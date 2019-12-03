@@ -1,0 +1,15 @@
+{
+ 
+  "Text Field": "<input type=\"text\" class=\"form-control input\" placeholder=\"Enter Your Name\"><\/input>",
+  "Textarea": "<textarea rows=\"4\" class=\"form-control input\" placeholder=\"\"><\/textarea>",
+  "Number Field": "<input type=\"number\" class=\"form-control input\" placeholder=\"\"><\/input>",
+  "Button":"<button type=\"button\" class=\"btn btn-primary \">Primary</button>  <button type=\"button\" class=\"btn btn-secondary\">Secondary</button> <button type=\"button\" class=\"btn btn-success\">Success</button>  <button type=\"button\" class=\"btn btn-danger\">Danger</button>   <button type=\"button\" class=\"btn btn-warning\">Warning</button>",
+  "Select Box":"<select class=\"browser-default custom-select  input\"> <option selected>Open this select menu</option> <option value=\"1\">One</option> <option value=\"2\">Two</option> <option value=\"3\">Three</option> <option value=\"4\">Four</option> </select>",
+  "File Upload":"<input type=\"file\" class=\"form-control input\" placeholder=\"Upload Your File\"><\/input>",
+  "CheckBox":"<input type=\"checkbox\" class=\"form-check-input \" placeholder=\"\"><\/input> Yes <br> <input type=\"checkbox\" class=\"form-check-input \" placeholder=\"\"><\/input> NO",
+  "Date Field":"<input type=\"date\" class=\"form-control input\" placeholder=\"Upload Your File\"><\/input>"
+ 
+  
+  
+  
+ }
