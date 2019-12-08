@@ -61,8 +61,9 @@ module.exports = (env, argv) => {
           use: ['style-loader', 'css-loader','sass-loader',],
         },
         {
+          limit: 8000,
           test: /\.(jpe?g|png|gif|svg)$/i,
-          loader: "file-loader?name=/public/icons/[name].[ext]"
+          loader: "file-loader?name=/assets/img/[name].[ext]"
         }
       ],
     },
