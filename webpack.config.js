@@ -61,9 +61,16 @@ module.exports = (env, argv) => {
           use: ['style-loader', 'css-loader','sass-loader',],
         },
         {
-          limit: 8000,
           test: /\.(jpe?g|png|gif|svg)$/i,
-          loader: "file-loader?name=../assets/img/[name].[ext]"
+          use: [{
+            loader: 'url-loader',
+            options: { 
+                limit: 2000,
+                name: '[hash]-[name].[ext]',
+                outputPath: '../img',
+                publicPath:production?'/wp-content/plugins/bitform/assets/img':''
+            } 
+        }]
         }
       ],
     },
