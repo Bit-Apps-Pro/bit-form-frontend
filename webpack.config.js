@@ -63,7 +63,7 @@ module.exports = (env, argv) => {
         {
           limit: 8000,
           test: /\.(jpe?g|png|gif|svg)$/i,
-          loader: "file-loader?name=/assets/img/[name].[ext]"
+          loader: "file-loader?name=../assets/img/[name].[ext]"
         }
       ],
     },
