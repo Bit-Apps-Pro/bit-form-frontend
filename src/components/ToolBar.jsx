@@ -4,9 +4,34 @@ import textArea from '../resource/img/text2.svg'
 
 export default function ToolBar(props) {
   const components = {
-    textField: { elm: '<div class="text-wrp no-drg"><label htmlFor="">Label</label><input class="txt-fld" type="text"/></div>', pos: { h: 2, w: 2, i: 'block-5' } },
-    textArea: { elm: '<div class="text-wrp no-drg"><label htmlFor="">Label:</label><textarea class="txt-a"></textarea></div>', pos: { h: 2, w: 3, i: 'block-5' } },
+    textField: {
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp no-drg' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Label' },
+            { tag: 'input', attr: { className: 'txt-fld', type: 'text' }, child: null },
+          ],
+        },
+      ],
+      pos: { h: 2, w: 2, i: 'block-5' },
+    },
+    textArea: {
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp no-drg' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Label' },
+            { tag: 'textarea', attr: { className: 'txt-a', type: 'text' }, child: null },
+          ],
+        },
+      ],
+      pos: { h: 2, w: 3, i: 'block-5' },
+    },
   }
+
 
   return (
     <div className="toolBar-wrp">
@@ -18,7 +43,7 @@ export default function ToolBar(props) {
           unselectable="on"
           onDragStart={() => props.setDrgElm([components.textField.elm, components.textField.pos])}
         >
-          <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text.svg':textField} alt="text-field" className="tool-img" />
+          <img src={textField} alt="text-field" className="tool-img" />
           Text Field
         </div>
 
@@ -28,9 +53,10 @@ export default function ToolBar(props) {
           unselectable="on"
           onDragStart={() => props.setDrgElm([components.textArea.elm, components.textArea.pos])}
         >
-          <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text.svg':textArea} alt="text-field" className="tool-img" />
+          <img src={textArea} alt="text-field" className="tool-img" />
           Text Area
         </div>
+
       </div>
     </div>
   )

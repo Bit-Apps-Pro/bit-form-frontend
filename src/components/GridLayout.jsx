@@ -1,63 +1,99 @@
 /* eslint-disable no-console */
 /* eslint-disable object-curly-newline */
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import _ from 'lodash'
-import DangerousHTML from 'react-dangerous-html'
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       newCounter: 0,
       data: {
-        'blk-0': '<span>html</span>',
-        'blk-1': '<span>html</span>',
-        'blk-2': '<span>html</span>',
-        'blk-3': '<span>html</span>',
-        'blk-4': '<span>html</span>',
+        blk_0: [
+          {
+            tag: 'label',
+            attr: { key: 1111 },
+            child: 'laebl',
+          },
+          {
+            tag: 'div',
+            attr: { key: 1112, type: 'text' },
+            child: 'asddasasd',
+          },
+        ],
+        blk_1: [
+
+          {
+            tag: 'label',
+            attr: { key: 1113 },
+            child: 'laebl',
+          },
+          {
+            tag: 'div',
+            attr: { key: 1114, type: 'text' },
+            child: [
+              { tag: 'label', attr: '', child: 'laebl' },
+              { tag: 'label', attr: '', child: 'laebl' },
+            ],
+          },
+        ],
+        blk_2: [
+          { tag: 'label', attr: '', child: 'laebl' },
+          {
+            tag: 'div',
+            attr: { key: 1115, type: 'text' },
+            child: { tag: 'b', attr: { key: 1119 }, child: 'bold' },
+          },
+        ],
+        blk_3: [
+          {
+            tag: 'label',
+            attr: { key: 1116 },
+            child: 'laebl',
+          },
+          {
+            tag: 'input',
+            attr: { key: 1117, type: 'text' },
+            child: null,
+          },
+        ],
       },
       lay: [
-        { i: 'blk-0', x: 0, y: 0, w: 2, h: 2 },
-        { i: 'blk-1', x: 2, y: 0, w: 2, h: 2 },
-        { i: 'blk-2', x: 4, y: 0, w: 2, h: 2 },
-        { i: 'blk-3', x: 6, y: 0, w: 2, h: 2 },
-        { i: 'blk-4', x: 8, y: 0, w: 2, h: 2 },
+        { i: 'blk_0', x: 0, y: 0, w: 2, h: 2 },
+        { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
+        { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
+        { i: 'blk_3', x: 6, y: 0, w: 2, h: 2 },
       ],
     }
 
     this.onAddItem = this.onAddItem.bind(this)
     this.onLayoutChange = this.onLayoutChange.bind(this)
     this.onBreakpointChange = this.onBreakpointChange.bind(this)
+    this.changeDat = this.changeDat.bind(this)
+    this.childGen = this.childGen.bind(this)
   }
 
-  componentDidUpdate() {
-    ReactDOM.findDOMNode(this).addEventListener('resize', () => {
-      console.log('mounte');
-    })
-  }
   onAddItem() {
     this.setState(prvState => ({
       ...prvState,
-      lay: prvState.lay.concat({ i: `n-blk-${prvState.newCounter}`, x: 4, y: 0, w: 2, h: 2 }),
+      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: 4, y: 0, w: 2, h: 2 }),
       newCounter: prvState.newCounter + 1,
     }))
   }
 
-  // We're using the cols coming back from this to calculate where to add new items.
   onBreakpointChange(breakpoint, cols) {
     this.setState({ breakpoint, cols })
   }
 
   onLayoutChange(layout) {
-    this.props.onLayoutChange(layout);
-    this.setState({ layout });
+    this.props.onLayoutChange(layout)
+    this.setState({ layout })
   }
 
   onRemoveItem(i) {
-    console.log('removing', i);
+    console.log('removing', i)
     this.setState(prvState => ({ ...prvState, lay: _.reject(prvState.lay, { i }) }))
   }
 
@@ -66,37 +102,54 @@ export default class GridLayout extends React.PureComponent {
     this.setState(prvState => ({
       ...prvState,
       data: {
-        ...prvState.data, [`n-blk-${prvState.newCounter}`]: draggedElm[0],
+        ...prvState.data, [`n_blk_${prvState.newCounter}`]: draggedElm[0],
       },
     }))
     this.setState(prvState => ({
       ...prvState,
-      lay: prvState.lay.concat({ i: `n-blk-${prvState.newCounter}`, x: elmPrms.x, y: elmPrms.y, w: draggedElm[1].w, h: draggedElm[1].h }),
+      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: elmPrms.x, y: elmPrms.y, w: draggedElm[1].w, h: draggedElm[1].h }),
       newCounter: prvState.newCounter + 1,
     }))
   }
 
-  createElm(elm) {
-    const removeStyle = {
-      position: 'absolute',
-      right: '2px',
-      top: 0,
-      cursor: 'pointer',
-    }
+  changeDat() {
+    this.setState(prvState => {
+      const { data } = prvState
+      data.blk_1[0].child = 'sssssss'
+      return {
+        ...prvState,
+        data,
+      }
+    })
+    this.forceUpdate()
+  }
 
-    return elm.map(itm => (
-      <div key={itm.i} data-grid={itm}>
+  childGen(cld) {
+    if (this.cld === null) {
+      return null
+    } if (typeof cld === 'string') {
+      return cld
+    } if ((!!cld) && (cld.constructor === Object)) {
+      return createElement(cld.tag, cld.attr, cld.child)
+    } if ((!!cld) && (cld.constructor === Array)) {
+      return cld.map(item => createElement(item.tag, item.attr, item.child))
+    }
+    return null
+  }
+
+  createElm(elm) {
+    return elm.map(item => (
+      <div key={item.i} data-grid={item}>
         <span
+          className="remove-blk"
+          onClick={this.onRemoveItem.bind(this, item.i)}
+          onKeyPress={this.onRemoveItem.bind(this, item.i)}
           role="button"
           tabIndex={0}
-          className="remove"
-          style={removeStyle}
-          onClick={this.onRemoveItem.bind(this, itm.i)}
-          onKeyPress={this.onRemoveItem.bind(this, itm.i)}
         >
-          &times;
+          &times
         </span>
-        <DangerousHTML className="com-wrp" style={{ height: '100%', width: '100%' }} html={this.state.data[itm.i]} />
+        {this.state.data[item.i].map(i => createElement(i.tag, i.attr, this.childGen(i.child)))}
       </div>
     ))
   }
@@ -105,6 +158,7 @@ export default class GridLayout extends React.PureComponent {
     return (
       <div>
         {/* <button type="button" onClick={this.onAddItem}>Add Item</button> */}
+        <button type="button" onClick={this.changeDat}>change data</button>
         <ResponsiveReactGridLayout
           style={{ height: 1000 }}
           onDrop={this.onDrop}
@@ -122,6 +176,6 @@ export default class GridLayout extends React.PureComponent {
           {this.createElm(this.state.lay)}
         </ResponsiveReactGridLayout>
       </div>
-    );
+    )
   }
 }
