@@ -18,7 +18,7 @@ export default function ToolBar(props) {
           unselectable="on"
           onDragStart={() => props.setDrgElm([components.textField.elm, components.textField.pos])}
         >
-          <img src={textField} alt="text-field" className="tool-img" />
+          <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text.svg':textField} alt="text-field" className="tool-img" />
           Text Field
         </div>
 
@@ -28,7 +28,7 @@ export default function ToolBar(props) {
           unselectable="on"
           onDragStart={() => props.setDrgElm([components.textArea.elm, components.textArea.pos])}
         >
-          <img src={textArea} alt="text-field" className="tool-img" />
+          <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text.svg':textArea} alt="text-field" className="tool-img" />
           Text Area
         </div>
       </div>

@@ -1,9 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-module.exports = (env, argv) => {
+module.exports = (env, argv) => {  
   let production = argv.mode === 'production'
   return {
     entry: {      
@@ -26,7 +27,8 @@ module.exports = (env, argv) => {
         chunks: ['webpackAssets'],
         // chunksSortMode: 'dependency'
     }),
-      new DynamicCdnWebpackPlugin()
+      new DynamicCdnWebpackPlugin(),
+      new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") })
     ],
     
     devtool: production ? '' : 'source-map',
@@ -66,9 +68,8 @@ module.exports = (env, argv) => {
             loader: 'url-loader',
             options: { 
                 limit: 2000,
-                name: '[hash]-[name].[ext]',
-                outputPath: '../img',
-                publicPath:production?'/wp-content/plugins/bitform/assets/img':''
+                name: '[name].[ext]',
+                outputPath: '../img'
             } 
         }]
         }
