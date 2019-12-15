@@ -5,9 +5,34 @@ import textArea from '../resource/img/text2.svg'
 /*eslint-disable no-undef*/
 export default function ToolBar(props) {
   const components = {
-    textField: { elm: '<div class="text-wrp no-drg"><label htmlFor="">Label</label><input class="txt-fld" type="text"/></div>', pos: { h: 2, w: 2, i: 'block-5' } },
-    textArea: { elm: '<div class="text-wrp no-drg"><label htmlFor="">Label:</label><textarea class="txt-a"></textarea></div>', pos: { h: 2, w: 3, i: 'block-5' } },
+    textField: {
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp no-drg' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Label' },
+            { tag: 'input', attr: { className: 'txt-fld', type: 'text' }, child: null },
+          ],
+        },
+      ],
+      pos: { h: 2, w: 2, i: 'block-5' },
+    },
+    textArea: {
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp no-drg' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Label' },
+            { tag: 'textarea', attr: { className: 'txt-a', type: 'text' }, child: null },
+          ],
+        },
+      ],
+      pos: { h: 2, w: 3, i: 'block-5' },
+    },
   }
+
 
   return (
     <div className="toolBar-wrp">
@@ -33,6 +58,7 @@ export default function ToolBar(props) {
           <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text2.svg':textArea} alt="text-field" className="tool-img" />
           Text Area
         </div>
+
       </div>
     </div>
   )
