@@ -28,7 +28,7 @@ module.exports = (env, argv) => {
         // chunksSortMode: 'dependency'
     }),
       new DynamicCdnWebpackPlugin(),
-      new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") })
+      new webpack.DefinePlugin({ "process.env.NODE_ENV": production ? JSON.stringify("developme"):JSON.stringify("production")})
     ],
     
     devtool: production ? '' : 'source-map',

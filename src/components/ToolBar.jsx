@@ -2,6 +2,7 @@ import React from 'react'
 import textField from '../resource/img/text.svg'
 import textArea from '../resource/img/text2.svg'
 
+/*eslint-disable no-undef*/
 export default function ToolBar(props) {
   const components = {
     textField: { elm: '<div class="text-wrp no-drg"><label htmlFor="">Label</label><input class="txt-fld" type="text"/></div>', pos: { h: 2, w: 2, i: 'block-5' } },
@@ -18,6 +19,7 @@ export default function ToolBar(props) {
           unselectable="on"
           onDragStart={() => props.setDrgElm([components.textField.elm, components.textField.pos])}
         >
+          
           <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text.svg':textField} alt="text-field" className="tool-img" />
           Text Field
         </div>
@@ -28,7 +30,7 @@ export default function ToolBar(props) {
           unselectable="on"
           onDragStart={() => props.setDrgElm([components.textArea.elm, components.textArea.pos])}
         >
-          <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text.svg':textArea} alt="text-field" className="tool-img" />
+          <img src={process.env.NODE_ENV==='production'?bits.assetsURL+'/img/text2.svg':textArea} alt="text-field" className="tool-img" />
           Text Area
         </div>
       </div>
