@@ -3,6 +3,7 @@
 import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import _ from 'lodash'
+import axios from "axios";
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
@@ -123,7 +124,18 @@ export default class GridLayout extends React.PureComponent {
     })
     this.forceUpdate()
   }
-
+  saveForm(){
+    console.log("bits.nonce: ",bits.ajaxURL)
+    axios.post(bits.ajaxURL, null, { params: {
+      action: 'bitform_save_form',
+      _ajax_nonce : bits.nonce,
+      lastName: 'Flintstone'
+    }}).then(function (response) {
+     console.log(response)
+    }) .catch(error => {
+      console.log("error",error);
+    })
+  }
   childGen(cld) {
     if (this.cld === null) {
       return null
@@ -159,6 +171,7 @@ export default class GridLayout extends React.PureComponent {
       <div>
         {/* <button type="button" onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
+        <button type="button" onClick={this.saveForm}>Save</button>
         <ResponsiveReactGridLayout
           style={{ height: 1000 }}
           onDrop={this.onDrop}
