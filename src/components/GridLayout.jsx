@@ -11,29 +11,18 @@ export default class GridLayout extends React.PureComponent {
 
     this.state = {
       newCounter: 0,
+      breakpoint: 'md',
       data: {
-        blk_0: [
-          {
-            tag: 'label',
-            attr: { key: 1111 },
-            child: 'laebl',
-          },
-          {
-            tag: 'div',
-            attr: { key: 1112, type: 'text' },
-            child: 'asddasasd',
-          },
-        ],
         blk_1: [
 
           {
             tag: 'label',
-            attr: { key: 1113 },
+            attr: {},
             child: 'laebl',
           },
           {
             tag: 'div',
-            attr: { key: 1114, type: 'text' },
+            attr: { type: 'text' },
             child: [
               { tag: 'label', attr: '', child: 'laebl' },
               { tag: 'label', attr: '', child: 'laebl' },
@@ -44,29 +33,56 @@ export default class GridLayout extends React.PureComponent {
           { tag: 'label', attr: '', child: 'laebl' },
           {
             tag: 'div',
-            attr: { key: 1115, type: 'text' },
-            child: { tag: 'b', attr: { key: 1119 }, child: 'bold' },
+            attr: { type: 'text' },
+            child: { tag: 'b', attr: {}, child: 'bold' },
           },
         ],
         blk_3: [
           {
             tag: 'label',
-            attr: { key: 1116 },
+            attr: {},
             child: 'laebl',
           },
           {
             tag: 'input',
-            attr: { key: 1117, type: 'text' },
+            attr: { type: 'text' },
             child: null,
           },
         ],
+        blk_4: [],
+        blk_5: [],
+        blk_6: [],
+        blk_7: [],
+        blk_8: [],
+        blk_9: [],
+        blk_10: [],
       },
       lay: [
-        { i: 'blk_0', x: 0, y: 0, w: 2, h: 2 },
-        { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
-        { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
-        { i: 'blk_3', x: 6, y: 0, w: 2, h: 2 },
+        { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
+        { i: 'blk_2', x: 1, y: 0, w: 1, h: 2 },
+        { i: 'blk_3', x: 2, y: 0, w: 1, h: 2 },
+        { i: 'blk_4', x: 3, y: 0, w: 1, h: 2 },
+        { i: 'blk_5', x: 4, y: 0, w: 1, h: 2 },
+        { i: 'blk_6', x: 5, y: 0, w: 1, h: 2 },
+        { i: 'blk_7', x: 6, y: 0, w: 1, h: 2 },
+        { i: 'blk_8', x: 7, y: 0, w: 1, h: 2 },
+        { i: 'blk_9', x: 8, y: 0, w: 1, h: 2 },
+        { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 },
       ],
+      lays: {
+        lg: [
+          { i: 'blk_0', x: 0, y: 0, w: 2, h: 2 },
+          { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
+          { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
+          { i: 'blk_3', x: 7, y: 0, w: 2, h: 2 },
+        ],
+        md: [
+          { i: 'blk_0', x: 0, y: 0, w: 2, h: 2 },
+          { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
+          { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
+          { i: 'blk_3', x: 7, y: 0, w: 2, h: 2 },
+        ]
+      },
     }
 
     this.onAddItem = this.onAddItem.bind(this)
@@ -85,12 +101,16 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onBreakpointChange(breakpoint, cols) {
-    this.setState({ breakpoint, cols })
+    //console.log(this.state.breakpoint, cols);
+    // unused
+    //this.setState({ breakpoint, cols })
   }
 
   onLayoutChange(layout) {
-    this.props.onLayoutChange(layout)
-    this.setState({ layout })
+    this.props.onLayoutChange(layout, this.state.cols)
+
+    // unused
+    //this.setState({ layout })
   }
 
   onRemoveItem(i) {
@@ -116,7 +136,7 @@ export default class GridLayout extends React.PureComponent {
   changeDat() {
     this.setState(prvState => {
       const { data } = prvState
-      data.blk_1[0].child = 'sssssss'
+      data.blk_1[0].child = Math.random().toString()
       return {
         ...prvState,
         data,
@@ -144,12 +164,13 @@ export default class GridLayout extends React.PureComponent {
     } if ((!!cld) && (cld.constructor === Object)) {
       return createElement(cld.tag, cld.attr, cld.child)
     } if ((!!cld) && (cld.constructor === Array)) {
-      return cld.map(item => createElement(item.tag, item.attr, item.child))
+      return cld.map((item, idx) => createElement(item.tag, { key: idx, ...item.attr }, item.child))
     }
     return null
   }
 
   createElm(elm) {
+    console.log(elm);
     return elm.map(item => (
       <div key={item.i} data-grid={item}>
         <span
@@ -159,34 +180,37 @@ export default class GridLayout extends React.PureComponent {
           role="button"
           tabIndex={0}
         >
-          &times
+          &times;
         </span>
-        {this.state.data[item.i].map(i => createElement(i.tag, i.attr, this.childGen(i.child)))}
+        <p>{item.i}</p>
+        {this.state.data[item.i].map((i, idx) => createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child)))}
       </div>
     ))
   }
 
   render() {
     return (
-      <div>
+      <div style={{ width: this.props.width }}>
         {/* <button type="button" onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>
         <ResponsiveReactGridLayout
+          className="layout"
           style={{ height: 1000 }}
+          //layouts={this.props.lay}
           onDrop={this.onDrop}
+          compactType="vertical"
           onLayoutChange={this.onLayoutChange}
           onBreakpointChange={this.onBreakpointChange}
           droppingItem={this.props.draggedElm[1]}
-          className="layout"
-          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+          breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
           rowHeight={50}
           width={this.props.width}
           isDroppable
           draggableCancel=".no-drg"
         >
-          {this.createElm(this.state.lay)}
+          {this.createElm(this.props.layout)}
         </ResponsiveReactGridLayout>
       </div>
     )
