@@ -16,7 +16,7 @@ export default function ToolBar(props) {
           ],
         },
       ],
-      pos: { h: 2, w: 2, i: 'block-5' },
+      pos: { h: 2, w: 2, i: 'n_blk' },
     },
     textArea: {
       elm: [
