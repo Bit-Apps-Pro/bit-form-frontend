@@ -1,12 +1,11 @@
-/* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-/* eslint-disable object-curly-newline */
 /* eslint-disable no-undef */
 
 import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import _ from 'lodash'
 import axios from 'axios';
+import moveIcon from '../resource/img/move.png'
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
@@ -15,76 +14,8 @@ export default class GridLayout extends React.PureComponent {
     this.state = {
       newCounter: 0,
       breakpoint: 'md',
-      data: {
-        blk_1: [
-          {
-            tag: 'label',
-            attr: {},
-            child: 'laebl',
-          },
-          {
-            tag: 'div',
-            attr: { type: 'text' },
-            child: [
-              { tag: 'label', attr: '', child: 'laebl' },
-              { tag: 'label', attr: '', child: 'laebl' },
-            ],
-          },
-        ],
-        blk_2: [
-          { tag: 'label', attr: '', child: 'laebl' },
-          {
-            tag: 'div',
-            attr: { type: 'text' },
-            child: { tag: 'b', attr: {}, child: 'bold' },
-          },
-        ],
-        blk_3: [
-          {
-            tag: 'label',
-            attr: {},
-            child: 'laebl',
-          },
-          {
-            tag: 'input',
-            attr: { type: 'text' },
-            child: null,
-          },
-        ],
-        blk_4: [],
-        blk_5: [],
-        blk_6: [],
-        blk_7: [],
-        blk_8: [],
-        blk_9: [],
-        blk_10: [],
-      },
-      lay: [
-        { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
-        { i: 'blk_2', x: 1, y: 0, w: 1, h: 2 },
-        { i: 'blk_3', x: 2, y: 0, w: 1, h: 2 },
-        { i: 'blk_4', x: 3, y: 0, w: 1, h: 2 },
-        { i: 'blk_5', x: 4, y: 0, w: 1, h: 2 },
-        { i: 'blk_6', x: 5, y: 0, w: 1, h: 2 },
-        { i: 'blk_7', x: 6, y: 0, w: 1, h: 2 },
-        { i: 'blk_8', x: 7, y: 0, w: 1, h: 2 },
-        { i: 'blk_9', x: 8, y: 0, w: 1, h: 2 },
-        { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 },
-      ],
-      lays: {
-        lg: [
-          { i: 'blk_0', x: 0, y: 0, w: 2, h: 2 },
-          { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
-          { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
-          { i: 'blk_3', x: 7, y: 0, w: 2, h: 2 },
-        ],
-        md: [
-          { i: 'blk_0', x: 0, y: 0, w: 2, h: 2 },
-          { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
-          { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
-          { i: 'blk_3', x: 7, y: 0, w: 2, h: 2 },
-        ],
-      },
+      data: props.data,
+      lay: props.layout,
     }
 
     this.onAddItem = this.onAddItem.bind(this)
@@ -92,6 +23,7 @@ export default class GridLayout extends React.PureComponent {
     this.onBreakpointChange = this.onBreakpointChange.bind(this)
     this.changeDat = this.changeDat.bind(this)
     this.childGen = this.childGen.bind(this)
+    this.getElmProp = this.getElmProp.bind(this)
   }
 
   onAddItem() {
@@ -105,7 +37,7 @@ export default class GridLayout extends React.PureComponent {
   onBreakpointChange(breakpoint, cols) {
     console.log(this.state.breakpoint, cols);
     // unused
-    this.setState({ breakpoint, cols })
+    // this.setState({ breakpoint, cols })
   }
 
   onLayoutChange(layout) {
@@ -122,29 +54,59 @@ export default class GridLayout extends React.PureComponent {
 
   onDrop = (elmPrms) => {
     const { draggedElm } = this.props
+
     this.setState(prvState => ({
       ...prvState,
       data: {
         ...prvState.data, [`n_blk_${prvState.newCounter}`]: draggedElm[0],
       },
-    }))
-    this.setState(prvState => ({
-      ...prvState,
-      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: elmPrms.x, y: elmPrms.y, w: draggedElm[1].w, h: draggedElm[1].h }),
+      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: elmPrms.x, y: elmPrms.y, w: draggedElm[1].w, h: draggedElm[1].h, maxH: draggedElm[1].maxH }),
       newCounter: prvState.newCounter + 1,
     }))
   }
 
+  getElmProp(e) {
+    let id
+    let type
+    if (e.target.getAttribute('btcd-id') != null) {
+      id = e.target.getAttribute('btcd-id')
+    } else if (e.target.parentNode.getAttribute('btcd-id') != null) {
+      id = e.target.parentNode.getAttribute('btcd-id')
+    } else if (e.target.parentNode.parentNode.getAttribute('btcd-id') != null) {
+      id = e.target.parentNode.parentNode.getAttribute('btcd-id')
+    } else if (e.target.parentNode.parentNode.parentNode.getAttribute('btcd-id') != null) {
+      id = e.target.parentNode.parentNode.parentNode.getAttribute('btcd-id')
+    } else if (e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-id') != null) {
+      id = e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-id')
+    }
+
+    if (e.target.getAttribute('btcd-fld') != null) {
+      type = e.target.getAttribute('btcd-fld')
+    } else if (e.target.parentNode.getAttribute('btcd-fld') != null) {
+      type = e.target.parentNode.getAttribute('btcd-fld')
+    } else if (e.target.parentNode.parentNode.getAttribute('btcd-fld') != null) {
+      type = e.target.parentNode.parentNode.getAttribute('btcd-fld')
+    } else if (e.target.parentNode.parentNode.parentNode.getAttribute('btcd-fld') != null) {
+      type = e.target.parentNode.parentNode.parentNode.getAttribute('btcd-fld')
+    } else if (e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-fld') != null) {
+      type = e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-fld')
+    }
+    this.props.getElmSettings(id, type)
+  }
+
+
   changeDat() {
-    this.setState(prvState => {
+    this.props.setData()
+    /* this.setState(prvState => {
       const { data } = prvState
       data.blk_1[0].child = Math.random().toString()
       return {
         ...prvState,
         data,
       }
-    })
-    this.forceUpdate()
+    }) */
+    console.log(this.state.data, this.props.data);
+    // this.forceUpdate()
   }
 
   saveForm() {
@@ -163,7 +125,7 @@ export default class GridLayout extends React.PureComponent {
   }
 
   childGen(cld) {
-    if (this.cld === null) {
+    if (cld === null) {
       return null
     } if (typeof cld === 'string') {
       return cld
@@ -176,19 +138,35 @@ export default class GridLayout extends React.PureComponent {
   }
 
   createElm(elm) {
-    console.log(elm);
     return elm.map(item => (
-      <div key={item.i} data-grid={item}>
+      <div
+        key={item.i}
+        btcd-id={item.i}
+        data-grid={item}
+        onClick={this.getElmProp}
+        onKeyPress={this.getElmProp}
+        role="button"
+        tabIndex={0}
+      >
         <span
-          className="remove-blk"
+          style={{ right: 2 }}
+          unselectable="on"
+          draggable="false"
+          className="bit-blk-icn"
           onClick={this.onRemoveItem.bind(this, item.i)}
           onKeyPress={this.onRemoveItem.bind(this, item.i)}
           role="button"
-          tabIndex={0}
+          tabIndex={-1}
         >
           &times;
         </span>
-        <p>{item.i}</p>
+        <span
+          style={{ right: 21, cursor: 'grab' }}
+          className="bit-blk-icn drag"
+          role="button"
+        >
+          <img draggable="false" unselectable="on" src={moveIcon} alt="drag handle" />
+        </span>
         {this.state.data[item.i].map((i, idx) => createElement(i.tag,
           { key: idx, ...i.attr }, this.childGen(i.child)))}
       </div>
@@ -196,6 +174,8 @@ export default class GridLayout extends React.PureComponent {
   }
 
   render() {
+    console.log('rendered', this.props.layout);
+    const { lay } = this.state
     return (
       <div style={{ width: this.props.width }}>
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
@@ -212,12 +192,14 @@ export default class GridLayout extends React.PureComponent {
           droppingItem={this.props.draggedElm[1]}
           cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
           breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-          rowHeight={50}
+          rowHeight={60}
           width={this.props.width}
           isDroppable
+          margin={[3, 3]}
           draggableCancel=".no-drg"
+          draggableHandle=".drag"
         >
-          {this.createElm(this.props.layout)}
+          {this.createElm(lay)}
         </ResponsiveReactGridLayout>
       </div>
     )

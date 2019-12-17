@@ -1,19 +1,21 @@
-/* eslint-disable object-curly-newline */
+/* eslint-disable react/jsx-one-expression-per-line */
 
 import React from 'react'
 import SplitPane from 'react-split-pane'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import GridLayout from './components/GridLayout'
 import './resource/sass/app.scss'
-import ToolBar from './components/ToolBar'
+import './resource/sass/components.scss'
+import ToolBar from './components/Toolbar'
 import ElementSettings from './components/ElementSettings'
 
 export default class App extends React.Component {
   col;
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
+      forceRender: false,
       drgElm: ['', { h: 1, w: 1, i: '' }],
       gridWidth: 1100,
       layout: [
@@ -77,8 +79,7 @@ export default class App extends React.Component {
     this.onLayoutChange = this.onLayoutChange.bind(this)
     this.setDrgElm = this.setDrgElm.bind(this)
     this.setGridWidth = this.setGridWidth.bind(this)
-    this.setData = this.setData.bind(this)
-    this.setLayout = this.setLayout.bind(this)
+    this.getElmSettings = this.getElmSettings.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -133,16 +134,11 @@ export default class App extends React.Component {
       this.col = cols
     } */
     // console.log(cols, layout);
-    this.setState({ layout });
+    this.setState({ layout })
   }
 
-
-  setLayout() {
-
-  }
-
-  setData() {
-
+  getElmSettings(id, type) {
+    console.log(id, type);
   }
 
   setDrgElm(el) {
@@ -150,13 +146,12 @@ export default class App extends React.Component {
   }
 
   setGridWidth(w) {
-    this.setState({ gridWidth: w })
+    this.setState({ gridWidth: w - 10 })
   }
 
   stringifyLayout() {
     return this.state.layout.map((l) => (
       <div className="layoutItem" key={l.i}>
-        {/* eslint-disable react/jsx-one-expression-per-line */}
         <b>{l.i}</b>:[{l.x}, {l.y}, {l.w}, {l.h}]
       </div>
     ));
@@ -164,7 +159,6 @@ export default class App extends React.Component {
 
   render() {
     return (
-
       <div className="App">
         <SplitPane
           split="vertical"
@@ -195,6 +189,8 @@ export default class App extends React.Component {
                   draggedElm={this.state.drgElm}
                   data={this.state.data}
                   setData={this.setData}
+                  getElmSettings={this.getElmSettings}
+                  reRender={this.state.forceRender}
                 />
               </Section>
 
