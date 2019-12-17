@@ -1,9 +1,12 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
 /* eslint-disable object-curly-newline */
+/* eslint-disable no-undef */
+
 import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import _ from 'lodash'
-import axios from "axios";
+import axios from 'axios';
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
@@ -14,7 +17,6 @@ export default class GridLayout extends React.PureComponent {
       breakpoint: 'md',
       data: {
         blk_1: [
-
           {
             tag: 'label',
             attr: {},
@@ -81,7 +83,7 @@ export default class GridLayout extends React.PureComponent {
           { i: 'blk_1', x: 2, y: 0, w: 2, h: 2 },
           { i: 'blk_2', x: 4, y: 0, w: 2, h: 2 },
           { i: 'blk_3', x: 7, y: 0, w: 2, h: 2 },
-        ]
+        ],
       },
     }
 
@@ -101,16 +103,16 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onBreakpointChange(breakpoint, cols) {
-    //console.log(this.state.breakpoint, cols);
+    console.log(this.state.breakpoint, cols);
     // unused
-    //this.setState({ breakpoint, cols })
+    this.setState({ breakpoint, cols })
   }
 
   onLayoutChange(layout) {
     this.props.onLayoutChange(layout, this.state.cols)
 
     // unused
-    //this.setState({ layout })
+    // this.setState({ layout })
   }
 
   onRemoveItem(i) {
@@ -144,18 +146,22 @@ export default class GridLayout extends React.PureComponent {
     })
     this.forceUpdate()
   }
-  saveForm(){
-    console.log("bits.nonce: ",bits.ajaxURL)
-    axios.post(bits.ajaxURL, null, { params: {
-      action: 'bitform_save_form',
-      _ajax_nonce : bits.nonce,
-      lastName: 'Flintstone'
-    }}).then(function (response) {
-     console.log(response)
-    }) .catch(error => {
-      console.log("error",error);
+
+  saveForm() {
+    console.log('bits.nonce: ', bits.ajaxURL)
+    axios.post(bits.ajaxURL, null, {
+      params: {
+        action: 'bitform_save_form',
+        _ajax_nonce: bits.nonce,
+        lastName: 'Flintstone',
+      },
+    }).then((response) => {
+      console.log(response)
+    }).catch(error => {
+      console.log('error', error);
     })
   }
+
   childGen(cld) {
     if (this.cld === null) {
       return null
@@ -183,7 +189,8 @@ export default class GridLayout extends React.PureComponent {
           &times;
         </span>
         <p>{item.i}</p>
-        {this.state.data[item.i].map((i, idx) => createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child)))}
+        {this.state.data[item.i].map((i, idx) => createElement(i.tag,
+          { key: idx, ...i.attr }, this.childGen(i.child)))}
       </div>
     ))
   }
@@ -191,13 +198,13 @@ export default class GridLayout extends React.PureComponent {
   render() {
     return (
       <div style={{ width: this.props.width }}>
-        {/* <button type="button" onClick={this.onAddItem}>Add Item</button> */}
+        {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>
         <ResponsiveReactGridLayout
           className="layout"
           style={{ height: 1000 }}
-          //layouts={this.props.lay}
+          // layouts={this.props.lay}
           onDrop={this.onDrop}
           compactType="vertical"
           onLayoutChange={this.onLayoutChange}
