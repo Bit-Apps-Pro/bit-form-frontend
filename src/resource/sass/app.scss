@@ -1,8 +1,9 @@
 body {
   margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
-$bdr-rad: 7px;
+$bdr-rad: 0px;
 
 #content {
   width: 100%;
@@ -47,7 +48,6 @@ $bdr-rad: 7px;
     width: 100%;
     margin: 10px 0;
     text-align: center;
-    color: #737373;
   }
 }
 
@@ -163,8 +163,6 @@ $bdr-rad: 7px;
 
 .react-grid-item:not(.react-grid-placeholder) {
   background: #e4e4e4;
-  cursor: move;
-  padding-top: 15px;
 
   &:hover {
     background: #dadada;
@@ -200,7 +198,6 @@ $bdr-rad: 7px;
 }
 
 .react-grid-dragHandleExample {
-  cursor: move;
   /* fallback if grab cursor is unsupported */
   cursor: grab;
   cursor: -moz-grab;
@@ -301,9 +298,50 @@ li b {
   box-sizing: border-box;
 }
 
-.remove-blk {
+.bit-blk-icn {
+  opacity: .5;
   position: absolute;
-  right: 2px;
-  top: 0;
+  font-size: 22px;
+  top: 2px;
   cursor: pointer;
+  padding: 0;
+  line-height: .6;
+  padding: 2px;
+  border-radius: 5px;
+  background: #fafafa;
+  width: 13px;
+  height: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  &:hover {
+    opacity: 1;
+    background: rgb(185, 185, 185);
+  }
+
+  &>img {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    width: 13px;
+    height: 13px;
+  }
+}
+
+.elm-settings {
+  &>h4 {
+    text-align: center;
+    margin: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #c7c7c7;
+  }
 }
