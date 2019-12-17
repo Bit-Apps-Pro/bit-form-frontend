@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class ElementSettings extends Component {
-  render() {
-    return (
-      <div>
-        <h4>Element Settings</h4>
-      </div>
-    )
-  }
+export default function ElementSettings() {
+  return (
+    <div className="elm-settings">
+      <h4>Element Settings</h4>
+    </div>
+  )
 }
