@@ -1,16 +1,19 @@
+/* eslint-disable object-curly-newline */
+
 import React from 'react'
 import SplitPane from 'react-split-pane'
+import { Container, Section, Bar } from 'react-simple-resizer'
 import GridLayout from './components/GridLayout'
 import './resource/sass/app.scss'
 import ToolBar from './components/ToolBar'
 import ElementSettings from './components/ElementSettings'
-import { Container, Section, Bar } from "react-simple-resizer";
 
 export default class App extends React.Component {
+  col;
+
   constructor(props) {
     super(props);
     this.state = {
-      displayMode: 'desktop',
       drgElm: ['', { h: 1, w: 1, i: '' }],
       gridWidth: 1100,
       layout: [
@@ -69,12 +72,13 @@ export default class App extends React.Component {
         blk_8: [],
         blk_9: [],
         blk_10: [],
-      }
+      },
     }
     this.onLayoutChange = this.onLayoutChange.bind(this)
     this.setDrgElm = this.setDrgElm.bind(this)
     this.setGridWidth = this.setGridWidth.bind(this)
     this.setData = this.setData.bind(this)
+    this.setLayout = this.setLayout.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -103,10 +107,8 @@ export default class App extends React.Component {
     console.log(insertion_Sort([3, 0, 2, 5, -1, 4, 1])); */
   }
 
-  col;
-
-  onLayoutChange(layout, cols) {
-    //console.log(this.col, cols);
+  onLayoutChange(layout) {
+    // console.log(this.col, cols);
     /* let count = 0
     if (this.col != cols) {
       console.log('cols', this.col, cols, layout);
@@ -130,7 +132,7 @@ export default class App extends React.Component {
       console.log(layout)
       this.col = cols
     } */
-    //console.log(cols, layout);
+    // console.log(cols, layout);
     this.setState({ layout });
   }
 
@@ -139,31 +141,26 @@ export default class App extends React.Component {
 
   }
 
-  setData(data) {
-    this.setState(prvState => ({
-      ...prvState,
-      data: {
-        ...prvState.data, [`n_blk_${prvState.newCounter}`]: this.state.drgElm[0],
-      },
-    }))
+  setData() {
+
   }
 
   setDrgElm(el) {
     this.setState({ drgElm: el })
   }
 
-  stringifyLayout() {
-    return this.state.layout.map((l) => (
-      <div className="layoutItem" key={l.i}>
-        <b>{l.i}</b>: [{l.x}, {l.y}, {l.w}, {l.h}]
-      </div>
-    ));
-  }
-
   setGridWidth(w) {
     this.setState({ gridWidth: w })
   }
 
+  stringifyLayout() {
+    return this.state.layout.map((l) => (
+      <div className="layoutItem" key={l.i}>
+        {/* eslint-disable react/jsx-one-expression-per-line */}
+        <b>{l.i}</b>:[{l.x}, {l.y}, {l.w}, {l.h}]
+      </div>
+    ));
+  }
 
   render() {
     return (
@@ -173,17 +170,20 @@ export default class App extends React.Component {
           split="vertical"
           minSize={150}
           maxSize={290}
-          onChange={(l) => { console.log('object', l) }}
+          onChange={() => { }}
         >
           <ToolBar setDrgElm={this.setDrgElm} className="tile" />
 
           <div className="grid-lay-wrp">
             <Container style={this.containerStyle}>
-              <Section defaultSize={.1} style={this.sectionStyle} />
+              <Section defaultSize={0.1} style={this.sectionStyle} />
               <Bar className="bar" />
 
-              <Section onSizeChanged={this.setGridWidth} minSize={320} >
-                <div className="layoutJSON">Displayed as<code>[x, y, w, h]</code>:
+              <Section onSizeChanged={this.setGridWidth} minSize={320}>
+                <div className="layoutJSON">
+                  Displayed as
+                  <code>[x, y, w, h]</code>
+                  :
                   <div className="columns">{this.stringifyLayout()}</div>
                 </div>
                 {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
@@ -199,7 +199,7 @@ export default class App extends React.Component {
               </Section>
 
               <Bar className="bar" />
-              <Section defaultSize={300} style={this.sectionStyle} >
+              <Section defaultSize={300} style={this.sectionStyle}>
                 <ElementSettings />
               </Section>
             </Container>
