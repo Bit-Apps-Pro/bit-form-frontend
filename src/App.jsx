@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React from 'react'
@@ -7,7 +8,7 @@ import GridLayout from './components/GridLayout'
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 import ToolBar from './components/Toolbar'
-import ElementSettings from './components/ElementSettings'
+import ElementSettings from './components/ElmSettings.jsx'
 
 export default class App extends React.Component {
   col;
@@ -18,6 +19,7 @@ export default class App extends React.Component {
       forceRender: false,
       drgElm: ['', { h: 1, w: 1, i: '' }],
       gridWidth: 1100,
+      settings: { id: null, type: null, data: null },
       layout: [
         { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
         { i: 'blk_2', x: 1, y: 0, w: 1, h: 2 },
@@ -80,6 +82,8 @@ export default class App extends React.Component {
     this.setDrgElm = this.setDrgElm.bind(this)
     this.setGridWidth = this.setGridWidth.bind(this)
     this.getElmSettings = this.getElmSettings.bind(this)
+    this.addData = this.addData.bind(this)
+    this.updateData = this.updateData.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -138,7 +142,9 @@ export default class App extends React.Component {
   }
 
   getElmSettings(id, type) {
-    console.log(id, type);
+    // console.log(id, type);
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    this.setState({ settings: { id, type, data: this.state.data[id][0] } })
   }
 
   setDrgElm(el) {
@@ -147,6 +153,35 @@ export default class App extends React.Component {
 
   setGridWidth(w) {
     this.setState({ gridWidth: w - 10 })
+  }
+
+  addData(counter) {
+    /*  this.setState(prvState => {
+       const { data } = prvState
+       data.blk_1[0].child = Math.random().toString()
+       return {
+         ...prvState,
+         data,
+       }
+     }) */
+    this.setState(prvState => ({
+      ...prvState,
+      data: {
+        ...prvState.data, [`n_blk_${counter}`]: prvState.drgElm[0],
+      },
+    }))
+  }
+
+  updateData(updatedElm) {
+    this.setState(prvState => {
+      const { data } = prvState
+      data[updatedElm.id] = [updatedElm.data]
+      return {
+        ...prvState,
+        data,
+        forceRender: !prvState.forceRender,
+      }
+    })
   }
 
   stringifyLayout() {
@@ -162,7 +197,7 @@ export default class App extends React.Component {
       <div className="App">
         <SplitPane
           split="vertical"
-          minSize={150}
+          minSize={152}
           maxSize={290}
           onChange={() => { }}
         >
@@ -188,7 +223,7 @@ export default class App extends React.Component {
                   onLayoutChange={this.onLayoutChange}
                   draggedElm={this.state.drgElm}
                   data={this.state.data}
-                  setData={this.setData}
+                  addData={this.addData}
                   getElmSettings={this.getElmSettings}
                   reRender={this.state.forceRender}
                 />
@@ -196,7 +231,7 @@ export default class App extends React.Component {
 
               <Bar className="bar" />
               <Section defaultSize={300} style={this.sectionStyle}>
-                <ElementSettings />
+                <ElementSettings key="elm-settins1" elm={this.state.settings} updateData={this.updateData} />
               </Section>
             </Container>
 
