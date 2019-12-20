@@ -24,6 +24,7 @@ export default class GridLayout extends React.PureComponent {
     this.changeDat = this.changeDat.bind(this)
     this.childGen = this.childGen.bind(this)
     this.getElmProp = this.getElmProp.bind(this)
+    this.saveForm = this.saveForm.bind(this)
   }
 
   onAddItem() {
@@ -35,9 +36,8 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onBreakpointChange(breakpoint, cols) {
-    console.log(this.state.breakpoint, cols);
     // unused
-    // this.setState({ breakpoint, cols })
+    //this.setState({ breakpoint, cols })
   }
 
   onLayoutChange(layout) {
@@ -48,55 +48,54 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onRemoveItem(i) {
-    console.log('removing', i)
     this.setState(prvState => ({ ...prvState, lay: _.reject(prvState.lay, { i }) }))
   }
 
   onDrop = (elmPrms) => {
     const { draggedElm } = this.props
-
+    const { w, h, minH, maxH } = draggedElm[1]
+    const { x, y } = elmPrms
+    this.props.addData(this.state.newCounter)
     this.setState(prvState => ({
       ...prvState,
       data: {
         ...prvState.data, [`n_blk_${prvState.newCounter}`]: draggedElm[0],
       },
-      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: elmPrms.x, y: elmPrms.y, w: draggedElm[1].w, h: draggedElm[1].h, maxH: draggedElm[1].maxH }),
+      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH }),
       newCounter: prvState.newCounter + 1,
     }))
   }
 
   getElmProp(e) {
-    let id
-    let type
-    if (e.target.getAttribute('btcd-id') != null) {
-      id = e.target.getAttribute('btcd-id')
-    } else if (e.target.parentNode.getAttribute('btcd-id') != null) {
-      id = e.target.parentNode.getAttribute('btcd-id')
-    } else if (e.target.parentNode.parentNode.getAttribute('btcd-id') != null) {
-      id = e.target.parentNode.parentNode.getAttribute('btcd-id')
-    } else if (e.target.parentNode.parentNode.parentNode.getAttribute('btcd-id') != null) {
-      id = e.target.parentNode.parentNode.parentNode.getAttribute('btcd-id')
-    } else if (e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-id') != null) {
-      id = e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-id')
+    let id = null
+    let type = null
+    let node = null
+    if (e.target.hasAttribute('btcd-id')) {
+      node = e.target
+    } else if (e.target.parentNode.hasAttribute('btcd-id')) {
+      node = e.target.parentNode
+    } else if (e.target.parentNode.parentNode.hasAttribute('btcd-id')) {
+      node = e.target.parentNode.parentNode
+    } else if (e.target.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
+      node = e.target.parentNode.parentNode.parentNode
+    } else if (e.target.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
+      node = e.target.parentNode.parentNode.parentNode.parentNode
+    } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
+      node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode
     }
-
-    if (e.target.getAttribute('btcd-fld') != null) {
-      type = e.target.getAttribute('btcd-fld')
-    } else if (e.target.parentNode.getAttribute('btcd-fld') != null) {
-      type = e.target.parentNode.getAttribute('btcd-fld')
-    } else if (e.target.parentNode.parentNode.getAttribute('btcd-fld') != null) {
-      type = e.target.parentNode.parentNode.getAttribute('btcd-fld')
-    } else if (e.target.parentNode.parentNode.parentNode.getAttribute('btcd-fld') != null) {
-      type = e.target.parentNode.parentNode.parentNode.getAttribute('btcd-fld')
-    } else if (e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-fld') != null) {
-      type = e.target.parentNode.parentNode.parentNode.parentNode.getAttribute('btcd-fld')
+    id = node.getAttribute('btcd-id')
+    for (let i = 0; i < node.children.length; i += 1) {
+      if (node.children[i].hasAttribute('btcd-fld')) {
+        type = node.children[i].getAttribute('btcd-fld')
+        break
+      }
     }
     this.props.getElmSettings(id, type)
   }
 
 
   changeDat() {
-    this.props.setData()
+    this.props.addData()
     /* this.setState(prvState => {
       const { data } = prvState
       data.blk_1[0].child = Math.random().toString()
@@ -105,7 +104,6 @@ export default class GridLayout extends React.PureComponent {
         data,
       }
     }) */
-    console.log(this.state.data, this.props.data);
     // this.forceUpdate()
   }
 
@@ -161,7 +159,7 @@ export default class GridLayout extends React.PureComponent {
           &times;
         </span>
         <span
-          style={{ right: 21, cursor: 'grab' }}
+          style={{ right: 22, cursor: 'grab' }}
           className="bit-blk-icn drag"
           role="button"
         >
@@ -174,7 +172,6 @@ export default class GridLayout extends React.PureComponent {
   }
 
   render() {
-    console.log('rendered', this.props.layout);
     const { lay } = this.state
     return (
       <div style={{ width: this.props.width }}>
@@ -192,7 +189,7 @@ export default class GridLayout extends React.PureComponent {
           droppingItem={this.props.draggedElm[1]}
           cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
           breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-          rowHeight={60}
+          rowHeight={40}
           width={this.props.width}
           isDroppable
           margin={[3, 3]}
