@@ -159,7 +159,7 @@ export default class GridLayout extends React.PureComponent {
           &times;
         </span>
         <span
-          style={{ right: 22, cursor: 'grab' }}
+          style={{ right: 22, cursor: 'move' }}
           className="bit-blk-icn drag"
           role="button"
         >
@@ -192,7 +192,7 @@ export default class GridLayout extends React.PureComponent {
           rowHeight={40}
           width={this.props.width}
           isDroppable
-          margin={[3, 3]}
+          margin={[0, 0]}
           draggableCancel=".no-drg"
           draggableHandle=".drag"
         >

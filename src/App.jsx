@@ -197,7 +197,7 @@ export default class App extends React.Component {
       <div className="App">
         <SplitPane
           split="vertical"
-          minSize={152}
+          minSize={175}
           maxSize={290}
           onChange={() => { }}
         >
