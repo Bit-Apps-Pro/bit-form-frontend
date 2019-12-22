@@ -163,7 +163,7 @@ export default class GridLayout extends React.PureComponent {
           className="bit-blk-icn drag"
           role="button"
         >
-          <img draggable="false" unselectable="on" src={moveIcon} alt="drag handle" />
+          <img draggable="false" unselectable="on" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
         </span>
         {this.state.data[item.i].map((i, idx) => createElement(i.tag,
           { key: idx, ...i.attr }, this.childGen(i.child)))}
