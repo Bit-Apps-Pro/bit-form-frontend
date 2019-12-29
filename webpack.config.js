@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env, argv) => {  
@@ -27,7 +26,6 @@ module.exports = (env, argv) => {
         chunks: ['webpackAssets'],
         // chunksSortMode: 'dependency'
     }),
-      new DynamicCdnWebpackPlugin(),
       new webpack.DefinePlugin({ "process.env.NODE_ENV": production ? JSON.stringify("developme"):JSON.stringify("production")})
     ],
     
