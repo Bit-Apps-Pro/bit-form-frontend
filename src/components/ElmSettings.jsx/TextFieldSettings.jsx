@@ -8,8 +8,8 @@ import MinMax from './Childs/MinMax'
 import MinMaxLength from './Childs/MinMaxLength'
 
 export default function TextFieldSettings(props) {
-  let isChecked = true
-  let isAutocomplete = true
+  let isChecked = false
+  let isAutocomplete = false
   let label = ''
   let placeholder = ''
   let min = 0
@@ -49,7 +49,6 @@ export default function TextFieldSettings(props) {
         minL = ''
       }
       if ('maxLength' in el.attr) {
-        console.log('max found', el.attr.maxL);
         maxL = el.attr.maxLength
       } else {
         maxL = ''
@@ -68,7 +67,7 @@ export default function TextFieldSettings(props) {
       <Label label={label} elm={props.elm} updateData={props.updateData} />
       <Placeholder placeholder={placeholder} elm={props.elm} updateData={props.updateData} />
       {type === 'number' && <MinMax min={min} max={max} elm={props.elm} updateData={props.updateData} />}
-      {type.match(/^(text|url|password|pineapple)$/) && <MinMaxLength minLength={minL} maxLength={maxL} elm={props.elm} updateData={props.updateData} />}
+      {type.match(/^(text|url|password)$/) && <MinMaxLength minLength={minL} maxLength={maxL} elm={props.elm} updateData={props.updateData} />}
     </div>
   )
 }
