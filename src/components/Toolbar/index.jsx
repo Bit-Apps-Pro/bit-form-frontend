@@ -309,7 +309,7 @@ export default function index(props) {
       <div className="toolBar">
         {tools.map(tool => (
           <Tools key={tool.name} setDrgElm={props.setDrgElm} value={[tool.elm, tool.pos]}>
-            <img draggable="false" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${tool.icn}.png` : `${tool.icn}`} alt={`${tool.name}-field`} className="tool-img" />
+            <img draggable="false" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${tool.icn}` : `${tool.icn}`} alt={`${tool.name}-field`} className="tool-img" />
             {tool.name}
           </Tools>
         ))}
