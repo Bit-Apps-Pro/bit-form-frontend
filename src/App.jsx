@@ -2,19 +2,20 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React from 'react'
-import SplitPane from 'react-split-pane'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import GridLayout from './components/GridLayout'
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 import ToolBar from './components/Toolbar'
 import ElementSettings from './components/ElmSettings.jsx'
+import './resource/js/custom'
 
 export default class App extends React.Component {
   col;
 
   constructor(props) {
     super(props)
+
     this.state = {
       forceRender: false,
       drgElm: ['', { h: 1, w: 1, i: '' }],
@@ -148,6 +149,7 @@ export default class App extends React.Component {
   }
 
   setDrgElm(el) {
+    console.log('set drag elm', el);
     this.setState({ drgElm: el })
   }
 
@@ -194,51 +196,39 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <SplitPane
-          split="vertical"
-          minSize={175}
-          maxSize={290}
-          onChange={() => { }}
-        >
-          <ToolBar setDrgElm={this.setDrgElm} className="tile" />
+      <div className="Btcd-App">
+        <Container style={this.containerStyle}>
+          <Section defaultSize={200} minSize={59} style={this.sectionStyle}>
+            <ToolBar setDrgElm={this.setDrgElm} className="tile" />
+          </Section>
+          <Bar className="bar" />
 
-          <div className="grid-lay-wrp">
-            <Container style={this.containerStyle}>
-              <Section defaultSize={0.1} style={this.sectionStyle} />
-              <Bar className="bar" />
+          <Section onSizeChanged={this.setGridWidth} minSize={320}>
+            <div className="layoutJSON">
+              Displayed as
+              <code>[x, y, w, h]</code>
+              :
+              <div className="columns">{this.stringifyLayout()}</div>
+            </div>
+            {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
+            <GridLayout
+              layout={this.state.layout}
+              setLayout={this.setLayout}
+              width={this.state.gridWidth}
+              onLayoutChange={this.onLayoutChange}
+              draggedElm={this.state.drgElm}
+              data={this.state.data}
+              addData={this.addData}
+              getElmSettings={this.getElmSettings}
+              reRender={this.state.forceRender}
+            />
+          </Section>
 
-              <Section onSizeChanged={this.setGridWidth} minSize={320}>
-                <div className="layoutJSON">
-                  Displayed as
-                  <code>[x, y, w, h]</code>
-                  :
-                  <div className="columns">{this.stringifyLayout()}</div>
-                </div>
-                {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
-                <GridLayout
-                  layout={this.state.layout}
-                  setLayout={this.setLayout}
-                  width={this.state.gridWidth}
-                  onLayoutChange={this.onLayoutChange}
-                  draggedElm={this.state.drgElm}
-                  data={this.state.data}
-                  addData={this.addData}
-                  getElmSettings={this.getElmSettings}
-                  reRender={this.state.forceRender}
-                />
-              </Section>
-
-              <Bar className="bar" />
-              <Section defaultSize={300} style={this.sectionStyle}>
-                <ElementSettings key="elm-settins1" elm={this.state.settings} updateData={this.updateData} />
-              </Section>
-            </Container>
-
-
-          </div>
-        </SplitPane>
-
+          <Bar className="bar" />
+          <Section defaultSize={300} style={this.sectionStyle}>
+            <ElementSettings key="elm-settins1" elm={this.state.settings} updateData={this.updateData} />
+          </Section>
+        </Container>
       </div>
     )
   }
