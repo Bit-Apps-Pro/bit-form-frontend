@@ -1,18 +1,9 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 export default function MinMaxLength(props) {
-  const [minLength, setMinLength] = useState(props.minLength)
-  const [maxLength, setMaxLength] = useState(props.maxLength)
-
-  useEffect(() => {
-    setMinLength(props.minLength)
-    setMaxLength(props.maxLength)
-  }, [props])
-
   const updateMinLength = e => {
     e.preventDefault()
-    setMinLength(e.target.value)
     props.elm.data.child.map(node => {
       if (node.tag === 'input') {
         node.attr.minLength = e.target.value
@@ -24,9 +15,9 @@ export default function MinMaxLength(props) {
     })
     props.updateData(props.elm)
   }
+
   const updateMaxLength = e => {
     e.preventDefault()
-    setMaxLength(e.target.value)
     props.elm.data.child.map(node => {
       if (node.tag === 'input') {
         node.attr.maxLength = e.target.value
@@ -38,16 +29,17 @@ export default function MinMaxLength(props) {
     })
     props.updateData(props.elm)
   }
+
   return (
     <div className="mt-3">
       <div className="flx">
         <div className="setting-inp ml-2">
           <span>Min Length:</span>
-          <input style={{ width: '70%' }} type="number" onChange={updateMinLength} value={minLength} />
+          <input style={{ width: '70%' }} type="number" onChange={updateMinLength} value={props.minLength} />
         </div>
         <div className="setting-inp">
           <span>Max Length:</span>
-          <input style={{ width: '70%' }} type="number" onChange={updateMaxLength} value={maxLength} />
+          <input style={{ width: '70%' }} type="number" onChange={updateMaxLength} value={props.maxLength} />
         </div>
       </div>
 

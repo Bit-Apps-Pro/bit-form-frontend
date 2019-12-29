@@ -5,7 +5,10 @@ import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import _ from 'lodash'
 import axios from 'axios';
+import SlimSelect from 'slim-select'
+import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
+
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
@@ -27,6 +30,26 @@ export default class GridLayout extends React.PureComponent {
     this.saveForm = this.saveForm.bind(this)
   }
 
+  componentDidUpdate() {
+    if (document.querySelector('.slim') != null) {
+      const allSel = document.querySelectorAll('select.slim')
+      for (let i = 0; i < allSel.length; i += 1) {
+        // eslint-disable-next-line no-unused-vars
+        const s = new SlimSelect({
+          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute('btcd-id')}"] > div > .slim`,
+          allowDeselect: true,
+          placeholder: allSel[i].getAttribute('placeholder'),
+          limit: Number(allSel[i].getAttribute('limit')),
+        })
+        if (allSel[i].nextSibling != null) {
+          if (allSel[i].hasAttribute('data-max-show')) {
+            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
+          }
+        }
+      }
+    }
+  }
+
   onAddItem() {
     this.setState(prvState => ({
       ...prvState,
@@ -37,7 +60,7 @@ export default class GridLayout extends React.PureComponent {
 
   onBreakpointChange(breakpoint, cols) {
     // unused
-    //this.setState({ breakpoint, cols })
+    // this.setState({ breakpoint, cols })
   }
 
   onLayoutChange(layout) {
@@ -52,8 +75,9 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onDrop = (elmPrms) => {
+    console.log('droped ')
     const { draggedElm } = this.props
-    const { w, h, minH, maxH } = draggedElm[1]
+    const { w, h, minH, maxH, minW } = draggedElm[1]
     const { x, y } = elmPrms
     this.props.addData(this.state.newCounter)
     this.setState(prvState => ({
@@ -61,7 +85,7 @@ export default class GridLayout extends React.PureComponent {
       data: {
         ...prvState.data, [`n_blk_${prvState.newCounter}`]: draggedElm[0],
       },
-      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH }),
+      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
       newCounter: prvState.newCounter + 1,
     }))
   }
@@ -82,7 +106,10 @@ export default class GridLayout extends React.PureComponent {
       node = e.target.parentNode.parentNode.parentNode.parentNode
     } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
       node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+    } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
+      node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
     }
+
     id = node.getAttribute('btcd-id')
     for (let i = 0; i < node.children.length; i += 1) {
       if (node.children[i].hasAttribute('btcd-fld')) {
@@ -90,9 +117,15 @@ export default class GridLayout extends React.PureComponent {
         break
       }
     }
+    if (type === 'select') {
+      const allSel = document.querySelectorAll('select')
+      for (let i = 0; i < allSel.length; i += 1) {
+        allSel[i].parentNode.parentNode.classList.remove('z-9')
+      }
+      node.classList.add('z-9')
+    }
     this.props.getElmSettings(id, type)
   }
-
 
   changeDat() {
     this.props.addData()
@@ -130,7 +163,12 @@ export default class GridLayout extends React.PureComponent {
     } if ((!!cld) && (cld.constructor === Object)) {
       return createElement(cld.tag, cld.attr, cld.child)
     } if ((!!cld) && (cld.constructor === Array)) {
-      return cld.map((item, idx) => createElement(item.tag, { key: idx, ...item.attr }, item.child))
+      return cld.map((itm, ind) => createElement(itm.tag, { key: ind, ...itm.attr }, this.childGen(itm.child)))
+      // return cld.map((itm, ind) => this.childGen(itm))
+      /* for (let cl of cld) {
+        console.log(cl)
+         this.childGen(cl)
+      } */
     }
     return null
   }
@@ -180,7 +218,7 @@ export default class GridLayout extends React.PureComponent {
         <button type="button" onClick={this.saveForm}>Save</button>
         <ResponsiveReactGridLayout
           className="layout"
-          style={{ height: 1000 }}
+          style={{ height: '100vh' }}
           // layouts={this.props.lay}
           onDrop={this.onDrop}
           compactType="vertical"

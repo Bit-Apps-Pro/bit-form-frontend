@@ -1,3 +1,4 @@
+/* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
 import React from 'react'
@@ -14,6 +15,10 @@ import week from '../../resource/img/week.png'
 import pswd from '../../resource/img/pswd.png'
 import clr from '../../resource/img/clr.png'
 import url from '../../resource/img/url.png'
+import blank from '../../resource/img/blank.png'
+import check from '../../resource/img/check.png'
+import radio from '../../resource/img/radio.png'
+import dropdown from '../../resource/img/dropdown.png'
 
 export default function index(props) {
   const tools = [
@@ -42,7 +47,85 @@ export default function index(props) {
           attr: { className: 'text-wrp drag', 'btcd-fld': 'textarea' },
           child: [
             { tag: 'label', attr: {}, child: 'Label' },
-            { tag: 'textarea', attr: { className: 'txt-a', placeholder: 'Placeholder text' }, child: null },
+            { tag: 'textarea', attr: { className: 'txt-a no-drg', placeholder: 'Placeholder text' }, child: null },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'Blank Block',
+      icn: blank,
+      pos: { h: 1, w: 1, i: 'block-5' },
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'blnk-blk drag' },
+          child: null,
+        },
+      ],
+    },
+    {
+      name: 'Check Box',
+      icn: check,
+      pos: { h: 2, w: 3, i: 'n_blk', minH: 2 },
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp drag', 'btcd-fld': 'ck' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Select Multiple Choises:' },
+            {
+              tag: 'div', attr: { className: 'no-drg btcd-ck-con' },
+              child: [
+                {
+                  tag: 'label', attr: { className: 'btcd-ck-wrp' }, child: [
+                    { tag: 'span', attr: null, child: 'Option 1' },
+                    { tag: 'input', attr: { type: 'checkbox' }, child: null },
+                    { tag: 'span', attr: { className: 'btcd-mrk ck' }, child: null },
+                  ],
+                },
+                {
+                  tag: 'label', attr: { className: 'btcd-ck-wrp' }, child: [
+                    { tag: 'span', attr: null, child: 'Option 2' },
+                    { tag: 'input', attr: { type: 'checkbox' }, child: null },
+                    { tag: 'span', attr: { className: 'btcd-mrk ck' }, child: null },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'Radio Button',
+      icn: radio,
+      pos: { h: 2, w: 3, i: 'n_blk', minH: 2 },
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp drag', 'btcd-fld': 'rdo' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Choose One Option:' },
+            {
+              tag: 'div', attr: { className: 'no-drg btcd-ck-con round' },
+              child: [
+                {
+                  tag: 'label', attr: { className: 'btcd-ck-wrp' }, child: [
+                    { tag: 'span', attr: null, child: 'Option 1' },
+                    { tag: 'input', attr: { type: 'radio' }, child: null },
+                    { tag: 'span', attr: { className: 'btcd-mrk rdo' }, child: null },
+                  ],
+                },
+                {
+                  tag: 'label', attr: { className: 'btcd-ck-wrp round' }, child: [
+                    { tag: 'span', attr: null, child: 'Option 2' },
+                    { tag: 'input', attr: { type: 'radio' }, child: null },
+                    { tag: 'span', attr: { className: 'btcd-mrk rdo' }, child: null },
+                  ],
+                },
+              ],
+            },
           ],
         },
       ],
@@ -62,6 +145,28 @@ export default function index(props) {
         },
       ],
     },
+    {
+      name: 'Drop Down',
+      icn: dropdown,
+      pos: { h: 2, w: 5, i: 'n_blk', minH: 2 },
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'text-wrp drag', 'btcd-fld': 'select' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Drop Down Select:' },
+            {
+              tag: 'select', attr: { className: 'txt-fld slim no-drg', placeholder: 'Select One' }, child: [
+                { tag: 'option', attr: { value: 'Option 1' }, child: 'option 1' },
+                { tag: 'option', attr: { value: 'Option 2' }, child: 'option 2' },
+                { tag: 'option', attr: { value: 'Option 3' }, child: 'option 3' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
     {
       name: 'Password:',
       icn: pswd,
