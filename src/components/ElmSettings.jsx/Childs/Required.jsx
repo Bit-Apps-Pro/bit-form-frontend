@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 export default function Required(props) {
-  const [isChecked, setisChecked] = useState(props.isChecked)
-
-  useEffect(() => {
-    setisChecked(props.isChecked)
-  }, [props])
-
   function onChecked() {
-    setisChecked(!isChecked)
     props.elm.data.child.map(node => {
       if (node.tag === props.tag) {
-        node.attr.required = !isChecked
+        node.attr.required = !props.isChecked
       }
       return null
     })
@@ -22,7 +15,7 @@ export default function Required(props) {
       <span>Required</span>
       <div className="onoffswitch">
         <input
-          checked={isChecked}
+          checked={props.isChecked}
           type="checkbox"
           name="onoffswitch"
           onChange={onChecked}

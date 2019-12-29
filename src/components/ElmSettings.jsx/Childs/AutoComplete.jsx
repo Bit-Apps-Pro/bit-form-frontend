@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 export default function AutoComplete(props) {
-  const [isAutocomplete, setisAutocomplete] = useState(props.isAutocomplete)
-  useEffect(() => {
-    setisAutocomplete(props.isAutocomplete)
-  }, [props])
   function onChecked() {
-    setisAutocomplete(!isAutocomplete)
     props.elm.data.child.map(node => {
       if (node.tag === props.tag) {
-        node.attr.autoComplete = isAutocomplete ? 'off' : 'on'
+        // eslint-disable-next-line no-param-reassign
+        node.attr.autoComplete = props.isAutocomplete ? 'off' : 'on'
       }
       return null
     })
@@ -20,7 +16,7 @@ export default function AutoComplete(props) {
       <span>Auto Complete</span>
       <div className="onoffswitch">
         <input
-          checked={isAutocomplete}
+          checked={props.isAutocomplete}
           type="checkbox"
           name="onoffswitch"
           onChange={onChecked}
