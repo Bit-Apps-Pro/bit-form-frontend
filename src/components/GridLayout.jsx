@@ -30,25 +30,7 @@ export default class GridLayout extends React.PureComponent {
     this.saveForm = this.saveForm.bind(this)
   }
 
-  componentDidUpdate() {
-    if (document.querySelector('.slim') != null) {
-      const allSel = document.querySelectorAll('select.slim')
-      for (let i = 0; i < allSel.length; i += 1) {
-        // eslint-disable-next-line no-unused-vars
-        const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute('btcd-id')}"] > div > .slim`,
-          allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        })
-        if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
-          }
-        }
-      }
-    }
-  }
+
 
   onAddItem() {
     this.setState(prvState => ({
@@ -64,6 +46,7 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onLayoutChange(layout) {
+    console.log('lay updated')
     this.props.onLayoutChange(layout, this.state.cols)
 
     // unused
@@ -213,11 +196,11 @@ export default class GridLayout extends React.PureComponent {
   render() {
     const { lay } = this.state
     return (
-      <div style={{ width: this.props.width }}>
+      <div onDragOver={e => e.preventDefault()} style={{ width: this.props.width }}>
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>
-        <div draggable onDragStart={e=> e.dataTransfer.setData('text/plain', 'sd') }>afasdfad</div>
+        <div draggable onDragStart={e => e.dataTransfer.setData('text/plain', 'sd')}>afasdfad</div>
         <ResponsiveReactGridLayout
           className="layout"
           style={{ height: '100vh' }}

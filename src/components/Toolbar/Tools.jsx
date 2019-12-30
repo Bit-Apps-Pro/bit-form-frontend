@@ -6,8 +6,7 @@ export default function Tools(props) {
       className="tools"
       draggable
       unselectable="on"
-      onDragStart={(e) => { e.dataTransfer.setData('text/plain', 'sd'); props.setDrgElm(props.value) }}
-      onDragOver={(e) => { e.dataTransfer.dropEffect = 'copy'; e.preventDefault() }}
+      onDragStart={(e) => { e.dataTransfer.setData('text/plain', ''); props.setDrgElm(props.value) }}
     >
       {props.children}
     </div>

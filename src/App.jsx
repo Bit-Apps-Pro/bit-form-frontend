@@ -143,15 +143,11 @@ export default class App extends React.Component {
   }
 
   getElmSettings(id, type) {
-    // console.log(id, type);
     // eslint-disable-next-line react/no-access-state-in-setstate
     this.setState({ settings: { id, type, data: this.state.data[id][0] } })
   }
 
   setDrgElm(el) {
-    console.log(el)
-    // e.dataTransfer.setData("text", "mydata");
-    console.log('set drag elm', el);
     this.setState({ drgElm: el })
   }
 
