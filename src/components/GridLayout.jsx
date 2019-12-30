@@ -75,7 +75,7 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onDrop = (elmPrms) => {
-    console.log('droped ')
+    console.log('droped ', elmPrms)
     const { draggedElm } = this.props
     const { w, h, minH, maxH, minW } = draggedElm[1]
     const { x, y } = elmPrms
@@ -88,6 +88,7 @@ export default class GridLayout extends React.PureComponent {
       lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
       newCounter: prvState.newCounter + 1,
     }))
+    //event.preventDefault();
   }
 
   getElmProp(e) {
@@ -216,12 +217,12 @@ export default class GridLayout extends React.PureComponent {
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>
+        <div draggable onDragStart={e=> e.dataTransfer.setData('text/plain', 'sd') }>afasdfad</div>
         <ResponsiveReactGridLayout
           className="layout"
           style={{ height: '100vh' }}
           // layouts={this.props.lay}
           onDrop={this.onDrop}
-          compactType="vertical"
           onLayoutChange={this.onLayoutChange}
           onBreakpointChange={this.onBreakpointChange}
           droppingItem={this.props.draggedElm[1]}
@@ -233,6 +234,8 @@ export default class GridLayout extends React.PureComponent {
           margin={[0, 0]}
           draggableCancel=".no-drg"
           draggableHandle=".drag"
+          useCSSTransforms
+          transformScale={1}
         >
           {this.createElm(lay)}
         </ResponsiveReactGridLayout>

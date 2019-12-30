@@ -149,6 +149,8 @@ export default class App extends React.Component {
   }
 
   setDrgElm(el) {
+    console.log(el)
+    // e.dataTransfer.setData("text", "mydata");
     console.log('set drag elm', el);
     this.setState({ drgElm: el })
   }

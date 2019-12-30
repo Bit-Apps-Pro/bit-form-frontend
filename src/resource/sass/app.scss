@@ -317,7 +317,7 @@ li b {
 
 .bar {
   background: #f3f3f3;
-  width: 10px;
+  width: 8px;
   cursor: col-resize;
 
   &::before {
@@ -342,6 +342,7 @@ li b {
   }
 
   &:hover {
+    width:10px;
     background: #c0c0c0;
   }
 }
