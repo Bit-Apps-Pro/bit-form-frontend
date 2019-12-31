@@ -30,6 +30,25 @@ export default class GridLayout extends React.PureComponent {
     this.saveForm = this.saveForm.bind(this)
   }
 
+  componentDidUpdate() {
+    if (document.querySelector('.slim') != null) {
+      const allSel = document.querySelectorAll('select.slim')
+      for (let i = 0; i < allSel.length; i += 1) {
+        // eslint-disable-next-line no-unused-vars
+        const s = new SlimSelect({
+          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute('btcd-id')}"] > div > .slim`,
+          allowDeselect: true,
+          placeholder: allSel[i].getAttribute('placeholder'),
+          limit: Number(allSel[i].getAttribute('limit')),
+        })
+        if (allSel[i].nextSibling != null) {
+          if (allSel[i].hasAttribute('data-max-show')) {
+            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
+          }
+        }
+      }
+    }
+  }
 
 
   onAddItem() {
@@ -185,7 +204,7 @@ export default class GridLayout extends React.PureComponent {
           className="bit-blk-icn drag"
           role="button"
         >
-          <img draggable="false" unselectable="on" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
+          <img  className="unselectable" draggable="false"  unselectable="on" onDragStart={e=> false} src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
         </span>
         {this.state.data[item.i].map((i, idx) => createElement(i.tag,
           { key: idx, ...i.attr }, this.childGen(i.child)))}
