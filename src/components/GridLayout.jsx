@@ -15,10 +15,11 @@ export default class GridLayout extends React.PureComponent {
     super(props)
 
     this.state = {
-      newCounter: 0,
+      newCounter: props.newCounter,
       breakpoint: 'md',
       data: props.data,
       lay: props.layout,
+      forceRender: props.forceRender
     }
 
     this.onAddItem = this.onAddItem.bind(this)
@@ -52,10 +53,27 @@ export default class GridLayout extends React.PureComponent {
 
 
   onAddItem() {
-    this.setState(prvState => ({
+    console.log('item add')
+    /* this.setState(prvState => ({
       ...prvState,
       lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: 4, y: 0, w: 2, h: 2 }),
       newCounter: prvState.newCounter + 1,
+    })) */
+    this.setState(prvState => ({
+      ...prvState,
+      forceRender: !prvState.forceRender,
+      lay: prvState.lay.concat({ i: 'n_blk_4', x: 0, y: 0, w: 2, h: 2 }),
+      data: {
+        ...prvState.data,
+        n_blk_4: [{
+          tag: 'div',
+          attr: { className: 'text-wrp drag', 'btcd-fld': 'date' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Week:' },
+            { tag: 'input', attr: { className: 'no-drg', type: 'week' }, child: null },
+          ],
+        }],
+      },
     }))
   }
 
@@ -65,7 +83,6 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onLayoutChange(layout) {
-    console.log('lay updated')
     this.props.onLayoutChange(layout, this.state.cols)
 
     // unused
@@ -77,20 +94,21 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onDrop = (elmPrms) => {
-    console.log('droped ', elmPrms)
+    // console.log('droped ', elmPrms)
     const { draggedElm } = this.props
     const { w, h, minH, maxH, minW } = draggedElm[1]
     const { x, y } = elmPrms
-    this.props.addData(this.state.newCounter)
+    const newBlk = `n_blk_${this.state.newCounter}`
+    // setting data in parent state
+    this.props.addData(this.state.newCounter, { i: newBlk, x, y, w, h, minH, maxH, minW })
     this.setState(prvState => ({
       ...prvState,
       data: {
-        ...prvState.data, [`n_blk_${prvState.newCounter}`]: draggedElm[0],
+        ...prvState.data, [newBlk]: draggedElm[0],
       },
-      lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
+      lay: prvState.lay.concat({ i: newBlk, x, y, w, h, minH, maxH, minW }),
       newCounter: prvState.newCounter + 1,
     }))
-    //event.preventDefault();
   }
 
   getElmProp(e) {
@@ -204,7 +222,7 @@ export default class GridLayout extends React.PureComponent {
           className="bit-blk-icn drag"
           role="button"
         >
-          <img  className="unselectable" draggable="false"  unselectable="on" onDragStart={e=> false} src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
+          <img className="unselectable" draggable="false" unselectable="on" onDragStart={() => false} src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
         </span>
         {this.state.data[item.i].map((i, idx) => createElement(i.tag,
           { key: idx, ...i.attr }, this.childGen(i.child)))}
@@ -212,35 +230,51 @@ export default class GridLayout extends React.PureComponent {
     ))
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // console.log('get derive',nextProps, prevState)
+    // console.log('get derive', nextProps.forceRender, prevState.forceRender)
+    if (nextProps.forceRender !== prevState.forceRender) {
+      return {
+        lay: nextProps.layout,
+        data: nextProps.data,
+        newCounter: nextProps.newCounter,
+        forceRender: !prevState.forceRender,
+      }
+    }
+    return null
+  }
+
   render() {
     const { lay } = this.state
     return (
-      <div onDragOver={e => e.preventDefault()} style={{ width: this.props.width }}>
+      <div /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{ width: this.props.width,background:'aliceblue' }}>
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
+        <button onClick={this.onAddItem}>Add</button>
         <button type="button" onClick={this.saveForm}>Save</button>
-        <div draggable onDragStart={e => e.dataTransfer.setData('text/plain', 'sd')}>afasdfad</div>
-        <ResponsiveReactGridLayout
-          className="layout"
-          style={{ height: '100vh' }}
-          // layouts={this.props.lay}
-          onDrop={this.onDrop}
-          onLayoutChange={this.onLayoutChange}
-          onBreakpointChange={this.onBreakpointChange}
-          droppingItem={this.props.draggedElm[1]}
-          cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-          breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-          rowHeight={40}
-          width={this.props.width}
-          isDroppable
-          margin={[0, 0]}
-          draggableCancel=".no-drg"
-          draggableHandle=".drag"
-          useCSSTransforms
-          transformScale={1}
-        >
-          {this.createElm(lay)}
-        </ResponsiveReactGridLayout>
+        <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+          <ResponsiveReactGridLayout
+            className="layout"
+            style={{ height: '100vh' }}
+            // layouts={this.props.lay}
+            onDrop={this.onDrop}
+            onLayoutChange={this.onLayoutChange}
+            onBreakpointChange={this.onBreakpointChange}
+            droppingItem={this.props.draggedElm[1]}
+            cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+            breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+            rowHeight={40}
+            width={this.props.width}
+            margin={[0, 0]}
+            draggableCancel=".no-drg"
+            draggableHandle=".drag"
+            isDroppable
+            useCSSTransforms
+            transformScale={1}
+          >
+            {this.createElm(lay)}
+          </ResponsiveReactGridLayout>
+        </div>
       </div>
     )
   }
