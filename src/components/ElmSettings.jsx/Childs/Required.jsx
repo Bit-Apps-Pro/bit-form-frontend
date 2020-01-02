@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react'
 
 export default function Required(props) {
   function onChecked() {
     props.elm.data.child.map(node => {
       if (node.tag === props.tag) {
+        // eslint-disable-next-line no-param-reassign
         node.attr.required = !props.isChecked
       }
       return null

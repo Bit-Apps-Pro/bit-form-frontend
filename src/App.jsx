@@ -147,7 +147,7 @@ export default class App extends React.Component {
     // console.log('droped ', elmPrms)
     const { w, h, minH, maxH, minW } = elm[1]
     const x = 0
-    const y = 0
+    const y = Infinity
     // setting data in parent state
     this.setState(prvState => ({
       ...prvState,
@@ -202,7 +202,7 @@ export default class App extends React.Component {
     return this.state.layout.map((l) => (
       <div className="layoutItem" key={l.i}>
         <b>{l.i}</b>:[{l.x}, {l.y}, {l.w}, {l.h}]
-        </div>
+      </div>
     ));
   }
 
@@ -216,7 +216,6 @@ export default class App extends React.Component {
           <Bar className="bar" />
 
           <Section onSizeChanged={this.setGridWidth} minSize={320} defaultSize={800}>
-            <h4>{this.state.newCounter} {this.state.forceRender.toString()}</h4>
             <div className="layoutJSON">
               Displayed as
               <code>[x, y, w, h]</code>
@@ -224,7 +223,6 @@ export default class App extends React.Component {
               <div className="columns">{this.stringifyLayout()}</div>
             </div>
             {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
-            <button onClick={this.onAddItem}>add</button>
             <GridLayout
               newCounter={this.state.newCounter}
               onAddItem={this.onAddItem}

@@ -148,19 +148,6 @@ export default class GridLayout extends React.PureComponent {
     this.props.getElmSettings(id, type)
   }
 
-  changeDat() {
-    this.props.addData()
-    /* this.setState(prvState => {
-      const { data } = prvState
-      data.blk_1[0].child = Math.random().toString()
-      return {
-        ...prvState,
-        data,
-      }
-    }) */
-    // this.forceUpdate()
-  }
-
   saveForm() {
     console.log('bits.nonce: ', bits.ajaxURL)
     axios.post(bits.ajaxURL, null, {
@@ -244,13 +231,26 @@ export default class GridLayout extends React.PureComponent {
     return null
   }
 
+  changeDat() {
+    this.props.addData()
+    /* this.setState(prvState => {
+      const { data } = prvState
+      data.blk_1[0].child = Math.random().toString()
+      return {
+        ...prvState,
+        data,
+      }
+    }) */
+    // this.forceUpdate()
+  }
+
+
   render() {
     const { lay } = this.state
     return (
-      <div /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{ width: this.props.width,background:'aliceblue' }}>
+      <div /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{ width: this.props.width, background: 'aliceblue' }}>
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
-        <button onClick={this.onAddItem}>Add</button>
         <button type="button" onClick={this.saveForm}>Save</button>
         <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
           <ResponsiveReactGridLayout
