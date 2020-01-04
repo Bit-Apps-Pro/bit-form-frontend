@@ -152,7 +152,7 @@ export default class GridLayout extends React.PureComponent {
     console.log('bits.nonce: ', bits.ajaxURL)
     axios.post(bits.ajaxURL, null, {
       params: {
-        action: 'bitform_save_form',
+        action: 'bitapps_save_form',
         _ajax_nonce: bits.nonce,
         lastName: 'Flintstone',
       },
