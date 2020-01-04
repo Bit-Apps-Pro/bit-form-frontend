@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
         chunks: ['webpackAssets'],
         // chunksSortMode: 'dependency'
     }),
-      new webpack.DefinePlugin({ "process.env.NODE_ENV": production ? JSON.stringify("developme"):JSON.stringify("production")})
+      new webpack.DefinePlugin({ "process.env.NODE_ENV": production ? JSON.stringify("development"):JSON.stringify("production")})
     ],
     
     devtool: production ? '' : 'source-map',
@@ -48,7 +48,12 @@ module.exports = (env, argv) => {
                 "@babel/preset-env",
                 {
                   targets: {
-                    browsers: "> 2%"
+                    browsers: [
+                      ">0.2%",
+                      "ie 11",
+                      "not dead",
+                      "not op_mini all"
+                    ]
                   }
                 }
               ]
@@ -57,7 +62,7 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s[ac]ss|css)$/i,
           use: ['style-loader', 'css-loader','sass-loader',],
         },
         {

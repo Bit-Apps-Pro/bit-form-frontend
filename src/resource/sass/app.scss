@@ -7,6 +7,15 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */
 }
+.unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
 
 //scroll bar style start
 ::-webkit-scrollbar {
@@ -113,7 +122,8 @@ $prim : #99e3ff;
   box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.5);
   transition: all 200ms;
 
-  &:hover {
+  &:hover,&:focus {
+    outline: none;
     box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.16), 0 3px 5px rgba(0, 0, 0, 0.15);
   }
 }
@@ -317,24 +327,17 @@ li b {
 
 .bar {
   background: #f3f3f3;
-  width: 10px;
+  width: 8px;
   cursor: col-resize;
 
   &::before {
-    content: "\025AA \025AA \025AA";
-    width: 13px;
-    border-radius: 20px;
-    border: 2px solid;
+    content: "\02551";
     height: 64px;
-    background: #f7f7f7;
-    color: gray;
+    color: rgb(168, 168, 168);
     position: absolute;
     top: 47vh;
     text-align: center;
-    text-orientation: mixed;
-    left: -3px;
-    writing-mode: vertical-lr;
-    line-height: 12px;
+    left: -2px;
   }
 
   &:hover::before {
@@ -342,7 +345,9 @@ li b {
   }
 
   &:hover {
-    background: #c0c0c0;
+    width:8px;
+    border: 1px solid #cfcfcf;
+    background: #cfcfcf;
   }
 }
 
@@ -617,12 +622,14 @@ li b {
   width: 20px;
   height: 20px;
   margin: -1px;
-  background: #A1A1A1;
+  background: rgb(235,235,235);
+background: linear-gradient(0deg, rgba(235,235,235,1) 0%, rgba(247,247,247,1) 100%);
   position: absolute;
   top: 0;
   bottom: 0;
   right: 32px;
   border-radius: 50px;
+  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.24);
   transition: all 0.3s ease-in 0s;
 }
 
@@ -632,7 +639,10 @@ li b {
 
 .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
   right: 0px;
-  background-color: #15D655;
+  box-shadow: -1px 1px 1px 0px rgba(0,0,0,0.24);
+  /* background-color: #15D655; */
+  background: rgb(6,241,37);
+background: linear-gradient(0deg, rgba(6,241,37,1) 0%, rgba(145,255,175,1) 100%);
 }
 
 // toogle handle end

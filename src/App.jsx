@@ -17,12 +17,13 @@ export default class App extends React.Component {
     super(props)
 
     this.state = {
+      newCounter: 0,
       forceRender: false,
       drgElm: ['', { h: 1, w: 1, i: '' }],
-      gridWidth: 1100,
+      gridWidth: 1000,
       settings: { id: null, type: null, data: null },
       layout: [
-        { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
+        /* { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
         { i: 'blk_2', x: 1, y: 0, w: 1, h: 2 },
         { i: 'blk_3', x: 2, y: 0, w: 1, h: 2 },
         { i: 'blk_4', x: 3, y: 0, w: 1, h: 2 },
@@ -31,11 +32,10 @@ export default class App extends React.Component {
         { i: 'blk_7', x: 6, y: 0, w: 1, h: 2 },
         { i: 'blk_8', x: 7, y: 0, w: 1, h: 2 },
         { i: 'blk_9', x: 8, y: 0, w: 1, h: 2 },
-        { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 },
+        { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 }, */
       ],
       data: {
         blk_1: [
-
           {
             tag: 'label',
             attr: {},
@@ -85,6 +85,7 @@ export default class App extends React.Component {
     this.getElmSettings = this.getElmSettings.bind(this)
     this.addData = this.addData.bind(this)
     this.updateData = this.updateData.bind(this)
+    this.onAddItem = this.onAddItem.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -142,14 +143,31 @@ export default class App extends React.Component {
     this.setState({ layout })
   }
 
+  onAddItem(elm) {
+    // console.log('droped ', elmPrms)
+    const { w, h, minH, maxH, minW } = elm[1]
+    const x = 0
+    const y = Infinity
+    // setting data in parent state
+    this.setState(prvState => ({
+      ...prvState,
+      data: {
+        ...prvState.data, [`n_blk_${prvState.newCounter}`]: elm[0],
+      },
+      layout: prvState.layout.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
+      newCounter: prvState.newCounter + 1,
+      forceRender: !prvState.forceRender,
+    }))
+  }
+
   getElmSettings(id, type) {
-    // console.log(id, type);
+    console.log(id, this.state.data, this.state.layout)
     // eslint-disable-next-line react/no-access-state-in-setstate
     this.setState({ settings: { id, type, data: this.state.data[id][0] } })
   }
 
+
   setDrgElm(el) {
-    console.log('set drag elm', el);
     this.setState({ drgElm: el })
   }
 
@@ -157,20 +175,14 @@ export default class App extends React.Component {
     this.setState({ gridWidth: w - 10 })
   }
 
-  addData(counter) {
-    /*  this.setState(prvState => {
-       const { data } = prvState
-       data.blk_1[0].child = Math.random().toString()
-       return {
-         ...prvState,
-         data,
-       }
-     }) */
+  addData(counter, newLayBlk) {
     this.setState(prvState => ({
       ...prvState,
       data: {
         ...prvState.data, [`n_blk_${counter}`]: prvState.drgElm[0],
       },
+      layout: prvState.layout.concat(newLayBlk),
+      newCounter: counter + 1,
     }))
   }
 
@@ -199,11 +211,11 @@ export default class App extends React.Component {
       <div className="Btcd-App">
         <Container style={this.containerStyle}>
           <Section defaultSize={200} minSize={59} style={this.sectionStyle}>
-            <ToolBar setDrgElm={this.setDrgElm} className="tile" />
+            <ToolBar setDrgElm={this.setDrgElm} onAddItem={this.onAddItem} className="tile" />
           </Section>
           <Bar className="bar" />
 
-          <Section onSizeChanged={this.setGridWidth} minSize={320}>
+          <Section onSizeChanged={this.setGridWidth} minSize={320} defaultSize={800}>
             <div className="layoutJSON">
               Displayed as
               <code>[x, y, w, h]</code>
@@ -212,6 +224,8 @@ export default class App extends React.Component {
             </div>
             {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
             <GridLayout
+              newCounter={this.state.newCounter}
+              onAddItem={this.onAddItem}
               layout={this.state.layout}
               setLayout={this.setLayout}
               width={this.state.gridWidth}
@@ -220,7 +234,7 @@ export default class App extends React.Component {
               data={this.state.data}
               addData={this.addData}
               getElmSettings={this.getElmSettings}
-              reRender={this.state.forceRender}
+              forceRender={this.state.forceRender}
             />
           </Section>
 
