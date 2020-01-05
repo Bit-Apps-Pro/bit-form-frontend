@@ -154,7 +154,8 @@ export default class GridLayout extends React.PureComponent {
       params: {
         action: 'bitapps_save_form',
         _ajax_nonce: bits.nonce,
-        lastName: 'Flintstone',
+        fields: this.state.lay,
+        field_data: this.state.data
       },
     }).then((response) => {
       console.log(response)

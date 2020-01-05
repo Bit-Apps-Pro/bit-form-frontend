@@ -35,7 +35,7 @@ export default class App extends React.Component {
         { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 }, */
       ],
       data: {
-        blk_1: [
+        /* blk_1: [
           {
             tag: 'label',
             attr: {},
@@ -76,7 +76,7 @@ export default class App extends React.Component {
         blk_7: [],
         blk_8: [],
         blk_9: [],
-        blk_10: [],
+        blk_10: [], */
       },
     }
     this.onLayoutChange = this.onLayoutChange.bind(this)
