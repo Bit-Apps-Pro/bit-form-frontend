@@ -6,8 +6,10 @@ import DateSettings from './DateSettings'
 import CheckBox from './CheckBox'
 import RadioBtn from './RadioBtn'
 import Select from './Select'
+import FileUploadSettings from './FileUploadSettings'
 
 export default function index(props) {
+
   const renderSettings = (type) => {
     switch (type) {
       case 'text-fld':
@@ -22,6 +24,8 @@ export default function index(props) {
         return <RadioBtn elm={props.elm} updateData={props.updateData} />
       case 'select':
         return <Select elm={props.elm} updateData={props.updateData} />
+      case 'file-up':
+        return <FileUploadSettings elm={props.elm} updateData={props.updateData} />
       default:
         return ''
     }

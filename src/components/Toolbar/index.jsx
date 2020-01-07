@@ -19,19 +19,20 @@ import blank from '../../resource/img/blank.png'
 import check from '../../resource/img/check.png'
 import radio from '../../resource/img/radio.png'
 import dropdown from '../../resource/img/dropdown.png'
+import { setPrevData, handleFile } from '../../resource/js/file-upload'
 
 export default function index(props) {
   const tools = [
     {
       name: 'Text Field',
       icn: textField,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
           attr: { className: 'text-wrp drag', 'btcd-fld': 'text-fld' },
           child: [
-            { tag: 'label', attr: {}, child: 'Label' },
+            { tag: 'label', attr: {}, child: 'Text Here:' },
             { tag: 'input', attr: { className: 'txt-fld no-drg', type: 'text', placeholder: 'Placeholder text' }, child: null },
           ],
         },
@@ -40,13 +41,13 @@ export default function index(props) {
     {
       name: 'Multiline Text',
       icn: multilineText,
-      pos: { h: 3, w: 5, i: 'block-5' },
+      pos: { h: 3, w: 10, i: 'block-5' },
       elm: [
         {
           tag: 'div',
           attr: { className: 'text-wrp drag', 'btcd-fld': 'textarea' },
           child: [
-            { tag: 'label', attr: {}, child: 'Label' },
+            { tag: 'label', attr: {}, child: 'Text Here:' },
             { tag: 'textarea', attr: { className: 'txt-a no-drg', placeholder: 'Placeholder text' }, child: null },
           ],
         },
@@ -55,7 +56,7 @@ export default function index(props) {
     {
       name: 'Blank Block',
       icn: blank,
-      pos: { h: 1, w: 1, i: 'block-5' },
+      pos: { h: 2, w: 2, i: 'block-5' },
       elm: [
         {
           tag: 'div',
@@ -67,7 +68,7 @@ export default function index(props) {
     {
       name: 'Check Box',
       icn: check,
-      pos: { h: 2, w: 3, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 5, i: 'n_blk', minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -100,7 +101,7 @@ export default function index(props) {
     {
       name: 'Radio Button',
       icn: radio,
-      pos: { h: 2, w: 3, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 5, i: 'n_blk', minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -133,13 +134,13 @@ export default function index(props) {
     {
       name: 'Number Field',
       icn: numberField,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
           attr: { className: 'text-wrp drag', 'btcd-fld': 'text-fld' },
           child: [
-            { tag: 'label', attr: {}, child: 'Number' },
+            { tag: 'label', attr: {}, child: 'Number:' },
             { tag: 'input', attr: { className: 'txt-fld no-drg', placeholder: 'Placeholder Number', type: 'number' }, child: null },
           ],
         },
@@ -166,11 +167,10 @@ export default function index(props) {
         },
       ],
     },
-
     {
       name: 'Password:',
       icn: pswd,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -185,7 +185,7 @@ export default function index(props) {
     {
       name: 'Email Field',
       icn: emailField,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -200,7 +200,7 @@ export default function index(props) {
     {
       name: 'URL Field',
       icn: url,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -213,9 +213,45 @@ export default function index(props) {
       ],
     },
     {
+      name: 'File Upload',
+      icn: url,
+      pos: { h: 2, w: 10, i: 'n_blk', minH: 2, minW: 3 },
+      elm: [
+        {
+          tag: 'div',
+          attr: { className: 'file-wrp drag', 'btcd-fld': 'file-up' },
+          child: [
+            { tag: 'label', attr: {}, child: 'Upload File Here:' },
+            {
+              tag: 'div',
+              attr: { className: 'btcd-f-input' },
+              child: [
+                {
+                  tag: 'div',
+                  attr: { className: 'btcd-f-wrp' },
+                  child: [
+                    {
+                      tag: 'button', attr: { className: 'btcd-inpBtn', type: 'button' }, child: [
+                        { tag: 'img', attr: { src: '', alt: '' }, child: null },
+                        { tag: 'span', attr: {}, child: ' Attach File' },
+                      ],
+                    },
+                    { tag: 'span', attr: { className: 'btcd-f-title' }, child: 'No File Chosen' },
+                    { tag: 'small', attr: { className: 'f-max' }, child: ' (Max 5 MB)' },
+                    { tag: 'input', attr: { type: 'file', onClick: e => setPrevData(e), onChange: e => handleFile(e) }, child: null },
+                  ],
+                },
+                { tag: 'div', attr: { className: 'btcd-files' }, child: null },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
       name: 'Date Field',
       icn: date,
-      pos: { h: 2, w: 2, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 4, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -230,7 +266,7 @@ export default function index(props) {
     {
       name: 'Time Field',
       icn: time,
-      pos: { h: 2, w: 2, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 4, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -245,7 +281,7 @@ export default function index(props) {
     {
       name: 'Date-Time Field',
       icn: dateTime,
-      pos: { h: 2, w: 2, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -260,7 +296,7 @@ export default function index(props) {
     {
       name: 'Month Field',
       icn: month,
-      pos: { h: 2, w: 2, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -275,7 +311,7 @@ export default function index(props) {
     {
       name: 'Week Field',
       icn: week,
-      pos: { h: 2, w: 2, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -290,7 +326,7 @@ export default function index(props) {
     {
       name: 'Color Picker',
       icn: clr,
-      pos: { h: 2, w: 2, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',

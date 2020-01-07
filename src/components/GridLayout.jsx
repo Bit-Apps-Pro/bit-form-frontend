@@ -9,7 +9,6 @@ import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 
-
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -19,7 +18,7 @@ export default class GridLayout extends React.PureComponent {
       breakpoint: 'md',
       data: props.data,
       lay: props.layout,
-      forceRender: props.forceRender
+      forceRender: props.forceRender,
     }
 
     this.onAddItem = this.onAddItem.bind(this)
@@ -32,6 +31,7 @@ export default class GridLayout extends React.PureComponent {
   }
 
   componentDidUpdate() {
+    // slim init
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
@@ -48,6 +48,13 @@ export default class GridLayout extends React.PureComponent {
           }
         }
       }
+    }
+
+    // attach icon file
+    const fInputs = document.querySelectorAll('.btcd-f-input>div>input')
+    // eslint-disable-next-line no-restricted-syntax
+    for (const inp of fInputs) {
+      inp.parentNode.querySelector('.btcd-inpBtn>img').src = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4='
     }
   }
 
@@ -84,7 +91,6 @@ export default class GridLayout extends React.PureComponent {
 
   onLayoutChange(layout) {
     this.props.onLayoutChange(layout, this.state.cols)
-
     // unused
     // this.setState({ layout })
   }
@@ -149,7 +155,8 @@ export default class GridLayout extends React.PureComponent {
   }
 
   saveForm() {
-    console.log('bits.nonce: ', bits.ajaxURL)
+    console.log(this.props.layout)
+    //console.log('bits.nonce: ', bits.ajaxURL)
     axios.post(bits.ajaxURL, null, {
       params: {
         action: 'bitform_save_form',
@@ -248,7 +255,7 @@ export default class GridLayout extends React.PureComponent {
   render() {
     const { lay } = this.state
     return (
-      <div /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{ width: this.props.width, background: 'aliceblue' }}>
+      <div style={{ width: this.props.width, background: 'aliceblue' }}>
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>

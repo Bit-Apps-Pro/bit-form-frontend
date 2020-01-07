@@ -161,7 +161,6 @@ export default class App extends React.Component {
   }
 
   getElmSettings(id, type) {
-    console.log(id, this.state.data, this.state.layout)
     // eslint-disable-next-line react/no-access-state-in-setstate
     this.setState({ settings: { id, type, data: this.state.data[id][0] } })
   }
