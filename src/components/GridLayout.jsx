@@ -4,7 +4,6 @@
 import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import _ from 'lodash'
-import axios from 'axios';
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
@@ -28,7 +27,6 @@ export default class GridLayout extends React.PureComponent {
     this.changeDat = this.changeDat.bind(this)
     this.childGen = this.childGen.bind(this)
     this.getElmProp = this.getElmProp.bind(this)
-    this.saveForm = this.saveForm.bind(this)
   }
 
   componentDidUpdate() {
@@ -148,22 +146,6 @@ export default class GridLayout extends React.PureComponent {
     this.props.getElmSettings(id, type)
   }
 
-  saveForm() {
-    console.log('bits.nonce: ', bits.ajaxURL)
-    axios.post(bits.ajaxURL, null, {
-      params: {
-        action: 'bitapps_save_form',
-        _ajax_nonce: bits.nonce,
-        fields: this.state.lay,
-        field_data: this.state.data
-      },
-    }).then((response) => {
-      console.log(response)
-    }).catch(error => {
-      console.log('error', error);
-    })
-  }
-
   childGen(cld) {
     if (cld === null) {
       return null
@@ -252,7 +234,6 @@ export default class GridLayout extends React.PureComponent {
       <div /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{ width: this.props.width, background: 'aliceblue' }}>
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
         <button type="button" onClick={this.changeDat}>change data</button>
-        <button type="button" onClick={this.saveForm}>Save</button>
         <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
           <ResponsiveReactGridLayout
             className="layout"

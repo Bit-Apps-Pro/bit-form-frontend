@@ -9,6 +9,7 @@ import './resource/sass/components.scss'
 import ToolBar from './components/Toolbar'
 import ElementSettings from './components/ElmSettings.jsx'
 import './resource/js/custom'
+import axios from 'axios'
 
 export default class App extends React.Component {
   col;
@@ -86,6 +87,7 @@ export default class App extends React.Component {
     this.addData = this.addData.bind(this)
     this.updateData = this.updateData.bind(this)
     this.onAddItem = this.onAddItem.bind(this)
+    this.saveForm = this.saveForm.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -206,6 +208,26 @@ export default class App extends React.Component {
     ));
   }
 
+  saveForm(lay) {
+    console.log('bits.nonce: ', bits.ajaxURL)
+    axios.post(bits.ajaxURL, {
+      fields: this.state.layout,
+      field_data: this.state.data
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    params : {      
+      action: 'bitapps_save_form',
+      _ajax_nonce: bits.nonce,
+    }
+    }).then((response) => {
+      console.log(response)
+    }).catch(error => {
+      console.log('error', error);
+    })
+  }
+
   render() {
     return (
       <div className="Btcd-App">
@@ -222,6 +244,8 @@ export default class App extends React.Component {
               :
               <div className="columns">{this.stringifyLayout()}</div>
             </div>
+            
+        <button type="button" onClick={()=>this.saveForm(this.state.layout)}>Save</button>
             {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
             <GridLayout
               newCounter={this.state.newCounter}
