@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
-
+/* eslint-disable no-undef */
 import React from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import GridLayout from './components/GridLayout'
