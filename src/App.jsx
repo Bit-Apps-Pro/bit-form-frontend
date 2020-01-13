@@ -88,6 +88,7 @@ export default class App extends React.Component {
     this.updateData = this.updateData.bind(this)
     this.onAddItem = this.onAddItem.bind(this)
     this.saveForm = this.saveForm.bind(this)
+    this.getTemplate = this.getTemplate.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -227,6 +228,22 @@ export default class App extends React.Component {
       console.log('error', error);
     })
   }
+  getTemplate() {
+    console.log('bits.nonce: ', bits.ajaxURL)
+    axios.post(bits.ajaxURL, null, {
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    params : {
+      action: 'bitapps_templates',
+      _ajax_nonce: bits.nonce,
+    }
+    }).then((response) => {
+      console.log(response)
+    }).catch(error => {
+      console.log('error', error);
+    })
+  }
 
   render() {
     return (
@@ -246,6 +263,7 @@ export default class App extends React.Component {
             </div>
             
         <button type="button" onClick={()=>this.saveForm(this.state.layout)}>Save</button>
+        <button type="button" onClick={this.getTemplate}>Templates</button>
             {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
             <GridLayout
               newCounter={this.state.newCounter}
