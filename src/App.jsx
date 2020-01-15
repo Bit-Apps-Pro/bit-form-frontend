@@ -1,18 +1,24 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-undef */
 import React from 'react'
-import { Container, Section, Bar } from 'react-simple-resizer'
-import GridLayout from './components/GridLayout'
+import { Router, Link } from '@reach/router'
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
-import ToolBar from './components/Toolbar'
-import ElementSettings from './components/ElmSettings.jsx'
+// import './resource/icons/style.css'
 import './resource/js/custom'
-import axios from 'axios'
+import Builder from './pages/Builder'
+import AllForms from './pages/AllForms'
+
+const Dashboard = () => (
+  <div>
+    <h2>Dashboard</h2>
+  </div>
+)
 
 export default class App extends React.Component {
-  col;
+  col
 
   constructor(props) {
     super(props)
@@ -20,8 +26,8 @@ export default class App extends React.Component {
     this.state = {
       newCounter: 0,
       forceRender: false,
-      drgElm: ['', { h: 1, w: 1, i: 'n_blk_0' }],
-      gridWidth: 1000,
+      drgElm: ['', { h: 1, w: 1, i: '' }],
+      gridWidth: 840,
       settings: { id: null, type: null, data: null },
       layout: [
         /* { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
@@ -87,9 +93,14 @@ export default class App extends React.Component {
     this.addData = this.addData.bind(this)
     this.updateData = this.updateData.bind(this)
     this.onAddItem = this.onAddItem.bind(this)
+<<<<<<< HEAD
     this.saveForm = this.saveForm.bind(this)
     this.getTemplates = this.getTemplates.bind(this)
     this.getTemplate = this.getTemplate.bind(this)
+=======
+    this.stringifyLayout = this.stringifyLayout.bind(this)
+    this.setNavActive = this.setNavActive.bind(this)
+>>>>>>> origin/render-from-object
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -165,18 +176,16 @@ export default class App extends React.Component {
   }
 
   getElmSettings(id, type) {
-    console.log(id, this.state.data, this.state.layout)
     // eslint-disable-next-line react/no-access-state-in-setstate
     this.setState({ settings: { id, type, data: this.state.data[id][0] } })
   }
-
 
   setDrgElm(el) {
     this.setState({ drgElm: el })
   }
 
   setGridWidth(w) {
-    this.setState({ gridWidth: w - 10 })
+    this.setState({ gridWidth: w - 15 })
   }
 
   addData(counter, newLayBlk) {
@@ -207,7 +216,40 @@ export default class App extends React.Component {
       <div className="layoutItem" key={l.i}>
         <b>{l.i}</b>:[{l.x}, {l.y}, {l.w}, {l.h}]
       </div>
-    ));
+    ))
+  }
+
+  /* navIdx(e, index) {
+    // console.log(e.target.parentNode.querySelectorAll('.underline'))
+    const underlines = e.target.parentNode.querySelectorAll('.underline')
+    for (let i = 0; i < underlines.length; i += 1) {
+      underlines[i].style.transform = `translate3d(${index * 100}%,0,0)`;
+    }
+  } */
+
+  // eslint-disable-next-line class-methods-use-this
+  setNavActive(isCurrent, index) {
+    if (isCurrent) {
+      const underlines = document.querySelectorAll('.underline');
+      for (let i = 0; i < underlines.length; i += 1) {
+        underlines[i].style.transform = `translate3d(${index * 100}%,0,0)`;
+      }
+    }
+
+    const as = {
+      style: {
+        color: '#0e112f',
+        fontWeight: 'bold',
+        background: 'white',
+      },
+    }
+    const is = {
+      style: {
+        fontWeight: 'normal',
+      },
+    }
+
+    return isCurrent ? as : is
   }
 
   saveForm(lay) {
@@ -269,8 +311,28 @@ export default class App extends React.Component {
   }
 
   render() {
+    const builderProps = {
+      gridWidth: this.state.gridWidth,
+      newCounter: this.state.newCounter,
+      draggedElm: this.state.drgElm,
+      forceRender: this.state.forceRender,
+      settings: this.state.settings,
+      data: this.state.data,
+      layout: this.state.layout,
+      setDrgElm: this.setDrgElm,
+      onAddItem: this.onAddItem,
+      setGridWidth: this.setGridWidth,
+      stringifyLayout: this.stringifyLayout,
+      setLayout: this.setLayout,
+      onLayoutChange: this.onLayoutChange,
+      addData: this.addData,
+      getElmSettings: this.getElmSettings,
+      updateData: this.updateData,
+    }
+
     return (
       <div className="Btcd-App">
+<<<<<<< HEAD
         <Container style={this.containerStyle}>
           <Section defaultSize={200} minSize={59} style={this.sectionStyle}>
             <ToolBar setDrgElm={this.setDrgElm} onAddItem={this.onAddItem} className="tile" />
@@ -303,12 +365,43 @@ export default class App extends React.Component {
               forceRender={this.state.forceRender}
             />
           </Section>
+=======
+        <div className="nav-wrp">
+          <div className="logo" />
+          <nav className="top-nav">
+>>>>>>> origin/render-from-object
 
-          <Bar className="bar" />
-          <Section defaultSize={300} style={this.sectionStyle}>
-            <ElementSettings key="elm-settins1" elm={this.state.settings} updateData={this.updateData} />
-          </Section>
-        </Container>
+            <Link
+              to="/"
+              getProps={({ isCurrent }) => this.setNavActive(isCurrent, 0)}
+            >My Forms
+            </Link>
+
+            <Link
+              to="/builder"
+              getProps={({ isCurrent }) => this.setNavActive(isCurrent, 1)}
+            >Builder
+            </Link>
+
+            <Link
+              to="settings"
+              getProps={({ isCurrent }) => this.setNavActive(isCurrent, 2)}
+            >Settings
+            </Link>
+
+          </nav>
+        </div>
+        <div className="route-wrp">
+          <Router primary={false}>
+            <AllForms path="/">All Forms</AllForms>
+
+            <Builder
+              path="/builder/:preLayout"
+              {...builderProps}
+            />
+            <Dashboard path="settings">Settings</Dashboard>
+          </Router>
+        </div>
       </div>
     )
   }
