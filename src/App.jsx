@@ -93,14 +93,9 @@ export default class App extends React.Component {
     this.addData = this.addData.bind(this)
     this.updateData = this.updateData.bind(this)
     this.onAddItem = this.onAddItem.bind(this)
-<<<<<<< HEAD
     this.saveForm = this.saveForm.bind(this)
-    this.getTemplates = this.getTemplates.bind(this)
-    this.getTemplate = this.getTemplate.bind(this)
-=======
     this.stringifyLayout = this.stringifyLayout.bind(this)
     this.setNavActive = this.setNavActive.bind(this)
->>>>>>> origin/render-from-object
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -271,45 +266,6 @@ export default class App extends React.Component {
       console.log('error', error);
     })
   }
-  getTemplates() {
-    console.log('bits.nonce: ', bits.ajaxURL)
-    axios.post(bits.ajaxURL, null, {
-      headers: {
-        'Content-Type': 'application/json'
-    },
-    params : {
-      action: 'bitapps_templates',
-      _ajax_nonce: bits.nonce,
-    }
-    }).then((response) => {
-      console.log(response)
-    }).catch(error => {
-      console.log('error', error);
-    })
-  }
-  getTemplate() {
-    console.log('bits.nonce: ', bits.ajaxURL)
-    axios.post(bits.ajaxURL, {template:'Contact Form'}, {
-      headers: {
-        'Content-Type': 'application/json'
-    },
-    params : {
-      action: 'bitapps_create_new_form',
-      _ajax_nonce: bits.nonce,
-    }
-    }).then((response) => {
-      // response = JSON.parse(response)
-      let data = JSON.parse(response.data.data)
-      console.log("object",data.form_content.field_data)
-      if (typeof data.form_content.field_data ==='object') {
-        this.setState({layout : data.form_content.layout,data : data.form_content.field_data, newCounter : 3});
-        console.log("IN get",this.state.layout)
-      }
-    }).catch(error => {
-      console.log('error', error);
-    })
-  }
-
   render() {
     const builderProps = {
       gridWidth: this.state.gridWidth,
@@ -332,44 +288,9 @@ export default class App extends React.Component {
 
     return (
       <div className="Btcd-App">
-<<<<<<< HEAD
-        <Container style={this.containerStyle}>
-          <Section defaultSize={200} minSize={59} style={this.sectionStyle}>
-            <ToolBar setDrgElm={this.setDrgElm} onAddItem={this.onAddItem} className="tile" />
-          </Section>
-          <Bar className="bar" />
-
-          <Section onSizeChanged={this.setGridWidth} minSize={320} defaultSize={800}>
-            <div className="layoutJSON">
-              Displayed as
-              <code>[x, y, w, h]</code>
-              :
-              <div className="columns">{this.stringifyLayout()}</div>
-            </div>
-            
-        <button type="button" onClick={()=>this.saveForm(this.state.layout)}>Save</button>
-        <button type="button" onClick={this.getTemplates}>Templates</button>
-        <button type="button" onClick={this.getTemplate}>Template</button>
-            {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
-            <GridLayout
-              newCounter={this.state.newCounter}
-              onAddItem={this.onAddItem}
-              layout={this.state.layout}
-              setLayout={this.setLayout}
-              width={this.state.gridWidth}
-              onLayoutChange={this.onLayoutChange}
-              draggedElm={this.state.drgElm}
-              data={this.state.data}
-              addData={this.addData}
-              getElmSettings={this.getElmSettings}
-              forceRender={this.state.forceRender}
-            />
-          </Section>
-=======
         <div className="nav-wrp">
           <div className="logo" />
           <nav className="top-nav">
->>>>>>> origin/render-from-object
 
             <Link
               to="/"

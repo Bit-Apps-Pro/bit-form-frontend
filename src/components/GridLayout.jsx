@@ -1,22 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-<<<<<<< HEAD
 import React, { createElement } from "react";
 import { Responsive as ResponsiveReactGridLayout } from "react-grid-layout";
 import _ from "lodash";
 import SlimSelect from "slim-select";
 import "../resource/css/slimselect.min.css";
 import moveIcon from "../resource/img/move.png";
-=======
-import React, { createElement } from 'react'
-import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import _ from 'lodash'
-import axios from 'axios';
-import SlimSelect from 'slim-select'
-import '../resource/css/slimselect.min.css'
-import moveIcon from '../resource/img/move.png'
->>>>>>> origin/render-from-object
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
@@ -26,13 +16,8 @@ export default class GridLayout extends React.PureComponent {
       breakpoint: "md",
       data: props.data,
       lay: props.layout,
-<<<<<<< HEAD
-      forceRender: props.forceRender
-    };
-=======
       forceRender: props.forceRender,
     }
->>>>>>> origin/render-from-object
 
     this.onAddItem = this.onAddItem.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
@@ -43,14 +28,9 @@ export default class GridLayout extends React.PureComponent {
   }
 
   componentDidUpdate() {
-<<<<<<< HEAD
-    if (document.querySelector(".slim") != null) {
-      const allSel = document.querySelectorAll("select.slim");
-=======
     // slim init
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
->>>>>>> origin/render-from-object
       for (let i = 0; i < allSel.length; i += 1) {
         // eslint-disable-next-line no-unused-vars
         const s = new SlimSelect({
@@ -97,10 +77,6 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onAddItem() {
-<<<<<<< HEAD
-    console.log("item add");
-=======
->>>>>>> origin/render-from-object
     /* this.setState(prvState => ({
       ...prvState,
       lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: 4, y: 0, w: 2, h: 2 }),
@@ -136,12 +112,7 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onLayoutChange(layout) {
-<<<<<<< HEAD
-    this.props.onLayoutChange(layout, this.state.cols);
-
-=======
     this.props.onLayoutChange(layout, this.state.cols)
->>>>>>> origin/render-from-object
     // unused
     // this.setState({ layout })
   }
@@ -231,54 +202,11 @@ export default class GridLayout extends React.PureComponent {
       }
       node.classList.add("z-9");
     }
-<<<<<<< HEAD
     this.props.getElmSettings(id, type);
-=======
-    this.props.getElmSettings(id, type)
-  }
-
-  saveForm() {
-    console.log(this.props.layout)
-    // console.log('bits.nonce: ', bits.ajaxURL)
-    axios.post(bits.ajaxURL, null, {
-      params: {
-        action: 'bitform_save_form',
-        _ajax_nonce: bits.nonce,
-        lastName: 'Flintstone',
-      },
-    }).then((response) => {
-      console.log(response)
-    }).catch(error => {
-      console.log('error', error);
-    })
->>>>>>> origin/render-from-object
   }
 
   childGen(cld) {
     if (cld === null) {
-<<<<<<< HEAD
-      return null;
-    }
-    if (typeof cld === "string") {
-      return cld;
-    }
-    if (!!cld && cld.constructor === Object) {
-      return createElement(cld.tag, cld.attr, cld.child);
-    }
-    if (!!cld && cld.constructor === Array) {
-      return cld.map((itm, ind) =>
-        createElement(
-          itm.tag,
-          { key: ind, ...itm.attr },
-          this.childGen(itm.child)
-        )
-      );
-      // return cld.map((itm, ind) => this.childGen(itm))
-      /* for (let cl of cld) {
-        console.log(cl)
-         this.childGen(cl)
-      } */
-=======
       return null
     } if (typeof cld === 'string') {
       return cld
@@ -286,7 +214,6 @@ export default class GridLayout extends React.PureComponent {
       return createElement(cld.tag, cld.attr, cld.child)
     } if ((!!cld) && (cld.constructor === Array)) {
       return cld.map((itm, ind) => createElement(itm.tag, { key: ind, ...itm.attr }, this.childGen(itm.child)))
->>>>>>> origin/render-from-object
     }
     return null;
   }
@@ -340,62 +267,17 @@ export default class GridLayout extends React.PureComponent {
     ));
   }
 
-<<<<<<< HEAD
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // console.log('get derive',nextProps, prevState)
-    // console.log('get derive', nextProps.forceRender, prevState.forceRender)
-    if (nextProps.forceRender !== prevState.forceRender) {
-      return {
-        lay: nextProps.layout,
-        data: nextProps.data,
-        newCounter: nextProps.newCounter,
-        forceRender: !prevState.forceRender
-      };
-    }
-    return null;
-  }
-
-  changeDat() {
-    this.props.addData();
-    /* this.setState(prvState => {
-      const { data } = prvState
-      data.blk_1[0].child = Math.random().toString()
-      return {
-        ...prvState,
-        data,
-      }
-    }) */
-    // this.forceUpdate()
-=======
   changeDat() {
     this.props.addData()
->>>>>>> origin/render-from-object
   }
 
   render() {
     const { lay } = this.state;
     return (
-<<<<<<< HEAD
-      <div
-        /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{
-          width: this.props.width,
-          background: "aliceblue"
-        }}
-      >
-        {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
-        <button type="button" onClick={this.changeDat}>
-          change data
-        </button>
-        <div
-          onDragOver={e => e.preventDefault()}
-          onDragEnter={e => e.preventDefault()}
-        >
-=======
       <div style={{ width: this.props.width, margin: 'auto' }}>
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>
         <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
->>>>>>> origin/render-from-object
           <ResponsiveReactGridLayout
             className="layout"
             style={{ height: "100vh" }}

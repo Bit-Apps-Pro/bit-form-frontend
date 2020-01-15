@@ -1,16 +1,46 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { Link } from '@reach/router'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import ElementSettings from '../components/ElmSettings'
+import axios from 'axios'
 
 export default function Builder(props) {
-  const [fulScn, setFulScn] = React.useState(false)
+  const [fulScn, setFulScn] = useState(false)
+  const [newCounter, setnewCounter] = useState(0)
+  const [data, setdata] = useState(props.data)
+  const [layout, setlayout] = useState(props.layout)
+  const [builder, setBuilder] = useState(false)
   setTimeout(() => { setFulScn(true) }, 500)
 
   React.useEffect(() => {
-    console.log(props.preLayout)
+    console.log(typeof props.preLayout)
+    const fetchTemplate = async () => {
+      const result = await axios.post(bits.ajaxURL, {template:props.preLayout}, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        params: {
+          action: "bitapps_create_new_form",
+          _ajax_nonce: bits.nonce
+        }
+      })
+      let data = JSON.parse(result.data.data)
+      setdata(data.form_content.field_data)
+      console.log("B : ",data.form_content.layout.length)
+      setlayout(data.form_content.layout)
+      setnewCounter(data.form_content.layout.length)
+      setBuilder(true)
+    }
+    if (props.preLayout==='0') {
+      setdata(props.data)
+      setlayout(props.layout)
+      setnewCounter(props.newCounter)
+      setBuilder(true)
+    } else {
+      fetchTemplate()
+    }
   }, [])
   const notIE = !window.document.documentMode
 
@@ -42,19 +72,19 @@ export default function Builder(props) {
             :
             <div className="columns">{props.stringifyLayout()}</div>
           </div>
-          <GridLayout
-            newCounter={props.newCounter}
+          {builder&&<GridLayout
+            newCounter={newCounter}
             onAddItem={props.onAddItem}
-            layout={props.layout}
+            layout={layout}
             setLayout={props.setLayout}
             width={props.gridWidth}
             onLayoutChange={props.onLayoutChange}
             draggedElm={props.draggedElm}
-            data={props.data}
+            data={data}
             addData={props.addData}
             getElmSettings={props.getElmSettings}
             forceRender={props.forceRender}
-          />
+          />}
         </Section>
 
         <Bar className="bar" />
