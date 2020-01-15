@@ -54,13 +54,27 @@ export default class GridLayout extends React.PureComponent {
     const fInputs = document.querySelectorAll('.btcd-f-input>div>input')
     // eslint-disable-next-line no-restricted-syntax
     for (const inp of fInputs) {
+      // eslint-disable-next-line max-len
       inp.parentNode.querySelector('.btcd-inpBtn>img').src = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4='
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // console.log('get derive',nextProps, prevState)
+    // console.log('get derive', nextProps.forceRender, prevState.forceRender)
+    if (nextProps.forceRender !== prevState.forceRender) {
+      return {
+        lay: nextProps.layout,
+        data: nextProps.data,
+        newCounter: nextProps.newCounter,
+        forceRender: !prevState.forceRender,
+      }
+    }
+    return null
+  }
+
 
   onAddItem() {
-    console.log('item add')
     /* this.setState(prvState => ({
       ...prvState,
       lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: 4, y: 0, w: 2, h: 2 }),
@@ -156,7 +170,7 @@ export default class GridLayout extends React.PureComponent {
 
   saveForm() {
     console.log(this.props.layout)
-    //console.log('bits.nonce: ', bits.ajaxURL)
+    // console.log('bits.nonce: ', bits.ajaxURL)
     axios.post(bits.ajaxURL, null, {
       params: {
         action: 'bitform_save_form',
@@ -179,11 +193,6 @@ export default class GridLayout extends React.PureComponent {
       return createElement(cld.tag, cld.attr, cld.child)
     } if ((!!cld) && (cld.constructor === Array)) {
       return cld.map((itm, ind) => createElement(itm.tag, { key: ind, ...itm.attr }, this.childGen(itm.child)))
-      // return cld.map((itm, ind) => this.childGen(itm))
-      /* for (let cl of cld) {
-        console.log(cl)
-         this.childGen(cl)
-      } */
     }
     return null
   }
@@ -192,6 +201,7 @@ export default class GridLayout extends React.PureComponent {
     return elm.map(item => (
       <div
         key={item.i}
+        className="blk"
         btcd-id={item.i}
         data-grid={item}
         onClick={this.getElmProp}
@@ -224,39 +234,15 @@ export default class GridLayout extends React.PureComponent {
     ))
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    // console.log('get derive',nextProps, prevState)
-    // console.log('get derive', nextProps.forceRender, prevState.forceRender)
-    if (nextProps.forceRender !== prevState.forceRender) {
-      return {
-        lay: nextProps.layout,
-        data: nextProps.data,
-        newCounter: nextProps.newCounter,
-        forceRender: !prevState.forceRender,
-      }
-    }
-    return null
-  }
-
   changeDat() {
     this.props.addData()
-    /* this.setState(prvState => {
-      const { data } = prvState
-      data.blk_1[0].child = Math.random().toString()
-      return {
-        ...prvState,
-        data,
-      }
-    }) */
-    // this.forceUpdate()
   }
 
 
   render() {
     const { lay } = this.state
     return (
-      <div style={{ width: this.props.width, background: 'aliceblue' }}>
-        {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
+      <div style={{ width: this.props.width, margin: 'auto' }}>
         <button type="button" onClick={this.changeDat}>change data</button>
         <button type="button" onClick={this.saveForm}>Save</button>
         <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
@@ -280,6 +266,9 @@ export default class GridLayout extends React.PureComponent {
             transformScale={1}
           >
             {this.createElm(lay)}
+
+            {/* <div key="d" data-grid={{ x: 1, y: 0, w: 2, h: 2, static: true }} onDrop={e => console.log(e)}>c</div> */}
+
           </ResponsiveReactGridLayout>
         </div>
       </div>
