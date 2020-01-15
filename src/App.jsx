@@ -20,7 +20,7 @@ export default class App extends React.Component {
     this.state = {
       newCounter: 0,
       forceRender: false,
-      drgElm: ['', { h: 1, w: 1, i: '' }],
+      drgElm: ['', { h: 1, w: 1, i: 'n_blk_0' }],
       gridWidth: 1000,
       settings: { id: null, type: null, data: null },
       layout: [
@@ -88,6 +88,7 @@ export default class App extends React.Component {
     this.updateData = this.updateData.bind(this)
     this.onAddItem = this.onAddItem.bind(this)
     this.saveForm = this.saveForm.bind(this)
+    this.getTemplates = this.getTemplates.bind(this)
     this.getTemplate = this.getTemplate.bind(this)
 
     /* function insertion_Sort(arr) {
@@ -210,7 +211,7 @@ export default class App extends React.Component {
   }
 
   saveForm(lay) {
-    console.log('bits.nonce: ', bits.ajaxURL)
+    console.log('bits.nonce: ', this.state.data)
     axios.post(bits.ajaxURL, {
       fields: this.state.layout,
       field_data: this.state.data
@@ -219,7 +220,7 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
     },
     params : {      
-      action: 'bitapps_save_form',
+      action: 'bitapps_update_form',
       _ajax_nonce: bits.nonce,
     }
     }).then((response) => {
@@ -228,7 +229,7 @@ export default class App extends React.Component {
       console.log('error', error);
     })
   }
-  getTemplate() {
+  getTemplates() {
     console.log('bits.nonce: ', bits.ajaxURL)
     axios.post(bits.ajaxURL, null, {
       headers: {
@@ -240,6 +241,28 @@ export default class App extends React.Component {
     }
     }).then((response) => {
       console.log(response)
+    }).catch(error => {
+      console.log('error', error);
+    })
+  }
+  getTemplate() {
+    console.log('bits.nonce: ', bits.ajaxURL)
+    axios.post(bits.ajaxURL, {template:'Contact Form'}, {
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    params : {
+      action: 'bitapps_create_new_form',
+      _ajax_nonce: bits.nonce,
+    }
+    }).then((response) => {
+      // response = JSON.parse(response)
+      let data = JSON.parse(response.data.data)
+      console.log("object",data.form_content.field_data)
+      if (typeof data.form_content.field_data ==='object') {
+        this.setState({layout : data.form_content.layout,data : data.form_content.field_data, newCounter : 3});
+        console.log("IN get",this.state.layout)
+      }
     }).catch(error => {
       console.log('error', error);
     })
@@ -263,7 +286,8 @@ export default class App extends React.Component {
             </div>
             
         <button type="button" onClick={()=>this.saveForm(this.state.layout)}>Save</button>
-        <button type="button" onClick={this.getTemplate}>Templates</button>
+        <button type="button" onClick={this.getTemplates}>Templates</button>
+        <button type="button" onClick={this.getTemplate}>Template</button>
             {/* <button onClick={() => this.setGridWidth(1300)}>desktop</button> */}
             <GridLayout
               newCounter={this.state.newCounter}

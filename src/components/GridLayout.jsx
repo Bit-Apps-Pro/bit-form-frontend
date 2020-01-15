@@ -1,57 +1,60 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { createElement } from 'react'
-import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import _ from 'lodash'
-import SlimSelect from 'slim-select'
-import '../resource/css/slimselect.min.css'
-import moveIcon from '../resource/img/move.png'
-
+import React, { createElement } from "react";
+import { Responsive as ResponsiveReactGridLayout } from "react-grid-layout";
+import _ from "lodash";
+import SlimSelect from "slim-select";
+import "../resource/css/slimselect.min.css";
+import moveIcon from "../resource/img/move.png";
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
-    super(props)
-
+    super(props);
     this.state = {
       newCounter: props.newCounter,
-      breakpoint: 'md',
+      breakpoint: "md",
       data: props.data,
       lay: props.layout,
       forceRender: props.forceRender
-    }
+    };
 
-    this.onAddItem = this.onAddItem.bind(this)
-    this.onLayoutChange = this.onLayoutChange.bind(this)
-    this.onBreakpointChange = this.onBreakpointChange.bind(this)
-    this.changeDat = this.changeDat.bind(this)
-    this.childGen = this.childGen.bind(this)
-    this.getElmProp = this.getElmProp.bind(this)
+    this.onAddItem = this.onAddItem.bind(this);
+    this.onLayoutChange = this.onLayoutChange.bind(this);
+    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+    this.changeDat = this.changeDat.bind(this);
+    this.childGen = this.childGen.bind(this);
+    this.getElmProp = this.getElmProp.bind(this);
   }
 
   componentDidUpdate() {
-    if (document.querySelector('.slim') != null) {
-      const allSel = document.querySelectorAll('select.slim')
+    if (document.querySelector(".slim") != null) {
+      const allSel = document.querySelectorAll("select.slim");
       for (let i = 0; i < allSel.length; i += 1) {
         // eslint-disable-next-line no-unused-vars
         const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute('btcd-id')}"] > div > .slim`,
+          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
+            "btcd-id"
+          )}"] > div > .slim`,
           allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        })
+          placeholder: allSel[i].getAttribute("placeholder"),
+          limit: Number(allSel[i].getAttribute("limit"))
+        });
         if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
+          if (allSel[i].hasAttribute("data-max-show")) {
+            allSel[
+              i
+            ].nextSibling.children[1].children[1].style.maxHeight = `${Number(
+              allSel[i].getAttribute("data-max-show")
+            ) * 2}pc`;
           }
         }
       }
     }
   }
 
-
   onAddItem() {
-    console.log('item add')
+    console.log("item add");
     /* this.setState(prvState => ({
       ...prvState,
       lay: prvState.lay.concat({ i: `n_blk_${prvState.newCounter}`, x: 4, y: 0, w: 2, h: 2 }),
@@ -60,19 +63,25 @@ export default class GridLayout extends React.PureComponent {
     this.setState(prvState => ({
       ...prvState,
       forceRender: !prvState.forceRender,
-      lay: prvState.lay.concat({ i: 'n_blk_4', x: 0, y: 0, w: 2, h: 2 }),
+      lay: prvState.lay.concat({ i: "n_blk_4", x: 0, y: 0, w: 2, h: 2 }),
       data: {
         ...prvState.data,
-        n_blk_4: [{
-          tag: 'div',
-          attr: { className: 'text-wrp drag', 'btcd-fld': 'date' },
-          child: [
-            { tag: 'label', attr: {}, child: 'Week:' },
-            { tag: 'input', attr: { className: 'no-drg', type: 'week' }, child: null },
-          ],
-        }],
-      },
-    }))
+        n_blk_4: [
+          {
+            tag: "div",
+            attr: { className: "text-wrp drag", "btcd-fld": "date" },
+            child: [
+              { tag: "label", attr: {}, child: "Week:" },
+              {
+                tag: "input",
+                attr: { className: "no-drg", type: "week" },
+                child: null
+              }
+            ]
+          }
+        ]
+      }
+    }));
   }
 
   onBreakpointChange(breakpoint, cols) {
@@ -81,87 +90,125 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onLayoutChange(layout) {
-    this.props.onLayoutChange(layout, this.state.cols)
+    this.props.onLayoutChange(layout, this.state.cols);
 
     // unused
     // this.setState({ layout })
   }
 
   onRemoveItem(i) {
-    this.setState(prvState => ({ ...prvState, lay: _.reject(prvState.lay, { i }) }))
+    this.setState(prvState => ({
+      ...prvState,
+      lay: _.reject(prvState.lay, { i })
+    }));
   }
 
-  onDrop = (elmPrms) => {
+  onDrop = elmPrms => {
     // console.log('droped ', elmPrms)
-    const { draggedElm } = this.props
-    const { w, h, minH, maxH, minW } = draggedElm[1]
-    const { x, y } = elmPrms
-    const newBlk = `n_blk_${this.state.newCounter}`
+    const { draggedElm } = this.props;
+    const { w, h, minH, maxH, minW } = draggedElm[1];
+    const { x, y } = elmPrms;
+    const newBlk = `n_blk_${this.state.newCounter}`;
     // setting data in parent state
-    this.props.addData(this.state.newCounter, { i: newBlk, x, y, w, h, minH, maxH, minW })
+    this.props.addData(this.state.newCounter, {
+      i: newBlk,
+      x,
+      y,
+      w,
+      h,
+      minH,
+      maxH,
+      minW
+    });
     this.setState(prvState => ({
       ...prvState,
       data: {
-        ...prvState.data, [newBlk]: draggedElm[0],
+        ...prvState.data,
+        [newBlk]: draggedElm[0]
       },
       lay: prvState.lay.concat({ i: newBlk, x, y, w, h, minH, maxH, minW }),
-      newCounter: prvState.newCounter + 1,
-    }))
-  }
+      newCounter: prvState.newCounter + 1
+    }));
+  };
 
   getElmProp(e) {
-    let id = null
-    let type = null
-    let node = null
-    if (e.target.hasAttribute('btcd-id')) {
-      node = e.target
-    } else if (e.target.parentNode.hasAttribute('btcd-id')) {
-      node = e.target.parentNode
-    } else if (e.target.parentNode.parentNode.hasAttribute('btcd-id')) {
-      node = e.target.parentNode.parentNode
-    } else if (e.target.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-      node = e.target.parentNode.parentNode.parentNode
-    } else if (e.target.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-      node = e.target.parentNode.parentNode.parentNode.parentNode
-    } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-      node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-    } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-      node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+    let id = null;
+    let type = null;
+    let node = null;
+    if (e.target.hasAttribute("btcd-id")) {
+      node = e.target;
+    } else if (e.target.parentNode.hasAttribute("btcd-id")) {
+      node = e.target.parentNode;
+    } else if (e.target.parentNode.parentNode.hasAttribute("btcd-id")) {
+      node = e.target.parentNode.parentNode;
+    } else if (
+      e.target.parentNode.parentNode.parentNode.hasAttribute("btcd-id")
+    ) {
+      node = e.target.parentNode.parentNode.parentNode;
+    } else if (
+      e.target.parentNode.parentNode.parentNode.parentNode.hasAttribute(
+        "btcd-id"
+      )
+    ) {
+      node = e.target.parentNode.parentNode.parentNode.parentNode;
+    } else if (
+      e.target.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute(
+        "btcd-id"
+      )
+    ) {
+      node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+    } else if (
+      e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute(
+        "btcd-id"
+      )
+    ) {
+      node =
+        e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+          .parentNode;
     }
 
-    id = node.getAttribute('btcd-id')
+    id = node.getAttribute("btcd-id");
     for (let i = 0; i < node.children.length; i += 1) {
-      if (node.children[i].hasAttribute('btcd-fld')) {
-        type = node.children[i].getAttribute('btcd-fld')
-        break
+      if (node.children[i].hasAttribute("btcd-fld")) {
+        type = node.children[i].getAttribute("btcd-fld");
+        break;
       }
     }
-    if (type === 'select') {
-      const allSel = document.querySelectorAll('select')
+    if (type === "select") {
+      const allSel = document.querySelectorAll("select");
       for (let i = 0; i < allSel.length; i += 1) {
-        allSel[i].parentNode.parentNode.classList.remove('z-9')
+        allSel[i].parentNode.parentNode.classList.remove("z-9");
       }
-      node.classList.add('z-9')
+      node.classList.add("z-9");
     }
-    this.props.getElmSettings(id, type)
+    this.props.getElmSettings(id, type);
   }
 
   childGen(cld) {
     if (cld === null) {
-      return null
-    } if (typeof cld === 'string') {
-      return cld
-    } if ((!!cld) && (cld.constructor === Object)) {
-      return createElement(cld.tag, cld.attr, cld.child)
-    } if ((!!cld) && (cld.constructor === Array)) {
-      return cld.map((itm, ind) => createElement(itm.tag, { key: ind, ...itm.attr }, this.childGen(itm.child)))
+      return null;
+    }
+    if (typeof cld === "string") {
+      return cld;
+    }
+    if (!!cld && cld.constructor === Object) {
+      return createElement(cld.tag, cld.attr, cld.child);
+    }
+    if (!!cld && cld.constructor === Array) {
+      return cld.map((itm, ind) =>
+        createElement(
+          itm.tag,
+          { key: ind, ...itm.attr },
+          this.childGen(itm.child)
+        )
+      );
       // return cld.map((itm, ind) => this.childGen(itm))
       /* for (let cl of cld) {
         console.log(cl)
          this.childGen(cl)
       } */
     }
-    return null
+    return null;
   }
 
   createElm(elm) {
@@ -188,16 +235,28 @@ export default class GridLayout extends React.PureComponent {
           &times;
         </span>
         <span
-          style={{ right: 22, cursor: 'move' }}
+          style={{ right: 22, cursor: "move" }}
           className="bit-blk-icn drag"
           role="button"
         >
-          <img className="unselectable" draggable="false" unselectable="on" onDragStart={() => false} src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
+          <img
+            className="unselectable"
+            draggable="false"
+            unselectable="on"
+            onDragStart={() => false}
+            src={
+              process.env.NODE_ENV === "production"
+                ? `${bits.assetsURL}/img/${moveIcon}`
+                : `${moveIcon}`
+            }
+            alt="drag handle"
+          />
         </span>
-        {this.state.data[item.i].map((i, idx) => createElement(i.tag,
-          { key: idx, ...i.attr }, this.childGen(i.child)))}
+        {this.state.data[item.i].map((i, idx) =>
+          createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child))
+        )}
       </div>
-    ))
+    ));
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -208,14 +267,14 @@ export default class GridLayout extends React.PureComponent {
         lay: nextProps.layout,
         data: nextProps.data,
         newCounter: nextProps.newCounter,
-        forceRender: !prevState.forceRender,
-      }
+        forceRender: !prevState.forceRender
+      };
     }
-    return null
+    return null;
   }
 
   changeDat() {
-    this.props.addData()
+    this.props.addData();
     /* this.setState(prvState => {
       const { data } = prvState
       data.blk_1[0].child = Math.random().toString()
@@ -227,17 +286,26 @@ export default class GridLayout extends React.PureComponent {
     // this.forceUpdate()
   }
 
-
   render() {
-    const { lay } = this.state
+    const { lay } = this.state;
     return (
-      <div /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{ width: this.props.width, background: 'aliceblue' }}>
+      <div
+        /* onDrop={(elm = { x: 0, y: 0 }) => this.onDrop(elm)} */ style={{
+          width: this.props.width,
+          background: "aliceblue"
+        }}
+      >
         {/* <button type='button' onClick={this.onAddItem}>Add Item</button> */}
-        <button type="button" onClick={this.changeDat}>change data</button>
-        <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+        <button type="button" onClick={this.changeDat}>
+          change data
+        </button>
+        <div
+          onDragOver={e => e.preventDefault()}
+          onDragEnter={e => e.preventDefault()}
+        >
           <ResponsiveReactGridLayout
             className="layout"
-            style={{ height: '100vh' }}
+            style={{ height: "100vh" }}
             // layouts={this.props.lay}
             onDrop={this.onDrop}
             onLayoutChange={this.onLayoutChange}
@@ -258,6 +326,6 @@ export default class GridLayout extends React.PureComponent {
           </ResponsiveReactGridLayout>
         </div>
       </div>
-    )
+    );
   }
 }
