@@ -10,7 +10,7 @@ export default function FileUploadSettings(props) {
   const isRequired = props.elm.data.child[1].child[0].child[3].attr.required
   const isMultiple = props.elm.data.child[1].child[0].child[3].attr.multiple
   let exts = props.elm.data.child[1].child[0].child[3].attr.accept
-  if (typeof exts !== 'undefined' && exts !== null) { console.log('yes'); exts = exts.split(',._RF_,') }
+  if (typeof exts !== 'undefined' && exts !== null) { exts = exts.split(',._RF_,') }
   const uploadBtnTxt = props.elm.data.child[1].child[0].child[0].child[1].child
   let maxSize = props.elm.data.child[1].child[0].child[2].child.replace(/\D/g, '')
   maxSize = maxSize !== '' && Number(maxSize)
@@ -60,13 +60,8 @@ export default function FileUploadSettings(props) {
     } else {
       props.elm.data.child[1].child[0].child[3].attr.accept = val.join(',._RF_,')
     }
-    console.log(val.join(',._RF_,'))
-    console.log(val.join(',._RF_,').split(',._RF_,'))
     props.updateData(props.elm)
   }
-  // console.log(props.elm.data.child[1].child[0].child[3].attr)
-
-  // NEED TO SET DEFAULT VALUE
 
   return (
     <div>

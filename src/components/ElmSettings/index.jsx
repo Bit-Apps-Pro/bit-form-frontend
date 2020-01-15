@@ -9,7 +9,6 @@ import Select from './Select'
 import FileUploadSettings from './FileUploadSettings'
 
 export default function index(props) {
-
   const renderSettings = (type) => {
     switch (type) {
       case 'text-fld':
