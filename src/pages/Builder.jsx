@@ -7,42 +7,24 @@ import ElementSettings from '../components/ElmSettings'
 import axios from 'axios'
 
 export default function Builder(props) {
-  const [fulScn, setFulScn] = useState(false)
-  const [newCounter, setnewCounter] = useState(0)
-  const [data, setdata] = useState(props.data)
-  const [layout, setlayout] = useState(props.layout)
-  const [builder, setBuilder] = useState(false)
+  const [fulScn, setFulScn] = React.useState(false)
+  const [elmSetting, setElmSetting] = React.useState({ id: null, type: null, data: null })
+  const [cloneData, setCloneData] = React.useState()
+  const [newData, setNewData] = React.useState(null)
+  const [drgElm, setDrgElm] = React.useState(['', { h: 1, w: 1, i: '' }])
+
+  const updateData = (data) => {
+    setCloneData({ ...cloneData, data })
+  }
+
   setTimeout(() => { setFulScn(true) }, 500)
+  const notIE = !window.document.documentMode
 
   React.useEffect(() => {
-    console.log(typeof props.preLayout)
-    const fetchTemplate = async () => {
-      const result = await axios.post(bits.ajaxURL, {template:props.preLayout}, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        params: {
-          action: "bitapps_create_new_form",
-          _ajax_nonce: bits.nonce
-        }
-      })
-      let data = JSON.parse(result.data.data)
-      setdata(data.form_content.field_data)
-      console.log("B : ",data.form_content.layout.length)
-      setlayout(data.form_content.layout)
-      setnewCounter(data.form_content.layout.length)
-      setBuilder(true)
-    }
-    if (props.preLayout==='0') {
-      setdata(props.data)
-      setlayout(props.layout)
-      setnewCounter(props.newCounter)
-      setBuilder(true)
-    } else {
-      fetchTemplate()
+    return function cleanup() {
+      setFulScn(false)
     }
   }, [])
-  const notIE = !window.document.documentMode
 
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -53,6 +35,7 @@ export default function Builder(props) {
             {' '}
             Back
           </Link>
+          <Link to={`/builder/${props.preLayout}`}>Builder</Link>
           <Link to="/">Settings</Link>
         </div>
         <div className="btcd-bld-btn">
@@ -61,7 +44,7 @@ export default function Builder(props) {
       </nav>
       <Container>
         <Section defaultSize={160} minSize={notIE && 60}>
-          <ToolBar setDrgElm={props.setDrgElm} onAddItem={props.onAddItem} className="tile" />
+          <ToolBar setDrgElm={setDrgElm} setNewData={setNewData} className="tile" />
         </Section>
         <Bar className="bar" />
 
@@ -70,26 +53,23 @@ export default function Builder(props) {
             Displayed as
             <code>[x, y, w, h]</code>
             :
-            <div className="columns">{props.stringifyLayout()}</div>
+            <div className="columns">{/* props.stringifyLayout() */}</div>
           </div>
-          {builder&&<GridLayout
-            newCounter={newCounter}
-            onAddItem={props.onAddItem}
-            layout={layout}
-            setLayout={props.setLayout}
+          <GridLayout
             width={props.gridWidth}
-            onLayoutChange={props.onLayoutChange}
-            draggedElm={props.draggedElm}
-            data={data}
-            addData={props.addData}
-            getElmSettings={props.getElmSettings}
-            forceRender={props.forceRender}
-          />}
+            draggedElm={drgElm}
+            setElmSetting={setElmSetting}
+            cloneData={cloneData}
+            setCloneData={setCloneData}
+            newData={newData}
+            setNewData={setNewData}
+            preLayout={props.preLayout}
+          />
         </Section>
 
         <Bar className="bar" />
         <Section id="settings-menu" defaultSize={300}>
-          <ElementSettings key="elm-settins1" elm={props.settings} updateData={props.updateData} />
+          <ElementSettings key="elm-settins1" elm={elmSetting} updateData={updateData} />
         </Section>
       </Container>
     </div>
