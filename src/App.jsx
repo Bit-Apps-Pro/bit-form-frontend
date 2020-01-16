@@ -22,7 +22,6 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props)
-
     this.state = {
       newCounter: 0,
       forceRender: false,
@@ -153,11 +152,9 @@ export default class App extends React.Component {
   }
 
   onAddItem(elm) {
-    // console.log('droped ', elmPrms)
     const { w, h, minH, maxH, minW } = elm[1]
     const x = 0
     const y = Infinity
-    // setting data in parent state
     this.setState(prvState => ({
       ...prvState,
       data: {
@@ -179,7 +176,7 @@ export default class App extends React.Component {
   }
 
   setGridWidth(w) {
-    this.setState({ gridWidth: w - 15 })
+    this.setState({ gridWidth: w - 20 })
   }
 
   addData(counter, newLayBlk) {
@@ -213,22 +210,8 @@ export default class App extends React.Component {
     ))
   }
 
-  /* navIdx(e, index) {
-    // console.log(e.target.parentNode.querySelectorAll('.underline'))
-    const underlines = e.target.parentNode.querySelectorAll('.underline')
-    for (let i = 0; i < underlines.length; i += 1) {
-      underlines[i].style.transform = `translate3d(${index * 100}%,0,0)`;
-    }
-  } */
-
   // eslint-disable-next-line class-methods-use-this
   setNavActive(isCurrent, index) {
-    if (isCurrent) {
-      const underlines = document.querySelectorAll('.underline');
-      for (let i = 0; i < underlines.length; i += 1) {
-        underlines[i].style.transform = `translate3d(${index * 100}%,0,0)`;
-      }
-    }
 
     const as = {
       style: {

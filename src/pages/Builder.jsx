@@ -8,11 +8,14 @@ import ElementSettings from '../components/ElmSettings'
 export default function Builder(props) {
   const [fulScn, setFulScn] = React.useState(false)
   setTimeout(() => { setFulScn(true) }, 500)
+  const notIE = !window.document.documentMode
 
   React.useEffect(() => {
     console.log(props.preLayout)
+    return function cleanup() {
+      setFulScn(false)
+    }
   }, [])
-  const notIE = !window.document.documentMode
 
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -23,6 +26,7 @@ export default function Builder(props) {
             {' '}
             Back
           </Link>
+          <Link to={`/builder/${props.preLayout}`}>Builder</Link>
           <Link to="/">Settings</Link>
         </div>
         <div className="btcd-bld-btn">

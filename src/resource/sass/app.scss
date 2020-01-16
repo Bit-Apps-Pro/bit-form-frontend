@@ -153,7 +153,7 @@ $blue: #0083f3;
   cursor: grab;
   overflow: hidden;
   margin: 5px;
-  box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.5), -1px -1px 3px 1px rgba(255,255,255,1) ;
   transition: all 200ms;
 
   &:hover,
