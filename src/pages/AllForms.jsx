@@ -70,7 +70,7 @@ export default function AllFroms(props) {
             <span className="btcd-icn icn-file-empty" style={{ fontSize: 90 }} />
             <div>Contact Form</div>
             <div className="btcd-hid-btn">
-              <Link to="builder/1" className="btn btn-white sh-sm" type="button">Create</Link>
+              <Link to="builder/contact_form" className="btn btn-white sh-sm" type="button">Create</Link>
             </div>
           </div>
         </div>

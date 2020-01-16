@@ -1355,25 +1355,25 @@ nav.top-nav {
   }
 }
 .btcd-builder-wrp {
-  background: white;
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 80px;
-  margin-bottom: 30px;
-  border-radius: 20px;
-  overflow: hidden;
-  transition: left 0.5s, right 0.5s, top 0.5s, margin-bottom 0.5s, border-radius 0.5s 0.5s;
+  background: white !important;
+  position: absolute !important;
+  left: 20px !important;
+  right: 20px !important;
+  top: 80px !important;
+  margin-bottom: 30px !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  transition: left 0.5s, right 0.5s, top 0.5s, margin-bottom 0.5s, border-radius 0.5s 0.5s !important;
 }
 .btcd-ful-scn {
-  left: 0;
-  right: 0;
-  top: 0;
-  border-radius: 0;
-  margin-bottom: 0;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
   & > .btcd-bld-nav {
-    height: 40px;
-    transition: height 0.5s 0.7s;
+    height: 40px !important;
+    transition: height 0.5s 0.7s !important;
   }
 }
 .btcd-bld-nav {
