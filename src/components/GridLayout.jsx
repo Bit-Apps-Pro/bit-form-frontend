@@ -81,10 +81,26 @@ export default class GridLayout extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.preLayout === 'contact_form') {
-      //  this.setState({ layout: data.data.layout, data: data.data.field_data })
+    const fetchTemplate = async () => {
+      const result = await axios.post(bits.ajaxURL, {template:this.props.preLayout}, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        params: {
+          action: "bitapps_create_new_form",
+          _ajax_nonce: bits.nonce
+        }
+      })
+      console.log(result.data.data)
+      if (result.data.data !== false) {
+        let data = JSON.parse(result.data.data)
+        this.setState({ layout: data.form_content.layout, data: data.form_content.field_data , newCounter: data.form_content.layout.length})
+      }
+    }
+    if (this.props.preLayout === '0') {
       this.setState({ isLoading: false })
     } else {
+      fetchTemplate()
       this.setState({ isLoading: false })
     }
   }
@@ -216,15 +232,19 @@ export default class GridLayout extends React.PureComponent {
     }
   }
 
-  saveForm() {
-    console.log(this.props.layout)
-    // console.log('bits.nonce: ', bits.ajaxURL)
-    axios.post(bits.ajaxURL, null, {
-      params: {
-        action: 'bitform_save_form',
-        _ajax_nonce: bits.nonce,
-        lastName: 'Flintstone',
-      },
+  saveForm(lay) {
+    console.log('bits.nonce: ', this.state.data)
+    axios.post(bits.ajaxURL, {
+      fields: this.state.layout,
+      field_data: this.state.data
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    params : {      
+      action: 'bitapps_update_form',
+      _ajax_nonce: bits.nonce,
+    }
     }).then((response) => {
       console.log(response)
     }).catch(error => {

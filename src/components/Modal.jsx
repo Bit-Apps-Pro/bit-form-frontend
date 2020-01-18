@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@reach/router";
 import axios from "axios";
+/* eslint-disable no-undef */
 export default function Modal(props) {
   const handleClickOutside = e => {
     e.target.classList.contains("btcd-modal-wrp") && props.setModal(false);
