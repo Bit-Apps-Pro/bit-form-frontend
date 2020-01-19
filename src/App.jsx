@@ -25,6 +25,8 @@ export default class App extends React.Component {
     this.state = {
       gridWidth: 840,
     }
+    console.log(bits.baseURL)
+
 
     this.setGridWidth = this.setGridWidth.bind(this)
     // this.stringifyLayout = this.stringifyLayout.bind(this)
@@ -70,7 +72,8 @@ export default class App extends React.Component {
   } */
 
   // eslint-disable-next-line class-methods-use-this
-  setNavActive(isCurrent) {
+  setNavActive(isCurrent,loc) {
+    console.log(loc)
     const as = {
       style: {
         color: '#0e112f',
@@ -91,7 +94,7 @@ export default class App extends React.Component {
     console.log('bits.nonce: ', this.state.data)
     axios.post(bits.ajaxURL, {
       fields: this.state.layout,
-      field_data: this.state.data
+      fields: this.state.data
     }, {
       headers: {
         'Content-Type': 'application/json'
@@ -113,8 +116,8 @@ export default class App extends React.Component {
           <div className="logo" />
           <nav className="top-nav">
             <Link
-              to="/"
-              getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
+              to={ "/ssss"}
+              getProps={({ isCurrent,location }) => this.setNavActive(isCurrent,location)}
             >My Forms
             </Link>
 
@@ -125,7 +128,7 @@ export default class App extends React.Component {
             </Link>
 
             <Link
-              to="settings"
+              to={bits.baseURL + "/settings?page=bitapps#/"}
               getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
             >Settings
             </Link>
@@ -141,7 +144,7 @@ export default class App extends React.Component {
               gridWidth={this.state.gridWidth}
               setGridWidth={this.setGridWidth}
             />
-            <Dashboard path="settings">Settings</Dashboard>
+            <Dashboard path={"/wp-admin/admin.php/settings?page=bitapps#/"}>Settings</Dashboard>
           </Router>
         </div>
       </div>

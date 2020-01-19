@@ -16,61 +16,11 @@ export default class GridLayout extends React.PureComponent {
       newCounter: 0,
       breakpoint: 'md',
       layout: [
-        /* { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
-        { i: 'blk_2', x: 1, y: 0, w: 1, h: 2 },
-        { i: 'blk_3', x: 2, y: 0, w: 1, h: 2 },
-        { i: 'blk_4', x: 3, y: 0, w: 1, h: 2 },
-        { i: 'blk_5', x: 4, y: 0, w: 1, h: 2 },
-        { i: 'blk_6', x: 5, y: 0, w: 1, h: 2 },
-        { i: 'blk_7', x: 6, y: 0, w: 1, h: 2 },
-        { i: 'blk_8', x: 7, y: 0, w: 1, h: 2 },
-        { i: 'blk_9', x: 8, y: 0, w: 1, h: 2 },
-        { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 }, */
       ],
       data: {
-        blk_1: [
-          {
-            tag: 'label',
-            attr: {},
-            child: 'laebl',
-          },
-          {
-            tag: 'div',
-            attr: { type: 'text' },
-            child: [
-              { tag: 'label', attr: '', child: 'laebl' },
-              { tag: 'label', attr: '', child: 'laebl' },
-            ],
-          },
-        ],
-        blk_2: [
-          { tag: 'label', attr: '', child: 'laebl' },
-          {
-            tag: 'div',
-            attr: { type: 'text' },
-            child: { tag: 'b', attr: {}, child: 'bold' },
-          },
-        ],
-        blk_3: [
-          {
-            tag: 'label',
-            attr: {},
-            child: 'laebl',
-          },
-          {
-            tag: 'input',
-            attr: { type: 'text' },
-            child: null,
-          },
-        ],
-        blk_4: [],
-        blk_5: [],
-        blk_6: [],
-        blk_7: [],
-        blk_8: [],
-        blk_9: [],
-        blk_10: [],
       },
+      id: 0,
+      form_name: "Blank Form"
     }
 
     this.onLayoutChange = this.onLayoutChange.bind(this)
@@ -94,7 +44,7 @@ export default class GridLayout extends React.PureComponent {
       console.log(result.data.data)
       if (result.data.data !== false) {
         let data = JSON.parse(result.data.data)
-        this.setState({ layout: data.form_content.layout, data: data.form_content.field_data , newCounter: data.form_content.layout.length})
+        this.setState({ layout: data.form_content.layout, data: data.form_content.fields , id:data.id, form_name:  data.form_content.form_name, newCounter: data.form_content.layout.length})
       }
     }
     if (this.props.preLayout === '0') {
@@ -235,8 +185,10 @@ export default class GridLayout extends React.PureComponent {
   saveForm(lay) {
     console.log('bits.nonce: ', this.state.data)
     axios.post(bits.ajaxURL, {
-      fields: this.state.layout,
-      field_data: this.state.data
+      layout: this.state.layout,
+      fields: this.state.data,
+      id: this.state.id,
+      form_name: this.state.form_name
     }, {
       headers: {
         'Content-Type': 'application/json'
@@ -318,6 +270,10 @@ export default class GridLayout extends React.PureComponent {
   render() {
     return (
       <div style={{ width: this.props.width, margin: 'auto' }}>
+        <p>
+          form_name:{this.state.form_name}  
+          ID:{this.state.id}
+        </p>
         <button type="button" onClick={this.saveForm}>Save</button>
         {this.state.isLoading ? <h1>Loading</h1>
           : (
