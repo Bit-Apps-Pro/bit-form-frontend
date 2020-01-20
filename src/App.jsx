@@ -3,7 +3,9 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import React from 'react'
-import { Router, Link } from '@reach/router'
+import {
+  BrowserRouter as Router, Switch, Route, NavLink,
+} from 'react-router-dom'
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 // import './resource/icons/style.css'
@@ -23,12 +25,10 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      gridWidth: 840,
+      gridWidth: window.innerWidth - 480,
     }
-
+    console.log(window.innerWidth - (166 + 8 + 312 + 8 + 20 + 1))
     this.setGridWidth = this.setGridWidth.bind(this)
-    // this.stringifyLayout = this.stringifyLayout.bind(this)
-    this.setNavActive = this.setNavActive.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -58,74 +58,51 @@ export default class App extends React.Component {
   }
 
   setGridWidth(w) {
+    console.log(w)
     this.setState({ gridWidth: w - 20 })
-  }
-
-  /* stringifyLayout() {
-    return this.state.layout.map((l) => (
-      <div className="layoutItem" key={l.i}>
-        <b>{l.i}</b>:[{l.x}, {l.y}, {l.w}, {l.h}]
-      </div>
-    ))
-  } */
-
-  // eslint-disable-next-line class-methods-use-this
-  setNavActive(isCurrent) {
-    const as = {
-      style: {
-        color: '#0e112f',
-        fontWeight: 'bold',
-        background: 'white',
-      },
-    }
-    const is = {
-      style: {
-        fontWeight: 'normal',
-      },
-    }
-
-    return isCurrent ? as : is
   }
 
   render() {
     return (
-      <div className="Btcd-App">
-        <div className="nav-wrp">
-          <div className="logo" />
-          <nav className="top-nav">
-            <Link
-              to="/"
-              getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
-            >My Forms
-            </Link>
+      <Router>
 
-            <Link
-              to="/builder"
-              getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
-            >Builder
-            </Link>
+        <div className="Btcd-App">
+          <div className="nav-wrp">
+            <div className="logo" />
+            <nav className="top-nav">
+              <NavLink
+                exact
+                to="/"
+                activeClassName="app-link-active"
+              >My Forms
+              </NavLink>
 
-            <Link
-              to="settings"
-              getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
-            >Settings
-            </Link>
-          </nav>
+              <NavLink
+                to="/settings"
+                activeClassName="app-link-active"
+              >Settings
+              </NavLink>
+            </nav>
+          </div>
+
+          <div className="route-wrp">
+            <Switch>
+              <Route exact path="/">
+                <AllForms />
+              </Route>
+              <Route path="/builder/:formType/:formID?">
+                <Builder
+                  gridWidth={this.state.gridWidth}
+                  setGridWidth={this.setGridWidth}
+                />
+              </Route>
+              <Route path="/settings">
+                <Dashboard />
+              </Route>
+            </Switch>
+          </div>
         </div>
-
-        <div className="route-wrp">
-          <Router primary={false}>
-            <AllForms path="/">All Forms</AllForms>
-
-            <Builder
-              path="/builder/:preLayout"
-              gridWidth={this.state.gridWidth}
-              setGridWidth={this.setGridWidth}
-            />
-            <Dashboard path="settings">Settings</Dashboard>
-          </Router>
-        </div>
-      </div>
+      </Router>
     )
   }
 }

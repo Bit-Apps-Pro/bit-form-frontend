@@ -1,16 +1,25 @@
 import React from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
-import { Link } from '@reach/router'
+import { NavLink, useParams } from 'react-router-dom'
+
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import ElementSettings from '../components/ElmSettings'
 
 export default function Builder(props) {
+  const { formType, formID } = useParams()
+
+  const styl = {
+    left: -180, top: -38, zIndex: 9999,
+  }
+
   const [fulScn, setFulScn] = React.useState(false)
   const [elmSetting, setElmSetting] = React.useState({ id: null, type: null, data: null })
   const [cloneData, setCloneData] = React.useState()
   const [newData, setNewData] = React.useState(null)
   const [drgElm, setDrgElm] = React.useState(['', { h: 1, w: 1, i: '' }])
+  const [lay, setLay] = React.useState(null)
+  const [tolbarSiz, setTolbarSiz] = React.useState(false)
 
   const updateData = (data) => {
     setCloneData({ ...cloneData, data })
@@ -19,41 +28,71 @@ export default function Builder(props) {
   setTimeout(() => { setFulScn(true) }, 500)
   const notIE = !window.document.documentMode
 
-  React.useEffect(() => {
-    return function cleanup() {
-      setFulScn(false)
-    }
+  React.useEffect(() => function cleanup() {
+    setFulScn(false)
   }, [])
 
   return (
-    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
+    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`} style={process.env.NODE_ENV === 'production' ? styl : {}}>
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
-          <Link to="/">
+          <NavLink to="/">
             <span className="btcd-icn icn-arrow_back" />
             {' '}
             Back
-          </Link>
-          <Link to={`/builder/${props.preLayout}`}>Builder</Link>
-          <Link to="/">Settings</Link>
+          </NavLink>
+          <NavLink
+            to={`/builder/${formType}/${formID}`}
+            activeClassName="app-link-active"
+          >
+            Builder
+          </NavLink>
+          <NavLink
+            to="/s"
+            activeClassName="app-link-active"
+          >
+            Settings
+          </NavLink>
         </div>
         <div className="btcd-bld-btn">
           <button className="btn blue" type="button">Save</button>
         </div>
       </nav>
-      <Container>
-        <Section defaultSize={160} minSize={notIE && 60}>
-          <ToolBar setDrgElm={setDrgElm} setNewData={setNewData} className="tile" />
+      <Container className="btcd-bld-con" style={{ height: '100%' }}>
+        <Section className="tool-sec" defaultSize={160} minSize={notIE && 58} style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}>
+          <ToolBar setDrgElm={setDrgElm} setNewData={setNewData} className="tile" tolbarSiz={tolbarSiz} setTolbarSiz={setTolbarSiz} setGridWidth={props.setGridWidth} />
         </Section>
-        <Bar className="bar" />
+        <Bar className="bar bar-l" />
 
-        <Section onSizeChanged={props.setGridWidth} minSize={notIE && 320} defaultSize={props.gridWidth}>
-          <div className="layoutJSON">
-            Displayed as
-            <code>[x, y, w, h]</code>
-            :
-            <div className="columns">{/* props.stringifyLayout() */}</div>
-          </div>
+        <Section onSizeChanged={props.setGridWidth} minSize={notIE && 320} defaultSize={props.gridWidth} style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}>
+
+          {lay !== null
+            && (
+              <small style={{ background: 'lightgray', padding: 8, display: 'none' }}>
+                {lay.map((item, i) => (
+                  <div key={`k-${i + 10}`} style={{ display: 'inline-block', padding: 5, background: 'aliceblue', margin: 5 }}>
+                    <div>{item.i}</div>
+                    <span style={{ margin: 8 }}>
+                      X:
+                      {item.x}
+                    </span>
+                    <span style={{ margin: 8 }}>
+                      Y:
+                      {item.y}
+                    </span>
+                    <span style={{ margin: 8 }}>
+                      W:
+                      {item.w}
+                    </span>
+                    <span style={{ margin: 8 }}>
+                      H:
+                      {item.h}
+                    </span>
+                  </div>
+                ))}
+              </small>
+            )}
+
           <GridLayout
             width={props.gridWidth}
             draggedElm={drgElm}
@@ -62,13 +101,15 @@ export default function Builder(props) {
             setCloneData={setCloneData}
             newData={newData}
             setNewData={setNewData}
-            preLayout={props.preLayout}
+            formType={formType}
+            formID={formID}
+            setLay={setLay}
           />
         </Section>
 
-        <Bar className="bar" />
+        <Bar className="bar bar-r" />
         <Section id="settings-menu" defaultSize={300}>
-          <ElementSettings key="elm-settins1" elm={elmSetting} updateData={updateData} />
+          <ElementSettings elm={elmSetting} updateData={updateData} />
         </Section>
       </Container>
     </div>
