@@ -55,7 +55,7 @@ function Templates() {
         <span className="btcd-icn icn-file-empty" style={{ fontSize: 90 }} />
         <div>{template.title}</div>
         <div className="btcd-hid-btn">
-          <Link to={`builder/${template.title}`} className="btn btn-white sh-sm" type="button">
+          <Link to={`builder/new/${template.title}`} className="btn btn-white sh-sm" type="button">
             Create
           </Link>
         </div>

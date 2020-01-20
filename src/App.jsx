@@ -27,7 +27,6 @@ export default class App extends React.Component {
     this.state = {
       gridWidth: window.innerWidth - 480,
     }
-    console.log(window.innerWidth - (166 + 8 + 312 + 8 + 20 + 1))
     this.setGridWidth = this.setGridWidth.bind(this)
 
     /* function insertion_Sort(arr) {
@@ -64,7 +63,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
 
         <div className="Btcd-App">
           <div className="nav-wrp">

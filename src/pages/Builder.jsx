@@ -11,7 +11,7 @@ export default function Builder(props) {
   const { formType, formID } = useParams()
 
   const styl = {
-    left: -180, top: -38, zIndex: 9999,
+    left: -180 , top: '-38px !important', zIndex: 99999,
   }
 
   const [fulScn, setFulScn] = React.useState(false)
