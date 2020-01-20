@@ -1,5 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import TextFieldSettings from './TextFieldSettings'
 import TextAreaSettings from './TextAreaSettings'
 import DateSettings from './DateSettings'
@@ -33,7 +34,13 @@ export default function index(props) {
   return (
     <div className="elm-settings">
       <h4>Element Settings</h4>
-      {renderSettings(props.elm.type)}
+      <div>
+        <Scrollbars>
+          <div className="btcd-settings">
+            {renderSettings(props.elm.type)}
+          </div>
+        </Scrollbars>
+      </div>
     </div>
   )
 }
