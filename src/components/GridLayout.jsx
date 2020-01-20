@@ -37,7 +37,7 @@ export default class GridLayout extends React.PureComponent {
           "Content-Type": "application/json"
         },
         params: {
-          action: "bitapps_create_new_form",
+          action: "bitapps_get_template",
           _ajax_nonce: bits.nonce
         }
       })
@@ -184,21 +184,35 @@ export default class GridLayout extends React.PureComponent {
 
   saveForm(lay) {
     console.log('bits.nonce: ', this.state.data)
-    axios.post(bits.ajaxURL, {
+    let data = {
       layout: this.state.layout,
       fields: this.state.data,
-      id: this.state.id,
       form_name: this.state.form_name
-    }, {
+    }
+    let action = 'bitapps_create_new_form'
+    if (this.state.id > 0 ) {
+       data = {
+        layout: this.state.layout,
+        fields: this.state.data,
+        id: this.state.id,
+        form_name: this.state.form_name
+      }
+
+       action = 'bitapps_update_form'
+    }
+    axios.post(bits.ajaxURL, data, {
       headers: {
         'Content-Type': 'application/json'
     },
-    params : {      
-      action: 'bitapps_update_form',
+    params : {
+      action: action,
       _ajax_nonce: bits.nonce,
     }
     }).then((response) => {
-      console.log(response)
+      if (action === 'bitapps_create_new_form') {
+        let data = JSON.parse(response.data.data)
+        this.setState({  id:data.id})
+      }
     }).catch(error => {
       console.log('error', error);
     })

@@ -1,28 +1,37 @@
+/* eslint-disable no-undef */
 import React from 'react'
-import { Link } from '@reach/router'
+import { NavLink as Link } from 'react-router-dom'
 import Table from './Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import Modal from '../components/Modal'
+import axios from "axios";
 
 
 export default function AllFroms(props) {
   console.log("AllForms",process.env.NODE_ENV === 'production' ? bits.allForms:null)
-  console.log("object:f",
-  [
-    bits.allForms.map(form=>
-      {return {status: form.status, formName: form.form_name, shortcode: 'bitapps '+form.id, entries: form.entries, views: form.views, conversion: (form.entries/form.views)*100, created_at: form.created_at}})
-  ]
-  )
-  const handleStatus = (e) => {
-    console.log(e.target.checked)
+  const handleStatus = (e, id,row) => {
+    const changeFormStatus = async () => {
+      const result = await axios.post(bits.ajaxURL, {id: bits.allForms[row.index].id, status: e.target.checked}, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        params: {
+          action: "bitapps_change_status",
+          _ajax_nonce: bits.nonce
+        }
+      })
+    }
+    if(row.values.status!==e.target.checked){
+      changeFormStatus()
+    }
   }
 
   const cols = [
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
-    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e, id) => handleStatus(e, id)} value={value.row.values.status} /> },
+    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e, id) => handleStatus(e, id,value.row)} value={value.row.values.status} /> },
     { Header: 'Form Name', accessor: 'formName' },
     { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
     { Header: 'Views', accessor: 'views' },
@@ -34,7 +43,7 @@ export default function AllFroms(props) {
 
   const data = process.env.NODE_ENV === 'production' ? 
     bits.allForms.map(form=>
-      {return {status: form.status==="0"?false:true, formName: form.form_name, shortcode: 'bitapps '+form.id, entries: form.entries, views: form.views, conversion: (form.entries/form.views===0?1:form.views)*100, created_at: form.created_at}})
+      {return {id: form.id, status: form.status==="0"?false:true, formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: (form.entries/form.views===0?1:form.views)*100, created_at: form.created_at}})
    : [
     { formName: 'member', shortcode: 'test', entries: 23, views: 79, conversion: 96, created_at: '2 Dec' },
     { formName: 'lace', shortcode: 'guitar', entries: 5, views: 38, conversion: 57, created_at: '2 Dec' },
@@ -58,7 +67,6 @@ export default function AllFroms(props) {
     { formName: 'emphasis', shortcode: 'stream', entries: 7, views: 5, conversion: 51, created_at: '2 Dec' },
     { formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
   ]
-  console.log("data",data)
   const [modal, setModal] = React.useState(false)
   return (
     <div id="all-forms">

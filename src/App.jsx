@@ -2,35 +2,38 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-undef */
-import React from 'react'
-import { Router, Link } from '@reach/router'
-import './resource/sass/app.scss'
-import './resource/sass/components.scss'
+import React from "react";
+import {
+  HashRouter as Router,
+  NavLink as Link,
+  Route,
+  Switch
+} from "react-router-dom";
+import "./resource/sass/app.scss";
+import "./resource/sass/components.scss";
 // import './resource/icons/style.css'
-import './resource/js/custom'
-import Builder from './pages/Builder'
-import AllForms from './pages/AllForms'
+import "./resource/js/custom";
+import Builder from "./pages/Builder";
+import AllForms from "./pages/AllForms";
 
 const Dashboard = () => (
   <div>
     <h2>Dashboard</h2>
   </div>
-)
+);
 
 export default class App extends React.Component {
-  col
+  col;
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      gridWidth: 840,
-    }
-    console.log(bits.baseURL)
+      gridWidth: 840
+    };
 
-
-    this.setGridWidth = this.setGridWidth.bind(this)
+    this.setGridWidth = this.setGridWidth.bind(this);
     // this.stringifyLayout = this.stringifyLayout.bind(this)
-    this.setNavActive = this.setNavActive.bind(this)
+    this.setNavActive = this.setNavActive.bind(this);
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -60,7 +63,7 @@ export default class App extends React.Component {
   }
 
   setGridWidth(w) {
-    this.setState({ gridWidth: w - 20 })
+    this.setState({ gridWidth: w - 20 });
   }
 
   /* stringifyLayout() {
@@ -72,83 +75,79 @@ export default class App extends React.Component {
   } */
 
   // eslint-disable-next-line class-methods-use-this
-  setNavActive(isCurrent,loc) {
-    console.log(loc)
+  setNavActive(isCurrent) {
     const as = {
-      style: {
-        color: '#0e112f',
-        fontWeight: 'bold',
-        background: 'white',
-      },
-    }
+        color: "#0e112f",
+        fontWeight: "bold",
+        background: "white"
+    };
     const is = {
-      style: {
-        fontWeight: 'normal',
-      },
-    }
+        fontWeight: "normal"
+    };
 
-    return isCurrent ? as : is
+    return isCurrent ? as : is;
   }
 
   saveForm(lay) {
-    console.log('bits.nonce: ', this.state.data)
-    axios.post(bits.ajaxURL, {
-      fields: this.state.layout,
-      fields: this.state.data
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
-    },
-    params : {      
-      action: 'bitapps_update_form',
-      _ajax_nonce: bits.nonce,
-    }
-    }).then((response) => {
-      console.log(response)
-    }).catch(error => {
-      console.log('error', error);
-    })
+    console.log("bits.nonce: ", this.state.data);
+    axios
+      .post(
+        bits.ajaxURL,
+        {
+          fields: this.state.layout,
+          fields: this.state.data
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          params: {
+            action: "bitapps_update_form",
+            _ajax_nonce: bits.nonce
+          }
+        }
+      )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log("error", error);
+      });
   }
   render() {
     return (
-      <div className="Btcd-App">
-        <div className="nav-wrp">
-          <div className="logo" />
-          <nav className="top-nav">
-            <Link
-              to={ "/ssss"}
-              getProps={({ isCurrent,location }) => this.setNavActive(isCurrent,location)}
-            >My Forms
-            </Link>
+      <Router>
+        <div className="Btcd-App">
+          <div className="nav-wrp">
+            <div className="logo" />
+            <nav className="top-nav">
+              <Link exact to={"/"} activeStyle={this.setNavActive(true)}>My Forms</Link>
 
-            <Link
-              to="/builder"
-              getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
-            >Builder
-            </Link>
+              <Link to="/builder" activeStyle={this.setNavActive(true)}>Builder</Link>
 
-            <Link
-              to={bits.baseURL + "/settings?page=bitapps#/"}
-              getProps={({ isCurrent }) => this.setNavActive(isCurrent)}
-            >Settings
-            </Link>
-          </nav>
+              <Link to="/settings" activeStyle={this.setNavActive(true)}>Settings</Link>
+            </nav>
+          </div>
+
+          <div className="route-wrp">
+            <Switch>
+              <Route exact path="/builder/:preLayout">
+                <Builder
+                  gridWidth={this.state.gridWidth}
+                  setGridWidth={this.setGridWidth}
+                />
+              </Route>
+              <Route exact path="/settings">
+                <Dashboard />
+              </Route>
+              <Route exact path="/">
+                <AllForms />
+              </Route>
+            </Switch>
+          </div>
         </div>
-
-        <div className="route-wrp">
-          <Router primary={false}>
-            <AllForms path="/">All Forms</AllForms>
-
-            <Builder
-              path="/builder/:preLayout"
-              gridWidth={this.state.gridWidth}
-              setGridWidth={this.setGridWidth}
-            />
-            <Dashboard path={"/wp-admin/admin.php/settings?page=bitapps#/"}>Settings</Dashboard>
-          </Router>
-        </div>
-      </div>
-    )
+      </Router>
+    );
   }
 }
 

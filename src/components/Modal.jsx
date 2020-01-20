@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 import axios from "axios";
 /* eslint-disable no-undef */
 export default function Modal(props) {
@@ -38,7 +38,6 @@ export default function Modal(props) {
 function Templates() {
   const [templates, setTemplates] = useState(null);
   useEffect(() => {
-    console.log("bits.nonce: ", templates);
     const fetchTemplates = async () => {
       const result = await axios.post(bits.ajaxURL, null, {
         headers: {

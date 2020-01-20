@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
-import { Link } from '@reach/router'
+import { NavLink as Link } from 'react-router-dom'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import ElementSettings from '../components/ElmSettings'
