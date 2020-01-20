@@ -20,6 +20,7 @@ import check from '../../resource/img/check.png'
 import radio from '../../resource/img/radio.png'
 import dropdown from '../../resource/img/dropdown.png'
 import { setPrevData, handleFile } from '../../resource/js/file-upload'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function index(props) {
   const tools = [
@@ -56,7 +57,7 @@ export default function index(props) {
     {
       name: 'Blank Block',
       icn: blank,
-      pos: { h: 2, w: 2, i: 'block-5' },
+      pos: { h: 2, w: 3, i: 'block-5' },
       elm: [
         {
           tag: 'div',
@@ -68,7 +69,7 @@ export default function index(props) {
     {
       name: 'Check Box',
       icn: check,
-      pos: { h: 2, w: 5, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -101,7 +102,7 @@ export default function index(props) {
     {
       name: 'Radio Button',
       icn: radio,
-      pos: { h: 2, w: 5, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -149,7 +150,7 @@ export default function index(props) {
     {
       name: 'Drop Down',
       icn: dropdown,
-      pos: { h: 2, w: 5, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -251,7 +252,7 @@ export default function index(props) {
     {
       name: 'Date Field',
       icn: date,
-      pos: { h: 2, w: 4, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -266,7 +267,7 @@ export default function index(props) {
     {
       name: 'Time Field',
       icn: time,
-      pos: { h: 2, w: 4, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -281,7 +282,7 @@ export default function index(props) {
     {
       name: 'Date-Time Field',
       icn: dateTime,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -296,7 +297,7 @@ export default function index(props) {
     {
       name: 'Month Field',
       icn: month,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -311,7 +312,7 @@ export default function index(props) {
     {
       name: 'Week Field',
       icn: week,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -326,7 +327,7 @@ export default function index(props) {
     {
       name: 'Color Picker',
       icn: clr,
-      pos: { h: 2, w: 5, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: [
         {
           tag: 'div',
@@ -341,15 +342,20 @@ export default function index(props) {
   ]
   return (
     <div className="toolBar-wrp">
-      <h4>ToolBar</h4>
-      <div className="toolBar">
-        {tools.map(tool => (
-          <Tools key={tool.name} setDrgElm={props.setDrgElm} setNewData={props.setNewData} value={[tool.elm, tool.pos]}>
-            <img draggable="false" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${tool.icn}` : `${tool.icn}`} alt={`${tool.name}-field`} className="tool-img" />
-            {tool.name}
-          </Tools>
-        ))}
+      <div className="btcd-toolbar-title">
+        {!props.tolbarSiz && 'ToolBar'}
+        <button className="icn-btn" onClick={() => { props.setTolbarSiz(!props.tolbarSiz); props.setGridWidth(props.tolbarSiz ? 870 : 975) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
       </div>
+      <Scrollbars autoHide style={{ maxWidth: 400 }}>
+        <div className="toolBar">
+          {tools.map(tool => (
+            <Tools key={tool.name} setDrgElm={props.setDrgElm} setNewData={props.setNewData} value={[tool.elm, tool.pos]}>
+              <img draggable="false" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${tool.icn}` : `${tool.icn}`} alt={`${tool.name}-field`} className="tool-img" />
+              {tool.name}
+            </Tools>
+          ))}
+        </div>
+      </Scrollbars>
     </div>
   )
 }

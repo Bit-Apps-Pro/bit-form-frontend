@@ -7,6 +7,7 @@ import axios from 'axios';
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default class GridLayout extends React.PureComponent {
   constructor(props) {
@@ -31,8 +32,8 @@ export default class GridLayout extends React.PureComponent {
   }
 
   componentDidMount() {
-    const fetchTemplate = async () => {
-      const result = await axios.post(bits.ajaxURL, {template:this.props.preLayout}, {
+    const fetchTemplate = async (template) => {
+      const result = await axios.post(bits.ajaxURL, {template:template}, {
         headers: {
           "Content-Type": "application/json"
         },
@@ -47,11 +48,20 @@ export default class GridLayout extends React.PureComponent {
         this.setState({ layout: data.form_content.layout, data: data.form_content.fields , id:data.id, form_name:  data.form_content.form_name, newCounter: data.form_content.layout.length})
       }
     }
-    if (this.props.preLayout === '0') {
+    if (this.props.formType === 'new') {
+      if (this.props.formID === 'blank') {
+        console.log('create a blank form')
+        this.setState({ isLoading: false })
+      } else {
+        fetchTemplate(this.props.formID)
+        console.log('fetch form layout', this.props.formID)
+        this.setState({ isLoading: false })
+
+      }
+    } else if (this.props.formType === 'edit') {
+      console.log('fetch existing form layout', this.props.formID)
       this.setState({ isLoading: false })
-    } else {
-      fetchTemplate()
-      this.setState({ isLoading: false })
+
     }
   }
 
@@ -99,9 +109,9 @@ export default class GridLayout extends React.PureComponent {
       nextProps.setNewData(null)
       return {
         data: {
-          ...prvState.data, [`n_blk_${prvState.newCounter}`]: nextProps.newData[0],
+          ...prvState.data, [`b-${prvState.newCounter}`]: nextProps.newData[0],
         },
-        layout: prvState.layout.concat({ i: `n_blk_${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
+        layout: prvState.layout.concat({ i: `b-${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
         newCounter: prvState.newCounter + 1,
       }
     }
@@ -114,6 +124,8 @@ export default class GridLayout extends React.PureComponent {
   }
 
   onLayoutChange(layout) {
+    this.props.setLay(layout)
+    console.log(layout)
     // this.setState({ layout })
   }
 
@@ -129,7 +141,7 @@ export default class GridLayout extends React.PureComponent {
     const { w, h, minH, maxH, minW } = draggedElm[1]
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `n_blk_${this.state.newCounter}`
+    const newBlk = `b-${this.state.newCounter}`
 
     this.setState(prvState => ({
       ...prvState,
@@ -245,7 +257,7 @@ export default class GridLayout extends React.PureComponent {
       >
         <span
           data-close
-          style={{ right: 2 }}
+          style={{ right: 8 }}
           unselectable="on"
           draggable="false"
           className="bit-blk-icn"
@@ -257,7 +269,7 @@ export default class GridLayout extends React.PureComponent {
           &times;
         </span>
         <span
-          style={{ right: 22, cursor: "move" }}
+          style={{ right: 27, cursor: 'move' }}
           className="bit-blk-icn drag"
           role="button"
         >
@@ -281,27 +293,24 @@ export default class GridLayout extends React.PureComponent {
     ));
   }
 
+
   render() {
     return (
-      <div style={{ width: this.props.width, margin: 'auto' }}>
-        <p>
-          form_name:{this.state.form_name}  
-          ID:{this.state.id}
-        </p>
-        <button type="button" onClick={this.saveForm}>Save</button>
-        {this.state.isLoading ? <h1>Loading</h1>
-          : (
-            <div onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      this.state.isLoading ? <h1>Loading</h1>
+        : (
+          <div style={{ width: this.props.width }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+            <Scrollbars>
               <ResponsiveReactGridLayout
                 className="layout"
-                style={{ height: '100vh' }}
                 // layouts={this.props.lay}
                 onDrop={this.onDrop}
                 onLayoutChange={this.onLayoutChange}
                 onBreakpointChange={this.onBreakpointChange}
                 droppingItem={this.props.draggedElm[1]}
-                cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-                breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+                cols={{ lg: 10 }}
+                breakpoints={{ lg: 800 }}
+                // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+                // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
                 rowHeight={40}
                 width={this.props.width}
                 margin={[0, 0]}
@@ -310,14 +319,15 @@ export default class GridLayout extends React.PureComponent {
                 isDroppable
                 useCSSTransforms
                 transformScale={1}
+              // compactType="vertical"
               >
 
                 {this.createElm(this.state.layout)}
 
               </ResponsiveReactGridLayout>
-            </div>
-          )}
-      </div>
-    );
+            </Scrollbars>
+          </div>
+        )
+    )
   }
 }

@@ -1,16 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable no-undef */
-import React from "react";
+
+import React from 'react'
 import {
-  HashRouter as Router,
-  NavLink as Link,
-  Route,
-  Switch
-} from "react-router-dom";
-import "./resource/sass/app.scss";
-import "./resource/sass/components.scss";
+  BrowserRouter as Router, Switch, Route, NavLink,
+} from 'react-router-dom'
+import './resource/sass/app.scss'
+import './resource/sass/components.scss'
 // import './resource/icons/style.css'
 import "./resource/js/custom";
 import Builder from "./pages/Builder";
@@ -28,12 +25,10 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gridWidth: 840
-    };
-
-    this.setGridWidth = this.setGridWidth.bind(this);
-    // this.stringifyLayout = this.stringifyLayout.bind(this)
-    this.setNavActive = this.setNavActive.bind(this);
+      gridWidth: window.innerWidth - 480,
+    }
+    console.log(window.innerWidth - (166 + 8 + 312 + 8 + 20 + 1))
+    this.setGridWidth = this.setGridWidth.bind(this)
 
     /* function insertion_Sort(arr) {
       for (let i = 1; i < arr.length; i++) {
@@ -63,91 +58,52 @@ export default class App extends React.Component {
   }
 
   setGridWidth(w) {
-    this.setState({ gridWidth: w - 20 });
+    console.log(w)
+    this.setState({ gridWidth: w - 20 })
   }
 
-  /* stringifyLayout() {
-    return this.state.layout.map((l) => (
-      <div className="layoutItem" key={l.i}>
-        <b>{l.i}</b>:[{l.x}, {l.y}, {l.w}, {l.h}]
-      </div>
-    ))
-  } */
-
-  // eslint-disable-next-line class-methods-use-this
-  setNavActive(isCurrent) {
-    const as = {
-        color: "#0e112f",
-        fontWeight: "bold",
-        background: "white"
-    };
-    const is = {
-        fontWeight: "normal"
-    };
-
-    return isCurrent ? as : is;
-  }
-
-  saveForm(lay) {
-    console.log("bits.nonce: ", this.state.data);
-    axios
-      .post(
-        bits.ajaxURL,
-        {
-          fields: this.state.layout,
-          fields: this.state.data
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          params: {
-            action: "bitapps_update_form",
-            _ajax_nonce: bits.nonce
-          }
-        }
-      )
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log("error", error);
-      });
-  }
   render() {
     return (
       <Router>
+
         <div className="Btcd-App">
           <div className="nav-wrp">
             <div className="logo" />
             <nav className="top-nav">
-              <Link exact to={"/"} activeStyle={this.setNavActive(true)}>My Forms</Link>
+              <NavLink
+                exact
+                to="/"
+                activeClassName="app-link-active"
+              >My Forms
+              </NavLink>
 
-              <Link to="/builder" activeStyle={this.setNavActive(true)}>Builder</Link>
-
-              <Link to="/settings" activeStyle={this.setNavActive(true)}>Settings</Link>
+              <NavLink
+                to="/settings"
+                activeClassName="app-link-active"
+              >Settings
+              </NavLink>
             </nav>
           </div>
 
           <div className="route-wrp">
             <Switch>
-              <Route exact path="/builder/:preLayout">
+              <Route exact path="/">
+                <AllForms />
+              </Route>
+              <Route path="/builder/:formType/:formID?">
                 <Builder
                   gridWidth={this.state.gridWidth}
                   setGridWidth={this.setGridWidth}
                 />
               </Route>
-              <Route exact path="/settings">
+              <Route path="/settings">
                 <Dashboard />
-              </Route>
-              <Route exact path="/">
-                <AllForms />
               </Route>
             </Switch>
           </div>
         </div>
       </Router>
-    );
+    )
   }
 }
 
