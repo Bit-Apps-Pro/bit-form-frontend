@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { NavLink, useParams } from 'react-router-dom'
 
@@ -9,17 +9,13 @@ import ElementSettings from '../components/ElmSettings'
 export default function Builder(props) {
   const { formType, formID } = useParams()
 
-  const styl = {
-    left: -180, top: -38, zIndex: 9999,
-  }
-
-  const [fulScn, setFulScn] = React.useState(false)
-  const [elmSetting, setElmSetting] = React.useState({ id: null, type: null, data: null })
-  const [cloneData, setCloneData] = React.useState()
-  const [newData, setNewData] = React.useState(null)
-  const [drgElm, setDrgElm] = React.useState(['', { h: 1, w: 1, i: '' }])
-  const [lay, setLay] = React.useState(null)
-  const [tolbarSiz, setTolbarSiz] = React.useState(false)
+  const [fulScn, setFulScn] = useState(false)
+  const [elmSetting, setElmSetting] = useState({ id: null, type: null, data: null })
+  const [cloneData, setCloneData] = useState()
+  const [newData, setNewData] = useState(null)
+  const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
+  const [lay, setLay] = useState(null)
+  const [tolbarSiz, setTolbarSiz] = useState(false)
 
   const updateData = (data) => {
     setCloneData({ ...cloneData, data })
@@ -33,7 +29,7 @@ export default function Builder(props) {
   }, [])
 
   return (
-    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`} style={process.env.NODE_ENV === 'production' ? styl : {}}>
+    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'} ${process.env.NODE_ENV === 'production' && 'btcd-wp-ful-scn'}`} >
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
           <NavLink to="/">
