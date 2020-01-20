@@ -1430,6 +1430,11 @@ nav.top-nav {
     transition: height 0.5s 0.7s !important;
   }
 }
+.btcd-wp-ful-scn {
+  left: -180px !important;
+  top: -32px !important;
+  z-index: 99999 !important;
+}
 .btcd-bld-nav {
   height: 0;
   overflow: hidden;
