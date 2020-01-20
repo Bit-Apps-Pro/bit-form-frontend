@@ -119,13 +119,23 @@ $blue: #0083f3;
 }
 
 .layout-wrapper {
-  width: 100%;
+  padding-top: 10px;
+  margin: auto;
+  height: calc(100% - 50px);
+  transition: width 0.5s;
+}
+
+.layout {
+  overflow: hidden;
+  border: 1px solid #bdbdbd;
+  min-height: 100% !important;
 }
 
 .toolBar-wrp {
+  height: 100%;
+  overflow: hidden;
   max-width: 400px;
   min-width: 55px;
-  overflow-y: auto;
   padding: 5px;
   background: #f8f8f8;
 
@@ -136,7 +146,29 @@ $blue: #0083f3;
   }
 }
 
+.btcd-toolbar-title {
+  user-select: none;
+  -webkit-user-drag: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0 10px 12px;
+  font-weight: bold;
+  & > button {
+    width: 25px;
+    height: 25px;
+    font-weight: bold;
+    // margin-left: 10px;
+    background: #e8e8e8;
+  }
+}
+
+.btcd-settings {
+  padding: 0 15px 50px 15px;
+}
+
 .toolBar {
+  padding-bottom: 80px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -153,7 +185,7 @@ $blue: #0083f3;
   cursor: grab;
   overflow: hidden;
   margin: 5px;
-  box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.5), -1px -1px 3px 1px rgba(255,255,255,1) ;
+  box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.5), -1px -1px 3px 1px rgba(255, 255, 255, 1);
   transition: all 200ms;
 
   &:hover,
@@ -165,6 +197,7 @@ $blue: #0083f3;
 
 .tool-img {
   width: 21px;
+  min-width: 21px;
   margin-right: 15px;
 }
 
@@ -225,17 +258,6 @@ $blue: #0083f3;
 
 .Resizer.disabled:hover {
   border-color: transparent;
-}
-
-.react-grid-layout {
-  background: rgba(241, 241, 241, 0.3137254901960784);
-}
-
-.layoutJSON {
-  background: #ddd;
-  border: 1px solid black;
-  margin-top: 10px;
-  padding: 10px;
 }
 
 .columns {
@@ -363,12 +385,15 @@ li b {
 .bar {
   background: #f3f3f3;
   width: 8px;
-  cursor: col-resize;
+  cursor: e-resize !important;
+  & > div {
+    cursor: e-resize !important;
+  }
 
   &::before {
     content: "\02551";
     height: 64px;
-    color: rgb(168, 168, 168);
+    color: #d8d8d8;
     position: absolute;
     top: 47vh;
     text-align: center;
@@ -378,11 +403,21 @@ li b {
   &:hover::before {
     color: #4e4e4e;
   }
+}
 
+.bar-l {
+  pointer-events: none;
+  background: #f8f8f8;
   &:hover {
     width: 8px;
-    border: 1px solid #cfcfcf;
-    background: #cfcfcf;
+    border-right: 1px solid #c7c7c7;
+  }
+}
+.bar-r {
+  background: #f8f8f8;
+  &:hover {
+    width: 8px;
+    border-left: 1px solid #c7c7c7;
   }
 }
 
@@ -410,7 +445,7 @@ li b {
   }
 
   & > textarea {
-    height: 85%;
+    height: calc(100% - 20px);
     resize: none;
   }
 }
@@ -435,7 +470,7 @@ li b {
   font-size: 22px;
   top: 2px;
   cursor: pointer;
-  line-height: 0.6;
+  //line-height: 0.6;
   padding: 2px;
   border-radius: 3px;
   background: #fafafa;
@@ -487,19 +522,25 @@ li b {
   cursor: default;
 }
 
-.elm-settings {
-  font-size: 18px;
-  overflow: auto;
+#settings-menu {
+}
 
-  & > div {
-    padding: 0 15px;
-  }
+.elm-settings {
+  background: #f8f8f8;
+  height: 100%;
+  max-width: 313px;
+  margin-right: 0;
+  margin-left: auto;
+  font-size: 18px;
 
   & > h4 {
-    text-align: center;
-    margin: 15px;
-    padding-bottom: 15px;
+    margin: 0 0 0 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-bottom: 2px solid #c7c7c7;
+  }
+  & > div {
+    height: calc(100% - 85px);
   }
 }
 
@@ -549,7 +590,7 @@ li b {
 .setting-inp {
   display: flex;
   flex-direction: column;
-  width:100%;
+  width: 100%;
   & > input,
   select {
     @include inp;
@@ -627,7 +668,7 @@ li b {
   display: block;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #ffffff;
+  border: 2px solid transparent;
   border-radius: 50px;
 }
 
@@ -1106,6 +1147,7 @@ nav.top-nav {
 .cpyTxt {
   width: 180px;
   & > input {
+    font-weight: normal;
     color: #191e3e;
     margin-top: 0;
     letter-spacing: 1px;
@@ -1148,6 +1190,9 @@ nav.top-nav {
     transform: scale(0) translate(-50%, 0);
     white-space: nowrap;
     z-index: 999;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
     transition: transform 300ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
   &:hover::after {
@@ -1188,7 +1233,12 @@ nav.top-nav {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.22);
   transition: left 200ms, width 0.3s, height 0.3s, border-radius 0.5s;
 
-  & > button {
+  & > a,
+  button {
+    color: inherit;
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: none;
     padding: 10px;
     display: block;
     cursor: pointer;
@@ -1199,19 +1249,21 @@ nav.top-nav {
     background: transparent;
     outline: none;
   }
-  & > button:hover {
+  & > a:hover,
+  button:hover {
     background: #f0f0f0;
   }
-  & > button:active {
+  & > a:active,
+  button:hover {
     background: #ebebeb;
   }
 }
 .btcd-m-a {
   background: #fff;
-  width: 100px;
-  height: 76px;
+  width: 110px;
+  height: 114px;
   border-radius: 8px;
-  left: -85px;
+  left: -90px;
 }
 
 .btcd-menu-btn {
@@ -1355,6 +1407,7 @@ nav.top-nav {
   }
 }
 .btcd-builder-wrp {
+  height: 100%;
   background: white !important;
   position: absolute !important;
   left: 20px !important;
@@ -1363,6 +1416,7 @@ nav.top-nav {
   margin-bottom: 30px !important;
   border-radius: 20px !important;
   overflow: hidden !important;
+  box-shadow: 0px 0px 7px 0px rgba(132, 178, 176, 0.45);
   transition: left 0.5s, right 0.5s, top 0.5s, margin-bottom 0.5s, border-radius 0.5s 0.5s !important;
 }
 .btcd-ful-scn {
@@ -1394,6 +1448,7 @@ nav.top-nav {
     border-radius: 100px;
     display: inline-block;
     text-decoration: none;
+    line-height: 16px;
     transition: background 0.3s;
     &:hover {
       background: transparentize(#fff, 0.7);
@@ -1417,8 +1472,55 @@ nav.top-nav {
 }
 .btcd-bld-btn {
   & > button {
-    margin: 5px 10px 5px 5px;
-    padding: 7px 10px;
+    margin: 5px 20px 5px 5px;
+    padding: 7px 25px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76);
   }
+}
+.btcd-bld-con {
+  & > .tool-sec {
+    transition: flex-grow 500ms;
+  }
+}
+
+.app-link-active {
+  color: #0e112f !important;
+  font-weight: bold !important;
+  background: white !important;
+}
+
+.bld-link-active {
+  border: 1px solid red;
+  border-bottom: 0;
+  width: 80px;
+  height: 40px;
+  margin: 30px;
+  position: relative;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+}
+
+.bld-link-active:after,
+.bld-link-active:before {
+  content: "";
+  width: 40px;
+  height: 30px;
+  border: 1px solid red;
+  position: absolute;
+  bottom: -3px;
+  border-top: 0;
+}
+
+.bld-link-active:after {
+  border-left: 0;
+  -moz-border-radius: 0 0 5px 0;
+  -webkit-border-radius: 0 0 5px 0;
+  left: -41px;
+}
+
+.bld-link-active:before {
+  border-right: 0;
+  -moz-border-radius: 0 0 0 5px;
+  -webkit-border-radius: 0 0 0 5px;
+  right: -41px;
 }
