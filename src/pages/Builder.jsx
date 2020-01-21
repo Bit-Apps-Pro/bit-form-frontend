@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
-import { NavLink, useParams } from 'react-router-dom'
+import { Switch, Route, NavLink, useParams } from 'react-router-dom'
 
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
@@ -16,9 +16,14 @@ export default function Builder(props) {
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [lay, setLay] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
+  const [formTitle, setFormTitle] = useState('Untitled-1')
 
   const updateData = (data) => {
     setCloneData({ ...cloneData, data })
+  }
+
+  const handleTitle = () => {
+    // save { formTitle } title in DB
   }
 
   setTimeout(() => { setFulScn(true) }, 500)
@@ -32,82 +37,96 @@ export default function Builder(props) {
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'} ${process.env.NODE_ENV === 'production' && 'btcd-wp-ful-scn'}`} >
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
-          <NavLink to="/">
+          <NavLink exact to="/">
             <span className="btcd-icn icn-arrow_back" />
             {' '}
             Back
           </NavLink>
           <NavLink
+            exact
             to={`/builder/${formType}/${formID}`}
             activeClassName="app-link-active"
           >
             Builder
           </NavLink>
           <NavLink
-            to="/s"
+            exact
+            to={`/builder/${formType}/${formID}/settings`}
             activeClassName="app-link-active"
           >
             Settings
           </NavLink>
         </div>
+        <div className="btcd-bld-title">
+          <input className="btcd-bld-title-inp br-50" onChange={e => setFormTitle(e.target.value)} onBlur={handleTitle} value={formTitle} />
+        </div>
         <div className="btcd-bld-btn">
           <button className="btn blue" type="button">Save</button>
         </div>
       </nav>
-      <Container className="btcd-bld-con" style={{ height: '100%' }}>
-        <Section className="tool-sec" defaultSize={160} minSize={notIE && 58} style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}>
-          <ToolBar setDrgElm={setDrgElm} setNewData={setNewData} className="tile" tolbarSiz={tolbarSiz} setTolbarSiz={setTolbarSiz} setGridWidth={props.setGridWidth} />
-        </Section>
-        <Bar className="bar bar-l" />
 
-        <Section onSizeChanged={props.setGridWidth} minSize={notIE && 320} defaultSize={props.gridWidth} style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}>
+      <Switch>
+        <Route exact path={`/builder/${formType}/${formID}`}>
+          <Container className="btcd-bld-con" style={{ height: '100%' }}>
+            <Section className="tool-sec" defaultSize={160} minSize={notIE && 58} style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}>
+              <ToolBar setDrgElm={setDrgElm} setNewData={setNewData} className="tile" tolbarSiz={tolbarSiz} setTolbarSiz={setTolbarSiz} setGridWidth={props.setGridWidth} />
+            </Section>
+            <Bar className="bar bar-l" />
 
-          {lay !== null
-            && (
-              <small style={{ background: 'lightgray', padding: 8, display: 'none' }}>
-                {lay.map((item, i) => (
-                  <div key={`k-${i + 10}`} style={{ display: 'inline-block', padding: 5, background: 'aliceblue', margin: 5 }}>
-                    <div>{item.i}</div>
-                    <span style={{ margin: 8 }}>
-                      X:
+            <Section onSizeChanged={props.setGridWidth} minSize={notIE && 320} defaultSize={props.gridWidth} style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}>
+
+              {lay !== null
+                && (
+                  <small style={{ background: 'lightgray', padding: 8, display: 'none' }}>
+                    {lay.map((item, i) => (
+                      <div key={`k-${i + 10}`} style={{ display: 'inline-block', padding: 5, background: 'aliceblue', margin: 5 }}>
+                        <div>{item.i}</div>
+                        <span style={{ margin: 8 }}>
+                          X:
                       {item.x}
-                    </span>
-                    <span style={{ margin: 8 }}>
-                      Y:
+                        </span>
+                        <span style={{ margin: 8 }}>
+                          Y:
                       {item.y}
-                    </span>
-                    <span style={{ margin: 8 }}>
-                      W:
+                        </span>
+                        <span style={{ margin: 8 }}>
+                          W:
                       {item.w}
-                    </span>
-                    <span style={{ margin: 8 }}>
-                      H:
+                        </span>
+                        <span style={{ margin: 8 }}>
+                          H:
                       {item.h}
-                    </span>
-                  </div>
-                ))}
-              </small>
-            )}
+                        </span>
+                      </div>
+                    ))}
+                  </small>
+                )}
 
-          <GridLayout
-            width={props.gridWidth}
-            draggedElm={drgElm}
-            setElmSetting={setElmSetting}
-            cloneData={cloneData}
-            setCloneData={setCloneData}
-            newData={newData}
-            setNewData={setNewData}
-            formType={formType}
-            formID={formID}
-            setLay={setLay}
-          />
-        </Section>
+              <GridLayout
+                width={props.gridWidth}
+                draggedElm={drgElm}
+                setElmSetting={setElmSetting}
+                cloneData={cloneData}
+                setCloneData={setCloneData}
+                newData={newData}
+                setNewData={setNewData}
+                formType={formType}
+                formID={formID}
+                setLay={setLay}
+              />
+            </Section>
 
-        <Bar className="bar bar-r" />
-        <Section id="settings-menu" defaultSize={300}>
-          <ElementSettings elm={elmSetting} updateData={updateData} />
-        </Section>
-      </Container>
+            <Bar className="bar bar-r" />
+            <Section id="settings-menu" defaultSize={300}>
+              <ElementSettings elm={elmSetting} updateData={updateData} />
+            </Section>
+          </Container>
+        </Route>
+        <Route exact path={`/builder/${formType}/${formID}/settings`}>
+          <h2>settings</h2>
+        </Route>
+      </Switch>
+
     </div>
   )
 }

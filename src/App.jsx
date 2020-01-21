@@ -90,7 +90,7 @@ export default class App extends React.Component {
               <Route exact path="/">
                 <AllForms />
               </Route>
-              <Route path="/builder/:formType/:formID?">
+              <Route path="/builder/:formType/:formID?/:option?">
                 <Builder
                   gridWidth={this.state.gridWidth}
                   setGridWidth={this.setGridWidth}
