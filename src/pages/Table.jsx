@@ -97,7 +97,7 @@ export default function Table({ columns, data }) {
         </tbody>
       </table>
 
-      <div className="pagination f-right">
+      <div className="btcd-pagination">
         <button className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           &laquo;
         </button>

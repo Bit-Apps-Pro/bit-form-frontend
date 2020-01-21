@@ -541,7 +541,7 @@ li b {
     margin: 0 0 0 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #c7c7c7;
+    border-bottom: 1px solid #c7c7c7;
   }
   & > div {
     height: calc(100% - 85px);
@@ -914,7 +914,7 @@ nav.top-nav {
   padding: 20px;
 }
 .route-wrp {
-  overflow: hidden;
+  min-height: 400px;
   background: white;
   margin: -150px 20px 30px;
   margin-top: -150px;
@@ -977,6 +977,7 @@ nav.top-nav {
   border-bottom: 2px solid #dedce4;
 }
 .f-table > tbody > tr {
+  height: 49px;
   &:hover {
     background: #f4f6ff;
   }
@@ -1069,14 +1070,17 @@ nav.top-nav {
   }
 }
 
-.pagination {
+.btcd-pagination {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   margin: 10px;
+  padding-bottom: 10px;
   & > select {
     border-radius: 100px;
     padding: 5px;
     margin-top: 0;
+    width: 90px;
   }
   & > select:hover {
     background: #dcdcdc;
@@ -1471,7 +1475,7 @@ nav.top-nav {
   & > a:nth-child(1) {
     display: flex;
     align-items: center;
-    width: 40px;
+    width: 38px;
     overflow: hidden;
     padding: 8px;
     transition: width 0.5s;
@@ -1487,6 +1491,25 @@ nav.top-nav {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76);
   }
 }
+
+.btcd-bld-title {
+  margin-right: 200px;
+
+  & > .btcd-bld-title-inp {
+    margin-top: 6px;
+    color: white;
+    background: #23253a;
+    border: none;
+    text-align: center;
+    outline: none;
+  }
+  & > .btcd-bld-title-inp:focus {
+    background: white;
+    color: #0e112f;
+    font-weight: bold;
+  }
+}
+
 .btcd-bld-con {
   & > .tool-sec {
     transition: flex-grow 500ms;
