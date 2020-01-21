@@ -17,82 +17,62 @@ export default class GridLayout extends React.PureComponent {
       newCounter: 0,
       breakpoint: 'md',
       layout: [
-        /* { i: 'blk_1', x: 0, y: 0, w: 1, h: 2 },
-        { i: 'blk_2', x: 1, y: 0, w: 1, h: 2 },
-        { i: 'blk_3', x: 2, y: 0, w: 1, h: 2 },
-        { i: 'blk_4', x: 3, y: 0, w: 1, h: 2 },
-        { i: 'blk_5', x: 4, y: 0, w: 1, h: 2 },
-        { i: 'blk_6', x: 5, y: 0, w: 1, h: 2 },
-        { i: 'blk_7', x: 6, y: 0, w: 1, h: 2 },
-        { i: 'blk_8', x: 7, y: 0, w: 1, h: 2 },
-        { i: 'blk_9', x: 8, y: 0, w: 1, h: 2 },
-        { i: 'blk_10', x: 9, y: 0, w: 1, h: 2 }, */
       ],
       data: {
-        blk_1: [
-          {
-            tag: 'label',
-            attr: {},
-            child: 'laebl',
-          },
-          {
-            tag: 'div',
-            attr: { type: 'text' },
-            child: [
-              { tag: 'label', attr: '', child: 'laebl' },
-              { tag: 'label', attr: '', child: 'laebl' },
-            ],
-          },
-        ],
-        blk_2: [
-          { tag: 'label', attr: '', child: 'laebl' },
-          {
-            tag: 'div',
-            attr: { type: 'text' },
-            child: { tag: 'b', attr: {}, child: 'bold' },
-          },
-        ],
-        blk_3: [
-          {
-            tag: 'label',
-            attr: {},
-            child: 'laebl',
-          },
-          {
-            tag: 'input',
-            attr: { type: 'text' },
-            child: null,
-          },
-        ],
-        blk_4: [],
-        blk_5: [],
-        blk_6: [],
-        blk_7: [],
-        blk_8: [],
-        blk_9: [],
-        blk_10: [],
       },
+      form_name: "Blank Form"
     }
 
     this.onLayoutChange = this.onLayoutChange.bind(this)
     this.onBreakpointChange = this.onBreakpointChange.bind(this)
     this.childGen = this.childGen.bind(this)
     this.getElmProp = this.getElmProp.bind(this)
-    this.saveForm = this.saveForm.bind(this)
   }
 
   componentDidMount() {
+    const fetchData = async (data, action) => {
+      try {
+        const result = await axios.post(bits.ajaxURL,data, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          params: {
+            action: action,
+            _ajax_nonce: bits.nonce
+          }
+        })
+        console.log('fetch form layout', this.props.formID)
+        console.log(result.data)
+      if (result.data.data !== false) {
+        console.log(typeof result.data.data)
+        let responseData = result.data.data
+        if (typeof responseData !== 'object') {
+          responseData = JSON.parse(result.data.data)
+        }
+        console.log("In Fetch: ",responseData)
+        this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields , id:responseData.id, newCounter: responseData.form_content.layout.length})
+        if (responseData.form_content.form_name !== 'undefined') {
+          this.props.setFormName( responseData.form_content.form_name )
+        }
+      }
+      } catch (error) {
+        console.log("Eror  Response : ",error )
+      }
+    }
     if (this.props.formType === 'new') {
       if (this.props.formID === 'blank') {
         console.log('create a blank form')
         this.setState({ isLoading: false })
       } else {
+        fetchData({template:this.props.formID},'bitapps_get_template')
         console.log('fetch form layout', this.props.formID)
         this.setState({ isLoading: false })
 
       }
     } else if (this.props.formType === 'edit') {
       console.log('fetch existing form layout', this.props.formID)
+      fetchData({id:this.props.formID},'bitapps_get_a_form')
+      console.log('fetch form layout', this.props.formID)
       this.setState({ isLoading: false })
 
     }
@@ -105,14 +85,20 @@ export default class GridLayout extends React.PureComponent {
       for (let i = 0; i < allSel.length; i += 1) {
         // eslint-disable-next-line no-unused-vars
         const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute('btcd-id')}"] > div > .slim`,
+          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
+            "btcd-id"
+          )}"] > div > .slim`,
           allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        })
+          placeholder: allSel[i].getAttribute("placeholder"),
+          limit: Number(allSel[i].getAttribute("limit"))
+        });
         if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
+          if (allSel[i].hasAttribute("data-max-show")) {
+            allSel[
+              i
+            ].nextSibling.children[1].children[1].style.maxHeight = `${Number(
+              allSel[i].getAttribute("data-max-show")
+            ) * 2}pc`;
           }
         }
       }
@@ -152,6 +138,7 @@ export default class GridLayout extends React.PureComponent {
 
   onLayoutChange(layout) {
     this.props.setLay(layout)
+    this.props.setFields(this.state.data)
     console.log(layout)
     // this.setState({ layout })
   }
@@ -173,7 +160,8 @@ export default class GridLayout extends React.PureComponent {
     this.setState(prvState => ({
       ...prvState,
       data: {
-        ...prvState.data, [newBlk]: draggedElm[0],
+        ...prvState.data,
+        [newBlk]: draggedElm[0]
       },
       layout: prvState.layout.concat({ i: newBlk, x, y, w, h, minH, maxH, minW }),
       newCounter: prvState.newCounter + 1,
@@ -220,21 +208,6 @@ export default class GridLayout extends React.PureComponent {
     }
   }
 
-  saveForm() {
-    console.log(this.props.layout)
-    // console.log('bits.nonce: ', bits.ajaxURL)
-    axios.post(bits.ajaxURL, null, {
-      params: {
-        action: 'bitform_save_form',
-        _ajax_nonce: bits.nonce,
-        lastName: 'Flintstone',
-      },
-    }).then((response) => {
-      console.log(response)
-    }).catch(error => {
-      console.log('error', error);
-    })
-  }
 
   childGen(cld) {
     if (cld === null) {
@@ -246,7 +219,7 @@ export default class GridLayout extends React.PureComponent {
     } if ((!!cld) && (cld.constructor === Array)) {
       return cld.map((itm, ind) => createElement(itm.tag, { key: ind, ...itm.attr }, this.childGen(itm.child)))
     }
-    return null
+    return null;
   }
 
   createElm(elm) {
@@ -279,12 +252,24 @@ export default class GridLayout extends React.PureComponent {
           className="bit-blk-icn drag"
           role="button"
         >
-          <img className="unselectable" draggable="false" unselectable="on" onDragStart={() => false} src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${moveIcon}` : `${moveIcon}`} alt="drag handle" />
+          <img
+            className="unselectable"
+            draggable="false"
+            unselectable="on"
+            onDragStart={() => false}
+            src={
+              process.env.NODE_ENV === "production"
+                ? `${bits.assetsURL}/img/${moveIcon}`
+                : `${moveIcon}`
+            }
+            alt="drag handle"
+          />
         </span>
-        {this.state.data[item.i].map((i, idx) => createElement(i.tag,
-          { key: idx, ...i.attr }, this.childGen(i.child)))}
+        {this.state.data[item.i].map((i, idx) =>
+          createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child))
+        )}
       </div>
-    ))
+    ));
   }
 
 

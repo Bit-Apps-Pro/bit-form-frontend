@@ -9,25 +9,24 @@ import {
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 // import './resource/icons/style.css'
-import './resource/js/custom'
-import Builder from './pages/Builder'
-import AllForms from './pages/AllForms'
+import "./resource/js/custom";
+import Builder from "./pages/Builder";
+import AllForms from "./pages/AllForms";
 
 const Dashboard = () => (
   <div>
     <h2>Dashboard</h2>
   </div>
-)
+);
 
 export default class App extends React.Component {
-  col
+  col;
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       gridWidth: window.innerWidth - 480,
     }
-    console.log(window.innerWidth - (166 + 8 + 312 + 8 + 20 + 1))
     this.setGridWidth = this.setGridWidth.bind(this)
 
     /* function insertion_Sort(arr) {
@@ -64,7 +63,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
 
         <div className="Btcd-App">
           <div className="nav-wrp">

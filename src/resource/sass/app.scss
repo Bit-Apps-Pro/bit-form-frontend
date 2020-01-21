@@ -15,6 +15,10 @@ body {
   box-sizing: border-box;
 }
 
+#wpcontent{
+ padding-left: 0; 
+}
+
 .unselectable {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -1438,6 +1442,7 @@ nav.top-nav {
   left: -180px !important;
   top: -32px !important;
   z-index: 99999 !important;
+  transition: all .5s !important;
 }
 .btcd-bld-nav {
   height: 0;

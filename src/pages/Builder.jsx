@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
-import { Switch, Route, NavLink, useParams } from 'react-router-dom'
-
+import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
+import axios from 'axios'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import ElementSettings from '../components/ElmSettings'
 
-export default function Builder(props) {
+function Builder(props) {
   const { formType, formID } = useParams()
 
   const [fulScn, setFulScn] = useState(false)
@@ -15,14 +15,19 @@ export default function Builder(props) {
   const [newData, setNewData] = useState(null)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [lay, setLay] = useState(null)
+  const [fields, setFields] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
   const [formTitle, setFormTitle] = useState('Untitled-1')
+
+  const [savedFormId, setSavedFormId] = formType === 'edit' ? useState(formID) : useState(0)
+  const [formName, setFormName] = useState('Blank Form')
+  const [buttonText, setButtonText] = formType === 'edit' ? useState('Update') : useState('Save')
 
   const updateData = (data) => {
     setCloneData({ ...cloneData, data })
   }
 
-  const handleTitle = () => {
+  const handleFormName = () => {
     // save { formTitle } title in DB
   }
 
@@ -33,8 +38,48 @@ export default function Builder(props) {
     setFulScn(false)
   }, [])
 
+  const saveForm = () => {
+    console.log('In saveForm: ', savedFormId, formID)
+    let formData = {
+      layout: lay,
+      fields,
+      form_name: formName,
+    }
+    let action = 'bitapps_create_new_form'
+    if (savedFormId > 0) {
+      formData = {
+        layout: lay,
+        fields,
+        form_name: formName,
+        id: savedFormId,
+      }
+
+      action = 'bitapps_update_form'
+    }
+    axios.post(bits.ajaxURL, formData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {
+        action,
+        _ajax_nonce: bits.nonce,
+      },
+    }).then((response) => {
+      if (action === 'bitapps_create_new_form') {
+        const data = JSON.parse(response.data.data)
+        if (savedFormId === 0 && buttonText === 'Save') {
+          setSavedFormId(data.id)
+          setButtonText('Update')
+          props.history.replace(`/builder/edit/${data.id}`)
+        }
+      }
+    }).catch(error => {
+      console.log('error', error);
+    })
+  }
+
   return (
-    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'} ${process.env.NODE_ENV === 'production' && 'btcd-wp-ful-scn'}`} >
+    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'} ${process.env.NODE_ENV === 'production' && 'btcd-wp-ful-scn'}`}>
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
           <NavLink exact to="/">
@@ -58,10 +103,10 @@ export default function Builder(props) {
           </NavLink>
         </div>
         <div className="btcd-bld-title">
-          <input className="btcd-bld-title-inp br-50" onChange={e => setFormTitle(e.target.value)} onBlur={handleTitle} value={formTitle} />
+          <input className="btcd-bld-title-inp br-50" onChange={e => setFormTitle(e.target.value)} onBlur={handleFormName} value={formTitle} />
         </div>
         <div className="btcd-bld-btn">
-          <button className="btn blue" type="button">Save</button>
+          <button className="btn blue" type="button" onClick={saveForm}>{buttonText}</button>
         </div>
       </nav>
 
@@ -83,19 +128,19 @@ export default function Builder(props) {
                         <div>{item.i}</div>
                         <span style={{ margin: 8 }}>
                           X:
-                      {item.x}
+                          {item.x}
                         </span>
                         <span style={{ margin: 8 }}>
                           Y:
-                      {item.y}
+                          {item.y}
                         </span>
                         <span style={{ margin: 8 }}>
                           W:
-                      {item.w}
+                          {item.w}
                         </span>
                         <span style={{ margin: 8 }}>
                           H:
-                      {item.h}
+                          {item.h}
                         </span>
                       </div>
                     ))}
@@ -113,6 +158,8 @@ export default function Builder(props) {
                 formType={formType}
                 formID={formID}
                 setLay={setLay}
+                setFields={setFields}
+                setFormName={setFormName}
               />
             </Section>
 
@@ -130,3 +177,5 @@ export default function Builder(props) {
     </div>
   )
 }
+
+export default withRouter(Builder)
