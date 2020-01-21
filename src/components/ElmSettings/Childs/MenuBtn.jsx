@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function MenuBtn(props) {
   const handleMenuClose = (e) => {
@@ -18,7 +19,13 @@ export default function MenuBtn(props) {
       e.target.parentNode.children[1].classList.add('btcd-m-a')
     }
   }
-
+ const handleDelete = () => {
+    console.log(props.formID)
+    bitsFetch({id: props.formID},'bitapps_delete_aform').then(response=>{
+      console.log("Response", response)
+    })
+  }
+  
   return (
     <div className="btcd-menu">
       <button className="btcd-menu-btn sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
@@ -33,7 +40,7 @@ export default function MenuBtn(props) {
           {'  '}
           Duplicate
         </button>
-        <button type="button" aria-label="actions">
+        <button type="button" aria-label="actions" onClick={handleDelete}>
           <span className="btcd-icn icn-trash-2" />
           {'  '}
           Delete

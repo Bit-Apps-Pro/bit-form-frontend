@@ -20,7 +20,6 @@ export default class GridLayout extends React.PureComponent {
       ],
       data: {
       },
-      id: 0,
       form_name: "Blank Form"
     }
 
@@ -28,24 +27,36 @@ export default class GridLayout extends React.PureComponent {
     this.onBreakpointChange = this.onBreakpointChange.bind(this)
     this.childGen = this.childGen.bind(this)
     this.getElmProp = this.getElmProp.bind(this)
-    this.saveForm = this.saveForm.bind(this)
   }
 
   componentDidMount() {
-    const fetchTemplate = async (template) => {
-      const result = await axios.post(bits.ajaxURL, {template:template}, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        params: {
-          action: "bitapps_get_template",
-          _ajax_nonce: bits.nonce
-        }
-      })
-      console.log(result.data.data)
+    const fetchData = async (data, action) => {
+      try {
+        const result = await axios.post(bits.ajaxURL,data, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          params: {
+            action: action,
+            _ajax_nonce: bits.nonce
+          }
+        })
+        console.log('fetch form layout', this.props.formID)
+        console.log(result.data)
       if (result.data.data !== false) {
-        let data = JSON.parse(result.data.data)
-        this.setState({ layout: data.form_content.layout, data: data.form_content.fields , id:data.id, form_name:  data.form_content.form_name, newCounter: data.form_content.layout.length})
+        console.log(typeof result.data.data)
+        let responseData = result.data.data
+        if (typeof responseData !== 'object') {
+          responseData = JSON.parse(result.data.data)
+        }
+        console.log("In Fetch: ",responseData)
+        this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields , id:responseData.id, newCounter: responseData.form_content.layout.length})
+        if (responseData.form_content.form_name !== 'undefined') {
+          this.props.setFormName( responseData.form_content.form_name )
+        }
+      }
+      } catch (error) {
+        console.log("Eror  Response : ",error )
       }
     }
     if (this.props.formType === 'new') {
@@ -53,13 +64,15 @@ export default class GridLayout extends React.PureComponent {
         console.log('create a blank form')
         this.setState({ isLoading: false })
       } else {
-        fetchTemplate(this.props.formID)
+        fetchData({template:this.props.formID},'bitapps_get_template')
         console.log('fetch form layout', this.props.formID)
         this.setState({ isLoading: false })
 
       }
     } else if (this.props.formType === 'edit') {
       console.log('fetch existing form layout', this.props.formID)
+      fetchData({id:this.props.formID},'bitapps_get_a_form')
+      console.log('fetch form layout', this.props.formID)
       this.setState({ isLoading: false })
 
     }
@@ -125,6 +138,7 @@ export default class GridLayout extends React.PureComponent {
 
   onLayoutChange(layout) {
     this.props.setLay(layout)
+    this.props.setFields(this.state.data)
     console.log(layout)
     // this.setState({ layout })
   }
@@ -194,41 +208,6 @@ export default class GridLayout extends React.PureComponent {
     }
   }
 
-  saveForm(lay) {
-    console.log('bits.nonce: ', this.state.data)
-    let data = {
-      layout: this.state.layout,
-      fields: this.state.data,
-      form_name: this.state.form_name
-    }
-    let action = 'bitapps_create_new_form'
-    if (this.state.id > 0 ) {
-       data = {
-        layout: this.state.layout,
-        fields: this.state.data,
-        id: this.state.id,
-        form_name: this.state.form_name
-      }
-
-       action = 'bitapps_update_form'
-    }
-    axios.post(bits.ajaxURL, data, {
-      headers: {
-        'Content-Type': 'application/json'
-    },
-    params : {
-      action: action,
-      _ajax_nonce: bits.nonce,
-    }
-    }).then((response) => {
-      if (action === 'bitapps_create_new_form') {
-        let data = JSON.parse(response.data.data)
-        this.setState({  id:data.id})
-      }
-    }).catch(error => {
-      console.log('error', error);
-    })
-  }
 
   childGen(cld) {
     if (cld === null) {

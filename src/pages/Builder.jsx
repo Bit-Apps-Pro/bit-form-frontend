@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams, withRouter } from 'react-router-dom'
 
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import ElementSettings from '../components/ElmSettings'
 import axios from 'axios'
 
-export default function Builder(props) {
+function Builder(props) {
   const { formType, formID } = useParams()
 
   const [fulScn, setFulScn] = useState(false)
@@ -16,8 +16,11 @@ export default function Builder(props) {
   const [newData, setNewData] = useState(null)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [lay, setLay] = useState(null)
+  const [fields, setFields] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
-
+  const [saved_form_id, setSaved_form_id] = formType ==='edit'? useState(formID) : useState(0)
+  const [formName, setFormName] = useState("Blank Form")
+  const [buttonText, setButtonText] = formType ==='edit'? useState('Update') : useState('Save')
   const updateData = (data) => {
     setCloneData({ ...cloneData, data })
   }
@@ -28,6 +31,46 @@ export default function Builder(props) {
   React.useEffect(() => function cleanup() {
     setFulScn(false)
   }, [])
+
+  const saveForm = () => {
+    console.log('In saveForm: ', saved_form_id, formID)
+    let formData = {
+      layout: lay,
+      fields: fields,
+      form_name: formName
+    }
+    let action = 'bitapps_create_new_form'
+    if (saved_form_id > 0 ) {
+       formData = {
+        layout: lay,
+        fields: fields,
+        form_name: formName,
+        id: saved_form_id
+      }
+
+       action = 'bitapps_update_form'
+    }
+    axios.post(bits.ajaxURL, formData, {
+      headers: {
+        'Content-Type': 'application/json'
+    },
+    params : {
+      action: action,
+      _ajax_nonce: bits.nonce,
+    }
+    }).then((response) => {
+      if (action === 'bitapps_create_new_form') {
+        let data = JSON.parse(response.data.data)
+        if (saved_form_id === 0 && buttonText === 'Save' ) {
+          setSaved_form_id(data.id)
+          setButtonText('Update')
+          props.history.replace('/builder/edit/'+data.id)
+        }
+      }
+    }).catch(error => {
+      console.log('error', error);
+    })
+  }
 
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'} ${process.env.NODE_ENV === 'production' && 'btcd-wp-ful-scn'}`} >
@@ -51,8 +94,11 @@ export default function Builder(props) {
             Settings
           </NavLink>
         </div>
+        <div style={{color:'#fff'}}>
+        {formName}
+        </div>
         <div className="btcd-bld-btn">
-          <button className="btn blue" type="button">Save</button>
+          <button className="btn blue" type="button" onClick={saveForm}>{buttonText}</button>
         </div>
       </nav>
       <Container className="btcd-bld-con" style={{ height: '100%' }}>
@@ -101,6 +147,8 @@ export default function Builder(props) {
             formType={formType}
             formID={formID}
             setLay={setLay}
+            setFields={setFields}
+            setFormName={setFormName}
           />
         </Section>
 
@@ -112,3 +160,5 @@ export default function Builder(props) {
     </div>
   )
 }
+
+export default withRouter(Builder)

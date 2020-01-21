@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React from 'react'
+import React, {useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import Table from './Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -7,31 +7,43 @@ import CopyText from '../components/ElmSettings/Childs/CopyText'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import Modal from '../components/Modal'
-import axios from "axios";
+import axios from "axios"
 
 
 export default function AllFroms(props) {
-  console.log("AllForms",process.env.NODE_ENV === 'production' ? bits.allForms:null)
   const handleStatus = (e, id,row) => {
-    const changeFormStatus = async () => {
-      const result = await axios.post(bits.ajaxURL, {id: bits.allForms[row.index].id, status: e.target.checked}, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        params: {
-          action: "bitapps_change_status",
-          _ajax_nonce: bits.nonce
-        }
-      })
+    console.log("object",e.target)
+    const changeFormStatus =  () => {
+        const response = axios({
+          url: bits.ajaxURL,
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          params: {
+            action: "bitapps_change_status",
+            _ajax_nonce: bits.nonce
+          },
+          data: {id: row.original.formID, status: e.target.checked}
+        }).then(res => res.data)
+        .catch (err => err.response.data)
+        return response;
     }
     if(row.values.status!==e.target.checked){
-      changeFormStatus()
+      let isChecked =e.target.checked
+      changeFormStatus().then(response=>{
+        if (response.success) {
+          let newData = [...data]
+          newData[row.index].status = isChecked
+          setData(newData)
+        }
+      })
     }
   }
 
   const cols = [
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
-    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e, id) => handleStatus(e, id,value.row)} value={value.row.values.status} /> },
+    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e, id) => handleStatus(e, id,value.row)} checked={value.row.values.status} /> },
     { Header: 'Form Name', accessor: 'formName' },
     { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
     { Header: 'Views', accessor: 'views' },
@@ -41,10 +53,14 @@ export default function AllFroms(props) {
     { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
   ]
 
-  const data = process.env.NODE_ENV === 'production' ? 
-    bits.allForms.map(form=>
+  const [data, setData] = process.env.NODE_ENV === 'production' ? 
+    useState(
+      bits.allForms === null ? [] :
+      bits.allForms.map(form=>
       {return {formID: form.id, status: form.status==="0"?false:true, formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: (form.entries/form.views===0?1:form.views)*100, created_at: form.created_at}})
-   : [
+    )
+   : useState(
+     [
     { formID: 123, formName: 'member', shortcode: 'test', entries: 23, views: 79, conversion: 96, created_at: '2 Dec' },
     { formID: 123, formName: 'lace', shortcode: 'guitar', entries: 5, views: 38, conversion: 57, created_at: '2 Dec' },
     { formID: 123, formName: 'toys', shortcode: 'camp', entries: 12, views: 75, conversion: 28, created_at: '2 Dec' },
@@ -66,8 +82,8 @@ export default function AllFroms(props) {
     { formID: 123, formName: 'worker', shortcode: 'wilderness', entries: 4, views: 92, conversion: 11, created_at: '2 Dec' },
     { formID: 123, formName: 'emphasis', shortcode: 'stream', entries: 7, views: 5, conversion: 51, created_at: '2 Dec' },
     { formID: 123, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
-  ]
-  const [modal, setModal] = React.useState(false)
+  ])
+  const [modal, setModal] = useState(false)
   return (
     <div id="all-forms">
       <Modal
