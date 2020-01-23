@@ -16,6 +16,9 @@ import AllForms from "./pages/AllForms";
 const Dashboard = () => (
   <div>
     <h2>Dashboard</h2>
+    <div id="wpeditorbitapps">
+
+    </div>
   </div>
 );
 
