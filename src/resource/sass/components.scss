@@ -33,7 +33,6 @@ select {
 }
 
 select {
-  background: #edeffb;
   border: none;
   padding: 9px;
 }
@@ -89,12 +88,12 @@ select {
   background-color: #eee;
 }
 
-.btcd-ck-wrp:hover input~.btcd-mrk {
+.btcd-ck-wrp:hover input ~ .btcd-mrk {
   background-color: #ccc;
 }
 
-.btcd-ck-wrp input:checked~.btcd-mrk {
-  background-color: #2196F3;
+.btcd-ck-wrp input:checked ~ .btcd-mrk {
+  background-color: #2196f3;
 }
 
 .btcd-mrk:after {
@@ -103,7 +102,7 @@ select {
   display: none;
 }
 
-.btcd-ck-wrp input:checked~.btcd-mrk:after {
+.btcd-ck-wrp input:checked ~ .btcd-mrk:after {
   display: block;
 }
 
@@ -131,15 +130,66 @@ select {
 
 // chek box style end
 
-
 .br-50 {
   border-radius: 500px;
 }
 
-.round>.btcd-ck-wrp>.btcd-mrk {
+.round > .btcd-ck-wrp > .btcd-mrk {
   border-radius: 50%;
 }
 
-.ss-main .ss-content .ss-search input{
+.ss-main .ss-content .ss-search input {
   font-size: 12px;
+}
+
+.btcd-frm-sub {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 10px;
+}
+.btcd-sub-btn {
+  border: none;
+  padding: 7px 10px 7px 10px;
+  border-radius: 8px;
+  margin: 10px 5px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 2px 2px 4px -2px transparentize(#000000, 0.6);
+}
+.btcd-sub {
+  background: #0083f3;
+  font-weight: bold;
+  color: white;
+  &:hover {
+    background: #0072d6;
+  }
+  &:active {
+    background: #0066be;
+  }
+}
+.btcd-rst {
+  background: #edf1f5;
+  font-weight: normal;
+  color: #23435f;
+  &:hover {
+    background: #ededf1;
+  }
+  &:active {
+    background: #f1f1f1;
+  }
+}
+
+.btcd-btn-md {
+  padding: 10px 20px 10px 20px;
+  font-size: 15px;
+}
+.j-c-c {
+  justify-content: center;
+}
+.j-c-e {
+  justify-content: flex-end;
+}
+.ful-w {
+  width: 100%;
 }

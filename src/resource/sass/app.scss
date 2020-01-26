@@ -1,3 +1,9 @@
+$bdr-rad: 0px;
+$prim: #99e3ff;
+$blue: #0083f3;
+$dp-blue: #191e3e;
+$bg: #eff3fb;
+
 html,
 body {
   margin: 0;
@@ -7,7 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   min-height: 100%;
-  color: #191e3e;
+  color: $dp-blue;
   background-color: rgba(230, 239, 255, 0.6196078431372549);
 }
 
@@ -15,8 +21,12 @@ body {
   box-sizing: border-box;
 }
 
-#wpcontent{
- padding-left: 0; 
+#wpcontent {
+  padding-left: 0;
+}
+
+.btcd-neo-sh-1 {
+  box-shadow: 5px 5px 10px #d7dbe2, -5px -5px 10px #ffffff;
 }
 
 .unselectable {
@@ -57,10 +67,6 @@ body {
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
-
-$bdr-rad: 0px;
-$prim: #99e3ff;
-$blue: #0083f3;
 
 .prim {
   background-color: $prim !important;
@@ -123,16 +129,22 @@ $blue: #0083f3;
 }
 
 .layout-wrapper {
-  padding-top: 10px;
   margin: auto;
-  height: calc(100% - 50px);
+  margin-top: 10px;
+  height: calc(100% - 80px);
+  border: 1px solid #bdbdbd;
   transition: width 0.5s;
 }
 
 .layout {
   overflow: hidden;
-  border: 1px solid #bdbdbd;
-  min-height: 100% !important;
+  min-height: calc(100% - 60px) !important;
+}
+
+.btcd-frm-sub {
+  &:hover {
+    background: aliceblue;
+  }
 }
 
 .toolBar-wrp {
@@ -141,7 +153,7 @@ $blue: #0083f3;
   max-width: 400px;
   min-width: 55px;
   padding: 5px;
-  background: #f8f8f8;
+  background: $bg;
 
   & > h4 {
     width: 100%;
@@ -162,8 +174,11 @@ $blue: #0083f3;
     width: 25px;
     height: 25px;
     font-weight: bold;
-    // margin-left: 10px;
-    background: #e8e8e8;
+    background: $bg;
+    color: #73818e;
+    &:hover {
+      background: $bg;
+    }
   }
 }
 
@@ -410,15 +425,19 @@ li b {
 }
 
 .bar-l {
+  width: 0;
   pointer-events: none;
   background: #f8f8f8;
+  &::before {
+    content: "";
+  }
   &:hover {
     width: 8px;
     border-right: 1px solid #c7c7c7;
   }
 }
 .bar-r {
-  background: #f8f8f8;
+  background: $bg;
   &:hover {
     width: 8px;
     border-left: 1px solid #c7c7c7;
@@ -440,7 +459,7 @@ li b {
   box-sizing: border-box;
 
   &:hover {
-    background: #fbfbfb;
+    background: aliceblue;
   }
 
   & > label {
@@ -526,11 +545,8 @@ li b {
   cursor: default;
 }
 
-#settings-menu {
-}
-
 .elm-settings {
-  background: #f8f8f8;
+  background: $bg;
   height: 100%;
   max-width: 313px;
   margin-right: 0;
@@ -577,18 +593,24 @@ li b {
   margin-top: 15px;
 }
 
+.mt-5 {
+  margin-top: 25px;
+}
+
 .mr-2 {
   margin-left: 10px;
 }
 
 @mixin inp($width: auto) {
   width: $width;
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 17px;
   padding: 5px;
-  border: 2px solid #c9ceff;
+  border: 3px solid $bg;
   border-radius: 9px;
   outline: none;
+  line-height: 0;
+  box-shadow: 5px 5px 6px #e1e4ec, -5px -5px 10px #fdffff;
 }
 
 .setting-inp {
@@ -601,7 +623,10 @@ li b {
   }
 
   & > input:focus {
-    border: 2px solid #2aa6ff;
+    box-shadow: none;
+    outline: none;
+    box-shadow: 5px 5px 10px #e1e4ec, -5px -5px 10px #fdffff, 1px 1px 1px 0px #e3e6eb inset,
+      -1px -1px 1px 0px #f1f2f3 inset;
   }
 }
 
@@ -688,26 +713,28 @@ li b {
   display: block;
   float: left;
   width: 50%;
-  height: 14px;
   padding: 0;
-  line-height: 15px;
+  line-height: 21px;
   font-size: 9px;
   color: white;
   font-weight: 600;
   box-sizing: border-box;
+  height: 20px;
+  background: $bg;
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2) inset, -1px -1px 3px 0.5px rgba(255, 255, 255, 1) inset;
 }
 
 .onoffswitch-inner:before {
   content: "YES";
   padding-left: 4px;
-  background-color: #eeeeee;
+  background-color: $bg;
   color: #15d655;
 }
 
 .onoffswitch-inner:after {
   content: "NO";
   padding-right: 10px;
-  background-color: #eeeeee;
+  background-color: $bg;
   color: #999999;
   text-align: right;
 }
@@ -716,9 +743,9 @@ li b {
   display: block;
   width: 20px;
   height: 20px;
-  margin: -1px;
-  background: rgb(235, 235, 235);
-  background: linear-gradient(0deg, rgba(235, 235, 235, 1) 0%, rgba(247, 247, 247, 1) 100%);
+  margin: 2px;
+  background: #fff;
+  // background: linear-gradient(0deg, rgba(235, 235, 235, 1) 0%, rgba(247, 247, 247, 1) 100%);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -920,8 +947,8 @@ nav.top-nav {
   margin-top: -150px;
   border-radius: 20px;
   box-shadow: 0px 0px 7px 0px rgba(132, 178, 176, 0.45);
-  & > div {
-    height: 100%;
+  & > div:not(#all-forms) {
+    height: 100vh;
   }
 }
 .top-nav > a {
@@ -1072,6 +1099,7 @@ nav.top-nav {
 
 .btcd-pagination {
   display: flex;
+  line-height: 1;
   justify-content: flex-end;
   align-items: center;
   margin: 10px;
@@ -1081,9 +1109,6 @@ nav.top-nav {
     padding: 5px;
     margin-top: 0;
     width: 90px;
-  }
-  & > select:hover {
-    background: #dcdcdc;
   }
 }
 
@@ -1156,7 +1181,7 @@ nav.top-nav {
   width: 180px;
   & > input {
     font-weight: normal;
-    color: #191e3e;
+    color: $dp-blue;
     margin-top: 0;
     letter-spacing: 1px;
     outline: none;
@@ -1438,12 +1463,20 @@ nav.top-nav {
     transition: height 0.5s 0.7s !important;
   }
 }
+
 .btcd-wp-ful-scn {
-  left: -180px !important;
-  top: -32px !important;
+  left: -160px !important;
+  right: 0 !important;
+  top: -31px !important;
   z-index: 99999 !important;
-  transition: all .5s !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  & > .btcd-bld-nav {
+    height: 40px !important;
+    transition: height 0.5s 0.7s !important;
+  }
 }
+
 .btcd-bld-nav {
   height: 0;
   overflow: hidden;
@@ -1454,6 +1487,7 @@ nav.top-nav {
 
 .btcd-bld-lnk {
   display: flex;
+  box-shadow: none;
   & > a {
     color: white;
     background: transparentize(#fff, 0.9);
@@ -1485,10 +1519,28 @@ nav.top-nav {
   }
 }
 .btcd-bld-btn {
-  & > button {
-    margin: 5px 20px 5px 5px;
+  display: flex;
+  align-items: center;
+  & > button,
+  a {
+    text-decoration: none;
+    margin: 5px 10px 5px 5px;
     padding: 7px 25px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76);
+  }
+  & > .btcd-btn-close {
+    font-size: 22px;
+    height: 30px;
+    width: 30px;
+    margin-right: 20px;
+    padding: 0;
+    border-radius: 100px;
+    text-align: center;
+    padding-top: 1px;
+    &:hover {
+      background: rgb(218, 0, 0) !important;
+      color: rgb(66, 0, 0) !important;
+    }
   }
 }
 
@@ -1498,10 +1550,14 @@ nav.top-nav {
   & > .btcd-bld-title-inp {
     margin-top: 6px;
     color: white;
-    background: #23253a;
+    background: #827e9e;
+    font-size: 16px;
     border: none;
     text-align: center;
     outline: none;
+  }
+  & > .btcd-bld-title-inp:hover {
+    background: #454764;
   }
   & > .btcd-bld-title-inp:focus {
     background: white;
@@ -1521,39 +1577,150 @@ nav.top-nav {
   font-weight: bold !important;
   background: white !important;
 }
+.btcd-f-settings {
+  height: 100%;
+  display: flex;
+}
 
-.bld-link-active {
-  border: 1px solid red;
-  border-bottom: 0;
-  width: 80px;
-  height: 40px;
-  margin: 30px;
+.btcd-f-sidebar {
+  display: inline-block;
+  height: 100%;
+  width: 220px;
+  background: #0076da;
+  box-shadow: -2px 0 3px 0 rgba(29, 28, 68, 0.3) inset;
+  & > a {
+    position: relative;
+    display: block;
+    padding: 10px 10px 10px 20px;
+    margin-left: 20px;
+    border-radius: 50px 0 0 50px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+    & > span {
+      margin-right: 5px;
+    }
+  }
+  & > a:hover:not(.btcd-f-a) {
+    background: transparentize(#000000, 0.7);
+  }
+}
+
+.btcd-f-a {
+  background: white;
+  color: $dp-blue !important;
+  box-shadow: -3px 1px 3px 0 rgba(29, 28, 68, 0.5);
+  &:before {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 18px;
+    background: transparent;
+    top: -18px;
+    right: 0;
+    border-radius: 0 0 10px 0;
+    box-shadow: 0 9px 0 0 white;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 18px;
+    background: #6b424200;
+    bottom: -18px;
+    right: 0;
+    border-radius: 0 10px 0 0;
+    box-shadow: 0 -9px 0 0 white;
+  }
+}
+.btcd-f-c-t {
+  margin-top: 20px;
+  height: 100px;
+}
+.btcd-f-c-t-o {
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  text-align: center;
+  background: white;
+  padding: 10px;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 13px;
+  margin-left: 7px;
+  margin-top: 10px;
+  display: inline-block;
+  box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4);
+}
+.btcd-f-c-t-o-a {
   position: relative;
-  -moz-border-radius: 5px 5px 0 0;
-  -webkit-border-radius: 5px 5px 0 0;
+  box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4), 0 0 0 2px $blue;
+  color: $blue;
+  font-weight: bold;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 11px;
+    border-style: solid;
+    border-color: $blue transparent transparent transparent;
+  }
+}
+.btcd-s-wrp {
+  padding: 50px 0 0 100px;
 }
 
-.bld-link-active:after,
-.bld-link-active:before {
-  content: "";
-  width: 40px;
-  height: 30px;
-  border: 1px solid red;
-  position: absolute;
-  bottom: -3px;
-  border-top: 0;
+.btcd-s-inp {
+  font-size: 16px;
+  border-radius: 8px;
+  outline: none;
+  width: 60%;
+  line-height: 0;
+  border: 2px solid #c6e5ff;
+  &:focus {
+    border: 2px solid $blue;
+  }
+}
+.btcd-f-c-t-d {
+  margin-left: 5px;
+  margin-top: 20px;
+  background: #eff1f7;
+  padding: 20px;
+  border-radius: 20px;
+  /* & > div {
+    height: 0;
+    transition: height 0.5s;
+  } */
+}
+.btcd-f-c-t-d-0 {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.5s;
 }
 
-.bld-link-active:after {
-  border-left: 0;
-  -moz-border-radius: 0 0 5px 0;
-  -webkit-border-radius: 0 0 5px 0;
-  left: -41px;
+.f-m {
+  font-size: 14px;
+}
+.btcd-paper-inp {
+  width: calc(100% - 10px);
+  font-family: inherit;
+  font-size: 15px;
+  padding: 10px;
+  outline: none;
+  margin-top: 5px;
+  margin-left: 3px;
+  border-radius: 8px;
+  border: 0;
+  box-shadow: 0 0 0 1px #e2e2e2;
+  &:focus {
+    border: 0;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.13), 1px 1px 2px 0 rgba(0, 0, 0, 0.07) inset;
+  }
 }
 
-.bld-link-active:before {
-  border-right: 0;
-  -moz-border-radius: 0 0 0 5px;
-  -webkit-border-radius: 0 0 0 5px;
-  right: -41px;
+.btcd-eml-not {
+  width: 900px;
 }
