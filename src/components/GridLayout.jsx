@@ -4,12 +4,13 @@
 import React, { createElement } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import axios from 'axios';
+import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export default class GridLayout extends React.PureComponent {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -17,46 +18,84 @@ export default class GridLayout extends React.PureComponent {
       newCounter: 0,
       breakpoint: 'md',
       layout: [
+        {
+          w: 10,
+          h: 2,
+          x: 0,
+          y: Infinity,
+          i: 'b-00',
+          minH: 2,
+          maxH: 2,
+          moved: false,
+          static: false,
+        },
       ],
       data: {
+
+        'b-00': [
+          {
+            tag: 'div',
+            attr: {
+              className: 'text-wrp drag',
+              'btcd-fld': 'text-fld',
+            },
+            child: [
+              {
+                tag: 'label',
+                attr: {},
+                child: 'Text Here:',
+              },
+              {
+                tag: 'input',
+                attr: {
+                  className: 'txt-fld no-drg',
+                  type: 'text',
+                  placeholder: 'Placeholder text',
+                },
+                child: null,
+              },
+            ],
+          },
+        ],
       },
-      form_name: "Blank Form"
+      form_name: 'Blank Form',
     }
 
     this.onLayoutChange = this.onLayoutChange.bind(this)
     this.onBreakpointChange = this.onBreakpointChange.bind(this)
     this.childGen = this.childGen.bind(this)
     this.getElmProp = this.getElmProp.bind(this)
+    this.editSubmit = this.editSubmit.bind(this)
   }
 
   componentDidMount() {
     const fetchData = async (data, action) => {
       try {
-        const result = await axios.post(bits.ajaxURL,data, {
+        const result = await axios.post(bits.ajaxURL, data, {
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
           },
           params: {
-            action: action,
-            _ajax_nonce: bits.nonce
-          }
+            action,
+            _ajax_nonce: bits.nonce,
+          },
         })
         console.log('fetch form layout', this.props.formID)
         console.log(result.data)
-      if (result.data.data !== false) {
-        console.log(typeof result.data.data)
-        let responseData = result.data.data
-        if (typeof responseData !== 'object') {
-          responseData = JSON.parse(result.data.data)
+        if (result.data.data !== false) {
+          console.log(typeof result.data.data)
+          let responseData = result.data.data
+          if (typeof responseData !== 'object') {
+            responseData = JSON.parse(result.data.data)
+          }
+          console.log('In Fetch: ', responseData)
+          this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
+          if (responseData.form_content.form_name !== 'undefined') {
+            this.props.setFormName(responseData.form_content.form_name)
+          }
         }
-        console.log("In Fetch: ",responseData)
-        this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields , id:responseData.id, newCounter: responseData.form_content.layout.length})
-        if (responseData.form_content.form_name !== 'undefined') {
-          this.props.setFormName( responseData.form_content.form_name )
-        }
-      }
       } catch (error) {
-        console.log("Eror  Response : ",error )
+        console.log('Eror  Response : ', error)
       }
     }
     if (this.props.formType === 'new') {
@@ -64,17 +103,15 @@ export default class GridLayout extends React.PureComponent {
         console.log('create a blank form')
         this.setState({ isLoading: false })
       } else {
-        fetchData({template:this.props.formID},'bitapps_get_template')
+        fetchData({ template: this.props.formID }, 'bitapps_get_template')
         console.log('fetch form layout', this.props.formID)
         this.setState({ isLoading: false })
-
       }
     } else if (this.props.formType === 'edit') {
       console.log('fetch existing form layout', this.props.formID)
-      fetchData({id:this.props.formID},'bitapps_get_a_form')
+      fetchData({ id: this.props.formID }, 'bitapps_get_a_form')
       console.log('fetch form layout', this.props.formID)
       this.setState({ isLoading: false })
-
     }
   }
 
@@ -86,18 +123,18 @@ export default class GridLayout extends React.PureComponent {
         // eslint-disable-next-line no-unused-vars
         const s = new SlimSelect({
           select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
-            "btcd-id"
+            'btcd-id',
           )}"] > div > .slim`,
           allowDeselect: true,
-          placeholder: allSel[i].getAttribute("placeholder"),
-          limit: Number(allSel[i].getAttribute("limit"))
+          placeholder: allSel[i].getAttribute('placeholder'),
+          limit: Number(allSel[i].getAttribute('limit')),
         });
         if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute("data-max-show")) {
+          if (allSel[i].hasAttribute('data-max-show')) {
             allSel[
               i
             ].nextSibling.children[1].children[1].style.maxHeight = `${Number(
-              allSel[i].getAttribute("data-max-show")
+              allSel[i].getAttribute('data-max-show'),
             ) * 2}pc`;
           }
         }
@@ -139,7 +176,7 @@ export default class GridLayout extends React.PureComponent {
   onLayoutChange(layout) {
     this.props.setLay(layout)
     this.props.setFields(this.state.data)
-    console.log(layout)
+    // console.log(layout)
     // this.setState({ layout })
   }
 
@@ -161,7 +198,7 @@ export default class GridLayout extends React.PureComponent {
       ...prvState,
       data: {
         ...prvState.data,
-        [newBlk]: draggedElm[0]
+        [newBlk]: draggedElm[0],
       },
       layout: prvState.layout.concat({ i: newBlk, x, y, w, h, minH, maxH, minW }),
       newCounter: prvState.newCounter + 1,
@@ -258,18 +295,20 @@ export default class GridLayout extends React.PureComponent {
             unselectable="on"
             onDragStart={() => false}
             src={
-              process.env.NODE_ENV === "production"
+              process.env.NODE_ENV === 'production'
                 ? `${bits.assetsURL}/img/${moveIcon}`
                 : `${moveIcon}`
             }
             alt="drag handle"
           />
         </span>
-        {this.state.data[item.i].map((i, idx) =>
-          createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child))
-        )}
+        {this.state.data[item.i].map((i, idx) => createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child)))}
       </div>
     ));
+  }
+
+  editSubmit() {
+    this.props.setElmSetting({ id: '', type: 'submit', data: this.props.formSubmit })
   }
 
 
@@ -300,10 +339,15 @@ export default class GridLayout extends React.PureComponent {
                 transformScale={1}
               // compactType="vertical"
               >
-
                 {this.createElm(this.state.layout)}
-
               </ResponsiveReactGridLayout>
+              <div onClick={this.editSubmit} onKeyPress={this.editSubmit} role="button" tabIndex={0}>
+                {this.childGen(this.props.formSubmit)}
+              </div>
+              {/* <div onClick={this.getElmProp} className="btcd-frm-sub" btcd-fld="submit">
+                <button className="btcd-sub-btn btcd-btn-md" type="button">Submit</button>
+                <button className="btcd-sub-btn btcd-rst-btn btcd-btn-md" type="button">Reset</button>
+              </div> */}
             </Scrollbars>
           </div>
         )
