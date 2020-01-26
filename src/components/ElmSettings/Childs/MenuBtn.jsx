@@ -14,15 +14,15 @@ export default function MenuBtn(props) {
     if (e.target.parentNode.children[1].classList.contains('btcd-m-a')) {
       e.target.parentNode.children[1].classList.remove('btcd-m-a')
       e.target.blur()
-
     } else {
       e.target.parentNode.children[1].classList.add('btcd-m-a')
     }
   }
- const handleDelete = () => {
+  const handleDelete = (e) => {
     console.log(props.formID)
-    bitsFetch({id: props.formID},'bitapps_delete_aform').then(response=>{
-      console.log("Response", response)
+    bitsFetch({ id: props.formID }, 'bitapps_delete_aform').then(response => {
+      e.target.parentNode.parentNode.parentNode.parentNode.remove()
+      // console.log('Response', response)
     })
   }
  const handleDuplicate = () => {

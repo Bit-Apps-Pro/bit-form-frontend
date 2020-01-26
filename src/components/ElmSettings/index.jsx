@@ -8,6 +8,7 @@ import CheckBox from './CheckBox'
 import RadioBtn from './RadioBtn'
 import Select from './Select'
 import FileUploadSettings from './FileUploadSettings'
+import SubmitBtn from './SubmitBtn'
 
 export default function index(props) {
   const renderSettings = (type) => {
@@ -26,6 +27,8 @@ export default function index(props) {
         return <Select elm={props.elm} updateData={props.updateData} />
       case 'file-up':
         return <FileUploadSettings elm={props.elm} updateData={props.updateData} />
+      case 'submit':
+        return <SubmitBtn elm={props.elm} setSubmitData={props.setSubmitData} />
       default:
         return ''
     }

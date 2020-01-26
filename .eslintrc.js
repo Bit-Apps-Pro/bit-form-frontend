@@ -27,6 +27,6 @@ module.exports = {
     "arrow-parens": 0,
     "react/prop-types": 0,
     "object-curly-newline": 0,
-    "max-len": ["error", { "code": 200 }]
+    "max-len": ["error", { "code": 300 }]
   },
 };

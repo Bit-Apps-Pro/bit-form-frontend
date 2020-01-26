@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 
 import React from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
 import textField from '../../resource/img/textField.png'
 import multilineText from '../../resource/img/multilineText.png'
@@ -20,7 +21,6 @@ import check from '../../resource/img/check.png'
 import radio from '../../resource/img/radio.png'
 import dropdown from '../../resource/img/dropdown.png'
 import { setPrevData, handleFile } from '../../resource/js/file-upload'
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function index(props) {
   const tools = [
@@ -343,8 +343,8 @@ export default function index(props) {
   return (
     <div className="toolBar-wrp">
       <div className="btcd-toolbar-title">
-        {!props.tolbarSiz && 'ToolBar'}
-        <button className="icn-btn" onClick={() => { props.setTolbarSiz(!props.tolbarSiz); props.setGridWidth(props.tolbarSiz ? 870 : 975) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
+        {!props.tolbarSiz && 'Tool Bar'}
+        <button className="icn-btn btcd-neo-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz); props.setGridWidth(props.tolbarSiz ? 870 : 975) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
       </div>
       <Scrollbars autoHide style={{ maxWidth: 400 }}>
         <div className="toolBar">

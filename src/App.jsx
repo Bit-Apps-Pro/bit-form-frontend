@@ -9,9 +9,9 @@ import {
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 // import './resource/icons/style.css'
-import "./resource/js/custom";
-import Builder from "./pages/Builder";
-import AllForms from "./pages/AllForms";
+import './resource/js/custom';
+import Builder from './pages/Builder';
+import AllForms from './pages/AllForms';
 
 const Dashboard = () => (
   <div>
@@ -23,8 +23,6 @@ const Dashboard = () => (
 );
 
 export default class App extends React.Component {
-  col;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -60,14 +58,13 @@ export default class App extends React.Component {
   }
 
   setGridWidth(w) {
-    console.log(w)
     this.setState({ gridWidth: w - 20 })
   }
 
   render() {
     return (
+      // eslint-disable-next-line no-undef
       <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
-
         <div className="Btcd-App">
           <div className="nav-wrp">
             <div className="logo" />
