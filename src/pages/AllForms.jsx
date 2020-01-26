@@ -57,7 +57,7 @@ export default function AllFroms(props) {
     useState(
       bits.allForms === null ? [] :
       bits.allForms.map(form=>
-      {return {formID: form.id, status: form.status==="0"?false:true, formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: (form.entries/form.views===0?1:form.views)*100, created_at: form.created_at}})
+      {return {formID: form.id, status: form.status==="0"?false:true, formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: (form.entries/(form.views==='0'?1:form.views))*100, created_at: form.created_at}})
     )
    : useState(
      [
