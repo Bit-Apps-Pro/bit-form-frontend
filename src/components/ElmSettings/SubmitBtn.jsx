@@ -47,10 +47,14 @@ export default function SubmitBtn(props) {
   function setFulWidth(e) {
     if (e.target.checked) {
       props.elm.data[0].child[0].attr.className += ' ful-w'
-      props.elm.data[0].child[1].attr.className += ' ful-w'
+      if (shwResetBtn) {
+        props.elm.data[0].child[1].attr.className += ' ful-w'
+      }
     } else {
       props.elm.data[0].child[0].attr.className = props.elm.data[0].child[0].attr.className.replace(/ful-w/g, '')
-      props.elm.data[0].child[1].attr.className = props.elm.data[0].child[1].attr.className.replace(/ful-w/g, '')
+      if (shwResetBtn) {
+        props.elm.data[0].child[1].attr.className = props.elm.data[0].child[1].attr.className.replace(/ful-w/g, '')
+      }
     }
     props.setSubmitData(props.elm.data)
   }
@@ -58,11 +62,14 @@ export default function SubmitBtn(props) {
   function setSmall(e) {
     if (e.target.checked) {
       props.elm.data[0].child[0].attr.className = props.elm.data[0].child[0].attr.className.replace(/btcd-btn-md/g, '')
-      props.elm.data[0].child[1].attr.className = props.elm.data[0].child[1].attr.className.replace(/btcd-btn-md/g, '')
+      if (shwResetBtn) {
+        props.elm.data[0].child[1].attr.className = props.elm.data[0].child[1].attr.className.replace(/btcd-btn-md/g, '')
+      }
     } else {
       props.elm.data[0].child[0].attr.className += ' btcd-btn-md'
-      props.elm.data[0].child[1].attr.className += ' btcd-btn-md'
-
+      if (shwResetBtn) {
+        props.elm.data[0].child[1].attr.className += ' btcd-btn-md'
+      }
     }
     props.setSubmitData(props.elm.data)
   }

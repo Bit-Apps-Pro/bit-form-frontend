@@ -1,8 +1,8 @@
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0083f3;
-$dp-blue: #191e3e;
-$bg: #eff3fb;
+$dp-blue: #192150;
+$bg: #edeff3;
 
 html,
 body {
@@ -1000,7 +1000,6 @@ nav.top-nav {
 }
 
 .f-table > thead > tr > th {
-  /* padding: 10px 40px 4px 40px; */
   border-bottom: 2px solid #dedce4;
 }
 .f-table > tbody > tr {
@@ -1209,6 +1208,7 @@ nav.top-nav {
 
 .tooltip {
   &::after {
+    line-height: 1;
     content: var(--tooltip-txt);
     background: #393939;
     color: white;
@@ -1300,9 +1300,11 @@ nav.top-nav {
 }
 
 .btcd-menu-btn {
+  position: relative;
+  margin-right: 10px;
   background: #ffffff;
   border: none;
-  font-size: 22px;
+  font-size: 14px;
   border-radius: 50px;
   padding: 5px;
   width: 30px;
@@ -1312,6 +1314,17 @@ nav.top-nav {
   outline: none;
   cursor: pointer;
   transition: all 0.3s;
+  &:hover {
+    background: $blue;
+    color: white;
+  }
+}
+.btcd-mnu {
+  font-size: 22px;
+  &:hover {
+    background: #f0f4ff;
+    color: $blue;
+  }
   &::after {
     content: "\02261";
   }
@@ -1529,6 +1542,8 @@ nav.top-nav {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76);
   }
   & > .btcd-btn-close {
+    background: transparentize(#fff, 0.6);
+    color: white;
     font-size: 22px;
     height: 30px;
     width: 30px;
@@ -1690,10 +1705,6 @@ nav.top-nav {
   background: #eff1f7;
   padding: 20px;
   border-radius: 20px;
-  /* & > div {
-    height: 0;
-    transition: height 0.5s;
-  } */
 }
 .btcd-f-c-t-d-0 {
   height: 0px;
@@ -1723,4 +1734,43 @@ nav.top-nav {
 
 .btcd-eml-not {
   width: 900px;
+}
+
+.btcd-em-n-t-wrp {
+  padding: 20px 0 20px 0;
+  box-shadow: 0px 3px 5px 1px #0000002b;
+  border-radius: 20px;
+  margin-top: 15px;
+  height: 400px;
+  overflow: auto;
+}
+
+.btcd-em-n-t {
+  width: 100%;
+  border-collapse: collapse;
+  & > thead > tr > th {
+    color: #637192;
+    text-align: left;
+    padding: 0 0 10px 10px;
+    border-bottom: 2px solid #dce1f3;
+  }
+  & > tbody > tr {
+    &:hover {
+      background: #f4f6ff;
+    }
+  }
+  & > tbody > tr > td {
+    color: $dp-blue;
+    padding: 10px 0 10px 10px;
+    border-bottom: 1px solid #c9d6e2;
+    &:hover {
+      background: #eeeefd;
+    }
+  }
+}
+
+.btcd-m-sm{
+  width: 350px !important;
+  height: 150px !important;
+  text-align: center !important;
 }

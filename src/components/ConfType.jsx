@@ -13,8 +13,6 @@ export default function ConfType(props) {
   const [page, setPage] = React.useState('')
   const [msg, setMsg] = React.useState('')
 
-  console.log(props.formSettings)
-
   function handlePos(ind) {
     setPos(ind)
     const st = props.formSettings
@@ -70,27 +68,6 @@ export default function ConfType(props) {
       default:
         break
     }
-
-    /* return function cleanup() {
-      const st = props.formSettings
-      switch (pos) {
-        case 0:
-          st.confirmation = { type: 'msg', txt: msg }
-          setMsg(st.confirmation.txt)
-          break
-        case 1:
-          st.confirmation = { type: 'page', page }
-          setPage(st.confirmation.page)
-          break
-        case 2:
-          st.confirmation = { type: 'url', url }
-          setUrl(st.confirmation.url)
-          break
-        default:
-          break
-      }
-      props.setFormSettings(st)
-    } */
   }, [])
 
   return (
