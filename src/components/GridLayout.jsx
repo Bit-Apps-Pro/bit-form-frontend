@@ -244,7 +244,6 @@ export default class GridLayout extends React.PureComponent {
     }
   }
 
-
   childGen(cld) {
     if (cld === null) {
       return null
