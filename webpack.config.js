@@ -80,7 +80,20 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(s[ac]ss|css)$/i,
-          use: ["style-loader", "css-loader", "sass-loader"]
+          use: [
+            "style-loader",
+            "css-loader",
+            {
+              loader: "postcss-loader",
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('autoprefixer')
+                ]
+              }
+            },
+            "sass-loader"
+          ]
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/i,

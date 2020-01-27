@@ -97,16 +97,15 @@ function Builder(props) {
       document.getElementById("wpcontent").style.marginLeft = 0;
     }
     return function cleanup() {
-      document.getElementsByTagName("body")[0].style.overflow = "auto";
-      if (process.env.NODE_ENV === "production") {
-        document.getElementByClassName("wp-toolbar")[0].style.paddingTop =
-          "32px";
-        document.getElementById("wpadminbar").style.display = "block";
-        document.getElementById("adminmenumain").style.display = "block";
-        document.getElementById("adminmenuback").style.display = "block";
-        document.getElementById("adminmenuwrap").style.display = "block";
-        document.getElementById("wpcontent").style.marginLeft = "160px";
-        document.getElementById("wpfooter").style.display = "block";
+      document.getElementsByTagName('body')[0].style.overflow = 'auto'
+      if (process.env.NODE_ENV === 'production') {
+        document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
+        document.getElementById('wpadminbar').style.display = 'block'
+        document.getElementById('adminmenumain').style.display = 'block'
+        document.getElementById('adminmenuback').style.display = 'block'
+        document.getElementById('adminmenuwrap').style.display = 'block'
+        document.getElementById('wpcontent').style.marginLeft = '160px'
+        document.getElementById('wpfooter').style.display = 'block'
       }
       setFulScn(false);
     };

@@ -25,7 +25,13 @@ export default function MenuBtn(props) {
       // console.log('Response', response)
     })
   }
-
+ const handleDuplicate = () => {
+    console.log(props.formID)
+    bitsFetch({id: props.formID},'bitapps_duplicate_aform').then(response=>{
+      console.log("Response", response)
+    })
+  }
+  
   return (
     <div className="btcd-menu">
       <button className="btcd-menu-btn btcd-mnu sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
@@ -35,7 +41,7 @@ export default function MenuBtn(props) {
           {'  '}
           Edit
         </Link>
-        <button type="button" aria-label="actions">
+        <button type="button" aria-label="actions" onClick={handleDuplicate}>
           <span className="btcd-icn icn-copy" />
           {'  '}
           Duplicate
