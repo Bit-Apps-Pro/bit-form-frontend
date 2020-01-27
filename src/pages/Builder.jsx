@@ -57,7 +57,7 @@ function Builder(props) {
     window.scrollTo(0, 0)
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
     if (process.env.NODE_ENV === 'production') {
-      document.getElementByClassName('wp-toolbar')[0].style.paddingTop = 0
+      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
       document.getElementById('wpadminbar').style.display = 'none'
       document.getElementById('adminmenumain').style.display = 'none'
       document.getElementById('adminmenuback').style.display = 'none'
