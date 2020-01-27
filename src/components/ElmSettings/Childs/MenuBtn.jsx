@@ -34,7 +34,7 @@ export default function MenuBtn(props) {
   
   return (
     <div className="btcd-menu">
-      <button className="btcd-menu-btn sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
+      <button className="btcd-menu-btn btcd-mnu sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
       <div className="btcd-menu-list">
         <Link to={`/builder/edit/${props.formID}`} type="button" aria-label="actions">
           <span className="btcd-icn icn-edit" />
@@ -51,7 +51,6 @@ export default function MenuBtn(props) {
           {'  '}
           Delete
         </button>
-
       </div>
     </div>
   )

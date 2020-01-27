@@ -10,7 +10,6 @@ import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 
 export default class GridLayout extends React.PureComponent {
-
   constructor(props) {
     super(props)
     this.state = {
