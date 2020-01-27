@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { Container, Section, Bar } from 'react-simple-resizer';
-import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom';
-import axios from 'axios';
-import ToolBar from '../components/Toolbar';
-import GridLayout from '../components/GridLayout';
-import ElementSettings from '../components/ElmSettings';
-import FormSettings from '../components/FormSettings';
+import React, { useState } from 'react'
+import { Container, Section, Bar } from 'react-simple-resizer'
+import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
+import axios from 'axios'
+import ToolBar from '../components/Toolbar'
+import GridLayout from '../components/GridLayout'
+import ElementSettings from '../components/ElmSettings'
+import FormSettings from '../components/FormSettings'
 
 function Builder(props) {
-  const { formType, formID } = useParams();
-  const [fulScn, setFulScn] = useState(false);
-  const [elmSetting, setElmSetting] = useState({ id: null, type: null, data: null, });
-  const [cloneData, setCloneData] = useState();
-  const [newData, setNewData] = useState(null);
-  const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }]);
-  const [lay, setLay] = useState(null);
-  const [fields, setFields] = useState(null);
-  const [tolbarSiz, setTolbarSiz] = useState(false);
+  const { formType, formID } = useParams()
+  const [fulScn, setFulScn] = useState(false)
+  const [elmSetting, setElmSetting] = useState({ id: null, type: null, data: null, })
+  const [cloneData, setCloneData] = useState()
+  const [newData, setNewData] = useState(null)
+  const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
+  const [lay, setLay] = useState(null)
+  const [fields, setFields] = useState(null)
+  const [tolbarSiz, setTolbarSiz] = useState(false)
   const [savedFormId, setSavedFormId] = useState(
     formType === 'edit' ? formID : 0,
-  );
-  const [formName, setFormName] = useState('Blank Form');
+  )
+  const [formName, setFormName] = useState('Blank Form')
   const [buttonText, setButtonText] = useState(
     formType === 'edit' ? 'Update' : 'Save',
-  );
-  const [forceRender, setForceRender] = useState(false);
+  )
+  const [forceRender, setForceRender] = useState(false)
   const [formSubmit, setFormSubmit] = useState([
     {
       tag: 'div',
@@ -48,7 +48,7 @@ function Builder(props) {
         },
       ],
     },
-  ]);
+  ])
   const [formSettings, setFormSettings] = useState({
     formName,
     submitBtn: {
@@ -64,24 +64,24 @@ function Builder(props) {
       },
     },
     confirmation: { type: 'msg', txt: '' },
-  });
+  })
 
-  const notIE = !window.document.documentMode;
+  const notIE = !window.document.documentMode
   setTimeout(() => {
-    setFulScn(true);
-  }, 500);
+    setFulScn(true)
+  }, 500)
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    window.scrollTo(0, 0)
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
     if (process.env.NODE_ENV === 'production') {
-      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0;
-      document.getElementById('wpadminbar').style.display = 'none';
-      document.getElementById('adminmenumain').style.display = 'none';
-      document.getElementById('adminmenuback').style.display = 'none';
-      document.getElementById('adminmenuwrap').style.display = 'none';
-      document.getElementById('wpfooter').style.display = 'none';
-      document.getElementById('wpcontent').style.marginLeft = 0;
+      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
+      document.getElementById('wpadminbar').style.display = 'none'
+      document.getElementById('adminmenumain').style.display = 'none'
+      document.getElementById('adminmenuback').style.display = 'none'
+      document.getElementById('adminmenuwrap').style.display = 'none'
+      document.getElementById('wpfooter').style.display = 'none'
+      document.getElementById('wpcontent').style.marginLeft = 0
     }
     return function cleanup() {
       document.getElementsByTagName('body')[0].style.overflow = 'auto'
@@ -94,31 +94,31 @@ function Builder(props) {
         document.getElementById('wpcontent').style.marginLeft = '160px'
         document.getElementById('wpfooter').style.display = 'block'
       }
-      setFulScn(false);
-    };
-  }, []);
+      setFulScn(false)
+    }
+  }, [])
 
   const updateData = data => {
-    setCloneData({ ...cloneData, data });
-  };
+    setCloneData({ ...cloneData, data })
+  }
 
   const saveForm = () => {
-    console.log('In saveForm: ', savedFormId, formID);
+    console.log('In saveForm: ', savedFormId, formID)
     let formData = {
       layout: lay,
       fields,
       form_name: formName,
-    };
-    let action = 'bitapps_create_new_form';
+    }
+    let action = 'bitapps_create_new_form'
     if (savedFormId > 0) {
       formData = {
         layout: lay,
         fields,
         form_name: formName,
         id: savedFormId,
-      };
+      }
 
-      action = 'bitapps_update_form';
+      action = 'bitapps_update_form'
     }
     // eslint-disable-next-line no-undef
     axios.post(bits.ajaxURL, formData, {
@@ -133,26 +133,26 @@ function Builder(props) {
     })
       .then(response => {
         if (action === 'bitapps_create_new_form') {
-          const data = JSON.parse(response.data.data);
+          const data = JSON.parse(response.data.data)
           if (savedFormId === 0 && buttonText === 'Save') {
-            setSavedFormId(data.id);
-            setButtonText('Update');
-            props.history.replace(`/builder/edit/${data.id}`);
+            setSavedFormId(data.id)
+            setButtonText('Update')
+            props.history.replace(`/builder/edit/${data.id}`)
           }
         }
       })
       .catch(error => {
-        console.log('error', error);
-      });
-  };
+        console.log('error', error)
+      })
+  }
 
   const setSubmitData = data => {
-    setForceRender(!forceRender);
-    setFormSubmit(data);
-  };
+    setForceRender(!forceRender)
+    setFormSubmit(data)
+  }
 
   // const activeClass = process.env.NODE_ENV === 'production' ? 'btcd-wp-ful-scn' : 'btcd-ful-scn'
-  const activeClass = 'btcd-ful-scn';
+  const activeClass = 'btcd-ful-scn'
 
   return (
     <div className={`btcd-builder-wrp ${fulScn && activeClass}`}>
@@ -190,7 +190,7 @@ function Builder(props) {
             {buttonText}
           </button>
           <NavLink to="/" className="btn btcd-btn-close">
-            &#10799;
+            &#10799
           </NavLink>
         </div>
       </nav>
@@ -299,7 +299,7 @@ function Builder(props) {
         </Route>
       </Switch>
     </div>
-  );
+  )
 }
 
-export default withRouter(Builder);
+export default withRouter(Builder)
