@@ -59,7 +59,7 @@ export default function AllFroms() {
   let dbForms = {}
   if (process.env.NODE_ENV === 'production') {
     if (bits.allForms !== null) {
-      dbForms = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: (form.entries / form.views === 0 ? 1 : form.views) * 100, created_at: form.created_at }))
+      dbForms = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
     }
   } else {
     dbForms = [

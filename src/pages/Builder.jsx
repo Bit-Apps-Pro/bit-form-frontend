@@ -57,7 +57,7 @@ function Builder(props) {
     window.scrollTo(0, 0)
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
     if (process.env.NODE_ENV === 'production') {
-      document.getElementByClassName('wp-toolbar')[0].style.paddingTop = 0
+      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
       document.getElementById('wpadminbar').style.display = 'none'
       document.getElementById('adminmenumain').style.display = 'none'
       document.getElementById('adminmenuback').style.display = 'none'
@@ -68,7 +68,7 @@ function Builder(props) {
     return function cleanup() {
       document.getElementsByTagName('body')[0].style.overflow = 'auto'
       if (process.env.NODE_ENV === 'production') {
-        document.getElementByClassName('wp-toolbar')[0].style.paddingTop = '32px'
+        document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
         document.getElementById('wpadminbar').style.display = 'block'
         document.getElementById('adminmenumain').style.display = 'block'
         document.getElementById('adminmenuback').style.display = 'block'
@@ -121,7 +121,7 @@ function Builder(props) {
           setButtonText('Update')
           props.history.replace(`/builder/edit/${data.id}`)
         }
-      })
+      }})
       .catch(error => {
         console.log("error", error);
       });
