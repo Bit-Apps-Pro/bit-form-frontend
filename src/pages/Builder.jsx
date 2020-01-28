@@ -190,7 +190,7 @@ function Builder(props) {
             {buttonText}
           </button>
           <NavLink to="/" className="btn btcd-btn-close">
-            &#10799
+            &#10799;
           </NavLink>
         </div>
       </nav>
