@@ -4,12 +4,9 @@ import React from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy } from 'react-table'
 
 function GlobalFilter({
-  // preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
 }) {
-  // const count = preGlobalFilteredRows.length
-
   return (
     <div className="f-search">
       <button type="button" className="icn-btn" aria-label="icon-btn"><span className="btcd-icn icn-search" /></button>
@@ -19,7 +16,6 @@ function GlobalFilter({
           setGlobalFilter(e.target.value || undefined)
         }}
         placeholder="Search"
-
       />
     </div>
   )

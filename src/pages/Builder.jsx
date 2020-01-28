@@ -4,26 +4,21 @@ import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
-import ElementSettings from '../components/ElmSettings'
+import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
 
 function Builder(props) {
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(false)
-  const [elmSetting, setElmSetting] = useState({ id: null, type: null, data: null, })
-  const [cloneData, setCloneData] = useState()
+  const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [lay, setLay] = useState(null)
   const [fields, setFields] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
-  const [savedFormId, setSavedFormId] = useState(
-    formType === 'edit' ? formID : 0,
-  )
-  const [formName, setFormName] = useState('Blank Form')
-  const [buttonText, setButtonText] = useState(
-    formType === 'edit' ? 'Update' : 'Save',
-  )
+  const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
+  const [formName, setFormName] = useState('Form Name')
+  const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [forceRender, setForceRender] = useState(false)
   const [formSubmit, setFormSubmit] = useState([
     {
@@ -99,7 +94,7 @@ function Builder(props) {
   }, [])
 
   const updateData = data => {
-    setCloneData({ ...cloneData, data })
+    console.log('updateData', fields, data)
   }
 
   const saveForm = () => {
@@ -265,8 +260,6 @@ function Builder(props) {
                 width={props.gridWidth}
                 draggedElm={drgElm}
                 setElmSetting={setElmSetting}
-                cloneData={cloneData}
-                setCloneData={setCloneData}
                 newData={newData}
                 setNewData={setNewData}
                 formType={formType}
@@ -281,7 +274,7 @@ function Builder(props) {
 
             <Bar className="bar bar-r" />
             <Section id="settings-menu" defaultSize={300}>
-              <ElementSettings
+              <CompSettings
                 elm={elmSetting}
                 updateData={updateData}
                 setSubmitData={setSubmitData}

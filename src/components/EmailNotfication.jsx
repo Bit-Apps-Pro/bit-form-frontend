@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
 import Modal from './Modal'
 
-export default function EmailNotfication(props) {
+export default function EmailNotfication() {
   const notify = [
     { status: 1, label: 'Hello text', email_sub: 'email subject here ...' },
     { status: 1, label: 'Hello text', email_sub: 'email subject here ...' },

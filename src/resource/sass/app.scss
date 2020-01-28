@@ -626,8 +626,7 @@ li b {
     border-color: $bg;
     box-shadow: none;
     outline: none;
-    box-shadow: 5px 5px 10px #e1e4ec, -5px -5px 10px #fdffff, 1px 1px 1px 0px #e3e6eb inset,
-      -1px -1px 1px 0px #f1f2f3 inset;
+    box-shadow: 5px 5px 10px #e1e4ec, -5px -5px 10px #fdffff, 1px 1px 1px 1px #e2e2e2 inset, -1px -1px 1px 0px #e0e0e0 inset;
   }
 }
 
