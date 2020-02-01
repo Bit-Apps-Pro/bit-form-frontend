@@ -28,6 +28,6 @@ module.exports = {
     "react/prop-types": 0,
     "object-curly-newline": 0,
     "max-len": ["error", { "code": 300 }],
-    "linebreak-style": ["error", "windows"]
+    "linebreak-style": ["error", "unix"]
   },
 };

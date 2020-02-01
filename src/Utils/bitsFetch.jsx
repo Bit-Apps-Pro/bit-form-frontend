@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export default function bitsFetch(data, action) {
-  const response = axios({
+export default async function bitsFetch(data, action) {
+  const response = await axios({
     // eslint-disable-next-line no-undef
     url: bits.ajaxURL,
     method: 'POST',

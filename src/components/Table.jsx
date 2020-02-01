@@ -25,7 +25,7 @@ function GlobalFilter({
   )
 }
 
-export default function Table({ columns, data }) {
+export default function Table(props) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -46,8 +46,8 @@ export default function Table({ columns, data }) {
     state: { pageIndex, pageSize },
   } = useTable(
     {
-      columns,
-      data,
+      ...props,
+      manualPagination: typeof props.pageCount !== 'undefined',
       initialState: { pageIndex: 0 },
     },
     useFilters,
@@ -56,6 +56,30 @@ export default function Table({ columns, data }) {
     usePagination,
   );
 
+  const handleGotoPageZero = () => {
+    if (props.getPageIndex) {
+      props.getPageIndex(0)
+    }
+    gotoPage(0)
+  }
+  const handleGotoLastPage = () => {
+    if (props.getPageIndex) {
+      props.getPageIndex(pageCount - 1)
+    }
+    gotoPage(pageCount - 1)
+  }
+  const handleNextPage = () => {
+    if (props.getPageIndex) {
+      props.getPageIndex(pageIndex + 1)
+    }
+    nextPage()
+  }
+  const handlePreviousPage = () => {
+    if (props.getPageIndex) {
+      props.getPageIndex(pageIndex - 1)
+    }
+    previousPage()
+  }
   return (
     <>
       <GlobalFilter
@@ -98,19 +122,19 @@ export default function Table({ columns, data }) {
       </table>
 
       <div className="btcd-pagination">
-        <button className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <button className="icn-btn" type="button" onClick={handleGotoPageZero} disabled={!canPreviousPage}>
           &laquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button className="icn-btn" type="button" onClick={handlePreviousPage} disabled={!canPreviousPage}>
           &lsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
+        <button className="icn-btn" type="button" onClick={handleNextPage} disabled={!canNextPage}>
           &rsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        <button className="icn-btn" type="button" onClick={handleGotoLastPage} disabled={!canNextPage}>
           &raquo;
         </button>
         {' '}
@@ -132,6 +156,9 @@ export default function Table({ columns, data }) {
           value={pageSize}
           onChange={e => {
             setPageSize(Number(e.target.value));
+            if (props.getPageSize) {
+              props.getPageSize(e.target.value, pageIndex)
+            }
           }}
         >
           {[10, 20, 30, 40, 50].map(pageSiz => (
