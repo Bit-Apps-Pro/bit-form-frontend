@@ -4,27 +4,32 @@ import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
-import ElementSettings from '../components/ElmSettings'
+import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
 
 function Builder(props) {
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(false)
-  const [elmSetting, setElmSetting] = useState({ id: null, type: null, data: null })
-  const [cloneData, setCloneData] = useState()
+  const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [lay, setLay] = useState(null)
   const [fields, setFields] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
-  const [savedFormId, setSavedFormId] = useState(
-    formType === 'edit' ? formID : 0,
-  )
-  const [formName, setFormName] = useState('Blank Form')
-  const [buttonText, setButtonText] = useState(
-    formType === 'edit' ? 'Update' : 'Save',
-  )
+  const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
+  const [formName, setFormName] = useState('Form Name')
+  const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [forceRender, setForceRender] = useState(false)
+  const [updatedData, updateData] = useState(null)
+  const [subBtn, setSubBtn] = useState({
+    typ: 'submit',
+    btnSiz: 'md',
+    fulW: false,
+    align: 'right',
+    subBtnTxt: 'Submit',
+    rstBtnTxt: 'Reset',
+  })
+
   const [formSubmit, setFormSubmit] = useState([
     {
       tag: 'div',
@@ -51,6 +56,7 @@ function Builder(props) {
   ])
   const [formSettings, setFormSettings] = useState({
     formName,
+    theme: 'default',
     submitBtn: {
       wrpCls: formSubmit[0].attr.className,
       subBtn: {
@@ -101,10 +107,6 @@ function Builder(props) {
     }
   }, [])
 
-  const updateData = data => {
-    setCloneData({ ...cloneData, data })
-  }
-
   const saveForm = () => {
     console.log('In saveForm: ', savedFormId, formID)
     let formData = {
@@ -149,9 +151,9 @@ function Builder(props) {
       })
   }
 
-  const setSubmitData = data => {
+  const setSubmitConfig = data => {
     setForceRender(!forceRender)
-    setFormSubmit(data)
+    setSubBtn(data)
   }
 
   // const activeClass = process.env.NODE_ENV === 'production' ? 'btcd-wp-ful-scn' : 'btcd-ful-scn'
@@ -265,11 +267,10 @@ function Builder(props) {
               )}
 
               <GridLayout
+                theme={formSettings.theme}
                 width={props.gridWidth}
                 draggedElm={drgElm}
                 setElmSetting={setElmSetting}
-                cloneData={cloneData}
-                setCloneData={setCloneData}
                 newData={newData}
                 setNewData={setNewData}
                 formType={formType}
@@ -279,15 +280,18 @@ function Builder(props) {
                 setFormName={setFormName}
                 formSubmit={formSubmit}
                 forceRender={forceRender}
+                updatedData={updatedData}
+                updateData={updateData}
+                subBtn={subBtn}
               />
             </Section>
 
             <Bar className="bar bar-r" />
             <Section id="settings-menu" defaultSize={300}>
-              <ElementSettings
+              <CompSettings
                 elm={elmSetting}
                 updateData={updateData}
-                setSubmitData={setSubmitData}
+                setSubmitConfig={setSubmitConfig}
               />
             </Section>
           </Container>

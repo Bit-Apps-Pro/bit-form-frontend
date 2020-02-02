@@ -8,6 +8,7 @@ import MinMax from './Childs/MinMax'
 import MinMaxLength from './Childs/MinMaxLength'
 
 export default function TextFieldSettings(props) {
+  console.log(props)
   let isChecked = false
   let isAutocomplete = false
   let label = ''

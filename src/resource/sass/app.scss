@@ -391,7 +391,7 @@ li b {
   width: 20px;
   height: 20px;
   bottom: 0;
-  right: 0;
+  right: 5px;
   background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=");
   background-position: bottom right;
   padding: 0 3px 3px 0;
@@ -457,10 +457,6 @@ li b {
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
-
-  &:hover {
-    background: aliceblue;
-  }
 
   & > label {
     height: 15px;
@@ -535,10 +531,12 @@ li b {
 
 .drag:not(.no-drg) {
   cursor: grab;
-}
-
-.drag:active {
-  cursor: grabbing;
+  &:hover {
+    background: aliceblue;
+  }
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .no-drg {
@@ -585,6 +583,10 @@ li b {
   margin-bottom: 5px;
 }
 
+.mt-0 {
+  margin-top: 0 !important;
+}
+
 .mt-2 {
   margin-top: 10px;
 }
@@ -600,6 +602,9 @@ li b {
 .mr-2 {
   margin-left: 10px;
 }
+.ml-4 {
+  margin-right: 20px;
+}
 
 @mixin inp($width: auto) {
   width: $width;
@@ -614,7 +619,7 @@ li b {
 }
 
 .setting-inp {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   width: 100%;
   & > input,
@@ -623,10 +628,11 @@ li b {
   }
 
   & > input:focus {
+    border-color: $bg;
     box-shadow: none;
     outline: none;
-    box-shadow: 5px 5px 10px #e1e4ec, -5px -5px 10px #fdffff, 1px 1px 1px 0px #e3e6eb inset,
-      -1px -1px 1px 0px #f1f2f3 inset;
+    box-shadow: 5px 5px 10px #e1e4ec, -5px -5px 10px #fdffff, 1px 1px 1px 1px #e2e2e2 inset,
+      -1px -1px 1px 0px #e0e0e0 inset;
   }
 }
 
@@ -636,8 +642,8 @@ li b {
 
 .opt {
   margin-top: 20px;
-  padding: 7px;
-  background: aliceblue;
+  padding: 10px;
+  background: #e2e6ef;
   border-radius: 8px;
 
   & > div > input {
@@ -677,6 +683,9 @@ li b {
   width: 25px;
   height: 25px;
   line-height: 0px;
+  &:hover {
+    color: red;
+  }
 }
 
 // toogle handle start
@@ -775,6 +784,9 @@ li b {
   width: 100%;
   height: 100%;
   padding: 10px;
+  & > label {
+    display: block;
+  }
 }
 /*.file-wrp:hover{
   background: #fafafa;
@@ -1209,6 +1221,7 @@ nav.top-nav {
 .tooltip {
   &::after {
     line-height: 1;
+    font-size: 13px;
     content: var(--tooltip-txt);
     background: #393939;
     color: white;
@@ -1239,6 +1252,7 @@ nav.top-nav {
 .btcd-icn {
   pointer-events: none !important;
 }
+
 .btcd-prgrs-wrp {
   width: 100px;
   height: 8px;
@@ -1552,6 +1566,7 @@ nav.top-nav {
     border-radius: 100px;
     text-align: center;
     padding-top: 1px;
+    line-height: 1.2;
     &:hover {
       background: rgb(218, 0, 0) !important;
       color: rgb(66, 0, 0) !important;
@@ -1769,7 +1784,7 @@ nav.top-nav {
   }
 }
 
-.btcd-m-sm{
+.btcd-m-sm {
   width: 350px !important;
   height: 150px !important;
   text-align: center !important;
