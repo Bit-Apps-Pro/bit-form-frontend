@@ -15,7 +15,7 @@ function getFileSize(size) {
 export function delItem(el) {
   fileList = { files: [] }
   const fInp = el.parentNode.parentNode.parentNode.querySelector('input[type="file"]')
-  for (let i = 0; i < fInp.files.length; i + 1) {
+  for (let i = 0; i < fInp.files.length; i += 1) {
     fileList.files.push(fInp.files[i])
   }
   fileList.files.splice(el.getAttribute('data-index'), 1)
@@ -151,7 +151,7 @@ export function handleFile(e) {
                           <br/>
                           <small>${getFileSize(e.target.files[i].size)}</small>
                       </div>
-                      <button onclick="this.parentNode.style.display='none'"  type="button" data-index="${i}" title="Remove This File"><span>&times;</span></button>
+                      <button type="button" data-index="${i}" title="Remove This File"><span style="pointer-events:none">&times;</span></button>
                   </div>`)
     }
   }

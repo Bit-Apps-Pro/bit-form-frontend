@@ -20,6 +20,16 @@ function Builder(props) {
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [forceRender, setForceRender] = useState(false)
+  const [updatedData, updateData] = useState(null)
+  const [subBtn, setSubBtn] = useState({
+    typ: 'submit',
+    btnSiz: 'md',
+    fulW: false,
+    align: 'right',
+    subBtnTxt: 'Submit',
+    rstBtnTxt: 'Reset',
+  })
+
   const [formSubmit, setFormSubmit] = useState([
     {
       tag: 'div',
@@ -44,8 +54,10 @@ function Builder(props) {
       ],
     },
   ])
+
   const [formSettings, setFormSettings] = useState({
     formName,
+    theme: 'default',
     submitBtn: {
       wrpCls: formSubmit[0].attr.className,
       subBtn: {
@@ -93,10 +105,6 @@ function Builder(props) {
     }
   }, [])
 
-  const updateData = data => {
-    console.log('updateData', fields, data)
-  }
-
   const saveForm = () => {
     console.log('In saveForm: ', savedFormId, formID)
     let formData = {
@@ -141,9 +149,9 @@ function Builder(props) {
       })
   }
 
-  const setSubmitData = data => {
+  const setSubmitConfig = data => {
     setForceRender(!forceRender)
-    setFormSubmit(data)
+    setSubBtn(data)
   }
 
   // const activeClass = process.env.NODE_ENV === 'production' ? 'btcd-wp-ful-scn' : 'btcd-ful-scn'
@@ -257,6 +265,7 @@ function Builder(props) {
               )}
 
               <GridLayout
+                theme={formSettings.theme}
                 width={props.gridWidth}
                 draggedElm={drgElm}
                 setElmSetting={setElmSetting}
@@ -269,6 +278,9 @@ function Builder(props) {
                 setFormName={setFormName}
                 formSubmit={formSubmit}
                 forceRender={forceRender}
+                updatedData={updatedData}
+                updateData={updateData}
+                subBtn={subBtn}
               />
             </Section>
 
@@ -277,7 +289,7 @@ function Builder(props) {
               <CompSettings
                 elm={elmSetting}
                 updateData={updateData}
-                setSubmitData={setSubmitData}
+                setSubmitConfig={setSubmitConfig}
               />
             </Section>
           </Container>

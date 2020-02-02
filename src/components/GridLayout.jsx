@@ -21,12 +21,13 @@ export default class GridLayout extends React.PureComponent {
   val: default value
   ac: autocomplete on/off
   req: required
+  mul: multiple
   */
 
   /*  data = {
      'b-00': {
        typ: 'text',
-       lbl: { txt: 'label texst', pos: '' },
+       lbl: 'label',
        cls: '',
        ph: 'sss',
        mn: 1,
@@ -57,29 +58,19 @@ export default class GridLayout extends React.PureComponent {
       layout: [
         {
           w: 10,
-          h: 2,
+          h: 4,
           x: 0,
           y: Infinity,
           i: 'b-00',
-          minH: 2,
-          maxH: 2,
-          moved: false,
-          static: false,
         },
       ],
       data: {
         'b-00': {
-          typ: 'text',
-          lbl: { txt: 'label texst', pos: '' },
-          cls: '',
-          ph: 'sss',
-          mn: 1,
-          mx: 2,
-          val: '',
-          ac: 'on',
-          valid: {
-            req: true,
-          },
+          typ: 'file-up',
+          lbl: 'File Upload',
+          upBtnTxt: 'Attach File',
+          mxUp: 5,
+          valid: {},
         },
       },
     }
@@ -180,6 +171,12 @@ export default class GridLayout extends React.PureComponent {
         newCounter: prvState.newCounter + 1,
       }
     }
+    if (nextProps.updatedData !== null) {
+      nextProps.updateData(null)
+      return {
+        data: { ...prvState.data, [nextProps.updatedData.id]: nextProps.updatedData.data },
+      }
+    }
     return null
   }
 
@@ -238,6 +235,8 @@ export default class GridLayout extends React.PureComponent {
         node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode
       } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
         node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+      } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
+        node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
       }
 
       id = node.getAttribute('btcd-id')
@@ -316,7 +315,16 @@ export default class GridLayout extends React.PureComponent {
   }
 
   editSubmit() {
-    this.props.setElmSetting({ id: '', type: 'submit', data: this.props.formSubmit })
+    this.props.setElmSetting({ id: '', type: 'submit', data: this.props.subBtn })
+  }
+
+  compByTheme(compData) {
+    switch (this.props.theme) {
+      case 'default':
+        return <CompGen atts={compData} />
+      default:
+        return null
+    }
   }
 
   blkGen(item) {
@@ -362,7 +370,8 @@ export default class GridLayout extends React.PureComponent {
             alt="drag handle"
           />
         </span>
-        <CompGen atts={this.state.data[item.i]} />
+
+        {this.compByTheme(this.state.data[item.i])}
       </div>
     )
   }
@@ -400,7 +409,7 @@ export default class GridLayout extends React.PureComponent {
               </ResponsiveReactGridLayout>
 
               <div onClick={this.editSubmit} onKeyPress={this.editSubmit} role="button" tabIndex={0}>
-                {this.childGen(this.props.formSubmit)}
+                {this.compByTheme(this.props.subBtn)}
               </div>
             </Scrollbars>
           </div>
