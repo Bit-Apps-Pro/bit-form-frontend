@@ -9,18 +9,17 @@ import {
 import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 // import './resource/icons/style.css'
-import './resource/js/custom';
-import Builder from './pages/Builder';
-import AllForms from './pages/AllForms';
+import './resource/js/custom'
+import Builder from './pages/Builder'
+import AllForms from './pages/AllForms'
+import FormEntries from './pages/FormEntries'
 
 const Dashboard = () => (
   <div>
     <h2>Dashboard</h2>
-    <div id="wpeditorbitapps">
-
-    </div>
+    <div id="wpeditorbitapps" />
   </div>
-);
+)
 
 export default class App extends React.Component {
   constructor(props) {
@@ -94,6 +93,9 @@ export default class App extends React.Component {
                   gridWidth={this.state.gridWidth}
                   setGridWidth={this.setGridWidth}
                 />
+              </Route>
+              <Route path="/formEntries/:formID">
+                <FormEntries />
               </Route>
               <Route path="/settings">
                 <Dashboard />

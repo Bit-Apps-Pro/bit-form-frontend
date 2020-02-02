@@ -54,7 +54,6 @@ function Builder(props) {
       ],
     },
   ])
-
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -67,7 +66,10 @@ function Builder(props) {
       resetBtn: {
         show: formSubmit[0].child.length > 1, // yes / no
         txt: formSubmit[0].child.length > 1 ? formSubmit[0].child[1].child : '',
-        cls: formSubmit[0].child.length > 1 ? formSubmit[0].child[1].attr.className : '',
+        cls:
+          formSubmit[0].child.length > 1
+            ? formSubmit[0].child[1].attr.className
+            : '',
       },
     },
     confirmation: { type: 'msg', txt: '' },

@@ -51,7 +51,7 @@ export default function AllFroms() {
     { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
     { Header: 'Views', accessor: 'views' },
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
-    { Header: 'Responses', accessor: 'entries' },
+    { Header: 'Responses', accessor: 'entries', Cell: value => <NavLink to={`formEntries/${value.row.original.formID}`}>{value.row.values.entries}</NavLink> },
     { Header: 'Created', accessor: 'created_at' },
     { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
   ]
