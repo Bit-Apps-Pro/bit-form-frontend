@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import bitsFetch from '../Utils/bitsFetch'
+import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
+
 
 export default function FormEntries() {
   const { formID } = useParams()
@@ -14,7 +15,6 @@ export default function FormEntries() {
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
     { Header: 'Status', accessor: 'status' },
-    { Header: 'Form Name', accessor: 'formName' },
     { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
     { Header: 'Views', accessor: 'views' },
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
@@ -46,10 +46,12 @@ export default function FormEntries() {
     { formID: 123, status: 0, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
   ])
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      bitsFetch({ id: formID }, 'bitapps_get_form_entry_count').then(response => {
-        console.log('object', formID, response)
+    const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
+
+    bitsFetch(fdata, 'bitapps_get_form_entry_count')
+      .then(response => {
         if (response.success) {
+          console.log('object', formID, response)
           setEntryCount(response.data.count)
           const cols = response.data.Labels.map(val => (
             { Header: val, accessor: val.split(' ').join('_') }
@@ -57,14 +59,16 @@ export default function FormEntries() {
           setEntryLabels(cols)
         }
       })
-      bitsFetch({ id: formID }, 'bitapps_get_form_entries').then(response => {
+    bitsFetch(fdata, 'bitapps_get_form_entries').then(response => {
+      if (response.success) {
         setData(response.data)
-      })
-    }
+      }
+    })
   }, [])
 
   const getPageSize = (changedPageSize, changedPageIndex) => {
     console.log('getPageSize', changedPageIndex, pageSize)
+    // eslint-disable-next-line no-param-reassign
     changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
     if (entryCount > pageSize) {
       bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(response => {
@@ -84,6 +88,9 @@ export default function FormEntries() {
   }
   return (
     <div id="all-forms">
+      <div className="af-header">
+        <h2>Form Responses</h2>
+      </div>
       <div className="forms">
         <Table columns={entryLabels} data={data} getPageSize={getPageSize} pageCount={Math.floor(entryCount / pageSize) + 1} getPageIndex={getPageIndex} />
       </div>

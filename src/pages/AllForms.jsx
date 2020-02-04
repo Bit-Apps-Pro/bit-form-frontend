@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import axios from 'axios'
+import { NavLink, Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
@@ -9,49 +8,31 @@ import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
+import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 
 export default function AllFroms() {
+  const [modal, setModal] = useState(false)
+
   const handleStatus = (e, id) => {
     const el = e.target
-
-    console.log('update in db ', e.target.checked, id)
-
-    const changeFormStatus = () => {
-      const response = axios({
-        url: bits.ajaxURL,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        params: {
-          action: 'bitapps_change_status',
-          _ajax_nonce: bits.nonce,
-        },
-        data: { id, status: el.checked },
-      }).then(res => res.data)
-        .catch(err => err.response.data)
-      return response;
-    }
-
-    changeFormStatus().then(response => {
-      if (response.success) {
-        /* const newData = [...data]
-        newData[row.index].status = isChecked
-        setData(newData) */
-      } else {
-        el.checked = !el.checked
-      }
-    })
+    let data = { id, status: el.checked }
+    data = process.env.NODE_ENV === 'development' && prepareData(data)
+    bitsFetch(data, 'bitapps_change_status')
+      .then(res => {
+        if (!res.success) {
+          el.checked = !el.checked
+        }
+      })
   }
 
   const cols = [
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
     { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
-    { Header: 'Form Name', accessor: 'formName' },
+    { Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
     { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
     { Header: 'Views', accessor: 'views' },
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
-    { Header: 'Responses', accessor: 'entries', Cell: value => <NavLink to={`formEntries/${value.row.original.formID}`}>{value.row.values.entries}</NavLink> },
+    { Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
     { Header: 'Created', accessor: 'created_at' },
     { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
   ]
@@ -86,10 +67,17 @@ export default function AllFroms() {
       { formID: 123, status: 0, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
     ]
   }
-
   const [data, setData] = useState(dbForms)
-  const [modal, setModal] = useState(false)
 
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      bitsFetch(prepareData({}), 'bitapps_get_all_form')
+        .then(res => {
+          dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
+          setData(dbForms)
+        })
+    }
+  }, [])
 
   return (
     <div id="all-forms">

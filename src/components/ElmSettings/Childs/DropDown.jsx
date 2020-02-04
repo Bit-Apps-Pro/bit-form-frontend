@@ -25,7 +25,7 @@ export default function DropDown(props) {
   return (
     <div className="mt-3 setting-inp">
       <span>{props.title}</span>
-      <select value={props.value} ref={s} multiple={props.isMultiple} onChange={props.action}>
+      <select value={props.value} ref={s} multiple={props.isMultiple} onChange={props.action} className="btcd-neo-sh-1 mt-2">
         {props.options.map(item => <option title="asdfaf" key={`key${item.name}`} value={item.value}>{item.name}</option>)}
       </select>
     </div>

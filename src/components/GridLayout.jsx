@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { createElement } from 'react'
+import React from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import axios from 'axios';
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -9,6 +9,7 @@ import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
+import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 
 export default class GridLayout extends React.PureComponent {
   /*
@@ -24,51 +25,24 @@ export default class GridLayout extends React.PureComponent {
   mul: multiple
   */
 
-  /*  data = {
-     'b-00': {
-       typ: 'text',
-       lbl: 'label',
-       cls: '',
-       ph: 'sss',
-       mn: 1,
-       mx: 2,
-       val: '',
-       ac: 'on',
-       valid: {
-         req: true,
-       },
-     },
-   } */
-
-  /* {
-    typ: 'check',
-    lbl: 'lebel',
-    opt: [
-      { lbl: 'opt 1' },
-      { lbl: 'opt 2' },
-    ],
-  }, */
-
   constructor(props) {
     super(props)
     this.state = {
       isLoading: true,
       newCounter: 0,
       breakpoint: 'md',
-      layout: [
-      ],
-      data: {
-      },
+      layout: [],
+      data: {},
     }
 
     // this.onBreakpointChange = this.onBreakpointChange.bind(this)
     this.onLayoutChange = this.onLayoutChange.bind(this)
-    this.childGen = this.childGen.bind(this)
     this.getElmProp = this.getElmProp.bind(this)
     this.editSubmit = this.editSubmit.bind(this)
   }
 
   componentDidMount() {
+
     const fetchData = async (data, action) => {
       try {
         const result = await axios.post(bits.ajaxURL, data, {
@@ -95,16 +69,34 @@ export default class GridLayout extends React.PureComponent {
         console.log('Eror  Response : ', error)
       }
     }
+
     if (this.props.formType === 'new') {
       if (this.props.formID === 'blank') {
         this.setState({ isLoading: false })
       } else {
-        fetchData({ template: this.props.formID }, 'bitapps_get_template')
+        const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: this.props.formID }) : { template: this.props.formID }
+        bitsFetch(pram, 'bitapps_get_template')
+          .then(res => {
+            const responseData = res.data
+            this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
+            this.props.setFormName(responseData.form_content.form_name)
+            this.setState({ isLoading: false })
+          })
         this.setState({ isLoading: false })
       }
     } else if (this.props.formType === 'edit') {
-      fetchData({ id: this.props.formID }, 'bitapps_get_a_form')
-      this.setState({ isLoading: false })
+      const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: this.props.formID }) : { id: this.props.formID }
+      bitsFetch(pram, 'bitapps_get_a_form')
+        .then(res => {
+          if (res.success) {
+            const responseData = JSON.parse(res.data)
+            console.log(res.data)
+            //console.log(typeof responseData.form_content.layout)
+            this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
+            this.props.setFormName(responseData.form_content.form_name)
+            this.setState({ isLoading: false })
+          }
+        })
     }
   }
 
@@ -239,67 +231,6 @@ export default class GridLayout extends React.PureComponent {
     }
   }
 
-  childGen(cld) {
-    if (cld === null) {
-      return null
-    } if (typeof cld === 'string') {
-      return cld
-    } if ((!!cld) && (cld.constructor === Object)) {
-      return createElement(cld.tag, cld.attr, cld.child)
-    } if ((!!cld) && (cld.constructor === Array)) {
-      return cld.map((itm, ind) => createElement(itm.tag, { key: ind, ...itm.attr }, this.childGen(itm.child)))
-    }
-    return null;
-  }
-
-  createElm(elm) {
-    return elm.map(item => (
-      <div
-        key={item.i}
-        className="blk"
-        btcd-id={item.i}
-        data-grid={item}
-        onClick={this.getElmProp}
-        onKeyPress={this.getElmProp}
-        role="button"
-        tabIndex={0}
-      >
-        <span
-          data-close
-          style={{ right: 8 }}
-          unselectable="on"
-          draggable="false"
-          className="bit-blk-icn"
-          onClick={this.onRemoveItem.bind(this, item.i)}
-          onKeyPress={this.onRemoveItem.bind(this, item.i)}
-          role="button"
-          tabIndex={-1}
-        >
-          &times;
-        </span>
-        <span
-          style={{ right: 27, cursor: 'move' }}
-          className="bit-blk-icn drag"
-          role="button"
-        >
-          <img
-            className="unselectable"
-            draggable="false"
-            unselectable="on"
-            onDragStart={() => false}
-            src={
-              process.env.NODE_ENV === 'production'
-                ? `${bits.assetsURL}/img/${moveIcon}`
-                : `${moveIcon}`
-            }
-            alt="drag handle"
-          />
-        </span>
-        {this.state.data[item.i].map((i, idx) => createElement(i.tag, { key: idx, ...i.attr }, this.childGen(i.child)))}
-      </div>
-    ));
-  }
-
   editSubmit() {
     this.props.setElmSetting({ id: '', type: 'submit', data: this.props.subBtn })
   }
@@ -389,8 +320,6 @@ export default class GridLayout extends React.PureComponent {
                 transformScale={1}
               // compactType="vertical"
               >
-                {/* this.createElm(this.state.layout) */}
-                {/* this.state.layout.map(itm => <CompGen key={itm.i} lay={itm} atts={this.data[itm.i]} />) */}
                 {this.state.layout.map(itm => this.blkGen(itm))}
               </ResponsiveReactGridLayout>
 
