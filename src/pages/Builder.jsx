@@ -88,13 +88,17 @@ function Builder(props) {
       action = 'bitapps_update_form'
     }
 
-    formData = process.env.NODE_ENV === 'development' && prepareData(formData)
-
+    formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
     bitsFetch(formData, action)
       .then(response => {
         if (action === 'bitapps_create_new_form') {
           const data = JSON.parse(response.data)
           if (savedFormId === 0 && buttonText === 'Save') {
+            if (process.env.NODE_ENV === 'production') {
+              // eslint-disable-next-line no-undef
+              bits.allForms = [...bits.allForms, { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0 * 100).toPrecision(3), created_at: data.created_at }]
+              console.log(bits.allForms)
+            }
             setSavedFormId(data.id)
             setButtonText('Update')
             props.history.replace(`/builder/edit/${data.id}`)

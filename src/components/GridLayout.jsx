@@ -43,33 +43,6 @@ export default class GridLayout extends React.PureComponent {
 
   componentDidMount() {
 
-    const fetchData = async (data, action) => {
-      try {
-        const result = await axios.post(bits.ajaxURL, data, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          params: {
-            action,
-            _ajax_nonce: bits.nonce,
-          },
-        })
-        if (result.data.data !== false) {
-          let responseData = result.data.data
-          if (typeof responseData !== 'object') {
-            responseData = JSON.parse(result.data.data)
-          }
-          console.log('In Fetch: ', responseData)
-          this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
-          if (responseData.form_content.form_name !== 'undefined') {
-            this.props.setFormName(responseData.form_content.form_name)
-          }
-        }
-      } catch (error) {
-        console.log('Eror  Response : ', error)
-      }
-    }
-
     if (this.props.formType === 'new') {
       if (this.props.formID === 'blank') {
         this.setState({ isLoading: false })
@@ -77,7 +50,7 @@ export default class GridLayout extends React.PureComponent {
         const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: this.props.formID }) : { template: this.props.formID }
         bitsFetch(pram, 'bitapps_get_template')
           .then(res => {
-            const responseData = res.data
+            const responseData = JSON.parse(res.data)
             this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
             this.props.setFormName(responseData.form_content.form_name)
             this.setState({ isLoading: false })
@@ -90,8 +63,6 @@ export default class GridLayout extends React.PureComponent {
         .then(res => {
           if (res.success) {
             const responseData = JSON.parse(res.data)
-            console.log(res.data)
-            //console.log(typeof responseData.form_content.layout)
             this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
             this.props.setFormName(responseData.form_content.form_name)
             this.setState({ isLoading: false })
@@ -105,15 +76,6 @@ export default class GridLayout extends React.PureComponent {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
-        // eslint-disable-next-line no-unused-vars
-        const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
-            'btcd-id',
-          )}"] > div > .slim`,
-          allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        })
 
         if (allSel[i].nextSibling != null) {
           if (allSel[i].hasAttribute('data-max-show')) {
