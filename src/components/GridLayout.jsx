@@ -56,22 +56,8 @@ export default class GridLayout extends React.PureComponent {
       newCounter: 0,
       breakpoint: 'md',
       layout: [
-        {
-          w: 10,
-          h: 4,
-          x: 0,
-          y: Infinity,
-          i: 'b-00',
-        },
       ],
       data: {
-        'b-00': {
-          typ: 'file-up',
-          lbl: 'File Upload',
-          upBtnTxt: 'Attach File',
-          mxUp: 5,
-          valid: {},
-        },
       },
     }
 
