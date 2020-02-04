@@ -1,12 +1,26 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy } from 'react-table'
+import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect } from 'react-table'
+import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 
-function GlobalFilter({
-  globalFilter,
-  setGlobalFilter,
-}) {
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef()
+    const resolvedRef = ref || defaultRef
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate
+    }, [resolvedRef, indeterminate])
+    return (
+      <>
+        <TableCheckBox refer={resolvedRef} rest={rest} />
+        {/* <input type="checkbox" ref={resolvedRef} {...rest} /> */}
+      </>
+    )
+  },
+)
+
+function GlobalFilter({ globalFilter, setGlobalFilter }) {
   return (
     <div className="f-search">
       <button type="button" className="icn-btn" aria-label="icon-btn"><span className="btcd-icn icn-search" /></button>
@@ -38,8 +52,11 @@ export default function Table(props) {
     setPageSize,
     state,
     preGlobalFilteredRows,
+    // row select
+    selectedFlatRows,
+    //
     setGlobalFilter,
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, selectedRowIds },
   } = useTable(
     {
       ...props,
@@ -50,6 +67,33 @@ export default function Table(props) {
     useGlobalFilter,
     useSortBy,
     usePagination,
+
+    useRowSelect,
+    // row select
+    hooks => {
+      hooks.flatColumns.push(columns => [
+        // Let's make a column for selection
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              {console.log('selec', row.isSelected)}
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ])
+    },
   );
 
   const handleGotoPageZero = () => {
@@ -115,6 +159,7 @@ export default function Table(props) {
             );
           })}
         </tbody>
+        {console.log(selectedFlatRows.map(i => i.original.formID))}
       </table>
 
       <div className="btcd-pagination">

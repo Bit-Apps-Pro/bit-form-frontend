@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
-import axios from 'axios'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
+import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 
 function Builder(props) {
   const { formType, formID } = useParams()
+
+  // console.log(url)
   const [fulScn, setFulScn] = useState(false)
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
@@ -30,55 +32,15 @@ function Builder(props) {
     rstBtnTxt: 'Reset',
   })
 
-  const [formSubmit, setFormSubmit] = useState([
-    {
-      tag: 'div',
-      attr: { className: 'btcd-frm-sub' },
-      child: [
-        {
-          tag: 'button',
-          attr: {
-            className: 'btcd-sub-btn btcd-sub btcd-btn-md',
-            type: 'button',
-          },
-          child: 'Submit',
-        },
-        {
-          tag: 'button',
-          attr: {
-            className: 'btcd-sub-btn btcd-rst btcd-btn-md',
-            type: 'button',
-          },
-          child: 'Reset',
-        },
-      ],
-    },
-  ])
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    submitBtn: {
-      wrpCls: formSubmit[0].attr.className,
-      subBtn: {
-        txt: formSubmit[0].child[0].child,
-        cls: formSubmit[0].child[0].attr.className,
-      },
-      resetBtn: {
-        show: formSubmit[0].child.length > 1, // yes / no
-        txt: formSubmit[0].child.length > 1 ? formSubmit[0].child[1].child : '',
-        cls:
-          formSubmit[0].child.length > 1
-            ? formSubmit[0].child[1].attr.className
-            : '',
-      },
-    },
+    submitBtn: subBtn,
     confirmation: { type: 'msg', txt: '' },
   })
 
   const notIE = !window.document.documentMode
-  setTimeout(() => {
-    setFulScn(true)
-  }, 500)
+  setTimeout(() => { setFulScn(true) }, 500)
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
@@ -125,29 +87,19 @@ function Builder(props) {
 
       action = 'bitapps_update_form'
     }
-    // eslint-disable-next-line no-undef
-    axios.post(bits.ajaxURL, formData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      params: {
-        action,
-        // eslint-disable-next-line no-undef
-        _ajax_nonce: bits.nonce,
-      },
-    })
+
+    formData = process.env.NODE_ENV === 'development' && prepareData(formData)
+
+    bitsFetch(formData, action)
       .then(response => {
         if (action === 'bitapps_create_new_form') {
-          const data = JSON.parse(response.data.data)
+          const data = JSON.parse(response.data)
           if (savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
             props.history.replace(`/builder/edit/${data.id}`)
           }
         }
-      })
-      .catch(error => {
-        console.log('error', error)
       })
   }
 
@@ -156,11 +108,8 @@ function Builder(props) {
     setSubBtn(data)
   }
 
-  // const activeClass = process.env.NODE_ENV === 'production' ? 'btcd-wp-ful-scn' : 'btcd-ful-scn'
-  const activeClass = 'btcd-ful-scn'
-
   return (
-    <div className={`btcd-builder-wrp ${fulScn && activeClass}`}>
+    <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
           <NavLink exact to="/">
@@ -176,7 +125,13 @@ function Builder(props) {
             Builder
           </NavLink>
           <NavLink
-            to={`/builder/${formType}/${formID}/settings`}
+            to={`/builder/${formType}/${formID}/responses`}
+            activeClassName="app-link-active"
+          >
+            Responses
+          </NavLink>
+          <NavLink
+            to={`/builder/${formType}/${formID}/settings/`}
             activeClassName="app-link-active"
           >
             Settings
@@ -278,7 +233,6 @@ function Builder(props) {
                 setLay={setLay}
                 setFields={setFields}
                 setFormName={setFormName}
-                formSubmit={formSubmit}
                 forceRender={forceRender}
                 updatedData={updatedData}
                 updateData={updateData}
@@ -303,6 +257,9 @@ function Builder(props) {
             formSettings={formSettings}
             setFormSettings={setFormSettings}
           />
+        </Route>
+        <Route path="/builder/:formType/:formID/responses/">
+          responses
         </Route>
       </Switch>
     </div>

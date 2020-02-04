@@ -10,7 +10,7 @@ export default function Tools(props) {
       draggable
       unselectable="on"
       onClick={() => props.setNewData(props.value)}
-      onKeyPress={e => console.log(e)}
+      onKeyPress={() => props.setNewData(props.value)}
       onDragStart={(e) => { e.dataTransfer.setData('text/plain', ''); props.setDrgElm(props.value) }}
     >
       {props.children}

@@ -6,11 +6,6 @@ import EmailNotfication from './EmailNotfication'
 export default function FormSettings(props) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
-  const history = useHistory()
-
-  React.useEffect(() => {
-    history.push(`/builder/${formType}/${formType}/settings/email-notification`)
-  }, [])
 
   return (
     <div className="btcd-f-settings">
@@ -18,7 +13,7 @@ export default function FormSettings(props) {
         <br />
         <br />
         <br />
-        <NavLink exact to={`/builder/${formType}/${formID}/settings/form-settings`} activeClassName="btcd-f-a">
+        <NavLink exact to={`/builder/${formType}/${formID}/settings/`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-file-empty" />
           Form Settings
         </NavLink>
@@ -32,7 +27,7 @@ export default function FormSettings(props) {
 
       <div className="btcd-s-wrp">
         <Switch>
-          <Route path={`${path}/form-settings`}>
+          <Route path={`${path}/`}>
             <div>
               <div><b>Form Name: </b></div>
               <input className="btcd-paper-inp" type="text" value={props.formName} onChange={(e) => props.setFormName(e.target.value)} placeholder="Form Name" />

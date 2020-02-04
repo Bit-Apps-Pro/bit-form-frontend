@@ -1036,35 +1036,34 @@ nav.top-nav {
   text-align: left;
 }
 
-.f-table > thead > tr > th:nth-child(1) {
-  width: 65px;
-  padding: 0px 0px 0 24px;
-}
-.f-table > tbody > tr > td:nth-child(1) {
-  width: 65px;
-  padding: 0px 0px 0 24px;
+.f-table > thead > tr > th:nth-child(1),
+.f-table > tbody > tr > td:nth-child(1){
+  padding-left: 20px;
+  width: 70px;
 }
 
-.f-table > tbody > tr > td:nth-child(4) {
-  width: 212px;
+.f-table > tbody > tr > td:nth-child(3) {
+  width: 65px;
+  padding: 0px 0px 0 24px;
 }
 
 .f-table > tbody > tr > td:nth-child(5) {
+  width: 212px;
+}
+
+.f-table > tbody > tr > td:nth-child(6) {
   text-align: center;
 }
 
-.f-table > thead > tr > th:nth-child(2),
-.f-table > tbody > tr > td:nth-child(2) {
+.f-table > thead > tr > th:nth-child(3),
+.f-table > tbody > tr > td:nth-child(3) {
   width: 104px;
   padding: 13px 14px;
 }
 
-.f-table > thead > tr > th:nth-child(3) {
+.f-table > thead > tr > th:nth-child(4) {
   text-align: left;
   width: 250px;
-}
-
-.f-table > tbody > tr > td {
 }
 
 .f-search {
@@ -1789,3 +1788,111 @@ nav.top-nav {
   height: 150px !important;
   text-align: center !important;
 }
+
+.btcd-tabl-lnk {
+  text-decoration: none;
+  color: $blue;
+}
+
+//table checkbox start
+.btcd-label-cbx {
+  user-select: none;
+  cursor: pointer;
+  margin-bottom: 0;
+  input {
+    &:checked {
+      + {
+        .btcd-t-cbx {
+          border-color: $blue;
+          svg {
+            path {
+              fill: $blue;
+            }
+            polyline {
+              stroke-dashoffset: 0;
+            }
+          }
+        }
+      }
+    }
+    &:indeterminate {
+      + {
+        .btcd-t-cbx {
+          border-color: $blue;
+          svg {
+            path {
+              stroke-dashoffset: 0;
+            }
+            line {
+              stroke-width: 2;
+            }
+          }
+        }
+      }
+    }
+  }
+  &:hover {
+    .btcd-t-cbx {
+      svg {
+        path {
+          stroke-dashoffset: 0;
+        }
+      }
+    }
+  }
+
+  .btcd-t-cbx {
+    position: relative;
+    top: 2px;
+    float: left;
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #c8ccd4;
+    border-radius: 3px;
+    svg {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      path {
+        fill: none;
+        stroke: $blue;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 71px;
+        stroke-dashoffset: 71px;
+        transition: all 0.6s ease;
+      }
+      polyline {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 18px;
+        stroke-dashoffset: 18px;
+        transition: all 0.3s ease;
+      }
+      line {
+        stroke: $blue;
+        stroke-width: 0;
+        stroke-linecap: round;
+      }
+    }
+  }
+  > span {
+    pointer-events: none;
+    vertical-align: middle;
+  }
+}
+
+.btcd-cbx-invisible {
+  position: absolute;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+// table checkbox end
