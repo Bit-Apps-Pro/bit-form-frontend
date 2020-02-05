@@ -38,7 +38,9 @@ export default function RadioCheckSettings(props) {
 
   function setCheck(e, i) {
     if (props.elm.data.typ === 'radio') {
-      props.elm.data.opt.map(itm => { delete itm.check })
+      for (let ind = 0; ind < props.elm.data.opt.length; ind += 1) {
+        delete props.elm.data.opt[ind].check
+      }
     }
 
     if (e.target.checked) {

@@ -64,7 +64,7 @@ export default function FormEntries() {
         setData(response.data)
       }
     })
-  }, [])
+  }, [formID])
 
   const getPageSize = (changedPageSize, changedPageIndex) => {
     console.log('getPageSize', changedPageIndex, pageSize)

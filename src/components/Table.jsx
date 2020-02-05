@@ -14,7 +14,6 @@ const IndeterminateCheckbox = React.forwardRef(
     return (
       <>
         <TableCheckBox refer={resolvedRef} rest={rest} />
-        {/* <input type="checkbox" ref={resolvedRef} {...rest} /> */}
       </>
     )
   },
@@ -54,9 +53,8 @@ export default function Table(props) {
     preGlobalFilteredRows,
     // row select
     selectedFlatRows,
-    //
     setGlobalFilter,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       ...props,
@@ -67,34 +65,29 @@ export default function Table(props) {
     useGlobalFilter,
     useSortBy,
     usePagination,
-
-    useRowSelect,
     // row select
-    hooks => {
+    props.rowSeletable ? useRowSelect : '',
+    props.rowSeletable ? (hooks => {
       hooks.flatColumns.push(columns => [
-        // Let's make a column for selection
         {
           id: 'selection',
-          // The header can use the table's getToggleAllRowsSelectedProps method
-          // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
           Cell: ({ row }) => (
             <div>
-              {console.log('selec', row.isSelected)}
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
             </div>
           ),
         },
         ...columns,
       ])
-    },
+    }) : '',
   );
+
+  props.onRowSelect(selectedFlatRows)
 
   const handleGotoPageZero = () => {
     if (props.getPageIndex) {
@@ -151,15 +144,15 @@ export default function Table(props) {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} className={row.isSelected ? 'btcd-row-selected' : ''}>
                 {row.cells.map(cell => (
                   <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 ))}
               </tr>
-            );
+            )
           })}
         </tbody>
-        {console.log(selectedFlatRows.map(i => i.original.formID))}
+        {/* console.log(selectedFlatRows.map(i => i.original.formID)) */}
       </table>
 
       <div className="btcd-pagination">
