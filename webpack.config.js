@@ -2,12 +2,16 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, argv) => {
   let production = argv.mode === "production";
   return {
     entry: {
-      index: path.resolve(__dirname, "src/index.js")
+      index: path.resolve(__dirname, "src/index.js"),
+      bitappsFrontend: path.resolve(__dirname, "src/user-frontend/index.js"),
+      bitapps: path.resolve(__dirname, "src/resource/sass/app.scss"),
+      components: [path.resolve(__dirname, "src/resource/sass/components.scss"), path.resolve(__dirname, "src/resource/css/slimselect.min.css")],
     },
 
     output: {
@@ -24,12 +28,6 @@ module.exports = (env, argv) => {
             test: /[\\/]node_modules[\\/]/,
             name: "vendors",
             chunks: "all"
-          },
-          styles: {
-            name: 'bitapps-styles',
-            test: /\.(s[ac]ss|css)$/i,
-            chunks: 'all',
-            enforce: true,
           }
         }
       }
@@ -48,7 +46,10 @@ module.exports = (env, argv) => {
         "process.env.NODE_ENV": production
           ? JSON.stringify("development")
           : JSON.stringify("production")
-      })
+      }),
+      new MiniCssExtractPlugin({
+        filename: '../css/[name].css',
+      }),
     ],
 
     devtool: production ? "" : "source-map",
@@ -81,7 +82,7 @@ module.exports = (env, argv) => {
         {
           test: /\.(s[ac]ss|css)$/i,
           use: [
-            "style-loader",
+            production?  MiniCssExtractPlugin.loader :"style-loader",
             "css-loader",
             {
               loader: "postcss-loader",

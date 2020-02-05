@@ -20,7 +20,7 @@ export default function AllFroms() {
   const handleStatus = (e, id) => {
     const el = e.target
     let data = { id, status: el.checked }
-    data = process.env.NODE_ENV === 'development' && prepareData(data)
+    data = process.env.NODE_ENV === 'development' ? prepareData(data) : data
     bitsFetch(data, 'bitapps_change_status')
       .then(res => {
         if (!res.success) {
