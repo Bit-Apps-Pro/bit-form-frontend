@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { BitappsContext } from '../../../Utils/BitappsContext'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function MenuBtn(props) {
+  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsDispatchHandler } = allFormsData
   const handleMenuClose = (e) => {
     const el = e.target
     setTimeout(() => {
@@ -18,17 +21,20 @@ export default function MenuBtn(props) {
       e.target.parentNode.children[1].classList.add('btcd-m-a')
     }
   }
-  const handleDelete = (e) => {
-    console.log(props.formID)
+  const handleDelete = () => {
     bitsFetch({ id: props.formID }, 'bitapps_delete_aform').then(response => {
-      e.target.parentNode.parentNode.parentNode.parentNode.remove()
-      // console.log('Response', response)
+      if (response.success) {
+        allFormsDispatchHandler({ type: 'remove', data: props.index })
+      }
     })
   }
   const handleDuplicate = () => {
     console.log(props.formID)
     bitsFetch({ id: props.formID }, 'bitapps_duplicate_aform').then(response => {
-      console.log('Response', response)
+      if (response.success) {
+        const { data } = response
+        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+      }
     })
   }
 

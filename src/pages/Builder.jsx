@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import ToolBar from '../components/Toolbar'
@@ -6,6 +6,7 @@ import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import { BitappsContext } from '../Utils/BitappsContext'
 
 function Builder(props) {
   const { formType, formID } = useParams()
@@ -23,6 +24,8 @@ function Builder(props) {
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [forceRender, setForceRender] = useState(false)
   const [updatedData, updateData] = useState(null)
+  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsDispatchHandler } = allFormsData
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
     btnSiz: 'md',
@@ -91,17 +94,25 @@ function Builder(props) {
     formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
     bitsFetch(formData, action)
       .then(response => {
-        if (action === 'bitapps_create_new_form') {
-          const data = JSON.parse(response.data)
-          if (savedFormId === 0 && buttonText === 'Save') {
-            if (process.env.NODE_ENV === 'production') {
+        console.log('UISave', typeof response.data)
+        if (response.success) {
+          let { data } = response
+          if (typeof data !== 'object') {
+            data = JSON.parse(data)
+          }
+          if (action === 'bitapps_create_new_form') {
+            if (savedFormId === 0 && buttonText === 'Save') {
+              if (process.env.NODE_ENV === 'production') {
               // eslint-disable-next-line no-undef
-              bits.allForms = [...bits.allForms, { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0 * 100).toPrecision(3), created_at: data.created_at }]
-              console.log(bits.allForms)
+                console.log('In Builder fn[saveForm]:', data.id, formName, (0).toPrecision(3))
+              }
+              setSavedFormId(data.id)
+              setButtonText('Update')
+              props.history.replace(`/builder/edit/${data.id}`)
             }
-            setSavedFormId(data.id)
-            setButtonText('Update')
-            props.history.replace(`/builder/edit/${data.id}`)
+            allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+          } else if (action === 'bitapps_update_form') {
+            allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
         }
       })

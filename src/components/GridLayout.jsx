@@ -76,7 +76,15 @@ export default class GridLayout extends React.PureComponent {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
-
+        // eslint-disable-next-line no-unused-vars
+        const s = new SlimSelect({
+          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
+            'btcd-id',
+          )}"] > div > .slim`,
+          allowDeselect: true,
+          placeholder: allSel[i].getAttribute('placeholder'),
+          limit: Number(allSel[i].getAttribute('limit')),
+        })
         if (allSel[i].nextSibling != null) {
           if (allSel[i].hasAttribute('data-max-show')) {
             allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
