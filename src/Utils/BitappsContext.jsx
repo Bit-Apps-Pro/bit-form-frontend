@@ -55,7 +55,7 @@ const BitappsContextProvider = (props) => {
     { formID: 123, status: 0, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
   ]
   // eslint-disable-next-line no-undef
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && bits.allForms !== null) {
     allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)

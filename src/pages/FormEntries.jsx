@@ -53,7 +53,7 @@ export default function FormEntries() {
         if (response.success) {
           console.log('object', formID, response)
           setEntryCount(response.data.count)
-          const cols = response.data.Labels.map(val => ( { Header: val, accessor: val.split(' ').join('_')}))
+          const cols = response.data.Labels.map(val => ( { Header: val['name'], accessor: val['key']}))
           console.log('In COLS', cols)
           setEntryLabels(cols)
         }
