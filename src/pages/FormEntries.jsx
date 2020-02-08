@@ -50,12 +50,12 @@ export default function FormEntries() {
     const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
     bitsFetch(fdata, 'bitapps_get_form_entry_count')
-      .then(res => {
-        if (res !== undefined && res.success) {
-          setEntryCount(res.data.count)
-          const cols = res.data.Labels.map((val, i) => (
-            { Header: val, accessor: val.split(' ').join('_') }
-          ))
+      .then(response => {
+        if (response.success) {
+          console.log('object', formID, response)
+          setEntryCount(response.data.count)
+          const cols = response.data.Labels.map(val => ( { Header: val['name'], accessor: val['key']}))
+          console.log('In COLS', cols)
           setEntryLabels(cols)
           console.log(res.data.Labels)
         }

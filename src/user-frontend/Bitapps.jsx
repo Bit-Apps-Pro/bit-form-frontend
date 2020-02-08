@@ -39,7 +39,6 @@ export default function Bitapps(props) {
       }
     }
   }, [])
-  console.log('LAY', props.data['b-0'])
   return (
     <div style={{ width: '100%' }} className="layout-wrapper">
       <form encType={props.file ? 'multipart/form-data' : ''}>
