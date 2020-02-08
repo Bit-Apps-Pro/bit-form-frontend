@@ -45,6 +45,7 @@ export default function AllFroms() {
     if (process.env.NODE_ENV === 'development') {
       bitsFetch(prepareData({}), 'bitapps_get_all_form')
         .then(res => {
+          console.log('all form res', res)
           if (res.success) {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ type: 'set', data: dbForms })

@@ -2,11 +2,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout } from 'react-table'
+import { Scrollbars } from 'react-custom-scrollbars'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import EyeToggle from './ElmSettings/Childs/EyeToggle'
 import Modal from './Modal'
-import { Scrollbars } from 'react-custom-scrollbars'
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -177,7 +177,9 @@ export default function Table(props) {
                   <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
                 </button>
                 <small>
-                  {selectedFlatRows.length} Row Selected
+                  {selectedFlatRows.length}
+                  {' '}
+                  Row Selected
                 </small>
               </>
             )}
