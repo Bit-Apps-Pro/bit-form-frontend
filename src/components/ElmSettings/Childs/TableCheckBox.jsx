@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function TableCheckBox(props) {
-  const id = Math.random()
+  const id = 'id' in props ? props.id : Math.random()
   return (
     <div>
       <label htmlFor={`btcd-cbx-${id}`} className="btcd-label-cbx">

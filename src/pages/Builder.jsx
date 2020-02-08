@@ -5,12 +5,11 @@ import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
+import FormEntries from './FormEntries'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 
 function Builder(props) {
   const { formType, formID } = useParams()
-
-  // console.log(url)
   const [fulScn, setFulScn] = useState(false)
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
@@ -70,7 +69,6 @@ function Builder(props) {
   }, [])
 
   const saveForm = () => {
-    console.log('In saveForm: ', savedFormId, formID)
     let formData = {
       layout: lay,
       fields,
@@ -84,11 +82,11 @@ function Builder(props) {
         form_name: formName,
         id: savedFormId,
       }
-
       action = 'bitapps_update_form'
     }
 
     formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
+    console.log(formData)
     bitsFetch(formData, action)
       .then(response => {
         if (action === 'bitapps_create_new_form') {
@@ -97,7 +95,6 @@ function Builder(props) {
             if (process.env.NODE_ENV === 'production') {
               // eslint-disable-next-line no-undef
               bits.allForms = [...bits.allForms, { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0 * 100).toPrecision(3), created_at: data.created_at }]
-              console.log(bits.allForms)
             }
             setSavedFormId(data.id)
             setButtonText('Update')
@@ -135,7 +132,7 @@ function Builder(props) {
             Responses
           </NavLink>
           <NavLink
-            to={`/builder/${formType}/${formID}/settings/`}
+            to={`/builder/${formType}/${formID}/settings/:sub`}
             activeClassName="app-link-active"
           >
             Settings
@@ -263,7 +260,7 @@ function Builder(props) {
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">
-          responses
+          <FormEntries />
         </Route>
       </Switch>
     </div>

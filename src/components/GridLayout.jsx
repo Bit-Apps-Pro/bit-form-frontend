@@ -3,7 +3,6 @@
 
 import React from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import axios from 'axios';
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
@@ -50,10 +49,12 @@ export default class GridLayout extends React.PureComponent {
         const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: this.props.formID }) : { template: this.props.formID }
         bitsFetch(pram, 'bitapps_get_template')
           .then(res => {
-            const responseData = JSON.parse(res.data)
-            this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
-            this.props.setFormName(responseData.form_content.form_name)
-            this.setState({ isLoading: false })
+            if (res !== undefined && res.success) {
+              const responseData = JSON.parse(res.data)
+              this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
+              this.props.setFormName(responseData.form_content.form_name)
+              this.setState({ isLoading: false })
+            }
           })
         this.setState({ isLoading: false })
       }
@@ -61,7 +62,7 @@ export default class GridLayout extends React.PureComponent {
       const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: this.props.formID }) : { id: this.props.formID }
       bitsFetch(pram, 'bitapps_get_a_form')
         .then(res => {
-          if (res.success) {
+          if (res !== undefined && res.success) {
             const responseData = JSON.parse(res.data)
             this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
             this.props.setFormName(responseData.form_content.form_name)
@@ -76,10 +77,22 @@ export default class GridLayout extends React.PureComponent {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
-
+        // eslint-disable-next-line no-unused-vars
+        const s = new SlimSelect({
+          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
+            'btcd-id',
+          )}"] > div > .slim`,
+          allowDeselect: true,
+          placeholder: allSel[i].getAttribute('placeholder'),
+          limit: Number(allSel[i].getAttribute('limit')),
+        });
         if (allSel[i].nextSibling != null) {
           if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
+            allSel[
+              i
+            ].nextSibling.children[1].children[1].style.maxHeight = `${Number(
+              allSel[i].getAttribute('data-max-show'),
+            ) * 2}pc`;
           }
         }
       }
