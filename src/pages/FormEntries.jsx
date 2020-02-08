@@ -18,7 +18,7 @@ export default function FormEntries() {
     { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
     { Header: 'Views', accessor: 'views' },
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
-    { Header: 'Responses', accessor: 'entries' },
+    { Header: 'ress', accessor: 'entries' },
     { Header: 'Created', accessor: 'created_at' },
     { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
   ])
@@ -45,6 +45,7 @@ export default function FormEntries() {
     { formID: 123, status: 0, formName: 'emphasis', shortcode: 'stream', entries: 7, views: 5, conversion: 51, created_at: '2 Dec' },
     { formID: 123, status: 0, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
   ])
+
   useEffect(() => {
     const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
@@ -56,42 +57,58 @@ export default function FormEntries() {
           const cols = response.data.Labels.map(val => ( { Header: val['name'], accessor: val['key']}))
           console.log('In COLS', cols)
           setEntryLabels(cols)
+          console.log(res.data.Labels)
         }
       })
-    bitsFetch(fdata, 'bitapps_get_form_entries').then(response => {
-      if (response.success) {
-        setData(response.data)
+    bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
+      if (res !== undefined && res.success) {
+        console.log(res.data)
+        setData(res.data)
       }
     })
-  }, [])
+  }, [formID])
 
   const getPageSize = (changedPageSize, changedPageIndex) => {
-    console.log('getPageSize', changedPageIndex, pageSize)
     // eslint-disable-next-line no-param-reassign
     changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
     if (entryCount > pageSize) {
-      bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(response => {
-        setData(response.data)
+      bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
+        setData(res.data)
       })
     }
     setPageSize(changedPageSize)
   }
+
   const getPageIndex = (changedPageIndex) => {
-    console.log('chgedbject', changedPageIndex, pageSize)
     if (entryCount > pageSize) {
-      bitsFetch({ id: formID, offset: changedPageIndex * pageSize, pageSize }, 'bitapps_get_form_entries').then(response => {
-        setData(response.data)
-        console.log('Data', data)
+      bitsFetch({ id: formID, offset: changedPageIndex * pageSize, pageSize }, 'bitapps_get_form_entries').then(res => {
+        setData(res.data)
       })
     }
   }
+
+  const setBulkDelete = () => {
+
+  }
+
   return (
-    <div id="all-forms">
+    <div id="form-res">
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
       <div className="forms">
-        <Table columns={entryLabels} data={data} getPageSize={getPageSize} pageCount={Math.floor(entryCount / pageSize) + 1} getPageIndex={getPageIndex} />
+        <Table
+          height="68vh"
+          columns={entryLabels}
+          data={data}
+          getPageSize={getPageSize}
+          pageCount={Math.floor(entryCount / pageSize) + 1}
+          getPageIndex={getPageIndex}
+          rowSeletable
+          resizable
+          columnHidable
+          setBulkDelete={setBulkDelete}
+        />
       </div>
     </div>
   )

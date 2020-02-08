@@ -1,8 +1,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect } from 'react-table'
+import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout } from 'react-table'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
+import Menu from './ElmSettings/Childs/Menu'
+import EyeToggle from './ElmSettings/Childs/EyeToggle'
+import Modal from './Modal'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -14,7 +18,6 @@ const IndeterminateCheckbox = React.forwardRef(
     return (
       <>
         <TableCheckBox refer={resolvedRef} rest={rest} />
-        {/* <input type="checkbox" ref={resolvedRef} {...rest} /> */}
       </>
     )
   },
@@ -36,6 +39,8 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
 }
 
 export default function Table(props) {
+  const [showStMdl, setShowStMdl] = React.useState(false)
+  const [showDelMdl, setShowDelMdl] = React.useState(false)
   const {
     getTableProps,
     getTableBodyProps,
@@ -52,11 +57,10 @@ export default function Table(props) {
     setPageSize,
     state,
     preGlobalFilteredRows,
-    // row select
-    selectedFlatRows,
-    //
+    selectedFlatRows, // row select
+    flatColumns, // col hide
     setGlobalFilter,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       ...props,
@@ -67,33 +71,28 @@ export default function Table(props) {
     useGlobalFilter,
     useSortBy,
     usePagination,
-
-    useRowSelect,
-    // row select
-    hooks => {
+    // useBlockLayout,
+    useFlexLayout,
+    props.resizable ? useResizeColumns : '', // resize
+    props.rowSeletable ? useRowSelect : '', // row select
+    props.rowSeletable ? (hooks => {
       hooks.flatColumns.push(columns => [
-        // Let's make a column for selection
         {
           id: 'selection',
-          // The header can use the table's getToggleAllRowsSelectedProps method
-          // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
           Cell: ({ row }) => (
             <div>
-              {console.log('selec', row.isSelected)}
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
             </div>
           ),
         },
         ...columns,
       ])
-    },
+    }) : '',
   );
 
   const handleGotoPageZero = () => {
@@ -120,47 +119,121 @@ export default function Table(props) {
     }
     previousPage()
   }
+
   return (
     <>
+      <Modal
+        sm
+        title="Change Status"
+        subTitle="Change status of all selected form"
+        show={showStMdl}
+        setModal={setShowStMdl}
+      >
+        <button onClick={e => { props.setBulkStatus(e, selectedFlatRows); setShowStMdl(false) }} className="btn blue btn-lg blue-sh " type="button">Enable</button>
+        <button onClick={e => { props.setBulkStatus(e, selectedFlatRows); setShowStMdl(false) }} className="btn red btn-lg red-sh ml-4" type="button">Disable</button>
+      </Modal>
+
+      <Modal
+        sm
+        title="Delete ?"
+        subTitle="Delete all selected form"
+        show={showDelMdl}
+        setModal={setShowDelMdl}
+      >
+        <button onClick={e => { props.setBulkDelete(e, selectedFlatRows); setShowDelMdl(false) }} className="btn red btn-lg red-sh ml-4" type="button">Yes</button>
+        <button onClick={() => { setShowDelMdl(false) }} className="btn blue btn-lg blue-sh ml-4" type="button">No</button>
+      </Modal>
+
+      <div className="btcd-t-actions">
+        <div className="flx">
+          {props.columnHidable
+            && (
+              <Menu icn="icn-remove_red_eye">
+                {flatColumns.map(column => {
+                  if (column.Header !== 'Status'
+                    && column.Header !== 'Actions'
+                    && column.Header !== '#'
+                    && typeof column.Header !== 'function') {
+                    return (
+                      <div key={column.id}>
+                        <EyeToggle id={column.id} title={column.Header} props={column.getToggleHiddenProps()} />
+                      </div>
+                    )
+                  }
+                  return null
+                })}
+              </Menu>
+            )}
+          {selectedFlatRows.length > 0
+            && (
+              <>
+                {'setBulkStatus' in props
+                  && (
+                    <button onClick={() => setShowStMdl(true)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
+                      <span className="btcd-icn icn-toggle_off" />
+                    </button>
+                  )}
+                <button onClick={() => setShowDelMdl(true)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
+                  <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
+                </button>
+                <small>
+                  {selectedFlatRows.length} Row Selected
+                </small>
+              </>
+            )}
+        </div>
+      </div>
+
       <GlobalFilter
         preGlobalFilteredRows={preGlobalFilteredRows}
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <table {...getTableProps()} className="f-table">
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  {' '}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? String.fromCharCode(9662)
-                        : String.fromCharCode(9652)
-                      : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                  </span>
-                </th>
+
+      <div className="btcd-f-t-wrp">
+        <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}>
+          <table {...getTableProps()} className="f-table">
+            <thead>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      {column.render('Header')}
+                      {' '}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? String.fromCharCode(9662)
+                            : String.fromCharCode(9652)
+                          : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                      </span>
+                      {props.resizable
+                        && (
+                          <div
+                            {...column.getResizerProps()}
+                            className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
+                          />
+                        )}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-        {console.log(selectedFlatRows.map(i => i.original.formID))}
-      </table>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
+                    {row.cells.map(cell => (
+                      <td className="td" {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    ))}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </Scrollbars>
+      </div>
 
       <div className="btcd-pagination">
         <button className="icn-btn" type="button" onClick={handleGotoPageZero} disabled={!canPreviousPage}>

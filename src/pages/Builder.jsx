@@ -5,13 +5,12 @@ import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
+import FormEntries from './FormEntries'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 
 function Builder(props) {
   const { formType, formID } = useParams()
-
-  // console.log(url)
   const [fulScn, setFulScn] = useState(false)
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
@@ -73,7 +72,6 @@ function Builder(props) {
   }, [])
 
   const saveForm = () => {
-    console.log('In saveForm: ', savedFormId, formID)
     let formData = {
       layout: lay,
       fields,
@@ -87,11 +85,11 @@ function Builder(props) {
         form_name: formName,
         id: savedFormId,
       }
-
       action = 'bitapps_update_form'
     }
 
     formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
+    console.log(formData)
     bitsFetch(formData, action)
       .then(response => {
         console.log('UISave', typeof response.data)
@@ -146,7 +144,7 @@ function Builder(props) {
             Responses
           </NavLink>
           <NavLink
-            to={`/builder/${formType}/${formID}/settings/`}
+            to={`/builder/${formType}/${formID}/settings/:sub`}
             activeClassName="app-link-active"
           >
             Settings
@@ -274,7 +272,7 @@ function Builder(props) {
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">
-          responses
+          <FormEntries />
         </Route>
       </Switch>
     </div>

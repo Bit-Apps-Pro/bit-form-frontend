@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
+import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import ConfType from './ConfType'
 import EmailNotfication from './EmailNotfication'
 
