@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import React, { createContext, useReducer } from 'react'
-import bitsFetch, { prepareData } from './bitsFetch'
 
 const AllFormsDispatchHandler = (allForms, action) => {
   console.log('In Context', action.data, action.type)
@@ -20,7 +19,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
       return [...allForms]
     }
     case 'set': {
-      allForms = action.data
+      allForms = typeof action.data === 'undefined' ? [] : action.data
       return [...allForms]
     }
     default:
