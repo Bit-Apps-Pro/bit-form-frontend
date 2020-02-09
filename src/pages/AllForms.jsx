@@ -47,7 +47,7 @@ export default function AllFroms() {
         .then(res => {
           if (res !== undefined && res.success) {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
-            setData(dbForms)
+            allFormsDispatchHandler({ data: dbForms, type: 'set' })
           }
         })
     }
@@ -61,12 +61,12 @@ export default function AllFroms() {
       rowID.push(rows[i].id)
       formID.push(rows[i].original.formID)
     }
-    const tmp = [...data]
-    const newData = [...data]
+    const tmp = [...allForms]
+    const newData = [...allForms]
     for (let i = 0; i < rowID.length; i += 1) {
-      newData[i].status = status
+      newData[rowID[i]].status = status
     }
-    setData(newData)
+    allFormsDispatchHandler({ data: newData, type: 'set' })
     let ajaxData = { formID, status }
     if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
@@ -74,7 +74,7 @@ export default function AllFroms() {
     bitsFetch(ajaxData, 'bitapps_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
-          setData(tmp)
+          allFormsDispatchHandler({ data: tmp, type: 'set' })
         }
       })
   }
@@ -86,20 +86,19 @@ export default function AllFroms() {
       rowID.push(rows[i].id)
       formID.push(rows[i].original.formID)
     }
-    const newData = [...data]
-    const tmp = [...data]
+    const newData = [...allForms]
+    const tmp = [...allForms]
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
       newData.splice(Number(rowID[i]), 1)
     }
-    setData(newData)
     let ajaxData = { formID }
     if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
     }
-    bitsFetch(ajaxData, 'bitapps_bulk_delete')
+    bitsFetch(ajaxData, 'bitapps_bulk_delete_form')
       .then(res => {
-        if (res !== undefined && !res.success) {
-          setData(tmp)
+        if (res.success) {
+          allFormsDispatchHandler({ data: newData, type: 'set' })
         }
       })
   }
