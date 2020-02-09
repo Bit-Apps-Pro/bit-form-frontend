@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState, useContext } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Scrollbars } from 'react-custom-scrollbars'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
@@ -29,24 +28,24 @@ export default function AllFroms() {
       })
   }
 
-  const cols = [
-    { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
-    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
-    { Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
-    { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
-    { Header: 'Views', accessor: 'views' },
-    { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
-    { Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
-    { Header: 'Created', accessor: 'created_at' },
-    { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} /> },
-  ]
+  const [cols, setCols] = useState([
+    { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</>, width: 50 },
+    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} />, width: 70 },
+    { Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link>, width: 250 },
+    { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} />, width: 220 },
+    { Header: 'Views', accessor: 'views', width: 80 },
+    { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} />, width: 170 },
+    { Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link>, width: 100 },
+    { Header: 'Created', accessor: 'created_at', width: 160 },
+    { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} />, width: 70 },
+  ])
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      bitsFetch(prepareData({}), 'bitapps_get_all_form')
+      bitsFetch(prepareData({}), 'bitapps_get_all_form--')
         .then(res => {
           console.log('all form res', res)
-          if (res.success) {
+          if (res !== undefined && res.success) {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ type: 'set', data: dbForms })
           }
@@ -105,6 +104,8 @@ export default function AllFroms() {
       })
   }
 
+
+
   return (
     <div id="all-forms">
       <Modal
@@ -146,6 +147,7 @@ export default function AllFroms() {
           columnHidable
           setBulkStatus={setBulkStatus}
           setBulkDelete={setBulkDelete}
+          setTableCols={setCols}
         />
       </div>
     </div>

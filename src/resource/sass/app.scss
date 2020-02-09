@@ -59,7 +59,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9dd6ff;
+  background: $blue;
 }
 
 //scroll bar style end
@@ -1040,20 +1040,21 @@ nav.top-nav {
 }
 
 .f-table > thead > tr > th {
+  user-select: none;
   border-bottom: 2px solid #dedce4;
   &:hover {
     background: #f0f2f8;
   }
 }
 
-.f-table > tbody tr {
+.f-table tbody tr {
   height: 49px;
   &:hover {
     background: #f4f6ff;
   }
 }
 
-.f-table > tbody tr td {
+.f-table tbody tr td {
   padding: 5px 5px;
   font-size: 14px;
   font-weight: bold;
@@ -1066,7 +1067,7 @@ nav.top-nav {
   }
 }
 
-.f-table > tbody tr:last-child td {
+.f-table tbody tr:last-child td {
   border-bottom: none;
 }
 
@@ -1078,7 +1079,7 @@ nav.top-nav {
   border-top: 1px solid #dedce4;
 }
 .f-table > thead > tr > th,
-.f-table > tbody tr td {
+.f-table tbody tr td {
   text-align: left;
   padding: 10px 0 10px 10px;
   display: flex !important;
@@ -1086,7 +1087,7 @@ nav.top-nav {
 }
 
 .f-table > thead > tr > th:nth-child(1),
-.f-table > tbody tr td:nth-child(1) {
+.f-table tbody tr td:nth-child(1) {
   width: 70px;
   padding-left: 20px;
 }
@@ -1923,7 +1924,7 @@ nav.top-nav {
     }
   }
   > span {
-    pointer-events: none;
+    line-height: 1.6;
     vertical-align: middle;
   }
 }
@@ -1968,15 +1969,41 @@ nav.top-nav {
   z-index: 999;
   border-radius: 10px;
   display: none;
-  & > div {
-    padding: 10px;
+  overflow: hidden;
+  & > div:not(.btcd-m-li-itm) {
+    height: 276px !important;
+    width: 190px;
+    // mpadding: 10px;
     min-width: 100px;
     border-bottom: 1px solid #eaeaf1;
-    &:hover {
-      background: rgb(236, 236, 236);
-    }
+    /* &:hover {
+      background: rgb(231, 234, 243);
+    } */
   }
 }
+
+.btcd-pane {
+  width: 100% !important;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaf1;
+  &:hover {
+    background: rgb(231, 234, 243);
+    .btcd-pane-drg {
+      display: block;
+    }
+  }
+  & > div {
+    display: inline-block;
+  }
+}
+.btcd-pane-drg {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: move;
+  display: none;
+}
+
 .btcd-menu-a {
   display: block;
 }
@@ -2006,4 +2033,15 @@ nav.top-nav {
 #form-res {
   height: 100%;
   overflow: auto;
+}
+
+.btcd-pill {
+  padding: 5px;
+  border-radius: 5px;
+  color: $dp-blue;
+  background: transparentize($blue, 0.8);
+}
+
+.scl-7 {
+  transform: scale(0.7);
 }

@@ -54,10 +54,9 @@ export default function FormEntries() {
         if (response.success) {
           console.log('object', formID, response)
           setEntryCount(response.data.count)
-          const cols = response.data.Labels.map(val => ({ Header: val['name'], accessor: val['key'] }))
+          const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key }))
           console.log('In COLS', cols)
           setEntryLabels(cols)
-          console.log(res.data.Labels)
         }
       })
     bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {

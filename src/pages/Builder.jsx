@@ -199,7 +199,7 @@ function Builder(props) {
                   style={{
                     background: 'lightgray',
                     padding: 8,
-                    display: 'none',
+                    display: 'block',
                   }}
                 >
                   {lay.map((item, i) => (

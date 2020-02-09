@@ -19,6 +19,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-simple-resizer": "^2.1.0",
+    "react-sortable-pane": "^1.1.0",
     "react-table": "^7.0.0-rc.15",
     "slim-select": "^1.23.1"
   },

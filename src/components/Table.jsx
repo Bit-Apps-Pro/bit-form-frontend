@@ -3,9 +3,9 @@
 import React from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout } from 'react-table'
 import { Scrollbars } from 'react-custom-scrollbars'
+import { SortablePane, Pane } from 'react-sortable-pane'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
-import EyeToggle from './ElmSettings/Childs/EyeToggle'
 import Modal from './Modal'
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -36,6 +36,20 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
       />
     </div>
   )
+}
+
+function ColPane(cols) {
+  const ncol = cols.filter(column => column.Header !== 'Status'
+    && column.Header !== 'Actions'
+    && column.Header !== '#'
+    && typeof column.Header !== 'function')
+
+  return ncol.map((column, i) => (
+    <Pane key={i} className="btcd-pane" resizable={false}>
+      <TableCheckBox cls="scl-7" id={column.id} title={column.Header} rest={column.getToggleHiddenProps()} />
+      <span className="btcd-pane-drg">&#8759;</span>
+    </Pane>
+  ))
 }
 
 export default function Table(props) {
@@ -93,7 +107,7 @@ export default function Table(props) {
         ...columns,
       ])
     }) : '',
-  );
+  )
 
   const handleGotoPageZero = () => {
     if (props.getPageIndex) {
@@ -101,23 +115,30 @@ export default function Table(props) {
     }
     gotoPage(0)
   }
+
   const handleGotoLastPage = () => {
     if (props.getPageIndex) {
       props.getPageIndex(pageCount - 1)
     }
     gotoPage(pageCount - 1)
   }
+
   const handleNextPage = () => {
     if (props.getPageIndex) {
       props.getPageIndex(pageIndex + 1)
     }
     nextPage()
   }
+
   const handlePreviousPage = () => {
     if (props.getPageIndex) {
       props.getPageIndex(pageIndex - 1)
     }
     previousPage()
+  }
+
+  const onOrderChange = order => {
+    props.setTableCols(order)
   }
 
   return (
@@ -149,19 +170,10 @@ export default function Table(props) {
           {props.columnHidable
             && (
               <Menu icn="icn-remove_red_eye">
-                {flatColumns.map(column => {
-                  if (column.Header !== 'Status'
-                    && column.Header !== 'Actions'
-                    && column.Header !== '#'
-                    && typeof column.Header !== 'function') {
-                    return (
-                      <div key={column.id}>
-                        <EyeToggle id={column.id} title={column.Header} props={column.getToggleHiddenProps()} />
-                      </div>
-                    )
-                  }
-                  return null
-                })}
+                <SortablePane direction="vertical" dragHandleClassName="btcd-pane-drg" onOrderChange={onOrderChange}>
+                  {ColPane(flatColumns)}
+                </SortablePane>
+
               </Menu>
             )}
           {selectedFlatRows.length > 0
@@ -176,7 +188,7 @@ export default function Table(props) {
                 <button onClick={() => setShowDelMdl(true)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
                   <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
                 </button>
-                <small>
+                <small className="btcd-pill">
                   {selectedFlatRows.length}
                   {' '}
                   Row Selected
@@ -191,37 +203,36 @@ export default function Table(props) {
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-
       <div className="btcd-f-t-wrp">
-        <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}>
-          <table {...getTableProps()} className="f-table">
-            <thead>
-              {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                      {column.render('Header')}
-                      {' '}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? String.fromCharCode(9662)
-                            : String.fromCharCode(9652)
-                          : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                      </span>
-                      {props.resizable
-                        && (
-                          <div
-                            {...column.getResizerProps()}
-                            className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
-                          />
-                        )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
+        <table {...getTableProps()} className="f-table">
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
+                    {' '}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? String.fromCharCode(9662)
+                          : String.fromCharCode(9652)
+                        : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                    </span>
+                    {props.resizable
+                      && (
+                        <div
+                          {...column.getResizerProps()}
+                          className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
+                        />
+                      )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}>
               {page.map((row) => {
                 prepareRow(row);
                 return (
@@ -232,9 +243,9 @@ export default function Table(props) {
                   </tr>
                 )
               })}
-            </tbody>
-          </table>
-        </Scrollbars>
+            </Scrollbars>
+          </tbody>
+        </table>
       </div>
 
       <div className="btcd-pagination">
