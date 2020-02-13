@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect } from 'react'
 import SlimSelect from 'slim-select'
 import { Responsive, WidthProvider } from 'react-grid-layout'
@@ -17,11 +18,16 @@ export default function Bitapps(props) {
       <CompGen atts={props.data[field.i]} />
     </div>
   )
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    console.log('IN Bitapps Frontend', formData)
+  }
   useEffect(() => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
-      // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars
         const s = new SlimSelect({
           select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
             'btcd-id',
@@ -41,13 +47,14 @@ export default function Bitapps(props) {
   }, [])
   return (
     <div style={{ width: '100%' }} className="layout-wrapper">
-      <form encType={props.file ? 'multipart/form-data' : ''}>
+      <form encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit}>
         <FormLayout
-          layouts={props.layout}
-          cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-          breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+          cols={{ lg: 10 }}
+          breakpoints={{ lg: 800 }}
+          // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+          // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
           rowHeight={40}
-          margin={[0, 0]}
+          margin={[0, 10]}
         >
           {props.layout.map(field => {
             // eslint-disable-next-line no-param-reassign
@@ -55,6 +62,7 @@ export default function Bitapps(props) {
             return blk(field)
           })}
         </FormLayout>
+        <button className="blk" type="submit" name={bitAppFront.contentID}>Submit</button>
       </form>
     </div>
   )
