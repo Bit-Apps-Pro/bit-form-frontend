@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Progressbar(props) {
   return (
-    <div className="flx">
+    <div className="flx" style={{ width: '100%' }}>
       <span style={{ width: 40 }}>
         {props.value}
         %

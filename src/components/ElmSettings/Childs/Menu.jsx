@@ -6,7 +6,9 @@ export default function Menu(props) {
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      setIsComponentVisible(false);
+      // props.onClickOut()
+      isComponentVisible && props.onClickOut()
+      setIsComponentVisible(false)
     }
   }
 
@@ -23,7 +25,7 @@ export default function Menu(props) {
 
   return (
     <div className="btcd-menu">
-      <button onClick={handleMenu} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Column Visibility"' }} aria-label="icon-btn" type="button">
+      <button ref={ref} onClick={handleMenu} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Column Visibility"' }} aria-label="icon-btn" type="button">
         <span className={`btcd-icn ${props.icn}`} />
         {props.title}
       </button>
