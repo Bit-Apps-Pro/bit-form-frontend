@@ -1988,6 +1988,16 @@ nav.top-nav {
   }
 }
 
+.btcd-col-vis {
+  background: red;
+  width: 200px;
+  height: 100px;
+ // top: 70px;
+  right: 40px;
+//  overflow: auto;
+  z-index: 9;
+}
+
 .btcd-pane {
   width: 100% !important;
   padding: 10px;
@@ -2062,7 +2072,7 @@ nav.top-nav {
 
 // style for edge
 /* IE9, IE10, IE11 */
-@media screen and (min-width:0\0) {
+@media screen and (min-width: 0\0) {
   .btcd-pane {
     background-color: red !important;
     padding-right: 15px !important;

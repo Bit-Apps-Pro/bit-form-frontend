@@ -87,9 +87,8 @@ export default function FormEntries() {
 
   }
 
-  const setEntriesCol = order => {
-    const newCol = order.map(i => entryLabels[i])
-    setEntryLabels(newCol)
+  const setEntriesCol = newCols => {
+    setEntryLabels(newCols)
   }
 
   return (

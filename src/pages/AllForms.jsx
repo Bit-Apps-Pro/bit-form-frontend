@@ -102,9 +102,8 @@ export default function AllFroms() {
       })
   }
 
-  const setTableCols = order => {
-    const newCol = order.map(i => cols[i])
-    setCols(newCol)
+  const setTableCols = newCols => {
+    setCols(newCols)
   }
 
   return (

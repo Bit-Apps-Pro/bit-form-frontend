@@ -7,7 +7,7 @@ export default function Menu(props) {
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       // props.onClickOut()
-      isComponentVisible && props.onClickOut()
+      // isComponentVisible && props.onClickOut()
       setIsComponentVisible(false)
     }
   }

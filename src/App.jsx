@@ -103,6 +103,7 @@ export default class App extends React.Component {
             </Switch>
           </div>
         </div>
+        <div>Asfsdaf</div>
       </Router>
     )
   }
