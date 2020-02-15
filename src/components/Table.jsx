@@ -38,23 +38,10 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   )
 }
 
-function ColPane(cols) {
-  const ncol = cols.filter(column => column.Header !== 'Status'
-    && column.Header !== 'Actions'
-    && column.Header !== '#'
-    && typeof column.Header !== 'function')
-
-  return ncol.map((column, i) => (
-    <Pane key={i} className="btcd-pane" resizable={false}>
-      <TableCheckBox cls="scl-7" id={column.id} title={column.Header} rest={column.getToggleHiddenProps()} />
-      <span className="btcd-pane-drg">&#8759;</span>
-    </Pane>
-  ))
-}
-
 export default function Table(props) {
   const [showStMdl, setShowStMdl] = React.useState(false)
   const [showDelMdl, setShowDelMdl] = React.useState(false)
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -85,7 +72,6 @@ export default function Table(props) {
     useGlobalFilter,
     useSortBy,
     usePagination,
-    // useBlockLayout,
     useFlexLayout,
     props.resizable ? useResizeColumns : '', // resize
     props.rowSeletable ? useRowSelect : '', // row select
@@ -108,6 +94,32 @@ export default function Table(props) {
       ])
     }) : '',
   )
+
+  let len = []
+  for (let i = 0; i < flatColumns.length - 1; i += 1) {
+    len.push(i.toString())
+  }
+
+  const [paneOrder, setPaneOrder] = React.useState(len)
+  const [tmpOrdr, setTmpordr] = React.useState(false)
+  //  console.log(flatColumns, paneOrder)
+
+  React.useEffect(() => {
+    console.log("re rendered")
+    if (paneOrder.length !== props.columns.length) {
+      console.log(paneOrder.length, props.columns.length)
+      len = []
+      for (let i = 0; i < flatColumns.length - 1; i += 1) {
+        len.push(i.toString())
+      }
+      setPaneOrder(len)
+    }
+  }, [props.columns])
+
+  const tmpSetPane = () => {
+
+    setPaneOrder(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])
+  }
 
   const handleGotoPageZero = () => {
     if (props.getPageIndex) {
@@ -138,11 +150,39 @@ export default function Table(props) {
   }
 
   const onOrderChange = order => {
-    props.setTableCols(order)
+    setTmpordr(paneOrder)
+    setPaneOrder(order)
+  }
+
+  const onMenuClose = () => {
+    let f = false
+    for (let i = 0; i < tmpOrdr.length; i += 1) {
+      if (tmpOrdr[i] !== paneOrder[i]) {
+        f = true
+        setTmpordr(paneOrder)
+      }
+    }
+    if (f) {
+      props.setTableCols(paneOrder)
+      setPaneOrder(len)
+    }
+  }
+
+  const ColPane = cols => {
+    const ncol = cols.filter(column => typeof column.Header !== 'function')
+    console.log(ncol)
+    return ncol.map(column => (
+      <Pane key={column.index} className="btcd-pane" resizable={false} defaultSize={{ width: '100%', height: 50 }}>
+        <TableCheckBox cls="scl-7" id={column.id} title={column.Header} rest={column.getToggleHiddenProps()} />
+        <span className="btcd-pane-drg">&#8759;</span>
+      </Pane>
+    ))
   }
 
   return (
     <>
+      <button onClick={() => console.log(paneOrder)}>get pane</button>
+      <button onClick={tmpSetPane}>set pane</button>
       <Modal
         sm
         title="Change Status"
@@ -169,11 +209,13 @@ export default function Table(props) {
         <div className="flx">
           {props.columnHidable
             && (
-              <Menu icn="icn-remove_red_eye">
-                <SortablePane direction="vertical" dragHandleClassName="btcd-pane-drg" onOrderChange={onOrderChange}>
+              <Menu icn="icn-remove_red_eye" onClickOut={onMenuClose}>
+                <SortablePane margin={10} direction="vertical" disableEffect dragHandleClassName="btcd-pane-drg" onOrderChange={onOrderChange} order={paneOrder}>
                   {ColPane(flatColumns)}
                 </SortablePane>
-
+                {/* <Shortable onOrderChange={onOrderChange} order={paneOrder}>
+                  {ColPane(flatColumns)}
+                </Shortable> */}
               </Menu>
             )}
           {selectedFlatRows.length > 0
@@ -297,6 +339,10 @@ export default function Table(props) {
           ))}
         </select>
       </div>
+
+      {/* <div style={{ background: 'red', padding: 20, height: '90px', position: 'relative' }}>
+
+      </div> */}
     </>
   );
 }

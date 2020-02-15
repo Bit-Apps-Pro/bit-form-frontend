@@ -25,7 +25,9 @@ body {
 #wpcontent {
   padding-left: 0;
 }
-
+.d-non {
+  display: none !important;
+}
 .btcd-neo-sh-1 {
   box-shadow: 5px 5px 10px #d7dbe2, -5px -5px 10px #ffffff;
 }
@@ -1026,7 +1028,7 @@ nav.top-nav {
 
 .btcd-f-t-wrp {
   margin-top: 10px;
-  //overflow-x: auto;
+  overflow-x: auto;
 }
 
 .f-table {
@@ -1042,6 +1044,7 @@ nav.top-nav {
 .f-table > thead > tr > th {
   user-select: none;
   border-bottom: 2px solid #dedce4;
+  overflow: hidden;
   &:hover {
     background: #f0f2f8;
   }
@@ -1295,7 +1298,7 @@ nav.top-nav {
 }
 
 .btcd-prgrs-wrp {
-  width: 100px;
+  width: 70%;
   height: 8px;
   border-radius: 10px;
   overflow: hidden;
@@ -1944,14 +1947,14 @@ nav.top-nav {
   position: absolute;
   right: 0;
   top: 0;
-  border-right: 1px solid #eaeaea;
+  border-left: 1px solid #eaeaea;
   transform: translateX(50%);
   z-index: 1;
   touch-action: none;
   background: transparent;
   &:hover {
     background: transparent;
-    border-right: 2px solid #c0bfc5;
+    border-left: 2px solid #c0bfc5;
   }
 }
 
@@ -1961,6 +1964,7 @@ nav.top-nav {
 }
 
 .btcd-menu-li {
+  height: 350px;
   width: max-content;
   position: absolute;
   backdrop-filter: blur(7px);
@@ -1971,8 +1975,10 @@ nav.top-nav {
   display: none;
   overflow: hidden;
   & > div:not(.btcd-m-li-itm) {
-    height: 276px !important;
-    width: 190px;
+    //height: 280px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 200px;
     // mpadding: 10px;
     min-width: 100px;
     border-bottom: 1px solid #eaeaf1;
@@ -2002,6 +2008,14 @@ nav.top-nav {
   font-weight: bold;
   cursor: move;
   display: none;
+  user-select: none;
+  position: relative;
+  &::before {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background: red;
+  }
 }
 
 .btcd-menu-a {
@@ -2044,4 +2058,13 @@ nav.top-nav {
 
 .scl-7 {
   transform: scale(0.7);
+}
+
+// style for edge
+/* IE9, IE10, IE11 */
+@media screen and (min-width:0\0) {
+  .btcd-pane {
+    background-color: red !important;
+    padding-right: 15px !important;
+  }
 }
