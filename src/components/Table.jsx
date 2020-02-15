@@ -3,7 +3,7 @@
 import React from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout } from 'react-table'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { SortablePane, Pane } from 'react-sortable-pane'
+import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import Modal from './Modal'
@@ -38,23 +38,10 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   )
 }
 
-function ColPane(cols) {
-  const ncol = cols.filter(column => column.Header !== 'Status'
-    && column.Header !== 'Actions'
-    && column.Header !== '#'
-    && typeof column.Header !== 'function')
-
-  return ncol.map((column, i) => (
-    <Pane key={i} className="btcd-pane" resizable={false}>
-      <TableCheckBox cls="scl-7" id={column.id} title={column.Header} rest={column.getToggleHiddenProps()} />
-      <span className="btcd-pane-drg">&#8759;</span>
-    </Pane>
-  ))
-}
-
 export default function Table(props) {
   const [showStMdl, setShowStMdl] = React.useState(false)
   const [showDelMdl, setShowDelMdl] = React.useState(false)
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -85,7 +72,6 @@ export default function Table(props) {
     useGlobalFilter,
     useSortBy,
     usePagination,
-    // useBlockLayout,
     useFlexLayout,
     props.resizable ? useResizeColumns : '', // resize
     props.rowSeletable ? useRowSelect : '', // row select
@@ -137,10 +123,6 @@ export default function Table(props) {
     previousPage()
   }
 
-  const onOrderChange = order => {
-    props.setTableCols(order)
-  }
-
   return (
     <>
       <Modal
@@ -170,10 +152,16 @@ export default function Table(props) {
           {props.columnHidable
             && (
               <Menu icn="icn-remove_red_eye">
-                <SortablePane direction="vertical" dragHandleClassName="btcd-pane-drg" onOrderChange={onOrderChange}>
-                  {ColPane(flatColumns)}
-                </SortablePane>
-
+                <Scrollbars autoHide style={{ width: 200 }}>
+                  <ReactSortable list={props.columns} setList={props.setTableCols} handle=".btcd-pane-drg">
+                    {props.columns.map((column, i) => (
+                      <div key={flatColumns[i + 1].id} className="btcd-pane">
+                        <TableCheckBox cls="scl-7" id={flatColumns[i + 1].id} title={column.Header} rest={flatColumns[i + 1].getToggleHiddenProps()} />
+                        <span className="btcd-pane-drg">&#8759;</span>
+                      </div>
+                    ))}
+                  </ReactSortable>
+                </Scrollbars>
               </Menu>
             )}
           {selectedFlatRows.length > 0
@@ -297,6 +285,10 @@ export default function Table(props) {
           ))}
         </select>
       </div>
+
+      {/* <div style={{ background: 'red', padding: 20, height: '90px', position: 'relative' }}>
+
+      </div> */}
     </>
   );
 }

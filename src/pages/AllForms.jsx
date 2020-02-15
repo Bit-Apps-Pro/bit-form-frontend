@@ -29,20 +29,19 @@ export default function AllFroms() {
   }
 
   const [cols, setCols] = useState([
-    { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</>, width: 50 },
-    { Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} />, width: 70 },
-    { Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link>, width: 250 },
-    { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} />, width: 220 },
-    { Header: 'Views', accessor: 'views', width: 80 },
-    { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} />, width: 170 },
-    { Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link>, width: 100 },
-    { Header: 'Created', accessor: 'created_at', width: 160 },
-    { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} />, width: 100 },
+    { minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} />, width: 70 },
+    { minWidth: 100, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link>, width: 250 },
+    { minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} />, width: 220 },
+    { minWidth: 60, Header: 'Views', accessor: 'views', width: 80 },
+    { minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} />, width: 170 },
+    { minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link>, width: 100 },
+    { minWidth: 60, Header: 'Created', accessor: 'created_at', width: 160 },
+    { minWidth: 60, Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} />, width: 100 },
   ])
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      bitsFetch(prepareData({}), 'bitapps_get_all_form--')
+      bitsFetch(prepareData({}), 'bitapps_get_all_form')
         .then(res => {
           if (res !== undefined && res.success) {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
@@ -90,16 +89,21 @@ export default function AllFroms() {
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
       newData.splice(Number(rowID[i]), 1)
     }
+    allFormsDispatchHandler({ data: newData, type: 'set' })
     let ajaxData = { formID }
     if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
     }
     bitsFetch(ajaxData, 'bitapps_bulk_delete_form')
       .then(res => {
-        if (res.success) {
-          allFormsDispatchHandler({ data: newData, type: 'set' })
+        if (res !== undefined && !res.success) {
+          allFormsDispatchHandler({ data: tmp, type: 'set' })
         }
       })
+  }
+
+  const setTableCols = newCols => {
+    setCols(newCols)
   }
 
   return (
@@ -143,7 +147,7 @@ export default function AllFroms() {
           columnHidable
           setBulkStatus={setBulkStatus}
           setBulkDelete={setBulkDelete}
-          setTableCols={setCols}
+          setTableCols={setTableCols}
         />
       </div>
     </div>

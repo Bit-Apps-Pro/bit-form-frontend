@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 import React, { createContext, useReducer } from 'react'
 
@@ -60,7 +61,9 @@ const BitappsContextProvider = (props) => {
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
   return (
     <BitappsContext.Provider
-      value={{ allFormsData: { allForms, allFormsDispatchHandler } }}
+      value={{
+        allFormsData: { allForms, allFormsDispatchHandler },
+      }}
     >
       {props.children}
     </BitappsContext.Provider>

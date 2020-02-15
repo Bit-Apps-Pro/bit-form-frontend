@@ -41,7 +41,6 @@ export default class GridLayout extends React.PureComponent {
   }
 
   componentDidMount() {
-
     if (this.props.formType === 'new') {
       if (this.props.formID === 'blank') {
         this.setState({ isLoading: false })

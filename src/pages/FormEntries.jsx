@@ -51,17 +51,14 @@ export default function FormEntries() {
 
     bitsFetch(fdata, 'bitapps_get_form_entry_count')
       .then(response => {
-        if (response.success) {
-          console.log('object', formID, response)
+        if (response !== undefined && response.success) {
           setEntryCount(response.data.count)
           const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key }))
-          console.log('In COLS', cols)
           setEntryLabels(cols)
         }
       })
     bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
       if (res !== undefined && res.success) {
-        console.log(res.data)
         setData(res.data)
       }
     })
@@ -90,6 +87,10 @@ export default function FormEntries() {
 
   }
 
+  const setEntriesCol = newCols => {
+    setEntryLabels(newCols)
+  }
+
   return (
     <div id="form-res">
       <div className="af-header">
@@ -100,13 +101,14 @@ export default function FormEntries() {
           height="68vh"
           columns={entryLabels}
           data={data}
-          getPageSize={getPageSize}
-          pageCount={Math.floor(entryCount / pageSize) + 1}
-          getPageIndex={getPageIndex}
           rowSeletable
           resizable
           columnHidable
+          getPageSize={getPageSize}
+          pageCount={Math.floor(entryCount / pageSize) + 1}
+          getPageIndex={getPageIndex}
           setBulkDelete={setBulkDelete}
+          setTableCols={setEntriesCol}
         />
       </div>
     </div>
