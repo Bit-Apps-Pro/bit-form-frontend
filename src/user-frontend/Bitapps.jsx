@@ -2,26 +2,58 @@
 import React, { useEffect } from 'react'
 import SlimSelect from 'slim-select'
 import { Responsive, WidthProvider } from 'react-grid-layout'
+import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 
 export default function Bitapps(props) {
   const FormLayout = WidthProvider(Responsive);
-  const blk = (field) => (
-    <div
-      key={field.i}
-      className="blk"
-      btcd-id={field.i}
-      data-grid={field}
-      role="button"
-      tabIndex={0}
-    >
-      <CompGen atts={props.data[field.i]} />
-    </div>
-  )
+  const blk = (field) => {
+    const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
+    props.data[field.i].name = name
+    return (
+      <div
+        key={field.i}
+        className="blk"
+        btcd-id={field.i}
+        data-grid={field}
+        role="button"
+        tabIndex={0}
+      >
+        <CompGen atts={props.data[field.i]} />
+      </div>
+    )
+  }
   const handleSubmit = (event) => {
     event.preventDefault()
-    const formData = new FormData(event.target)
-    console.log('IN Bitapps Frontend', formData)
+    const formData = new FormData()
+    console.log('INPUTS', event.target)
+    const fields = Array.prototype.slice.call(event.target)
+      .filter(el => {
+        if (el.type === 'file' && el.files.length > 0) {
+          if (el.files.length > 1) {
+            el.files.forEach(file => formData.append(`${el.name}[]`, file))
+          } else {
+            el.files.forEach(file => formData.append(el.name, file))
+          }
+        } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
+          console.log(el.name, el.value, el.checked)
+          formData.append(el.name, el.value)
+        } else if (el.type === 'select') {
+          console.log(el.name)
+          formData.append(el.name, el.value)
+        } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
+          console.log(el.name)
+          formData.append(el.name, el.value)
+        }
+      })
+    bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
+      .then(response => {
+        console.log('In BITAPPS SUBMIT', response)
+        if (response !== undefined && response.success) {
+          console.log('In BITAPPS SUBMIT', response)
+        }
+      })
+    console.log('In BITAPPS formData', formData)
   }
   useEffect(() => {
     if (document.querySelector('.slim') != null) {
@@ -47,7 +79,9 @@ export default function Bitapps(props) {
   }, [])
   return (
     <div style={{ width: '100%' }} className="layout-wrapper">
-      <form encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit}>
+      <form id={`form-${bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        <input type="hidden" value={bitAppsFront.nonce} name="bitapps_token" />
+        <input type="hidden" value={bitAppsFront.appID} name="bitapps_id" />
         <FormLayout
           cols={{ lg: 10 }}
           breakpoints={{ lg: 800 }}
@@ -62,7 +96,7 @@ export default function Bitapps(props) {
             return blk(field)
           })}
         </FormLayout>
-        <button className="blk" type="submit" name={bitAppFront.contentID}>Submit</button>
+        <button className="blk" type="submit">Submit</button>
       </form>
     </div>
   )
