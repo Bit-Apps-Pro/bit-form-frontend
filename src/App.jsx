@@ -13,7 +13,6 @@ import './resource/js/custom'
 import Builder from './pages/Builder'
 import AllForms from './pages/AllForms'
 import FormEntries from './pages/FormEntries'
-import Snackbar from './components/ElmSettings/Childs/Snackbar'
 
 
 const Dashboard = () => (
@@ -28,7 +27,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       gridWidth: window.innerWidth - 480,
-      snack: false,
     }
     this.setGridWidth = this.setGridWidth.bind(this)
 
@@ -106,8 +104,6 @@ export default class App extends React.Component {
             </Switch>
           </div>
         </div>
-        <button onClick={() => this.setState({ snack: !this.state.snack })}>set snack</button>
-        <Snackbar msg="asfsadfadfa" show={this.state.snack} />
       </Router>
     )
   }

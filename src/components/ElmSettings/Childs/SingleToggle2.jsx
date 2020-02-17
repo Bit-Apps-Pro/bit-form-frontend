@@ -7,7 +7,7 @@ export default function SingleToggle2(props) {
       <span>{props.title}</span>
       <label className="btcd-label">
         <div className="btcd-toggle">
-          <input onChange={props.action} className="btcd-toggle-state" type="checkbox" name="check" value="check" defaultChecked={ props.checked } />
+          <input onChange={props.action} className="btcd-toggle-state" type="checkbox" name="check" value="check" checked={ props.checked ? 'checked' : '' } />
           <div className="btcd-toggle-inner">
             <div className="btcd-indicator" />
           </div>

@@ -1,11 +1,14 @@
 /* eslint-disable no-undef */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import SlimSelect from 'slim-select'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
+import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 export default function Bitapps(props) {
+  const [snack, setSnack] = useState(false)
+  const [message, setMessage] = useState(null)
   const FormLayout = WidthProvider(Responsive);
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
@@ -17,7 +20,6 @@ export default function Bitapps(props) {
         btcd-id={field.i}
         data-grid={field}
         role="button"
-        tabIndex={0}
       >
         <CompGen atts={props.data[field.i]} />
       </div>
@@ -26,7 +28,6 @@ export default function Bitapps(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = new FormData()
-    console.log('INPUTS', event.target)
     const fields = Array.prototype.slice.call(event.target)
       .filter(el => {
         if (el.type === 'file' && el.files.length > 0) {
@@ -36,24 +37,21 @@ export default function Bitapps(props) {
             el.files.forEach(file => formData.append(el.name, file))
           }
         } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-          console.log(el.name, el.value, el.checked)
           formData.append(el.name, el.value)
         } else if (el.type === 'select') {
-          console.log(el.name)
           formData.append(el.name, el.value)
         } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-          console.log(el.name)
           formData.append(el.name, el.value)
         }
       })
     bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
       .then(response => {
-        console.log('In BITAPPS SUBMIT', response)
         if (response !== undefined && response.success) {
-          console.log('In BITAPPS SUBMIT', response)
+          setMessage(response.data)
+          setSnack(true)
+          // window.location = '/'
         }
       })
-    console.log('In BITAPPS formData', formData)
   }
   useEffect(() => {
     if (document.querySelector('.slim') != null) {
@@ -79,6 +77,10 @@ export default function Bitapps(props) {
   }, [])
   return (
     <div style={{ width: '100%' }} className="layout-wrapper">
+      {
+        snack
+        && <Toast msg={message} show={snack} setSnack={setSnack} />
+      }
       <form id={`form-${bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
         <input type="hidden" value={bitAppsFront.nonce} name="bitapps_token" />
         <input type="hidden" value={bitAppsFront.appID} name="bitapps_id" />
@@ -98,6 +100,37 @@ export default function Bitapps(props) {
         </FormLayout>
         <button className="blk" type="submit">Submit</button>
       </form>
+    </div>
+  )
+}
+
+function Toast(props) {
+  const toatStyles = {
+    btcdSnack: {
+      userSelect: 'none',
+      background: '#383838',
+      padding: '10px 15px',
+      color: 'white',
+      borderRadius: '5px',
+      position: 'fixed',
+      bottom: '20px',
+      right: '20px',
+      boxShadow: '1px 1px 3px 0px #0000004d',
+      transition: 'right 0.5s',
+    },
+  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (props.show) {
+        // props.setSnack(false)
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+  return (
+    <div className="btcd-snack flx" style={{ right: props.show ? 20 : -200 }}>
+      {props.msg}
+      <button onClick={() => props.setSnack(false)} className="btcd-snack-cls" type="button">&times;</button>
     </div>
   )
 }

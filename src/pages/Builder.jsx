@@ -8,6 +8,7 @@ import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 function Builder(props) {
   const { formType, formID } = useParams()
@@ -23,8 +24,11 @@ function Builder(props) {
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [forceRender, setForceRender] = useState(false)
   const [updatedData, updateData] = useState(null)
-  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsData, snackBar } = useContext(BitappsContext)
   const { allFormsDispatchHandler } = allFormsData
+  const { message, view } = snackBar
+  const { setsnackView, snackView } = view
+  const { setsnackMessage } = message
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
     btnSiz: 'md',
@@ -107,9 +111,13 @@ function Builder(props) {
               setSavedFormId(data.id)
               setButtonText('Update')
               props.history.replace(`/builder/edit/${data.id}`)
+              setsnackMessage('Form Saved Successfully')
+              setsnackView(true)
             }
             allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
           } else if (action === 'bitapps_update_form') {
+            setsnackMessage('Form Updated Successfully')
+            setsnackView(true)
             allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
         }
@@ -275,6 +283,10 @@ function Builder(props) {
           <FormEntries />
         </Route>
       </Switch>
+      {
+        snackView
+        && <Snackbar />
+      }
     </div>
   )
 }

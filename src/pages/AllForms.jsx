@@ -10,12 +10,19 @@ import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 export default function AllFroms() {
-  const [modal, setModal] = useState(false)
-  const { allFormsData } = useContext(BitappsContext)
-  const { allForms, allFormsDispatchHandler } = allFormsData
+  /* const [snack, setSnack] = useState(false)
+  const [message, setMessage] = useState(null) */
 
+  
+  const [modal, setModal] = useState(false)
+  const { allFormsData, snackBar } = useContext(BitappsContext)
+  const { allForms, allFormsDispatchHandler } = allFormsData
+  const { message, view } = snackBar
+  const { setsnackView, snackView } = view
+  const { setsnackMessage } = message
   const handleStatus = (e, id) => {
     const el = e.target
     let data = { id, status: el.checked }
@@ -73,7 +80,13 @@ export default function AllFroms() {
     bitsFetch(ajaxData, 'bitapps_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
+          console.log(res)
           allFormsDispatchHandler({ data: tmp, type: 'set' })
+        } else if (res.success) {
+          setsnackMessage(res.data)
+          setsnackView(true)
+          /* setMessage(res.data)
+          setSnack(true) */
         }
       })
   }
@@ -99,6 +112,11 @@ export default function AllFroms() {
       .then(res => {
         if (res !== undefined && !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
+        } else if (res.success) {
+          /* setMessage('Form Deleted!!')
+          setSnack(true) */
+          setsnackMessage(res.data)
+          setsnackView(true)
         }
       })
   }
@@ -152,6 +170,10 @@ export default function AllFroms() {
           setTableCols={setTableCols}
         />
       </div>
+      {
+        snackView
+        && <Snackbar />
+      }
     </div>
   )
 }

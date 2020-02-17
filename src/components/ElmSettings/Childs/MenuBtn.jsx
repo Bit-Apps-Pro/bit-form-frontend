@@ -4,8 +4,11 @@ import { BitappsContext } from '../../../Utils/BitappsContext'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function MenuBtn(props) {
-  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsData, snackBar } = useContext(BitappsContext)
   const { allFormsDispatchHandler } = allFormsData
+  const { message, view } = snackBar
+  const { setsnackView } = view
+  const { setsnackMessage } = message
   const handleMenuClose = (e) => {
     const el = e.target
     setTimeout(() => {
@@ -25,6 +28,8 @@ export default function MenuBtn(props) {
     bitsFetch({ id: props.formID }, 'bitapps_delete_aform').then(response => {
       if (response.success) {
         allFormsDispatchHandler({ type: 'remove', data: props.index })
+        setsnackMessage('Form deleted!!')
+        setsnackView(true)
       }
     })
   }
@@ -34,6 +39,8 @@ export default function MenuBtn(props) {
       if (response.success) {
         const { data } = response
         allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+        setsnackMessage('Form duplicated successfully')
+        setsnackView(true)
       }
     })
   }
