@@ -1042,6 +1042,7 @@ nav.top-nav {
 }
 
 .f-table > thead > tr > th {
+  line-height: 1.8;
   user-select: none;
   border-bottom: 2px solid #dedce4;
   overflow: hidden;
@@ -1052,12 +1053,15 @@ nav.top-nav {
 
 .f-table tbody tr {
   height: 49px;
+  position: relative;
+  align-items: center;
   &:hover {
     background: #f4f6ff;
   }
 }
 
 .f-table tbody tr td {
+  line-height: 1.9;
   padding: 5px 5px;
   font-size: 14px;
   font-weight: bold;
@@ -1074,6 +1078,16 @@ nav.top-nav {
   border-bottom: none;
 }
 
+.btcd-sl > div {
+  // padding-top: 3px;
+}
+
+.btcd-all-frm tbody tr td:last-child{
+  overflow: unset;
+  //position: absolute;
+ // right: 0;
+}
+
 .btcd-row-selected {
   background: #eff2f5;
 }
@@ -1085,8 +1099,10 @@ nav.top-nav {
 .f-table tbody tr td {
   text-align: left;
   padding: 10px 0 10px 10px;
-  display: flex !important;
-  align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 100%;
 }
 
 .f-table > thead > tr > th:nth-child(1),
@@ -1263,6 +1279,7 @@ nav.top-nav {
 }
 
 .tooltip {
+  font-family: inherit;
   &::after {
     line-height: 1;
     font-size: 13px;
@@ -1992,9 +2009,7 @@ nav.top-nav {
   background: red;
   width: 200px;
   height: 100px;
- // top: 70px;
   right: 40px;
-//  overflow: auto;
   z-index: 9;
 }
 
@@ -2070,11 +2085,35 @@ nav.top-nav {
   transform: scale(0.7);
 }
 
-// style for edge
-/* IE9, IE10, IE11 */
-@media screen and (min-width: 0\0) {
-  .btcd-pane {
-    background-color: red !important;
-    padding-right: 15px !important;
+.btcd-snack {
+  user-select: none;
+  background: #383838;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  box-shadow: 1px 1px 3px 0px #0000004d;
+  transition: right 0.5s;
+}
+
+.btcd-snack-cls {
+  user-select: none;
+  display: inline-block;
+  background: transparentize(#fff, 0.95);
+  height: 25px;
+  width: 25px;
+  border: none;
+  font-size: 21px;
+  padding: 3px 6px;
+  color: white;
+  border-radius: 50px;
+  line-height: 0.8;
+  margin-left: 7px;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    background: transparentize(#fff, 0.8);
   }
 }

@@ -15,7 +15,7 @@ export default function AllFroms() {
   const [modal, setModal] = useState(false)
   const { allFormsData } = useContext(BitappsContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
-  console.log('In AllForm fn[default]', allForms)
+
   const handleStatus = (e, id) => {
     const el = e.target
     let data = { id, status: el.checked }
@@ -30,7 +30,7 @@ export default function AllFroms() {
 
   const [cols, setCols] = useState([
     { minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} />, width: 70 },
-    { minWidth: 100, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link>, width: 250 },
+    { minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link>, width: 250 },
     { minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} />, width: 220 },
     { minWidth: 60, Header: 'Views', accessor: 'views', width: 80 },
     { minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} />, width: 170 },
@@ -44,6 +44,7 @@ export default function AllFroms() {
       bitsFetch(prepareData({}), 'bitapps_get_all_form')
         .then(res => {
           if (res !== undefined && res.success) {
+            console.log(res.data)
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ data: dbForms, type: 'set' })
           }
@@ -116,14 +117,14 @@ export default function AllFroms() {
       >
         <div className="btcd-tem-lay">
           <div className="btcd-tem">
-            <span className="btcd-icn icn-file-empty" style={{ fontSize: 90 }} />
+            <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
             <div>Blank</div>
             <div className="btcd-hid-btn">
               <NavLink to="/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
             </div>
           </div>
           <div className="btcd-tem">
-            <span className="btcd-icn icn-file-empty" style={{ fontSize: 90 }} />
+            <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
             <div>Contact Form</div>
             <div className="btcd-hid-btn">
               <NavLink to="builder/new/contact_form" className="btn btn-white sh-sm" type="button">Create</NavLink>
@@ -139,6 +140,7 @@ export default function AllFroms() {
       </div>
       <div className="forms">
         <Table
+          className="btcd-all-frm"
           height="78vh"
           columns={cols}
           data={allForms}
