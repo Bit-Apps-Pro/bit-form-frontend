@@ -3,7 +3,6 @@
 import React, { createContext, useReducer } from 'react'
 
 const AllFormsDispatchHandler = (allForms, action) => {
-  console.log('In Context', action.data, action.type)
   switch (action.type) {
     case 'add':
       return [...allForms, action.data]
@@ -21,6 +20,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
     }
     case 'set': {
       allForms = typeof action.data === 'undefined' ? [] : action.data
+      console.log(allForms)
       return [...allForms]
     }
     default:

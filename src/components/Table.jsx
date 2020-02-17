@@ -192,7 +192,7 @@ export default function Table(props) {
         setGlobalFilter={setGlobalFilter}
       />
       <div className="btcd-f-t-wrp">
-        <table {...getTableProps()} className="f-table">
+        <table {...getTableProps()} className={`f-table ${props.className}`}>
           <thead>
             {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -226,7 +226,7 @@ export default function Table(props) {
                 return (
                   <tr {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
                     {row.cells.map(cell => (
-                      <td className="td" {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      <td className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     ))}
                   </tr>
                 )
