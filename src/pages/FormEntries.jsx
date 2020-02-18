@@ -1,17 +1,23 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
+import { BitappsContext } from '../Utils/BitappsContext'
+import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 
 export default function FormEntries() {
   const { formID } = useParams()
   const [pageSize, setPageSize] = useState(10)
   const [entryCount, setEntryCount] = useState(0)
+  const { snackBar } = useContext(BitappsContext)
+  const { message, view } = snackBar
+  const { setsnackView, snackView } = view
+  const { setsnackMessage } = message
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
     { Header: 'Status', accessor: 'status' },
@@ -65,13 +71,14 @@ export default function FormEntries() {
   }, [formID])
 
   const getPageSize = (changedPageSize, changedPageIndex) => {
+    console.log((changedPageIndex - 1) * pageSize)
     // eslint-disable-next-line no-param-reassign
     changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
-    if (entryCount > pageSize) {
-      bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
-        setData(res.data)
-      })
-    }
+    // if (entryCount > pageSize) {
+    bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
+      setData(res.data)
+    })
+    // }
     setPageSize(changedPageSize)
   }
 
@@ -82,9 +89,33 @@ export default function FormEntries() {
       })
     }
   }
+  const setBulkDelete = (e, rows) => {
+    const rowID = []
+    const entries = []
+    setsnackMessage('res.data')
+    setsnackView(true)
+    for (let i = 0; i < rows.length; i += 1) {
+      rowID.push(rows[i].id)
+      entries.push(rows[i].original.entry_id)
+    }
+    console.log('bulkDelete', entries)
 
-  const setBulkDelete = () => {
-
+    const newData = [...data]
+    for (let i = rowID.length - 1; i >= 0; i -= 1) {
+      newData.splice(Number(rowID[i]), 1)
+    }
+    let ajaxData = { formID, entries }
+    if (process.env.NODE_ENV === 'development') {
+      ajaxData = prepareData(ajaxData)
+    }
+    bitsFetch(ajaxData, 'bitapps_bulk_delete_form_entries')
+      .then(res => {
+        if (res.success) {
+          setsnackMessage('Entries deleted successfully')
+          setData(newData)
+          setsnackView(true)
+        }
+      })
   }
 
   const setEntriesCol = newCols => {
@@ -105,12 +136,16 @@ export default function FormEntries() {
           resizable
           columnHidable
           getPageSize={getPageSize}
-          pageCount={Math.floor(entryCount / pageSize) + 1}
+          pageCount={((entryCount / pageSize) % 1 === 0) ? (entryCount / pageSize) : Math.floor(entryCount / pageSize) + 1}
           getPageIndex={getPageIndex}
           setBulkDelete={setBulkDelete}
           setTableCols={setEntriesCol}
         />
       </div>
+      {
+        snackView
+        && <Snackbar />
+      }
     </div>
   )
 }

@@ -13,7 +13,9 @@ const AllFormsDispatchHandler = (allForms, action) => {
     case 'update': {
       allForms.map(form => {
         if (form.formID === action.data.formID) {
-          form.formName = action.data.formName
+          Object.entries(action.data).forEach(([field, fieldV]) => {
+            form[field] = action.data[field]
+          })
         }
       })
       return [...allForms]

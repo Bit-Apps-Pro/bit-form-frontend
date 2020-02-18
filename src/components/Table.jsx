@@ -276,7 +276,7 @@ export default function Table(props) {
             }
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSiz => (
+          {[10, 20, 30, 40, 50, 100].map(pageSiz => (
             <option key={pageSiz} value={pageSiz}>
               Show
               {' '}
