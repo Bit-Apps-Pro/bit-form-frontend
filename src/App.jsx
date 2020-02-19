@@ -15,13 +15,19 @@ import AllForms from './pages/AllForms'
 import FormEntries from './pages/FormEntries'
 import Snackbar from './components/ElmSettings/Childs/Snackbar'
 
+const Dashboard = () => {
 
-const Dashboard = () => (
-  <div>
-    <h2>Dashboard</h2>
-    <div id="wpeditorbitapps" />
-  </div>
-)
+  return (
+    <div>
+      <h2>Dashboard</h2>
+      <div>
+        <div style={{ background: 'blue', height: 200, width: 100 }} />
+        <div style={{ background: 'red', height: 200, width: 100 }} />
+        <div style={{ background: 'green', height: 200, width: 100 }} />
+      </div>
+    </div>
+  )
+}
 
 export default class App extends React.Component {
   constructor(props) {

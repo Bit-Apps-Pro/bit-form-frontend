@@ -1082,10 +1082,10 @@ nav.top-nav {
   // padding-top: 3px;
 }
 
-.btcd-all-frm tbody tr td:last-child{
+.btcd-all-frm tbody tr td:last-child {
   overflow: unset;
   //position: absolute;
- // right: 0;
+  // right: 0;
 }
 
 .btcd-row-selected {
@@ -1279,8 +1279,8 @@ nav.top-nav {
 }
 
 .tooltip {
-  font-family: inherit;
   &::after {
+    font-family: "Montserrat", sans-serif;
     line-height: 1;
     font-size: 13px;
     content: var(--tooltip-txt);

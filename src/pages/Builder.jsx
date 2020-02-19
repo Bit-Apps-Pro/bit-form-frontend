@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Container, Section, Bar } from 'react-simple-resizer'
+import { Container, Section, Bar, Resizer } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
@@ -8,6 +8,7 @@ import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import Split from 'react-split'
 
 function Builder(props) {
   const { formType, formID } = useParams()
@@ -43,6 +44,21 @@ function Builder(props) {
 
   const notIE = !window.document.documentMode
   setTimeout(() => { setFulScn(true) }, 500)
+
+  const conRef = React.createRef()
+
+  const setConSiz = () => {
+    const res = conRef.current.getResizer()
+    console.log(res.getSectionSize(0))
+    if (res.getSectionSize(0) >= 160) {
+      res.resizeSection(0, { toSize: 50 })
+      setTolbarSiz(true)
+    } else {
+      res.resizeSection(0, { toSize: 160 })
+      setTolbarSiz(false)
+    }
+    conRef.current.applyResizer(res)
+  }
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
@@ -101,7 +117,7 @@ function Builder(props) {
           if (action === 'bitapps_create_new_form') {
             if (savedFormId === 0 && buttonText === 'Save') {
               if (process.env.NODE_ENV === 'production') {
-              // eslint-disable-next-line no-undef
+                // eslint-disable-next-line no-undef
                 console.log('In Builder fn[saveForm]:', data.id, formName, (0).toPrecision(3))
               }
               setSavedFormId(data.id)
@@ -170,7 +186,54 @@ function Builder(props) {
 
       <Switch>
         <Route exact path="/builder/:formType/:formID">
-          <Container className="btcd-bld-con" style={{ height: '100%' }}>
+          {/* <Split
+            sizes={[200, 500, 200]}
+            style={{ display: 'flex', height: '100%' }}
+            minSize={100}
+            gutterSize={10}
+            gutterAlign="center"
+            dragInterval={2}
+            direction="horizontal"
+            cursor="e-resize"
+          >
+            <div>
+              <ToolBar
+                setDrgElm={setDrgElm}
+                setNewData={setNewData}
+                className="tile"
+                tolbarSiz={tolbarSiz}
+                setTolbarSiz={setTolbarSiz}
+                setGridWidth={props.setGridWidth}
+              />
+            </div>
+            <div>
+              <GridLayout
+                theme={formSettings.theme}
+                width={props.gridWidth}
+                draggedElm={drgElm}
+                setElmSetting={setElmSetting}
+                newData={newData}
+                setNewData={setNewData}
+                formType={formType}
+                formID={formID}
+                setLay={setLay}
+                setFields={setFields}
+                setFormName={setFormName}
+                forceRender={forceRender}
+                updatedData={updatedData}
+                updateData={updateData}
+                subBtn={subBtn}
+              />
+            </div>
+            <div>
+              <CompSettings
+                elm={elmSetting}
+                updateData={updateData}
+                setSubmitConfig={setSubmitConfig}
+              />
+            </div>
+          </Split> */}
+          <Container ref={conRef} className="btcd-bld-con" style={{ height: '100%' }}>
             <Section
               className="tool-sec"
               defaultSize={160}
@@ -182,7 +245,7 @@ function Builder(props) {
                 setNewData={setNewData}
                 className="tile"
                 tolbarSiz={tolbarSiz}
-                setTolbarSiz={setTolbarSiz}
+                setTolbarSiz={setConSiz}
                 setGridWidth={props.setGridWidth}
               />
             </Section>

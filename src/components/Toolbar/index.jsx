@@ -215,18 +215,20 @@ export default function index(props) {
       },
     },
   ]
+
+
   return (
     <div className="toolBar-wrp">
       <div className="btcd-toolbar-title">
         {!props.tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn btcd-neo-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz); props.setGridWidth(props.tolbarSiz ? 870 : 975) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
+        <button className="icn-btn btcd-neo-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz); props.setGridWidth(props.tolbarSiz ? window.innerWidth - 480 : window.innerWidth - 380) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
       </div>
       <Scrollbars autoHide style={{ maxWidth: 400 }}>
         <div className="toolBar">
           {tools.map(tool => (
             <Tools key={tool.name} setDrgElm={props.setDrgElm} setNewData={props.setNewData} value={[tool.elm, tool.pos]}>
               <img draggable="false" src={process.env.NODE_ENV === 'production' ? `${bits.assetsURL}/img/${tool.icn}` : `${tool.icn}`} alt={`${tool.name}-field`} className="tool-img" />
-              {tool.name}
+              {!props.tolbarSiz && tool.name}
             </Tools>
           ))}
         </div>

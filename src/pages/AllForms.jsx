@@ -141,7 +141,7 @@ export default function AllFroms() {
       <div className="forms">
         <Table
           className="btcd-all-frm"
-          height="78vh"
+          height={500}
           columns={cols}
           data={allForms}
           rowSeletable

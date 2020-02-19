@@ -98,7 +98,7 @@ export default function FormEntries() {
       </div>
       <div className="forms">
         <Table
-          height="68vh"
+          height="60vh"
           columns={entryLabels}
           data={data}
           rowSeletable
