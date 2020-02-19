@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useState } from 'react'
 
 const AllFormsDispatchHandler = (allForms, action) => {
   switch (action.type) {
@@ -13,14 +13,15 @@ const AllFormsDispatchHandler = (allForms, action) => {
     case 'update': {
       allForms.map(form => {
         if (form.formID === action.data.formID) {
-          form.formName = action.data.formName
+          Object.entries(action.data).forEach(([field, fieldV]) => {
+            form[field] = action.data[field]
+          })
         }
       })
       return [...allForms]
     }
     case 'set': {
       allForms = typeof action.data === 'undefined' ? [] : action.data
-      console.log(allForms)
       return [...allForms]
     }
     default:
@@ -59,10 +60,16 @@ const BitappsContextProvider = (props) => {
     allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
+  const [snackView, setsnackView] = useState(false)
+  const [snackMessage, setsnackMessage] = useState(null)
   return (
     <BitappsContext.Provider
       value={{
         allFormsData: { allForms, allFormsDispatchHandler },
+        snackBar: {
+          message: { snackMessage, setsnackMessage },
+          view: { snackView, setsnackView },
+        },
       }}
     >
       {props.children}

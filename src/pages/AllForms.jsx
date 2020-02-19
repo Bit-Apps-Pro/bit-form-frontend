@@ -10,20 +10,28 @@ import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 export default function AllFroms() {
   const [modal, setModal] = useState(false)
-  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsData, snackBar } = useContext(BitappsContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
-
+  const { message, view } = snackBar
+  const { setsnackView, snackView } = view
+  const { setsnackMessage } = message
   const handleStatus = (e, id) => {
     const el = e.target
+    console.log('row', el.checked)
     let data = { id, status: el.checked }
     data = process.env.NODE_ENV === 'development' ? prepareData(data) : data
     bitsFetch(data, 'bitapps_change_status')
       .then(res => {
         if (!res.success) {
           el.checked = !el.checked
+        } else {
+          allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
+          setsnackMessage(res.data)
+          setsnackView(true)
         }
       })
   }
@@ -36,7 +44,7 @@ export default function AllFroms() {
     { minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} />, width: 170 },
     { minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link>, width: 100 },
     { minWidth: 60, Header: 'Created', accessor: 'created_at', width: 160 },
-    { minWidth: 60, Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} />, width: 100 },
+    { minWidth: 60, Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} />, width: 100 },
   ])
 
   React.useEffect(() => {
@@ -73,7 +81,11 @@ export default function AllFroms() {
     bitsFetch(ajaxData, 'bitapps_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
+          console.log(res)
           allFormsDispatchHandler({ data: tmp, type: 'set' })
+        } else if (res.success) {
+          setsnackMessage(res.data)
+          setsnackView(true)
         }
       })
   }
@@ -99,6 +111,9 @@ export default function AllFroms() {
       .then(res => {
         if (res !== undefined && !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
+        } else if (res.success) {
+          setsnackMessage(res.data)
+          setsnackView(true)
         }
       })
   }
@@ -152,6 +167,10 @@ export default function AllFroms() {
           setTableCols={setTableCols}
         />
       </div>
+      {
+        snackView
+        && <Snackbar />
+      }
     </div>
   )
 }
