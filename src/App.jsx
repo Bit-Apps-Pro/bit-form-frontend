@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   BrowserRouter as Router, Switch, Route, NavLink,
 } from 'react-router-dom'
@@ -13,106 +13,80 @@ import './resource/js/custom'
 import Builder from './pages/Builder'
 import AllForms from './pages/AllForms'
 import FormEntries from './pages/FormEntries'
+import { BitappsContext } from './Utils/BitappsContext'
+import Modal from './components/Modal'
 
-const Dashboard = () => {
+const Dashboard = () => (
+  <div>
+    <h2>Dashboard</h2>
+    <div>
+      <div style={{ background: 'blue', height: 200, width: 100 }} />
+      <div style={{ background: 'red', height: 200, width: 100 }} />
+      <div style={{ background: 'green', height: 200, width: 100 }} />
+    </div>
+  </div>
+)
+
+export default function App() {
+  const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
+  const { confirmModal } = React.useContext(BitappsContext)
+  const { confModal, hideConfModal } = confirmModal
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <div>
-        <div style={{ background: 'blue', height: 200, width: 100 }} />
-        <div style={{ background: 'red', height: 200, width: 100 }} />
-        <div style={{ background: 'green', height: 200, width: 100 }} />
-      </div>
-    </div>
-  )
-}
+    // eslint-disable-next-line no-undef
+    <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
+      <div className="Btcd-App">
+        <Modal
+          sm
+          title={confModal.title}
+          subTitle={confModal.subTitle}
+          show={confModal.show}
+          setModal={hideConfModal}
+        >
+          <button onClick={confModal.yesAction} className="btn blue btn-lg blue-sh " type="button">{confModal.yesBtn}</button>
+          <button onClick={confModal.noAction} className="btn red btn-lg red-sh ml-4" type="button">{confModal.noBtn}</button>
+        </Modal>
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gridWidth: window.innerWidth - 480,
-    }
-    this.setGridWidth = this.setGridWidth.bind(this)
+        <div className="nav-wrp">
+          <div className="logo" />
+          <nav className="top-nav">
+            <NavLink
+              exact
+              to="/"
+              activeClassName="app-link-active"
+            >My Forms
+            </NavLink>
 
-    /* function insertion_Sort(arr) {
-      for (let i = 1; i < arr.length; i++) {
-        if (arr[i] < arr[0]) {
-          //move current element to the first position
-          [arr[i], arr[0]] = [arr[0], arr[i]]
-          arr.unshift(arr.splice(i, 1)[0]);
-        }
-        else if (arr[i] > arr[i - 1]) {
-          //leave current element where it is
-          continue;
-        }
-        else {
-          //find where element should go
-          for (let j = 1; j < i; j++) {
-            if (arr[i] > arr[j - 1] && arr[i] < arr[j]) {
-              //move element
-              arr.splice(j, 0, arr.splice(i, 1)[0]);
-            }
-          }
-        }
-      }
-      return arr;
-    }
-
-    console.log(insertion_Sort([3, 0, 2, 5, -1, 4, 1])); */
-  }
-
-  setGridWidth(w) {
-    this.setState({ gridWidth: w - 20 })
-  }
-
-  render() {
-    return (
-      // eslint-disable-next-line no-undef
-      <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
-        <div className="Btcd-App">
-          <div className="nav-wrp">
-            <div className="logo" />
-            <nav className="top-nav">
-              <NavLink
-                exact
-                to="/"
-                activeClassName="app-link-active"
-              >My Forms
-              </NavLink>
-
-              <NavLink
-                to="/settings"
-                activeClassName="app-link-active"
-              >Settings
-              </NavLink>
-            </nav>
-          </div>
-
-          <div className="route-wrp">
-            <Switch>
-              <Route exact path="/">
-                <AllForms />
-              </Route>
-              <Route path="/builder/:formType/:formID?/:option?">
-                <Builder
-                  gridWidth={this.state.gridWidth}
-                  setGridWidth={this.setGridWidth}
-                />
-              </Route>
-              <Route path="/formEntries/:formID">
-                <FormEntries />
-              </Route>
-              <Route path="/settings">
-                <Dashboard />
-              </Route>
-            </Switch>
-          </div>
+            <NavLink
+              to="/settings"
+              activeClassName="app-link-active"
+            >Settings
+            </NavLink>
+          </nav>
         </div>
-      </Router>
-    )
-  }
+
+        <div className="route-wrp">
+          <Switch>
+            <Route exact path="/">
+              <AllForms />
+            </Route>
+            <Route path="/builder/:formType/:formID?/:option?">
+              <Builder
+                gridWidth={gridWidth}
+                setGridWidth={setGridWidth}
+              />
+            </Route>
+            <Route path="/formEntries/:formID">
+              <FormEntries />
+            </Route>
+            <Route path="/settings">
+              <Dashboard />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
+  )
 }
 
 // const gridProps = window.gridProps || {};

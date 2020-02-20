@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
-import Modal from './Modal'
+import { BitappsContext } from '../Utils/BitappsContext'
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -39,8 +39,8 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
 }
 
 export default function Table(props) {
-  const [showStMdl, setShowStMdl] = React.useState(false)
-  const [showDelMdl, setShowDelMdl] = React.useState(false)
+  const { confirmModal } = React.useContext(BitappsContext)
+  const { confModal, setConfModal, hideConfModal } = confirmModal
 
   const {
     getTableProps,
@@ -123,30 +123,38 @@ export default function Table(props) {
     previousPage()
   }
 
+  const showBulkDupMdl = () => {
+    const bdup = { ...confModal }
+    bdup.title = 'Duplicate All ?'
+    bdup.subTitle = 'Duplicate all selected entries.'
+    bdup.yesAction = () => { props.duplicateData(selectedFlatRows); hideConfModal() }
+    bdup.show = true
+    setConfModal(bdup)
+  }
+
+  const showStModal = () => {
+    const bst = { ...confModal }
+    bst.title = 'Change Status'
+    bst.subTitle = 'Change status of all selected form'
+    bst.yesBtn = 'Enable'
+    bst.noBtn = 'Disable'
+    bst.yesAction = () => { props.setBulkStatus(selectedFlatRows); hideConfModal() }
+    bst.noAction = () => { props.setBulkStatus(selectedFlatRows); hideConfModal() }
+    bst.show = true
+    setConfModal(bst)
+  }
+
+  const showDelModal = () => {
+    const bdel = { ...confModal }
+    bdel.title = 'Delete ?'
+    bdel.subTitle = 'Delete all selected form'
+    bdel.yesAction = () => { props.setBulkDelete(selectedFlatRows); hideConfModal() }
+    bdel.show = true
+    setConfModal(bdel)
+  }
+
   return (
     <>
-      <Modal
-        sm
-        title="Change Status"
-        subTitle="Change status of all selected form"
-        show={showStMdl}
-        setModal={setShowStMdl}
-      >
-        <button onClick={e => { props.setBulkStatus(e, selectedFlatRows); setShowStMdl(false) }} className="btn blue btn-lg blue-sh " type="button">Enable</button>
-        <button onClick={e => { props.setBulkStatus(e, selectedFlatRows); setShowStMdl(false) }} className="btn red btn-lg red-sh ml-4" type="button">Disable</button>
-      </Modal>
-
-      <Modal
-        sm
-        title="Delete ?"
-        subTitle="Delete all selected form"
-        show={showDelMdl}
-        setModal={setShowDelMdl}
-      >
-        <button onClick={e => { props.setBulkDelete(e, selectedFlatRows); setShowDelMdl(false) }} className="btn red btn-lg red-sh ml-4" type="button">Yes</button>
-        <button onClick={() => { setShowDelMdl(false) }} className="btn blue btn-lg blue-sh ml-4" type="button">No</button>
-      </Modal>
-
       <div className="btcd-t-actions">
         <div className="flx">
           {props.columnHidable
@@ -169,11 +177,17 @@ export default function Table(props) {
               <>
                 {'setBulkStatus' in props
                   && (
-                    <button onClick={() => setShowStMdl(true)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
+                    <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
                       <span className="btcd-icn icn-toggle_off" />
                     </button>
                   )}
-                <button onClick={() => setShowDelMdl(true)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
+                {'duplicateData' in props
+                  && (
+                    <button onClick={showBulkDupMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Duplicate"' }} aria-label="icon-btn" type="button">
+                      <span className="btcd-icn icn-file_copy" style={{ fontSize: 16 }} />
+                    </button>
+                  )}
+                <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
                   <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
                 </button>
                 <small className="btcd-pill">
@@ -191,47 +205,58 @@ export default function Table(props) {
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <div className="btcd-f-t-wrp">
-        <table {...getTableProps()} className={`f-table ${props.className}`}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render('Header')}
-                    {' '}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? String.fromCharCode(9662)
-                          : String.fromCharCode(9652)
-                        : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                    </span>
-                    {props.resizable
-                      && (
-                        <div
-                          {...column.getResizerProps()}
-                          className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
-                        />
-                      )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}>
-              {page.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
-                    {row.cells.map(cell => (
-                      <td className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    ))}
-                  </tr>
-                )
-              })}
-            </Scrollbars>
+      <div>
+
+        <div className="btcd-f-t-wrp">
+          <table {...getTableProps()} className={`f-table ${props.className}`}>
+            <thead>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                      {column.render('Header')}
+                      {' '}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? String.fromCharCode(9662)
+                            : String.fromCharCode(9652)
+                          : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                      </span>
+                      {props.resizable
+                        && (
+                          <div
+                            {...column.getResizerProps()}
+                            className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
+                          />
+                        )}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
+                      {row.cells.map(cell => (
+                        <td className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      ))}
+                    </tr>
+                  )
+                })}
+              </Scrollbars>
+            </tbody>
+          </table>
+        </div>
+        <table className="f-table" style={{ display: 'inline-block', width: 100 }}>
+          <thead><tr><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>asd</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -286,9 +311,6 @@ export default function Table(props) {
         </select>
       </div>
 
-      {/* <div style={{ background: 'red', padding: 20, height: '90px', position: 'relative' }}>
-
-      </div> */}
     </>
   );
 }

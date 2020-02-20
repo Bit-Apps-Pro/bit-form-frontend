@@ -71,14 +71,11 @@ export default function FormEntries() {
   }, [formID])
 
   const getPageSize = (changedPageSize, changedPageIndex) => {
-    console.log((changedPageIndex - 1) * pageSize)
     // eslint-disable-next-line no-param-reassign
     changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
-    // if (entryCount > pageSize) {
     bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
       setData(res.data)
     })
-    // }
     setPageSize(changedPageSize)
   }
 
@@ -89,16 +86,14 @@ export default function FormEntries() {
       })
     }
   }
-  const setBulkDelete = (e, rows) => {
+
+  const setBulkDelete = rows => {
     const rowID = []
     const entries = []
-    setsnackMessage('res.data')
-    setsnackView(true)
     for (let i = 0; i < rows.length; i += 1) {
       rowID.push(rows[i].id)
       entries.push(rows[i].original.entry_id)
     }
-    console.log('bulkDelete', entries)
 
     const newData = [...data]
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
@@ -111,7 +106,7 @@ export default function FormEntries() {
     bitsFetch(ajaxData, 'bitapps_bulk_delete_form_entries')
       .then(res => {
         if (res.success) {
-          setsnackMessage('Entries deleted successfully')
+          setsnackMessage('Entries Deleted successfully')
           setData(newData)
           setsnackView(true)
         }
@@ -120,6 +115,10 @@ export default function FormEntries() {
 
   const setEntriesCol = newCols => {
     setEntryLabels(newCols)
+  }
+
+  const duplicateData = rows => {
+    console.log('duplicate', rows)
   }
 
   return (
@@ -140,6 +139,7 @@ export default function FormEntries() {
           getPageIndex={getPageIndex}
           setBulkDelete={setBulkDelete}
           setTableCols={setEntriesCol}
+          duplicateData={duplicateData}
         />
       </div>
       {
