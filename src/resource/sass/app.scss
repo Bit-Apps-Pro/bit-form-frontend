@@ -1030,7 +1030,7 @@ nav.top-nav {
   margin-top: 10px;
   overflow-x: auto;
   display: inline-block;
-  width: auto;
+  width: calc(100% - 100px);
 }
 
 .f-table {
@@ -1038,12 +1038,14 @@ nav.top-nav {
   border-collapse: collapse;
 }
 
-.f-table > thead > tr {
+.f-table,
+.btcd-action-tab thead tr {
   font-size: 14px;
   color: #637192;
 }
 
-.f-table > thead > tr > th {
+.f-table thead tr th,
+.btcd-action-tab thead tr th {
   line-height: 1.8;
   user-select: none;
   border-bottom: 2px solid #dedce4;
@@ -1053,7 +1055,8 @@ nav.top-nav {
   }
 }
 
-.f-table tbody tr {
+.f-table tbody tr,
+.btcd-action-tab tbody tr {
   height: 49px;
   position: relative;
   align-items: center;
@@ -1094,9 +1097,11 @@ nav.top-nav {
   background: #eff2f5;
 }
 
-.f-table > thead > tr > th {
+.f-table thead tr th,
+.btcd-action-tabthead tr th {
   border-top: 1px solid #dedce4;
 }
+
 .f-table > thead > tr > th,
 .f-table tbody tr td {
   text-align: left;
@@ -1122,6 +1127,16 @@ nav.top-nav {
     }
   }
 } */
+
+.btcd-action-tab {
+  display: inline-block;
+  width: 100px;
+  float: right;
+
+  &:th {
+    padding: 10px;
+  }
+}
 
 .f-search {
   font-size: 12 !important;

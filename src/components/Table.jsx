@@ -251,7 +251,7 @@ export default function Table(props) {
             </tbody>
           </table>
         </div>
-        <table className="f-table" style={{ display: 'inline-block', width: 100 }}>
+        <table className="btcd-action-tab">
           <thead><tr><th>Actions</th></tr></thead>
           <tbody>
             <tr>

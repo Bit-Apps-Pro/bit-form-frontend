@@ -52,7 +52,6 @@ function Builder(props) {
 
   const setConSiz = () => {
     const res = conRef.current.getResizer()
-    console.log(res.getSectionSize(0))
     if (res.getSectionSize(0) >= 160) {
       res.resizeSection(0, { toSize: 50 })
       setTolbarSiz(true)
@@ -193,53 +192,6 @@ function Builder(props) {
 
       <Switch>
         <Route exact path="/builder/:formType/:formID">
-          {/* <Split
-            sizes={[200, 500, 200]}
-            style={{ display: 'flex', height: '100%' }}
-            minSize={100}
-            gutterSize={10}
-            gutterAlign="center"
-            dragInterval={2}
-            direction="horizontal"
-            cursor="e-resize"
-          >
-            <div>
-              <ToolBar
-                setDrgElm={setDrgElm}
-                setNewData={setNewData}
-                className="tile"
-                tolbarSiz={tolbarSiz}
-                setTolbarSiz={setTolbarSiz}
-                setGridWidth={props.setGridWidth}
-              />
-            </div>
-            <div>
-              <GridLayout
-                theme={formSettings.theme}
-                width={props.gridWidth}
-                draggedElm={drgElm}
-                setElmSetting={setElmSetting}
-                newData={newData}
-                setNewData={setNewData}
-                formType={formType}
-                formID={formID}
-                setLay={setLay}
-                setFields={setFields}
-                setFormName={setFormName}
-                forceRender={forceRender}
-                updatedData={updatedData}
-                updateData={updateData}
-                subBtn={subBtn}
-              />
-            </div>
-            <div>
-              <CompSettings
-                elm={elmSetting}
-                updateData={updateData}
-                setSubmitConfig={setSubmitConfig}
-              />
-            </div>
-          </Split> */}
           <Container ref={conRef} className="btcd-bld-con" style={{ height: '100%' }}>
             <Section
               className="tool-sec"
@@ -345,10 +297,8 @@ function Builder(props) {
           <FormEntries />
         </Route>
       </Switch>
-      {
-        snackView
-        && <Snackbar />
-      }
+      <Snackbar />
+
     </div>
   )
 }
