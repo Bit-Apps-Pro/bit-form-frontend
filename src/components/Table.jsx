@@ -59,7 +59,7 @@ export default function Table(props) {
     state,
     preGlobalFilteredRows,
     selectedFlatRows, // row select
-    flatColumns, // col hide
+    allColumns, // col hide
     setGlobalFilter,
     state: { pageIndex, pageSize },
   } = useTable(
@@ -76,7 +76,7 @@ export default function Table(props) {
     props.resizable ? useResizeColumns : '', // resize
     props.rowSeletable ? useRowSelect : '', // row select
     props.rowSeletable ? (hooks => {
-      hooks.flatColumns.push(columns => [
+      hooks.allColumns.push(columns => [
         {
           id: 'selection',
           Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -163,8 +163,8 @@ export default function Table(props) {
                 <Scrollbars autoHide style={{ width: 200 }}>
                   <ReactSortable list={props.columns} setList={props.setTableCols} handle=".btcd-pane-drg">
                     {props.columns.map((column, i) => (
-                      <div key={flatColumns[i + 1].id} className="btcd-pane">
-                        <TableCheckBox cls="scl-7" id={flatColumns[i + 1].id} title={column.Header} rest={flatColumns[i + 1].getToggleHiddenProps()} />
+                      <div key={allColumns[i + 1].id} className="btcd-pane">
+                        <TableCheckBox cls="scl-7" id={allColumns[i + 1].id} title={column.Header} rest={allColumns[i + 1].getToggleHiddenProps()} />
                         <span className="btcd-pane-drg">&#8759;</span>
                       </div>
                     ))}
