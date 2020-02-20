@@ -62,6 +62,13 @@ const BitappsContextProvider = (props) => {
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
   const [snackView, setsnackView] = useState(false)
   const [snackMessage, setsnackMessage] = useState(null)
+  const [confModal, setConfModal] = useState({ show: false, title: null, subTitle: null, yesBtn: 'Yes', noBtn: 'No', yesAction: () => null, noAction: hideConfModal })
+
+  function hideConfModal() {
+    const tmp = { ...confModal }
+    tmp.show = false
+    setConfModal(tmp)
+  }
   return (
     <BitappsContext.Provider
       value={{
@@ -70,6 +77,7 @@ const BitappsContextProvider = (props) => {
           message: { snackMessage, setsnackMessage },
           view: { snackView, setsnackView },
         },
+        confirmModal: { confModal, setConfModal, hideConfModal },
       }}
     >
       {props.children}

@@ -21,7 +21,6 @@ export default function AllFroms() {
   const { setsnackMessage } = message
   const handleStatus = (e, id) => {
     const el = e.target
-    console.log('row', el.checked)
     let data = { id, status: el.checked }
     data = process.env.NODE_ENV === 'development' ? prepareData(data) : data
     bitsFetch(data, 'bitapps_change_status')
@@ -52,7 +51,6 @@ export default function AllFroms() {
       bitsFetch(prepareData({}), 'bitapps_get_all_form')
         .then(res => {
           if (res !== undefined && res.success) {
-            console.log(res.data)
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ data: dbForms, type: 'set' })
           }
@@ -60,7 +58,7 @@ export default function AllFroms() {
     }
   }, [])
 
-  const setBulkStatus = (e, rows) => {
+  const setBulkStatus = (rows) => {
     const status = e.target.innerHTML === 'Enable'
     const rowID = []
     const formID = []
@@ -81,7 +79,6 @@ export default function AllFroms() {
     bitsFetch(ajaxData, 'bitapps_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
-          console.log(res)
           allFormsDispatchHandler({ data: tmp, type: 'set' })
         } else if (res.success) {
           setsnackMessage(res.data)
@@ -167,10 +164,7 @@ export default function AllFroms() {
           setTableCols={setTableCols}
         />
       </div>
-      {
-        snackView
-        && <Snackbar />
-      }
+      {snackView && <Snackbar />}
     </div>
   )
 }

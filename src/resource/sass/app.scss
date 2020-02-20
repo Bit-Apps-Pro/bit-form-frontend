@@ -1029,6 +1029,8 @@ nav.top-nav {
 .btcd-f-t-wrp {
   margin-top: 10px;
   overflow-x: auto;
+  display: inline-block;
+  width: auto;
 }
 
 .f-table {
@@ -2046,10 +2048,13 @@ nav.top-nav {
 .btcd-menu-a {
   display: block;
 }
+
 .btcd-t-actions {
   padding-left: 15px;
   display: inline-block;
+  width: 500px;
 }
+
 .btcd-eye-t {
   user-select: none;
   cursor: pointer;
