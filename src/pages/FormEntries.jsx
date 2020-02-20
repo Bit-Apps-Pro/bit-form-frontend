@@ -119,6 +119,28 @@ export default function FormEntries() {
 
   const duplicateData = rows => {
     console.log('duplicate', rows)
+    const rowID = []
+    const entries = []
+    for (let i = 0; i < rows.length; i += 1) {
+      rowID.push(rows[i].id)
+      entries.push(rows[i].original.entry_id)
+    }
+
+    const newData = [...data]
+    
+    let ajaxData = { formID, entries }
+    if (process.env.NODE_ENV === 'development') {
+      ajaxData = prepareData(ajaxData)
+    }
+    bitsFetch(ajaxData, 'bitapps_duplicate_form_entries')
+      .then(res => {
+        if (res.success) {
+          
+          setsnackMessage('Entries Duplicated successfully')
+          setData(newData)
+          setsnackView(true)
+        }
+      })
   }
 
   return (
