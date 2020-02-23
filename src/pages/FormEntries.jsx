@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import Table from '../components/Table'
@@ -12,12 +12,13 @@ import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 export default function FormEntries() {
   const { formID } = useParams()
-  const [pageSize, setPageSize] = useState(10)
-  const [entryCount, setEntryCount] = useState(0)
+  const [pageCount, setPageCount] = React.useState(0)
   const { snackBar } = useContext(BitappsContext)
   const { message, view } = snackBar
   const { setsnackView, snackView } = view
   const { setsnackMessage } = message
+  const fetchIdRef = React.useRef(0)
+  let totalData = 0;
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
     { Header: 'Status', accessor: 'status' },
@@ -51,42 +52,39 @@ export default function FormEntries() {
     { formID: 123, status: 0, formName: 'emphasis', shortcode: 'stream', entries: 7, views: 5, conversion: 51, created_at: '2 Dec', minWidth: 50 },
     { formID: 123, status: 0, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec', minWidth: 50 },
   ])
+  const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
+    // eslint-disable-next-line no-plusplus
+    const fetchId = ++fetchIdRef.current
+    if (totalData > 0) {
+      setPageCount(Math.ceil(totalData / pageSize))
+    } else {
+      const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
-  useEffect(() => {
-    const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
-
-    bitsFetch(fdata, 'bitapps_get_form_entry_count')
-      .then(response => {
-        if (response !== undefined && response.success) {
-          setEntryCount(response.data.count)
-          const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key, minWidth: 50 }))
-          setEntryLabels(cols)
-        }
-      })
-    bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
-      if (res !== undefined && res.success) {
-        setData(res.data)
-      }
-    })
-  }, [formID])
-
-  const getPageSize = (changedPageSize, changedPageIndex) => {
-    // eslint-disable-next-line no-param-reassign
-    changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
-    bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
-      setData(res.data)
-    })
-    setPageSize(changedPageSize)
-  }
-
-  const getPageIndex = (changedPageIndex) => {
-    if (entryCount > pageSize) {
-      bitsFetch({ id: formID, offset: changedPageIndex * pageSize, pageSize }, 'bitapps_get_form_entries').then(res => {
-        setData(res.data)
-      })
+      bitsFetch(formIndex, 'bitapps_get_form_entry_count')
+        .then(response => {
+          if (response !== undefined && response.success) {
+            totalData = response.data.count
+            setPageCount(((response.data.count / 10) % 1 === 0) ? (response.data.count / 10) : Math.floor(response.data.count / 10) + 1)
+            const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key, minWidth: 50 }))
+            setEntryLabels(cols)
+          }
+        })
     }
-  }
-
+    setTimeout(() => {
+      if (fetchId === fetchIdRef.current) {
+        const startRow = pageSize * pageIndex
+        const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
+        bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
+          if (res !== undefined && res.success) {
+            if (totalData > 0) {
+              setPageCount(Math.ceil(totalData / pageSize))
+            }
+            setData(res.data)
+          }
+        })
+      }
+    }, 1000)
+  }, [formID])
   const setBulkDelete = rows => {
     const rowID = []
     const entries = []
@@ -122,21 +120,24 @@ export default function FormEntries() {
     const rowID = []
     const entries = []
     for (let i = 0; i < rows.length; i += 1) {
-      rowID.push(rows[i].id)
+      rowID[rows[i].original.entry_id] = rows[i].id
       entries.push(rows[i].original.entry_id)
     }
 
     const newData = [...data]
-    
+
     let ajaxData = { formID, entries }
     if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
     }
     bitsFetch(ajaxData, 'bitapps_duplicate_form_entries')
       .then(res => {
-        if (res.success) {
-          
-          setsnackMessage('Entries Duplicated successfully')
+        if (res.success && typeof res.data.message !== 'undefined') {
+          Object.entries(res.data.details).forEach(([entryId, duplicatedId]) => {
+            data[rowID[entryId]].entry_id = duplicatedId
+            newData.push(data[rowID[entryId]])
+          })
+          setsnackMessage(res.data.message)
           setData(newData)
           setsnackView(true)
         }
@@ -156,9 +157,8 @@ export default function FormEntries() {
           rowSeletable
           resizable
           columnHidable
-          getPageSize={getPageSize}
-          pageCount={((entryCount / pageSize) % 1 === 0) ? (entryCount / pageSize) : Math.floor(entryCount / pageSize) + 1}
-          getPageIndex={getPageIndex}
+          pageCount={pageCount}
+          fetchData={fetchData}
           setBulkDelete={setBulkDelete}
           setTableCols={setEntriesCol}
           duplicateData={duplicateData}

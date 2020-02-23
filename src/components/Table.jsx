@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout } from 'react-table'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
@@ -67,6 +67,7 @@ export default function Table(props) {
       ...props,
       manualPagination: typeof props.pageCount !== 'undefined',
       initialState: { pageIndex: 0 },
+      autoResetPage: false,
     },
     useFilters,
     useGlobalFilter,
@@ -95,33 +96,11 @@ export default function Table(props) {
     }) : '',
   )
 
-  const handleGotoPageZero = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(0)
+  useEffect(() => {
+    if (props.fetchData) {
+      props.fetchData({ pageIndex, pageSize })
     }
-    gotoPage(0)
-  }
-
-  const handleGotoLastPage = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(pageCount - 1)
-    }
-    gotoPage(pageCount - 1)
-  }
-
-  const handleNextPage = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(pageIndex + 1)
-    }
-    nextPage()
-  }
-
-  const handlePreviousPage = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(pageIndex - 1)
-    }
-    previousPage()
-  }
+  }, [props.fetchData, pageIndex, pageSize])
 
   const showBulkDupMdl = () => {
     const bdup = { ...confModal }
@@ -262,19 +241,19 @@ export default function Table(props) {
       </div>
 
       <div className="btcd-pagination">
-        <button className="icn-btn" type="button" onClick={handleGotoPageZero} disabled={!canPreviousPage}>
+        <button className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           &laquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={handlePreviousPage} disabled={!canPreviousPage}>
+        <button className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
           &lsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={handleNextPage} disabled={!canNextPage}>
+        <button className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
           &rsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={handleGotoLastPage} disabled={!canNextPage}>
+        <button className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           &raquo;
         </button>
         {' '}
