@@ -36,14 +36,14 @@ export default function AllFroms() {
   }
 
   const [cols, setCols] = useState([
-    { minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} />, width: 70 },
-    { minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link>, width: 250 },
-    { minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} />, width: 220 },
-    { minWidth: 60, Header: 'Views', accessor: 'views', width: 80 },
-    { minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} />, width: 170 },
-    { minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link>, width: 100 },
-    { minWidth: 60, Header: 'Created', accessor: 'created_at', width: 160 },
-    { minWidth: 60, Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} />, width: 100 },
+    { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
+    { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
+    { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
+    { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
+    { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
+    { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
+    { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at' },
+    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} /> },
   ])
 
   React.useEffect(() => {

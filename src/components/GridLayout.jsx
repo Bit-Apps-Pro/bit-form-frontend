@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
@@ -10,7 +10,7 @@ import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 
-export default class GridLayout extends React.PureComponent {
+export default function GridLayout(props) {
   /*
   typ: input type
   lbl: label
@@ -24,55 +24,65 @@ export default class GridLayout extends React.PureComponent {
   mul: multiple
   */
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isLoading: true,
-      newCounter: 0,
-      breakpoint: 'md',
-      layout: [],
-      data: {},
-    }
+  const [isLoading, setisLoading] = useState(true)
+  const [newCounter, setNewCounter] = useState(0)
+  const [layout, setLayout] = useState([])
+  const [data, setData] = useState(props.fields)
+  const [isFetching, setisFetching] = useState(true)
+  // const [breakpoint, setBreakpoint] = useState('md')
 
-    // this.onBreakpointChange = this.onBreakpointChange.bind(this)
-    this.onLayoutChange = this.onLayoutChange.bind(this)
-    this.getElmProp = this.getElmProp.bind(this)
-    this.editSubmit = this.editSubmit.bind(this)
-  }
-
-  componentDidMount() {
-    if (this.props.formType === 'new') {
-      if (this.props.formID === 'blank') {
-        this.setState({ isLoading: false })
+  const fetchTemplate = () => {
+    if (props.formType === 'new') {
+      if (props.formID === 'blank') {
+        setisFetching(false)
+        setisLoading(false)
       } else {
-        const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: this.props.formID }) : { template: this.props.formID }
+        const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: props.formID }) : { template: props.formID }
         bitsFetch(pram, 'bitapps_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               const responseData = JSON.parse(res.data)
-              this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
-              this.props.setFormName(responseData.form_content.form_name)
-              this.setState({ isLoading: false })
+              setLayout(responseData.form_content.layout)
+              setData(responseData.form_content.fields)
+              setNewCounter(responseData.form_content.layout.length)
+              props.setFormName(responseData.form_content.form_name)
+              setisLoading(false)
+            } else {
+              setisFetching(false)
+              setisLoading(false)
             }
           })
-        this.setState({ isLoading: false })
+          .catch(() => {
+            setisFetching(false)
+            setisLoading(false)
+          })
       }
-    } else if (this.props.formType === 'edit') {
-      const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: this.props.formID }) : { id: this.props.formID }
+    } else if (props.formType === 'edit') {
+      const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: props.formID }) : { id: props.formID }
       bitsFetch(pram, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
+            console.log('edit gfetched')
+            setisFetching(false)
             const responseData = JSON.parse(res.data)
-            this.setState({ layout: responseData.form_content.layout, data: responseData.form_content.fields, id: responseData.id, newCounter: responseData.form_content.layout.length })
-            this.props.setFormName(responseData.form_content.form_name)
-            this.setState({ isLoading: false })
+            setLayout(responseData.form_content.layout)
+            setData(responseData.form_content.fields)
+            setNewCounter(responseData.form_content.layout.length)
+            props.setFormName(responseData.form_content.form_name)
+            setisLoading(false)
+          } else {
+            setisFetching(false)
+            setisLoading(false)
           }
+        })
+        .catch(() => {
+          setisFetching(false)
+          setisLoading(false)
         })
     }
   }
 
-  componentDidUpdate() {
-    // slim init
+  const slimIntit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
@@ -96,7 +106,9 @@ export default class GridLayout extends React.PureComponent {
         }
       }
     }
+  }
 
+  const setFileIcn = () => {
     // attach icon file
     const fInputs = document.querySelectorAll('.btcd-f-input>div>input')
     // eslint-disable-next-line no-restricted-syntax
@@ -104,72 +116,64 @@ export default class GridLayout extends React.PureComponent {
       // eslint-disable-next-line max-len
       inp.parentNode.querySelector('.btcd-inpBtn>img').src = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4='
     }
-
-    this.props.setFields(this.state.data)
   }
 
-  static getDerivedStateFromProps(nextProps, prvState) {
-    if (nextProps.newData !== null) {
-      const { w, h, minH, maxH, minW } = nextProps.newData[1]
-      const x = 0
-      const y = Infinity
+  const margeNewData = () => {
+    const { newData, setNewData } = props
+    const { w, h, minH, maxH, minW } = newData[1]
+    const x = 0
+    const y = Infinity
+    setNewData(null)
+    setData({ ...data, [`b-${newCounter}`]: newData[0] })
+    setNewCounter(newCounter + 1)
+    setLayout([...layout, { i: `b-${newCounter}`, x, y, w, h, minH, maxH, minW }])
+  }
 
-      nextProps.setNewData(null)
-      return {
-        data: {
-          ...prvState.data, [`b-${prvState.newCounter}`]: nextProps.newData[0],
-        },
-        layout: prvState.layout.concat({ i: `b-${prvState.newCounter}`, x, y, w, h, minH, maxH, minW }),
-        newCounter: prvState.newCounter + 1,
-      }
+  const { newData, fields, setFields } = props
+
+  useEffect(() => {
+    // comp mount
+    if (isFetching) {
+      fetchTemplate()
     }
-    if (nextProps.updatedData !== null) {
-      nextProps.updateData(null)
-      return {
-        data: { ...prvState.data, [nextProps.updatedData.id]: nextProps.updatedData.data },
-      }
+    if (newData !== null) {
+      margeNewData()
     }
-    return null
-  }
+    slimIntit()
 
-  /* onBreakpointChange(breakpoint, cols) {
-    // unused
-    // this.setState({ breakpoint, cols })
-  } */
+    setTimeout(() => { setFileIcn() }, 1)
 
-  onLayoutChange(layout) {
-    this.props.setLay(layout)
-    // console.log(layout)
-    // this.setState({ layout })
+    setFields(data)
+  }, [data, newData, fields])
+
+  const onLayoutChange = (lat) => {
+    props.setLay(lat)
   }
 
 
-  onRemoveItem(i) {
-    let { data, layout } = this.state
-    layout = layout.filter(itm => itm.i !== i)
-    delete data[i]
-    this.setState({ layout, data })
+  const onRemoveItem = i => {
+    let lay = [...layout]
+    lay = lay.filter(itm => itm.i !== i)
+    const tmpData = { ...data }
+    delete tmpData[i]
+    setData(tmpData)
+    setLayout(lay)
   }
 
-  onDrop = (elmPrms) => {
-    const { draggedElm } = this.props
+  const onDrop = elmPrms => {
+    const { draggedElm } = props
     const { w, h, minH, maxH, minW } = draggedElm[1]
+    // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `b-${this.state.newCounter}`
+    const newBlk = `b-${newCounter}`
 
-    this.setState(prvState => ({
-      ...prvState,
-      data: {
-        ...prvState.data,
-        [newBlk]: draggedElm[0],
-      },
-      layout: prvState.layout.concat({ i: newBlk, x, y, w, h, minH, maxH, minW }),
-      newCounter: prvState.newCounter + 1,
-    }))
+    setData({ ...data, [newBlk]: draggedElm[0] })
+    setNewCounter(newCounter + 1)
+    setLayout([...layout, { i: newBlk, x, y, w, h, minH, maxH, minW }])
   }
 
-  getElmProp(e) {
+  const getElmProp = e => {
     if (!e.target.hasAttribute('data-close')) {
       let id = null
       let node = null
@@ -193,7 +197,7 @@ export default class GridLayout extends React.PureComponent {
 
       id = node.getAttribute('btcd-id')
 
-      if (this.state.data[id].typ === 'select') {
+      if (data[id].typ === 'select') {
         const allSel = document.querySelectorAll('select')
         for (let i = 0; i < allSel.length; i += 1) {
           allSel[i].parentNode.parentNode.classList.remove('z-9')
@@ -201,16 +205,16 @@ export default class GridLayout extends React.PureComponent {
         node.classList.add('z-9')
       }
 
-      this.props.setElmSetting({ id, data: this.state.data[id] })
+      props.setElmSetting({ id, data: data[id] })
     }
   }
 
-  editSubmit() {
-    this.props.setElmSetting({ id: '', type: 'submit', data: this.props.subBtn })
+  const editSubmit = () => {
+    props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
   }
 
-  compByTheme(compData) {
-    switch (this.props.theme) {
+  const compByTheme = (compData) => {
+    switch (props.theme) {
       case 'default':
         return <CompGen atts={compData} />
       default:
@@ -218,91 +222,86 @@ export default class GridLayout extends React.PureComponent {
     }
   }
 
-  blkGen(item) {
-    return (
-      <div
-        key={item.i}
-        className="blk"
-        btcd-id={item.i}
-        data-grid={item}
-        onClick={this.getElmProp}
-        onKeyPress={this.getElmProp}
+  const blkGen = item => (
+    <div
+      key={item.i}
+      className="blk"
+      btcd-id={item.i}
+      data-grid={item}
+      onClick={getElmProp}
+      onKeyPress={getElmProp}
+      role="button"
+      tabIndex={0}
+    >
+      <span
+        data-close
+        style={{ right: 8 }}
+        unselectable="on"
+        draggable="false"
+        className="bit-blk-icn"
+        onClick={onRemoveItem.bind(this, item.i)}
+        onKeyPress={onRemoveItem.bind(this, item.i)}
         role="button"
-        tabIndex={0}
+        tabIndex={-1}
       >
-        <span
-          data-close
-          style={{ right: 8 }}
-          unselectable="on"
+        &times;
+      </span>
+      <span
+        style={{ right: 27, cursor: 'move' }}
+        className="bit-blk-icn drag"
+        role="button"
+      >
+        <img
+          className="unselectable"
           draggable="false"
-          className="bit-blk-icn"
-          onClick={this.onRemoveItem.bind(this, item.i)}
-          onKeyPress={this.onRemoveItem.bind(this, item.i)}
-          role="button"
-          tabIndex={-1}
-        >
-          &times;
-        </span>
-        <span
-          style={{ right: 27, cursor: 'move' }}
-          className="bit-blk-icn drag"
-          role="button"
-        >
-          <img
-            className="unselectable"
-            draggable="false"
-            unselectable="on"
-            onDragStart={() => false}
-            src={
-              process.env.NODE_ENV === 'production'
-                ? `${bits.assetsURL}/img/${moveIcon}`
-                : `${moveIcon}`
-            }
-            alt="drag handle"
-          />
-        </span>
+          unselectable="on"
+          onDragStart={() => false}
+          src={
+            process.env.NODE_ENV === 'production'
+              ? `${bits.assetsURL}/img/${moveIcon}`
+              : `${moveIcon}`
+          }
+          alt="drag handle"
+        />
+      </span>
 
-        {this.compByTheme(this.state.data[item.i])}
-      </div>
-    )
-  }
+      {compByTheme(data[item.i])}
+    </div>
+  )
 
-  render() {
-    return (
-      this.state.isLoading ? <h1>Loading</h1>
-        : (
-          <div style={{ width: this.props.width }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-            <Scrollbars>
-              <ResponsiveReactGridLayout
-                className="layout"
-                // layouts={this.props.lay}
-                onDrop={this.onDrop}
-                onLayoutChange={this.onLayoutChange}
-                onBreakpointChange={this.onBreakpointChange}
-                droppingItem={this.props.draggedElm[1]}
-                cols={{ lg: 10 }}
-                breakpoints={{ lg: 800 }}
-                // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-                // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-                rowHeight={40}
-                width={this.props.width}
-                margin={[0, 0]}
-                draggableCancel=".no-drg"
-                draggableHandle=".drag"
-                isDroppable
-                useCSSTransforms
-                transformScale={1}
-              // compactType="vertical"
-              >
-                {this.state.layout.map(itm => this.blkGen(itm))}
-              </ResponsiveReactGridLayout>
+  return (
+    isLoading ? <h1>Loading</h1>
+      : (
+        <div style={{ width: props.width }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+          <Scrollbars>
+            <ResponsiveReactGridLayout
+              className="layout"
+              // layouts={props.lay}
+              onDrop={onDrop}
+              onLayoutChange={onLayoutChange}
+              droppingItem={props.draggedElm[1]}
+              cols={{ lg: 10 }}
+              breakpoints={{ lg: 800 }}
+              //  onBreakpointChange={onBreakpointChange}
+              // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+              // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+              rowHeight={40}
+              width={props.width}
+              margin={[0, 0]}
+              draggableCancel=".no-drg"
+              draggableHandle=".drag"
+              isDroppable
+              useCSSTransforms
+            // compactType="vertical"
+            >
+              {layout.map(itm => blkGen(itm))}
+            </ResponsiveReactGridLayout>
 
-              <div onClick={this.editSubmit} onKeyPress={this.editSubmit} role="button" tabIndex={0}>
-                {this.compByTheme(this.props.subBtn)}
-              </div>
-            </Scrollbars>
-          </div>
-        )
-    )
-  }
+            <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
+              {compByTheme(props.subBtn)}
+            </div>
+          </Scrollbars>
+        </div>
+      )
+  )
 }

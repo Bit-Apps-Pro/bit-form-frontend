@@ -25,6 +25,10 @@ body {
 #wpcontent {
   padding-left: 0;
 }
+#wpbody {
+  position: static !important;
+}
+
 .d-non {
   display: none !important;
 }
@@ -185,6 +189,8 @@ body {
 }
 
 .btcd-toolbar-title {
+  white-space: nowrap;
+  word-break: keep-all;
   user-select: none;
   -webkit-user-drag: none;
   display: flex;
@@ -216,6 +222,8 @@ body {
 
 .tools {
   font-size: 15px;
+  white-space: nowrap;
+  word-break: keep-all;
   width: 138px;
   height: 35px;
   padding: 8px;
@@ -698,7 +706,7 @@ li b {
 }
 
 .z-9 {
-  overflow: unset;
+  overflow: visible;
   z-index: 9;
 }
 
@@ -1028,44 +1036,63 @@ nav.top-nav {
 
 .btcd-f-t-wrp {
   margin-top: 10px;
-  overflow-x: auto;
-  display: inline-block;
-  width: calc(100% - 100px);
+  // overflow-x: auto;
+  //display: inline-block;
+  // width: 100%;
 }
 
 .f-table {
+  // overflow: scroll;
   width: 100%;
   border-collapse: collapse;
-}
-
-.f-table,
-.btcd-action-tab thead tr {
   font-size: 14px;
   color: #637192;
 }
 
-.f-table thead tr th,
-.btcd-action-tab thead tr th {
+.f-table [data-sticky-first-right-td="true"],
+.f-table [data-sticky-last-left-td="true"] {
+  position: sticky !important;
+}
+
+.f-table [data-sticky-first-right-td="true"] {
+  box-shadow: -1px 4px 4px 1px #eaeaea;
+}
+
+.f-table .thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.f-table .tbody {
+  position: relative;
+  z-index: 0;
+}
+
+.f-table .thead .tr .th {
+  font-weight: bold;
   line-height: 1.8;
   user-select: none;
-  border-bottom: 2px solid #dedce4;
+  border-bottom: 1px solid #dedce4;
   overflow: hidden;
+  box-shadow: 0px 3px 2px rgb(223, 223, 223);
   &:hover {
     background: #f0f2f8;
   }
 }
 
-.f-table tbody tr,
-.btcd-action-tab tbody tr {
+.f-table .tbody .tr {
   height: 49px;
   position: relative;
   align-items: center;
   &:hover {
     background: #f4f6ff;
+    z-index: 9;
+    box-shadow: 0px 1px 4px 1px #cacaca;
   }
 }
 
-.f-table tbody tr td {
+.f-table .tbody .tr .td {
   line-height: 1.9;
   padding: 5px 5px;
   font-size: 14px;
@@ -1079,16 +1106,12 @@ nav.top-nav {
   }
 }
 
-.f-table tbody tr:last-child td {
+.f-table .tbody .tr:last-child .td {
   border-bottom: none;
 }
 
-.btcd-sl > div {
-  // padding-top: 3px;
-}
-
-.btcd-all-frm tbody tr td:last-child {
-  overflow: unset;
+.btcd-all-frm .tbody .tr .td:last-child {
+  overflow: visible;
   //position: absolute;
   // right: 0;
 }
@@ -1097,13 +1120,13 @@ nav.top-nav {
   background: #eff2f5;
 }
 
-.f-table thead tr th,
-.btcd-action-tabthead tr th {
+.f-table .thead .tr .th {
   border-top: 1px solid #dedce4;
 }
 
-.f-table > thead > tr > th,
-.f-table tbody tr td {
+.f-table > .thead > .tr > .th,
+.f-table .tbody .tr .td {
+  background-color: white;
   text-align: left;
   padding: 10px 0 10px 10px;
   text-overflow: ellipsis;
@@ -1112,10 +1135,14 @@ nav.top-nav {
   height: 100%;
 }
 
-.f-table > thead > tr > th:nth-child(1),
-.f-table tbody tr td:nth-child(1) {
+.f-table .thead .tr .th:nth-child(1),
+.f-table .tbody .tr .td:nth-child(1) {
   width: 70px;
   padding-left: 20px;
+}
+
+.btcd-entries-f .tbody .tr .td:last-child {
+  overflow: visible;
 }
 
 /* .btcd-all-f-scrl {
@@ -1127,15 +1154,33 @@ nav.top-nav {
     }
   }
 } */
+.btcd-hid-icn {
+  display: none !important;
+}
 
-.btcd-action-tab {
-  display: inline-block;
-  width: 100px;
-  float: right;
-
-  &:th {
-    padding: 10px;
+.btcd-t-action-wrp {
+  position: absolute;
+  background: white;
+  top: 0;
+  right: 0;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  &:hover {
+    width: 172px;
   }
+}
+
+.btcd-t-action-wrp:hover .btcd-t-action .btcd-hid-icn {
+  display: inline-block !important;
+}
+
+.btcd-t-action-wrp:hover .btcd-t-action .btcd-ph-btn {
+  display: none;
+}
+
+.btcd-t-action {
+  margin-right: 40px;
 }
 
 .f-search {
@@ -1183,6 +1228,9 @@ nav.top-nav {
   width: 40px;
   height: 40px;
   font-size: 25px;
+}
+.btcd-icn-sm {
+  font-size: 17px;
 }
 
 .btcd-pagination {
@@ -1332,6 +1380,7 @@ nav.top-nav {
 }
 
 .btcd-prgrs-wrp {
+  margin-left: 7px;
   width: 70%;
   height: 8px;
   border-radius: 10px;
@@ -1981,7 +2030,7 @@ nav.top-nav {
   position: absolute;
   right: 0;
   top: 0;
-  border-left: 1px solid #eaeaea;
+  //border-left: 1px solid #eaeaea;
   transform: translateX(50%);
   z-index: 1;
   touch-action: none;
@@ -2136,4 +2185,11 @@ nav.top-nav {
   &:hover {
     background: transparentize(#fff, 0.8);
   }
+}
+
+// for IE11
+
+_:-ms-fullscreen,
+:root .f-table [data-sticky-first-right-td="true"] {
+  position: relative;
 }

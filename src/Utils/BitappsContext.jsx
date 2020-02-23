@@ -17,6 +17,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
             form[field] = action.data[field]
           })
         }
+        return null
       })
       return [...allForms]
     }
@@ -27,6 +28,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
     default:
       break
   }
+  return null
 }
 
 const BitappsContext = createContext()

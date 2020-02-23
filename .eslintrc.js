@@ -27,7 +27,7 @@ module.exports = {
     "arrow-parens": 0,
     "react/prop-types": 0,
     "object-curly-newline": 0,
-    "max-len": ["error", { "code": 300 }],
-    "linebreak-style": ["error", "unix"]
+    "max-len": ["error", { "code": 350 }],
+    "linebreak-style": ["error", "unix"],
   },
 };

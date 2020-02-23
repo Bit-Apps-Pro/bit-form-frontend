@@ -1,15 +1,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout, useColumnOrder } from 'react-table'
-import { useSticky } from 'react-table-sticky'
+import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFle  xLayout } from 'react-table'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import { BitappsContext } from '../Utils/BitappsContext'
-import TableAction from './ElmSettings/Childs/TableAction'
-
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -44,7 +41,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
 export default function Table(props) {
   const { confirmModal } = React.useContext(BitappsContext)
   const { confModal, setConfModal, hideConfModal } = confirmModal
-  const { columns, data } = props
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -67,8 +64,7 @@ export default function Table(props) {
     state: { pageIndex, pageSize },
   } = useTable(
     {
-      columns,
-      data,
+      ...props,
       manualPagination: typeof props.pageCount !== 'undefined',
       initialState: { pageIndex: 0 },
     },
@@ -76,33 +72,14 @@ export default function Table(props) {
     useGlobalFilter,
     useSortBy,
     usePagination,
-    useSticky,
-    useColumnOrder,
     // useBlockLayout,
     useFlexLayout,
     props.resizable ? useResizeColumns : '', // resize
     props.rowSeletable ? useRowSelect : '', // row select
     props.rowSeletable ? (hooks => {
-      if (props.hasAction) {
-        hooks.allColumns.push(cols => [
-          ...cols,
-          {
-            id: 't_action',
-            width: 85,
-            sticky: 'right',
-            Header: 'Actions',
-            accessor: 'table_ac',
-            //Cell: <h1>sdad</h1>
-            Cell: val => <TableAction edit={props.edit} del={props.del} dup={props.dup} id={val.row.original.formID} />,
-          },
-        ])
-      }
-      hooks.allColumns.push(cols => [
+      hooks.allColumns.push(columns => [
         {
           id: 'selection',
-          width: 67,
-          minWidth: 67,
-          sticky: 'left',
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
@@ -114,7 +91,7 @@ export default function Table(props) {
             </div>
           ),
         },
-        ...cols,
+        ...columns,
       ])
     }) : '',
   )
@@ -186,7 +163,7 @@ export default function Table(props) {
               <Menu icn="icn-remove_red_eye">
                 <Scrollbars autoHide style={{ width: 200 }}>
                   <ReactSortable list={props.columns} setList={props.setTableCols} handle=".btcd-pane-drg">
-                    {columns.map((column, i) => (
+                    {props.columns.map((column, i) => (
                       <div key={allColumns[i + 1].id} className="btcd-pane">
                         <TableCheckBox cls="scl-7" id={allColumns[i + 1].id} title={column.Header} rest={allColumns[i + 1].getToggleHiddenProps()} />
                         <span className="btcd-pane-drg">&#8759;</span>
@@ -229,14 +206,15 @@ export default function Table(props) {
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <div className="btcd-f-t-wrp">
-        <Scrollbars style={{ height: props.height }}>
-          <div {...getTableProps()} className={`f-table ${props.className}`}>
-            <div className="thead">
+      <div>
+
+        <div className="btcd-f-t-wrp">
+          <table {...getTableProps()} className={`f-table ${props.className}`}>
+            <thead>
               {headerGroups.map(headerGroup => (
-                <div className="tr" {...headerGroup.getHeaderGroupProps()}>
+                <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <div className="th" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                       {column.render('Header')}
                       {' '}
                       <span>
@@ -253,27 +231,35 @@ export default function Table(props) {
                             className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
                           />
                         )}
-                    </div>
+                    </th>
                   ))}
-                </div>
+                </tr>
               ))}
-            </div>
-            <div className="tbody" {...getTableBodyProps()}>
-              {/* <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}> */}
-              {page.map(row => {
-                prepareRow(row)
-                return (
-                  <div {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
-                    {row.cells.map(cell => (
-                      <div className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</div>
-                    ))}
-                  </div>
-                )
-              })}
-              {/* </Scrollbars> */}
-            </div>
-          </div>
-        </Scrollbars>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
+                      {row.cells.map(cell => (
+                        <td className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      ))}
+                    </tr>
+                  )
+                })}
+              </Scrollbars>
+            </tbody>
+          </table>
+        </div>
+        <table className="btcd-action-tab">
+          <thead><tr><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>asd</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div className="btcd-pagination">

@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
+import TableAction from '../components/ElmSettings/Childs/TableAction'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
-import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import { BitappsContext } from '../Utils/BitappsContext'
 import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
@@ -26,8 +26,8 @@ export default function FormEntries() {
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { Header: 'ress', accessor: 'entries' },
     { Header: 'Created', accessor: 'created_at' },
-    { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
   ])
+
   const [data, setData] = useState([
     { formID: 333, status: 0, formName: 'member', shortcode: 'test', entries: 23, views: 79, conversion: 96, created_at: '2 Dec', minWidth: 50 },
     { formID: 111, status: 1, formName: 'lace', shortcode: 'guitar', entries: 5, views: 38, conversion: 57, created_at: '2 Dec', minWidth: 50 },
@@ -117,8 +117,20 @@ export default function FormEntries() {
     setEntryLabels(newCols)
   }
 
-  const duplicateData = rows => {
+  const bulkDuplicateData = rows => {
     console.log('duplicate', rows)
+  }
+
+  const editData = id => {
+    console.log('edit', id)
+  }
+
+  const delData = id => {
+    console.log('del', id)
+  }
+
+  const dupData = id => {
+    console.log('dup', id)
   }
 
   return (
@@ -128,18 +140,23 @@ export default function FormEntries() {
       </div>
       <div className="forms">
         <Table
+          className="btcd-entries-f"
           height="60vh"
           columns={entryLabels}
           data={data}
           rowSeletable
           resizable
           columnHidable
+          hasAction
           getPageSize={getPageSize}
           pageCount={((entryCount / pageSize) % 1 === 0) ? (entryCount / pageSize) : Math.floor(entryCount / pageSize) + 1}
           getPageIndex={getPageIndex}
           setBulkDelete={setBulkDelete}
           setTableCols={setEntriesCol}
-          duplicateData={duplicateData}
+          duplicateData={bulkDuplicateData}
+          edit={editData}
+          del={delData}
+          dup={dupData}
         />
       </div>
       {
