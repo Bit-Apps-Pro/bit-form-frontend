@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Container, Section, Bar, Resizer } from 'react-simple-resizer'
+import { Container, Section, Bar } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
@@ -22,8 +22,6 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const [forceRender, setForceRender] = useState(false)
-  const [updatedData, updateData] = useState(null)
   const { allFormsData, snackBar } = useContext(BitappsContext)
   const { allFormsDispatchHandler } = allFormsData
   const { message, view } = snackBar
@@ -107,10 +105,8 @@ function Builder(props) {
     }
 
     formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
-    console.log(formData)
     bitsFetch(formData, action)
       .then(response => {
-        console.log('UISave', typeof response.data)
         if (response.success) {
           let { data } = response
           if (typeof data !== 'object') {
@@ -118,10 +114,6 @@ function Builder(props) {
           }
           if (action === 'bitapps_create_new_form') {
             if (savedFormId === 0 && buttonText === 'Save') {
-              if (process.env.NODE_ENV === 'production') {
-                // eslint-disable-next-line no-undef
-                console.log('In Builder fn[saveForm]:', data.id, formName, (0).toPrecision(3))
-              }
               setSavedFormId(data.id)
               setButtonText('Update')
               props.history.replace(`/builder/edit/${data.id}`)
@@ -139,8 +131,13 @@ function Builder(props) {
   }
 
   const setSubmitConfig = data => {
-    setForceRender(!forceRender)
-    setSubBtn(data)
+    setSubBtn({ ...data })
+  }
+
+  const updateFields = updatedElm => {
+    const tmp = { ...fields }
+    fields[updatedElm.id] = updatedElm.data
+    setFields(tmp)
   }
 
   return (
@@ -197,7 +194,7 @@ function Builder(props) {
               className="tool-sec"
               defaultSize={160}
               minSize={notIE && 58}
-              style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}
+            // style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}
             >
               <ToolBar
                 setDrgElm={setDrgElm}
@@ -205,7 +202,6 @@ function Builder(props) {
                 className="tile"
                 tolbarSiz={tolbarSiz}
                 setTolbarSiz={setConSiz}
-                setGridWidth={props.setGridWidth}
               />
             </Section>
             <Bar className="bar bar-l" />
@@ -214,7 +210,7 @@ function Builder(props) {
               onSizeChanged={props.setGridWidth}
               minSize={notIE && 320}
               defaultSize={props.gridWidth}
-              style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}
+            // style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}
             >
               {lay !== null && (
                 <small
@@ -261,6 +257,7 @@ function Builder(props) {
                 width={props.gridWidth}
                 draggedElm={drgElm}
                 setElmSetting={setElmSetting}
+                fields={fields}
                 newData={newData}
                 setNewData={setNewData}
                 formType={formType}
@@ -268,9 +265,6 @@ function Builder(props) {
                 setLay={setLay}
                 setFields={setFields}
                 setFormName={setFormName}
-                forceRender={forceRender}
-                updatedData={updatedData}
-                updateData={updateData}
                 subBtn={subBtn}
               />
             </Section>
@@ -279,7 +273,7 @@ function Builder(props) {
             <Section id="settings-menu" defaultSize={300}>
               <CompSettings
                 elm={elmSetting}
-                updateData={updateData}
+                updateData={updateFields}
                 setSubmitConfig={setSubmitConfig}
               />
             </Section>

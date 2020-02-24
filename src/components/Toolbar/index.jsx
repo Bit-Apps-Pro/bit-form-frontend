@@ -221,7 +221,7 @@ export default function index(props) {
     <div className="toolBar-wrp">
       <div className="btcd-toolbar-title">
         {!props.tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn btcd-neo-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz); props.setGridWidth(props.tolbarSiz ? window.innerWidth - 480 : window.innerWidth - 380) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
+        <button className="icn-btn btcd-neo-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
       </div>
       <Scrollbars autoHide style={{ maxWidth: 400 }}>
         <div className="toolBar">

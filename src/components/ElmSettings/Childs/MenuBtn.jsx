@@ -34,7 +34,6 @@ export default function MenuBtn(props) {
     })
   }
   const handleDuplicate = () => {
-    console.log(props.formID)
     bitsFetch({ id: props.formID }, 'bitapps_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response

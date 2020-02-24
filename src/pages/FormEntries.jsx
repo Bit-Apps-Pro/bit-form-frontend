@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
+import TableAction from '../components/ElmSettings/Childs/TableAction'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
-import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import { BitappsContext } from '../Utils/BitappsContext'
 import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
@@ -27,8 +27,8 @@ export default function FormEntries() {
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { Header: 'ress', accessor: 'entries' },
     { Header: 'Created', accessor: 'created_at' },
-    { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
   ])
+
   const [data, setData] = useState([
     { formID: 333, status: 0, formName: 'member', shortcode: 'test', entries: 23, views: 79, conversion: 96, created_at: '2 Dec', minWidth: 50 },
     { formID: 111, status: 1, formName: 'lace', shortcode: 'guitar', entries: 5, views: 38, conversion: 57, created_at: '2 Dec', minWidth: 50 },
@@ -55,9 +55,7 @@ export default function FormEntries() {
   const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
-    if (totalData > 0) {
-      setPageCount(Math.ceil(totalData / pageSize))
-    } else {
+    if (totalData === 0) {
       const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
       bitsFetch(formIndex, 'bitapps_get_form_entry_count')
@@ -86,16 +84,24 @@ export default function FormEntries() {
     }, 1000)
   }, [formID])
   const setBulkDelete = rows => {
+    console.log(typeof rows[0])
     const rowID = []
     const entries = []
-    for (let i = 0; i < rows.length; i += 1) {
-      rowID.push(rows[i].id)
-      entries.push(rows[i].original.entry_id)
+    if (typeof rows[0] === 'object') {
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID.push(rows[i].id)
+        entries.push(rows[i].original.entry_id)
+      }
+    } else {
+      rowID.push(rows.id)
+      entries.push(rows.original.entry_id)
     }
-
+    console.log(data)
     const newData = [...data]
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
+      console.log(newData)
       newData.splice(Number(rowID[i]), 1)
+      console.log(newData)
     }
     let ajaxData = { formID, entries }
     if (process.env.NODE_ENV === 'development') {
@@ -115,13 +121,18 @@ export default function FormEntries() {
     setEntryLabels(newCols)
   }
 
-  const duplicateData = rows => {
+  const bulkDuplicateData = rows => {
     console.log('duplicate', rows)
     const rowID = []
     const entries = []
-    for (let i = 0; i < rows.length; i += 1) {
-      rowID[rows[i].original.entry_id] = rows[i].id
-      entries.push(rows[i].original.entry_id)
+    if (typeof rows[0] === 'object') {
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID.push(rows[i].id)
+        entries.push(rows[i].original.entry_id)
+      }
+    } else {
+      rowID.push(rows.id)
+      entries.push(rows.original.entry_id)
     }
 
     const newData = [...data]
@@ -144,6 +155,18 @@ export default function FormEntries() {
       })
   }
 
+  const editData = id => {
+    console.log('edit', id)
+  }
+
+  const delData = id => {
+    console.log('del', id, data)
+  }
+
+  const dupData = id => {
+    console.log('dup', id, data)
+  }
+
   return (
     <div id="form-res">
       <div className="af-header">
@@ -151,17 +174,22 @@ export default function FormEntries() {
       </div>
       <div className="forms">
         <Table
+          className="btcd-entries-f"
           height="60vh"
           columns={entryLabels}
           data={data}
           rowSeletable
           resizable
           columnHidable
+          hasAction
           pageCount={pageCount}
           fetchData={fetchData}
           setBulkDelete={setBulkDelete}
           setTableCols={setEntriesCol}
-          duplicateData={duplicateData}
+          duplicateData={bulkDuplicateData}
+          edit={editData}
+          del={setBulkDelete}
+          dup={dupData}
         />
       </div>
       {
