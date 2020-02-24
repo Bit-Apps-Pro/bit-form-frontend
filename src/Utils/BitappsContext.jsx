@@ -62,6 +62,7 @@ const BitappsContextProvider = (props) => {
     allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
+  const [allResp, setAllResp] = useState(allFormsInitialState)
   const [snackView, setsnackView] = useState(false)
   const [snackMessage, setsnackMessage] = useState(null)
   const [confModal, setConfModal] = useState({ show: false, title: null, subTitle: null, yesBtn: 'Yes', noBtn: 'No', yesAction: () => null, noAction: hideConfModal })
@@ -80,6 +81,7 @@ const BitappsContextProvider = (props) => {
           view: { snackView, setsnackView },
         },
         confirmModal: { confModal, setConfModal, hideConfModal },
+        allRes: { allResp, setAllResp },
       }}
     >
       {props.children}

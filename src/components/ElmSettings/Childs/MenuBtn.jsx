@@ -24,6 +24,7 @@ export default function MenuBtn(props) {
       e.target.parentNode.children[1].classList.add('btcd-m-a')
     }
   }
+
   const handleDelete = () => {
     bitsFetch({ id: props.formID }, 'bitapps_delete_aform').then(response => {
       if (response.success) {

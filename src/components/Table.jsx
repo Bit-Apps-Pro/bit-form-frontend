@@ -83,33 +83,20 @@ export default function Table(props) {
     props.resizable ? useResizeColumns : '', // resize
     props.rowSeletable ? useRowSelect : '', // row select
     props.rowSeletable ? (hooks => {
-      if (props.hasAction) {
-        hooks.allColumns.push(cols => [
-          ...cols,
-          {
-            id: 't_action',
-            width: 85,
-            sticky: 'right',
-            Header: 'Actions',
-            accessor: 'table_ac',
-            //Cell: <h1>sdad</h1>
-            Cell: val => <TableAction edit={props.edit} del={props.del} dup={props.dup} id={val.row.original.formID} />,
-          },
-        ])
-      }
       hooks.allColumns.push(cols => [
         {
           id: 'selection',
-          width: 67,
+          width: 50,
+          maxWidth: 50,
           minWidth: 67,
           sticky: 'left',
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <div title="Select All Rows">
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           Cell: ({ row }) => (
-            <div>
+            <div title="Select This Row">
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
             </div>
           ),
@@ -179,6 +166,7 @@ export default function Table(props) {
 
   return (
     <>
+      <button onClick={() => console.log(props.edit())}>data</button>
       <div className="btcd-t-actions">
         <div className="flx">
           {props.columnHidable
@@ -236,16 +224,18 @@ export default function Table(props) {
               {headerGroups.map(headerGroup => (
                 <div className="tr" {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <div className="th" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    <div className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
                       {column.render('Header')}
                       {' '}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? String.fromCharCode(9662)
-                            : String.fromCharCode(9652)
-                          : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                      </span>
+                      {(column.id !== 't_action' && column.id !== 'selection') && (
+                        <span>
+                          {column.isSorted
+                            ? column.isSortedDesc
+                              ? String.fromCharCode(9662)
+                              : String.fromCharCode(9652)
+                            : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                        </span>
+                      )}
                       {props.resizable
                         && (
                           <div
@@ -265,7 +255,7 @@ export default function Table(props) {
                 return (
                   <div {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
                     {row.cells.map(cell => (
-                      <div className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</div>
+                      <div className="td flx" {...cell.getCellProps()}>{cell.render('Cell')}</div>
                     ))}
                   </div>
                 )

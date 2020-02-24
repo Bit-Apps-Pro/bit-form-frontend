@@ -13,6 +13,7 @@ export default function TableAction(props) {
     const del = { ...confModal }
     del.title = 'Delete'
     del.subTitle = 'Confirm Delete this Entry ?'
+    console.log('props', props)
     del.yesAction = () => { props.del(props.id); hideConfModal() }
     del.show = true
     setConfModal(del)
@@ -46,7 +47,7 @@ export default function TableAction(props) {
         )}
 
         <button className="icn-btn btcd-ph-btn" aria-label="action btn" type="button">
-          <span className="btcd-icn btcd-icn-sm"><b>&#8942;</b></span>
+          <span className="btcd-icn btcd-icn-sm icn-blue"><span><b>&#8230;</b></span></span>
         </button>
       </div>
     </div>

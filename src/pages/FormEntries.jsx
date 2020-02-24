@@ -11,13 +11,15 @@ import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 
 export default function FormEntries() {
+  const { allRes, snackBar } = useContext(BitappsContext)
+  const { allResp, setAllResp } = allRes
+  const { message, view } = snackBar
   const { formID } = useParams()
   const [pageSize, setPageSize] = useState(10)
   const [entryCount, setEntryCount] = useState(0)
-  const { snackBar } = useContext(BitappsContext)
-  const { message, view } = snackBar
   const { setsnackView, snackView } = view
   const { setsnackMessage } = message
+
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
     { Header: 'Status', accessor: 'status' },
@@ -26,6 +28,14 @@ export default function FormEntries() {
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { Header: 'ress', accessor: 'entries' },
     { Header: 'Created', accessor: 'created_at' },
+    {
+      id: 't_action',
+      width: 50,
+      sticky: 'right',
+      Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+      accessor: 'table_ac',
+      Cell: val => <TableAction edit={editData} del={delData} dup={dupData} id={val.row} />,
+    },
   ])
 
   const [data, setData] = useState([
@@ -60,12 +70,20 @@ export default function FormEntries() {
         if (response !== undefined && response.success) {
           setEntryCount(response.data.count)
           const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key, minWidth: 50 }))
+          cols.push({
+            id: 't_action',
+            width: 60,
+            sticky: 'right',
+            Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+            accessor: 'table_ac',
+            Cell: val => <TableAction edit={editData} del={delData} dup={dupData} id={val.row} />,
+          })
           setEntryLabels(cols)
         }
       })
     bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
       if (res !== undefined && res.success) {
-        setData(res.data)
+        setAllResp(res.data)
       }
     })
   }, [formID])
@@ -74,7 +92,7 @@ export default function FormEntries() {
     // eslint-disable-next-line no-param-reassign
     changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
     bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
-      setData(res.data)
+      setAllResp(res.data)
     })
     setPageSize(changedPageSize)
   }
@@ -82,7 +100,7 @@ export default function FormEntries() {
   const getPageIndex = (changedPageIndex) => {
     if (entryCount > pageSize) {
       bitsFetch({ id: formID, offset: changedPageIndex * pageSize, pageSize }, 'bitapps_get_form_entries').then(res => {
-        setData(res.data)
+        setAllResp(res.data)
       })
     }
   }
@@ -118,23 +136,30 @@ export default function FormEntries() {
   }
 
   const bulkDuplicateData = rows => {
-    console.log('duplicate', rows)
+    console.log('duplicate', rows, data)
   }
 
   const editData = id => {
-    console.log('edit', id)
+    console.log('edit', id, data)
   }
 
   const delData = id => {
-    console.log('del', id)
+    const tmp = [...data]
+    tmp.splice(1, 1)
+    setData(tmp)
+    console.log('temp', tmp, data)
+    //console.log('del', id)
   }
 
   const dupData = id => {
-    console.log('dup', id)
+    console.log('dup', id, allResp)
   }
 
+  console.count(";render")
   return (
     <div id="form-res">
+      <button onClick={() => console.log(data)}>data</button>
+      {console.log('re rendered')}
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
@@ -143,7 +168,7 @@ export default function FormEntries() {
           className="btcd-entries-f"
           height="60vh"
           columns={entryLabels}
-          data={data}
+          data={allResp}
           rowSeletable
           resizable
           columnHidable
