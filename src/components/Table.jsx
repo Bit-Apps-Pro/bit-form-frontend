@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -70,7 +70,9 @@ export default function Table(props) {
       columns,
       data,
       manualPagination: typeof props.pageCount !== 'undefined',
+      pageCount: props.pageCount,
       initialState: { pageIndex: 0 },
+      autoResetPage: false,
     },
     useFilters,
     useGlobalFilter,
@@ -104,35 +106,26 @@ export default function Table(props) {
         ...cols,
       ])
     }) : '',
+    props.hasAction ? (hooks => {
+      hooks.allColumns.push(cols => [
+        ...cols,
+        {
+          id: 't_action',
+          width: 85,
+          sticky: 'right',
+          Header: 'Actions',
+          accessor: 'table_ac',
+          Cell: val => <TableAction edit={props.edit} del={props.del} dup={props.duplicateData} id={val.row} />,
+        },
+      ])
+    }) : '',
   )
 
-  const handleGotoPageZero = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(0)
+  useEffect(() => {
+    if (props.fetchData) {
+      props.fetchData({ pageIndex, pageSize })
     }
-    gotoPage(0)
-  }
-
-  const handleGotoLastPage = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(pageCount - 1)
-    }
-    gotoPage(pageCount - 1)
-  }
-
-  const handleNextPage = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(pageIndex + 1)
-    }
-    nextPage()
-  }
-
-  const handlePreviousPage = () => {
-    if (props.getPageIndex) {
-      props.getPageIndex(pageIndex - 1)
-    }
-    previousPage()
-  }
+  }, [props.fetchData, pageIndex, pageSize])
 
   const showBulkDupMdl = () => {
     const bdup = { ...confModal }
@@ -267,19 +260,19 @@ export default function Table(props) {
       </div>
 
       <div className="btcd-pagination">
-        <button className="icn-btn" type="button" onClick={handleGotoPageZero} disabled={!canPreviousPage}>
+        <button className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           &laquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={handlePreviousPage} disabled={!canPreviousPage}>
+        <button className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
           &lsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={handleNextPage} disabled={!canNextPage}>
+        <button className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
           &rsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={handleGotoLastPage} disabled={!canNextPage}>
+        <button className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           &raquo;
         </button>
         {' '}
