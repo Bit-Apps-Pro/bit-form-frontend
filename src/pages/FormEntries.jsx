@@ -104,9 +104,9 @@ export default function FormEntries() {
       console.log(newData)
     }
     let ajaxData = { formID, entries }
-    if (process.env.NODE_ENV === 'development') {
+    /* if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
-    }
+    } */
     bitsFetch(ajaxData, 'bitapps_bulk_delete_form_entries')
       .then(res => {
         if (res.success) {
