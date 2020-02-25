@@ -1,7 +1,7 @@
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0083f3;
-$dp-blue: #192150;
+$dp-blue: #0b1655;
 $bg: #edeff3;
 $red: #ff4646;
 
@@ -49,6 +49,7 @@ body {
 //scroll bar style start
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -91,6 +92,10 @@ body {
   &:active {
     background: #0062b8;
   }
+}
+
+.icn-blue {
+  color: $blue;
 }
 
 .red {
@@ -638,6 +643,9 @@ li b {
 .ml-4 {
   margin-left: 20px !important;
 }
+.ml-2 {
+  margin-left: 10px;
+}
 
 @mixin inp($width: auto) {
   width: $width;
@@ -1054,7 +1062,7 @@ nav.top-nav {
   position: sticky !important;
 }
 
-.f-table [data-sticky-first-right-td="true"] {
+[data-sticky-first-right-td="true"] {
   box-shadow: -1px 4px 4px 1px #eaeaea;
 }
 
@@ -1081,15 +1089,21 @@ nav.top-nav {
   }
 }
 
-.f-table .tbody .tr {
+.f-table .tbody .tr,
+.f-table .thead .tr {
   height: 49px;
   position: relative;
+  outline: none;
   align-items: center;
   &:hover {
     background: #f4f6ff;
     z-index: 9;
     box-shadow: 0px 1px 4px 1px #cacaca;
   }
+}
+
+.rowClickable .tbody .tr {
+  cursor: pointer;
 }
 
 .f-table .tbody .tr .td {
@@ -1110,10 +1124,9 @@ nav.top-nav {
   border-bottom: none;
 }
 
-.btcd-all-frm .tbody .tr .td:last-child {
+.btcd-all-frm .tbody .tr .td:last-child,
+.btcd-all-frm .tbody .tr .td:nth-child(4) {
   overflow: visible;
-  //position: absolute;
-  // right: 0;
 }
 
 .btcd-row-selected {
@@ -1163,7 +1176,7 @@ nav.top-nav {
   background: white;
   top: 0;
   right: 0;
-  justify-content: center;
+  justify-content: flex-end;
   height: 100%;
   width: 100%;
   &:hover {
@@ -1180,7 +1193,7 @@ nav.top-nav {
 }
 
 .btcd-t-action {
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .f-search {
@@ -1206,7 +1219,7 @@ nav.top-nav {
 }
 
 .icn-btn {
-  color: inherit;
+  color: $dp-blue;
   cursor: pointer;
   font-size: 20px;
   border: 0;
@@ -1382,13 +1395,13 @@ nav.top-nav {
 .btcd-prgrs-wrp {
   margin-left: 7px;
   width: 70%;
-  height: 8px;
+  height: 6px;
   border-radius: 10px;
   overflow: hidden;
   background-color: #c7d4ff;
 }
 .btcd-prgrs {
-  height: 8px;
+  height: inherit;
   border-radius: inherit;
   background-color: $blue;
 }
@@ -2161,7 +2174,7 @@ nav.top-nav {
   color: white;
   border-radius: 5px;
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
   box-shadow: 1px 1px 3px 0px #0000004d;
   transition: right 0.5s;

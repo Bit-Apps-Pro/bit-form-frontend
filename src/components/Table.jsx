@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -8,7 +8,6 @@ import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import { BitappsContext } from '../Utils/BitappsContext'
-import TableAction from './ElmSettings/Childs/TableAction'
 
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -41,7 +40,9 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   )
 }
 
-export default function Table(props) {
+function Table(props) {
+  console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
+
   const { confirmModal } = React.useContext(BitappsContext)
   const { confModal, setConfModal, hideConfModal } = confirmModal
   const { columns, data } = props
@@ -88,34 +89,22 @@ export default function Table(props) {
       hooks.allColumns.push(cols => [
         {
           id: 'selection',
-          width: 67,
+          width: 50,
+          maxWidth: 50,
           minWidth: 67,
           sticky: 'left',
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <div title="Select All Rows">
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           Cell: ({ row }) => (
-            <div>
+            <div title="Select This Row">
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
             </div>
           ),
         },
         ...cols,
-      ])
-    }) : '',
-    props.hasAction ? (hooks => {
-      hooks.allColumns.push(cols => [
-        ...cols,
-        {
-          id: 't_action',
-          width: 85,
-          sticky: 'right',
-          Header: 'Actions',
-          accessor: 'table_ac',
-          Cell: val => <TableAction edit={props.edit} del={props.del} dup={props.duplicateData} id={val.row} />,
-        },
       ])
     }) : '',
   )
@@ -156,6 +145,10 @@ export default function Table(props) {
     setConfModal(bdel)
   }
 
+  const showDetailMdl = () => {
+
+  }
+
   return (
     <>
       <div className="btcd-t-actions">
@@ -175,7 +168,7 @@ export default function Table(props) {
                 </Scrollbars>
               </Menu>
             )}
-          {selectedFlatRows.length > 0
+          {props.rowSeletable && selectedFlatRows.length > 0
             && (
               <>
                 {'setBulkStatus' in props
@@ -210,21 +203,23 @@ export default function Table(props) {
       />
       <div className="btcd-f-t-wrp">
         <Scrollbars style={{ height: props.height }}>
-          <div {...getTableProps()} className={`f-table ${props.className}`}>
+          <div {...getTableProps()} className={`f-table ${props.className} ${props.rowClickable && 'rowClickable'}`}>
             <div className="thead">
               {headerGroups.map(headerGroup => (
                 <div className="tr" {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <div className="th" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    <div className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
                       {column.render('Header')}
                       {' '}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? String.fromCharCode(9662)
-                            : String.fromCharCode(9652)
-                          : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                      </span>
+                      {(column.id !== 't_action' && column.id !== 'selection') && (
+                        <span>
+                          {column.isSorted
+                            ? column.isSortedDesc
+                              ? String.fromCharCode(9662)
+                              : String.fromCharCode(9652)
+                            : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                        </span>
+                      )}
                       {props.resizable
                         && (
                           <div
@@ -238,18 +233,23 @@ export default function Table(props) {
               ))}
             </div>
             <div className="tbody" {...getTableBodyProps()}>
-              {/* <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}> */}
               {page.map(row => {
                 prepareRow(row)
                 return (
-                  <div {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
+                  <div
+                    className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
+                    onClick={() => props.rowClickable && showDetailMdl(row.original)}
+                    onKeyPress={() => props.rowClickable && showDetailMdl(row.original)}
+                    role="button"
+                    tabIndex={0}
+                    {...row.getRowProps()}
+                  >
                     {row.cells.map(cell => (
-                      <div className="td btcd-sl" {...cell.getCellProps()}>{cell.render('Cell')}</div>
+                      <div className="td flx" {...cell.getCellProps()}>{cell.render('Cell')}</div>
                     ))}
                   </div>
                 )
               })}
-              {/* </Scrollbars> */}
             </div>
           </div>
         </Scrollbars>
@@ -308,3 +308,5 @@ export default function Table(props) {
     </>
   );
 }
+
+export default memo(Table)

@@ -15,6 +15,7 @@ import AllForms from './pages/AllForms'
 import FormEntries from './pages/FormEntries'
 import { BitappsContext } from './Utils/BitappsContext'
 import Modal from './components/Modal'
+import SnackMsg from './components/ElmSettings/Childs/SnackMsg'
 
 const Dashboard = () => (
   <div>
@@ -28,9 +29,11 @@ const Dashboard = () => (
 )
 
 export default function App() {
+
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
-  const { confirmModal } = React.useContext(BitappsContext)
+  const { confirmModal, snackMsg } = React.useContext(BitappsContext)
   const { confModal, hideConfModal } = confirmModal
+  const { snackbar } = snackMsg
 
   return (
     // eslint-disable-next-line no-undef
@@ -85,6 +88,7 @@ export default function App() {
           </Switch>
         </div>
       </div>
+      {snackbar.show && <SnackMsg />}
     </Router>
   )
 }

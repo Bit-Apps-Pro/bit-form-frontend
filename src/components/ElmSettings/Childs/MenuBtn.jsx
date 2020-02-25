@@ -4,11 +4,10 @@ import { BitappsContext } from '../../../Utils/BitappsContext'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function MenuBtn(props) {
-  const { allFormsData, snackBar } = useContext(BitappsContext)
+  const { allFormsData, snackMsg } = useContext(BitappsContext)
   const { allFormsDispatchHandler } = allFormsData
-  const { message, view } = snackBar
-  const { setsnackView } = view
-  const { setsnackMessage } = message
+  const { setSnackbar } = snackMsg
+
   const handleMenuClose = (e) => {
     const el = e.target
     setTimeout(() => {
@@ -24,22 +23,22 @@ export default function MenuBtn(props) {
       e.target.parentNode.children[1].classList.add('btcd-m-a')
     }
   }
+
   const handleDelete = () => {
     bitsFetch({ id: props.formID }, 'bitapps_delete_aform').then(response => {
       if (response.success) {
         allFormsDispatchHandler({ type: 'remove', data: props.index })
-        setsnackMessage('Form deleted!!')
-        setsnackView(true)
+        setSnackbar({ show: true, msg: 'Form Deleted !' })
       }
     })
   }
+
   const handleDuplicate = () => {
     bitsFetch({ id: props.formID }, 'bitapps_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
         allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
-        setsnackMessage('Form duplicated successfully')
-        setsnackView(true)
+        setSnackbar({ show: true, msg: 'Form Duplicated Successfully.' })
       }
     })
   }

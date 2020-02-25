@@ -62,8 +62,8 @@ const BitappsContextProvider = (props) => {
     allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
-  const [snackView, setsnackView] = useState(false)
-  const [snackMessage, setsnackMessage] = useState(null)
+  const [allResp, setAllResp] = useState(allFormsInitialState)
+  const [snackbar, setSnackbar] = useState({ show: false, msg: '' })
   const [confModal, setConfModal] = useState({ show: false, title: null, subTitle: null, yesBtn: 'Yes', noBtn: 'No', yesAction: () => null, noAction: hideConfModal })
 
   function hideConfModal() {
@@ -75,11 +75,9 @@ const BitappsContextProvider = (props) => {
     <BitappsContext.Provider
       value={{
         allFormsData: { allForms, allFormsDispatchHandler },
-        snackBar: {
-          message: { snackMessage, setsnackMessage },
-          view: { snackView, setsnackView },
-        },
+        snackMsg: { snackbar, setSnackbar },
         confirmModal: { confModal, setConfModal, hideConfModal },
+        allRes: { allResp, setAllResp },
       }}
     >
       {props.children}
