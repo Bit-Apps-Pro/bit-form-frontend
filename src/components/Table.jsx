@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -8,7 +8,6 @@ import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import { BitappsContext } from '../Utils/BitappsContext'
-import TableAction from './ElmSettings/Childs/TableAction'
 
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -41,7 +40,9 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   )
 }
 
-export default function Table(props) {
+function Table(props) {
+  console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
+
   const { confirmModal } = React.useContext(BitappsContext)
   const { confModal, setConfModal, hideConfModal } = confirmModal
   const { columns, data } = props
@@ -106,19 +107,6 @@ export default function Table(props) {
         ...cols,
       ])
     }) : '',
-    props.hasAction ? (hooks => {
-      hooks.allColumns.push(cols => [
-        ...cols,
-        {
-          id: 't_action',
-          width: 85,
-          sticky: 'right',
-          Header: 'Actions',
-          accessor: 'table_ac',
-          Cell: val => <TableAction edit={props.edit} del={props.del} dup={props.duplicateData} id={val.row} />,
-        },
-      ])
-    }) : '',
   )
 
   useEffect(() => {
@@ -157,9 +145,12 @@ export default function Table(props) {
     setConfModal(bdel)
   }
 
+  const showDetailMdl = () => {
+
+  }
+
   return (
     <>
-      <button onClick={() => console.log(props.edit())}>data</button>
       <div className="btcd-t-actions">
         <div className="flx">
           {props.columnHidable
@@ -177,7 +168,7 @@ export default function Table(props) {
                 </Scrollbars>
               </Menu>
             )}
-          {selectedFlatRows.length > 0
+          {props.rowSeletable && selectedFlatRows.length > 0
             && (
               <>
                 {'setBulkStatus' in props
@@ -212,7 +203,7 @@ export default function Table(props) {
       />
       <div className="btcd-f-t-wrp">
         <Scrollbars style={{ height: props.height }}>
-          <div {...getTableProps()} className={`f-table ${props.className}`}>
+          <div {...getTableProps()} className={`f-table ${props.className} ${props.rowClickable && 'rowClickable'}`}>
             <div className="thead">
               {headerGroups.map(headerGroup => (
                 <div className="tr" {...headerGroup.getHeaderGroupProps()}>
@@ -242,18 +233,23 @@ export default function Table(props) {
               ))}
             </div>
             <div className="tbody" {...getTableBodyProps()}>
-              {/* <Scrollbars className="btcd-all-f-scrl" style={{ height: props.height }}> */}
               {page.map(row => {
                 prepareRow(row)
                 return (
-                  <div {...row.getRowProps()} className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}>
+                  <div
+                    className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
+                    onClick={() => props.rowClickable && showDetailMdl(row.original)}
+                    onKeyPress={() => props.rowClickable && showDetailMdl(row.original)}
+                    role="button"
+                    tabIndex={0}
+                    {...row.getRowProps()}
+                  >
                     {row.cells.map(cell => (
                       <div className="td flx" {...cell.getCellProps()}>{cell.render('Cell')}</div>
                     ))}
                   </div>
                 )
               })}
-              {/* </Scrollbars> */}
             </div>
           </div>
         </Scrollbars>
@@ -312,3 +308,5 @@ export default function Table(props) {
     </>
   );
 }
+
+export default memo(Table)

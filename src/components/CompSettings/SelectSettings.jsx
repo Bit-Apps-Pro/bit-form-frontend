@@ -94,7 +94,11 @@ export default function SelectSettings(props) {
   }
   return (
     <div>
-      <h4>Text Field ({props.elm.data.typ})</h4>
+      <h4>
+        Text Field (
+        {props.elm.data.typ}
+        )
+      </h4>
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />

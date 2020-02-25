@@ -1,7 +1,7 @@
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0083f3;
-$dp-blue: #192150;
+$dp-blue: #0b1655;
 $bg: #edeff3;
 $red: #ff4646;
 
@@ -49,6 +49,7 @@ body {
 //scroll bar style start
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -1092,12 +1093,17 @@ nav.top-nav {
 .f-table .thead .tr {
   height: 49px;
   position: relative;
+  outline: none;
   align-items: center;
   &:hover {
     background: #f4f6ff;
     z-index: 9;
     box-shadow: 0px 1px 4px 1px #cacaca;
   }
+}
+
+.rowClickable .tbody .tr {
+  cursor: pointer;
 }
 
 .f-table .tbody .tr .td {
@@ -1118,10 +1124,9 @@ nav.top-nav {
   border-bottom: none;
 }
 
-.btcd-all-frm .tbody .tr .td:last-child {
+.btcd-all-frm .tbody .tr .td:last-child,
+.btcd-all-frm .tbody .tr .td:nth-child(4) {
   overflow: visible;
-  //position: absolute;
-  // right: 0;
 }
 
 .btcd-row-selected {
@@ -1214,7 +1219,7 @@ nav.top-nav {
 }
 
 .icn-btn {
-  color: inherit;
+  color: $dp-blue;
   cursor: pointer;
   font-size: 20px;
   border: 0;
@@ -2169,7 +2174,7 @@ nav.top-nav {
   color: white;
   border-radius: 5px;
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
   box-shadow: 1px 1px 3px 0px #0000004d;
   transition: right 0.5s;

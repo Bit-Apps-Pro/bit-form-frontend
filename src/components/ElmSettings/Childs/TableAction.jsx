@@ -2,8 +2,15 @@ import React from 'react'
 import { BitappsContext } from '../../../Utils/BitappsContext'
 
 export default function TableAction(props) {
-  const { confirmModal } = React.useContext(BitappsContext)
+  const { confirmModal, allRes } = React.useContext(BitappsContext)
+  const { allResp } = allRes
+
   const { confModal, setConfModal, hideConfModal } = confirmModal
+  let data = null
+
+  if (props.dataSrc === 'entries') {
+    data = allResp
+  }
 
   const showEditMdl = () => {
     props.edit(props.id)
@@ -13,8 +20,10 @@ export default function TableAction(props) {
     const del = { ...confModal }
     del.title = 'Delete'
     del.subTitle = 'Confirm Delete this Entry ?'
-    console.log('props', props)
-    del.yesAction = () => { props.del(props.id); hideConfModal() }
+    del.yesAction = () => {
+      props.del(props.id, data)
+      hideConfModal()
+    }
     del.show = true
     setConfModal(del)
   }
@@ -23,10 +32,14 @@ export default function TableAction(props) {
     const dup = { ...confModal }
     dup.title = 'Duplicate'
     dup.subTitle = 'Duplicate this Entry ?'
-    dup.yesAction = () => { props.dup(props.id); hideConfModal() }
+    dup.yesAction = () => {
+      props.dup(props.id, data)
+      hideConfModal()
+    }
     dup.show = true
     setConfModal(dup)
   }
+
   return (
     <div className="btcd-t-action-wrp flx">
       <div className="btcd-t-action">

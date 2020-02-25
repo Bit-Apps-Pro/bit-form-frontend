@@ -10,15 +10,14 @@ import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
-import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 export default function AllFroms() {
   const [modal, setModal] = useState(false)
-  const { allFormsData, snackBar } = useContext(BitappsContext)
+  const { allFormsData, snackMsg } = useContext(BitappsContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
-  const { message, view } = snackBar
-  const { setsnackView, snackView } = view
-  const { setsnackMessage } = message
+  const { setSnackbar } = snackMsg
+
+
   const handleStatus = (e, id) => {
     const el = e.target
     let data = { id, status: el.checked }
@@ -29,8 +28,7 @@ export default function AllFroms() {
           el.checked = !el.checked
         } else {
           allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
-          setsnackMessage(res.data)
-          setsnackView(true)
+          setSnackbar({ show: true, msg: res.data })
         }
       })
   }
@@ -43,7 +41,7 @@ export default function AllFroms() {
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
     { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at' },
-    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} /> },
+    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} /> },
   ])
 
   React.useEffect(() => {
@@ -81,8 +79,7 @@ export default function AllFroms() {
         if (res !== undefined && !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
         } else if (res.success) {
-          setsnackMessage(res.data)
-          setsnackView(true)
+          setSnackbar({ show: true, msg: res.data })
         }
       })
   }
@@ -109,8 +106,7 @@ export default function AllFroms() {
         if (res !== undefined && !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
         } else if (res.success) {
-          setsnackMessage(res.data)
-          setsnackView(true)
+          setSnackbar({ show: true, msg: res.data })
         }
       })
   }
@@ -164,7 +160,6 @@ export default function AllFroms() {
           setTableCols={setTableCols}
         />
       </div>
-      {snackView && <Snackbar />}
     </div>
   )
 }

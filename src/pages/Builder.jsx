@@ -8,9 +8,10 @@ import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
-import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 function Builder(props) {
+  console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
+
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(false)
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
@@ -22,11 +23,10 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const { allFormsData, snackBar } = useContext(BitappsContext)
+  const { allFormsData, snackMsg } = useContext(BitappsContext)
   const { allFormsDispatchHandler } = allFormsData
-  const { message, view } = snackBar
-  const { setsnackView, snackView } = view
-  const { setsnackMessage } = message
+  const { setSnackbar } = snackMsg
+
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
     btnSiz: 'md',
@@ -117,13 +117,11 @@ function Builder(props) {
               setSavedFormId(data.id)
               setButtonText('Update')
               props.history.replace(`/builder/edit/${data.id}`)
-              setsnackMessage('Form Saved Successfully')
-              setsnackView(true)
+              setSnackbar({ show: true, msg: 'Form Saved Successfully.' })
             }
             allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
           } else if (action === 'bitapps_update_form') {
-            setsnackMessage('Form Updated Successfully')
-            setsnackView(true)
+            setSnackbar({ show: true, msg: 'Form Updated Successfully.' })
             allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
         }
@@ -291,8 +289,6 @@ function Builder(props) {
           <FormEntries />
         </Route>
       </Switch>
-      <Snackbar />
-
     </div>
   )
 }

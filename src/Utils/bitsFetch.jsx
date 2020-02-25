@@ -7,7 +7,7 @@ export default async function bitsFetch(data, action, contentType = null) {
     url: process.env.NODE_ENV === 'production' ? (typeof bits === 'undefined' ? bitAppsFront.ajaxURL : bits.ajaxURL) : 'http://192.168.1.11/wp-admin/admin-ajax.php',
     method: 'POST',
     headers: {
-      'Content-Type': contentType === null ? 'application/json' : contentType,
+      'Content-Type': contentType === null ? 'application/x-www-form-urlencoded' : contentType,
     },
     params: {
       action,

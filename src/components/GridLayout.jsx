@@ -11,6 +11,8 @@ import CompGen from './CompGen'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 
 export default function GridLayout(props) {
+  console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
+
   /*
   typ: input type
   lbl: label

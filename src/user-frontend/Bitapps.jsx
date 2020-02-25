@@ -4,7 +4,6 @@ import SlimSelect from 'slim-select'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
-import Snackbar from '../components/ElmSettings/Childs/Snackbar'
 
 export default function Bitapps(props) {
   const [snack, setSnack] = useState(false)
