@@ -21,7 +21,7 @@ export default function CompGen(props) {
             ...('mx' in attr && { max: attr.mx }),
             ...('val' in attr && { defaultValue: attr.val }),
             ...('ac' in attr && { autoComplete: attr.ac }),
-            ...('req' in attr.valid && { required: attr.valid.req }),
+            ...('name' in attr && { name: attr.name }),
           },
         )}
       </div>
@@ -39,6 +39,7 @@ export default function CompGen(props) {
           {...'val' in attr && { defaultValue: attr.val }}
           {...'ac' in attr && { autoComplete: attr.ac }}
           {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'name' in attr && { name: attr.name }}
         />
       </div>
     )
@@ -56,6 +57,8 @@ export default function CompGen(props) {
                 type="checkbox"
                 {...itm.check && { checked: true }}
                 {...itm.req && { required: true }}
+                {...'name' in attr && { name: `${attr.name}[]` }}
+                {...'lbl' in itm && { defaultValue: itm.lbl }}
               />
               <span className="btcd-mrk ck" />
             </label>
@@ -79,6 +82,8 @@ export default function CompGen(props) {
                 name={n}
                 {...itm.check && { checked: true }}
                 {...itm.req && { required: true }}
+                {...'name' in attr && { name: attr.name }}
+                {...'lbl' in itm && { defaultValue: itm.lbl }}
               />
               <span className="btcd-mrk rdo" />
             </label>
@@ -140,6 +145,7 @@ export default function CompGen(props) {
               {...'req' in attr.valid && { required: attr.valid.req }}
               {...'mul' in attr && { multiple: true }}
               {...'exts' in attr && { accept: attr.exts }}
+              {...'name' in attr && { name: attr.name }}
               type="file"
               onClick={setPrevData}
               onChange={e => onFileChange(e)}

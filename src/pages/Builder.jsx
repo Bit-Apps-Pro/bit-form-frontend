@@ -10,6 +10,8 @@ import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 
 function Builder(props) {
+  console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
+
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(false)
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
@@ -21,10 +23,10 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const [forceRender, setForceRender] = useState(false)
-  const [updatedData, updateData] = useState(null)
-  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsData, snackMsg } = useContext(BitappsContext)
   const { allFormsDispatchHandler } = allFormsData
+  const { setSnackbar } = snackMsg
+
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
     btnSiz: 'md',
@@ -43,6 +45,20 @@ function Builder(props) {
 
   const notIE = !window.document.documentMode
   setTimeout(() => { setFulScn(true) }, 500)
+
+  const conRef = React.createRef()
+
+  const setConSiz = () => {
+    const res = conRef.current.getResizer()
+    if (res.getSectionSize(0) >= 160) {
+      res.resizeSection(0, { toSize: 50 })
+      setTolbarSiz(true)
+    } else {
+      res.resizeSection(0, { toSize: 160 })
+      setTolbarSiz(false)
+    }
+    conRef.current.applyResizer(res)
+  }
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
@@ -89,10 +105,8 @@ function Builder(props) {
     }
 
     formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
-    console.log(formData)
     bitsFetch(formData, action)
       .then(response => {
-        console.log('UISave', typeof response.data)
         if (response.success) {
           let { data } = response
           if (typeof data !== 'object') {
@@ -100,16 +114,14 @@ function Builder(props) {
           }
           if (action === 'bitapps_create_new_form') {
             if (savedFormId === 0 && buttonText === 'Save') {
-              if (process.env.NODE_ENV === 'production') {
-              // eslint-disable-next-line no-undef
-                console.log('In Builder fn[saveForm]:', data.id, formName, (0).toPrecision(3))
-              }
               setSavedFormId(data.id)
               setButtonText('Update')
               props.history.replace(`/builder/edit/${data.id}`)
+              setSnackbar({ show: true, msg: 'Form Saved Successfully.' })
             }
             allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
           } else if (action === 'bitapps_update_form') {
+            setSnackbar({ show: true, msg: 'Form Updated Successfully.' })
             allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
         }
@@ -117,8 +129,13 @@ function Builder(props) {
   }
 
   const setSubmitConfig = data => {
-    setForceRender(!forceRender)
-    setSubBtn(data)
+    setSubBtn({ ...data })
+  }
+
+  const updateFields = updatedElm => {
+    const tmp = { ...fields }
+    fields[updatedElm.id] = updatedElm.data
+    setFields(tmp)
   }
 
   return (
@@ -170,20 +187,19 @@ function Builder(props) {
 
       <Switch>
         <Route exact path="/builder/:formType/:formID">
-          <Container className="btcd-bld-con" style={{ height: '100%' }}>
+          <Container ref={conRef} className="btcd-bld-con" style={{ height: '100%' }}>
             <Section
               className="tool-sec"
               defaultSize={160}
               minSize={notIE && 58}
-              style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}
+            // style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}
             >
               <ToolBar
                 setDrgElm={setDrgElm}
                 setNewData={setNewData}
                 className="tile"
                 tolbarSiz={tolbarSiz}
-                setTolbarSiz={setTolbarSiz}
-                setGridWidth={props.setGridWidth}
+                setTolbarSiz={setConSiz}
               />
             </Section>
             <Bar className="bar bar-l" />
@@ -192,14 +208,14 @@ function Builder(props) {
               onSizeChanged={props.setGridWidth}
               minSize={notIE && 320}
               defaultSize={props.gridWidth}
-              style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}
+            // style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}
             >
               {lay !== null && (
                 <small
                   style={{
                     background: 'lightgray',
                     padding: 8,
-                    display: 'block',
+                    display: 'none',
                   }}
                 >
                   {lay.map((item, i) => (
@@ -239,6 +255,7 @@ function Builder(props) {
                 width={props.gridWidth}
                 draggedElm={drgElm}
                 setElmSetting={setElmSetting}
+                fields={fields}
                 newData={newData}
                 setNewData={setNewData}
                 formType={formType}
@@ -246,9 +263,6 @@ function Builder(props) {
                 setLay={setLay}
                 setFields={setFields}
                 setFormName={setFormName}
-                forceRender={forceRender}
-                updatedData={updatedData}
-                updateData={updateData}
                 subBtn={subBtn}
               />
             </Section>
@@ -257,7 +271,7 @@ function Builder(props) {
             <Section id="settings-menu" defaultSize={300}>
               <CompSettings
                 elm={elmSetting}
-                updateData={updateData}
+                updateData={updateFields}
                 setSubmitConfig={setSubmitConfig}
               />
             </Section>

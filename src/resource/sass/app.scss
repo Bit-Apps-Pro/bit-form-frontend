@@ -1,7 +1,7 @@
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0083f3;
-$dp-blue: #192150;
+$dp-blue: #0b1655;
 $bg: #edeff3;
 $red: #ff4646;
 
@@ -25,6 +25,10 @@ body {
 #wpcontent {
   padding-left: 0;
 }
+#wpbody {
+  position: static !important;
+}
+
 .d-non {
   display: none !important;
 }
@@ -45,6 +49,7 @@ body {
 //scroll bar style start
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -87,6 +92,10 @@ body {
   &:active {
     background: #0062b8;
   }
+}
+
+.icn-blue {
+  color: $blue;
 }
 
 .red {
@@ -185,6 +194,8 @@ body {
 }
 
 .btcd-toolbar-title {
+  white-space: nowrap;
+  word-break: keep-all;
   user-select: none;
   -webkit-user-drag: none;
   display: flex;
@@ -216,6 +227,8 @@ body {
 
 .tools {
   font-size: 15px;
+  white-space: nowrap;
+  word-break: keep-all;
   width: 138px;
   height: 35px;
   padding: 8px;
@@ -630,6 +643,9 @@ li b {
 .ml-4 {
   margin-left: 20px !important;
 }
+.ml-2 {
+  margin-left: 10px;
+}
 
 @mixin inp($width: auto) {
   width: $width;
@@ -698,7 +714,7 @@ li b {
 }
 
 .z-9 {
-  overflow: unset;
+  overflow: visible;
   z-index: 9;
 }
 
@@ -1028,36 +1044,70 @@ nav.top-nav {
 
 .btcd-f-t-wrp {
   margin-top: 10px;
-  overflow-x: auto;
+  // overflow-x: auto;
+  //display: inline-block;
+  // width: 100%;
 }
 
 .f-table {
+  // overflow: scroll;
   width: 100%;
   border-collapse: collapse;
-}
-
-.f-table > thead > tr {
   font-size: 14px;
   color: #637192;
 }
 
-.f-table > thead > tr > th {
+.f-table [data-sticky-first-right-td="true"],
+.f-table [data-sticky-last-left-td="true"] {
+  position: sticky !important;
+}
+
+[data-sticky-first-right-td="true"] {
+  box-shadow: -1px 4px 4px 1px #eaeaea;
+}
+
+.f-table .thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.f-table .tbody {
+  position: relative;
+  z-index: 0;
+}
+
+.f-table .thead .tr .th {
+  font-weight: bold;
+  line-height: 1.8;
   user-select: none;
-  border-bottom: 2px solid #dedce4;
+  border-bottom: 1px solid #dedce4;
   overflow: hidden;
+  box-shadow: 0px 3px 2px rgb(223, 223, 223);
   &:hover {
     background: #f0f2f8;
   }
 }
 
-.f-table tbody tr {
+.f-table .tbody .tr,
+.f-table .thead .tr {
   height: 49px;
+  position: relative;
+  outline: none;
+  align-items: center;
   &:hover {
     background: #f4f6ff;
+    z-index: 9;
+    box-shadow: 0px 1px 4px 1px #cacaca;
   }
 }
 
-.f-table tbody tr td {
+.rowClickable .tbody .tr {
+  cursor: pointer;
+}
+
+.f-table .tbody .tr .td {
+  line-height: 1.9;
   padding: 5px 5px;
   font-size: 14px;
   font-weight: bold;
@@ -1070,29 +1120,42 @@ nav.top-nav {
   }
 }
 
-.f-table tbody tr:last-child td {
+.f-table .tbody .tr:last-child .td {
   border-bottom: none;
+}
+
+.btcd-all-frm .tbody .tr .td:last-child,
+.btcd-all-frm .tbody .tr .td:nth-child(4) {
+  overflow: visible;
 }
 
 .btcd-row-selected {
   background: #eff2f5;
 }
 
-.f-table > thead > tr > th {
+.f-table .thead .tr .th {
   border-top: 1px solid #dedce4;
 }
-.f-table > thead > tr > th,
-.f-table tbody tr td {
+
+.f-table > .thead > .tr > .th,
+.f-table .tbody .tr .td {
+  background-color: white;
   text-align: left;
   padding: 10px 0 10px 10px;
-  display: flex !important;
-  align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 100%;
 }
 
-.f-table > thead > tr > th:nth-child(1),
-.f-table tbody tr td:nth-child(1) {
+.f-table .thead .tr .th:nth-child(1),
+.f-table .tbody .tr .td:nth-child(1) {
   width: 70px;
   padding-left: 20px;
+}
+
+.btcd-entries-f .tbody .tr .td:last-child {
+  overflow: visible;
 }
 
 /* .btcd-all-f-scrl {
@@ -1104,6 +1167,34 @@ nav.top-nav {
     }
   }
 } */
+.btcd-hid-icn {
+  display: none !important;
+}
+
+.btcd-t-action-wrp {
+  position: absolute;
+  background: white;
+  top: 0;
+  right: 0;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+  &:hover {
+    width: 172px;
+  }
+}
+
+.btcd-t-action-wrp:hover .btcd-t-action .btcd-hid-icn {
+  display: inline-block !important;
+}
+
+.btcd-t-action-wrp:hover .btcd-t-action .btcd-ph-btn {
+  display: none;
+}
+
+.btcd-t-action {
+  margin-right: 20px;
+}
 
 .f-search {
   font-size: 12 !important;
@@ -1128,7 +1219,7 @@ nav.top-nav {
 }
 
 .icn-btn {
-  color: inherit;
+  color: $dp-blue;
   cursor: pointer;
   font-size: 20px;
   border: 0;
@@ -1150,6 +1241,9 @@ nav.top-nav {
   width: 40px;
   height: 40px;
   font-size: 25px;
+}
+.btcd-icn-sm {
+  font-size: 17px;
 }
 
 .btcd-pagination {
@@ -1264,6 +1358,7 @@ nav.top-nav {
 
 .tooltip {
   &::after {
+    font-family: "Montserrat", sans-serif;
     line-height: 1;
     font-size: 13px;
     content: var(--tooltip-txt);
@@ -1298,14 +1393,15 @@ nav.top-nav {
 }
 
 .btcd-prgrs-wrp {
+  margin-left: 7px;
   width: 70%;
-  height: 8px;
+  height: 6px;
   border-radius: 10px;
   overflow: hidden;
   background-color: #c7d4ff;
 }
 .btcd-prgrs {
-  height: 8px;
+  height: inherit;
   border-radius: inherit;
   background-color: $blue;
 }
@@ -1947,7 +2043,7 @@ nav.top-nav {
   position: absolute;
   right: 0;
   top: 0;
-  border-left: 1px solid #eaeaea;
+  //border-left: 1px solid #eaeaea;
   transform: translateX(50%);
   z-index: 1;
   touch-action: none;
@@ -1992,9 +2088,7 @@ nav.top-nav {
   background: red;
   width: 200px;
   height: 100px;
- // top: 70px;
   right: 40px;
-//  overflow: auto;
   z-index: 9;
 }
 
@@ -2031,10 +2125,13 @@ nav.top-nav {
 .btcd-menu-a {
   display: block;
 }
+
 .btcd-t-actions {
   padding-left: 15px;
   display: inline-block;
+  width: 500px;
 }
+
 .btcd-eye-t {
   user-select: none;
   cursor: pointer;
@@ -2070,11 +2167,42 @@ nav.top-nav {
   transform: scale(0.7);
 }
 
-// style for edge
-/* IE9, IE10, IE11 */
-@media screen and (min-width: 0\0) {
-  .btcd-pane {
-    background-color: red !important;
-    padding-right: 15px !important;
+.btcd-snack {
+  user-select: none;
+  background: #383838;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  box-shadow: 1px 1px 3px 0px #0000004d;
+  transition: right 0.5s;
+}
+
+.btcd-snack-cls {
+  user-select: none;
+  display: inline-block;
+  background: transparentize(#fff, 0.95);
+  height: 25px;
+  width: 25px;
+  border: none;
+  font-size: 21px;
+  padding: 3px 6px;
+  color: white;
+  border-radius: 50px;
+  line-height: 0.8;
+  margin-left: 7px;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    background: transparentize(#fff, 0.8);
   }
+}
+
+// for IE11
+
+_:-ms-fullscreen,
+:root .f-table [data-sticky-first-right-td="true"] {
+  position: relative;
 }

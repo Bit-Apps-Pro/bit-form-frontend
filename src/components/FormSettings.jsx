@@ -14,7 +14,7 @@ export default function FormSettings(props) {
         <br />
         <br />
         <NavLink exact to={`/builder/${formType}/${formID}/settings/`} activeClassName="btcd-f-a">
-          <span className="btcd-icn icn-file-empty" />
+          <span className="btcd-icn icn-file" />
           Form Settings
         </NavLink>
         <NavLink to={`/builder/${formType}/${formID}/settings/email-notification`} activeClassName="btcd-f-a">

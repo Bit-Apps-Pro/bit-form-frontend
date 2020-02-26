@@ -1,17 +1,27 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, memo, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
+import TableAction from '../components/ElmSettings/Childs/TableAction'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
-import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
+import { BitappsContext } from '../Utils/BitappsContext'
+import EditEntryData from '../components/EditEntryData'
 
 
-export default function FormEntries() {
+function FormEntries() {
+  console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
+
+  const { allRes, snackMsg } = useContext(BitappsContext)
+  const { allResp, setAllResp } = allRes
+  const { setSnackbar } = snackMsg
   const { formID } = useParams()
-  const [pageSize, setPageSize] = useState(10)
-  const [entryCount, setEntryCount] = useState(0)
+  const [pageCount, setPageCount] = React.useState(0)
+  const fetchIdRef = React.useRef(0)
+  const [showEditMdl, setShowEditMdl] = useState(false)
+  let totalData = 0
+
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
     { Header: 'Status', accessor: 'status' },
@@ -20,97 +30,151 @@ export default function FormEntries() {
     { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { Header: 'ress', accessor: 'entries' },
     { Header: 'Created', accessor: 'created_at' },
-    { Header: 'Actions', accessor: 'actions', Cell: val => <MenuBtn formID={val.row.original.formID} /> },
-  ])
-  const [data, setData] = useState([
-    { formID: 333, status: 0, formName: 'member', shortcode: 'test', entries: 23, views: 79, conversion: 96, created_at: '2 Dec' },
-    { formID: 111, status: 1, formName: 'lace', shortcode: 'guitar', entries: 5, views: 38, conversion: 57, created_at: '2 Dec' },
-    { formID: 222, status: 1, formName: 'toys', shortcode: 'camp', entries: 12, views: 75, conversion: 28, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'girlfriend', shortcode: 'yard', entries: 0, views: 89, conversion: 89, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'environment', shortcode: 'love', entries: 20, views: 65, conversion: 67, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'bread', shortcode: 'bait', entries: 21, views: 26, conversion: 47, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'farm', shortcode: 'bone', entries: 8, views: 85, conversion: 80, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'location', shortcode: 'string', entries: 19, views: 3, conversion: 14, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'conclusion', shortcode: 'story', entries: 16, views: 84, conversion: 18, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'shirt', shortcode: 'rain', entries: 20, views: 66, conversion: 3, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'singer', shortcode: 'leader', entries: 10, views: 75, conversion: 82, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'year', shortcode: 'recording', entries: 26, views: 81, conversion: 82, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'point', shortcode: 'ear', entries: 5, views: 35, conversion: 88, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'attack', shortcode: 'rail', entries: 25, views: 46, conversion: 85, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'development', shortcode: 'carriage', entries: 6, views: 45, conversion: 83, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'fog', shortcode: 'letter', entries: 6, views: 43, conversion: 59, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'boot', shortcode: 'yam', entries: 16, views: 20, conversion: 9, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'governor', shortcode: 'difficulty', entries: 1, views: 51, conversion: 5, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'worker', shortcode: 'wilderness', entries: 4, views: 92, conversion: 11, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'emphasis', shortcode: 'stream', entries: 7, views: 5, conversion: 51, created_at: '2 Dec' },
-    { formID: 123, status: 0, formName: 'currency', shortcode: 'pain', entries: 15, views: 7, conversion: 85, created_at: '2 Dec' },
+    {
+      id: 't_action',
+      width: 70,
+      maxWidth: 70,
+      minWidth: 70,
+      sticky: 'right',
+      accessor: 'table_ac',
+      Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+      Cell: val => <TableAction edit={editData} del={setBulkDelete} dup={bulkDuplicateData} id={val.row} dataSrc="entries" />,
+    },
   ])
 
-  useEffect(() => {
-    const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
+  const fetchData = useCallback(({ pageSize, pageIndex }) => {
+    // eslint-disable-next-line no-plusplus
+    const fetchId = ++fetchIdRef.current
+    if (totalData === 0) {
+      const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
-    bitsFetch(fdata, 'bitapps_get_form_entry_count')
-      .then(response => {
-        if (response !== undefined && response.success) {
-          setEntryCount(response.data.count)
-          const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key }))
-          setEntryLabels(cols)
-        }
-      })
-    bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
-      if (res !== undefined && res.success) {
-        setData(res.data)
+      bitsFetch(formIndex, 'bitapps_get_form_entry_count')
+        .then(response => {
+          if (response !== undefined && response.success) {
+            totalData = response.data.count
+            setPageCount(((response.data.count / 10) % 1 === 0) ? (response.data.count / 10) : Math.floor(response.data.count / 10) + 1)
+            const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key, minWidth: 50 }))
+            cols.push({
+              id: 't_action',
+              width: 70,
+              maxWidth: 70,
+              minWidth: 70,
+              sticky: 'right',
+              Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+              accessor: 'table_ac',
+              Cell: val => <TableAction edit={editData} del={setBulkDelete} dup={bulkDuplicateData} id={val.row} dataSrc="entries" />,
+            })
+            setEntryLabels(cols)
+          }
+        })
+    }
+    setTimeout(() => {
+      if (fetchId === fetchIdRef.current) {
+        const startRow = pageSize * pageIndex
+        const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
+        bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
+          if (res !== undefined && res.success) {
+            if (totalData > 0) {
+              setPageCount(Math.ceil(totalData / pageSize))
+            }
+            setAllResp(res.data)
+          }
+        })
       }
-    })
+    }, 1000)
   }, [formID])
 
-  const getPageSize = (changedPageSize, changedPageIndex) => {
-    // eslint-disable-next-line no-param-reassign
-    changedPageIndex = changedPageIndex === 0 ? 1 : changedPageIndex
-    if (entryCount > pageSize) {
-      bitsFetch({ id: formID, offset: (changedPageIndex - 1) * pageSize, changedPageSize }, 'bitapps_get_form_entries').then(res => {
-        setData(res.data)
-      })
+  const setBulkDelete = useCallback((rows, tmpData) => {
+    const rowID = []
+    const entries = []
+    if (typeof rows[0] === 'object') {
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID.push(rows[i].id)
+        entries.push(rows[i].original.entry_id)
+      }
+    } else {
+      rowID.push(rows.id)
+      entries.push(rows.original.entry_id)
     }
-    setPageSize(changedPageSize)
-  }
-
-  const getPageIndex = (changedPageIndex) => {
-    if (entryCount > pageSize) {
-      bitsFetch({ id: formID, offset: changedPageIndex * pageSize, pageSize }, 'bitapps_get_form_entries').then(res => {
-        setData(res.data)
-      })
+    const newData = tmpData !== undefined ? [...tmpData] : [...allResp]
+    for (let i = rowID.length - 1; i >= 0; i -= 1) {
+      newData.splice(Number(rowID[i]), 1)
     }
-  }
+    const ajaxData = { formID, entries }
 
-  const setBulkDelete = () => {
+    bitsFetch(ajaxData, 'bitapps_bulk_delete_form_entries')
+      .then(res => {
+        if (res.success) {
+          setAllResp(newData)
+          setSnackbar({ show: true, msg: res.data.message })
+        }
+      })
+  }, [])
 
-  }
-
-  const setEntriesCol = newCols => {
+  const setEntriesCol = useCallback(newCols => {
     setEntryLabels(newCols)
-  }
+  }, [])
+
+  const bulkDuplicateData = useCallback((rows, tmpData) => {
+    const rowID = []
+    const entries = []
+    if (typeof rows[0] === 'object') {
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID[rows[i].original.entry_id] = rows[i].id
+        entries.push(rows[i].original.entry_id)
+      }
+    } else {
+      rowID[rows.original.entry_id] = rows.id
+      entries.push(rows.original.entry_id)
+    }
+    const newData = tmpData !== undefined ? [...tmpData] : [...allResp]
+
+    const ajaxData = { formID, entries }
+    bitsFetch(ajaxData, 'bitapps_duplicate_form_entries')
+      .then(res => {
+        if (res.success && res.data.message !== 'undefined') {
+          Object.entries(res.data.details).forEach(([entryId, duplicatedId]) => {
+            allResp[rowID[entryId]].entry_id = duplicatedId
+            newData.push(allResp[rowID[entryId]])
+          })
+          setAllResp(newData)
+          setSnackbar({ show: true, msg: res.data.message })
+        }
+      })
+  }, [])
+
+  const editData = useCallback(id => {
+    console.log('edit', id)
+  }, [])
 
   return (
     <div id="form-res">
+      <button onClick={() => setShowEditMdl(true)}>edit</button>
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
+      {showEditMdl && <EditEntryData close={setShowEditMdl} />}
       <div className="forms">
         <Table
-          height="68vh"
+          className="btcd-entries-f"
+          height="60vh"
           columns={entryLabels}
-          data={data}
+          data={allResp}
           rowSeletable
           resizable
           columnHidable
-          getPageSize={getPageSize}
-          pageCount={Math.floor(entryCount / pageSize) + 1}
-          getPageIndex={getPageIndex}
-          setBulkDelete={setBulkDelete}
+          hasAction
+          // rowClickable
           setTableCols={setEntriesCol}
+          fetchData={fetchData}
+          setBulkDelete={setBulkDelete}
+          duplicateData={bulkDuplicateData}
+          pageCount={pageCount}
+          edit={editData}
         />
       </div>
     </div>
   )
 }
+
+export default memo(FormEntries)

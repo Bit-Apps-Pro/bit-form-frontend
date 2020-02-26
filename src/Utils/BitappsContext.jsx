@@ -1,9 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useState } from 'react'
 
 const AllFormsDispatchHandler = (allForms, action) => {
-  console.log('In Context', action.data, action.type)
   switch (action.type) {
     case 'add':
       return [...allForms, action.data]
@@ -14,8 +13,11 @@ const AllFormsDispatchHandler = (allForms, action) => {
     case 'update': {
       allForms.map(form => {
         if (form.formID === action.data.formID) {
-          form.formName = action.data.formName
+          Object.entries(action.data).forEach(([field, fieldV]) => {
+            form[field] = action.data[field]
+          })
         }
+        return null
       })
       return [...allForms]
     }
@@ -26,6 +28,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
     default:
       break
   }
+  return null
 }
 
 const BitappsContext = createContext()
@@ -59,10 +62,22 @@ const BitappsContextProvider = (props) => {
     allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
+  const [allResp, setAllResp] = useState(allFormsInitialState)
+  const [snackbar, setSnackbar] = useState({ show: false, msg: '' })
+  const [confModal, setConfModal] = useState({ show: false, title: null, subTitle: null, yesBtn: 'Yes', noBtn: 'No', yesAction: () => null, noAction: hideConfModal })
+
+  function hideConfModal() {
+    const tmp = { ...confModal }
+    tmp.show = false
+    setConfModal(tmp)
+  }
   return (
     <BitappsContext.Provider
       value={{
         allFormsData: { allForms, allFormsDispatchHandler },
+        snackMsg: { snackbar, setSnackbar },
+        confirmModal: { confModal, setConfModal, hideConfModal },
+        allRes: { allResp, setAllResp },
       }}
     >
       {props.children}
