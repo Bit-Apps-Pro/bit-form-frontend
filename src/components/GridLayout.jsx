@@ -8,7 +8,7 @@ import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 
 function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
@@ -37,8 +37,8 @@ function GridLayout(props) {
       if (props.formID === 'blank') {
         setisLoading(false)
       } else {
-        const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: props.formID }) : { template: props.formID }
-        bitsFetch(pram, 'bitapps_get_template')
+        // const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: props.formID }) : { template: props.formID }
+        bitsFetch({ template: props.formID }, 'bitapps_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               const responseData = JSON.parse(res.data)
@@ -56,8 +56,8 @@ function GridLayout(props) {
           })
       }
     } else if (props.formType === 'edit') {
-      const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: props.formID }) : { id: props.formID }
-      bitsFetch(pram, 'bitapps_get_a_form')
+      // const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: props.formID }) : { id: props.formID }
+      bitsFetch({ id: props.formID }, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
             console.log('edit gfetched')

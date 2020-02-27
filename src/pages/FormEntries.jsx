@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState, useContext, memo, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
@@ -49,9 +49,9 @@ function FormEntries() {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     if (totalData === 0) {
-      const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
+      // const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
-      bitsFetch(formIndex, 'bitapps_get_form_entry_count')
+      bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
         .then(response => {
           if (response !== undefined && response.success) {
             totalData = response.data.count
@@ -74,8 +74,8 @@ function FormEntries() {
     setTimeout(() => {
       if (fetchId === fetchIdRef.current) {
         const startRow = pageSize * pageIndex
-        const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
-        bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
+        // const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
+        bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
           if (res !== undefined && res.success) {
             if (totalData > 0) {
               setPageCount(Math.ceil(totalData / pageSize))

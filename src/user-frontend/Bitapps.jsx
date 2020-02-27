@@ -19,7 +19,7 @@ export default function Bitapps(props) {
           gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
           gridRowStart: field.y + 1, /* y-0 -> y + 1 */
           gridRowEnd: field.y !== 1 && field.h + (field.y + 1), /* h-4 -> if y not 1 then h+y */
-          // height: field.h * 40, /* h * 40px */
+          minHeight: field.h * 40, /* h * 40px */
         }}
         key={field.i}
         btcd-id={field.i}
@@ -107,15 +107,9 @@ export default function Bitapps(props) {
         snack
         && <Toast msg={message} show={snack} setSnack={setSnack} />
       }
-      <form id={`form-${process.env.NODE_ENV === 'production' && typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        {
-        typeof bitAppsFront !== 'undefined'
-          && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />
-        }
-        {
-        typeof bitAppsFront !== 'undefined'
-          && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />
-        }
+      <form ref={props.refer} id={`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />}
+        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />}
         <div
           style={style}
           cols={{ lg: 10 }}
