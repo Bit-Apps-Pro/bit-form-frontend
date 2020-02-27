@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -12,6 +12,8 @@ import bitsFetch, { prepareData } from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 
 export default function AllFroms() {
+  console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
+
   const [modal, setModal] = useState(false)
   const { allFormsData, snackMsg } = useContext(BitappsContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
@@ -56,7 +58,7 @@ export default function AllFroms() {
     }
   }, [])
 
-  const setBulkStatus = (rows) => {
+  const setBulkStatus = useCallback(rows => {
     const status = e.target.innerHTML === 'Enable'
     const rowID = []
     const formID = []
@@ -82,9 +84,9 @@ export default function AllFroms() {
           setSnackbar({ show: true, msg: res.data })
         }
       })
-  }
+  }, [])
 
-  const setBulkDelete = (e, rows) => {
+  const setBulkDelete = useCallback(rows => {
     const rowID = []
     const formID = []
     for (let i = 0; i < rows.length; i += 1) {
@@ -109,11 +111,11 @@ export default function AllFroms() {
           setSnackbar({ show: true, msg: res.data })
         }
       })
-  }
+  }, [])
 
-  const setTableCols = newCols => {
+  const setTableCols = useCallback(newCols => {
     setCols(newCols)
-  }
+  }, [])
 
   return (
     <div id="all-forms">

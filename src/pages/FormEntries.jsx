@@ -8,6 +8,7 @@ import TableAction from '../components/ElmSettings/Childs/TableAction'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import { BitappsContext } from '../Utils/BitappsContext'
 import EditEntryData from '../components/EditEntryData'
+import Drawer from '../components/Drawer'
 
 
 function FormEntries() {
@@ -17,9 +18,11 @@ function FormEntries() {
   const { allResp, setAllResp } = allRes
   const { setSnackbar } = snackMsg
   const { formID } = useParams()
-  const [pageCount, setPageCount] = React.useState(0)
   const fetchIdRef = React.useRef(0)
+  const [pageCount, setPageCount] = React.useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
+  const [entryID, setEntryID] = useState(null)
+  const [rowDtl, setRowDtl] = useState(false)
   let totalData = 0
 
   const [entryLabels, setEntryLabels] = useState([
@@ -77,6 +80,8 @@ function FormEntries() {
             if (totalData > 0) {
               setPageCount(Math.ceil(totalData / pageSize))
             }
+            console.log('new data', res.data)
+
             setAllResp(res.data)
           }
         })
@@ -109,7 +114,7 @@ function FormEntries() {
           setSnackbar({ show: true, msg: res.data.message })
         }
       })
-  }, [])
+  }, [allResp])
 
   const setEntriesCol = useCallback(newCols => {
     setEntryLabels(newCols)
@@ -141,19 +146,47 @@ function FormEntries() {
           setSnackbar({ show: true, msg: res.data.message })
         }
       })
-  }, [])
+  }, [allResp])
 
   const editData = useCallback(id => {
-    console.log('edit', id)
+    console.log('asdasdas', formID, id.original.entry_id)
+    setEntryID(id.original.entry_id)
+    setShowEditMdl(true)
+  }, [])
+
+  const onRowClick = useCallback(row => {
+    console.log(allResp)
   }, [])
 
   return (
     <div id="form-res">
-      <button onClick={() => setShowEditMdl(true)}>edit</button>
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
-      {showEditMdl && <EditEntryData close={setShowEditMdl} />}
+      <button onClick={() => setRowDtl(!rowDtl)}>set </button>
+      {showEditMdl
+        && (
+          <EditEntryData
+            close={setShowEditMdl}
+            formID={formID}
+            entryID={entryID}
+          />
+        )}
+
+      <Drawer
+        title="Details view"
+        subTitle="adsff"
+        show={rowDtl}
+        close={setRowDtl}
+      >
+        <table className="btcd-row-detail-tbl">
+          <tr>
+            <th>sdafsf</th>
+            <td>asdf</td>
+          </tr>
+        </table>
+      </Drawer>
+
       <div className="forms">
         <Table
           className="btcd-entries-f"
@@ -164,13 +197,14 @@ function FormEntries() {
           resizable
           columnHidable
           hasAction
-          // rowClickable
+          rowClickable
           setTableCols={setEntriesCol}
           fetchData={fetchData}
           setBulkDelete={setBulkDelete}
           duplicateData={bulkDuplicateData}
           pageCount={pageCount}
           edit={editData}
+          onRowClick={onRowClick}
         />
       </div>
     </div>

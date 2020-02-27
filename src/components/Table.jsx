@@ -145,10 +145,6 @@ function Table(props) {
     setConfModal(bdel)
   }
 
-  const showDetailMdl = () => {
-
-  }
-
   return (
     <>
       <div className="btcd-t-actions">
@@ -238,8 +234,8 @@ function Table(props) {
                 return (
                   <div
                     className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
-                    onClick={() => props.rowClickable && showDetailMdl(row.original)}
-                    onKeyPress={() => props.rowClickable && showDetailMdl(row.original)}
+                    onClick={() => props.rowClickable && props.onRowClick(row)}
+                    onKeyPress={() => props.rowClickable && props.onRowClick(row.original)}
                     role="button"
                     tabIndex={0}
                     {...row.getRowProps()}
