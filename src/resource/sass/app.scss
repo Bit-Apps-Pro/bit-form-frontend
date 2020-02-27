@@ -491,6 +491,7 @@ li b {
   width: 100%;
   background: #fff;
   height: 100%;
+  min-height: inherit;
   padding: 10px;
   box-sizing: border-box;
 
@@ -501,6 +502,7 @@ li b {
 
   & > textarea {
     height: calc(100% - 20px);
+    min-height: inherit;
     resize: none;
   }
 }

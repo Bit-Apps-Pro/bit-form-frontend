@@ -6,7 +6,7 @@ import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 
 function Builder(props) {
@@ -108,7 +108,6 @@ function Builder(props) {
       action = 'bitapps_update_form'
     }
 
-    formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
     bitsFetch(formData, action)
       .then(response => {
         if (response.success) {
