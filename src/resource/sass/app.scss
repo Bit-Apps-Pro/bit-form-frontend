@@ -58,6 +58,7 @@ body {
 
 ::-webkit-scrollbar-track:hover {
   background: #f1f1f1;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -709,6 +710,12 @@ li b {
   height: 40px;
 }
 
+.btn-md {
+  font-weight: bold;
+  padding: 5px 20px;
+  height: 30px;
+}
+
 .round {
   border-radius: 50px;
 }
@@ -1129,8 +1136,8 @@ nav.top-nav {
   overflow: visible;
 }
 
-.btcd-row-selected {
-  background: #eff2f5;
+.btcd-row-selected > .td {
+  background: #eff2f5 !important;
 }
 
 .f-table .thead .tr .th {
@@ -1181,6 +1188,7 @@ nav.top-nav {
   width: 100%;
   &:hover {
     width: 172px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 27%);
   }
 }
 
@@ -1539,6 +1547,12 @@ nav.top-nav {
   margin-top: 7px;
 }
 
+.btcd-mdl-hdr-btn {
+  position: absolute;
+  right: 50px;
+  top: 2px;
+}
+
 .btcd-tem-lay {
   display: flex;
 }
@@ -1631,16 +1645,24 @@ nav.top-nav {
   }
 }
 
-.btcd-wp-ful-scn {
-  left: -160px !important;
-  right: 0 !important;
-  top: -31px !important;
-  z-index: 99999 !important;
-  border-radius: 0 !important;
-  margin-bottom: 0 !important;
-  & > .btcd-bld-nav {
-    height: 40px !important;
-    transition: height 0.5s 0.7s !important;
+.btcd-drawer {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 400px;
+  background: white;
+  z-index: 9;
+  padding: 20px;
+  box-shadow: -2px 0 4px 1px transparentize(#000000, 0.7);
+  transition: right 0.5s ease;
+}
+
+.btcd-row-detail-tbl {
+  & tr th {
+    padding: 10px;
+  }
+  & tr td {
+    padding: 10px;
   }
 }
 
@@ -1685,6 +1707,7 @@ nav.top-nav {
     }
   }
 }
+
 .btcd-bld-btn {
   display: flex;
   align-items: center;
@@ -1928,6 +1951,12 @@ nav.top-nav {
   width: 350px !important;
   height: 150px !important;
   text-align: center !important;
+}
+
+.btcd-m-lg {
+  width: 80% !important;
+  overflow: auto;
+  height: 90% !important;
 }
 
 .btcd-tabl-lnk {

@@ -1,21 +1,82 @@
 import React, { useState, useEffect } from 'react'
 import Modal from './Modal'
+import bitsFetch from '../Utils/bitsFetch'
+import Bitapps from '../user-frontend/Bitapps.jsx'
 
 export default function EditEntryData(props) {
-  const [showEdit, setshowEdit] = useState(false)
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
+
+  const [showEdit, setshowEdit] = useState(false)
+  const [data, setData] = useState({ layout: null, fields: null })
+
+
   useEffect(() => {
     setshowEdit(true)
+    bitsFetch({ formID: props.formID, entryID: props.entryID }, 'bitapps_edit_form_entry')
+      .then(res => {
+        if (res !== undefined && res.success) {
+          setData({ layout: res.data.layout, fields: res.data.fields })
+          console.log('data res', res.data)
+        }
+      })
   }, [])
+
+  const saveNewData = () => {
+    console.log("update data")
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const formData = new FormData()
+      // const fields = Array.prototype.slice.call(event.target)
+      .filter(el => {
+        if (el.type === 'file' && el.files.length > 0) {
+          if (el.files.length > 1) {
+            el.files.forEach(file => formData.append(`${el.name}[]`, file))
+          } else {
+            el.files.forEach(file => formData.append(el.name, file))
+          }
+        } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
+          formData.append(el.name, el.value)
+        } else if (el.type === 'select') {
+          formData.append(el.name, el.value)
+        } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
+          formData.append(el.name, el.value)
+        }
+      })
+    /* bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
+      .then(response => {
+        if (response !== undefined && response.success) {
+          setMessage(response.data)
+          setSnack(true)
+          // window.location = '/'
+        }
+      }) */
+  }
+
+  function SaveBtn() {
+    return (
+      <button onClick={saveNewData} type="button" className="btn btn-md blue btcd-mdl-hdr-btn">Update</button>
+    )
+  }
 
   return (
     <Modal
+      hdrActn={<SaveBtn />}
+      lg
       show={showEdit}
       setModal={props.close}
       title="Edit"
-      subTitle="Edit Entry Data."
     >
-      sdfs
+      <div style={{ overflow: 'auto' }}>
+        {data.layout !== null && (
+          <Bitapps
+            editMode
+            layout={data.layout}
+            data={data.fields}
+          />
+        )}
+      </div>
     </Modal>
   )
 }

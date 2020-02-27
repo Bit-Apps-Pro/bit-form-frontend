@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default function Modal(props) {
   const handleClickOutside = e => {
@@ -15,8 +15,9 @@ export default function Modal(props) {
       onClick={handleClickOutside}
       className={`btcd-modal-wrp ${props.show && 'btcd-modal-show'}`}
     >
-      <div className={`btcd-modal ${props.sm && 'btcd-m-sm'}`}>
+      <div className={`btcd-modal ${props.sm && 'btcd-m-sm'} ${props.lg && 'btcd-m-lg'}`}>
         <div className="btcd-modal-content">
+          {props.hdrActn}
           <button onClick={() => props.setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><span>&#10799;</span></button>
           <h2 className="btcd-mdl-title">{props.title}</h2>
           <small className="btcd-mdl-subtitle">{props.subTitle}</small>

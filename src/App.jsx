@@ -29,6 +29,7 @@ const Dashboard = () => (
 )
 
 export default function App() {
+  console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
 
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
   const { confirmModal, snackMsg } = React.useContext(BitappsContext)
