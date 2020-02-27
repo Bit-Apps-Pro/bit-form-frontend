@@ -34,22 +34,22 @@ export default function Bitapps(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = new FormData()
-      // const fields = Array.prototype.slice.call(event.target)
-      .filter(el => {
-        if (el.type === 'file' && el.files.length > 0) {
-          if (el.files.length > 1) {
-            el.files.forEach(file => formData.append(`${el.name}[]`, file))
-          } else {
-            el.files.forEach(file => formData.append(el.name, file))
-          }
-        } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-          formData.append(el.name, el.value)
-        } else if (el.type === 'select') {
-          formData.append(el.name, el.value)
-        } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-          formData.append(el.name, el.value)
+    const fields = Array.prototype.slice.call(event.target)
+    fields.filter(el => {
+      if (el.type === 'file' && el.files.length > 0) {
+        if (el.files.length > 1) {
+          el.files.forEach(file => formData.append(`${el.name}[]`, file))
+        } else {
+          el.files.forEach(file => formData.append(el.name, file))
         }
-      })
+      } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
+        formData.append(el.name, el.value)
+      } else if (el.type === 'select') {
+        formData.append(el.name, el.value)
+      } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
+        formData.append(el.name, el.value)
+      }
+    })
     bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
       .then(response => {
         if (response !== undefined && response.success) {
@@ -107,9 +107,15 @@ export default function Bitapps(props) {
         snack
         && <Toast msg={message} show={snack} setSnack={setSnack} />
       }
-      <form id={`form-${process.env.NODE_ENV === 'production' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />
-        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />
+      <form id={`form-${process.env.NODE_ENV === 'production' && typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        {
+        typeof bitAppsFront !== 'undefined'
+          && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />
+        }
+        {
+        typeof bitAppsFront !== 'undefined'
+          && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />
+        }
         <div
           style={style}
           cols={{ lg: 10 }}
