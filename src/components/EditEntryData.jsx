@@ -46,7 +46,8 @@ export default function EditEntryData(props) {
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}, ${pair[1]}`);
     }
-    bitsFetch(formData, 'bitapps_update_form_entry', 'multipart/form-data')
+    const queryParam = {formID: props.formID, entryID: props.entryID }
+    bitsFetch(formData, 'bitapps_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
           setMessage(response.data.message)
