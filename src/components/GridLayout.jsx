@@ -132,12 +132,14 @@ export default function GridLayout(props) {
   }
 
   const { newData, fields, setFields } = props
-
   useEffect(() => {
-    // comp mount
     if (isFetching) {
       fetchTemplate()
     }
+  }, [])
+  useEffect(() => {
+    // comp mount
+    
     if (newData !== null) {
       margeNewData()
     }

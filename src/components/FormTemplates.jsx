@@ -25,7 +25,7 @@ export default function FormTemplates() {
         fetchTemplates()
       }
     }
-  })
+  }, [])
   return (
     templates
     && templates.map(template => (

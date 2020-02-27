@@ -109,6 +109,7 @@ export default function CompGen(props) {
           {...'mul' in attr && { multiple: attr.mul }}
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'val' in attr && { value: attr.val }}
+          {...'name' in attr && { name: attr.name }}
         >
           <option data-placeholder="true" aria-label="option placeholder" />
           {attr.opt.map((itm, i) => (
