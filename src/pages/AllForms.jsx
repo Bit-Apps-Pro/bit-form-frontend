@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -8,10 +8,12 @@ import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 
 export default function AllFroms() {
+  console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
+
   const [modal, setModal] = useState(false)
   const { allFormsData, snackMsg } = useContext(BitappsContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
@@ -46,7 +48,7 @@ export default function AllFroms() {
 
   React.useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      bitsFetch(prepareData({}), 'bitapps_get_all_form')
+      bitsFetch(null, 'bitapps_get_all_form')
         .then(res => {
           if (res !== undefined && res.success && typeof res.data === 'object') {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
@@ -56,7 +58,7 @@ export default function AllFroms() {
     }
   }, [])
 
-  const setBulkStatus = (rows) => {
+  const setBulkStatus = useCallback(rows => {
     const status = e.target.innerHTML === 'Enable'
     const rowID = []
     const formID = []
@@ -70,10 +72,10 @@ export default function AllFroms() {
       newData[rowID[i]].status = status
     }
     allFormsDispatchHandler({ data: newData, type: 'set' })
-    let ajaxData = { formID, status }
-    if (process.env.NODE_ENV === 'development') {
+    const ajaxData = { formID, status }
+    /* if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
-    }
+    } */
     bitsFetch(ajaxData, 'bitapps_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
@@ -82,9 +84,9 @@ export default function AllFroms() {
           setSnackbar({ show: true, msg: res.data })
         }
       })
-  }
+  }, [])
 
-  const setBulkDelete = (e, rows) => {
+  const setBulkDelete = useCallback(rows => {
     const rowID = []
     const formID = []
     for (let i = 0; i < rows.length; i += 1) {
@@ -97,10 +99,10 @@ export default function AllFroms() {
       newData.splice(Number(rowID[i]), 1)
     }
     allFormsDispatchHandler({ data: newData, type: 'set' })
-    let ajaxData = { formID }
-    if (process.env.NODE_ENV === 'development') {
+    const ajaxData = { formID }
+    /* if (process.env.NODE_ENV === 'development') {
       ajaxData = prepareData(ajaxData)
-    }
+    } */
     bitsFetch(ajaxData, 'bitapps_bulk_delete_form')
       .then(res => {
         if (res !== undefined && !res.success) {
@@ -109,11 +111,11 @@ export default function AllFroms() {
           setSnackbar({ show: true, msg: res.data })
         }
       })
-  }
+  }, [])
 
-  const setTableCols = newCols => {
+  const setTableCols = useCallback(newCols => {
     setCols(newCols)
-  }
+  }, [])
 
   return (
     <div id="all-forms">

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback, memo } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import ToolBar from '../components/Toolbar'
@@ -6,7 +6,7 @@ import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings'
 import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 
 function Builder(props) {
@@ -87,6 +87,10 @@ function Builder(props) {
     }
   }, [])
 
+  const handleFormName = e => {
+    setFormName(e.target.value)
+  }
+
   const saveForm = () => {
     let formData = {
       layout: lay,
@@ -104,7 +108,6 @@ function Builder(props) {
       action = 'bitapps_update_form'
     }
 
-    formData = process.env.NODE_ENV === 'development' ? prepareData(formData) : formData
     bitsFetch(formData, action)
       .then(response => {
         if (response.success) {
@@ -138,6 +141,10 @@ function Builder(props) {
     setFields(tmp)
   }
 
+  const setElementSetting = useCallback(elm => {
+    setElmSetting(elm)
+  }, [])
+
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
       <nav className="btcd-bld-nav">
@@ -170,7 +177,7 @@ function Builder(props) {
         <div className="btcd-bld-title">
           <input
             className="btcd-bld-title-inp br-50"
-            onChange={e => setFormName(e.target.value)}
+            onChange={handleFormName}
             value={formName}
           />
         </div>
@@ -254,7 +261,7 @@ function Builder(props) {
                 theme={formSettings.theme}
                 width={props.gridWidth}
                 draggedElm={drgElm}
-                setElmSetting={setElmSetting}
+                setElmSetting={setElementSetting}
                 fields={fields}
                 newData={newData}
                 setNewData={setNewData}
@@ -262,7 +269,7 @@ function Builder(props) {
                 formID={formID}
                 setLay={setLay}
                 setFields={setFields}
-                setFormName={setFormName}
+                // setFormName={setFormName}
                 subBtn={subBtn}
               />
             </Section>
@@ -293,4 +300,4 @@ function Builder(props) {
   )
 }
 
-export default withRouter(Builder)
+export default memo(withRouter(Builder)) 

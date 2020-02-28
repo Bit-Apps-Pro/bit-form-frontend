@@ -6,7 +6,7 @@ export default function SnackMsg() {
   const { snackbar, setSnackbar } = snackMsg
   const [show, setshow] = useState(false)
   useEffect(() => {
-    setshow(true)
+    setTimeout(() => { setshow(true) }, 1)
     setTimeout(() => { setshow(false) }, 2000)
     setTimeout(() => { setSnackbar({ show: false, msg: '' }) }, 2500)
   }, [])

@@ -8,7 +8,7 @@ import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 
 export default class GridLayout extends React.PureComponent {
   /*
@@ -45,8 +45,8 @@ export default class GridLayout extends React.PureComponent {
       if (this.props.formID === 'blank') {
         this.setState({ isLoading: false })
       } else {
-        const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: this.props.formID }) : { template: this.props.formID }
-        bitsFetch(pram, 'bitapps_get_template')
+        // const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: this.props.formID }) : { template: this.props.formID }
+        bitsFetch({ template: this.props.formID }, 'bitapps_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               const responseData = JSON.parse(res.data)
@@ -58,8 +58,8 @@ export default class GridLayout extends React.PureComponent {
         this.setState({ isLoading: false })
       }
     } else if (this.props.formType === 'edit') {
-      const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: this.props.formID }) : { id: this.props.formID }
-      bitsFetch(pram, 'bitapps_get_a_form')
+      // const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: this.props.formID }) : { id: this.props.formID }
+      bitsFetch({ id: this.props.formID }, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
             const responseData = JSON.parse(res.data)

@@ -1,13 +1,14 @@
 /* eslint-disable no-undef */
 import React, { useState, useContext, memo, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 import Table from '../components/Table'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import { BitappsContext } from '../Utils/BitappsContext'
 import EditEntryData from '../components/EditEntryData'
+import Drawer from '../components/Drawer'
 
 
 function FormEntries() {
@@ -17,9 +18,11 @@ function FormEntries() {
   const { allResp, setAllResp } = allRes
   const { setSnackbar } = snackMsg
   const { formID } = useParams()
-  const [pageCount, setPageCount] = React.useState(0)
   const fetchIdRef = React.useRef(0)
+  const [pageCount, setPageCount] = React.useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
+  const [entryID, setEntryID] = useState(null)
+  const [rowDtl, setRowDtl] = useState(false)
   let totalData = 0
 
   const [entryLabels, setEntryLabels] = useState([
@@ -46,9 +49,9 @@ function FormEntries() {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     if (totalData === 0) {
-      const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
+      // const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
-      bitsFetch(formIndex, 'bitapps_get_form_entry_count')
+      bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
         .then(response => {
           if (response !== undefined && response.success) {
             totalData = response.data.count
@@ -71,12 +74,14 @@ function FormEntries() {
     setTimeout(() => {
       if (fetchId === fetchIdRef.current) {
         const startRow = pageSize * pageIndex
-        const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
-        bitsFetch(fdata, 'bitapps_get_form_entries').then(res => {
+        // const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
+        bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
           if (res !== undefined && res.success) {
             if (totalData > 0) {
               setPageCount(Math.ceil(totalData / pageSize))
             }
+            console.log('new data', res.data)
+
             setAllResp(res.data)
           }
         })
@@ -109,7 +114,7 @@ function FormEntries() {
           setSnackbar({ show: true, msg: res.data.message })
         }
       })
-  }, [])
+  }, [allResp])
 
   const setEntriesCol = useCallback(newCols => {
     setEntryLabels(newCols)
@@ -141,19 +146,47 @@ function FormEntries() {
           setSnackbar({ show: true, msg: res.data.message })
         }
       })
-  }, [])
+  }, [allResp])
 
   const editData = useCallback(id => {
-    console.log('edit', id)
+    console.log('asdasdas', formID, id.original.entry_id)
+    setEntryID(id.original.entry_id)
+    setShowEditMdl(true)
+  }, [])
+
+  const onRowClick = useCallback(row => {
+    console.log(allResp)
   }, [])
 
   return (
     <div id="form-res">
-      <button onClick={() => setShowEditMdl(true)}>edit</button>
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
-      {showEditMdl && <EditEntryData close={setShowEditMdl} />}
+      <button onClick={() => setRowDtl(!rowDtl)}>set </button>
+      {showEditMdl
+        && (
+          <EditEntryData
+            close={setShowEditMdl}
+            formID={formID}
+            entryID={entryID}
+          />
+        )}
+
+      <Drawer
+        title="Details view"
+        subTitle="adsff"
+        show={rowDtl}
+        close={setRowDtl}
+      >
+        <table className="btcd-row-detail-tbl">
+          <tr>
+            <th>sdafsf</th>
+            <td>asdf</td>
+          </tr>
+        </table>
+      </Drawer>
+
       <div className="forms">
         <Table
           className="btcd-entries-f"
@@ -164,13 +197,14 @@ function FormEntries() {
           resizable
           columnHidable
           hasAction
-          // rowClickable
+          rowClickable
           setTableCols={setEntriesCol}
           fetchData={fetchData}
           setBulkDelete={setBulkDelete}
           duplicateData={bulkDuplicateData}
           pageCount={pageCount}
           edit={editData}
+          onRowClick={onRowClick}
         />
       </div>
     </div>

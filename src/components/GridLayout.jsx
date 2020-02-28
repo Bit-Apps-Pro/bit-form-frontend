@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
-import bitsFetch, { prepareData } from '../Utils/bitsFetch'
+import bitsFetch from '../Utils/bitsFetch'
 
-export default function GridLayout(props) {
+function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
 
   /*
@@ -30,17 +30,15 @@ export default function GridLayout(props) {
   const [newCounter, setNewCounter] = useState(0)
   const [layout, setLayout] = useState([])
   const [data, setData] = useState(props.fields)
-  const [isFetching, setisFetching] = useState(true)
   // const [breakpoint, setBreakpoint] = useState('md')
 
   const fetchTemplate = () => {
     if (props.formType === 'new') {
       if (props.formID === 'blank') {
-        setisFetching(false)
         setisLoading(false)
       } else {
-        const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: props.formID }) : { template: props.formID }
-        bitsFetch(pram, 'bitapps_get_template')
+        // const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: props.formID }) : { template: props.formID }
+        bitsFetch({ template: props.formID }, 'bitapps_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               const responseData = JSON.parse(res.data)
@@ -50,22 +48,19 @@ export default function GridLayout(props) {
               props.setFormName(responseData.form_content.form_name)
               setisLoading(false)
             } else {
-              setisFetching(false)
               setisLoading(false)
             }
           })
           .catch(() => {
-            setisFetching(false)
             setisLoading(false)
           })
       }
     } else if (props.formType === 'edit') {
-      const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: props.formID }) : { id: props.formID }
-      bitsFetch(pram, 'bitapps_get_a_form')
+      // const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: props.formID }) : { id: props.formID }
+      bitsFetch({ id: props.formID }, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
             console.log('edit gfetched')
-            setisFetching(false)
             const responseData = JSON.parse(res.data)
             setLayout(responseData.form_content.layout)
             setData(responseData.form_content.fields)
@@ -73,12 +68,10 @@ export default function GridLayout(props) {
             props.setFormName(responseData.form_content.form_name)
             setisLoading(false)
           } else {
-            setisFetching(false)
             setisLoading(false)
           }
         })
         .catch(() => {
-          setisFetching(false)
           setisLoading(false)
         })
     }
@@ -132,12 +125,12 @@ export default function GridLayout(props) {
   }
 
   const { newData, fields, setFields } = props
-
   useEffect(() => {
     // comp mount
-    if (isFetching) {
-      fetchTemplate()
-    }
+    fetchTemplate()
+  }, [])
+
+  useEffect(() => {
     if (newData !== null) {
       margeNewData()
     }
@@ -307,3 +300,5 @@ export default function GridLayout(props) {
       )
   )
 }
+
+export default memo(GridLayout)

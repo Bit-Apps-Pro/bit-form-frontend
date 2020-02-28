@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { BitappsContext } from '../../../Utils/BitappsContext'
 
-export default function TableAction(props) {
+function TableAction(props) {
+  console.log('%c $render TableAction', 'background:orange;padding:3px;border-radius:5px')
+
   const { confirmModal, allRes } = React.useContext(BitappsContext)
   const { allResp } = allRes
 
@@ -66,3 +68,4 @@ export default function TableAction(props) {
     </div>
   )
 }
+export default memo(TableAction)

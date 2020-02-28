@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { createElement } from 'react'
+import React, { createElement, createRef } from 'react'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
 
 export default function CompGen(props) {
-  const delBtnRef = React.createRef()
+  const delBtnRef = createRef()
 
   function textField(attr) {
     return (
@@ -46,6 +46,8 @@ export default function CompGen(props) {
   }
 
   function checkBox(attr) {
+    const vals = 'val' in attr ? JSON.parse(attr.val) : null
+
     return (
       <div className="text-wrp drag" btcd-fld="textarea">
         {'lbl' in attr && <label>{attr.lbl}</label>}
@@ -58,7 +60,7 @@ export default function CompGen(props) {
                 {...itm.check && { checked: true }}
                 {...itm.req && { required: true }}
                 {...'name' in attr && { name: `${attr.name}[]` }}
-                {...'lbl' in itm && { defaultValue: itm.lbl }}
+                {...vals !== null && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
               />
               <span className="btcd-mrk ck" />
             </label>
@@ -70,6 +72,7 @@ export default function CompGen(props) {
 
   function radioBox(attr) {
     const n = Math.random()
+
     return (
       <div className="text-wrp drag" btcd-fld="textarea">
         {'lbl' in attr && <label>{attr.lbl}</label>}
@@ -84,6 +87,7 @@ export default function CompGen(props) {
                 {...itm.req && { required: true }}
                 {...'name' in attr && { name: attr.name }}
                 {...'lbl' in itm && { defaultValue: itm.lbl }}
+                {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
               />
               <span className="btcd-mrk rdo" />
             </label>
@@ -108,7 +112,9 @@ export default function CompGen(props) {
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'mul' in attr && { multiple: attr.mul }}
           {...'ph' in attr && { placeholder: attr.ph }}
+          {...'name' in attr && { name: attr.name }}
           {...'val' in attr && { value: attr.val }}
+          {...'name' in attr && { name: attr.name }}
         >
           <option data-placeholder="true" aria-label="option placeholder" />
           {attr.opt.map((itm, i) => (
@@ -146,6 +152,7 @@ export default function CompGen(props) {
               {...'mul' in attr && { multiple: true }}
               {...'exts' in attr && { accept: attr.exts }}
               {...'name' in attr && { name: attr.name }}
+              {...'val' in attr && { value: attr.val }}
               type="file"
               onClick={setPrevData}
               onChange={e => onFileChange(e)}

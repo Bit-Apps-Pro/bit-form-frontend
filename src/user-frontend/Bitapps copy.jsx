@@ -12,15 +12,9 @@ export default function Bitapps(props) {
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
     props.data[field.i].name = name
+    console.log(field)
     return (
       <div
-        style={{
-          gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
-          gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
-          gridRowStart: field.y + 1, /* y-0 -> y + 1 */
-          gridRowEnd: field.y !== 1 && field.h + (field.y + 1), /* h-4 -> if y not 1 then h+y */
-          minHeight: field.h * 40, /* h * 40px */
-        }}
         key={field.i}
         btcd-id={field.i}
         data-grid={field}
@@ -34,22 +28,22 @@ export default function Bitapps(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = new FormData()
-    const fields = Array.prototype.slice.call(event.target)
-    fields.filter(el => {
-      if (el.type === 'file' && el.files.length > 0) {
-        if (el.files.length > 1) {
-          el.files.forEach(file => formData.append(`${el.name}[]`, file))
-        } else {
-          el.files.forEach(file => formData.append(el.name, file))
+      // const fields = Array.prototype.slice.call(event.target)
+      .filter(el => {
+        if (el.type === 'file' && el.files.length > 0) {
+          if (el.files.length > 1) {
+            el.files.forEach(file => formData.append(`${el.name}[]`, file))
+          } else {
+            el.files.forEach(file => formData.append(el.name, file))
+          }
+        } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
+          formData.append(el.name, el.value)
+        } else if (el.type === 'select') {
+          formData.append(el.name, el.value)
+        } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
+          formData.append(el.name, el.value)
         }
-      } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-        formData.append(el.name, el.value)
-      } else if (el.type === 'select') {
-        formData.append(el.name, el.value)
-      } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-        formData.append(el.name, el.value)
-      }
-    })
+      })
     bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
       .then(response => {
         if (response !== undefined && response.success) {
@@ -95,23 +89,16 @@ export default function Bitapps(props) {
     setTimeout(() => { setFileIcn() }, 1)
   }, [])
 
-  const style = {
-    display: 'grid',
-    gridTemplateColumns: 'auto auto auto auto auto auto auto auto auto auto',
-    gridgap: 0,
-  }
-
   return (
     <div>
       {
         snack
         && <Toast msg={message} show={snack} setSnack={setSnack} />
       }
-      <form ref={props.refer} id={`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />}
-        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />}
-        <div
-          style={style}
+      <form id={`form-${process.env.NODE_ENV === 'production' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />
+        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />
+        <FormLayout
           cols={{ lg: 10 }}
           breakpoints={{ lg: 800 }}
           // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
@@ -124,7 +111,7 @@ export default function Bitapps(props) {
             field.static = true
             return blk(field)
           })}
-        </div>
+        </FormLayout>
         {!props.editMode && <button className="blk" type="submit">Submit</button>}
       </form>
     </div>
