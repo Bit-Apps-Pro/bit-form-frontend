@@ -201,10 +201,10 @@ function Table(props) {
         <Scrollbars style={{ height: props.height }}>
           <div {...getTableProps()} className={`f-table ${props.className} ${props.rowClickable && 'rowClickable'}`}>
             <div className="thead">
-              {headerGroups.map(headerGroup => (
-                <div className="tr" {...headerGroup.getHeaderGroupProps()}>
+              {headerGroups.map((headerGroup, i) => (
+                <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
-                    <div className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
+                    <div key={column.id} className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
                       {column.render('Header')}
                       {' '}
                       {(column.id !== 't_action' && column.id !== 'selection') && (
@@ -233,6 +233,7 @@ function Table(props) {
                 prepareRow(row)
                 return (
                   <div
+                    key={`t-r-${row.index}`}
                     className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
                     onClick={() => props.rowClickable && props.onRowClick(row)}
                     onKeyPress={() => props.rowClickable && props.onRowClick(row.original)}
@@ -241,7 +242,7 @@ function Table(props) {
                     {...row.getRowProps()}
                   >
                     {row.cells.map(cell => (
-                      <div className="td flx" {...cell.getCellProps()}>{cell.render('Cell')}</div>
+                      <div key={`t-d-${cell.row.index}`} className="td flx" {...cell.getCellProps()}>{cell.render('Cell')}</div>
                     ))}
                   </div>
                 )

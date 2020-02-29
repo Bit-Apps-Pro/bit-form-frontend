@@ -947,6 +947,19 @@ li b {
 .btcd-files > div > button:hover {
   background: #bbbbbb;
 }
+
+.btcd-old-file {
+  margin-left: 35px;
+  font-size: 12px;
+  & > div > a {
+    text-decoration: none;
+    color: #004077;
+    margin-right: 10px;
+    &:hover {
+      color: #0078e0;
+    }
+  }
+}
 // file upload end
 
 :root {

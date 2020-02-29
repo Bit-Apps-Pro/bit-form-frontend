@@ -56,7 +56,21 @@ function FormEntries() {
           if (response !== undefined && response.success) {
             totalData = response.data.count
             setPageCount(((response.data.count / 10) % 1 === 0) ? (response.data.count / 10) : Math.floor(response.data.count / 10) + 1)
-            const cols = response.data.Labels.map(val => ({ Header: val.name, accessor: val.key, minWidth: 50 }))
+            const cols = response.data.Labels.map(val => ({
+              Header: val.name,
+              accessor: val.key,
+              minWidth: 50,
+              ...'type' in val && val.type.match(/^(file-up|check)$/) && {
+                Cell: row => {
+                  if (row.cell.value !== null && row.cell.value !== undefined) {
+                    if (val.type === 'file-up') {
+                      return JSON.parse(row.cell.value).map((itm, i) => <a key={`file-n-${row.cell.row.index + i}`} target="_blank" rel="noopener noreferrer" title={itm} href={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}/${itm}`}>{itm}</a>)
+                    } JSON.parse(row.cell.value).join(', ')
+                  }
+                  return null
+                },
+              },
+            }))
             cols.push({
               id: 't_action',
               width: 70,
@@ -67,6 +81,7 @@ function FormEntries() {
               accessor: 'table_ac',
               Cell: val => <TableAction edit={editData} del={setBulkDelete} dup={bulkDuplicateData} id={val.row} dataSrc="entries" />,
             })
+
             setEntryLabels(cols)
           }
         })
@@ -80,8 +95,6 @@ function FormEntries() {
             if (totalData > 0) {
               setPageCount(Math.ceil(totalData / pageSize))
             }
-            console.log('new data', res.data)
-
             setAllResp(res.data)
           }
         })
@@ -149,7 +162,6 @@ function FormEntries() {
   }, [allResp])
 
   const editData = useCallback(id => {
-    console.log('asdasdas', formID, id.original.entry_id)
     setEntryID(id.original.entry_id)
     setShowEditMdl(true)
   }, [])
@@ -180,10 +192,12 @@ function FormEntries() {
         close={setRowDtl}
       >
         <table className="btcd-row-detail-tbl">
-          <tr>
-            <th>sdafsf</th>
-            <td>asdf</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>sdafsf</th>
+              <td>asdf</td>
+            </tr>
+          </tbody>
         </table>
       </Drawer>
 

@@ -17,7 +17,6 @@ export default function EditEntryData(props) {
       .then(res => {
         if (res !== undefined && res.success) {
           setData({ layout: res.data.layout, fields: res.data.fields })
-          console.log('data res', res.data)
         }
       })
   }, [])
@@ -42,6 +41,7 @@ export default function EditEntryData(props) {
         formData.append(el.name, el.value)
       }
     })
+
     console.clear()
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}, ${pair[1]}`);
@@ -78,6 +78,8 @@ export default function EditEntryData(props) {
             editMode
             layout={data.layout}
             data={data.fields}
+            formID={props.formID}
+            entryID={props.entryID}
           />
         )}
       </div>

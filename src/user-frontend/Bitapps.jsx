@@ -12,6 +12,7 @@ export default function Bitapps(props) {
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
     props.data[field.i].name = name
+    console.log(props.data[field.i])
     return (
       <div
         style={{
@@ -26,7 +27,12 @@ export default function Bitapps(props) {
         data-grid={field}
         role="button"
       >
-        <CompGen atts={props.data[field.i]} />
+        <CompGen
+          editMode
+          atts={props.data[field.i]}
+          formID={props.formID}
+          entryID={props.entryID}
+        />
       </div>
     )
   }
@@ -112,12 +118,12 @@ export default function Bitapps(props) {
         {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />}
         <div
           style={style}
-          cols={{ lg: 10 }}
-          breakpoints={{ lg: 800 }}
-          // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-          // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-          rowHeight={40}
-          margin={[0, 10]}
+        // cols={{ lg: 10 }}
+        // breakpoints={{ lg: 800 }}
+        // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+        // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+        // rowHeight={40}
+        // margin={[0, 10]}
         >
           {props.layout.map(field => {
             // eslint-disable-next-line no-param-reassign
