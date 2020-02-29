@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
+import { BitappsContext } from '../Utils/BitappsContext'
 import Bitapps from '../user-frontend/Bitapps.jsx'
 
 export default function EditEntryData(props) {
@@ -8,7 +9,8 @@ export default function EditEntryData(props) {
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
-
+  const { snackMsg } = useContext(BitappsContext)
+  const { setSnackbar } = snackMsg
   const ref = useRef(null)
 
   useEffect(() => {
@@ -50,8 +52,7 @@ export default function EditEntryData(props) {
     bitsFetch(formData, 'bitapps_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
-          setMessage(response.data.message)
-          setSnack(true)
+          setSnackbar({ show: true, msg: response.data.message })
           // window.location = '/'
         }
       })
