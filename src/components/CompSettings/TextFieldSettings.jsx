@@ -67,7 +67,11 @@ export default function TextFieldSettings(props) {
 
   return (
     <div>
-      <h4>Text Field ({props.elm.data.typ})</h4>
+      <h4>
+        Text Field (
+        {props.elm.data.typ}
+        )
+      </h4>
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       {props.elm.data.typ !== 'textarea'
         && props.elm.data.typ.match(/^(text|url|password|number|email|)$/)

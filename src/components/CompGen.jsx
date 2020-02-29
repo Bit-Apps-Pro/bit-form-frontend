@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { createElement, createRef } from 'react'
+import React, { createElement, createRef, memo, useState } from 'react'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
 
-export default function CompGen(props) {
-  const delBtnRef = createRef()
-
+function CompGen(props) {
   function textField(attr) {
+    console.log('a                    textField rerender ')
     return (
       <div className="text-wrp drag" btcd-fld="text-fld">
         {'lbl' in attr && <label>{attr.lbl}</label>}
@@ -125,45 +124,6 @@ export default function CompGen(props) {
     )
   }
 
-  const onFileChange = e => {
-    handleFile(e)
-    // set del action
-    for (let i = 0; i < delBtnRef.current.children.length; i += 1) {
-      delBtnRef.current.children[i].children[2].addEventListener('click', ev => {
-        delItem(ev.target)
-      })
-    }
-  }
-
-  function fileUp(attr) {
-    return (
-      <div className="file-wrp drag">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
-        <div className="btcd-f-input">
-          <div className="btcd-f-wrp">
-            <button className="btcd-inpBtn" type="button">
-              <img src="" alt="file-upload" />
-              <span>{` ${attr.upBtnTxt}`}</span>
-            </button>
-            <span className="btcd-f-title">No File Chosen</span>
-            <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
-            <input
-              {...'req' in attr.valid && { required: attr.valid.req }}
-              {...'mul' in attr && { multiple: true }}
-              {...'exts' in attr && { accept: attr.exts }}
-              {...'name' in attr && { name: attr.name }}
-              {...'val' in attr && { value: attr.val }}
-              type="file"
-              onClick={setPrevData}
-              onChange={e => onFileChange(e)}
-            />
-            <div ref={delBtnRef} className="btcd-files" />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   function submitBtns(attr) {
     return (
       <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
@@ -197,7 +157,7 @@ export default function CompGen(props) {
     case 'select':
       return dropDown(props.atts)
     case 'file-up':
-      return fileUp(props.atts)
+      return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} />
     case 'submit':
       return submitBtns(props.atts)
     default:
@@ -205,4 +165,78 @@ export default function CompGen(props) {
   }
 
   return <div>aaa</div>
+}
+
+export default memo(CompGen)
+
+function FileUp({ attr, formID, entryID }) {
+  const delBtnRef = createRef()
+  const [filelist, setfilelist] = useState(attr.val !== undefined && JSON.parse(attr.val))
+
+  const onFileChange = e => {
+    handleFile(e)
+    // set del action
+    for (let i = 0; i < delBtnRef.current.children.length; i += 1) {
+      delBtnRef.current.children[i].children[2].addEventListener('click', ev => {
+        delItem(ev.target)
+      })
+    }
+  }
+
+  const rmvFile = (idx) => {
+    const tmp = [...filelist]
+    tmp.splice(idx, 1)
+    setfilelist(tmp)
+  }
+
+  return (
+    <div className="file-wrp drag">
+      {'lbl' in attr && <label>{attr.lbl}</label>}
+      <div className="btcd-f-input">
+        <div className="btcd-f-wrp">
+          <button className="btcd-inpBtn" type="button">
+            <img src="" alt="file-upload" />
+            <span>{` ${attr.upBtnTxt}`}</span>
+          </button>
+          <span className="btcd-f-title">No File Chosen</span>
+          <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
+          <input
+            {...'req' in attr.valid && { required: attr.valid.req }}
+            {...'mul' in attr && { multiple: true }}
+            {...'exts' in attr && { accept: attr.exts }}
+            {...'name' in attr && { name: attr.name }}
+            type="file"
+            onClick={setPrevData}
+            onChange={e => onFileChange(e)}
+          />
+          {attr.val !== undefined && (
+            <div className="btcd-old-file">
+              <input type="hidden" name={`${attr.name}_old`} value={filelist.toString()} />
+              {filelist !== false && filelist.length !== 0 && (
+                <div className="mt-2">
+                  <small>
+                    {filelist.length}
+                    {' '}
+                    Old File
+                  </small>
+                </div>
+              )}
+              {filelist.map((itm, i) => (
+                <div key={`ol-f-${i + 3}`} className="flx ">
+                  <a href={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
+                    <span className="btcd-icn icn-file" />
+                    {' '}
+                    {itm}
+                  </a>
+                  <button onClick={() => rmvFile(i)} type="button" className="icn-btn">&times;</button>
+                </div>
+              ))}
+
+            </div>
+          )}
+          <div ref={delBtnRef} className="btcd-files" />
+        </div>
+      </div>
+    </div>
+  )
 }
