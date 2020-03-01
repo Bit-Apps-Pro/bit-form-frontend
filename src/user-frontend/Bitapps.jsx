@@ -113,8 +113,8 @@ export default function Bitapps(props) {
         && <Toast msg={message} show={snack} setSnack={setSnack} />
       }
       <form ref={props.refer} id={`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />}
-        {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />}
+        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />}
+        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />}
         <div
           style={style}
         // cols={{ lg: 10 }}
