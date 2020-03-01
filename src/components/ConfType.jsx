@@ -68,6 +68,21 @@ export default function ConfType(props) {
       default:
         break;
     }
+    if (process.env.NODE_ENV === 'production' && typeof wp.editor !== 'undefined') {
+      wp.editor.remove()
+      console.log('here in tinymce')
+      wp.editor.initialize(
+        'wp-bitapps-editor',
+        {
+          tinymce: {
+            wpautop: true,
+            plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
+            toolbar1: 'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more | spellchecker',
+          },
+          quicktags: true,
+        },
+      )
+    }
   }, []);
 
   return (
@@ -111,6 +126,7 @@ export default function ConfType(props) {
             style={{ width: '95%' }}
             rows="5"
             value={msg}
+            id="wp-bitapps-editor"
           />
         </div>
         <div className="btcd-f-c-t-d-0" style={{ height: pos === 1 && 70 }}>
