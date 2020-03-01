@@ -9,7 +9,7 @@ import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import { BitappsContext } from '../Utils/BitappsContext'
 import EditEntryData from '../components/EditEntryData'
 import Drawer from '../components/Drawer'
-
+import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 
 function FormEntries() {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
@@ -64,13 +64,15 @@ function FormEntries() {
                 Cell: row => {
                   if (row.cell.value !== null && row.cell.value !== undefined) {
                     if (val.type === 'file-up') {
-                      return JSON.parse(row.cell.value).map((itm, i) => <a key={`file-n-${row.cell.row.index + i}`} target="_blank" rel="noopener noreferrer" title={itm} href={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}/${itm}`}>{itm}</a>)
+                      return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`} />)
                     } JSON.parse(row.cell.value).join(', ')
                   }
                   return null
                 },
               },
             }))
+
+            cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</>, width: 40 })
             cols.push({
               id: 't_action',
               width: 70,
@@ -175,6 +177,7 @@ function FormEntries() {
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
+
       <button onClick={() => setRowDtl(!rowDtl)}>set </button>
       {showEditMdl
         && (

@@ -138,6 +138,7 @@ function Builder(props) {
   const updateFields = updatedElm => {
     const tmp = { ...fields }
     fields[updatedElm.id] = updatedElm.data
+    console.log(tmp)
     setFields(tmp)
   }
 
@@ -199,7 +200,6 @@ function Builder(props) {
               className="tool-sec"
               defaultSize={160}
               minSize={notIE && 58}
-            // style={{ flexGrow: tolbarSiz ? 0.212299 : 0.607903 }}
             >
               <ToolBar
                 setDrgElm={setDrgElm}
@@ -215,7 +215,6 @@ function Builder(props) {
               onSizeChanged={props.setGridWidth}
               minSize={notIE && 320}
               defaultSize={props.gridWidth}
-            // style={{ flexGrow: tolbarSiz ? 3.58883 : 3.19149 }}
             >
               {lay !== null && (
                 <small
@@ -269,7 +268,7 @@ function Builder(props) {
                 formID={formID}
                 setLay={setLay}
                 setFields={setFields}
-                // setFormName={setFormName}
+                setFormName={setFormName}
                 subBtn={subBtn}
               />
             </Section>
@@ -300,4 +299,4 @@ function Builder(props) {
   )
 }
 
-export default memo(withRouter(Builder)) 
+export default memo(withRouter(Builder))

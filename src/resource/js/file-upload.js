@@ -78,14 +78,17 @@ function unfade(element) {
 
 export function setPrevData(e) {
   if (e.target.hasAttribute('multiple') && fName !== e.target.name) {
-    fName = e.target.name
+    console.log('multiple')
     fileList = { files: [] }
     if (e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i += 1) {
         fileList.files.push(e.target.files[i])
       }
     }
-  }
+    } /* else {
+      console.log('#', fileList)
+      fileList = { files: [] }
+    } */
 }
 
 export function handleFile(e) {
@@ -93,7 +96,6 @@ export function handleFile(e) {
   const fLen = e.target.files.length;
   mxSiz = e.target.parentNode.querySelector('.f-max')
   mxSiz = mxSiz != null && (Number(mxSiz.innerHTML.replace(/\D/g, '')) * 1024 ** 2)
-  console.log(mxSiz)
   if (e.target.hasAttribute('multiple')) {
     for (let i = 0; i < fLen; i += 1) {
       fileList.files.push(e.target.files[i])
@@ -124,13 +126,13 @@ export function handleFile(e) {
         tmpf.push(fileList.files[i])
         mxSiz -= fileList.files[i].size
       } else {
-        console.log('rejected', i, fileList.files[i].size)
         err.push('Max Upload Size Exceeded')
       }
     }
     fileList.files = tmpf
   }
 
+  console.log(fileList.files)
   e.target.files = createFileList(...fileList.files)
 
   // set File list view

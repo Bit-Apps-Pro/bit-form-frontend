@@ -4,6 +4,7 @@ $blue: #0083f3;
 $dp-blue: #0b1655;
 $bg: #edeff3;
 $red: #ff4646;
+$dp-txt: #545582;
 
 html,
 body {
@@ -956,7 +957,7 @@ li b {
     color: #004077;
     margin-right: 10px;
     &:hover {
-      color: #0078e0;
+      color: $blue;
     }
   }
 }
@@ -1135,7 +1136,7 @@ nav.top-nav {
   font-weight: bold;
   word-break: break-all;
   border-bottom: 1px solid #dedce4;
-  color: #545582;
+  color: $dp-txt;
   text-overflow: ellipsis;
   &:hover {
     background: #eeeefd;
@@ -1166,7 +1167,7 @@ nav.top-nav {
   padding: 10px 0 10px 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
   height: 100%;
 }
 
@@ -1260,6 +1261,14 @@ nav.top-nav {
     background: #dcdcdc;
   }
 }
+
+.icn-btn-sm {
+  height: 22px;
+  width: 22px;
+  padding: 2px;
+  font-size: 17px;
+}
+
 .btcd-icn-lg {
   width: 40px;
   height: 40px;
@@ -1542,6 +1551,7 @@ nav.top-nav {
 .btcd-modal-content {
   padding: 20px;
   position: relative;
+  height: 100%;
 }
 .btcd-mdl-title {
   margin: 0;
@@ -2176,6 +2186,36 @@ nav.top-nav {
   width: 500px;
 }
 
+.btcd-t-link {
+  position: relative;
+  & > a {
+    text-decoration: none;
+  }
+  & > div {
+    width: 70px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    & > a {
+      text-decoration: none;
+      color: $dp-txt;
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+  & > a {
+    color: $dp-txt;
+    display: none;
+  }
+
+  &:hover {
+    & > a {
+      display: inline-block;
+    }
+  }
+}
+
 .btcd-eye-t {
   user-select: none;
   cursor: pointer;
@@ -2222,6 +2262,7 @@ nav.top-nav {
   right: 20px;
   box-shadow: 1px 1px 3px 0px #0000004d;
   transition: right 0.5s;
+  z-index: 9999;
 }
 
 .btcd-snack-cls {

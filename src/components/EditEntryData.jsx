@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
 import Bitapps from '../user-frontend/Bitapps.jsx'
+import Scrollbars from 'react-custom-scrollbars'
 
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
@@ -70,7 +71,7 @@ export default function EditEntryData(props) {
       setModal={props.close}
       title="Edit"
     >
-      <div style={{ overflow: 'auto' }}>
+      <Scrollbars style={{ height: 'calc(100% - 17px)' }}>
         {data.layout !== null && (
           <Bitapps
             refer={ref}
@@ -81,7 +82,7 @@ export default function EditEntryData(props) {
             entryID={props.entryID}
           />
         )}
-      </div>
+      </Scrollbars>
     </Modal>
   )
 }

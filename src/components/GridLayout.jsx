@@ -125,6 +125,7 @@ function GridLayout(props) {
   }
 
   const { newData, fields, setFields } = props
+
   useEffect(() => {
     // comp mount
     fetchTemplate()
@@ -141,10 +142,10 @@ function GridLayout(props) {
     setFields(data)
   }, [data, newData, fields])
 
+
   const onLayoutChange = (lat) => {
     props.setLay(lat)
   }
-
 
   const onRemoveItem = i => {
     let lay = [...layout]
@@ -161,7 +162,7 @@ function GridLayout(props) {
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `b-${newCounter}`
+    const newBlk = `b-${newCounter + 1}`
 
     setData({ ...data, [newBlk]: draggedElm[0] })
     setNewCounter(newCounter + 1)
@@ -271,15 +272,11 @@ function GridLayout(props) {
           <Scrollbars>
             <ResponsiveReactGridLayout
               className="layout"
-              // layouts={props.lay}
               onDrop={onDrop}
               onLayoutChange={onLayoutChange}
               droppingItem={props.draggedElm[1]}
               cols={{ lg: 10 }}
               breakpoints={{ lg: 800 }}
-              //  onBreakpointChange={onBreakpointChange}
-              // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-              // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
               rowHeight={40}
               width={props.width}
               margin={[0, 0]}
@@ -287,6 +284,10 @@ function GridLayout(props) {
               draggableHandle=".drag"
               isDroppable
               useCSSTransforms
+            // layouts={props.lay}
+            // onBreakpointChange={onBreakpointChange}
+            // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+            // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
             // compactType="vertical"
             >
               {layout.map(itm => blkGen(itm))}
