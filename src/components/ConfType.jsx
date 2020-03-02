@@ -72,10 +72,10 @@ export default function ConfType(props) {
     }
     if (typeof tinymce !== 'undefined') {
       console.log('GG', typeof tinymce)
-      /* wp.editor.remove()
+     /*  wp.editor.remove()
       console.log('here in tinymce')
       wp.editor.initialize(
-        a.current,
+        'wp-bitapps-editor',
         {
           tinymce: {
             // wpautop: true,
@@ -87,14 +87,16 @@ export default function ConfType(props) {
       ) */
       tinymce.init({
         mode: 'textareas',
+        plugins: 'link wpview',
         // mode: "exact",
         // elements: 'pre-details',
         theme: 'modern',
-        skin: 'lightgray',
+        // skin: 'lightgray',
         menubar: false,
-        statusbar: false,
+        // statusbar: false,
+        branding: false,
         toolbar: [
-          'bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | undo redo',
+          'bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link | undo redo',
         ],
       })
     }
