@@ -40,7 +40,12 @@ function Builder(props) {
     formName,
     theme: 'default',
     submitBtn: subBtn,
-    confirmation: { type: 'msg', txt: '' },
+    confirmation: {
+      type: {
+        msg: [{ title: 'title 1', msg: 'adsf afsasfda ' }, { title: 'title 2', msg: 'sadsadsadasd ' }],
+        url: [{ title: 'url 1', url: 'asdfa' }],
+      },
+    },
   })
 
   const notIE = !window.document.documentMode
@@ -133,7 +138,7 @@ function Builder(props) {
 
   const setSubmitConfig = useCallback(data => {
     setSubBtn({ ...data })
-  }, [])
+  }, [subBtn])
 
   const updateFields = useCallback(updatedElm => {
     const tmp = { ...fields }

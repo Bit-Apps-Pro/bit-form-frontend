@@ -9,7 +9,6 @@ export default function FormSettings(props) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
 
-  console.log({ formType, formID })
   return (
     <div className="btcd-f-settings">
       <aside className="btcd-f-sidebar">

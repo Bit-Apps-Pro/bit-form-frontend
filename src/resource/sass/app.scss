@@ -89,7 +89,7 @@ body {
   background: $blue;
   color: white !important;
   &:hover {
-    background: #016fcf;
+    background: #016fcf !important;
   }
   &:active {
     background: #0062b8;
@@ -1216,6 +1216,72 @@ nav.top-nav {
   margin-right: 20px;
 }
 
+.btcd-accr {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  & > .btcd-accr-btn {
+    outline: none;
+    padding: 5px;
+    cursor: pointer;
+    & > .icn-btn {
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: #eaedff;
+      & > .btcd-accr-title > div > div.edit {
+        display: inline-block;
+      }
+    }
+    & > .btcd-accr-title > div {
+      & > input {
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        font-size: 15px;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+      }
+      & > div {
+        display: none;
+        margin-left: 3px;
+        & > .btcd-icn {
+          font-size: 14px !important;
+          color: transparentize(#000, 0.5);
+        }
+      }
+    }
+    & > .btcd-accr-title div > input.edit {
+      cursor: text;
+      &:hover {
+        box-shadow: 0 0 0 1px transparentize(#000000, 0.8);
+      }
+      &:focus {
+        box-shadow: 0 0 0 1px transparentize($dp-blue, 0.8);
+        background: transparentize($color: #fff, $amount: 0.4);
+        padding: 0 4px;
+      }
+    }
+  }
+  & > .btcd-accr-cont {
+    overflow: auto;
+    transition: max-height 0.5s ease-in-out;
+    & > div {
+      padding: 10px;
+    }
+  }
+}
+
+.btcd-accr-title {
+  padding: 5px;
+  & > small {
+    color: gray;
+    font-size: 12px;
+  }
+}
+
 .f-search {
   font-size: 12 !important;
   float: right;
@@ -1905,15 +1971,11 @@ nav.top-nav {
   padding: 20px;
   border-radius: 20px;
 }
-.btcd-f-c-t-d-0 {
-  height: 0px;
-  overflow: hidden;
-  transition: height 0.5s;
-}
 
 .f-m {
   font-size: 14px;
 }
+
 .btcd-paper-inp {
   width: calc(100% - 10px);
   font-family: inherit;

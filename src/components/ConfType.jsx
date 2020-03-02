@@ -1,6 +1,10 @@
-import React from 'react';
+/* eslint-disable no-undef */
+import React, { useState } from 'react'
+import Accordions from './ElmSettings/Childs/Accordions'
 
 export default function ConfType(props) {
+  console.log('%c $render FormSettings', 'background:lightgreen;padding:3px;border-radius:5px;')
+  const { formSettings, setFormSettings } = props
   let conf = 0;
   if (props.formSettings.confirmation.type === 'page') {
     conf = 1;
@@ -54,6 +58,13 @@ export default function ConfType(props) {
     props.setFormSettings(tmp);
   }
 
+  const handleMsgTitle = (e, idx) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.msg[idx] = e.target.value
+    setFormSettings(tmp)
+    console.log(e.target.value, idx)
+  }
+
   React.useEffect(() => {
     switch (props.formSettings.confirmation.type) {
       case 'url':
@@ -68,9 +79,8 @@ export default function ConfType(props) {
       default:
         break;
     }
-    if (process.env.NODE_ENV === 'production' && typeof wp.editor !== 'undefined') {
+    if (process.env.NODE_ENV === 'production' && typeof wp !== 'undefined') {
       wp.editor.remove()
-      console.log('here in tinymce')
       wp.editor.initialize(
         'wp-bitapps-editor',
         {
@@ -83,7 +93,7 @@ export default function ConfType(props) {
         },
       )
     }
-  }, []);
+  }, [])
 
   return (
     <div className="btcd-f-c-t">
@@ -116,22 +126,30 @@ export default function ConfType(props) {
       </div>
 
       <div className="btcd-f-c-t-d">
-        <div className="btcd-f-c-t-d-0" style={{ height: pos === 0 && 130 }}>
-          <div className="f-m">
-            <b>Success Message: </b>
-          </div>
-          <textarea
-            onChange={handleMsg}
-            className="btcd-paper-inp"
-            style={{ width: '95%' }}
-            rows="5"
-            value={msg}
-            id="wp-bitapps-editor"
-          />
+        <div style={{ display: pos === 0 ? 'block' : 'none' }}>
+          {formSettings.confirmation.type.msg.map((itm, i) => (
+            <Accordions
+              key={`f-m-${i + 1}`}
+              title={itm.title}
+              titleEditable
+              cls="mt-2"
+              onTitleChange={(e) => handleMsgTitle(e, i)}
+            >
+              <div className="f-m">Success Message:</div>
+              <textarea
+                onChange={handleMsg}
+                className="btcd-paper-inp"
+                rows="5"
+                value={itm.msg}
+                id="wp-bitapps-editor"
+              />
+            </Accordions>
+          ))}
         </div>
-        <div className="btcd-f-c-t-d-0" style={{ height: pos === 1 && 70 }}>
+
+        <div style={{ display: pos === 1 ? 'block' : 'none' }}>
           <div className="">
-            <b>Select A Page</b>
+            Select A Page
           </div>
           <select value={page} onChange={handlePage} className="btcd-paper-inp">
             <option value="Page 1">Page 1</option>
@@ -139,9 +157,10 @@ export default function ConfType(props) {
             <option value="Page 3">Page 3</option>
           </select>
         </div>
-        <div className="btcd-f-c-t-d-0" style={{ height: pos === 2 && 70 }}>
+
+        <div style={{ display: pos === 2 ? 'block' : 'none' }}>
           <div className="f-m">
-            <b>Custom URL:</b>
+            Custom URL:
           </div>
           <input
             onChange={handleUrl}
