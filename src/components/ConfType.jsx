@@ -1,4 +1,6 @@
+/* eslint-disable no-undef */
 import React from 'react';
+import { useRef } from 'react';
 
 export default function ConfType(props) {
   let conf = 0;
@@ -7,7 +9,7 @@ export default function ConfType(props) {
   } else if (props.formSettings.confirmation.type === 'url') {
     conf = 2;
   }
-
+  const a = useRef(null)
   const [pos, setPos] = React.useState(conf);
   const [url, setUrl] = React.useState('');
   const [page, setPage] = React.useState('');
@@ -68,20 +70,33 @@ export default function ConfType(props) {
       default:
         break;
     }
-    if (process.env.NODE_ENV === 'production' && typeof wp.editor !== 'undefined') {
-      wp.editor.remove()
+    if (typeof tinymce !== 'undefined') {
+      console.log('GG', typeof tinymce)
+      /* wp.editor.remove()
       console.log('here in tinymce')
       wp.editor.initialize(
-        'wp-bitapps-editor',
+        a.current,
         {
           tinymce: {
-            wpautop: true,
+            // wpautop: true,
             plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
             toolbar1: 'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more | spellchecker',
           },
           quicktags: true,
         },
-      )
+      ) */
+      tinymce.init({
+        mode: 'textareas',
+        // mode: "exact",
+        // elements: 'pre-details',
+        theme: 'modern',
+        skin: 'lightgray',
+        menubar: false,
+        statusbar: false,
+        toolbar: [
+          'bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | undo redo',
+        ],
+      })
     }
   }, []);
 
@@ -121,12 +136,21 @@ export default function ConfType(props) {
             <b>Success Message: </b>
           </div>
           <textarea
+            ref={a}
             onChange={handleMsg}
             className="btcd-paper-inp"
             style={{ width: '95%' }}
             rows="5"
             value={msg}
             id="wp-bitapps-editor"
+          />
+          <textarea
+            onChange={handleMsg}
+            className="btcd-paper-inp"
+            style={{ width: '95%' }}
+            rows="5"
+            value={msg}
+            id="wp-bitapps-editor2"
           />
         </div>
         <div className="btcd-f-c-t-d-0" style={{ height: pos === 1 && 70 }}>
