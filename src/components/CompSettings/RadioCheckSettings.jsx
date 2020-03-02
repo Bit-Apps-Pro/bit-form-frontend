@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import React from 'react'
+import React, { memo } from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 
-export default function RadioCheckSettings(props) {
+function RadioCheckSettings(props) {
+  console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
+
   const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl
   const isRound = props.elm.data.round !== undefined
 
@@ -96,3 +98,4 @@ export default function RadioCheckSettings(props) {
     </div>
   )
 }
+export default memo(RadioCheckSettings)

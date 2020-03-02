@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
+import React, { memo } from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 
-export default function TextFieldSettings(props) {
+function TextFieldSettings(props) {
   const isRequired = props.elm.data.valid.req !== undefined
   const isAutoComplete = props.elm.data.ac === 'on'
   const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl
@@ -83,3 +83,5 @@ export default function TextFieldSettings(props) {
     </div>
   )
 }
+
+export default memo(TextFieldSettings)

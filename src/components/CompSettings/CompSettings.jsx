@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import TextFieldSettings from './TextFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
@@ -6,7 +6,9 @@ import SelectSettings from './SelectSettings'
 import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
 
-export default function index(props) {
+function CompSettings(props) {
+  console.log('%c $render Comp setting index', 'background:gray;padding:3px;border-radius:5px;color:white')
+
   const renderSettings = (type) => {
     switch (type) {
       case 'text':
@@ -49,3 +51,4 @@ export default function index(props) {
     </div>
   )
 }
+export default memo(CompSettings)

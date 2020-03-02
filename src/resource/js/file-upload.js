@@ -85,10 +85,7 @@ export function setPrevData(e) {
         fileList.files.push(e.target.files[i])
       }
     }
-    } /* else {
-      console.log('#', fileList)
-      fileList = { files: [] }
-    } */
+  }
 }
 
 export function handleFile(e) {
@@ -132,8 +129,12 @@ export function handleFile(e) {
     fileList.files = tmpf
   }
 
-  console.log(fileList.files)
-  e.target.files = createFileList(...fileList.files)
+  if (e.target.hasAttribute('multiple')) {
+    e.target.files = createFileList(...fileList.files)
+  } else {
+    e.target.files = createFileList(fileList.files[fileList.files.length - 1])
+    fileList = { files: [] }
+  }
 
   // set File list view
   if (e.target.files.length > 0) {

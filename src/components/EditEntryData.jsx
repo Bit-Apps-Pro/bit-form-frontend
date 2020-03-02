@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
+import Scrollbars from 'react-custom-scrollbars'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
 import Bitapps from '../user-frontend/Bitapps.jsx'
-import Scrollbars from 'react-custom-scrollbars'
 
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
-  const { snackMsg } = useContext(BitappsContext)
+  const { snackMsg, allRes } = useContext(BitappsContext)
   const { setSnackbar } = snackMsg
+  const { allResp, setAllResp } = allRes
   const ref = useRef(null)
 
   useEffect(() => {
@@ -45,16 +46,20 @@ export default function EditEntryData(props) {
       }
     })
 
-    console.clear()
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-    }
-    const queryParam = {formID: props.formID, entryID: props.entryID }
+    const queryParam = { formID: props.formID, entryID: props.entryID }
     bitsFetch(formData, 'bitapps_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
           setSnackbar({ show: true, msg: response.data.message })
-          // window.location = '/'
+          const tmp = [...allResp]
+          for (let i = 0; i < tmp.length; i += 1) {
+            if (tmp[i].entry_id === props.entryID) {
+              tmp[i] = response.data.updatedData
+              break
+            }
+          }
+          setAllResp(tmp)
+          props.close(false)
         }
       })
   }

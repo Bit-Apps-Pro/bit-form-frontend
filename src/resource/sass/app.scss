@@ -1143,10 +1143,6 @@ nav.top-nav {
   }
 }
 
-.f-table .tbody .tr:last-child .td {
-  border-bottom: none;
-}
-
 .btcd-all-frm .tbody .tr .td:last-child,
 .btcd-all-frm .tbody .tr .td:nth-child(4) {
   overflow: visible;
@@ -1337,7 +1333,7 @@ nav.top-nav {
 }
 
 .btcd-toggle-state {
-  display: none;
+  display: none !important;
 }
 
 .btcd-indicator {

@@ -49,7 +49,6 @@ function FormEntries() {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     if (totalData === 0) {
-      // const formIndex = process.env.NODE_ENV === 'development' ? prepareData({ id: formID }) : { id: formID }
 
       bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
         .then(response => {
@@ -62,7 +61,7 @@ function FormEntries() {
               minWidth: 50,
               ...'type' in val && val.type.match(/^(file-up|check)$/) && {
                 Cell: row => {
-                  if (row.cell.value !== null && row.cell.value !== undefined) {
+                  if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
                     if (val.type === 'file-up') {
                       return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`} />)
                     } JSON.parse(row.cell.value).join(', ')

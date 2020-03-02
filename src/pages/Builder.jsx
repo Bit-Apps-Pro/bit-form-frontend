@@ -1,9 +1,9 @@
-import React, { useState, useContext, useCallback, memo } from 'react'
+import React, { useState, useContext, useCallback, memo, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import ToolBar from '../components/Toolbar'
 import GridLayout from '../components/GridLayout'
-import CompSettings from '../components/CompSettings'
+import CompSettings from '../components/CompSettings/CompSettings'
 import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
@@ -48,7 +48,7 @@ function Builder(props) {
 
   const conRef = React.createRef()
 
-  const setConSiz = () => {
+  const setConSiz = useCallback(() => {
     const res = conRef.current.getResizer()
     if (res.getSectionSize(0) >= 160) {
       res.resizeSection(0, { toSize: 50 })
@@ -58,9 +58,9 @@ function Builder(props) {
       setTolbarSiz(false)
     }
     conRef.current.applyResizer(res)
-  }
+  }, [conRef])
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0)
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
     if (process.env.NODE_ENV === 'production') {
@@ -131,19 +131,22 @@ function Builder(props) {
       })
   }
 
-  const setSubmitConfig = data => {
+  const setSubmitConfig = useCallback(data => {
     setSubBtn({ ...data })
-  }
+  }, [])
 
-  const updateFields = updatedElm => {
+  const updateFields = useCallback(updatedElm => {
     const tmp = { ...fields }
     fields[updatedElm.id] = updatedElm.data
-    console.log(tmp)
     setFields(tmp)
-  }
+  }, [fields])
 
   const setElementSetting = useCallback(elm => {
     setElmSetting(elm)
+  }, [])
+
+  const addNewData = useCallback(ndata => {
+    setNewData(ndata)
   }, [])
 
   return (
@@ -169,7 +172,7 @@ function Builder(props) {
             Responses
           </NavLink>
           <NavLink
-            to={`/builder/${formType}/${formID}/settings/:sub`}
+            to={`/builder/${formType}/${formID}/settings/`}
             activeClassName="app-link-active"
           >
             Settings
@@ -203,7 +206,7 @@ function Builder(props) {
             >
               <ToolBar
                 setDrgElm={setDrgElm}
-                setNewData={setNewData}
+                setNewData={addNewData}
                 className="tile"
                 tolbarSiz={tolbarSiz}
                 setTolbarSiz={setConSiz}

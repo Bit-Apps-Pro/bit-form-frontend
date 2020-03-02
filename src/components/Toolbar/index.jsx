@@ -1,7 +1,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import React from 'react'
+import React, { memo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
 import textField from '../../resource/img/textField.png'
@@ -21,7 +21,9 @@ import check from '../../resource/img/check.png'
 import radio from '../../resource/img/radio.png'
 import dropdown from '../../resource/img/dropdown.png'
 
-export default function index(props) {
+function index(props) {
+  console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
+
   const tools = [
     {
       name: 'Text Field',
@@ -236,3 +238,4 @@ export default function index(props) {
     </div>
   )
 }
+export default memo(index)
