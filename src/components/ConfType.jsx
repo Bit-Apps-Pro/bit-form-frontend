@@ -88,14 +88,33 @@ export default function ConfType(props) {
         break;
     }
     if (typeof tinymce !== 'undefined') {
+      console.log('GG', typeof tinymce)
+      /*  wp.editor.remove()
+       console.log('here in tinymce')
+       wp.editor.initialize(
+         'wp-bitapps-editor',
+         {
+           tinymce: {
+             // wpautop: true,
+             plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
+             toolbar1: 'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more | spellchecker',
+           },
+           quicktags: true,
+         },
+       ) */
       tinymce.init({
         mode: 'textareas',
+        plugins: 'link wpview',
+        // mode: "exact",
         // elements: 'pre-details',
         theme: 'modern',
-        skin: 'lightgray',
+        // skin: 'lightgray',
         menubar: false,
-        statusbar: false,
-        toolbar: ['bold italic link image | alignleft aligncenter alignright | bullist numlist outdent indent | undo redo', ''],
+        // statusbar: false,
+        branding: false,
+        toolbar: [
+          'bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link | undo redo',
+        ],
       })
     }
   }, [])

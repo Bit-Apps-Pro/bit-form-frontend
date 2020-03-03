@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -34,6 +35,14 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        filename: '../../views/view-root.php',
+        path: path.resolve('../views/'),
+        template: `${__dirname}/public/index.html`,
+        inject: 'true',
+        chunks: ['webpackAssets'],
+        // chunksSortMode: 'dependency'
+      }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': production
           ? JSON.stringify('development')
@@ -54,7 +63,7 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: /node_modules/,
+          exclude: /node_modules\/(?!react-table-sticky)/,
           loader: 'babel-loader',
           query: {
             presets: [
