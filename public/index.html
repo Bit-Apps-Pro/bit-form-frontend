@@ -26,63 +26,7 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="btcd-app"></div>
-  
-<!-- <script src='http://192.168.1.11/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
-<script src='http://192.168.1.11/wp-admin/js/editor.min.js?ver=5.3.2'></script>
-<script>
-window.wp.oldEditor = window.wp.editor;
-</script>
-<script>
-var quicktagsL10n = {"closeAllOpenTags":"Close all open tags","closeTags":"close tags","enterURL":"Enter the URL","enterImageURL":"Enter the URL of the image","enterImageDescription":"Enter a description of the image","textdirection":"text direction","toggleTextdirection":"Toggle Editor Text Direction","dfw":"Distraction-free writing mode","strong":"Bold","strongClose":"Close bold tag","em":"Italic","emClose":"Close italic tag","link":"Insert link","blockquote":"Blockquote","blockquoteClose":"Close blockquote tag","del":"Deleted text (strikethrough)","delClose":"Close deleted text tag","ins":"Inserted text","insClose":"Close inserted text tag","image":"Insert image","ul":"Bulleted list","ulClose":"Close bulleted list tag","ol":"Numbered list","olClose":"Close numbered list tag","li":"List item","liClose":"Close list item tag","code":"Code","codeClose":"Close code tag","more":"Insert Read More tag"};
-</script>
-<script src='http://192.168.1.11/wp-includes/js/quicktags.min.js?ver=5.3.2'></script>
-<script src='http://192.168.1.11/wp-includes/js/dist/dom-ready.min.js?ver=2.5.1'></script>
-<script src='http://192.168.1.11/wp-includes/js/dist/a11y.min.js?ver=2.5.1'></script>
-<script>
-var wpLinkL10n = {"title":"Insert\/edit link","update":"Update","save":"Add Link","noTitle":"(no title)","noMatchesFound":"No results found.","linkSelected":"Link selected.","linkInserted":"Link inserted."};
-</script>
-<script src='http://192.168.1.11/wp-includes/js/wplink.min.js?ver=5.3.2'></script>
-<script src='http://192.168.1.11/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
-<script src='http://192.168.1.11/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
-<script src='http://192.168.1.11/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4'></script>
-<script src='http://192.168.1.11/wp-includes/js/jquery/ui/menu.min.js?ver=1.11.4'></script>
-<script>
-var uiAutocompleteL10n = {"noResults":"No results found.","oneResult":"1 result found. Use up and down arrow keys to navigate.","manyResults":"%d results found. Use up and down arrow keys to navigate.","itemSelected":"Item selected."};
-</script>
-<script src='http://192.168.1.11/wp-includes/js/jquery/ui/autocomplete.min.js?ver=1.11.4'></script>
-<script>
-var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"http:\/\/192.168.1.11\/wp-includes\/js\/thickbox\/loadingAnimation.gif"};
-</script>
-<script src='http://192.168.1.11/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105'></script>
-<script src='http://192.168.1.11/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
-<script src='http://192.168.1.11/wp-includes/js/shortcode.min.js?ver=5.3.2'></script>
-<script src='http://192.168.1.11/wp-admin/js/media-upload.min.js?ver=5.3.2'></script>
-		<script type="text/javascript">
-		window.wp = window.wp || {};
-		window.wp.editor = window.wp.editor || {};
-		window.wp.editor.getDefaultSettings = function() {
-			return {
-				tinymce: {theme:"modern",skin:"lightgray",language:"en",formats:{alignleft: [{selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", styles: {textAlign:"left"}},{selector: "img,table,dl.wp-caption", classes: "alignleft"}],aligncenter: [{selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", styles: {textAlign:"center"}},{selector: "img,table,dl.wp-caption", classes: "aligncenter"}],alignright: [{selector: "p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li", styles: {textAlign:"right"}},{selector: "img,table,dl.wp-caption", classes: "alignright"}],strikethrough: {inline: "del"}},relative_urls:false,remove_script_host:false,convert_urls:false,browser_spellcheck:true,fix_list_elements:true,entities:"38,amp,60,lt,62,gt",entity_encoding:"raw",keep_styles:false,cache_suffix:"wp-mce-4960-20190918",resize:"vertical",menubar:false,branding:false,preview_styles:"font-family font-size font-weight font-style text-decoration text-transform",end_container_on_empty_block:true,wpeditimage_html5_captions:true,wp_lang_attr:"en-US",wp_keep_scroll_position:false,wp_shortcut_labels:{"Heading 1":"access1","Heading 2":"access2","Heading 3":"access3","Heading 4":"access4","Heading 5":"access5","Heading 6":"access6","Paragraph":"access7","Blockquote":"accessQ","Underline":"metaU","Strikethrough":"accessD","Bold":"metaB","Italic":"metaI","Code":"accessX","Align center":"accessC","Align right":"accessR","Align left":"accessL","Justify":"accessJ","Cut":"metaX","Copy":"metaC","Paste":"metaV","Select all":"metaA","Undo":"metaZ","Redo":"metaY","Bullet list":"accessU","Numbered list":"accessO","Insert\/edit image":"accessM","Insert\/edit link":"metaK","Remove link":"accessS","Toolbar Toggle":"accessZ","Insert Read More tag":"accessT","Insert Page Break tag":"accessP","Distraction-free writing mode":"accessW","Add Media":"accessM","Keyboard Shortcuts":"accessH"},content_css:"http://192.168.1.11/wp-includes/css/dashicons.min.css?ver=5.3.2,http://192.168.1.11/wp-includes/js/tinymce/skins/wordpress/wp-content.css?ver=5.3.2",toolbar1:"bold,italic,bullist,numlist,link",wpautop:false,indent:true,elementpath:false,plugins:"charmap,colorpicker,hr,lists,paste,tabfocus,textcolor,fullscreen,wordpress,wpautoresize,wpeditimage,wpemoji,wpgallery,wplink,wptextpattern"},
-				quicktags: {
-					buttons: 'strong,em,link,ul,ol,li,code'
-				}
-			};
-		};
-
-					var tinyMCEPreInit = {
-				baseURL: "http://192.168.1.11/wp-includes/js/tinymce",
-				suffix: ".min",
-				mceInit: {},
-				qtInit: {},
-				load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
-			};
-					</script>
-		<script src='http://192.168.1.11/wp-includes/js/tinymce/wp-tinymce.js?ver=4960-20190918'></script>
-<script type='text/javascript'>
-tinymce.addI18n( 'en', {"Ok":"OK","Bullet list":"Bulleted list","Insert\/Edit code sample":"Insert\/edit code sample","Url":"URL","Spellcheck":"Check Spelling","Row properties":"Table row properties","Cell properties":"Table cell properties","Paste row before":"Paste table row before","Paste row after":"Paste table row after","Cut row":"Cut table row","Copy row":"Copy table row","Merge cells":"Merge table cells","Split cell":"Split table cell","Paste is now in plain text mode. Contents will now be pasted as plain text until you toggle this option off.":"Paste is now in plain text mode. Contents will now be pasted as plain text until you toggle this option off.\n\nIf you\u2019re looking to paste rich content from Microsoft Word, try turning this option off. The editor will clean up text pasted from Word automatically.","Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help":"Rich Text Area. Press Alt-Shift-H for help.","You have unsaved changes are you sure you want to navigate away?":"The changes you made will be lost if you navigate away from this page.","Your browser doesn't support direct access to the clipboard. Please use the Ctrl+X\/C\/V keyboard shortcuts instead.":"Your browser does not support direct access to the clipboard. Please use keyboard shortcuts or your browser\u2019s edit menu instead.","Edit|button":"Edit"});
-tinymce.ScriptLoader.markDone( 'http://192.168.1.11/wp-includes/js/tinymce/langs/en.js' );
-</script> -->
-<script src="http://192.168.1.11/wp-includes/js/tinymce/wp-tinymce.php?ver=5.3.2"></script>
+  <script src="http://192.168.1.11/wp-includes/js/tinymce/wp-tinymce.php?ver=5.3.2"></script>
 
 </body>
 

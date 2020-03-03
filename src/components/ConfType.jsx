@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 
 export default function ConfType(props) {
@@ -11,7 +11,7 @@ export default function ConfType(props) {
   } else if (props.formSettings.confirmation.type === 'url') {
     conf = 2;
   }
-  const a = useRef(null)
+
   const [pos, setPos] = React.useState(conf);
   const [url, setUrl] = React.useState('');
   const [page, setPage] = React.useState('');
@@ -60,12 +60,20 @@ export default function ConfType(props) {
 
   const handleMsgTitle = (e, idx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.msg[idx] = e.target.value
+    tmp.confirmation.type.msg[idx].title = e.target.value
     setFormSettings(tmp)
-    console.log(e.target.value, idx)
+    console.log(e.target.value, idx, tmp)
   }
 
-  React.useEffect(() => {
+  const handleMsgMsg = (e, idx) => {
+    console.log(e)
+    /* const tmp = { ...formSettings }
+    tmp.confirmation.type.msg[idx].msg = e.target.value
+    setFormSettings(tmp)
+    console.log(e.target.value, idx, tmp) */
+  }
+
+  useEffect(() => {
     switch (props.formSettings.confirmation.type) {
       case 'url':
         setUrl(props.formSettings.confirmation.url);
@@ -80,31 +88,14 @@ export default function ConfType(props) {
         break;
     }
     if (typeof tinymce !== 'undefined') {
-      console.log('GG', typeof tinymce)
-      /* wp.editor.remove()
-      console.log('here in tinymce')
-      wp.editor.initialize(
-        a.current,
-        {
-          tinymce: {
-            // wpautop: true,
-            plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
-            toolbar1: 'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more | spellchecker',
-          },
-          quicktags: true,
-        },
-      ) */
       tinymce.init({
         mode: 'textareas',
-        // mode: "exact",
         // elements: 'pre-details',
         theme: 'modern',
         skin: 'lightgray',
         menubar: false,
         statusbar: false,
-        toolbar: [
-          'bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | undo redo',
-        ],
+        toolbar: ['bold italic link image | alignleft aligncenter alignright | bullist numlist outdent indent | undo redo', ''],
       })
     }
   }, [])
@@ -151,8 +142,8 @@ export default function ConfType(props) {
             >
               <div className="f-m">Success Message:</div>
               <textarea
-                onChange={handleMsg}
-                className="btcd-paper-inp"
+                onChange={(e) => handleMsgMsg(e)}
+                // className="btcd-paper-inp"
                 rows="5"
                 value={itm.msg}
                 id="wp-bitapps-editor"
