@@ -1,51 +1,49 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { createElement, createRef, memo, useState } from 'react'
+import React, { createElement, createRef, useState } from 'react'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
 
 function CompGen(props) {
-  function textField(attr) {
-    console.log('a                    textField rerender ')
-    return (
-      <div className="text-wrp drag" btcd-fld="text-fld">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
-        {createElement(
-          'input',
-          {
-            className: 'txt-fld no-drg',
-            type: attr.typ,
-            ...('req' in attr.valid && { required: attr.valid.req }),
-            ...('ph' in attr && { placeholder: attr.ph }),
-            ...('mn' in attr && { min: attr.mn }),
-            ...('mx' in attr && { max: attr.mx }),
-            ...('val' in attr && { defaultValue: attr.val }),
-            ...('ac' in attr && { autoComplete: attr.ac }),
-            ...('name' in attr && { name: attr.name }),
-          },
-        )}
-      </div>
-    )
-  }
+  console.log('%c $render CompGen', 'background:red;padding:3px;border-radius:5px;color:white')
 
-  function textArea(attr) {
-    return (
-      <div className="text-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
-        <textarea
-          className="txt-fld no-drg"
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'val' in attr && { defaultValue: attr.val }}
-          {...'ac' in attr && { autoComplete: attr.ac }}
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'name' in attr && { name: attr.name }}
-        />
-      </div>
-    )
-  }
+  const textField = attr => (
+    <div className="text-wrp drag" btcd-fld="text-fld">
+      {'lbl' in attr && <label>{attr.lbl}</label>}
+      {createElement(
+        'input',
+        {
+          className: 'txt-fld no-drg',
+          type: attr.typ,
+          ...('req' in attr.valid && { required: attr.valid.req }),
+          ...('ph' in attr && { placeholder: attr.ph }),
+          ...('mn' in attr && { min: attr.mn }),
+          ...('mx' in attr && { max: attr.mx }),
+          ...('val' in attr && { defaultValue: attr.val }),
+          ...('ac' in attr && { autoComplete: attr.ac }),
+          ...('name' in attr && { name: attr.name }),
+        },
+      )}
+    </div>
+  )
 
-  function checkBox(attr) {
-    const vals = 'val' in attr ? JSON.parse(attr.val) : null
+  const textArea = attr => (
+    <div className="text-wrp drag" btcd-fld="textarea">
+      {'lbl' in attr && <label>{attr.lbl}</label>}
+      <textarea
+        className="txt-fld no-drg"
+        {...'req' in attr.valid && { required: attr.valid.req }}
+        {...'ph' in attr && { placeholder: attr.ph }}
+        {...'val' in attr && { defaultValue: attr.val }}
+        {...'ac' in attr && { autoComplete: attr.ac }}
+        {...'req' in attr.valid && { required: attr.valid.req }}
+        {...'name' in attr && { name: attr.name }}
+      />
+    </div>
+  )
+
+
+  const checkBox = attr => {
+    const vals = 'val' in attr && attr.val !== '' ? JSON.parse(attr.val) : null
 
     return (
       <div className="text-wrp drag" btcd-fld="textarea">
@@ -69,7 +67,7 @@ function CompGen(props) {
     )
   }
 
-  function radioBox(attr) {
+  const radioBox = attr => {
     const n = Math.random()
 
     return (
@@ -96,42 +94,36 @@ function CompGen(props) {
     )
   }
 
-  function blank() {
-    return (
-      <div className="blnk-blk drag" />
-    )
-  }
+  const blank = () => (
+    <div className="blnk-blk drag" />
+  )
 
-  function dropDown(attr) {
-    return (
-      <div className="text-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
-        <select
-          className="txt-fld slim no-drg"
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'mul' in attr && { multiple: attr.mul }}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'name' in attr && { name: attr.name }}
-          {...'val' in attr && { value: attr.val }}
-          {...'name' in attr && { name: attr.name }}
-        >
-          <option data-placeholder="true" aria-label="option placeholder" />
-          {attr.opt.map((itm, i) => (
-            <option key={`op-${i + 87}`} value={itm.lbl}>{itm.lbl}</option>
-          ))}
-        </select>
-      </div>
-    )
-  }
+  const dropDown = (attr) => (
+    <div className="text-wrp drag" btcd-fld="textarea">
+      {'lbl' in attr && <label>{attr.lbl}</label>}
+      <select
+        className="txt-fld slim no-drg"
+        {...'req' in attr.valid && { required: attr.valid.req }}
+        {...'mul' in attr && { multiple: attr.mul }}
+        {...'ph' in attr && { placeholder: attr.ph }}
+        {...'name' in attr && { name: attr.name }}
+        {...'val' in attr && { value: attr.val }}
+        {...'name' in attr && { name: attr.name }}
+      >
+        <option data-placeholder="true" aria-label="option placeholder" />
+        {attr.opt.map((itm, i) => (
+          <option key={`op-${i + 87}`} value={itm.lbl}>{itm.lbl}</option>
+        ))}
+      </select>
+    </div>
+  )
 
-  function submitBtns(attr) {
-    return (
-      <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
-        <button className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="button">{attr.subBtnTxt}</button>
-        {'rstBtnTxt' in attr && <button className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="button">{attr.rstBtnTxt}</button>}
-      </div>
-    )
-  }
+  const submitBtns = (attr) => (
+    <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
+      <button className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="button">{attr.subBtnTxt}</button>
+      {'rstBtnTxt' in attr && <button className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="button">{attr.rstBtnTxt}</button>}
+    </div>
+  )
 
   switch (props.atts.typ) {
     case 'text':
@@ -145,6 +137,7 @@ function CompGen(props) {
     case 'month':
     case 'week':
     case 'color':
+
       return textField(props.atts)
     case 'textarea':
       return textArea(props.atts)
@@ -167,7 +160,7 @@ function CompGen(props) {
   return <div>aaa</div>
 }
 
-export default memo(CompGen)
+export default CompGen
 
 function FileUp({ attr, formID, entryID }) {
   const delBtnRef = createRef()

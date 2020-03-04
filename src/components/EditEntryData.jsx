@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
+import Scrollbars from 'react-custom-scrollbars'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
@@ -9,8 +10,9 @@ export default function EditEntryData(props) {
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
-  const { snackMsg } = useContext(BitappsContext)
+  const { snackMsg, allRes } = useContext(BitappsContext)
   const { setSnackbar } = snackMsg
+  const { allResp, setAllResp } = allRes
   const ref = useRef(null)
 
   useEffect(() => {
@@ -44,16 +46,20 @@ export default function EditEntryData(props) {
       }
     })
 
-    console.clear()
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-    }
-    const queryParam = {formID: props.formID, entryID: props.entryID }
+    const queryParam = { formID: props.formID, entryID: props.entryID }
     bitsFetch(formData, 'bitapps_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
           setSnackbar({ show: true, msg: response.data.message })
-          // window.location = '/'
+          const tmp = [...allResp]
+          for (let i = 0; i < tmp.length; i += 1) {
+            if (tmp[i].entry_id === props.entryID) {
+              tmp[i] = response.data.updatedData
+              break
+            }
+          }
+          setAllResp(tmp)
+          props.close(false)
         }
       })
   }
@@ -72,7 +78,7 @@ export default function EditEntryData(props) {
       setModal={props.close}
       title="Edit"
     >
-      <div style={{ overflow: 'auto' }}>
+      <Scrollbars style={{ height: 'calc(100% - 17px)' }}>
         {data.layout !== null && (
           <Bitapps
             refer={ref}
@@ -83,7 +89,7 @@ export default function EditEntryData(props) {
             entryID={props.entryID}
           />
         )}
-      </div>
+      </Scrollbars>
     </Modal>
   )
 }

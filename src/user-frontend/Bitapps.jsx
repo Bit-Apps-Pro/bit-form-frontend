@@ -12,7 +12,6 @@ export default function Bitapps(props) {
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
     props.data[field.i].name = name
-    console.log(props.data[field.i])
     return (
       <div
         style={{

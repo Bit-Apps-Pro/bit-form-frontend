@@ -26,10 +26,11 @@ function GridLayout(props) {
   mul: multiple
   */
 
+  const { newData, setNewData, fields, setFields } = props
+
   const [isLoading, setisLoading] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
   const [layout, setLayout] = useState([])
-  const [data, setData] = useState(props.fields)
   // const [breakpoint, setBreakpoint] = useState('md')
 
   const fetchTemplate = () => {
@@ -37,13 +38,12 @@ function GridLayout(props) {
       if (props.formID === 'blank') {
         setisLoading(false)
       } else {
-        // const pram = process.env.NODE_ENV === 'development' ? prepareData({ template: props.formID }) : { template: props.formID }
         bitsFetch({ template: props.formID }, 'bitapps_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               const responseData = JSON.parse(res.data)
               setLayout(responseData.form_content.layout)
-              setData(responseData.form_content.fields)
+              setFields(responseData.form_content.fields)
               setNewCounter(responseData.form_content.layout.length)
               props.setFormName(responseData.form_content.form_name)
               setisLoading(false)
@@ -56,14 +56,13 @@ function GridLayout(props) {
           })
       }
     } else if (props.formType === 'edit') {
-      // const pram = process.env.NODE_ENV === 'development' ? prepareData({ id: props.formID }) : { id: props.formID }
       bitsFetch({ id: props.formID }, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
             console.log('edit gfetched')
             const responseData = JSON.parse(res.data)
             setLayout(responseData.form_content.layout)
-            setData(responseData.form_content.fields)
+            setFields(responseData.form_content.fields)
             setNewCounter(responseData.form_content.layout.length)
             props.setFormName(responseData.form_content.form_name)
             setisLoading(false)
@@ -114,17 +113,16 @@ function GridLayout(props) {
   }
 
   const margeNewData = () => {
-    const { newData, setNewData } = props
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
     setNewData(null)
-    setData({ ...data, [`b-${newCounter}`]: newData[0] })
+    setFields({ ...fields, [`b-${newCounter + 1}`]: newData[0] })
     setNewCounter(newCounter + 1)
-    setLayout([...layout, { i: `b-${newCounter}`, x, y, w, h, minH, maxH, minW }])
+    setLayout([...layout, { i: `b-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }])
   }
 
-  const { newData, fields, setFields } = props
+
   useEffect(() => {
     // comp mount
     fetchTemplate()
@@ -138,20 +136,19 @@ function GridLayout(props) {
 
     setTimeout(() => { setFileIcn() }, 1)
 
-    setFields(data)
-  }, [data, newData, fields])
+  }, [newData, fields])
+
 
   const onLayoutChange = (lat) => {
     props.setLay(lat)
   }
 
-
   const onRemoveItem = i => {
     let lay = [...layout]
     lay = lay.filter(itm => itm.i !== i)
-    const tmpData = { ...data }
+    const tmpData = { ...fields }
     delete tmpData[i]
-    setData(tmpData)
+    setFields(tmpData)
     setLayout(lay)
   }
 
@@ -161,9 +158,9 @@ function GridLayout(props) {
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `b-${newCounter}`
+    const newBlk = `b-${newCounter + 1}`
 
-    setData({ ...data, [newBlk]: draggedElm[0] })
+    setFields({ ...fields, [newBlk]: draggedElm[0] })
     setNewCounter(newCounter + 1)
     setLayout([...layout, { i: newBlk, x, y, w, h, minH, maxH, minW }])
   }
@@ -192,7 +189,7 @@ function GridLayout(props) {
 
       id = node.getAttribute('btcd-id')
 
-      if (data[id].typ === 'select') {
+      if (fields[id].typ === 'select') {
         const allSel = document.querySelectorAll('select')
         for (let i = 0; i < allSel.length; i += 1) {
           allSel[i].parentNode.parentNode.classList.remove('z-9')
@@ -200,7 +197,7 @@ function GridLayout(props) {
         node.classList.add('z-9')
       }
 
-      props.setElmSetting({ id, data: data[id] })
+      props.setElmSetting({ id, data: fields[id] })
     }
   }
 
@@ -208,7 +205,7 @@ function GridLayout(props) {
     props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
   }
 
-  const compByTheme = (compData) => {
+  const compByTheme = compData => {
     switch (props.theme) {
       case 'default':
         return <CompGen atts={compData} />
@@ -234,8 +231,8 @@ function GridLayout(props) {
         unselectable="on"
         draggable="false"
         className="bit-blk-icn"
-        onClick={onRemoveItem.bind(this, item.i)}
-        onKeyPress={onRemoveItem.bind(this, item.i)}
+        onClick={() => onRemoveItem(item.i)}
+        onKeyPress={() => onRemoveItem(item.i)}
         role="button"
         tabIndex={-1}
       >
@@ -260,7 +257,7 @@ function GridLayout(props) {
         />
       </span>
 
-      {compByTheme(data[item.i])}
+      {compByTheme(fields[item.i])}
     </div>
   )
 
@@ -271,15 +268,11 @@ function GridLayout(props) {
           <Scrollbars>
             <ResponsiveReactGridLayout
               className="layout"
-              // layouts={props.lay}
               onDrop={onDrop}
               onLayoutChange={onLayoutChange}
               droppingItem={props.draggedElm[1]}
               cols={{ lg: 10 }}
               breakpoints={{ lg: 800 }}
-              //  onBreakpointChange={onBreakpointChange}
-              // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-              // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
               rowHeight={40}
               width={props.width}
               margin={[0, 0]}
@@ -287,6 +280,10 @@ function GridLayout(props) {
               draggableHandle=".drag"
               isDroppable
               useCSSTransforms
+            // layouts={props.lay}
+            // onBreakpointChange={onBreakpointChange}
+            // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+            // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
             // compactType="vertical"
             >
               {layout.map(itm => blkGen(itm))}

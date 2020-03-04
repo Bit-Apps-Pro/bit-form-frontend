@@ -1,99 +1,71 @@
 /* eslint-disable no-undef */
-import React from 'react';
-import { useRef } from 'react';
+import React, { useEffect } from 'react'
+import Accordions from './ElmSettings/Childs/Accordions'
+import Button from './ElmSettings/Childs/Button'
 
 export default function ConfType(props) {
-  let conf = 0;
-  if (props.formSettings.confirmation.type === 'page') {
-    conf = 1;
-  } else if (props.formSettings.confirmation.type === 'url') {
-    conf = 2;
-  }
-  const a = useRef(null)
-  const [pos, setPos] = React.useState(conf);
-  const [url, setUrl] = React.useState('');
-  const [page, setPage] = React.useState('');
-  const [msg, setMsg] = React.useState('');
+  console.log('%c $render FormSettings', 'background:lightgreen;padding:3px;border-radius:5px;')
+  const { formSettings, setFormSettings } = props
 
-  function handlePos(ind) {
-    setPos(ind);
-    const st = props.formSettings;
-    switch (ind) {
-      case 0:
-        st.confirmation = { type: 'msg', txt: msg };
-        break;
-      case 1:
-        st.confirmation = { type: 'page', page };
-        break;
-      case 2:
-        st.confirmation = { type: 'url', url };
-        break;
-      default:
-        break;
+  const [pos, setPos] = React.useState(0);
+
+  const handlePos = ind => {
+    setPos(ind)
+  }
+
+  const handleMsgTitle = (e, idx) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.msg[idx].title = e.target.value
+    setFormSettings(tmp)
+  }
+
+  const handleUrlTitle = (e, idx) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.url[idx].title = e.target.value
+    setFormSettings(tmp)
+  }
+
+  const handleMsgMsg = (mg, idx) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.msg[idx].msg = mg
+    setFormSettings(tmp)
+  }
+
+  const handlePage = (e, idx) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.url[idx].url = e.target.value
+    setFormSettings(tmp)
+  }
+
+  const handleLink = (val, i) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.url[i].url = val
+    setFormSettings(tmp)
+  }
+
+  const getUrlParams = url => url.match(/(\?|&)([^=]+)=([^&]+)/gi)
+
+  const handleParam = (typ, val, pram, i) => {
+    const tmp = { ...formSettings }
+    if (typ === 'key') {
+      tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
+    } else {
+      tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(pram, `${pram.split('=')[0]}=${val}`)
     }
-
-    props.setFormSettings(st);
+    setFormSettings(tmp)
   }
 
-  function handleUrl(e) {
-    setUrl(e.target.value);
-    const tmp = props.formSettings;
-    tmp.confirmation = { type: 'url', url: e.target.value };
-    props.setFormSettings(tmp);
-  }
-
-  function handleMsg(e) {
-    setMsg(e.target.value);
-    const tmp = props.formSettings;
-    tmp.confirmation = { type: 'msg', msg: e.target.value };
-    props.setFormSettings(tmp);
-  }
-
-  function handlePage(e) {
-    setPage(e.target.value);
-    const tmp = props.formSettings;
-    tmp.confirmation = { type: 'page', page: e.target.value };
-    props.setFormSettings(tmp);
-  }
-
-  React.useEffect(() => {
-    switch (props.formSettings.confirmation.type) {
-      case 'url':
-        setUrl(props.formSettings.confirmation.url);
-        break;
-      case 'msg':
-        setMsg(props.formSettings.confirmation.msg);
-        break;
-      case 'page':
-        setPage(props.formSettings.confirmation.page);
-        break;
-      default:
-        break;
-    }
+  useEffect(() => {
     if (typeof tinymce !== 'undefined') {
-      console.log('GG', typeof tinymce)
-      /* wp.editor.remove()
-      console.log('here in tinymce')
-      wp.editor.initialize(
-        'wp-bitapps-editor',
-        {
-          tinymce: {
-            // wpautop: true,
-            plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
-            toolbar1: 'wpemoji formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more ',
-          },
-          quicktags: true,
-        },
-      ) */
       tinymce.init({
-        mode: 'textareas',
-        plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
         // mode: "exact",
         // elements: 'pre-details',
-        theme: 'modern',
-        // skin: 'lightgray',
-        menubar: false,
         // statusbar: false,
+        // skin: 'lightgray',
+        selector: '.btcd-editor',
+        plugins: 'link hr lists wpview wpemoji',
+        theme: 'modern',
+        menubar: false,
         branding: false,
         toolbar: [
           'emoticons wpemoji bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link | undo redo',
@@ -101,13 +73,11 @@ export default function ConfType(props) {
         external_plugins: { emoticons: 'http:\/\/192.168.1.11\/wp-content\/plugins\/tinymce-advanced\/mce\/emoticons\/plugin.min.js' },
       })
     }
-  }, []);
+  }, [])
 
   return (
     <div className="btcd-f-c-t">
-      <div>
-        <b>Confirmation Type:</b>
-      </div>
+      <div><b>Confirmation Type:</b></div>
       <div>
         <button
           onClick={() => handlePos(0)}
@@ -123,60 +93,80 @@ export default function ConfType(props) {
         >
           Redirect to another Page
         </button>
-        <button
-          onClick={() => handlePos(2)}
-          className={`btcd-f-c-t-o ${pos === 2 && 'btcd-f-c-t-o-a'}`}
-          type="button"
-        >
-          {' '}
-          Redirect to a Custom Link
-        </button>
       </div>
 
       <div className="btcd-f-c-t-d">
-        <div className="btcd-f-c-t-d-0" style={{ height: pos === 0 && 130 }}>
-          <div className="f-m">
-            <b>Success Message: </b>
-          </div>
-          <textarea
-            ref={a}
-            onChange={handleMsg}
-            className="btcd-paper-inp"
-            style={{ width: '95%' }}
-            rows="5"
-            value={msg}
-            id="wp-bitapps-editor"
-          />
-          <textarea
-            onChange={handleMsg}
-            className="btcd-paper-inp"
-            style={{ width: '95%' }}
-            rows="5"
-            value={msg}
-            id="wp-bitapps-editor2"
-          />
+        <div style={{ display: pos === 0 ? 'block' : 'none' }}>
+          {formSettings.confirmation.type.msg.map((itm, i) => (
+            <Accordions
+              key={`f-m-${i + 1}`}
+              title={itm.title}
+              titleEditable
+              cls="mt-2"
+              onTitleChange={e => handleMsgTitle(e, i)}
+            >
+              <div className="f-m">Success Message:</div>
+              <textarea
+                onChange={e => handleMsgMsg(e.target.value, i)}
+                className="btcd-paper-inp btcd-editor"
+                rows="5"
+                value={itm.msg}
+                data-idx={i}
+              />
+            </Accordions>
+          ))}
         </div>
-        <div className="btcd-f-c-t-d-0" style={{ height: pos === 1 && 70 }}>
-          <div className="">
-            <b>Select A Page</b>
-          </div>
-          <select value={page} onChange={handlePage} className="btcd-paper-inp">
-            <option value="Page 1">Page 1</option>
-            <option value="Page 2">Page 2</option>
-            <option value="Page 3">Page 3</option>
-          </select>
+
+        <div style={{ display: pos === 1 ? 'block' : 'none' }}>
+          {formSettings.confirmation.type.url.map((itm, i) => (
+            <Accordions
+              key={`f-u-${i + 1}`}
+              title={itm.title}
+              titleEditable
+              cls="mt-2"
+              onTitleChange={e => handleUrlTitle(e, i)}
+            >
+              <div className="f-m">Select A Page:</div>
+              <select className="btcd-paper-inp" onChange={e => handlePage(e, i)}>
+                <option value="">Custom Link</option>
+                <option value="https://www.Page-1.com?aaa=wwww&ssss=dddd">Page 1</option>
+                <option value="https://www.Page-2.com?aaa=wwww&ssss=dddd">Page 2</option>
+                <option value="https://www.Page-3.com?aaa=wwww&ssss=dddd">Page 3</option>
+              </select>
+              <br />
+              <br />
+              <div className="f-m">Link:</div>
+              <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
+              <br />
+              <br />
+              <div className="f-m">Add Url Parameter: (optional)</div>
+              <div className="btcd-param-t-wrp mt-1">
+                <div className="btcd-param-t">
+                  <div className="tr">
+                    <div className="td">Key</div>
+                    <div className="td">Value</div>
+                  </div>
+                  {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
+                    <div key={`url-p-${childIdx + 11}`} className="tr">
+                      <div className="td"><input onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
+                      <div className="td">
+                        <span className="tooltip" style={{ '--tooltip-txt': '"Get Form Field"', height: 200, width: 200, background: 'red', position: 'relative' }}></span>
+
+                        <input onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
+                        <select className="tooltip" style={{ '--tooltip-txt': '"Get Form Field"' }} name="">
+                          <option disabled selected>Select form field value</option>
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                  <Button icn>+</Button>
+                </div>
+              </div>
+
+            </Accordions>
+          ))}
         </div>
-        <div className="btcd-f-c-t-d-0" style={{ height: pos === 2 && 70 }}>
-          <div className="f-m">
-            <b>Custom URL:</b>
-          </div>
-          <input
-            onChange={handleUrl}
-            className="btcd-paper-inp"
-            text="text"
-            value={url}
-          />
-        </div>
+
       </div>
     </div>
   );

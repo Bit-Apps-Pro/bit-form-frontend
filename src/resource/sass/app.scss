@@ -4,6 +4,7 @@ $blue: #0083f3;
 $dp-blue: #0b1655;
 $bg: #edeff3;
 $red: #ff4646;
+$dp-txt: #545582;
 
 html,
 body {
@@ -88,7 +89,7 @@ body {
   background: $blue;
   color: white !important;
   &:hover {
-    background: #016fcf;
+    background: #016fcf !important;
   }
   &:active {
     background: #0062b8;
@@ -628,6 +629,10 @@ li b {
   margin-top: 0 !important;
 }
 
+.mt-1 {
+  margin-top: 5px;
+}
+
 .mt-2 {
   margin-top: 10px;
 }
@@ -956,7 +961,7 @@ li b {
     color: #004077;
     margin-right: 10px;
     &:hover {
-      color: #0078e0;
+      color: $blue;
     }
   }
 }
@@ -1135,15 +1140,11 @@ nav.top-nav {
   font-weight: bold;
   word-break: break-all;
   border-bottom: 1px solid #dedce4;
-  color: #545582;
+  color: $dp-txt;
   text-overflow: ellipsis;
   &:hover {
     background: #eeeefd;
   }
-}
-
-.f-table .tbody .tr:last-child .td {
-  border-bottom: none;
 }
 
 .btcd-all-frm .tbody .tr .td:last-child,
@@ -1166,7 +1167,7 @@ nav.top-nav {
   padding: 10px 0 10px 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
   height: 100%;
 }
 
@@ -1219,6 +1220,72 @@ nav.top-nav {
   margin-right: 20px;
 }
 
+.btcd-accr {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  & > .btcd-accr-btn {
+    outline: none;
+    padding: 5px;
+    cursor: pointer;
+    & > .icn-btn {
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: #eaedff;
+      & > .btcd-accr-title > div > div.edit {
+        display: inline-block;
+      }
+    }
+    & > .btcd-accr-title > div {
+      & > input {
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        font-size: 15px;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+      }
+      & > div {
+        display: none;
+        margin-left: 3px;
+        & > .btcd-icn {
+          font-size: 14px !important;
+          color: transparentize(#000, 0.5);
+        }
+      }
+    }
+    & > .btcd-accr-title div > input.edit {
+      cursor: text;
+      &:hover {
+        box-shadow: 0 0 0 1px transparentize(#000000, 0.8);
+      }
+      &:focus {
+        box-shadow: 0 0 0 1px transparentize($dp-blue, 0.8);
+        background: transparentize($color: #fff, $amount: 0.4);
+        padding: 0 4px;
+      }
+    }
+  }
+  & > .btcd-accr-cont {
+    overflow: auto;
+    transition: max-height 0.5s ease-in-out;
+    & > div {
+      padding: 10px;
+    }
+  }
+}
+
+.btcd-accr-title {
+  padding: 5px;
+  & > small {
+    color: gray;
+    font-size: 12px;
+  }
+}
+
 .f-search {
   font-size: 12 !important;
   float: right;
@@ -1260,6 +1327,14 @@ nav.top-nav {
     background: #dcdcdc;
   }
 }
+
+.icn-btn-sm {
+  height: 22px;
+  width: 22px;
+  padding: 2px;
+  font-size: 17px;
+}
+
 .btcd-icn-lg {
   width: 40px;
   height: 40px;
@@ -1328,7 +1403,7 @@ nav.top-nav {
 }
 
 .btcd-toggle-state {
-  display: none;
+  display: none !important;
 }
 
 .btcd-indicator {
@@ -1542,6 +1617,7 @@ nav.top-nav {
 .btcd-modal-content {
   padding: 20px;
   position: relative;
+  height: 100%;
 }
 .btcd-mdl-title {
   margin: 0;
@@ -1786,12 +1862,12 @@ nav.top-nav {
   background: white !important;
 }
 .btcd-f-settings {
-  height: 100%;
-  display: flex;
+  height: calc(100% - 40px);
+  overflow: auto;
 }
 
 .btcd-f-sidebar {
-  display: inline-block;
+  position: fixed;
   height: 100%;
   width: 220px;
   background: #0076da;
@@ -1878,7 +1954,10 @@ nav.top-nav {
   }
 }
 .btcd-s-wrp {
+  width: 70%;
+  height: 100%;
   padding: 50px 0 0 100px;
+  margin-left: 200px;
 }
 
 .btcd-s-inp {
@@ -1899,15 +1978,11 @@ nav.top-nav {
   padding: 20px;
   border-radius: 20px;
 }
-.btcd-f-c-t-d-0 {
-  height: 0px;
-  overflow: hidden;
-  transition: height 0.5s;
-}
 
 .f-m {
   font-size: 14px;
 }
+
 .btcd-paper-inp {
   width: calc(100% - 10px);
   font-family: inherit;
@@ -2176,6 +2251,36 @@ nav.top-nav {
   width: 500px;
 }
 
+.btcd-t-link {
+  position: relative;
+  & > a {
+    text-decoration: none;
+  }
+  & > div {
+    width: 70px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    & > a {
+      text-decoration: none;
+      color: $dp-txt;
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+  & > a {
+    color: $dp-txt;
+    display: none;
+  }
+
+  &:hover {
+    & > a {
+      display: inline-block;
+    }
+  }
+}
+
 .btcd-eye-t {
   user-select: none;
   cursor: pointer;
@@ -2222,6 +2327,7 @@ nav.top-nav {
   right: 20px;
   box-shadow: 1px 1px 3px 0px #0000004d;
   transition: right 0.5s;
+  z-index: 9999;
 }
 
 .btcd-snack-cls {
@@ -2241,6 +2347,75 @@ nav.top-nav {
   outline: none;
   &:hover {
     background: transparentize(#fff, 0.8);
+  }
+}
+
+.mce-tinymce.mce-container.mce-panel {
+  overflow: hidden;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.btcd-param-t-wrp {
+  & .btcd-param-t {
+    resize: horizontal;
+    display: inline-block;
+    border: 1px solid #c7c7c7;
+    border-radius: 8px;
+    overflow: hidden;
+    & .tr {
+      min-width: 300px;
+      border-bottom: 1px solid #c7c7c7;
+      &:first-child {
+        font-size: 13px;
+        color: gray;
+        & .td {
+          padding: 8px;
+        }
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+    & .td {
+      padding: 5px;
+      display: inline-block;
+      &:first-child {
+        width: 30%;
+        border-right: 1px solid #c7c7c7;
+      }
+      &:last-child {
+        width: 70%;
+        & input {
+          width: 70%;
+        }
+        & select {
+          border: 1px solid rgb(212, 212, 212);
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          width: 80px;
+          position: relative;
+        }
+      }
+    }
+    & input {
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 4px;
+      border-radius: 0;
+    }
+    & button {
+      width: 100%;
+      height: 25px;
+      border-radius: 0;
+      background: #fafafa;
+      font-weight: bold;
+      &:hover {
+        background: #e4e4e4;
+      }
+    }
   }
 }
 

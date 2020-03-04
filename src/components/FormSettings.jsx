@@ -4,11 +4,14 @@ import ConfType from './ConfType'
 import EmailNotfication from './EmailNotfication'
 
 export default function FormSettings(props) {
+  console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
+
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
 
   return (
     <div className="btcd-f-settings">
+
       <aside className="btcd-f-sidebar">
         <br />
         <br />
@@ -27,14 +30,14 @@ export default function FormSettings(props) {
 
       <div className="btcd-s-wrp">
         <Switch>
-          <Route path={`${path}/`}>
+          <Route path={`/builder/${formType}/${formID}/settings/`}>
             <div>
               <div><b>Form Name: </b></div>
               <input className="btcd-paper-inp" type="text" value={props.formName} onChange={(e) => props.setFormName(e.target.value)} placeholder="Form Name" />
             </div>
             <ConfType formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
           </Route>
-          <Route path={`${path}/email-notification`}>
+          <Route path={`/builder/${formType}/${formID}/settings/email-notification`}>
             <EmailNotfication />
           </Route>
           <Route path={`${path}/b`}>
