@@ -72,7 +72,7 @@ export default function ConfType(props) {
     }
     if (typeof tinymce !== 'undefined') {
       console.log('GG', typeof tinymce)
-     /*  wp.editor.remove()
+      /* wp.editor.remove()
       console.log('here in tinymce')
       wp.editor.initialize(
         'wp-bitapps-editor',
@@ -80,14 +80,14 @@ export default function ConfType(props) {
           tinymce: {
             // wpautop: true,
             plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
-            toolbar1: 'formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more | spellchecker',
+            toolbar1: 'wpemoji formatselect bold italic | bullist numlist | blockquote | alignleft aligncenter alignright | link unlink | wp_more ',
           },
           quicktags: true,
         },
       ) */
       tinymce.init({
         mode: 'textareas',
-        plugins: 'link wpview',
+        plugins: 'charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview',
         // mode: "exact",
         // elements: 'pre-details',
         theme: 'modern',
@@ -96,8 +96,9 @@ export default function ConfType(props) {
         // statusbar: false,
         branding: false,
         toolbar: [
-          'bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link | undo redo',
+          'emoticons wpemoji bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link | undo redo',
         ],
+        external_plugins: { emoticons: 'http:\/\/192.168.1.11\/wp-content\/plugins\/tinymce-advanced\/mce\/emoticons\/plugin.min.js' },
       })
     }
   }, []);
