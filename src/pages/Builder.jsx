@@ -43,7 +43,7 @@ function Builder(props) {
     confirmation: {
       type: {
         msg: [{ title: 'title 1', msg: 'adsf afsasfda ' }, { title: 'title 2', msg: 'sadsadsadasd ' }],
-        url: [{ title: 'url 1', url: 'asdfa' }],
+        url: [{ title: 'url 1', url: 'asdfa' }, { title: 'url 2', url: 'awerw wer' }],
       },
     },
   })

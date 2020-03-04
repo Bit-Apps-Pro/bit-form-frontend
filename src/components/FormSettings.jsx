@@ -11,6 +11,7 @@ export default function FormSettings(props) {
 
   return (
     <div className="btcd-f-settings">
+
       <aside className="btcd-f-sidebar">
         <br />
         <br />
