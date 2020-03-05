@@ -49,7 +49,6 @@ function FormEntries() {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     if (totalData === 0) {
-
       bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
         .then(response => {
           if (response !== undefined && response.success) {

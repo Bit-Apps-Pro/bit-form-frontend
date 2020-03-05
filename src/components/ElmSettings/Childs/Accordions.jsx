@@ -21,12 +21,15 @@ function Accordions({ title, subtitle, children, titleEditable, onTitleChange, c
       <div className={`btcd-accr-btn ${tgl && 'blue'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>
         <div className="btcd-accr-title">
           <div>
-            <input ref={inp} className={titleEditable && 'edit'} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />
-            {titleEditable !== undefined && <div className="edit" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span className="btcd-icn icn-edit" /></div>}
+            <input ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />
+            {titleEditable !== undefined && <div className="edit" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span className="btcd-icn icn-edit" style={{ color: tgl ? 'white' : 'gray' }} /></div>}
           </div>
           {subtitle !== undefined && <small>{subtitle}</small>}
         </div>
-        <Button icn>{tgl ? '-' : '+'}</Button>
+
+        <Button icn>
+          <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} style={{ color: tgl ? 'white' : 'inherit' }} />
+        </Button>
       </div>
       <section className="btcd-accr-cont" style={{ maxHeight: tgl ? '400px' : 0 }}>
         <div>{children}</div>

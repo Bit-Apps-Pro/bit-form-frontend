@@ -42,8 +42,9 @@ function Builder(props) {
     submitBtn: subBtn,
     confirmation: {
       type: {
-        msg: [{ title: 'title 1', msg: 'adsf afsasfda ' }, { title: 'title 2', msg: 'sadsadsadasd ' }],
-        url: [{ title: 'url 1', url: 'asdfa' }, { title: 'url 2', url: 'awerw wer' }],
+        msg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
+        url: [{ title: 'Redirect Url 1', url: '' }],
+        hooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
       },
     },
   })
@@ -291,7 +292,7 @@ function Builder(props) {
             </Section>
           </Container>
         </Route>
-        <Route path="/builder/:formType/:formID/settings/:subSettings?">
+        <Route path="/builder/:formType/:formID/settings/:settings?">
           <FormSettings
             formName={formName}
             setFormName={setFormName}
