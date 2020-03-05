@@ -3,6 +3,7 @@ import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
 import Modal from './Modal'
 
 export default function EmailNotfication() {
+  console.log('render EmailNotfication')
   const notify = [
     { status: 1, label: 'Hello text', email_sub: 'email subject here ...' },
     { status: 1, label: 'Hello text', email_sub: 'email subject here ...' },
