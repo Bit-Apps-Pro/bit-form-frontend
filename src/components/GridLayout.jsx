@@ -26,56 +26,10 @@ function GridLayout(props) {
   mul: multiple
   */
 
-  const { newData, setNewData, fields, setFields } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, isLoading } = props
 
-  const [isLoading, setisLoading] = useState(true)
-  const [newCounter, setNewCounter] = useState(0)
-  const [layout, setLayout] = useState([])
+  const [layout, setLayout] = useState(props.layout)
   // const [breakpoint, setBreakpoint] = useState('md')
-
-  const fetchTemplate = () => {
-    if (props.formType === 'new') {
-      if (props.formID === 'blank') {
-        setisLoading(false)
-      } else {
-        bitsFetch({ template: props.formID }, 'bitapps_get_template')
-          .then(res => {
-            if (res !== undefined && res.success) {
-              const responseData = JSON.parse(res.data)
-              setLayout(responseData.form_content.layout)
-              setFields(responseData.form_content.fields)
-              setNewCounter(responseData.form_content.layout.length)
-              props.setFormName(responseData.form_content.form_name)
-              setisLoading(false)
-            } else {
-              setisLoading(false)
-            }
-          })
-          .catch(() => {
-            setisLoading(false)
-          })
-      }
-    } else if (props.formType === 'edit') {
-      bitsFetch({ id: props.formID }, 'bitapps_get_a_form')
-        .then(res => {
-          if (res !== undefined && res.success) {
-            console.log('edit gfetched')
-            const responseData = JSON.parse(res.data)
-            setLayout(responseData.form_content.layout)
-            setFields(responseData.form_content.fields)
-            setNewCounter(responseData.form_content.layout.length)
-            props.setFormName(responseData.form_content.form_name)
-            setisLoading(false)
-          } else {
-            setisLoading(false)
-          }
-        })
-        .catch(() => {
-          setisLoading(false)
-        })
-    }
-  }
-
   const slimIntit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
@@ -121,12 +75,6 @@ function GridLayout(props) {
     setNewCounter(newCounter + 1)
     setLayout([...layout, { i: `b-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }])
   }
-
-
-  useEffect(() => {
-    // comp mount
-    fetchTemplate()
-  }, [])
 
   useEffect(() => {
     if (newData !== null) {
