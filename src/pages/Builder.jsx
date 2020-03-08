@@ -17,6 +17,8 @@ function Builder(props) {
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
+  const [newCounter, setNewCounter] = useState(0)
+  const [isLoading, setisLoading] = useState(true)
   const [lay, setLay] = useState(null)
   const [fields, setFields] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
@@ -49,6 +51,49 @@ function Builder(props) {
     },
   })
 
+  const fetchTemplate = () => {
+    if (formType === 'new') {
+      if (formID === 'blank') {
+        setisLoading(false)
+      } else {
+        bitsFetch({ template: formID }, 'bitapps_get_template')
+          .then(res => {
+            if (res !== undefined && res.success) {
+              const responseData = JSON.parse(res.data)
+              setLay(responseData.form_content.layout)
+              setFields(responseData.form_content.fields)
+              setNewCounter(responseData.form_content.layout.length)
+              setFormName(responseData.form_content.form_name)
+              setisLoading(false)
+            } else {
+              setisLoading(false)
+            }
+          })
+          .catch(() => {
+            setisLoading(false)
+          })
+      }
+    } else if (formType === 'edit') {
+      bitsFetch({ id: formID }, 'bitapps_get_a_form')
+        .then(res => {
+          if (res !== undefined && res.success) {
+            console.log('edit gfetched')
+            const responseData = JSON.parse(res.data)
+            setLay(responseData.form_content.layout)
+            setFields(responseData.form_content.fields)
+            setNewCounter(responseData.form_content.layout.length)
+            setFormName(responseData.form_content.form_name)
+            setisLoading(false)
+          } else {
+            setisLoading(false)
+          }
+        })
+        .catch(() => {
+          setisLoading(false)
+        })
+    }
+    console.log('Layout K', lay, fields)
+  }
   const notIE = !window.document.documentMode
   setTimeout(() => { setFulScn(true) }, 500)
 
@@ -78,6 +123,7 @@ function Builder(props) {
       document.getElementById('wpfooter').style.display = 'none'
       document.getElementById('wpcontent').style.marginLeft = 0
     }
+    fetchTemplate()
     return function cleanup() {
       document.getElementsByTagName('body')[0].style.overflow = 'auto'
       if (process.env.NODE_ENV === 'production') {
@@ -102,6 +148,7 @@ function Builder(props) {
       layout: lay,
       fields,
       form_name: formName,
+      formSettings,
     }
     let action = 'bitapps_create_new_form'
     if (savedFormId > 0) {
@@ -109,6 +156,7 @@ function Builder(props) {
         layout: lay,
         fields,
         form_name: formName,
+        formSettings,
         id: savedFormId,
       }
       action = 'bitapps_update_form'
@@ -265,6 +313,8 @@ function Builder(props) {
                 </small>
               )}
 
+              {lay
+              && (
               <GridLayout
                 theme={formSettings.theme}
                 width={props.gridWidth}
@@ -279,7 +329,12 @@ function Builder(props) {
                 setFields={setFields}
                 setFormName={setFormName}
                 subBtn={subBtn}
+                isLoading={isLoading}
+                newCounter={newCounter}
+                setNewCounter={setNewCounter}
+                layout={lay}
               />
+              )}
             </Section>
 
             <Bar className="bar bar-r" />
