@@ -1,17 +1,17 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react'
 import SlimSelect from 'slim-select'
-import { Responsive, WidthProvider } from 'react-grid-layout'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 
 export default function Bitapps(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
-  const FormLayout = WidthProvider(Responsive);
+  let maxRowIndex = 0
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
     props.data[field.i].name = name
+    maxRowIndex = maxRowIndex > field.y + field.h ? maxRowIndex : field.y + field.h
     return (
       <div
         style={{
@@ -105,7 +105,7 @@ export default function Bitapps(props) {
     gridTemplateColumns: 'auto auto auto auto auto auto auto auto auto auto',
     gridgap: 0,
   }
-
+  console.log('BUTTONS', props.buttons)
   return (
     <div>
       {
@@ -130,7 +130,27 @@ export default function Bitapps(props) {
             return blk(field)
           })}
         </div>
-        {!props.editMode && <button className="blk" type="submit">Submit</button>}
+        {/* {!props.editMode && <button className="blk" type="submit">Submit</button>} */}
+        {!props.editMode && props.buttons
+          && (
+            <div
+              style={{
+                // gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
+                // gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
+                gridRowStart: maxRowIndex + 2, /* y-0 -> y + 1 */
+                gridRowEnd: maxRowIndex + 4, /* h-4 -> if y not 1 then h+y */
+                minHeight: 40, /* h * 40px */
+              }}
+              key={props.buttons.typ}
+              role="button"
+            >
+              <CompGen
+                atts={props.buttons}
+                formID={bitAppsFront.contentID}
+                entryID={props.entryID}
+              />
+            </div>
+          )}
       </form>
     </div>
   )
@@ -138,18 +158,16 @@ export default function Bitapps(props) {
 
 function Toast(props) {
   const toatStyles = {
-    btcdSnack: {
-      userSelect: 'none',
-      background: '#383838',
-      padding: '10px 15px',
-      color: 'white',
-      borderRadius: '5px',
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      boxShadow: '1px 1px 3px 0px #0000004d',
-      transition: 'right 0.5s',
-    },
+    userSelect: 'none',
+    background: '#383838',
+    padding: '10px 15px',
+    color: 'white',
+    borderRadius: '5px',
+    position: 'fixed',
+    bottom: '20px',
+    right: props.show ? 20 : -200,
+    boxShadow: '1px 1px 3px 0px #0000004d',
+    transition: 'right 0.5s',
   }
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -160,7 +178,7 @@ function Toast(props) {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <div className="btcd-snack flx" style={{ right: props.show ? 20 : -200 }}>
+    <div className="btcd-snack flx" style={toatStyles}>
       {props.msg}
       <button onClick={() => props.setSnack(false)} className="btcd-snack-cls" type="button">&times;</button>
     </div>
