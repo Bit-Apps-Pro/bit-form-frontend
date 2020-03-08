@@ -1,9 +1,9 @@
+/* eslint-disable no-undef */
 import React, { useEffect, memo } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 
-function ConfMsg({ formSettings, setFormSettings }) {
-
+function ConfMsg({ formSettings, setFormSettings, formFields }) {
   const handleMsgMsg = (mg, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.msg[idx].msg = mg
@@ -11,8 +11,12 @@ function ConfMsg({ formSettings, setFormSettings }) {
   }
 
   useEffect(() => {
-    if (typeof tinymce !== 'undefined') {
-      // eslint-disable-next-line no-undef
+    if (typeof tinymce !== 'undefined' && formFields !== null) {
+      const s = document.querySelectorAll('.form-fields')
+      for (let i = 0; i < s.length; i += 1) {
+        s[i].style.display = 'none'
+      }
+
       tinymce.init({
         // mode: "exact",
         // elements: 'pre-details',
@@ -23,18 +27,26 @@ function ConfMsg({ formSettings, setFormSettings }) {
         theme: 'modern',
         menubar: false,
         branding: false,
-        resize: 'both',
+        resize: 'verticle',
         min_width: 300,
-        // max_width: 800,
-        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr lists| emoticons ',
+        toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
             handleMsgMsg(editor.getContent(), editor.targetElm.getAttribute('data-idx'))
           })
+
+          editor.addButton('addFormField', {
+            text: 'Form Fields ',
+            tooltip: 'Add Form Field Value in Message',
+            type: 'menubutton',
+            icon: false,
+            menu: formFields.map(i => ({ text: i.name, onClick() { editor.insertContent(`{${i.key}}`) } })),
+          })
         },
       })
     }
-  }, [formSettings])
+  }, [formSettings, formFields])
+
 
   const handleMsgTitle = (e, idx) => {
     const tmp = { ...formSettings }
@@ -54,6 +66,13 @@ function ConfMsg({ formSettings, setFormSettings }) {
     setFormSettings(tmp)
   }
 
+  const addFormField = (val, i) => {
+    const tmp = { ...formSettings }
+    tmp.confirmation.type.msg[i].msg += val
+    setFormSettings(tmp)
+    // console.log(tmp)
+  }
+
   return (
     <div>
       {formSettings.confirmation.type.msg.map((itm, i) => (
@@ -64,7 +83,13 @@ function ConfMsg({ formSettings, setFormSettings }) {
             cls="mt-2 mr-2"
             onTitleChange={e => handleMsgTitle(e, i)}
           >
-            <div className="f-m">Success Message:</div>
+            <div className="flx flx-between">
+              {/* <div className="f-m">Success Message:</div> */}
+              <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
+                <option value="">Add form field</option>
+                {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+              </select>
+            </div>
             <textarea
               onChange={e => handleMsgMsg(e.target.value, i)}
               className="btcd-paper-inp btcd-editor"

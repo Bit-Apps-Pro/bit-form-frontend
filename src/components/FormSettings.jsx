@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
 import ConfType from './ConfType'
 import EmailNotfication from './EmailNotfication'
+import Workflow from './Workflow'
 
 export default function FormSettings(props) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
@@ -51,7 +52,7 @@ export default function FormSettings(props) {
             <EmailNotfication />
           </Route>
           <Route path={`${path}workflow`}>
-            Bsdfasdf
+            <Workflow />
           </Route>
           <Route path={`${path}c`}>
             C
