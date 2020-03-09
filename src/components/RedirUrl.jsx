@@ -1,31 +1,14 @@
-import React, { useEffect, useState, memo } from 'react'
+import React, { memo } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
-import bitsFetch from '../Utils/bitsFetch'
 
-function RedirUrl({ formSettings, setFormSettings, formID }) {
-  const [formFields, setformFields] = useState(null)
-
-  useEffect(() => {
-    let mount = false
-    mount = true
-    bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
-      .then(res => {
-        if (res !== undefined && res.success) {
-          if (mount) {
-            setformFields(res.data.Labels)
-          }
-        }
-      })
-    return function cleanup() { mount = false }
-  }, [])
+function RedirUrl({ formSettings, setFormSettings, formFields }) {
 
   const handleUrlTitle = (e, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.url[idx].title = e.target.value
     setFormSettings(tmp)
   }
-
 
   const handlePage = (e, idx) => {
     const tmp = { ...formSettings }
@@ -74,6 +57,7 @@ function RedirUrl({ formSettings, setFormSettings, formID }) {
   }
 
   const getFromField = (val, i, param) => {
+    console.log(val)
     const tmp = { ...formSettings }
     const a = param.split('=')
     a[1] = val
@@ -124,30 +108,30 @@ function RedirUrl({ formSettings, setFormSettings, formID }) {
                   <div className="td">Value</div>
                 </div>
                 {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
-                  <div key={`url-p-${childIdx + 11}`} className="tr">
-                    <div className="td"><input onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
+                  <div key={`url-p-${childIdx + 21}`} className="tr">
+                    <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
                     <div className="td">
-                      <input onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
+                      <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
                     </div>
-                    <div className="flx p-atn">
+                    <div className="flx p-atn mt-1">
                       <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
                       <span className="tooltip" style={{ '--tooltip-txt': '"Get Form Field"', position: 'relative' }}>
-                        <select onChange={e => getFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
+                        <select className="btcd-paper-inp p-i-sm" onChange={e => getFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
                           <option disabled>Select From Field</option>
-                          {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.name}}`}>{f.name}</option>)}
+                          {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
                         </select>
                       </span>
                     </div>
                   </div>
                 ))}
-                <Button onClick={() => addParam(i)} cls="add-pram" icn>+</Button>
+                <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
               </div>
             </div>
           </Accordions>
-          <Button onClick={() => rmvUrl(i)} icn cls="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => rmvUrl(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
-      <div className="txt-center"><Button onClick={addMoreUrl} icn cls="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>
     </div>
   )
 }

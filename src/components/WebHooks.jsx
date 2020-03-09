@@ -79,7 +79,7 @@ function WebHooks({ formSettings, setFormSettings }) {
             onTitleChange={e => handleHookTitle(e, i)}
           >
             <div className="flx">
-              <div className="w-7">
+              <div className="w-7 mr-2">
                 <div className="f-m">Link:</div>
                 <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
               </div>
@@ -109,23 +109,23 @@ function WebHooks({ formSettings, setFormSettings }) {
                 </div>
                 {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
                   <div key={`url-p-${childIdx + 11}`} className="tr">
-                    <div className="td"><input onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
+                    <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
                     <div className="td">
-                      <input onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
+                      <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
                     </div>
-                    <div className="flx p-atn">
-                      <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2a" style={{ fontSize: 16 }} /></Button>
+                    <div className="flx p-atn mt-1">
+                      <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
                     </div>
                   </div>
                 ))}
-                <Button onClick={() => addParam(i)} cls="add-pram" icn>+</Button>
+                <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
               </div>
             </div>
           </Accordions>
-          <Button onClick={() => rmvHook(i)} icn cls="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => rmvHook(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
-      <div className="txt-center"><Button onClick={addMoreHook} icn cls="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><b>+</b></Button></div>
     </div>
   )
 }

@@ -19,7 +19,7 @@ function Builder(props) {
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [newCounter, setNewCounter] = useState(0)
   const [isLoading, setisLoading] = useState(true)
-  const [lay, setLay] = useState(null)
+  const [lay, setLay] = useState([])
   const [fields, setFields] = useState(null)
   const [tolbarSiz, setTolbarSiz] = useState(false)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
@@ -77,7 +77,6 @@ function Builder(props) {
       bitsFetch({ id: formID }, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
-            console.log('edit gfetched')
             const responseData = JSON.parse(res.data)
             setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
@@ -92,7 +91,6 @@ function Builder(props) {
           setisLoading(false)
         })
     }
-    console.log('Layout K', lay, fields)
   }
   const notIE = !window.document.documentMode
   setTimeout(() => { setFulScn(true) }, 500)
@@ -113,6 +111,7 @@ function Builder(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    fetchTemplate()
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
     if (process.env.NODE_ENV === 'production') {
       document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
@@ -123,7 +122,6 @@ function Builder(props) {
       document.getElementById('wpfooter').style.display = 'none'
       document.getElementById('wpcontent').style.marginLeft = 0
     }
-    fetchTemplate()
     return function cleanup() {
       document.getElementsByTagName('body')[0].style.overflow = 'auto'
       if (process.env.NODE_ENV === 'production') {
@@ -313,8 +311,6 @@ function Builder(props) {
                 </small>
               )}
 
-              {lay
-              && (
               <GridLayout
                 theme={formSettings.theme}
                 width={props.gridWidth}
@@ -334,7 +330,6 @@ function Builder(props) {
                 setNewCounter={setNewCounter}
                 layout={lay}
               />
-              )}
             </Section>
 
             <Bar className="bar bar-r" />

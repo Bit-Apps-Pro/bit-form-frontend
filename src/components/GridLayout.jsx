@@ -30,6 +30,7 @@ function GridLayout(props) {
 
   const [layout, setLayout] = useState(props.layout)
   // const [breakpoint, setBreakpoint] = useState('md')
+
   const slimIntit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')

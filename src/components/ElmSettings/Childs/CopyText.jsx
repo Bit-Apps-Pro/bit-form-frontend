@@ -17,7 +17,7 @@ export default function CopyText(props) {
   }
   return (
     <div className="cpyTxt">
-      <input value={`[${props.value}]`} readOnly />
+      <label><input value={`[${props.value}]`} readOnly /></label>
       <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button"><span className="btcd-icn icn-copy" /></button>
     </div>
   )

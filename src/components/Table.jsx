@@ -29,13 +29,16 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   return (
     <div className="f-search">
       <button type="button" className="icn-btn" aria-label="icon-btn"><span className="btcd-icn icn-search" /></button>
-      <input
-        value={globalFilter || ''}
-        onChange={e => {
-          setGlobalFilter(e.target.value || undefined)
-        }}
-        placeholder="Search"
-      />
+      <label>
+        <input
+
+          value={globalFilter || ''}
+          onChange={e => {
+            setGlobalFilter(e.target.value || undefined)
+          }}
+          placeholder="Search"
+        />
+      </label>
     </div>
   )
 }
@@ -283,23 +286,25 @@ function Table(props) {
           </strong>
           {' '}
         </small>
-        <select
-          value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value));
-            if (props.getPageSize) {
-              props.getPageSize(e.target.value, pageIndex)
-            }
-          }}
-        >
-          {[10, 20, 30, 40, 50, 100].map(pageSiz => (
-            <option key={pageSiz} value={pageSiz}>
-              Show
-              {' '}
-              {pageSiz}
-            </option>
-          ))}
-        </select>
+        <label>
+          <select
+            value={pageSize}
+            onChange={e => {
+              setPageSize(Number(e.target.value));
+              if (props.getPageSize) {
+                props.getPageSize(e.target.value, pageIndex)
+              }
+            }}
+          >
+            {[10, 20, 30, 40, 50, 100].map(pageSiz => (
+              <option key={pageSiz} value={pageSiz}>
+                Show
+                {' '}
+                {pageSiz}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
     </>
