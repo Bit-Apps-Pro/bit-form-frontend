@@ -36,7 +36,7 @@ export default function ConfType(props) {
           className={`btcd-f-c-t-o ${pos === 0 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Message
+          Messages
         </button>
         <button
           onClick={() => setPos(1)}

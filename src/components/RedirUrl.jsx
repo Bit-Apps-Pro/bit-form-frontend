@@ -124,14 +124,14 @@ function RedirUrl({ formSettings, setFormSettings, formFields }) {
                     </div>
                   </div>
                 ))}
-                <Button onClick={() => addParam(i)} cls="add-pram" icn>+</Button>
+                <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
               </div>
             </div>
           </Accordions>
-          <Button onClick={() => rmvUrl(i)} icn cls="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => rmvUrl(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
-      <div className="txt-center"><Button onClick={addMoreUrl} icn cls="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>
     </div>
   )
 }

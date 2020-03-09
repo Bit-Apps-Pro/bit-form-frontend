@@ -98,10 +98,10 @@ function ConfMsg({ formSettings, setFormSettings, formFields }) {
               data-idx={i}
             />
           </Accordions>
-          <Button onClick={() => rmvMsg(i)} icn cls="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => rmvMsg(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
-      <div className="txt-center"><Button onClick={addMoreMsg} icn cls="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><b>+</b></Button></div>
     </div>
   )
 }
