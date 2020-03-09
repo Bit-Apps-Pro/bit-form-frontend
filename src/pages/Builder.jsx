@@ -59,7 +59,10 @@ function Builder(props) {
         bitsFetch({ template: formID }, 'bitapps_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
-              const responseData = JSON.parse(res.data)
+              let responseData = JSON.parse(res.data)
+              if (typeof data !== 'object') {
+                responseData = JSON.parse(res.data)
+              }
               setLay(responseData.form_content.layout)
               setFields(responseData.form_content.fields)
               setNewCounter(responseData.form_content.layout.length)
@@ -77,11 +80,14 @@ function Builder(props) {
       bitsFetch({ id: formID }, 'bitapps_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
-            const responseData = JSON.parse(res.data)
+            const responseData = res.data
             setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
             setNewCounter(responseData.form_content.layout.length)
             setFormName(responseData.form_content.form_name)
+            console.log('Api formSettings', responseData.formSettings.confirmation.type.url)
+            
+            setFormSettings(responseData.formSettings)
             setisLoading(false)
           } else {
             setisLoading(false)
@@ -200,7 +206,6 @@ function Builder(props) {
   const addNewData = useCallback(ndata => {
     setNewData(ndata)
   }, [])
-
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
       <nav className="btcd-bld-nav">
@@ -311,25 +316,31 @@ function Builder(props) {
                 </small>
               )}
 
-              <GridLayout
-                theme={formSettings.theme}
-                width={props.gridWidth}
-                draggedElm={drgElm}
-                setElmSetting={setElementSetting}
-                fields={fields}
-                newData={newData}
-                setNewData={setNewData}
-                formType={formType}
-                formID={formID}
-                setLay={setLay}
-                setFields={setFields}
-                setFormName={setFormName}
-                subBtn={subBtn}
-                isLoading={isLoading}
-                newCounter={newCounter}
-                setNewCounter={setNewCounter}
-                layout={lay}
-              />
+              {
+                lay
+                && fields
+                && (
+                <GridLayout
+                  theme={formSettings.theme}
+                  width={props.gridWidth}
+                  draggedElm={drgElm}
+                  setElmSetting={setElementSetting}
+                  fields={fields}
+                  newData={newData}
+                  setNewData={setNewData}
+                  formType={formType}
+                  formID={formID}
+                  setLay={setLay}
+                  setFields={setFields}
+                  setFormName={setFormName}
+                  subBtn={subBtn}
+                  isLoading={isLoading}
+                  newCounter={newCounter}
+                  setNewCounter={setNewCounter}
+                  layout={lay}
+                />
+                )
+              }
             </Section>
 
             <Bar className="bar bar-r" />

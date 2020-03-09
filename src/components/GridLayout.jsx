@@ -30,7 +30,6 @@ function GridLayout(props) {
 
   const [layout, setLayout] = useState(props.layout)
   // const [breakpoint, setBreakpoint] = useState('md')
-
   const slimIntit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
@@ -197,11 +196,7 @@ function GridLayout(props) {
           draggable="false"
           unselectable="on"
           onDragStart={() => false}
-          src={
-            process.env.NODE_ENV === 'production'
-              ? `${bits.assetsURL}/img/${moveIcon}`
-              : `${moveIcon}`
-          }
+          src={moveIcon}
           alt="drag handle"
         />
       </span>
