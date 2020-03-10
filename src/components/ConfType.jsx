@@ -26,7 +26,22 @@ export default function ConfType(props) {
       })
     return function cleanup() { mount = false }
   }, [])
+  const removeIntegration = (id, type = null) => {
+    let action = 'bitapps_delete_form_integration'
+    if (type && type === 'msg') {
+      action = 'bitapps_delete_success_messsage'
+    }
+    const status = bitsFetch({ formID: props.formID, id }, action)
+      .then(res => {
+        if (res !== undefined && res.success) {
+          return true
+        }
+        return false
+      })
 
+    return status
+
+  }
   return (
     <div className="btcd-f-c-t">
       <div><b>Confirmation Type:</b></div>
@@ -55,9 +70,9 @@ export default function ConfType(props) {
       </div>
 
       <div className="btcd-f-c-t-d">
-        {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} />}
-        {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} />}
-        {pos === 2 && <WebHooks formSettings={formSettings} setFormSettings={setFormSettings} />}
+        {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+        {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+        {pos === 2 && <WebHooks formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState, memo } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 
-function WebHooks({ formSettings, setFormSettings }) {
+function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
 
   const handleHookTitle = (e, idx) => {
     const tmp = { ...formSettings }
@@ -64,8 +64,10 @@ function WebHooks({ formSettings, setFormSettings }) {
 
   const rmvHook = i => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.hooks.splice(i, 1)
-    setFormSettings(tmp)
+    if (removeIntegration(tmp.confirmation.type.hooks[i].id, 'msg')) {
+      tmp.confirmation.type.hooks.splice(i, 1)
+      setFormSettings(tmp)
+    }
   }
 
   return (
