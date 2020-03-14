@@ -31,7 +31,6 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
       <button type="button" className="icn-btn" aria-label="icon-btn"><span className="btcd-icn icn-search" /></button>
       <label>
         <input
-
           value={globalFilter || ''}
           onChange={e => {
             setGlobalFilter(e.target.value || undefined)
