@@ -10,6 +10,7 @@ module.exports = (env, argv) => {
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
       bitappsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
+      'bitapps-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
       bitapps: path.resolve(__dirname, 'src/resource/sass/app.scss'),
       'bitapps-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
       components: [path.resolve(__dirname, 'src/resource/sass/components.scss'), path.resolve(__dirname, 'src/resource/css/slimselect.min.css')],
@@ -25,10 +26,20 @@ module.exports = (env, argv) => {
       runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
-          vendor: {
+          main: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
+            name: 'vendors-main',
+            chunks: chunk => chunk.name === 'index',
+          },
+          frontend: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors-frontend',
+            chunks: chunk => chunk.name === 'bitappsFrontend',
+          },
+          gutenbergBlock: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors-block',
+            chunks: chunk => chunk.name === 'bitapps-shortcode-block',
           },
         },
       },
