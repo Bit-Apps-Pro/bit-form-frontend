@@ -2,7 +2,7 @@
 import React, { useState, useRef, memo } from 'react'
 import Button from './Button'
 
-function Accordions({ title, subtitle, children, titleEditable, onTitleChange, cls }) {
+function Accordions({ title, subtitle, children, titleEditable, onTitleChange, cls, notScroll }) {
   console.log('%c $render Accordions', 'background:aquamarine;padding:3px;border-radius:5px;')
 
   const [tgl, setTgl] = useState(false)
@@ -31,11 +31,12 @@ function Accordions({ title, subtitle, children, titleEditable, onTitleChange, c
           <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} style={{ color: tgl ? 'white' : 'inherit' }} />
         </Button>
       </div>
-      <section className="btcd-accr-cont" style={{ maxHeight: tgl ? '400px' : 0 }}>
+      <section className="btcd-accr-cont" style={{ ...{ maxHeight: tgl ? 5000 : 0 }, ...{ overflowX: tgl && notScroll ? 'visible' : 'auto' } }}>
         <div>{children}</div>
       </section>
     </div>
   )
 }
+
 
 export default memo(Accordions)

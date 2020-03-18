@@ -1,14 +1,13 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
-import bitsFetch from '../Utils/bitsFetch'
 
 export default function ConfType(props) {
   console.log('%c $render FormSettings', 'background:lightgreen;padding:3px;border-radius:5px;')
 
-  const { formSettings, setFormSettings } = props
+  const { formSettings, setFormSettings, formFields } = props
 
   const [pos, setPos] = useState(0)
   const [formFields, setformFields] = useState(null)

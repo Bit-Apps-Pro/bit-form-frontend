@@ -65,7 +65,7 @@ export default function App() {
             <NavLink
               to="/settings"
               activeClassName="app-link-active"
-            >Settings
+            >App Settings
             </NavLink>
           </nav>
         </div>
