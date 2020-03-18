@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
 import ConfType from './ConfType'
 import EmailNotfication from './EmailNotfication'
 import Workflow from './Workflow'
+import bitsFetch from '../Utils/bitsFetch'
 
 export default function FormSettings(props) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
@@ -11,10 +12,25 @@ export default function FormSettings(props) {
   const history = useHistory()
   const { formType, formID } = useParams()
 
+  const [formFields, setformFields] = useState([])
+
   useEffect(() => {
     if (url.match(/settings\/.+/g) === null) {
       history.push(`${url}form-settings`)
     }
+
+    let mount = false
+    mount = true
+    bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
+      .then(res => {
+        if (res !== undefined && res.success) {
+          if (mount) {
+            setformFields(res.data.Labels)
+          }
+        }
+      })
+
+    return function cleanup() { mount = false }
   }, [])
 
   return (
@@ -46,13 +62,13 @@ export default function FormSettings(props) {
               <div><b>Form Name: </b></div>
               <input className="btcd-paper-inp" type="text" value={props.formName} onChange={(e) => props.setFormName(e.target.value)} placeholder="Form Name" />
             </div>
-            <ConfType formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
+            <ConfType formFields={formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
           </Route>
           <Route path={`${path}email-notification`}>
             <EmailNotfication />
           </Route>
           <Route path={`${path}workflow`}>
-            <Workflow />
+            <Workflow formFields={formFields} formSettings={props.formSettings} />
           </Route>
           <Route path={`${path}c`}>
             C

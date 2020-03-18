@@ -57,7 +57,6 @@ function RedirUrl({ formSettings, setFormSettings, formFields }) {
   }
 
   const getFromField = (val, i, param) => {
-    console.log(val)
     const tmp = { ...formSettings }
     const a = param.split('=')
     a[1] = val
