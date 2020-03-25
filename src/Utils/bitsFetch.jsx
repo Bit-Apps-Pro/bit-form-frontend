@@ -20,12 +20,3 @@ export default async function bitsFetch(data, action, contentType = null, queryP
     .catch(err => err.response)
   return response;
 }
-
-export function prepareData(data) {
-  const fdata = new FormData()
-  const dat = Object.entries(data)
-  for (let i = 0; i < dat.length; i += 1) {
-    fdata.append(dat[i][0], dat[i][1])
-  }
-  return fdata
-}
