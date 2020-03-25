@@ -16,7 +16,7 @@ import week from '../../resource/img/week.png'
 import pswd from '../../resource/img/pswd.png'
 import clr from '../../resource/img/clr.png'
 import url from '../../resource/img/url.png'
-import blank from '../../resource/img/blank.png'
+import fileup from '../../resource/img/fileup.png'
 import check from '../../resource/img/check.png'
 import radio from '../../resource/img/radio.png'
 import dropdown from '../../resource/img/dropdown.png'
@@ -26,7 +26,7 @@ function index(props) {
 
   const tools = [
     {
-      name: 'Text Field',
+      name: 'Text',
       icn: textField,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -42,19 +42,19 @@ function index(props) {
       pos: { h: 3, w: 10, i: 'block-5' },
       elm: {
         typ: 'textarea',
-        lbl: 'Multi-Line Text Field',
+        lbl: 'Multi-Line Text',
         ph: 'Placeholder Text...',
         valid: {},
       },
     },
-    {
+    /* {
       name: 'Blank Block',
       icn: blank,
       pos: { h: 2, w: 3, i: 'block-5' },
       elm: {
         typ: 'blank',
       },
-    },
+    }, */
     {
       name: 'Check Box',
       icn: check,
@@ -87,7 +87,7 @@ function index(props) {
       },
     },
     {
-      name: 'Number Field',
+      name: 'Number',
       icn: numberField,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -124,7 +124,7 @@ function index(props) {
       },
     },
     {
-      name: 'Email Field',
+      name: 'Email',
       icn: emailField,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -135,7 +135,7 @@ function index(props) {
       },
     },
     {
-      name: 'URL Field',
+      name: 'URL',
       icn: url,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -147,7 +147,7 @@ function index(props) {
     },
     {
       name: 'File Upload',
-      icn: url,
+      icn: fileup,
       pos: { h: 2, w: 10, i: 'n_blk', minH: 2, minW: 3 },
       elm: {
         typ: 'file-up',
@@ -157,7 +157,7 @@ function index(props) {
       },
     },
     {
-      name: 'Date Field',
+      name: 'Date',
       icn: date,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -167,7 +167,7 @@ function index(props) {
       },
     },
     {
-      name: 'Time Field',
+      name: 'Time',
       icn: time,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -177,7 +177,7 @@ function index(props) {
       },
     },
     {
-      name: 'Date-Time Field',
+      name: 'Date-Time',
       icn: dateTime,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -187,7 +187,7 @@ function index(props) {
       },
     },
     {
-      name: 'Month Field',
+      name: 'Month',
       icn: month,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -197,7 +197,7 @@ function index(props) {
       },
     },
     {
-      name: 'Week Field',
+      name: 'Week',
       icn: week,
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -223,7 +223,7 @@ function index(props) {
     <div className="toolBar-wrp">
       <div className="btcd-toolbar-title">
         {!props.tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn btcd-neo-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
+        <button className="icn-btn btcd-neu-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
       </div>
       <Scrollbars autoHide style={{ maxWidth: 400 }}>
         <div className="toolBar">

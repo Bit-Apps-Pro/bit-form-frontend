@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import React, { useState } from 'react'
@@ -7,12 +9,13 @@ import LogicBlock from './ElmSettings/Childs/LogicBlock'
 import ActionBlock from './ElmSettings/Childs/ActionBlock'
 import Accordions from './ElmSettings/Childs/Accordions'
 import CheckBox from './ElmSettings/Childs/CheckBox'
-import MtInput from './ElmSettings/Childs/MtInput'
 import MtSelect from './ElmSettings/Childs/MtSelect'
 import DropDown from './ElmSettings/Childs/DropDown'
+import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 
 function Workflow({ formFields, formSettings }) {
-  console.log()
+  console.log('%c $render Workflow', 'background:skyblue;padding:3px;border-radius:5px;color:white')
+
   const l = [
     {
       title: 'Action',
@@ -53,6 +56,7 @@ function Workflow({ formFields, formSettings }) {
       action_type: 'onsubmit',
       action_run: 'edit',
       action_behaviour: 'always',
+      mailNotify: { template: 'Template 2', to: ['admin', 'asd'], cc: ['asdasd'], bcc: ['asdasd'] },
       logics: [
         { field: 'fld-1', logic: 'eqal', val: 'aaa' },
         'or',
@@ -66,17 +70,46 @@ function Workflow({ formFields, formSettings }) {
 
   const [lgc, setlgc] = useState(l)
 
+  const mailOptions = vals => {
+    const mail = [{ name: 'Admin', value: 'admin' }]
+    console.log(mail, vals)
+    if (vals !== undefined) {
+      vals.map(i => {
+        if (i !== 'admin') {
+          mail.push({ name: i, value: i })
+        }
+      })
+    }
+    return mail
+  }
+
+  const ActionsTitle = type => (
+    <>
+      {type === 'onload' && 'On Load'}
+      {type === 'oninput' && 'On Field Input'}
+      {type === 'onvalidate' && 'On Form Validate'}
+      {type === 'onsubmit' && 'On Form Submit'}
+      {type === 'create_edit' && 'Record Create/Edit'}
+      {type === 'create' && 'Record Create'}
+      {type === 'edit' && 'Record Edit'}
+      {type === 'delete' && 'Record Delete'}
+      {type === 'always' && 'Always'}
+      {type === 'cond' && 'With Condition'}
+    </>
+  )
+
   const addLogicGrp = () => {
     lgc.push({
       title: `Action ${lgc.length + 1}`,
+      action_type: 'onload',
+      action_run: 'create_edit',
+      action_behaviour: 'cond',
       logics: [
         { field: 'fld-1', logic: 'eqal', val: 'aaa' },
         'or',
         { field: 'fld-1', logic: 'eqal', val: 'bbb' },
       ],
-      actions: [
-        { field: 'fld-1', action: 'hide' },
-      ],
+      actions: [{ field: 'fld-1', action: 'value' }],
     })
     setlgc([...lgc])
   }
@@ -309,7 +342,11 @@ function Workflow({ formFields, formSettings }) {
 
   const addAction = lgcGrpInd => {
     setlgc(prv => {
-      prv[lgcGrpInd].actions.push({ field: 'fld-1', action: 'disable' })
+      if (prv[lgcGrpInd].action_type === 'onsubmit') {
+        prv[lgcGrpInd].actions.push({ field: 'fld-1', action: 'value' })
+      } else {
+        prv[lgcGrpInd].actions.push({ field: 'fld-1', action: 'disable' })
+      }
       return [...prv]
     })
   }
@@ -342,6 +379,7 @@ function Workflow({ formFields, formSettings }) {
 
   const changeActionType = (typ, lgcGrpInd) => {
     if (typ === 'onsubmit') {
+      // eslint-disable-next-line array-callback-return
       lgc[lgcGrpInd].actions.map(itm => { itm.action = 'value' })
     } else if (typ === 'onvalidate') {
       lgc[lgcGrpInd].action_behaviour = 'cond'
@@ -351,6 +389,11 @@ function Workflow({ formFields, formSettings }) {
   }
 
   const changeActionRun = (typ, lgcGrpInd) => {
+    if (typ === 'delete') {
+      delete lgc[lgcGrpInd].action_type
+    } else if (lgc[lgcGrpInd].action_type === undefined) {
+      lgc[lgcGrpInd].action_type = 'onload'
+    }
     lgc[lgcGrpInd].action_run = typ
     setlgc([...lgc])
   }
@@ -389,14 +432,72 @@ function Workflow({ formFields, formSettings }) {
     setlgc([...lgc])
   }
 
+  const setEmailSetting = (typ, e, lgcGrpInd) => {
+    const values = []
+    if (typ === 'tem') {
+      lgc[lgcGrpInd].mailNotify.template = e.target.value
+    } else if (typ === 'to') {
+      for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
+        values.push(e.target.selectedOptions[i].value)
+      }
+      lgc[lgcGrpInd].mailNotify.to = values
+    } else if (typ === 'cc') {
+      for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
+        values.push(e.target.selectedOptions[i].value)
+      }
+      lgc[lgcGrpInd].mailNotify.cc = values
+    } else if (typ === 'bcc') {
+      for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
+        values.push(e.target.selectedOptions[i].value)
+      }
+      lgc[lgcGrpInd].mailNotify.bcc = values
+    }
+    setlgc([...lgc])
+  }
 
+  const enableAction = (checked, typ, lgcGrpInd) => {
+    if (checked) {
+      if (typ === 'mailNotify') {
+        lgc[lgcGrpInd][typ] = {}
+      } else {
+        lgc[lgcGrpInd][typ] = ''
+      }
+    } else {
+      delete lgc[lgcGrpInd][typ]
+    }
+    setlgc([...lgc])
+  }
 
   return (
-    <div className="btcd-workflow">
+    <div className="btcd-workflow w-8">
       <h3>Actions</h3>
       {lgc.map((lgcGrp, lgcGrpInd) => (
         <div key={`lgc-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
-          <Accordions title={`${lgcGrp.title}`} titleEditable onTitleChange={e => handleLgcTitle(e, lgcGrpInd)} notScroll cls="mt-2 w-10">
+          <Accordions
+            title={`${lgcGrp.title}`}
+            header={(
+              <small className="f-right txt-dp mr-4">
+                <span className="mr-2">
+                  <i className="btcd-chat-dot mr-1" />
+                  {ActionsTitle(lgcGrp.action_run)}
+                </span>
+                {lgcGrp.action_type !== undefined && (
+                  <span className="mr-2">
+                    <i className="btcd-chat-dot mr-1" />
+                    {ActionsTitle(lgcGrp.action_type)}
+                  </span>
+                )}
+                <span>
+                  <i className="btcd-chat-dot mr-1" />
+                  {ActionsTitle(lgcGrp.action_behaviour)}
+                </span>
+              </small>
+            )}
+            titleEditable
+            onTitleChange={e => handleLgcTitle(e, lgcGrpInd)}
+            notScroll
+            cls="mt-2 w-9"
+          >
             <div className="flx">
               <b className="txt-dp"><small>Action Run When:</small></b>
               <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create/Edit</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
@@ -415,7 +516,7 @@ function Workflow({ formFields, formSettings }) {
             )}
             <div className="flx">
               <b className="txt-dp"><small>Action Behaviour:</small></b>
-              {lgcGrp.action_behaviour !== 'onvalidate' && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
+              {lgcGrp.action_type !== 'onvalidate' && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
               <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Condition</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
             </div>
 
@@ -482,32 +583,104 @@ function Workflow({ formFields, formSettings }) {
 
               <div className="txt-dp mt-2"><b>Action</b></div>
               <div className="btcd-hr mb-2" />
-
+              {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
+                <div className="mb-2">
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2" title="Success Message" checked={'successMsg' in lgcGrp} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2" title="Redirect URL" checked={'redirectPage' in lgcGrp} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2" title="Web Hook" checked={'webHooks' in lgcGrp} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2" title="Email Notification" checked={'mailNotify' in lgcGrp} />
+                </div>
+              )}
               {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} title={<small className="txt-dp">Prevent Delete</small>} />}
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
+                  {'webHooks' in lgcGrp && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={lgcGrp.webHooks} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.hooks.map(itm => ({ name: itm.title, value: itm.title }))} placeholder="Select Hooks to Call" />}
+
                   {lgcGrp.action_run !== 'delete' && (
                     <>
-                      <MtSelect onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={lgcGrp.successMsg} label="Success Message" className="w-7">
-                        <option value="">Select Message</option>
-                        {formSettings.confirmation.type.msg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
-                      </MtSelect>
                       <div className="mt-2" />
-                      <MtSelect onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={lgcGrp.redirectPage} label="Redirect Page" className="w-7">
-                        <option value="">Select Page To Redirect</option>
-                        {formSettings.confirmation.type.url.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.title}>{itm.title}</option>)}
-                      </MtSelect>
+                      {'successMsg' in lgcGrp && (
+                        <label className="f-m">
+                          Success Message:
+                          <br />
+                          <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={lgcGrp.successMsg}>
+                            <option value="">Select Message</option>
+                            {formSettings.confirmation.type.msg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
+                          </select>
+                        </label>
+                      )}
+                      <div className="mt-2" />
+                      {'redirectPage' in lgcGrp && (
+                        <label className="f-m">
+                          Redirect URL:
+                          <br />
+                          <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={lgcGrp.redirectPage}>
+                            <option value="">Select Page To Redirect</option>
+                            {formSettings.confirmation.type.url.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.title}>{itm.title}</option>)}
+                          </select>
+                        </label>
+                      )}
                     </>
                   )}
 
-                  <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={lgcGrp.webHooks} title={<small className="txt-dp ml-2">Web Hooks</small>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.hooks.map(itm => ({ name: itm.title, value: itm.title }))} placeholder="Select Hooks to Call" />
+                  <div className="mt-2">
+                    {'mailNotify' in lgcGrp && (
+                      <>
+                        <label className="f-m">
+                          Email Notification:
+                          <br />
+                          <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={lgcGrp.mailNotify.template}>
+                            <option value="">Select Email Template</option>
+                            {formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
+                          </select>
+                        </label>
+                        <DropDown
+                          action={e => setEmailSetting('to', e, lgcGrpInd)}
+                          searchPH="Type email press + to add"
+                          value={lgcGrp.mailNotify.to}
+                          placeholder="Add Email Receiver"
+                          searchPlaceholder="Search/Type Email"
+                          title={<span className="f-m">To</span>}
+                          isMultiple
+                          titleClassName="w-7 mt-2"
+                          addable
+                          options={mailOptions(lgcGrp.mailNotify.to)}
+                        />
+                        <DropDown
+                          action={e => setEmailSetting('cc', e, lgcGrpInd)}
+                          searchPH="Type email press + to add"
+                          value={lgcGrp.mailNotify.cc}
+                          placeholder="Add Email CC"
+                          searchPlaceholder="Search/Type Email"
+                          title={<span className="f-m">CC</span>}
+                          isMultiple
+                          titleClassName="w-7 mt-2"
+                          addable
+                          options={mailOptions(lgcGrp.mailNotify.cc)}
+                        />
+                        <DropDown
+                          searchPH="Type email press + to add"
+                          action={e => setEmailSetting('bcc', e, lgcGrpInd)}
+                          placeholder="Add Email BCC"
+                          searchPlaceholder="Search/Type Email"
+                          value={lgcGrp.mailNotify.bcc}
+                          title={<span className="f-m">BCC</span>}
+                          isMultiple
+                          titleClassName="w-7 mt-2"
+                          addable
+                          options={mailOptions(lgcGrp.mailNotify.bcc)}
+                        />
+                      </>
+                    )}
+                  </div>
+
                   {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">Set another field value</b></div>}
                 </>
               )}
 
               {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
-                <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Validation Message" className="w-7 mt-2">
+                <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                   <option value="">Select Message</option>
                   {formSettings.confirmation.type.msg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.title}>{itm.title}</option>)}
                 </MtSelect>

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
 import React, { useState, useContext, memo, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
@@ -167,7 +168,11 @@ function FormEntries() {
   }, [])
 
   const onRowClick = useCallback(row => {
-    console.log(allResp)
+    console.log(row)
+    for (let i = 0; i < row.length; i += 1) {
+      console.log('row[i]', row[i])
+    }
+    //  console.log(row)
   }, [])
 
   return (
@@ -187,7 +192,7 @@ function FormEntries() {
         )}
 
       <Drawer
-        title="Details view"
+        title="Response Details"
         subTitle="adsff"
         show={rowDtl}
         close={setRowDtl}
@@ -204,7 +209,7 @@ function FormEntries() {
 
       <div className="forms">
         <Table
-          className="btcd-entries-f"
+          className="f-table btcd-entries-f"
           height="60vh"
           columns={entryLabels}
           data={allResp}

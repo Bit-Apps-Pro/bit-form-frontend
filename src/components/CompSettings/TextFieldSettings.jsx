@@ -4,6 +4,8 @@ import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 
 function TextFieldSettings(props) {
+  console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
+
   const isRequired = props.elm.data.valid.req !== undefined
   const isAutoComplete = props.elm.data.ac === 'on'
   const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl

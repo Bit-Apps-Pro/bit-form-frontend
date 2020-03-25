@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Tools(props) {
+function Tools(props) {
+  console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')
   return (
     <div
       tabIndex={0}
@@ -17,3 +18,5 @@ export default function Tools(props) {
     </div>
   )
 }
+
+export default Tools

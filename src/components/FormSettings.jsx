@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
 import ConfType from './ConfType'
-import EmailNotfication from './EmailNotfication'
+import EmailTemplate from './EmailTemplate'
 import Workflow from './Workflow'
 import bitsFetch from '../Utils/bitsFetch'
+import EmailTemplateEdit from './EmailTemplateEdit'
+import Integrations from './Integrations'
 
 export default function FormSettings(props) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
@@ -48,33 +50,35 @@ export default function FormSettings(props) {
           <span className="btcd-icn icn-flow-tree" />
           Workflow
         </NavLink>
-        <NavLink to={`/builder/${formType}/${formID}/settings/email-notification`} activeClassName="btcd-f-a">
+        <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-envelope-open-o" />
-          Email Notification
+          Email Templates
         </NavLink>
-        <NavLink to={`/builder/${formType}/${formID}/settings/c`} activeClassName="btcd-f-a">Form Settings</NavLink>
+        <NavLink to={`/builder/${formType}/${formID}/settings/integrations`} activeClassName="btcd-f-a em-tem">
+          <span className="btcd-icn icn-code" />
+          Integrations
+        </NavLink>
       </aside>
 
       <div className="btcd-s-wrp">
         <Switch>
           <Route path={`${path}form-settings`}>
-            <div>
-              <div><b>Form Name: </b></div>
-              <input className="btcd-paper-inp" type="text" value={props.formName} onChange={(e) => props.setFormName(e.target.value)} placeholder="Form Name" />
-            </div>
             <ConfType formFields={formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
           </Route>
-          <Route path={`${path}email-notification`}>
-            <EmailNotfication />
+          <Route exact path={`${path}email-templates`}>
+            <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} />
+          </Route>
+          <Route exact path={`${path}email-templates/:id`}>
+            <EmailTemplateEdit mailTem={props.mailTem} setMailTem={props.setMailTem} />
           </Route>
           <Route path={`${path}workflow`}>
-            <Workflow formFields={formFields} formSettings={props.formSettings} />
+            <Workflow formFields={formFields} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
           </Route>
-          <Route path={`${path}c`}>
-            C
+          <Route path={`${path}integrations`}>
+            <Integrations integrations={props.integrations} setIntegration={props.setIntegration} />
           </Route>
         </Switch>
       </div>
-    </div >
+    </div>
   )
 }

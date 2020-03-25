@@ -4,6 +4,7 @@ import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 
 function ConfMsg({ formSettings, setFormSettings, formFields }) {
+  console.log('................. CONF MSG RENDER')
   const handleMsgMsg = (mg, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.msg[idx].msg = mg
@@ -70,7 +71,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields }) {
     const tmp = { ...formSettings }
     tmp.confirmation.type.msg[i].msg += val
     setFormSettings(tmp)
-    // console.log(tmp)
   }
 
   return (
@@ -84,7 +84,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields }) {
             onTitleChange={e => handleMsgTitle(e, i)}
           >
             <div className="flx flx-between">
-              {/* <div className="f-m">Success Message:</div> */}
               <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
                 <option value="">Add form field</option>
                 {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}

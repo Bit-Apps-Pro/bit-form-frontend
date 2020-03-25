@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, memo } from 'react'
-import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, useBlockLayout, useFlexLayout, useColumnOrder } from 'react-table'
+import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, /* useBlockLayout */ useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
@@ -47,7 +47,7 @@ function Table(props) {
 
   const { confirmModal } = React.useContext(BitappsContext)
   const { confModal, setConfModal, hideConfModal } = confirmModal
-  const { columns, data } = props
+  const { columns, data, fetchData } = props
   const {
     getTableProps,
     getTableBodyProps,
@@ -96,12 +96,12 @@ function Table(props) {
           minWidth: 67,
           sticky: 'left',
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div title="Select All Rows">
+            <div title="Select All Rows" className="flx">
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           Cell: ({ row }) => (
-            <div title="Select This Row">
+            <div title="Select This Row" className="flx">
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
             </div>
           ),
@@ -112,10 +112,10 @@ function Table(props) {
   )
 
   useEffect(() => {
-    if (props.fetchData) {
-      props.fetchData({ pageIndex, pageSize })
+    if (fetchData) {
+      fetchData({ pageIndex, pageSize })
     }
-  }, [props.fetchData, pageIndex, pageSize])
+  }, [fetchData, pageIndex, pageSize])
 
   const showBulkDupMdl = () => {
     const bdup = { ...confModal }
@@ -199,9 +199,9 @@ function Table(props) {
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <div className="btcd-f-t-wrp">
+      <div className="mt-2">
         <Scrollbars style={{ height: props.height }}>
-          <div {...getTableProps()} className={`f-table ${props.className} ${props.rowClickable && 'rowClickable'}`}>
+          <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
             <div className="thead">
               {headerGroups.map((headerGroup, i) => (
                 <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
@@ -237,14 +237,20 @@ function Table(props) {
                   <div
                     key={`t-r-${row.index}`}
                     className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
-                    onClick={() => props.rowClickable && props.onRowClick(row)}
-                    onKeyPress={() => props.rowClickable && props.onRowClick(row.original)}
-                    role="button"
-                    tabIndex={0}
                     {...row.getRowProps()}
                   >
                     {row.cells.map(cell => (
-                      <div key={`t-d-${cell.row.index}`} className="td flx" {...cell.getCellProps()}>{cell.render('Cell')}</div>
+                      <div
+                        key={`t-d-${cell.row.index}`}
+                        className="td flx"
+                        {...cell.getCellProps()}
+                        onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.original)}
+                        onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.original)}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        {cell.render('Cell')}
+                      </div>
                     ))}
                   </div>
                 )

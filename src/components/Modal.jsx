@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default function Modal(props) {
+  console.log('%c $render Modal', 'background:black;padding:3px;border-radius:5px;color:white')
+
   const handleClickOutside = e => {
     if (e.target.classList.contains('btcd-modal-wrp')) {
       props.setModal(false)

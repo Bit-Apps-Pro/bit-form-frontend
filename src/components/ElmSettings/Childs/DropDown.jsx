@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import SlimSelect from 'slim-select'
 
 
-export default function DropDown(props) {
+function DropDown(props) {
   const s = React.useRef(null)
 
   const config = {
@@ -31,3 +31,5 @@ export default function DropDown(props) {
     </div>
   )
 }
+
+export default memo(DropDown)

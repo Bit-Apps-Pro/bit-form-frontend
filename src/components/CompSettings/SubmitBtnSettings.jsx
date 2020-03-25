@@ -5,6 +5,8 @@ import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import SelectBox2 from '../ElmSettings/Childs/SelectBox2'
 
 export default function SubmitBtnSettings(props) {
+  console.log('%c $render SubmitBtnSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
+
   const isAlwReset = 'rstBtnTxt' in props.elm.data
   const rstBtnTxt = 'rstBtnTxt' in props.elm.data && props.elm.data.rstBtnTxt
   const { subBtnTxt, align, fulW, btnSiz } = props.elm.data

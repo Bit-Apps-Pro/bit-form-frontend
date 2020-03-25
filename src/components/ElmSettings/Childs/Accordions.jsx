@@ -2,7 +2,7 @@
 import React, { useState, useRef, memo } from 'react'
 import Button from './Button'
 
-function Accordions({ title, subtitle, children, titleEditable, onTitleChange, cls, notScroll }) {
+function Accordions({ title, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header }) {
   console.log('%c $render Accordions', 'background:aquamarine;padding:3px;border-radius:5px;')
 
   const [tgl, setTgl] = useState(false)
@@ -19,10 +19,11 @@ function Accordions({ title, subtitle, children, titleEditable, onTitleChange, c
   return (
     <div className={`btcd-accr sh-sm ${cls}`}>
       <div className={`btcd-accr-btn ${tgl && 'blue'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>
-        <div className="btcd-accr-title">
+        <div className="btcd-accr-title w-9">
           <div>
-            <input ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />
+            <input title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />
             {titleEditable !== undefined && <div className="edit" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span className="btcd-icn icn-edit" style={{ color: tgl ? 'white' : 'gray' }} /></div>}
+            {!tgl && header}
           </div>
           {subtitle !== undefined && <small>{subtitle}</small>}
         </div>

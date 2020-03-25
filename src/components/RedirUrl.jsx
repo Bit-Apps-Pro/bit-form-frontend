@@ -3,6 +3,7 @@ import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 
 function RedirUrl({ formSettings, setFormSettings, formFields }) {
+  console.log('%c $render RedirUrl', 'background:black;padding:3px;border-radius:5px;color:white')
 
   const handleUrlTitle = (e, idx) => {
     const tmp = { ...formSettings }

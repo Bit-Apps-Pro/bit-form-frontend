@@ -145,7 +145,7 @@ export default function AllFroms() {
       </div>
       <div className="forms">
         <Table
-          className="btcd-all-frm"
+          className="f-table btcd-all-frm"
           height={500}
           columns={cols}
           data={allForms}

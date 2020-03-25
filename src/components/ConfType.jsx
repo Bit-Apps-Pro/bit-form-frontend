@@ -12,7 +12,7 @@ export default function ConfType(props) {
   const [pos, setPos] = useState(0)
 
   return (
-    <div className="btcd-f-c-t">
+    <div className="mt-4 w-7">
       <div><b>Confirmation Type:</b></div>
       <div>
         <button
@@ -20,7 +20,7 @@ export default function ConfType(props) {
           className={`btcd-f-c-t-o ${pos === 0 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Messages
+          Success/Error Messages
         </button>
         <button
           onClick={() => setPos(1)}

@@ -3,6 +3,7 @@ import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 
 function WebHooks({ formSettings, setFormSettings }) {
+  console.log('%c $render WebHooks', 'background:blue;padding:3px;border-radius:5px;color:white')
 
   const handleHookTitle = (e, idx) => {
     const tmp = { ...formSettings }
