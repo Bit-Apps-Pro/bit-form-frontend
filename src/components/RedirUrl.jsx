@@ -1,10 +1,19 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
+import bitsFetch from '../Utils/bitsFetch'
 
-function RedirUrl({ formSettings, setFormSettings, formFields }) {
-  console.log('%c $render RedirUrl', 'background:black;padding:3px;border-radius:5px;color:white')
 
+function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration }) {
+  const [redirectUrls, setredirectUrls] = useState(null)
+  useEffect(() => {
+    bitsFetch(null, 'bitapps_get_all_wp_pages')
+      .then(res => {
+        if (res !== undefined && res.success && res.data !== undefined) {
+          setredirectUrls(res.data)
+        }
+      })
+  }, [])
   const handleUrlTitle = (e, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.url[idx].title = e.target.value
@@ -73,8 +82,11 @@ function RedirUrl({ formSettings, setFormSettings, formFields }) {
 
   const rmvUrl = i => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.url.splice(i, 1)
-    setFormSettings(tmp)
+    if (removeIntegration(tmp.confirmation.type.url[i].id)) {
+      tmp.confirmation.type.url.splice(i, 1)
+      console.log(tmp.confirmation.type.url[i])
+      setFormSettings(tmp)
+    }
   }
 
   return (
@@ -90,9 +102,10 @@ function RedirUrl({ formSettings, setFormSettings, formFields }) {
             <div className="f-m">Select A Page:</div>
             <select className="btcd-paper-inp" onChange={e => handlePage(e, i)}>
               <option value="">Custom Link</option>
-              <option value="https://www.Page-1.com?aaa=wwww&ssss=dddd">Page 1</option>
-              <option value="https://www.Page-2.com?aaa=wwww&ssss=dddd">Page 2</option>
-              <option value="https://www.Page-3.com?aaa=wwww&ssss=dddd">Page 3</option>
+              {redirectUrls
+                && redirectUrls.map((urlDetail) => (
+                  <option value={urlDetail.url}>{urlDetail.title}</option>
+                ))}
             </select>
             <br />
             <br />

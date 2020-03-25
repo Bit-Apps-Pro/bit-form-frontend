@@ -120,8 +120,16 @@ function CompGen(props) {
 
   const submitBtns = (attr) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
-      <button className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="button">{attr.subBtnTxt}</button>
-      {'rstBtnTxt' in attr && <button className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="button">{attr.rstBtnTxt}</button>}
+      <button className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="submit">{attr.subBtnTxt}</button>
+      {'rstBtnTxt' in attr && (
+      <button
+        className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
+        type="button"
+        onClick={() => { document.getElementById(`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`).reset() }}
+      >
+        {attr.rstBtnTxt}
+      </button>
+      )}
     </div>
   )
 

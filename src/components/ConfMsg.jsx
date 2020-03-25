@@ -3,8 +3,7 @@ import React, { useEffect, memo } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 
-function ConfMsg({ formSettings, setFormSettings, formFields }) {
-  console.log('................. CONF MSG RENDER')
+function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const handleMsgMsg = (mg, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.msg[idx].msg = mg
@@ -63,8 +62,10 @@ function ConfMsg({ formSettings, setFormSettings, formFields }) {
 
   const rmvMsg = i => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.msg.splice(i, 1)
-    setFormSettings(tmp)
+    if (removeIntegration(tmp.confirmation.type.msg[i].id, 'msg')) {
+      tmp.confirmation.type.msg.splice(i, 1)
+      setFormSettings(tmp)
+    }
   }
 
   const addFormField = (val, i) => {

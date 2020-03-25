@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -13,9 +13,7 @@ import MtSelect from './ElmSettings/Childs/MtSelect'
 import DropDown from './ElmSettings/Childs/DropDown'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 
-function Workflow({ formFields, formSettings }) {
-  console.log('%c $render Workflow', 'background:skyblue;padding:3px;border-radius:5px;color:white')
-
+function Workflow({ formFields, formSettings, setworkFlows }) {
   const l = [
     {
       title: 'Action',
@@ -69,6 +67,9 @@ function Workflow({ formFields, formSettings }) {
   ]
 
   const [lgc, setlgc] = useState(l)
+  useEffect(() => {
+    setworkFlows([...lgc])
+  }, [lgc])
 
   const mailOptions = vals => {
     const mail = [{ name: 'Admin', value: 'admin' }]

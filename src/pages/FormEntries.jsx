@@ -63,7 +63,7 @@ function FormEntries() {
                 Cell: row => {
                   if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
                     if (val.type === 'file-up') {
-                      return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`} />)
+                      return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== undefined ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`}`} />)
                     } JSON.parse(row.cell.value).join(', ')
                   }
                   return null

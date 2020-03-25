@@ -10,7 +10,37 @@ export default function ConfType(props) {
   const { formSettings, setFormSettings, formFields } = props
 
   const [pos, setPos] = useState(0)
+  // const [formFields, setformFields] = useState(null)
 
+  // useEffect(() => {
+  //   let mount = false
+  //   mount = true
+  //   bitsFetch({ id: props.formID }, 'bitapps_get_form_entry_count')
+  //     .then(res => {
+  //       if (res !== undefined && res.success) {
+  //         if (mount) {
+  //           setformFields(res.data.Labels)
+  //         }
+  //       }
+  //     })
+  //   return function cleanup() { mount = false }
+  // }, [])
+  const removeIntegration = (id, type = null) => {
+    let action = 'bitapps_delete_form_integration'
+    if (type && type === 'msg') {
+      action = 'bitapps_delete_success_messsage'
+    }
+    const status = bitsFetch({ formID: props.formID, id }, action)
+      .then(res => {
+        if (res !== undefined && res.success) {
+          return true
+        }
+        return false
+      })
+
+    return status
+
+  }
   return (
     <div className="mt-4 w-7">
       <div><b>Confirmation Type:</b></div>
@@ -39,9 +69,9 @@ export default function ConfType(props) {
       </div>
 
       <div className="btcd-f-c-t-d">
-        {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} />}
-        {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} />}
-        {pos === 2 && <WebHooks formSettings={formSettings} setFormSettings={setFormSettings} />}
+        {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+        {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+        {pos === 2 && <WebHooks formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
       </div>
     </div>
   );
