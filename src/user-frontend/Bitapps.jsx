@@ -1,16 +1,17 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react'
 import SlimSelect from 'slim-select'
-import { Responsive, WidthProvider } from 'react-grid-layout'
+// import { Responsive, WidthProvider } from 'react-grid-layout'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 
 export default function Bitapps(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
-  const FormLayout = WidthProvider(Responsive);
+  // const FormLayout = WidthProvider(Responsive);
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
+    // eslint-disable-next-line no-param-reassign
     props.data[field.i].name = name
     return (
       <div
@@ -60,20 +61,10 @@ export default function Bitapps(props) {
         if (response !== undefined && response.success) {
           setMessage(response.data)
           setSnack(true)
-          // window.location = '/'
         }
       })
   }
 
-  const setFileIcn = () => {
-    // attach icon file
-    const fInputs = document.querySelectorAll('.btcd-f-input>div>input')
-    // eslint-disable-next-line no-restricted-syntax
-    for (const inp of fInputs) {
-      // eslint-disable-next-line max-len
-      inp.parentNode.querySelector('.btcd-inpBtn>img').src = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4='
-    }
-  }
 
   useEffect(() => {
     if (document.querySelector('.slim') != null) {
@@ -96,8 +87,6 @@ export default function Bitapps(props) {
         }
       }
     }
-
-    setTimeout(() => { setFileIcn() }, 1)
   }, [])
 
   const style = {
@@ -137,20 +126,20 @@ export default function Bitapps(props) {
 }
 
 function Toast(props) {
-  const toatStyles = {
-    btcdSnack: {
-      userSelect: 'none',
-      background: '#383838',
-      padding: '10px 15px',
-      color: 'white',
-      borderRadius: '5px',
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      boxShadow: '1px 1px 3px 0px #0000004d',
-      transition: 'right 0.5s',
-    },
-  }
+  /*  const toatStyles = {
+     btcdSnack: {
+       userSelect: 'none',
+       background: '#383838',
+       padding: '10px 15px',
+       color: 'white',
+       borderRadius: '5px',
+       position: 'fixed',
+       bottom: '20px',
+       right: '20px',
+       boxShadow: '1px 1px 3px 0px #0000004d',
+       transition: 'right 0.5s',
+     },
+   } */
   useEffect(() => {
     const timer = setTimeout(() => {
       if (props.show) {
