@@ -26,6 +26,7 @@ function Builder(props) {
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const { allFormsData, snackMsg } = useContext(BitappsContext)
+  const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
   const { allFormsDispatchHandler } = allFormsData
   const { setSnackbar } = snackMsg
 
@@ -38,6 +39,16 @@ function Builder(props) {
     rstBtnTxt: 'Reset',
   })
 
+  const [mailTem, setMailTem] = useState([
+    { title: 'Template 1', sub: 'Email Subject', body: 'Email Body' },
+    { title: 'Template 2', sub: 'Mail Subject', body: 'Email Body' },
+  ])
+
+  const [integrations, setIntegration] = useState([
+    { name: 'Integration 1', type: 'Zoho CRM' },
+    { name: 'Integration 2', type: 'Zoho Sheet' },
+  ])
+
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -49,6 +60,8 @@ function Builder(props) {
         hooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
       },
     },
+    mailTem,
+    integrations,
   })
 
   const fetchTemplate = () => {
@@ -95,7 +108,7 @@ function Builder(props) {
   const notIE = !window.document.documentMode
   setTimeout(() => { setFulScn(true) }, 500)
 
-  const conRef = React.createRef()
+  const conRef = React.createRef(null)
 
   const setConSiz = useCallback(() => {
     const res = conRef.current.getResizer()
@@ -267,9 +280,9 @@ function Builder(props) {
             <Bar className="bar bar-l" />
 
             <Section
-              onSizeChanged={props.setGridWidth}
+              onSizeChanged={setGridWidth}
               minSize={notIE && 320}
-              defaultSize={props.gridWidth}
+              defaultSize={gridWidth}
             >
               {lay !== null && (
                 <small
@@ -313,7 +326,7 @@ function Builder(props) {
 
               <GridLayout
                 theme={formSettings.theme}
-                width={props.gridWidth}
+                width={gridWidth}
                 draggedElm={drgElm}
                 setElmSetting={setElementSetting}
                 fields={fields}
@@ -348,6 +361,10 @@ function Builder(props) {
             setFormName={setFormName}
             formSettings={formSettings}
             setFormSettings={setFormSettings}
+            mailTem={mailTem}
+            setMailTem={setMailTem}
+            integrations={integrations}
+            setIntegration={setIntegration}
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">
