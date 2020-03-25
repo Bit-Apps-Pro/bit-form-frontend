@@ -8,7 +8,6 @@ import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
-import bitsFetch from '../Utils/bitsFetch'
 
 function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
@@ -57,16 +56,6 @@ function GridLayout(props) {
     }
   }
 
-  const setFileIcn = () => {
-    // attach icon file
-    const fInputs = document.querySelectorAll('.btcd-f-input>div>input')
-    // eslint-disable-next-line no-restricted-syntax
-    for (const inp of fInputs) {
-      // eslint-disable-next-line max-len
-      inp.parentNode.querySelector('.btcd-inpBtn>img').src = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4='
-    }
-  }
-
   const margeNewData = () => {
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
@@ -82,11 +71,7 @@ function GridLayout(props) {
       margeNewData()
     }
     slimIntit()
-
-    setTimeout(() => { setFileIcn() }, 1)
-
   }, [newData, fields])
-
 
   const onLayoutChange = (lat) => {
     props.setLay(lat)
@@ -213,9 +198,10 @@ function GridLayout(props) {
   return (
     isLoading ? <h1>Loading</h1>
       : (
-        <div style={{ width: props.width }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+        <div style={{ width: props.width - 15 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
           <Scrollbars>
             <ResponsiveReactGridLayout
+              isDroppable
               className="layout"
               onDrop={onDrop}
               onLayoutChange={onLayoutChange}
@@ -223,12 +209,12 @@ function GridLayout(props) {
               cols={{ lg: 10 }}
               breakpoints={{ lg: 800 }}
               rowHeight={40}
-              width={props.width}
+              width={props.width - 15}
               margin={[0, 0]}
               draggableCancel=".no-drg"
               draggableHandle=".drag"
-              isDroppable
               useCSSTransforms
+              containerPadding={[1, 1]}
             // layouts={props.lay}
             // onBreakpointChange={onBreakpointChange}
             // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
@@ -247,4 +233,4 @@ function GridLayout(props) {
   )
 }
 
-export default memo(GridLayout)
+export default (GridLayout)
