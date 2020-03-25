@@ -5,6 +5,8 @@ import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import DropDown from '../ElmSettings/Childs/DropDown'
 
 export default function FileUpSettings(props) {
+  console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
+
   const isRequired = props.elm.data.valid.req !== undefined
   const isMultiple = props.elm.data.mul !== undefined
   const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl
@@ -85,7 +87,7 @@ export default function FileUpSettings(props) {
       <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
       <SingleInput inpType="number" title="Upload Button Text:" value={mxUp} action={setMxUp} placeholder="Any Size" />
       <SingleToggle title="Allow Multiple:" action={setMultiple} isChecked={isMultiple} className="mt-5" />
-      <DropDown className="btcd-neo-sh-1 mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Any File Type" searchPH="Search or Add ext (e.g: .jpg,.png)" action={setFileFilter} value={exts} />
+      <DropDown className="btcd-neu-sh-1 mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Any File Type" searchPH="Search or Add ext (e.g: .jpg,.png)" action={setFileFilter} value={exts} />
     </div>
   )
 }

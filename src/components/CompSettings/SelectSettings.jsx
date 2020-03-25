@@ -5,6 +5,8 @@ import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 
 export default function SelectSettings(props) {
+  console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
+
   const isRequired = props.elm.data.valid.req !== undefined
   const isMultiple = props.elm.data.mul !== undefined
   const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl
@@ -106,18 +108,18 @@ export default function SelectSettings(props) {
       <div className="opt">
         Options:
         {props.elm.data.opt.map((itm, i) => (
-          <div key={`opt-${i + 8}`} className="flx flx-between">
-            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
-            <div className="flx mt-3">
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-                <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? props.elm.data.val.indexOf(itm.lbl) >= 0 : itm.lbl === props.elm.data.val} />
-                <span className="btcd-mrk ck br-50 btcd-neo-sh-1" />
-              </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn btcd-neo-sh-1" type="button">&times;</button>
-            </div>
+        <div key={`opt-${i + 8}`} className="flx flx-between">
+          <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
+          <div className="flx mt-3">
+            <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
+              <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? props.elm.data.val.indexOf(itm.lbl) >= 0 : itm.lbl === props.elm.data.val} />
+              <span className="btcd-mrk ck br-50 btcd-neu-sh-1" />
+            </label>
+            <button onClick={() => rmvOpt(i)} className="btn cls-btn btcd-neu-sh-1" type="button">&times;</button>
           </div>
-        ))}
-        <button onClick={addOpt} className="btn btcd-neo-sh-1 blue" type="button">Add More +</button>
+        </div>
+      ))}
+        <button onClick={addOpt} className="btn btcd-neu-sh-1 blue" type="button">Add More +</button>
       </div>
     </div>
   )

@@ -75,25 +75,25 @@ function RadioCheckSettings(props) {
       <div className="opt">
         Options:
         {props.elm.data.opt.map((itm, i) => (
-          <div key={`opt-${i + 8}`} className="flx flx-between">
-            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
-            <div className="flx mt-3">
-              {props.elm.data.typ === 'check'
-                && (
-                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Required"' }}>
-                    <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
-                    <span className="btcd-mrk ck br-50 btcd-neo-sh-1" />
-                  </label>
-                )}
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-                <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
-                <span className="btcd-mrk ck br-50 btcd-neo-sh-1" />
-              </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn btcd-neo-sh-1" type="button">&times;</button>
-            </div>
+        <div key={`opt-${i + 8}`} className="flx flx-between">
+          <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
+          <div className="flx mt-3">
+            {props.elm.data.typ === 'check'
+              && (
+                <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Required"' }}>
+                  <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
+                  <span className="btcd-mrk ck br-50 btcd-neu-sh-1" />
+                </label>
+              )}
+            <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
+              <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
+              <span className="btcd-mrk ck br-50 btcd-neu-sh-1" />
+            </label>
+            <button onClick={() => rmvOpt(i)} className="btn cls-btn btcd-neu-sh-1" type="button">&times;</button>
           </div>
-        ))}
-        <button onClick={addOpt} className="btn btcd-neo-sh-1 blue" type="button">Add More +</button>
+        </div>
+      ))}
+        <button onClick={addOpt} className="btn btcd-neu-sh-1 blue" type="button">Add More +</button>
       </div>
     </div>
   )
