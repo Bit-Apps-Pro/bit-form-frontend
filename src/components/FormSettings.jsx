@@ -68,13 +68,13 @@ export default function FormSettings(props) {
             <EmailNotfication />
           </Route>
           <Route path={`${path}workflow`}>
-            <Workflow formFields={formFields} formSettings={props.formSettings} />
+            <Workflow formFields={formFields} formSettings={props.formSettings} setworkFlows={props.setworkFlows} />
           </Route>
           <Route path={`${path}c`}>
             C
           </Route>
         </Switch>
       </div>
-    </div >
+    </div>
   )
 }

@@ -1,18 +1,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
 import ActionBlock from './ElmSettings/Childs/ActionBlock'
 import Accordions from './ElmSettings/Childs/Accordions'
 import CheckBox from './ElmSettings/Childs/CheckBox'
-import MtInput from './ElmSettings/Childs/MtInput'
 import MtSelect from './ElmSettings/Childs/MtSelect'
 import DropDown from './ElmSettings/Childs/DropDown'
 
-function Workflow({ formFields, formSettings }) {
-  console.log()
+function Workflow({ formFields, formSettings, setworkFlows }) {
   const l = [
     {
       title: 'Action',
@@ -65,6 +63,9 @@ function Workflow({ formFields, formSettings }) {
   ]
 
   const [lgc, setlgc] = useState(l)
+  useEffect(() => {
+    setworkFlows([...lgc])
+  }, [lgc])
 
   const addLogicGrp = () => {
     lgc.push({
@@ -388,7 +389,6 @@ function Workflow({ formFields, formSettings }) {
     lgc[lgcGrpInd].avoid_delete = val
     setlgc([...lgc])
   }
-
 
 
   return (

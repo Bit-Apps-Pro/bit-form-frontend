@@ -51,6 +51,7 @@ function Builder(props) {
     },
   })
 
+  const [workFlows, setworkFlows] = useState(null);
   const fetchTemplate = () => {
     if (formType === 'new') {
       if (formID === 'blank') {
@@ -86,7 +87,7 @@ function Builder(props) {
             setNewCounter(responseData.form_content.layout.length)
             setFormName(responseData.form_content.form_name)
             console.log('Api formSettings', responseData.formSettings.confirmation.type.url)
-            
+
             setFormSettings(responseData.formSettings)
             setisLoading(false)
           } else {
@@ -153,6 +154,7 @@ function Builder(props) {
       fields,
       form_name: formName,
       formSettings,
+      workFlows,
     }
     let action = 'bitapps_create_new_form'
     if (savedFormId > 0) {
@@ -162,6 +164,7 @@ function Builder(props) {
         form_name: formName,
         formSettings,
         id: savedFormId,
+        workFlows,
       }
       action = 'bitapps_update_form'
     }
@@ -320,25 +323,25 @@ function Builder(props) {
                 lay
                 && fields
                 && (
-                <GridLayout
-                  theme={formSettings.theme}
-                  width={props.gridWidth}
-                  draggedElm={drgElm}
-                  setElmSetting={setElementSetting}
-                  fields={fields}
-                  newData={newData}
-                  setNewData={setNewData}
-                  formType={formType}
-                  formID={formID}
-                  setLay={setLay}
-                  setFields={setFields}
-                  setFormName={setFormName}
-                  subBtn={subBtn}
-                  isLoading={isLoading}
-                  newCounter={newCounter}
-                  setNewCounter={setNewCounter}
-                  layout={lay}
-                />
+                  <GridLayout
+                    theme={formSettings.theme}
+                    width={props.gridWidth}
+                    draggedElm={drgElm}
+                    setElmSetting={setElementSetting}
+                    fields={fields}
+                    newData={newData}
+                    setNewData={setNewData}
+                    formType={formType}
+                    formID={formID}
+                    setLay={setLay}
+                    setFields={setFields}
+                    setFormName={setFormName}
+                    subBtn={subBtn}
+                    isLoading={isLoading}
+                    newCounter={newCounter}
+                    setNewCounter={setNewCounter}
+                    layout={lay}
+                  />
                 )
               }
             </Section>
@@ -359,6 +362,7 @@ function Builder(props) {
             setFormName={setFormName}
             formSettings={formSettings}
             setFormSettings={setFormSettings}
+            setworkFlows={setworkFlows}
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">
