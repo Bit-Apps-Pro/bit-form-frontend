@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import React, { useState, lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import {
   BrowserRouter as Router, Switch, Route, NavLink,
 } from 'react-router-dom'
@@ -32,7 +32,6 @@ const Dashboard = () => (
 export default function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
 
-  const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
   const { confirmModal, snackMsg } = React.useContext(BitappsContext)
   const { confModal, hideConfModal } = confirmModal
   const { snackbar } = snackMsg
@@ -77,10 +76,7 @@ export default function App() {
                 <AllForms />
               </Route>
               <Route path="/builder/:formType/:formID?/:option?">
-                <Builder
-                  gridWidth={gridWidth}
-                  setGridWidth={setGridWidth}
-                />
+                <Builder />
               </Route>
               <Route path="/formEntries/:formID">
                 <FormEntries />
@@ -93,7 +89,7 @@ export default function App() {
         </div>
       </div>
       {snackbar.show && <SnackMsg />}
-    </Router >
+    </Router>
   )
 }
 
