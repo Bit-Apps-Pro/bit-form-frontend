@@ -40,6 +40,9 @@ body {
 .d-non {
   display: none !important;
 }
+.d-in-b {
+  display: inline-block;
+}
 .btcd-neu-sh-1 {
   box-shadow: 5px 5px 10px #d7dbe2, -5px -5px 10px #ffffff;
 }
@@ -717,6 +720,12 @@ li b {
 .w-4 {
   width: 40% !important;
 }
+.w-5 {
+  width: 50% !important;
+}
+.w-6 {
+  width: 60% !important;
+}
 .w-7 {
   width: 70% !important;
 }
@@ -741,6 +750,7 @@ li b {
 .p-2 {
   padding: 10px;
 }
+
 .pl-6 {
   padding-left: 30px;
 }
@@ -767,15 +777,17 @@ li b {
   box-shadow: 2px 2px 7px #d7e0ed;
   position: relative;
   transition: box-shadow 0.2s, transform 0.3s;
+  & > .body {
+    position: absolute;
+    width: 100%;
+    padding-top: 3px;
+    background: #fff;
+    height: 85px;
+    transition: margin 0.2s;
+  }
   & a {
     text-decoration: none;
     color: inherit;
-  }
-  & > .rmv-integ {
-    position: absolute;
-    right: 4px;
-    top: 4px;
-    transform: scale(0);
   }
   &.add-inte {
     font-size: 100px;
@@ -789,13 +801,9 @@ li b {
   &:hover {
     transform: scale(1.02);
     box-shadow: 2px 2px 16px #cdd4e7;
-    & > .rmv-integ {
-      transform: scale(1);
+    & > .body {
+      margin-top: -45px;
     }
-  }
-  &:active {
-    transform: scale(0.98);
-    box-shadow: 2px 2px 7px #d7e0ed;
   }
   & img {
     background-color: aliceblue;
@@ -813,6 +821,7 @@ li b {
   & img {
     height: 110px;
     width: 130px;
+    margin-bottom: 2px;
   }
   &:before {
     display: flex;
@@ -885,9 +894,32 @@ li b {
   margin-bottom: 10px;
   cursor: pointer;
   outline: none;
-  cursor: pointer;
   color: inherit;
+  display: inline-block;
+  font-size: 14px;
+  text-decoration: none;
   white-space: nowrap;
+  font-weight: bold;
+}
+.btcd-btn-o-blue {
+  background: transparent;
+  border: 1px solid $blue;
+  color: $blue !important;
+  transition: background 0.2s !important;
+  &:hover {
+    background: $blue;
+    color: white !important;
+  }
+}
+.btcd-btn-o-gray {
+  background: transparent;
+  border: 1px solid #9c9c9c;
+  color: #4b4b4b !important;
+  transition: background 0.2s !important;
+  &:hover {
+    background: #f7f7f7;
+    color: black !important;
+  }
 }
 
 .btn,
@@ -898,7 +930,12 @@ li b {
   }
 }
 
-.btn-lg {
+.btcd-btn-sm {
+  padding: 5px;
+  font-size: 10px;
+}
+
+.btcd-btn-lg {
   font-weight: bold;
   padding: 10px 20px;
   height: 40px;
@@ -2167,6 +2204,10 @@ nav.top-nav {
   background: #eff1f7;
   padding: 20px;
   border-radius: 20px;
+}
+
+.f-lg {
+  font-size: 20px;
 }
 
 .f-m {

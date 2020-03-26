@@ -47,8 +47,8 @@ export default function App() {
           show={confModal.show}
           setModal={hideConfModal}
         >
-          <button onClick={confModal.yesAction} className="btn blue btn-lg blue-sh " type="button">{confModal.yesBtn}</button>
-          <button onClick={confModal.noAction} className="btn red btn-lg red-sh ml-4" type="button">{confModal.noBtn}</button>
+          <button onClick={confModal.yesAction} className="btn blue btcd-btn-lg blue-sh " type="button">{confModal.yesBtn}</button>
+          <button onClick={confModal.noAction} className="btn red btcd-btn-lg red-sh ml-4" type="button">{confModal.noBtn}</button>
         </Modal>
 
         <div className="nav-wrp">
