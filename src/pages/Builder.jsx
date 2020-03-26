@@ -49,6 +49,87 @@ function Builder(props) {
     { name: 'Integration 2', type: 'Zoho Sheet' },
   ])
 
+  const [workFlows, setworkFlows] = useState([
+    {
+      title: 'Action',
+      action_run: 'create_edit',
+      action_type: 'onload',
+      action_behaviour: 'cond',
+      logics: [
+        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
+        'or',
+        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
+        'or',
+        [
+          { field: 'fld-1', logic: 'eqal', val: 'ccc' },
+          'or',
+          { field: 'fld-1', logic: 'eqal', val: 'ddd' },
+          'or',
+          [
+            { field: 'fld-1', logic: 'eqal', val: 'eee' },
+            'and',
+            { field: 'fld-1', logic: 'eqal', val: 'fff' },
+            'and',
+            { field: 'fld-1', logic: 'eqal', val: 'ggg' },
+          ],
+        ],
+        'and',
+        { field: 'fld-1', logic: 'eqal', val: 'hhh' },
+        'or',
+        { field: 'fld-1', logic: 'eqal', val: 'iii' },
+      ],
+      actions: [
+        { field: 'fld-1', action: 'show' },
+        { field: 'fld-1', action: 'hide' },
+        { field: 'fld-1', action: 'hide' },
+      ],
+    },
+    {
+      title: 'Action asd',
+      action_type: 'onsubmit',
+      action_run: 'edit',
+      action_behaviour: 'always',
+      logics: [
+        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
+        'or',
+        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
+      ],
+      actions: [
+        { field: 'fld-1', action: 'value' },
+      ],
+      successAction: [
+        {
+          type: 'successMsg',
+          details: {
+            id: 0,
+          },
+        },
+        {
+          type: 'redirectPage',
+          details: {
+            id: 0,
+          },
+        },
+        {
+          type: 'webHooks',
+          details: {
+            id: [0],
+          },
+        },
+        {
+          type: 'mailNotify',
+          details: {
+            tem: 0,
+            to: ['admin', 'custom@mail.com'],
+            cc: ['admin', 'custom@mail.com'],
+            bcc: ['admin', 'custom@mail.com'],
+          },
+        },
+      ],
+    },
+  ])
+
+
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -64,7 +145,6 @@ function Builder(props) {
     integrations,
   })
 
-  const [workFlows, setworkFlows] = useState(null);
   const fetchTemplate = () => {
     if (formType === 'new') {
       if (formID === 'blank') {
@@ -379,6 +459,7 @@ function Builder(props) {
             setMailTem={setMailTem}
             integrations={integrations}
             setIntegration={setIntegration}
+            workFlows={workFlows}
             setworkFlows={setworkFlows}
           />
         </Route>

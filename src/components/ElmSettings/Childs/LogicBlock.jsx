@@ -18,7 +18,7 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
     <div className="flx pos-rel btcd-logic-blk">
       <MtSelect
         label="Form Fields"
-        value={fieldVal}
+        value={fieldVal !== undefined && fieldVal}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
         {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
