@@ -65,7 +65,7 @@ function Workflow({ formFields, formSettings, setworkFlows }) {
       ],
     },
   ]
-
+console.log('formSettings', formSettings)
   const [lgc, setlgc] = useState(l)
   useEffect(() => {
     setworkFlows([...lgc])
@@ -633,7 +633,7 @@ function Workflow({ formFields, formSettings, setworkFlows }) {
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={lgcGrp.mailNotify.template}>
                             <option value="">Select Email Template</option>
-                            {formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
+                            {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
                           </select>
                         </label>
                         <DropDown
