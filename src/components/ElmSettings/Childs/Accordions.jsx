@@ -19,7 +19,7 @@ function Accordions({ title, subtitle, children, titleEditable, onTitleChange, c
   return (
     <div className={`btcd-accr sh-sm ${cls}`}>
       <div className={`btcd-accr-btn ${tgl && 'blue'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>
-        <div className="btcd-accr-title w-9">
+        <div className="btcd-accr-title w-10">
           <div>
             <input title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />
             {titleEditable !== undefined && <div className="edit" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span className="btcd-icn icn-edit" style={{ color: tgl ? 'white' : 'gray' }} /></div>}

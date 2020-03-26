@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -13,68 +13,11 @@ import MtSelect from './ElmSettings/Childs/MtSelect'
 import DropDown from './ElmSettings/Childs/DropDown'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 
-function Workflow({ formFields, formSettings, setworkFlows }) {
-  const l = [
-    {
-      title: 'Action',
-      action_run: 'create_edit',
-      action_type: 'onload',
-      action_behaviour: 'cond',
-      logics: [
-        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
-        'or',
-        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
-        'or',
-        [
-          { field: 'fld-1', logic: 'eqal', val: 'ccc' },
-          'or',
-          { field: 'fld-1', logic: 'eqal', val: 'ddd' },
-          'or',
-          [
-            { field: 'fld-1', logic: 'eqal', val: 'eee' },
-            'and',
-            { field: 'fld-1', logic: 'eqal', val: 'fff' },
-            'and',
-            { field: 'fld-1', logic: 'eqal', val: 'ggg' },
-          ],
-        ],
-        'and',
-        { field: 'fld-1', logic: 'eqal', val: 'hhh' },
-        'or',
-        { field: 'fld-1', logic: 'eqal', val: 'iii' },
-      ],
-      actions: [
-        { field: 'fld-1', action: 'show' },
-        { field: 'fld-1', action: 'hide' },
-        { field: 'fld-1', action: 'hide' },
-      ],
-    },
-    {
-      title: 'Action asd',
-      action_type: 'onsubmit',
-      action_run: 'edit',
-      action_behaviour: 'always',
-      mailNotify: { template: 'Template 2', to: ['admin', 'asd'], cc: ['asdasd'], bcc: ['asdasd'] },
-      logics: [
-        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
-        'or',
-        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
-      ],
-      actions: [
-        { field: 'fld-1', action: 'value' },
-      ],
-    },
-  ]
-console.log('formSettings', formSettings)
-  const [lgc, setlgc] = useState(l)
-  useEffect(() => {
-    setworkFlows([...lgc])
-  }, [lgc])
-
+function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
   const mailOptions = vals => {
     const mail = [{ name: 'Admin', value: 'admin' }]
-    console.log(mail, vals)
     if (vals !== undefined) {
+      // eslint-disable-next-line array-callback-return
       vals.map(i => {
         if (i !== 'admin') {
           mail.push({ name: i, value: i })
@@ -83,6 +26,15 @@ console.log('formSettings', formSettings)
     }
     return mail
   }
+
+  const getValueFromArr = (key, subkey, lgcGrpInd) => {
+    const value = workFlows[lgcGrpInd].successAction.find(val => val.type === key)
+
+    if (value !== undefined) { return value.details[subkey] }
+    return ''
+  }
+
+  const checkKeyInArr = (key, lgcGrpInd) => workFlows[lgcGrpInd].successAction.some(v => v.type === key)
 
   const ActionsTitle = type => (
     <>
@@ -100,8 +52,8 @@ console.log('formSettings', formSettings)
   )
 
   const addLogicGrp = () => {
-    lgc.push({
-      title: `Action ${lgc.length + 1}`,
+    workFlows.push({
+      title: `Action ${workFlows.length + 1}`,
       action_type: 'onload',
       action_run: 'create_edit',
       action_behaviour: 'cond',
@@ -112,40 +64,40 @@ console.log('formSettings', formSettings)
       ],
       actions: [{ field: 'fld-1', action: 'value' }],
     })
-    setlgc([...lgc])
+    setworkFlows([...workFlows])
   }
 
   const delLgcGrp = val => {
-    lgc.splice(val, 1)
-    setlgc([...lgc])
+    workFlows.splice(val, 1)
+    setworkFlows([...workFlows])
   }
 
   const handleLgcTitle = (e, i) => {
-    lgc[i].title = e.target.value
-    setlgc([...lgc])
+    workFlows[i].title = e.target.value
+    setworkFlows([...workFlows])
   }
 
   const addLogic = (typ, lgcGrpInd) => {
     if (typ === 'and') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('and')
         prv[lgcGrpInd].logics.push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
         return [...prv]
       })
     } else if (typ === 'or') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('or')
         prv[lgcGrpInd].logics.push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
         return [...prv]
       })
     } else if (typ === 'orGrp') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('or')
         prv[lgcGrpInd].logics.push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'or', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
         return [...prv]
       })
     } else if (typ === 'andGrp') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('and')
         prv[lgcGrpInd].logics.push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'and', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
         return [...prv]
@@ -155,25 +107,25 @@ console.log('formSettings', formSettings)
 
   const addSubLogic = (typ, lgcGrpInd, ind) => {
     if (typ === 'and') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('and')
         prv[lgcGrpInd].logics[ind].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
         return [...prv]
       })
     } else if (typ === 'or') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('or')
         prv[lgcGrpInd].logics[ind].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
         return [...prv]
       })
     } else if (typ === 'orGrp') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('or')
         prv[lgcGrpInd].logics[ind].push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'or', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
         return [...prv]
       })
     } else if (typ === 'andGrp') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('and')
         prv[lgcGrpInd].logics[ind].push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'and', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
         return [...prv]
@@ -183,13 +135,13 @@ console.log('formSettings', formSettings)
 
   const addSubSubLogic = (typ, lgcGrpInd, ind, subInd) => {
     if (typ === 'and') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind][subInd].push('and')
         prv[lgcGrpInd].logics[ind][subInd].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
         return [...prv]
       })
     } else if (typ === 'or') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind][subInd].push('or')
         prv[lgcGrpInd].logics[ind][subInd].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
         return [...prv]
@@ -199,17 +151,17 @@ console.log('formSettings', formSettings)
 
   const changeLogicChip = (e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd] = e
         return [...prv]
       })
     } else if (subLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd] = e
         return [...prv]
       })
     } else {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd] = e
         return [...prv]
       })
@@ -218,7 +170,7 @@ console.log('formSettings', formSettings)
 
   const changeLogic = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         if (val === 'null') {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].val = ''
         }
@@ -226,7 +178,7 @@ console.log('formSettings', formSettings)
         return [...prv]
       })
     } else if (subLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         if (val === 'null') {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd].val = ''
         }
@@ -234,7 +186,7 @@ console.log('formSettings', formSettings)
         return [...prv]
       })
     } else {
-      setlgc(prv => {
+      setworkFlows(prv => {
         if (val === 'null') {
           prv[lgcGrpInd].logics[lgcInd].val = ''
         }
@@ -246,17 +198,17 @@ console.log('formSettings', formSettings)
 
   const changeValue = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].val = val
         return [...prv]
       })
     } else if (subLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].val = val
         return [...prv]
       })
     } else {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd].val = val
         return [...prv]
       })
@@ -265,17 +217,17 @@ console.log('formSettings', formSettings)
 
   const changeFormField = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].field = val
         return [...prv]
       })
     } else if (subLgcInd !== undefined) {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].field = val
         return [...prv]
       })
     } else {
-      setlgc(prv => {
+      setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd].field = val
         return [...prv]
       })
@@ -283,9 +235,9 @@ console.log('formSettings', formSettings)
   }
 
   const delLogic = (lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
-    if (lgc[lgcGrpInd].logics.length > 1) {
+    if (workFlows[lgcGrpInd].logics.length > 1) {
       if (subSubLgcInd !== undefined) {
-        setlgc(prv => {
+        setworkFlows(prv => {
           if (prv[lgcGrpInd].logics[lgcInd][subLgcInd].length === subSubLgcInd + 1) {
             if (prv[lgcGrpInd].logics[lgcInd][subLgcInd].length === 3) {
               const tmp = prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd - 2]
@@ -307,7 +259,7 @@ console.log('formSettings', formSettings)
           return [...prv]
         })
       } else if (subLgcInd !== undefined) {
-        setlgc(prv => {
+        setworkFlows(prv => {
           if (prv[lgcGrpInd].logics[lgcInd].length === subLgcInd + 1) {
             if (prv[lgcGrpInd].logics[lgcInd].length === 3) {
               const tmp = prv[lgcGrpInd].logics[lgcInd][subLgcInd - 2]
@@ -329,7 +281,7 @@ console.log('formSettings', formSettings)
           return [...prv]
         })
       } else {
-        setlgc(prv => {
+        setworkFlows(prv => {
           if (lgcInd !== 0) {
             prv[lgcGrpInd].logics.splice(lgcInd - 1, 2)
           } else {
@@ -342,7 +294,7 @@ console.log('formSettings', formSettings)
   }
 
   const addAction = lgcGrpInd => {
-    setlgc(prv => {
+    setworkFlows(prv => {
       if (prv[lgcGrpInd].action_type === 'onsubmit') {
         prv[lgcGrpInd].actions.push({ field: 'fld-1', action: 'value' })
       } else {
@@ -354,7 +306,7 @@ console.log('formSettings', formSettings)
 
   const addInlineLogic = (typ, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (typ === 'and') {
-      setlgc(prv => {
+      setworkFlows(prv => {
         if (subSubLgcInd !== undefined) {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'and', { field: 'fld-1', logic: 'eqal', val: 'iii' })
         } else if (subLgcInd !== undefined) {
@@ -365,7 +317,7 @@ console.log('formSettings', formSettings)
         return [...prv]
       })
     } else {
-      setlgc(prv => {
+      setworkFlows(prv => {
         if (subSubLgcInd !== undefined) {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'or', { field: 'fld-1', logic: 'eqal', val: 'iii' })
         } else if (subLgcInd !== undefined) {
@@ -381,42 +333,52 @@ console.log('formSettings', formSettings)
   const changeActionType = (typ, lgcGrpInd) => {
     if (typ === 'onsubmit') {
       // eslint-disable-next-line array-callback-return
-      lgc[lgcGrpInd].actions.map(itm => { itm.action = 'value' })
+      workFlows[lgcGrpInd].actions.map(itm => { itm.action = 'value' })
     } else if (typ === 'onvalidate') {
-      lgc[lgcGrpInd].action_behaviour = 'cond'
+      workFlows[lgcGrpInd].action_behaviour = 'cond'
     }
-    lgc[lgcGrpInd].action_type = typ
-    setlgc([...lgc])
+    workFlows[lgcGrpInd].action_type = typ
+    setworkFlows([...workFlows])
   }
 
   const changeActionRun = (typ, lgcGrpInd) => {
     if (typ === 'delete') {
-      delete lgc[lgcGrpInd].action_type
-    } else if (lgc[lgcGrpInd].action_type === undefined) {
-      lgc[lgcGrpInd].action_type = 'onload'
+      delete workFlows[lgcGrpInd].action_type
+    } else if (workFlows[lgcGrpInd].action_type === undefined) {
+      workFlows[lgcGrpInd].action_type = 'onload'
     }
-    lgc[lgcGrpInd].action_run = typ
-    setlgc([...lgc])
+    workFlows[lgcGrpInd].action_run = typ
+    setworkFlows([...workFlows])
   }
 
   const changeActionBehave = (typ, lgcGrpInd) => {
-    lgc[lgcGrpInd].action_behaviour = typ
-    setlgc([...lgc])
+    workFlows[lgcGrpInd].action_behaviour = typ
+    setworkFlows([...workFlows])
   }
 
   const changeValidateMsg = (val, lgcGrpInd) => {
-    lgc[lgcGrpInd].validateMsg = val
-    setlgc([...lgc])
+    workFlows[lgcGrpInd].validateMsg = val
+    setworkFlows([...workFlows])
   }
 
   const setSuccessMsg = (val, lgcGrpInd) => {
-    lgc[lgcGrpInd].successMsg = val // value can be message title or arr index or msg value
-    setlgc([...lgc])
+    for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+      if (workFlows[lgcGrpInd].successAction[i].type === 'successMsg') {
+        workFlows[lgcGrpInd].successAction[i].details.id = val
+        break
+      }
+    }
+    setworkFlows([...workFlows])
   }
 
   const setRedirectPage = (val, lgcGrpInd) => {
-    lgc[lgcGrpInd].redirectPage = val // value can be message title or arr index or msg value
-    setlgc([...lgc])
+    for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+      if (workFlows[lgcGrpInd].successAction[i].type === 'redirectPage') {
+        workFlows[lgcGrpInd].successAction[i].details.id = val
+        break
+      }
+    }
+    setworkFlows([...workFlows])
   }
 
   const setWebHooks = (e, lgcGrpInd) => {
@@ -424,56 +386,86 @@ console.log('formSettings', formSettings)
     for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
       val.push(e.target.selectedOptions[i].value)
     }
-    lgc[lgcGrpInd].webHooks = val // value can be message title or arr index or msg value
-    setlgc([...lgc])
+    for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+      if (workFlows[lgcGrpInd].successAction[i].type === 'webHooks') {
+        workFlows[lgcGrpInd].successAction[i].details.id = val
+        break
+      }
+    }
+    setworkFlows([...workFlows])
   }
 
   const preventDelete = (val, lgcGrpInd) => {
-    lgc[lgcGrpInd].avoid_delete = val
-    setlgc([...lgc])
+    workFlows[lgcGrpInd].avoid_delete = val
+    setworkFlows([...workFlows])
   }
 
   const setEmailSetting = (typ, e, lgcGrpInd) => {
     const values = []
     if (typ === 'tem') {
-      lgc[lgcGrpInd].mailNotify.template = e.target.value
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.tem = e.target.value
+          break
+        }
+      }
     } else if (typ === 'to') {
       for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
         values.push(e.target.selectedOptions[i].value)
       }
-      lgc[lgcGrpInd].mailNotify.to = values
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.to = values
+          break
+        }
+      }
     } else if (typ === 'cc') {
       for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
         values.push(e.target.selectedOptions[i].value)
       }
-      lgc[lgcGrpInd].mailNotify.cc = values
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.cc = values
+          break
+        }
+      }
     } else if (typ === 'bcc') {
       for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
         values.push(e.target.selectedOptions[i].value)
       }
-      lgc[lgcGrpInd].mailNotify.bcc = values
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.bcc = values
+          break
+        }
+      }
     }
-    setlgc([...lgc])
+    setworkFlows([...workFlows])
   }
 
   const enableAction = (checked, typ, lgcGrpInd) => {
     if (checked) {
       if (typ === 'mailNotify') {
-        lgc[lgcGrpInd][typ] = {}
+        workFlows[lgcGrpInd].successAction.push({ type: typ, details: {} })
       } else {
-        lgc[lgcGrpInd][typ] = ''
+        workFlows[lgcGrpInd].successAction.push({ type: typ, details: { id: '' } })
       }
     } else {
-      delete lgc[lgcGrpInd][typ]
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === typ) {
+          workFlows[lgcGrpInd].successAction.splice(i, 1)
+          break
+        }
+      }
     }
-    setlgc([...lgc])
+    setworkFlows([...workFlows])
   }
 
   return (
     <div className="btcd-workflow w-8">
       <h3>Actions</h3>
-      {lgc.map((lgcGrp, lgcGrpInd) => (
-        <div key={`lgc-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
+      {workFlows.map((lgcGrp, lgcGrpInd) => (
+        <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
           <Accordions
             title={`${lgcGrp.title}`}
             header={(
@@ -544,7 +536,7 @@ console.log('formSettings', formSettings)
                                     {typeof subSubLogic === 'string' && <LogicChip logic={subSubLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd, subSubLgcInd)} />}
                                   </span>
                                 ))}
-                                <div className=" btcd-lgc-btns">
+                                <div className=" btcd-workFlows-btns">
                                   <div className="flx">
                                     <Button icn className="blue sh-sm">+</Button>
                                     <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue sh-sm ml-2"> AND </Button>
@@ -555,7 +547,7 @@ console.log('formSettings', formSettings)
                             )}
                           </span>
                         ))}
-                        <div className=" btcd-lgc-btns">
+                        <div className=" btcd-workFlows-btns">
                           <div className="flx">
                             <Button icn className="blue sh-sm">+</Button>
                             <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue sh-sm ml-2"> AND </Button>
@@ -571,7 +563,7 @@ console.log('formSettings', formSettings)
               }
 
               {lgcGrp.action_behaviour === 'cond' && (
-                <div className="btcd-lgc-btns">
+                <div className="btcd-workFlows-btns">
                   <div className="flx">
                     <Button icn className="blue sh-sm">+</Button>
                     <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue sh-sm ml-2"> AND </Button>
@@ -586,39 +578,39 @@ console.log('formSettings', formSettings)
               <div className="btcd-hr mb-2" />
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <div className="mb-2">
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2" title="Success Message" checked={'successMsg' in lgcGrp} />
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2" title="Redirect URL" checked={'redirectPage' in lgcGrp} />
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2" title="Web Hook" checked={'webHooks' in lgcGrp} />
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2" title="Email Notification" checked={'mailNotify' in lgcGrp} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
                 </div>
               )}
               {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} title={<small className="txt-dp">Prevent Delete</small>} />}
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
-                  {'webHooks' in lgcGrp && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={lgcGrp.webHooks} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.hooks.map(itm => ({ name: itm.title, value: itm.title }))} placeholder="Select Hooks to Call" />}
+                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.hooks.map((itm, i) => ({ name: itm.title, value: i }))} placeholder="Select Hooks to Call" />}
 
                   {lgcGrp.action_run !== 'delete' && (
                     <>
                       <div className="mt-2" />
-                      {'successMsg' in lgcGrp && (
+                      {checkKeyInArr('successMsg', lgcGrpInd) && (
                         <label className="f-m">
                           Success Message:
                           <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={lgcGrp.successMsg}>
+                          <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
                             <option value="">Select Message</option>
-                            {formSettings.confirmation.type.msg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
+                            {formSettings.confirmation.type.msg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={i}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
                       <div className="mt-2" />
-                      {'redirectPage' in lgcGrp && (
+                      {checkKeyInArr('redirectPage', lgcGrpInd) && (
                         <label className="f-m">
                           Redirect URL:
                           <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={lgcGrp.redirectPage}>
+                          <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
                             <option value="">Select Page To Redirect</option>
-                            {formSettings.confirmation.type.url.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.title}>{itm.title}</option>)}
+                            {formSettings.confirmation.type.url.map((itm, i) => <option key={`sr-${i + 2.5}`} value={i}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -626,51 +618,51 @@ console.log('formSettings', formSettings)
                   )}
 
                   <div className="mt-2">
-                    {'mailNotify' in lgcGrp && (
+                    {checkKeyInArr('mailNotify', lgcGrpInd) && (
                       <>
                         <label className="f-m">
                           Email Notification:
                           <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={lgcGrp.mailNotify.template}>
+                          <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'tem', lgcGrpInd)}>
                             <option value="">Select Email Template</option>
-                            {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.title}>{itm.title}</option>)}
+                            {formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={i}>{itm.title}</option>)}
                           </select>
                         </label>
                         <DropDown
                           action={e => setEmailSetting('to', e, lgcGrpInd)}
                           searchPH="Type email press + to add"
-                          value={lgcGrp.mailNotify.to}
+                          value={getValueFromArr('mailNotify', 'to', lgcGrpInd)}
                           placeholder="Add Email Receiver"
                           searchPlaceholder="Search/Type Email"
                           title={<span className="f-m">To</span>}
                           isMultiple
                           titleClassName="w-7 mt-2"
                           addable
-                          options={mailOptions(lgcGrp.mailNotify.to)}
+                          options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
                         />
                         <DropDown
                           action={e => setEmailSetting('cc', e, lgcGrpInd)}
                           searchPH="Type email press + to add"
-                          value={lgcGrp.mailNotify.cc}
+                          value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
                           placeholder="Add Email CC"
                           searchPlaceholder="Search/Type Email"
                           title={<span className="f-m">CC</span>}
                           isMultiple
                           titleClassName="w-7 mt-2"
                           addable
-                          options={mailOptions(lgcGrp.mailNotify.cc)}
+                          options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
                         />
                         <DropDown
                           searchPH="Type email press + to add"
                           action={e => setEmailSetting('bcc', e, lgcGrpInd)}
                           placeholder="Add Email BCC"
                           searchPlaceholder="Search/Type Email"
-                          value={lgcGrp.mailNotify.bcc}
+                          value={getValueFromArr('mailNotify', 'bcc', lgcGrpInd)}
                           title={<span className="f-m">BCC</span>}
                           isMultiple
                           titleClassName="w-7 mt-2"
                           addable
-                          options={mailOptions(lgcGrp.mailNotify.bcc)}
+                          options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
                         />
                       </>
                     )}
@@ -691,7 +683,7 @@ console.log('formSettings', formSettings)
                 <div className="ml-2 mt-2">
                   {lgcGrp.actions.map((action, actionInd) => (
                     <span key={`atn-${actionInd + 22}`}>
-                      <ActionBlock formFields={formFields} action={action} setlgc={setlgc} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
+                      <ActionBlock formFields={formFields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
                       {lgcGrp.actions.length !== actionInd + 1 && (
                         <>
                           <div style={{ height: 5 }}>

@@ -135,7 +135,7 @@ export default function Bitapps(props) {
             >
               <CompGen
                 atts={props.buttons}
-                formID={bitAppsFront.contentID}
+                //formID={bitAppsFront.contentID}
                 entryID={props.entryID}
               />
             </div>
