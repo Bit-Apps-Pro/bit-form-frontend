@@ -61,13 +61,13 @@ function Integrations({ integrations, setIntegration }) {
                   <Link to={`${url}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2" type="button">
                     <div>
                       <span className="btcd-icn icn-edit" />
-                  &nbsp;Edit
+                       &nbsp;Edit
                     </div>
                   </Link>
                   <button className="btn btcd-btn-o-blue btcd-btn-sm" onClick={() => removeInteg(i)} type="button">
                     <div>
                       <span className="btcd-icn icn-trash-2" />
-                  &nbsp;Delete
+                        &nbsp;Delete
                     </div>
                   </button>
                 </div>
