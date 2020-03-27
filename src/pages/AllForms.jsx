@@ -141,7 +141,7 @@ export default function AllFroms() {
 
       <div className="af-header">
         <h2>Forms</h2>
-        <button onClick={() => setModal(true)} type="button" className="btn round btn-lg blue blue-sh">Create From</button>
+        <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
       </div>
       <div className="forms">
         <Table

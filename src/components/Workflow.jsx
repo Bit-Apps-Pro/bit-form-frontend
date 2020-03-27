@@ -63,6 +63,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
         { field: 'fld-1', logic: 'eqal', val: 'bbb' },
       ],
       actions: [{ field: 'fld-1', action: 'value' }],
+      successAction: [],
     })
     setworkFlows([...workFlows])
   }

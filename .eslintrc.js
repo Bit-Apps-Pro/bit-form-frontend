@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: [
     'airbnb',
+    'react-app',
   ],
   globals: {
     Atomics: 'readonly',

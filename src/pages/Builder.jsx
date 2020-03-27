@@ -83,6 +83,7 @@ function Builder(props) {
         { field: 'fld-1', action: 'hide' },
         { field: 'fld-1', action: 'hide' },
       ],
+      successAction: [],
     },
     {
       title: 'Action asd',
