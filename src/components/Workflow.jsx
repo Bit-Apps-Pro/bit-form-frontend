@@ -34,7 +34,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
     return ''
   }
 
-  const checkKeyInArr = (key, lgcGrpInd) => workFlows[lgcGrpInd].successAction.some(v => v.type === key)
+  const checkKeyInArr = (key, lgcGrpInd) => workFlows[lgcGrpInd].successAction && workFlows[lgcGrpInd].successAction.some(v => v.type === key)
 
   const ActionsTitle = type => (
     <>
@@ -444,6 +444,9 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
   }
 
   const enableAction = (checked, typ, lgcGrpInd) => {
+    /* if (!workFlows[lgcGrpInd].successAction) {
+      workFlows[lgcGrpInd].successAction = []
+    } */
     if (checked) {
       if (typ === 'mailNotify') {
         workFlows[lgcGrpInd].successAction.push({ type: typ, details: {} })
@@ -625,7 +628,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'tem', lgcGrpInd)}>
                             <option value="">Select Email Template</option>
-                            {formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={i}>{itm.title}</option>)}
+                            {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={i}>{itm.title}</option>)}
                           </select>
                         </label>
                         <DropDown
