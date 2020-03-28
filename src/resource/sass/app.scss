@@ -769,21 +769,36 @@ li b {
 }
 .btcd-inte-card {
   cursor: pointer;
-  width: 170px;
-  height: 180px;
+  width: 160px;
+  height: 200px;
   overflow: hidden;
   border-radius: 20px;
   outline: none;
   box-shadow: 2px 2px 7px #d7e0ed;
   position: relative;
   transition: box-shadow 0.2s, transform 0.3s;
-  & > .body {
+  & > .btcd-inte-atn {
     position: absolute;
+    bottom: 38px;
+    background: white;
+    height: 0px;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    transition: height 0.2s;
+  }
+  & > .body {
     width: 100%;
     padding-top: 3px;
     background: #fff;
-    height: 85px;
-    transition: margin 0.2s;
+    & > div {
+      width: 95%;
+      height: 17px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin: auto;
+      white-space: pre;
+    }
   }
   & a {
     text-decoration: none;
@@ -801,26 +816,27 @@ li b {
   &:hover {
     transform: scale(1.02);
     box-shadow: 2px 2px 16px #cdd4e7;
-    & > .body {
-      margin-top: -45px;
+    & > .btcd-inte-atn {
+      height: 42px;
     }
   }
   & img {
     background-color: aliceblue;
-    height: 140px;
-    width: 170px;
+    height: 160px;
+    width: 160px;
     display: block;
   }
 }
 
 .inte-sm {
-  width: 130px;
+  width: 110px;
   height: 130px;
-  font-size: 13px;
+  border-radius: 15px;
+  font-size: 11px;
   position: relative;
   & img {
-    height: 110px;
-    width: 130px;
+    max-height: 110px;
+    max-width: 110px;
     margin-bottom: 2px;
   }
   &:before {
@@ -828,16 +844,37 @@ li b {
     justify-content: center;
     align-items: center;
     font-size: 100px;
-    color: #9297cd;
+    color: #fff;
     background: rgba(4, 37, 155, 0.18);
     width: 100%;
     height: 100%;
     position: absolute;
   }
-  &:hover {
+  &:hover:not(.btcd-inte-dis) {
     &:before {
       content: "+";
     }
+  }
+}
+
+.btcd-inte-dis {
+  pointer-events: none;
+  user-select: none;
+  & > img {
+    filter: grayscale(1) !important;
+  }
+  &::before {
+    position: absolute;
+    z-index: 9;
+    content: "Coming Soon";
+    font-size: 15px;
+    font-weight: bold;
+    background: transparentize(#000000, 0.7);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -1272,6 +1309,7 @@ nav.top-nav {
   color: #fff;
   background: transparent;
   border-radius: 8px;
+  box-shadow: none;
   &:hover {
     background: rgb(31, 34, 68);
   }
@@ -1457,6 +1495,8 @@ nav.top-nav {
     & > .btcd-accr-title > div {
       & > input {
         border: none;
+        line-height: 1;
+        min-height: 10px;
         padding: 0;
         margin: 0;
         background: transparent;
@@ -2114,6 +2154,9 @@ nav.top-nav {
     font-weight: bold;
     color: white;
     margin-bottom: 10px;
+    &:focus {
+      box-shadow: none;
+    }
     & > span {
       margin-right: 5px;
     }
