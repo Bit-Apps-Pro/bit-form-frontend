@@ -17,13 +17,22 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif !important;
+}
+
+#btcd-app {
+  font-family: "Sen", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   min-height: 100%;
   color: $dp-blue;
   background-color: $light-bg;
+  & a {
+    text-decoration: none;
+    &:focus {
+      // box-shadow: none;
+    }
+  }
 }
 
 * {
@@ -126,6 +135,16 @@ body {
   }
 }
 
+.green {
+  background: #00f8a4;
+  color: #022217;
+  &:hover {
+    background: #00e699;
+  }
+  &:active {
+    background: #01d18c;
+  }
+}
 .icn-blue {
   color: $blue;
 }
@@ -636,7 +655,9 @@ li b {
     height: calc(100% - 85px);
   }
 }
-
+.d-flx {
+  display: flex;
+}
 .flx {
   display: flex;
   align-items: center;
@@ -705,6 +726,9 @@ li b {
 .ml-4 {
   margin-left: 20px !important;
 }
+.ml-5 {
+  margin-left: 25px !important;
+}
 .ml-2 {
   margin-left: 10px;
 }
@@ -739,6 +763,13 @@ li b {
   width: 100% !important;
 }
 
+.wdt-100 {
+  width: 100px;
+}
+.wdt-200 {
+  width: 200px;
+}
+
 .btcd-hr {
   border-bottom: 1px solid $gray;
 }
@@ -771,6 +802,7 @@ li b {
   cursor: pointer;
   width: 160px;
   height: 200px;
+  text-decoration: none;
   overflow: hidden;
   border-radius: 20px;
   outline: none;
@@ -834,6 +866,7 @@ li b {
   border-radius: 15px;
   font-size: 11px;
   position: relative;
+  background: aliceblue;
   & img {
     max-height: 110px;
     max-width: 110px;
@@ -927,16 +960,22 @@ li b {
   border: none;
   padding: 7px;
   border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   outline: none;
   color: inherit;
-  display: inline-block;
   font-size: 14px;
   text-decoration: none;
   white-space: nowrap;
   font-weight: bold;
+  &:disabled {
+    background-color: rgb(230, 230, 230);
+    box-shadow: none;
+  }
 }
 .btcd-btn-o-blue {
   background: transparent;
@@ -2270,12 +2309,13 @@ nav.top-nav {
   border-radius: 8px !important;
   min-height: 15px !important;
   border: 1px solid #e2e2e2 !important;
+  transition: box-shadow 0.3s;
   &:hover {
     border-color: $dp-txt !important;
   }
   &:focus {
     border-color: $blue !important;
-    box-shadow: 0 0 0 2px white, 0 0 0 5px rgba(0, 131, 243, 0.3) !important;
+    box-shadow: 0 0 0 0px $blue, 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
   }
 }
 
@@ -3193,6 +3233,40 @@ select.btcd-ud-inp {
       background: white;
     }
   }
+}
+.btcd-stp {
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  line-height: 2;
+  color: gray;
+  font-weight: bold;
+  user-select: none;
+  border: 2px solid rgb(236, 236, 236);
+  background: rgb(236, 236, 236);
+  border-radius: 30px;
+  &.stp-a {
+    border-color: $blue;
+    color: $blue;
+    background: transparentize($blue, 0.9);
+  }
+}
+.btcd-stp-line {
+  display: inline-block;
+  width: 50px;
+  height: 3px;
+  background: rgb(236, 236, 236);
+  &.stp-line-a {
+    background: $blue;
+  }
+}
+
+.btcd-stp-page {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  transition-delay: height 1s;
+  transition: width 0.4s, height 0.4s;
 }
 
 // for IE11

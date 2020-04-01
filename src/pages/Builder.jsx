@@ -45,8 +45,9 @@ function Builder(props) {
   ])
 
   const [integrations, setIntegration] = useState([
-    { name: 'Integration 1', type: 'Zoho CRM' },
-    { name: 'Integration 2', type: 'Zoho Sheet' },
+    { name: 'Integration 1', type: 'Zoho Marketing Hub' },
+    { name: 'Integration 2', type: 'Zoho Recruit' },
+    { name: 'Zoho CRM API', type: 'Zoho CRM', email: '', pass: '', module: 'Leads', layout: 'Standard', field_map: [{ formField: '', zohoFormField: '' }], actions: ['Workflow', 'Approval'] },
   ])
 
   const [workFlows, setworkFlows] = useState([
@@ -236,6 +237,7 @@ function Builder(props) {
       }
       setFulScn(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleFormName = e => {
@@ -303,6 +305,7 @@ function Builder(props) {
   const addNewData = useCallback(ndata => {
     setNewData(ndata)
   }, [])
+
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
       <nav className="btcd-bld-nav">
@@ -310,7 +313,7 @@ function Builder(props) {
           <NavLink exact to="/">
             <span className="btcd-icn icn-arrow_back" />
             {' '}
-            Back
+            Home
           </NavLink>
           <NavLink
             exact

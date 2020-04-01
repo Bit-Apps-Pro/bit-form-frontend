@@ -75,7 +75,7 @@ export default function FormSettings(props) {
             <Workflow formFields={formFields} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} />
           </Route>
           <Route path={`${path}integrations`}>
-            <Integrations integrations={props.integrations} setIntegration={props.setIntegration} />
+            <Integrations integrations={props.integrations} formFields={formFields} setIntegration={props.setIntegration} />
           </Route>
         </Switch>
       </div>

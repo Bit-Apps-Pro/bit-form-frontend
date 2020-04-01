@@ -396,6 +396,20 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
     setworkFlows([...workFlows])
   }
 
+  const setInteg = (e, lgcGrpInd) => {
+    const val = []
+    for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
+      val.push(e.target.selectedOptions[i].value)
+    }
+    for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+      if (workFlows[lgcGrpInd].successAction[i].type === 'integ') {
+        workFlows[lgcGrpInd].successAction[i].details.id = val
+        break
+      }
+    }
+    setworkFlows([...workFlows])
+  }
+
   const preventDelete = (val, lgcGrpInd) => {
     workFlows[lgcGrpInd].avoid_delete = val
     setworkFlows([...workFlows])
@@ -583,6 +597,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2" title="Api Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />
                 </div>
               )}
               {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} title={<small className="txt-dp">Prevent Delete</small>} />}
@@ -590,6 +605,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
                   {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.hooks.map((itm, i) => ({ name: itm.title, value: i }))} placeholder="Select Hooks to Call" />}
+                  {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={e => setInteg(e, lgcGrpInd)} value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.integrations.map((itm, i) => ({ name: itm.name, value: i }))} placeholder="Select Integation" />}
 
                   {lgcGrp.action_run !== 'delete' && (
                     <>
