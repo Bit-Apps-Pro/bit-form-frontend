@@ -4,30 +4,30 @@ import MtSelect from './MtSelect'
 import MtInput from './MtInput'
 import Button from './Button'
 
-function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setlgc, actionType }) {
+function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
   const changeAction = val => {
-    setlgc(prv => {
+    setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].action = val
       return [...prv]
     })
   }
 
   const changeAtnVal = val => {
-    setlgc(prv => {
+    setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].val = val
       return [...prv]
     })
   }
 
   const changeAtnField = val => {
-    setlgc(prv => {
+    setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].field = val
       return [...prv]
     })
   }
 
   const delAction = () => {
-    setlgc(prv => {
+    setworkFlows(prv => {
       if (prv[lgcGrpInd].actions.length > 1) {
         prv[lgcGrpInd].actions.splice(actionInd, 1)
       }
