@@ -6,19 +6,19 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
 
   const handleHookTitle = (e, idx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.hooks[idx].title = e.target.value
+    tmp.confirmation.type.webHooks[idx].title = e.target.value
     setFormSettings(tmp)
   }
 
   const handleLink = (val, i) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.hooks[i].url = val
+    tmp.confirmation.type.webHooks[i].url = val
     setFormSettings(tmp)
   }
 
   const handleMethod = (val, i) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.hooks[i].method = val
+    tmp.confirmation.type.webHooks[i].method = val
     setFormSettings(tmp)
   }
 
@@ -28,51 +28,51 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
     const tmp = { ...formSettings }
     if (val !== '') {
       if (typ === 'key') {
-        tmp.confirmation.type.hooks[i].url = tmp.confirmation.type.hooks[i].url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
+        tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
       } else {
-        tmp.confirmation.type.hooks[i].url = tmp.confirmation.type.hooks[i].url.replace(pram, `${pram.split('=')[0]}=${val}`)
+        tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(pram, `${pram.split('=')[0]}=${val}`)
       }
     } else if (pram.match(/\?/g) === null) {
-      tmp.confirmation.type.hooks[i].url = tmp.confirmation.type.hooks[i].url.replace(pram, '')
+      tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(pram, '')
     } else {
-      tmp.confirmation.type.hooks[i].url = tmp.confirmation.type.hooks[i].url.replace(`${pram}&`, '?')
+      tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(`${pram}&`, '?')
     }
     setFormSettings(tmp)
   }
 
   const delParam = (i, param) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.hooks[i].url = tmp.confirmation.type.hooks[i].url.replace(param, '')
+    tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(param, '')
     setFormSettings(tmp)
   }
 
   const addParam = i => {
     const tmp = { ...formSettings }
-    if (tmp.confirmation.type.hooks[i].url.match(/\?/g) !== null) {
-      tmp.confirmation.type.hooks[i].url += '&key=value'
+    if (tmp.confirmation.type.webHooks[i].url.match(/\?/g) !== null) {
+      tmp.confirmation.type.webHooks[i].url += '&key=value'
     } else {
-      tmp.confirmation.type.hooks[i].url += '?key=value'
+      tmp.confirmation.type.webHooks[i].url += '?key=value'
     }
     setFormSettings(tmp)
   }
 
   const addMoreHook = () => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.hooks.push({ title: `Web Hook ${tmp.confirmation.type.hooks.length + 1}`, url: '', method: 'GET' })
+    tmp.confirmation.type.webHooks.push({ title: `Web Hook ${tmp.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     setFormSettings(tmp)
   }
 
   const rmvHook = i => {
     const tmp = { ...formSettings }
-    if (removeIntegration(tmp.confirmation.type.hooks[i].id, 'msg')) {
-      tmp.confirmation.type.hooks.splice(i, 1)
+    if (removeIntegration(tmp.confirmation.type.webHooks[i].id)) {
+      tmp.confirmation.type.webHooks.splice(i, 1)
       setFormSettings(tmp)
     }
   }
 
   return (
     <div>
-      {formSettings.confirmation.type.hooks.map((itm, i) => (
+      {formSettings.confirmation.type.webHooks.map((itm, i) => (
         <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
           <Accordions
             title={itm.title}

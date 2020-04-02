@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
+import bitsFetch from '../Utils/bitsFetch'
 
 export default function ConfType(props) {
   console.log('%c $render FormSettings', 'background:lightgreen;padding:3px;border-radius:5px;')

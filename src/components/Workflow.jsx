@@ -12,8 +12,9 @@ import CheckBox from './ElmSettings/Childs/CheckBox'
 import MtSelect from './ElmSettings/Childs/MtSelect'
 import DropDown from './ElmSettings/Childs/DropDown'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
+import bitsFetch from '../Utils/bitsFetch'
 
-function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
+function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID }) {
   const mailOptions = vals => {
     const mail = [{ name: 'Admin', value: 'admin' }]
     if (vals !== undefined) {
@@ -69,8 +70,19 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
   }
 
   const delLgcGrp = val => {
-    workFlows.splice(val, 1)
-    setworkFlows([...workFlows])
+    if (workFlows[val].id) {
+      bitsFetch({ formID, id: workFlows[val].id }, 'bitapps_delete_workflow')
+        .then(res => {
+          if (res !== undefined && res.success) {
+            console.log('WORKFLOW', val)
+            workFlows.splice(val, 1)
+            setworkFlows([...workFlows])
+          }
+        })
+    } else {
+      workFlows.splice(val, 1)
+      setworkFlows([...workFlows])
+    }
   }
 
   const handleLgcTitle = (e, i) => {
@@ -384,7 +396,10 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
 
   const setWebHooks = (e, lgcGrpInd) => {
     const val = []
+    console.log('SETHOOKS', e.target.selectedOptions)
     for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
+      console.log('SETHOOKS', JSON.parse(e.target.selectedOptions[i].value).id)
+
       val.push(e.target.selectedOptions[i].value)
     }
     for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
@@ -592,7 +607,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
-                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.hooks.map((itm, i) => ({ name: itm.title, value: i }))} placeholder="Select Hooks to Call" />}
+                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.webHooks.map((itm, i) => ({ name: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
 
                   {lgcGrp.action_run !== 'delete' && (
                     <>
@@ -603,7 +618,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
                             <option value="">Select Message</option>
-                            {formSettings.confirmation.type.msg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={i}>{itm.title}</option>)}
+                            {formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -614,7 +629,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
                             <option value="">Select Page To Redirect</option>
-                            {formSettings.confirmation.type.url.map((itm, i) => <option key={`sr-${i + 2.5}`} value={i}>{itm.title}</option>)}
+                            {formSettings.confirmation.type.redirectPage.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -679,7 +694,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
               {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                 <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                   <option value="">Select Message</option>
-                  {formSettings.confirmation.type.msg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.title}>{itm.title}</option>)}
+                  {formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.title}>{itm.title}</option>)}
                 </MtSelect>
               )}
 
