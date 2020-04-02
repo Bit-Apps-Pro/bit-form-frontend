@@ -27,7 +27,7 @@ function index(props) {
   const tools = [
     {
       name: 'Text',
-      icn: textField,
+      icn: 'text',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'text',
@@ -38,7 +38,7 @@ function index(props) {
     },
     {
       name: 'Multiline Text',
-      icn: multilineText,
+      icn: 'textarea',
       pos: { h: 3, w: 10, i: 'block-5' },
       elm: {
         typ: 'textarea',
@@ -57,7 +57,7 @@ function index(props) {
     }, */
     {
       name: 'Check Box',
-      icn: check,
+      icn: 'check',
       pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'check',
@@ -72,7 +72,7 @@ function index(props) {
     },
     {
       name: 'Radio Button',
-      icn: radio,
+      icn: 'radio',
       pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'radio',
@@ -88,7 +88,7 @@ function index(props) {
     },
     {
       name: 'Number',
-      icn: numberField,
+      icn: 'num',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'number',
@@ -99,7 +99,7 @@ function index(props) {
     },
     {
       name: 'Drop Down',
-      icn: dropdown,
+      icn: 'dropdown',
       pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
@@ -114,7 +114,7 @@ function index(props) {
     },
     {
       name: 'Password:',
-      icn: pswd,
+      icn: 'pass',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'password',
@@ -125,7 +125,7 @@ function index(props) {
     },
     {
       name: 'Email',
-      icn: emailField,
+      icn: 'email',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'email',
@@ -136,7 +136,7 @@ function index(props) {
     },
     {
       name: 'URL',
-      icn: url,
+      icn: 'url',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'url',
@@ -147,7 +147,7 @@ function index(props) {
     },
     {
       name: 'File Upload',
-      icn: fileup,
+      icn: 'fileup',
       pos: { h: 2, w: 10, i: 'n_blk', minH: 2, minW: 3 },
       elm: {
         typ: 'file-up',
@@ -158,7 +158,7 @@ function index(props) {
     },
     {
       name: 'Date',
-      icn: date,
+      icn: 'date',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'date',
@@ -168,7 +168,7 @@ function index(props) {
     },
     {
       name: 'Time',
-      icn: time,
+      icn: 'time',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'time',
@@ -178,7 +178,7 @@ function index(props) {
     },
     {
       name: 'Date-Time',
-      icn: dateTime,
+      icn: 'datetime',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
@@ -188,7 +188,7 @@ function index(props) {
     },
     {
       name: 'Month',
-      icn: month,
+      icn: 'month',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'month',
@@ -198,7 +198,7 @@ function index(props) {
     },
     {
       name: 'Week',
-      icn: week,
+      icn: 'week',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'week',
@@ -208,7 +208,7 @@ function index(props) {
     },
     {
       name: 'Color Picker',
-      icn: clr,
+      icn: 'color',
       pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'color',
@@ -222,13 +222,14 @@ function index(props) {
     <div className="toolBar-wrp">
       <div className="btcd-toolbar-title">
         {!props.tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn btcd-neu-sh-1" onClick={() => { props.setTolbarSiz(!props.tolbarSiz) }} type="button"><span>{props.tolbarSiz ? String.fromCharCode(8250) : String.fromCharCode(8249)}</span></button>
+        <button className="icn-btn" onClick={() => { props.setTolbarSiz(!props.tolbarSiz) }} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${props.tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div>
       <Scrollbars autoHide style={{ maxWidth: 400 }}>
         <div className="toolBar">
           {tools.map(tool => (
             <Tools key={tool.name} setDrgElm={props.setDrgElm} setNewData={props.setNewData} value={[tool.elm, tool.pos]}>
-              <img draggable="false" src={tool.icn} alt={`${tool.name}-field`} className="tool-img" />
+              <span className={`btcd-icn  icn-${tool.icn}`} />
+              {/* <img draggable="false" src={tool.icn} alt={`${tool.name}-field`} className="tool-img" /> */}
               {!props.tolbarSiz && tool.name}
             </Tools>
           ))}

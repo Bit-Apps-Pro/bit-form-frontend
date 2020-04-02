@@ -45,6 +45,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         },
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])
 
 

@@ -1,20 +1,20 @@
-import React, { useEffect, useContext, useState } from 'react'
-import { BitappsContext } from '../../../Utils/BitappsContext'
+import React, { useEffect, useContext, memo } from 'react'
+import { SnackContext } from '../../../Utils/SnackContext'
 
-export default function SnackMsg() {
-  const { snackMsg } = useContext(BitappsContext)
-  const { snackbar, setSnackbar } = snackMsg
-  const [show, setshow] = useState(false)
+function SnackMsg() {
+  const { snackbar, setSnackbar } = useContext(SnackContext)
+  const { show, msg } = snackbar
   useEffect(() => {
-    setTimeout(() => { setshow(true) }, 1)
-    setTimeout(() => { setshow(false) }, 2000)
     setTimeout(() => { setSnackbar({ show: false, msg: '' }) }, 2500)
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show])
 
   return (
     <div className="btcd-snack flx" style={{ right: show ? 30 : -400 }}>
-      {snackbar.msg}
+      {msg}
       <button onClick={() => setSnackbar({ show: false, msg: '' })} className="btcd-snack-cls" type="button">&times;</button>
     </div>
   )
 }
+
+export default SnackMsg

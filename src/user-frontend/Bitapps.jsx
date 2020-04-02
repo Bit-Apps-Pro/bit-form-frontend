@@ -41,6 +41,7 @@ export default function Bitapps(props) {
     event.preventDefault()
     const formData = new FormData()
     const fields = Array.prototype.slice.call(event.target)
+    // eslint-disable-next-line array-callback-return
     fields.filter(el => {
       if (el.type === 'file' && el.files.length > 0) {
         if (el.files.length > 1) {
@@ -135,7 +136,7 @@ export default function Bitapps(props) {
             >
               <CompGen
                 atts={props.buttons}
-                //formID={bitAppsFront.contentID}
+                // formID={bitAppsFront.contentID}
                 entryID={props.entryID}
               />
             </div>
@@ -167,6 +168,7 @@ function Toast(props) {
       }
     }, 2000);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="btcd-snack flx" style={toatStyles}>

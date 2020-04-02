@@ -8,6 +8,7 @@ import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import { SnackContext } from '../Utils/SnackContext'
 
 function Builder(props) {
   console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -25,10 +26,10 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const { allFormsData, snackMsg } = useContext(BitappsContext)
+  const { allFormsData } = useContext(BitappsContext)
+  const { setSnackbar } = useContext(SnackContext)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
   const { allFormsDispatchHandler } = allFormsData
-  const { setSnackbar } = snackMsg
 
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
@@ -290,6 +291,7 @@ function Builder(props) {
 
   const setSubmitConfig = useCallback(data => {
     setSubBtn({ ...data })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subBtn])
 
   const updateFields = useCallback(updatedElm => {

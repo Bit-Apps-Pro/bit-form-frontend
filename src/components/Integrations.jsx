@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
 import Modal from './Modal'
-import Allintegrations from './AllIntegrations/ALllIntegrations'
 import zohoAnalytics from '../resource/img/integ/zohoAnalytics.png'
 import zohoDesk from '../resource/img/integ/zohoDesk.png'
 import zohoCRM from '../resource/img/integ/zohoCRM.png'
@@ -41,6 +40,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
         return <img src={integs[i].logo} alt={type} />
       }
     }
+    return null
   }
 
   const setNewInteg = (type) => {

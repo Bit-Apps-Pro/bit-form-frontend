@@ -478,7 +478,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows }) {
 
   return (
     <div className="btcd-workflow w-8">
-      <h3>Actions</h3>
+      <h3>Actions s</h3>
       {workFlows.map((lgcGrp, lgcGrpInd) => (
         <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
           <Accordions

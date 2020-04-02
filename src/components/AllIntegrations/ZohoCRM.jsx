@@ -77,7 +77,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         <input className="btcd-paper-inp w-9" onChange={handleInput} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
 
         <div className="mt-4"><b>Login Zoho</b></div>
-        <a className="btn btcd-btn-lg br-50 blue sh-sm d-in-b" type="button">
+        <a href="#s" className="btn btcd-btn-lg br-50 blue sh-sm d-in-b" type="button">
           Authenticaticate with Zoho &nbsp;
           <span className="btcd-icn icn-external-link" />
         </a>

@@ -8,16 +8,18 @@ import CopyText from '../components/ElmSettings/Childs/CopyText'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
 import Progressbar from '../components/ElmSettings/Childs/Progressbar'
 import { BitappsContext } from '../Utils/BitappsContext'
+import { SnackContext } from '../Utils/SnackContext'
 import EditEntryData from '../components/EditEntryData'
 import Drawer from '../components/Drawer'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
+import Modal from '../components/Modal'
 
 function FormEntries() {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
 
-  const { allRes, snackMsg } = useContext(BitappsContext)
+  const { allRes } = useContext(BitappsContext)
+  const { setSnackbar } = useContext(SnackContext)
   const { allResp, setAllResp } = allRes
-  const { setSnackbar } = snackMsg
   const { formID } = useParams()
   const fetchIdRef = React.useRef(0)
   const [pageCount, setPageCount] = React.useState(0)
@@ -63,7 +65,8 @@ function FormEntries() {
                 Cell: row => {
                   if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
                     if (val.type === 'file-up') {
-                      return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== undefined ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`}`} />)
+                      // eslint-disable-next-line max-len
+                      return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`}`} />)
                     } JSON.parse(row.cell.value).join(', ')
                   }
                   return null
@@ -90,7 +93,6 @@ function FormEntries() {
     setTimeout(() => {
       if (fetchId === fetchIdRef.current) {
         const startRow = pageSize * pageIndex
-        // const fdata = process.env.NODE_ENV === 'development' ? prepareData({ id: formID, offset: startRow, pageSize }) : { id: formID, offset: startRow, pageSize }
         bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
           if (res !== undefined && res.success) {
             if (totalData > 0) {
@@ -128,6 +130,7 @@ function FormEntries() {
           setSnackbar({ show: true, msg: res.data.message })
         }
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allResp])
 
   const setEntriesCol = useCallback(newCols => {
@@ -160,6 +163,7 @@ function FormEntries() {
           setSnackbar({ show: true, msg: res.data.message })
         }
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allResp])
 
   const editData = useCallback(id => {
@@ -177,11 +181,12 @@ function FormEntries() {
 
   return (
     <div id="form-res">
+
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
 
-      <button onClick={() => setRowDtl(!rowDtl)}>set </button>
+      {/* <button onClick={() => setRowDtl(!rowDtl)}>set </button> */}
       {showEditMdl
         && (
           <EditEntryData

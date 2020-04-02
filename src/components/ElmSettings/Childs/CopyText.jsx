@@ -1,9 +1,8 @@
 import React from 'react'
-import { BitappsContext } from '../../../Utils/BitappsContext'
+import { SnackContext } from '../../../Utils/SnackContext'
 
 export default function CopyText(props) {
-  const { snackMsg } = React.useContext(BitappsContext)
-  const { setSnackbar } = snackMsg
+  const { setSnackbar } = React.useContext(SnackContext)
 
   const copyText = e => {
     const cpyBtn = e.target

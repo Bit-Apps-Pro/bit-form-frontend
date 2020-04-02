@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { SnackContext } from '../../../Utils/SnackContext'
 import { BitappsContext } from '../../../Utils/BitappsContext'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function MenuBtn(props) {
-  const { allFormsData, snackMsg } = useContext(BitappsContext)
+  const { allFormsData } = useContext(BitappsContext)
+  const { setSnackbar } = useContext(SnackContext)
   const { allFormsDispatchHandler } = allFormsData
-  const { setSnackbar } = snackMsg
 
   const handleMenuClose = (e) => {
     const el = e.target
