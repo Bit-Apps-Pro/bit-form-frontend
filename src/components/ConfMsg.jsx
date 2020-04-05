@@ -1,9 +1,13 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import React, { useEffect, memo } from 'react'
+import React, { useEffect, memo, useState } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
+import ConfirmModal from './ConfirmModal'
 
 function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration }) {
+  const [confMdl, setConfMdl] = useState({ show: false, action: null })
+
   const handleMsgMsg = (mg, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.msg[idx].msg = mg
@@ -56,17 +60,13 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   }
 
   const addMoreMsg = () => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.msg.push({ title: `Message Title ${tmp.confirmation.type.msg.length + 1}`, msg: 'Successfully Submitted.' })
-    setFormSettings(tmp)
-  }
-
-  const rmvMsg = i => {
-    const tmp = { ...formSettings }
-    if (removeIntegration(tmp.confirmation.type.msg[i].id, 'msg')) {
-      tmp.confirmation.type.msg.splice(i, 1)
-      setFormSettings(tmp)
+    if ('msg' in formSettings.confirmation.type) {
+      formSettings.confirmation.type.msg.push({ title: `Message Title ${formSettings.confirmation.type.msg.length + 1}`, msg: 'Successfully Submitted.' })
+    } else {
+      formSettings.confirmation.type.msg = []
+      formSettings.confirmation.type.msg.push({ title: `Message Title ${formSettings.confirmation.type.msg.length + 1}`, msg: 'Successfully Submitted.' })
     }
+    setFormSettings({ ...formSettings })
   }
 
   const addFormField = (val, i) => {
@@ -75,9 +75,40 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     setFormSettings(tmp)
   }
 
+  const closeMdl = () => {
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
+  }
+
+  const showDelConf = (i) => {
+    confMdl.show = true
+    confMdl.action = () => rmvMsg(i)
+    setConfMdl({ ...confMdl })
+  }
+
+  const rmvMsg = async i => {
+    const tmpData = formSettings.confirmation.type.msg[i]
+    formSettings.confirmation.type.msg.splice(i, 1)
+    setFormSettings({ ...formSettings })
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
+    const status = await removeIntegration(tmpData.id, 'msg')
+    if (!status) {
+      formSettings.confirmation.type.msg.splice(i, 0, tmpData)
+      setFormSettings({ ...formSettings })
+    }
+  }
+
   return (
     <div>
-      {formSettings.confirmation.type.msg.map((itm, i) => (
+      <ConfirmModal
+        action={confMdl.action}
+        show={confMdl.show}
+        body="Are you sure to delete this message ?"
+        btnTxt="Delete"
+        close={closeMdl}
+      />
+      {formSettings.confirmation.type.msg !== undefined && formSettings.confirmation.type.msg.map((itm, i) => (
         <div key={`f-m-${i + 1}`} className="flx btcd-conf-list">
           <Accordions
             title={itm.title}
@@ -99,7 +130,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
               data-idx={i}
             />
           </Accordions>
-          <Button onClick={() => rmvMsg(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
       <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><b>+</b></Button></div>
