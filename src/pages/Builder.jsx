@@ -8,6 +8,7 @@ import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import { SnackContext } from '../Utils/SnackContext'
 
 function Builder(props) {
   console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -25,10 +26,10 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const { allFormsData, snackMsg } = useContext(BitappsContext)
+  const { allFormsData } = useContext(BitappsContext)
+  const { setSnackbar } = useContext(SnackContext)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
   const { allFormsDispatchHandler } = allFormsData
-  const { setSnackbar } = snackMsg
 
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
@@ -164,6 +165,7 @@ function Builder(props) {
               setNewCounter(responseData.form_content.layout.length)
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
+              console.log(responseData.form_content.layout, responseData.form_content.fields)
             } else {
               setisLoading(false)
             }
@@ -270,7 +272,7 @@ function Builder(props) {
 
     bitsFetch(formData, action)
       .then(response => {
-        if (response.success) {
+        if (response !== undefined && response.success) {
           let { data } = response
           if (typeof data !== 'object') {
             data = JSON.parse(data)
@@ -293,6 +295,7 @@ function Builder(props) {
 
   const setSubmitConfig = useCallback(data => {
     setSubBtn({ ...data })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subBtn])
 
   const updateFields = useCallback(updatedElm => {
@@ -419,31 +422,28 @@ function Builder(props) {
                 </small>
               )}
 
-              {
-                lay
-                && fields
-                && (
-                  <GridLayout
-                    theme={formSettings.theme}
-                    width={gridWidth}
-                    draggedElm={drgElm}
-                    setElmSetting={setElementSetting}
-                    fields={fields}
-                    newData={newData}
-                    setNewData={setNewData}
-                    formType={formType}
-                    formID={formID}
-                    setLay={setLay}
-                    setFields={setFields}
-                    setFormName={setFormName}
-                    subBtn={subBtn}
-                    isLoading={isLoading}
-                    newCounter={newCounter}
-                    setNewCounter={setNewCounter}
-                    layout={lay}
-                  />
-                )
-              }
+              {!isLoading && (
+                <GridLayout
+                  theme={formSettings.theme}
+                  width={gridWidth}
+                  draggedElm={drgElm}
+                  setElmSetting={setElementSetting}
+                  fields={fields}
+                  newData={newData}
+                  setNewData={setNewData}
+                  formType={formType}
+                  formID={formID}
+                  setLay={setLay}
+                  setFields={setFields}
+                  setFormName={setFormName}
+                  subBtn={subBtn}
+                  isLoading={isLoading}
+                  newCounter={newCounter}
+                  setNewCounter={setNewCounter}
+                  layout={lay}
+                />
+              )}
+
             </Section>
 
             <Bar className="bar bar-r" />

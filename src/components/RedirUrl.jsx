@@ -2,10 +2,13 @@ import React, { memo, useEffect, useState } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'
+import ConfirmModal from './ConfirmModal'
 
 
 function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration }) {
+  const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [redirectUrls, setredirectUrls] = useState(null)
+
   useEffect(() => {
     bitsFetch(null, 'bitapps_get_all_wp_pages')
       .then(res => {
@@ -14,6 +17,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
         }
       })
   }, [])
+
   const handleUrlTitle = (e, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.redirectPage[idx].title = e.target.value
@@ -75,23 +79,50 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
   }
 
   const addMoreUrl = () => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.redirectPage.push({ title: `Redirect Url ${tmp.confirmation.type.redirectPage.length + 1}`, url: '' })
-    setFormSettings(tmp)
+    if ('redirectPage' in formSettings.confirmation.type) {
+      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      formSettings.confirmation.type.redirectPage = []
+      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
+    }
+    setFormSettings({ ...formSettings })
   }
 
-  const rmvUrl = i => {
-    const tmp = { ...formSettings }
-    if (removeIntegration(tmp.confirmation.type.redirectPage[i].id)) {
-      tmp.confirmation.type.redirectPage.splice(i, 1)
-      console.log(tmp.confirmation.type.redirectPage[i])
-      setFormSettings(tmp)
+  const rmvUrl = async i => {
+    const tmpData = formSettings.confirmation.type.redirectPage[i]
+    formSettings.confirmation.type.redirectPage.splice(i, 1)
+    setFormSettings({ ...formSettings })
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
+    const status = await removeIntegration(tmpData.id, 'url')
+    if (!status) {
+      formSettings.confirmation.type.redirectPage.splice(i, 0, tmpData)
+      setFormSettings({ ...formSettings })
     }
+  }
+
+  const closeMdl = () => {
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
+  }
+
+  const showDelConf = (i) => {
+    confMdl.show = true
+    confMdl.action = () => rmvUrl(i)
+    setConfMdl({ ...confMdl })
   }
 
   return (
     <div>
-      {formSettings.confirmation.type.redirectPage.map((itm, i) => (
+      <ConfirmModal
+        action={confMdl.action}
+        show={confMdl.show}
+        body="Are you sure to delete this URL ?"
+        btnTxt="Delete"
+        close={closeMdl}
+      />
+      {formSettings.confirmation.type.redirectPage !== undefined && formSettings.confirmation.type.redirectPage.map((itm, i) => (
         <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
           <Accordions
             title={itm.title}
@@ -141,7 +172,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               </div>
             </div>
           </Accordions>
-          <Button onClick={() => rmvUrl(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
       <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>

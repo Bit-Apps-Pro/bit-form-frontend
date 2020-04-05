@@ -24,7 +24,8 @@ function EmailTemplateEdit({ mailTem, setMailTem }) {
 
   return (
     <div className="w-7">
-      <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btcd-neu-btn"><span className="btcd-icn icn-arrow_back" />
+      <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
+        <span className="btcd-icn icn-arrow_back" />
         {' '}
         Back
       </NavLink>

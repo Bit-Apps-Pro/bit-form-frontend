@@ -6,44 +6,29 @@ import WebHooks from './WebHooks'
 import bitsFetch from '../Utils/bitsFetch'
 
 export default function ConfType(props) {
-  console.log('%c $render FormSettings', 'background:lightgreen;padding:3px;border-radius:5px;')
+  console.log('%c $render ConfType', 'background:lightgreen;padding:3px;border-radius:5px;')
 
   const { formSettings, setFormSettings, formFields } = props
-
   const [pos, setPos] = useState(0)
-  // const [formFields, setformFields] = useState(null)
 
-  // useEffect(() => {
-  //   let mount = false
-  //   mount = true
-  //   bitsFetch({ id: props.formID }, 'bitapps_get_form_entry_count')
-  //     .then(res => {
-  //       if (res !== undefined && res.success) {
-  //         if (mount) {
-  //           setformFields(res.data.Labels)
-  //         }
-  //       }
-  //     })
-  //   return function cleanup() { mount = false }
-  // }, [])
-  const removeIntegration = (id, type = null) => {
+  const removeIntegration = async (id, type = null) => {
     let action = 'bitapps_delete_form_integration'
     if (type && type === 'msg') {
       action = 'bitapps_delete_success_messsage'
     }
-    const status = bitsFetch({ formID: props.formID, id }, action)
-      .then(res => {
-        if (res !== undefined && res.success) {
-          return true
-        }
-        return false
-      })
-
+    let status = await bitsFetch({ formID: props.formID, id }, action)
+    if (status !== undefined) {
+      status = status.success
+    } else {
+      // if internet connection error than status will undefined and set null
+      status = null
+    }
     return status
-
   }
+
   return (
     <div className="mt-4 w-7">
+
       <div><b>Confirmation Type:</b></div>
       <div>
         <button

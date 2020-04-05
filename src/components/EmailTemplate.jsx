@@ -59,7 +59,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
     <div className="w-7">
       <h2>Email Templates</h2>
       <div className="">
-        <button onClick={addTem} className="btn blue sh-sm">Add a Template</button>
+        <button onClick={addTem} type="button" className="btn blue sh-sm">Add a Template</button>
         <Table
           height="60vh"
           className="btcd-neu-table"

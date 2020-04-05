@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useContext, useCallback } from 'react'
+import React, { useState, useEffect, useContext, useCallback, memo } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -10,14 +10,15 @@ import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
+import { SnackContext } from '../Utils/SnackContext'
 
-export default function AllFroms() {
+function AllFroms() {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
 
   const [modal, setModal] = useState(false)
-  const { allFormsData, snackMsg } = useContext(BitappsContext)
+  const { allFormsData } = useContext(BitappsContext)
+  const { setSnackbar } = useContext(SnackContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
-  const { setSnackbar } = snackMsg
 
 
   const handleStatus = (e, id) => {
@@ -29,7 +30,7 @@ export default function AllFroms() {
           el.checked = !el.checked
         } else {
           allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
-          setSnackbar({ show: true, msg: res.data })
+          setSnackbar({ ...{ show: true, msg: res.data } })
         }
       })
   }
@@ -45,7 +46,7 @@ export default function AllFroms() {
     { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} /> },
   ])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
       bitsFetch(null, 'bitapps_get_all_form')
         .then(res => {
@@ -55,6 +56,7 @@ export default function AllFroms() {
           }
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setBulkStatus = useCallback(rows => {
@@ -81,6 +83,7 @@ export default function AllFroms() {
           setSnackbar({ show: true, msg: res.data })
         }
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setBulkDelete = useCallback(rows => {
@@ -106,6 +109,7 @@ export default function AllFroms() {
           setSnackbar({ show: true, msg: res.data })
         }
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setTableCols = useCallback(newCols => {
@@ -160,3 +164,5 @@ export default function AllFroms() {
     </div>
   )
 }
+
+export default memo(AllFroms) 

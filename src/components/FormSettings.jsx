@@ -33,6 +33,7 @@ export default function FormSettings(props) {
       })
 
     return function cleanup() { mount = false }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -1,8 +1,10 @@
-import React, { useEffect, useState, memo } from 'react'
+import React, { memo, useState } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
+import ConfirmModal from './ConfirmModal'
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
+  const [confMdl, setConfMdl] = useState({ show: false, action: null })
 
   const handleHookTitle = (e, idx) => {
     const tmp = { ...formSettings }
@@ -57,22 +59,50 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
   }
 
   const addMoreHook = () => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks.push({ title: `Web Hook ${tmp.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
-    setFormSettings(tmp)
+    if ('webHooks' in formSettings.confirmation.type) {
+      formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      formSettings.confirmation.type.webHooks = []
+      formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
+    }
+    setFormSettings({ ...formSettings })
   }
 
-  const rmvHook = i => {
-    const tmp = { ...formSettings }
-    if (removeIntegration(tmp.confirmation.type.webHooks[i].id)) {
-      tmp.confirmation.type.webHooks.splice(i, 1)
-      setFormSettings(tmp)
+  const rmvHook = async i => {
+    const tmpData = formSettings.confirmation.type.webHooks[i]
+    formSettings.confirmation.type.webHooks.splice(i, 1)
+    setFormSettings({ ...formSettings })
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
+    const status = await removeIntegration(tmpData.id, 'hook')
+    if (!status) {
+      formSettings.confirmation.type.webHooks.splice(i, 0, tmpData)
+      setFormSettings({ ...formSettings })
     }
+  }
+
+  const closeMdl = () => {
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
+  }
+
+  const showDelConf = (i) => {
+    confMdl.show = true
+    confMdl.action = () => rmvHook(i)
+    setConfMdl({ ...confMdl })
   }
 
   return (
     <div>
-      {formSettings.confirmation.type.webHooks.map((itm, i) => (
+      <ConfirmModal
+        action={confMdl.action}
+        show={confMdl.show}
+        body="Are you sure to delete this message ?"
+        btnTxt="Delete"
+        close={closeMdl}
+      />
+      {formSettings.confirmation.type.webHooks !== undefined && formSettings.confirmation.type.webHooks.map((itm, i) => (
         <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
           <Accordions
             title={itm.title}
@@ -124,7 +154,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
               </div>
             </div>
           </Accordions>
-          <Button onClick={() => rmvHook(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
         </div>
       ))}
       <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><b>+</b></Button></div>

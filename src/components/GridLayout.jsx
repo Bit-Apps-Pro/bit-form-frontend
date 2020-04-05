@@ -6,7 +6,6 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
-import moveIcon from '../resource/img/move.png'
 import CompGen from './CompGen'
 
 function GridLayout(props) {
@@ -29,7 +28,7 @@ function GridLayout(props) {
 
   const [layout, setLayout] = useState(props.layout)
   // const [breakpoint, setBreakpoint] = useState('md')
-  const slimIntit = () => {
+  const slimInit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
@@ -69,8 +68,9 @@ function GridLayout(props) {
     if (newData !== null) {
       margeNewData()
     }
-    slimIntit()
-  }, [newData, fields])
+    slimInit()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newData, fields, isLoading])
 
   const onLayoutChange = (lat) => {
     props.setLay(lat)
@@ -158,7 +158,7 @@ function GridLayout(props) {
       role="button"
       tabIndex={0}
     >
-      <span
+      <div
         data-close
         style={{ right: 8 }}
         unselectable="on"
@@ -170,21 +170,14 @@ function GridLayout(props) {
         tabIndex={-1}
       >
         &times;
-      </span>
-      <span
-        style={{ right: 27, cursor: 'move' }}
-        className="bit-blk-icn drag"
-        role="button"
+      </div>
+      <div
+        style={{ right: 27, cursor: 'move', fontSize: 15 }}
+        className="bit-blk-icn drag "
+        aria-label="Move"
       >
-        <img
-          className="unselectable"
-          draggable="false"
-          unselectable="on"
-          onDragStart={() => false}
-          src={moveIcon}
-          alt="drag handle"
-        />
-      </span>
+        <span className="btcd-icn icn-move" />
+      </div>
 
       {compByTheme(fields[item.i])}
     </div>

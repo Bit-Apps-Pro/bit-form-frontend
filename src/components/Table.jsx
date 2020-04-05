@@ -248,6 +248,7 @@ function Table(props) {
                         onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.original)}
                         role="button"
                         tabIndex={0}
+                        aria-label="cell"
                       >
                         {cell.render('Cell')}
                       </div>
@@ -261,19 +262,19 @@ function Table(props) {
       </div>
 
       <div className="btcd-pagination">
-        <button className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           &laquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
+        <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
           &lsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
+        <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
           &rsaquo;
         </button>
         {' '}
-        <button className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+        <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
           &raquo;
         </button>
         {' '}
