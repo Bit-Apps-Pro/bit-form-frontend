@@ -13,6 +13,7 @@ import EditEntryData from '../components/EditEntryData'
 import Drawer from '../components/Drawer'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 import Modal from '../components/Modal'
+import ConfirmModal from '../components/ConfirmModal'
 
 function FormEntries() {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
@@ -25,8 +26,9 @@ function FormEntries() {
   const [pageCount, setPageCount] = React.useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
-  const [rowDtl, setRowDtl] = useState(false)
+  const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   let totalData = 0
+  const [confMdl, setconfMdl] = useState({ show: false, action: null, btnTxt: 'Delete', body: 'Are you sure to delete this ?' })
 
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
@@ -171,22 +173,49 @@ function FormEntries() {
     setShowEditMdl(true)
   }, [])
 
-  const onRowClick = useCallback(row => {
-    console.log(row)
-    for (let i = 0; i < row.length; i += 1) {
-      console.log('row[i]', row[i])
+  const closeRowDetail = () => {
+    rowDtl.show = false
+    setRowDtl({ ...rowDtl })
+  }
+
+  const printObject = data => {
+    const d = []
+    for (const i in data) {
+      if (data.hasOwnProperty.call(data, i)) {
+        d.push({ key: i, value: data[i] })
+      }
     }
-    //  console.log(row)
+    return d
+  }
+
+  const onRowClick = useCallback(row => {
+    rowDtl.data = row
+    rowDtl.show = true
+    setRowDtl({ ...rowDtl })
   }, [])
+
+  const setModal = () => {
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+  const closeEditMdl = () => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
+  }
 
   return (
     <div id="form-res">
-
+      <button onClick={setModal}>Modal</button>
+      <ConfirmModal
+        show={confMdl.show}
+        body={confMdl.body}
+        btnTxt={confMdl.btnTxt}
+        close={closeEditMdl}
+      />
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>
 
-      {/* <button onClick={() => setRowDtl(!rowDtl)}>set </button> */}
       {showEditMdl
         && (
           <EditEntryData
@@ -199,15 +228,21 @@ function FormEntries() {
       <Drawer
         title="Response Details"
         subTitle="adsff"
-        show={rowDtl}
-        close={setRowDtl}
+        show={rowDtl.show}
+        close={closeRowDetail}
       >
         <table className="btcd-row-detail-tbl">
           <tbody>
-            <tr>
-              <th>sdafsf</th>
-              <td>asdf</td>
+            <tr className="txt-dp">
+              <th>Title</th>
+              <th>Value</th>
             </tr>
+            {printObject(rowDtl.data).map((itm, i) => (
+              <tr key={`rw-d-${i + 2}`}>
+                <th>{itm.key}</th>
+                <td>{itm.value}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </Drawer>
