@@ -27,7 +27,6 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     }
     return mail
   }
-
   const getValueFromArr = (key, subkey, lgcGrpInd) => {
     const value = workFlows[lgcGrpInd].successAction.find(val => val.type === key)
 
@@ -74,7 +73,6 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       bitsFetch({ formID, id: workFlows[val].id }, 'bitapps_delete_workflow')
         .then(res => {
           if (res !== undefined && res.success) {
-            console.log('WORKFLOW', val)
             workFlows.splice(val, 1)
             setworkFlows([...workFlows])
           }
@@ -396,10 +394,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
   const setWebHooks = (e, lgcGrpInd) => {
     const val = []
-    console.log('SETHOOKS', e.target.selectedOptions)
     for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-      console.log('SETHOOKS', JSON.parse(e.target.selectedOptions[i].value).id)
-
       val.push(e.target.selectedOptions[i].value)
     }
     for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
@@ -435,7 +430,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     if (typ === 'tem') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.tem = e.target.value
+          workFlows[lgcGrpInd].successAction[i].details.id = e.target.value
           break
         }
       }
@@ -623,7 +618,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
                   {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.confirmation.type.webHooks.map((itm, i) => ({ name: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
-                  {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={e => setInteg(e, lgcGrpInd)} value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.integrations.map((itm, i) => ({ name: itm.name, value: i }))} placeholder="Select Integation" />}
+                  {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={e => setInteg(e, lgcGrpInd)} value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.integrations.map((itm, i) => ({ name: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
 
                   {lgcGrp.action_run !== 'delete' && (
                     <>
@@ -658,9 +653,9 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                         <label className="f-m">
                           Email Notification:
                           <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'tem', lgcGrpInd)}>
+                          <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
                             <option value="">Select Email Template</option>
-                            {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={i}>{itm.title}</option>)}
+                            {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                         <DropDown

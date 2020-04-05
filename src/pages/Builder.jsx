@@ -183,6 +183,8 @@ function Builder(props) {
             setFormName(responseData.form_content.form_name)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)
+            setIntegration(responseData.formSettings.integrations)
+            setMailTem(responseData.formSettings.mailTem)
             setisLoading(false)
           } else {
             setisLoading(false)
@@ -250,15 +252,17 @@ function Builder(props) {
       form_name: formName,
       formSettings,
       workFlows,
+      mailTem,
+      integrations,
     }
     let action = 'bitapps_create_new_form'
     if (savedFormId > 0) {
       formData = {
+        id: savedFormId,
         layout: lay,
         fields,
         form_name: formName,
         formSettings,
-        id: savedFormId,
         workFlows,
       }
       action = 'bitapps_update_form'
