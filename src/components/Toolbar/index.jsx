@@ -4,22 +4,6 @@
 import React, { memo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
-import textField from '../../resource/img/textField.png'
-import multilineText from '../../resource/img/multilineText.png'
-import numberField from '../../resource/img/numberField.png'
-import emailField from '../../resource/img/emailField.png'
-import date from '../../resource/img/date.png'
-import time from '../../resource/img/time.png'
-import dateTime from '../../resource/img/dateTime.png'
-import month from '../../resource/img/month.png'
-import week from '../../resource/img/week.png'
-import pswd from '../../resource/img/pswd.png'
-import clr from '../../resource/img/clr.png'
-import url from '../../resource/img/url.png'
-import fileup from '../../resource/img/fileup.png'
-import check from '../../resource/img/check.png'
-import radio from '../../resource/img/radio.png'
-import dropdown from '../../resource/img/dropdown.png'
 
 function index(props) {
   console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')

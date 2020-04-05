@@ -165,6 +165,7 @@ function Builder(props) {
               setNewCounter(responseData.form_content.layout.length)
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
+              console.log(responseData.form_content.layout, responseData.form_content.fields)
             } else {
               setisLoading(false)
             }
@@ -268,7 +269,7 @@ function Builder(props) {
 
     bitsFetch(formData, action)
       .then(response => {
-        if (response.success) {
+        if (response !== undefined && response.success) {
           let { data } = response
           if (typeof data !== 'object') {
             data = JSON.parse(data)
@@ -418,31 +419,28 @@ function Builder(props) {
                 </small>
               )}
 
-              {
-                lay
-                && fields
-                && (
-                  <GridLayout
-                    theme={formSettings.theme}
-                    width={gridWidth}
-                    draggedElm={drgElm}
-                    setElmSetting={setElementSetting}
-                    fields={fields}
-                    newData={newData}
-                    setNewData={setNewData}
-                    formType={formType}
-                    formID={formID}
-                    setLay={setLay}
-                    setFields={setFields}
-                    setFormName={setFormName}
-                    subBtn={subBtn}
-                    isLoading={isLoading}
-                    newCounter={newCounter}
-                    setNewCounter={setNewCounter}
-                    layout={lay}
-                  />
-                )
-              }
+              {!isLoading && (
+                <GridLayout
+                  theme={formSettings.theme}
+                  width={gridWidth}
+                  draggedElm={drgElm}
+                  setElmSetting={setElementSetting}
+                  fields={fields}
+                  newData={newData}
+                  setNewData={setNewData}
+                  formType={formType}
+                  formID={formID}
+                  setLay={setLay}
+                  setFields={setFields}
+                  setFormName={setFormName}
+                  subBtn={subBtn}
+                  isLoading={isLoading}
+                  newCounter={newCounter}
+                  setNewCounter={setNewCounter}
+                  layout={lay}
+                />
+              )}
+
             </Section>
 
             <Bar className="bar bar-r" />
