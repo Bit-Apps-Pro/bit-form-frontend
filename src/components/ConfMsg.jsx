@@ -10,7 +10,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
 
   const handleMsgMsg = (mg, idx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.msg[idx].msg = mg
+    tmp.confirmation.type.successMsg[idx].msg = mg
     setFormSettings(tmp)
   }
 
@@ -55,23 +55,23 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
 
   const handleMsgTitle = (e, idx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.msg[idx].title = e.target.value
+    tmp.confirmation.type.successMsg[idx].title = e.target.value
     setFormSettings(tmp)
   }
 
   const addMoreMsg = () => {
-    if ('msg' in formSettings.confirmation.type) {
-      formSettings.confirmation.type.msg.push({ title: `Message Title ${formSettings.confirmation.type.msg.length + 1}`, msg: 'Successfully Submitted.' })
+    if ('successMsg' in formSettings.confirmation.type) {
+      formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     } else {
-      formSettings.confirmation.type.msg = []
-      formSettings.confirmation.type.msg.push({ title: `Message Title ${formSettings.confirmation.type.msg.length + 1}`, msg: 'Successfully Submitted.' })
+      formSettings.confirmation.type.successMsg = []
+      formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     }
     setFormSettings({ ...formSettings })
   }
 
   const addFormField = (val, i) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.msg[i].msg += val
+    tmp.confirmation.type.successMsg[i].msg += val
     setFormSettings(tmp)
   }
 
@@ -87,14 +87,14 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   }
 
   const rmvMsg = async i => {
-    const tmpData = formSettings.confirmation.type.msg[i]
-    formSettings.confirmation.type.msg.splice(i, 1)
+    const tmpData = formSettings.confirmation.type.successMsg[i]
+    formSettings.confirmation.type.successMsg.splice(i, 1)
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
     const status = await removeIntegration(tmpData.id, 'msg')
     if (!status) {
-      formSettings.confirmation.type.msg.splice(i, 0, tmpData)
+      formSettings.confirmation.type.successMsg.splice(i, 0, tmpData)
       setFormSettings({ ...formSettings })
     }
   }
@@ -108,7 +108,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         btnTxt="Delete"
         close={closeMdl}
       />
-      {formSettings.confirmation.type.msg !== undefined && formSettings.confirmation.type.msg.map((itm, i) => (
+      {formSettings.confirmation.type.successMsg !== undefined && formSettings.confirmation.type.successMsg.map((itm, i) => (
         <div key={`f-m-${i + 1}`} className="flx btcd-conf-list">
           <Accordions
             title={itm.title}

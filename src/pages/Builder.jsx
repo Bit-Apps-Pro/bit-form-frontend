@@ -139,9 +139,9 @@ function Builder(props) {
     submitBtn: subBtn,
     confirmation: {
       type: {
-        msg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
-        url: [{ title: 'Redirect Url 1', url: '' }],
-        hooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
+        successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
+        redirectPage: [{ title: 'Redirect Url 1', url: '' }],
+        webHooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
       },
     },
     mailTem,
@@ -183,9 +183,10 @@ function Builder(props) {
             setFields(responseData.form_content.fields)
             setNewCounter(responseData.form_content.layout.length)
             setFormName(responseData.form_content.form_name)
-            console.log('Api formSettings', responseData.formSettings.confirmation.type.url)
-
             setFormSettings(responseData.formSettings)
+            setworkFlows(responseData.workFlows)
+            setIntegration(responseData.formSettings.integrations)
+            setMailTem(responseData.formSettings.mailTem)
             setisLoading(false)
           } else {
             setisLoading(false)
@@ -253,15 +254,17 @@ function Builder(props) {
       form_name: formName,
       formSettings,
       workFlows,
+      mailTem,
+      integrations,
     }
     let action = 'bitapps_create_new_form'
     if (savedFormId > 0) {
       formData = {
+        id: savedFormId,
         layout: lay,
         fields,
         form_name: formName,
         formSettings,
-        id: savedFormId,
         workFlows,
       }
       action = 'bitapps_update_form'

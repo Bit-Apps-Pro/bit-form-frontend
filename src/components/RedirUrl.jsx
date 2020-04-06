@@ -20,19 +20,19 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
 
   const handleUrlTitle = (e, idx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.url[idx].title = e.target.value
+    tmp.confirmation.type.redirectPage[idx].title = e.target.value
     setFormSettings(tmp)
   }
 
   const handlePage = (e, idx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.url[idx].url = e.target.value
+    tmp.confirmation.type.redirectPage[idx].url = e.target.value
     setFormSettings(tmp)
   }
 
   const handleLink = (val, i) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.url[i].url = val
+    tmp.confirmation.type.redirectPage[i].url = val
     setFormSettings(tmp)
   }
 
@@ -42,30 +42,30 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
     const tmp = { ...formSettings }
     if (val !== '') {
       if (typ === 'key') {
-        tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
+        tmp.confirmation.type.redirectPage[i].url = tmp.confirmation.type.redirectPage[i].url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
       } else {
-        tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(pram, `${pram.split('=')[0]}=${val}`)
+        tmp.confirmation.type.redirectPage[i].url = tmp.confirmation.type.redirectPage[i].url.replace(pram, `${pram.split('=')[0]}=${val}`)
       }
     } else if (pram.match(/\?/g) === null) {
-      tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(pram, '')
+      tmp.confirmation.type.redirectPage[i].url = tmp.confirmation.type.redirectPage[i].url.replace(pram, '')
     } else {
-      tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(`${pram}&`, '?')
+      tmp.confirmation.type.redirectPage[i].url = tmp.confirmation.type.redirectPage[i].url.replace(`${pram}&`, '?')
     }
     setFormSettings(tmp)
   }
 
   const delParam = (i, param) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(param, '')
+    tmp.confirmation.type.redirectPage[i].url = tmp.confirmation.type.redirectPage[i].url.replace(param, '')
     setFormSettings(tmp)
   }
 
   const addParam = i => {
     const tmp = { ...formSettings }
-    if (tmp.confirmation.type.url[i].url.match(/\?/g) !== null) {
-      tmp.confirmation.type.url[i].url += '&key=value'
+    if (tmp.confirmation.type.redirectPage[i].url.match(/\?/g) !== null) {
+      tmp.confirmation.type.redirectPage[i].url += '&key=value'
     } else {
-      tmp.confirmation.type.url[i].url += '?key=value'
+      tmp.confirmation.type.redirectPage[i].url += '?key=value'
     }
     setFormSettings(tmp)
   }
@@ -74,30 +74,30 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
     const tmp = { ...formSettings }
     const a = param.split('=')
     a[1] = val
-    tmp.confirmation.type.url[i].url = tmp.confirmation.type.url[i].url.replace(param, a.join('='))
+    tmp.confirmation.type.redirectPage[i].url = tmp.confirmation.type.redirectPage[i].url.replace(param, a.join('='))
     setFormSettings(tmp)
   }
 
   const addMoreUrl = () => {
-    if ('url' in formSettings.confirmation.type) {
-      formSettings.confirmation.type.url.push({ title: `Redirect Url ${formSettings.confirmation.type.url.length + 1}`, url: '' })
+    if ('redirectPage' in formSettings.confirmation.type) {
+      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
     } else {
       // eslint-disable-next-line no-param-reassign
-      formSettings.confirmation.type.url = []
-      formSettings.confirmation.type.url.push({ title: `Redirect Url ${formSettings.confirmation.type.url.length + 1}`, url: '' })
+      formSettings.confirmation.type.redirectPage = []
+      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
     }
     setFormSettings({ ...formSettings })
   }
 
   const rmvUrl = async i => {
-    const tmpData = formSettings.confirmation.type.url[i]
-    formSettings.confirmation.type.url.splice(i, 1)
+    const tmpData = formSettings.confirmation.type.redirectPage[i]
+    formSettings.confirmation.type.redirectPage.splice(i, 1)
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
     const status = await removeIntegration(tmpData.id, 'url')
     if (!status) {
-      formSettings.confirmation.type.url.splice(i, 0, tmpData)
+      formSettings.confirmation.type.redirectPage.splice(i, 0, tmpData)
       setFormSettings({ ...formSettings })
     }
   }
@@ -122,7 +122,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
         btnTxt="Delete"
         close={closeMdl}
       />
-      {formSettings.confirmation.type.url !== undefined && formSettings.confirmation.type.url.map((itm, i) => (
+      {formSettings.confirmation.type.redirectPage !== undefined && formSettings.confirmation.type.redirectPage.map((itm, i) => (
         <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
           <Accordions
             title={itm.title}

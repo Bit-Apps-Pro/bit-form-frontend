@@ -67,13 +67,13 @@ export default function FormSettings(props) {
             <ConfType formFields={formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
           </Route>
           <Route exact path={`${path}email-templates`}>
-            <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} />
+            <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} formID={formID} />
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
             <EmailTemplateEdit mailTem={props.mailTem} setMailTem={props.setMailTem} />
           </Route>
           <Route path={`${path}workflow`}>
-            <Workflow formFields={formFields} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} />
+            <Workflow formFields={formFields} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
           </Route>
           <Route path={`${path}integrations`}>
             <Integrations integrations={props.integrations} formFields={formFields} setIntegration={props.setIntegration} />
