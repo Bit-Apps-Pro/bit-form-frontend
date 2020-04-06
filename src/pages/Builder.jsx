@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, memo, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
-import ToolBar from '../components/Toolbar'
+import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
 import FormSettings from '../components/FormSettings'
@@ -14,7 +14,7 @@ function Builder(props) {
   console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const { formType, formID } = useParams()
-  const [fulScn, setFulScn] = useState(false)
+  const [fulScn, setFulScn] = useState(true)
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
@@ -197,7 +197,7 @@ function Builder(props) {
     }
   }
   const notIE = !window.document.documentMode
-  setTimeout(() => { setFulScn(true) }, 500)
+  // setTimeout(() => { setFulScn(true) }, 500)
 
   const conRef = React.createRef(null)
 

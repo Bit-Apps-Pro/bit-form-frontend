@@ -28,7 +28,6 @@ function FormEntries() {
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   let totalData = 0
-  const [confMdl, setconfMdl] = useState({ show: false, action: null, btnTxt: 'Delete', body: 'Are you sure to delete this ?' })
 
   const [entryLabels, setEntryLabels] = useState([
     { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
@@ -192,7 +191,7 @@ function FormEntries() {
     rowDtl.data = row
     rowDtl.show = true
     setRowDtl({ ...rowDtl })
-  }, [])
+  }, [rowDtl])
 
   const setModal = () => {
     confMdl.show = true
@@ -205,13 +204,6 @@ function FormEntries() {
 
   return (
     <div id="form-res">
-      <button onClick={setModal}>Modal</button>
-      <ConfirmModal
-        show={confMdl.show}
-        body={confMdl.body}
-        btnTxt={confMdl.btnTxt}
-        close={closeEditMdl}
-      />
       <div className="af-header">
         <h2>Form Responses</h2>
       </div>

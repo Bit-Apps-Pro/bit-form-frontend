@@ -5,7 +5,7 @@ import React, { memo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
 
-function index(props) {
+function Toolbar(props) {
   console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
 
   const tools = [
@@ -222,4 +222,4 @@ function index(props) {
     </div>
   )
 }
-export default memo(index)
+export default memo(Toolbar)

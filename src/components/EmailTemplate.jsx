@@ -30,13 +30,13 @@ export default function EmailTemplate({ mailTem, setMailTem }) {
       accessor: 'action',
       Cell: row => (
         <>
-          <Button onClick={() => duplicateTem(row.row.index)} className="btcd-neu-btn neu-sh-sm icn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Duplicate"' }}>
+          <Button onClick={() => duplicateTem(row.row.index)} className="icn-btn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Duplicate"' }}>
             <span className="btcd-icn icn-file_copy" />
           </Button>
-          <NavLink to={`${url}/${row.row.index}`} className="btcd-neu-btn neu-sh-sm icn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"' }}>
+          <NavLink to={`${url}/${row.row.index}`} className="icn-btn mr-2 flx flx-center tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"' }}>
             <span className="btcd-icn icn-document-edit" />
           </NavLink>
-          <Button onClick={() => delTem(row.row.index)} className="btcd-neu-btn neu-sh-sm icn tooltip pos-rel" style={{ '--tooltip-txt': '"Delete"' }}>
+          <Button onClick={() => delTem(row.row.index)} className="icn-btn tooltip pos-rel" style={{ '--tooltip-txt': '"Delete"' }}>
             <span className="btcd-icn icn-trash-fill" />
           </Button>
         </>
