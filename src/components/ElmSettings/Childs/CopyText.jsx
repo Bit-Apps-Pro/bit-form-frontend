@@ -1,9 +1,6 @@
 import React from 'react'
-import { SnackContext } from '../../../Utils/SnackContext'
 
-export default function CopyText(props) {
-  const { setSnackbar } = React.useContext(SnackContext)
-
+export default function CopyText({ value, setSnackbar }) {
   const copyText = e => {
     const cpyBtn = e.target
     cpyBtn.setAttribute('style', '--tooltip-txt: "Copied"')
@@ -14,10 +11,11 @@ export default function CopyText(props) {
     document.execCommand('copy');
     setTimeout(() => { cpyBtn.setAttribute('style', '--tooltip-txt: "Copy"') }, 2000)
   }
+
   return (
     <div className="cpyTxt">
-      <label>
-        <input value={`[${props.value}]`} readOnly />
+      <label htmlFor={value}>
+        <input value={`[${value}]`} readOnly />
         <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button"><span className="btcd-icn icn-copy" /></button>
       </label>
     </div>

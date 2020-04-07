@@ -8,7 +8,7 @@ import FormSettings from '../components/FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
-import { SnackContext } from '../Utils/SnackContext'
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
 function Builder(props) {
   console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -27,7 +27,7 @@ function Builder(props) {
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const { allFormsData } = useContext(BitappsContext)
-  const { setSnackbar } = useContext(SnackContext)
+  const [snack, setSnackbar] = useState({ show: false })
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
   const { allFormsDispatchHandler } = allFormsData
 
@@ -314,6 +314,7 @@ function Builder(props) {
 
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
           <NavLink exact to="/">

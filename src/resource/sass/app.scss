@@ -13,130 +13,6 @@ $dp-txt: #545582;
 $gray: #e2e2e2;
 $select-arrow: "data:image/svg+xml;charset=utf8,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3C!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ --%3E%3Cg%3E%3Ctitle%3Ebackground%3C/title%3E%3Crect fill='none' id='canvas_background' height='22' width='22' y='-1' x='-1'/%3E%3Cg display='none' overflow='visible' y='0' x='0' height='100%25' width='100%25' id='canvasGrid'%3E%3Crect fill='url(%23gridpattern)' stroke-width='0' y='0' x='0' height='100%25' width='100%25'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Ctitle%3ELayer 1%3C/title%3E%3Cline transform='rotate(45 9.707600593566898,10.544168472290037) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_2' y2='14.860267' x2='9.7076' y1='6.228069' x1='9.7076' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3Cline transform='rotate(-45 4.444442749023432,10.544166564941404) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_1' y2='14.860266' x2='4.444443' y1='6.228067' x1='4.444443' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3C/g%3E%3C/svg%3E";
 
-// @import "Loader.scss";
-
-@keyframes slide {
-  0% {
-    transform: translate(0, 0);
-  }
-  2% {
-    transform: translate(33px, 0);
-  }
-  12.5% {
-    transform: translate(33px, 0);
-  }
-  15.5% {
-    transform: translate(66px, 0);
-  }
-  25% {
-    transform: translate(66px, 0);
-  }
-  27% {
-    transform: translate(66px, 33px);
-  }
-  37.5% {
-    transform: translate(66px, 33px);
-  }
-  39.5% {
-    transform: translate(33px, 33px);
-  }
-  50% {
-    transform: translate(33px, 33px);
-  }
-  52% {
-    transform: translate(33px, 66px);
-  }
-  62.5% {
-    transform: translate(33px, 66px);
-  }
-  64.5% {
-    transform: translate(0, 66px);
-  }
-  75% {
-    transform: translate(0, 66px);
-  }
-  77% {
-    transform: translate(0, 33px);
-  }
-  87.5% {
-    transform: translate(0, 33px);
-  }
-  89.5% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-@keyframes gradient1 {
-  from {
-    stop-color: #4383b8;
-  }
-  50% {
-    stop-color: #8013b9;
-  }
-  to {
-    stop-color: #4383b8;
-  }
-}
-@keyframes gradient2 {
-  from {
-    stop-color: #4aa06c;
-  }
-  50% {
-    stop-color: #b22358;
-  }
-  to {
-    stop-color: #4aa06c;
-  }
-}
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-svg#loading {
-  display: block;
-  margin: auto;
-  width: 20rem;
-  height: auto;
-}
-svg#loading #gradient > stop[offset="0%"] {
-  animation: gradient1 15s ease 0s infinite;
-}
-svg#loading #gradient > stop[offset="100%"] {
-  animation: gradient2 15s ease 0s infinite;
-}
-svg#loading .rect {
-  animation: slide 15s ease infinite;
-}
-svg#loading #rect1 {
-  animation-delay: 0s;
-}
-svg#loading #rect2 {
-  animation-delay: -2.14285714s;
-}
-svg#loading #rect3 {
-  animation-delay: -4.28571429s;
-}
-svg#loading #rect4 {
-  animation-delay: -6.42857143s;
-}
-svg#loading #rect5 {
-  animation-delay: -8.57142857s;
-}
-svg#loading #rect6 {
-  animation-delay: -10.71428571s;
-}
-svg#loading #rect7 {
-  animation-delay: -12.85714286s;
-}
-#loading {
-  background: red;
-}
 html,
 body {
   margin: 0;
@@ -154,9 +30,6 @@ body {
   background-color: $light-bg;
   & a {
     text-decoration: none;
-    &:focus {
-      // box-shadow: none;
-    }
   }
 }
 
@@ -207,7 +80,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
-  user-drag: none;
+  // user-drag: none;
   pointer-events: none;
 }
 
@@ -2202,6 +2075,7 @@ nav.top-nav {
   z-index: 9;
   padding: 20px;
   box-shadow: -2px 0 4px 1px transparentize(#000000, 0.7);
+  transition-delay: right 0.5s;
   transition: right 0.5s ease;
 }
 
@@ -2812,13 +2686,17 @@ select.btcd-paper-inp {
   color: white;
   border-radius: 5px;
   position: fixed;
-  bottom: 30px;
+  bottom: -100px;
   right: 20px;
-  transition: right 0.5s;
+  transition: bottom 0.5s, transform 0.5s;
   z-index: 9999;
-  // box-shadow: 1px 1px 3px 0px #0000004d;
+  transform: scale(0);
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14),
     0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+.btcd-snack-a {
+  bottom: 30px;
+  transform: scale(1);
 }
 
 .btcd-snack-cls {

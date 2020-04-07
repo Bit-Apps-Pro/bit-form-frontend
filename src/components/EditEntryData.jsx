@@ -1,20 +1,15 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
-import { BitappsContext } from '../Utils/BitappsContext'
-import { SnackContext } from '../Utils/SnackContext'
 import Bitapps from '../user-frontend/Bitapps'
 
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
-  const { formID } = props
+  const { formID, allResp, setAllResp, setSnackbar } = props
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
-  const { allRes } = useContext(BitappsContext)
-  const { setSnackbar } = useContext(SnackContext)
-  const { allResp, setAllResp } = allRes
   const ref = useRef(null)
 
   useEffect(() => {

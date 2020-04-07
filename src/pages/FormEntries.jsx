@@ -1,55 +1,36 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import React, { useState, useContext, memo, useCallback } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import bitsFetch from '../Utils/bitsFetch'
 import Table from '../components/Table'
-import CopyText from '../components/ElmSettings/Childs/CopyText'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
-import Progressbar from '../components/ElmSettings/Childs/Progressbar'
-import { BitappsContext } from '../Utils/BitappsContext'
-import { SnackContext } from '../Utils/SnackContext'
 import EditEntryData from '../components/EditEntryData'
 import Drawer from '../components/Drawer'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
-import Modal from '../components/Modal'
 import ConfirmModal from '../components/ConfirmModal'
+import TableLoader from '../components/Loaders/TableLoader'
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
 function FormEntries() {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
 
-  const { allRes } = useContext(BitappsContext)
-  const { setSnackbar } = useContext(SnackContext)
-  const { allResp, setAllResp } = allRes
+  const [snack, setSnackbar] = useState({ show: false, msg: '' })
+  const [isloading, setisloading] = useState(false)
+  const [allResp, setAllResp] = useState([])
   const { formID } = useParams()
   const fetchIdRef = React.useRef(0)
   const [pageCount, setPageCount] = React.useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
+  const [confMdl, setconfMdl] = useState({ show: false })
+  const [entryLabels, setEntryLabels] = useState([])
   let totalData = 0
 
-  const [entryLabels, setEntryLabels] = useState([
-    { Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</> },
-    { Header: 'Status', accessor: 'status' },
-    { Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
-    { Header: 'Views', accessor: 'views' },
-    { Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
-    { Header: 'ress', accessor: 'entries' },
-    { Header: 'Created', accessor: 'created_at' },
-    {
-      id: 't_action',
-      width: 70,
-      maxWidth: 70,
-      minWidth: 70,
-      sticky: 'right',
-      accessor: 'table_ac',
-      Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
-      Cell: val => <TableAction edit={editData} del={setBulkDelete} dup={bulkDuplicateData} id={val.row} dataSrc="entries" />,
-    },
-  ])
 
   const fetchData = useCallback(({ pageSize, pageIndex }) => {
+    let cols = null
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     if (totalData === 0) {
@@ -58,7 +39,7 @@ function FormEntries() {
           if (response !== undefined && response.success) {
             totalData = response.data.count
             setPageCount(((response.data.count / 10) % 1 === 0) ? (response.data.count / 10) : Math.floor(response.data.count / 10) + 1)
-            const cols = response.data.Labels.map(val => ({
+            cols = response.data.Labels.map(val => ({
               Header: val.name,
               accessor: val.key,
               minWidth: 50,
@@ -76,18 +57,6 @@ function FormEntries() {
             }))
 
             cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</>, width: 40 })
-            cols.push({
-              id: 't_action',
-              width: 70,
-              maxWidth: 70,
-              minWidth: 70,
-              sticky: 'right',
-              Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
-              accessor: 'table_ac',
-              Cell: val => <TableAction edit={editData} del={setBulkDelete} dup={bulkDuplicateData} id={val.row} dataSrc="entries" />,
-            })
-
-            setEntryLabels(cols)
           }
         })
     }
@@ -100,6 +69,18 @@ function FormEntries() {
               setPageCount(Math.ceil(totalData / pageSize))
             }
             setAllResp(res.data)
+            cols.push({
+              id: 't_action',
+              width: 70,
+              maxWidth: 70,
+              minWidth: 70,
+              sticky: 'right',
+              Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+              accessor: 'table_ac',
+              Cell: val => <TableAction edit={() => editData(val.row)} del={() => delConfMdl(val.row, res.data)} dup={() => dupConfMdl(val.row, res.data)} />,
+            })
+            setEntryLabels(cols)
+            // setisloading(false)
           }
         })
       }
@@ -132,10 +113,6 @@ function FormEntries() {
         }
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allResp])
-
-  const setEntriesCol = useCallback(newCols => {
-    setEntryLabels(newCols)
   }, [])
 
   const bulkDuplicateData = useCallback((rows, tmpData) => {
@@ -165,101 +142,129 @@ function FormEntries() {
         }
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allResp])
+  }, [])
 
   const editData = useCallback(id => {
     setEntryID(id.original.entry_id)
     setShowEditMdl(true)
   }, [])
 
-  const closeRowDetail = () => {
+  const closeRowDetail = useCallback(() => {
     rowDtl.show = false
-    setRowDtl({ ...rowDtl })
-  }
-
-  const printObject = data => {
-    const d = []
-    for (const i in data) {
-      if (data.hasOwnProperty.call(data, i)) {
-        d.push({ key: i, value: data[i] })
-      }
-    }
-    return d
-  }
-
-  const onRowClick = useCallback(row => {
-    rowDtl.data = row
-    rowDtl.show = true
     setRowDtl({ ...rowDtl })
   }, [rowDtl])
 
-  const setModal = () => {
-    confMdl.show = true
-    setconfMdl({ ...confMdl })
-  }
-  const closeEditMdl = () => {
+  const onRowClick = useCallback((row, idx) => {
+    if (rowDtl.show && rowDtl.idx === idx) {
+      rowDtl.show = false
+    } else {
+      rowDtl.data = row
+      rowDtl.idx = idx
+      rowDtl.show = true
+    }
+    setRowDtl({ ...rowDtl })
+  }, [rowDtl])
+
+  const closeConfMdl = useCallback(() => {
     confMdl.show = false
     setconfMdl({ ...confMdl })
-  }
+  }, [confMdl])
+
+  const delConfMdl = useCallback((row, data) => {
+    confMdl.btnTxt = 'Delete'
+    confMdl.body = 'Are you sure to delete this entry'
+    confMdl.btnClass = ''
+    confMdl.action = () => { setBulkDelete(row, data); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }, [closeConfMdl, confMdl, setBulkDelete])
+
+  const dupConfMdl = useCallback((row, data) => {
+    confMdl.btnTxt = 'Duplicate'
+    confMdl.btnClass = 'blue'
+    confMdl.body = 'Are you sure to duplicate this entry'
+    confMdl.action = () => { bulkDuplicateData(row, data); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }, [bulkDuplicateData, closeConfMdl, confMdl])
 
   return (
-    <div id="form-res">
-      <div className="af-header">
-        <h2>Form Responses</h2>
-      </div>
+    isloading ? <TableLoader /> : (
+      <div id="form-res">
+        <div className="af-header">
+          <h2>Form Responses</h2>
+        </div>
+        <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
-      {showEditMdl
-        && (
-          <EditEntryData
-            close={setShowEditMdl}
-            formID={formID}
-            entryID={entryID}
-          />
-        )}
-
-      <Drawer
-        title="Response Details"
-        subTitle="adsff"
-        show={rowDtl.show}
-        close={closeRowDetail}
-      >
-        <table className="btcd-row-detail-tbl">
-          <tbody>
-            <tr className="txt-dp">
-              <th>Title</th>
-              <th>Value</th>
-            </tr>
-            {printObject(rowDtl.data).map((itm, i) => (
-              <tr key={`rw-d-${i + 2}`}>
-                <th>{itm.key}</th>
-                <td>{itm.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Drawer>
-
-      <div className="forms">
-        <Table
-          className="f-table btcd-entries-f"
-          height="60vh"
-          columns={entryLabels}
-          data={allResp}
-          rowSeletable
-          resizable
-          columnHidable
-          hasAction
-          rowClickable
-          setTableCols={setEntriesCol}
-          fetchData={fetchData}
-          setBulkDelete={setBulkDelete}
-          duplicateData={bulkDuplicateData}
-          pageCount={pageCount}
-          edit={editData}
-          onRowClick={onRowClick}
+        <ConfirmModal
+          show={confMdl.show}
+          close={closeConfMdl}
+          btnTxt={confMdl.btnTxt}
+          btnClass={confMdl.btnClass}
+          body={confMdl.body}
+          action={confMdl.action}
         />
+
+        {showEditMdl
+          && (
+            <EditEntryData
+              close={setShowEditMdl}
+              formID={formID}
+              entryID={entryID}
+              allResp={allResp}
+              setAllResp={setAllResp}
+              setSnackbar={setSnackbar}
+            />
+          )}
+
+
+        <Drawer
+          title="Response Details"
+          subTitle="adsff"
+          show={rowDtl.show}
+          close={closeRowDetail}
+        >
+          <table className="btcd-row-detail-tbl">
+            <tbody>
+              <tr className="txt-dp">
+                <th>Title</th>
+                <th>Value</th>
+              </tr>
+              {rowDtl.show && rowDtl.data.map((itm, i) => typeof itm.column.Header !== 'function'
+                && typeof itm.column.Header !== 'object'
+                && itm.column.Header !== '#' && (
+                  <tr key={`rw-d-${i + 2}`}>
+                    <th>{itm.column.Header}</th>
+                    <td>{itm.value}</td>
+                  </tr>
+              ))}
+            </tbody>
+          </table>
+        </Drawer>
+
+
+        <div className="forms">
+          <Table
+            className="f-table btcd-entries-f"
+            height="60vh"
+            columns={entryLabels}
+            data={allResp}
+            rowSeletable
+            resizable
+            columnHidable
+            hasAction
+            rowClickable
+            setTableCols={setEntryLabels}
+            fetchData={fetchData}
+            setBulkDelete={setBulkDelete}
+            duplicateData={bulkDuplicateData}
+            pageCount={pageCount}
+            edit={editData}
+            onRowClick={onRowClick}
+          />
+        </div>
       </div>
-    </div>
+    )
   )
 }
 

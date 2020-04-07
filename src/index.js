@@ -6,8 +6,7 @@ import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 import { BitappsContextProvider } from './Utils/BitappsContext'
-import { SnackContextProvider } from './Utils/SnackContext'
-import Loader from './components/Loader'
+import Loader from './components/Loaders/Loader'
 
 const App = lazy(() => import('./App'))
 
@@ -17,11 +16,7 @@ if (process.env.NODE_ENV === 'production' && typeof bits.assetsURL !== 'undefine
 }
 ReactDOM.render(
   <BitappsContextProvider>
-    <SnackContextProvider>
-      <Loader />
-
-      {/* <Suspense fallback={<h1>sedfasdf</h1>}><App /></Suspense> */}
-    </SnackContextProvider>
-  </BitappsContextProvider>, document.getElementById('btcd-app')
+    <Suspense fallback={<Loader />}><App /></Suspense>
+  </BitappsContextProvider>, document.getElementById('btcd-app'),
 )
 serviceWorker.unregister();
