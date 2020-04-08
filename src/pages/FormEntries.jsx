@@ -30,16 +30,16 @@ function FormEntries() {
 
 
   const fetchData = useCallback(({ pageSize, pageIndex }) => {
-    let cols = null
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
+    setisloading(true)
     if (totalData === 0) {
       bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
         .then(response => {
           if (response !== undefined && response.success) {
             totalData = response.data.count
             setPageCount(((response.data.count / 10) % 1 === 0) ? (response.data.count / 10) : Math.floor(response.data.count / 10) + 1)
-            cols = response.data.Labels.map(val => ({
+            const cols = response.data.Labels.map(val => ({
               Header: val.name,
               accessor: val.key,
               minWidth: 50,
@@ -57,6 +57,17 @@ function FormEntries() {
             }))
 
             cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</>, width: 40 })
+            cols.push({
+              id: 't_action',
+              width: 70,
+              maxWidth: 70,
+              minWidth: 70,
+              sticky: 'right',
+              Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+              accessor: 'table_ac',
+              Cell: val => <TableAction edit={() => editData(val.row)} del={() => delConfMdl(val.row, val.data)} dup={() => dupConfMdl(val.row, val.data)} />,
+            })
+            setEntryLabels(cols)
           }
         })
     }
@@ -69,19 +80,8 @@ function FormEntries() {
               setPageCount(Math.ceil(totalData / pageSize))
             }
             setAllResp(res.data)
-            cols.push({
-              id: 't_action',
-              width: 70,
-              maxWidth: 70,
-              minWidth: 70,
-              sticky: 'right',
-              Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
-              accessor: 'table_ac',
-              Cell: val => <TableAction edit={() => editData(val.row)} del={() => delConfMdl(val.row, res.data)} dup={() => dupConfMdl(val.row, res.data)} />,
-            })
-            setEntryLabels(cols)
-            // setisloading(false)
           }
+          setisloading(false)
         })
       }
     }, 1000)
@@ -189,82 +189,79 @@ function FormEntries() {
   }, [bulkDuplicateData, closeConfMdl, confMdl])
 
   return (
-    isloading ? <TableLoader /> : (
-      <div id="form-res">
-        <div className="af-header">
-          <h2>Form Responses</h2>
-        </div>
-        <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-
-        <ConfirmModal
-          show={confMdl.show}
-          close={closeConfMdl}
-          btnTxt={confMdl.btnTxt}
-          btnClass={confMdl.btnClass}
-          body={confMdl.body}
-          action={confMdl.action}
-        />
-
-        {showEditMdl
-          && (
-            <EditEntryData
-              close={setShowEditMdl}
-              formID={formID}
-              entryID={entryID}
-              allResp={allResp}
-              setAllResp={setAllResp}
-              setSnackbar={setSnackbar}
-            />
-          )}
-
-
-        <Drawer
-          title="Response Details"
-          subTitle="adsff"
-          show={rowDtl.show}
-          close={closeRowDetail}
-        >
-          <table className="btcd-row-detail-tbl">
-            <tbody>
-              <tr className="txt-dp">
-                <th>Title</th>
-                <th>Value</th>
-              </tr>
-              {rowDtl.show && rowDtl.data.map((itm, i) => typeof itm.column.Header !== 'function'
-                && typeof itm.column.Header !== 'object'
-                && itm.column.Header !== '#' && (
-                  <tr key={`rw-d-${i + 2}`}>
-                    <th>{itm.column.Header}</th>
-                    <td>{itm.value}</td>
-                  </tr>
-              ))}
-            </tbody>
-          </table>
-        </Drawer>
-
-
-        <div className="forms">
-          <Table
-            className="f-table btcd-entries-f"
-            height="60vh"
-            columns={entryLabels}
-            data={allResp}
-            rowSeletable
-            resizable
-            columnHidable
-            hasAction
-            rowClickable
-            setTableCols={setEntryLabels}
-            fetchData={fetchData}
-            setBulkDelete={setBulkDelete}
-            duplicateData={bulkDuplicateData}
-            pageCount={pageCount}
-            edit={editData}
-            onRowClick={onRowClick}
-          />
-        </div>
+    <div id="form-res">
+      <div className="af-header">
+        <h2>Form Responses</h2>
       </div>
-    )
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+
+      <ConfirmModal
+        show={confMdl.show}
+        close={closeConfMdl}
+        btnTxt={confMdl.btnTxt}
+        btnClass={confMdl.btnClass}
+        body={confMdl.body}
+        action={confMdl.action}
+      />
+
+      {showEditMdl
+        && (
+          <EditEntryData
+            close={setShowEditMdl}
+            formID={formID}
+            entryID={entryID}
+            allResp={allResp}
+            setAllResp={setAllResp}
+            setSnackbar={setSnackbar}
+          />
+        )}
+
+      <Drawer
+        title="Response Details"
+        subTitle="adsff"
+        show={rowDtl.show}
+        close={closeRowDetail}
+      >
+        <table className="btcd-row-detail-tbl">
+          <tbody>
+            <tr className="txt-dp">
+              <th>Title</th>
+              <th>Value</th>
+            </tr>
+            {rowDtl.show && rowDtl.data.map((itm, i) => typeof itm.column.Header !== 'function'
+              && typeof itm.column.Header !== 'object'
+              && itm.column.Header !== '#' && (
+                <tr key={`rw-d-${i + 2}`}>
+                  <th>{itm.column.Header}</th>
+                  <td>{itm.value}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </Drawer>
+
+      <div className="forms">
+        <Table
+          className="f-table btcd-entries-f"
+          height="60vh"
+          columns={entryLabels}
+          data={allResp}
+          loading={isloading}
+          rowSeletable
+          resizable
+          columnHidable
+          hasAction
+          rowClickable
+          setTableCols={setEntryLabels}
+          fetchData={fetchData}
+          setBulkDelete={setBulkDelete}
+          duplicateData={bulkDuplicateData}
+          pageCount={pageCount}
+          edit={editData}
+          onRowClick={onRowClick}
+        />
+      </div>
+    </div>
   )
 }
 
