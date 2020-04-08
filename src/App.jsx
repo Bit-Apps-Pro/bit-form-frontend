@@ -10,10 +10,11 @@ import './resource/sass/app.scss'
 import './resource/sass/components.scss'
 import './resource/js/custom'
 import TableLoader from './components/Loaders/TableLoader'
+import Loader from './components/Loaders/Loader'
 // import './resource/icons/style.css'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
-const Builder = lazy(() => import('./pages/Builder'))
+const FormDetails = lazy(() => import('./pages/FormDetails'))
 const FormEntries = lazy(() => import('./pages/FormEntries'))
 
 function App() {
@@ -43,22 +44,26 @@ function App() {
         </div>
 
         <div className="route-wrp">
-          <Suspense fallback={<TableLoader />}>
-            <Switch>
-              <Route exact path="/">
+          <Switch>
+            <Route exact path="/">
+              <Suspense fallback={<TableLoader />}>
                 <AllForms />
-              </Route>
-              <Route path="/builder/:formType/:formID?/:option?">
-                <Builder />
-              </Route>
-              <Route path="/formEntries/:formID">
+              </Suspense>
+            </Route>
+            <Route path="/builder/:formType/:formID?/:option?">
+              <Suspense fallback={<Loader />}>
+                <FormDetails />
+              </Suspense>
+            </Route>
+            <Route path="/formEntries/:formID">
+              <Suspense fallback={<TableLoader />}>
                 <FormEntries />
-              </Route>
-              <Route path="/settings">
-                <h1>Settings</h1>
-              </Route>
-            </Switch>
-          </Suspense>
+              </Suspense>
+            </Route>
+            <Route path="/settings">
+              <h1>Settings</h1>
+            </Route>
+          </Switch>
         </div>
       </main>
     </Router>
