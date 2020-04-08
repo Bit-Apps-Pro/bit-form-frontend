@@ -12,9 +12,12 @@ import zohoProjects from '../resource/img/integ/zohoProjects.png'
 import zohoPeople from '../resource/img/integ/zohoPeople.png'
 import NewInteg from './AllIntegrations/NewInteg'
 import EditInteg from './AllIntegrations/EditInteg'
+import ConfirmModal from './ConfirmModal'
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
+  const [confMdl, setconfMdl] = useState({ show: false })
+
   const { path, url } = useRouteMatch()
   const history = useHistory()
   const integs = [
@@ -34,6 +37,15 @@ function Integrations({ integrations, setIntegration, formFields }) {
     setIntegration([...integrations])
   }
 
+  const inteDelConf = i => {
+    confMdl.btnTxt = 'Delete'
+    confMdl.body = 'Are you sure to delete this template'
+    confMdl.btnClass = ''
+    confMdl.action = () => { removeInteg(i); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
   const getLogo = type => {
     for (let i = 0; i < integs.length; i += 1) {
       if (integs[i].type === type) {
@@ -48,8 +60,21 @@ function Integrations({ integrations, setIntegration, formFields }) {
     history.push(`${url}/new/${type}`)
   }
 
+  const closeConfMdl = () => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
+  }
+
   return (
     <div>
+      <ConfirmModal
+        show={confMdl.show}
+        close={closeConfMdl}
+        btnTxt={confMdl.btnTxt}
+        btnClass={confMdl.btnClass}
+        body={confMdl.body}
+        action={confMdl.action}
+      />
       <Switch>
         <Route exact path={path}>
           <div className="flx flx-wrp">
@@ -84,7 +109,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                        &nbsp;Edit
                     </div>
                   </Link>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm" onClick={() => removeInteg(i)} type="button">
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm" onClick={() => inteDelConf(i)} type="button">
                     <div>
                       <span className="btcd-icn icn-trash-2" />
                         &nbsp;Delete

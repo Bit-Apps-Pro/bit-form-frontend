@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import React from 'react'
+import React, { useState } from 'react'
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -13,8 +13,11 @@ import MtSelect from './ElmSettings/Childs/MtSelect'
 import DropDown from './ElmSettings/Childs/DropDown'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
+import ConfirmModal from './ConfirmModal'
 
 function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID }) {
+  const [confMdl, setconfMdl] = useState({ show: false })
+
   const mailOptions = vals => {
     const mail = [{ name: 'Admin', value: 'admin' }]
     if (vals !== undefined) {
@@ -489,9 +492,31 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     setworkFlows([...workFlows])
   }
 
+  const closeConfMdl = () => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
+  }
+
+  const lgcGrpDelConf = i => {
+    confMdl.btnTxt = 'Delete'
+    confMdl.body = 'Are you sure to delete this workflow'
+    confMdl.btnClass = ''
+    confMdl.action = () => { delLgcGrp(i); closeConfMdl() }
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
   return (
     <div className="btcd-workflow w-8">
-      <h3>Actions s</h3>
+      <ConfirmModal
+        show={confMdl.show}
+        close={closeConfMdl}
+        btnTxt={confMdl.btnTxt}
+        btnClass={confMdl.btnClass}
+        body={confMdl.body}
+        action={confMdl.action}
+      />
+      <h3>Actions</h3>
       {workFlows.map((lgcGrp, lgcGrpInd) => (
         <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
           <Accordions
@@ -739,7 +764,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           </Accordions>
 
           <div className="mt-1">
-            <Button onClick={() => delLgcGrp(lgcGrpInd)} icn className="ml-2 sh-sm btcd-menu-btn tooltip" style={{ '--tooltip-txt': '"Delete Action"' }}>
+            <Button onClick={() => lgcGrpDelConf(lgcGrpInd)} icn className="ml-2 sh-sm btcd-menu-btn tooltip" style={{ '--tooltip-txt': '"Delete Action"' }}>
               <span className="btcd-icn icn-trash-2" />
             </Button>
           </div>
