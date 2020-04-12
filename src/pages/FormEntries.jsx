@@ -9,7 +9,6 @@ import EditEntryData from '../components/EditEntryData'
 import Drawer from '../components/Drawer'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 import ConfirmModal from '../components/ConfirmModal'
-import TableLoader from '../components/Loaders/TableLoader'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
 function FormEntries() {
@@ -26,10 +25,9 @@ function FormEntries() {
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
   const [entryLabels, setEntryLabels] = useState([])
-  let totalData = 0
-
 
   const fetchData = useCallback(({ pageSize, pageIndex }) => {
+    let totalData = 0
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     setisloading(true)
@@ -85,7 +83,7 @@ function FormEntries() {
         })
       }
     }, 1000)
-  }, [formID])
+  }, [delConfMdl, dupConfMdl, editData, formID])
 
   const setBulkDelete = useCallback((rows, tmpData) => {
     const rowID = []

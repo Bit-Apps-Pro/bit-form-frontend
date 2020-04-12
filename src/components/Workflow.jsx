@@ -516,7 +516,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
         body={confMdl.body}
         action={confMdl.action}
       />
-      <h3>Actions</h3>
+      <h2>Actions</h2>
       {workFlows.map((lgcGrp, lgcGrpInd) => (
         <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
           <Accordions

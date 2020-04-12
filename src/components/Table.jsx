@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, memo, useState, Fragment } from 'react'
+import React, { useEffect, memo, useState } from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, /* useBlockLayout */ useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'

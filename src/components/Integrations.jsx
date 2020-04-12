@@ -77,6 +77,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
       />
       <Switch>
         <Route exact path={path}>
+          <h2>Integrations</h2>
           <div className="flx flx-wrp">
             <Modal
               title="Available Integrations"

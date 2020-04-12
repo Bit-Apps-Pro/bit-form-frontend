@@ -1,6 +1,6 @@
-import React, { useState, useContext, useCallback, memo, useEffect, lazy, Suspense } from 'react'
+import React, { useState, useContext, memo, useEffect, lazy, Suspense } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
-import FormSettings from '../components/FormSettings'
+import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
@@ -10,7 +10,7 @@ import BuilderLoader from '../components/Loaders/BuilderLoader'
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
 function Builder(props) {
-  console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
+  console.log('%c $render Form Details', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(true)
@@ -155,6 +155,15 @@ function Builder(props) {
     },
   ])
 
+  const [additional, setadditional] = useState({
+    enabled: { captcha: true, blocked_ip: true },
+    settings: {
+      restrict_form: { day: ['Custom'], date: { from: new Date(), to: new Date() }, time: { from: '00:00', to: '23:59' } },
+      entry_limit: 100,
+      blocked_ip: [{ ip: '127.0.2.3', status: true }, { ip: '122.43.545.7', status: false }],
+    },
+    onePerIp: true,
+  })
 
   const [formSettings, setFormSettings] = useState({
     formName,
@@ -169,6 +178,7 @@ function Builder(props) {
     },
     mailTem,
     integrations,
+    additional,
   })
 
   const fetchTemplate = () => {
@@ -322,7 +332,6 @@ function Builder(props) {
       <Switch>
         <Route exact path="/builder/:formType/:formID">
           <Suspense fallback={<BuilderLoader />}>
-            {/*  <BuilderLoader /> */}
             <FormBuilder
               newCounter={newCounter}
               isLoading={isLoading}
@@ -352,6 +361,8 @@ function Builder(props) {
             setIntegration={setIntegration}
             workFlows={workFlows}
             setworkFlows={setworkFlows}
+            additional={additional}
+            setadditional={setadditional}
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">
