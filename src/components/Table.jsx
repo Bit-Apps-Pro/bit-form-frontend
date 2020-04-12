@@ -1,13 +1,14 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, memo } from 'react'
+import React, { useEffect, memo, useState } from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, /* useBlockLayout */ useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
-import { BitappsContext } from '../Utils/BitappsContext'
+import ConfirmModal from './ConfirmModal'
+import TableLoader from './Loaders/TableLoader'
 
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -44,9 +45,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
 
 function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
-
-  const { confirmModal } = React.useContext(BitappsContext)
-  const { confModal, setConfModal, hideConfModal } = confirmModal
+  const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const { columns, data, fetchData } = props
   const {
     getTableProps,
@@ -70,6 +69,8 @@ function Table(props) {
     state: { pageIndex, pageSize },
   } = useTable(
     {
+      debug: true,
+      fetchData,
       columns,
       data,
       manualPagination: typeof props.pageCount !== 'undefined',
@@ -118,37 +119,52 @@ function Table(props) {
   }, [fetchData, pageIndex, pageSize])
 
   const showBulkDupMdl = () => {
-    const bdup = { ...confModal }
-    bdup.title = 'Duplicate All ?'
-    bdup.subTitle = 'Duplicate all selected entries.'
-    bdup.yesAction = () => { props.duplicateData(selectedFlatRows); hideConfModal() }
-    bdup.show = true
-    setConfModal(bdup)
+    confMdl.action = () => { props.duplicateData(selectedFlatRows); closeConfMdl() }
+    confMdl.btnTxt = 'Duplicate'
+    confMdl.btn2Txt = null
+    confMdl.btnClass = 'blue'
+    confMdl.body = `Do You want Deplicate these ${selectedFlatRows.length} item ?`
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
   }
 
   const showStModal = () => {
-    const bst = { ...confModal }
-    bst.title = 'Change Status'
-    bst.subTitle = 'Change status of all selected form'
-    bst.yesBtn = 'Enable'
-    bst.noBtn = 'Disable'
-    bst.yesAction = () => { props.setBulkStatus(selectedFlatRows); hideConfModal() }
-    bst.noAction = () => { props.setBulkStatus(selectedFlatRows); hideConfModal() }
-    bst.show = true
-    setConfModal(bst)
+    confMdl.action = (e) => { props.setBulkStatus(e, selectedFlatRows); closeConfMdl() }
+    confMdl.btn2Action = (e) => { props.setBulkStatus(e, selectedFlatRows); closeConfMdl() }
+    confMdl.btnTxt = 'Disable'
+    confMdl.btn2Txt = 'Enable'
+    confMdl.body = `Do you want to change these ${selectedFlatRows.length} status ?`
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
   }
 
   const showDelModal = () => {
-    const bdel = { ...confModal }
-    bdel.title = 'Delete ?'
-    bdel.subTitle = 'Delete all selected form'
-    bdel.yesAction = () => { props.setBulkDelete(selectedFlatRows); hideConfModal() }
-    bdel.show = true
-    setConfModal(bdel)
+    confMdl.action = () => { props.setBulkDelete(selectedFlatRows); closeConfMdl() }
+    confMdl.btnTxt = 'Delete'
+    confMdl.btn2Txt = null
+    confMdl.btnClass = ''
+    confMdl.body = `Are you sure to delete these ${selectedFlatRows.length} items ?`
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
+  const closeConfMdl = () => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
   }
 
   return (
     <>
+      <ConfirmModal
+        show={confMdl.show}
+        body={confMdl.body}
+        action={confMdl.action}
+        close={closeConfMdl}
+        btnTxt={confMdl.btnTxt}
+        btn2Txt={confMdl.btn2Txt}
+        btn2Action={confMdl.btn2Action}
+        btnClass={confMdl.btnClass}
+      />
       <div className="btcd-t-actions">
         <div className="flx">
           {props.columnHidable
@@ -193,73 +209,76 @@ function Table(props) {
             )}
         </div>
       </div>
-
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
-      <div className="mt-2">
-        <Scrollbars style={{ height: props.height }}>
-          <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
-            <div className="thead">
-              {headerGroups.map((headerGroup, i) => (
-                <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    <div key={column.id} className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
-                      {column.render('Header')}
-                      {' '}
-                      {(column.id !== 't_action' && column.id !== 'selection') && (
-                        <span>
-                          {column.isSorted
-                            ? column.isSortedDesc
-                              ? String.fromCharCode(9662)
-                              : String.fromCharCode(9652)
-                            : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                        </span>
-                      )}
-                      {props.resizable
-                        && (
-                          <div
-                            {...column.getResizerProps()}
-                            className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
-                          />
-                        )}
+      {props.loading ? <TableLoader /> : (
+        <>
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            globalFilter={state.globalFilter}
+            setGlobalFilter={setGlobalFilter}
+          />
+          <div className="mt-2">
+            <Scrollbars style={{ height: props.height }}>
+              <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
+                <div className="thead">
+                  {headerGroups.map((headerGroup, i) => (
+                    <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map(column => (
+                        <div key={column.id} className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
+                          {column.render('Header')}
+                          {' '}
+                          {(column.id !== 't_action' && column.id !== 'selection') && (
+                            <span>
+                              {column.isSorted
+                                ? column.isSortedDesc
+                                  ? String.fromCharCode(9662)
+                                  : String.fromCharCode(9652)
+                                : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                            </span>
+                          )}
+                          {props.resizable
+                            && (
+                              <div
+                                {...column.getResizerProps()}
+                                className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
+                              />
+                            )}
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
-              ))}
-            </div>
-            <div className="tbody" {...getTableBodyProps()}>
-              {page.map(row => {
-                prepareRow(row)
-                return (
-                  <div
-                    key={`t-r-${row.index}`}
-                    className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
-                    {...row.getRowProps()}
-                  >
-                    {row.cells.map(cell => (
+                <div className="tbody" {...getTableBodyProps()}>
+                  {page.map(row => {
+                    prepareRow(row)
+                    return (
                       <div
-                        key={`t-d-${cell.row.index}`}
-                        className="td flx"
-                        {...cell.getCellProps()}
-                        onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.original)}
-                        onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.original)}
-                        role="button"
-                        tabIndex={0}
-                        aria-label="cell"
+                        key={`t-r-${row.index}`}
+                        className={`tr ${row.isSelected ? 'btcd-row-selected' : ''}`}
+                        {...row.getRowProps()}
                       >
-                        {cell.render('Cell')}
+                        {row.cells.map(cell => (
+                          <div
+                            key={`t-d-${cell.row.index}`}
+                            className="td flx"
+                            {...cell.getCellProps()}
+                            onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index)}
+                            onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index)}
+                            role="button"
+                            tabIndex={0}
+                            aria-label="cell"
+                          >
+                            {cell.render('Cell')}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )
-              })}
-            </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </Scrollbars>
           </div>
-        </Scrollbars>
-      </div>
+        </>
+      )}
 
       <div className="btcd-pagination">
         <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>

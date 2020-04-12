@@ -10,15 +10,17 @@ import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
-import { SnackContext } from '../Utils/SnackContext'
+import ConfirmModal from '../components/ConfirmModal'
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
 function AllFroms() {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
 
   const [modal, setModal] = useState(false)
   const { allFormsData } = useContext(BitappsContext)
-  const { setSnackbar } = useContext(SnackContext)
+  const [snack, setSnackbar] = useState({ show: false })
   const { allForms, allFormsDispatchHandler } = allFormsData
+  const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
 
 
   const handleStatus = (e, id) => {
@@ -38,12 +40,12 @@ function AllFroms() {
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
-    { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} /> },
+    { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} setSnackbar={setSnackbar} /> },
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
     { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at' },
-    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} /> },
+    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} del={() => showDelModal(val.row.original.formID)} dup={(e) => showDupMdl(val.row.original.formID)} /> },
   ])
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function AllFroms() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const setBulkStatus = useCallback(rows => {
+  const setBulkStatus = useCallback((e, rows) => {
     const status = e.target.innerHTML === 'Enable'
     const rowID = []
     const formID = []
@@ -103,7 +105,7 @@ function AllFroms() {
 
     bitsFetch(ajaxData, 'bitapps_bulk_delete_form')
       .then(res => {
-        if (res !== undefined && !res.success) {
+        if (res === undefined || !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
         } else if (res.success) {
           setSnackbar({ show: true, msg: res.data })
@@ -112,12 +114,67 @@ function AllFroms() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const handleDelete = formID => {
+    bitsFetch({ id: formID }, 'bitapps_delete_aform').then(response => {
+      if (response.success) {
+        allFormsDispatchHandler({ type: 'remove', data: props.index })
+        setSnackbar({ show: true, msg: 'Form Deleted !' })
+      }
+    })
+  }
+
+  const handleDuplicate = formID => {
+    bitsFetch({ id: formID }, 'bitapps_duplicate_aform').then(response => {
+      if (response.success) {
+        const { data } = response
+        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+        setSnackbar({ show: true, msg: 'Form Duplicated Successfully.' })
+      }
+    })
+  }
+
   const setTableCols = useCallback(newCols => {
     setCols(newCols)
   }, [])
 
+  const closeConfMdl = () => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
+  }
+
+  const showDelModal = formID => {
+    confMdl.action = () => { handleDelete(formID); closeConfMdl() }
+    confMdl.btnTxt = 'Delete'
+    confMdl.btn2Txt = null
+    confMdl.btnClass = ''
+    confMdl.body = 'Are you sure to delete this form ?'
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
+  const showDupMdl = formID => {
+    confMdl.action = () => { handleDuplicate(formID); closeConfMdl() }
+    confMdl.btnTxt = 'Duplicate'
+    confMdl.btn2Txt = null
+    confMdl.btnClass = 'blue'
+    confMdl.body = 'Are you sure to duplicate this form ?'
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
   return (
     <div id="all-forms">
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      <ConfirmModal
+        show={confMdl.show}
+        body={confMdl.body}
+        action={confMdl.action}
+        close={closeConfMdl}
+        btnTxt={confMdl.btnTxt}
+        btn2Txt={confMdl.btn2Txt}
+        btn2Action={confMdl.btn2Action}
+        btnClass={confMdl.btnClass}
+      />
       <Modal
         show={modal}
         setModal={setModal}
@@ -165,4 +222,4 @@ function AllFroms() {
   )
 }
 
-export default memo(AllFroms) 
+export default memo(AllFroms)

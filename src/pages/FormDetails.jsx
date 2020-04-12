@@ -1,35 +1,58 @@
-import React, { useState, useContext, useCallback, memo, useEffect } from 'react'
-import { Container, Section, Bar } from 'react-simple-resizer'
+import React, { useState, useContext, memo, useEffect, lazy, Suspense } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
-import ToolBar from '../components/Toolbar'
-import GridLayout from '../components/GridLayout'
-import CompSettings from '../components/CompSettings/CompSettings'
-import FormSettings from '../components/FormSettings'
+import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
 import { BitappsContext } from '../Utils/BitappsContext'
-import { SnackContext } from '../Utils/SnackContext'
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import BuilderLoader from '../components/Loaders/BuilderLoader'
+
+const FormBuilder = lazy(() => import('./FormBuilder'))
 
 function Builder(props) {
-  console.log('%c $render Builder', 'background:purple;padding:3px;border-radius:5px;color:white')
+  console.log('%c $render Form Details', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const { formType, formID } = useParams()
-  const [fulScn, setFulScn] = useState(false)
-  const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
-  const [newData, setNewData] = useState(null)
-  const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
+  const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
   const [isLoading, setisLoading] = useState(true)
   const [lay, setLay] = useState([])
   const [fields, setFields] = useState(null)
-  const [tolbarSiz, setTolbarSiz] = useState(false)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const { allFormsData } = useContext(BitappsContext)
-  const { setSnackbar } = useContext(SnackContext)
-  const [gridWidth, setGridWidth] = useState(window.innerWidth - 480)
+  const [snack, setSnackbar] = useState({ show: false })
   const { allFormsDispatchHandler } = allFormsData
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    fetchTemplate()
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+    if (process.env.NODE_ENV === 'production') {
+      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
+      document.getElementById('wpadminbar').style.display = 'none'
+      document.getElementById('adminmenumain').style.display = 'none'
+      document.getElementById('adminmenuback').style.display = 'none'
+      document.getElementById('adminmenuwrap').style.display = 'none'
+      document.getElementById('wpfooter').style.display = 'none'
+      document.getElementById('wpcontent').style.marginLeft = 0
+    }
+    return function cleanup() {
+      document.getElementsByTagName('body')[0].style.overflow = 'auto'
+      if (process.env.NODE_ENV === 'production') {
+        document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
+        document.getElementById('wpadminbar').style.display = 'block'
+        document.getElementById('adminmenumain').style.display = 'block'
+        document.getElementById('adminmenuback').style.display = 'block'
+        document.getElementById('adminmenuwrap').style.display = 'block'
+        document.getElementById('wpcontent').style.marginLeft = '160px'
+        document.getElementById('wpfooter').style.display = 'block'
+      }
+      setFulScn(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const [subBtn, setSubBtn] = useState({
     typ: 'submit',
@@ -132,6 +155,15 @@ function Builder(props) {
     },
   ])
 
+  const [additional, setadditional] = useState({
+    enabled: { captcha: true, blocked_ip: true },
+    settings: {
+      restrict_form: { day: ['Custom'], date: { from: new Date(), to: new Date() }, time: { from: '00:00', to: '23:59' } },
+      entry_limit: 100,
+      blocked_ip: [{ ip: '127.0.2.3', status: true }, { ip: '122.43.545.7', status: false }],
+    },
+    onePerIp: true,
+  })
 
   const [formSettings, setFormSettings] = useState({
     formName,
@@ -146,6 +178,7 @@ function Builder(props) {
     },
     mailTem,
     integrations,
+    additional,
   })
 
   const fetchTemplate = () => {
@@ -197,51 +230,6 @@ function Builder(props) {
         })
     }
   }
-  const notIE = !window.document.documentMode
-  setTimeout(() => { setFulScn(true) }, 500)
-
-  const conRef = React.createRef(null)
-
-  const setConSiz = useCallback(() => {
-    const res = conRef.current.getResizer()
-    if (res.getSectionSize(0) >= 160) {
-      res.resizeSection(0, { toSize: 50 })
-      setTolbarSiz(true)
-    } else {
-      res.resizeSection(0, { toSize: 160 })
-      setTolbarSiz(false)
-    }
-    conRef.current.applyResizer(res)
-  }, [conRef])
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    fetchTemplate()
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
-    if (process.env.NODE_ENV === 'production') {
-      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
-      document.getElementById('wpadminbar').style.display = 'none'
-      document.getElementById('adminmenumain').style.display = 'none'
-      document.getElementById('adminmenuback').style.display = 'none'
-      document.getElementById('adminmenuwrap').style.display = 'none'
-      document.getElementById('wpfooter').style.display = 'none'
-      document.getElementById('wpcontent').style.marginLeft = 0
-    }
-    return function cleanup() {
-      document.getElementsByTagName('body')[0].style.overflow = 'auto'
-      if (process.env.NODE_ENV === 'production') {
-        document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
-        document.getElementById('wpadminbar').style.display = 'block'
-        document.getElementById('adminmenumain').style.display = 'block'
-        document.getElementById('adminmenuback').style.display = 'block'
-        document.getElementById('adminmenuwrap').style.display = 'block'
-        document.getElementById('wpcontent').style.marginLeft = '160px'
-        document.getElementById('wpfooter').style.display = 'block'
-      }
-      setFulScn(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handleFormName = e => {
     setFormName(e.target.value)
@@ -293,27 +281,9 @@ function Builder(props) {
       })
   }
 
-  const setSubmitConfig = useCallback(data => {
-    setSubBtn({ ...data })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subBtn])
-
-  const updateFields = useCallback(updatedElm => {
-    const tmp = { ...fields }
-    fields[updatedElm.id] = updatedElm.data
-    setFields(tmp)
-  }, [fields])
-
-  const setElementSetting = useCallback(elm => {
-    setElmSetting(elm)
-  }, [])
-
-  const addNewData = useCallback(ndata => {
-    setNewData(ndata)
-  }, [])
-
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
           <NavLink exact to="/">
@@ -361,100 +331,23 @@ function Builder(props) {
 
       <Switch>
         <Route exact path="/builder/:formType/:formID">
-          <Container ref={conRef} className="btcd-bld-con" style={{ height: '100%' }}>
-            <Section
-              className="tool-sec"
-              defaultSize={160}
-              minSize={notIE && 58}
-            >
-              <ToolBar
-                setDrgElm={setDrgElm}
-                setNewData={addNewData}
-                className="tile"
-                tolbarSiz={tolbarSiz}
-                setTolbarSiz={setConSiz}
-              />
-            </Section>
-            <Bar className="bar bar-l" />
-
-            <Section
-              onSizeChanged={setGridWidth}
-              minSize={notIE && 320}
-              defaultSize={gridWidth}
-            >
-              {lay !== null && (
-                <small
-                  style={{
-                    background: 'lightgray',
-                    padding: 8,
-                    display: 'none',
-                  }}
-                >
-                  {lay.map((item, i) => (
-                    <div
-                      key={`k-${i + 10} `}
-                      style={{
-                        display: 'inline-block',
-                        padding: 5,
-                        background: 'aliceblue',
-                        margin: 5,
-                      }}
-                    >
-                      <div>{item.i}</div>
-                      <span style={{ margin: 8 }}>
-                        X:
-                        {item.x}
-                      </span>
-                      <span style={{ margin: 8 }}>
-                        Y:
-                        {item.y}
-                      </span>
-                      <span style={{ margin: 8 }}>
-                        W:
-                        {item.w}
-                      </span>
-                      <span style={{ margin: 8 }}>
-                        H:
-                        {item.h}
-                      </span>
-                    </div>
-                  ))}
-                </small>
-              )}
-
-              {!isLoading && (
-                <GridLayout
-                  theme={formSettings.theme}
-                  width={gridWidth}
-                  draggedElm={drgElm}
-                  setElmSetting={setElementSetting}
-                  fields={fields}
-                  newData={newData}
-                  setNewData={setNewData}
-                  formType={formType}
-                  formID={formID}
-                  setLay={setLay}
-                  setFields={setFields}
-                  setFormName={setFormName}
-                  subBtn={subBtn}
-                  isLoading={isLoading}
-                  newCounter={newCounter}
-                  setNewCounter={setNewCounter}
-                  layout={lay}
-                />
-              )}
-
-            </Section>
-
-            <Bar className="bar bar-r" />
-            <Section id="settings-menu" defaultSize={300}>
-              <CompSettings
-                elm={elmSetting}
-                updateData={updateFields}
-                setSubmitConfig={setSubmitConfig}
-              />
-            </Section>
-          </Container>
+          <Suspense fallback={<BuilderLoader />}>
+            <FormBuilder
+              newCounter={newCounter}
+              isLoading={isLoading}
+              fields={fields}
+              setFields={setFields}
+              subBtn={subBtn}
+              setSubBtn={setSubBtn}
+              lay={lay}
+              setLay={setLay}
+              setNewCounter={setNewCounter}
+              theme={formSettings.theme}
+              setFormName={setFormName}
+              formID={formID}
+              formType={formType}
+            />
+          </Suspense>
         </Route>
         <Route path="/builder/:formType/:formID/settings/:settings?">
           <FormSettings
@@ -468,6 +361,8 @@ function Builder(props) {
             setIntegration={setIntegration}
             workFlows={workFlows}
             setworkFlows={setworkFlows}
+            additional={additional}
+            setadditional={setadditional}
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">

@@ -1,14 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { SnackContext } from '../../../Utils/SnackContext'
-import { BitappsContext } from '../../../Utils/BitappsContext'
-import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function MenuBtn(props) {
-  const { allFormsData } = useContext(BitappsContext)
-  const { setSnackbar } = useContext(SnackContext)
-  const { allFormsDispatchHandler } = allFormsData
-
   const handleMenuClose = (e) => {
     const el = e.target
     setTimeout(() => {
@@ -25,25 +18,6 @@ export default function MenuBtn(props) {
     }
   }
 
-  const handleDelete = () => {
-    bitsFetch({ id: props.formID }, 'bitapps_delete_aform').then(response => {
-      if (response.success) {
-        allFormsDispatchHandler({ type: 'remove', data: props.index })
-        setSnackbar({ show: true, msg: 'Form Deleted !' })
-      }
-    })
-  }
-
-  const handleDuplicate = () => {
-    bitsFetch({ id: props.formID }, 'bitapps_duplicate_aform').then(response => {
-      if (response.success) {
-        const { data } = response
-        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
-        setSnackbar({ show: true, msg: 'Form Duplicated Successfully.' })
-      }
-    })
-  }
-
   return (
     <div className="btcd-menu">
       <button className="btcd-menu-btn btcd-mnu sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
@@ -53,12 +27,12 @@ export default function MenuBtn(props) {
           {'  '}
           Edit
         </Link>
-        <button type="button" aria-label="actions" onClick={handleDuplicate}>
+        <button type="button" aria-label="actions" onClick={props.dup}>
           <span className="btcd-icn icn-copy" />
           {'  '}
           Duplicate
         </button>
-        <button type="button" aria-label="actions" onClick={handleDelete}>
+        <button type="button" aria-label="actions" onClick={props.del}>
           <span className="btcd-icn icn-trash-2" />
           {'  '}
           Delete

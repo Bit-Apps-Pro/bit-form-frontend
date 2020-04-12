@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
-import ConfType from './ConfType'
-import EmailTemplate from './EmailTemplate'
-import Workflow from './Workflow'
+import ConfType from '../components/ConfType'
+import EmailTemplate from '../components/EmailTemplate'
+import Workflow from '../components/Workflow'
 import bitsFetch from '../Utils/bitsFetch'
-import EmailTemplateEdit from './EmailTemplateEdit'
-import Integrations from './Integrations'
+import EmailTemplateEdit from '../components/EmailTemplateEdit'
+import Integrations from '../components/Integrations'
+import FSettingsLoader from '../components/Loaders/FSettingsLoader'
+
+const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
 export default function FormSettings(props) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
@@ -44,8 +47,12 @@ export default function FormSettings(props) {
         <br />
         <br />
         <NavLink to={`/builder/${formType}/${formID}/settings/form-settings`} activeClassName="btcd-f-a">
-          <span className="btcd-icn icn-file" />
+          <span className="btcd-icn icn-params" />
           Form Settings
+        </NavLink>
+        <NavLink to={`/builder/${formType}/${formID}/settings/confirmations`} activeClassName="btcd-f-a">
+          <span className="btcd-icn icn-information-outline" />
+          Confirmations
         </NavLink>
         <NavLink to={`/builder/${formType}/${formID}/settings/workflow`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-flow-tree" />
@@ -64,6 +71,11 @@ export default function FormSettings(props) {
       <div className="btcd-s-wrp">
         <Switch>
           <Route path={`${path}form-settings`}>
+            <Suspense fallback={<FSettingsLoader />}>
+              <SingleFormSettings additional={props.additional} setadditional={props.setadditional} />
+            </Suspense>
+          </Route>
+          <Route path={`${path}confirmations`}>
             <ConfType formFields={formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
           </Route>
           <Route exact path={`${path}email-templates`}>
