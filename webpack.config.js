@@ -20,6 +20,8 @@ module.exports = (env, argv) => {
       filename: '[name].js',
       path: path.resolve('../assets/js/'),
       chunkFilename: '[name].js',
+      library: '[name]',
+      libraryTarget: 'umd',
     },
 
     optimization: {

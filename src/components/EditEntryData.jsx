@@ -8,7 +8,7 @@ import Bitapps from '../user-frontend/Bitapps'
 
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
-  const { formID } = props
+  const { formID, entryID } = props
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
@@ -19,7 +19,7 @@ export default function EditEntryData(props) {
 
   useEffect(() => {
     setshowEdit(true)
-    bitsFetch({ formID, entryID: formID }, 'bitapps_edit_form_entry')
+    bitsFetch({ formID, entryID }, 'bitapps_edit_form_entry')
       .then(res => {
         if (res !== undefined && res.success) {
           setData({ layout: res.data.layout, fields: res.data.fields })
