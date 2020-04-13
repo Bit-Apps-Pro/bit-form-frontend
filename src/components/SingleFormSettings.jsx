@@ -436,6 +436,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <button onClick={addMorePrivateIp} className="icn-btn sh-sm mt-1" type="button">+</button>
         </div>
       </Accordions>
+      <div className="mb-4 mt-4"><br /></div>
     </div>
   )
 }
