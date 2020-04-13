@@ -7,6 +7,31 @@ function CompGen(props) {
   console.log('%c $render CompGen', 'background:red;padding:3px;border-radius:5px;color:white')
 
   const textField = attr => (
+    (
+      !('hide' in attr.valid && attr.valid.hide === true)
+      && (
+        <div className="text-wrp drag" btcd-fld="text-fld">
+          {'lbl' in attr && <label>{attr.lbl}</label>}
+          {createElement(
+            'input',
+            {
+              className: 'txt-fld no-drg',
+              type: attr.typ,
+              ...('req' in attr.valid && { required: attr.valid.req }),
+              ...('disabled' in attr.valid && { disabled: attr.valid.disabled }),
+              ...('ph' in attr && { placeholder: attr.ph }),
+              ...('mn' in attr && { min: attr.mn }),
+              ...('mx' in attr && { max: attr.mx }),
+              ...('val' in attr && { defaultValue: attr.val }),
+              ...('ac' in attr && { autoComplete: attr.ac }),
+              ...('name' in attr && { name: attr.name }),
+            },
+          )}
+        </div>
+      )
+    )
+  )
+  const hiddenField = attr => (
     <div className="text-wrp drag" btcd-fld="text-fld">
       {'lbl' in attr && <label>{attr.lbl}</label>}
       {createElement(
@@ -27,18 +52,23 @@ function CompGen(props) {
   )
 
   const textArea = attr => (
-    <div className="text-wrp drag" btcd-fld="textarea">
-      {'lbl' in attr && <label>{attr.lbl}</label>}
-      <textarea
-        className="txt-fld no-drg"
-        {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'ph' in attr && { placeholder: attr.ph }}
-        {...'val' in attr && { defaultValue: attr.val }}
-        {...'ac' in attr && { autoComplete: attr.ac }}
-        {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'name' in attr && { name: attr.name }}
-      />
-    </div>
+    (
+      !('hide' in attr.valid && attr.valid.hide === true)
+      && (
+        <div className="text-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label>{attr.lbl}</label>}
+          <textarea
+            className="txt-fld no-drg"
+            {...'ph' in attr && { placeholder: attr.ph }}
+            {...'val' in attr && { defaultValue: attr.val }}
+            {...'ac' in attr && { autoComplete: attr.ac }}
+            {...'req' in attr.valid && { required: attr.valid.req }}
+            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+            {...'name' in attr && { name: attr.name }}
+          />
+        </div>
+      )
+    )
   )
 
 
@@ -46,24 +76,29 @@ function CompGen(props) {
     const vals = 'val' in attr && attr.val !== '' ? JSON.parse(attr.val) : null
 
     return (
-      <div className="text-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
-        <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
-          {attr.opt.map((itm, i) => (
-            <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
-              <span>{itm.lbl}</span>
-              <input
-                type="checkbox"
-                {...itm.check && { checked: true }}
-                {...itm.req && { required: true }}
-                {...'name' in attr && { name: `${attr.name}[]` }}
-                {...vals !== null && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-              />
-              <span className="btcd-mrk ck" />
-            </label>
-          ))}
-        </div>
-      </div>
+      (
+        !('hide' in attr.valid && attr.valid.hide === true)
+        && (
+          <div className="text-wrp drag" btcd-fld="textarea">
+            {'lbl' in attr && <label>{attr.lbl}</label>}
+            <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
+              {attr.opt.map((itm, i) => (
+                <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
+                  <span>{itm.lbl}</span>
+                  <input
+                    type="checkbox"
+                    {...itm.check && { checked: true }}
+                    {...itm.req && { required: true }}
+                    {...'name' in attr && { name: `${attr.name}[]` }}
+                    {...vals !== null && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                  />
+                  <span className="btcd-mrk ck" />
+                </label>
+              ))}
+            </div>
+          </div>
+        )
+      )
     )
   }
 
@@ -71,26 +106,31 @@ function CompGen(props) {
     const n = Math.random()
 
     return (
-      <div className="text-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
-        <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
-          {attr.opt.map((itm, i) => (
-            <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
-              <span>{itm.lbl}</span>
-              <input
-                type="radio"
-                name={n}
-                {...itm.check && { checked: true }}
-                {...itm.req && { required: true }}
-                {...'name' in attr && { name: attr.name }}
-                {...'lbl' in itm && { defaultValue: itm.lbl }}
-                {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
-              />
-              <span className="btcd-mrk rdo" />
-            </label>
-          ))}
-        </div>
-      </div>
+      (
+        !('hide' in attr.valid && attr.valid.hide === true)
+        && (
+          <div className="text-wrp drag" btcd-fld="textarea">
+            {'lbl' in attr && <label>{attr.lbl}</label>}
+            <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
+              {attr.opt.map((itm, i) => (
+                <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
+                  <span>{itm.lbl}</span>
+                  <input
+                    type="radio"
+                    name={n}
+                    {...itm.check && { checked: true }}
+                    {...itm.req && { required: true }}
+                    {...'name' in attr && { name: attr.name }}
+                    {...'lbl' in itm && { defaultValue: itm.lbl }}
+                    {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
+                  />
+                  <span className="btcd-mrk rdo" />
+                </label>
+              ))}
+            </div>
+          </div>
+        )
+      )
     )
   }
 
@@ -99,23 +139,29 @@ function CompGen(props) {
   )
 
   const dropDown = (attr) => (
-    <div className="text-wrp drag" btcd-fld="textarea">
-      {'lbl' in attr && <label>{attr.lbl}</label>}
-      <select
-        className="txt-fld slim no-drg"
-        {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'mul' in attr && { multiple: attr.mul }}
-        {...'ph' in attr && { placeholder: attr.ph }}
-        {...'name' in attr && { name: attr.name }}
-        {...'val' in attr && { value: attr.val }}
-        {...'name' in attr && { name: attr.name }}
-      >
-        <option data-placeholder="true" aria-label="option placeholder" />
-        {attr.opt.map((itm, i) => (
-          <option key={`op-${i + 87}`} value={itm.lbl}>{itm.lbl}</option>
-        ))}
-      </select>
-    </div>
+    (
+      !('hide' in attr.valid && attr.valid.hide === true)
+      && (
+        <div className="text-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label>{attr.lbl}</label>}
+          <select
+            className="txt-fld slim no-drg"
+            {...'req' in attr.valid && { required: attr.valid.req }}
+            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+            {...'mul' in attr && { multiple: attr.mul }}
+            {...'ph' in attr && { placeholder: attr.ph }}
+            {...'name' in attr && { name: attr.name }}
+            {...'val' in attr && { value: attr.val }}
+            {...'name' in attr && { name: attr.name }}
+          >
+            <option data-placeholder="true" aria-label="option placeholder" />
+            {attr.opt.map((itm, i) => (
+              <option key={`op-${i + 87}`} value={itm.lbl}>{itm.lbl}</option>
+            ))}
+          </select>
+        </div>
+      )
+    )
   )
 
   const submitBtns = (attr) => (
@@ -125,7 +171,7 @@ function CompGen(props) {
         <button
           className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
           type="button"
-        //onClick={() => { document.getElementById(`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`).reset() }}
+        // onClick={() => { document.getElementById(`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`).reset() }}
         >
           {attr.rstBtnTxt}
         </button>
@@ -161,6 +207,8 @@ function CompGen(props) {
       return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} />
     case 'submit':
       return submitBtns(props.atts)
+    case 'hidden':
+      return hiddenField(props.atts)
     default:
       break
   }
@@ -203,6 +251,7 @@ function FileUp({ attr, formID, entryID }) {
           <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
           <input
             {...'req' in attr.valid && { required: attr.valid.req }}
+            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
             {...'mul' in attr && { multiple: true }}
             {...'exts' in attr && { accept: attr.exts }}
             {...'name' in attr && { name: attr.name }}
