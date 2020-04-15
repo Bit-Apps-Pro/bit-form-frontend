@@ -218,6 +218,7 @@ function Builder(props) {
             setFormName(responseData.form_content.form_name)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)
+            setadditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
             setisLoading(false)
@@ -244,6 +245,7 @@ function Builder(props) {
       workFlows,
       mailTem,
       integrations,
+      additional,
     }
     let action = 'bitapps_create_new_form'
     if (savedFormId > 0) {
@@ -254,6 +256,7 @@ function Builder(props) {
         form_name: formName,
         formSettings,
         workFlows,
+        additional,
       }
       action = 'bitapps_update_form'
     }
@@ -274,7 +277,11 @@ function Builder(props) {
             }
             allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
           } else if (action === 'bitapps_update_form') {
-            setSnackbar({ show: true, msg: 'Form Updated Successfully.' })
+            setSnackbar({ show: true, msg: data.message })
+            if ('formSettings' in data) setFormSettings(data.formSettings)
+            if ('workFlows' in data) setworkFlows(data.workFlows)
+            if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
+            if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
             allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
         }

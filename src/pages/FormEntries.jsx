@@ -69,20 +69,20 @@ function FormEntries() {
           }
         })
     }
-    setTimeout(() => {
-      if (fetchId === fetchIdRef.current) {
-        const startRow = pageSize * pageIndex
-        bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
-          if (res !== undefined && res.success) {
-            if (totalData > 0) {
-              setPageCount(Math.ceil(totalData / pageSize))
-            }
-            setAllResp(res.data)
+    // setTimeout(() => {
+    if (fetchId === fetchIdRef.current) {
+      const startRow = pageSize * pageIndex
+      bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
+        if (res !== undefined && res.success) {
+          if (totalData > 0) {
+            setPageCount(Math.ceil(totalData / pageSize))
           }
-          setisloading(false)
-        })
-      }
-    }, 1000)
+          setAllResp(res.data)
+        }
+        setisloading(false)
+      })
+    }
+    // }, 1000)
   }, [delConfMdl, dupConfMdl, editData, formID])
 
   const setBulkDelete = useCallback((rows, tmpData) => {
@@ -233,7 +233,7 @@ function FormEntries() {
                   <th>{itm.column.Header}</th>
                   <td>{itm.value}</td>
                 </tr>
-            ))}
+              ))}
           </tbody>
         </table>
       </Drawer>

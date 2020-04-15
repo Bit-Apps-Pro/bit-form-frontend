@@ -654,7 +654,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
                             <option value="">Select Message</option>
-                            {formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            {'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -665,7 +665,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
                             <option value="">Select Page To Redirect</option>
-                            {formSettings.confirmation.type.redirectPage.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            {'redirectPage' in formSettings.confirmation.type && formSettings.confirmation.type.redirectPage.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -730,7 +730,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                 <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                   <option value="">Select Message</option>
-                  {formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.title}>{itm.title}</option>)}
+                  {'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.title}>{itm.title}</option>)}
                 </MtSelect>
               )}
 
