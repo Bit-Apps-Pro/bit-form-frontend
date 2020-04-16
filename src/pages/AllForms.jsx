@@ -9,7 +9,7 @@ import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
 import Modal from '../components/Modal'
 import FormTemplates from '../components/FormTemplates'
 import bitsFetch from '../Utils/bitsFetch'
-import { BitappsContext } from '../Utils/BitappsContext'
+import { AllFormContext } from '../Utils/AllFormContext'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
@@ -17,7 +17,7 @@ function AllFroms() {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
 
   const [modal, setModal] = useState(false)
-  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsData } = useContext(AllFormContext)
   const [snack, setSnackbar] = useState({ show: false })
   const { allForms, allFormsDispatchHandler } = allFormsData
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
@@ -37,6 +37,15 @@ function AllFroms() {
       })
   }
 
+  const formatDate = dt => {
+    const d = new Date(dt)
+    const ye = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d)
+    const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
+    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+    const hr = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(d)
+    return `${da}-${mo}-${ye} ${hr}`
+  }
+
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
@@ -44,7 +53,7 @@ function AllFroms() {
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
-    { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at' },
+    { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at', Cell: row => formatDate(row.row.original.created_at) },
     { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} del={() => showDelModal(val.row.original.formID)} dup={(e) => showDupMdl(val.row.original.formID)} /> },
   ])
 
