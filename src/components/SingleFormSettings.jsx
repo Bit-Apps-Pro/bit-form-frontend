@@ -414,8 +414,8 @@ export default function SingleFormSettings({ additional, setadditional }) {
         <div>
           <b>Note:</b>
           {' '}
-          By enabling this option, this form will not appear in public anymore,
-          only listed IP can access this form.
+          By enabling this option, this form will not be able to sumbit in public anymore,
+          only listed IP can submit this form.
         </div>
 
         {'private_ip' in additional.settings && additional.settings.private_ip.length > 0 && (

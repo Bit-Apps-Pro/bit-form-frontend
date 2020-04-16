@@ -22,7 +22,7 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
         <div className="btcd-accr-title w-10">
           <div>
             {customTitle}
-            {title && <input title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />}
+            {title !== undefined && <input title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />}
             {titleEditable && <div className="edit" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span className="btcd-icn icn-edit" style={{ color: tgl ? 'white' : 'gray' }} /></div>}
             {!tgl && header}
           </div>

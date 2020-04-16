@@ -1,25 +1,33 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink, useParams, useHistory } from 'react-router-dom'
 
 function EmailTemplateEdit({ mailTem, setMailTem }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
+  const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
+
   const { formType, formID, id } = useParams()
+  const history = useHistory()
 
   const handleTitle = e => {
-    mailTem[id].title = e.target.value
-    setMailTem([...mailTem])
+    tem.title = e.target.value
+    setTem({ ...tem })
   }
 
   const handleSubject = e => {
-    mailTem[id].sub = e.target.value
-    setMailTem([...mailTem])
+    tem.sub = e.target.value
+    setTem({ ...tem })
   }
 
   const handleBody = e => {
-    mailTem[id].body = e.target.value
+    tem.body = e.target.value
+    setTem({ ...tem })
+  }
+  const save = () => {
+    mailTem.push(tem)
     setMailTem([...mailTem])
+    history.push(`/builder/${formType}/${formID}/settings/email-templates`)
   }
 
   return (
@@ -30,13 +38,15 @@ function EmailTemplateEdit({ mailTem, setMailTem }) {
         Back
       </NavLink>
 
+      <button onClick={save} className="btn blue f-right" type="button">Save</button>
+
       <div className="mt-3 flx">
         <b style={{ width: 135 }}>Template Name: </b>
-        <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={mailTem[id].title} />
+        <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={tem.title} />
       </div>
       <div className="mt-3 flx">
         <b style={{ width: 135 }}>Subject:</b>
-        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={mailTem[id].sub} />
+        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
       </div>
 
       <div className="mt-3">
@@ -48,7 +58,7 @@ function EmailTemplateEdit({ mailTem, setMailTem }) {
             onChange={handleBody}
             className="btcd-editor btcd-paper-inp mt-1"
             rows="5"
-            value={mailTem[id].body}
+            value={tem.body}
           />
         </label>
       </div>

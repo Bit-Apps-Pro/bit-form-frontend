@@ -60,7 +60,10 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   }
 
   const addMoreMsg = () => {
-    if ('successMsg' in formSettings.confirmation.type) {
+    if (!('confirmation' in formSettings)) {
+      formSettings.confirmation = { type: { successMsg: [] } }
+      formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+    } else if ('successMsg' in formSettings.confirmation.type) {
       formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     } else {
       formSettings.confirmation.type.successMsg = []
@@ -108,31 +111,38 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         btnTxt="Delete"
         close={closeMdl}
       />
-      {formSettings.confirmation.type.successMsg !== undefined && formSettings.confirmation.type.successMsg.map((itm, i) => (
-        <div key={`f-m-${i + 1}`} className="flx btcd-conf-list">
-          <Accordions
-            title={itm.title}
-            titleEditable
-            cls="mt-2 mr-2"
-            onTitleChange={e => handleMsgTitle(e, i)}
-          >
-            <div className="flx flx-between">
-              <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
-                <option value="">Add form field</option>
-                {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
-              </select>
-            </div>
-            <textarea
-              onChange={e => handleMsgMsg(e.target.value, i)}
-              className="btcd-paper-inp btcd-editor"
-              rows="5"
-              value={itm.msg}
-              data-idx={i}
-            />
-          </Accordions>
-          <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-        </div>
-      ))}
+      {'confirmation' in formSettings
+        && formSettings.confirmation.type.successMsg !== undefined
+        ? formSettings.confirmation.type.successMsg.map((itm, i) => (
+          <div key={`f-m-${i + 1}`} className="flx btcd-conf-list">
+            <Accordions
+              title={itm.title}
+              titleEditable
+              cls="mt-2 mr-2"
+              onTitleChange={e => handleMsgTitle(e, i)}
+            >
+              <div className="flx flx-between">
+                <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
+                  <option value="">Add form field</option>
+                  {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+                </select>
+              </div>
+              <textarea
+                onChange={e => handleMsgMsg(e.target.value, i)}
+                className="btcd-paper-inp btcd-editor mt-2"
+                rows="5"
+                value={itm.msg}
+                data-idx={i}
+              />
+            </Accordions>
+            <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          </div>
+        )) : (
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
+            Empty
+          </div>
+        )}
       <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><b>+</b></Button></div>
     </div>
   )

@@ -59,7 +59,11 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
   }
 
   const addMoreHook = () => {
-    if ('webHooks' in formSettings.confirmation.type) {
+    if (!('confirmation' in formSettings)) {
+      // eslint-disable-next-line no-param-reassign
+      formSettings.confirmation = { type: { webHooks: [] } }
+      formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
+    } else if ('webHooks' in formSettings.confirmation.type) {
       formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     } else {
       // eslint-disable-next-line no-param-reassign
@@ -102,61 +106,68 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
         btnTxt="Delete"
         close={closeMdl}
       />
-      {formSettings.confirmation.type.webHooks !== undefined && formSettings.confirmation.type.webHooks.map((itm, i) => (
-        <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
-          <Accordions
-            title={itm.title}
-            titleEditable
-            cls="mt-2 mr-2"
-            onTitleChange={e => handleHookTitle(e, i)}
-          >
-            <div className="flx">
-              <div className="w-7 mr-2">
-                <div className="f-m">Link:</div>
-                <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
-              </div>
-
-              <div className="w-3">
-                <div className="f-m">Method:</div>
-                <select onChange={e => handleMethod(e.target.value, i)} defaultValue={itm.method} className="btcd-paper-inp">
-                  <option value="GET">GET</option>
-                  <option value="POST">POST</option>
-                  <option value="PUT">PUT</option>
-                  <option value="PATCH">PATCH</option>
-                  <option value="OPTION">OPTION</option>
-                  <option value="DELETE">DELETE</option>
-                  <option value="TRACE">TRACE</option>
-                  <option value="CONNECT">CONNECT</option>
-                </select>
-              </div>
-            </div>
-            <br />
-            <br />
-            <div className="f-m">Add Url Parameter: (optional)</div>
-            <div className="btcd-param-t-wrp mt-1">
-              <div className="btcd-param-t">
-                <div className="tr">
-                  <div className="td">Key</div>
-                  <div className="td">Value</div>
+      {'confirmation' in formSettings
+        && formSettings.confirmation.type.webHooks !== undefined
+        ? formSettings.confirmation.type.webHooks.map((itm, i) => (
+          <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
+            <Accordions
+              title={itm.title}
+              titleEditable
+              cls="mt-2 mr-2"
+              onTitleChange={e => handleHookTitle(e, i)}
+            >
+              <div className="flx">
+                <div className="w-7 mr-2">
+                  <div className="f-m">Link:</div>
+                  <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
                 </div>
-                {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
-                  <div key={`url-p-${childIdx + 11}`} className="tr">
-                    <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
-                    <div className="td">
-                      <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
-                    </div>
-                    <div className="flx p-atn mt-1">
-                      <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                    </div>
-                  </div>
-                ))}
-                <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
+
+                <div className="w-3">
+                  <div className="f-m">Method:</div>
+                  <select onChange={e => handleMethod(e.target.value, i)} defaultValue={itm.method} className="btcd-paper-inp">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="OPTION">OPTION</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="TRACE">TRACE</option>
+                    <option value="CONNECT">CONNECT</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </Accordions>
-          <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-        </div>
-      ))}
+              <br />
+              <br />
+              <div className="f-m">Add Url Parameter: (optional)</div>
+              <div className="btcd-param-t-wrp mt-1">
+                <div className="btcd-param-t">
+                  <div className="tr">
+                    <div className="td">Key</div>
+                    <div className="td">Value</div>
+                  </div>
+                  {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
+                    <div key={`url-p-${childIdx + 11}`} className="tr">
+                      <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
+                      <div className="td">
+                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
+                      </div>
+                      <div className="flx p-atn">
+                        <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+                      </div>
+                    </div>
+                  ))}
+                  <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
+                </div>
+              </div>
+            </Accordions>
+            <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          </div>
+        )) : (
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
+            Empty
+          </div>
+        )}
       <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><b>+</b></Button></div>
     </div>
   )

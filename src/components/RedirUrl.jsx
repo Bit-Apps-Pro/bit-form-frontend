@@ -79,7 +79,11 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
   }
 
   const addMoreUrl = () => {
-    if ('redirectPage' in formSettings.confirmation.type) {
+    if (!('confirmation' in formSettings)) {
+      // eslint-disable-next-line no-param-reassign
+      formSettings.confirmation = { type: { redirectPage: [] } }
+      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
+    } else if ('redirectPage' in formSettings.confirmation.type) {
       formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
     } else {
       // eslint-disable-next-line no-param-reassign
@@ -122,59 +126,66 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
         btnTxt="Delete"
         close={closeMdl}
       />
-      {formSettings.confirmation.type.redirectPage !== undefined && formSettings.confirmation.type.redirectPage.map((itm, i) => (
-        <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
-          <Accordions
-            title={itm.title}
-            titleEditable
-            cls="mt-2 mr-2"
-            onTitleChange={e => handleUrlTitle(e, i)}
-          >
-            <div className="f-m">Select A Page:</div>
-            <select className="btcd-paper-inp" onChange={e => handlePage(e, i)}>
-              <option value="">Custom Link</option>
-              {redirectUrls
-                && redirectUrls.map((urlDetail) => (
-                  <option value={urlDetail.url}>{urlDetail.title}</option>
-                ))}
-            </select>
-            <br />
-            <br />
-            <div className="f-m">Link:</div>
-            <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
-            <br />
-            <br />
-            <div className="f-m">Add Url Parameter: (optional)</div>
-            <div className="btcd-param-t-wrp mt-1">
-              <div className="btcd-param-t">
-                <div className="tr">
-                  <div className="td">Key</div>
-                  <div className="td">Value</div>
-                </div>
-                {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
-                  <div key={`url-p-${childIdx + 21}`} className="tr">
-                    <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
-                    <div className="td">
-                      <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
-                    </div>
-                    <div className="flx p-atn mt-1">
-                      <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                      <span className="tooltip" style={{ '--tooltip-txt': '"Get Form Field"', position: 'relative' }}>
-                        <select className="btcd-paper-inp p-i-sm" onChange={e => getFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
-                          <option disabled>Select From Field</option>
-                          {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
-                        </select>
-                      </span>
-                    </div>
+      {'confirmation' in formSettings
+        && formSettings.confirmation.type.redirectPage !== undefined
+        ? formSettings.confirmation.type.redirectPage.map((itm, i) => (
+          <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
+            <Accordions
+              title={itm.title}
+              titleEditable
+              cls="mt-2 mr-2"
+              onTitleChange={e => handleUrlTitle(e, i)}
+            >
+              <div className="f-m">Select A Page:</div>
+              <select className="btcd-paper-inp" onChange={e => handlePage(e, i)}>
+                <option value="">Custom Link</option>
+                {redirectUrls
+                  && redirectUrls.map((urlDetail) => (
+                    <option value={urlDetail.url}>{urlDetail.title}</option>
+                  ))}
+              </select>
+              <br />
+              <br />
+              <div className="f-m">Link:</div>
+              <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
+              <br />
+              <br />
+              <div className="f-m">Add Url Parameter: (optional)</div>
+              <div className="btcd-param-t-wrp mt-1">
+                <div className="btcd-param-t">
+                  <div className="tr">
+                    <div className="td">Key</div>
+                    <div className="td">Value</div>
                   </div>
-                ))}
-                <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
+                  {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
+                    <div key={`url-p-${childIdx + 21}`} className="tr">
+                      <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
+                      <div className="td">
+                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
+                      </div>
+                      <div className="flx p-atn">
+                        <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+                        <span className="tooltip" style={{ '--tooltip-txt': '"Get Form Field"', position: 'relative' }}>
+                          <select className="btcd-paper-inp p-i-sm" onChange={e => getFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
+                            <option disabled>Select From Field</option>
+                            {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+                          </select>
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                  <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
+                </div>
               </div>
-            </div>
-          </Accordions>
-          <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-        </div>
-      ))}
+            </Accordions>
+            <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+          </div>
+        )) : (
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
+            Empty
+          </div>
+        )}
       <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>
     </div>
   )
