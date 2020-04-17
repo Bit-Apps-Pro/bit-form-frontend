@@ -26,7 +26,10 @@ function DropDown(props) {
     <div className={`${props.titleClassName}`}>
       <span>{props.title}</span>
       <select value={props.value} ref={s} multiple={props.isMultiple} onChange={props.action} className={`${props.className}`}>
-        {props.options.map(item => <option key={`key${item.name}`} value={item.value}>{item.name}</option>)}
+        {console.log(props.options)}
+        {props.options !== null
+          && props.options !== false
+          && props.options.map(item => <option key={`key${item.name}`} value={item.value}>{item.name}</option>)}
       </select>
     </div>
   )

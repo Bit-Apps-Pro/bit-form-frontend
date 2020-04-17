@@ -3,7 +3,7 @@ import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
-import { BitappsContext } from '../Utils/BitappsContext'
+import { AllFormContext } from '../Utils/AllFormContext'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 
@@ -21,7 +21,7 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const { allFormsData } = useContext(BitappsContext)
+  const { allFormsData } = useContext(AllFormContext)
   const [snack, setSnackbar] = useState({ show: false })
   const { allFormsDispatchHandler } = allFormsData
 
@@ -63,106 +63,15 @@ function Builder(props) {
     rstBtnTxt: 'Reset',
   })
 
-  const [mailTem, setMailTem] = useState([
-    { title: 'Template 1', sub: 'Email Subject', body: 'Email Body' },
-    { title: 'Template 2', sub: 'Mail Subject', body: 'Email Body' },
-  ])
+  const [mailTem, setMailTem] = useState([])
 
-  const [integrations, setIntegration] = useState([
-    { name: 'Integration 1', type: 'Zoho Marketing Hub' },
-    { name: 'Integration 2', type: 'Zoho Recruit' },
-    { name: 'Zoho CRM API', type: 'Zoho CRM', email: '', pass: '', module: 'Leads', layout: 'Standard', field_map: [{ formField: '', zohoFormField: '' }], actions: ['Workflow', 'Approval'] },
-  ])
+  const [integrations, setIntegration] = useState([])
 
-  const [workFlows, setworkFlows] = useState([
-    {
-      title: 'Action',
-      action_run: 'create_edit',
-      action_type: 'onload',
-      action_behaviour: 'cond',
-      logics: [
-        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
-        'or',
-        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
-        'or',
-        [
-          { field: 'fld-1', logic: 'eqal', val: 'ccc' },
-          'or',
-          { field: 'fld-1', logic: 'eqal', val: 'ddd' },
-          'or',
-          [
-            { field: 'fld-1', logic: 'eqal', val: 'eee' },
-            'and',
-            { field: 'fld-1', logic: 'eqal', val: 'fff' },
-            'and',
-            { field: 'fld-1', logic: 'eqal', val: 'ggg' },
-          ],
-        ],
-        'and',
-        { field: 'fld-1', logic: 'eqal', val: 'hhh' },
-        'or',
-        { field: 'fld-1', logic: 'eqal', val: 'iii' },
-      ],
-      actions: [
-        { field: 'fld-1', action: 'show' },
-        { field: 'fld-1', action: 'hide' },
-        { field: 'fld-1', action: 'hide' },
-      ],
-      successAction: [],
-    },
-    {
-      title: 'Action asd',
-      action_type: 'onsubmit',
-      action_run: 'edit',
-      action_behaviour: 'always',
-      logics: [
-        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
-        'or',
-        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
-      ],
-      actions: [
-        { field: 'fld-1', action: 'value' },
-      ],
-      successAction: [
-        {
-          type: 'successMsg',
-          details: {
-            id: 0,
-          },
-        },
-        {
-          type: 'redirectPage',
-          details: {
-            id: 0,
-          },
-        },
-        {
-          type: 'webHooks',
-          details: {
-            id: [0],
-          },
-        },
-        {
-          type: 'mailNotify',
-          details: {
-            tem: 0,
-            to: ['admin', 'custom@mail.com'],
-            cc: ['admin', 'custom@mail.com'],
-            bcc: ['admin', 'custom@mail.com'],
-          },
-        },
-      ],
-    },
-  ])
+  const [workFlows, setworkFlows] = useState([])
 
   const [additional, setadditional] = useState({
-    enabled: { captcha: true, blocked_ip: true },
-    settings: {
-      restrict_form: { day: ['Custom'], date: { from: new Date(), to: new Date() }, time: { from: '00:00', to: '23:59' } },
-      entry_limit: 100,
-      blocked_ip: [{ ip: '127.0.2.3', status: true }, { ip: '122.43.545.7', status: false }],
-    },
-    onePerIp: true,
+    enabled: {},
+    settings: {},
   })
 
   const [formSettings, setFormSettings] = useState({
@@ -198,7 +107,6 @@ function Builder(props) {
               setNewCounter(responseData.form_content.layout.length)
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
-              console.log(responseData.form_content.layout, responseData.form_content.fields)
             } else {
               setisLoading(false)
             }

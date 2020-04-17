@@ -5,7 +5,7 @@ import 'react-app-polyfill/stable'
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
-import { BitappsContextProvider } from './Utils/BitappsContext'
+import { AllFormContextProvider } from './Utils/AllFormContext'
 import Loader from './components/Loaders/Loader'
 
 const App = lazy(() => import('./App'))
@@ -15,8 +15,8 @@ if (process.env.NODE_ENV === 'production' && typeof bits.assetsURL !== 'undefine
   __webpack_public_path__ = `${bits.assetsURL}/js/`
 }
 ReactDOM.render(
-  <BitappsContextProvider>
+  <AllFormContextProvider>
     <Suspense fallback={<Loader />}><App /></Suspense>
-  </BitappsContextProvider>, document.getElementById('btcd-app'),
+  </AllFormContextProvider>, document.getElementById('btcd-app'),
 )
 serviceWorker.unregister();

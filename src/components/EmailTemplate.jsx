@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, useRouteMatch } from 'react-router-dom'
+import { NavLink, useRouteMatch, Link } from 'react-router-dom'
 import Table from './Table'
 import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'
@@ -44,6 +44,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
+
   const temDupConf = i => {
     confMdl.btnTxt = 'Dulicate'
     confMdl.body = 'Are you sure to duplicate this template'
@@ -51,11 +52,6 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
     confMdl.action = () => { duplicateTem(i); closeConfMdl() }
     confMdl.show = true
     setconfMdl({ ...confMdl })
-  }
-
-  const addTem = () => {
-    mailTem.push({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
-    setMailTem([...mailTem])
   }
 
   const col = [
@@ -91,13 +87,25 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
       />
       <h2>Email Templates</h2>
       <div className="">
-        <button onClick={addTem} type="button" className="btn blue sh-sm">Add a Template</button>
-        <Table
-          height="60vh"
-          className="btcd-neu-table"
-          columns={col}
-          data={mailTem}
-        />
+        <Link to={`${url}/new`} className="btn blue sh-sm">
+          <span className="btcd-icn icn-layout" />
+          &nbsp;Add New Template
+        </Link>
+        {mailTem.length > 0 ? (
+          <Table
+            height="60vh"
+            className="btcd-neu-table"
+            columns={col}
+            data={mailTem}
+          />
+        )
+          : (
+            <div className="txt-center btcd-empty">
+              <span className="btcd-icn icn-stack" />
+              Empty
+            </div>
+          )}
+
 
       </div>
     </div>

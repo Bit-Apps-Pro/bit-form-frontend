@@ -7,6 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
+import '../resource/css/grid-layout.css'
 
 function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
@@ -199,10 +200,10 @@ function GridLayout(props) {
               rowHeight={40}
               width={props.width - 15}
               margin={[0, 0]}
+              containerPadding={[1, 1]}
               draggableCancel=".no-drg"
               draggableHandle=".drag"
               useCSSTransforms
-              containerPadding={[1, 1]}
             // layouts={props.lay}
             // onBreakpointChange={onBreakpointChange}
             // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}

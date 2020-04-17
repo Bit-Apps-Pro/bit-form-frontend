@@ -43,6 +43,23 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
   )
 }
 
+function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
+  return (
+    <Menu icn="icn-remove_red_eye">
+      <Scrollbars autoHide style={{ width: 200 }}>
+        <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
+          {tableCol.map((column, i) => (
+            <div key={tableAllCols[i + 1].id} className={`btcd-pane ${(column.Header === 'Actions' || typeof column.Header === 'object') && 'd-non'}`}>
+              <TableCheckBox cls="scl-7" id={tableAllCols[i + 1].id} title={column.Header} rest={tableAllCols[i + 1].getToggleHiddenProps()} />
+              <span className="btcd-pane-drg">&#8759;</span>
+            </div>
+          ))}
+        </ReactSortable>
+      </Scrollbars>
+    </Menu>
+  )
+}
+
 function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
@@ -167,21 +184,9 @@ function Table(props) {
       />
       <div className="btcd-t-actions">
         <div className="flx">
-          {props.columnHidable
-            && (
-              <Menu icn="icn-remove_red_eye">
-                <Scrollbars autoHide style={{ width: 200 }}>
-                  <ReactSortable list={props.columns} setList={props.setTableCols} handle=".btcd-pane-drg">
-                    {columns.map((column, i) => (
-                      <div key={allColumns[i + 1].id} className="btcd-pane">
-                        <TableCheckBox cls="scl-7" id={allColumns[i + 1].id} title={column.Header} rest={allColumns[i + 1].getToggleHiddenProps()} />
-                        <span className="btcd-pane-drg">&#8759;</span>
-                      </div>
-                    ))}
-                  </ReactSortable>
-                </Scrollbars>
-              </Menu>
-            )}
+
+          {props.columnHidable && <ColumnHide cols={props.columns} setCols={props.setTableCols} tableCol={columns} tableAllCols={allColumns} />}
+
           {props.rowSeletable && selectedFlatRows.length > 0
             && (
               <>
@@ -313,6 +318,7 @@ function Table(props) {
         </small>
         <label>
           <select
+          className="btcd-paper-inp"
             value={pageSize}
             onChange={e => {
               setPageSize(Number(e.target.value));

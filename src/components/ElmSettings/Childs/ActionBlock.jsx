@@ -39,6 +39,7 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
     <div className="flx pos-rel btcd-logic-blk">
       <MtSelect
         label="Form Fields"
+        value={action.field}
         onChange={e => changeAtnField(e.target.value)}
       >
         {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}

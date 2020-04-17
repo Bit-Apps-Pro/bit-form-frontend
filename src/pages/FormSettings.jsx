@@ -5,6 +5,7 @@ import EmailTemplate from '../components/EmailTemplate'
 import Workflow from '../components/Workflow'
 import bitsFetch from '../Utils/bitsFetch'
 import EmailTemplateEdit from '../components/EmailTemplateEdit'
+import EmailTemplateNew from '../components/EmailTemplateNew'
 import Integrations from '../components/Integrations'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 
@@ -80,6 +81,9 @@ export default function FormSettings(props) {
           </Route>
           <Route exact path={`${path}email-templates`}>
             <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} formID={formID} />
+          </Route>
+          <Route exact path={`${path}email-templates/new`}>
+            <EmailTemplateNew mailTem={props.mailTem} setMailTem={props.setMailTem} />
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
             <EmailTemplateEdit mailTem={props.mailTem} setMailTem={props.setMailTem} />
