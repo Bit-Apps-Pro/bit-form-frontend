@@ -89,6 +89,7 @@ function CompGen(props) {
                     type="checkbox"
                     {...itm.check && { checked: true }}
                     {...itm.req && { required: true }}
+                    {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'name' in attr && { name: `${attr.name}[]` }}
                     {...vals !== null && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
                   />
@@ -138,8 +139,8 @@ function CompGen(props) {
     <div className="blnk-blk drag" />
   )
 
-  const dropDown = (attr) => (
-    (
+  const dropDown = (attr) => {
+    return (
       !('hide' in attr.valid && attr.valid.hide === true)
       && (
         <div className="text-wrp drag" btcd-fld="textarea">
@@ -150,9 +151,9 @@ function CompGen(props) {
             {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
             {...'mul' in attr && { multiple: attr.mul }}
             {...'ph' in attr && { placeholder: attr.ph }}
-            {...'name' in attr && { name: attr.name }}
-            {...'val' in attr && { value: attr.val }}
-            {...'name' in attr && { name: attr.name }}
+            {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
+            {...'val' in attr && attr.val.length > 0 && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : [attr.val] }}
+            onChange={fieldChangeHandler}
           >
             <option data-placeholder="true" aria-label="option placeholder" />
             {attr.opt.map((itm, i) => (
@@ -162,7 +163,7 @@ function CompGen(props) {
         </div>
       )
     )
-  )
+            }
 
   const submitBtns = (attr) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
@@ -178,7 +179,9 @@ function CompGen(props) {
       )}
     </div>
   )
-
+  const fieldChangeHandler = (event) => {
+    
+  }
   switch (props.atts.typ) {
     case 'text':
     case 'number':

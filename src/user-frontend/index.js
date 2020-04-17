@@ -7,7 +7,7 @@ import * as serviceWorker from '../serviceWorker'
 import Bitapps from './Bitapps'
 
 export default function BitappsRenderer(params) {
-    console.log(params, document.getElementById(params.contentID), Bitapps)
+  document.getElementById(`${params.contentID}no-js`).innerHTML = ''
   ReactDOM.render(<Bitapps buttons={params.buttons} data={params.fields} layout={params.layout} file={params.file} />, document.getElementById(params.contentID));
 }
 serviceWorker.unregister();

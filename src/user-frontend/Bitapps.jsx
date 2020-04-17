@@ -40,6 +40,7 @@ export default function Bitapps(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = new FormData()
+    console.log("FRONT", event.target)
     const fields = Array.prototype.slice.call(event.target)
     // eslint-disable-next-line array-callback-return
     fields.filter(el => {
@@ -51,7 +52,20 @@ export default function Bitapps(props) {
         }
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
         formData.append(el.name, el.value)
-      } else if (el.type === 'select') {
+      } else if (el.type === 'select-multiple') {
+        if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
+          const selectedData = el.slim.data.data
+          const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
+          selectedData.forEach(optionData => {
+            if (optionData.selected) {
+              formData.append(name, optionData.value)
+            }
+          })
+
+        } else {
+          formData.append(el.name, el.value)
+        }
+      } else if (el.type === 'select-one') {
         formData.append(el.name, el.value)
       } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
         formData.append(el.name, el.value)
@@ -147,24 +161,22 @@ export default function Bitapps(props) {
 }
 
 function Toast(props) {
-  /*  const toatStyles = {
-     btcdSnack: {
-       userSelect: 'none',
-       background: '#383838',
-       padding: '10px 15px',
-       color: 'white',
-       borderRadius: '5px',
-       position: 'fixed',
-       bottom: '20px',
-       right: '20px',
-       boxShadow: '1px 1px 3px 0px #0000004d',
-       transition: 'right 0.5s',
-     },
-   } */
+  const toatStyles = {
+    userSelect: 'none',
+    background: '#383838',
+    padding: '10px 15px',
+    color: 'white',
+    borderRadius: '5px',
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px',
+    boxShadow: '1px 1px 3px 0px #0000004d',
+    transition: 'right 0.5s',
+  }
   useEffect(() => {
     const timer = setTimeout(() => {
       if (props.show) {
-        // props.setSnack(false)
+        props.setSnack(false)
       }
     }, 2000);
     return () => clearTimeout(timer);

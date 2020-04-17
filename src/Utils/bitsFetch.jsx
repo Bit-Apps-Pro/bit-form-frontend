@@ -2,7 +2,6 @@
 import axios from 'axios'
 
 export default async function bitsFetch(data, action, contentType = null, queryParam = null) {
-  console.log('------------------- API called', action)
   const response = await axios({
     // eslint-disable-next-line no-undef
     url: process.env.NODE_ENV === 'production' ? (typeof bits === 'undefined' ? bitAppsFront.ajaxURL : bits.ajaxURL) : 'http://bitapp.test/wp-admin/admin-ajax.php',
