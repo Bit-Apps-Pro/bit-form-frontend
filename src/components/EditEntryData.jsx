@@ -24,8 +24,8 @@ export default function EditEntryData(props) {
 
   const updateData = (event) => {
     event.preventDefault()
-    const formData = new FormData(ref.current)
-    const fields = Array.prototype.slice.call(event.target)
+    const formData = new FormData()
+    const fields = Array.prototype.slice.call(ref.current)
     // eslint-disable-next-line array-callback-return
     fields.filter(el => {
       if (el.type === 'file' && el.files.length > 0) {
@@ -35,11 +35,32 @@ export default function EditEntryData(props) {
           el.files.forEach(file => formData.append(el.name, file))
         }
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-        formData.append(el.name, el.value)
-      } else if (el.type === 'select') {
-        formData.append(el.name, el.value)
+        if (formData.getAll(el.name).indexOf(el.value) === -1) {
+          formData.append(el.name, el.value)
+        }
+      } else if (el.type === 'select-multiple') {
+        if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
+          const selectedData = el.slim.data.data
+          const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
+          selectedData.forEach(optionData => {
+            if (optionData.selected && formData.getAll(name).indexOf(optionData.selected) === -1) {
+              formData.append(name, optionData.value)
+            }
+          })
+
+        } else {
+          if (formData.getAll(el.name).indexOf(el.value) === -1) {
+            formData.append(el.name, el.value)
+          }
+        }
+      } else if (el.type === 'select-one' || el.type === 'select') {
+        if (formData.getAll(el.name).indexOf(el.value) === -1) {
+          formData.append(el.name, el.value)
+        }
       } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-        formData.append(el.name, el.value)
+        if (formData.getAll(el.name).indexOf(el.value) === -1) {
+          formData.append(el.name, el.value)
+        }
       }
     })
 
@@ -51,6 +72,7 @@ export default function EditEntryData(props) {
           const tmp = [...allResp]
           for (let i = 0; i < tmp.length; i += 1) {
             if (tmp[i].entry_id === props.entryID) {
+              console.log('update', response.data.updatedData)
               tmp[i] = response.data.updatedData
               break
             }

@@ -48,7 +48,7 @@ function FormEntries() {
                     if (val.type === 'file-up') {
                       // eslint-disable-next-line max-len
                       return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`}`} />)
-                    } JSON.parse(row.cell.value).join(', ')
+                    } //JSON.parse(row.cell.value).join(', ')
                   }
                   return null
                 },
@@ -70,20 +70,20 @@ function FormEntries() {
           }
         })
     }
-    setTimeout(() => {
-      if (fetchId === fetchIdRef.current) {
-        const startRow = pageSize * pageIndex
-        bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
-          if (res !== undefined && res.success) {
-            if (totalData > 0) {
-              setPageCount(Math.ceil(totalData / pageSize))
-            }
-            setAllResp(res.data)
+    // setTimeout(() => {
+    if (fetchId === fetchIdRef.current) {
+      const startRow = pageSize * pageIndex
+      bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
+        if (res !== undefined && res.success) {
+          if (totalData > 0) {
+            setPageCount(Math.ceil(totalData / pageSize))
           }
-          setisloading(false)
-        })
-      }
-    }, 1000)
+          setAllResp(res.data)
+        }
+        setisloading(false)
+      })
+    }
+    // }, 1000)
   }, [delConfMdl, dupConfMdl, editData, formID])
 
   const setBulkDelete = useCallback((rows, tmpData) => {
