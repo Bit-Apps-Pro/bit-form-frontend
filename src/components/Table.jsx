@@ -44,6 +44,10 @@ function GlobalFilter({ globalFilter, setGlobalFilter }) {
 }
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
+  console.log('cols', cols)
+  console.log('setCols', setCols)
+  console.log('tableCol', tableCol)
+  console.log('tableAllCols', tableAllCols)
   return (
     <Menu icn="icn-remove_red_eye">
       <Scrollbars autoHide style={{ width: 200 }}>

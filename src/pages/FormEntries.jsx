@@ -54,7 +54,7 @@ function FormEntries() {
               },
             }))
 
-            cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.row.id) + 1}</>, width: 40 })
+            cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(pageIndex * pageSize) + Number(value.row.id) + 1}</>, width: 40 })
             cols.push({
               id: 't_action',
               width: 70,
@@ -233,7 +233,7 @@ function FormEntries() {
                   <th>{itm.column.Header}</th>
                   <td>{itm.value}</td>
                 </tr>
-              ))}
+            ))}
           </tbody>
         </table>
       </Drawer>
