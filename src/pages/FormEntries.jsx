@@ -10,6 +10,7 @@ import Drawer from '../components/Drawer'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import noData from '../resource/img/nodata.jpg'
 
 function FormEntries() {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
@@ -233,7 +234,7 @@ function FormEntries() {
                   <th>{itm.column.Header}</th>
                   <td>{itm.value}</td>
                 </tr>
-            ))}
+              ))}
           </tbody>
         </table>
       </Drawer>
@@ -258,6 +259,13 @@ function FormEntries() {
           edit={editData}
           onRowClick={onRowClick}
         />
+        {!isloading && allResp.length === 0 && (
+          <div className="btcd-no-data txt-center">
+            <img src={noData} alt="no data found" />
+            <h2>No Response Found.</h2>
+          </div>
+        )}
+
       </div>
     </div>
   )

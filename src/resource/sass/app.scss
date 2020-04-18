@@ -314,14 +314,26 @@ body {
   margin-right: 15px;
 }
 
-.btcd-empty{
+.btcd-empty {
   color: #d1d8ed;
-  &>span{
+  & > span {
     display: block;
     font-size: 50px;
   }
 }
- 
+
+.btcd-no-data {
+  position: absolute;
+  top: 240px;
+  right: 45%;
+  & h2 {
+    color: #374072;
+  }
+  & img {
+    width: 200px;
+  }
+}
+
 .bar {
   background: #f3f3f3;
   width: 8px;
