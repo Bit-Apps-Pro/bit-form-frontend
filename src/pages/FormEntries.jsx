@@ -262,7 +262,7 @@ function FormEntries() {
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
             <img src={noData} alt="no data found" />
-            <h2>No Response Found.</h2>
+            <div className="mt-2">No Response Found.</div>
           </div>
         )}
 

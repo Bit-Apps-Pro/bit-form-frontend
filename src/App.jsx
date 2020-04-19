@@ -23,7 +23,7 @@ function App() {
   return (
     // eslint-disable-next-line no-undef
     <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
-      <main className="Btcd-App">
+      <div className="Btcd-App">
 
         <div className="nav-wrp">
           <div className="logo" />
@@ -65,7 +65,7 @@ function App() {
             </Route>
           </Switch>
         </div>
-      </main>
+      </div>
     </Router>
   )
 }

@@ -46,7 +46,7 @@ function Builder(props) {
         document.getElementById('adminmenumain').style.display = 'block'
         document.getElementById('adminmenuback').style.display = 'block'
         document.getElementById('adminmenuwrap').style.display = 'block'
-        document.getElementById('wpcontent').style.marginLeft = '160px'
+        document.getElementById('wpcontent').style.marginLeft = null
         document.getElementById('wpfooter').style.display = 'block'
       }
       setFulScn(false)

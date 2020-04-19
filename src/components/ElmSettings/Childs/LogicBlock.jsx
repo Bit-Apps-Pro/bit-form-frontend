@@ -21,6 +21,7 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         value={fieldVal !== undefined && fieldVal}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
+        <option value="">Select From Field</option>
         {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
@@ -36,6 +37,7 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-4"
       >
+        <option value="">Select One</option>
         <option value="equal">Equal</option>
         <option value="not_equal">Not Equal</option>
         <option value="null">Is Null</option>

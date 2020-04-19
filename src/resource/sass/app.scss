@@ -29,7 +29,7 @@ body {
   min-height: 100%;
   font-size: 16px;
   color: $dp-blue;
-  background-color: $light-bg;
+  background-color: #f5f8ff;
   & a {
     text-decoration: none;
   }
@@ -324,9 +324,11 @@ body {
 
 .btcd-no-data {
   position: absolute;
-  top: 240px;
+  opacity: .6;
+    top: 240px;
   right: 45%;
-  & h2 {
+  & > div {
+    font-size: 18px;
     color: #374072;
   }
   & img {

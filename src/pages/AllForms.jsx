@@ -198,13 +198,6 @@ function AllFroms() {
               <NavLink to="/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
             </div>
           </div>
-          <div className="btcd-tem">
-            <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
-            <div>Contact Form</div>
-            <div className="btcd-hid-btn">
-              <NavLink to="builder/new/contact_form" className="btn btn-white sh-sm" type="button">Create</NavLink>
-            </div>
-          </div>
         </div>
         {modal && <FormTemplates />}
       </Modal>

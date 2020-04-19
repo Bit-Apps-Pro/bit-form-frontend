@@ -105,8 +105,6 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
               Empty
             </div>
           )}
-
-
       </div>
     </div>
   )
