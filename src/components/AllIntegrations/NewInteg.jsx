@@ -12,6 +12,7 @@ function NewInteg({ url, formFields, setIntegration, integrations }) {
       default:
         break;
     }
+    return ''
   }
   return (
     <div>

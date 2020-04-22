@@ -8,7 +8,7 @@ function FSettingsLoader() {
       width={800}
       height={330}
       viewBox="0 0 800 330"
-      backgroundColor="#f3f3f3"
+      backgroundColor="#f7f7f7"
       foregroundColor="#ecebeb"
     >
       <rect x="2" y="8" rx="5" ry="5" width="127" height="33" />

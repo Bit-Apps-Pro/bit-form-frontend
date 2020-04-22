@@ -20,7 +20,7 @@ export default function EditEntryData(props) {
           setData({ layout: res.data.layout, fields: res.data.fields })
         }
       })
-  }, [formID])
+  }, [entryID, formID])
 
   const updateData = (event) => {
     event.preventDefault()

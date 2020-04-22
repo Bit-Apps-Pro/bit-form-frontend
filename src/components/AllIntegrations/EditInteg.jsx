@@ -12,6 +12,7 @@ function EditInteg({ url, formFields, setIntegration, integrations }) {
       default:
         break;
     }
+    return ''
   }
 
   return (
