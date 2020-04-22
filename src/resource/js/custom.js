@@ -1,9 +1,4 @@
 
-window.addEventListener('click', (e) => {
-  if (e.target.id === 'arf') {
-    console.log('arf')
-  }
-})
 
 if (document.querySelector('.slim') != null) {
   const allSel = document.querySelectorAll('select')
