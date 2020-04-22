@@ -7,18 +7,19 @@ import {
   BrowserRouter as Router, Switch, Route, NavLink,
 } from 'react-router-dom'
 import './resource/sass/app.scss'
-import './resource/sass/components.scss'
-import './resource/js/custom'
 import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
-// import './resource/icons/style.css'
+import './resource/icons/style.css'
+// import './resource/fonts/stylesheet.css'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const FormDetails = lazy(() => import('./pages/FormDetails'))
 const FormEntries = lazy(() => import('./pages/FormEntries'))
+const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
+
 
   return (
     // eslint-disable-next-line no-undef
@@ -62,6 +63,9 @@ function App() {
             </Route>
             <Route path="/settings">
               <h1>Settings</h1>
+            </Route>
+            <Route path="*">
+              <Error404 />
             </Route>
           </Switch>
         </div>
