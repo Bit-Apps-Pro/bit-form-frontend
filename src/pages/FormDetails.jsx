@@ -6,6 +6,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
+import '../resource/sass/components.scss'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
