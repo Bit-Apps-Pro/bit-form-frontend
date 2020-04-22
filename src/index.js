@@ -19,4 +19,4 @@ ReactDOM.render(
     <Suspense fallback={<Loader />}><App /></Suspense>
   </AllFormContextProvider>, document.getElementById('btcd-app'),
 )
-serviceWorker.unregister();
+serviceWorker.register();

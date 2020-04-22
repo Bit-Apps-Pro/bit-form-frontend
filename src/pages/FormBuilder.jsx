@@ -51,7 +51,7 @@ function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubB
     <Container ref={conRef} className="btcd-bld-con" style={{ height: '100%' }}>
       <Section
         className="tool-sec"
-        defaultSize={160}
+        defaultSize={165}
         minSize={notIE && 58}
       >
         <ToolBar

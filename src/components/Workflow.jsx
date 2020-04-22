@@ -775,7 +775,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           Empty
         </div>
       )}
-      <Button className="blue sh-sm" onClick={addLogicGrp}>+ Add Action</Button>
+      <Button className="blue" onClick={addLogicGrp}>+ Add Action</Button>
     </div>
   )
 }

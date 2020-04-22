@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useContext, useCallback, memo } from 'react'
+import React, { useState, useEffect, useContext, useCallback, memo, lazy } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -12,6 +12,8 @@ import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+
+const Welcome = lazy(() => import('./Welcome'))
 
 function AllFroms() {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
@@ -105,7 +107,6 @@ function AllFroms() {
       formID.push(rows[i].original.formID)
     }
     const newData = [...allForms]
-    const tmp = [...allForms]
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
       newData.splice(Number(rowID[i]), 1)
     }
@@ -202,24 +203,28 @@ function AllFroms() {
         {modal && <FormTemplates />}
       </Modal>
 
-      <div className="af-header">
-        <h2>Forms</h2>
-        <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
-      </div>
-      <div className="forms">
-        <Table
-          className="f-table btcd-all-frm"
-          height={500}
-          columns={cols}
-          data={allForms}
-          rowSeletable
-          resizable
-          columnHidable
-          setBulkStatus={setBulkStatus}
-          setBulkDelete={setBulkDelete}
-          setTableCols={setTableCols}
-        />
-      </div>
+      {allForms.length > 0 ? (
+        <>
+          <div className="af-header">
+            <h2>Forms</h2>
+            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
+          </div>
+          <div className="forms">
+            <Table
+              className="f-table btcd-all-frm"
+              height={500}
+              columns={cols}
+              data={allForms}
+              rowSeletable
+              resizable
+              columnHidable
+              setBulkStatus={setBulkStatus}
+              setBulkDelete={setBulkDelete}
+              setTableCols={setTableCols}
+            />
+          </div>
+        </>
+      ) : <Welcome setModal={setModal} />}
     </div>
   )
 }
