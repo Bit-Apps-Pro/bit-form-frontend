@@ -7,7 +7,7 @@ const TableLoader = () => (
     width="100%"
     height={400}
     viewBox="0 0 1520 400"
-    backgroundColor="#f3f3f3"
+    backgroundColor="#f7f7f7"
     foregroundColor="#ecebeb"
   >
     <rect x="27" y="139" rx="4" ry="4" width="20" height="20" />
