@@ -22,7 +22,7 @@ body {
 }
 
 #btcd-app {
-  font-family: "Sen", sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
@@ -40,6 +40,7 @@ body {
 }
 
 #wpcontent {
+  background: #f5f8ff;
   padding-left: 0;
 }
 #wpbody {
@@ -129,6 +130,17 @@ body {
   color: white !important;
   &:hover {
     background: #016fcf !important;
+  }
+  &:active {
+    background: #0062b8;
+  }
+}
+
+.dp-blue {
+  background: $dp-bg !important;
+  color: white !important;
+  &:hover {
+    background: rgb(28, 43, 83) !important;
   }
   &:active {
     background: #0062b8;
@@ -278,7 +290,7 @@ body {
   font-size: 15px;
   white-space: nowrap;
   word-break: keep-all;
-  width: 138px;
+  width: 145px;
   height: 35px;
   padding: 8px;
   border-radius: 8px;
@@ -323,9 +335,10 @@ body {
 }
 
 .btcd-no-data {
+  font-weight: 500;
   position: absolute;
-  opacity: .6;
-    top: 240px;
+  opacity: 0.6;
+  top: 240px;
   right: 45%;
   & > div {
     font-size: 18px;
@@ -835,7 +848,7 @@ body {
   font-size: 14px;
   text-decoration: none;
   white-space: nowrap;
-  font-weight: bold;
+  font-weight: 600;
   &:disabled {
     background-color: rgb(230, 230, 230);
     box-shadow: none;
@@ -1198,7 +1211,7 @@ nav.top-nav {
 }
 
 .nav-wrp {
-  background: #0e112f;
+  background: $dp-bg;
   height: 230px;
   padding: 20px;
 }
@@ -1208,7 +1221,7 @@ nav.top-nav {
   margin: -150px 20px 30px;
   margin-top: -150px;
   border-radius: 20px;
-  box-shadow: 0px 0px 7px 0px rgba(132, 178, 176, 0.45);
+  box-shadow: 0px 0px 7px 1px rgba(17, 9, 52, 0.24);
   & > div:not(#all-forms#form-res) {
     height: 100vh;
   }
@@ -1273,7 +1286,7 @@ nav.top-nav {
 }
 
 [data-sticky-first-right-td="true"] {
-  box-shadow: -1px 4px 4px 1px #eaeaea;
+  box-shadow: -5px 0px 6px -5px #cdcdcd;
 }
 
 .f-table .thead {
@@ -1288,7 +1301,7 @@ nav.top-nav {
 }
 
 .f-table .thead .tr .th {
-  font-weight: bold;
+  font-weight: 600;
   line-height: 1.8;
   user-select: none;
   border-bottom: 1px solid #dedce4;
@@ -1320,7 +1333,7 @@ nav.top-nav {
   line-height: 1.9;
   padding: 5px 5px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
   word-break: break-all;
   border-bottom: 1px solid #dedce4;
   color: $dp-txt;
@@ -1634,7 +1647,7 @@ nav.top-nav {
     font-family: "Montserrat", sans-serif;
     line-height: 1;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 600;
     content: var(--tooltip-txt);
     background: #393939;
     color: white;
@@ -2093,7 +2106,7 @@ nav.top-nav {
     margin-left: 20px;
     border-radius: 50px 0 0 50px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     color: white;
     margin-bottom: 10px;
     &:focus {
@@ -2155,7 +2168,7 @@ nav.top-nav {
   position: relative;
   box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4), 0 0 0 2px $blue;
   color: $blue;
-  font-weight: bold;
+  font-weight: 600;
   &:after {
     content: "";
     position: absolute;
@@ -2629,6 +2642,7 @@ select.btcd-paper-inp {
     0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
 .btcd-snack-a {
+  font-weight: 500;
   bottom: 30px;
   transform: scale(1);
 }
@@ -3235,6 +3249,50 @@ select.btcd-ud-inp {
   height: 0;
   transition-delay: height 1s;
   transition: width 0.4s, height 0.4s;
+}
+
+.error-404 {
+  & img {
+    border-radius: 20px;
+    display: block;
+  }
+
+  & > div {
+    & h1 {
+      font-size: 160px;
+      margin: 0;
+      text-shadow: 36px 32px #0505320d;
+    }
+    & .t {
+      font-size: 30px;
+      font-weight: 700;
+      position: relative;
+      margin-top: 20px;
+    }
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    text-align: center;
+  }
+}
+
+.btcd-greeting {
+  text-align: center;
+  & img {
+    margin-top: 10px;
+    width: 600px;
+  }
+  & > h2 {
+    margin-top: 30px;
+  }
+  & .sub{
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  & button{
+    margin-top: 20px;
+    margin-bottom: 80px;
+  }
 }
 
 // for IE11
