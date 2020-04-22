@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer')
+// const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports = (env, argv) => {
   const production = argv.mode === 'production';
@@ -56,6 +58,10 @@ module.exports = (env, argv) => {
         chunks: ['webpackAssets'],
         // chunksSortMode: 'dependency'
       }),
+      /* new PreloadWebpackPlugin({
+        rel: 'preload',
+        include: ['vendors-main']
+      }), */
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': production
           ? JSON.stringify('development')
@@ -103,7 +109,7 @@ module.exports = (env, argv) => {
               options: {
                 ident: 'postcss',
                 plugins: [
-                  require('autoprefixer'),
+                  autoprefixer,
                 ],
               },
             },
@@ -111,7 +117,7 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.(jpe?g|png|gif|svg)$/i,
+          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot)$/i,
           use: [
             {
               loader: 'url-loader',
