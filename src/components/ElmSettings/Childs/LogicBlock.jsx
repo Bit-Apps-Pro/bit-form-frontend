@@ -4,7 +4,7 @@ import MtInput from './MtInput'
 import Button from './Button'
 
 function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
-  let type
+  let type = ''
   if (formFields !== null) {
     // eslint-disable-next-line array-callback-return
     formFields.map(itm => {
@@ -19,6 +19,7 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
       <MtSelect
         label="Form Fields"
         value={fieldVal !== undefined && fieldVal}
+        style={{ width: 720 }}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
         <option value="">Select From Field</option>
@@ -34,6 +35,7 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
       <MtSelect
         label="Logic"
         value={logicValue}
+        style={{ width: 400 }}
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-4"
       >
@@ -42,14 +44,14 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         <option value="not_equal">Not Equal</option>
         <option value="null">Is Null</option>
         <option value="not_null">Is Not Null</option>
-        <option value="contain">Contain</option>
-        <option value="not_contain">Not Contain</option>
-        <option value="greater">Greater Than</option>
-        <option value="less">Less Than</option>
-        <option value="greater_or_equal">Greater Than or Equal</option>
-        <option value="less_or_equal">Less Than or Equal</option>
-        <option value="start_with">Start With</option>
-        <option value="end_with">End With</option>
+        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain">Contain</option>}
+        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="not_contain">Not Contain</option>}
+        {!type.match(/^(color|url|password|email)$/) && <option value="greater">Greater Than</option>}
+        {!type.match(/^(color|url|password|email)$/) && <option value="less">Less Than</option>}
+        {!type.match(/^(color|url|password|email)$/) && <option value="greater_or_equal">Greater Than or Equal</option>}
+        {!type.match(/^(color|url|password|email)$/) && <option value="less_or_equal">Less Than or Equal</option>}
+        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="start_with">Start With</option>}
+        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="end_with">End With</option>}
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">
@@ -66,11 +68,11 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         value={value}
       />
       <div className="btcd-li-side-btn">
-        <Button onClick={() => delLogic(lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} icn className="ml-2 sh-sm white mr-2">
+        <Button onClick={() => delLogic(lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} icn className="ml-2  white mr-2">
           <span className="btcd-icn icn-trash-2" />
         </Button>
-        <Button onClick={() => addInlineLogic('and', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="sh-sm white mr-2">+ AND</Button>
-        <Button onClick={() => addInlineLogic('or', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="sh-sm white">+ OR</Button>
+        <Button onClick={() => addInlineLogic('and', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white mr-2">+ AND</Button>
+        <Button onClick={() => addInlineLogic('or', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white">+ OR</Button>
       </div>
     </div>
   )
