@@ -591,9 +591,9 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                                 ))}
                                 <div className=" btcd-workFlows-btns">
                                   <div className="flx">
-                                    <Button icn className="blue sh-sm">+</Button>
-                                    <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue sh-sm ml-2"> AND </Button>
-                                    <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue sh-sm ml-2"> OR </Button>
+                                    <Button icn className="blue">+</Button>
+                                    <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
+                                    <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
                                   </div>
                                 </div>
                               </div>
@@ -603,10 +603,10 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                         <div className=" btcd-workFlows-btns">
                           <div className="flx">
                             <Button icn className="blue sh-sm">+</Button>
-                            <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue sh-sm ml-2"> AND </Button>
-                            <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue sh-sm ml-2"> OR </Button>
-                            <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue sh-sm ml-2"> OR Group</Button>
-                            <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue sh-sm ml-2"> AND Group</Button>
+                            <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
+                            <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
+                            <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
+                            <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue ml-2"> AND Group</Button>
                           </div>
                         </div>
                       </div>
@@ -619,10 +619,10 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                 <div className="btcd-workFlows-btns">
                   <div className="flx">
                     <Button icn className="blue sh-sm">+</Button>
-                    <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue sh-sm ml-2"> AND </Button>
-                    <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue sh-sm ml-2"> OR </Button>
-                    <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue sh-sm ml-2"> OR Group</Button>
-                    <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue sh-sm ml-2"> AND Group</Button>
+                    <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
+                    <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
+                    <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
+                    <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue ml-2"> AND Group</Button>
                   </div>
                 </div>
               )}

@@ -49,7 +49,7 @@ function AllFroms() {
   }
 
   const [cols, setCols] = useState([
-    { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
+    { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
     { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} setSnackbar={setSnackbar} /> },
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
@@ -199,13 +199,13 @@ function AllFroms() {
               <NavLink to="/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
             </div>
           </div>
+          {modal && <FormTemplates />}
         </div>
-        {modal && <FormTemplates />}
       </Modal>
 
       {allForms.length > 0 ? (
         <>
-          <div className="af-header">
+          <div className="af-header flx flx-between">
             <h2>Forms</h2>
             <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
           </div>

@@ -189,7 +189,7 @@ function FormEntries() {
 
   return (
     <div id="form-res">
-      <div className="af-header">
+      <div className="af-header flx flx-between">
         <h2>Form Responses</h2>
       </div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

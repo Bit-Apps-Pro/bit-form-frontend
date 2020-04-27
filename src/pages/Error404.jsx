@@ -17,7 +17,7 @@ export default function Error404() {
   return (
     <div className="error-404">
       <div>
-        <h1>404</h1>
+        <div className="four">404</div>
         <div className="t">Lost In Space</div>
         <br />
         Redirecting Home in

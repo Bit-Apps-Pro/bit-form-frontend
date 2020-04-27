@@ -108,7 +108,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: $blue;
+  background: $dp-blue;
 }
 
 //scroll bar style end
@@ -1204,10 +1204,23 @@ nav.top-nav {
   height: 40px;
   width: 40px;
   background: white;
-  display: block;
-  position: absolute;
-  border-radius: 50%;
+  overflow: hidden;
+  border-radius: 15px;
   box-shadow: 2px 2px 5px 0px #444444;
+  transition: width 0.4s, border-radius 0.4s;
+  &:hover {
+    width: 125px;
+    border-radius: 8px;
+  }
+  & img {
+    width: 23px;
+  }
+  & span {
+    color: $dp-bg;
+    white-space: nowrap;
+    font-size: 17px;
+    font-weight: 600;
+  }
 }
 
 .nav-wrp {
@@ -1227,53 +1240,37 @@ nav.top-nav {
   }
 }
 .top-nav > a {
+  height: 40px;
   font-size: 13px;
   text-decoration: none;
   display: inline-block;
   z-index: 10;
   width: 100px;
-  padding: 13px 0;
+  padding: 12px 0;
+  margin-left: 5px;
   text-align: center;
   cursor: pointer;
   color: #fff;
-  background: transparent;
+  background: $dp-bg;
   border-radius: 8px;
   box-shadow: none;
   &:hover {
-    background: rgb(31, 34, 68);
+    filter: brightness(1.2);
   }
 }
 
 nav.top-nav {
-  margin-left: 60px;
   color: black;
   background: transparent;
-  .underline {
-    height: 100%;
-    background: #486ab9;
-    opacity: 0.1;
-    border-radius: 8px;
-  }
 }
 
 // navbar end
 
 .af-header {
   padding: 0px 20px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.btcd-f-t-wrp {
-  margin-top: 10px;
-  // overflow-x: auto;
-  //display: inline-block;
-  // width: 100%;
 }
 
 .f-table {
-  // overflow: scroll;
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
@@ -2359,6 +2356,8 @@ select.btcd-paper-inp {
 
 //table checkbox start
 .btcd-label-cbx {
+  height: 20px;
+  width: 20px;
   display: inline-block;
   user-select: none;
   cursor: pointer;
@@ -2407,7 +2406,6 @@ select.btcd-paper-inp {
 
   .btcd-t-cbx {
     position: relative;
-    top: 2px;
     float: left;
     margin-right: 8px;
     width: 20px;
@@ -3252,17 +3250,19 @@ select.btcd-ud-inp {
 }
 
 .error-404 {
+  position: relative;
   & img {
     border-radius: 20px;
     display: block;
   }
-
+  & .four {
+    font-size: 160px;
+    margin: 0;
+    line-height: 1;
+    font-weight: bold;
+    text-shadow: 36px 32px #0505320d;
+  }
   & > div {
-    & h1 {
-      font-size: 160px;
-      margin: 0;
-      text-shadow: 36px 32px #0505320d;
-    }
     & .t {
       font-size: 30px;
       font-weight: 700;
@@ -3270,7 +3270,7 @@ select.btcd-ud-inp {
       margin-top: 20px;
     }
     position: absolute;
-    top: 150px;
+    top: 50px;
     left: 150px;
     text-align: center;
   }
@@ -3285,11 +3285,11 @@ select.btcd-ud-inp {
   & > h2 {
     margin-top: 30px;
   }
-  & .sub{
+  & .sub {
     font-weight: 600;
     margin-bottom: 10px;
   }
-  & button{
+  & button {
     margin-top: 20px;
     margin-bottom: 80px;
   }

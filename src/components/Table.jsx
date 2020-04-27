@@ -18,11 +18,7 @@ const IndeterminateCheckbox = React.forwardRef(
     React.useEffect(() => {
       resolvedRef.current.indeterminate = indeterminate
     }, [resolvedRef, indeterminate])
-    return (
-      <>
-        <TableCheckBox refer={resolvedRef} rest={rest} />
-      </>
-    )
+    return <TableCheckBox refer={resolvedRef} rest={rest} />
   },
 )
 
@@ -113,16 +109,8 @@ function Table(props) {
           maxWidth: 50,
           minWidth: 67,
           sticky: 'left',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div title="Select All Rows" className="flx">
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div title="Select This Row" className="flx">
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
+          Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+          Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
         },
         ...cols,
       ])
@@ -318,7 +306,7 @@ function Table(props) {
         </small>
         <label>
           <select
-          className="btcd-paper-inp"
+            className="btcd-paper-inp"
             value={pageSize}
             onChange={e => {
               setPageSize(Number(e.target.value));
