@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import React, { useState, memo, useCallback } from 'react'
+import React, { useState, memo, useCallback, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import bitsFetch from '../Utils/bitsFetch'
 import Table from '../components/Table'
@@ -10,6 +10,7 @@ import Drawer from '../components/Drawer'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import { AllFormContext } from '../Utils/AllFormContext'
 
 function FormEntries() {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
@@ -25,64 +26,76 @@ function FormEntries() {
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
   const [entryLabels, setEntryLabels] = useState([])
+  const { reportsData } = useContext(AllFormContext)
+  const { reports } = reportsData
+  const [report] = useState(0)
+ /*  useEffect(() => {
+    setisloading(true)
+    bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
+      .then(response => {
+        if (response !== undefined && response.success) {
+          if ('reports' in response.data && response.data.reports.length > 0) {
+            if (response.data.reports[0] && response.data.reports[0].details !== undefined && 'order' in response.data.reports[0].details.order) {
+              setEntryLabels(response.data.reports[0].details.order)
+            }
+            console.log('STA--fetchLabel')
+            reportsDispatch({ type: 'set', reports: response.data.reports })
+          } else {
+            tableHeaderHandler(response.data.Labels)
+          }
+        }
+      })
+  }, []) */
 
-  const fetchData = useCallback(({ pageSize, pageIndex }) => {
-    let totalData = 0
+  const tableHeaderHandler = (labels) => {
+    const cols = labels.map(val => ({
+      Header: val.name,
+      accessor: val.key,
+      minWidth: 50,
+      ...'type' in val && val.type.match(/^(file-up|check)$/) && {
+        Cell: row => {
+          if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
+            if (val.type === 'file-up') {
+              // eslint-disable-next-line max-len
+              return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`}`} />)
+            } // JSON.parse(row.cell.value).join(', ')
+          }
+          return null
+        },
+      },
+    }))
+    cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.state.pageIndex * value.state.pageSize) + Number(value.row.id) + 1}</>, width: 40 })
+    cols.push({
+      id: 't_action',
+      width: 70,
+      maxWidth: 70,
+      minWidth: 70,
+      sticky: 'right',
+      Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
+      accessor: 'table_ac',
+      Cell: val => <TableAction edit={() => editData(val.row)} del={() => delConfMdl(val.row, val.data)} dup={() => dupConfMdl(val.row, val.data)} />,
+    })
+    setEntryLabels(cols)
+  }
+  const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     setisloading(true)
-    if (totalData === 0) {
-      bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
-        .then(response => {
-          if (response !== undefined && response.success) {
-            totalData = response.data.count
-            setPageCount(((response.data.count / 10) % 1 === 0) ? (response.data.count / 10) : Math.floor(response.data.count / 10) + 1)
-            const cols = response.data.Labels.map(val => ({
-              Header: val.name,
-              accessor: val.key,
-              minWidth: 50,
-              ...'type' in val && val.type.match(/^(file-up|check)$/) && {
-                Cell: row => {
-                  if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
-                    if (val.type === 'file-up') {
-                      // eslint-disable-next-line max-len
-                      return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${row.cell.row.original.entry_id}`}`} />)
-                    } //JSON.parse(row.cell.value).join(', ')
-                  }
-                  return null
-                },
-              },
-            }))
-
-            cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(pageIndex * pageSize) + Number(value.row.id) + 1}</>, width: 40 })
-            cols.push({
-              id: 't_action',
-              width: 70,
-              maxWidth: 70,
-              minWidth: 70,
-              sticky: 'right',
-              Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
-              accessor: 'table_ac',
-              Cell: val => <TableAction edit={() => editData(val.row)} del={() => delConfMdl(val.row, val.data)} dup={() => dupConfMdl(val.row, val.data)} />,
-            })
-            setEntryLabels(cols)
-          }
-        })
-    }
-    // setTimeout(() => {
     if (fetchId === fetchIdRef.current) {
       const startRow = pageSize * pageIndex
-      bitsFetch({ id: formID, offset: startRow, pageSize }, 'bitapps_get_form_entries').then(res => {
+      bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitapps_get_form_entries').then(res => {
         if (res !== undefined && res.success) {
-          if (totalData > 0) {
-            setPageCount(Math.ceil(totalData / pageSize))
+          // if (totalData > 0) {
+          setPageCount(Math.ceil(res.data.count / pageSize))
+          if (res.data.Labels && entryLabels.length === 0) {
+            tableHeaderHandler(res.data.Labels)
           }
-          setAllResp(res.data)
+          // }
+          setAllResp(res.data.entries)
         }
         setisloading(false)
       })
     }
-    // }, 1000)
   }, [delConfMdl, dupConfMdl, editData, formID])
 
   const setBulkDelete = useCallback((rows, tmpData) => {
@@ -233,7 +246,7 @@ function FormEntries() {
                   <th>{itm.column.Header}</th>
                   <td>{itm.value}</td>
                 </tr>
-            ))}
+              ))}
           </tbody>
         </table>
       </Drawer>
@@ -257,6 +270,8 @@ function FormEntries() {
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
+          report={report}
+          test={reports}
         />
       </div>
     </div>

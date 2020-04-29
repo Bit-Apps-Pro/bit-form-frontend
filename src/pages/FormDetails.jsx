@@ -21,9 +21,11 @@ function Builder(props) {
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
-  const { allFormsData } = useContext(AllFormContext)
+  const [buttonDisabled, setbuttonDisabled] = useState(false)
+  const { allFormsData, reportsData } = useContext(AllFormContext)
   const [snack, setSnackbar] = useState({ show: false })
   const { allFormsDispatchHandler } = allFormsData
+  const { reports, reportsDispatch } = reportsData
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -73,7 +75,7 @@ function Builder(props) {
     enabled: {},
     settings: {},
   })
-
+console.log('STAreports',reports)
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -129,6 +131,7 @@ function Builder(props) {
             setadditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
+            if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
             setisLoading(false)
           } else {
             setisLoading(false)
@@ -145,6 +148,7 @@ function Builder(props) {
   }
 
   const saveForm = () => {
+    setbuttonDisabled(true)
     let formData = {
       layout: lay,
       fields,
@@ -165,6 +169,7 @@ function Builder(props) {
         formSettings,
         workFlows,
         additional,
+        reports,
       }
       action = 'bitapps_update_form'
     }
@@ -190,8 +195,10 @@ function Builder(props) {
             if ('workFlows' in data) setworkFlows(data.workFlows)
             if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
             if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
+            if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
             allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
+          setbuttonDisabled(false)
         }
       })
   }
@@ -235,7 +242,7 @@ function Builder(props) {
         </div>
 
         <div className="btcd-bld-btn">
-          <button className="btn blue" type="button" onClick={saveForm}>
+          <button className="btn blue" type="button" onClick={saveForm} disabled={!!buttonDisabled}>
             {buttonText}
           </button>
           <NavLink to="/" className="btn btcd-btn-close">

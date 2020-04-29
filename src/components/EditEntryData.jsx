@@ -47,11 +47,8 @@ export default function EditEntryData(props) {
               formData.append(name, optionData.value)
             }
           })
-
-        } else {
-          if (formData.getAll(el.name).indexOf(el.value) === -1) {
-            formData.append(el.name, el.value)
-          }
+        } else if (formData.getAll(el.name).indexOf(el.value) === -1) {
+          formData.append(el.name, el.value)
         }
       } else if (el.type === 'select-one' || el.type === 'select') {
         if (formData.getAll(el.name).indexOf(el.value) === -1) {
