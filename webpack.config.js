@@ -3,16 +3,18 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer')
+// const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports = (env, argv) => {
   const production = argv.mode === 'production';
   return {
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
-      bitappsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
-      'bitapps-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
-      bitapps: path.resolve(__dirname, 'src/resource/sass/app.scss'),
-      'bitapps-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
+      bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
+      'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
+      bitforms: path.resolve(__dirname, 'src/resource/sass/app.scss'),
+      'bitforms-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
       components: [path.resolve(__dirname, 'src/resource/sass/components.scss'), path.resolve(__dirname, 'src/resource/css/slimselect.min.css')],
     },
 
@@ -25,7 +27,7 @@ module.exports = (env, argv) => {
     },
 
     optimization: {
-      runtimeChunk: 'single',
+      // runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
           main: {
@@ -36,12 +38,12 @@ module.exports = (env, argv) => {
           frontend: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors-frontend',
-            chunks: chunk => chunk.name === 'bitappsFrontend',
+            chunks: chunk => chunk.name === 'bitformsFrontend',
           },
           gutenbergBlock: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors-block',
-            chunks: chunk => chunk.name === 'bitapps-shortcode-block',
+            chunks: chunk => chunk.name === 'bitforms-shortcode-block',
           },
         },
       },
@@ -56,6 +58,10 @@ module.exports = (env, argv) => {
         chunks: ['webpackAssets'],
         // chunksSortMode: 'dependency'
       }),
+      /* new PreloadWebpackPlugin({
+        rel: 'preload',
+        include: ['vendors-main']
+      }), */
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': production
           ? JSON.stringify('development')
@@ -103,7 +109,7 @@ module.exports = (env, argv) => {
               options: {
                 ident: 'postcss',
                 plugins: [
-                  require('autoprefixer'),
+                  autoprefixer,
                 ],
               },
             },
@@ -111,7 +117,7 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.(jpe?g|png|gif|svg)$/i,
+          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot)$/i,
           use: [
             {
               loader: 'url-loader',

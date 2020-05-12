@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
-import Bitapps from '../user-frontend/Bitapps'
+import Bitforms from '../user-frontend/Bitforms'
 
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
@@ -14,13 +14,13 @@ export default function EditEntryData(props) {
 
   useEffect(() => {
     setshowEdit(true)
-    bitsFetch({ formID, entryID }, 'bitapps_edit_form_entry')
+    bitsFetch({ formID, entryID }, 'bitforms_edit_form_entry')
       .then(res => {
         if (res !== undefined && res.success) {
           setData({ layout: res.data.layout, fields: res.data.fields })
         }
       })
-  }, [formID])
+  }, [entryID, formID])
 
   const updateData = (event) => {
     event.preventDefault()
@@ -62,7 +62,7 @@ export default function EditEntryData(props) {
     })
 
     const queryParam = { formID, entryID: props.entryID }
-    bitsFetch(formData, 'bitapps_update_form_entry', 'multipart/form-data', queryParam)
+    bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
           setSnackbar({ show: true, msg: response.data.message })
@@ -96,7 +96,7 @@ export default function EditEntryData(props) {
     >
       <Scrollbars style={{ height: 'calc(100% - 17px)' }}>
         {data.layout !== null && (
-          <Bitapps
+          <Bitforms
             refer={ref}
             editMode
             layout={data.layout}

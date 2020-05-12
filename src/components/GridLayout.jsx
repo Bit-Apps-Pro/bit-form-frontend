@@ -185,40 +185,38 @@ function GridLayout(props) {
   )
 
   return (
-    isLoading ? <h1>Loading</h1>
-      : (
-        <div style={{ width: props.width - 15 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-          <Scrollbars>
-            <ResponsiveReactGridLayout
-              isDroppable
-              className="layout"
-              onDrop={onDrop}
-              onLayoutChange={onLayoutChange}
-              droppingItem={props.draggedElm[1]}
-              cols={{ lg: 10 }}
-              breakpoints={{ lg: 800 }}
-              rowHeight={40}
-              width={props.width - 15}
-              margin={[0, 0]}
-              containerPadding={[1, 1]}
-              draggableCancel=".no-drg"
-              draggableHandle=".drag"
-              useCSSTransforms
-            // layouts={props.lay}
-            // onBreakpointChange={onBreakpointChange}
-            // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-            // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-            // compactType="vertical"
-            >
-              {layout.map(itm => blkGen(itm))}
-            </ResponsiveReactGridLayout>
 
-            <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
-              {compByTheme(props.subBtn)}
-            </div>
-          </Scrollbars>
+    <div style={{ width: props.width - 15 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      <Scrollbars>
+        <ResponsiveReactGridLayout
+          isDroppable
+          className="layout"
+          onDrop={onDrop}
+          onLayoutChange={onLayoutChange}
+          droppingItem={props.draggedElm[1]}
+          cols={{ lg: 10 }}
+          breakpoints={{ lg: 800 }}
+          rowHeight={40}
+          width={props.width - 15}
+          margin={[0, 0]}
+          containerPadding={[1, 1]}
+          draggableCancel=".no-drg"
+          draggableHandle=".drag"
+          useCSSTransforms
+        // layouts={props.lay}
+        // onBreakpointChange={onBreakpointChange}
+        // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
+        // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+        // compactType="vertical"
+        >
+          {layout.map(itm => blkGen(itm))}
+        </ResponsiveReactGridLayout>
+
+        <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
+          {compByTheme(props.subBtn)}
         </div>
-      )
+      </Scrollbars>
+    </div>
   )
 }
 

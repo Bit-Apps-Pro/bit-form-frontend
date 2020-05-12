@@ -7,7 +7,7 @@ export default function FormTemplates() {
 
   const [templates, setTemplates] = useState(null)
   useEffect(() => {
-    bitsFetch(null, 'bitapps_templates')
+    bitsFetch(null, 'bitforms_templates')
       .then(res => {
         if (typeof res !== 'undefined' && res.success) {
           setTemplates(JSON.parse(res.data))

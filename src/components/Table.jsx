@@ -19,11 +19,7 @@ const IndeterminateCheckbox = React.forwardRef(
     React.useEffect(() => {
       resolvedRef.current.indeterminate = indeterminate
     }, [resolvedRef, indeterminate])
-    return (
-      <>
-        <TableCheckBox refer={resolvedRef} rest={rest} />
-      </>
-    )
+    return <TableCheckBox refer={resolvedRef} rest={rest} />
   },
 )
 
@@ -131,16 +127,8 @@ function Table(props) {
           maxWidth: 50,
           minWidth: 67,
           sticky: 'left',
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div title="Select All Rows" className="flx">
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div title="Select This Row" className="flx">
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
+          Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+          Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
         },
         ...cols,
       ])
@@ -155,7 +143,10 @@ function Table(props) {
     }
   }, [fetchData, pageIndex, pageSize, sortBy, filters, search])
   useEffect(() => {
-    // setstateSavable(true)
+    if (reports[reportID] && reports[reportID].details !== null && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+      const actionColumn = columns[columns.length - 1] // table action column
+      props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+    }
     return () => {
       if (!stateSavable) {
         reportsDispatch({ type: 'set', reports: [] })
@@ -182,7 +173,7 @@ function Table(props) {
   }, [pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns])
   useEffect(() => {
     // setReport if not initially setted
-    if (state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && reports[reportID].details !== null) {
+    if ( typeof props.pageCount !== 'undefined' && state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && reports[reportID].details !== null) {
       if (!stateSavable) {
         if ('hiddenColumns' in reports[reportID].details && reports[reportID].details.hiddenColumns !== state.hiddenColumns) {
           setHiddenColumns(reports[reportID].details.hiddenColumns)
@@ -227,7 +218,7 @@ function Table(props) {
           props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
           setstateSavable(true)
         }
-      } else if (isNaN(reportID) || reports.length === 0) {
+      } else if (typeof props.pageCount !== 'undefined' && (isNaN(reportID) || reports.length === 0)) {
         const details = { hiddenColumns: state.hiddenColumns, order: columns, pageSize, type: 'table', sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
         setreportID(reports.length)
         reportsDispatch({ type: 'add', report: { details } })
@@ -236,7 +227,7 @@ function Table(props) {
   }, [columns])
 
   const showBulkDupMdl = () => {
-    confMdl.action = () => { props.duplicateData(selectedFlatRows); closeConfMdl() }
+    confMdl.action = () => { props.duplicateData(selectedFlatRows, data, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
     confMdl.btnTxt = 'Duplicate'
     confMdl.btn2Txt = null
     confMdl.btnClass = 'blue'
@@ -256,7 +247,7 @@ function Table(props) {
   }
 
   const showDelModal = () => {
-    confMdl.action = () => { props.setBulkDelete(selectedFlatRows); closeConfMdl() }
+    confMdl.action = () => { props.setBulkDelete(selectedFlatRows, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
     confMdl.btnTxt = 'Delete'
     confMdl.btn2Txt = null
     confMdl.btnClass = ''

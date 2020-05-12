@@ -21,13 +21,13 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const { path, url } = useRouteMatch()
   const history = useHistory()
   const integs = [
-    { type: 'Zoho Marketing Hub', logo: zohoHub },
-    { type: 'Zoho Campaigns', logo: zohoCamp },
     { type: 'Zoho CRM', logo: zohoCRM },
-    { type: 'Zoho Recruit', logo: zohoRecruit },
-    { type: 'Zoho Analytics', logo: zohoAnalytics },
-    { type: 'Zoho Desk', logo: zohoDesk },
-    { type: 'Zoho Creator', logo: zohoCreator },
+    { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
+    { type: 'Zoho Campaigns', logo: zohoCamp, disable: true },
+    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true },
+    { type: 'Zoho Analytics', logo: zohoAnalytics, disable: true },
+    { type: 'Zoho Desk', logo: zohoDesk, disable: true },
+    { type: 'Zoho Creator', logo: zohoCreator, disable: true },
     { type: 'Zoho Projects', logo: zohoProjects, disable: true },
     { type: 'Zoho People', logo: zohoPeople, disable: true },
   ]

@@ -3,6 +3,7 @@ import { Container, Section, Bar } from 'react-simple-resizer'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
+import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 
 function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setNewCounter, setFormName, formID, formType }) {
   const [tolbarSiz, setTolbarSiz] = useState(false)
@@ -50,7 +51,7 @@ function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubB
     <Container ref={conRef} className="btcd-bld-con" style={{ height: '100%' }}>
       <Section
         className="tool-sec"
-        defaultSize={160}
+        defaultSize={165}
         minSize={notIE && 58}
       >
         <ToolBar
@@ -107,8 +108,7 @@ function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubB
             ))}
           </small>
         )}
-
-        {!isLoading && (
+        {!isLoading ? (
           <GridLayout
             theme={theme}
             width={gridWidth}
@@ -128,7 +128,7 @@ function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubB
             setNewCounter={setNewCounter}
             layout={lay}
           />
-        )}
+        ) : <GridLayoutLoader />}
 
       </Section>
 

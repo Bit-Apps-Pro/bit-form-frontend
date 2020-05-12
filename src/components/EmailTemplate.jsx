@@ -18,7 +18,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
 
   const delTem = (i, templateData) => {
     if (templateData.original.id) {
-      bitsFetch({ formID, id: templateData.original.id }, 'bitapps_delete_mailtemplate')
+      bitsFetch({ formID, id: templateData.original.id }, 'bitforms_delete_mailtemplate')
         .then(res => {
           if (res !== undefined && res.success) {
             mailTem.splice(i, 1)
@@ -87,7 +87,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
       />
       <h2>Email Templates</h2>
       <div className="">
-        <Link to={`${url}/new`} className="btn blue sh-sm">
+        <Link to={`${url}/new`} className="btn blue">
           <span className="btcd-icn icn-layout" />
           &nbsp;Add New Template
         </Link>
@@ -105,8 +105,6 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
               Empty
             </div>
           )}
-
-
       </div>
     </div>
   )

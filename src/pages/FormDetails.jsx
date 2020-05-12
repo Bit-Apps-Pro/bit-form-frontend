@@ -6,6 +6,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
+import '../resource/sass/components.scss'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -48,7 +49,7 @@ function Builder(props) {
         document.getElementById('adminmenumain').style.display = 'block'
         document.getElementById('adminmenuback').style.display = 'block'
         document.getElementById('adminmenuwrap').style.display = 'block'
-        document.getElementById('wpcontent').style.marginLeft = '160px'
+        document.getElementById('wpcontent').style.marginLeft = null
         document.getElementById('wpfooter').style.display = 'block'
       }
       setFulScn(false)
@@ -97,7 +98,7 @@ console.log('STAreports',reports)
       if (formID === 'blank') {
         setisLoading(false)
       } else {
-        bitsFetch({ template: formID }, 'bitapps_get_template')
+        bitsFetch({ template: formID }, 'bitforms_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               let responseData = JSON.parse(res.data)
@@ -118,7 +119,7 @@ console.log('STAreports',reports)
           })
       }
     } else if (formType === 'edit') {
-      bitsFetch({ id: formID }, 'bitapps_get_a_form')
+      bitsFetch({ id: formID }, 'bitforms_get_a_form')
         .then(res => {
           if (res !== undefined && res.success) {
             const responseData = res.data
@@ -159,7 +160,7 @@ console.log('STAreports',reports)
       integrations,
       additional,
     }
-    let action = 'bitapps_create_new_form'
+    let action = 'bitforms_create_new_form'
     if (savedFormId > 0) {
       formData = {
         id: savedFormId,
@@ -171,7 +172,7 @@ console.log('STAreports',reports)
         additional,
         reports,
       }
-      action = 'bitapps_update_form'
+      action = 'bitforms_update_form'
     }
 
     bitsFetch(formData, action)
@@ -181,22 +182,22 @@ console.log('STAreports',reports)
           if (typeof data !== 'object') {
             data = JSON.parse(data)
           }
-          if (action === 'bitapps_create_new_form') {
+          if (action === 'bitforms_create_new_form') {
             if (savedFormId === 0 && buttonText === 'Save') {
               setSavedFormId(data.id)
               setButtonText('Update')
               props.history.replace(`/builder/edit/${data.id}`)
               setSnackbar({ show: true, msg: 'Form Saved Successfully.' })
             }
-            allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
-          } else if (action === 'bitapps_update_form') {
+            allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitforms id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+          } else if (action === 'bitforms_update_form') {
             setSnackbar({ show: true, msg: data.message })
             if ('formSettings' in data) setFormSettings(data.formSettings)
             if ('workFlows' in data) setworkFlows(data.workFlows)
             if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
             if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
             if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
-            allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+            allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
           setbuttonDisabled(false)
         }

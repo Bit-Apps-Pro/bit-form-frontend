@@ -42,6 +42,7 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
         value={action.field}
         onChange={e => changeAtnField(e.target.value)}
       >
+        <option value="">Select One</option>
         {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
@@ -54,11 +55,12 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
         onChange={e => changeAction(e.target.value)}
         value={action.action}
       >
+        <option value="">Select One</option>
+        <option value="value">Value</option>
         {actionType !== 'onsubmit' && <option value="disable">Disable</option>}
         {actionType !== 'onsubmit' && <option value="enable">Enable</option>}
         {actionType !== 'onsubmit' && <option value="hide">Hide</option>}
         {actionType !== 'onsubmit' && <option value="show">Show</option>}
-        <option value="value">Value</option>
       </MtSelect>
 
       {action.action === 'value' && (

@@ -7,7 +7,7 @@ const BuilderLoader = () => (
     width="100%"
     height={430}
     viewBox="0 0 1500 430"
-    backgroundColor="#f3f3f3"
+    backgroundColor="#f7f7f7"
     foregroundColor="#ecebeb"
   >
     <rect x="21" y="10" rx="0" ry="0" width="89" height="16" />

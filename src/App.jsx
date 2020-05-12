@@ -4,43 +4,52 @@
 
 import React, { lazy, Suspense } from 'react'
 import {
-  BrowserRouter as Router, Switch, Route, NavLink,
+  BrowserRouter as Router, Switch, Route, NavLink, Link
 } from 'react-router-dom'
 import './resource/sass/app.scss'
-import './resource/sass/components.scss'
-import './resource/js/custom'
 import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
-// import './resource/icons/style.css'
+import './resource/icons/style.css'
+import logo from './resource/img/bit-form-logo.svg'
+// import './resource/fonts/stylesheet.css'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const FormDetails = lazy(() => import('./pages/FormDetails'))
 const FormEntries = lazy(() => import('./pages/FormEntries'))
+const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
 
+
   return (
     // eslint-disable-next-line no-undef
     <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
-      <main className="Btcd-App">
+      <div className="Btcd-App">
 
         <div className="nav-wrp">
-          <div className="logo" />
-          <nav className="top-nav">
-            <NavLink
-              exact
-              to="/"
-              activeClassName="app-link-active"
-            >My Forms
-            </NavLink>
+          <div className="flx">
+            <div className="logo flx" title="Bit Form">
+              <Link to="/" className="flx">
+                <img src={logo} alt="bit form logo" className="ml-2" />
+                <span className="ml-2">Bit Form</span>
+              </Link>
+            </div>
+            <nav className="top-nav ml-2">
+              <NavLink
+                exact
+                to="/"
+                activeClassName="app-link-active"
+              >My Forms
+              </NavLink>
 
-            <NavLink
-              to="/settings"
-              activeClassName="app-link-active"
-            >App Settings
-            </NavLink>
-          </nav>
+              <NavLink
+                to="/settings"
+                activeClassName="app-link-active"
+              >App Settings
+              </NavLink>
+            </nav>
+          </div>
         </div>
 
         <div className="route-wrp">
@@ -63,9 +72,12 @@ function App() {
             <Route path="/settings">
               <h1>Settings</h1>
             </Route>
+            <Route path="*">
+              <Error404 />
+            </Route>
           </Switch>
         </div>
-      </main>
+      </div>
     </Router>
   )
 }

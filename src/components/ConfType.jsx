@@ -12,9 +12,9 @@ export default function ConfType(props) {
   const [pos, setPos] = useState(0)
 
   const removeIntegration = async (id, type = null) => {
-    let action = 'bitapps_delete_form_integration'
+    let action = 'bitforms_delete_form_integration'
     if (type && type === 'msg') {
-      action = 'bitapps_delete_success_messsage'
+      action = 'bitforms_delete_success_messsage'
     }
     let status = await bitsFetch({ formID: props.formID, id }, action)
     if (status !== undefined) {

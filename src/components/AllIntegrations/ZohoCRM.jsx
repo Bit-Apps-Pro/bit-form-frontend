@@ -74,7 +74,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
 
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && `${80}%` }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
-        <input className="btcd-paper-inp w-9" onChange={handleInput} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
 
         <div className="mt-4"><b>Login Zoho</b></div>
         <a href="#s" className="btn btcd-btn-lg br-50 blue sh-sm d-in-b" type="button">
@@ -83,10 +83,10 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         </a>
         <div><b>Or</b></div>
         <div className="mt-3"><b>Email:</b></div>
-        <input className="btcd-paper-inp w-9" onChange={handleInput} name="email" value={crmConf.email} type="email" placeholder="Email..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="email" value={crmConf.email} type="email" placeholder="Email..." />
 
         <div className="mt-3"><b>Password:</b></div>
-        <input className="btcd-paper-inp w-9" onChange={handleInput} name="pass" value={crmConf.pass} type="password" placeholder="Password..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="pass" value={crmConf.pass} type="password" placeholder="Password..." />
         <br />
         <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button">
           Next &nbsp;

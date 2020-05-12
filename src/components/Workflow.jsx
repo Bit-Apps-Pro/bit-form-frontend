@@ -61,11 +61,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       action_run: 'create_edit',
       action_behaviour: 'cond',
       logics: [
-        { field: 'fld-1', logic: 'eqal', val: 'aaa' },
+        { field: '', logic: '', val: '' },
         'or',
-        { field: 'fld-1', logic: 'eqal', val: 'bbb' },
+        { field: '', logic: '', val: '' },
       ],
-      actions: [{ field: 'fld-1', action: 'value' }],
+      actions: [{ field: '', action: 'value' }],
       successAction: [],
     })
     setworkFlows([...workFlows])
@@ -73,7 +73,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
   const delLgcGrp = val => {
     if (workFlows[val].id) {
-      bitsFetch({ formID, id: workFlows[val].id }, 'bitapps_delete_workflow')
+      bitsFetch({ formID, id: workFlows[val].id }, 'bitforms_delete_workflow')
         .then(res => {
           if (res !== undefined && res.success) {
             workFlows.splice(val, 1)
@@ -95,25 +95,25 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     if (typ === 'and') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('and')
-        prv[lgcGrpInd].logics.push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
+        prv[lgcGrpInd].logics.push({ field: '', logic: '', val: '' })
         return [...prv]
       })
     } else if (typ === 'or') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('or')
-        prv[lgcGrpInd].logics.push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
+        prv[lgcGrpInd].logics.push({ field: '', logic: '', val: '' })
         return [...prv]
       })
     } else if (typ === 'orGrp') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('or')
-        prv[lgcGrpInd].logics.push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'or', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
+        prv[lgcGrpInd].logics.push([{ field: '', logic: '', val: '' }, 'or', { field: '', logic: '', val: '' }])
         return [...prv]
       })
     } else if (typ === 'andGrp') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics.push('and')
-        prv[lgcGrpInd].logics.push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'and', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
+        prv[lgcGrpInd].logics.push([{ field: '', logic: '', val: '' }, 'and', { field: '', logic: '', val: '' }])
         return [...prv]
       })
     }
@@ -123,25 +123,25 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     if (typ === 'and') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('and')
-        prv[lgcGrpInd].logics[ind].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
+        prv[lgcGrpInd].logics[ind].push({ field: '', logic: '', val: '' })
         return [...prv]
       })
     } else if (typ === 'or') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('or')
-        prv[lgcGrpInd].logics[ind].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
+        prv[lgcGrpInd].logics[ind].push({ field: '', logic: '', val: '' })
         return [...prv]
       })
     } else if (typ === 'orGrp') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('or')
-        prv[lgcGrpInd].logics[ind].push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'or', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
+        prv[lgcGrpInd].logics[ind].push([{ field: '', logic: '', val: '' }, 'or', { field: '', logic: '', val: '' }])
         return [...prv]
       })
     } else if (typ === 'andGrp') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind].push('and')
-        prv[lgcGrpInd].logics[ind].push([{ field: 'fld-1', logic: 'eqal', val: 'aaa' }, 'and', { field: 'fld-1', logic: 'eqal', val: 'aaa' }])
+        prv[lgcGrpInd].logics[ind].push([{ field: '', logic: '', val: '' }, 'and', { field: '', logic: '', val: '' }])
         return [...prv]
       })
     }
@@ -151,13 +151,13 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     if (typ === 'and') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind][subInd].push('and')
-        prv[lgcGrpInd].logics[ind][subInd].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
+        prv[lgcGrpInd].logics[ind][subInd].push({ field: '', logic: '', val: '' })
         return [...prv]
       })
     } else if (typ === 'or') {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[ind][subInd].push('or')
-        prv[lgcGrpInd].logics[ind][subInd].push({ field: 'fld-1', logic: 'eqal', val: 'aaa' })
+        prv[lgcGrpInd].logics[ind][subInd].push({ field: '', logic: '', val: '' })
         return [...prv]
       })
     }
@@ -310,9 +310,9 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   const addAction = lgcGrpInd => {
     setworkFlows(prv => {
       if (prv[lgcGrpInd].action_type === 'onsubmit') {
-        prv[lgcGrpInd].actions.push({ field: 'fld-1', action: 'value' })
+        prv[lgcGrpInd].actions.push({ field: '', action: 'value' })
       } else {
-        prv[lgcGrpInd].actions.push({ field: 'fld-1', action: 'disable' })
+        prv[lgcGrpInd].actions.push({ field: '', action: 'disable' })
       }
       return [...prv]
     })
@@ -322,22 +322,22 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     if (typ === 'and') {
       setworkFlows(prv => {
         if (subSubLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'and', { field: 'fld-1', logic: 'eqal', val: 'iii' })
+          prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
         } else if (subLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd + 1, 0, 'and', { field: 'fld-1', logic: 'eqal', val: 'iii' })
+          prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
         } else {
-          prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'and', { field: 'fld-1', logic: 'eqal', val: 'iii' })
+          prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
         }
         return [...prv]
       })
     } else {
       setworkFlows(prv => {
         if (subSubLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'or', { field: 'fld-1', logic: 'eqal', val: 'iii' })
+          prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
         } else if (subLgcInd !== undefined) {
-          prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd + 1, 0, 'or', { field: 'fld-1', logic: 'eqal', val: 'iii' })
+          prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
         } else {
-          prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'or', { field: 'fld-1', logic: 'eqal', val: 'iii' })
+          prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
         }
         return [...prv]
       })
@@ -591,9 +591,9 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                                 ))}
                                 <div className=" btcd-workFlows-btns">
                                   <div className="flx">
-                                    <Button icn className="blue sh-sm">+</Button>
-                                    <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue sh-sm ml-2"> AND </Button>
-                                    <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue sh-sm ml-2"> OR </Button>
+                                    <Button icn className="blue">+</Button>
+                                    <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
+                                    <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
                                   </div>
                                 </div>
                               </div>
@@ -603,10 +603,10 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                         <div className=" btcd-workFlows-btns">
                           <div className="flx">
                             <Button icn className="blue sh-sm">+</Button>
-                            <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue sh-sm ml-2"> AND </Button>
-                            <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue sh-sm ml-2"> OR </Button>
-                            <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue sh-sm ml-2"> OR Group</Button>
-                            <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue sh-sm ml-2"> AND Group</Button>
+                            <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
+                            <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
+                            <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
+                            <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue ml-2"> AND Group</Button>
                           </div>
                         </div>
                       </div>
@@ -619,10 +619,10 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                 <div className="btcd-workFlows-btns">
                   <div className="flx">
                     <Button icn className="blue sh-sm">+</Button>
-                    <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue sh-sm ml-2"> AND </Button>
-                    <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue sh-sm ml-2"> OR </Button>
-                    <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue sh-sm ml-2"> OR Group</Button>
-                    <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue sh-sm ml-2"> AND Group</Button>
+                    <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
+                    <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
+                    <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
+                    <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue ml-2"> AND Group</Button>
                   </div>
                 </div>
               )}
@@ -775,7 +775,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           Empty
         </div>
       )}
-      <Button className="blue sh-sm" onClick={addLogicGrp}>+ Add Action</Button>
+      <Button className="blue" onClick={addLogicGrp}>+ Add Action</Button>
     </div>
   )
 }

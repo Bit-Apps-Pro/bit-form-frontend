@@ -23,7 +23,7 @@ function TableAction(props) {
         )}
 
         <button className="icn-btn btcd-ph-btn" aria-label="action btn" type="button">
-          <span className="btcd-icn btcd-icn-sm icn-blue"><span><b>&#8230;</b></span></span>
+          <span className="btcd-icn btcd-icn-sm icn-dots-three-horizontal" />
         </button>
       </div>
     </div>

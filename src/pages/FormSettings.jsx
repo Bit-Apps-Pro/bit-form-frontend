@@ -1,14 +1,15 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
-import ConfType from '../components/ConfType'
-import EmailTemplate from '../components/EmailTemplate'
-import Workflow from '../components/Workflow'
 import bitsFetch from '../Utils/bitsFetch'
-import EmailTemplateEdit from '../components/EmailTemplateEdit'
-import EmailTemplateNew from '../components/EmailTemplateNew'
-import Integrations from '../components/Integrations'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
+import IntegLoader from '../components/Loaders/IntegLoader'
 
+const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
+const EmailTemplateEdit = lazy(() => import('../components/EmailTemplateEdit'))
+const EmailTemplateNew = lazy(() => import('../components/EmailTemplateNew'))
+const Integrations = lazy(() => import('../components/Integrations'))
+const Workflow = lazy(() => import('../components/Workflow'))
+const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
 export default function FormSettings(props) {
@@ -27,7 +28,7 @@ export default function FormSettings(props) {
 
     let mount = false
     mount = true
-    bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
+    bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(res => {
         if (res !== undefined && res.success) {
           if (mount) {
@@ -77,22 +78,34 @@ export default function FormSettings(props) {
             </Suspense>
           </Route>
           <Route path={`${path}confirmations`}>
-            <ConfType formFields={formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
+            <Suspense fallback={<FSettingsLoader />}>
+              <ConfType formFields={formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
+            </Suspense>
           </Route>
           <Route exact path={`${path}email-templates`}>
-            <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} formID={formID} />
+            <Suspense fallback={<FSettingsLoader />}>
+              <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} formID={formID} />
+            </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/new`}>
-            <EmailTemplateNew mailTem={props.mailTem} setMailTem={props.setMailTem} />
+            <Suspense fallback={<FSettingsLoader />}>
+              <EmailTemplateNew mailTem={props.mailTem} setMailTem={props.setMailTem} />
+            </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
-            <EmailTemplateEdit mailTem={props.mailTem} setMailTem={props.setMailTem} />
+            <Suspense fallback={<FSettingsLoader />}>
+              <EmailTemplateEdit mailTem={props.mailTem} setMailTem={props.setMailTem} />
+            </Suspense>
           </Route>
           <Route path={`${path}workflow`}>
-            <Workflow formFields={formFields} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
+            <Suspense fallback={<FSettingsLoader />}>
+              <Workflow formFields={formFields} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
+            </Suspense>
           </Route>
           <Route path={`${path}integrations`}>
-            <Integrations integrations={props.integrations} formFields={formFields} setIntegration={props.setIntegration} />
+            <Suspense fallback={<IntegLoader />}>
+              <Integrations integrations={props.integrations} formFields={formFields} setIntegration={props.setIntegration} />
+            </Suspense>
           </Route>
         </Switch>
       </div>

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useContext, useCallback, memo } from 'react'
+import React, { useState, useEffect, useContext, useCallback, memo, lazy } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -12,6 +12,8 @@ import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+
+const Welcome = lazy(() => import('./Welcome'))
 
 function AllFroms() {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
@@ -26,7 +28,7 @@ function AllFroms() {
   const handleStatus = (e, id) => {
     const el = e.target
     const data = { id, status: el.checked }
-    bitsFetch(data, 'bitapps_change_status')
+    bitsFetch(data, 'bitforms_change_status')
       .then(res => {
         if (!res.success) {
           el.checked = !el.checked
@@ -47,7 +49,7 @@ function AllFroms() {
   }
 
   const [cols, setCols] = useState([
-    { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
+    { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
     { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} setSnackbar={setSnackbar} /> },
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
@@ -59,10 +61,10 @@ function AllFroms() {
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      bitsFetch(null, 'bitapps_get_all_form')
+      bitsFetch(null, 'bitforms_get_all_form')
         .then(res => {
           if (res !== undefined && res.success && typeof res.data === 'object') {
-            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
+            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitforms id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ data: dbForms, type: 'set' })
           }
         })
@@ -86,7 +88,7 @@ function AllFroms() {
     allFormsDispatchHandler({ data: newData, type: 'set' })
     const ajaxData = { formID, status }
 
-    bitsFetch(ajaxData, 'bitapps_bulk_status_change')
+    bitsFetch(ajaxData, 'bitforms_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
@@ -105,14 +107,13 @@ function AllFroms() {
       formID.push(rows[i].original.formID)
     }
     const newData = [...allForms]
-    const tmp = [...allForms]
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
       newData.splice(Number(rowID[i]), 1)
     }
     allFormsDispatchHandler({ data: newData, type: 'set' })
     const ajaxData = { formID }
 
-    bitsFetch(ajaxData, 'bitapps_bulk_delete_form')
+    bitsFetch(ajaxData, 'bitforms_bulk_delete_form')
       .then(res => {
         if (res === undefined || !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
@@ -124,7 +125,7 @@ function AllFroms() {
   }, [])
 
   const handleDelete = formID => {
-    bitsFetch({ id: formID }, 'bitapps_delete_aform').then(response => {
+    bitsFetch({ id: formID }, 'bitforms_delete_aform').then(response => {
       if (response.success) {
         allFormsDispatchHandler({ type: 'remove', data: props.index })
         setSnackbar({ show: true, msg: 'Form Deleted !' })
@@ -133,10 +134,11 @@ function AllFroms() {
   }
 
   const handleDuplicate = formID => {
-    bitsFetch({ id: formID }, 'bitapps_duplicate_aform').then(response => {
+    console.log('formID', formID)
+    bitsFetch({ id: formID }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
-        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
         setSnackbar({ show: true, msg: 'Form Duplicated Successfully.' })
       }
     })
@@ -198,35 +200,32 @@ function AllFroms() {
               <NavLink to="/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
             </div>
           </div>
-          <div className="btcd-tem">
-            <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
-            <div>Contact Form</div>
-            <div className="btcd-hid-btn">
-              <NavLink to="builder/new/contact_form" className="btn btn-white sh-sm" type="button">Create</NavLink>
-            </div>
-          </div>
+          {modal && <FormTemplates />}
         </div>
-        {modal && <FormTemplates />}
       </Modal>
 
-      <div className="af-header">
-        <h2>Forms</h2>
-        <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
-      </div>
-      <div className="forms">
-        <Table
-          className="f-table btcd-all-frm"
-          height={500}
-          columns={cols}
-          data={allForms}
-          rowSeletable
-          resizable
-          columnHidable
-          setBulkStatus={setBulkStatus}
-          setBulkDelete={setBulkDelete}
-          setTableCols={setTableCols}
-        />
-      </div>
+      {allForms.length > 0 ? (
+        <>
+          <div className="af-header flx flx-between">
+            <h2>Forms</h2>
+            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
+          </div>
+          <div className="forms">
+            <Table
+              className="f-table btcd-all-frm"
+              height={500}
+              columns={cols}
+              data={allForms}
+              rowSeletable
+              resizable
+              columnHidable
+              setBulkStatus={setBulkStatus}
+              setBulkDelete={setBulkDelete}
+              setTableCols={setTableCols}
+            />
+          </div>
+        </>
+      ) : <Welcome setModal={setModal} />}
     </div>
   )
 }

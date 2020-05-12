@@ -1,10 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect } from 'react'
+import React from 'react'
 
 export default function SingleToggle2(props) {
-  useEffect(() => {
-
-  }, [props])
   return (
     <div className={`${props.className}`}>
       <span>{props.title}</span>

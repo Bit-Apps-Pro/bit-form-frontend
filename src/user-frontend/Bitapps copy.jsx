@@ -5,7 +5,7 @@ import { Responsive, WidthProvider } from 'react-grid-layout'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 
-export default function Bitapps(props) {
+export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
   const FormLayout = WidthProvider(Responsive);
@@ -44,7 +44,7 @@ export default function Bitapps(props) {
           formData.append(el.name, el.value)
         }
       })
-    bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
+    bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
       .then(response => {
         if (response !== undefined && response.success) {
           setMessage(response.data)
@@ -95,9 +95,9 @@ export default function Bitapps(props) {
         snack
         && <Toast msg={message} show={snack} setSnack={setSnack} />
       }
-      <form id={`form-${process.env.NODE_ENV === 'production' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />
-        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />
+      <form id={`form-${process.env.NODE_ENV === 'production' && bitFormsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.nonce} name="bitforms_token" />
+        <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.appID} name="bitforms_id" />
         <FormLayout
           cols={{ lg: 10 }}
           breakpoints={{ lg: 800 }}
