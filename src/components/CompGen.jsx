@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { createElement, createRef, useState } from 'react'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
+import ReCaptcha from './Fields/Recaptcha';
 
 function CompGen(props) {
   console.log('%c $render CompGen', 'background:red;padding:3px;border-radius:5px;color:white')
@@ -163,7 +164,7 @@ function CompGen(props) {
         </div>
       )
     )
-            }
+  }
 
   const submitBtns = (attr) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
@@ -180,8 +181,9 @@ function CompGen(props) {
     </div>
   )
   const fieldChangeHandler = (event) => {
-    
+
   }
+
   switch (props.atts.typ) {
     case 'text':
     case 'number':
@@ -212,14 +214,16 @@ function CompGen(props) {
       return submitBtns(props.atts)
     case 'hidden':
       return hiddenField(props.atts)
+    case 'recaptcha':
+      return ReCaptcha(props.atts)
     default:
       break
   }
 
-  return <div>aaa</div>
+  return <div>None</div>
 }
 
-export default CompGen
+export default (CompGen)
 
 function FileUp({ attr, formID, entryID }) {
   const delBtnRef = createRef()
