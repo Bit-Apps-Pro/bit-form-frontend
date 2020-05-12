@@ -36,10 +36,9 @@ function GridLayout(props) {
   }, [newData, fields, isLoading])
 
   // const [layout, setLayout] = useState(props.layout)
-  const [layouts, setLayouts] = useState({ lg: [], md: [], sm: [] })
+  const [layouts, setLayouts] = useState(props.layout !== undefined ? props.layout : { lg: [], md: [], sm: [] })
   const [breakpoint, setBreakpoint] = useState('lg')
   const cols = { lg: 6, md: 4, sm: 2 }
-
   const sortLay = arr => {
     if (arr.length <= 1) {
       return arr

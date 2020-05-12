@@ -8,6 +8,7 @@ export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
   const [redirectPage, setredirectPage] = useState(null)
+  const [layoutSize, setlayoutSize] = useState(window.innerWidth > 800 ? 'lg' : window.innerWidth > 600 ? 'md' : 'sm')
   let maxRowIndex = 0
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
@@ -37,6 +38,18 @@ export default function Bitforms(props) {
       </div>
     )
   }
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 800) {
+      setlayoutSize('lg')
+      console.log(window.innerWidth)
+    } else if (window.innerWidth > 600) {
+      setlayoutSize('md')
+      console.log(window.innerWidth)
+    } else {
+      setlayoutSize('sm')
+      console.log(window.innerWidth)
+    }
+  })
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -45,10 +58,16 @@ export default function Bitforms(props) {
     // eslint-disable-next-line array-callback-return
     fields.filter(el => {
       if (el.type === 'file' && el.files.length > 0) {
+        let fileName
         if (el.files.length > 1) {
-          el.files.forEach(file => formData.append(`${el.name}[]`, file))
+          fileName = `${el.name}[]`
         } else {
-          el.files.forEach(file => formData.append(el.name, file))
+          fileName = el.name
+        }
+        if (el.files.forEach) {
+          el.files.forEach(file => formData.append(fileName, file))
+        } else {
+          Array.from(el.files).forEach(file => formData.append(fileName, file))
         }
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
         formData.append(el.name, el.value)
@@ -78,7 +97,6 @@ export default function Bitforms(props) {
           bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
             .then(response => {
               if (response !== undefined && response.success) {
-                console.log('responseType', typeof response.data)
                 if (typeof response.data === 'object') {
                   setMessage(response.data.message)
                   setSnack(true)
@@ -96,7 +114,6 @@ export default function Bitforms(props) {
       bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
         .then(response => {
           if (response !== undefined && response.success) {
-            console.log('responseType', typeof response.data)
             if (typeof response.data === 'object') {
               setMessage(response.data.message)
               setredirectPage(response.data.redirectPage)
@@ -162,7 +179,7 @@ export default function Bitforms(props) {
         // rowHeight={40}
         // margin={[0, 10]}
         >
-          {props.layout.map(field => {
+          {props.layout[layoutSize].map(field => {
             // eslint-disable-next-line no-param-reassign
             field.static = true
             return blk(field)
@@ -220,6 +237,8 @@ function Toast(props) {
         props.setSnack(false)
         if (props.redirectPage !== null) {
           window.location = props.redirectPage
+        } else {
+          window.location.reload()
         }
       }
     }, 2000);

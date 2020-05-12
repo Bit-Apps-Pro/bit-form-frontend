@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports = (env, argv) => {
@@ -27,7 +28,7 @@ module.exports = (env, argv) => {
     },
 
     optimization: {
-      // runtimeChunk: 'single',
+      runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
           main: {
@@ -49,14 +50,15 @@ module.exports = (env, argv) => {
       },
     },
     plugins: [
+      // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         filename: '../../views/view-root.php',
         path: path.resolve('../views/'),
         template: `${__dirname}/public/index.html`,
-        inject: 'true',
+        // inject: 'true',
         chunks: ['webpackAssets'],
-        // chunksSortMode: 'dependency'
+        chunksSortMode: 'auto',
       }),
       /* new PreloadWebpackPlugin({
         rel: 'preload',
