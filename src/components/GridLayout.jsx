@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
@@ -27,8 +27,111 @@ function GridLayout(props) {
 
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, isLoading } = props
 
-  const [layout, setLayout] = useState(props.layout)
-  // const [breakpoint, setBreakpoint] = useState('md')
+  useEffect(() => {
+    if (newData !== null) {
+      margeNewData()
+    }
+    slimInit()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newData, fields, isLoading])
+
+  // const [layout, setLayout] = useState(props.layout)
+  const [layouts, setLayouts] = useState({ lg: [], md: [], sm: [] })
+  const [breakpoint, setBreakpoint] = useState('lg')
+  const cols = { lg: 6, md: 4, sm: 2 }
+
+  const sortLay = arr => {
+    if (arr.length <= 1) {
+      return arr
+    }
+    const left = []
+    const right = []
+    const piv = arr.pop()
+    const newArr = []
+    for (let i = 0; i < arr.length; i += 1) {
+      if (arr[i].y >= piv.y) {
+        right.push(arr[i])
+      } else {
+        left.push(arr[i])
+      }
+    }
+    return newArr.concat(sortLay(left), piv, sortLay(right))
+  }
+
+  // eslint-disable-next-line consistent-return
+  const getPos = (vgrid, width, h, col) => {
+    const w = width > col ? col : width
+    for (let i = 0; i < vgrid.length; i += 1) {
+      for (let j = 0; j < vgrid[i].length; j += 1) {
+        if (!vgrid[i][j]) {
+          if (h > i) {
+            vgrid.push(Array(col).fill(0));
+          }
+          if (col - j >= w) {
+            // chek height
+            let clr = true;
+            for (let k = i; k < i + h; k += 1) {
+              // check clr right by w
+              if (k > vgrid.length - 1) {
+                vgrid.push(Array(col).fill(0));
+              }
+              for (let m = j; m < w + j - 1; m += 1) {
+                if (vgrid[k][m]) {
+                  clr = false;
+                }
+              }
+            }
+            if (clr) {
+              for (let r = i; r < h + i; r += 1) {
+                for (let c = j; c < w + j; c += 1) {
+                  // eslint-disable-next-line no-param-reassign
+                  vgrid[r][c] = 1
+                }
+              }
+              // console.log("row", i, "col", j);
+              return { x: j, y: i, vgrid, w }
+            }
+          } else {
+            break;
+          }
+        } else {
+          vgrid.push(Array(col).fill(0));
+        }
+      }
+    }
+  }
+
+  const genLay = (lay, col) => {
+    const sortedLay = sortLay(lay)
+    const nlay = []
+    const nvgrid = Array(Array(col).fill(0));
+    for (let i = 0; i < sortedLay.length; i += 1) {
+      const o = { ...sortedLay[i] }
+      const { x, y, w } = getPos(nvgrid, o.w, o.h, col);
+      o.x = x;
+      o.y = y;
+      o.w = w;
+      nlay.push(o)
+    }
+    return nlay;
+  }
+
+  const genFilterLay = (lay, col, idx) => {
+    const nlay = []
+    const nvgrid = Array(Array(col).fill(0));
+    for (let i = 0; i < lay.length; i += 1) {
+      const o = { ...lay[i] }
+      if (o.i !== idx) {
+        const { x, y, w } = getPos(nvgrid, o.w, o.h, col);
+        o.x = x;
+        o.y = y;
+        o.w = w;
+        nlay.push(o)
+      }
+    }
+    return nlay;
+  }
+
   const slimInit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
@@ -60,30 +163,49 @@ function GridLayout(props) {
     const x = 0
     const y = Infinity
     setNewData(null)
+
+    const newBlk = { i: `b-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
+    const tmpLayouts = layouts
+    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
+    tmpLayouts.lg.push(newBlk)
+    tmpLayouts.md.push(newBlk)
+    tmpLayouts.sm.push(newBlk)
+    if (breakpoint === 'lg') {
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'md') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'sm') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+    }
+    setLayouts({ ...tmpLayouts })
     setFields({ ...fields, [`b-${newCounter + 1}`]: newData[0] })
     setNewCounter(newCounter + 1)
-    setLayout([...layout, { i: `b-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }])
   }
 
-  useEffect(() => {
-    if (newData !== null) {
-      margeNewData()
+  const onLayoutChange = (newLay, newLays) => {
+    if (newLays.lg.length === layouts.lg.length
+      && newLays.md.length === layouts.md.length
+      && newLays.sm.length === layouts.sm.length) {
+      setLayouts({ ...newLays })
+      props.setLay({ ...newLays })
     }
-    slimInit()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newData, fields, isLoading])
+  }
 
-  const onLayoutChange = (lat) => {
-    props.setLay(lat)
+  const onBreakpointChange = bp => {
+    setBreakpoint(bp)
   }
 
   const onRemoveItem = i => {
-    let lay = [...layout]
-    lay = lay.filter(itm => itm.i !== i)
-    const tmpData = { ...fields }
-    delete tmpData[i]
-    setFields(tmpData)
-    setLayout(lay)
+    const nwLay = {}
+    nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
+    nwLay.md = genFilterLay(layouts.md, cols.md, i)
+    nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
+    delete fields[i]
+    setLayouts(nwLay)
+    setFields({ ...fields })
   }
 
   const onDrop = elmPrms => {
@@ -94,9 +216,24 @@ function GridLayout(props) {
     if (y !== 0) { y -= 1 }
     const newBlk = `b-${newCounter + 1}`
 
+    const tmpLayouts = layouts
+    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
+    tmpLayouts.lg.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    tmpLayouts.md.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    tmpLayouts.sm.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    if (breakpoint === 'lg') {
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'md') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'sm') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+    }
+    setLayouts({ ...tmpLayouts })
     setFields({ ...fields, [newBlk]: draggedElm[0] })
     setNewCounter(newCounter + 1)
-    setLayout([...layout, { i: newBlk, x, y, w, h, minH, maxH, minW }])
   }
 
   const getElmProp = e => {
@@ -185,31 +322,28 @@ function GridLayout(props) {
   )
 
   return (
-
-    <div style={{ width: props.width - 15 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+    <div style={{ width: props.width - 19 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars>
         <ResponsiveReactGridLayout
-          isDroppable
+          width={props.width - 25}
+          isDroppable={props.draggedElm[0] !== ''}
           className="layout"
           onDrop={onDrop}
           onLayoutChange={onLayoutChange}
           droppingItem={props.draggedElm[1]}
-          cols={{ lg: 10 }}
-          breakpoints={{ lg: 800 }}
+          cols={cols}
+          breakpoints={{ lg: 800, md: 600, sm: 320 }}
           rowHeight={40}
-          width={props.width - 15}
           margin={[0, 0]}
           containerPadding={[1, 1]}
           draggableCancel=".no-drg"
           draggableHandle=".drag"
           useCSSTransforms
-        // layouts={props.lay}
-        // onBreakpointChange={onBreakpointChange}
-        // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-        // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
+          layouts={layouts}
+          onBreakpointChange={onBreakpointChange}
         // compactType="vertical"
         >
-          {layout.map(itm => blkGen(itm))}
+          {layouts[breakpoint].map(itm => blkGen(itm))}
         </ResponsiveReactGridLayout>
 
         <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
@@ -220,4 +354,4 @@ function GridLayout(props) {
   )
 }
 
-export default (GridLayout)
+export default memo(GridLayout)
