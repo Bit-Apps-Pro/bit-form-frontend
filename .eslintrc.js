@@ -22,6 +22,7 @@ module.exports = {
   plugins: [
     'react',
     'react-hooks',
+    
   ],
   rules: {
     "semi": 0,
@@ -31,5 +32,6 @@ module.exports = {
     "object-curly-newline": 0,
     "max-len": ["error", { "code": 350 }],
     "linebreak-style": ["error", "unix"],
+    "react-hooks/exhaustive-deps": 'warn' 
   },
 };
