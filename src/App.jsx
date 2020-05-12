@@ -11,7 +11,7 @@ import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
-// import './resource/fonts/stylesheet.css'
+import AppSettings from './pages/AppSettings'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const FormDetails = lazy(() => import('./pages/FormDetails'))
@@ -44,9 +44,9 @@ function App() {
               </NavLink>
 
               <NavLink
-                to="/settings"
+                to="/settings/recaptcha"
                 activeClassName="app-link-active"
-              >App Settings
+              >Settings
               </NavLink>
             </nav>
           </div>
@@ -70,7 +70,7 @@ function App() {
               </Suspense>
             </Route>
             <Route path="/settings">
-              <h1>Settings</h1>
+              <AppSettings />
             </Route>
             <Route path="*">
               <Error404 />

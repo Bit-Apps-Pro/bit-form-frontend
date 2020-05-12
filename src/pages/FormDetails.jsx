@@ -17,7 +17,7 @@ function Builder(props) {
   const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
   const [isLoading, setisLoading] = useState(true)
-  const [lay, setLay] = useState([])
+  const [lay, setLay] = useState({})
   const [fields, setFields] = useState(null)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')

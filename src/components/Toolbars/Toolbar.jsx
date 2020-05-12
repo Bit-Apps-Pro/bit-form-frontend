@@ -1,18 +1,18 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import React, { memo } from 'react'
+import React, { useMemo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
 
-function Toolbar(props) {
+function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
   console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
 
   const tools = [
     {
       name: 'Text',
       icn: 'text',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'text',
         lbl: 'Text Field',
@@ -23,7 +23,7 @@ function Toolbar(props) {
     {
       name: 'Multiline Text',
       icn: 'textarea',
-      pos: { h: 3, w: 10, i: 'block-5' },
+      pos: { h: 3, w: 6, i: 'block-5' },
       elm: {
         typ: 'textarea',
         lbl: 'Multi-Line Text',
@@ -42,7 +42,7 @@ function Toolbar(props) {
     {
       name: 'Check Box',
       icn: 'check',
-      pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'check',
         lbl: 'Check Boxs',
@@ -57,7 +57,7 @@ function Toolbar(props) {
     {
       name: 'Radio Button',
       icn: 'radio',
-      pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'radio',
         lbl: 'Radio Boxs',
@@ -73,7 +73,7 @@ function Toolbar(props) {
     {
       name: 'Number',
       icn: 'num',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'number',
         lbl: 'Number Field',
@@ -84,7 +84,7 @@ function Toolbar(props) {
     {
       name: 'Drop Down',
       icn: 'dropdown',
-      pos: { h: 2, w: 10, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
         lbl: 'Drop-Down Menu',
@@ -99,7 +99,7 @@ function Toolbar(props) {
     {
       name: 'Password:',
       icn: 'pass',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'password',
         lbl: 'Password Field',
@@ -110,7 +110,7 @@ function Toolbar(props) {
     {
       name: 'Email',
       icn: 'email',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'email',
         lbl: 'Email Field',
@@ -121,7 +121,7 @@ function Toolbar(props) {
     {
       name: 'URL',
       icn: 'url',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'url',
         lbl: 'URL Field',
@@ -132,7 +132,7 @@ function Toolbar(props) {
     {
       name: 'File Upload',
       icn: 'fileup',
-      pos: { h: 2, w: 10, i: 'n_blk', minH: 2, minW: 3 },
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2, minW: 3 },
       elm: {
         typ: 'file-up',
         lbl: 'File Upload',
@@ -143,7 +143,7 @@ function Toolbar(props) {
     {
       name: 'Date',
       icn: 'date',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'date',
         lbl: 'Date Input:',
@@ -153,7 +153,7 @@ function Toolbar(props) {
     {
       name: 'Time',
       icn: 'time',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'time',
         lbl: 'Time Input:',
@@ -163,7 +163,7 @@ function Toolbar(props) {
     {
       name: 'Date-Time',
       icn: 'datetime',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
         lbl: 'Date-Time Input:',
@@ -173,7 +173,7 @@ function Toolbar(props) {
     {
       name: 'Month',
       icn: 'month',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'month',
         lbl: 'Month Input:',
@@ -183,7 +183,7 @@ function Toolbar(props) {
     {
       name: 'Week',
       icn: 'week',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'week',
         lbl: 'Week Input:',
@@ -193,33 +193,45 @@ function Toolbar(props) {
     {
       name: 'Color Picker',
       icn: 'color',
-      pos: { h: 2, w: 10, i: 'n_blk', maxH: 2, minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'color',
         lbl: 'Color Picker:',
         valid: {},
       },
     },
+    {
+      name: 'reCaptcha v2',
+      icn: 'recaptcha',
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2, minW: 2 },
+      elm: {
+        typ: 'recaptcha',
+        theme: 'light',
+        lbl: '',
+        valid: {},
+      },
+    },
   ]
 
   return (
-    <div className="toolBar-wrp">
+    <div className="toolBar-wrp" style={{ width: tolbarSiz && 58 }}>
       <div className="btcd-toolbar-title">
-        {!props.tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn" onClick={() => { props.setTolbarSiz(!props.tolbarSiz) }} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${props.tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
+        {!tolbarSiz && 'Tool Bar'}
+        <button className="icn-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div>
-      <Scrollbars autoHide style={{ maxWidth: 400 }}>
-        <div className="toolBar">
-          {tools.map(tool => (
-            <Tools key={tool.name} setDrgElm={props.setDrgElm} setNewData={props.setNewData} value={[tool.elm, tool.pos]}>
-              <span className={`btcd-icn  icn-${tool.icn}`} />
-              {/* <img draggable="false" src={tool.icn} alt={`${tool.name}-field`} className="tool-img" /> */}
-              {!props.tolbarSiz && tool.name}
-            </Tools>
-          ))}
-        </div>
-      </Scrollbars>
+      {useMemo(() => (
+        <Scrollbars autoHide style={{ maxWidth: 400 }}>
+          <div className="toolBar">
+            {tools.map(tool => (
+              <Tools key={tool.name} setDrgElm={setDrgElm} setNewData={setNewData} value={[tool.elm, tool.pos]}>
+                <span className={`btcd-icn  icn-${tool.icn}`} />
+                {!tolbarSiz && tool.name}
+              </Tools>
+            ))}
+          </div>
+        </Scrollbars>
+      ), [tolbarSiz])}
     </div>
   )
 }
-export default memo(Toolbar)
+export default (Toolbar)

@@ -5,6 +5,7 @@ import RadioCheckSettings from './RadioCheckSettings'
 import SelectSettings from './SelectSettings'
 import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
+import ReCaptchaSettigns from './ReCaptchaSettigns'
 
 function CompSettings(props) {
   console.log('%c $render Comp setting index', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -33,6 +34,8 @@ function CompSettings(props) {
         return <FileUpSettings elm={props.elm} updateData={props.updateData} />
       case 'submit':
         return <SubmitBtnSettings elm={props.elm} setSubmitConfig={props.setSubmitConfig} />
+      case 'recaptcha':
+        return <ReCaptchaSettigns elm={props.elm} updateData={props.updateData} />
       default:
         return ''
     }
