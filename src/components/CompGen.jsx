@@ -173,7 +173,7 @@ function CompGen(props) {
         <button
           className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
           type="button"
-        // onClick={() => { document.getElementById(`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`).reset() }}
+        // onClick={() => { document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset() }}
         >
           {attr.rstBtnTxt}
         </button>
@@ -280,7 +280,7 @@ function FileUp({ attr, formID, entryID }) {
               )}
               {filelist.map((itm, i) => (
                 <div key={`ol-f-${i + 3}`} className="flx ">
-                  <a href={`http://192.168.1.11/wp-content/uploads/bitapps/${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`http://192.168.1.11/wp-content/uploads/bitforms/${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
                     <span className="btcd-icn icn-file" />
                     {' '}
                     {itm}

@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, memo, useState } from 'react'
+import React, { useEffect, memo, useState, useContext } from 'react'
 import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, /* useBlockLayout */ useFlexLayout, useColumnOrder } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -9,6 +9,7 @@ import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import ConfirmModal from './ConfirmModal'
 import TableLoader from './Loaders/TableLoader'
+import { AllFormContext } from '../Utils/AllFormContext'
 
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -22,16 +23,17 @@ const IndeterminateCheckbox = React.forwardRef(
   },
 )
 
-function GlobalFilter({ globalFilter, setGlobalFilter }) {
+function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
   return (
     <div className="f-search">
-      <button type="button" className="icn-btn" aria-label="icon-btn"><span className="btcd-icn icn-search" /></button>
+      <button type="button" className="icn-btn" aria-label="icon-btn" onClick={e => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
       <label>
         <input
           value={globalFilter || ''}
           onChange={e => {
             setGlobalFilter(e.target.value || undefined)
           }}
+          onBlur={e => { setSearch(globalFilter || undefined) }}
           placeholder="Search"
         />
       </label>
@@ -59,7 +61,9 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
 function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const { columns, data, fetchData } = props
+  const { columns, data, fetchData, report } = props
+  const { reportsData } = useContext(AllFormContext)
+  const { reportsDispatch, reports } = reportsData
   const {
     getTableProps,
     getTableBodyProps,
@@ -79,7 +83,10 @@ function Table(props) {
     selectedFlatRows, // row select
     allColumns, // col hide
     setGlobalFilter,
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
+    setColumnOrder,
+    setHiddenColumns,
+    toggleSortBy,
   } = useTable(
     {
       debug: true,
@@ -88,8 +95,19 @@ function Table(props) {
       data,
       manualPagination: typeof props.pageCount !== 'undefined',
       pageCount: props.pageCount,
-      initialState: { pageIndex: 0 },
+      initialState: {
+        pageIndex: 0,
+        hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
+        pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
+        sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
+        filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'filters' in reports[report].details) ? reports[report].details.filters : [],
+        globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
+      },
       autoResetPage: false,
+      autoResetHiddenColumns: false,
+      autoResetSortBy: false,
+      autoResetFilters: false,
+      autoResetGlobalFilter: false,
     },
     useFilters,
     useGlobalFilter,
@@ -116,15 +134,100 @@ function Table(props) {
       ])
     }) : '',
   )
-
+  const [reportID, setreportID] = useState(parseInt(report, 10))
+  const [stateSavable, setstateSavable] = useState(false)
+  const [search, setSearch] = useState(globalFilter)
   useEffect(() => {
     if (fetchData) {
-      fetchData({ pageIndex, pageSize })
+      fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search })
     }
-  }, [fetchData, pageIndex, pageSize])
+  }, [fetchData, pageIndex, pageSize, sortBy, filters, search])
+  useEffect(() => {
+    if (reports[reportID] && reports[reportID].details !== null && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+      const actionColumn = columns[columns.length - 1] // table action column
+      props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+    }
+    return () => {
+      if (!stateSavable) {
+        reportsDispatch({ type: 'set', reports: [] })
+        setstateSavable(false)
+      }
+    }
+  }, [])
+  useEffect(() => {
+    if (pageIndex > pageCount) {
+      gotoPage(0)
+    }
+  }, [gotoPage, pageCount, pageIndex])
+  useEffect(() => {
+    if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
+      if (reports[reportID].details !== null) {
+        const details = { ...reports[reportID].details, hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
+        const newReport = { ...reports[reportID], details }
+        reportsDispatch({ type: 'update', report: newReport, reportID })
+        setstateSavable(false)
+      }
+    } else if (stateSavable) {
+      setstateSavable(false)
+    }
+  }, [pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns])
+  useEffect(() => {
+    // setReport if not initially setted
+    if ( typeof props.pageCount !== 'undefined' && state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && reports[reportID].details !== null) {
+      if (!stateSavable) {
+        if ('hiddenColumns' in reports[reportID].details && reports[reportID].details.hiddenColumns !== state.hiddenColumns) {
+          setHiddenColumns(reports[reportID].details.hiddenColumns)
+        }
+        if ('pageSize' in reports[reportID].details && reports[reportID].details.pageSize !== pageSize) {
+          setPageSize(reports[reportID].details.pageSize)
+        }
+        if ('pageIndex' in reports[reportID].details && reports[reportID].details.pageIndex !== pageIndex) {
+          gotoPage(reports[reportID].details.pageIndex - 1)
+        }
+        if ('sortBy' in reports[reportID].details && reports[reportID].details.sortBy !== state.sortBy && data !== null) {
+          // reports[reportID].details.sortBy.map(fieldToSort => { console.log({...fieldToSort}); toggleSortBy(fieldToSort.id, fieldToSort.desc) })
+        }
+        if ('filters' in reports[reportID].details && reports[reportID].details.filters !== state.filters) {
+        }
+        if ('globalFilter' in reports[reportID].details && reports[reportID].details.globalFilter !== state.globalFilter) {
+          setGlobalFilter(reports[reportID].details.globalFilter)
+          setSearch(reports[reportID].details.globalFilter)
+        }
+        if ('order' in reports[reportID].details && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+          setColumnOrder(['selection', ...reports[reportID].details.order.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))])
+        }
+      }
+    }
+  }, [reports[report]])
+
+  useEffect(() => {
+    if (columns.length > 0 && allColumns.length >= columns.length) {
+      if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
+        if (stateSavable && reports[reportID].details !== null) {
+          const details = { ...reports[reportID].details, order: columns, type: 'table' }
+          const newReport = { ...reports[reportID], details }
+          if (state.columnOrder.length === 0) {
+            props.setTableCols([...reports[reportID].details.order])
+            setColumnOrder(['selection', ...reports[reportID].details.order.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))])
+          } else if (JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+            setColumnOrder(allColumns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor)))
+            reportsDispatch({ type: 'update', report: newReport, reportID })
+          }
+        } else if (!stateSavable && reports[reportID].details !== null && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+          const actionColumn = columns[columns.length - 1] // table action column
+          props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+          setstateSavable(true)
+        }
+      } else if (typeof props.pageCount !== 'undefined' && (isNaN(reportID) || reports.length === 0)) {
+        const details = { hiddenColumns: state.hiddenColumns, order: columns, pageSize, type: 'table', sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
+        setreportID(reports.length)
+        reportsDispatch({ type: 'add', report: { details } })
+      }
+    }
+  }, [columns])
 
   const showBulkDupMdl = () => {
-    confMdl.action = () => { props.duplicateData(selectedFlatRows); closeConfMdl() }
+    confMdl.action = () => { props.duplicateData(selectedFlatRows, data, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
     confMdl.btnTxt = 'Duplicate'
     confMdl.btn2Txt = null
     confMdl.btnClass = 'blue'
@@ -144,7 +247,7 @@ function Table(props) {
   }
 
   const showDelModal = () => {
-    confMdl.action = () => { props.setBulkDelete(selectedFlatRows); closeConfMdl() }
+    confMdl.action = () => { props.setBulkDelete(selectedFlatRows, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
     confMdl.btnTxt = 'Delete'
     confMdl.btn2Txt = null
     confMdl.btnClass = ''
@@ -208,6 +311,7 @@ function Table(props) {
             preGlobalFilteredRows={preGlobalFilteredRows}
             globalFilter={state.globalFilter}
             setGlobalFilter={setGlobalFilter}
+            setSearch={setSearch}
           />
           <div className="mt-2">
             <Scrollbars style={{ height: props.height }}>

@@ -10,7 +10,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
   const [redirectUrls, setredirectUrls] = useState(null)
 
   useEffect(() => {
-    bitsFetch(null, 'bitapps_get_all_wp_pages')
+    bitsFetch(null, 'bitforms_get_all_wp_pages')
       .then(res => {
         if (res !== undefined && res.success && res.data !== undefined) {
           setredirectUrls(res.data)

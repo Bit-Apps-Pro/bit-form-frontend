@@ -4,9 +4,10 @@ import SlimSelect from 'slim-select'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 
-export default function Bitapps(props) {
+export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
+  const [redirectPage, setredirectPage] = useState(null)
   let maxRowIndex = 0
   const blk = (field) => {
     const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
@@ -40,7 +41,6 @@ export default function Bitapps(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = new FormData()
-    console.log("FRONT", event.target)
     const fields = Array.prototype.slice.call(event.target)
     // eslint-disable-next-line array-callback-return
     fields.filter(el => {
@@ -61,7 +61,6 @@ export default function Bitapps(props) {
               formData.append(name, optionData.value)
             }
           })
-
         } else {
           formData.append(el.name, el.value)
         }
@@ -71,13 +70,49 @@ export default function Bitapps(props) {
         formData.append(el.name, el.value)
       }
     })
-    bitsFetch(formData, 'bitapps_submit_form', 'multipart/form-data')
-      .then(response => {
-        if (response !== undefined && response.success) {
-          setMessage(response.data)
-          setSnack(true)
-        }
+
+    if (props.gRecaptchaVersion && props.gRecaptchaVersion !== null && props.gRecaptchaVersion === 'v3') {
+      grecaptcha.ready(() => {
+        grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'homepage' }).then((token) => {
+          formData.append('g-recaptcha-response', token)
+          bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
+            .then(response => {
+              if (response !== undefined && response.success) {
+                console.log('responseType', typeof response.data)
+                if (typeof response.data === 'object') {
+                  setMessage(response.data.message)
+                  setSnack(true)
+                  setredirectPage(response.data.redirectPage)
+                } else {
+                  setMessage(response.data)
+                  setSnack(true)
+                  setredirectPage(null)
+                }
+              }
+            })
+        })
       })
+    } else {
+      bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
+        .then(response => {
+          if (response !== undefined && response.success) {
+            console.log('responseType', typeof response.data)
+            if (typeof response.data === 'object') {
+              setMessage(response.data.message)
+              setredirectPage(response.data.redirectPage)
+              setSnack(true)
+              if (response.data.redirectPage === null) {
+                document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
+              }
+            } else {
+              setMessage(response.data)
+              setredirectPage(null)
+              setSnack(true)
+              document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
+            }
+          }
+        })
+    }
   }
 
 
@@ -109,16 +144,15 @@ export default function Bitapps(props) {
     gridTemplateColumns: 'auto auto auto auto auto auto auto auto auto auto',
     gridgap: 0,
   }
-  console.log('BUTTONS', props.buttons)
   return (
     <div>
       {
         snack
-        && <Toast msg={message} show={snack} setSnack={setSnack} />
+        && <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} />
       }
-      <form ref={props.refer} id={`form-${typeof bitAppsFront !== 'undefined' && bitAppsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.nonce} name="bitapps_token" />}
-        {typeof bitAppsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitAppsFront.appID} name="bitapps_id" />}
+      <form ref={props.refer} id={`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.nonce} name="bitforms_token" />}
+        {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.appID} name="bitforms_id" />}
         <div
           style={style}
         // cols={{ lg: 10 }}
@@ -135,6 +169,12 @@ export default function Bitapps(props) {
           })}
         </div>
         {/* {!props.editMode && <button className="blk" type="submit">Submit</button>} */}
+        {props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && props.gRecaptchaVersion && props.gRecaptchaVersion === 'v2'
+          && (
+            <div className="text-wrp">
+              <div className="g-recaptcha" data-sitekey={props.gRecaptchaSiteKey} />
+            </div>
+          )}
         {!props.editMode && props.buttons
           && (
             <div
@@ -150,7 +190,7 @@ export default function Bitapps(props) {
             >
               <CompGen
                 atts={props.buttons}
-                // formID={bitAppsFront.contentID}
+                // formID={bitFormsFront.contentID}
                 entryID={props.entryID}
               />
             </div>
@@ -173,10 +213,14 @@ function Toast(props) {
     boxShadow: '1px 1px 3px 0px #0000004d',
     transition: 'right 0.5s',
   }
+  console.log('props.redirectPage', props.redirectPage)
   useEffect(() => {
     const timer = setTimeout(() => {
       if (props.show) {
         props.setSnack(false)
+        if (props.redirectPage !== null) {
+          window.location = props.redirectPage
+        }
       }
     }, 2000);
     return () => clearTimeout(timer);
@@ -184,7 +228,15 @@ function Toast(props) {
   }, []);
   return (
     <div className="btcd-snack flx" style={toatStyles}>
-      {props.msg}
+      {
+        /<\/?[a-z][\s\S]*>/i.test(props.msg)
+          ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: props.msg }}
+            />
+          )
+          : props.msg
+      }
       <button onClick={() => props.setSnack(false)} className="btcd-snack-cls" type="button">&times;</button>
     </div>
   )

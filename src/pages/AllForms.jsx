@@ -28,7 +28,7 @@ function AllFroms() {
   const handleStatus = (e, id) => {
     const el = e.target
     const data = { id, status: el.checked }
-    bitsFetch(data, 'bitapps_change_status')
+    bitsFetch(data, 'bitforms_change_status')
       .then(res => {
         if (!res.success) {
           el.checked = !el.checked
@@ -70,10 +70,10 @@ function AllFroms() {
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      bitsFetch(null, 'bitapps_get_all_form')
+      bitsFetch(null, 'bitforms_get_all_form')
         .then(res => {
           if (res !== undefined && res.success && typeof res.data === 'object') {
-            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
+            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitforms id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ data: dbForms, type: 'set' })
           }
         })
@@ -97,7 +97,7 @@ function AllFroms() {
     allFormsDispatchHandler({ data: newData, type: 'set' })
     const ajaxData = { formID, status }
 
-    bitsFetch(ajaxData, 'bitapps_bulk_status_change')
+    bitsFetch(ajaxData, 'bitforms_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
@@ -122,7 +122,7 @@ function AllFroms() {
     allFormsDispatchHandler({ data: newData, type: 'set' })
     const ajaxData = { formID }
 
-    bitsFetch(ajaxData, 'bitapps_bulk_delete_form')
+    bitsFetch(ajaxData, 'bitforms_bulk_delete_form')
       .then(res => {
         if (res === undefined || !res.success) {
           allFormsDispatchHandler({ data: tmp, type: 'set' })
@@ -134,7 +134,7 @@ function AllFroms() {
   }, [])
 
   const handleDelete = formID => {
-    bitsFetch({ id: formID }, 'bitapps_delete_aform').then(response => {
+    bitsFetch({ id: formID }, 'bitforms_delete_aform').then(response => {
       if (response.success) {
         allFormsDispatchHandler({ type: 'remove', data: props.index })
         setSnackbar({ show: true, msg: 'Form Deleted !' })
@@ -143,10 +143,11 @@ function AllFroms() {
   }
 
   const handleDuplicate = formID => {
-    bitsFetch({ id: formID }, 'bitapps_duplicate_aform').then(response => {
+    console.log('formID', formID)
+    bitsFetch({ id: formID }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
-        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitapps id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
         setSnackbar({ show: true, msg: 'Form Duplicated Successfully.' })
       }
     })

@@ -28,7 +28,7 @@ export default function FormSettings(props) {
 
     let mount = false
     mount = true
-    bitsFetch({ id: formID }, 'bitapps_get_form_entry_count')
+    bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(res => {
         if (res !== undefined && res.success) {
           if (mount) {

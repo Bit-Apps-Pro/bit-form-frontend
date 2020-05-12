@@ -30,6 +30,28 @@ const AllFormsDispatchHandler = (allForms, action) => {
   }
   return null
 }
+const reportsReducer = (reports, action) => {
+  switch (action.type) {
+    case 'add':
+      return [...reports, action.report]
+    case 'remove': {
+      reports.splice(action.rport, 1)
+      return [...reports];
+    }
+    case 'update': {
+      const oldReports = [...reports]
+      oldReports[action.reportID] = action.report
+      return [...oldReports]
+    }
+    case 'set': {
+      reports = typeof action.reports === 'undefined' ? [] : action.reports
+      return [...reports]
+    }
+    default:
+      break
+  }
+  return null
+}
 
 const AllFormContext = createContext()
 
@@ -37,14 +59,16 @@ const AllFormContextProvider = (props) => {
   let allFormsInitialState = []
   // eslint-disable-next-line no-undef
   if (process.env.NODE_ENV === 'production' && bits.allForms !== null) {
-    allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitapps id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
+    allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitforms id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
+  const [reports, reportsDispatch] = useReducer(reportsReducer, [])
 
   return (
     <AllFormContext.Provider
       value={{
         allFormsData: { allForms, allFormsDispatchHandler },
+        reportsData: { reports, reportsDispatch },
       }}
     >
       {props.children}

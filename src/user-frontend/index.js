@@ -1,13 +1,21 @@
 /* eslint-disable no-undef */
-import 'react-app-polyfill/ie11'
-import 'react-app-polyfill/stable'
+/* import 'react-app-polyfill/ie11'
+import 'react-app-polyfill/stable' */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from '../serviceWorker'
-import Bitapps from './Bitapps'
+import Bitforms from './Bitforms'
 
-export default function BitappsRenderer(params) {
+export default function BitformsRenderer(params) {
   document.getElementById(`${params.contentID}no-js`).innerHTML = ''
-  ReactDOM.render(<Bitapps buttons={params.buttons} data={params.fields} layout={params.layout} file={params.file} />, document.getElementById(params.contentID));
+  /* if (params.gCaptchaSiteKey !== null) {
+    grecaptcha.ready(() => {
+      console.log('gCaptchaSiteKey', params.gCaptchaSiteKey)
+      grecaptcha.execute(params.gCaptchaSiteKey, { action: 'homepage' }).then((token) => {
+        console.log('gCaptchaSiteKey', token)
+      })
+    })
+  } */
+  ReactDOM.render(<Bitforms buttons={params.buttons} data={params.fields} layout={params.layout} file={params.file} gRecaptchaSiteKey={params.gRecaptchaSiteKey} gRecaptchaVersion ={params.gRecaptchaVersion} />, document.getElementById(params.contentID));
 }
 serviceWorker.unregister();

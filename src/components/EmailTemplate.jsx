@@ -18,7 +18,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
 
   const delTem = (i, templateData) => {
     if (templateData.original.id) {
-      bitsFetch({ formID, id: templateData.original.id }, 'bitapps_delete_mailtemplate')
+      bitsFetch({ formID, id: templateData.original.id }, 'bitforms_delete_mailtemplate')
         .then(res => {
           if (res !== undefined && res.success) {
             mailTem.splice(i, 1)

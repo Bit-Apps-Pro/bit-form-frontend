@@ -73,7 +73,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
   const delLgcGrp = val => {
     if (workFlows[val].id) {
-      bitsFetch({ formID, id: workFlows[val].id }, 'bitapps_delete_workflow')
+      bitsFetch({ formID, id: workFlows[val].id }, 'bitforms_delete_workflow')
         .then(res => {
           if (res !== undefined && res.success) {
             workFlows.splice(val, 1)
