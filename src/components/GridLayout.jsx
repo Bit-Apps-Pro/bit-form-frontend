@@ -34,9 +34,7 @@ function GridLayout(props) {
     slimInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields, isLoading])
-
-  // const [layout, setLayout] = useState(props.layout)
-  const [layouts, setLayouts] = useState(props.layout !== undefined ? props.layout : { lg: [], md: [], sm: [] })
+  const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const cols = { lg: 6, md: 4, sm: 2 }
   const sortLay = arr => {
