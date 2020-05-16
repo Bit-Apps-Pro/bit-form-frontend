@@ -13,7 +13,7 @@ export default function Captcha() {
     <div className="btcd-captcha">
       <h2>Google reCAPTCHA v2</h2>
       <small>
-        reCAPTCHA is a free service that protects your website from spam and abuse.
+        reCAPTCHA is a free service that protects your website from spam and abuses.
         <a className="btcd-link" href="https://developers.google.com/recaptcha/docs/display" target="_blank" rel="noopener noreferrer"> Learn More</a>
       </small>
       <br />
