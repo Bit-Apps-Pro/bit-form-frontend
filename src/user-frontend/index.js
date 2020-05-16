@@ -1,9 +1,8 @@
 /* eslint-disable no-undef */
-/* import 'react-app-polyfill/ie11'
-import 'react-app-polyfill/stable' */
+import 'react-app-polyfill/ie11'
+import 'react-app-polyfill/stable'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import * as serviceWorker from '../serviceWorker'
 import Bitforms from './Bitforms'
 
 export default function BitformsRenderer(params) {
@@ -18,4 +17,3 @@ export default function BitformsRenderer(params) {
   } */
   ReactDOM.render(<Bitforms buttons={params.buttons} data={params.fields} layout={params.layout} file={params.file} gRecaptchaSiteKey={params.gRecaptchaSiteKey} gRecaptchaVersion ={params.gRecaptchaVersion} />, document.getElementById(params.contentID));
 }
-serviceWorker.unregister();
