@@ -22,6 +22,7 @@ function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
   // eslint-disable-next-line no-undef
   if (typeof wp !== 'undefined' && wp.customize !== 'undefined' && bits.baseURL) {
+    // eslint-disable-next-line no-undef
     bits.baseURL = bits.baseURL.replace('#', '&customize_changeset_uuid=#')
   }
   return (
