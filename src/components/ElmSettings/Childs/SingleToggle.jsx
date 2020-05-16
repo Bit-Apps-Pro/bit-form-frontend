@@ -1,25 +1,26 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react'
 
 export default function SingleToggle(props) {
   return (
     <div className={`flx flx-between ${props.className}`}>
       <span>{props.title}</span>
-      <div className="onoffswitch">
-        <input
-          checked={props.isChecked}
-          type="checkbox"
-          name="onoffswitch"
-          onChange={props.action}
-          className="onoffswitch-checkbox"
-          id={`btcd-onoffswitch-${props.title}`}
-        />
-
-        <label className="onoffswitch-label" htmlFor={`btcd-onoffswitch-${props.title}`}>
-          <span className="onoffswitch-inner" />
-          <span className="onoffswitch-switch" />
-        </label>
-      </div>
+      <label htmlFor={`s-ck-${props.title}-${props.isChecked}`} className="btcd-label">
+        <div className="btcd-toggle">
+          <input
+            id={`s-ck-${props.title}-${props.isChecked}`}
+            onChange={props.action}
+            className="btcd-toggle-state"
+            type="checkbox"
+            name="check"
+            value="check"
+            checked={props.isChecked} />
+          <div className="btcd-toggle-inner">
+            <div className="btcd-indicator" />
+          </div>
+          <div className="btcd-active-bg" />
+        </div>
+        <div className="btcd-label-text" />
+      </label>
     </div>
   )
 }

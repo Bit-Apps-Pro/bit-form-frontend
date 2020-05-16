@@ -76,6 +76,7 @@ function Builder(props) {
     enabled: {},
     settings: {},
   })
+  console.log('STAreports', reports)
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -104,9 +105,9 @@ function Builder(props) {
               if (typeof data !== 'object') {
                 responseData = JSON.parse(res.data)
               }
-              responseData.form_content.layout !== undefined ? setLay(responseData.form_content.layout) : setLay({ lg: [], md: [], sm: [] })
+              responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
               setFields(responseData.form_content.fields)
-              setNewCounter(responseData.form_content.layout.length)
+              setNewCounter(responseData.form_content.layout.lg.length + 1)
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
             } else {
@@ -122,9 +123,9 @@ function Builder(props) {
         .then(res => {
           if (res !== undefined && res.success) {
             const responseData = res.data
-            responseData.form_content.layout !== undefined ? setLay(responseData.form_content.layout) : setLay({ lg: [], md: [], sm: [] })
+            responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
-            setNewCounter(responseData.form_content.layout.length)
+            setNewCounter(responseData.form_content.layout.lg.length + 1)
             setFormName(responseData.form_content.form_name)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)

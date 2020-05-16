@@ -6,14 +6,17 @@ export default function MenuBtn(props) {
     const el = e.target
     setTimeout(() => {
       el.parentNode.children[1].classList.remove('btcd-m-a')
-    }, 500)
+      el.parentNode.parentNode.parentNode.style.zIndex = 'auto'
+    }, 100)
   }
 
   const hadleClick = (e) => {
     if (e.target.parentNode.children[1].classList.contains('btcd-m-a')) {
       e.target.parentNode.children[1].classList.remove('btcd-m-a')
+      e.target.parentNode.parentNode.parentNode.style.zIndex = 'auto'
       e.target.blur()
     } else {
+      e.target.parentNode.parentNode.parentNode.style.zIndex = 10
       e.target.parentNode.children[1].classList.add('btcd-m-a')
     }
   }
