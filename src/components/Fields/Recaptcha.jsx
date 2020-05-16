@@ -16,7 +16,7 @@ export default function ReCaptcha(attr) {
       {render && (
         <ReCAPTCHA
           theme={attr.theme}
-          sitekey={reCaptchaV2.siteKey || 'nan'}
+          sitekey={reCaptchaV2.siteKey || 'none'}
         // onChange={onChange}
         />
       )}
