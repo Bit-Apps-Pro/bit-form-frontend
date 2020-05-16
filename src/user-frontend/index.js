@@ -15,5 +15,16 @@ export default function BitformsRenderer(params) {
       })
     })
   } */
-  ReactDOM.render(<Bitforms buttons={params.buttons} data={params.fields} layout={params.layout} file={params.file} gRecaptchaSiteKey={params.gRecaptchaSiteKey} gRecaptchaVersion ={params.gRecaptchaVersion} />, document.getElementById(params.contentID));
+  // eslint-disable-next-line react/jsx-filename-extension
+  ReactDOM.render(<Bitforms
+    buttons={params.buttons}
+    data={params.fields}
+    layout={params.layout}
+    file={params.file}
+    gRecaptchaSiteKey={params.gRecaptchaSiteKey}
+    gRecaptchaVersion={params.gRecaptchaVersion}
+    fieldToCheck={params.fieldToCheck}
+    fieldToChange={params.fieldToChange}
+    conditional={params.conditional}
+  />, document.getElementById(params.contentID));
 }

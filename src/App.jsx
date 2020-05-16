@@ -21,9 +21,6 @@ const Error404 = lazy(() => import('./pages/Error404'))
 function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
   // eslint-disable-next-line no-undef
-  if (typeof wp !== 'undefined' && wp.customize !== 'undefined' && bits.baseURL) {
-    bits.baseURL = bits.baseURL.replace('#', '&customize_changeset_uuid=#')
-  }
   return (
     // eslint-disable-next-line no-undef
     <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>

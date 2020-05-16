@@ -76,7 +76,6 @@ function Builder(props) {
     enabled: {},
     settings: {},
   })
-console.log('STAreports',reports)
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',

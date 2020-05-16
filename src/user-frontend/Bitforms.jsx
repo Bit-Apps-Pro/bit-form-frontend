@@ -3,17 +3,20 @@ import React, { useEffect, useState } from 'react'
 import SlimSelect from 'slim-select'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
+import checkLogic from './checkLogic'
 
 export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
   const [redirectPage, setredirectPage] = useState(null)
+  const [data, setdata] = useState(props.data)
+  const [layout, setlayout] = useState(props.layout)
   const [layoutSize, setlayoutSize] = useState(window.innerWidth > 800 ? 'lg' : window.innerWidth > 600 ? 'md' : 'sm')
   let maxRowIndex = 0
   const blk = (field) => {
-    const name = props.data[field.i].lbl === null ? null : field.i + props.data[field.i].lbl.split(' ').join('_')
+    const name = data[field.i].lbl === null ? null : field.i + data[field.i].lbl.split(' ').join('_')
     // eslint-disable-next-line no-param-reassign
-    props.data[field.i].name = name
+    data[field.i].name = name
     maxRowIndex = maxRowIndex > field.y + field.h ? maxRowIndex : field.y + field.h
     return (
       <div
@@ -31,12 +34,75 @@ export default function Bitforms(props) {
       >
         <CompGen
           editMode
-          atts={props.data[field.i]}
+          atts={data[field.i]}
           formID={props.formID}
           entryID={props.entryID}
+          onBlurHandler={onBlurHandler}
         />
       </div>
     )
+  }
+
+  const onBlurHandler = (event) => {
+    const element = event.target
+    if (props.fieldToCheck[element.name] !== undefined) {
+      const fieldData = []
+      Object.keys(props.fieldToCheck).forEach(fieldName => {
+        const fieldDetails = document.getElementsByName(fieldName)
+        if (fieldDetails.length > 0) {
+          fieldData[fieldName] = {
+            type: fieldDetails[0].type,
+            value: fieldDetails[0].value,
+            multiple: fieldDetails[0].multiple,
+          }
+        }
+      });
+      console.log(fieldData)
+      // console.log( props.fieldToCheck)
+      props.fieldToCheck[element.name].forEach(LogicIndex => {
+        console.log('checkLogic', checkLogic(props.conditional[LogicIndex].logics, fieldData), JSON.stringify(data))
+        if (checkLogic(props.conditional[LogicIndex].logics, fieldData)) {
+          const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+          props.conditional[LogicIndex].actions.forEach(actionDetail => {
+            if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              switch (actionDetail.action) {
+                case 'value':
+                  if (actionDetail.val !== undefined) {
+                    newData[props.fieldToChange[actionDetail.field]].val = actionDetail.val;
+                  }
+                  break
+
+                case 'hide':
+                  newData[props.fieldToChange[actionDetail.field]].valid.hide = true;
+                  break;
+
+                case 'disable':
+                  newData[props.fieldToChange[actionDetail.field]].valid.disabled = true;
+                  break;
+
+                case 'enable':
+                  newData[props.fieldToChange[actionDetail.field]].valid.disabled = false;
+                  break;
+
+                case 'show':
+                  newData[props.fieldToChange[actionDetail.field]].valid.hide = false;
+                  if (newData[props.fieldToChange[actionDetail.field]].typ === 'hidden') {
+                    newData[props.fieldToChange[actionDetail.field]].typ = 'text';
+                  }
+                  break
+                default:
+                  break
+              }
+            }
+          })
+          setdata(newData)
+          setlayout(layout)
+        } else {
+          setdata(props.data)
+        }
+      })
+      console.log('onBlurHandler', props.data, data)
+    }
   }
   window.addEventListener('resize', () => {
     if (window.innerWidth > 800) {
@@ -179,7 +245,7 @@ export default function Bitforms(props) {
         // rowHeight={40}
         // margin={[0, 10]}
         >
-          {props.layout[layoutSize].map(field => {
+          {layout[layoutSize].map(field => {
             // eslint-disable-next-line no-param-reassign
             field.static = true
             return blk(field)

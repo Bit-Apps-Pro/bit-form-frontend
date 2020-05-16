@@ -15,6 +15,9 @@ const App = lazy(() => import('./App'))
 if (process.env.NODE_ENV === 'production' && typeof bits.assetsURL !== 'undefined') {
   __webpack_public_path__ = `${bits.assetsURL}/js/`
 }
+if (bits.baseURL && `${window.location.pathname + window.location.search}#` !== bits.baseURL) {
+  bits.baseURL = `${window.location.pathname + window.location.search}#`
+}
 ReactDOM.render(
   <AllFormContextProvider>
     <AppSettingsProvider>
