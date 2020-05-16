@@ -191,7 +191,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
 
   const setRestrictForm = e => {
     if (e.target.checked) {
-      if ('day' in additional.settings.restrict_form) {
+      if ('restrict_form' in additional.settings && 'day' in additional.settings.restrict_form) {
         if (e.target.value === 'Everyday' || checkAllDayInArr(additional.settings.restrict_form.day)) {
           additional.settings.restrict_form.day = ['Everyday']
         } else if (e.target.value === 'Custom') {
@@ -205,6 +205,9 @@ export default function SingleFormSettings({ additional, setadditional }) {
           additional.settings.restrict_form.day.push(e.target.value)
         }
       } else {
+        if (!('restrict_form' in additional.settings)) {
+          additional.settings.restrict_form = {}
+        }
         additional.settings.restrict_form.day = []
         if (e.target.value === 'Everyday' || checkAllDayInArr(additional.settings.restrict_form.day)) {
           additional.settings.restrict_form.day = ['Everyday']
@@ -331,7 +334,10 @@ export default function SingleFormSettings({ additional, setadditional }) {
               <div><small>From</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'from')}
-                value={new Date(additional.settings.restrict_form.date.from)}
+                value={('restrict_form' in additional.settings
+                  && 'date' in additional.settings.restrict_form
+                  && 'from' in additional.settings.restrict_form.date
+                  && new Date(additional.settings.restrict_form.date.from)) || new Date()}
                 dayPlaceholder="dd"
                 monthPlaceholder="mm"
                 yearPlaceholder="year"
@@ -343,7 +349,12 @@ export default function SingleFormSettings({ additional, setadditional }) {
               <div><small>To</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'to')}
-                value={new Date(additional.settings.restrict_form.date.to)}
+                value={
+                  ('restrict_form' in additional.settings
+                    && 'date' in additional.settings.restrict_form
+                    && 'to' in additional.settings.restrict_form.date
+                    && new Date(additional.settings.restrict_form.date.to)) || new Date()
+                }
                 dayPlaceholder="dd"
                 monthPlaceholder="mm"
                 yearPlaceholder="year"
@@ -360,14 +371,18 @@ export default function SingleFormSettings({ additional, setadditional }) {
             <div><small>From</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'from')}
-              value={'restrict_form' in additional.settings && additional.settings.restrict_form.time.from}
+              value={('restrict_form' in additional.settings
+                && 'time' in additional.settings.restrict_form
+                && additional.settings.restrict_form.time.from) || new Date()}
             />
           </div>
           <div>
             <div><small>To</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'to')}
-              value={'restrict_form' in additional.settings && additional.settings.restrict_form.time.to}
+              value={('restrict_form' in additional.settings
+                && 'time' in additional.settings.restrict_form
+                && additional.settings.restrict_form.time.to) || new Date()}
               className="btcd-date-pick"
             />
           </div>

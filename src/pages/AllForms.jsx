@@ -24,18 +24,19 @@ function AllFroms() {
   const { allForms, allFormsDispatchHandler } = allFormsData
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
 
-
   const handleStatus = (e, id) => {
-    const el = e.target
-    const data = { id, status: el.checked }
+    const status = e.target.checked
+    const data = { id, status }
+    allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
     bitsFetch(data, 'bitforms_change_status')
       .then(res => {
-        if (!res.success) {
-          el.checked = !el.checked
-        } else {
+        if ('success' in res && !res.success) {
           allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
-          setSnackbar({ ...{ show: true, msg: res.data } })
+          setSnackbar({ ...{ show: true, msg: 'Failed to change Form Status' } })
         }
+      }).catch(() => {
+        allFormsDispatchHandler({ type: 'update', data: { formID: id, status: !status } })
+        setSnackbar({ ...{ show: true, msg: 'Failed to change Form Status' } })
       })
   }
 

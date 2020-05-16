@@ -84,8 +84,7 @@ function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubB
   return (
     <Container
       ref={conRef}
-      className="btcd-bld-con"
-      style={{ height: '100%' }}
+      style={{ height: '100vh' }}
       beforeApplyResizer={onResize}
       afterResizing={afterResizing}
       onActivate={onResizeActivate}
