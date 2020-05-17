@@ -35,8 +35,9 @@ function GridLayout(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields, isLoading])
 
-  // const [layout, setLayout] = useState(props.layout)
-  const [layouts, setLayouts] = useState({ lg: [], md: [], sm: [] })
+  console.log('%', newCounter, props.layout)
+
+  const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const cols = { lg: 6, md: 4, sm: 2 }
 

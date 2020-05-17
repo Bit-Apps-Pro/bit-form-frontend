@@ -55,7 +55,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   )
 
   const addLogicGrp = () => {
-    workFlows.push({
+    workFlows.unshift({
       title: `Action ${workFlows.length + 1}`,
       action_type: 'onload',
       action_run: 'create_edit',
@@ -517,6 +517,8 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
         action={confMdl.action}
       />
       <h2>Actions</h2>
+      <Button className="blue" onClick={addLogicGrp}>+ Add Action</Button>
+
       {workFlows.length > 0 ? workFlows.map((lgcGrp, lgcGrpInd) => (
         <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
           <Accordions
@@ -775,7 +777,6 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           Empty
         </div>
       )}
-      <Button className="blue" onClick={addLogicGrp}>+ Add Action</Button>
     </div>
   )
 }

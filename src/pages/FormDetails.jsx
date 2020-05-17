@@ -17,7 +17,7 @@ function Builder(props) {
   const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
   const [isLoading, setisLoading] = useState(true)
-  const [lay, setLay] = useState({})
+  const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
   const [fields, setFields] = useState(null)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
@@ -76,7 +76,7 @@ function Builder(props) {
     enabled: {},
     settings: {},
   })
-console.log('STAreports',reports)
+  console.log('STAreports', reports)
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -105,9 +105,9 @@ console.log('STAreports',reports)
               if (typeof data !== 'object') {
                 responseData = JSON.parse(res.data)
               }
-              setLay(responseData.form_content.layout)
+              responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
               setFields(responseData.form_content.fields)
-              setNewCounter(responseData.form_content.layout.length)
+              setNewCounter(responseData.form_content.layout.lg.length + 1)
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
             } else {
@@ -123,9 +123,9 @@ console.log('STAreports',reports)
         .then(res => {
           if (res !== undefined && res.success) {
             const responseData = res.data
-            setLay(responseData.form_content.layout)
+            responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
-            setNewCounter(responseData.form_content.layout.length)
+            setNewCounter(responseData.form_content.layout.lg.length + 1)
             setFormName(responseData.form_content.form_name)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)

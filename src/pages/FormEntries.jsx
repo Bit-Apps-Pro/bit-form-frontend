@@ -33,7 +33,7 @@ function FormEntries() {
   const { reports, reportsDispatch } = reportsData
   const [report] = useState(0)
   useEffect(() => {
-    setisloading(true)
+    // setisloading(true)
     bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(response => {
         if (response !== undefined && response.success) {

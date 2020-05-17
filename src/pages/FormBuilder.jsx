@@ -5,7 +5,7 @@ import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 
-function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setNewCounter, setFormName, formID, formType }) {
+function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType }) {
   const [tolbarSiz, setTolbarSiz] = useState(false)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 473)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
@@ -84,8 +84,7 @@ function FormBuilder({ isLoading, newCounter, fields, setFields, subBtn, setSubB
   return (
     <Container
       ref={conRef}
-      className="btcd-bld-con"
-      style={{ height: '100%' }}
+      style={{ height: '100vh' }}
       beforeApplyResizer={onResize}
       afterResizing={afterResizing}
       onActivate={onResizeActivate}
