@@ -60,7 +60,7 @@ export default function Bitforms(props) {
       console.log(fieldData)
       // console.log( props.fieldToCheck)
       props.fieldToCheck[element.name].forEach(LogicIndex => {
-        console.log('checkLogic', checkLogic(props.conditional[LogicIndex].logics, fieldData), JSON.stringify(data))
+        console.log('checkLogic', checkLogic(props.conditional[LogicIndex].logics, fieldData))
         if (checkLogic(props.conditional[LogicIndex].logics, fieldData)) {
           const newData = data !== undefined && JSON.parse(JSON.stringify(data))
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
@@ -96,12 +96,43 @@ export default function Bitforms(props) {
             }
           })
           setdata(newData)
-          setlayout(layout)
         } else {
-          setdata(props.data)
+          const dataToReset = data !== undefined && JSON.parse(JSON.stringify(data))
+          props.conditional[LogicIndex].actions.forEach(actionDetail => {
+            if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              switch (actionDetail.action) {
+                case 'value':
+                  if (actionDetail.val !== undefined) {
+                    dataToReset[props.fieldToChange[actionDetail.field]].val = props.data[props.fieldToChange[actionDetail.field]].val
+                  }
+                  break
+
+                case 'hide':
+                  dataToReset[props.fieldToChange[actionDetail.field]].valid.hide = props.data[props.fieldToChange[actionDetail.field]].valid.hide
+                  break;
+
+                case 'disable':
+                  dataToReset[props.fieldToChange[actionDetail.field]].valid.disabled = props.data[props.fieldToChange[actionDetail.field]].valid.disabled
+                  break;
+
+                case 'enable':
+                  dataToReset[props.fieldToChange[actionDetail.field]].valid.disabled = props.data[props.fieldToChange[actionDetail.field]].valid.disabled
+                  break;
+
+                case 'show':
+                  dataToReset[props.fieldToChange[actionDetail.field]].valid.hide = props.data[props.fieldToChange[actionDetail.field]].valid.hide
+                  if (dataToReset[props.fieldToChange[actionDetail.field]].typ === 'hidden') {
+                    dataToReset[props.fieldToChange[actionDetail.field]].typ = props.data[props.fieldToChange[actionDetail.field]].typ
+                  }
+                  break
+                default:
+                  break
+              }
+            }
+          })
+          setdata(dataToReset)
         }
       })
-      console.log('onBlurHandler', props.data, data)
     }
   }
   window.addEventListener('resize', () => {
