@@ -26,6 +26,7 @@ function CompGen(props) {
               ...('val' in attr && { defaultValue: attr.val }),
               ...('ac' in attr && { autoComplete: attr.ac }),
               ...('name' in attr && { name: attr.name }),
+              ...({ onBlur: props.onBlurHandler }),
             },
           )}
         </div>
@@ -66,6 +67,7 @@ function CompGen(props) {
             {...'req' in attr.valid && { required: attr.valid.req }}
             {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
             {...'name' in attr && { name: attr.name }}
+            onBlur={props.onBlurHandler}
           />
         </div>
       )
@@ -93,6 +95,7 @@ function CompGen(props) {
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'name' in attr && { name: `${attr.name}[]` }}
                     {...vals !== null && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                    onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk ck" />
                 </label>
@@ -125,6 +128,7 @@ function CompGen(props) {
                     {...'name' in attr && { name: attr.name }}
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
+                    onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk rdo" />
                 </label>
@@ -140,9 +144,8 @@ function CompGen(props) {
     <div className="blnk-blk drag" />
   )
 
-  const dropDown = (attr) => {
-    return (
-      !('hide' in attr.valid && attr.valid.hide === true)
+  const dropDown = (attr) => (
+    !('hide' in attr.valid && attr.valid.hide === true)
       && (
         <div className="text-wrp drag" btcd-fld="textarea">
           {'lbl' in attr && <label>{attr.lbl}</label>}
@@ -155,6 +158,7 @@ function CompGen(props) {
             {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
             {...'val' in attr && attr.val.length > 0 && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : [attr.val] }}
             onChange={fieldChangeHandler}
+            onBlur={props.onBlurHandler}
           >
             <option data-placeholder="true" aria-label="option placeholder" />
             {attr.opt.map((itm, i) => (
@@ -163,8 +167,7 @@ function CompGen(props) {
           </select>
         </div>
       )
-    )
-  }
+  )
 
   const submitBtns = (attr) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
