@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-undef */
+/* eslint-disable react/jsx-filename-extension */
 import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
 import React, { lazy, Suspense } from 'react'
@@ -13,9 +13,10 @@ const App = lazy(() => import('./App'))
 
 
 if (process.env.NODE_ENV === 'production' && typeof bits.assetsURL !== 'undefined') {
+  // eslint-disable-next-line camelcase
   __webpack_public_path__ = `${bits.assetsURL}/js/`
 }
-if (bits.baseURL && `${window.location.pathname + window.location.search}#` !== bits.baseURL) {
+if (typeof bits !== 'undefined' && bits.baseURL && `${window.location.pathname + window.location.search}#` !== bits.baseURL) {
   bits.baseURL = `${window.location.pathname + window.location.search}#`
 }
 ReactDOM.render(
