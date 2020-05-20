@@ -53,20 +53,6 @@ export default function SingleFormSettings({ additional, setadditional }) {
     setadditional({ ...additional })
   }
 
-  const enableCaptcha = e => {
-    if (e.target.checked) {
-      additional.enabled.captcha = true
-    } else {
-      delete additional.enabled.captcha
-    }
-    setadditional({ ...additional })
-  }
-
-  const setCaptchaTyp = e => {
-    additional.settings.captcha = e.target.value
-    setadditional({ ...additional })
-  }
-
   const handleEntryLimit = e => {
     if (e.target.checked) {
       additional.enabled.entry_limit = true
@@ -258,23 +244,6 @@ export default function SingleFormSettings({ additional, setadditional }) {
   return (
     <div>
       <h2>Settings</h2>
-      <div className="w-5">
-        <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
-          <div>
-            <b>
-              <span className="btcd-icn icn-loop mr-2" />
-              Enable Captcha
-            </b>
-          </div>
-          <div className="flx">
-            <select onChange={setCaptchaTyp} className="btcd-paper-inp mr-2 wdt-200" disabled={!('captcha' in additional.enabled)}>
-              <option value="google_recaptcha">Google reCaptcha v1</option>
-              <option value="google_recaptcha">Google reCaptcha v2</option>
-            </select>
-            <SingleToggle2 action={enableCaptcha} checked={'captcha' in additional.enabled} className="flx" />
-          </div>
-        </div>
-      </div>
 
       <div className="w-5 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
