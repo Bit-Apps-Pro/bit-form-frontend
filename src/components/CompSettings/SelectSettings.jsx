@@ -5,114 +5,124 @@ import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 
 export default function SelectSettings(props) {
+  const elmId = props.elm.id
+  const elmData = { ...props.fields[elmId] }
+  const options = [...elmData.opt]
   console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
 
-  const isRequired = props.elm.data.valid.req !== undefined
-  const isMultiple = props.elm.data.mul !== undefined
-  const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl
-  const placeholder = props.elm.data.ph === undefined ? '' : props.elm.data.ph
+  const isRequired = elmData.valid.req !== undefined
+  const isMultiple = elmData.mul !== undefined
+  const label = elmData.lbl === undefined ? '' : elmData.lbl
+  const placeholder = elmData.ph === undefined ? '' : elmData.ph
 
   // set defaults
   if (isMultiple) {
-    if ('val' in props.elm.data) {
-      if (!Array.isArray(props.elm.data.val)) {
-        props.elm.data.val = [props.elm.data.val]
+    if ('val' in elmData) {
+      if (!Array.isArray(elmData.val)) {
+        elmData.val = [elmData.val]
       }
     } else {
-      props.elm.data.val = []
+      elmData.val = []
     }
   }
 
   function setRequired(e) {
     if (e.target.checked) {
-      props.elm.data.valid.req = true
+      const tmp = { ...elmData.valid }
+      tmp.req = true
+      elmData.valid = tmp
     } else {
-      delete props.elm.data.valid.req
+      delete elmData.valid.req
     }
-    props.updateData(props.elm)
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function setLabel(e) {
     if (e.target.value === '') {
-      delete props.elm.data.lbl
+      delete elmData.lbl
     } else {
-      props.elm.data.lbl = e.target.value
+      elmData.lbl = e.target.value
     }
-    props.updateData(props.elm)
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function setPlaceholder(e) {
     if (e.target.value === '') {
-      delete props.elm.data.ph
+      delete elmData.ph
     } else {
-      props.elm.data.ph = e.target.value
+      elmData.ph = e.target.value
     }
-    props.updateData(props.elm)
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function setMultiple(e) {
     if (e.target.checked) {
-      props.elm.data.mul = true
+      elmData.mul = true
     } else {
-      delete props.elm.data.mul
+      delete elmData.mul
     }
-    props.updateData(props.elm)
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function rmvOpt(ind) {
-    props.elm.data.opt.splice(ind, 1)
-    props.updateData(props.elm)
+    options.splice(ind, 1)
+    elmData.opt = options
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function addOpt() {
-    props.elm.data.opt.push({ lbl: `Option ${props.elm.data.opt.length}` })
-    props.updateData(props.elm)
+    options.push({ lbl: `Option ${elmData.opt.length}` })
+    elmData.opt = options
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function setCheck(e) {
     if (e.target.checked) {
       if (isMultiple) {
-        if (!Array.isArray(props.elm.data.val)) {
-          props.elm.data.val = []
+        if (!Array.isArray(elmData.val)) {
+          elmData.val = []
         }
-        props.elm.data.val.push(e.target.getAttribute('data-lbl'))
+        elmData.val.push(e.target.getAttribute('data-lbl'))
       } else {
-        props.elm.data.val = e.target.getAttribute('data-lbl')
+        elmData.val = e.target.getAttribute('data-lbl')
       }
     } else {
       // eslint-disable-next-line no-lonely-if
       if (isMultiple) {
-        props.elm.data.val = props.elm.data.val.filter(itm => itm !== e.target.getAttribute('data-lbl'))
+        elmData.val = elmData.val.filter(itm => itm !== e.target.getAttribute('data-lbl'))
       } else {
-        delete props.elm.data.val
+        delete elmData.val
       }
     }
-    props.updateData(props.elm)
+    props.updateData({ id: elmId, data: elmData })
   }
 
   function setOptLbl(e, i) {
-    props.elm.data.opt[i].lbl = e.target.value
-    props.updateData(props.elm)
+    const tmp = { ...options[i] }
+    tmp.lbl = e.target.value
+    elmData.opt[i] = tmp
+    props.updateData({ id: elmId, data: elmData })
   }
+
   return (
     <div>
       <h4>
         Text Field (
-        {props.elm.data.typ}
+        {elmData.typ}
         )
       </h4>
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />
-      {props.elm.data.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
+      {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
       <div className="opt">
         Options:
-        {props.elm.data.opt.map((itm, i) => (
+        {elmData.opt.map((itm, i) => (
         <div key={`opt-${i + 8}`} className="flx flx-between">
           <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
           <div className="flx mt-3">
             <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-              <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? props.elm.data.val.indexOf(itm.lbl) >= 0 : itm.lbl === props.elm.data.val} />
+              <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? elmData.val.indexOf(itm.lbl) >= 0 : itm.lbl === elmData.val} />
               <span className="btcd-mrk ck br-50 btcd-neu-sh-1" />
             </label>
             <button onClick={() => rmvOpt(i)} className="btn cls-btn btcd-neu-sh-1" type="button">&times;</button>

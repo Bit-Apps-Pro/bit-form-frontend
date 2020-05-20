@@ -24,18 +24,18 @@ function CompSettings(props) {
       case 'month':
       case 'week':
       case 'color':
-        return <TextFieldSettings elm={props.elm} updateData={props.updateData} />
+        return <TextFieldSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
       case 'check':
       case 'radio':
-        return <RadioCheckSettings elm={props.elm} updateData={props.updateData} />
+        return <RadioCheckSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
       case 'select':
-        return <SelectSettings elm={props.elm} updateData={props.updateData} />
+        return <SelectSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
       case 'file-up':
-        return <FileUpSettings elm={props.elm} updateData={props.updateData} />
+        return <FileUpSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
       case 'submit':
-        return <SubmitBtnSettings elm={props.elm} setSubmitConfig={props.setSubmitConfig} />
+        return <SubmitBtnSettings fields={props.fields} elm={props.elm} setSubmitConfig={props.setSubmitConfig} />
       case 'recaptcha':
-        return <ReCaptchaSettigns elm={props.elm} updateData={props.updateData} />
+        return <ReCaptchaSettigns fields={props.fields} elm={props.elm} updateData={props.updateData} />
       default:
         return ''
     }

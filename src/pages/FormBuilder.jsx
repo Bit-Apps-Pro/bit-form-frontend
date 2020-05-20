@@ -30,14 +30,14 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const updateFields = useCallback(updatedElm => {
     const tmp = { ...fields }
-    // eslint-disable-next-line no-param-reassign
-    fields[updatedElm.id] = updatedElm.data
+    tmp[updatedElm.id] = updatedElm.data
+    console.log('^', tmp)
     setFields(tmp)
   }, [fields, setFields])
 
-  const setElementSetting = elm => {
+  const setElementSetting = useCallback(elm => {
     setElmSetting(elm)
-  }
+  }, [])
 
   const addNewData = useCallback(ndata => {
     setNewData(ndata)
@@ -182,6 +182,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       <Bar className="bar bar-r" />
       <Section id="settings-menu" defaultSize={300}>
         <CompSettings
+          fields={fields}
           elm={elmSetting}
           updateData={updateFields}
           setSubmitConfig={setSubmitConfig}

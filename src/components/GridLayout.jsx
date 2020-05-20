@@ -182,7 +182,8 @@ function GridLayout(props) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    setFields({ ...fields, [`b-${newCounter + 1}`]: newData[0] })
+    const tmpField = JSON.parse(JSON.stringify(newData[0]))
+    setFields({ ...fields, [`b-${newCounter + 1}`]: tmpField })
     setNewCounter(newCounter + 1)
   }
 
@@ -233,7 +234,8 @@ function GridLayout(props) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    setFields({ ...fields, [newBlk]: draggedElm[0] })
+    const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
+    setFields({ ...fields, [newBlk]: tmpField })
     setNewCounter(newCounter + 1)
   }
 
