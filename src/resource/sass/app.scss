@@ -3249,17 +3249,17 @@ select.btcd-ud-inp {
     background: transparentize($dp-bg, 0.1) !important;
   }
 }
-.btcd-captcha{
-  & h2{
+.btcd-captcha {
+  & h2 {
     margin: 15px 0 5px 0;
   }
 }
 
-.btcd-link{
-color:blue;
-&:hover{
-  color: rgb(142, 142, 255);
-}
+.btcd-link {
+  color: blue;
+  &:hover {
+    color: rgb(142, 142, 255);
+  }
 }
 // for IE11
 
