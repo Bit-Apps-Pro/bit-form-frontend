@@ -8,37 +8,39 @@ import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 
 function CompSettings(props) {
-  console.log('%c $render Comp setting index', 'background:gray;padding:3px;border-radius:5px;color:white')
 
   const renderSettings = (type) => {
-    switch (type) {
-      case 'text':
-      case 'number':
-      case 'password':
-      case 'email':
-      case 'url':
-      case 'textarea':
-      case 'date':
-      case 'datetime-local':
-      case 'time':
-      case 'month':
-      case 'week':
-      case 'color':
-        return <TextFieldSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
-      case 'check':
-      case 'radio':
-        return <RadioCheckSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
-      case 'select':
-        return <SelectSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
-      case 'file-up':
-        return <FileUpSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
-      case 'submit':
-        return <SubmitBtnSettings fields={props.fields} elm={props.elm} setSubmitConfig={props.setSubmitConfig} />
-      case 'recaptcha':
-        return <ReCaptchaSettigns fields={props.fields} elm={props.elm} updateData={props.updateData} />
-      default:
-        return ''
+    if (props.fields !== null && props.fields[props.elm.id] !== undefined) {
+      switch (type) {
+        case 'text':
+        case 'number':
+        case 'password':
+        case 'email':
+        case 'url':
+        case 'textarea':
+        case 'date':
+        case 'datetime-local':
+        case 'time':
+        case 'month':
+        case 'week':
+        case 'color':
+          return <TextFieldSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
+        case 'check':
+        case 'radio':
+          return <RadioCheckSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
+        case 'select':
+          return <SelectSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
+        case 'file-up':
+          return <FileUpSettings fields={props.fields} elm={props.elm} updateData={props.updateData} />
+        case 'submit':
+          return <SubmitBtnSettings fields={props.fields} elm={props.elm} setSubmitConfig={props.setSubmitConfig} />
+        case 'recaptcha':
+          return <ReCaptchaSettigns fields={props.fields} elm={props.elm} updateData={props.updateData} />
+        default:
+          return ''
+      }
     }
+    return ''
   }
 
   return (
