@@ -9,7 +9,11 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
     // eslint-disable-next-line array-callback-return
     formFields.map(itm => {
       if (itm.key === fieldVal) {
-        type = itm.type
+        if (itm.type.match(/^(check|radio)$/)) {
+          type = 'text'
+        } else {
+          type = itm.type
+        }
       }
     })
   }
@@ -23,7 +27,7 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
         <option value="">Select From Field</option>
-        {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+        {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">
