@@ -732,7 +732,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                 <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                   <option value="">Select Message</option>
-                  {'confirmation' in formSettings && 'type' in formSettings.confirmation &&  'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.title}>{itm.title}</option>)}
+                  {'confirmation' in formSettings && 'type' in formSettings.confirmation &&  'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                 </MtSelect>
               )}
 

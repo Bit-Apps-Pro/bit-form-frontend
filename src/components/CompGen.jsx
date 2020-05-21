@@ -24,11 +24,14 @@ function CompGen(props) {
               ...('mn' in attr && { min: attr.mn }),
               ...('mx' in attr && { max: attr.mx }),
               ...('val' in attr && { defaultValue: attr.val }),
+              ...('val' in attr && 'userinput' in attr && attr.userinput && { value: attr.val }),
               ...('ac' in attr && { autoComplete: attr.ac }),
               ...('name' in attr && { name: attr.name }),
               ...({ onBlur: props.onBlurHandler }),
+              ...({ btcdUserinput: attr.userinput }),
             },
           )}
+          {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
         </div>
       )
     )
@@ -46,6 +49,7 @@ function CompGen(props) {
           ...('mn' in attr && { min: attr.mn }),
           ...('mx' in attr && { max: attr.mx }),
           ...('val' in attr && { defaultValue: attr.val }),
+          ...('val' in attr && 'userinput' in attr && attr.userinput && { value: attr.val }),
           ...('ac' in attr && { autoComplete: attr.ac }),
           ...('name' in attr && { name: attr.name }),
         },
@@ -63,6 +67,7 @@ function CompGen(props) {
             className="txt-fld no-drg"
             {...'ph' in attr && { placeholder: attr.ph }}
             {...'val' in attr && { defaultValue: attr.val }}
+            {...'val' in attr && 'userinput' in attr && attr.userinput && { value: attr.val }}
             {...'ac' in attr && { autoComplete: attr.ac }}
             {...'req' in attr.valid && { required: attr.valid.req }}
             {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
@@ -76,8 +81,7 @@ function CompGen(props) {
 
 
   const checkBox = attr => {
-    const vals = 'val' in attr && attr.val !== '' ? JSON.parse(attr.val) : null
-
+    const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',')
     return (
       (
         !('hide' in attr.valid && attr.valid.hide === true)
@@ -90,11 +94,13 @@ function CompGen(props) {
                   <span>{itm.lbl}</span>
                   <input
                     type="checkbox"
-                    {...itm.check && { checked: true }}
+                    {...itm.check && { defaultChecked: true }}
                     {...itm.req && { required: true }}
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'name' in attr && { name: `${attr.name}[]` }}
-                    {...vals !== null && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                    {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) >= 0 && { checked: true }}
+                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) === -1 && { checked: false }}
                     onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk ck" />
@@ -128,6 +134,7 @@ function CompGen(props) {
                     {...'name' in attr && { name: attr.name }}
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
+                    {...'val' in attr && attr.val === itm.lbl && 'userinput' in attr && attr.userinput && { checked: true }}
                     onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk rdo" />
@@ -144,29 +151,30 @@ function CompGen(props) {
     <div className="blnk-blk drag" />
   )
 
-  const dropDown = (attr) => (
+  const dropDown = (attr) => (console.log(attr, typeof attr.val === 'string' && attr.val.length > 0, 'select'),
     !('hide' in attr.valid && attr.valid.hide === true)
-      && (
-        <div className="text-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label>{attr.lbl}</label>}
-          <select
-            className="txt-fld slim no-drg"
-            {...'req' in attr.valid && { required: attr.valid.req }}
-            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-            {...'mul' in attr && { multiple: attr.mul }}
-            {...'ph' in attr && { placeholder: attr.ph }}
-            {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
-            {...'val' in attr && attr.val.length > 0 && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : [attr.val] }}
-            onChange={fieldChangeHandler}
-            onBlur={props.onBlurHandler}
-          >
-            <option data-placeholder="true" aria-label="option placeholder" />
-            {attr.opt.map((itm, i) => (
-              <option key={`op-${i + 87}`} value={itm.lbl}>{itm.lbl}</option>
-            ))}
-          </select>
-        </div>
-      )
+    && (
+      <div className="text-wrp drag" btcd-fld="textarea">
+        {'lbl' in attr && <label>{attr.lbl}</label>}
+        <select
+          className="txt-fld slim no-drg"
+          {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+          {...'mul' in attr && { multiple: attr.mul }}
+          {...'ph' in attr && { placeholder: attr.ph }}
+          {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
+          {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
+          {...'val' in attr && attr.val.length > 0 && 'userinput' in attr && attr.userinput && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
+          onChange={fieldChangeHandler}
+          onBlur={props.onBlurHandler}
+        >
+          <option data-placeholder="true" aria-label="option placeholder" />
+          {attr.opt.map((itm, i) => (
+            <option key={`op-${i + 87}-${attr.userinput}`} value={itm.lbl}>{itm.lbl}</option>
+          ))}
+        </select>
+      </div>
+    )
   )
 
   const submitBtns = (attr) => (

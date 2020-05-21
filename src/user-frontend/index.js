@@ -26,5 +26,6 @@ export default function BitformsRenderer(params) {
     fieldToCheck={params.fieldToCheck}
     fieldToChange={params.fieldToChange}
     conditional={params.conditional}
+    fieldsKey={params.fieldsKey}
   />, document.getElementById(params.contentID));
 }
