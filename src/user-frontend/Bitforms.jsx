@@ -248,8 +248,8 @@ export default function Bitforms(props) {
   useEffect(() => {
     if (props.error) {
       if (props.error.$form !== undefined) {
-        setMessage(JSON.parse(JSON.stringify(props.error.$form)))
         sethasError(true)
+        setMessage(JSON.parse(JSON.stringify(props.error.$form)))
         setSnack(true)
         delete props.error.$form
       }
