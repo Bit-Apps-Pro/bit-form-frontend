@@ -42,21 +42,17 @@ function GridLayout(props) {
   const cols = { lg: 6, md: 4, sm: 2 }
 
   const sortLay = arr => {
-    if (arr.length <= 1) {
-      return arr
-    }
-    const left = []
-    const right = []
-    const piv = arr.pop()
-    const newArr = []
-    for (let i = 0; i < arr.length; i += 1) {
-      if (arr[i].y >= piv.y) {
-        right.push(arr[i])
-      } else {
-        left.push(arr[i])
+    const newArr = arr
+    for (let i = 1; i < newArr.length; i += 1) {
+      let j = i - 1
+      const tmp = newArr[i]
+      while (j >= 0 && newArr[j].y > tmp.y) {
+        newArr[j + 1] = newArr[j]
+        j -= 1
       }
+      newArr[j + 1] = tmp
     }
-    return newArr.concat(sortLay(left), piv, sortLay(right))
+    return newArr
   }
 
   // eslint-disable-next-line consistent-return
