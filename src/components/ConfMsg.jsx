@@ -124,7 +124,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
               <div className="flx flx-between">
                 <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
                   <option value="">Add form field</option>
-                  {formFields !== null && formFields.map(f => <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+                  {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
                 </select>
               </div>
               <textarea
