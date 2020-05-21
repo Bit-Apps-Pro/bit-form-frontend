@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, useEffect, memo, useContext } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'
 import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
+import { AppSettings } from '../Utils/AppSettingsContext'
 
 function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
@@ -24,7 +25,7 @@ function GridLayout(props) {
   req: required
   mul: multiple
   */
-
+  const { reCaptchaV2 } = useContext(AppSettings)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, isLoading } = props
 
   useEffect(() => {
@@ -278,6 +279,9 @@ function GridLayout(props) {
   }
 
   const compByTheme = compData => {
+    if (compData.typ === 'recaptcha') {
+      compData.siteKey = reCaptchaV2.siteKey
+    }
     switch (props.theme) {
       case 'default':
         return <CompGen atts={compData} />

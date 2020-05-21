@@ -1,13 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { NavLink, Switch, Route } from 'react-router-dom'
 import Captcha from '../components/Captcha'
+import { AppSettings } from '../Utils/AppSettingsContext'
+import bitsFetch from '../Utils/bitsFetch'
 
-function AppSettings() {
-
+function AppSettingsPage() {
+  const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
   useEffect(() => {
     return () => {
-      // save in db
-      // bitsFetch('Save-app-setting in database')
+      bitsFetch({ reCaptchaV2 }, 'bitforms_save_grecaptcha')
+        .then(res => {
+          if (res !== undefined && res.success) {
+            if (res.data && res.data.id) {
+              setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
+            }
+          }
+        })
     }
   }, [])
 
@@ -29,4 +37,4 @@ function AppSettings() {
   )
 }
 
-export default AppSettings
+export default AppSettingsPage

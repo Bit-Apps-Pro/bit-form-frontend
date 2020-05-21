@@ -11,12 +11,16 @@ export default function Bitforms(props) {
   const [redirectPage, setredirectPage] = useState(null)
   const [data, setdata] = useState(props.data)
   const [layout, setlayout] = useState(props.layout)
+  const [hasError, sethasError] = useState(false)
   const [layoutSize, setlayoutSize] = useState(window.innerWidth > 800 ? 'lg' : window.innerWidth > 600 ? 'md' : 'sm')
   let maxRowIndex = 0
   const blk = (field) => {
     const name = data[field.i].lbl === null ? null : field.i + data[field.i].lbl.split(' ').join('_')
     // eslint-disable-next-line no-param-reassign
     data[field.i].name = name
+    if (props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && data[field.i].typ === 'recaptcha') {
+      data[field.i].siteKey = props.gRecaptchaSiteKey
+    }
     maxRowIndex = maxRowIndex > field.y + field.h ? maxRowIndex : field.y + field.h
     return (
       <div
@@ -42,9 +46,13 @@ export default function Bitforms(props) {
       </div>
     )
   }
-
+  console.log('data', data)
   const onBlurHandler = (event) => {
     const element = event.target
+    const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+    if (newData[props.fieldsKey[element.name]] && newData[props.fieldsKey[element.name]].error) {
+      delete newData[props.fieldsKey[element.name]].error
+    }
     if (props.fieldToCheck[element.name] !== undefined) {
       const fieldData = []
       Object.keys(props.fieldToCheck).forEach(fieldName => {
@@ -57,37 +65,38 @@ export default function Bitforms(props) {
           }
         }
       });
-      console.log(fieldData)
+      console.log('fieldData', fieldData)
       // console.log( props.fieldToCheck)
       props.fieldToCheck[element.name].forEach(LogicIndex => {
         console.log('checkLogic', checkLogic(props.conditional[LogicIndex].logics, fieldData))
         if (checkLogic(props.conditional[LogicIndex].logics, fieldData)) {
-          const newData = data !== undefined && JSON.parse(JSON.stringify(data))
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
               switch (actionDetail.action) {
                 case 'value':
                   if (actionDetail.val !== undefined) {
-                    newData[props.fieldToChange[actionDetail.field]].val = actionDetail.val;
+                    newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val;
+                    newData[props.fieldsKey[actionDetail.field]].userinput = true;
+                    console.log('object', actionDetail.val, newData[props.fieldsKey[actionDetail.field]])
                   }
                   break
 
                 case 'hide':
-                  newData[props.fieldToChange[actionDetail.field]].valid.hide = true;
+                  newData[props.fieldsKey[actionDetail.field]].valid.hide = true;
                   break;
 
                 case 'disable':
-                  newData[props.fieldToChange[actionDetail.field]].valid.disabled = true;
+                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = true;
                   break;
 
                 case 'enable':
-                  newData[props.fieldToChange[actionDetail.field]].valid.disabled = false;
+                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = false;
                   break;
 
                 case 'show':
-                  newData[props.fieldToChange[actionDetail.field]].valid.hide = false;
-                  if (newData[props.fieldToChange[actionDetail.field]].typ === 'hidden') {
-                    newData[props.fieldToChange[actionDetail.field]].typ = 'text';
+                  newData[props.fieldsKey[actionDetail.field]].valid.hide = false;
+                  if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
+                    newData[props.fieldsKey[actionDetail.field]].typ = 'text';
                   }
                   break
                 default:
@@ -95,34 +104,33 @@ export default function Bitforms(props) {
               }
             }
           })
-          setdata(newData)
         } else {
-          const dataToReset = data !== undefined && JSON.parse(JSON.stringify(data))
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
               switch (actionDetail.action) {
                 case 'value':
                   if (actionDetail.val !== undefined) {
-                    dataToReset[props.fieldToChange[actionDetail.field]].val = props.data[props.fieldToChange[actionDetail.field]].val
+                    newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val
+                    delete newData[props.fieldsKey[actionDetail.field]].userinput
                   }
                   break
 
                 case 'hide':
-                  dataToReset[props.fieldToChange[actionDetail.field]].valid.hide = props.data[props.fieldToChange[actionDetail.field]].valid.hide
+                  newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
                   break;
 
                 case 'disable':
-                  dataToReset[props.fieldToChange[actionDetail.field]].valid.disabled = props.data[props.fieldToChange[actionDetail.field]].valid.disabled
+                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
                   break;
 
                 case 'enable':
-                  dataToReset[props.fieldToChange[actionDetail.field]].valid.disabled = props.data[props.fieldToChange[actionDetail.field]].valid.disabled
+                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
                   break;
 
                 case 'show':
-                  dataToReset[props.fieldToChange[actionDetail.field]].valid.hide = props.data[props.fieldToChange[actionDetail.field]].valid.hide
-                  if (dataToReset[props.fieldToChange[actionDetail.field]].typ === 'hidden') {
-                    dataToReset[props.fieldToChange[actionDetail.field]].typ = props.data[props.fieldToChange[actionDetail.field]].typ
+                  newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
+                  if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
+                    newData[props.fieldsKey[actionDetail.field]].typ = props.data[props.fieldsKey[actionDetail.field]].typ
                   }
                   break
                 default:
@@ -130,21 +138,18 @@ export default function Bitforms(props) {
               }
             }
           })
-          setdata(dataToReset)
         }
       })
     }
+    setdata(newData)
   }
   window.addEventListener('resize', () => {
     if (window.innerWidth > 800) {
       setlayoutSize('lg')
-      console.log(window.innerWidth)
     } else if (window.innerWidth > 600) {
       setlayoutSize('md')
-      console.log(window.innerWidth)
     } else {
       setlayoutSize('sm')
-      console.log(window.innerWidth)
     }
   })
 
@@ -186,49 +191,77 @@ export default function Bitforms(props) {
         formData.append(el.name, el.value)
       }
     })
-
+    let submitResponse
     if (props.gRecaptchaVersion && props.gRecaptchaVersion !== null && props.gRecaptchaVersion === 'v3') {
       grecaptcha.ready(() => {
         grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'homepage' }).then((token) => {
           formData.append('g-recaptcha-response', token)
-          bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
-            .then(response => {
-              if (response !== undefined && response.success) {
-                if (typeof response.data === 'object') {
-                  setMessage(response.data.message)
-                  setSnack(true)
-                  setredirectPage(response.data.redirectPage)
-                } else {
-                  setMessage(response.data)
-                  setSnack(true)
-                  setredirectPage(null)
-                }
-              }
-            })
+          submitResponse = bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
+            .then(response => response)
         })
       })
     } else {
-      bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
-        .then(response => {
-          if (response !== undefined && response.success) {
-            if (typeof response.data === 'object') {
-              setMessage(response.data.message)
-              setredirectPage(response.data.redirectPage)
-              setSnack(true)
-              if (response.data.redirectPage === null) {
-                document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
-              }
-            } else {
-              setMessage(response.data)
-              setredirectPage(null)
-              setSnack(true)
-              document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
-            }
-          }
-        })
+      submitResponse = bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
+        .then(response => response)
     }
+    submitResponse.then(result => {
+      if (result !== undefined && result.success) {
+        if (typeof result.data === 'object') {
+          setMessage(result.data.message)
+          setredirectPage(result.data.redirectPage)
+          setSnack(true)
+          if (hasError) {
+            sethasError(false)
+          }
+          if (result.data.redirectPage === null) {
+            document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
+          }
+        } else {
+          setMessage(result.data)
+          setredirectPage(null)
+          setSnack(true)
+          document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
+        }
+      } else if (result.data && typeof result.data === 'string') {
+        setMessage(result.data)
+        sethasError(true)
+        setSnack(true)
+      } else if (result.data && result.data.data) {
+        if (result.data.data.$form !== undefined) {
+          setMessage(JSON.parse(JSON.stringify(result.data.data.$form)))
+          sethasError(true)
+          setSnack(true)
+          delete result.data.data.$form
+        }
+        console.log(typeof result.data.data, result.data.data, Object.keys(result.data.data).length)
+        if (Object.keys(result.data.data).length > 0) {
+          const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+          Object.keys(result.data.data).map(element => {
+            newData[props.fieldsKey[element]].error = result.data.data[element]
+          });
+          setdata(newData)
+        }
+      }
+    })
   }
 
+  useEffect(() => {
+    if (props.error) {
+      if (props.error.$form !== undefined) {
+        setMessage(JSON.parse(JSON.stringify(props.error.$form)))
+        sethasError(true)
+        setSnack(true)
+        delete props.error.$form
+      }
+      if (Object.keys(props.error).length > 0) {
+        const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+        Object.keys(props.error).map(element => {
+          newData[props.fieldsKey[element]].error = props.error[element]
+        });
+        setdata(newData)
+      }
+    }
+  }, [props.error])
 
   useEffect(() => {
     if (document.querySelector('.slim') != null) {
@@ -262,7 +295,7 @@ export default function Bitforms(props) {
     <div>
       {
         snack
-        && <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} />
+        && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} index={index} canClose={message.length - 1 === index} />))
       }
       <form ref={props.refer} id={`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
         {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.nonce} name="bitforms_token" />}
@@ -281,40 +314,50 @@ export default function Bitforms(props) {
             field.static = true
             return blk(field)
           })}
+          {!props.editMode && props.buttons
+            && (
+              <div
+                style={{
+                  gridColumnStart: 0,
+                  gridColumnEnd: layoutSize === 'lg' ? 7 : layoutSize === 'md' ? 5 : 3,
+                  gridRowStart: maxRowIndex + 2, /* y-0 -> y + 1 */
+                  gridRowEnd: maxRowIndex + 4, /* h-4 -> if y not 1 then h+y */
+                  minHeight: 40, /* h * 40px */
+                }}
+                key={props.buttons.typ}
+                role="button"
+              >
+                <CompGen
+                  atts={props.buttons}
+                  // formID={bitFormsFront.contentID}
+                  entryID={props.entryID}
+                />
+              </div>
+            )}
         </div>
-        {/* {!props.editMode && <button className="blk" type="submit">Submit</button>} */}
-        {props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && props.gRecaptchaVersion && props.gRecaptchaVersion === 'v2'
-          && (
-            <div className="text-wrp">
-              <div className="g-recaptcha" data-sitekey={props.gRecaptchaSiteKey} />
-            </div>
-          )}
-        {!props.editMode && props.buttons
-          && (
-            <div
-              style={{
-                // gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
-                // gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
-                gridRowStart: maxRowIndex + 2, /* y-0 -> y + 1 */
-                gridRowEnd: maxRowIndex + 4, /* h-4 -> if y not 1 then h+y */
-                minHeight: 40, /* h * 40px */
-              }}
-              key={props.buttons.typ}
-              role="button"
-            >
-              <CompGen
-                atts={props.buttons}
-                // formID={bitFormsFront.contentID}
-                entryID={props.entryID}
-              />
-            </div>
-          )}
       </form>
     </div>
   )
 }
 
 function Toast(props) {
+  console.log("objectTOST", props)
+  const [snack, setSnack] = useState(true)
+  const closeButtonStyle = {
+    position: 'absolute',
+    top: -20,
+    right: -15,
+    background: 'red',
+    height: '25px',
+    width: '25px',
+    fontSize: '21px',
+    padding: '3px 6px',
+    color: 'white',
+    borderRadius: '50px',
+    lineHeight: '0.8',
+    marginLeft: '7px',
+    cursor: 'pointer',
+  }
   const toatStyles = {
     userSelect: 'none',
     background: '#383838',
@@ -322,27 +365,36 @@ function Toast(props) {
     color: 'white',
     borderRadius: '5px',
     position: 'fixed',
-    bottom: '20px',
+    bottom: 20,
     right: '20px',
     boxShadow: '1px 1px 3px 0px #0000004d',
     transition: 'right 0.5s',
   }
-  console.log('props.redirectPage', props.redirectPage)
+  if (props.index && props.index > 0) {
+    toatStyles.bottom += props.index * 2 * 45
+  }
+  useEffect(() => {
+    if (!snack && props.canClose && props.show) {
+      props.setSnack(false)
+    }
+  }, [snack])
   useEffect(() => {
     const timer = setTimeout(() => {
       if (props.show) {
-        props.setSnack(false)
-        if (props.redirectPage !== null) {
-          window.location = props.redirectPage
-        } else {
-          window.location.reload()
+        if (!props.error) {
+          props.setSnack(false)
+          if (props.redirectPage !== null) {
+            window.location = props.redirectPage
+          } else {
+            window.location.reload()
+          }
         }
       }
     }, 2000);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return (
+  return snack && (
     <div className="btcd-snack flx" style={toatStyles}>
       {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
@@ -353,7 +405,7 @@ function Toast(props) {
           )
           : props.msg
       }
-      <button onClick={() => props.setSnack(false)} className="btcd-snack-cls" type="button">&times;</button>
+      <button onClick={() => setSnack(false)} className="btcd-snack-cls" style={closeButtonStyle} type="button">&times;</button>
     </div>
   )
 }

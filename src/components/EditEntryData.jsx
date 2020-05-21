@@ -10,6 +10,7 @@ export default function EditEntryData(props) {
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
+  const [error, setError] = useState(null)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function EditEntryData(props) {
     bitsFetch({ formID, entryID }, 'bitforms_edit_form_entry')
       .then(res => {
         if (res !== undefined && res.success) {
-          setData({ layout: res.data.layout, fields: res.data.fields })
+          setData({ layout: res.data.layout, fields: res.data.fields, fieldToCheck: res.data.fieldToCheck, conditional: res.data.conditional, fieldsKey: res.data.fieldsKey })
         }
       })
   }, [entryID, formID])
@@ -69,13 +70,14 @@ export default function EditEntryData(props) {
           const tmp = [...allResp]
           for (let i = 0; i < tmp.length; i += 1) {
             if (tmp[i].entry_id === props.entryID) {
-              console.log('update', response.data.updatedData)
               tmp[i] = response.data.updatedData
               break
             }
           }
           setAllResp(tmp)
           props.close(false)
+        } else if (response.data && response.data.data) {
+          setError(response.data.data)
         }
       })
   }
@@ -103,6 +105,10 @@ export default function EditEntryData(props) {
             data={data.fields}
             formID={formID}
             entryID={props.entryID}
+            fieldToCheck={data.fieldToCheck}
+            conditional={data.conditional}
+            fieldsKey={data.fieldsKey}
+            error={error}
           />
         )}
       </Scrollbars>

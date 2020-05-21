@@ -22,8 +22,6 @@ function FormEntries() {
   const { formID } = useParams()
   const fetchIdRef = React.useRef(0)
   const [pageCount, setPageCount] = React.useState(0)
-  const [currentpageSize, setcurrentpageSize] = useState(0)
-  const [currentEntry, setcurrentEntry] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
@@ -90,8 +88,6 @@ function FormEntries() {
         if (res !== undefined && res.success) {
           // if (totalData > 0) {
           setPageCount(Math.ceil(res.data.count / pageSize))
-          setcurrentpageSize(pageSize)
-          setcurrentEntry(res.data.count)
           if (res.data.Labels && entryLabels.length === 0) {
             tableHeaderHandler(res.data.Labels)
           }
