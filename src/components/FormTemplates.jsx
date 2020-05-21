@@ -7,12 +7,14 @@ export default function FormTemplates() {
 
   const [templates, setTemplates] = useState(null)
   useEffect(() => {
+    let mount = true
     bitsFetch(null, 'bitforms_templates')
       .then(res => {
-        if (typeof res !== 'undefined' && res.success) {
+        if (typeof res !== 'undefined' && res.success && mount) {
           setTemplates(JSON.parse(res.data))
         }
       })
+    return function cleanup() { mount = false }
   }, [])
 
   return (

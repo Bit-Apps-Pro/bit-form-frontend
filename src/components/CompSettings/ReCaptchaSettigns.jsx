@@ -1,12 +1,10 @@
 import React from 'react'
 
 export default function ReCaptchaSettigns({ elm, updateData }) {
-  console.log('elm', elm)
   const onInput = e => {
     const tmp = { ...elm }
     tmp.data[e.target.name] = e.target.value
     updateData(tmp)
-    console.log(tmp)
   }
 
   return (

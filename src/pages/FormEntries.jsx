@@ -32,11 +32,12 @@ function FormEntries() {
   const { reportsData } = useContext(AllFormContext)
   const { reports, reportsDispatch } = reportsData
   const [report] = useState(0)
+  const [mounted, setmounted] = useState(true)
   useEffect(() => {
     // setisloading(true)
     bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(response => {
-        if (response !== undefined && response.success) {
+        if (response !== undefined && response.success && mounted) {
           if ('reports' in response.data && response.data.reports.length > 0) {
             if (response.data.reports[0] && response.data.reports[0].details !== undefined && 'order' in response.data.reports[0].details.order) {
               setEntryLabels(response.data.reports[0].details.order)
@@ -48,6 +49,7 @@ function FormEntries() {
           }
         }
       })
+    return function cleanup() { setmounted(false) }
   }, [])
 
   const tableHeaderHandler = (labels) => {
@@ -61,7 +63,7 @@ function FormEntries() {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
               return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitforms/${formID}/${row.cell.row.original.entry_id}`}`} />)
-            } // JSON.parse(row.cell.value).join(', ')
+            }
           }
           return null
         },
@@ -80,6 +82,7 @@ function FormEntries() {
     })
     setEntryLabels(cols)
   }
+
   const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
@@ -87,7 +90,7 @@ function FormEntries() {
     if (fetchId === fetchIdRef.current) {
       const startRow = pageSize * pageIndex
       bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitforms_get_form_entries').then(res => {
-        if (res !== undefined && res.success) {
+        if (res !== undefined && res.success && mounted) {
           // if (totalData > 0) {
           setPageCount(Math.ceil(res.data.count / pageSize))
           setcurrentpageSize(pageSize)
@@ -119,7 +122,7 @@ function FormEntries() {
 
     bitsFetch(ajaxData, 'bitforms_bulk_delete_form_entries')
       .then(res => {
-        if (res.success) {
+        if (res.success && mounted) {
           if (action && action.fetchData && action.data) {
             action.fetchData(action.data)
           }
@@ -141,13 +144,12 @@ function FormEntries() {
       rowID[rows.original.entry_id] = rows.id
       entries.push(rows.original.entry_id)
     }
-    // const newData = tmpData !== undefined ? [...tmpData] : [...allResp]
     const newData = JSON.parse(JSON.stringify(tmpData))
 
     const ajaxData = { formID, entries }
     bitsFetch(ajaxData, 'bitforms_duplicate_form_entries')
       .then(res => {
-        if (res.success && res.data.message !== 'undefined') {
+        if (res.success && res.data.message !== 'undefined' && mounted) {
           if (action && action.fetchData && action.data) {
             action.fetchData(action.data)
           } else {
