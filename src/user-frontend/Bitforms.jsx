@@ -8,6 +8,7 @@ import checkLogic from './checkLogic'
 export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
+  const [buttonDisabled, setbuttonDisabled] = useState(false)
   const [redirectPage, setredirectPage] = useState(null)
   const [data, setdata] = useState(props.data)
   const [layout, setlayout] = useState(props.layout)
@@ -111,7 +112,7 @@ export default function Bitforms(props) {
                 case 'value':
                   if (actionDetail.val !== undefined) {
                     newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val
-                    delete newData[props.fieldsKey[actionDetail.field]].userinput
+                    newData[props.fieldsKey[actionDetail.field]].userinput = false
                   }
                   break
 
@@ -155,6 +156,7 @@ export default function Bitforms(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    setbuttonDisabled(true)
     const formData = new FormData()
     const fields = Array.prototype.slice.call(event.target)
     // eslint-disable-next-line array-callback-return
@@ -242,14 +244,15 @@ export default function Bitforms(props) {
           setdata(newData)
         }
       }
+      setbuttonDisabled(false)
     })
   }
 
   useEffect(() => {
     if (props.error) {
       if (props.error.$form !== undefined) {
-        setMessage(JSON.parse(JSON.stringify(props.error.$form)))
         sethasError(true)
+        setMessage(JSON.parse(JSON.stringify(props.error.$form)))
         setSnack(true)
         delete props.error.$form
       }
@@ -331,6 +334,7 @@ export default function Bitforms(props) {
                   atts={props.buttons}
                   // formID={bitFormsFront.contentID}
                   entryID={props.entryID}
+                  buttonDisabled={buttonDisabled}
                 />
               </div>
             )}
@@ -395,7 +399,7 @@ function Toast(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return snack && (
-    <div className="btcd-snack flx" style={toatStyles}>
+    <div style={toatStyles}>
       {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
           ? (

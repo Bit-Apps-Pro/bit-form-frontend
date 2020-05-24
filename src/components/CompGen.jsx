@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { createElement, createRef, useState } from 'react'
+import React, { createElement, createRef, useState, useEffect } from 'react'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
 import ReCaptcha from './Fields/Recaptcha';
 
@@ -28,7 +28,6 @@ function CompGen(props) {
               ...('ac' in attr && { autoComplete: attr.ac }),
               ...('name' in attr && { name: attr.name }),
               ...({ onBlur: props.onBlurHandler }),
-              ...({ btcdUserinput: attr.userinput }),
             },
           )}
           {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
@@ -100,8 +99,8 @@ function CompGen(props) {
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'name' in attr && { name: `${attr.name}[]` }}
                     {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) >= 0 && { checked: true }}
-                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) === -1 && { checked: false }}
+                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) === -1 && { defaultChecked: false }}
                     onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk ck" />
@@ -135,7 +134,7 @@ function CompGen(props) {
                     {...'name' in attr && { name: attr.name }}
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
-                    {...'val' in attr && attr.val === itm.lbl && 'userinput' in attr && attr.userinput && { checked: true }}
+                    {...'val' in attr && attr.val === itm.lbl && 'userinput' in attr && { checked: attr.val === itm.lbl }}
                     onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk rdo" />
@@ -152,7 +151,7 @@ function CompGen(props) {
     <div className="blnk-blk drag" />
   )
 
-  const dropDown = (attr) => (console.log(attr, typeof attr.val === 'string' && attr.val.length > 0, 'select'),
+  const dropDown = (attr) => (
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
       <div className="fld-wrp drag" btcd-fld="select">
@@ -178,13 +177,14 @@ function CompGen(props) {
     )
   )
 
-  const submitBtns = (attr) => (
+  const submitBtns = (attr, buttonDisabled) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
       <button className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="submit">{attr.subBtnTxt}</button>
       {'rstBtnTxt' in attr && (
         <button
           className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
           type="button"
+          disabled={buttonDisabled}
         // onClick={() => { document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset() }}
         >
           {attr.rstBtnTxt}
@@ -209,13 +209,17 @@ function CompGen(props) {
     case 'week':
     case 'color':
 
-      return textField(props.atts)
+      // return textField(props.atts)
+      return <TextField attr={props.atts} onBlurHandler={props.onBlurHandler} />
     case 'textarea':
-      return textArea(props.atts)
+      // return textArea(props.atts)
+      return <TextArea attr={props.atts} onBlurHandler={props.onBlurHandler} />
     case 'check':
-      return checkBox(props.atts)
+      // return checkBox(props.atts)
+      return <CheckBox attr={props.atts} onBlurHandler={props.onBlurHandler} />
     case 'radio':
-      return radioBox(props.atts)
+      // return radioBox(props.atts)
+      return <RadioBox attr={props.atts} onBlurHandler={props.onBlurHandler} />
     case 'blank':
       return blank()
     case 'select':
@@ -223,7 +227,7 @@ function CompGen(props) {
     case 'file-up':
       return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} />
     case 'submit':
-      return submitBtns(props.atts)
+      return submitBtns(props.atts, props.buttonDisabled)
     case 'hidden':
       return hiddenField(props.atts)
     case 'recaptcha':
@@ -309,5 +313,177 @@ function FileUp({ attr, formID, entryID }) {
         </div>
       </div>
     </div>
+  )
+}
+
+function TextField({ attr, onBlurHandler }) {
+  const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
+  useEffect(() => {
+    if (attr.val !== undefined) {
+      setvalue(attr.val)
+    } else {
+      setvalue('')
+    }
+  }, [attr.val])
+  const onChangeHandler = (event) => {
+    setvalue(event.target.value)
+  }
+  return (
+    !('hide' in attr.valid && attr.valid.hide === true)
+    && (
+      <div className="text-wrp drag" btcd-fld="text-fld">
+        {'lbl' in attr && <label>{attr.lbl}</label>}
+        {createElement(
+          'input',
+          {
+            className: 'txt-fld no-drg',
+            type: attr.typ,
+            ...('req' in attr.valid && { required: attr.valid.req }),
+            ...('disabled' in attr.valid && { disabled: attr.valid.disabled }),
+            ...('ph' in attr && { placeholder: attr.ph }),
+            ...('mn' in attr && { min: attr.mn }),
+            ...('mx' in attr && { max: attr.mx }),
+            ...('val' in attr && { defaultValue: attr.val }),
+            ...(value && 'userinput' in attr && attr.userinput && { value }),
+            ...(value && 'userinput' in attr && !attr.userinput && { value }),
+            ...('ac' in attr && { autoComplete: attr.ac }),
+            ...('name' in attr && { name: attr.name }),
+            ...({ onBlur: onBlurHandler }),
+            ...({ onChange: onChangeHandler }),
+          },
+        )}
+        {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
+      </div>
+    )
+  )
+}
+
+function TextArea({ attr, onBlurHandler }) {
+  const [value, setvalue] = useState(attr.val)
+  useEffect(() => {
+    if (attr.val !== undefined) {
+      setvalue(attr.val)
+    } else {
+      setvalue('')
+    }
+  }, [attr.val])
+  const onChangeHandler = (event) => {
+    setvalue(event.target.value)
+  }
+  return (
+    !('hide' in attr.valid && attr.valid.hide === true)
+    && (
+      <div className="text-wrp drag" btcd-fld="textarea">
+        {'lbl' in attr && <label>{attr.lbl}</label>}
+        <textarea
+          className="txt-fld no-drg"
+          {...'ph' in attr && { placeholder: attr.ph }}
+          {...'val' in attr && { defaultValue: attr.val }}
+          {...value && 'userinput' in attr && attr.userinput && { value }}
+          {...'ac' in attr && { autoComplete: attr.ac }}
+          {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+          {...'name' in attr && { name: attr.name }}
+          onBlur={onBlurHandler}
+          onChange={onChangeHandler}
+        />
+      </div>
+    )
+  )
+}
+
+function CheckBox({ attr, onBlurHandler }) {
+  const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',')
+  const [value, setvalue] = useState(vals || [])
+  useEffect(() => {
+    if (value !== vals) {
+      setvalue(vals)
+    }
+  }, [attr.val])
+  const onChangeHandler = (event) => {
+    console.log('CHKBOX', event.target.checked)
+    const index = value.indexOf(event.target.value)
+    if (event.target.checked && index === -1) {
+      setvalue([...value, event.target.value])
+    } else if (!event.target.checked && index >= 0) {
+      setvalue(value.filter(v => v !== event.target.value))
+    }
+  }
+  return (
+    (
+      !('hide' in attr.valid && attr.valid.hide === true)
+      && (
+        <div className="text-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label>{attr.lbl}</label>}
+          <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
+            {attr.opt.map((itm, i) => (
+              <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
+                <span>{itm.lbl}</span>
+                <input
+                  type="checkbox"
+                  {...itm.check && { defaultChecked: true }}
+                  {...itm.req && { required: true }}
+                  {...'lbl' in itm && { defaultValue: itm.lbl }}
+                  {...'name' in attr && { name: `${attr.name}[]` }}
+                  {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                  {...value && 'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
+                  {...value && 'userinput' in attr && !attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
+                  // {...'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) !== -1 }}
+                  onBlur={onBlurHandler}
+                  onChange={onChangeHandler}
+                />
+                <span className="btcd-mrk ck" />
+              </label>
+            ))}
+          </div>
+        </div>
+      )
+    )
+  )
+}
+
+function RadioBox({ attr, onBlurHandler }) {
+  const [value, setvalue] = useState(attr.val)
+  useEffect(() => {
+    if (attr.val !== undefined) {
+      setvalue(attr.val)
+    } else {
+      setvalue('')
+    }
+  }, [attr.val])
+  const onChangeHandler = (event) => {
+    setvalue(event.target.value)
+  }
+  const n = Math.random()
+
+  return (
+    (
+      !('hide' in attr.valid && attr.valid.hide === true)
+      && (
+        <div className="text-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label>{attr.lbl}</label>}
+          <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
+            {attr.opt.map((itm, i) => (
+              <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
+                <span>{itm.lbl}</span>
+                <input
+                  type="radio"
+                  name={n}
+                  {...itm.check && { checked: true }}
+                  {...itm.req && { required: true }}
+                  {...'name' in attr && { name: attr.name }}
+                  {...'lbl' in itm && { defaultValue: itm.lbl }}
+                  {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
+                  {...value && 'userinput' in attr && { checked: value === itm.lbl }}
+                  onBlur={onBlurHandler}
+                  onChange={onChangeHandler}
+                />
+                <span className="btcd-mrk rdo" />
+              </label>
+            ))}
+          </div>
+        </div>
+      )
+    )
   )
 }
