@@ -85,7 +85,7 @@ export default function FileUpSettings(props) {
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
-      <SingleInput inpType="number" title="Upload Button Text:" value={mxUp} action={setMxUp} placeholder="Any Size" />
+      <SingleInput inpType="number" title="Max Upload Size:" value={mxUp} action={setMxUp} placeholder="Any Size" />
       <SingleToggle title="Allow Multiple:" action={setMultiple} isChecked={isMultiple} className="mt-5" />
       <DropDown className="btcd-neu-sh-1 mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Any File Type" searchPH="Search or Add ext (e.g: .jpg,.png)" action={setFileFilter} value={exts} />
     </div>
