@@ -25,8 +25,7 @@ function DropDown(props) {
   return (
     <div className={`${props.titleClassName}`}>
       <span>{props.title}</span>
-      <select value={props.value} ref={s} multiple={props.isMultiple} onChange={props.action} className={`${props.className}`}>
-        {console.log(props.options)}
+      <select value={props.value} ref={s} multiple={props.isMultiple} onChange={props.action} className={`btcd-app-slim ${props.className}`}>
         {props.options !== null
           && props.options !== false
           && props.options.map(item => <option key={`key${item.name}`} value={item.value}>{item.name}</option>)}
@@ -35,4 +34,4 @@ function DropDown(props) {
   )
 }
 
-export default memo(DropDown)
+export default (DropDown)
