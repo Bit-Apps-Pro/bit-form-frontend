@@ -331,12 +331,12 @@ function TextField({ attr, onBlurHandler }) {
   return (
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
-      <div className="text-wrp drag" btcd-fld="text-fld">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
+      <div className="fld-wrp drag" btcd-fld="text-fld">
+        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         {createElement(
           'input',
           {
-            className: 'txt-fld no-drg',
+            className: 'fld no-drg',
             type: attr.typ,
             ...('req' in attr.valid && { required: attr.valid.req }),
             ...('disabled' in attr.valid && { disabled: attr.valid.disabled }),
@@ -373,10 +373,10 @@ function TextArea({ attr, onBlurHandler }) {
   return (
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
-      <div className="text-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
+      <div className="fld-wrp drag" btcd-fld="textarea">
+        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         <textarea
-          className="txt-fld no-drg"
+          className="fld no-drg"
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'val' in attr && { defaultValue: attr.val }}
           {...value && 'userinput' in attr && attr.userinput && { value }}
@@ -413,8 +413,8 @@ function CheckBox({ attr, onBlurHandler }) {
     (
       !('hide' in attr.valid && attr.valid.hide === true)
       && (
-        <div className="text-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label>{attr.lbl}</label>}
+        <div className="fld-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
           <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
             {attr.opt.map((itm, i) => (
               <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
@@ -460,8 +460,8 @@ function RadioBox({ attr, onBlurHandler }) {
     (
       !('hide' in attr.valid && attr.valid.hide === true)
       && (
-        <div className="text-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label>{attr.lbl}</label>}
+        <div className="fld-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
           <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
             {attr.opt.map((itm, i) => (
               <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
