@@ -187,9 +187,14 @@ function Builder(props) {
               setSavedFormId(data.id)
               setButtonText('Update')
               props.history.replace(`/builder/edit/${data.id}`)
-              setSnackbar({ show: true, msg: 'Form Saved Successfully.' })
+              setSnackbar({ show: true, msg: data.message })
+              if ('formSettings' in data) setFormSettings(data.formSettings)
+              if ('workFlows' in data) setworkFlows(data.workFlows)
+              if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
+              if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
+              if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
             }
-            allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName, shortcode: `bitforms id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
+            allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           } else if (action === 'bitforms_update_form') {
             setSnackbar({ show: true, msg: data.message })
             if ('formSettings' in data) setFormSettings(data.formSettings)
