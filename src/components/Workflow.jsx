@@ -520,7 +520,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       <Button className="blue" onClick={addLogicGrp}>+ Add Action</Button>
 
       {workFlows.length > 0 ? workFlows.map((lgcGrp, lgcGrpInd) => (
-        <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp flx">
+        <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp d-flx mt-2">
           <Accordions
             title={`${lgcGrp.title}`}
             header={(
@@ -544,7 +544,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
             titleEditable
             onTitleChange={e => handleLgcTitle(e, lgcGrpInd)}
             notScroll
-            cls="mt-2 w-9"
+            cls="w-9"
           >
             <div className="flx">
               <b className="txt-dp"><small>Action Run When:</small></b>
@@ -732,7 +732,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                 <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                   <option value="">Select Message</option>
-                  {'confirmation' in formSettings && 'type' in formSettings.confirmation &&  'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                  {'confirmation' in formSettings && 'type' in formSettings.confirmation && 'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                 </MtSelect>
               )}
 
@@ -765,7 +765,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
             </div>
           </Accordions>
 
-          <div className="mt-1">
+          <div className="mt-2">
             <Button onClick={() => lgcGrpDelConf(lgcGrpInd)} icn className="ml-2 sh-sm btcd-menu-btn tooltip" style={{ '--tooltip-txt': '"Delete Action"' }}>
               <span className="btcd-icn icn-trash-2" />
             </Button>
@@ -777,6 +777,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           Empty
         </div>
       )}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   )
 }
