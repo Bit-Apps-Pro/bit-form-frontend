@@ -98,8 +98,8 @@ function CompGen(props) {
                     {...'lbl' in itm && { defaultValue: itm.lbl }}
                     {...'name' in attr && { name: `${attr.name}[]` }}
                     {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) >= 0 && { checked: true }}
-                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) === -1 && { checked: false }}
+                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) === -1 && { defaultChecked: false }}
                     onBlur={props.onBlurHandler}
                   />
                   <span className="btcd-mrk ck" />
@@ -341,8 +341,8 @@ function TextField({ attr, onBlurHandler }) {
             ...('mn' in attr && { min: attr.mn }),
             ...('mx' in attr && { max: attr.mx }),
             ...('val' in attr && { defaultValue: attr.val }),
-            ...('val' in attr && 'userinput' in attr && attr.userinput && { value }),
-            ...('val' in attr && 'userinput' in attr && !attr.userinput && { value }),
+            ...(value && 'userinput' in attr && attr.userinput && { value }),
+            ...(value && 'userinput' in attr && !attr.userinput && { value }),
             ...('ac' in attr && { autoComplete: attr.ac }),
             ...('name' in attr && { name: attr.name }),
             ...({ onBlur: onBlurHandler }),
@@ -376,7 +376,7 @@ function TextArea({ attr, onBlurHandler }) {
           className="txt-fld no-drg"
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'val' in attr && { defaultValue: attr.val }}
-          {...'val' in attr && 'userinput' in attr && attr.userinput && { value }}
+          {...value && 'userinput' in attr && attr.userinput && { value }}
           {...'ac' in attr && { autoComplete: attr.ac }}
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
@@ -396,12 +396,13 @@ function CheckBox({ attr, onBlurHandler }) {
     if (value !== vals) {
       setvalue(vals)
     }
-  }, [attr])
+  }, [attr.val])
   const onChangeHandler = (event) => {
+    console.log('CHKBOX', event.target.checked)
     const index = value.indexOf(event.target.value)
     if (event.target.checked && index === -1) {
       setvalue([...value, event.target.value])
-    } else if (index >= 0) {
+    } else if (!event.target.checked && index >= 0) {
       setvalue(value.filter(v => v !== event.target.value))
     }
   }
@@ -422,8 +423,8 @@ function CheckBox({ attr, onBlurHandler }) {
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
                   {...'name' in attr && { name: `${attr.name}[]` }}
                   {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                  {...'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
-                  {...'userinput' in attr && !attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
+                  {...value && 'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
+                  {...value && 'userinput' in attr && !attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
                   // {...'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) !== -1 }}
                   onBlur={onBlurHandler}
                   onChange={onChangeHandler}
@@ -470,7 +471,7 @@ function RadioBox({ attr, onBlurHandler }) {
                   {...'name' in attr && { name: attr.name }}
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
                   {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
-                  {...'userinput' in attr && { checked: value === itm.lbl }}
+                  {...value && 'userinput' in attr && { checked: value === itm.lbl }}
                   onBlur={onBlurHandler}
                   onChange={onChangeHandler}
                 />
