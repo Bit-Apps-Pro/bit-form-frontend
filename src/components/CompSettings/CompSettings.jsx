@@ -10,7 +10,7 @@ import ReCaptchaSettigns from './ReCaptchaSettigns'
 function CompSettings(props) {
 
   const renderSettings = (type) => {
-    if (props.fields !== null && props.fields[props.elm.id] !== undefined) {
+    if ((props.fields !== null && props.fields[props.elm.id] !== undefined) || type === 'submit') {
       switch (type) {
         case 'text':
         case 'number':
