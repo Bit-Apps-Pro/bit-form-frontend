@@ -40,6 +40,8 @@ function GridLayout(props) {
 
   const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
+  const [runningOpt, setrunningOpt] = useState(false)
+
   const cols = { lg: 6, md: 4, sm: 2 }
 
   const sortLay = arr => {
@@ -157,31 +159,34 @@ function GridLayout(props) {
   }
 
   const margeNewData = () => {
-    const { w, h, minH, maxH, minW } = newData[1]
-    const x = 0
-    const y = Infinity
-    setNewData(null)
-
-    const newBlk = { i: `b-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
-    const tmpLayouts = layouts
-    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
-    tmpLayouts.lg.push(newBlk)
-    tmpLayouts.md.push(newBlk)
-    tmpLayouts.sm.push(newBlk)
-    if (breakpoint === 'lg') {
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'md') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'sm') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+    if (!runningOpt) {
+      setrunningOpt(true)
+      setrunningOpt(false)
+      const { w, h, minH, maxH, minW } = newData[1]
+      const x = 0
+      const y = Infinity
+      setNewData(null)
+      const newBlk = { i: `b-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
+      const tmpLayouts = layouts
+      tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
+      tmpLayouts.lg.push(newBlk)
+      tmpLayouts.md.push(newBlk)
+      tmpLayouts.sm.push(newBlk)
+      if (breakpoint === 'lg') {
+        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+      } else if (breakpoint === 'md') {
+        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+      } else if (breakpoint === 'sm') {
+        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      }
+      setLayouts({ ...tmpLayouts })
+      const tmpField = JSON.parse(JSON.stringify(newData[0]))
+      setFields({ ...fields, [`b-${newCounter + 1}`]: tmpField })
+      setNewCounter(newCounter + 1)
     }
-    setLayouts({ ...tmpLayouts })
-    const tmpField = JSON.parse(JSON.stringify(newData[0]))
-    setFields({ ...fields, [`b-${newCounter + 1}`]: tmpField })
-    setNewCounter(newCounter + 1)
   }
 
   const onLayoutChange = (newLay, newLays) => {
@@ -198,42 +203,50 @@ function GridLayout(props) {
   }
 
   const onRemoveItem = i => {
-    const nwLay = {}
-    nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
-    nwLay.md = genFilterLay(layouts.md, cols.md, i)
-    nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
-    delete fields[i]
-    setLayouts(nwLay)
-    setFields({ ...fields })
+    if (!runningOpt) {
+      setrunningOpt(true)
+      const nwLay = {}
+      nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
+      nwLay.md = genFilterLay(layouts.md, cols.md, i)
+      nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
+      delete fields[i]
+      setLayouts(nwLay)
+      setFields({ ...fields })
+      setrunningOpt(false)
+    }
   }
 
   const onDrop = elmPrms => {
-    const { draggedElm } = props
-    const { w, h, minH, maxH, minW } = draggedElm[1]
-    // eslint-disable-next-line prefer-const
-    let { x, y } = elmPrms
-    if (y !== 0) { y -= 1 }
-    const newBlk = `b-${newCounter + 1}`
+    if (!runningOpt) {
+      setrunningOpt(true)
+      const { draggedElm } = props
+      const { w, h, minH, maxH, minW } = draggedElm[1]
+      // eslint-disable-next-line prefer-const
+      let { x, y } = elmPrms
+      if (y !== 0) { y -= 1 }
+      const newBlk = `b-${newCounter + 1}`
 
-    const tmpLayouts = layouts
-    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
-    tmpLayouts.lg.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-    tmpLayouts.md.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-    tmpLayouts.sm.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-    if (breakpoint === 'lg') {
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'md') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'sm') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      const tmpLayouts = layouts
+      tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
+      tmpLayouts.lg.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+      tmpLayouts.md.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+      tmpLayouts.sm.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+      if (breakpoint === 'lg') {
+        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+      } else if (breakpoint === 'md') {
+        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+      } else if (breakpoint === 'sm') {
+        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      }
+      setLayouts({ ...tmpLayouts })
+      const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
+      setFields({ ...fields, [newBlk]: tmpField })
+      setNewCounter(newCounter + 1)
+      setrunningOpt(false)
     }
-    setLayouts({ ...tmpLayouts })
-    const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
-    setFields({ ...fields, [newBlk]: tmpField })
-    setNewCounter(newCounter + 1)
   }
 
   const getElmProp = e => {
