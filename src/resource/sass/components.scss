@@ -2,31 +2,66 @@ body {
   scroll-behavior: smooth;
 }
 
-input[type="date"],
-input[type="datetime-local"],
-input[type="time"],
-input[type="month"],
-input[type="week"] {
+.fld-wrp {
+  font-family: sans-serif !important;
+  box-sizing: border-box !important;
+}
+.fld-wrp > * {
+  box-sizing: border-box !important;
+}
+.fld-lbl {
+  display: block;
+  font-size: 15px;
+  margin: 0;
+  font-weight: normal;
+}
+
+.fld {
+  font-family: sans-serif;
+  padding: 8px !important;
+  font-size: 15px !important;
+  height: 36px !important;
+  width: 100% !important;
+  background: white !important;
+  outline: none !important;
+  display: inline-block;
+  margin-top: 5px !important;
+  border-radius: 5px !important;
+  border: 1.5px solid #505050 !important;
+  &:focus {
+    box-shadow: 0 0 0 1px #505050 inset !important;
+  }
+}
+
+.fld[type="date"],
+.fld[type="datetime-local"],
+.fld[type="time"],
+.fld[type="month"],
+.fld[type="week"] {
   display: flow-root;
   width: 100%;
+  padding: 5px !important;
 }
 
-input[type="color"] {
-  display: block;
-  cursor: pointer;
-  width: 90%;
-  height: 27px;
-  border: none;
-  background: none;
-  padding: 0;
-  border-radius: 0px;
+.fld[type="color"] {
+  cursor: pointer !important;
+  height: 32px !important;
+  background: white !important;
+  padding: 2px !important;
+}
+textarea.fld {
+  height: calc(100% - 20px) !important;
 }
 
-.txt-fld {
-  padding: 6px;
-  margin-top: 5px;
-  border-radius: 8px;
-  border: 1px solid #6b6b6b;
+.fld + .slim {
+  padding: 0 !important;
+  border: none !important;
+  & > .ss-multi-selected,
+  .ss-single-selected {
+    min-height: 36px !important;
+    border: 1.5px solid #505050 !important;
+    border-radius: 5px !important;
+  }
 }
 
 select {
@@ -58,12 +93,14 @@ select {
   align-items: center;
   position: relative;
   padding-left: 35px;
+  font-weight: normal;
   cursor: pointer;
   font-size: 17px;
   -webkit-user-select: none;
   user-select: none;
   height: 25px;
   margin: 8px;
+  width: auto;
 }
 
 .btcd-ck-wrp input {
@@ -77,6 +114,7 @@ select {
 .btcd-ck-con {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 8px;
 }
 
 .btcd-mrk {
@@ -84,6 +122,7 @@ select {
   top: 0;
   left: 0;
   height: 25px;
+  box-sizing: content-box;
   width: 25px;
   background-color: #eee;
 }
@@ -141,7 +180,8 @@ select {
 .ss-main .ss-content .ss-search input {
   font-size: 12px;
 }
-.text-wrp {
+.fld-wrp {
+  min-height: inherit;
   padding: 10px;
   background: #fff;
 }
@@ -153,34 +193,41 @@ select {
   padding: 0 10px 0 10px;
 }
 .btcd-sub-btn {
+  width: 100px;
+  font-family: sans-serif;
+  line-height: 1;
   border: none;
   padding: 7px 10px 7px 10px;
-  border-radius: 8px;
+  border-radius: 5px;
   margin: 10px 5px;
   cursor: pointer;
   outline: none;
   box-shadow: 2px 2px 4px -2px transparentize(#000000, 0.6);
 }
 .btcd-sub {
-  background: #0083f3;
+  background: #0083f3 !important;
+  text-transform: none !important;
+  text-decoration: none !important;
   font-weight: bold;
   color: white;
   &:hover {
-    background: #0072d6;
+    background: #0072d6 !important;
   }
   &:active {
-    background: #0066be;
+    background: #0066be !important;
   }
 }
 .btcd-rst {
-  background: #edf1f5;
-  font-weight: normal;
-  color: #23435f;
+  background: #edf1f5 !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  font-weight: normal !important;
+  color: #23435f !important;
   &:hover {
-    background: #ededf1;
+    background: #ededf1 !important;
   }
   &:active {
-    background: #f1f1f1;
+    background: #f1f1f1 !important;
   }
 }
 
@@ -200,7 +247,7 @@ select {
 // file upload style start
 .file-wrp {
   background: #fff;
-  width: 100%;
+  font-family: sans-serif !important;
   height: 100%;
   padding: 10px;
   & > label {
@@ -209,44 +256,61 @@ select {
 }
 
 .btcd-f-wrp {
-  cursor: pointer;
-  margin-top: 6px;
+  cursor: pointer !important;
+  margin-top: 6px !important;
+}
+
+.btcd-f-wrp .btn-wrp {
+  display: inline-flex;
+  align-items: center;
 }
 
 .btcd-f-input {
-  display: inline-block;
-  width: 90%;
-  position: relative;
-  overflow: hidden;
+  display: inline-block !important;
+  width: 90% !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .btcd-f-input > div > input::-webkit-file-upload-button {
   cursor: pointer;
 }
 
-.btcd-f-wrp > small {
-  color: gray;
+.btcd-f-wrp .btcd-f-title {
+  font-style: 14px !important;
 }
 
-.btcd-f-wrp > button {
+.btcd-f-wrp .f-max {
+  color: gray;
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.btcd-f-wrp .btcd-inpBtn {
   cursor: pointer;
   background: #f3f3f3;
   padding: 5px;
-  display: inline-block;
-  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
   border: none;
   margin-right: 8px;
   height: 35px;
 }
 
-.btcd-f-wrp > button > img {
+.btcd-f-wrp .btcd-inpBtn img {
   width: 24px;
+  margin-right: 5px;
+  display: inline-block;
 }
 
-.btcd-f-wrp > button > span,
-.btcd-f-wrp > span,
-.btcd-f-wrp > small {
-  vertical-align: super;
+.btcd-f-wrp .btcd-inpBtn span,
+.btcd-f-wrp > span {
+  font-size: 14px !important;
+  color: rgb(75, 75, 75);
+  font-weight: normal !important;
+  vertical-align: middle !important;
+  text-transform: none !important;
 }
 
 .btcd-f-input > .btcd-f-wrp > input {
@@ -254,6 +318,7 @@ select {
   width: 100%;
   position: absolute;
   opacity: 0;
+  top: 0;
   left: 0;
   height: 37px;
   cursor: pointer;
@@ -293,22 +358,34 @@ select {
 }
 
 .btcd-files > div > img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   margin-right: 10px;
   border-radius: 10px;
 }
 
+.btcd-files > div > div {
+  display: flex;
+  align-items: center;
+}
+
 .btcd-files > div > div > span {
   display: inline-block;
+  font-size: 14px;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
+.btcd-files > div > div > small {
+  font-size: 12px;
+}
+
 .btcd-files > div > button {
   background: #e8e8e8;
+  color: gray;
+  text-decoration: none;
   border: none;
   border-radius: 50px;
   width: 25px;

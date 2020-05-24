@@ -11,12 +11,12 @@ function CompGen(props) {
     (
       !('hide' in attr.valid && attr.valid.hide === true)
       && (
-        <div className="text-wrp drag" btcd-fld="text-fld">
-          {'lbl' in attr && <label>{attr.lbl}</label>}
+        <div className="fld-wrp drag" btcd-fld="text-fld">
+          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
           {createElement(
             'input',
             {
-              className: 'txt-fld no-drg',
+              className: 'fld no-drg',
               type: attr.typ,
               ...('req' in attr.valid && { required: attr.valid.req }),
               ...('disabled' in attr.valid && { disabled: attr.valid.disabled }),
@@ -36,13 +36,14 @@ function CompGen(props) {
       )
     )
   )
+
   const hiddenField = attr => (
-    <div className="text-wrp drag" btcd-fld="text-fld">
-      {'lbl' in attr && <label>{attr.lbl}</label>}
+    <div className="fld-wrp drag" btcd-fld="text-fld">
+      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
       {createElement(
         'input',
         {
-          className: 'txt-fld no-drg',
+          className: 'fld no-drg',
           type: attr.typ,
           ...('req' in attr.valid && { required: attr.valid.req }),
           ...('ph' in attr && { placeholder: attr.ph }),
@@ -61,10 +62,10 @@ function CompGen(props) {
     (
       !('hide' in attr.valid && attr.valid.hide === true)
       && (
-        <div className="text-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label>{attr.lbl}</label>}
+        <div className="fld-wrp drag" btcd-fld="textarea">
+          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
           <textarea
-            className="txt-fld no-drg"
+            className="fld no-drg"
             {...'ph' in attr && { placeholder: attr.ph }}
             {...'val' in attr && { defaultValue: attr.val }}
             {...'val' in attr && 'userinput' in attr && attr.userinput && { value: attr.val }}
@@ -86,8 +87,8 @@ function CompGen(props) {
       (
         !('hide' in attr.valid && attr.valid.hide === true)
         && (
-          <div className="text-wrp drag" btcd-fld="textarea">
-            {'lbl' in attr && <label>{attr.lbl}</label>}
+          <div className="fld-wrp drag" btcd-fld="textarea">
+            {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
             <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
               {attr.opt.map((itm, i) => (
                 <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
@@ -120,8 +121,8 @@ function CompGen(props) {
       (
         !('hide' in attr.valid && attr.valid.hide === true)
         && (
-          <div className="text-wrp drag" btcd-fld="textarea">
-            {'lbl' in attr && <label>{attr.lbl}</label>}
+          <div className="fld-wrp drag" btcd-fld="textarea">
+            {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
             <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
               {attr.opt.map((itm, i) => (
                 <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
@@ -154,10 +155,10 @@ function CompGen(props) {
   const dropDown = (attr) => (console.log(attr, typeof attr.val === 'string' && attr.val.length > 0, 'select'),
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
-      <div className="text-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label>{attr.lbl}</label>}
+      <div className="fld-wrp drag" btcd-fld="select">
+        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         <select
-          className="txt-fld slim no-drg"
+          className="fld slim no-drg"
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
           {...'mul' in attr && { multiple: attr.mul }}
@@ -258,15 +259,17 @@ function FileUp({ attr, formID, entryID }) {
 
   return (
     <div className="file-wrp drag">
-      {'lbl' in attr && <label>{attr.lbl}</label>}
+      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
       <div className="btcd-f-input">
         <div className="btcd-f-wrp">
-          <button className="btcd-inpBtn" type="button">
-            <img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4=" alt="file-upload" />
-            <span>{` ${attr.upBtnTxt}`}</span>
-          </button>
-          <span className="btcd-f-title">No File Chosen</span>
-          <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
+          <div className="btn-wrp">
+            <button className="btcd-inpBtn" type="button">
+              <img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4=" alt="file-upload" />
+              <span>{` ${attr.upBtnTxt}`}</span>
+            </button>
+            <span className="btcd-f-title">No File Chosen</span>
+            <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
+          </div>
           <input
             {...'req' in attr.valid && { required: attr.valid.req }}
             {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}

@@ -219,7 +219,7 @@ body {
   background: gray;
 }
 
-.text-wrp {
+.fld-wrp {
   width: 200px;
 }
 
@@ -407,7 +407,7 @@ body {
   cursor: default;
 }
 
-.text-wrp {
+.fld-wrp {
   width: 100%;
   background: #fff;
   height: 100%;
@@ -427,7 +427,7 @@ body {
   }
 }
 
-.txt-fld {
+.fld {
   box-sizing: border-box;
   width: 100%;
   height: 35px;
@@ -479,7 +479,7 @@ body {
 .blk {
   outline: none;
   &:focus {
-    & > .text-wrp {
+    & > .fld-wrp {
       box-shadow: 0 0 0 2px #76adff inset !important;
     }
   }
@@ -675,7 +675,7 @@ body {
 .br-15 {
   border-radius: 15px;
 }
-.ss-main .ss-multi-selected {
+.btcd-app-slim + .ss-main .ss-multi-selected {
   border-radius: 8px !important;
   padding: 5px 0 5px 9px !important;
   &:hover {
@@ -1814,7 +1814,7 @@ nav.top-nav {
 .btcd-builder-wrp {
   height: 100%;
   background: white !important;
-  position: absolute !important;
+  position: fixed !important;
   left: 20px !important;
   right: 20px !important;
   top: 80px !important;
@@ -2886,6 +2886,7 @@ select.btcd-paper-inp {
     border: 1px solid $gray;
     transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s;
     appearance: none;
+    font-size: 16px;
     background: url($select-arrow) no-repeat right #fff;
     display: block;
     &:focus {
