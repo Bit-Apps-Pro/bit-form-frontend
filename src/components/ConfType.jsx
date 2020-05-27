@@ -56,7 +56,7 @@ export default function ConfType(props) {
       <div className="btcd-f-c-t-d">
         {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
         {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
-        {pos === 2 && <WebHooks formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+        {pos === 2 && <WebHooks formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
       </div>
     </div>
   );

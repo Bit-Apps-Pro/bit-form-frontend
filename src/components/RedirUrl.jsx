@@ -70,7 +70,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
     setFormSettings(tmp)
   }
 
-  const getFromField = (val, i, param) => {
+  const setFromField = (val, i, param) => {
     const tmp = { ...formSettings }
     const a = param.split('=')
     a[1] = val
@@ -165,9 +165,9 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                        <span className="tooltip" style={{ '--tooltip-txt': '"Get Form Field"', position: 'relative' }}>
-                          <select className="btcd-paper-inp p-i-sm" onChange={e => getFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
-                            <option disabled>Select From Field</option>
+                        <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
+                          <select className="btcd-paper-inp p-i-sm" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
+                            <option value="">Select From Field</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
                           </select>
                         </span>

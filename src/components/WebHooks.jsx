@@ -3,7 +3,7 @@ import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
 
-function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
+function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
 
   const handleHookTitle = (e, idx) => {
@@ -97,6 +97,14 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
     setConfMdl({ ...confMdl })
   }
 
+  const setFromField = (val, i, param) => {
+    const tmp = { ...formSettings }
+    const a = param.split('=')
+    a[1] = val
+    tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(param, a.join('='))
+    setFormSettings(tmp)
+  }
+
   return (
     <div>
       <ConfirmModal
@@ -153,6 +161,12 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration }) {
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+                        <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
+                          <select className="btcd-paper-inp p-i-sm" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
+                            <option value="">Select From Field</option>
+                            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+                          </select>
+                        </span>
                       </div>
                     </div>
                   ))}
