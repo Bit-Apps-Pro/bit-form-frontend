@@ -167,12 +167,14 @@ export default function SingleFormSettings({ additional, setadditional }) {
   }
 
   const handleTime = (val, typ) => {
-    if (typ === 'from') {
-      additional.settings.restrict_form.time.from = val
-    } else {
-      additional.settings.restrict_form.time.to = val
+    if ('restrict_form' in additional.settings) {
+      if (typ === 'from') {
+        additional.settings.restrict_form.time.from = val
+      } else {
+        additional.settings.restrict_form.time.to = val
+      }
+      setadditional({ ...additional })
     }
-    setadditional({ ...additional })
   }
 
   const setRestrictForm = e => {
