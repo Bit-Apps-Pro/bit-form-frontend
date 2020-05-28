@@ -507,7 +507,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   }
 
   return (
-    <div className="btcd-workflow w-8">
+    <div className="btcd-workflow" style={{ width: 900 }}>
       <ConfirmModal
         show={confMdl.show}
         close={closeConfMdl}
@@ -630,14 +630,14 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               )}
 
               <div className="txt-dp mt-2"><b>Action</b></div>
-              <div className="btcd-hr mb-2" />
+              <div className="btcd-hr" />
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <div className="mb-2">
-                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2" title="Api Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
+                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
+                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
                 </div>
               )}
               {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} title={<small className="txt-dp">Prevent Delete</small>} />}
@@ -772,11 +772,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           </div>
         </div>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack" />
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
           Empty
-        </div>
-      )}
+          </div>
+        )}
       <br />
       <br />
       <br />
