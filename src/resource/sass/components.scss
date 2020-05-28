@@ -64,7 +64,7 @@ textarea.fld {
 }
 
 textarea.fld {
-  height: calc(100% - 20px) !important;
+  min-height: calc(100% - 20px) !important;
   resize: vertical;
 }
 .fld::placeholder {
