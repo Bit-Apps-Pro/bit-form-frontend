@@ -15,7 +15,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   }
 
   useEffect(() => {
-    if (typeof tinymce !== 'undefined' && formFields !== null) {
+    if (typeof tinymce !== 'undefined' && formFields.length > 0) {
       const s = document.querySelectorAll('.form-fields')
       for (let i = 0; i < s.length; i += 1) {
         s[i].style.display = 'none'
@@ -44,10 +44,17 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
             tooltip: 'Add Form Field Value in Message',
             type: 'menubutton',
             icon: false,
-            menu: formFields.map(i => ({ text: i.name, onClick() { editor.insertContent(`{${i.key}}`) } })),
+            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`{${i.key}}`) } })),
           })
         },
       })
+    }
+
+    return function cleanup() {
+      if (typeof tinymce !== 'undefined') {
+        // eslint-disable-next-line no-undef
+        tinymce.remove()
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])

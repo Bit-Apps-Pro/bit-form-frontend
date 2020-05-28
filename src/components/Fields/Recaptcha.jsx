@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function ReCaptcha(attr) {
