@@ -63,7 +63,6 @@ function Builder(props) {
     fulW: false,
     align: 'right',
     subBtnTxt: 'Submit',
-    rstBtnTxt: 'Reset',
   })
 
   const [mailTem, setMailTem] = useState([])
