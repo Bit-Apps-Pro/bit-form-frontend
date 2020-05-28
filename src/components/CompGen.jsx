@@ -415,7 +415,7 @@ function CheckBox({ attr, onBlurHandler }) {
       && (
         <div className="fld-wrp drag" btcd-fld="textarea">
           {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-          <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
+          <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
             {attr.opt.map((itm, i) => (
               <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
                 <span>{itm.lbl}</span>
@@ -462,7 +462,7 @@ function RadioBox({ attr, onBlurHandler }) {
       && (
         <div className="fld-wrp drag" btcd-fld="textarea">
           {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-          <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
+          <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
             {attr.opt.map((itm, i) => (
               <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
                 <span>{itm.lbl}</span>
