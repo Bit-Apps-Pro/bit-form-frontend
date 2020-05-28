@@ -640,7 +640,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2" title="Api Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
                 </div>
               )}
-              {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} title={<small className="txt-dp">Prevent Delete</small>} />}
+              {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
