@@ -295,7 +295,7 @@ export default function Bitforms(props) {
 
   const style = {
     display: 'grid',
-    gridTemplateColumns: 'auto auto auto auto auto auto auto auto auto auto',
+    gridTemplateColumns: 'auto auto auto auto auto auto',
     gridgap: 0,
   }
   return (

@@ -102,10 +102,12 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
-    const status = await removeIntegration(tmpData.id, 'msg')
-    if (!status) {
-      formSettings.confirmation.type.successMsg.splice(i, 0, tmpData)
-      setFormSettings({ ...formSettings })
+    if (tmpData.id !== undefined) {
+      const status = await removeIntegration(tmpData.id, 'msg')
+      if (!status) {
+        formSettings.confirmation.type.successMsg.splice(i, 0, tmpData)
+        setFormSettings({ ...formSettings })
+      }
     }
   }
 

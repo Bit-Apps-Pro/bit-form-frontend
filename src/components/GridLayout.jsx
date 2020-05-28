@@ -217,6 +217,10 @@ function GridLayout(props) {
   }
 
   const onDrop = elmPrms => {
+    /* if (layouts.lg.length === 4) {
+      alert('You can not add more than 5 field in free version.')
+      return false
+    } */
     if (!runningOpt) {
       setrunningOpt(true)
       const { draggedElm } = props

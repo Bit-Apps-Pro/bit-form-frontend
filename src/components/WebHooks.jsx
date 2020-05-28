@@ -79,10 +79,12 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
-    const status = await removeIntegration(tmpData.id, 'hook')
-    if (!status) {
-      formSettings.confirmation.type.webHooks.splice(i, 0, tmpData)
-      setFormSettings({ ...formSettings })
+    if (tmpData.id !== undefined) {
+      const status = await removeIntegration(tmpData.id, 'hook')
+      if (!status) {
+        formSettings.confirmation.type.webHooks.splice(i, 0, tmpData)
+        setFormSettings({ ...formSettings })
+      }
     }
   }
 

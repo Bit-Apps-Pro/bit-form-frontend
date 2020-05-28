@@ -99,10 +99,12 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
-    const status = await removeIntegration(tmpData.id, 'url')
-    if (!status) {
-      formSettings.confirmation.type.redirectPage.splice(i, 0, tmpData)
-      setFormSettings({ ...formSettings })
+    if (tmpData.id !== undefined) {
+      const status = await removeIntegration(tmpData.id, 'url')
+      if (!status) {
+        formSettings.confirmation.type.redirectPage.splice(i, 0, tmpData)
+        setFormSettings({ ...formSettings })
+      }
     }
   }
 
@@ -140,8 +142,8 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               <select className="btcd-paper-inp" onChange={e => handlePage(e, i)}>
                 <option value="">Custom Link</option>
                 {redirectUrls
-                  && redirectUrls.map((urlDetail) => (
-                    <option value={urlDetail.url}>{urlDetail.title}</option>
+                  && redirectUrls.map((urlDetail, i) => (
+                    <option key={`r-url-${i + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                   ))}
               </select>
               <br />
