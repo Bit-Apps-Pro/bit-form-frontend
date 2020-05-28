@@ -40,6 +40,7 @@ textarea.fld {
   margin: 5px 0 0 0 !important;
   border-radius: 5px !important;
   border: 1.5px solid #505050 !important;
+  transition: all 0s;
   &:focus {
     border-color: #505050 !important;
     box-shadow: 0 0 0 1px #505050 inset !important;
