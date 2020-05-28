@@ -115,16 +115,18 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         <br />
         <div className="mt-4"><b className="wdt-100">Field Map</b></div>
         <div className="btcd-hr mt-1" />
-        <div className="mt-3 txt-center d-in-b w-4 txt-dp"><b className="wdt-100">Form Fields</b></div>
-        <div className="mt-3 txt-center d-in-b w-4 txt-dp"><b className="wdt-100">Zoho Fields</b></div>
+        <div className="flx flx-around mt-2 mb-1">
+          <div className="txt-dp"><b>Form Fields</b></div>
+          <div className="txt-dp"><b>Zoho Fields</b></div>
+        </div>
 
         {crmConf.field_map.map((itm, i) => (
-          <div key={`f-m-${i + 9}`}>
-            <select className="btcd-paper-inp w-4 mr-2">
+          <div key={`f-m-${i + 9}`} className="flx flx-around mt-1 mr-1">
+            <select className="btcd-paper-inp  mr-2">
               <option value="">Select Field</option>
               {formFields.map(f => itm.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
             </select>
-            <select className="btcd-paper-inp w-4">
+            <select className="btcd-paper-inp ">
               <option value="">Select Field</option>
               <option value="name">Name</option>
               <option value="email">Email</option>
@@ -134,7 +136,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
             <button onClick={() => delMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn"><span className="btcd-icn icn-trash-2" /></button>
           </div>
         ))}
-        <div className="txt-center w-8 mt-2"><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
+        <div className="txt-center  mt-2" style={{ marginRight: 80 }}><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
 
         <br />
         <br />
