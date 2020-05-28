@@ -5,25 +5,35 @@ body {
 .fld-wrp {
   font-family: sans-serif !important;
   box-sizing: border-box !important;
+  width: 100%;
+  background: #fff;
+  cursor: default;
+  height: 100%;
+  padding: 10px;
+  & > * {
+    box-sizing: border-box !important;
+  }
 }
-.fld-wrp > * {
-  box-sizing: border-box !important;
-}
+
 .fld-lbl {
   display: block;
   font-size: 15px;
   margin: 0;
   color: rgb(54, 54, 54);
-  font-weight: normal;
+  font-weight: 500;
 }
 
-.fld {
+input.fld{
+  height: 40px !important;
+}
+
+input.fld,
+textarea.fld {
   color: black !important;
   background: white !important;
   font-family: sans-serif;
   padding: 8px !important;
   font-size: 15px !important;
-  height: 36px !important;
   width: 100% !important;
   outline: none !important;
   display: inline-block;
@@ -52,32 +62,33 @@ body {
   background: white !important;
   padding: 2px !important;
 }
+
 textarea.fld {
   height: calc(100% - 20px) !important;
+  resize: vertical;
+}
+.fld::placeholder {
+  color: rgb(133, 133, 133) !important;
 }
 
 .fld + .slim {
+  margin: 5px 0 0 0 !important;
   padding: 0 !important;
   border: none !important;
   & > .ss-multi-selected,
   .ss-single-selected {
-    min-height: 36px !important;
+    min-height: 40px !important;
     border: 1.5px solid #505050 !important;
     border-radius: 5px !important;
   }
+  & .ss-disabled {
+    color: rgb(133, 133, 133) !important;
+  }
 }
 
-select {
-  border: none;
-  padding: 9px;
-}
-
-.blnk-blk {
-  width: 100%;
-  height: 100%;
-  background: white;
-  &:hover {
-    background: aliceblue;
+.fld {
+  & .btcd-mrk {
+    border: 1.5px solid #505050 !important;
   }
 }
 
@@ -89,9 +100,22 @@ select {
 .ss-content {
   border-radius: 6px !important;
 }
+.ss-main .ss-content .ss-search input {
+  font-size: 13px !important;
+}
+
+.blnk-blk {
+  width: 100%;
+  height: 100%;
+  background: white;
+  &:hover {
+    background: aliceblue;
+  }
+}
 
 // chek box style start
 .btcd-ck-wrp {
+  color: rgb(54, 54, 54);
   display: inline-flex;
   align-items: center;
   position: relative;
@@ -101,7 +125,7 @@ select {
   font-size: 17px;
   -webkit-user-select: none;
   user-select: none;
-  height: 25px;
+  height: 28px;
   margin: 8px;
   width: auto;
 }
@@ -127,15 +151,17 @@ select {
   height: 25px;
   box-sizing: content-box;
   width: 25px;
-  background-color: #eee;
+  border-radius: 3px;
+  background-color: #fff;
 }
 
 .btcd-ck-wrp:hover input ~ .btcd-mrk {
-  background-color: #ccc;
+  background-color: rgb(226, 226, 226);
 }
 
 .btcd-ck-wrp input:checked ~ .btcd-mrk {
-  background-color: #2196f3;
+  background-color: #0a8dff;
+  border-color: #0a8dff !important;
 }
 
 .btcd-mrk:after {
@@ -180,9 +206,6 @@ select {
   border-radius: 50%;
 }
 
-.ss-main .ss-content .ss-search input {
-  font-size: 12px;
-}
 .fld-wrp {
   min-height: inherit;
   padding: 10px;
