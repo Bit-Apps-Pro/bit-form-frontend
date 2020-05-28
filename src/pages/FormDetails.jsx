@@ -132,7 +132,7 @@ function Builder(props) {
             setadditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
-            if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
+            // if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
             setisLoading(false)
           } else {
             setisLoading(false)

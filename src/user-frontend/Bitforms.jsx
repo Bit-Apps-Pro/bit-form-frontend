@@ -75,7 +75,7 @@ export default function Bitforms(props) {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
               switch (actionDetail.action) {
                 case 'value':
-                  if (actionDetail.val !== undefined) {
+                  if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val;
                     newData[props.fieldsKey[actionDetail.field]].userinput = true;
                     console.log('object', actionDetail.val, newData[props.fieldsKey[actionDetail.field]])
@@ -83,21 +83,23 @@ export default function Bitforms(props) {
                   break
 
                 case 'hide':
-                  newData[props.fieldsKey[actionDetail.field]].valid.hide = true;
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = true; }
                   break;
 
                 case 'disable':
-                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = true;
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = true; }
                   break;
 
                 case 'enable':
-                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = false;
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = false; }
                   break;
 
                 case 'show':
-                  newData[props.fieldsKey[actionDetail.field]].valid.hide = false;
-                  if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
-                    newData[props.fieldsKey[actionDetail.field]].typ = 'text';
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.hide = false;
+                    if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
+                      newData[props.fieldsKey[actionDetail.field]].typ = 'text';
+                    }
                   }
                   break
                 default:
@@ -110,28 +112,30 @@ export default function Bitforms(props) {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
               switch (actionDetail.action) {
                 case 'value':
-                  if (actionDetail.val !== undefined) {
+                  if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val
                     newData[props.fieldsKey[actionDetail.field]].userinput = false
                   }
                   break
 
                 case 'hide':
-                  newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide }
                   break;
 
                 case 'disable':
-                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled }
                   break;
 
                 case 'enable':
-                  newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled }
                   break;
 
                 case 'show':
-                  newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
-                  if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
-                    newData[props.fieldsKey[actionDetail.field]].typ = props.data[props.fieldsKey[actionDetail.field]].typ
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
+                    if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
+                      newData[props.fieldsKey[actionDetail.field]].typ = props.data[props.fieldsKey[actionDetail.field]].typ
+                    }
                   }
                   break
                 default:

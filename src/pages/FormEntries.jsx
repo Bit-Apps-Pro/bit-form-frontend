@@ -37,13 +37,15 @@ function FormEntries() {
       .then(response => {
         if (response !== undefined && response.success && mounted) {
           if ('reports' in response.data && response.data.reports.length > 0) {
-            if (response.data.reports[0] && response.data.reports[0].details !== undefined && 'order' in response.data.reports[0].details.order) {
-              setEntryLabels(response.data.reports[0].details.order)
-            }
-            console.log('STA--fetchLabel')
             reportsDispatch({ type: 'set', reports: response.data.reports })
-          } else {
-            tableHeaderHandler(response.data.Labels)
+            if ('details' in response.data.reports[0] && typeof response.data.reports[0].details === 'object' && response.data.reports[0].details && response.data.reports[0].details.order) {
+              const labels = []
+              response.data.reports[0].details.order.forEach(field => { if (field && field !== 'sl' && field !== 'selection' && field !== 'table_ac') { labels.push(response.data.fieldDetails[field]) } })
+              console.log('LA', labels)
+              tableHeaderHandler(labels)
+            } else {
+              tableHeaderHandler(response.data.Labels)
+            }
           }
         }
       })
@@ -55,12 +57,16 @@ function FormEntries() {
       Header: val.name,
       accessor: val.key,
       minWidth: 50,
-      ...'type' in val && val.type.match(/^(file-up|check)$/) && {
+      ...'type' in val && val.type.match(/^(file-up|check|select)$/) && {
         Cell: row => {
           if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
               return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitforms/${formID}/${row.cell.row.original.entry_id}`}`} />)
+            }
+            if (val.type === 'check' || val.type === 'select') {
+              const vals = typeof row.cell.value === 'string' && row.cell.value.length > 0 && row.cell.value[0] === '[' ? JSON.parse(row.cell.value) : row.cell.value !== undefined && row.cell.value.split(',')
+              return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
             }
           }
           return null
@@ -89,12 +95,7 @@ function FormEntries() {
       const startRow = pageSize * pageIndex
       bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitforms_get_form_entries').then(res => {
         if (res !== undefined && res.success && mounted) {
-          // if (totalData > 0) {
           setPageCount(Math.ceil(res.data.count / pageSize))
-          if (res.data.Labels && entryLabels.length === 0) {
-            tableHeaderHandler(res.data.Labels)
-          }
-          // }
           setAllResp(res.data.entries)
         }
         setisloading(false)
@@ -269,9 +270,9 @@ function FormEntries() {
         <Table
           className="f-table btcd-entries-f"
           height="60vh"
-          loading={isloading}
           columns={entryLabels}
           data={allResp}
+          loading={isloading}
           rowSeletable
           resizable
           columnHidable
