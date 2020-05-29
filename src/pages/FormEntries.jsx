@@ -46,6 +46,8 @@ function FormEntries() {
             } else {
               tableHeaderHandler(response.data.Labels)
             }
+          } else {
+            tableHeaderHandler(response.data.Labels)
           }
         }
       })
@@ -54,7 +56,7 @@ function FormEntries() {
 
   const tableHeaderHandler = (labels) => {
     const cols = labels.map(val => ({
-      Header: val.name,
+      Header: typeof val.name === 'string' && val.name,
       accessor: val.key,
       minWidth: 50,
       ...'type' in val && val.type.match(/^(file-up|check|select)$/) && {

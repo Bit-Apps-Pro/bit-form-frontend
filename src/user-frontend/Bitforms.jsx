@@ -16,7 +16,7 @@ export default function Bitforms(props) {
   const [layoutSize, setlayoutSize] = useState(window.innerWidth > 800 ? 'lg' : window.innerWidth > 600 ? 'md' : 'sm')
   let maxRowIndex = 0
   const blk = (field) => {
-    const name = data[field.i].lbl === null ? null : field.i + data[field.i].lbl.split(' ').join('_')
+    const name = data[field.i].lbl ? field.i + data[field.i].lbl.split(' ').join('_') : field.i
     // eslint-disable-next-line no-param-reassign
     data[field.i].name = name
     if (props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && data[field.i].typ === 'recaptcha') {
@@ -49,10 +49,12 @@ export default function Bitforms(props) {
   }
   console.log('data', data)
   const onBlurHandler = (event) => {
+    let maybeReset = false
     const element = event.target
     const newData = data !== undefined && JSON.parse(JSON.stringify(data))
     if (newData[props.fieldsKey[element.name]] && newData[props.fieldsKey[element.name]].error) {
       delete newData[props.fieldsKey[element.name]].error
+      maybeReset = true
     }
     if (props.fieldToCheck[element.name] !== undefined) {
       const fieldData = []
@@ -77,21 +79,21 @@ export default function Bitforms(props) {
                 case 'value':
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val;
-                    newData[props.fieldsKey[actionDetail.field]].userinput = true;
-                    console.log('object', actionDetail.val, newData[props.fieldsKey[actionDetail.field]])
+                    newData[props.fieldsKey[actionDetail.field]].userinput = true
+                    maybeReset = true
                   }
                   break
 
                 case 'hide':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = true; }
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = true; maybeReset = true }
                   break;
 
                 case 'disable':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = true; }
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = true; maybeReset = true }
                   break;
 
                 case 'enable':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = false; }
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = false; maybeReset = true }
                   break;
 
                 case 'show':
@@ -100,6 +102,7 @@ export default function Bitforms(props) {
                     if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
                       newData[props.fieldsKey[actionDetail.field]].typ = 'text';
                     }
+                    maybeReset = true
                   }
                   break
                 default:
@@ -115,19 +118,29 @@ export default function Bitforms(props) {
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val
                     newData[props.fieldsKey[actionDetail.field]].userinput = false
+                    maybeReset = true
                   }
                   break
 
                 case 'hide':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide }
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
+                    maybeReset = true
+                  }
                   break;
 
                 case 'disable':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled }
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
+                    maybeReset = true
+                  }
                   break;
 
                 case 'enable':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled }
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
+                    maybeReset = true
+                  }
                   break;
 
                 case 'show':
@@ -136,6 +149,7 @@ export default function Bitforms(props) {
                     if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
                       newData[props.fieldsKey[actionDetail.field]].typ = props.data[props.fieldsKey[actionDetail.field]].typ
                     }
+                    maybeReset = true
                   }
                   break
                 default:
@@ -146,7 +160,9 @@ export default function Bitforms(props) {
         }
       })
     }
-    setdata(newData)
+    if (maybeReset) {
+      setdata(newData)
+    }
   }
   window.addEventListener('resize', () => {
     if (window.innerWidth > 800) {

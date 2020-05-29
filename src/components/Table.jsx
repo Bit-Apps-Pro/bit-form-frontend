@@ -143,9 +143,8 @@ function Table(props) {
     }
   }, [fetchData, pageIndex, pageSize, sortBy, filters, search])
   useEffect(() => {
-    if (reports[reportID] && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
-      const actionColumn = columns[columns.length - 1] // table action column
-      props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+    if (reports[reportID] && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
+      setColumnOrder(reports[reportID].details.order)
     }
     return () => {
       if (!stateSavable) {
@@ -193,7 +192,7 @@ function Table(props) {
           setGlobalFilter(reports[reportID].details.globalFilter)
           setSearch(reports[reportID].details.globalFilter)
         }
-        if ('order' in reports[reportID].details && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+        if ('order' in reports[reportID].details) {
           setColumnOrder(reports[reportID].details.order)
         }
       }
