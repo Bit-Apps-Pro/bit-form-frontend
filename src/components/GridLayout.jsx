@@ -318,7 +318,7 @@ function GridLayout(props) {
     >
       <div
         data-close
-        style={{ right: 8 }}
+        style={{ right: 8, fontSize: 20 }}
         unselectable="on"
         draggable="false"
         className="bit-blk-icn"
@@ -327,14 +327,14 @@ function GridLayout(props) {
         role="button"
         tabIndex={-1}
       >
-        &times;
+        <span className="btcd-icn icn-clear" />
       </div>
       <div
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Move"
       >
-        <span className="btcd-icn icn-move" />
+        <span className="btcd-icn icn-move1" />
       </div>
 
       {compByTheme(fields[item.i])}
