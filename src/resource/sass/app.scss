@@ -334,6 +334,88 @@ body {
   }
 }
 
+ .btcd-ck-wrp {
+  color: rgb(54, 54, 54);
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  font-weight: normal;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  user-select: none;
+  height: 25px;
+  margin: 8px;
+  width: auto;
+}
+
+ .btcd-ck-wrp input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+ .btcd-ck-con {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+ .btcd-mrk {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  box-sizing: content-box;
+  border-radius: 3px;
+  background-color: #fff;
+  border: 2px solid rgb(212, 212, 212);
+  transition: border-color .3s;
+}
+
+ .btcd-ck-wrp:hover input ~ .btcd-mrk {
+  border-color: $blue !important;
+}
+
+ .btcd-ck-wrp input:checked ~ .btcd-mrk {
+  background-color: $blue;
+  border-color: $blue !important;
+}
+
+ .btcd-mrk:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+ .btcd-ck-wrp input:checked ~ .btcd-mrk:after {
+  display: block;
+}
+
+ .btcd-ck-wrp .btcd-mrk:not(.rdo):after {
+  top: 47%;
+  left: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform:  translate(-50%, -50%) rotate(45deg);
+}
+
+ .btcd-ck-wrp .btcd-mrk:not(.ck):after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
 .btcd-no-data {
   font-weight: 500;
   position: absolute;
@@ -3021,7 +3103,7 @@ select.btcd-ud-inp {
       padding-left: 5px;
       &:hover:not(:last-child) {
         border-radius: 5px;
-        background: #d7e1ff;
+        background: #ecf1ff;
       }
       &:last-child {
         border: none;
