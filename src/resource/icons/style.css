@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'btcd-icn';
-  src:  url('fonts/btcd-icn.eot?lsnbpi');
-  src:  url('fonts/btcd-icn.eot?lsnbpi#iefix') format('embedded-opentype'),
-    url('fonts/btcd-icn.ttf?lsnbpi') format('truetype'),
-    url('fonts/btcd-icn.woff?lsnbpi') format('woff'),
-    url('fonts/btcd-icn.svg?lsnbpi#btcd-icn') format('svg');
+  src:  url('fonts/btcd-icn.eot?p82ohr');
+  src:  url('fonts/btcd-icn.eot?p82ohr#iefix') format('embedded-opentype'),
+    url('fonts/btcd-icn.ttf?p82ohr') format('truetype'),
+    url('fonts/btcd-icn.woff?p82ohr') format('woff'),
+    url('fonts/btcd-icn.svg?p82ohr#btcd-icn') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -35,62 +35,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icn-recaptcha:before {
-  content: "\e934";
+.icn-move1:before {
+  content: "\e938";
 }
-.icn-one:before {
-  content: "\e929";
+.icn-clear:before {
+  content: "\e936";
 }
-.icn-r-block:before {
-  content: "\e92f";
-}
-.icn-text:before {
-  content: "\e920";
-}
-.icn-textarea:before {
-  content: "\e91f";
-}
-.icn-radio:before {
-  content: "\e918";
-}
-.icn-dropdown:before {
-  content: "\e91e";
-}
-.icn-date:before {
-  content: "\e916";
-}
-.icn-check:before {
-  content: "\e914";
-}
-.icn-color:before {
-  content: "\e915";
-}
-.icn-datetime:before {
-  content: "\e917";
-}
-.icn-email:before {
-  content: "\e919";
-}
-.icn-fileup:before {
-  content: "\e91a";
-}
-.icn-month:before {
-  content: "\e91b";
-}
-.icn-num:before {
-  content: "\e91c";
-}
-.icn-pass:before {
-  content: "\e91d";
-}
-.icn-time:before {
-  content: "\e921";
-}
-.icn-url:before {
-  content: "\e922";
-}
-.icn-week:before {
-  content: "\e923";
+.icn-file_download:before {
+  content: "\e935";
 }
 .icn-tablet_android:before {
   content: "\e931";
@@ -155,6 +107,63 @@
 .icn-edit:before {
   content: "\e905";
 }
+.icn-recaptcha:before {
+  content: "\e934";
+}
+.icn-one:before {
+  content: "\e929";
+}
+.icn-r-block:before {
+  content: "\e92f";
+}
+.icn-text:before {
+  content: "\e920";
+}
+.icn-textarea:before {
+  content: "\e91f";
+}
+.icn-radio:before {
+  content: "\e918";
+}
+.icn-dropdown:before {
+  content: "\e91e";
+}
+.icn-date:before {
+  content: "\e916";
+}
+.icn-check:before {
+  content: "\e914";
+}
+.icn-color:before {
+  content: "\e915";
+}
+.icn-datetime:before {
+  content: "\e917";
+}
+.icn-email:before {
+  content: "\e919";
+}
+.icn-fileup:before {
+  content: "\e91a";
+}
+.icn-month:before {
+  content: "\e91b";
+}
+.icn-num:before {
+  content: "\e91c";
+}
+.icn-pass:before {
+  content: "\e91d";
+}
+.icn-time:before {
+  content: "\e921";
+}
+.icn-url:before {
+  content: "\e922";
+}
+.icn-week:before {
+  content: "\e923";
+}
 .icn-dots-three-horizontal:before {
   content: "\e930";
 }
@@ -181,9 +190,6 @@
 }
 .icn-loop:before {
   content: "\e928";
-}
-.icn-move:before {
-  content: "\e924";
 }
 .icn-trash-fill:before {
   content: "\e903";
