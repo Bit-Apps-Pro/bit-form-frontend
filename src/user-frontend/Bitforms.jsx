@@ -13,6 +13,7 @@ export default function Bitforms(props) {
   const [data, setdata] = useState(props.data)
   const [layout, setlayout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
+  const [resetFieldValue, setresetFieldValue] = useState(false)
   const [layoutSize, setlayoutSize] = useState(window.innerWidth > 800 ? 'lg' : window.innerWidth > 600 ? 'md' : 'sm')
   let maxRowIndex = 0
   const blk = (field) => {
@@ -43,15 +44,18 @@ export default function Bitforms(props) {
           formID={props.formID}
           entryID={props.entryID}
           onBlurHandler={onBlurHandler}
+          resetFieldValue={resetFieldValue}
         />
       </div>
     )
   }
-  console.log('data', data)
   const onBlurHandler = (event) => {
     let maybeReset = false
     const element = event.target
     const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+    if (resetFieldValue) {
+      setresetFieldValue(false)
+    }
     if (newData[props.fieldsKey[element.name]] && newData[props.fieldsKey[element.name]].error) {
       delete newData[props.fieldsKey[element.name]].error
       maybeReset = true
@@ -177,6 +181,7 @@ export default function Bitforms(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     setbuttonDisabled(true)
+    const formID = event.target.id
     const formData = new FormData()
     const fields = Array.prototype.slice.call(event.target)
     // eslint-disable-next-line array-callback-return
@@ -228,6 +233,11 @@ export default function Bitforms(props) {
     }
     submitResponse.then(result => {
       if (result !== undefined && result.success) {
+        /* console.log('formID', formID)
+        if (formID) {
+          document.getElementById(formID).reset()
+        } */
+        handleReset()
         if (typeof result.data === 'object') {
           setMessage(result.data.message)
           setredirectPage(result.data.redirectPage)
@@ -268,6 +278,22 @@ export default function Bitforms(props) {
     })
   }
 
+  const handleReset = () => {
+    /* console.log(props.data)
+    if (props.file) {
+      props.file.forEach(fileField => {
+        console.log(document.getElementsByName(fileField), fileField)
+      })
+    }
+    */
+   /* const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+   console.log(Array.isArray(newData))
+   if (newData && Array.isArray(newData)) {
+     newData.forEach(field => { field.val = ''; console.log('field', field) })
+    }
+    setdata(props.data) */
+    setresetFieldValue(true)
+  }
   useEffect(() => {
     if (props.error) {
       if (props.error.$form !== undefined) {
@@ -316,10 +342,6 @@ export default function Bitforms(props) {
   }
   return (
     <div>
-      {
-        snack
-        && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} index={index} canClose={message.length - 1 === index} />))
-      }
       <form ref={props.refer} id={`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
         {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.nonce} name="bitforms_token" />}
         {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.appID} name="bitforms_id" />}
@@ -355,22 +377,26 @@ export default function Bitforms(props) {
                   // formID={bitFormsFront.contentID}
                   entryID={props.entryID}
                   buttonDisabled={buttonDisabled}
+                  handleReset={handleReset}
                 />
               </div>
             )}
         </div>
       </form>
+      {
+        snack
+        && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
+      }
     </div>
   )
 }
 
 function Toast(props) {
-  console.log("objectTOST", props)
   const [snack, setSnack] = useState(true)
   const closeButtonStyle = {
-    position: 'absolute',
-    top: -20,
-    right: -15,
+    position: props.editMode ? 'absolute' : 'inherit',
+    top: props.editMode && -20,
+    right: props.editMode && -15,
     background: 'red',
     height: '25px',
     width: '25px',
@@ -381,6 +407,7 @@ function Toast(props) {
     lineHeight: '0.8',
     marginLeft: '7px',
     cursor: 'pointer',
+    float: !props.editMode && 'right',
   }
   const toatStyles = {
     userSelect: 'none',
@@ -388,14 +415,18 @@ function Toast(props) {
     padding: '10px 15px',
     color: 'white',
     borderRadius: '5px',
-    position: 'fixed',
-    bottom: 20,
-    right: '20px',
+    position: props.editMode ? 'fixed' : 'inherit',
+    bottom: props.editMode && 20,
+    right: props.editMode && 20,
+    left: props.editMode && 20,
+    marginBottom: !props.editMode && 10,
     boxShadow: '1px 1px 3px 0px #0000004d',
     transition: 'right 0.5s',
   }
   if (props.index && props.index > 0) {
-    toatStyles.bottom += props.index * 2 * 45
+    if (props.editMode) {
+      toatStyles.bottom += props.index * 2 * 45
+    }
   }
   useEffect(() => {
     if (!snack && props.canClose && props.show) {
@@ -406,11 +437,11 @@ function Toast(props) {
     const timer = setTimeout(() => {
       if (props.show) {
         if (!props.error) {
-          props.setSnack(false)
+          // props.setSnack(false)
           if (props.redirectPage !== null) {
             window.location = props.redirectPage
           } else {
-            window.location.reload()
+            // window.location.reload()
           }
         }
       }
@@ -420,6 +451,7 @@ function Toast(props) {
   }, []);
   return snack && (
     <div style={toatStyles}>
+      <button onClick={() => setSnack(false)} style={closeButtonStyle} type="button">&times;</button>
       {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
           ? (
@@ -429,7 +461,6 @@ function Toast(props) {
           )
           : props.msg
       }
-      <button onClick={() => setSnack(false)} className="btcd-snack-cls" style={closeButtonStyle} type="button">&times;</button>
     </div>
   )
 }

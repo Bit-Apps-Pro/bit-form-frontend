@@ -19,11 +19,12 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const mailOptions = vals => {
-    const mail = [{ name: 'Admin', value: 'admin' }]
+    const mail = bits && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
+    const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
       vals.map(i => {
-        if (i !== 'admin') {
+        if (i !== 'admin' && mailStr.indexOf(i) == -1) {
           mail.push({ name: i, value: i })
         }
       })
