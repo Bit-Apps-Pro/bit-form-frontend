@@ -251,7 +251,7 @@ function Builder(props) {
             {buttonText}
           </button>
           <NavLink to="/" className="btn btcd-btn-close">
-            &#10799;
+            <span className="btcd-icn icn-clear" />
           </NavLink>
         </div>
       </nav>

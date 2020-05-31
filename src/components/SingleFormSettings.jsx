@@ -254,7 +254,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <div>
             <b>
               <span className="btcd-icn icn-one mr-2" />
-              Allow One Entry for each IP adress
+              Allow One Entry for each IP address
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />

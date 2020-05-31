@@ -172,7 +172,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                       </div>
                     </div>
                   ))}
-                  <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
+                  <Button onClick={() => addParam(i)} className="add-pram" icn><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
                 </div>
               </div>
             </Accordions>
@@ -184,7 +184,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
             Empty
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }
