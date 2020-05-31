@@ -19,6 +19,9 @@ if (process.env.NODE_ENV === 'production' && typeof bits.assetsURL !== 'undefine
 if (typeof bits !== 'undefined' && bits.baseURL && `${window.location.pathname + window.location.search}#` !== bits.baseURL) {
   bits.baseURL = `${window.location.pathname + window.location.search}#`
 }
+if (window.location.hash === '') {
+  window.location = `${window.location.href}#/`
+}
 ReactDOM.render(
   <AllFormContextProvider>
     <AppSettingsProvider>

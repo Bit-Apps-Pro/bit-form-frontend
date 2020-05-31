@@ -19,11 +19,12 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const mailOptions = vals => {
-    const mail = [{ name: 'Admin', value: 'admin' }]
+    const mail = bits && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
+    const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
       vals.map(i => {
-        if (i !== 'admin') {
+        if (i !== 'admin' && mailStr.indexOf(i) == -1) {
           mail.push({ name: i, value: i })
         }
       })
@@ -652,7 +653,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
                 </div>
               )}
-              {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} title={<small className="txt-dp">Prevent Delete</small>} />}
+              {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>

@@ -151,7 +151,7 @@ function CompGen(props) {
     <div className="blnk-blk drag" />
   )
 
-  const dropDown = (attr) => (
+  const dropDown = (attr, resetFieldValue) => (
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
       <div className="fld-wrp drag" btcd-fld="select">
@@ -165,36 +165,38 @@ function CompGen(props) {
           {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
           {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
           {...'val' in attr && attr.val.length > 0 && 'userinput' in attr && attr.userinput && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
-          onChange={fieldChangeHandler}
+          {...resetFieldValue && { value: [] }}
           onBlur={props.onBlurHandler}
         >
           <option data-placeholder="true" aria-label="option placeholder" />
           {attr.opt.map((itm, i) => (
-            <option key={`op-${i + 87}-${attr.userinput}`} value={itm.lbl}>{itm.lbl}</option>
+            <option key={`op-${i + 87}-${(attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
           ))}
         </select>
       </div>
     )
   )
 
-  const submitBtns = (attr, buttonDisabled) => (
+  const submitBtns = (attr, buttonDisabled, handleReset) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
-      <button className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`} type="submit">{attr.subBtnTxt}</button>
+      <button
+        className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
+        disabled={buttonDisabled}
+        type="submit"
+      >
+        {attr.subBtnTxt}
+      </button>
       {'rstBtnTxt' in attr && (
         <button
           className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
           type="button"
-          disabled={buttonDisabled}
-        // onClick={() => { document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset() }}
+          onClick={handleReset}
         >
           {attr.rstBtnTxt}
         </button>
       )}
     </div>
   )
-  const fieldChangeHandler = (event) => {
-
-  }
 
   switch (props.atts.typ) {
     case 'text':
@@ -210,24 +212,24 @@ function CompGen(props) {
     case 'color':
 
       // return textField(props.atts)
-      return <TextField attr={props.atts} onBlurHandler={props.onBlurHandler} />
+      return <TextField attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'textarea':
       // return textArea(props.atts)
-      return <TextArea attr={props.atts} onBlurHandler={props.onBlurHandler} />
+      return <TextArea attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'check':
       // return checkBox(props.atts)
-      return <CheckBox attr={props.atts} onBlurHandler={props.onBlurHandler} />
+      return <CheckBox attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'radio':
       // return radioBox(props.atts)
-      return <RadioBox attr={props.atts} onBlurHandler={props.onBlurHandler} />
+      return <RadioBox attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'blank':
       return blank()
     case 'select':
-      return dropDown(props.atts)
+      return dropDown(props.atts, props.resetFieldValue)
     case 'file-up':
-      return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} />
+      return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':
-      return submitBtns(props.atts, props.buttonDisabled)
+      return submitBtns(props.atts, props.buttonDisabled, props.handleReset)
     case 'hidden':
       return hiddenField(props.atts)
     case 'recaptcha':
@@ -241,10 +243,18 @@ function CompGen(props) {
 
 export default (CompGen)
 
-function FileUp({ attr, formID, entryID }) {
+function FileUp({ attr, formID, entryID, resetFieldValue }) {
   const delBtnRef = createRef()
   const [filelist, setfilelist] = useState(attr.val !== undefined && JSON.parse(attr.val))
 
+  useEffect(() => {
+    if (resetFieldValue) {
+      const element = document.getElementsByName(attr.name)[0]
+      element.value = null
+      element.nextElementSibling.innerHTML = ''
+      element.previousElementSibling.children[1].innerHTML = 'No File Chosen'
+    }
+  }, [resetFieldValue])
   const onFileChange = e => {
     handleFile(e)
     // set del action
@@ -316,7 +326,7 @@ function FileUp({ attr, formID, entryID }) {
   )
 }
 
-function TextField({ attr, onBlurHandler }) {
+function TextField({ attr, onBlurHandler, resetFieldValue }) {
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
     if (attr.val !== undefined) {
@@ -324,7 +334,10 @@ function TextField({ attr, onBlurHandler }) {
     } else {
       setvalue('')
     }
-  }, [attr.val])
+    if (resetFieldValue) {
+      setvalue('')
+    }
+  }, [attr.val, resetFieldValue])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
   }
@@ -344,8 +357,7 @@ function TextField({ attr, onBlurHandler }) {
             ...('mn' in attr && { min: attr.mn }),
             ...('mx' in attr && { max: attr.mx }),
             ...('val' in attr && { defaultValue: attr.val }),
-            ...(value && 'userinput' in attr && attr.userinput && { value }),
-            ...(value && 'userinput' in attr && !attr.userinput && { value }),
+            ...({ value }),
             ...('ac' in attr && { autoComplete: attr.ac }),
             ...('name' in attr && { name: attr.name }),
             ...({ onBlur: onBlurHandler }),
@@ -358,7 +370,7 @@ function TextField({ attr, onBlurHandler }) {
   )
 }
 
-function TextArea({ attr, onBlurHandler }) {
+function TextArea({ attr, onBlurHandler, resetFieldValue }) {
   const [value, setvalue] = useState(attr.val)
   useEffect(() => {
     if (attr.val !== undefined) {
@@ -366,7 +378,10 @@ function TextArea({ attr, onBlurHandler }) {
     } else {
       setvalue('')
     }
-  }, [attr.val])
+    if (resetFieldValue) {
+      setvalue('')
+    }
+  }, [attr.val, resetFieldValue])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
   }
@@ -379,7 +394,7 @@ function TextArea({ attr, onBlurHandler }) {
           className="fld no-drg"
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'val' in attr && { defaultValue: attr.val }}
-          {...value && 'userinput' in attr && attr.userinput && { value }}
+          {...{ value }}
           {...'ac' in attr && { autoComplete: attr.ac }}
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
@@ -392,16 +407,18 @@ function TextArea({ attr, onBlurHandler }) {
   )
 }
 
-function CheckBox({ attr, onBlurHandler }) {
+function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
   const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',')
   const [value, setvalue] = useState(vals || [])
   useEffect(() => {
-    if (value !== vals) {
+    if (vals && value !== vals) {
       setvalue(vals)
     }
-  }, [attr.val])
+    if (resetFieldValue) {
+      setvalue([])
+    }
+  }, [attr.val, resetFieldValue])
   const onChangeHandler = (event) => {
-    console.log('CHKBOX', event.target.checked)
     const index = value.indexOf(event.target.value)
     if (event.target.checked && index === -1) {
       setvalue([...value, event.target.value])
@@ -426,9 +443,7 @@ function CheckBox({ attr, onBlurHandler }) {
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
                   {...'name' in attr && { name: `${attr.name}[]` }}
                   {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                  {...value && 'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
-                  {...value && 'userinput' in attr && !attr.userinput && { checked: value.indexOf(itm.lbl) >= 0 }}
-                  // {...'userinput' in attr && attr.userinput && { checked: value.indexOf(itm.lbl) !== -1 }}
+                  {... { checked: value && value.indexOf(itm.lbl) >= 0 }}
                   onBlur={onBlurHandler}
                   onChange={onChangeHandler}
                 />
@@ -442,7 +457,7 @@ function CheckBox({ attr, onBlurHandler }) {
   )
 }
 
-function RadioBox({ attr, onBlurHandler }) {
+function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
   const [value, setvalue] = useState(attr.val)
   useEffect(() => {
     if (attr.val !== undefined) {
@@ -450,7 +465,10 @@ function RadioBox({ attr, onBlurHandler }) {
     } else {
       setvalue('')
     }
-  }, [attr.val])
+    if (resetFieldValue) {
+      setvalue('')
+    }
+  }, [attr.val, resetFieldValue])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
   }
@@ -474,7 +492,7 @@ function RadioBox({ attr, onBlurHandler }) {
                   {...'name' in attr && { name: attr.name }}
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
                   {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
-                  {...value && 'userinput' in attr && { checked: value === itm.lbl }}
+                  {...{ checked: value === itm.lbl }}
                   onBlur={onBlurHandler}
                   onChange={onChangeHandler}
                 />

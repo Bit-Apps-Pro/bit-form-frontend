@@ -97,11 +97,11 @@ function Table(props) {
       pageCount: props.pageCount,
       initialState: {
         pageIndex: 0,
-        hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
-        pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
-        sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
-        filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'filters' in reports[report].details) ? reports[report].details.filters : [],
-        globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && reports[report].details !== null && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
+        hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
+        pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
+        sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
+        filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'filters' in reports[report].details) ? reports[report].details.filters : [],
+        globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
       },
       autoResetPage: false,
       autoResetHiddenColumns: false,
@@ -143,9 +143,8 @@ function Table(props) {
     }
   }, [fetchData, pageIndex, pageSize, sortBy, filters, search])
   useEffect(() => {
-    if (reports[reportID] && reports[reportID].details !== null && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
-      const actionColumn = columns[columns.length - 1] // table action column
-      props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+    if (reports[reportID] && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
+      setColumnOrder(reports[reportID].details.order)
     }
     return () => {
       if (!stateSavable) {
@@ -161,7 +160,7 @@ function Table(props) {
   }, [gotoPage, pageCount, pageIndex])
   useEffect(() => {
     if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
-      if (reports[reportID].details !== null) {
+      if (typeof reports[reportID].details === 'object' && reports[reportID].details) {
         const details = { ...reports[reportID].details, hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
         const newReport = { ...reports[reportID], details }
         reportsDispatch({ type: 'update', report: newReport, reportID })
@@ -170,10 +169,10 @@ function Table(props) {
     } else if (stateSavable) {
       setstateSavable(false)
     }
-  }, [pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns])
+  }, [pageSize, sortBy, filters, globalFilter, hiddenColumns])
   useEffect(() => {
     // setReport if not initially setted
-    if ( typeof props.pageCount !== 'undefined' && state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && reports[reportID].details !== null) {
+    if (typeof props.pageCount !== 'undefined' && state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && typeof reports[reportID].details === 'object' && reports[reportID].details) {
       if (!stateSavable) {
         if ('hiddenColumns' in reports[reportID].details && reports[reportID].details.hiddenColumns !== state.hiddenColumns) {
           setHiddenColumns(reports[reportID].details.hiddenColumns)
@@ -193,8 +192,8 @@ function Table(props) {
           setGlobalFilter(reports[reportID].details.globalFilter)
           setSearch(reports[reportID].details.globalFilter)
         }
-        if ('order' in reports[reportID].details && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
-          setColumnOrder(['selection', ...reports[reportID].details.order.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))])
+        if ('order' in reports[reportID].details) {
+          setColumnOrder(reports[reportID].details.order)
         }
       }
     }
@@ -203,23 +202,33 @@ function Table(props) {
   useEffect(() => {
     if (columns.length > 0 && allColumns.length >= columns.length) {
       if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
-        if (stateSavable && reports[reportID].details !== null) {
-          const details = { ...reports[reportID].details, order: columns, type: 'table' }
+        console.log('stateSave', stateSavable, reports[reportID].details)
+        if (stateSavable && reports[reportID].details) {
+          let details
+          if (typeof reports[reportID].details === 'object' && 'order' in reports[reportID].details) {
+            details = { ...reports[reportID].details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
+          } else {
+            details = { order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
+          }
           const newReport = { ...reports[reportID], details }
-          if (state.columnOrder.length === 0) {
-            props.setTableCols([...reports[reportID].details.order])
-            setColumnOrder(['selection', ...reports[reportID].details.order.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))])
-          } else if (JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
+          if (state.columnOrder.length === 0 && typeof reports[reportID].details === 'object' && 'order' in reports[reportID].details) {
+            // const actionColumn = columns[columns.length - 1] // table action column
+            // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+            setColumnOrder(reports[reportID].details.order)
+          } else {
             setColumnOrder(allColumns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor)))
             reportsDispatch({ type: 'update', report: newReport, reportID })
           }
-        } else if (!stateSavable && reports[reportID].details !== null && JSON.stringify(columns) !== JSON.stringify(reports[reportID].details.order)) {
-          const actionColumn = columns[columns.length - 1] // table action column
-          props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+        } else if (!stateSavable && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
+          // const actionColumn = columns[columns.length - 1] // table action column
+          // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
+          setColumnOrder(reports[reportID].details.order)
+          setstateSavable(true)
+        } else if (!stateSavable && typeof reports[reportID].details !== 'object') {
           setstateSavable(true)
         }
       } else if (typeof props.pageCount !== 'undefined' && (isNaN(reportID) || reports.length === 0)) {
-        const details = { hiddenColumns: state.hiddenColumns, order: columns, pageSize, type: 'table', sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
+        const details = { hiddenColumns: state.hiddenColumns, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], pageSize, type: 'table', sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
         setreportID(reports.length)
         reportsDispatch({ type: 'add', report: { details } })
       }
