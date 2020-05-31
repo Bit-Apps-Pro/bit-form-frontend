@@ -13,7 +13,7 @@ export default async function bitsFetch(data, action, contentType = null, queryP
     params: {
       action,
       // eslint-disable-next-line no-undef
-      _ajax_nonce:typeof bits === 'undefined' ? '62da33988a': bits.nonce,
+      _ajax_nonce: typeof bits === 'undefined' ? '93367f5357' : bits.nonce,
       ...queryParam,
     },
     data,

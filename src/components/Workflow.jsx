@@ -19,12 +19,13 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const mailOptions = vals => {
-    const mail = bits && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
+    // eslint-disable-next-line no-undef
+    const mail = typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
     const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
       vals.map(i => {
-        if (i !== 'admin' && mailStr.indexOf(i) == -1) {
+        if (i !== 'admin' && mailStr.indexOf(i) === -1) {
           mail.push({ name: i, value: i })
         }
       })
@@ -803,11 +804,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           </div>
         </div>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack" />
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
           Empty
-        </div>
-      )}
+          </div>
+        )}
       <br />
       <br />
       <br />

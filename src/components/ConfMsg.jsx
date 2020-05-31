@@ -52,7 +52,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])
 
-
   const handleMsgTitle = (e, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.successMsg[idx].title = e.target.value
