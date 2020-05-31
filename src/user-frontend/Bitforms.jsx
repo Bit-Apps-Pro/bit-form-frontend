@@ -65,10 +65,11 @@ export default function Bitforms(props) {
       Object.keys(props.fieldToCheck).forEach(fieldName => {
         const fieldDetails = document.getElementsByName(fieldName)
         if (fieldDetails.length > 0) {
+          const elementIndex = props.sid ? props.sid - 1 : 0
           fieldData[fieldName] = {
-            type: fieldDetails[0].type,
-            value: fieldDetails[0].value,
-            multiple: fieldDetails[0].multiple,
+            type: fieldDetails[elementIndex].type,
+            value: fieldDetails[elementIndex].value,
+            multiple: fieldDetails[elementIndex].multiple,
           }
         }
       });
@@ -181,7 +182,7 @@ export default function Bitforms(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     setbuttonDisabled(true)
-    const formID = event.target.id
+    snack && setSnack(false)
     const formData = new FormData()
     const fields = Array.prototype.slice.call(event.target)
     // eslint-disable-next-line array-callback-return
@@ -196,7 +197,7 @@ export default function Bitforms(props) {
         if (el.files.forEach) {
           el.files.forEach(file => formData.append(fileName, file))
         } else {
-          Array.from(el.files).forEach(file => formData.append(fileName, file))
+          Array.prototype.slice.call(el.files).forEach(file => formData.append(fileName, file))
         }
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
         formData.append(el.name, el.value)
@@ -258,6 +259,10 @@ export default function Bitforms(props) {
         setMessage(result.data)
         sethasError(true)
         setSnack(true)
+      } else if (result.data && result.data.data && typeof result.data.data === 'string') {
+        setMessage(result.data)
+        sethasError(true)
+        setSnack(true)
       } else if (result.data && result.data.data) {
         if (result.data.data.$form !== undefined) {
           setMessage(JSON.parse(JSON.stringify(result.data.data.$form)))
@@ -279,19 +284,6 @@ export default function Bitforms(props) {
   }
 
   const handleReset = () => {
-    /* console.log(props.data)
-    if (props.file) {
-      props.file.forEach(fileField => {
-        console.log(document.getElementsByName(fileField), fileField)
-      })
-    }
-    */
-   /* const newData = data !== undefined && JSON.parse(JSON.stringify(data))
-   console.log(Array.isArray(newData))
-   if (newData && Array.isArray(newData)) {
-     newData.forEach(field => { field.val = ''; console.log('field', field) })
-    }
-    setdata(props.data) */
     setresetFieldValue(true)
   }
   useEffect(() => {
@@ -431,21 +423,26 @@ function Toast(props) {
   useEffect(() => {
     if (!snack && props.canClose && props.show) {
       props.setSnack(false)
+    } else if (!snack && !props.index && props.show) {
+      props.setSnack(false)
     }
   }, [snack])
   useEffect(() => {
+    const resetTime = props.index ? 5000 : 2000
+    console.log('resetTime', resetTime)
     const timer = setTimeout(() => {
       if (props.show) {
+        console.log(props.index)
+        // !props.index && props.canClose === undefined && props.setSnack(false)
+        props.setSnack(false)
         if (!props.error) {
-          // props.setSnack(false)
           if (props.redirectPage !== null) {
-            window.location = props.redirectPage
-          } else {
-            // window.location.reload()
+            console.log(props.redirectPage)
+            window.location = decodeURI(props.redirectPage)
           }
         }
       }
-    }, 2000);
+    }, resetTime);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

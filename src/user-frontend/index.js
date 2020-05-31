@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
-import 'react-app-polyfill/ie11'
-import 'react-app-polyfill/stable'
+/* import 'react-app-polyfill/ie11'
+import 'react-app-polyfill/stable' */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Bitforms from './Bitforms'
 
 export default function BitformsRenderer(params) {
+  console.log('params.contentID', params.sid)
   document.getElementById(`${params.contentID}no-js`).innerHTML = ''
   /* if (params.gCaptchaSiteKey !== null) {
     grecaptcha.ready(() => {
@@ -27,5 +28,6 @@ export default function BitformsRenderer(params) {
     fieldToChange={params.fieldToChange}
     conditional={params.conditional}
     fieldsKey={params.fieldsKey}
+    sid={params.sid}
   />, document.getElementById(params.contentID));
 }

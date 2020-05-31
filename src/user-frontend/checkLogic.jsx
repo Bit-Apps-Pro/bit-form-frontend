@@ -1,6 +1,7 @@
 export default function checkLogic(logics, fields) {
   if (Array.isArray(logics)) {
-    let conditionSatus
+    // static  
+    let conditionSatus = false;
     for (let sskey = 0; sskey < logics.length; sskey += 1) {
       const ssvalue = logics[sskey]
       if (typeof ssvalue !== 'string') {
@@ -8,10 +9,10 @@ export default function checkLogic(logics, fields) {
         if (sskey === 0) {
           conditionSatus = isCondition
         }
-        if (isCondition && logics[sskey + 1] !== undefined && typeof logics[sskey + 1] === 'string' && logics[sskey + 1].toLowerCase() === 'or') {
+        /* if (isCondition && logics[sskey + 1] !== undefined && typeof logics[sskey + 1] === 'string' && logics[sskey + 1].toLowerCase() === 'or') {
           conditionSatus = isCondition
           break
-        }
+        } */
         if (sskey - 1 >= 0 && typeof logics[sskey - 1] === 'string') {
           switch (logics[sskey - 1].toLowerCase()) {
             case 'or':

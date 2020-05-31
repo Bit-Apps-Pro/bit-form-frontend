@@ -41,7 +41,10 @@ function AllFroms() {
   }
 
   const formatDate = dt => {
-    const d = new Date(dt)
+    let d = new Date(dt)
+    if (`${d}` === 'Invalid Date') {
+      d = new Date(dt.split(' ').join('T'))
+    }
     const ye = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d)
     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)

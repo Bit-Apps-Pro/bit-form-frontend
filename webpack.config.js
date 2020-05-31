@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
   return {
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
-      bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
+      bitformsFrontend: ['babel-polyfill', path.resolve(__dirname, 'src/user-frontend/index.js')],
       'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
       bitforms: path.resolve(__dirname, 'src/resource/sass/app.scss'),
       'bitforms-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
@@ -92,6 +92,8 @@ module.exports = (env, argv) => {
               [
                 '@babel/preset-env',
                 {
+                  useBuiltIns: 'entry',
+                  corejs: 3,
                   targets: {
                     browsers: ['>0.2%', 'ie 11', 'not dead', 'not op_mini all'],
                   },

@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "3",
     "create-file-list": "^1.0.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
@@ -16,7 +18,7 @@
     "react-router-dom": "^5.1.2",
     "react-simple-resizer": "^2.1.0",
     "react-sortablejs": "^2.0.11",
-    "react-table": "^7.0.0",
+    "react-table": "7.0.0",
     "react-table-sticky": "^1.0.0",
     "react-time-picker": "^4.0.1",
     "slim-select": "1.23.1"
@@ -51,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.8.6",
     "@babel/preset-react": "^7.8.3",
