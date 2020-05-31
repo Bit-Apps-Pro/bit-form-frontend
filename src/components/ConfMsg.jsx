@@ -49,13 +49,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         },
       })
     }
-
-    return function cleanup() {
-      if (typeof tinymce !== 'undefined') {
-        // eslint-disable-next-line no-undef
-        tinymce.remove()
-      }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])
 
@@ -152,7 +145,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
             Empty
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }
