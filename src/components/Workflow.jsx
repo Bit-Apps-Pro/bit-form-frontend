@@ -19,12 +19,13 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const mailOptions = vals => {
-    const mail = bits && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
+    // eslint-disable-next-line no-undef
+    const mail = typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
     const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
       vals.map(i => {
-        if (i !== 'admin' && mailStr.indexOf(i) == -1) {
+        if (i !== 'admin' && mailStr.indexOf(i) === -1) {
           mail.push({ name: i, value: i })
         }
       })
@@ -507,6 +508,15 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     setconfMdl({ ...confMdl })
   }
 
+  const emailInFormField = () => {
+    for (const field of formFields) {
+      if (field.type === 'email') {
+        return true
+      }
+    }
+    return false
+  }
+
   return (
     <div className="btcd-workflow" style={{ width: 900 }}>
       <ConfirmModal
@@ -518,7 +528,10 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
         action={confMdl.action}
       />
       <h2>Actions</h2>
-      <Button className="blue" onClick={addLogicGrp}>+ Add Action</Button>
+      <Button className="blue" onClick={addLogicGrp}>
+        <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
+        Add Action
+      </Button>
 
       {workFlows.length > 0 ? workFlows.map((lgcGrp, lgcGrpInd) => (
         <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp d-flx mt-2">
@@ -594,7 +607,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                                 ))}
                                 <div className=" btcd-workFlows-btns">
                                   <div className="flx">
-                                    <Button icn className="blue">+</Button>
+                                    <Button icn className="blue"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
                                     <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
                                     <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
                                   </div>
@@ -605,7 +618,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                         ))}
                         <div className=" btcd-workFlows-btns">
                           <div className="flx">
-                            <Button icn className="blue sh-sm">+</Button>
+                            <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
                             <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
                             <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
                             <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
@@ -621,7 +634,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {lgcGrp.action_behaviour === 'cond' && (
                 <div className="btcd-workFlows-btns">
                   <div className="flx">
-                    <Button icn className="blue sh-sm">+</Button>
+                    <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
                     <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
                     <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
                     <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
@@ -635,7 +648,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <div className="mb-2">
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                  {!lgcGrp.action_run.match((/^(delete|edit)$/)) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
@@ -697,7 +710,13 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           titleClassName="w-7 mt-2"
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
-                        />
+                        >
+                          {emailInFormField() && (
+                            <optgroup label="Form Email Fields">
+                              {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
+                            </optgroup>
+                          )}
+                        </DropDown>
                         <DropDown
                           action={e => setEmailSetting('cc', e, lgcGrpInd)}
                           searchPH="Type email press + to add"
@@ -709,7 +728,13 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           titleClassName="w-7 mt-2"
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
-                        />
+                        >
+                          {emailInFormField() && (
+                            <optgroup label="Form Email Fields">
+                              {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
+                            </optgroup>
+                          )}
+                        </DropDown>
                         <DropDown
                           searchPH="Type email press + to add"
                           action={e => setEmailSetting('bcc', e, lgcGrpInd)}
@@ -721,7 +746,13 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           titleClassName="w-7 mt-2"
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
-                        />
+                        >
+                          {emailInFormField() && (
+                            <optgroup label="Form Email Fields">
+                              {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
+                            </optgroup>
+                          )}
+                        </DropDown>
                       </>
                     )}
                   </div>
@@ -760,7 +791,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                     </span>
                   ))}
                   <br />
-                  <Button onClick={() => addAction(lgcGrpInd)} icn className="blue sh-sm">+</Button>
+                  <Button onClick={() => addAction(lgcGrpInd)} icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
                 </div>
               )}
             </div>

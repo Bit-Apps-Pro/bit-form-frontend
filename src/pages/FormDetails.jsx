@@ -131,6 +131,7 @@ function Builder(props) {
             setadditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
+            if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             // if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
             setisLoading(false)
           } else {
@@ -161,6 +162,7 @@ function Builder(props) {
     }
     let action = 'bitforms_create_new_form'
     if (savedFormId > 0) {
+      setFormSettings({ ...formSettings, submitBtn: subBtn })
       formData = {
         id: savedFormId,
         layout: lay,
@@ -251,7 +253,7 @@ function Builder(props) {
             {buttonText}
           </button>
           <NavLink to="/" className="btn btcd-btn-close">
-            &#10799;
+            <span className="btcd-icn icn-clear" />
           </NavLink>
         </div>
       </nav>

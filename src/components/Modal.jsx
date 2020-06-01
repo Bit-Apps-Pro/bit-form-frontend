@@ -20,7 +20,7 @@ export default function Modal(props) {
       <div className={`btcd-modal ${props.sm && 'btcd-m-sm'} ${props.lg && 'btcd-m-lg'}`}>
         <div className="btcd-modal-content">
           {props.hdrActn}
-          <button onClick={() => props.setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><span>&#10799;</span></button>
+          <button onClick={() => props.setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><span className="btcd-icn icn-clear" /></button>
           <h2 className="btcd-mdl-title">{props.title}</h2>
           <small className="btcd-mdl-subtitle">{props.subTitle}</small>
           {!props.sm && <div className="btcd-mdl-div" />}

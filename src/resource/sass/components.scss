@@ -23,7 +23,7 @@ body {
   font-weight: 500;
 }
 
-input.fld{
+input.fld {
   height: 40px !important;
 }
 
@@ -55,6 +55,7 @@ textarea.fld {
   display: flow-root;
   width: 100%;
   padding: 5px !important;
+  line-height: 1.5 !important;
 }
 
 .fld[type="color"] {
@@ -65,7 +66,7 @@ textarea.fld {
 }
 
 textarea.fld {
-  min-height: calc(100% - 20px) !important;
+  height: calc(100% - 20px);
   resize: vertical;
 }
 .fld::placeholder {
@@ -115,7 +116,7 @@ textarea.fld {
 }
 
 // chek box style start
-.btcd-ck-wrp {
+.fld > .btcd-ck-wrp {
   color: rgb(54, 54, 54);
   display: inline-flex;
   align-items: center;
@@ -126,12 +127,12 @@ textarea.fld {
   font-size: 17px;
   -webkit-user-select: none;
   user-select: none;
-  height: 28px;
+  height: 19px;
   margin: 8px;
   width: auto;
 }
 
-.btcd-ck-wrp input {
+.fld .btcd-ck-wrp input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -139,58 +140,56 @@ textarea.fld {
   width: 0;
 }
 
-.btcd-ck-con {
+.fld .btcd-ck-con {
   display: flex;
   flex-wrap: wrap;
   margin-top: 8px;
 }
 
-.btcd-mrk {
+.fld .btcd-mrk {
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
+  height: 18px;
+  width: 18px;
   box-sizing: content-box;
-  width: 25px;
   border-radius: 3px;
   background-color: #fff;
 }
 
-.btcd-ck-wrp:hover input ~ .btcd-mrk {
-  background-color: rgb(226, 226, 226);
+.fld .btcd-ck-wrp:hover input ~ .btcd-mrk {
+  border-color: #0a8dff !important;
 }
 
-.btcd-ck-wrp input:checked ~ .btcd-mrk {
+.fld .btcd-ck-wrp input:checked ~ .btcd-mrk {
   background-color: #0a8dff;
   border-color: #0a8dff !important;
 }
 
-.btcd-mrk:after {
+.fld .btcd-mrk:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-.btcd-ck-wrp input:checked ~ .btcd-mrk:after {
+.fld .btcd-ck-wrp input:checked ~ .btcd-mrk:after {
   display: block;
 }
 
-.btcd-ck-wrp .btcd-mrk:not(.rdo):after {
-  left: 9px;
-  top: 5px;
+.fld .btcd-ck-wrp .btcd-mrk:not(.rdo):after {
+  top: 47%;
+  left: 50%;
   width: 5px;
   height: 10px;
   border: solid white;
   border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  transition: display 1s;
+  transform:  translate(-50%, -50%) rotate(45deg);
 }
 
-.btcd-ck-wrp .btcd-mrk:not(.ck):after {
-  top: 8.5px;
-  left: 8.4px;
+.fld .btcd-ck-wrp .btcd-mrk:not(.ck):after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -407,6 +406,8 @@ textarea.fld {
 
 .btcd-files > div > div > small {
   font-size: 12px;
+  line-height: 1;
+  margin-left: 5px;
 }
 
 .btcd-files > div > button {

@@ -83,7 +83,7 @@ function TextFieldSettings(props) {
         && <SingleToggle title="Auto Complete:" action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       {elmData.typ.match(/^(text|url|password|number|email|)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
-      {elmData.typ === 'number' && <SingleInput inpType="number" title="Min:" value={min} action={setMin} width={100} className="ml-4" />}
+      {elmData.typ === 'number' && <SingleInput inpType="number" title="Min:" value={min} action={setMin} width={100} className="mr-4" />}
       {elmData.typ === 'number' && <SingleInput inpType="number" title="Max:" value={max} action={setMax} width={100} />}
     </div>
   )

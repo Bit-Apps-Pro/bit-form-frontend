@@ -334,6 +334,93 @@ body {
   }
 }
 
+.btcd-ck-wrp {
+  color: rgb(54, 54, 54);
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  font-weight: normal;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  user-select: none;
+  height: 25px;
+  margin: 8px;
+  width: auto;
+}
+
+.btcd-ck-wrp input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.btcd-ck-con {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btcd-mrk {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  box-sizing: content-box;
+  border-radius: 3px;
+  background-color: #fff;
+  border: 2px solid rgb(212, 212, 212);
+  transition: border-color 0.3s;
+}
+
+.btcd-ck-wrp:hover input ~ .btcd-mrk {
+  border-color: $blue !important;
+}
+
+.btcd-ck-wrp input:checked ~ .btcd-mrk {
+  background-color: $blue;
+  border-color: $blue !important;
+}
+
+.btcd-mrk:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.btcd-ck-wrp input:checked ~ .btcd-mrk:after {
+  display: block;
+}
+
+.btcd-ck-wrp .btcd-mrk:not(.rdo):after {
+  top: 47%;
+  left: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.icn-rotate-45{
+  display: inline-block;
+  transform: rotate(45deg);
+}
+
+.btcd-ck-wrp .btcd-mrk:not(.ck):after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
 .btcd-no-data {
   font-weight: 500;
   position: absolute;
@@ -402,7 +489,6 @@ body {
   height: 100%;
   cursor: default;
 }
-
 
 .txt-dp {
   color: $dp-txt;
@@ -573,7 +659,7 @@ body {
 .ml-2 {
   margin-left: 10px;
 }
-.w-md{
+.w-md {
   width: 900px;
 }
 .w-1 {
@@ -767,38 +853,13 @@ body {
   }
 }
 
-@mixin inp($width: auto) {
-  width: $width;
-  margin-top: 10px;
-  font-size: 17px;
-  padding: 5px;
-  border: 3px solid $bg;
-  border-radius: 9px;
-  outline: none;
-  line-height: 0;
-  box-shadow: 5px 5px 6px #e1e4ec, -5px -5px 10px #fdffff;
-}
-
 .setting-inp {
   display: inline-flex;
   flex-direction: column;
   width: 100%;
-  & > input,
-  select {
-    @include inp;
+  & input {
+    margin-top: 6px;
   }
-
-  & > input:focus {
-    border-color: $bg;
-    box-shadow: none;
-    outline: none;
-    box-shadow: 5px 5px 10px #e1e4ec, -5px -5px 10px #fdffff, 1px 1px 1px 1px #e2e2e2 inset,
-      -1px -1px 1px 0px #e0e0e0 inset;
-  }
-}
-
-.input {
-  @include inp;
 }
 
 .opt {
@@ -806,10 +867,6 @@ body {
   padding: 10px;
   background: #e2e6ef;
   border-radius: 8px;
-
-  & > div > input {
-    @include inp(135px);
-  }
 }
 
 .btn {
@@ -833,6 +890,7 @@ body {
     box-shadow: none;
   }
 }
+
 .btcd-btn-o-blue {
   background: transparent;
   border: 1px solid $blue;
@@ -843,6 +901,7 @@ body {
     color: white !important;
   }
 }
+
 .btcd-btn-o-red {
   background: transparent;
   border: 1px solid $red;
@@ -1199,6 +1258,8 @@ nav.top-nav {
   border-bottom: 1px solid #dedce4;
   color: $dp-bg;
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   &:hover {
     background: #eeeefd;
   }
@@ -1272,7 +1333,7 @@ nav.top-nav {
   background: white;
   border-radius: 8px;
   & > .btcd-accr-btn {
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px 8px 0 0;
     outline: none;
     padding: 8px;
     cursor: pointer;
@@ -1362,8 +1423,10 @@ nav.top-nav {
   cursor: pointer;
   font-size: 20px;
   border: 0;
-  min-width: 32px;
+  width: 32px;
   height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: 50%;
   line-height: 1px;
   background: transparent;
@@ -1612,6 +1675,8 @@ nav.top-nav {
   padding: 5px;
   width: 30px;
   height: 30px;
+  min-width: 30px;
+  min-height: 30px;
   line-height: 0px;
   color: $blue;
   outline: none;
@@ -1802,10 +1867,6 @@ nav.top-nav {
   top: 0 !important;
   border-radius: 0 !important;
   margin-bottom: 0 !important;
-  & > .btcd-bld-nav {
-    height: 40px !important;
-    transition: height 0.5s 0.7s !important;
-  }
 }
 
 .btcd-drawer {
@@ -1832,7 +1893,7 @@ nav.top-nav {
 }
 
 .btcd-bld-nav {
-  height: 0;
+  height: 40px;
   overflow: hidden;
   background: $dp-bg;
   display: flex;
@@ -1936,8 +1997,6 @@ nav.top-nav {
 
 .btcd-f-settings {
   background-color: $light-bg;
-  height: calc(100% - 40px);
-  overflow: auto;
 }
 
 .btcd-f-sidebar {
@@ -2024,6 +2083,7 @@ nav.top-nav {
   display: inline-block;
   box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4);
 }
+
 .btcd-f-c-t-o-a {
   position: relative;
   box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4), 0 0 0 2px $blue;
@@ -2040,9 +2100,12 @@ nav.top-nav {
     border-color: $blue transparent transparent transparent;
   }
 }
+
 .btcd-s-wrp {
   padding: 30px 0 0 75px;
   margin-left: 220px;
+  height: 100vh;
+  overflow: auto;
 }
 
 .btcd-s-inp {
@@ -2163,11 +2226,6 @@ select.btcd-paper-inp {
   border-radius: 10px;
   border: none !important;
   box-shadow: 0px 0px 4px #b8b8b8;
-}
-
-.p-i-sm {
-  padding: 4px !important;
-  border-radius: 5px !important;
 }
 
 .btcd-setting-opt {
@@ -3021,7 +3079,7 @@ select.btcd-ud-inp {
       padding-left: 5px;
       &:hover:not(:last-child) {
         border-radius: 5px;
-        background: #d7e1ff;
+        background: #ecf1ff;
       }
       &:last-child {
         border: none;

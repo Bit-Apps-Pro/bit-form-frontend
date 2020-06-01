@@ -349,31 +349,22 @@ export default function Bitforms(props) {
           {layout[layoutSize].map(field => {
             // eslint-disable-next-line no-param-reassign
             field.static = true
+
             return blk(field)
           })}
-          {!props.editMode && props.buttons
-            && (
-              <div
-                style={{
-                  gridColumnStart: 0,
-                  gridColumnEnd: layoutSize === 'lg' ? 7 : layoutSize === 'md' ? 5 : 3,
-                  gridRowStart: maxRowIndex + 2, /* y-0 -> y + 1 */
-                  gridRowEnd: maxRowIndex + 4, /* h-4 -> if y not 1 then h+y */
-                  minHeight: 40, /* h * 40px */
-                }}
-                key={props.buttons.typ}
-                role="button"
-              >
-                <CompGen
-                  atts={props.buttons}
-                  // formID={bitFormsFront.contentID}
-                  entryID={props.entryID}
-                  buttonDisabled={buttonDisabled}
-                  handleReset={handleReset}
-                />
-              </div>
-            )}
         </div>
+        {!props.editMode && props.buttons
+          && (
+            <div>
+              <CompGen
+                atts={props.buttons}
+                // formID={bitFormsFront.contentID}
+                entryID={props.entryID}
+                buttonDisabled={buttonDisabled}
+                handleReset={handleReset}
+              />
+            </div>
+          )}
       </form>
       {
         snack

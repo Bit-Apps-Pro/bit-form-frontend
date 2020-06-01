@@ -176,7 +176,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                       </div>
                     </div>
                   ))}
-                  <Button onClick={() => addParam(i)} className="add-pram" icn>+</Button>
+                  <Button onClick={() => addParam(i)} className="add-pram" icn><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
                 </div>
               </div>
             </Accordions>
@@ -188,7 +188,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
             Empty
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><b>+</b></Button></div>
+      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }

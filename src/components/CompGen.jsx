@@ -177,7 +177,7 @@ function CompGen(props) {
     )
   )
 
-  const submitBtns = (attr, buttonDisabled, handleReset) => (
+  const submitBtns = (attr, buttonDisabled, handleReset) => (console.log('attr', attr),
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
       <button
         className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
@@ -308,7 +308,7 @@ function FileUp({ attr, formID, entryID, resetFieldValue }) {
               )}
               {filelist.map((itm, i) => (
                 <div key={`ol-f-${i + 3}`} className="flx ">
-                  <a href={`http://192.168.1.11/wp-content/uploads/bitforms/${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
+                  <a href={bits.baseDLURL && `${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
                     <span className="btcd-icn icn-file" />
                     {' '}
                     {itm}

@@ -1,12 +1,11 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams, Redirect } from 'react-router-dom'
 
 function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const { formType, formID, id } = useParams()
-
 
   useEffect(() => {
     if (typeof tinymce !== 'undefined' && formFields.length > 0) {
@@ -63,8 +62,8 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
     setMailTem([...mailTem])
   }
 
-  const handleBody = e => {
-    mailTem[id].body = e.target.value
+  const handleBody = val => {
+    mailTem[id].body = val
     setMailTem([...mailTem])
   }
 
@@ -80,46 +79,48 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
 
 
   return (
-    <div className="w-7">
-      <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
-        <span className="btcd-icn icn-arrow_back" />
-        &nbsp;
-        Back
-      </NavLink>
+    mailTem.length < 1 ? <Redirect to={`/builder/edit/${formID}/settings/email-templates`} /> : (
+      <div className="w-7">
+        <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
+          <span className="btcd-icn icn-arrow_back" />
+          &nbsp;
+          Back
+        </NavLink>
 
-      <div className="mt-3 flx">
-        <b style={{ width: 135 }}>Template Name: </b>
-        <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={mailTem[id].title} />
-      </div>
-      <div className="mt-3 flx">
-        <b style={{ width: 135 }}>Subject:</b>
-        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={mailTem[id].sub} />
-        <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 130 }}>
-          <option value="">Add form field</option>
-          {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
-        </select>
-      </div>
-
-      <div className="mt-3">
-        <div><b>Body:</b></div>
-
-        <label htmlFor={`t-m-e-${id}-${formID}`} className="mt-2 w-10">
-          <select onChange={addFieldToBody} className="btcd-paper-inp mt-2 form-fields-em w-5">
+        <div className="mt-3 flx">
+          <b style={{ width: 135 }}>Template Name: </b>
+          <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={mailTem[id].title} />
+        </div>
+        <div className="mt-3 flx">
+          <b style={{ width: 135 }}>Subject:</b>
+          <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={mailTem[id].sub} />
+          <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 130 }}>
             <option value="">Add form field</option>
             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
           </select>
-          <textarea
-            id={`t-m-e-${id}-${formID}`}
-            onChange={handleBody}
-            className="btcd-editor btcd-paper-inp mt-1"
-            rows="5"
-            value={mailTem[id].body}
-          />
-        </label>
+        </div>
+
+        <div className="mt-3">
+          <div><b>Body:</b></div>
+
+          <label htmlFor={`t-m-e-${id}-${formID}`} className="mt-2 w-10">
+            <select onChange={addFieldToBody} className="btcd-paper-inp mt-2 form-fields-em w-5">
+              <option value="">Add form field</option>
+              {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+            </select>
+            <textarea
+              id={`t-m-e-${id}-${formID}`}
+              onChange={e => handleBody(e.target.value)}
+              className="btcd-editor btcd-paper-inp mt-1"
+              rows="5"
+              value={mailTem[id].body}
+            />
+          </label>
+        </div>
+
+
       </div>
-
-
-    </div>
+    )
   )
 }
 

@@ -126,7 +126,9 @@ export default function SingleFormSettings({ additional, setadditional }) {
 
   const handleRestrictFrom = e => {
     if (e.target.checked) {
-      if (!('restrict_form' in additional.settings)) {
+      if (additional.settings.restrict_form === undefined
+        || additional.settings.restrict_form.date === undefined
+          || additional.settings.restrict_form.time === undefined) {
         additional.settings.restrict_form = { day: ['Everyday'], date: { from: new Date(), to: new Date() }, time: { from: '00:00', to: '23:59' } }
       }
       additional.enabled.restrict_form = true
@@ -167,7 +169,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
   }
 
   const handleTime = (val, typ) => {
-    if ('restrict_form' in additional.settings) {
+    if ('restrict_form' in additional.settings && 'time' in additional.settings.restrict_form) {
       if (typ === 'from') {
         additional.settings.restrict_form.time.from = val
       } else {
@@ -252,7 +254,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <div>
             <b>
               <span className="btcd-icn icn-one mr-2" />
-              Allow One Entry for each IP adress
+              Allow One Entry for each IP address
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />

@@ -10,6 +10,11 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
   const { formType, formID, id } = useParams()
   const history = useHistory()
 
+  const handleBody = val => {
+    tem.body = val
+    setTem({ ...tem })
+  }
+
   useEffect(() => {
     if (typeof tinymce !== 'undefined' && formFields.length > 0) {
       const s = document.querySelectorAll('.form-fields-em')
@@ -65,10 +70,6 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
     setTem({ ...tem })
   }
 
-  const handleBody = val => {
-    tem.body = val
-    setTem({ ...tem })
-  }
 
   const save = () => {
     mailTem.push(tem)
