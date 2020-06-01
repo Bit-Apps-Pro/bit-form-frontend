@@ -29,7 +29,7 @@ function DropDown(props) {
         {props.options !== null
           && props.options !== false
           && props.options.map(item => <option key={`key${item.name}`} value={item.value}>{item.name}</option>)}
-        {props.children}
+        {/* {props.children} */}
       </select>
     </div>
   )

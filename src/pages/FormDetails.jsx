@@ -79,7 +79,7 @@ function Builder(props) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    submitBtn: subBtn,
+    subBtn,
     confirmation: {
       type: {
         successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],

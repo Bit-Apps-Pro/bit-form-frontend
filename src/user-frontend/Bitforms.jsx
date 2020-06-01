@@ -27,6 +27,7 @@ export default function Bitforms(props) {
     return (
       <div
         style={{
+          overflow: 'auto',
           gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
           gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
           gridRowStart: field.y + 1, /* y-0 -> y + 1 */

@@ -99,13 +99,13 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
 
       <button onClick={save} className="btn blue f-right" type="button">Save</button>
 
-      <div className="mt-3 flx">
+      <div className="mt-3">
         <b style={{ width: 135 }}>Template Name: </b>
         <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={tem.title} />
       </div>
       <div className="mt-3 flx">
-        <b style={{ width: 135 }}>Subject:</b>
-        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
+        <b style={{ width: 142 }}>Subject:</b>
+        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-6" placeholder="Email Subject Here" value={tem.sub} />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
           <option value="">Add form field</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}

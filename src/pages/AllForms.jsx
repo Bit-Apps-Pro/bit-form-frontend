@@ -49,7 +49,6 @@ function AllFroms() {
     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
     const hr = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(d)
-    // return `${da}-${mo}-${ye} ${hr}`
     return (
       <div style={{ lineHeight: 0.7, fontWeight: 500 }}>
         {/* eslint-disable-next-line react/jsx-one-expression-per-line */}

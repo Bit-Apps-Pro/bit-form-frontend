@@ -14,6 +14,10 @@ $dp-txt: #545582;
 $gray: #e2e2e2;
 $select-arrow: "data:image/svg+xml;charset=utf8,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3C!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ --%3E%3Cg%3E%3Ctitle%3Ebackground%3C/title%3E%3Crect fill='none' id='canvas_background' height='22' width='22' y='-1' x='-1'/%3E%3Cg display='none' overflow='visible' y='0' x='0' height='100%25' width='100%25' id='canvasGrid'%3E%3Crect fill='url(%23gridpattern)' stroke-width='0' y='0' x='0' height='100%25' width='100%25'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Ctitle%3ELayer 1%3C/title%3E%3Cline transform='rotate(45 9.707600593566898,10.544168472290037) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_2' y2='14.860267' x2='9.7076' y1='6.228069' x1='9.7076' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3Cline transform='rotate(-45 4.444442749023432,10.544166564941404) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_1' y2='14.860266' x2='4.444443' y1='6.228067' x1='4.444443' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3C/g%3E%3C/svg%3E";
 
+:root {
+  --tooltip-txt: "";
+}
+
 html,
 body {
   margin: 0;
@@ -1110,11 +1114,6 @@ body {
 }
 // file upload end
 
-:root {
-  --underline-height: 0.5em;
-  --transition-duration: 0.5s;
-  --tooltip-txt: "";
-}
 
 // navbar start
 nav.top-nav {
@@ -1537,7 +1536,7 @@ nav.top-nav {
 //2nd toggle end
 
 .cpyTxt {
-  width: 180px;
+  width: 200px;
   & input {
     font-weight: normal;
     color: $dp-blue;
@@ -1545,7 +1544,7 @@ nav.top-nav {
     letter-spacing: 1px;
     outline: none;
     padding: 3px 10px;
-    width: 140px;
+    width: 160px;
     border-radius: 15px 0 0 15px;
     border: none;
     background: whitesmoke;
@@ -1570,6 +1569,7 @@ nav.top-nav {
   &::after {
     font-family: "Montserrat", sans-serif;
     line-height: 1;
+    white-space: pre-wrap;
     font-size: 13px;
     font-weight: 600;
     content: var(--tooltip-txt);
