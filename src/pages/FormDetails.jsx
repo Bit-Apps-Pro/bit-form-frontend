@@ -280,6 +280,7 @@ function Builder(props) {
         </Route>
         <Route path="/builder/:formType/:formID/settings/:settings?">
           <FormSettings
+            saveForm={saveForm}
             formName={formName}
             setFormName={setFormName}
             formSettings={formSettings}

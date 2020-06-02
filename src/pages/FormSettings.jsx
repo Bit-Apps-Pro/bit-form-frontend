@@ -89,12 +89,12 @@ export default function FormSettings(props) {
           </Route>
           <Route exact path={`${path}email-templates/new`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateNew formFields={formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
+              <EmailTemplateNew saveForm={props.saveForm} formFields={formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateEdit formFields={formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
+              <EmailTemplateEdit saveForm={props.saveForm} formFields={formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
             </Suspense>
           </Route>
           <Route path={`${path}workflow`}>
