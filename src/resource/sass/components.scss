@@ -52,10 +52,10 @@ textarea.fld {
 .fld[type="time"],
 .fld[type="month"],
 .fld[type="week"] {
-  display: flow-root;
+  // display: flow-root;
+  line-height: 1 !important;
   width: 100%;
   padding: 5px !important;
-  line-height: 1.5 !important;
 }
 
 .fld[type="color"] {
@@ -297,7 +297,7 @@ textarea.fld {
 
 .btcd-f-input {
   display: inline-block !important;
-  width: 320px;
+  width: 100%;
   position: relative !important;
   overflow: hidden !important;
 }

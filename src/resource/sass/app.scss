@@ -1561,7 +1561,7 @@ nav.top-nav {
     border-left: none;
     border-radius: 0 8px 8px 0;
     position: relative;
-    &:hover{
+    &:hover {
       background: #fafafa;
     }
   }
@@ -1947,6 +1947,9 @@ nav.top-nav {
     margin: 5px 10px 5px 5px;
     padding: 7px 25px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76);
+    &:disabled {
+      background: transparentize($blue, 0.5) !important;
+    }
   }
   & > .btcd-btn-close {
     background: transparentize(#fff, 0.6);
@@ -2146,7 +2149,7 @@ nav.top-nav {
   height: auto !important;
   width: 100%;
   font-family: inherit;
-  line-height: 1 !important;
+  line-height: 1.2 !important;
   font-size: 15px !important;
   padding: 10px 10px 10px 10px !important;
   outline: none !important;
