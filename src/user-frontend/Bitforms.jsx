@@ -6,6 +6,17 @@ import CompGen from '../components/CompGen'
 import checkLogic from './checkLogic'
 
 export default function Bitforms(props) {
+  const layoutConf = { size: 'lg', cols: 6 }
+  if (window.innerWidth > 800) {
+    layoutConf.size = 'lg'
+    layoutConf.cols = 6
+  } else if (window.innerWidth > 600) {
+    layoutConf.size = 'lg'
+    layoutConf.cols = 4
+  } else if (window.innerWidth > 400) {
+    layoutConf.size = 'sm'
+    layoutConf.cols = 2
+  }
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
@@ -14,7 +25,7 @@ export default function Bitforms(props) {
   const [layout, setlayout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
-  const [layoutSize, setlayoutSize] = useState(window.innerWidth > 800 ? 'lg' : window.innerWidth > 600 ? 'md' : 'sm')
+  const [layoutConfig, setlayoutConfig] = useState(layoutConf)
   let maxRowIndex = 0
   const blk = (field) => {
     const name = data[field.i].lbl ? field.i + data[field.i].lbl.split(' ').join('_') : field.i
@@ -27,7 +38,7 @@ export default function Bitforms(props) {
     return (
       <div
         style={{
-          overflow: 'auto',
+          // overflow: 'hidden',
           gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
           gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
           gridRowStart: field.y + 1, /* y-0 -> y + 1 */
@@ -170,14 +181,18 @@ export default function Bitforms(props) {
       setdata(newData)
     }
   }
+
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 800) {
-      setlayoutSize('lg')
-    } else if (window.innerWidth > 600) {
-      setlayoutSize('md')
-    } else {
-      setlayoutSize('sm')
-    }
+    // delay to get stable windows size after resized
+    setTimeout(() => {
+      if (window.innerWidth > 800) {
+        setlayoutConfig({ size: 'lg', cols: 6 })
+      } else if (window.innerWidth > 600) {
+        setlayoutConfig({ size: 'md', cols: 4 })
+      } else if (window.innerWidth > 400) {
+        setlayoutConfig({ size: 'sm', cols: 2 })
+      }
+    }, 1000);
   })
 
   const handleSubmit = (event) => {
@@ -287,6 +302,7 @@ export default function Bitforms(props) {
   const handleReset = () => {
     setresetFieldValue(true)
   }
+
   useEffect(() => {
     if (props.error) {
       if (props.error.$form !== undefined) {
@@ -330,7 +346,10 @@ export default function Bitforms(props) {
 
   const style = {
     display: 'grid',
-    gridTemplateColumns: 'auto auto auto auto auto auto',
+    // gridTemplateColumns: 'auto auto auto auto auto auto',
+    // gridTemplateColumns: '62px 62px 62px 62px 62px 62px',
+    // gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
+    gridTemplateColumns: `repeat(${layoutConfig.cols}, 1fr)`,
     gridgap: 0,
   }
   return (
@@ -338,19 +357,9 @@ export default function Bitforms(props) {
       <form ref={props.refer} id={`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
         {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.nonce} name="bitforms_token" />}
         {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.appID} name="bitforms_id" />}
-        <div
-          style={style}
-        // cols={{ lg: 10 }}
-        // breakpoints={{ lg: 800 }}
-        // cols={{ lg: 10, md: 8, sm: 6, xs: 4, xxs: 2 }}
-        // breakpoints={{ lg: 1100, md: 800, sm: 600, xs: 400, xxs: 330 }}
-        // rowHeight={40}
-        // margin={[0, 10]}
-        >
-          {layout[layoutSize].map(field => {
-            // eslint-disable-next-line no-param-reassign
-            field.static = true
 
+        <div style={style}>
+          {layout[layoutConfig.size].map(field => {
             return blk(field)
           })}
         </div>
