@@ -83,7 +83,7 @@ function TextFieldSettings(props) {
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       {elmData.typ !== 'textarea'
         && elmData.typ.match(/^(text|url|password|number|email|)$/)
-        && <SingleToggle title="Auto Complete:" action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
+        && <SingleToggle title="Auto Fill:" action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       {elmData.typ.match(/^(text|url|password|number|email|)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
       {elmData.typ === 'number' && <SingleInput inpType="number" title="Min:" value={min} action={setMin} width={100} className="mr-4" />}
