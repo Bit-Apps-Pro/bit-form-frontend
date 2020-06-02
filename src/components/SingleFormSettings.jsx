@@ -254,7 +254,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <div>
             <b>
               <span className="btcd-icn icn-one mr-2" />
-              Allow One Entry for each IP address
+              Allow Single Entry for each IP address
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />
@@ -402,7 +402,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         <div>
           <b>Note:</b>
           {' '}
-          By enabling this option, this form will not be able to sumbit in public anymore,
+          By enabling this option, this form will not sumbitted in public anymore,
           only listed IP can submit this form.
         </div>
 
