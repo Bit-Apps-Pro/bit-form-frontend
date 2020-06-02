@@ -178,7 +178,7 @@ function CompGen(props) {
     )
   )
 
-  const submitBtns = (attr, buttonDisabled, handleReset) => (console.log('attr', attr),
+  const submitBtns = (attr, buttonDisabled, handleReset) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
       <button
         className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
