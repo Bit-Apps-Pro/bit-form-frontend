@@ -297,7 +297,7 @@ textarea.fld {
 
 .btcd-f-input {
   display: inline-block !important;
-  width: 95% !important;
+  width: 320px;
   position: relative !important;
   overflow: hidden !important;
 }
@@ -374,14 +374,14 @@ textarea.fld {
   background: #f8f8f8;
   border-radius: 10px;
   margin-left: 10px;
-  width: 95%;
+  width: 90%;
   margin-top: 10px;
   height: 40px;
 }
 
 .btcd-files > div > div {
   display: inline-block;
-  width: 66%;
+  width: 75%;
 }
 
 .btcd-files > div > div > small {
@@ -423,6 +423,8 @@ textarea.fld {
   border-radius: 50px;
   width: 25px;
   height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   line-height: 1;
   font-size: 20px;
   margin-right: 6px;

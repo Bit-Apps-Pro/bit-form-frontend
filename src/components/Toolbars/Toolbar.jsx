@@ -60,7 +60,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'radio',
-        lbl: 'Radio Boxs',
+        lbl: 'Radio Button',
         round: true,
         opt: [
           { lbl: 'option 1' },

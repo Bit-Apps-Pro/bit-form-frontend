@@ -57,23 +57,6 @@ body {
 .d-in-b {
   display: inline-block;
 }
-.btcd-neu-sh-1 {
-  box-shadow: 5px 5px 10px #d7dbe2, -5px -5px 10px #ffffff;
-}
-
-.btcd-neu-sh-2 {
-  box-shadow: 6px 6px 10px rgba(120, 136, 194, 0.4), -6px -6px 10px rgba(255, 255, 255, 0.68);
-}
-.btcd-neu-sh-2-in {
-  box-shadow: 6px 6px 10px rgba(120, 136, 194, 0.4) inset, -6px -6px 10px rgba(255, 255, 255, 0.68) inset;
-}
-.btcd-neu-sh-3 {
-  box-shadow: 3px 3px 5px rgba(120, 136, 194, 0.4), -3px -3px 5px rgba(255, 255, 255, 0.68);
-}
-.btcd-neu-sh-3-in {
-  box-shadow: 3px 3px 5px rgba(120, 136, 194, 0.4) inset, -3px -3px 5px rgba(255, 255, 255, 0.68) inset;
-}
-
 .txt-gray {
   color: $gray;
 }
@@ -410,7 +393,7 @@ body {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.icn-rotate-45{
+.icn-rotate-45 {
   display: inline-block;
   transform: rotate(45deg);
 }
@@ -1114,7 +1097,6 @@ body {
 }
 // file upload end
 
-
 // navbar start
 nav.top-nav {
   position: relative;
@@ -1564,6 +1546,26 @@ nav.top-nav {
     background: #acacac;
   }
 }
+.field-key-cpy {
+  margin: 6px auto 10px auto;
+  & input {
+    outline: none;
+    padding: 10px;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px 0 0 8px;
+  }
+  & button {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+    &:hover{
+      background: #fafafa;
+    }
+  }
+}
 
 .tooltip {
   &::after {
@@ -1752,10 +1754,11 @@ nav.top-nav {
 .btcd-modal-content {
   padding: 15px;
   position: relative;
-  height: 100%;
+  height: 97%;
 }
 .btcd-mdl-title {
   margin: 0;
+  height: 27px;
 }
 .btcd-mdl-subtitle {
   color: #737f94;
