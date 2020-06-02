@@ -3,6 +3,7 @@
 import React, { memo } from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
+import CopyText from '../ElmSettings/Childs/CopyText'
 
 function RadioCheckSettings(props) {
   const elmId = props.elm.id
@@ -88,6 +89,8 @@ function RadioCheckSettings(props) {
         {' '}
         Boxs
       </h4>
+      <label htmlFor="f-key">Field Key</label>
+      <CopyText value={elmId + elmData.lbl.split(' ').join('_')} setSnackbar={() => {}} className="field-key-cpy" />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} className="mt-0" />
       <SingleToggle title="Rounded:" action={setRound} isChecked={isRound} className="mt-3" />
       <div className="opt">

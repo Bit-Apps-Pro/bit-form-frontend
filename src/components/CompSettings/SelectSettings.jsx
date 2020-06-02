@@ -3,6 +3,7 @@
 import React from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
+import CopyText from '../ElmSettings/Childs/CopyText'
 
 export default function SelectSettings(props) {
   const elmId = props.elm.id
@@ -111,6 +112,8 @@ export default function SelectSettings(props) {
         {elmData.typ}
         )
       </h4>
+      <label htmlFor="f-key">Field Key</label>
+      <CopyText value={elmId + elmData.lbl.split(' ').join('_')} setSnackbar={() => {}} className="field-key-cpy" />
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />
@@ -123,13 +126,13 @@ export default function SelectSettings(props) {
           <div className="flx mt-3">
             <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
               <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? elmData.val.indexOf(itm.lbl) >= 0 : itm.lbl === elmData.val} />
-              <span className="btcd-mrk ck br-50 btcd-neu-sh-1" />
+              <span className="btcd-mrk ck br-50" />
             </label>
-            <button onClick={() => rmvOpt(i)} className="btn cls-btn btcd-neu-sh-1" type="button">&times;</button>
+            <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button">&times;</button>
           </div>
         </div>
       ))}
-        <button onClick={addOpt} className="btn btcd-neu-sh-1 blue" type="button">Add More +</button>
+        <button onClick={addOpt} className="btn blue" type="button">Add More +</button>
       </div>
     </div>
   )

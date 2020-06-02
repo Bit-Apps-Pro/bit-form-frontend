@@ -3,6 +3,7 @@ import React from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import DropDown from '../ElmSettings/Childs/DropDown'
+import CopyText from '../ElmSettings/Childs/CopyText'
 
 export default function FileUpSettings(props) {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -82,12 +83,14 @@ export default function FileUpSettings(props) {
   return (
     <div>
       <h4>File Upload</h4>
+      <label htmlFor="f-key">Field Key</label>
+      <CopyText value={props.elm.id + props.elm.data.lbl.split(' ').join('_')} setSnackbar={() => { }} className="field-key-cpy" />
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
       <SingleInput inpType="number" title="Max Upload Size:" value={mxUp} action={setMxUp} placeholder="Any Size" />
       <SingleToggle title="Allow Multiple:" action={setMultiple} isChecked={isMultiple} className="mt-5" />
-      <DropDown className="btcd-neu-sh-1 mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Any File Type" searchPH="Search or Add ext (e.g: .jpg,.png)" action={setFileFilter} value={exts} />
+      <DropDown className="mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Any File Type" searchPH="Search or Add ext (e.g: .jpg,.png)" action={setFileFilter} value={exts} />
     </div>
   )
 }

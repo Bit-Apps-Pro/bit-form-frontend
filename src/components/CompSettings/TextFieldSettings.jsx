@@ -1,12 +1,14 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { memo } from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
+import CopyText from '../ElmSettings/Childs/CopyText'
 
 function TextFieldSettings(props) {
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-
+  console.log('dd', elmData)
   const isRequired = elmData.valid.req !== undefined
   const isAutoComplete = elmData.ac === 'on'
   const label = elmData.lbl === undefined ? '' : elmData.lbl
@@ -73,10 +75,11 @@ function TextFieldSettings(props) {
   return (
     <div>
       <h4>
-        Text Field (
-        {elmData.typ}
-        )
+        { /* eslint-disable-next-line react/jsx-one-expression-per-line */}
+        Field ({elmData.typ})
       </h4>
+      <label htmlFor="f-key">Field Key</label>
+      <CopyText value={elmId + elmData.lbl.split(' ').join('_')} setSnackbar={() => {}} className="field-key-cpy" />
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       {elmData.typ !== 'textarea'
         && elmData.typ.match(/^(text|url|password|number|email|)$/)
