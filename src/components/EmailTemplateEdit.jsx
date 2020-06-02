@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react'
-import { NavLink, useParams, Redirect } from 'react-router-dom'
+import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
 
-function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
+function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const { formType, formID, id } = useParams()
+  const history = useHistory()
 
   useEffect(() => {
     if (typeof tinymce !== 'undefined' && formFields.length > 0) {
@@ -77,6 +78,11 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
     setMailTem([...mailTem])
   }
 
+  const save = () => {
+    history.push(`/builder/${formType}/${formID}/settings/email-templates`)
+    saveForm()
+  }
+
 
   return (
     mailTem.length < 1 ? <Redirect to={`/builder/edit/${formID}/settings/email-templates`} /> : (
@@ -86,6 +92,9 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
           &nbsp;
           Back
         </NavLink>
+
+        <button onClick={save} className="btn blue f-right" type="button">Save</button>
+
 
         <div className="mt-3 flx">
           <b style={{ width: 135 }}>Template Name: </b>

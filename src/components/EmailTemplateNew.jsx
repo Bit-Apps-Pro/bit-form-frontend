@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 
-function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
+function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
@@ -75,6 +75,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields }) {
     mailTem.push(tem)
     setMailTem([...mailTem])
     history.push(`/builder/${formType}/${formID}/settings/email-templates`)
+    saveForm()
   }
 
   const addFieldToSubject = e => {
