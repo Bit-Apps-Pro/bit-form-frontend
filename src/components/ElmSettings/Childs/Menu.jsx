@@ -25,7 +25,7 @@ export default function Menu(props) {
 
   return (
     <div className="btcd-menu">
-      <button ref={ref} onClick={handleMenu} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Column  Visibility"' }} aria-label="icon-btn" type="button">
+      <button ref={ref} onClick={handleMenu} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Column  Visibility"', '--left': '148%' }} aria-label="icon-btn" type="button">
         <span className={`btcd-icn ${props.icn}`} />
         {props.title}
       </button>
