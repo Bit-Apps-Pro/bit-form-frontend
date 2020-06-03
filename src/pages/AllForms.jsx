@@ -68,7 +68,7 @@ function AllFroms() {
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
     { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at', Cell: row => formatDate(row.row.original.created_at) },
-    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} del={() => showDelModal(val.row.original.formID)} dup={(e) => showDupMdl(val.row.original.formID)} /> },
+    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={(e) => showDupMdl(val.row.original.formID)} /> },
   ])
 
   useEffect(() => {
@@ -136,17 +136,16 @@ function AllFroms() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleDelete = formID => {
+  const handleDelete = (formID, index) => {
     bitsFetch({ id: formID }, 'bitforms_delete_aform').then(response => {
       if (response.success) {
-        allFormsDispatchHandler({ type: 'remove', data: props.index })
+        allFormsDispatchHandler({ type: 'remove', data: index })
         setSnackbar({ show: true, msg: 'Form Deleted !' })
       }
     })
   }
 
   const handleDuplicate = formID => {
-    console.log('formID', formID)
     bitsFetch({ id: formID }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
@@ -165,8 +164,8 @@ function AllFroms() {
     setconfMdl({ ...confMdl })
   }
 
-  const showDelModal = formID => {
-    confMdl.action = () => { handleDelete(formID); closeConfMdl() }
+  const showDelModal = (formID, index) => {
+    confMdl.action = () => { handleDelete(formID, index); closeConfMdl() }
     confMdl.btnTxt = 'Delete'
     confMdl.btn2Txt = null
     confMdl.btnClass = ''
