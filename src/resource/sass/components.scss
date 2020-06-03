@@ -1,6 +1,10 @@
 body {
   scroll-behavior: smooth;
 }
+/* .btcd-fld-itm:empty{
+  display: none;
+  background: red;
+} */
 
 .fld-wrp {
   font-family: sans-serif !important;
@@ -43,7 +47,7 @@ textarea.fld {
   transition: all 0s;
   &:focus {
     border-color: #505050 !important;
-    box-shadow: 0 0 0 1px #505050 inset !important;
+    box-shadow: 0 0 0 1px #505050 !important;
   }
 }
 
@@ -71,6 +75,13 @@ textarea.fld {
 }
 .fld::placeholder {
   color: rgb(133, 133, 133) !important;
+}
+
+input:required .fld-lbl::after {
+  margin-left: 2px;
+  content: "*"; // --------------------------------------------------
+  font-size: 20px;
+  position: absolute;
 }
 
 .fld + .slim {
@@ -163,7 +174,7 @@ textarea.fld {
 
 .fld .btcd-ck-wrp input:checked ~ .btcd-mrk {
   background-color: #0a8dff;
-  border-color: #0a8dff !important;
+  border-color: transparent !important;
 }
 
 .fld .btcd-mrk:after {
@@ -190,10 +201,10 @@ textarea.fld {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
+  width: 45%;
+  height: 45%;
   border-radius: 50%;
-  background: white;
+  background: #0a8dff;
 }
 
 // chek box style end
@@ -260,8 +271,8 @@ textarea.fld {
 }
 
 .btcd-btn-md {
-  padding: 10px 20px 10px 20px;
-  font-size: 15px;
+  padding: 10px 20px 10px 20px !important;
+  font-size: 15px !important;
 }
 .j-c-c {
   justify-content: center;

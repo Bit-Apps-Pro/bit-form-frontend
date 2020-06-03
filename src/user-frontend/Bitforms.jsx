@@ -47,8 +47,8 @@ export default function Bitforms(props) {
         }}
         key={field.i}
         btcd-id={field.i}
-        data-grid={field}
-        role="button"
+        // data-grid={field}
+        className="btcd-fld-itm"
       >
         <CompGen
           editMode
