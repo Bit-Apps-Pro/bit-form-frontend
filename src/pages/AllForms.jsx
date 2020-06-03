@@ -49,7 +49,6 @@ function AllFroms() {
     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
     const hr = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(d)
-    // return `${da}-${mo}-${ye} ${hr}`
     return (
       <div style={{ lineHeight: 0.7, fontWeight: 500 }}>
         {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
@@ -64,7 +63,7 @@ function AllFroms() {
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
-    { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={val.row.values.shortcode} setSnackbar={setSnackbar} /> },
+    { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} setSnackbar={setSnackbar} className="cpyTxt" /> },
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },

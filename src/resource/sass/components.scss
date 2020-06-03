@@ -52,10 +52,10 @@ textarea.fld {
 .fld[type="time"],
 .fld[type="month"],
 .fld[type="week"] {
-  display: flow-root;
+  // display: flow-root;
+  line-height: 1 !important;
   width: 100%;
   padding: 5px !important;
-  line-height: 1.5 !important;
 }
 
 .fld[type="color"] {
@@ -183,7 +183,7 @@ textarea.fld {
   height: 10px;
   border: solid white;
   border-width: 0 3px 3px 0;
-  transform:  translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .fld .btcd-ck-wrp .btcd-mrk:not(.ck):after {
@@ -213,13 +213,15 @@ textarea.fld {
 }
 
 .btcd-frm-sub {
+  background: white;
   height: 60px;
   display: flex;
   align-items: center;
   padding: 0 10px 0 10px;
 }
 .btcd-sub-btn {
-  width: 100px;
+  height: auto;
+  width: auto;
   font-family: sans-serif;
   line-height: 1;
   border: none;
@@ -284,6 +286,8 @@ textarea.fld {
 .btcd-f-wrp {
   cursor: pointer !important;
   margin-top: 6px !important;
+  width: 100%;
+  position: relative;
 }
 
 .btcd-f-wrp .btn-wrp {
@@ -293,7 +297,7 @@ textarea.fld {
 
 .btcd-f-input {
   display: inline-block !important;
-  width: 90% !important;
+  width: 100%;
   position: relative !important;
   overflow: hidden !important;
 }
@@ -303,7 +307,7 @@ textarea.fld {
 }
 
 .btcd-f-wrp .btcd-f-title {
-  font-style: 14px !important;
+  font-size: 14px !important;
 }
 
 .btcd-f-wrp .f-max {
@@ -322,6 +326,7 @@ textarea.fld {
   border: none;
   margin-right: 8px;
   height: 35px;
+  box-shadow: none;
 }
 
 .btcd-f-wrp .btcd-inpBtn img {
@@ -346,7 +351,7 @@ textarea.fld {
   opacity: 0;
   top: 0;
   left: 0;
-  height: 37px;
+  height: 42px;
   cursor: pointer;
 }
 
@@ -368,15 +373,15 @@ textarea.fld {
   align-items: center;
   background: #f8f8f8;
   border-radius: 10px;
-  margin-left: 30px;
-  width: 91%;
+  margin-left: 10px;
+  width: 90%;
   margin-top: 10px;
   height: 40px;
 }
 
 .btcd-files > div > div {
   display: inline-block;
-  width: 73%;
+  width: 75%;
 }
 
 .btcd-files > div > div > small {
@@ -418,9 +423,13 @@ textarea.fld {
   border-radius: 50px;
   width: 25px;
   height: 25px;
+  min-width: 25px;
+  min-height: 25px;
+  line-height: 1;
   font-size: 20px;
   margin-right: 6px;
   padding: 0;
+  box-shadow: none;
 }
 
 .btcd-files > div > button:hover {

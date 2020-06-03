@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { createElement, createRef, useState, useEffect } from 'react'
@@ -282,7 +283,7 @@ function FileUp({ attr, formID, entryID, resetFieldValue }) {
               <img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4=" alt="file-upload" />
               <span>{` ${attr.upBtnTxt}`}</span>
             </button>
-            <span className="btcd-f-title">No File Chosen</span>
+            <div className="btcd-f-title">No File Chosen</div>
             <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
           </div>
           <input
@@ -309,7 +310,7 @@ function FileUp({ attr, formID, entryID, resetFieldValue }) {
               )}
               {filelist.map((itm, i) => (
                 <div key={`ol-f-${i + 3}`} className="flx ">
-                  <a href={bits.baseDLURL && `${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
+                  <a href={typeof bits !== 'undefined' && bits.baseDLURL && `${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
                     <span className="btcd-icn icn-file" />
                     {' '}
                     {itm}

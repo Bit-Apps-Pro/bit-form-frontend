@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CopyText({ value, setSnackbar }) {
+export default function CopyText({ value, setSnackbar, className }) {
   const copyText = e => {
     const cpyBtn = e.target
     cpyBtn.setAttribute('style', '--tooltip-txt: "Copied"')
@@ -13,9 +13,9 @@ export default function CopyText({ value, setSnackbar }) {
   }
 
   return (
-    <div className="cpyTxt">
+    <div className={className}>
       <label htmlFor={value}>
-        <input value={`[${value}]`} readOnly />
+        <input value={value} readOnly />
         <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button"><span className="btcd-icn icn-copy" /></button>
       </label>
     </div>

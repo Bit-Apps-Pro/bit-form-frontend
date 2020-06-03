@@ -658,7 +658,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
-                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={'confirmation' in formSettings && formSettings.confirmation.type.webHooks.map((itm, i) => ({ name: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
+                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={'confirmation' in formSettings && 'webHooks' in formSettings.confirmation && formSettings.confirmation.type.webHooks.map((itm, i) => ({ name: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
                   {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={e => setInteg(e, lgcGrpInd)} value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.integrations.map((itm, i) => ({ name: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
 
                   {lgcGrp.action_run !== 'delete' && (

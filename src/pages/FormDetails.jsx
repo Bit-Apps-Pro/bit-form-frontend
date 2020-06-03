@@ -79,7 +79,7 @@ function Builder(props) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    submitBtn: subBtn,
+    subBtn,
     confirmation: {
       type: {
         successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
@@ -280,6 +280,7 @@ function Builder(props) {
         </Route>
         <Route path="/builder/:formType/:formID/settings/:settings?">
           <FormSettings
+            saveForm={saveForm}
             formName={formName}
             setFormName={setFormName}
             formSettings={formSettings}

@@ -14,6 +14,10 @@ $dp-txt: #545582;
 $gray: #e2e2e2;
 $select-arrow: "data:image/svg+xml;charset=utf8,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3C!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ --%3E%3Cg%3E%3Ctitle%3Ebackground%3C/title%3E%3Crect fill='none' id='canvas_background' height='22' width='22' y='-1' x='-1'/%3E%3Cg display='none' overflow='visible' y='0' x='0' height='100%25' width='100%25' id='canvasGrid'%3E%3Crect fill='url(%23gridpattern)' stroke-width='0' y='0' x='0' height='100%25' width='100%25'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Ctitle%3ELayer 1%3C/title%3E%3Cline transform='rotate(45 9.707600593566898,10.544168472290037) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_2' y2='14.860267' x2='9.7076' y1='6.228069' x1='9.7076' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3Cline transform='rotate(-45 4.444442749023432,10.544166564941404) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_1' y2='14.860266' x2='4.444443' y1='6.228067' x1='4.444443' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3C/g%3E%3C/svg%3E";
 
+:root {
+  --tooltip-txt: "";
+}
+
 html,
 body {
   margin: 0;
@@ -53,23 +57,6 @@ body {
 .d-in-b {
   display: inline-block;
 }
-.btcd-neu-sh-1 {
-  box-shadow: 5px 5px 10px #d7dbe2, -5px -5px 10px #ffffff;
-}
-
-.btcd-neu-sh-2 {
-  box-shadow: 6px 6px 10px rgba(120, 136, 194, 0.4), -6px -6px 10px rgba(255, 255, 255, 0.68);
-}
-.btcd-neu-sh-2-in {
-  box-shadow: 6px 6px 10px rgba(120, 136, 194, 0.4) inset, -6px -6px 10px rgba(255, 255, 255, 0.68) inset;
-}
-.btcd-neu-sh-3 {
-  box-shadow: 3px 3px 5px rgba(120, 136, 194, 0.4), -3px -3px 5px rgba(255, 255, 255, 0.68);
-}
-.btcd-neu-sh-3-in {
-  box-shadow: 3px 3px 5px rgba(120, 136, 194, 0.4) inset, -3px -3px 5px rgba(255, 255, 255, 0.68) inset;
-}
-
 .txt-gray {
   color: $gray;
 }
@@ -406,7 +393,7 @@ body {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.icn-rotate-45{
+.icn-rotate-45 {
   display: inline-block;
   transform: rotate(45deg);
 }
@@ -1110,12 +1097,6 @@ body {
 }
 // file upload end
 
-:root {
-  --underline-height: 0.5em;
-  --transition-duration: 0.5s;
-  --tooltip-txt: "";
-}
-
 // navbar start
 nav.top-nav {
   position: relative;
@@ -1537,7 +1518,7 @@ nav.top-nav {
 //2nd toggle end
 
 .cpyTxt {
-  width: 180px;
+  width: 200px;
   & input {
     font-weight: normal;
     color: $dp-blue;
@@ -1545,7 +1526,7 @@ nav.top-nav {
     letter-spacing: 1px;
     outline: none;
     padding: 3px 10px;
-    width: 140px;
+    width: 160px;
     border-radius: 15px 0 0 15px;
     border: none;
     background: whitesmoke;
@@ -1565,11 +1546,32 @@ nav.top-nav {
     background: #acacac;
   }
 }
+.field-key-cpy {
+  margin: 6px auto 10px auto;
+  & input {
+    outline: none;
+    padding: 10px;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px 0 0 8px;
+  }
+  & button {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #e4e4e4;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+    &:hover {
+      background: #fafafa;
+    }
+  }
+}
 
 .tooltip {
   &::after {
     font-family: "Montserrat", sans-serif;
     line-height: 1;
+    white-space: pre-wrap;
     font-size: 13px;
     font-weight: 600;
     content: var(--tooltip-txt);
@@ -1752,10 +1754,11 @@ nav.top-nav {
 .btcd-modal-content {
   padding: 15px;
   position: relative;
-  height: 100%;
+  height: 97%;
 }
 .btcd-mdl-title {
   margin: 0;
+  height: 27px;
 }
 .btcd-mdl-subtitle {
   color: #737f94;
@@ -1944,6 +1947,9 @@ nav.top-nav {
     margin: 5px 10px 5px 5px;
     padding: 7px 25px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.76);
+    &:disabled {
+      background: transparentize($blue, 0.5) !important;
+    }
   }
   & > .btcd-btn-close {
     background: transparentize(#fff, 0.6);
@@ -2143,7 +2149,7 @@ nav.top-nav {
   height: auto !important;
   width: 100%;
   font-family: inherit;
-  line-height: 1 !important;
+  line-height: 1.2 !important;
   font-size: 15px !important;
   padding: 10px 10px 10px 10px !important;
   outline: none !important;
