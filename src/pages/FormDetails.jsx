@@ -79,7 +79,7 @@ function Builder(props) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    subBtn,
+    submitBtn: { ...subBtn },
     confirmation: {
       type: {
         successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
@@ -106,7 +106,7 @@ function Builder(props) {
               }
               responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
               setFields(responseData.form_content.fields)
-              setNewCounter(responseData.form_content.layout.lg.length + 1)
+              setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
             } else {
@@ -124,8 +124,9 @@ function Builder(props) {
             const responseData = res.data
             responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
-            setNewCounter(responseData.form_content.layout.lg.length + 1)
+            setNewCounter(getNewId(responseData.form_content.fields))
             setFormName(responseData.form_content.form_name)
+            setSubBtn(responseData.formSettings.submitBtn)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)
             setadditional(responseData.additional)
@@ -148,6 +149,20 @@ function Builder(props) {
     setFormName(e.target.value)
   }
 
+  const getNewId = flds => {
+    let largestNumberFld = 0
+    let num = 0
+    for (const fld in flds) {
+      if (fld !== null && fld !== undefined) {
+        num = Number(fld.match(/[0-9]/g).join(''))
+        if (typeof num === 'number' && num > largestNumberFld) {
+          largestNumberFld = num
+        }
+      }
+    }
+    return largestNumberFld + 1
+  }
+
   const saveForm = () => {
     setbuttonDisabled(true)
     let formData = {
@@ -162,7 +177,7 @@ function Builder(props) {
     }
     let action = 'bitforms_create_new_form'
     if (savedFormId > 0) {
-      setFormSettings({ ...formSettings, submitBtn: subBtn })
+      setFormSettings({ ...formSettings })
       formData = {
         id: savedFormId,
         layout: lay,
