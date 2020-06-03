@@ -9,6 +9,10 @@ export default function SelectSettings(props) {
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...elmData.opt]
+  let fldKey = elmId
+  if ('lbl' in elmData) {
+    fldKey = elmId + elmData.lbl.split(' ').join('_')
+  }
   console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
 
   const isRequired = elmData.valid.req !== undefined
@@ -107,31 +111,30 @@ export default function SelectSettings(props) {
 
   return (
     <div>
-      <h4>
-        Text Field (
+      <div className="mt-2 mb-2">
+        <span className="font-w-m">Field Type : </span>
         {elmData.typ}
-        )
-      </h4>
-      <label htmlFor="f-key">Field Key</label>
-      <CopyText value={elmId + elmData.lbl.split(' ').join('_')} setSnackbar={() => {}} className="field-key-cpy" />
+      </div>
+      <span className="font-w-m">Field Key</span>
+      <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />
       {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
       <div className="opt">
-        Options:
+        <span className="font-w-m">Options:</span>
         {elmData.opt.map((itm, i) => (
-        <div key={`opt-${i + 8}`} className="flx flx-between">
-          <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
-          <div className="flx mt-3">
-            <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-              <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? elmData.val.indexOf(itm.lbl) >= 0 : itm.lbl === elmData.val} />
-              <span className="btcd-mrk ck br-50" />
-            </label>
-            <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button">&times;</button>
+          <div key={`opt-${i + 8}`} className="flx flx-between">
+            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
+            <div className="flx mt-2">
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
+                <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? elmData.val.indexOf(itm.lbl) >= 0 : itm.lbl === elmData.val} />
+                <span className="btcd-mrk ck br-50" />
+              </label>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button"><span className="btcd-icn icn-clear" /></button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
         <button onClick={addOpt} className="btn blue" type="button">Add More +</button>
       </div>
     </div>

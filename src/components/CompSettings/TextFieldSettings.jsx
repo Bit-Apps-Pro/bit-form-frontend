@@ -15,6 +15,10 @@ function TextFieldSettings(props) {
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
   const min = elmData.mn === undefined ? '' : elmData.mn
   const max = elmData.mx === undefined ? '' : elmData.mx
+  let fldKey = elmId
+  if ('lbl' in elmData) {
+    fldKey = elmId + elmData.lbl.split(' ').join('_')
+  }
 
   function setRequired(e) {
     if (e.target.checked) {
@@ -74,13 +78,14 @@ function TextFieldSettings(props) {
 
   return (
     <div>
-      <h4>
-        { /* eslint-disable-next-line react/jsx-one-expression-per-line */}
-        Field ({elmData.typ})
-      </h4>
-      <label htmlFor="f-key">Field Key</label>
-      <CopyText value={elmId + elmData.lbl.split(' ').join('_')} setSnackbar={() => {}} className="field-key-cpy" />
-      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
+      <div className="mt-2 mb-2">
+        <span className="font-w-m">Field Type :</span>
+        {' '}
+        {elmData.typ}
+      </div>
+      <span className="font-w-m">Field Key</span>
+      <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
+      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} className="mt-3" />
       {elmData.typ !== 'textarea'
         && elmData.typ.match(/^(text|url|password|number|email|)$/)
         && <SingleToggle title="Auto Fill:" action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
