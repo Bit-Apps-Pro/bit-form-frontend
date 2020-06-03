@@ -64,32 +64,87 @@ export default function Bitforms(props) {
   const onBlurHandler = (event) => {
     let maybeReset = false
     const element = event.target
+    const { form } = event.target
     const newData = data !== undefined && JSON.parse(JSON.stringify(data))
     if (resetFieldValue) {
       setresetFieldValue(false)
     }
-    if (newData[props.fieldsKey[element.name]] && newData[props.fieldsKey[element.name]].error) {
-      delete newData[props.fieldsKey[element.name]].error
+    let targetFieldName
+    const fieldNameToQuery = element.name
+    if (element.name && element.name.indexOf('[]') !== -1 && element.name.indexOf('[]') === element.name.length - 2) {
+      targetFieldName = element.name.substring(0, element.name.length - 2)
+    } else {
+      targetFieldName = element.name
+    }
+    if (newData[props.fieldsKey[targetFieldName]] && newData[props.fieldsKey[targetFieldName]].error) {
+      delete newData[props.fieldsKey[targetFieldName]].error
       maybeReset = true
     }
-    if (props.fieldToCheck[element.name] !== undefined) {
+    if (props.fieldToCheck[targetFieldName] !== undefined) {
       const fieldData = []
       Object.keys(props.fieldToCheck).forEach(fieldName => {
-        const fieldDetails = document.getElementsByName(fieldName)
+        let currentField
+        if (targetFieldName === fieldName) {
+          currentField = fieldNameToQuery
+        } else {
+          currentField = fieldName
+        }
+        const fieldDetails = form.querySelectorAll(`[name^='${currentField}']`)
+        // const fieldDetails = document.getElementsByName(currentField)
+        // console.log('fieldDetails', form.querySelectorAll(`*[name='${currentField}']`))
         if (fieldDetails.length > 0) {
-          const elementIndex = props.sid ? props.sid - 1 : 0
+          let value
+          let multiple
+          const { type } = fieldDetails[0]
+          if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
+            switch (type) {
+              case 'checkbox':
+                // eslint-disable-next-line no-case-declarations
+                const checkedValue = []
+                fieldDetails.forEach(option => { option.checked && option.value && checkedValue.push(option.value) })
+                value = checkedValue
+                multiple = true
+                break;
+
+              case 'select-multiple':
+                // console.log('MULPLfieldDetails', fieldDetails)
+                // eslint-disable-next-line no-case-declarations
+                const selectedValue = []
+                if (fieldDetails[0].slim) {
+                  fieldDetails[0].slim.data.data.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
+                } else {
+                  fieldDetails[0].childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
+                }
+                value = selectedValue
+                multiple = true
+                break;
+
+              case 'select-one':
+                value = fieldDetails[0].value
+                break;
+
+              case 'radio':
+                fieldDetails.forEach(option => { if (option.checked && option.value) value = option.value })
+                break;
+
+              default:
+                break;
+            }
+          } else {
+            value = fieldDetails[0].value
+            multiple = fieldDetails[0].multiple
+          }
           fieldData[fieldName] = {
-            type: fieldDetails[elementIndex].type,
-            value: fieldDetails[elementIndex].value,
-            multiple: fieldDetails[elementIndex].multiple,
+            type,
+            value,
+            multiple,
           }
         }
       });
-      console.log('fieldData', fieldData)
-      // console.log( props.fieldToCheck)
-      props.fieldToCheck[element.name].forEach(LogicIndex => {
-        console.log('checkLogic', checkLogic(props.conditional[LogicIndex].logics, fieldData))
-        if (checkLogic(props.conditional[LogicIndex].logics, fieldData)) {
+      props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
+        const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldData)
+        console.log('checkLogic', logicStatus)
+        if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
               switch (actionDetail.action) {
@@ -250,10 +305,6 @@ export default function Bitforms(props) {
     }
     submitResponse.then(result => {
       if (result !== undefined && result.success) {
-        /* console.log('formID', formID)
-        if (formID) {
-          document.getElementById(formID).reset()
-        } */
         handleReset()
         if (typeof result.data === 'object') {
           setMessage(result.data.message)
@@ -262,21 +313,17 @@ export default function Bitforms(props) {
           if (hasError) {
             sethasError(false)
           }
-          if (result.data.redirectPage === null) {
-            document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
-          }
         } else {
           setMessage(result.data)
           setredirectPage(null)
           setSnack(true)
-          document.getElementById(`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`).reset()
         }
       } else if (result.data && typeof result.data === 'string') {
         setMessage(result.data)
         sethasError(true)
         setSnack(true)
       } else if (result.data && result.data.data && typeof result.data.data === 'string') {
-        setMessage(result.data)
+        setMessage(result.data.data)
         sethasError(true)
         setSnack(true)
       } else if (result.data && result.data.data) {
@@ -303,6 +350,14 @@ export default function Bitforms(props) {
     setresetFieldValue(true)
   }
 
+  useEffect(() => {
+    if (resetFieldValue) {
+      setresetFieldValue(false)
+    }
+    return () => {
+      setresetFieldValue(false)
+    }
+  }, [resetFieldValue])
   useEffect(() => {
     if (props.error) {
       if (props.error.$form !== undefined) {
@@ -354,10 +409,9 @@ export default function Bitforms(props) {
   }
   return (
     <div>
-      <form ref={props.refer} id={`form-${typeof bitFormsFront !== 'undefined' && bitFormsFront.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
-        {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.nonce} name="bitforms_token" />}
-        {typeof bitFormsFront !== 'undefined' && !props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && bitFormsFront.appID} name="bitforms_id" />}
-
+      <form ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+        {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
+        {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div style={style}>
           {layout[layoutConfig.size].map(field => {
             return blk(field)
@@ -429,16 +483,13 @@ function Toast(props) {
     }
   }, [snack])
   useEffect(() => {
-    const resetTime = props.index ? 5000 : 2000
-    console.log('resetTime', resetTime)
+    const resetTime = props.error ? 10000 : 5000
     const timer = setTimeout(() => {
       if (props.show) {
-        console.log(props.index)
         // !props.index && props.canClose === undefined && props.setSnack(false)
         props.setSnack(false)
         if (!props.error) {
           if (props.redirectPage !== null) {
-            console.log(props.redirectPage)
             window.location = decodeURI(props.redirectPage)
           }
         }

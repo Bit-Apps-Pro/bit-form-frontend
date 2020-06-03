@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom'
 import Bitforms from './Bitforms'
 
 export default function BitformsRenderer(params) {
-  console.log('params.contentID', params.sid)
   document.getElementById(`${params.contentID}no-js`).innerHTML = ''
   /* if (params.gCaptchaSiteKey !== null) {
     grecaptcha.ready(() => {
@@ -28,6 +27,8 @@ export default function BitformsRenderer(params) {
     fieldToChange={params.fieldToChange}
     conditional={params.conditional}
     fieldsKey={params.fieldsKey}
-    sid={params.sid}
+    contentID={params.contentID}
+    appID={params.appID}
+    nonce={params.nonce}
   />, document.getElementById(params.contentID));
 }
