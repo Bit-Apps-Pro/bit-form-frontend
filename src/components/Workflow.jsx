@@ -809,11 +809,6 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           Empty
           </div>
         )}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   )
 }
