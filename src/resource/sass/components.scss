@@ -1,10 +1,9 @@
 body {
   scroll-behavior: smooth;
 }
-/* .btcd-fld-itm:empty{
+.btcd-fld-itm:empty {
   display: none;
-  background: red;
-} */
+}
 
 .fld-wrp {
   font-family: sans-serif !important;
@@ -204,7 +203,7 @@ input:required .fld-lbl::after {
   width: 45%;
   height: 45%;
   border-radius: 50%;
-  background: #0a8dff;
+  background: #ffffff;
 }
 
 // chek box style end

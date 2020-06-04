@@ -611,6 +611,9 @@ body {
 .mb-4 {
   margin-bottom: 20px;
 }
+.mb-50{
+  margin-bottom: 250px;
+}
 
 .mt-0 {
   margin-top: 0 !important;
@@ -2155,7 +2158,7 @@ nav.top-nav {
 
 .btcd-paper-inp {
   box-shadow: none !important;
-  height: auto !important;
+  height: auto;
   width: 100%;
   font-family: inherit;
   line-height: 1.2 !important;
