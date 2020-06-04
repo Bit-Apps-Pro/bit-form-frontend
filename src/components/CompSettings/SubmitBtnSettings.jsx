@@ -57,7 +57,10 @@ export default function SubmitBtnSettings(props) {
 
   return (
     <div>
-      <h4>Submit Buttons</h4>
+      <div className="mt-2">
+        <span className="font-w-m">Field Type : </span>
+        Submit
+      </div>
       <SingleInput inpType="text" title="Submit Button Text:" value={subBtnTxt} action={setSubBtnTxt} />
       <SingleToggle title="Show Reset Button:" action={setResetAlw} isChecked={isAlwReset} className="mt-5" />
       {isAlwReset && <SingleInput inpType="text" title="Reset Button Text:" value={rstBtnTxt} action={setRstBtnTxt} />}

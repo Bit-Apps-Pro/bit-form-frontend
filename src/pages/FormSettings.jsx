@@ -108,6 +108,7 @@ export default function FormSettings(props) {
             </Suspense>
           </Route>
         </Switch>
+        <div className="mb-50" />
       </div>
     </div>
   )

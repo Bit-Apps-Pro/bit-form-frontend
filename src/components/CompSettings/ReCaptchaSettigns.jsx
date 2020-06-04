@@ -9,7 +9,10 @@ export default function ReCaptchaSettigns({ elm, updateData }) {
 
   return (
     <div>
-      <h4>ReCaptcha</h4>
+      <div className="mt-2 mb-2">
+        <span className="font-w-m">Field Type : </span>
+        ReCaptcha
+      </div>
       <div>
         <label htmlFor="recap-thm">
           Theme

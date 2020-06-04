@@ -50,10 +50,10 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         <option value="not_null">Is Not Null</option>
         {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain">Contain</option>}
         {!type.match(/^(date|time|datetime|month|week)$/) && <option value="not_contain">Not Contain</option>}
-        {!type.match(/^(color|url|password|email)$/) && <option value="greater">Greater Than</option>}
-        {!type.match(/^(color|url|password|email)$/) && <option value="less">Less Than</option>}
-        {!type.match(/^(color|url|password|email)$/) && <option value="greater_or_equal">Greater Than or Equal</option>}
-        {!type.match(/^(color|url|password|email)$/) && <option value="less_or_equal">Less Than or Equal</option>}
+        {!type.match(/^(color|url|password|email|text)$/) && <option value="greater">Greater Than</option>}
+        {!type.match(/^(color|url|password|email|text)$/) && <option value="less">Less Than</option>}
+        {!type.match(/^(color|url|password|email|text)$/) && <option value="greater_or_equal">Greater Than or Equal</option>}
+        {!type.match(/^(color|url|password|email|text)$/) && <option value="less_or_equal">Less Than or Equal</option>}
         {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="start_with">Start With</option>}
         {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="end_with">End With</option>}
       </MtSelect>

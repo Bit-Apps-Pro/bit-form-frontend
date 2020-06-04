@@ -14,7 +14,10 @@ export default function FileUpSettings(props) {
   const { upBtnTxt } = props.elm.data
   const mxUp = props.elm.data.mxUp === undefined ? '' : props.elm.data.mxUp
   const exts = props.elm.data.exts === undefined ? [] : props.elm.data.exts.split(',._RF_,')
-
+  let fldKey = props.elm.id
+  if ('lbl' in props.elm.data) {
+    fldKey = props.elm.id + props.elm.data.lbl.split(' ').join('_')
+  }
   const options = [
     { name: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
     { name: 'Audios', value: '.opus,.flac,.webm,.weba,.wav,.ogg,.m4a,.mp3,.oga,.mid,.amr,.aiff,.wma,.au,.acc,.wpl' },
@@ -82,10 +85,16 @@ export default function FileUpSettings(props) {
 
   return (
     <div>
-      <h4>File Upload</h4>
-      <label htmlFor="f-key">Field Key</label>
-      <CopyText value={props.elm.id + props.elm.data.lbl.split(' ').join('_')} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
+      <div className="mt-2 mb-2">
+        <span className="font-w-m">Field Type : </span>
+        {' '}
+        File-Upload
+      </div>
+      <div className="mt-1">
+        <span className="font-w-m">Field Key</span>
+        <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
+      </div>
+      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} className="mt-2" />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
       <SingleInput inpType="number" title="Max Upload Size:" value={mxUp} action={setMxUp} placeholder="Any Size" />

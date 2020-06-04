@@ -6,11 +6,14 @@ import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
 
 function RadioCheckSettings(props) {
+  console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...props.fields[elmId].opt]
-  console.log('^', elmData)
-  console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
+  let fldKey = elmId
+  if ('lbl' in elmData) {
+    fldKey = elmId + elmData.lbl.split(' ').join('_')
+  }
 
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const isRound = elmData.round !== undefined
@@ -84,17 +87,16 @@ function RadioCheckSettings(props) {
 
   return (
     <div>
-      <h4>
-        {elmData.typ === 'check' ? 'Check' : 'Radio'}
-        {' '}
-        Boxs
-      </h4>
-      <label htmlFor="f-key">Field Key</label>
-      <CopyText value={elmId + elmData.lbl.split(' ').join('_')} setSnackbar={() => {}} className="field-key-cpy" />
+      <div className="mt-2 mb-2">
+        <span className="font-w-m">Field Type : </span>
+        {elmData.typ === 'check' ? 'Check Box' : 'Radio'}
+      </div>
+      <span className="font-w-m">Field Key</span>
+      <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} className="mt-0" />
       <SingleToggle title="Rounded:" action={setRound} isChecked={isRound} className="mt-3" />
       <div className="opt">
-        Options:
+        <span className="font-w-m">Options:</span>
         {options.map((itm, i) => (
         <div key={`opt-${i + 8}`} className="flx flx-between">
           <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />

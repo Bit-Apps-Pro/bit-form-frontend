@@ -7,7 +7,7 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 
 function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType }) {
   const [tolbarSiz, setTolbarSiz] = useState(false)
-  const [gridWidth, setGridWidth] = useState(window.innerWidth - 473)
+  const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
@@ -169,7 +169,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
               setFields={setFields}
               setFormName={setFormName}
               subBtn={subBtn}
-              isLoading={isLoading}
               newCounter={newCounter}
               setNewCounter={setNewCounter}
               layout={lay}
