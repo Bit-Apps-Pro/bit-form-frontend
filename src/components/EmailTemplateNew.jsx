@@ -1,12 +1,13 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react'
 import { NavLink, useParams, useHistory } from 'react-router-dom'
+import Modal from './Modal'
 
 function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
-
+  const [showTemplateModal, setTemplateModal] = useState(false)
   const { formType, formID, id } = useParams()
   const history = useHistory()
 
@@ -23,10 +24,6 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
       }
       // eslint-disable-next-line no-undef
       tinymce.init({
-        // mode: "exact",
-        // elements: 'pre-details',
-        // statusbar: false,
-        // skin: 'lightgray',
         selector: '.btcd-editor',
         plugins: 'link hr lists wpview wpemoji',
         theme: 'modern',
@@ -91,7 +88,15 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   }
 
   return (
-    <div className="w-7">
+    <div style={{ width: 900 }}>
+      <Modal
+        show={showTemplateModal}
+        setModal={setTemplateModal}
+        title="Browse Template"
+      >
+        <h4 className="txt-dp">Email Templates Coming soon</h4>
+      </Modal>
+
       <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
         <span className="btcd-icn icn-arrow_back" />
         &nbsp;
@@ -100,13 +105,13 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
 
       <button onClick={save} className="btn blue f-right" type="button">Save</button>
 
-      <div className="mt-3">
-        <b style={{ width: 135 }}>Template Name: </b>
-        <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={tem.title} />
+      <div className="mt-3 flx">
+        <b style={{ width: 103 }}>Template Name: </b>
+        <input onChange={handleTitle} type="text" className="btcd-paper-inp w-9" placeholder="Name" value={tem.title} />
       </div>
       <div className="mt-3 flx">
-        <b style={{ width: 142 }}>Subject:</b>
-        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-6" placeholder="Email Subject Here" value={tem.sub} />
+        <b style={{ width: 100 }}>Subject:</b>
+        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
           <option value="">Add form field</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
@@ -114,7 +119,10 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
       </div>
 
       <div className="mt-3">
-        <div><b>Body:</b></div>
+        <div className="flx flx-between">
+          <b>Body:</b>
+          <button className="btn" onClick={() => setTemplateModal(true)} type="button">Choose Template</button>
+        </div>
         <select onChange={addFieldToBody} className="btcd-paper-inp mt-2 form-fields-em w-5">
           <option value="">Add form field</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
@@ -131,7 +139,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
       </div>
 
 
-    </div>
+    </div >
   )
 }
 

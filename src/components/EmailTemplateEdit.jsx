@@ -86,7 +86,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
 
   return (
     mailTem.length < 1 ? <Redirect to={`/builder/edit/${formID}/settings/email-templates`} /> : (
-      <div className="w-7">
+      <div style={{ width: 900 }}>
         <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
           <span className="btcd-icn icn-arrow_back" />
           &nbsp;
@@ -97,13 +97,13 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
 
 
         <div className="mt-3 flx">
-          <b style={{ width: 135 }}>Template Name: </b>
-          <input onChange={handleTitle} type="text" className="btcd-paper-inp w-7" placeholder="Name" value={mailTem[id].title} />
+          <b style={{ width: 102 }}>Template Name: </b>
+          <input onChange={handleTitle} type="text" className="btcd-paper-inp w-9" placeholder="Name" value={mailTem[id].title} />
         </div>
         <div className="mt-3 flx">
-          <b style={{ width: 135 }}>Subject:</b>
+          <b style={{ width: 100 }}>Subject:</b>
           <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={mailTem[id].sub} />
-          <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 130 }}>
+          <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
             <option value="">Add form field</option>
             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
           </select>
