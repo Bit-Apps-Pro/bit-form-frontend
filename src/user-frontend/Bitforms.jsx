@@ -45,10 +45,10 @@ export default function Bitforms(props) {
           gridRowEnd: field.y !== 1 && field.h + (field.y + 1), /* h-4 -> if y not 1 then h+y */
           minHeight: field.h * 40, /* h * 40px */
         }}
-        key={field.i}
-        btcd-id={field.i}
-        // data-grid={field}
         className="btcd-fld-itm"
+        // btcd-id={field.i}
+        // key={field.i}
+        // data-grid={field}
       >
         <CompGen
           editMode

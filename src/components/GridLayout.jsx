@@ -341,7 +341,6 @@ function GridLayout(props) {
       {compByTheme(fields[item.i])}
     </div>
   )
-  console.log('ww', props.width, props.width - 25)
   return (
     <div style={{ width: props.width - 19 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars>
