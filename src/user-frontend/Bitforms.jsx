@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useReducer } from 'react'
 import SlimSelect from 'slim-select'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 import checkLogic from './checkLogic'
 
+
+const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
   const layoutConf = { size: 'lg', cols: 6 }
   if (window.innerWidth > 800) {
@@ -21,18 +23,22 @@ export default function Bitforms(props) {
   const [message, setMessage] = useState(null)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
   const [redirectPage, setredirectPage] = useState(null)
-  const [data, setdata] = useState(props.data)
-  const [layout, setlayout] = useState(props.layout)
+  const [fieldData, dispatchFieldData] = useReducer(reduceFieldData, props.data)
+  const [layout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
   const [layoutConfig, setlayoutConfig] = useState(layoutConf)
   let maxRowIndex = 0
   const blk = (field) => {
-    const name = data[field.i].lbl ? field.i + data[field.i].lbl.split(' ').join('_') : field.i
+    const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+    const name = dataToPass[field.i].lbl ? field.i + dataToPass[field.i].lbl.split(' ').join('_') : field.i
     // eslint-disable-next-line no-param-reassign
-    data[field.i].name = name
-    if (props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && data[field.i].typ === 'recaptcha') {
-      data[field.i].siteKey = props.gRecaptchaSiteKey
+    dataToPass[field.i].name = name
+    if (props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && dataToPass[field.i].typ === 'recaptcha') {
+      dataToPass[field.i].siteKey = props.gRecaptchaSiteKey
+    }
+    if (props.fieldToCheck[name]) {
+      dataToPass[field.i].hasWorkflow = true
     }
     maxRowIndex = maxRowIndex > field.y + field.h ? maxRowIndex : field.y + field.h
     return (
@@ -52,7 +58,7 @@ export default function Bitforms(props) {
       >
         <CompGen
           editMode
-          atts={data[field.i]}
+          atts={dataToPass[field.i]}
           formID={props.formID}
           entryID={props.entryID}
           onBlurHandler={onBlurHandler}
@@ -63,9 +69,19 @@ export default function Bitforms(props) {
   }
   const onBlurHandler = (event) => {
     let maybeReset = false
-    const element = event.target
-    const { form } = event.target
-    const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+    let isInteracted = false
+    const dataToSet = []
+    let element
+    let form
+    if (event.target) {
+      element = event.target
+      form = event.target.form
+      isInteracted = true
+    } else {
+      element = event
+      form = document.getElementById(`form-${props.contentID}`)
+    }
+    const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
     if (resetFieldValue) {
       setresetFieldValue(false)
     }
@@ -78,7 +94,11 @@ export default function Bitforms(props) {
     }
     if (newData[props.fieldsKey[targetFieldName]] && newData[props.fieldsKey[targetFieldName]].error) {
       delete newData[props.fieldsKey[targetFieldName]].error
+      dataToSet[props.fieldsKey[targetFieldName]] = newData[props.fieldsKey[targetFieldName]]
       maybeReset = true
+    }
+    if (newData[props.fieldsKey[targetFieldName]] && !newData[props.fieldsKey[targetFieldName]].userinput && isInteracted) {
+      fieldData[props.fieldsKey[targetFieldName]].userinput = isInteracted
     }
     if (props.fieldToCheck[targetFieldName] !== undefined) {
       const fieldData = []
@@ -143,7 +163,7 @@ export default function Bitforms(props) {
       });
       props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
         const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldData)
-        console.log('checkLogic', logicStatus)
+        console.log('checkLogic', targetFieldName, logicStatus, props.conditional[LogicIndex], newData, fieldData)
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
@@ -151,7 +171,7 @@ export default function Bitforms(props) {
                 case 'value':
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val;
-                    newData[props.fieldsKey[actionDetail.field]].userinput = true
+                    newData[props.fieldsKey[actionDetail.field]].userinput = false
                     maybeReset = true
                   }
                   break
@@ -180,38 +200,36 @@ export default function Bitforms(props) {
                 default:
                   break
               }
+              dataToSet[props.fieldsKey[actionDetail.field]] = newData[props.fieldsKey[actionDetail.field]]
             }
           })
         } else {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              maybeReset = true
               switch (actionDetail.action) {
                 case 'value':
-                  if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
+                  if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]] && !newData[props.fieldsKey[actionDetail.field]].userinput) {
                     newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val
                     newData[props.fieldsKey[actionDetail.field]].userinput = false
-                    maybeReset = true
                   }
                   break
 
                 case 'hide':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
-                    maybeReset = true
                   }
                   break;
 
                 case 'disable':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
-                    maybeReset = true
                   }
                   break;
 
                 case 'enable':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
-                    maybeReset = true
                   }
                   break;
 
@@ -221,19 +239,19 @@ export default function Bitforms(props) {
                     if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
                       newData[props.fieldsKey[actionDetail.field]].typ = props.data[props.fieldsKey[actionDetail.field]].typ
                     }
-                    maybeReset = true
                   }
                   break
                 default:
                   break
               }
+              dataToSet[props.fieldsKey[actionDetail.field]] = newData[props.fieldsKey[actionDetail.field]]
             }
           })
         }
       })
     }
     if (maybeReset) {
-      setdata(newData)
+      dispatchFieldData(dataToSet)
     }
   }
 
@@ -273,16 +291,16 @@ export default function Bitforms(props) {
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
         formData.append(el.name, el.value)
       } else if (el.type === 'select-multiple') {
+        const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
         if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
           const selectedData = el.slim.data.data
-          const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
           selectedData.forEach(optionData => {
             if (optionData.selected) {
               formData.append(name, optionData.value)
             }
           })
         } else {
-          formData.append(el.name, el.value)
+          el.childNodes.forEach((option => { option.selected && option.value && formData.append(name, option.value) }))
         }
       } else if (el.type === 'select-one') {
         formData.append(el.name, el.value)
@@ -335,11 +353,11 @@ export default function Bitforms(props) {
         }
         console.log(typeof result.data.data, result.data.data, Object.keys(result.data.data).length)
         if (Object.keys(result.data.data).length > 0) {
-          const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+          const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
           Object.keys(result.data.data).map(element => {
             newData[props.fieldsKey[element]].error = result.data.data[element]
           });
-          setdata(newData)
+          dispatchFieldData(newData)
         }
       }
       setbuttonDisabled(false)
@@ -367,11 +385,11 @@ export default function Bitforms(props) {
         delete props.error.$form
       }
       if (Object.keys(props.error).length > 0) {
-        const newData = data !== undefined && JSON.parse(JSON.stringify(data))
+        const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
         Object.keys(props.error).map(element => {
           newData[props.fieldsKey[element]].error = props.error[element]
         });
-        setdata(newData)
+        dispatchFieldData(newData)
       }
     }
   }, [props.error])
@@ -380,15 +398,6 @@ export default function Bitforms(props) {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
-        // eslint-disable-next-line no-unused-vars
-        const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
-            'btcd-id',
-          )}"] > div > .slim`,
-          allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        })
 
         if (allSel[i].nextSibling != null) {
           if (allSel[i].hasAttribute('data-max-show')) {
@@ -413,9 +422,7 @@ export default function Bitforms(props) {
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div style={style}>
-          {layout[layoutConfig.size].map(field => {
-            return blk(field)
-          })}
+          {layout[layoutConfig.size].map(field => blk(field))}
         </div>
         {!props.editMode && props.buttons
           && (

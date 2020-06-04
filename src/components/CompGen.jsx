@@ -4,6 +4,7 @@
 import React, { createElement, createRef, useState, useEffect } from 'react'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
 import ReCaptcha from './Fields/Recaptcha';
+import { useRef } from 'react';
 
 function CompGen(props) {
   console.log('%c $render CompGen', 'background:red;padding:3px;border-radius:5px;color:white')
@@ -329,17 +330,30 @@ function FileUp({ attr, formID, entryID, resetFieldValue }) {
 }
 
 function TextField({ attr, onBlurHandler, resetFieldValue }) {
+  const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
-    if (attr.val !== undefined) {
+    // console.log('att.name', attr.name, attr.val)
+    if (attr.val && !attr.userinput) {
       setvalue(attr.val)
-    } else {
+    } else if (!attr.val && !attr.userinput) {
       setvalue('')
     }
+  }, [attr.val, attr.userinput])
+  useEffect(() => {
     if (resetFieldValue) {
       setvalue('')
     }
-  }, [attr.val, resetFieldValue])
+  }, [resetFieldValue])
+  useEffect(() => {
+    if (attr.hasWorkflow && attr.val === value && onBlurHandler) {
+      const { current } = textFieldRef
+      // console.log('value', value, current, attr.name)
+      setTimeout(() => {
+        onBlurHandler(current)
+      }, 10);
+    }
+  }, [value])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
   }
@@ -364,6 +378,7 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
             ...('name' in attr && { name: attr.name }),
             ...({ onBlur: onBlurHandler }),
             ...({ onChange: onChangeHandler }),
+            ref: textFieldRef,
           },
         )}
         {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
@@ -374,16 +389,28 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
 
 function TextArea({ attr, onBlurHandler, resetFieldValue }) {
   const [value, setvalue] = useState(attr.val)
+  const textAreaRef = useRef(null)
   useEffect(() => {
-    if (attr.val !== undefined) {
+    if (attr.val && !attr.userinput) {
       setvalue(attr.val)
-    } else {
+    } else if (!attr.val && !attr.userinput) {
       setvalue('')
     }
+  }, [attr.val, attr.userinput])
+  useEffect(() => {
     if (resetFieldValue) {
       setvalue('')
     }
-  }, [attr.val, resetFieldValue])
+  }, [resetFieldValue])
+  useEffect(() => {
+    if (attr.hasWorkflow && attr.val === value && onBlurHandler) {
+      const { current } = textAreaRef
+      // console.log('value', value, current, attr.name)
+      setTimeout(() => {
+        onBlurHandler(current)
+      }, 10);
+    }
+  }, [value])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
   }
@@ -394,8 +421,9 @@ function TextArea({ attr, onBlurHandler, resetFieldValue }) {
         {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         <textarea
           className="fld no-drg"
+          ref={textAreaRef}
           {...'ph' in attr && { placeholder: attr.ph }}
-          {...'val' in attr && { defaultValue: attr.val }}
+          {...{ defaultValue: value }}
           {...{ value }}
           {...'ac' in attr && { autoComplete: attr.ac }}
           {...'req' in attr.valid && { required: attr.valid.req }}
@@ -410,20 +438,41 @@ function TextArea({ attr, onBlurHandler, resetFieldValue }) {
 }
 
 function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
-  const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.length > 0 && attr.val.split(',')
-  const [value, setvalue] = useState(vals || [])
-  useEffect(() => {
-    if (vals && value !== vals) {
-      setvalue(vals)
-    } else if (vals === false && value && value.length > 0) {
-      setvalue([])
+  let defaultValue
+  if ('val' in attr && attr.val && attr.val.length > 0) {
+    if (typeof attr.val === 'string') {
+      if (attr.val[0] === '[') {
+        defaultValue = JSON.parse(attr.val)
+      } else {
+        defaultValue = attr.val.split(',')
+      }
+    } else if (Array.isArray(arr.val)) {
+      defaultValue = attr.val
     }
-  }, [attr.val])
+  } else {
+    defaultValue = []
+  }
+  const [value, setvalue] = useState(defaultValue || [])
+  const checkBoxRef = useRef(null)
+  useEffect(() => {
+    if (defaultValue && value !== defaultValue && !attr.userinput) {
+      setvalue(defaultValue)
+    }
+  }, [attr.val, attr.userinput])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue([])
     }
   }, [resetFieldValue])
+  useEffect(() => {
+    if (attr.hasWorkflow && defaultValue === value && onBlurHandler) {
+      const { current } = checkBoxRef
+      // console.log('value', value, current, attr.name)
+      setTimeout(() => {
+        onBlurHandler(current)
+      }, 10);
+    }
+  }, [value])
   const onChangeHandler = (event) => {
     const index = value.indexOf(event.target.value)
     if (event.target.checked && index === -1) {
@@ -444,11 +493,12 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
                 <span>{itm.lbl}</span>
                 <input
                   type="checkbox"
+                  ref={checkBoxRef}
                   {...itm.check && { defaultChecked: true }}
                   {...itm.req && { required: true }}
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
                   {...'name' in attr && { name: `${attr.name}[]` }}
-                  {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                  {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
                   {... { checked: value && value.indexOf(itm.lbl) >= 0 }}
                   onBlur={onBlurHandler}
                   onChange={onChangeHandler}
@@ -465,16 +515,28 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
 
 function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
   const [value, setvalue] = useState(attr.val)
+  const radioRef = useRef(null)
   useEffect(() => {
-    if (attr.val !== undefined) {
+    if (attr.val && !attr.userinput) {
       setvalue(attr.val)
-    } else {
+    } else if (!attr.val && !attr.userinput) {
       setvalue('')
     }
+  }, [attr.val, attr.userinput])
+  useEffect(() => {
     if (resetFieldValue) {
       setvalue('')
     }
-  }, [attr.val, resetFieldValue])
+  }, [resetFieldValue])
+  useEffect(() => {
+    if (attr.hasWorkflow && attr.val === value && onBlurHandler) {
+      const { current } = radioRef
+      // console.log('value', value, current, attr.name)
+      setTimeout(() => {
+        onBlurHandler(current)
+      }, 10);
+    }
+  }, [value])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
   }
@@ -492,6 +554,7 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
                 <span>{itm.lbl}</span>
                 <input
                   type="radio"
+                  ref={radioRef}
                   name={n}
                   {...itm.check && { checked: true }}
                   {...itm.req && { required: true }}
@@ -513,31 +576,51 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
 }
 
 function DropDown({ attr, onBlurHandler, resetFieldValue }) {
-  const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.length > 0 && attr.val.split(',')
-  const [value, setvalue] = useState(vals || [])
-  useEffect(() => {
-    if (vals && value !== vals && attr.userinput && !resetFieldValue) {
-      setvalue(vals)
-    } else if (vals === false && value && value.length > 0 && attr.userinput && !resetFieldValue) {
-      setvalue([])
+  let defaultValue
+  if ('val' in attr && attr.val && attr.val.length > 0) {
+    if (typeof attr.val === 'string') {
+      if (attr.val[0] === '[') {
+        defaultValue = JSON.parse(attr.val)
+      } else {
+        defaultValue = attr.val.split(',')
+      }
+    } else if (Array.isArray(arr.val)) {
+      defaultValue = attr.val
     }
-  }, [attr.val])
+  } else {
+    defaultValue = []
+  }
+  // const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.length > 0 && attr.val.split(',')
+  const [value, setvalue] = useState(defaultValue || [])
+  const selectFieldRef = useRef(null)
+  useEffect(() => {
+    if (defaultValue && value !== defaultValue && !attr.userinput) {
+      setvalue(defaultValue)
+    }
+  }, [attr.val, attr.userinput])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue([])
     }
   }, [resetFieldValue])
+  useEffect(() => {
+    if (attr.hasWorkflow && defaultValue === value && onBlurHandler) {
+      const { current } = selectFieldRef
+      // console.log('value', value, current, attr.name)
+      setTimeout(() => {
+        onBlurHandler(current)
+      }, 10);
+    }
+  }, [value])
   const onChangeHandler = (event) => {
     if (event.target.slim) {
       const newValue = []
       event.target.slim.data.data.forEach((option => { option.selected && option.value && newValue.push(option.value) }))
       setvalue(newValue)
     } else if (event.target.multiple && value) {
-      const newValue = value.map(option => option)
-      if (newValue && newValue.indexOf(event.target.value)) {
-        newValue.push(event.target.value)
-        setvalue([...newValue])
-      }
+      const selectedValue = []
+      event.target.childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
+      setvalue([...selectedValue])
     } else {
       setvalue([event.target.value])
     }
@@ -550,20 +633,20 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         <select
           className="fld slim no-drg"
+          ref={selectFieldRef}
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
           {...'mul' in attr && { multiple: attr.mul }}
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
-          {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
-          // {...'val' in attr && attr.val.length > 0 && 'userinput' in attr && attr.userinput && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
-          // {...resetFieldValue && { value: [] }}
+          {...{ defaultValue: value }}
           {...{ value }}
+          {...resetFieldValue && { value: [] }}
           onChange={onChangeHandler}
         >
           <option data-placeholder="true" aria-label="option placeholder" />
           {attr.opt.map((itm, i) => (
-            <option key={`op-${i + 87}-${(attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
+            <option key={`op-${i + 87}-${(!attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
           ))}
         </select>
       </div>
