@@ -26,7 +26,13 @@ function GridLayout(props) {
   mul: multiple
   */
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, isLoading } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter } = props
+
+  const [layouts, setLayouts] = useState(props.layout)
+  const [breakpoint, setBreakpoint] = useState('lg')
+  const [runningOpt, setrunningOpt] = useState(false)
+
+  const cols = { lg: 6, md: 4, sm: 2 }
 
   useEffect(() => {
     if (newData !== null) {
@@ -34,15 +40,10 @@ function GridLayout(props) {
     }
     slimInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newData, fields, isLoading])
+  }, [newData, fields])
 
   console.log('%', newCounter, props.layout)
 
-  const [layouts, setLayouts] = useState(props.layout)
-  const [breakpoint, setBreakpoint] = useState('lg')
-  const [runningOpt, setrunningOpt] = useState(false)
-
-  const cols = { lg: 6, md: 4, sm: 2 }
 
   const sortLay = arr => {
     const newArr = arr
@@ -340,12 +341,13 @@ function GridLayout(props) {
       {compByTheme(fields[item.i])}
     </div>
   )
-
+  console.log('ww', props.width, props.width - 25)
   return (
     <div style={{ width: props.width - 19 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars>
         <ResponsiveReactGridLayout
           width={props.width - 25}
+          measureBeforeMount={false}
           isDroppable={props.draggedElm[0] !== ''}
           className="layout"
           onDrop={onDrop}
@@ -358,7 +360,6 @@ function GridLayout(props) {
           containerPadding={[1, 1]}
           draggableCancel=".no-drg"
           draggableHandle=".drag"
-          useCSSTransforms
           layouts={layouts}
           onBreakpointChange={onBreakpointChange}
         // compactType="vertical"
