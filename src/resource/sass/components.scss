@@ -26,6 +26,20 @@ body {
   font-weight: 500;
 }
 
+.fld-wrp .msl-vars {
+  margin-top: 5px;
+  background: white;
+  --border-radius: 5px;
+  & > .msl:not(.msl-active) {
+    border: 1.5px solid;
+    border-color: #505050;
+  }
+  & .msl-option{
+    padding: 7px 5px;
+    border-radius: 4px;
+  }
+}
+
 input.fld {
   height: 40px !important;
 }
