@@ -16,7 +16,7 @@ export default function SelectSettings(props) {
   console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
 
   const isRequired = elmData.valid.req !== undefined
-  const isMultiple = elmData.mul !== undefined
+  const isMultiple = elmData.mul
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
 
@@ -76,7 +76,7 @@ export default function SelectSettings(props) {
   }
 
   function addOpt() {
-    options.push({ lbl: `Option ${elmData.opt.length}` })
+    options.push({ label: `Option ${elmData.opt.length + 1}`, value: `option_${elmData.opt.length + 1}` })
     elmData.opt = options
     props.updateData({ id: elmId, data: elmData })
   }
@@ -87,14 +87,14 @@ export default function SelectSettings(props) {
         if (!Array.isArray(elmData.val)) {
           elmData.val = []
         }
-        elmData.val.push(e.target.getAttribute('data-lbl'))
+        elmData.val.push(e.target.getAttribute('data-value'))
       } else {
-        elmData.val = e.target.getAttribute('data-lbl')
+        elmData.val = e.target.getAttribute('data-value')
       }
     } else {
       // eslint-disable-next-line no-lonely-if
       if (isMultiple) {
-        elmData.val = elmData.val.filter(itm => itm !== e.target.getAttribute('data-lbl'))
+        elmData.val = elmData.val.filter(itm => itm !== e.target.getAttribute('data-value'))
       } else {
         delete elmData.val
       }
@@ -103,8 +103,10 @@ export default function SelectSettings(props) {
   }
 
   function setOptLbl(e, i) {
+    const updateVal = e.target.value
     const tmp = { ...options[i] }
-    tmp.lbl = e.target.value
+    tmp.label = updateVal
+    tmp.value = updateVal.replace(' ', '').replace(',', '_')
     elmData.opt[i] = tmp
     props.updateData({ id: elmId, data: elmData })
   }
@@ -125,10 +127,10 @@ export default function SelectSettings(props) {
         <span className="font-w-m">Options:</span>
         {elmData.opt.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
-            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
+            <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
               <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-                <input onChange={setCheck} type="checkbox" data-lbl={itm.lbl} checked={isMultiple ? elmData.val.indexOf(itm.lbl) >= 0 : itm.lbl === elmData.val} />
+                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={isMultiple ? elmData.val.indexOf(itm.lbl) >= 0 : itm.lbl === elmData.val} />
                 <span className="btcd-mrk ck br-50" />
               </label>
               <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button"><span className="btcd-icn icn-clear" /></button>
