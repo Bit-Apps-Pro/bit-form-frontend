@@ -86,7 +86,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
 
   return (
     mailTem.length < 1 ? <Redirect to={`/builder/edit/${formID}/settings/email-templates`} /> : (
-      <div style={{ width: 900 }}>
+      <div>
         <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
           <span className="btcd-icn icn-arrow_back" />
           &nbsp;

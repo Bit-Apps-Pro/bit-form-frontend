@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { createElement, createRef, useState, useEffect } from 'react'
-import { useRef } from 'react';
+import React, { createElement, createRef, useState, useEffect, useRef } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { setPrevData, handleFile, delItem } from '../resource/js/file-upload'
 import ReCaptcha from './Fields/Recaptcha';
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 function CompGen(props) {
   console.log('%c $render CompGen', 'background:red;padding:3px;border-radius:5px;color:white')
@@ -149,9 +150,7 @@ function CompGen(props) {
     )
   }
 
-  const blank = () => (
-    <div className="blnk-blk drag" />
-  )
+  const blank = () => <div className="blnk-blk drag" />
 
   const dropDown = (attr, onBlurHandler, resetFieldValue) => (
     !('hide' in attr.valid && attr.valid.hide === true)
@@ -609,16 +608,16 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
     }
   }, [value])
   const onChangeHandler = (event) => {
-    if (event.target.slim) {
+    if (event.target && event.target.slim) {
       const newValue = []
       event.target.slim.data.data.forEach((option => { option.selected && option.value && newValue.push(option.value) }))
       setvalue(newValue)
-    } else if (event.target.multiple && value) {
+    } else if (event.target && event.target.multiple && value) {
       const selectedValue = []
       event.target.childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
       setvalue([...selectedValue])
     } else {
-      setvalue([event.target.value])
+      setvalue(event.split(','))
     }
     onBlurHandler(event)
   }
@@ -627,7 +626,22 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
     && (
       <div className="fld-wrp drag" btcd-fld="select">
         {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-        <select
+        {/* props options
+        https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
+        <MultiSelect
+          width="100%"
+          className="fld no-drg"
+          {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+          {...'ph' in attr && { placeholder: attr.ph }}
+          {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
+          {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
+          singleSelect={!attr.mul}
+          options={attr.opt.map(option => ({ value: option.lbl, label: option.lbl }))}
+          onChange={onChangeHandler}
+          {...{ value }}
+        />
+        {/* <select
           className="fld slim no-drg"
           ref={selectFieldRef}
           {...'req' in attr.valid && { required: attr.valid.req }}
@@ -644,7 +658,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
           {attr.opt.map((itm, i) => (
             <option key={`op-${i + 87}-${(!attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
           ))}
-        </select>
+        </select> */}
       </div>
     )
   )
