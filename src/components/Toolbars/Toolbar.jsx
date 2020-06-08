@@ -88,10 +88,11 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       elm: {
         typ: 'select',
         lbl: 'Drop-Down Menu',
+        mul: false,
         opt: [
-          { lbl: 'option 1' },
-          { lbl: 'option 2' },
-          { lbl: 'option 3' },
+          { label: 'option 1', value: 'option_1' },
+          { label: 'option 2', value: 'option_2' },
+          { label: 'option 3', value: 'option_3' },
         ],
         valid: {},
       },
