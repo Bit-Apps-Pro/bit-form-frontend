@@ -1,6 +1,5 @@
-export default function checkLogic(logics, fields) {
+export const checkLogic = (logics, fields) => {
   if (Array.isArray(logics)) {
-    // static  
     let conditionSatus = false;
     for (let sskey = 0; sskey < logics.length; sskey += 1) {
       const ssvalue = logics[sskey]
@@ -32,18 +31,25 @@ export default function checkLogic(logics, fields) {
     return conditionSatus
   }
   if (fields[logics.field] !== undefined) {
+    const logicsVal = replaceWithField(logics.val, fields)
+    let { value } = fields[logics.field]
+    if (typeof logicsVal === 'number') {
+      value = parseInt(value, 10)
+    }
+    const targetFieldValue = value
+    // console.log('logicsCC', logicsVal, typeof logicsVal, targetFieldValue, typeof fields[logics.field].value)
     switch (logics.logic) {
       case 'equal':
         if (!fields[logics.field].value) {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-                    || fields[logics.field].value === 'check'
+          || targetFieldValue === 'check'
         ) {
-          const fieldValue = Array.isArray(fields[logics.field].value)
-            ? fields[logics.field].value
-            : JSON.parse(fields[logics.field].value)
-          const valueToCheck = logics.val.split(',')
+          const fieldValue = Array.isArray(targetFieldValue)
+            ? targetFieldValue
+            : JSON.parse(targetFieldValue)
+          const valueToCheck = logicsVal.split(',')
           let checker = 0
           fieldValue.forEach(value => {
             if (fieldValue.length > 0 && valueToCheck.indexOf(value) !== -1) {
@@ -55,45 +61,45 @@ export default function checkLogic(logics, fields) {
           }
           return false
         }
-        return fields[logics.field].value === logics.val
+        return targetFieldValue === logicsVal
 
       case 'not_equal':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-                    || fields[logics.field].value === 'check'
+          || targetFieldValue === 'check'
         ) {
-          const fieldValue = Array.isArray(fields[logics.field].value)
-            ? fields[logics.field].value
-            : JSON.parse(fields[logics.field].value)
-          const valueToCheck = logics.val.split(',')
+          const fieldValue = Array.isArray(targetFieldValue)
+            ? targetFieldValue
+            : JSON.parse(targetFieldValue)
+          const valueToCheck = logicsVal.split(',')
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
-              return false
+              return true
             }
           })
-          return fields[logics.field].value !== logics.val
+          return targetFieldValue !== logicsVal
         }
-        return fields[logics.field].value !== logics.val
+        return targetFieldValue !== logicsVal
 
       case 'null':
-        return fields[logics.field].value.length === 0
+        return targetFieldValue.length === 0
 
       case 'not_null':
-        return fields[logics.field].value.length > 0
+        return targetFieldValue.length > 0
 
       case 'contain':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-                    || fields[logics.field].value === 'check'
+          || targetFieldValue === 'check'
         ) {
-          const fieldValue = Array.isArray(fields[logics.field].value)
-            ? fields[logics.field].value
-            : JSON.parse(fields[logics.field].value)
-          const valueToCheck = logics.val.split(',')
+          const fieldValue = Array.isArray(targetFieldValue)
+            ? targetFieldValue
+            : JSON.parse(targetFieldValue)
+          const valueToCheck = logicsVal.split(',')
           let checker = 0
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) !== -1) {
@@ -105,19 +111,19 @@ export default function checkLogic(logics, fields) {
           }
           return false
         }
-        return fields[logics.field].value !== '' && fields[logics.field].value.indexOf(logics.val) !== -1
+        return targetFieldValue !== '' && targetFieldValue.indexOf(logicsVal) !== -1
 
       case 'not_contain':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if ((fields[logics.field].multipletiple !== undefined && fields[logics.field].multipletiple)
-                    || fields[logics.field].value === 'check'
+          || targetFieldValue === 'check'
         ) {
-          const fieldValue = Array.isArray(fields[logics.field].value)
-            ? fields[logics.field].value
-            : JSON.parse(fields[logics.field].value)
-          const valueToCheck = logics.val.split(',')
+          const fieldValue = Array.isArray(targetFieldValue)
+            ? targetFieldValue
+            : JSON.parse(targetFieldValue)
+          const valueToCheck = logicsVal.split(',')
           let checker = 0
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
@@ -129,59 +135,59 @@ export default function checkLogic(logics, fields) {
           }
           return false
         }
-        return logics.val.length > 0 && fields[logics.field].value.indexOf(logics.val) === -1
+        return logicsVal.length > 0 && targetFieldValue.indexOf(logicsVal) === -1
 
       case 'greater':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if (fields[logics.field].type === 'number') {
-          return fields[logics.field].value !== '' && Number(fields[logics.field].value) > Number(logics.val)
+          return targetFieldValue !== '' && Number(targetFieldValue) > Number(logicsVal)
         }
-        return fields[logics.field].value !== '' && fields[logics.field].value > logics.val
+        return targetFieldValue !== '' && targetFieldValue > logicsVal
 
 
       case 'less':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if (fields[logics.field].type === 'number') {
-          return fields[logics.field].value !== '' && Number(fields[logics.field].value) < Number(logics.val)
+          return targetFieldValue !== '' && Number(targetFieldValue) < Number(logicsVal)
         }
-        return fields[logics.field].value !== '' && fields[logics.field].value < logics.val
+        return targetFieldValue !== '' && targetFieldValue < logicsVal
 
 
       case 'greater_or_equal':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if (fields[logics.field].type === 'number') {
-          return fields[logics.field].value !== '' && Number(fields[logics.field].value) >= Number(logics.val)
+          return targetFieldValue !== '' && Number(targetFieldValue) >= Number(logicsVal)
         }
-        return fields[logics.field].value !== '' && fields[logics.field].value >= logics.val
+        return targetFieldValue !== '' && targetFieldValue >= logicsVal
 
 
       case 'less_or_equal':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
         if (fields[logics.field].type === 'number') {
-          return fields[logics.field].value !== '' && Number(fields[logics.field].value) <= Number(logics.val)
+          return targetFieldValue !== '' && Number(targetFieldValue) <= Number(logicsVal)
         }
-        return fields[logics.field].value !== '' && fields[logics.field].value <= logics.val
+        return targetFieldValue !== '' && targetFieldValue <= logicsVal
 
 
       case 'start_with':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
-        return fields[logics.field].value !== '' && fields[logics.field].value.indexOf(logics.val) === 0
+        return targetFieldValue !== '' && targetFieldValue.indexOf(logicsVal) === 0
 
       case 'end_with':
-        if (!fields[logics.field].value) {
+        if (!targetFieldValue) {
           return false
         }
-        return logics.val === fields[logics.field].value.substr(fields[logics.field].value.length - logics.val.length, fields[logics.field].value.length)
+        return logicsVal === targetFieldValue.substr(targetFieldValue.length - logicsVal.length, targetFieldValue.length)
 
 
       default:
@@ -190,4 +196,58 @@ export default function checkLogic(logics, fields) {
   } else {
     return false
   }
+}
+
+export const replaceWithField = (stringToReplace, fieldValues) => {
+  if (!stringToReplace) {
+    return stringToReplace
+  }
+  let mutatedString
+  if (typeof stringToReplace === 'object') {
+    mutatedString = JSON.stringify(stringToReplace)
+  } else {
+    mutatedString = JSON.parse(JSON.stringify(stringToReplace))
+  }
+  if (typeof mutatedString !== 'string') {
+    return stringToReplace
+  }
+  const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
+  if (matchedFields) {
+    matchedFields.map(field => {
+      const fieldName = field.substring(2, field.length - 1)
+      if (fieldValues[fieldName]) {
+        mutatedString = mutatedString.replace(field, fieldValues[fieldName].value)
+      }
+    })
+    mutatedString = evalMathExpression(mutatedString)
+  }
+
+  return mutatedString
+}
+
+export const evalMathExpression = (stringToReplace) => {
+  if (!stringToReplace) {
+    return stringToReplace
+  }
+  let mutatedString = stringToReplace
+  const isMathEpr = stringToReplace.match(/[\+\-\*\/\%]/g)
+  if (isMathEpr && isMathEpr.length > 0) {
+    const mathEpr = stringToReplace.match(/\w+/g)
+    if (!mathEpr) {
+      return stringToReplace
+    }
+    const isInvalid = mathEpr.filter(v => isNaN(v))
+    if (isInvalid && isInvalid.length > 0) {
+      return mutatedString
+    }
+    mutatedString = mutatedString.replace(/\{|\[/g, '(')
+    mutatedString = mutatedString.replace(/\}|\]/g, ')')
+    try {
+      mutatedString = Function(`"use strict";return (${mutatedString})`)()
+    } catch (error) {
+      console.log('errorMathexpr', error)
+      return stringToReplace
+    }
+  }
+  return mutatedString
 }

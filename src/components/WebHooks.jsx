@@ -166,7 +166,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                         <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
                           <select className="btcd-paper-inp p-i-sm" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
                             <option value="">Select From Field</option>
-                            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+                            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                           </select>
                         </span>
                       </div>

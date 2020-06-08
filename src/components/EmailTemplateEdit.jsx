@@ -38,7 +38,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
             tooltip: 'Add Form Field Value in Message',
             type: 'menubutton',
             icon: false,
-            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`{${i.key}}`) } })),
+            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
           })
         },
       })
@@ -105,7 +105,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
           <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={mailTem[id].sub} />
           <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
             <option value="">Add form field</option>
-            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
           </select>
         </div>
 
@@ -115,7 +115,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
           <label htmlFor={`t-m-e-${id}-${formID}`} className="mt-2 w-10">
             <select onChange={addFieldToBody} className="btcd-paper-inp mt-2 form-fields-em w-5">
               <option value="">Add form field</option>
-              {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+              {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
             </select>
             <textarea
               id={`t-m-e-${id}-${formID}`}

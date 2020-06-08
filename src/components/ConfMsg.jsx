@@ -44,7 +44,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
             tooltip: 'Add Form Field Value in Message',
             type: 'menubutton',
             icon: false,
-            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`{${i.key}}`) } })),
+            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
           })
         },
       })
@@ -125,7 +125,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
               <div className="flx flx-between">
                 <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
                   <option value="">Add form field</option>
-                  {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`{${f.key}}`}>{f.name}</option>)}
+                  {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                 </select>
               </div>
               <textarea

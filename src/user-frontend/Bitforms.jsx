@@ -3,7 +3,7 @@ import React, { useEffect, useState, useReducer } from 'react'
 import SlimSelect from 'slim-select'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
-import checkLogic from './checkLogic'
+import { checkLogic, replaceWithField } from './checkLogic'
 
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
@@ -52,9 +52,9 @@ export default function Bitforms(props) {
           minHeight: field.h * 40, /* h * 40px */
         }}
         className="btcd-fld-itm"
-        // btcd-id={field.i}
-        // key={field.i}
-        // data-grid={field}
+      // btcd-id={field.i}
+      // key={field.i}
+      // data-grid={field}
       >
         <CompGen
           editMode
@@ -67,6 +67,7 @@ export default function Bitforms(props) {
       </div>
     )
   }
+  // console.log('fieldData', fieldData)
   const onBlurHandler = (event) => {
     let maybeReset = false
     let isInteracted = false
@@ -86,6 +87,7 @@ export default function Bitforms(props) {
       setresetFieldValue(false)
     }
     let targetFieldName
+    const fieldValues = []
     const fieldNameToQuery = element.name
     if (element.name && element.name.indexOf('[]') !== -1 && element.name.indexOf('[]') === element.name.length - 2) {
       targetFieldName = element.name.substring(0, element.name.length - 2)
@@ -98,11 +100,14 @@ export default function Bitforms(props) {
       maybeReset = true
     }
     if (newData[props.fieldsKey[targetFieldName]] && !newData[props.fieldsKey[targetFieldName]].userinput && isInteracted) {
-      fieldData[props.fieldsKey[targetFieldName]].userinput = isInteracted
+      newData[props.fieldsKey[targetFieldName]].userinput = isInteracted
+      dataToSet[props.fieldsKey[targetFieldName]] = newData[props.fieldsKey[targetFieldName]]
+      maybeReset = true
     }
+    // console.log('______o_n_b_l_u_r______________________', isInteracted)
+
     if (props.fieldToCheck[targetFieldName] !== undefined) {
-      const fieldData = []
-      Object.keys(props.fieldToCheck).forEach(fieldName => {
+      Object.keys(props.fieldsKey).forEach(fieldName => {
         let currentField
         if (targetFieldName === fieldName) {
           currentField = fieldNameToQuery
@@ -154,7 +159,7 @@ export default function Bitforms(props) {
             value = fieldDetails[0].value
             multiple = fieldDetails[0].multiple
           }
-          fieldData[fieldName] = {
+          fieldValues[fieldName] = {
             type,
             value,
             multiple,
@@ -162,15 +167,20 @@ export default function Bitforms(props) {
         }
       });
       props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
-        const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldData)
-        console.log('checkLogic', targetFieldName, logicStatus, props.conditional[LogicIndex], newData, fieldData)
+        const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldValues)
+        console.log('checkLogic', targetFieldName, element.value, logicStatus, props.conditional[LogicIndex]/* , newData, fieldData */)
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
               switch (actionDetail.action) {
                 case 'value':
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
-                    newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val;
+                    if (actionDetail.field === targetFieldName && newData[props.fieldsKey[actionDetail.field]].val === actionDetail.val && isInteracted && !newData[props.fieldsKey[actionDetail.field]].conditional) {
+                      newData[props.fieldsKey[actionDetail.field]].conditional = true
+                    } else {
+                      newData[props.fieldsKey[actionDetail.field]].conditional = false
+                    }
+                    newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues) : actionDetail.val
                     newData[props.fieldsKey[actionDetail.field]].userinput = false
                     maybeReset = true
                   }
@@ -209,8 +219,8 @@ export default function Bitforms(props) {
               maybeReset = true
               switch (actionDetail.action) {
                 case 'value':
-                  if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]] && !newData[props.fieldsKey[actionDetail.field]].userinput) {
-                    newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val
+                  if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]] && !newData[props.fieldsKey[actionDetail.field]].userinput && actionDetail.field !== targetFieldName) {
+                    newData[props.fieldsKey[actionDetail.field]].val = props.data[props.fieldsKey[actionDetail.field]].val ? replaceWithField(props.data[props.fieldsKey[actionDetail.field]].val, fieldValues) : ''
                     newData[props.fieldsKey[actionDetail.field]].userinput = false
                   }
                   break
@@ -251,6 +261,9 @@ export default function Bitforms(props) {
       })
     }
     if (maybeReset) {
+      if (dataToSet[props.fieldsKey[targetFieldName]] && dataToSet[props.fieldsKey[targetFieldName]].userinput && fieldValues[targetFieldName]) {
+        dataToSet[props.fieldsKey[targetFieldName]].val = fieldValues[targetFieldName].value
+      }
       dispatchFieldData(dataToSet)
     }
   }
