@@ -347,7 +347,7 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
       <div className="fld-wrp drag" btcd-fld="text-fld">
-        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+        {'lbl' in attr && <label title={attr.lbl} className="fld-lbl">{attr.lbl}</label>}
         {createElement(
           'input',
           {
