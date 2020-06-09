@@ -65,6 +65,12 @@ function Builder(props) {
     subBtnTxt: 'Submit',
   })
 
+  const updateSubBtn = val => {
+    setSubBtn(val)
+    formSettings.submitBtn = val
+    setFormSettings(formSettings)
+  }
+
   const [mailTem, setMailTem] = useState([])
 
   const [integrations, setIntegration] = useState([])
@@ -79,7 +85,7 @@ function Builder(props) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    submitBtn: { ...subBtn },
+    submitBtn: subBtn,
     confirmation: {
       type: {
         successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
@@ -282,7 +288,7 @@ function Builder(props) {
               fields={fields}
               setFields={setFields}
               subBtn={subBtn}
-              setSubBtn={setSubBtn}
+              setSubBtn={updateSubBtn}
               lay={lay}
               setLay={setLay}
               setNewCounter={setNewCounter}
