@@ -29,8 +29,28 @@ function Builder(props) {
   const { reports, reportsDispatch } = reportsData
 
   useEffect(() => {
+    if (sessionStorage.getItem('formData')) {
+      const formData = JSON.parse(sessionStorage.getItem('formData'))
+      formData.layout !== undefined && setLay(formData.layout)
+      setFields(formData.fields)
+      setNewCounter(getNewId(formData.fields))
+      setFormName(formData.form_name)
+      setSubBtn(formData.formSettings.submitBtn)
+      setFormSettings(formData.formSettings)
+      setworkFlows(formData.workFlows)
+      setadditional(formData.additional)
+      setIntegration(formData.formSettings.integrations)
+      setMailTem(formData.formSettings.mailTem)
+      if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
+      sessionStorage.removeItem('formData')
+      setSnackbar({ show: true, msg: 'Please try again. Token was expired' })
+      if (isLoading) {
+        setisLoading(!isLoading)
+      }
+    } else {
+      fetchTemplate()
+    }
     window.scrollTo(0, 0)
-    fetchTemplate()
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
     if (process.env.NODE_ENV === 'production') {
       document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
@@ -136,6 +156,9 @@ function Builder(props) {
             // if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
             setisLoading(false)
           } else {
+            if (!res.data.success && res.data.data === 'Token expired') {
+              window.location.reload()
+            }
             setisLoading(false)
           }
         })
@@ -221,6 +244,9 @@ function Builder(props) {
             allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
           }
           setbuttonDisabled(false)
+        } else if (!response.data.success && response.data.data === 'Token expired') {
+          sessionStorage.setItem('formData', JSON.stringify(formData))
+          window.location.reload()
         }
       })
   }
