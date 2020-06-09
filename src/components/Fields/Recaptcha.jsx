@@ -10,7 +10,7 @@ export default function ReCaptcha(attr) {
     }, 1);
   }, [attr.theme])
   return (
-    <div className="drag" style={{ display: 'flex', justifyContent: 'center' }}>
+    <div className="drag btcd-flx j-c-c" style={{ minHeight: 'inherit' }}>
       {render && (
         <ReCAPTCHA
           theme={attr.theme}
