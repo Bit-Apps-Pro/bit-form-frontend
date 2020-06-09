@@ -88,7 +88,7 @@ export default function FileUpSettings(props) {
       <div className="mt-2 mb-2">
         <span className="font-w-m">Field Type : </span>
         {' '}
-        File-Upload
+        File Upload
       </div>
       <div className="mt-1">
         <span className="font-w-m">Field Key</span>
