@@ -4,8 +4,19 @@ body {
 .btcd-fld-itm:empty {
   display: none;
 }
+.btcd-form {
+  background: white;
+}
+
+.btcd-flx {
+  display: flex;
+  align-items: center;
+}
 
 .fld-wrp {
+  min-height: inherit;
+  padding: 10px;
+  background: #fff;
   font-family: sans-serif !important;
   box-sizing: border-box !important;
   width: 100%;
@@ -20,7 +31,10 @@ body {
 
 .fld-lbl {
   display: block;
-  font-size: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
   margin: 0;
   color: rgb(54, 54, 54);
   font-weight: 500;
@@ -30,11 +44,21 @@ body {
   margin-top: 5px;
   background: white;
   --border-radius: 5px;
+  & > * {
+    line-height: 1;
+  }
   & > .msl:not(.msl-active) {
+    height: 40px;
     border: 1.5px solid;
     border-color: #505050;
   }
-  & .msl-option{
+  & .msl-input {
+    margin: 8px;
+  }
+  .msl-single-value {
+    margin: 7px;
+  }
+  & .msl-option {
     padding: 7px 5px;
     border-radius: 4px;
   }
@@ -46,18 +70,20 @@ input.fld {
 
 input.fld,
 textarea.fld {
+  min-height: 40px !important;
+  max-width: 100% !important;
   color: black !important;
   background: white !important;
-  font-family: sans-serif;
+  font-family: sans-serif !important;
   padding: 8px !important;
   font-size: 15px !important;
   width: 100% !important;
   outline: none !important;
-  display: inline-block;
+  display: inline-block !important;
   margin: 5px 0 0 0 !important;
   border-radius: 5px !important;
   border: 1.5px solid #505050 !important;
-  transition: all 0s;
+  transition: all 0s !important;
   &:focus {
     border-color: #505050 !important;
     box-shadow: 0 0 0 1px #505050 !important;
@@ -81,13 +107,16 @@ textarea.fld {
   background: white !important;
   padding: 2px !important;
 }
+.fld[type="email"] {
+  text-transform: lowercase !important;
+}
 
 textarea.fld {
-  height: calc(100% - 20px);
+  height: calc(100% - 30px);
   resize: vertical;
 }
 .fld::placeholder {
-  color: rgb(133, 133, 133) !important;
+  color: rgb(146, 146, 146) !important;
 }
 
 input:required .fld-lbl::after {
@@ -230,37 +259,36 @@ input:required .fld-lbl::after {
   border-radius: 50%;
 }
 
-.fld-wrp {
-  min-height: inherit;
-  padding: 10px;
-  background: #fff;
+.btcd-frm-sub {
+  background: white !important;
+  height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
-.btcd-frm-sub {
-  background: white;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  padding: 0 10px 0 10px;
-}
 .btcd-sub-btn {
-  height: auto;
-  width: auto;
-  font-family: sans-serif;
-  line-height: 1;
-  border: none;
-  padding: 7px 10px 7px 10px;
-  border-radius: 5px;
-  margin: 10px 5px;
-  cursor: pointer;
-  outline: none;
-  box-shadow: 2px 2px 4px -2px transparentize(#000000, 0.6);
+  height: auto !important;
+  width: auto !important;
+  font-family: sans-serif !important;
+  line-height: 1 !important;
+  font-size: 13px !important;
+  border: none !important;
+  padding: 7px 10px 7px 10px !important;
+  border-radius: 5px !important;
+  margin: 10px 5px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  // grid-template-columns: repeat(2, minmax(1fr, 1fr));
+  box-shadow: 2px 2px 4px -2px transparentize(#000000, 0.6) !important;
+  &:active {
+    transform: scale(0.95) !important;
+  }
 }
 .btcd-sub {
   background: #0083f3 !important;
   text-transform: none !important;
   text-decoration: none !important;
-  font-weight: bold;
+  font-weight: bold !important;
   color: white;
   &:hover {
     background: #0072d6 !important;
@@ -284,17 +312,17 @@ input:required .fld-lbl::after {
 }
 
 .btcd-btn-md {
-  padding: 10px 20px 10px 20px !important;
-  font-size: 15px !important;
+  padding: 11px 20px 11px 20px !important;
+  font-size: 16px !important;
 }
 .j-c-c {
-  justify-content: center;
+  justify-content: center !important;
 }
 .j-c-e {
-  justify-content: flex-end;
+  justify-content: flex-end !important;
 }
 .ful-w {
-  width: 100%;
+  width: 100% !important;
 }
 // file upload style start
 .file-wrp {
