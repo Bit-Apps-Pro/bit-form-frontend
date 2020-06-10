@@ -44,7 +44,7 @@ export default function Bitforms(props) {
     return (
       <div
         style={{
-          // overflow: 'hidden',
+          height: '100%',
           gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
           gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
           gridRowStart: field.y + 1, /* y-0 -> y + 1 */
@@ -423,15 +423,12 @@ export default function Bitforms(props) {
 
   const style = {
     display: 'grid',
-    // gridTemplateColumns: 'auto auto auto auto auto auto',
-    // gridTemplateColumns: '62px 62px 62px 62px 62px 62px',
-    // gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr',
-    gridTemplateColumns: `repeat(${layoutConfig.cols}, 1fr)`,
+    gridTemplateColumns: `repeat(${layoutConfig.cols}, minmax(50px, 1fr))`,
     gridgap: 0,
   }
   return (
     <div>
-      <form ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+      <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div style={style}>

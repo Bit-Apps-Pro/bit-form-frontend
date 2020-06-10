@@ -11,7 +11,7 @@ export default function ReCaptchaSettigns({ elm, updateData }) {
     <div>
       <div className="mt-2 mb-2">
         <span className="font-w-m">Field Type : </span>
-        ReCaptcha
+        reCAPTCHA
       </div>
       <div>
         <label htmlFor="recap-thm">

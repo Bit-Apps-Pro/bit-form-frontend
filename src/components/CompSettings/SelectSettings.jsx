@@ -115,7 +115,7 @@ export default function SelectSettings(props) {
     <div>
       <div className="mt-2 mb-2">
         <span className="font-w-m">Field Type : </span>
-        {elmData.typ}
+        {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
       </div>
       <span className="font-w-m">Field Key</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />

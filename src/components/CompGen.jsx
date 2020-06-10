@@ -360,7 +360,7 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
     !('hide' in attr.valid && attr.valid.hide === true)
     && (
       <div className="fld-wrp drag" btcd-fld="text-fld">
-        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+        {'lbl' in attr && <label title={attr.lbl} className="fld-lbl">{attr.lbl}</label>}
         {createElement(
           'input',
           {
@@ -449,7 +449,7 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
       defaultValue = attr.val
     }
   } else {
-    defaultValue = []
+    defaultValue = attr.opt.map(checkBoxElement => checkBoxElement.check && checkBoxElement.lbl)
   }
   const [value, setvalue] = useState(defaultValue || [])
   const checkBoxRef = useRef(null)
@@ -520,7 +520,15 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
     if (attr.val && !attr.userinput) {
       setvalue(attr.val)
     } else if (!attr.val && !attr.userinput) {
-      setvalue('')
+      let defaultChecked
+      if (attr.opt) {
+        attr.opt.forEach(radioElment => {
+          if (radioElment.check) {
+            defaultChecked = radioElment.lbl
+          }
+        })
+      }
+      setvalue(defaultChecked || '')
     } else if (attr.conditional) {
       setvalue(attr.val)
     }
@@ -639,7 +647,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
           singleSelect={!attr.mul}
           options={attr.opt.map(option => ({ value: option.lbl, label: option.lbl }))}
           onChange={onChangeHandler}
-          {...{ value }}
+          {...{ defaultValue: value }}
         />
         {/* <select
           className="fld slim no-drg"
