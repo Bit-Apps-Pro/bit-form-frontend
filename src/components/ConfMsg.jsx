@@ -112,6 +112,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         btnTxt="Delete"
         close={closeMdl}
       />
+
       {'confirmation' in formSettings
         && formSettings.confirmation.type.successMsg !== undefined
         ? formSettings.confirmation.type.successMsg.map((itm, i) => (
