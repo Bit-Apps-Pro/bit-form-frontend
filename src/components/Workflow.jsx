@@ -578,7 +578,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
             )}
             <div className="flx">
               <b className="txt-dp"><small>Action Behaviour:</small></b>
-              {lgcGrp.action_type !== 'onvalidate' && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
+              {!lgcGrp.action_type.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
               <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Condition</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
             </div>
 
@@ -648,7 +648,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <div className="mb-2">
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                  {!lgcGrp.action_run.match((/^(delete|edit)$/)) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                  {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
