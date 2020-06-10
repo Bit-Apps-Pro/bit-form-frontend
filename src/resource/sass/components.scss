@@ -119,13 +119,6 @@ textarea.fld {
   color: rgb(146, 146, 146) !important;
 }
 
-input:required .fld-lbl::after {
-  margin-left: 2px;
-  content: "*"; // --------------------------------------------------
-  font-size: 20px;
-  position: absolute;
-}
-
 .fld + .slim {
   margin: 5px 0 0 0 !important;
   padding: 0 !important;
@@ -183,6 +176,9 @@ input:required .fld-lbl::after {
   height: 19px;
   margin: 8px;
   width: auto;
+  & span:first-child{
+    color: #363636 !important;
+  }
 }
 
 .fld .btcd-ck-wrp input {

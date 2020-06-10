@@ -1,13 +1,13 @@
 import React from 'react'
 import Modal from './Modal'
 
-function ConfirmModal({ close, action, show, btnTxt, body, btn2Txt, btn2Action, btnClass }) {
+function ConfirmModal({ close, action, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title }) {
   return (
     <Modal
       sm
       show={show}
       setModal={close}
-      title="Confirmation"
+      title={title || 'Confirmation'}
     >
       <div className="txt-center atn-btns">
         <div className="flx flx-center content">

@@ -397,28 +397,20 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     setworkFlows([...workFlows])
   }
 
-  const setWebHooks = (e, lgcGrpInd) => {
-    const val = []
-    for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-      val.push(e.target.selectedOptions[i].value)
-    }
+  const setWebHooks = (val, lgcGrpInd) => {
     for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
       if (workFlows[lgcGrpInd].successAction[i].type === 'webHooks') {
-        workFlows[lgcGrpInd].successAction[i].details.id = val
+        workFlows[lgcGrpInd].successAction[i].details.id = val.map(itm => itm.value)
         break
       }
     }
     setworkFlows([...workFlows])
   }
 
-  const setInteg = (e, lgcGrpInd) => {
-    const val = []
-    for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-      val.push(e.target.selectedOptions[i].value)
-    }
+  const setInteg = (val, lgcGrpInd) => {
     for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
       if (workFlows[lgcGrpInd].successAction[i].type === 'integ') {
-        workFlows[lgcGrpInd].successAction[i].details.id = val
+        workFlows[lgcGrpInd].successAction[i].details.id = val.map(itm => itm.value)
         break
       }
     }
@@ -578,7 +570,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
             )}
             <div className="flx">
               <b className="txt-dp"><small>Action Behaviour:</small></b>
-              {lgcGrp.action_type !== 'onvalidate' && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
+              {!lgcGrp.action_type.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
               <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Condition</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
             </div>
 
@@ -648,7 +640,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <div className="mb-2">
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                  {!lgcGrp.action_run.match((/^(delete|edit)$/)) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                  {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
                   <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
                   {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
@@ -658,8 +650,8 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
               {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                 <>
-                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={e => setWebHooks(e, lgcGrpInd)} value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={'confirmation' in formSettings && 'webHooks' in formSettings.confirmation && formSettings.confirmation.type.webHooks.map((itm, i) => ({ name: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
-                  {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={e => setInteg(e, lgcGrpInd)} value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings.integrations.map((itm, i) => ({ name: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
+                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
+                  {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
 
                   {lgcGrp.action_run !== 'delete' && (
                     <>
@@ -670,7 +662,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
                             <option value="">Select Message</option>
-                            {'confirmation' in formSettings && 'type' in formSettings.confirmation && 'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -681,7 +673,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           <br />
                           <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
                             <option value="">Select Page To Redirect</option>
-                            {'confirmation' in formSettings && 'type' in formSettings.confirmation && 'redirectPage' in formSettings.confirmation.type && formSettings.confirmation.type.redirectPage.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            {formSettings?.confirmation?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                           </select>
                         </label>
                       )}
@@ -764,7 +756,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
               {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                 <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                   <option value="">Select Message</option>
-                  {'confirmation' in formSettings && 'type' in formSettings.confirmation && 'successMsg' in formSettings.confirmation.type && formSettings.confirmation.type.successMsg.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                  {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                 </MtSelect>
               )}
 

@@ -126,7 +126,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       elm: {
         typ: 'url',
         lbl: 'URL Field',
-        ph: 'www.example.com',
+        ph: 'https://www.example.com',
         valid: {},
       },
     },
