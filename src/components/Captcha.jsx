@@ -21,15 +21,15 @@ export default function Captcha() {
       <div className="btcd-hr" />
 
       <div className="mt-2">
-        <label htmlFor="catcha">
+        <label htmlFor="captcha-key">
           Site Key
-          <input id="catcha" onChange={onInput} name="siteKey" className="btcd-paper-inp mt-1" value={reCaptchaV2.siteKey} placeholder="Site Key" type="text" />
+          <input id="captcha-key" onChange={onInput} name="siteKey" className="btcd-paper-inp mt-1" value={reCaptchaV2.siteKey} placeholder="Site Key" type="text" />
         </label>
       </div>
       <div className="mt-2">
-        <label htmlFor="catcha">
+        <label htmlFor="captcha-secret">
           Secret Key
-          <input id="catcha" onChange={onInput} name="secretKey" className="btcd-paper-inp mt-1" value={reCaptchaV2.secretKey} placeholder="Secret Key" type="text" />
+          <input id="captcha-secret" onChange={onInput} name="secretKey" className="btcd-paper-inp mt-1" value={reCaptchaV2.secretKey} placeholder="Secret Key" type="text" />
         </label>
       </div>
     </div>
