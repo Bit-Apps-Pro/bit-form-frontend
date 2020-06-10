@@ -7,6 +7,7 @@ import { AllFormContext } from '../Utils/AllFormContext'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
+import ConfirmModal from '../components/ConfirmModal'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -27,6 +28,7 @@ function Builder(props) {
   const [snack, setSnackbar] = useState({ show: false })
   const { allFormsDispatchHandler } = allFormsData
   const { reports, reportsDispatch } = reportsData
+  const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -170,70 +172,91 @@ function Builder(props) {
   }
 
   const saveForm = () => {
-    setbuttonDisabled(true)
-    let formData = {
-      layout: lay,
-      fields,
-      form_name: formName,
-      formSettings,
-      workFlows,
-      mailTem,
-      integrations,
-      additional,
-    }
-    let action = 'bitforms_create_new_form'
-    if (savedFormId > 0) {
-      setFormSettings({ ...formSettings })
-      formData = {
-        id: savedFormId,
+    if (lay.md.length === 0 || typeof lay === 'undefined') {
+      modal.show = true
+      modal.title = 'Sorry'
+      modal.btnTxt = 'Close'
+      modal.msg = 'You can not save a blank form'
+      setModal({ ...modal })
+    } else {
+      setbuttonDisabled(true)
+      let formData = {
         layout: lay,
         fields,
         form_name: formName,
         formSettings,
         workFlows,
+        mailTem,
+        integrations,
         additional,
-        reports,
       }
-      action = 'bitforms_update_form'
-    }
+      let action = 'bitforms_create_new_form'
+      if (savedFormId > 0) {
+        setFormSettings({ ...formSettings })
+        formData = {
+          id: savedFormId,
+          layout: lay,
+          fields,
+          form_name: formName,
+          formSettings,
+          workFlows,
+          additional,
+          reports,
+        }
+        action = 'bitforms_update_form'
+      }
 
-    bitsFetch(formData, action)
-      .then(response => {
-        if (response !== undefined && response.success) {
-          let { data } = response
-          if (typeof data !== 'object') {
-            data = JSON.parse(data)
-          }
-          if (action === 'bitforms_create_new_form') {
-            if (savedFormId === 0 && buttonText === 'Save') {
-              setSavedFormId(data.id)
-              setButtonText('Update')
-              props.history.replace(`/builder/edit/${data.id}`)
+      bitsFetch(formData, action)
+        .then(response => {
+          if (response !== undefined && response.success) {
+            let { data } = response
+            if (typeof data !== 'object') {
+              data = JSON.parse(data)
+            }
+            if (action === 'bitforms_create_new_form') {
+              if (savedFormId === 0 && buttonText === 'Save') {
+                setSavedFormId(data.id)
+                setButtonText('Update')
+                props.history.replace(`/builder/edit/${data.id}`)
+                setSnackbar({ show: true, msg: data.message })
+                if ('formSettings' in data) setFormSettings(data.formSettings)
+                if ('workFlows' in data) setworkFlows(data.workFlows)
+                if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
+                if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
+                if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
+              }
+              allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+            } else if (action === 'bitforms_update_form') {
               setSnackbar({ show: true, msg: data.message })
               if ('formSettings' in data) setFormSettings(data.formSettings)
               if ('workFlows' in data) setworkFlows(data.workFlows)
               if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
               if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
+              allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
-            allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
-          } else if (action === 'bitforms_update_form') {
-            setSnackbar({ show: true, msg: data.message })
-            if ('formSettings' in data) setFormSettings(data.formSettings)
-            if ('workFlows' in data) setworkFlows(data.workFlows)
-            if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
-            if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
-            if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
-            allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+            setbuttonDisabled(false)
           }
-          setbuttonDisabled(false)
-        }
-      })
+        })
+    }
+  }
+
+  const closeModal = () => {
+    modal.show = false
+    setModal({ ...modal })
   }
 
   return (
     <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      <ConfirmModal
+        title={modal.title}
+        action={modal.action}
+        show={modal.show}
+        body={modal.msg}
+        btnTxt={modal.btnTxt}
+        close={closeModal}
+      />
       <nav className="btcd-bld-nav">
         <div className="btcd-bld-lnk">
           <NavLink exact to="/">
