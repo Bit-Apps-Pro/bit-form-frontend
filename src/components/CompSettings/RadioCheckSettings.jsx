@@ -98,24 +98,24 @@ function RadioCheckSettings(props) {
       <div className="opt">
         <span className="font-w-m">Options:</span>
         {options.map((itm, i) => (
-        <div key={`opt-${i + 8}`} className="flx flx-between">
-          <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
-          <div className="flx mt-1">
-            {elmData.typ === 'check'
-              && (
-                <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Required"' }}>
-                  <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
-                  <span className="btcd-mrk ck br-50 " />
-                </label>
-              )}
-            <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-              <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
-              <span className="btcd-mrk ck br-50 " />
-            </label>
-            <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><span className="btcd-icn icn-clear" /></button>
+          <div key={`opt-${i + 8}`} className="flx flx-between">
+            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
+            <div className="flx mt-1">
+              {elmData.typ === 'check'
+                && (
+                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Required"' }}>
+                    <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
+                    <span className="btcd-mrk ck br-50 " />
+                  </label>
+                )}
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
+                <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
+                <span className="btcd-mrk ck br-50 " />
+              </label>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><span className="btcd-icn icn-clear" /></button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
         <button onClick={addOpt} className="btn blue" type="button">Add More +</button>
       </div>
     </div>
