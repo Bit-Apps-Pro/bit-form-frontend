@@ -26,7 +26,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       // eslint-disable-next-line array-callback-return
       vals.map(i => {
         if (i !== 'admin' && mailStr.indexOf(i) === -1) {
-          mail.push({ name: i, value: i })
+          mail.push({ label: i, value: i })
         }
       })
     }
@@ -703,11 +703,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
                         >
-                          {emailInFormField() && (
+                          {/* {emailInFormField() && (
                             <optgroup label="Form Email Fields">
                               {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
                             </optgroup>
-                          )}
+                          )} */}
                         </DropDown>
                         <DropDown
                           action={e => setEmailSetting('cc', e, lgcGrpInd)}
@@ -721,11 +721,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
                         >
-                          {emailInFormField() && (
+                          {/* {emailInFormField() && (
                             <optgroup label="Form Email Fields">
                               {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
                             </optgroup>
-                          )}
+                          )} */}
                         </DropDown>
                         <DropDown
                           searchPH="Type email press + to add"
@@ -739,11 +739,11 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
                         >
-                          {emailInFormField() && (
+                          {/* {emailInFormField() && (
                             <optgroup label="Form Email Fields">
                               {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
                             </optgroup>
-                          )}
+                          )} */}
                         </DropDown>
                       </>
                     )}
