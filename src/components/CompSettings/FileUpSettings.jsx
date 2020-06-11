@@ -19,14 +19,14 @@ export default function FileUpSettings(props) {
     fldKey = props.elm.id + props.elm.data.lbl.split(' ').join('_')
   }
   const options = [
-    { name: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
-    { name: 'Audios', value: '.opus,.flac,.webm,.weba,.wav,.ogg,.m4a,.mp3,.oga,.mid,.amr,.aiff,.wma,.au,.acc,.wpl' },
-    { name: 'Videos', value: '.ogm,.wmv,.mpg,.webm,.ogv,.mov,.asx,.mpeg,.mp4,.m4v,.avi,.3g2,.3gp,.flv,.mkv,.swf' },
-    { name: 'Documents', value: '.doc,.docx,.odt,.pdf,.rtf,.tex,.txt,.wks,.wps,.wpd' },
-    { name: 'Zip', value: '.7z,.arj,.deb,.pkg,.rar,.rpm,.gz,.z,.zip' },
-    { name: 'Presentation', value: '.key,.odp,.pps,.ppt,.pptx' },
-    { name: 'Spreadsheet', value: '.ods,.xlr,.xls,.xlsx' },
-    { name: 'Databases', value: '.csv,.dat,.db,.dbf,.log,.mdb,.sav,.sql,.tar,.sql,.sqlite,.xml' },
+    { label: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
+    { label: 'Audios', value: '.opus,.flac,.webm,.weba,.wav,.ogg,.m4a,.mp3,.oga,.mid,.amr,.aiff,.wma,.au,.acc,.wpl' },
+    { label: 'Videos', value: '.ogm,.wmv,.mpg,.webm,.ogv,.mov,.asx,.mpeg,.mp4,.m4v,.avi,.3g2,.3gp,.flv,.mkv,.swf' },
+    { label: 'Documents', value: '.doc,.docx,.odt,.pdf,.rtf,.tex,.txt,.wks,.wps,.wpd' },
+    { label: 'Zip', value: '.7z,.arj,.deb,.pkg,.rar,.rpm,.gz,.z,.zip' },
+    { label: 'Presentation', value: '.key,.odp,.pps,.ppt,.pptx' },
+    { label: 'Spreadsheet', value: '.ods,.xlr,.xls,.xlsx' },
+    { label: 'Databases', value: '.csv,.dat,.db,.dbf,.log,.mdb,.sav,.sql,.tar,.sql,.sqlite,.xml' },
   ]
 
   function setRequired(e) {
@@ -70,11 +70,8 @@ export default function FileUpSettings(props) {
     props.updateData(props.elm)
   }
 
-  function setFileFilter(e) {
-    const val = []
-    for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-      val.push(e.target.selectedOptions[i].value)
-    }
+  function setFileFilter(value) {
+    const val = value.map(itm => itm.value)
     if (val.join(',') === '') {
       delete props.elm.data.exts
     } else {
@@ -99,7 +96,7 @@ export default function FileUpSettings(props) {
       <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
       <SingleInput inpType="number" title="Max Upload Size:" value={mxUp} action={setMxUp} placeholder="Any Size" />
       <SingleToggle title="Allow Multiple:" action={setMultiple} isChecked={isMultiple} className="mt-5" />
-      <DropDown className="mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Any File Type" searchPH="Search or Add ext (e.g: .jpg,.png)" action={setFileFilter} value={exts} />
+      <DropDown className="mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Select File Type" jsonValue action={setFileFilter} value={exts} />
     </div>
   )
 }
