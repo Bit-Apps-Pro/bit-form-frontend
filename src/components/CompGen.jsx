@@ -565,7 +565,7 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
                   ref={radioRef}
                   name={n}
                   value={itm.lbl}
-                  {...itm.check && { defaultChecked: true }}
+                  {...itm.check && { checked: true }}
                   {...itm.req && { required: true }}
                   {...'name' in attr && { name: attr.name }}
                   {...{ checked: value === itm.lbl }}
@@ -636,16 +636,17 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
+        {console.log('ss', attr.opt)}
         <MultiSelect
           width="100%"
-          className="fld no-drg"
+          className="no-drg"
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
           {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
           singleSelect={!attr.mul}
-          options={attr.opt.map(option => ({ value: option.lbl, label: option.lbl }))}
+          options={attr.opt.length > 0 ? attr.opt : undefined}
           onChange={onChangeHandler}
           {...{ defaultValue: value }}
         />
