@@ -69,6 +69,9 @@ export default function Bitforms(props) {
   }
   // console.log('fieldData', fieldData)
   const onBlurHandler = (event) => {
+    if (!event) {
+      return
+    }
     let maybeReset = false
     let isInteracted = false
     const dataToSet = []
@@ -80,6 +83,9 @@ export default function Bitforms(props) {
       isInteracted = true
     } else {
       element = event
+      if (element.type === 'dropdown' && element.userinput) {
+        isInteracted = true
+      }
       form = document.getElementById(`form-${props.contentID}`)
     }
     const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
@@ -120,8 +126,13 @@ export default function Bitforms(props) {
         if (fieldDetails.length > 0) {
           let value
           let multiple
-          const { type } = fieldDetails[0]
-          if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
+          let { type } = fieldDetails[0]
+          if (fieldDetails[0].name === element.name) {
+            // console.log('fieldDetails[0].', fieldDetails[0].nextElementSibling, fieldDetails[0].value, element.value, fieldDetails[0].name === element.name, fieldDetails[0].name, targetFieldName)
+            value = element.value
+            multiple = element.multiple
+            type = element.type
+          } else if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
             switch (type) {
               case 'checkbox':
                 // eslint-disable-next-line no-case-declarations
@@ -155,6 +166,9 @@ export default function Bitforms(props) {
               default:
                 break;
             }
+          } else if (fieldDetails[0].type === 'hidden' && fieldDetails[0].value && fieldDetails[0].nextElementSibling && fieldDetails[0].nextElementSibling.hasAttribute('data-msl')) {
+            value = fieldDetails[0].value.split(',')
+            multiple = value && value.length > 0
           } else {
             value = fieldDetails[0].value
             multiple = fieldDetails[0].multiple
