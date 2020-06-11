@@ -33,7 +33,7 @@ function DropDown({ options, placeholder, action, className, isMultiple, value, 
       <MultiSelect
         width="100%"
         defaultValue={value}
-        className={`${className}`}
+        className={`btcd-paper-drpdwn ${className}`}
         onChange={action}
         singleSelect={!isMultiple}
         placeholder={placeholder}
