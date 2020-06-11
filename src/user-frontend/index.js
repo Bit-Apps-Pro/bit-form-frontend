@@ -5,8 +5,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Bitforms from './Bitforms'
 
+if (! window._babelPolyfill) {
+  require('babel-polyfill');
+}
 export default function BitformsRenderer(params) {
-  document.getElementById(`${params.contentID}no-js`).innerHTML = ''
+  const noJS = document.getElementById(`${params.contentID}no-js`)
+  if (noJS) {
+    noJS.innerHTML = ''
+  }
   /* if (params.gCaptchaSiteKey !== null) {
     grecaptcha.ready(() => {
       console.log('gCaptchaSiteKey', params.gCaptchaSiteKey)

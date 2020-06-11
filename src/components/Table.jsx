@@ -160,12 +160,14 @@ function Table(props) {
   }, [gotoPage, pageCount, pageIndex])
   useEffect(() => {
     if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
+      let details
       if (typeof reports[reportID].details === 'object' && reports[reportID].details) {
-        const details = { ...reports[reportID].details, hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
-        const newReport = { ...reports[reportID], details }
-        reportsDispatch({ type: 'update', report: newReport, reportID })
-        setstateSavable(false)
+        details = { ...reports[reportID].details, hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
+      } else {
+        details = { hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
       }
+      reportsDispatch({ type: 'update', report: { ...reports[reportID], details }, reportID })
+      setstateSavable(false)
     } else if (stateSavable) {
       setstateSavable(false)
     }
