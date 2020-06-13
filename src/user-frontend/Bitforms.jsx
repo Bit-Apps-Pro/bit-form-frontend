@@ -295,7 +295,8 @@ export default function Bitforms(props) {
   })
 
   const handleSubmit = (event) => {
-    let currentForm
+
+    /* let currentForm
     if (typeof event.target.tagName === 'string') {
       if (event.target.tagName.toLowerCase() === 'form') {
         currentForm = event.target
@@ -305,46 +306,50 @@ export default function Bitforms(props) {
     }
     if (!currentForm) {
       return
-    }
+    } */
+    // currentForm.submit()
     event.preventDefault()
     setbuttonDisabled(true)
     snack && setSnack(false)
-    const formData = new FormData()
-    const fields = Array.prototype.slice.call(currentForm)
-    // eslint-disable-next-line array-callback-return
-    fields.filter(el => {
-      if (el.type === 'file' && el.files.length > 0) {
-        let fileName
-        if (el.files.length > 1) {
-          fileName = `${el.name}[]`
-        } else {
-          fileName = el.name
+    const formData = new FormData(event.target)
+
+    /*  const fields = Array.prototype.slice.call(currentForm)
+       // eslint-disable-next-line array-callback-return
+      fields.filter(el => {
+        if (el.type === 'file' && el.files.length > 0) {
+          let fileName
+          if (el.files.length > 1) {
+            fileName = `${el.name}[]`
+          } else {
+            fileName = el.name
+          }
+          if (el.files.forEach) {
+            el.files.forEach(file => formData.append(fileName, file))
+          } else {
+            Array.prototype.slice.call(el.files).forEach(file => formData.append(fileName, file))
+          }
+        } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
+          formData.append(el.name, el.value)
+        } else if (el.type === 'select-multiple') {
+          const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
+          if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
+            const selectedData = el.slim.data.data
+            selectedData.forEach(optionData => {
+              if (optionData.selected) {
+                formData.append(name, optionData.value)
+              }
+            })
+          } else {
+            el.childNodes.forEach((option => { option.selected && option.value && formData.append(name, option.value) }))
+          }
+        } else if (el.type === 'select-one') {
+          formData.append(el.name, el.value)
+        } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
+          formData.append(el.name, el.value)
         }
-        if (el.files.forEach) {
-          el.files.forEach(file => formData.append(fileName, file))
-        } else {
-          Array.prototype.slice.call(el.files).forEach(file => formData.append(fileName, file))
-        }
-      } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-        formData.append(el.name, el.value)
-      } else if (el.type === 'select-multiple') {
-        const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
-        if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
-          const selectedData = el.slim.data.data
-          selectedData.forEach(optionData => {
-            if (optionData.selected) {
-              formData.append(name, optionData.value)
-            }
-          })
-        } else {
-          el.childNodes.forEach((option => { option.selected && option.value && formData.append(name, option.value) }))
-        }
-      } else if (el.type === 'select-one') {
-        formData.append(el.name, el.value)
-      } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-        formData.append(el.name, el.value)
-      }
-    })
+      })
+       */
+
     let submitResponse
     if (props.gRecaptchaVersion && props.gRecaptchaVersion !== null && props.gRecaptchaVersion === 'v3') {
       grecaptcha.ready(() => {
@@ -451,7 +456,7 @@ export default function Bitforms(props) {
   }
   return (
     <div>
-      <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={(event) => event.preventDefault()} method="POST">
+      <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div style={style}>
@@ -466,8 +471,8 @@ export default function Bitforms(props) {
                 entryID={props.entryID}
                 buttonDisabled={buttonDisabled}
                 handleReset={handleReset}
-                handleSubmit={handleSubmit}
-                id={`form-${props.contentID}-submit`}
+                // handleSubmit={handleSubmit}
+                // id={`form-${props.contentID}-submit`}
               />
             </div>
           )}
@@ -476,7 +481,7 @@ export default function Bitforms(props) {
         snack
         && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
       }
-    </div>
+    </div >
   )
 }
 
