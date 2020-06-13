@@ -456,7 +456,11 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         defaultValue = attr.val.split(',')
       }
     } else if (Array.isArray(attr.val)) {
-      defaultValue = attr.val
+      if (attr.val.length > 0) {
+        defaultValue = attr.val.filter(option => option)
+      } else {
+        defaultValue = []
+      }
     }
   } else {
     defaultValue = []
