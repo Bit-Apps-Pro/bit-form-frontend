@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { AppSettings } from '../Utils/AppSettingsContext'
 
-export default function Captcha() {
+export default function Captcha({ saveCaptcha }) {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
 
   const onInput = e => {
@@ -32,6 +32,7 @@ export default function Captcha() {
           <input id="captcha-secret" onChange={onInput} name="secretKey" className="btcd-paper-inp mt-1" value={reCaptchaV2.secretKey} placeholder="Secret Key" type="text" />
         </label>
       </div>
+      <button onClick={saveCaptcha} type="button" className="btn btn-md f-right blue">Save</button>
     </div>
   )
 }
