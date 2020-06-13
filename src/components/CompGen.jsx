@@ -10,34 +10,6 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 function CompGen(props) {
   console.log('%c $render CompGen', 'background:red;padding:3px;border-radius:5px;color:white')
 
-  const textField = attr => (
-    (
-      !('hide' in attr.valid && attr.valid.hide === true)
-      && (
-        <div className="fld-wrp drag" btcd-fld="text-fld">
-          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-          {createElement(
-            'input',
-            {
-              className: 'fld no-drg',
-              type: attr.typ,
-              ...('req' in attr.valid && { required: attr.valid.req }),
-              ...('disabled' in attr.valid && { disabled: attr.valid.disabled }),
-              ...('ph' in attr && { placeholder: attr.ph }),
-              ...('mn' in attr && { min: attr.mn }),
-              ...('mx' in attr && { max: attr.mx }),
-              ...('val' in attr && { defaultValue: attr.val }),
-              ...('val' in attr && 'userinput' in attr && attr.userinput && { value: attr.val }),
-              ...('ac' in attr && { autoComplete: attr.ac }),
-              ...('name' in attr && { name: attr.name }),
-              ...({ onBlur: props.onBlurHandler }),
-            },
-          )}
-          {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
-        </div>
-      )
-    )
-  )
 
   const hiddenField = attr => (
     <div className="fld-wrp drag" btcd-fld="text-fld">
@@ -60,138 +32,26 @@ function CompGen(props) {
     </div>
   )
 
-  const textArea = attr => (
-    (
-      !('hide' in attr.valid && attr.valid.hide === true)
-      && (
-        <div className="fld-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-          <textarea
-            className="fld no-drg"
-            {...'ph' in attr && { placeholder: attr.ph }}
-            {...'val' in attr && { defaultValue: attr.val }}
-            {...'val' in attr && 'userinput' in attr && attr.userinput && { value: attr.val }}
-            {...'ac' in attr && { autoComplete: attr.ac }}
-            {...'req' in attr.valid && { required: attr.valid.req }}
-            {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-            {...'name' in attr && { name: attr.name }}
-            onBlur={props.onBlurHandler}
-          />
-        </div>
-      )
-    )
-  )
-
-
-  const checkBox = attr => {
-    const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',')
-    return (
-      (
-        !('hide' in attr.valid && attr.valid.hide === true)
-        && (
-          <div className="fld-wrp drag" btcd-fld="textarea">
-            {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-            <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
-              {attr.opt.map((itm, i) => (
-                <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
-                  <span>{itm.lbl}</span>
-                  <input
-                    type="checkbox"
-                    {...itm.check && { defaultChecked: true }}
-                    {...itm.req && { required: true }}
-                    {...'lbl' in itm && { defaultValue: itm.lbl }}
-                    {...'name' in attr && { name: `${attr.name}[]` }}
-                    {...vals && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                    {...vals && 'userinput' in attr && attr.userinput && vals.indexOf(itm.lbl) === -1 && { defaultChecked: false }}
-                    onBlur={props.onBlurHandler}
-                  />
-                  <span className="btcd-mrk ck" />
-                </label>
-              ))}
-            </div>
-          </div>
-        )
-      )
-    )
-  }
-
-  const radioBox = attr => {
-    const n = Math.random()
-
-    return (
-      (
-        !('hide' in attr.valid && attr.valid.hide === true)
-        && (
-          <div className="fld-wrp drag" btcd-fld="textarea">
-            {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-            <div className={`no-drg btcd-ck-con ${attr.round && 'btcd-round'}`}>
-              {attr.opt.map((itm, i) => (
-                <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
-                  <span>{itm.lbl}</span>
-                  <input
-                    type="radio"
-                    name={n}
-                    {...itm.check && { checked: true }}
-                    {...itm.req && { required: true }}
-                    {...'name' in attr && { name: attr.name }}
-                    {...'lbl' in itm && { defaultValue: itm.lbl }}
-                    {...'val' in attr && attr.val === itm.lbl && { defaultChecked: true }}
-                    {...'val' in attr && attr.val === itm.lbl && 'userinput' in attr && { checked: attr.val === itm.lbl }}
-                    onBlur={props.onBlurHandler}
-                  />
-                  <span className="btcd-mrk rdo" />
-                </label>
-              ))}
-            </div>
-          </div>
-        )
-      )
-    )
-  }
 
   const blank = () => <div className="blnk-blk drag" />
 
-  const dropDown = (attr, onBlurHandler, resetFieldValue) => (
-    !('hide' in attr.valid && attr.valid.hide === true)
-    && (
-      <div className="fld-wrp drag" btcd-fld="select">
-        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-        <select
-          className="fld slim no-drg"
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-          {...'mul' in attr && { multiple: attr.mul }}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
-          {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
-          {...'val' in attr && attr.val.length > 0 && 'userinput' in attr && attr.userinput && { value: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
-          {...resetFieldValue && { value: [] }}
-          {...onBlurHandler && { onBlur: onBlurHandler }}
-        >
-          <option data-placeholder="true" aria-label="option placeholder" />
-          {attr.opt.map((itm, i) => (
-            <option key={`op-${i + 87}-${(attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
-          ))}
-        </select>
-      </div>
-    )
-  )
 
-  const submitBtns = (attr, buttonDisabled, handleReset) => (
+  const submitBtns = (attr, buttonDisabled, handleReset, handleSubmit, id) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
       <button
         className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
         disabled={buttonDisabled}
-        type="submit"
+        type="button"
+        id={id}
+        {...handleSubmit && { onClick: handleSubmit }}
       >
-        {attr.subBtnTxt}
+        {buttonDisabled ? 'Submitting....' : attr.subBtnTxt}
       </button>
       {'rstBtnTxt' in attr && (
         <button
           className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
           type="button"
-          onClick={handleReset}
+          {...handleReset && { onClick: handleReset }}
         >
           {attr.rstBtnTxt}
         </button>
@@ -231,7 +91,7 @@ function CompGen(props) {
     case 'file-up':
       return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':
-      return submitBtns(props.atts, props.buttonDisabled, props.handleReset)
+      return submitBtns(props.atts, props.buttonDisabled, props.handleReset, props.handleSubmit, props.id)
     case 'hidden':
       return hiddenField(props.atts)
     case 'recaptcha':
@@ -376,7 +236,7 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
             ...({ value }),
             ...('ac' in attr && { autoComplete: attr.ac }),
             ...('name' in attr && { name: attr.name }),
-            ...({ onBlur: onBlurHandler }),
+            ...(onBlurHandler && { onBlur: onBlurHandler }),
             ...({ onChange: onChangeHandler }),
             ref: textFieldRef,
           },
@@ -429,7 +289,7 @@ function TextArea({ attr, onBlurHandler, resetFieldValue }) {
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
           {...'name' in attr && { name: attr.name }}
-          onBlur={onBlurHandler}
+          {...onBlurHandler && { onBlur: onBlurHandler }}
           onChange={onChangeHandler}
         />
       </div>
@@ -480,7 +340,9 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
     } else if (!event.target.checked && index >= 0) {
       setvalue(value.filter(v => v !== event.target.value))
     }
-    onBlurHandler(event)
+    if (onBlurHandler) {
+      onBlurHandler(event)
+    }
   }
   return (
     (
@@ -500,8 +362,7 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
                   {...'name' in attr && { name: `${attr.name}[]` }}
                   {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                  {... { checked: value && value.indexOf(itm.lbl) >= 0 }}
-                  // onBlur={onBlurHandler}
+                  {...{ checked: value && value.indexOf(itm.lbl) >= 0 }}
                   onChange={onChangeHandler}
                 />
                 <span className="btcd-mrk ck" />
@@ -547,7 +408,9 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
   }, [value])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)
-    onBlurHandler(event)
+    if (onBlurHandler) {
+      onBlurHandler(event)
+    }
   }
   const n = Math.random()
 
@@ -584,6 +447,7 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
 
 function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   let defaultValue
+  // console.log('attr.val', typeof attr.val, Array.isArray(attr.val), attr.val && attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(','))
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
       if (attr.val[0] === '[') {
@@ -592,19 +456,21 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         defaultValue = attr.val.split(',')
       }
     } else if (Array.isArray(attr.val)) {
-      defaultValue = attr.val
+      defaultValue = [attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(',')]
     }
   } else {
     defaultValue = []
   }
-  // const vals = 'val' in attr && attr.val && typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.length > 0 && attr.val.split(',')
   const [value, setvalue] = useState(defaultValue || [])
   const selectFieldRef = useRef(null)
   useEffect(() => {
+    console.log('defaultValueAA', attr.val, attr.userinput, attr.conditional)
     if (defaultValue && JSON.stringify(defaultValue) !== JSON.stringify(value) && !attr.userinput) {
       setvalue(defaultValue)
+    } else if (defaultValue && attr.conditional) {
+      setvalue(defaultValue)
     }
-  }, [attr.val, attr.userinput])
+  }, [attr.val, attr.userinput, attr.conditional])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue([])
@@ -613,22 +479,26 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   useEffect(() => {
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
       const { current } = selectFieldRef
-      onBlurHandler(current)
+      const eventLikeData = { name: 'mul' in attr ? `${attr.name}[]` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
+      onBlurHandler(eventLikeData)
     }
   }, [value])
   const onChangeHandler = (event) => {
-    if (event.target && event.target.slim) {
+    if (event && event.target && event.target.slim) {
       const newValue = []
       event.target.slim.data.data.forEach((option => { option.selected && option.value && newValue.push(option.value) }))
       setvalue(newValue)
-    } else if (event.target && event.target.multiple && value) {
+    } else if (event && event.target && event.target.multiple && value) {
       const selectedValue = []
       event.target.childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
       setvalue([...selectedValue])
     } else {
       setvalue(event.split(','))
     }
-    onBlurHandler(event)
+    if (onBlurHandler && event) {
+      const eventLikeData = { name: 'mul' in attr ? `${attr.name}[]` : attr.name, value: event.split(','), type: 'dropdown', multiple: 'mul' in attr && attr.mul, userinput: true }
+      onBlurHandler(eventLikeData)
+    }
   }
   return (
     !('hide' in attr.valid && attr.valid.hide === true)
@@ -639,15 +509,16 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
         {console.log('ss', attr.opt)}
         <MultiSelect
+          ref={selectFieldRef}
           width="100%"
           className="no-drg"
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
           {...'ph' in attr && { placeholder: attr.ph }}
           {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
-          {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
+          // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
           singleSelect={!attr.mul}
-          options={attr.opt.length > 0 ? attr.opt : undefined}
+          options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
           onChange={onChangeHandler}
           {...{ defaultValue: value }}
         />
