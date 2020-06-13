@@ -74,6 +74,7 @@ function RadioCheckSettings(props) {
     } else {
       delete options[i].req
     }
+    elmData.opt = options
     props.updateData({ id: elmId, data: elmData })
   }
 
