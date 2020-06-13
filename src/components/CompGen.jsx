@@ -36,20 +36,22 @@ function CompGen(props) {
   const blank = () => <div className="blnk-blk drag" />
 
 
-  const submitBtns = (attr, buttonDisabled, handleReset) => (
+  const submitBtns = (attr, buttonDisabled, handleReset, handleSubmit, id) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
       <button
         className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
         disabled={buttonDisabled}
-        type="submit"
+        type="button"
+        id={id}
+        {...handleSubmit && { onClick: handleSubmit }}
       >
-        {attr.subBtnTxt}
+        {buttonDisabled ? 'Submitting....' : attr.subBtnTxt}
       </button>
       {'rstBtnTxt' in attr && (
         <button
           className={`btcd-sub-btn btcd-rst ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
           type="button"
-          onClick={handleReset}
+          {...handleReset && { onClick: handleReset }}
         >
           {attr.rstBtnTxt}
         </button>
@@ -89,7 +91,7 @@ function CompGen(props) {
     case 'file-up':
       return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':
-      return submitBtns(props.atts, props.buttonDisabled, props.handleReset)
+      return submitBtns(props.atts, props.buttonDisabled, props.handleReset, props.handleSubmit, props.id)
     case 'hidden':
       return hiddenField(props.atts)
     case 'recaptcha':
@@ -453,7 +455,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         defaultValue = attr.val.split(',')
       }
     } else if (Array.isArray(attr.val)) {
-      defaultValue = attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(',')
+      defaultValue = [attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(',')]
     }
   } else {
     defaultValue = []
@@ -514,7 +516,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
           {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
           // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
           singleSelect={!attr.mul}
-          options={attr.opt.map(option => ({ value: option.lbl, label: option.lbl }))}
+          options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
           onChange={onChangeHandler}
           {...{ defaultValue: value }}
         />

@@ -102,6 +102,7 @@ function Table(props) {
         sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
         filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'filters' in reports[report].details) ? reports[report].details.filters : [],
         globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
+        columnOrder: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'order' in reports[report].details) ? reports[report].details.order : [],
       },
       autoResetPage: false,
       autoResetHiddenColumns: false,
@@ -162,11 +163,11 @@ function Table(props) {
     if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
       let details
       if (typeof reports[reportID].details === 'object' && reports[reportID].details) {
-        details = { ...reports[reportID].details, hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
+        details = { ...reports[reportID].details, hiddenColumns, pageSize, sortBy, filters, globalFilter }
       } else {
-        details = { hiddenColumns, pageSize, type: 'table', sortBy, filters, globalFilter }
+        details = { hiddenColumns, pageSize, sortBy, filters, globalFilter }
       }
-      reportsDispatch({ type: 'update', report: { ...reports[reportID], details }, reportID })
+      reportsDispatch({ type: 'update', report: { ...reports[reportID], details, type: 'table' }, reportID })
       setstateSavable(false)
     } else if (stateSavable) {
       setstateSavable(false)
@@ -210,9 +211,9 @@ function Table(props) {
           if (typeof reports[reportID].details === 'object' && 'order' in reports[reportID].details) {
             details = { ...reports[reportID].details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
           } else {
-            details = { order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
+            details = { ...reports[reportID].details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
           }
-          const newReport = { ...reports[reportID], details }
+          const newReport = { ...reports[reportID], details, type: 'table' }
           if (state.columnOrder.length === 0 && typeof reports[reportID].details === 'object' && 'order' in reports[reportID].details) {
             // const actionColumn = columns[columns.length - 1] // table action column
             // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
@@ -226,13 +227,13 @@ function Table(props) {
           // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
           setColumnOrder(reports[reportID].details.order)
           setstateSavable(true)
-        } else if (!stateSavable && typeof reports[reportID].details !== 'object') {
+        } else if (!stateSavable/*  && typeof reports[reportID].details !== 'object' */) {
           setstateSavable(true)
         }
       } else if (typeof props.pageCount !== 'undefined' && (isNaN(reportID) || reports.length === 0)) {
-        const details = { hiddenColumns: state.hiddenColumns, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], pageSize, type: 'table', sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
+        const details = { hiddenColumns: state.hiddenColumns, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], pageSize, sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
         setreportID(reports.length)
-        reportsDispatch({ type: 'add', report: { details } })
+        reportsDispatch({ type: 'add', report: { details, type: 'table' } })
       }
     }
   }, [columns])

@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState, useReducer } from 'react'
-import SlimSelect from 'slim-select'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 import { checkLogic, replaceWithField } from './checkLogic'
@@ -296,11 +295,22 @@ export default function Bitforms(props) {
   })
 
   const handleSubmit = (event) => {
+    let currentForm
+    if (typeof event.target.tagName === 'string') {
+      if (event.target.tagName.toLowerCase() === 'form') {
+        currentForm = event.target
+      } else if (event.target.id === `form-${props.contentID}-submit`) {
+        currentForm = document.getElementById(`form-${props.contentID}`)
+      }
+    }
+    if (!currentForm) {
+      return
+    }
     event.preventDefault()
     setbuttonDisabled(true)
     snack && setSnack(false)
     const formData = new FormData()
-    const fields = Array.prototype.slice.call(event.target)
+    const fields = Array.prototype.slice.call(currentForm)
     // eslint-disable-next-line array-callback-return
     fields.filter(el => {
       if (el.type === 'file' && el.files.length > 0) {
@@ -425,7 +435,6 @@ export default function Bitforms(props) {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
-
         if (allSel[i].nextSibling != null) {
           if (allSel[i].hasAttribute('data-max-show')) {
             allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
@@ -442,7 +451,7 @@ export default function Bitforms(props) {
   }
   return (
     <div>
-      <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} method="POST">
+      <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={(event) => event.preventDefault()} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div style={style}>
@@ -457,6 +466,8 @@ export default function Bitforms(props) {
                 entryID={props.entryID}
                 buttonDisabled={buttonDisabled}
                 handleReset={handleReset}
+                handleSubmit={handleSubmit}
+                id={`form-${props.contentID}-submit`}
               />
             </div>
           )}
