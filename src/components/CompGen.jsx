@@ -36,14 +36,14 @@ function CompGen(props) {
   const blank = () => <div className="blnk-blk drag" />
 
 
-  const submitBtns = (attr, buttonDisabled, handleReset, handleSubmit, id) => (
+  const submitBtns = (attr, buttonDisabled, handleReset) => (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
       <button
         className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
         disabled={buttonDisabled}
-        type="button"
-        id={id}
-        {...handleSubmit && { onClick: handleSubmit }}
+        type="submit"
+      // id={id}
+      // {...handleSubmit && { onClick: handleSubmit }}
       >
         {buttonDisabled ? 'Submitting....' : attr.subBtnTxt}
       </button>
@@ -320,7 +320,7 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
     } else if (attr.conditional) {
       setvalue(defaultValue)
     }
-  }, [attr.val, attr.userinput, attr.conditional])
+  }, [attr.val, attr.userinput, attr.conditional, defaultValue, value])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue([])
@@ -357,11 +357,11 @@ function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
                 <input
                   type="checkbox"
                   ref={checkBoxRef}
-                  {...itm.check && { defaultChecked: true }}
-                  {...itm.req && { required: true }}
+                  // {...itm.check && { defaultChecked: true }}
+                  // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
                   {...'lbl' in itm && { defaultValue: itm.lbl }}
+                  {...itm.req && { required: true }}
                   {...'name' in attr && { name: `${attr.name}[]` }}
-                  {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
                   {...{ checked: value && value.indexOf(itm.lbl) >= 0 }}
                   onChange={onChangeHandler}
                 />
@@ -394,7 +394,7 @@ function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
     } else if (attr.conditional) {
       setvalue(attr.val)
     }
-  }, [attr.val, attr.userinput, attr.conditional])
+  }, [attr.val, attr.userinput, attr.conditional, attr.opt])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue('')
@@ -456,7 +456,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         defaultValue = attr.val.split(',')
       }
     } else if (Array.isArray(attr.val)) {
-      defaultValue = [attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(',')]
+      defaultValue = attr.val
     }
   } else {
     defaultValue = []
@@ -464,8 +464,8 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   const [value, setvalue] = useState(defaultValue || [])
   const selectFieldRef = useRef(null)
   useEffect(() => {
-    console.log('defaultValueAA', attr.val, attr.userinput, attr.conditional)
-    if (defaultValue && JSON.stringify(defaultValue) !== JSON.stringify(value) && !attr.userinput) {
+    console.log('ssss effected')
+    if (defaultValue && !attr.userinput) {
       setvalue(defaultValue)
     } else if (defaultValue && attr.conditional) {
       setvalue(defaultValue)
@@ -507,7 +507,6 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
         {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
-        {console.log('ss', attr.opt)}
         <MultiSelect
           ref={selectFieldRef}
           width="100%"
