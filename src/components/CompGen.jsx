@@ -462,7 +462,6 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
     defaultValue = []
   }
   const [value, setvalue] = useState(defaultValue || [])
-  const selectFieldRef = useRef(null)
   useEffect(() => {
     console.log('ssss effected')
     if (defaultValue && !attr.userinput) {
@@ -478,7 +477,6 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   }, [resetFieldValue])
   useEffect(() => {
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
-      const { current } = selectFieldRef
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}[]` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
     }
@@ -508,7 +506,6 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
         <MultiSelect
-          ref={selectFieldRef}
           width="100%"
           className="no-drg"
           {...'req' in attr.valid && { required: attr.valid.req }}
