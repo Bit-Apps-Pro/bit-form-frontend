@@ -354,7 +354,8 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
     }
   }, [value])
   const onChangeHandler = (event) => {
-    setvalue(event.target.value)
+    const val = attr.typ === 'email' ? event.target.value.toLowerCase() : event.target.value
+    setvalue(val)
   }
   return (
     !('hide' in attr.valid && attr.valid.hide === true)

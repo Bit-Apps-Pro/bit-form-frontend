@@ -8,7 +8,6 @@ function TextFieldSettings(props) {
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-  console.log('dd', elmData)
   const isRequired = elmData.valid.req !== undefined
   const isAutoComplete = elmData.ac === 'on'
   const label = elmData.lbl === undefined ? '' : elmData.lbl
