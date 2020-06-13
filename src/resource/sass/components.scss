@@ -62,6 +62,10 @@ body {
     padding: 7px 5px;
     border-radius: 4px;
   }
+  & .msl-btn{
+    background: transparent !important;
+    box-shadow: none !important;
+  }
 }
 
 input.fld {
@@ -106,9 +110,6 @@ textarea.fld {
   height: 32px !important;
   background: white !important;
   padding: 2px !important;
-}
-.fld[type="email"] {
-  text-transform: lowercase !important;
 }
 
 textarea.fld {
