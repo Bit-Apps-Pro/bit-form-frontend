@@ -19,9 +19,20 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const mailOptions = vals => {
+    const mail = []
     // eslint-disable-next-line no-undef
-    const mail = typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail) ? bits.userMail.map(email => email) : []
-    const mailStr = JSON.stringify(mail)
+    if (typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail)) {
+      // eslint-disable-next-line no-undef
+      mail.push(...bits.userMail)
+    }
+    if (emailInFormField()) {
+      formFields.map(fld => {
+        if (fld.type === 'email') {
+          mail.push({ label: fld.name, value: fld.key })
+        }
+      })
+    }
+    /* const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
       vals.map(i => {
@@ -29,7 +40,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
           mail.push({ label: i, value: i })
         }
       })
-    }
+    } */
     return mail
   }
   const getValueFromArr = (key, subkey, lgcGrpInd) => {
@@ -423,7 +434,6 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   }
 
   const setEmailSetting = (typ, e, lgcGrpInd) => {
-    const values = []
     if (typ === 'tem') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
@@ -432,32 +442,24 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
         }
       }
     } else if (typ === 'to') {
-      for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-        values.push(e.target.selectedOptions[i].value)
-      }
+
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.to = values
+          workFlows[lgcGrpInd].successAction[i].details.to = e.split(',')
           break
         }
       }
     } else if (typ === 'cc') {
-      for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-        values.push(e.target.selectedOptions[i].value)
-      }
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.cc = values
+          workFlows[lgcGrpInd].successAction[i].details.cc = e.split(',')
           break
         }
       }
     } else if (typ === 'bcc') {
-      for (let i = 0; i < e.target.selectedOptions.length; i += 1) {
-        values.push(e.target.selectedOptions[i].value)
-      }
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.bcc = values
+          workFlows[lgcGrpInd].successAction[i].details.bcc = e.split(',')
           break
         }
       }
@@ -692,59 +694,36 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                           </select>
                         </label>
                         <DropDown
-                          action={e => setEmailSetting('to', e, lgcGrpInd)}
-                          searchPH="Type email press + to add"
+                          action={val => setEmailSetting('to', val, lgcGrpInd)}
                           value={getValueFromArr('mailNotify', 'to', lgcGrpInd)}
                           placeholder="Add Email Receiver"
-                          searchPlaceholder="Search/Type Email"
                           title={<span className="f-m">To</span>}
                           isMultiple
                           titleClassName="w-7 mt-2"
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
-                        >
-                          {/* {emailInFormField() && (
-                            <optgroup label="Form Email Fields">
-                              {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
-                            </optgroup>
-                          )} */}
-                        </DropDown>
+                        />
                         <DropDown
-                          action={e => setEmailSetting('cc', e, lgcGrpInd)}
-                          searchPH="Type email press + to add"
+                          action={val => setEmailSetting('cc', val, lgcGrpInd)}
                           value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
                           placeholder="Add Email CC"
-                          searchPlaceholder="Search/Type Email"
                           title={<span className="f-m">CC</span>}
                           isMultiple
                           titleClassName="w-7 mt-2"
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
-                        >
-                          {/* {emailInFormField() && (
-                            <optgroup label="Form Email Fields">
-                              {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
-                            </optgroup>
-                          )} */}
-                        </DropDown>
+                        />
+
                         <DropDown
-                          searchPH="Type email press + to add"
-                          action={e => setEmailSetting('bcc', e, lgcGrpInd)}
+                          action={val => setEmailSetting('bcc', val, lgcGrpInd)}
                           placeholder="Add Email BCC"
-                          searchPlaceholder="Search/Type Email"
                           value={getValueFromArr('mailNotify', 'bcc', lgcGrpInd)}
                           title={<span className="f-m">BCC</span>}
                           isMultiple
                           titleClassName="w-7 mt-2"
                           addable
                           options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
-                        >
-                          {/* {emailInFormField() && (
-                            <optgroup label="Form Email Fields">
-                              {formFields.map(itm => itm.type === 'email' && <option value={itm.key}>{itm.name}</option>)}
-                            </optgroup>
-                          )} */}
-                        </DropDown>
+                        />
                       </>
                     )}
                   </div>
