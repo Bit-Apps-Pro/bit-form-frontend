@@ -309,7 +309,7 @@ body {
   & > span {
     font-size: 25px;
     display: inline-block;
-
+    color: $dp-blue;
     margin-right: 5px;
   }
 
@@ -318,7 +318,10 @@ body {
     outline: none;
     transform: scale(1.05);
     box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.3), -2px -2px 3px 0px white;
-    color: black;
+    color: $blue;
+    & > span {
+      color: $blue;
+    }
   }
 }
 
@@ -2189,7 +2192,7 @@ nav.top-nav {
     background: white;
     border-color: #e2e2e2;
     &:not(.msl-active):hover {
-      border-color: $dp-txt ;
+      border-color: $dp-txt;
     }
   }
   & > * {
