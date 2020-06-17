@@ -8,6 +8,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
+import { hideWpMenu, showWpMenu } from '../Utils/Helpers'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -30,7 +31,7 @@ function Builder(props) {
   const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
 
-  useEffect(() => {
+  const onMount = () => {
     if (sessionStorage.getItem('formData')) {
       const formData = JSON.parse(sessionStorage.getItem('formData'))
       formData.layout !== undefined && setLay(formData.layout)
@@ -53,29 +54,17 @@ function Builder(props) {
       fetchTemplate()
     }
     window.scrollTo(0, 0)
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
-    if (process.env.NODE_ENV === 'production') {
-      document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
-      document.getElementById('wpadminbar').style.display = 'none'
-      document.getElementById('adminmenumain').style.display = 'none'
-      document.getElementById('adminmenuback').style.display = 'none'
-      document.getElementById('adminmenuwrap').style.display = 'none'
-      document.getElementById('wpfooter').style.display = 'none'
-      document.getElementById('wpcontent').style.marginLeft = 0
-    }
-    return function cleanup() {
-      document.getElementsByTagName('body')[0].style.overflow = 'auto'
-      if (process.env.NODE_ENV === 'production') {
-        document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
-        document.getElementById('wpadminbar').style.display = 'block'
-        document.getElementById('adminmenumain').style.display = 'block'
-        document.getElementById('adminmenuback').style.display = 'block'
-        document.getElementById('adminmenuwrap').style.display = 'block'
-        document.getElementById('wpcontent').style.marginLeft = null
-        document.getElementById('wpfooter').style.display = 'block'
-      }
-      setFulScn(false)
-    }
+    hideWpMenu()
+  }
+
+  const onUnmount = () => {
+    showWpMenu()
+    setFulScn(false)
+  }
+
+  useEffect(() => {
+    onMount()
+    return onUnmount()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -222,25 +222,23 @@ function TextField({ attr, onBlurHandler, resetFieldValue }) {
     && (
       <div className="fld-wrp drag" btcd-fld="text-fld">
         {'lbl' in attr && <label title={attr.lbl} className="fld-lbl">{attr.lbl}</label>}
-        {createElement(
-          'input',
-          {
-            className: 'fld no-drg',
-            type: attr.typ,
-            ...('req' in attr.valid && { required: attr.valid.req }),
-            ...('disabled' in attr.valid && { disabled: attr.valid.disabled }),
-            ...('ph' in attr && { placeholder: attr.ph }),
-            ...('mn' in attr && { min: attr.mn }),
-            ...('mx' in attr && { max: attr.mx }),
-            ...('val' in attr && { defaultValue: attr.val }),
-            ...({ value }),
-            ...('ac' in attr && { autoComplete: attr.ac }),
-            ...('name' in attr && { name: attr.name }),
-            ...(onBlurHandler && { onBlur: onBlurHandler }),
-            ...({ onChange: onChangeHandler }),
-            ref: textFieldRef,
-          },
-        )}
+        <input
+          className="fld no-drg"
+          type={attr.typ}
+          {...'attr' in attr && attr.attr}
+          {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+          {...'ph' in attr && { placeholder: attr.ph }}
+          {...'mn' in attr && { min: attr.mn }}
+          {...'mx' in attr && { max: attr.mx }}
+          {...'val' in attr && { defaultValue: attr.val }}
+          {...{ value }}
+          {...'ac' in attr && { autoComplete: attr.ac }}
+          {...'name' in attr && { name: attr.name }}
+          {...onBlurHandler && { onBlur: onBlurHandler }}
+          {...{ onChange: onChangeHandler }}
+          ref={textFieldRef}
+        />
         {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
       </div>
     )
