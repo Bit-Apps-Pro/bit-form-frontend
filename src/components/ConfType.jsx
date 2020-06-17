@@ -27,7 +27,7 @@ export default function ConfType(props) {
   }
 
   return (
-    <div className="mt-4 w-7">
+    <div className="mt-4" style={{ width: 900 }}>
       <h2>Confirmations</h2>
       <div>
         <button
