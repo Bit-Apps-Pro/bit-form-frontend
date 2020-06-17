@@ -130,7 +130,7 @@ export default function SelectSettings(props) {
             <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
               <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
-                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData.val.some(d => d === itm.value)} />
+                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
               <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button"><span className="btcd-icn icn-clear" /></button>
