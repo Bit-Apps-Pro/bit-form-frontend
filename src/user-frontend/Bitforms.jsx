@@ -188,12 +188,13 @@ export default function Bitforms(props) {
               switch (actionDetail.action) {
                 case 'value':
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
-                    if (actionDetail.field === targetFieldName && newData[props.fieldsKey[actionDetail.field]].val === actionDetail.val && isInteracted && !newData[props.fieldsKey[actionDetail.field]].conditional) {
+                    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues) : actionDetail.val
+                    if (actionDetail.field === targetFieldName && newData[props.fieldsKey[actionDetail.field]].val === actionValue && isInteracted && !newData[props.fieldsKey[actionDetail.field]].conditional) {
                       newData[props.fieldsKey[actionDetail.field]].conditional = true
                     } else {
                       newData[props.fieldsKey[actionDetail.field]].conditional = false
                     }
-                    newData[props.fieldsKey[actionDetail.field]].val = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues) : actionDetail.val
+                    newData[props.fieldsKey[actionDetail.field]].val = actionValue
                     newData[props.fieldsKey[actionDetail.field]].userinput = false
                     maybeReset = true
                   }

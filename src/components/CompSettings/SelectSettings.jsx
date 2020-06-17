@@ -87,14 +87,15 @@ export default function SelectSettings(props) {
         if (!Array.isArray(elmData.val)) {
           elmData.val = []
         }
-        elmData.val.push(e.target.getAttribute('data-value'))
+        // elmData.val.push(e.target.getAttribute('data-value'))
+        elmData.val = [...elmData.val, e.target.getAttribute('data-value')]
       } else {
         elmData.val = e.target.getAttribute('data-value')
       }
     } else {
       // eslint-disable-next-line no-lonely-if
       if (isMultiple) {
-        elmData.val = elmData.val.filter(itm => itm !== e.target.getAttribute('data-value'))
+        elmData.val = [...elmData.val.filter(itm => itm !== e.target.getAttribute('data-value'))]
       } else {
         delete elmData.val
       }
@@ -133,7 +134,7 @@ export default function SelectSettings(props) {
                 <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button"><span className="btcd-icn icn-clear" /></button>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><span className="btcd-icn icn-clear" /></button>
             </div>
           </div>
         ))}

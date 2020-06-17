@@ -189,7 +189,6 @@ function FileUp({ attr, formID, entryID, resetFieldValue }) {
   )
 }
 
-
 function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
@@ -349,14 +348,17 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
         defaultValue = attr.val.split(',')
       }
     } else if (Array.isArray(attr.val)) {
-      defaultValue = attr.val
+      if (attr.val.length > 0) {
+        defaultValue = attr.val.filter(option => option)
+      } else {
+        defaultValue = []
+      }
     }
   } else {
     defaultValue = []
   }
   const [value, setvalue] = useState(defaultValue || [])
   useEffect(() => {
-    console.log('ssss effected')
     if (defaultValue && !attr.userinput) {
       setvalue(defaultValue)
     } else if (defaultValue && attr.conditional) {
