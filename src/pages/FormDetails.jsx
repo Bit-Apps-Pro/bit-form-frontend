@@ -8,7 +8,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
-import { hideWpMenu, showWpMenu } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, getNewId } from '../Utils/Helpers'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -88,10 +88,7 @@ function Builder(props) {
 
   const [workFlows, setworkFlows] = useState([])
 
-  const [additional, setadditional] = useState({
-    enabled: {},
-    settings: {},
-  })
+  const [additional, setadditional] = useState({ enabled: {}, settings: {} })
   console.log('STAreports', reports)
   const [formSettings, setFormSettings] = useState({
     formName,
@@ -167,20 +164,6 @@ function Builder(props) {
 
   const handleFormName = e => {
     setFormName(e.target.value)
-  }
-
-  const getNewId = flds => {
-    let largestNumberFld = 0
-    let num = 0
-    for (const fld in flds) {
-      if (fld !== null && fld !== undefined) {
-        num = Number(fld.match(/[0-9]/g).join(''))
-        if (typeof num === 'number' && num > largestNumberFld) {
-          largestNumberFld = num
-        }
-      }
-    }
-    return largestNumberFld + 1
   }
 
   const saveForm = () => {

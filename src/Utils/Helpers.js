@@ -23,3 +23,17 @@ export const showWpMenu = () => {
     document.getElementById('wpfooter').style.display = 'block'
   }
 }
+
+ export const getNewId = flds => {
+  let largestNumberFld = 0
+  let num = 0
+  for (const fld in flds) {
+    if (fld !== null && fld !== undefined) {
+      num = Number(fld.match(/[0-9]/g).join(''))
+      if (typeof num === 'number' && num > largestNumberFld) {
+        largestNumberFld = num
+      }
+    }
+  }
+  return largestNumberFld + 1
+}
