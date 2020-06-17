@@ -64,7 +64,7 @@ function Builder(props) {
 
   useEffect(() => {
     onMount()
-    return onUnmount()
+    return () => onUnmount()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
