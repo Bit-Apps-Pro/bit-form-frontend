@@ -247,7 +247,6 @@ function FormEntries() {
 
       <Drawer
         title="Response Details"
-        subTitle="adsff"
         show={rowDtl.show}
         close={closeRowDetail}
       >
@@ -262,9 +261,9 @@ function FormEntries() {
               && itm.column.Header !== '#' && (
                 <tr key={`rw-d-${i + 2}`}>
                   <th>{itm.column.Header}</th>
-                  <td>{itm.value}</td>
+                  <td>{ itm.value}</td>
                 </tr>
-              ))}
+            ))}
           </tbody>
         </table>
       </Drawer>
