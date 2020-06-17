@@ -98,7 +98,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       },
     },
     {
-      name: 'Password:',
+      name: 'Password',
       icn: 'pass',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -124,7 +124,11 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       icn: 'url',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
-        typ: 'url',
+        typ: 'text',
+        attr: {
+          title: 'https://www.example.com  or  www.example.com',
+          pattern: '(https:\/\/www.*.*)|(http:\/\/www.*.*)|(http:\/\/*.*)|(https:\/\/*.*|www.*.*)',
+        },
         lbl: 'URL Field',
         ph: 'https://www.example.com',
         valid: {},
