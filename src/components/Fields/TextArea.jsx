@@ -7,10 +7,10 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue }) {
   useEffect(() => {
     if (attr.val !== undefined && !attr.userinput) {
       setvalue(attr.val)
-    } else if (attr.val !== undefined && attr.conditional) {
-      setvalue(attr.val)
     } else if (!attr.val && !attr.userinput) {
       setvalue('')
+    } else if (attr.conditional) {
+      setvalue(attr.val)
     }
   }, [attr.val, attr.userinput, attr.conditional])
   useEffect(() => {
