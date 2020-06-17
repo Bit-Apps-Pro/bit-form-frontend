@@ -253,10 +253,10 @@ function TextArea({ attr, onBlurHandler, resetFieldValue }) {
   useEffect(() => {
     if (attr.val !== undefined && !attr.userinput) {
       setvalue(attr.val)
-    } else if (attr.val !== undefined && attr.conditional) {
-      setvalue(attr.val)
     } else if (!attr.val && !attr.userinput) {
       setvalue('')
+    } else if (attr.conditional) {
+      setvalue(attr.val)
     }
   }, [attr.val, attr.userinput, attr.conditional])
   useEffect(() => {
@@ -467,7 +467,6 @@ function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   }
   const [value, setvalue] = useState(defaultValue || [])
   useEffect(() => {
-    console.log('ssss effected')
     if (defaultValue && !attr.userinput) {
       setvalue(defaultValue)
     } else if (defaultValue && attr.conditional) {
