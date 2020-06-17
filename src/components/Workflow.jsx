@@ -26,12 +26,15 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       mail.push(...bits.userMail)
     }
     if (emailInFormField()) {
+      const flds = []
       formFields.map(fld => {
         if (fld.type === 'email') {
-          mail.push({ label: fld.name, value: fld.key })
+          flds.push({ label: fld.name, value: fld.key })
         }
       })
+      mail.push({ title: 'Form Fields', type: 'group', childs: flds })
     }
+    console.log('sss',mail)
     /* const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
@@ -434,6 +437,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   }
 
   const setEmailSetting = (typ, e, lgcGrpInd) => {
+    console.log('ssss', e.split(','))
     if (typ === 'tem') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
@@ -442,7 +446,6 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
         }
       }
     } else if (typ === 'to') {
-
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
           workFlows[lgcGrpInd].successAction[i].details.to = e.split(',')
