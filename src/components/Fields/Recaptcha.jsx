@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha';
 
-export default function ReCaptcha(attr) {
+export default function ReCaptcha({ attr }) {
   const [render, setrender] = useState(true)
   useEffect(() => {
     setrender(false)
