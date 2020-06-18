@@ -6,15 +6,15 @@ import ReactDOM from 'react-dom'
 import Bitforms from './Bitforms'
 
 if (!window._babelPolyfill) {
-  require('babel-polyfill');
+  require('babel-polyfill')
 }
 export default function BitformsRenderer(params) {
   const renderApp = () => {
 
-    const isJS = document.getElementById(`${params.contentID}no-js`)
+    /* const isJS = document.getElementById(`${params.contentID}no-js`)
     if (isJS) {
       isJS.innerHTML = ''
-    }
+    } */
     // eslint-disable-next-line react/jsx-filename-extension
     ReactDOM.hydrate(<Bitforms
       buttons={params.buttons}

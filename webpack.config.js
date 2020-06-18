@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const PreloadWebpackPlugin = require('preload-webpack-plugin');
@@ -27,7 +28,7 @@ module.exports = (env, argv) => {
       filename: '[name].js',
       path: path.resolve('../assets/js/'),
       chunkFilename: '[name].js',
-      library: '[name]',
+      library: '_bitforms',
       libraryTarget: 'umd',
     },
 
@@ -52,6 +53,19 @@ module.exports = (env, argv) => {
           },
         },
       },
+      minimizer: [
+        new UglifyJsPlugin({
+          test: /\.js(\?.*)?$/i,
+          uglifyOptions: {
+            output: {
+              comments: /^\**!|@preserve|@license/,
+            },
+            compress: {
+              drop_console: production && true,
+            },
+          },
+        }),
+      ],
     },
     plugins: [
       // new BundleAnalyzerPlugin(),
@@ -119,6 +133,7 @@ module.exports = (env, argv) => {
                 plugins: [
                   autoprefixer,
                 ],
+                minimize: true,
               },
             },
             'sass-loader',
