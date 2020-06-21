@@ -58,7 +58,7 @@ const AllFormContext = createContext()
 const AllFormContextProvider = (props) => {
   let allFormsInitialState = []
   // eslint-disable-next-line no-undef
-  if (process.env.NODE_ENV === 'production' && bits.allForms !== null) {
+  if (process.env.NODE_ENV === 'production' && typeof bits !== 'undefined' && bits.allForms !== null) {
     allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitforms id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)

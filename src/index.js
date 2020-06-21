@@ -4,7 +4,7 @@ import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import * as Sentry from '@sentry/browser';
+// import * as Sentry from '@sentry/browser';
 import * as serviceWorker from './serviceWorker'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
@@ -15,7 +15,7 @@ const App = lazy(() => import('./App'))
 // Sentry.init({ dsn: 'https://ca450a3bacc2472bbe9b010388f11880@o400688.ingest.sentry.io/5259314' });
 
 
-if (process.env.NODE_ENV === 'production' && typeof bits.assetsURL !== 'undefined') {
+if (process.env.NODE_ENV === 'production' && typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
   // eslint-disable-next-line camelcase
   __webpack_public_path__ = `${bits.assetsURL}/js/`
 }
@@ -32,4 +32,5 @@ ReactDOM.render(
     </AppSettingsProvider>
   </AllFormContextProvider>, document.getElementById('btcd-app'),
 )
+
 serviceWorker.register();

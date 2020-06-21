@@ -44,12 +44,14 @@ export default function Bitforms(props) {
       <div
         style={{
           height: '100%',
-          gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
-          gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
-          gridRowStart: field.y + 1, /* y-0 -> y + 1 */
-          gridRowEnd: field.y !== 1 && field.h + (field.y + 1), /* h-4 -> if y not 1 then h+y */
+          gridArea:`${field.y + 1}/${field.x + 1} / ${field.y !== 1 && field.h + (field.y + 1)}/${ (field.x + 1) + field.w} `,
+         // gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
+         // gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
+         // gridRowStart: field.y + 1, /* y-0 -> y + 1 */
+         // gridRowEnd: field.y !== 1 && field.h + (field.y + 1), /* h-4 -> if y not 1 then h+y */
           minHeight: field.h * 40, /* h * 40px */
         }}
+        sss={`${field.y + 1}/${field.x + 1} / ${field.y !== 1 && field.h + (field.y + 1)}/${ (field.x + 1) + field. w} `}
         className="btcd-fld-itm"
       // btcd-id={field.i}
       // key={field.i}
@@ -297,59 +299,10 @@ export default function Bitforms(props) {
 
   const handleSubmit = (event) => {
 
-    /* let currentForm
-    if (typeof event.target.tagName === 'string') {
-      if (event.target.tagName.toLowerCase() === 'form') {
-        currentForm = event.target
-      } else if (event.target.id === `form-${props.contentID}-submit`) {
-        currentForm = document.getElementById(`form-${props.contentID}`)
-      }
-    }
-    if (!currentForm) {
-      return
-    } */
-    // currentForm.submit()
     event.preventDefault()
     setbuttonDisabled(true)
     snack && setSnack(false)
     const formData = new FormData(event.target)
-
-    /*  const fields = Array.prototype.slice.call(currentForm)
-       // eslint-disable-next-line array-callback-return
-      fields.filter(el => {
-        if (el.type === 'file' && el.files.length > 0) {
-          let fileName
-          if (el.files.length > 1) {
-            fileName = `${el.name}[]`
-          } else {
-            fileName = el.name
-          }
-          if (el.files.forEach) {
-            el.files.forEach(file => formData.append(fileName, file))
-          } else {
-            Array.prototype.slice.call(el.files).forEach(file => formData.append(fileName, file))
-          }
-        } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-          formData.append(el.name, el.value)
-        } else if (el.type === 'select-multiple') {
-          const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
-          if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
-            const selectedData = el.slim.data.data
-            selectedData.forEach(optionData => {
-              if (optionData.selected) {
-                formData.append(name, optionData.value)
-              }
-            })
-          } else {
-            el.childNodes.forEach((option => { option.selected && option.value && formData.append(name, option.value) }))
-          }
-        } else if (el.type === 'select-one') {
-          formData.append(el.name, el.value)
-        } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-          formData.append(el.name, el.value)
-        }
-      })
-       */
 
     let submitResponse
     if (props.gRecaptchaVersion && props.gRecaptchaVersion !== null && props.gRecaptchaVersion === 'v3') {
@@ -457,6 +410,7 @@ export default function Bitforms(props) {
   }
   return (
     <div>
+      {console.log(layout)}
       <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}

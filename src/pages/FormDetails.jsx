@@ -18,6 +18,7 @@ function Builder(props) {
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
+  const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
   const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
   const [fields, setFields] = useState(null)
@@ -338,7 +339,10 @@ function Builder(props) {
           />
         </Route>
         <Route path="/builder/:formType/:formID/responses/">
-          <FormEntries />
+          <FormEntries
+            allResp={allResponse}
+            setAllResp={setAllResponse}
+          />
         </Route>
       </Switch>
     </div>

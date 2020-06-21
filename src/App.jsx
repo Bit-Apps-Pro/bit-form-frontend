@@ -4,7 +4,7 @@
 
 import React, { lazy, Suspense } from 'react'
 import {
-  BrowserRouter as Router, Switch, Route, NavLink, Link
+  BrowserRouter as Router, Switch, Route, NavLink, Link,
 } from 'react-router-dom'
 import './resource/sass/app.scss'
 import TableLoader from './components/Loaders/TableLoader'
@@ -23,61 +23,63 @@ function App() {
   // eslint-disable-next-line no-undef
   return (
     // eslint-disable-next-line no-undef
-    <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
-      <div className="Btcd-App">
+    <Suspense fallback={<Loader />}>
+      <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
+        <div className="Btcd-App">
 
-        <div className="nav-wrp">
-          <div className="flx">
-            <div className="logo flx" title="Bit Form">
-              <Link to="/" className="flx">
-                <img src={logo} alt="bit form logo" className="ml-2" />
-                <span className="ml-2">Bit Form</span>
-              </Link>
+          <div className="nav-wrp">
+            <div className="flx">
+              <div className="logo flx" title="Bit Form">
+                <Link to="/" className="flx">
+                  <img src={logo} alt="bit form logo" className="ml-2" />
+                  <span className="ml-2">Bit Form</span>
+                </Link>
+              </div>
+              <nav className="top-nav ml-2">
+                <NavLink
+                  exact
+                  to="/"
+                  activeClassName="app-link-active"
+                >My Forms
+              </NavLink>
+
+                <NavLink
+                  to="/settings/recaptcha"
+                  activeClassName="app-link-active"
+                >Settings
+              </NavLink>
+              </nav>
             </div>
-            <nav className="top-nav ml-2">
-              <NavLink
-                exact
-                to="/"
-                activeClassName="app-link-active"
-              >My Forms
-              </NavLink>
+          </div>
 
-              <NavLink
-                to="/settings/recaptcha"
-                activeClassName="app-link-active"
-              >Settings
-              </NavLink>
-            </nav>
+          <div className="route-wrp">
+            <Switch>
+              <Route exact path="/">
+                <Suspense fallback={<TableLoader />}>
+                  <AllForms />
+                </Suspense>
+              </Route>
+              <Route path="/builder/:formType/:formID?/:option?">
+                <Suspense fallback={<Loader />}>
+                  <FormDetails />
+                </Suspense>
+              </Route>
+              <Route path="/formEntries/:formID">
+                <Suspense fallback={<TableLoader />}>
+                  <FormEntries />
+                </Suspense>
+              </Route>
+              <Route path="/settings">
+                <AppSettings />
+              </Route>
+              <Route path="*">
+                <Error404 />
+              </Route>
+            </Switch>
           </div>
         </div>
-
-        <div className="route-wrp">
-          <Switch>
-            <Route exact path="/">
-              <Suspense fallback={<TableLoader />}>
-                <AllForms />
-              </Suspense>
-            </Route>
-            <Route path="/builder/:formType/:formID?/:option?">
-              <Suspense fallback={<Loader />}>
-                <FormDetails />
-              </Suspense>
-            </Route>
-            <Route path="/formEntries/:formID">
-              <Suspense fallback={<TableLoader />}>
-                <FormEntries />
-              </Suspense>
-            </Route>
-            <Route path="/settings">
-              <AppSettings />
-            </Route>
-            <Route path="*">
-              <Error404 />
-            </Route>
-          </Switch>
-        </div>
-      </div>
-    </Router>
+      </Router>
+    </Suspense>
   )
 }
 
