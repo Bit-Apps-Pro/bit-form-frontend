@@ -1,9 +1,10 @@
 $bdr-rad: 0px;
 $prim: #99e3ff;
-$blue: #0a8dff;
+$blue: #0069ff;
+//$blue: #0a8dff;
 //$blue: #0083f3;
 // $dp-blue: #0b1655;
-$dp-blue: #172c4d;
+$dp-blue: #031b4e;
 $dp-bg: #13233c;
 $light-bg: #fff;
 //$light-bg: #f2f3f7;
@@ -129,15 +130,15 @@ body {
 
 .blue {
   //background: $blue !important;
-  background: linear-gradient(145deg, #0b97ff, #097fe6) !important;
+  background: linear-gradient(145deg, $blue, #097fe6) !important;
   color: white !important;
   &:hover {
     //background: #016fcf !important;
-    background: linear-gradient(145deg, #018efa, #0474d6) !important;
+    background: linear-gradient(145deg, darken($blue, 2), darken($blue, 5)) !important;
   }
   &:active {
     // background: #0062b8;
-    background: linear-gradient(145deg, #097fe6, #008efa) !important;
+    background: linear-gradient(145deg, darken($blue, 4), darken($blue, 7 )) !important;
   }
 }
 
