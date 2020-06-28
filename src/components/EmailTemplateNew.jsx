@@ -97,7 +97,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
         <h4 className="txt-dp">Email Templates Coming soon</h4>
       </Modal>
 
-      <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} className="btn btcd-btn-o-gray">
+      <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className="btn btcd-btn-o-gray">
         <span className="btcd-icn icn-arrow_back" />
         &nbsp;
         Back
