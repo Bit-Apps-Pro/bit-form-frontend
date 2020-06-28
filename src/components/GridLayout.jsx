@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
@@ -296,6 +297,7 @@ function GridLayout(props) {
 
   const compByTheme = compData => {
     if (compData.typ === 'recaptcha') {
+      // eslint-disable-next-line no-param-reassign
       compData.siteKey = reCaptchaV2.siteKey
     }
     switch (props.theme) {
@@ -326,7 +328,8 @@ function GridLayout(props) {
         onClick={() => onRemoveItem(item.i)}
         onKeyPress={() => onRemoveItem(item.i)}
         role="button"
-        tabIndex={-1}
+        tabIndex="0"
+        title="Remove"
       >
         <span className="btcd-icn icn-clear" />
       </div>
@@ -334,40 +337,53 @@ function GridLayout(props) {
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Move"
+        title="Move"
       >
         <span className="btcd-icn icn-move1" />
+      </div>
+      <div
+        style={{ right: 47, fontSize: 15 }}
+        className="bit-blk-icn drag "
+        aria-label="Settings"
+        title="Settings"
+      >
+        <span className="btcd-icn icn-settings" />
       </div>
 
       {compByTheme(fields[item.i])}
     </div>
   )
   return (
-    <div style={{ width: props.width - 19 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbars>
-        <ResponsiveReactGridLayout
-          width={props.width - 25}
-          measureBeforeMount={false}
-          isDroppable={props.draggedElm[0] !== ''}
-          className="layout"
-          onDrop={onDrop}
-          onLayoutChange={onLayoutChange}
-          droppingItem={props.draggedElm[1]}
-          cols={cols}
-          breakpoints={{ lg: 800, md: 600, sm: 320 }}
-          rowHeight={40}
-          margin={[0, 0]}
-          containerPadding={[1, 1]}
-          draggableCancel=".no-drg"
-          draggableHandle=".drag"
-          layouts={layouts}
-          onBreakpointChange={onBreakpointChange}
-        // compactType="vertical"
-        >
-          {layouts[breakpoint].map(itm => blkGen(itm))}
-        </ResponsiveReactGridLayout>
+    <div style={{ width: props.width - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      <Scrollbars autoHide>
+        <div style={{ padding: 10, paddingRight: 13 }}>
+          <div className="_frm">
+            <ResponsiveReactGridLayout
+              width={props.width - 32}
+              measureBeforeMount={false}
+              isDroppable={props.draggedElm[0] !== ''}
+              className="layout"
+              onDrop={onDrop}
+              onLayoutChange={onLayoutChange}
+              droppingItem={props.draggedElm[1]}
+              cols={cols}
+              breakpoints={{ lg: 800, md: 600, sm: 320 }}
+              rowHeight={40}
+              margin={[0, 0]}
+              containerPadding={[1, 1]}
+              draggableCancel=".no-drg"
+              draggableHandle=".drag"
+              layouts={layouts}
+              onBreakpointChange={onBreakpointChange}
+            // compactType="vertical"
+            >
+              {layouts[breakpoint].map(itm => blkGen(itm))}
+            </ResponsiveReactGridLayout>
 
-        <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
-          {compByTheme(props.subBtn)}
+            <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
+              {compByTheme(props.subBtn)}
+            </div>
+          </div>
         </div>
       </Scrollbars>
     </div>
