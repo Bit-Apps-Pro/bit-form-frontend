@@ -265,20 +265,22 @@ function Builder(props) {
           </NavLink>
           <NavLink
             exact
-            to={`/builder/${formType}/${formID}`}
+            to={`/form/builder/${formType}/${formID}/fs`}
             activeClassName="app-link-active"
+            isActive={(m, l) => l.pathname.includes('/form/builder')}
           >
             Builder
           </NavLink>
           <NavLink
-            to={`/builder/${formType}/${formID}/responses`}
+            to={`/form/responses/${formType}/${formID}/`}
             activeClassName="app-link-active"
           >
             Responses
           </NavLink>
           <NavLink
-            to={`/builder/${formType}/${formID}/settings/`}
+            to={`/form/settings/${formType}/${formID}/form-settings`}
             activeClassName="app-link-active"
+            isActive={(m, l) => l.pathname.includes('settings')}
           >
             Settings
           </NavLink>
@@ -292,7 +294,7 @@ function Builder(props) {
         </div>
 
         <div className="btcd-bld-btn">
-          <button className="btn blue" type="button" onClick={saveForm} disabled={!!buttonDisabled}>
+          <button className="btn blue" type="button" onClick={saveForm} disabled={buttonDisabled}>
             {buttonText}
           </button>
           <NavLink to="/" className="btn btcd-btn-close">
@@ -302,7 +304,7 @@ function Builder(props) {
       </nav>
 
       <Switch>
-        <Route exact path="/builder/:formType/:formID">
+        <Route exact path="/form/builder/:formType/:formID/:s?/:s?">
           <Suspense fallback={<BuilderLoader />}>
             <FormBuilder
               newCounter={newCounter}
@@ -321,7 +323,13 @@ function Builder(props) {
             />
           </Suspense>
         </Route>
-        <Route path="/builder/:formType/:formID/settings/:settings?">
+        <Route path="/form/responses/:formType/:formID/">
+          <FormEntries
+            allResp={allResponse}
+            setAllResp={setAllResponse}
+          />
+        </Route>
+        <Route path="/form/settings/:formType/:formID/:settings?">
           <FormSettings
             saveForm={saveForm}
             formName={formName}
@@ -336,12 +344,6 @@ function Builder(props) {
             setworkFlows={setworkFlows}
             additional={additional}
             setadditional={setadditional}
-          />
-        </Route>
-        <Route path="/builder/:formType/:formID/responses/">
-          <FormEntries
-            allResp={allResponse}
-            setAllResp={setAllResponse}
           />
         </Route>
       </Switch>

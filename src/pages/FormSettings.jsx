@@ -22,12 +22,7 @@ export default function FormSettings(props) {
   const [formFields, setformFields] = useState([])
 
   useEffect(() => {
-    if (url.match(/settings\/.+/g) === null) {
-      history.push(`${url}form-settings`)
-    }
-
-    let mount = false
-    mount = true
+    let mount = true
     bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(res => {
         if (res !== undefined && res.success) {
@@ -48,23 +43,23 @@ export default function FormSettings(props) {
         <br />
         <br />
         <br />
-        <NavLink to={`/builder/${formType}/${formID}/settings/form-settings`} activeClassName="btcd-f-a">
+        <NavLink to={`/form/settings/${formType}/${formID}/form-settings`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-params" />
           Form Settings
         </NavLink>
-        <NavLink to={`/builder/${formType}/${formID}/settings/confirmations`} activeClassName="btcd-f-a">
+        <NavLink to={`/form/settings/${formType}/${formID}/confirmations`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-information-outline" />
           Confirmations
         </NavLink>
-        <NavLink to={`/builder/${formType}/${formID}/settings/workflow`} activeClassName="btcd-f-a">
+        <NavLink to={`/form/settings/${formType}/${formID}/workflow`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-flow-tree" />
           Workflow
         </NavLink>
-        <NavLink to={`/builder/${formType}/${formID}/settings/email-templates`} activeClassName="btcd-f-a em-tem">
+        <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-envelope-open-o" />
           Email Templates
         </NavLink>
-        <NavLink to={`/builder/${formType}/${formID}/settings/integrations`} activeClassName="btcd-f-a em-tem">
+        <NavLink to={`/form/settings/${formType}/${formID}/integrations`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-code" />
           Integrations
         </NavLink>

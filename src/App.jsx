@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
@@ -20,9 +21,7 @@ const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
-  // eslint-disable-next-line no-undef
   return (
-    // eslint-disable-next-line no-undef
     <Suspense fallback={<Loader />}>
       <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
         <div className="Btcd-App">
@@ -41,13 +40,13 @@ function App() {
                   to="/"
                   activeClassName="app-link-active"
                 >My Forms
-              </NavLink>
+                </NavLink>
 
                 <NavLink
-                  to="/settings/recaptcha"
+                  to="/app-settings/recaptcha"
                   activeClassName="app-link-active"
                 >Settings
-              </NavLink>
+                </NavLink>
               </nav>
             </div>
           </div>
@@ -59,7 +58,7 @@ function App() {
                   <AllForms />
                 </Suspense>
               </Route>
-              <Route path="/builder/:formType/:formID?/:option?">
+              <Route path="/form/:page/:formType/:formID?/:option?">
                 <Suspense fallback={<Loader />}>
                   <FormDetails />
                 </Suspense>
@@ -69,7 +68,7 @@ function App() {
                   <FormEntries />
                 </Suspense>
               </Route>
-              <Route path="/settings">
+              <Route path="/app-settings">
                 <AppSettings />
               </Route>
               <Route path="*">
