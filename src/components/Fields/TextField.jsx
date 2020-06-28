@@ -5,7 +5,6 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue }) {
   const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
-    // console.log('att.name', attr.name, attr.val)
     if (attr.val !== undefined && !attr.userinput) {
       setvalue(attr.val)
     } else if (!attr.val && !attr.userinput) {

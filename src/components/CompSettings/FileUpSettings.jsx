@@ -4,6 +4,7 @@ import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import DropDown from '../ElmSettings/Childs/DropDown'
 import CopyText from '../ElmSettings/Childs/CopyText'
+import Back2FldList from './Back2FldList'
 
 export default function FileUpSettings(props) {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -81,8 +82,9 @@ export default function FileUpSettings(props) {
   }
 
   return (
-    <div>
-      <div className="mt-2 mb-2">
+    <div className="ml-2 mr-4">
+      <Back2FldList setElementSetting={props.setElementSetting} />
+      <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {' '}
         File Upload

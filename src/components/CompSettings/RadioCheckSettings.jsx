@@ -4,6 +4,7 @@ import React, { memo } from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
+import Back2FldList from './Back2FldList'
 
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -87,8 +88,10 @@ function RadioCheckSettings(props) {
   }
 
   return (
-    <div>
-      <div className="mt-2 mb-2">
+    <div className="mr-4 ml-2">
+      <Back2FldList setElementSetting={props.setElementSetting} />
+
+      <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {elmData.typ === 'check' ? 'Check Box' : 'Radio'}
       </div>
