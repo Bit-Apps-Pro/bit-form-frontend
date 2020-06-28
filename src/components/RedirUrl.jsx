@@ -131,11 +131,11 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
       {'confirmation' in formSettings
         && formSettings.confirmation.type.redirectPage !== undefined
         ? formSettings.confirmation.type.redirectPage.map((itm, i) => (
-          <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
+          <div key={`f-u-${i + 1}`} className="flx">
             <Accordions
               title={itm.title}
               titleEditable
-              cls="mt-2 mr-2"
+              cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleUrlTitle(e, i)}
             >
               <div className="f-m">Select A Page:</div>

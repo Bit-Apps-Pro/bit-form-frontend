@@ -116,11 +116,11 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
       {'confirmation' in formSettings
         && formSettings.confirmation.type.successMsg !== undefined
         ? formSettings.confirmation.type.successMsg.map((itm, i) => (
-          <div key={`f-m-${i + 1}`} className="flx btcd-conf-list">
+          <div key={`f-m-${i + 1}`} className="flx">
             <Accordions
               title={itm.title}
               titleEditable
-              cls="mt-2 mr-2"
+              cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleMsgTitle(e, i)}
             >
               <div className="flx flx-between">
