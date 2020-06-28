@@ -17,6 +17,7 @@
 }
 
 .react-grid-item.react-draggable-dragging {
+  background: white;
   transition: none;
   z-index: 3;
   will-change: transform;
