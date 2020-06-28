@@ -24,7 +24,7 @@ export const showWpMenu = () => {
   }
 }
 
- export const getNewId = flds => {
+export const getNewId = flds => {
   let largestNumberFld = 0
   let num = 0
   for (const fld in flds) {
@@ -36,4 +36,9 @@ export const showWpMenu = () => {
     }
   }
   return largestNumberFld + 1
+}
+
+export function setCharAt(str, index, chr) {
+  if (index > str.length - 1) return str;
+  return str.substr(0, index) + chr + str.substr(index + 1);
 }
