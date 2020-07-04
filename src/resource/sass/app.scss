@@ -80,6 +80,9 @@ body {
   height: 60px;
   box-sizing: border-box;
 }
+.f-5 {
+  font-weight: 500;
+}
 
 .unselectable {
   -moz--ms-user-select: none;
@@ -681,9 +684,9 @@ body {
   & .tgl {
     cursor: pointer;
     padding: 10px;
-    font-size: 15px;
+    font-size: 16 px;
     outline: none;
-    font-weight: 500;
+    font-weight: 600;
     & .btcd-icn {
       font-size: 20px;
     }
@@ -709,8 +712,8 @@ body {
 .btc-pick {
   position: absolute;
   top: 20px;
-  z-index: 99;
   right: -8px;
+  z-index: 99;
   & .ui-color-picker {
     margin: 0;
     border-radius: 10px;
@@ -786,7 +789,7 @@ body {
   position: absolute;
   font-size: 27px;
   top: 5px;
-  cursor: pointer !important;
+  cursor: pointer;
   padding: 2px;
   border-radius: 3px;
   background: transparent;
@@ -3650,6 +3653,27 @@ select.btcd-ud-inp {
   & button.lap {
     padding-top: 4px;
     font-size: 23px;
+  }
+}
+
+.resp-btn {
+  & button:nth-child(2) {
+    transform: rotate(90deg);
+  }
+  & button {
+    border: none;
+    outline: none;
+    border: 1px solid $blue;
+    background: transparent;
+    color: $blue;
+    width: 22px;
+    height: 22px;
+    padding: 3px;
+    cursor: pointer;
+    justify-content: center;
+    &:hover {
+      background: transparentize($blue, 0.9);
+    }
   }
 }
 
