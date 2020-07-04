@@ -25,6 +25,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const conRef = React.createRef(null)
 
+
   const notIE = !window.document.documentMode
 
   const setTolbar = useCallback(() => {
@@ -75,18 +76,18 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const responsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
     if (view === 'lg') {
-      resizer.resizeSection(0, { toSize: 165 });
-      resizer.resizeSection(2, { toSize: 300 });
+      resizer.resizeSection(0, { toSize: 165 })
+      resizer.resizeSection(2, { toSize: 300 })
     } else if (view === 'md') {
       const s0 = ((window.innerWidth - 473) / 2.5) - 165
       const s2 = ((window.innerWidth - 473) / 2.5) - 300
-      resizer.resizeSection(0, { toSize: 165 + s0 });
-      resizer.resizeSection(2, { toSize: 300 + s2 });
+      resizer.resizeSection(0, { toSize: 165 + s0 })
+      resizer.resizeSection(2, { toSize: 300 + s2 })
     } else if (view === 'sm') {
       const s0 = ((window.innerWidth - 473) / 2) - 165
       const s2 = ((window.innerWidth - 473) / 2) - 300
-      resizer.resizeSection(0, { toSize: 165 + s0 });
-      resizer.resizeSection(2, { toSize: 300 + s2 });
+      resizer.resizeSection(0, { toSize: 165 + s0 })
+      resizer.resizeSection(2, { toSize: 300 + s2 })
     }
     conRef.current.applyResizer(resizer)
   }, [conRef])
@@ -130,7 +131,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
             <GridLayout
               theme={theme}
               style={style}
-              width={gridWidth}
+              gridWidth={gridWidth}
               draggedElm={drgElm}
               setElmSetting={setElementSetting}
               fields={fields}
