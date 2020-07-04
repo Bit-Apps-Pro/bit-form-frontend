@@ -60,26 +60,24 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
     }
   }
   return (
-    !('hide' in attr.valid && attr.valid.hide === true)
-    && (
-      <div className="fld-wrp drag" btcd-fld="select">
-        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-        {/* props options
+    <div className="fld-wrp drag" btcd-fld="select">
+      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+      {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
-        <MultiSelect
-          width="100%"
-          className="no-drg"
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
-          // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
-          singleSelect={!attr.mul}
-          options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
-          onChange={onChangeHandler}
-          {...{ defaultValue: value }}
-        />
-        {/* <select
+      <MultiSelect
+        width="100%"
+        className="no-drg"
+        {...'req' in attr.valid && { required: attr.valid.req }}
+        {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+        {...'ph' in attr && { placeholder: attr.ph }}
+        {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
+        // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
+        singleSelect={!attr.mul}
+        options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
+        onChange={onChangeHandler}
+        {...{ defaultValue: value }}
+      />
+      {/* <select
           className="fld slim no-drg"
           ref={selectFieldRef}
           {...'req' in attr.valid && { required: attr.valid.req }}
@@ -97,7 +95,6 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
             <option key={`op-${i + 87}-${(!attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
           ))}
         </select> */}
-      </div>
-    )
+    </div>
   )
 }

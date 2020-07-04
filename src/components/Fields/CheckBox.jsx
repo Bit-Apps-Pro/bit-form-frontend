@@ -38,6 +38,9 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
     }
   }, [value])
   const onChangeHandler = (event) => {
+    if (attr.valid.disabled) {
+      return
+    }
     const index = value.indexOf(event.target.value)
     if (event.target.checked && index === -1) {
       setvalue([...value, event.target.value])
@@ -49,32 +52,27 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
     }
   }
   return (
-    (
-      !('hide' in attr.valid && attr.valid.hide === true)
-      && (
-        <div className="fld-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-          <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
-            {attr.opt.map((itm, i) => (
-              <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
-                <span>{itm.lbl}</span>
-                <input
-                  type="checkbox"
-                  ref={checkBoxRef}
-                  // {...itm.check && { defaultChecked: true }}
-                  // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-                  {...'lbl' in itm && { defaultValue: itm.lbl }}
-                  {...itm.req && { required: true }}
-                  {...'name' in attr && { name: `${attr.name}[]` }}
-                  {...{ checked: value && value.indexOf(itm.lbl) >= 0 }}
-                  onChange={onChangeHandler}
-                />
-                <span className="btcd-mrk ck" />
-              </label>
-            ))}
-          </div>
-        </div>
-      )
-    )
+    <div className="fld-wrp drag" btcd-fld="textarea">
+      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+      <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
+        {attr.opt.map((itm, i) => (
+          <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
+            <span>{itm.lbl}</span>
+            <input
+              type="checkbox"
+              ref={checkBoxRef}
+              // {...itm.check && { defaultChecked: true }}
+              // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+              {...'lbl' in itm && { defaultValue: itm.lbl }}
+              {...itm.req && { required: true }}
+              {...'name' in attr && { name: `${attr.name}[]` }}
+              {...{ checked: value && value.indexOf(itm.lbl) >= 0 }}
+              onChange={onChangeHandler}
+            />
+            <span className="btcd-mrk ck" />
+          </label>
+        ))}
+      </div>
+    </div>
   )
 }

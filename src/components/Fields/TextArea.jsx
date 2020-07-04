@@ -29,24 +29,21 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue }) {
     setvalue(event.target.value)
   }
   return (
-    !('hide' in attr.valid && attr.valid.hide === true)
-    && (
-      <div className="fld-wrp drag" btcd-fld="textarea">
-        {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-        <textarea
-          className="fld no-drg"
-          ref={textAreaRef}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...{ defaultValue: value }}
-          {...{ value }}
-          {...'ac' in attr && { autoComplete: attr.ac }}
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-          {...'name' in attr && { name: attr.name }}
-          {...onBlurHandler && { onBlur: onBlurHandler }}
-          onChange={onChangeHandler}
-        />
-      </div>
-    )
+    <div className="fld-wrp drag" btcd-fld="textarea">
+      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+      <textarea
+        className="fld no-drg"
+        ref={textAreaRef}
+        {...'ph' in attr && { placeholder: attr.ph }}
+        {...{ defaultValue: value }}
+        {...{ value }}
+        {...'ac' in attr && { autoComplete: attr.ac }}
+        {...'req' in attr.valid && { required: attr.valid.req }}
+        {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+        {...'name' in attr && { name: attr.name }}
+        {...onBlurHandler && { onBlur: onBlurHandler }}
+        onChange={onChangeHandler}
+      />
+    </div>
   )
 }

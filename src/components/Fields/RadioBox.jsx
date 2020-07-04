@@ -33,6 +33,9 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
     }
   }, [value])
   const onChangeHandler = (event) => {
+    if (attr.valid.disabled) {
+      return
+    }
     setvalue(event.target.value)
     if (onBlurHandler) {
       onBlurHandler(event)
@@ -41,32 +44,27 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
   const n = Math.random()
 
   return (
-    (
-      !('hide' in attr.valid && attr.valid.hide === true)
-      && (
-        <div className="fld-wrp drag" btcd-fld="textarea">
-          {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-          <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
-            {attr.opt.map((itm, i) => (
-              <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
-                <span>{itm.lbl}</span>
-                <input
-                  type="radio"
-                  ref={radioRef}
-                  name={n}
-                  value={itm.lbl}
-                  {...itm.check && { checked: true }}
-                  {...itm.req && { required: true }}
-                  {...'name' in attr && { name: attr.name }}
-                  {...{ checked: value === itm.lbl }}
-                  onChange={onChangeHandler}
-                />
-                <span className="btcd-mrk rdo" />
-              </label>
-            ))}
-          </div>
-        </div>
-      )
-    )
+    <div className="fld-wrp drag" btcd-fld="textarea">
+      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+      <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
+        {attr.opt.map((itm, i) => (
+          <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
+            <span>{itm.lbl}</span>
+            <input
+              type="radio"
+              ref={radioRef}
+              name={n}
+              value={itm.lbl}
+              {...itm.check && { checked: true }}
+              {...itm.req && { required: true }}
+              {...'name' in attr && { name: attr.name }}
+              {...{ checked: value === itm.lbl }}
+              onChange={onChangeHandler}
+            />
+            <span className="btcd-mrk rdo" />
+          </label>
+        ))}
+      </div>
+    </div>
   )
 }

@@ -7,17 +7,6 @@ import { checkLogic, replaceWithField } from './checkLogic'
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
-  const layoutConf = { size: 'lg', cols: 6 }
-  if (window.innerWidth > 800) {
-    layoutConf.size = 'lg'
-    layoutConf.cols = 6
-  } else if (window.innerWidth > 600) {
-    layoutConf.size = 'lg'
-    layoutConf.cols = 4
-  } else if (window.innerWidth > 400) {
-    layoutConf.size = 'sm'
-    layoutConf.cols = 2
-  }
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
@@ -26,7 +15,6 @@ export default function Bitforms(props) {
   const [layout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
-  const [layoutConfig, setlayoutConfig] = useState(layoutConf)
   let maxRowIndex = 0
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
@@ -42,15 +30,7 @@ export default function Bitforms(props) {
     maxRowIndex = maxRowIndex > field.y + field.h ? maxRowIndex : field.y + field.h
     return (
       <div
-        style={{
-          height: '100%',
-          gridColumnStart: field.x + 1, /* x-0 -> (x + 1) */
-          gridColumnEnd: (field.x + 1) + field.w, /* w-4 -> x + w */
-          gridRowStart: field.y + 1, /* y-0 -> y + 1 */
-          gridRowEnd: field.y !== 1 && field.h + (field.y + 1), /* h-4 -> if y not 1 then h+y */
-          minHeight: field.h * 40, /* h * 40px */
-        }}
-        className="btcd-fld-itm"
+        className={`btcd-fld-itm ${field.i} ${dataToPass[field.i].valid.hide ? 'btcd-hidden' : ''}`}
       // btcd-id={field.i}
       // key={field.i}
       // data-grid={field}
@@ -282,7 +262,7 @@ export default function Bitforms(props) {
     }
   }
 
-  window.addEventListener('resize', () => {
+ /*  window.addEventListener('resize', () => {
     // delay to get stable windows size after resized
     setTimeout(() => {
       if (window.innerWidth > 800) {
@@ -293,7 +273,7 @@ export default function Bitforms(props) {
         setlayoutConfig({ size: 'sm', cols: 2 })
       }
     }, 1000);
-  })
+  }) */
 
   const handleSubmit = (event) => {
 
@@ -450,18 +430,13 @@ export default function Bitforms(props) {
     }
   }, [])
 
-  const style = {
-    display: 'grid',
-    gridTemplateColumns: `repeat(${layoutConfig.cols}, minmax(50px, 1fr))`,
-    gridgap: 0,
-  }
   return (
     <div>
       <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
-        <div style={style}>
-          {layout[layoutConfig.size].map(field => blk(field))}
+        <div className="btcd-grid-wrp">
+          {layout['lg'].map(field => blk(field))}
         </div>
         {!props.editMode && props.buttons
           && (

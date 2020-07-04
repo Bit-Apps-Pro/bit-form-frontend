@@ -2,10 +2,12 @@ import React, { memo, useState } from 'react'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
+import bitsFetch from '../Utils/bitsFetch'
+import SnackMsg from './ElmSettings/Childs/SnackMsg'
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
-
+  const [snack, setSnackbar] = useState({ show: false })
   const handleHookTitle = (e, idx) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.webHooks[idx].title = e.target.value
@@ -107,8 +109,21 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
     setFormSettings(tmp)
   }
 
+  const testWebhook = webHookId => {
+    bitsFetch({ hookDetails: formSettings.confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
+      if (response && response.success) {
+        setSnackbar({ show: true, msg: `${response.data}` })
+      } else if (response && response.data && response.data.data) {
+        setSnackbar({ show: true, msg: `${response.data.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Webhook tests failed. please try again' })
+      }
+    })
+  }
+
   return (
     <div>
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
@@ -126,6 +141,9 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
               cls="mt-2 mr-2"
               onTitleChange={e => handleHookTitle(e, i)}
             >
+              <Button onClick={() => testWebhook(i)} icn className="sh-sm white mt-2 mr-4 tooltip f-right" style={{ '--tooltip-txt': '"Test WebHook"' }}><span className="btcd-icn icn-loop" style={{ fontSize: 16 }} /></Button>
+              <br />
+              <br />
               <div className="flx">
                 <div className="w-7 mr-2">
                   <div className="f-m">Link:</div>
