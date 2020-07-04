@@ -1,30 +1,40 @@
 import React from 'react'
-import { setCharAt } from '../../../../Utils/Helpers'
 
-export default function Range({ className, title, value, onChange }) {
-  let vals = null
-  if (value !== undefined) {
-    vals = [...value.matchAll(/(\d\.\d)|(\d\d\.\d\d)|(\d)/g)]
-    console.log('sssss', vals)
-  }
-  console.log('ssss', vals)
+Range.defaultProps = {
+  unit: '',
+  master: true,
+  minRange: 0,
+}
+
+export default function Range({ className, value, onChange, maxRange, minRange, info, unit, master }) {
+  // eslint-disable-next-line no-param-reassign
+  value = value.split(' ')
 
   const handleVal = (v, ind) => {
-    let newVal = value
-    newVal = setCharAt(newVal, ind, v)
-    onChange(newVal)
+    // eslint-disable-next-line no-param-reassign
+    value[ind] = v + unit
+    onChange(value.join(' '))
+  }
+
+  const handleMaster = e => {
+    value.fill(e.target.value)
+    onChange(value.join(`${unit} `) + unit)
   }
 
   return (
     <div className={className}>
-      <div className="title">{title}</div>
-      {vals !== null && vals.length > 1 && vals.map(arr => (
-        <div className="flx flx-between mt-1 inp-grp">
-          <span className="icn br-50 flx mr-1"><span className="btcd-icn icn-settings" /></span>
-          <input onChange={e => handleVal(e.target.value, arr[4])} className="btc-range mr-1" type="range" min="0" max="50" value={arr[0]} />
-          <input onChange={e => handleVal(e.target.value, arr[4])} className="ml-1" type="number" placeholder="auto" value={arr[0]} />
-        </div>
+      {value && master && <RSlider icn={info[info.length - 1].icn} lbl={info[info.length - 1].lbl} action={handleMaster} rVal={parseInt(value[0], 10)} unit={unit} max={maxRange} min={minRange} />}
+      {value && value.length > 1 && value.map((itm, i) => (
+        <RSlider key={info[i].lbl} icn={info[i].icn} lbl={info[i].lbl} action={e => handleVal(e.target.value, i)} rVal={parseInt(itm, 10)} unit={unit} max={maxRange} min={minRange} />
       ))}
     </div>
   )
 }
+
+const RSlider = ({ icn, lbl, action, rVal, unit, max, min }) => (
+  <div className="flx flx-between mt-1 inp-grp">
+    <span className="icn tooltip pos-rel br-50 flx mr-1" style={{ '--tooltip-txt': `"${lbl}"`, '--left': '95%' }}>{icn}</span>
+    <input title={`${lbl} ${rVal} ${unit}`} onChange={action} className="btc-range mr-1" type="range" min={min} max={max} value={rVal} />
+    <input onChange={action} className="ml-1" type="number" placeholder="auto" value={rVal} min="0" />
+  </div>
+)
