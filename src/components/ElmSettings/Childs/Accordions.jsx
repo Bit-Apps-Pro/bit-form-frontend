@@ -16,6 +16,7 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
   const focusEdit = () => {
     inp.current.focus()
   }
+  
   return (
     <div className={`btcd-accr sh-sm ${cls}`}>
       <div className={`btcd-accr-btn ${tgl && 'blue'} flx flx-between`} onClick={handleTgl} onKeyPress={handleTgl} role="button" tabIndex={0}>

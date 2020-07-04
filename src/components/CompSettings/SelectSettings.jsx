@@ -4,6 +4,7 @@ import React from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
+import Back2FldList from './Back2FldList'
 
 export default function SelectSettings(props) {
   const elmId = props.elm.id
@@ -111,10 +112,10 @@ export default function SelectSettings(props) {
     elmData.opt[i] = tmp
     props.updateData({ id: elmId, data: elmData })
   }
-
   return (
-    <div>
-      <div className="mt-2 mb-2">
+    <div className="ml-2 mr-4">
+      <Back2FldList setElementSetting={props.setElementSetting} />
+      <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
       </div>

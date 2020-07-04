@@ -134,11 +134,11 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
       {'confirmation' in formSettings
         && formSettings.confirmation.type.webHooks !== undefined
         ? formSettings.confirmation.type.webHooks.map((itm, i) => (
-          <div key={`f-u-${i + 1}`} className="flx btcd-conf-list">
+          <div key={`f-u-${i + 1}`} className="flx">
             <Accordions
               title={itm.title}
               titleEditable
-              cls="mt-2 mr-2"
+              cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleHookTitle(e, i)}
             >
               <Button onClick={() => testWebhook(i)} icn className="sh-sm white mt-2 mr-4 tooltip f-right" style={{ '--tooltip-txt': '"Test WebHook"' }}><span className="btcd-icn icn-loop" style={{ fontSize: 16 }} /></Button>

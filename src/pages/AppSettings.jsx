@@ -7,7 +7,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
-  const [snack, setsnack] = useState  ({ show: false })
+  const [snack, setsnack] = useState({ show: false })
 
   const saveCaptcha = () => {
     bitsFetch({ reCaptchaV2 }, 'bitforms_save_grecaptcha')
@@ -38,14 +38,14 @@ function AppSettingsPage() {
     <div className="d-flx">
       <SnackMsg snack={snack} setSnackbar={setsnack} />
       <aside className="btcd-app-setting-sidebar mr-4">
-        <NavLink to="/settings/recaptcha" activeClassName="btcd-app-s-a">
+        <NavLink to="/app-settings/recaptcha" activeClassName="btcd-app-s-a">
           <span className="btcd-icn icn-loop" />
           reCAPTCHA
         </NavLink>
       </aside>
 
       <Switch>
-        <Route path="/settings/recaptcha">
+        <Route path="/app-settings/recaptcha">
           <Captcha saveCaptcha={saveCaptcha} />
         </Route>
       </Switch>

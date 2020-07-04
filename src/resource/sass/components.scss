@@ -16,11 +16,10 @@ body {
 .fld-wrp {
   min-height: inherit;
   padding: 10px;
-  background: #fff;
+  // background: white;
   font-family: sans-serif !important;
   box-sizing: border-box !important;
   width: 100%;
-  background: #fff;
   cursor: default;
   height: 100%;
   padding: 10px;
@@ -62,7 +61,7 @@ body {
     padding: 7px 5px;
     border-radius: 4px;
   }
-  & .msl-btn{
+  & .msl-btn {
     background: transparent !important;
     box-shadow: none !important;
   }
@@ -81,7 +80,8 @@ textarea.fld {
   min-height: 40px !important;
   max-width: 100% !important;
   color: black !important;
-  background: white !important;
+  // background: white !important;
+  background: transparent !important;
   font-family: sans-serif !important;
   padding: 8px !important;
   font-size: 15px !important;
@@ -181,7 +181,7 @@ textarea.fld {
   height: 19px;
   margin: 8px;
   width: auto;
-  & span:first-child{
+  & span:first-child {
     color: #363636 !important;
   }
 }
@@ -261,7 +261,7 @@ textarea.fld {
 }
 
 .btcd-frm-sub {
-  background: white !important;
+  // background: white !important;
   height: 60px !important;
   display: flex !important;
   align-items: center !important;

@@ -18,7 +18,8 @@ export default async function bitsFetch(data, action, contentType = null, queryP
     },
     data,
     action,
-  }).then(res => res.data)
+  })
+    .then(res => res.data)
     .catch(err => err.response)
   return response;
 }

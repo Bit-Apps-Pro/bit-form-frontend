@@ -62,7 +62,7 @@ function AllFroms() {
 
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
-    { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/builder/edit/${v.row.original.formID}/responses`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
+    { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/form/responses/edit/${v.row.original.formID}/`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
     { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} setSnackbar={setSnackbar} className="cpyTxt" /> },
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },

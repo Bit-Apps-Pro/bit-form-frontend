@@ -1,14 +1,16 @@
 $bdr-rad: 0px;
 $prim: #99e3ff;
-$blue: #0a8dff;
+$blue: #0069ff;
+//$blue: #0a8dff;
 //$blue: #0083f3;
 // $dp-blue: #0b1655;
-$dp-blue: #172c4d;
+$dp-blue: #031b4e;
 $dp-bg: #13233c;
 $light-bg: #fff;
 //$light-bg: #f2f3f7;
 //$light-bg: #eaf0f7;
-$bg: #f2f3f7;
+//$bg: #f2f3f7;
+$bg: #f7f8fc;
 $red: #ff4646;
 $dp-txt: #545582;
 $gray: #e2e2e2;
@@ -78,12 +80,19 @@ body {
   height: 60px;
   box-sizing: border-box;
 }
+.f-5 {
+  font-weight: 500;
+}
 
 .unselectable {
-  -moz-user-select: none;
+  -moz--ms-user-select: none;
+  -webkit-user-select: none;
+  -webkit--ms-user-select: none;
+  -webkit-user-select: none;
+  -ms--ms-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  -webkit-user-select: none;
   -webkit-user-drag: none;
   // user-drag: none;
   pointer-events: none;
@@ -129,15 +138,15 @@ body {
 
 .blue {
   //background: $blue !important;
-  background: linear-gradient(145deg, #0b97ff, #097fe6) !important;
+  background: linear-gradient(145deg, $blue, #097fe6) !important;
   color: white !important;
   &:hover {
     //background: #016fcf !important;
-    background: linear-gradient(145deg, #018efa, #0474d6) !important;
+    background: linear-gradient(145deg, darken($blue, 2), darken($blue, 5)) !important;
   }
   &:active {
     // background: #0062b8;
-    background: linear-gradient(145deg, #097fe6, #008efa) !important;
+    background: linear-gradient(145deg, darken($blue, 4), darken($blue, 7)) !important;
   }
 }
 
@@ -223,10 +232,8 @@ body {
 
 .layout-wrapper {
   margin: auto;
-  margin-top: 10px;
-  height: calc(100% - 70px);
-  box-shadow: 0 0 0 1px #bdbdbd;
-  //  transition: width 0.5s;
+  margin-top: 3px;
+  height: calc(100% - 60px);
 }
 
 .layout {
@@ -259,7 +266,8 @@ body {
 .btcd-toolbar-title {
   white-space: nowrap;
   word-break: keep-all;
-  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   -webkit-user-drag: none;
   display: flex;
   justify-content: space-between;
@@ -276,10 +284,6 @@ body {
       background: $bg;
     }
   }
-}
-
-.btcd-settings {
-  padding: 0 15px 50px 15px;
 }
 
 .toolBar {
@@ -348,8 +352,8 @@ body {
   font-weight: normal;
   cursor: pointer;
   font-size: 17px;
+  -ms-user-select: none;
   -webkit-user-select: none;
-  user-select: none;
   height: 25px;
   margin: 8px;
   width: auto;
@@ -389,6 +393,192 @@ body {
 .btcd-ck-wrp input:checked ~ .btcd-mrk {
   background-color: $blue;
   border-color: $blue !important;
+}
+
+.btc-range {
+  & .inp-grp {
+    &:hover {
+      .icn {
+        background-color: transparentize($blue, 0.92);
+        color: $blue;
+      }
+    }
+  }
+  & .icn {
+    width: 30px;
+    max-width: 30px;
+    min-width: 30px;
+    max-height: 30px;
+    height: 30px;
+    justify-content: center;
+    background: rgb(238, 243, 250);
+  }
+  & input[type="number"] {
+    width: 55px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid rgb(224, 224, 224);
+    font-size: 14px;
+    padding: 4px;
+    &:hover,
+    :focus {
+      border-color: gray;
+    }
+  }
+}
+
+.btc-range {
+  $track-color: #eceff1 !default;
+  $thumb-color: transparentize($dp-blue, 0.2) !default;
+
+  $thumb-radius: 12px !default;
+  $thumb-height: 15px !default;
+  $thumb-width: 15px !default;
+  $thumb-shadow-size: 2px !default;
+  $thumb-shadow-blur: 4px !default;
+  $thumb-shadow-color: rgba(0, 0, 0, 0.2) !default;
+  $thumb-border-width: 1.5px !default;
+  $thumb-border-color: #ff7777 !default;
+
+  $track-width: 100% !default;
+  $track-height: 8px !default;
+  $track-shadow-size: 0px !default;
+  $track-shadow-blur: 0px !default;
+  $track-shadow-color: rgba(0, 0, 0, 0.2) !default;
+  $track-border-width: 0px !default;
+  $track-border-color: #dccfcf !default;
+
+  $track-radius: 5px !default;
+  $contrast: 7% !default;
+
+  $ie-bottom-track-color: darken($track-color, $contrast) !default;
+
+  @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+    box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+  }
+
+  @mixin track {
+    cursor: default;
+    height: $track-height;
+    transition: all 0.2s ease;
+    width: $track-width;
+  }
+
+  @mixin thumb {
+    @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+    background: $thumb-color;
+    border: $thumb-border-width solid $thumb-border-color;
+    border-radius: $thumb-radius;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: $thumb-height;
+    width: $thumb-width;
+  }
+
+  [type="range"] {
+    -webkit-appearance: none;
+    background: transparent;
+    margin: $thumb-height / 2 0;
+    width: $track-width;
+    &::-moz-focus-outer {
+      border: 0;
+    }
+
+    &:hover {
+      &::-webkit-slider-runnable-track {
+        background: darken($track-color, $contrast - 1);
+      }
+
+      &::-ms-fill-lower {
+        background: $track-color;
+      }
+
+      &::-ms-fill-upper {
+        background: darken($track-color, $contrast - 1);
+      }
+    }
+
+    &:focus {
+      outline: 0;
+
+      &::-webkit-slider-runnable-track {
+        background: darken($track-color, $contrast);
+      }
+
+      &::-ms-fill-lower {
+        background: $track-color;
+      }
+
+      &::-ms-fill-upper {
+        background: darken($track-color, $contrast);
+      }
+    }
+
+    &::-webkit-slider-runnable-track {
+      @include track;
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+      background: $track-color;
+      border: $track-border-width solid $track-border-color;
+      border-radius: $track-radius;
+    }
+
+    &::-webkit-slider-thumb {
+      @include thumb;
+      -webkit-appearance: none;
+      margin-top: ((-$track-border-width * 2 + $track-height) / 2 - $thumb-height / 2);
+    }
+
+    &::-moz-range-track {
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+      @include track;
+      background: $track-color;
+      border: $track-border-width solid $track-border-color;
+      border-radius: $track-radius;
+      height: $track-height / 2;
+    }
+
+    &::-moz-range-thumb {
+      @include thumb;
+    }
+
+    &::-ms-track {
+      @include track;
+      background: transparent;
+      border-color: transparent;
+      border-width: ($thumb-height / 2) 0;
+      color: transparent;
+    }
+
+    &::-ms-fill-lower {
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+      background: $ie-bottom-track-color;
+      border: $track-border-width solid $track-border-color;
+      border-radius: ($track-radius * 2);
+    }
+
+    &::-ms-fill-upper {
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+      background: $track-color;
+      border: $track-border-width solid $track-border-color;
+      border-radius: ($track-radius * 2);
+    }
+
+    &::-ms-thumb {
+      @include thumb;
+      margin-top: $track-height / 4;
+    }
+
+    &:disabled {
+      &::-webkit-slider-thumb,
+      &::-moz-range-thumb,
+      &::-ms-thumb,
+      &::-webkit-slider-runnable-track,
+      &::-ms-fill-lower,
+      &::-ms-fill-upper {
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 
 .btcd-mrk:after {
@@ -488,6 +678,105 @@ body {
   background: red;
 }
 
+.style-acc {
+  overflow: hidden;
+  margin: auto;
+  & .tgl {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16 px;
+    outline: none;
+    font-weight: 600;
+    & .btcd-icn {
+      font-size: 20px;
+    }
+    &:hover {
+      background: transparentize($blue, 0.95);
+    }
+  }
+
+  & .body {
+    padding: 10px;
+  }
+}
+.style-acc.active {
+  overflow: visible;
+  animation: 800ms delay-overflow;
+}
+@keyframes delay-overflow {
+  from {
+    overflow: hidden;
+  }
+}
+
+.btc-pick {
+  position: absolute;
+  top: 20px;
+  right: -8px;
+  z-index: 99;
+  & .ui-color-picker {
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    & .picker-area {
+      padding: 5px;
+    }
+  }
+  & .gradient-controls {
+    height: 45px;
+    margin-bottom: 0px;
+  }
+}
+.clr-pick {
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  outline: none;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px $dp-txt;
+}
+.btc-pk-enter {
+  transform: scale(0);
+  transition: transform 150ms;
+}
+.btc-pk-enter-active {
+  transform: scale(1.03);
+  transition: transform 150ms;
+}
+.btc-pk-enter-done {
+  transform: scale(1);
+  transition: transform 100ms;
+}
+
+.btc-btn-grp {
+  & button:first-child {
+    border-radius: 7px 0 0 7px;
+  }
+  & button {
+    position: relative;
+    background: transparent;
+    color: $dp-txt;
+    border: 1px solid lightgray;
+    border-right: 0;
+    border-radius: 0;
+    outline: none;
+    padding: 3px 7px;
+    cursor: pointer;
+    & .btcd-icn {
+      font-size: 15px;
+    }
+  }
+  & button:last-child {
+    border-radius: 0 7px 7px 0;
+    border-right: 1px solid lightgray;
+  }
+  & button.active {
+    background: $blue;
+    color: white;
+    border-color: $blue;
+  }
+}
+
 // components style
 .com-wrp {
   width: 100%;
@@ -501,7 +790,6 @@ body {
   font-size: 27px;
   top: 5px;
   cursor: pointer;
-  //line-height: 0.6;
   padding: 2px;
   border-radius: 3px;
   background: transparent;
@@ -512,11 +800,16 @@ body {
   align-items: center;
   display: flex;
   overflow: hidden;
+  -webkit--ms-user-select: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+  -khtml--ms-user-select: none;
+  -webkit-user-select: none;
+  -moz--ms-user-select: none;
+  -webkit-user-select: none;
+  -o--ms-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   transform: scale(0);
   transition: all 0.3s;
 
@@ -544,7 +837,7 @@ body {
 .drag:not(.no-drg) {
   cursor: grab;
   &:hover {
-    background: aliceblue;
+    background: rgba(0, 114, 255, 0.12156862745098039);
   }
   &:active {
     cursor: grabbing;
@@ -558,7 +851,7 @@ body {
 .elm-settings {
   background: $bg;
   height: 100%;
-  max-width: 313px;
+  max-width: 413px;
   margin-right: 0;
   margin-left: auto;
   font-size: 18px;
@@ -569,11 +862,12 @@ body {
     padding-bottom: 10px;
     border-bottom: 1px solid #c7c7c7;
   }
-  & > div {
+  & > .settings {
     font-size: 14px;
     height: calc(100% - 85px);
   }
 }
+
 .d-flx {
   display: flex;
 }
@@ -600,10 +894,12 @@ body {
 .flx-center {
   justify-content: center;
 }
+.m-a {
+  margin: auto;
+}
 .m-0 {
   margin: 0;
 }
-
 .mb-1 {
   margin-bottom: 5px;
 }
@@ -647,6 +943,9 @@ body {
 }
 .mr-4 {
   margin-right: 20px;
+}
+.ml-1 {
+  margin-left: 5px;
 }
 .ml-4 {
   margin-left: 20px !important;
@@ -825,8 +1124,10 @@ body {
 
 .btcd-inte-dis {
   pointer-events: none;
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   & > img {
+    -webkit-filter: grayscale(1) !important;
     filter: grayscale(1) !important;
   }
   &::before {
@@ -1211,7 +1512,8 @@ nav.top-nav {
 .f-table .thead .tr .th {
   font-weight: 600;
   line-height: 1.8;
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   border-bottom: 1px solid #dedce4;
   overflow: hidden;
   box-shadow: 0px 2px 2px rgb(223, 223, 223);
@@ -1440,6 +1742,9 @@ nav.top-nav {
   height: 40px;
   font-size: 25px;
 }
+.btc-icn-md {
+  font-size: 20px;
+}
 .btcd-icn-sm {
   font-size: 17px;
 }
@@ -1584,7 +1889,7 @@ nav.top-nav {
     font-size: 13px;
     font-weight: 600;
     content: var(--tooltip-txt);
-    background: #393939;
+    background: $dp-bg;
     color: white;
     position: absolute;
     display: block;
@@ -1598,12 +1903,13 @@ nav.top-nav {
     white-space: nowrap;
     z-index: 999;
     pointer-events: none;
-    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
     -webkit-user-drag: none;
     transition: transform 300ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
   &:hover::after {
-    border-radius: 5px;
+    border-radius: 7px;
     left: var(--left);
     transform-origin: 0%;
     transform: scale(1) translate(-50%, 0);
@@ -2324,7 +2630,8 @@ select.btcd-paper-inp {
 //table checkbox start
 .btcd-label-cbx {
   display: inline-block;
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   cursor: pointer;
   margin-bottom: 0;
   input {
@@ -2500,7 +2807,8 @@ select.btcd-paper-inp {
   font-weight: bold;
   cursor: move;
   display: none;
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   position: relative;
   &::before {
     position: absolute;
@@ -2551,7 +2859,8 @@ select.btcd-paper-inp {
 }
 
 .btcd-eye-t {
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   cursor: pointer;
   display: inline-block;
   input:checked {
@@ -2590,7 +2899,8 @@ select.btcd-paper-inp {
 }
 
 .btcd-snack {
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   background: #383838;
   font-weight: 300;
   font-size: 0.875rem;
@@ -2613,7 +2923,8 @@ select.btcd-paper-inp {
 }
 
 .btcd-snack-cls {
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   display: inline-block;
   background: transparentize(#fff, 0.95);
   height: 25px;
@@ -2696,19 +3007,65 @@ select.btcd-paper-inp {
   }
 }
 
-.btcd-conf-list {
-  & > div {
-    width: 95%;
+.btcd-s-tab-link {
+  color: $dp-blue;
+  font-size: 15px;
+  margin-top: 5px;
+  justify-content: center;
+  padding: 8px 10px 5px 8px;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  & .btcd-icn {
+    font-size: 20px;
+  }
+  &:hover {
+    background: transparentize($blue, 0.95);
+  }
+  & .title {
+    font-weight: 500;
+  }
+  & .sub {
+    font-size: 12px;
   }
 }
-
-.btcd-workflow {
-  & select,
-  input {
-    margin-top: 0;
+.s-t-l-active {
+  color: $blue;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 94%;
+    border-radius: 10px 10px 0 0;
+    height: 4px;
+    width: 85%;
+    background: $blue;
   }
 }
-
+.btc-s-l {
+  cursor: pointer;
+  background: white;
+  color: $dp-txt;
+  width: 90%;
+  border-radius: 8px;
+  padding: 7px 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: 20px;
+  font-weight: 500;
+  //box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  & .lft-icn {
+    border-radius: 30;
+    justify-content: center;
+    background: #f5f5f5;
+  }
+  &:hover {
+    color: $blue;
+    & .lft-icn {
+      background: #f0f5ff;
+    }
+  }
+}
 .btcd-li-side-btn {
   position: absolute;
   left: 100%;
@@ -2780,7 +3137,8 @@ select.btcd-paper-inp {
 /* Span */
 .btcd-mt-inp > input + span,
 .btcd-mt-inp > textarea + span {
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -2943,7 +3301,8 @@ select.btcd-paper-inp {
   margin-top: 6px;
   & small {
     color: gray;
-    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
     font-size: 12px;
     top: -7px;
     display: block;
@@ -3189,7 +3548,8 @@ select.btcd-ud-inp {
   width: 35px;
   color: gray;
   font-weight: bold;
-  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   border: 2px solid rgb(236, 236, 236);
   background: rgb(236, 236, 236);
   border-radius: 30px;
@@ -3293,6 +3653,27 @@ select.btcd-ud-inp {
   & button.lap {
     padding-top: 4px;
     font-size: 23px;
+  }
+}
+
+.resp-btn {
+  & button:nth-child(2) {
+    transform: rotate(90deg);
+  }
+  & button {
+    border: none;
+    outline: none;
+    border: 1px solid $blue;
+    background: transparent;
+    color: $blue;
+    width: 22px;
+    height: 22px;
+    padding: 3px;
+    cursor: pointer;
+    justify-content: center;
+    &:hover {
+      background: transparentize($blue, 0.9);
+    }
   }
 }
 

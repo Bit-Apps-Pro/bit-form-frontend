@@ -13,12 +13,11 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import noData from '../resource/img/nodata.jpg'
 
-function FormEntries() {
+function FormEntries({ allResp, setAllResp }) {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
 
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(false)
-  const [allResp, setAllResp] = useState([])
   const { formID } = useParams()
   const fetchIdRef = React.useRef(0)
   const [pageCount, setPageCount] = React.useState(0)
@@ -33,7 +32,6 @@ function FormEntries() {
   const [mounted, setmounted] = useState(true)
 
   useEffect(() => {
-    // setisloading(true)
     bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(response => {
         if (response !== undefined && response.success && mounted) {
@@ -85,7 +83,13 @@ function FormEntries() {
       sticky: 'right',
       Header: <span className="btcd-icn btcd-icn-sm icn-settings ml-2" title="Settings" />,
       accessor: 'table_ac',
-      Cell: val => <TableAction edit={() => editData(val.row)} del={() => delConfMdl(val.row, { fetchData: val.fetchData, data: { pageIndex: val.state.pageIndex, pageSize: val.state.pageSize, sortBy: val.state.sortBy, filters: val.state.filters, globalFilter: val.state.globalFilter } })} dup={() => dupConfMdl(val.row, val.data, { fetchData: val.fetchData, data: { pageIndex: val.state.pageIndex, pageSize: val.state.pageSize, sortBy: val.state.sortBy, filters: val.state.filters, globalFilter: val.state.globalFilter } })} />,
+      Cell: val => (
+        <TableAction
+          edit={() => editData(val.row)}
+          del={() => delConfMdl(val.row, { fetchData: val.fetchData, data: { pageIndex: val.state.pageIndex, pageSize: val.state.pageSize, sortBy: val.state.sortBy, filters: val.state.filters, globalFilter: val.state.globalFilter } })}
+          dup={() => dupConfMdl(val.row, val.data, { fetchData: val.fetchData, data: { pageIndex: val.state.pageIndex, pageSize: val.state.pageSize, sortBy: val.state.sortBy, filters: val.state.filters, globalFilter: val.state.globalFilter } })}
+        />
+      ),
     })
     setEntryLabels(cols)
   }
@@ -93,13 +97,15 @@ function FormEntries() {
   const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
     // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
-    setisloading(true)
+    if (allResp.length < 1) {
+      setisloading(true)
+    }
     if (fetchId === fetchIdRef.current) {
       const startRow = pageSize * pageIndex
       bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitforms_get_form_entries').then(res => {
         if (res !== undefined && res.success && mounted) {
           setPageCount(Math.ceil(res.data.count / pageSize))
-          setAllResp(res.data.entries)
+          allResp.length === 0 && setAllResp(res.data.entries)
         }
         setisloading(false)
       })
@@ -261,9 +267,9 @@ function FormEntries() {
               && itm.column.Header !== '#' && (
                 <tr key={`rw-d-${i + 2}`}>
                   <th>{itm.column.Header}</th>
-                  <td>{ itm.value}</td>
+                  <td>{itm.value}</td>
                 </tr>
-            ))}
+              ))}
           </tbody>
         </table>
       </Drawer>

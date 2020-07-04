@@ -24,7 +24,7 @@ export const showWpMenu = () => {
   }
 }
 
- export const getNewId = flds => {
+export const getNewId = flds => {
   let largestNumberFld = 0
   let num = 0
   for (const fld in flds) {
@@ -37,3 +37,4 @@ export const showWpMenu = () => {
   }
   return largestNumberFld + 1
 }
+

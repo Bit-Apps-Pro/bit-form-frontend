@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
@@ -26,12 +27,11 @@ function GridLayout(props) {
   mul: multiple
   */
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth } = props
 
   const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
-  const [runningOpt, setrunningOpt] = useState(false)
-
+  const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 6, md: 4, sm: 2 }
 
   useEffect(() => {
@@ -42,8 +42,31 @@ function GridLayout(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields])
 
-  console.log('%', newCounter, props.layout)
-
+  // set builder width by style
+  useEffect(() => {
+    const newW = gridWidth - 32
+    if (style['._frm']['border-width']
+      || style['._frm'].padding
+      || style['._frm'].margin) {
+      let w = 0
+      if (style['._frm']['border-width']) {
+        const vals = style['._frm']['border-width'].replace(/px|em|rem/g, '').split(' ')
+        w += Number(vals[1])
+        w += Number(vals[3])
+      }
+      if (style['._frm'].padding) {
+        const vals = style['._frm'].padding.replace(/px|em|rem/g, '').split(' ')
+        w += Number(vals[1])
+        w += Number(vals[3])
+      }
+      if (style['._frm'].margin) {
+        const vals = style['._frm'].margin.replace(/px|em|rem/g, '').split(' ')
+        w += Number(vals[1])
+        w += Number(vals[3])
+      }
+      setBuilderWidth(newW - w)
+    }
+  }, [style, gridWidth])
 
   const sortLay = arr => {
     const newArr = arr
@@ -160,34 +183,30 @@ function GridLayout(props) {
   }
 
   const margeNewData = () => {
-    if (!runningOpt) {
-      setrunningOpt(true)
-      setrunningOpt(false)
-      const { w, h, minH, maxH, minW } = newData[1]
-      const x = 0
-      const y = Infinity
-      setNewData(null)
-      const newBlk = { i: `bf-${newCounter + 1}-`, x, y, w, h, minH, maxH, minW }
-      const tmpLayouts = layouts
-      tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
-      tmpLayouts.lg.push(newBlk)
-      tmpLayouts.md.push(newBlk)
-      tmpLayouts.sm.push(newBlk)
-      if (breakpoint === 'lg') {
-        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-      } else if (breakpoint === 'md') {
-        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-      } else if (breakpoint === 'sm') {
-        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-      }
-      setLayouts({ ...tmpLayouts })
-      const tmpField = JSON.parse(JSON.stringify(newData[0]))
-      setFields({ ...fields, [`bf-${newCounter + 1}-`]: tmpField })
-      setNewCounter(newCounter + 1)
+    const { w, h, minH, maxH, minW } = newData[1]
+    const x = 0
+    const y = Infinity
+    setNewData(null)
+    const newBlk = { i: `bf-${newCounter + 1}-`, x, y, w, h, minH, maxH, minW }
+    const tmpLayouts = layouts
+    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
+    tmpLayouts.lg.push(newBlk)
+    tmpLayouts.md.push(newBlk)
+    tmpLayouts.sm.push(newBlk)
+    if (breakpoint === 'lg') {
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'md') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'sm') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
+    setLayouts({ ...tmpLayouts })
+    const tmpField = JSON.parse(JSON.stringify(newData[0]))
+    setFields({ ...fields, [`bf-${newCounter + 1}-`]: tmpField })
+    setNewCounter(newCounter + 1)
   }
 
   const onLayoutChange = (newLay, newLays) => {
@@ -204,17 +223,13 @@ function GridLayout(props) {
   }
 
   const onRemoveItem = i => {
-    if (!runningOpt) {
-      setrunningOpt(true)
-      const nwLay = {}
-      nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
-      nwLay.md = genFilterLay(layouts.md, cols.md, i)
-      nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
-      delete fields[i]
-      setLayouts(nwLay)
-      setFields({ ...fields })
-      setrunningOpt(false)
-    }
+    const nwLay = {}
+    nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
+    nwLay.md = genFilterLay(layouts.md, cols.md, i)
+    nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
+    delete fields[i]
+    setLayouts(nwLay)
+    setFields({ ...fields })
   }
 
   const onDrop = elmPrms => {
@@ -222,36 +237,33 @@ function GridLayout(props) {
       alert('You can not add more than 5 field in free version.')
       return false
     } */
-    if (!runningOpt) {
-      setrunningOpt(true)
-      const { draggedElm } = props
-      const { w, h, minH, maxH, minW } = draggedElm[1]
-      // eslint-disable-next-line prefer-const
-      let { x, y } = elmPrms
-      if (y !== 0) { y -= 1 }
-      const newBlk = `bf-${newCounter + 1}-`
 
-      const tmpLayouts = layouts
-      tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
-      tmpLayouts.lg.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-      tmpLayouts.md.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-      tmpLayouts.sm.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-      if (breakpoint === 'lg') {
-        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-      } else if (breakpoint === 'md') {
-        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-        tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-      } else if (breakpoint === 'sm') {
-        tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-        tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-      }
-      setLayouts({ ...tmpLayouts })
-      const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
-      setFields({ ...fields, [newBlk]: tmpField })
-      setNewCounter(newCounter + 1)
-      setrunningOpt(false)
+    const { draggedElm } = props
+    const { w, h, minH, maxH, minW } = draggedElm[1]
+    // eslint-disable-next-line prefer-const
+    let { x, y } = elmPrms
+    if (y !== 0) { y -= 1 }
+    const newBlk = `bf-${newCounter + 1}-`
+
+    const tmpLayouts = layouts
+    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
+    tmpLayouts.lg.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    tmpLayouts.md.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    tmpLayouts.sm.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    if (breakpoint === 'lg') {
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'md') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
+    } else if (breakpoint === 'sm') {
+      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
+      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
+    setLayouts({ ...tmpLayouts })
+    const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
+    setFields({ ...fields, [newBlk]: tmpField })
+    setNewCounter(newCounter + 1)
   }
 
   const getElmProp = e => {
@@ -296,6 +308,7 @@ function GridLayout(props) {
 
   const compByTheme = compData => {
     if (compData.typ === 'recaptcha') {
+      // eslint-disable-next-line no-param-reassign
       compData.siteKey = reCaptchaV2.siteKey
     }
     switch (props.theme) {
@@ -326,7 +339,8 @@ function GridLayout(props) {
         onClick={() => onRemoveItem(item.i)}
         onKeyPress={() => onRemoveItem(item.i)}
         role="button"
-        tabIndex={-1}
+        tabIndex="0"
+        title="Remove"
       >
         <span className="btcd-icn icn-clear" />
       </div>
@@ -334,40 +348,53 @@ function GridLayout(props) {
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Move"
+        title="Move"
       >
         <span className="btcd-icn icn-move1" />
+      </div>
+      <div
+        style={{ right: 47, fontSize: 15 }}
+        className="bit-blk-icn drag "
+        aria-label="Settings"
+        title="Settings"
+      >
+        <span className="btcd-icn icn-settings" />
       </div>
 
       {compByTheme(fields[item.i])}
     </div>
   )
   return (
-    <div style={{ width: props.width - 19 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbars>
-        <ResponsiveReactGridLayout
-          width={props.width - 25}
-          measureBeforeMount={false}
-          isDroppable={props.draggedElm[0] !== ''}
-          className="layout"
-          onDrop={onDrop}
-          onLayoutChange={onLayoutChange}
-          droppingItem={props.draggedElm[1]}
-          cols={cols}
-          breakpoints={{ lg: 800, md: 600, sm: 320 }}
-          rowHeight={40}
-          margin={[0, 0]}
-          containerPadding={[1, 1]}
-          draggableCancel=".no-drg"
-          draggableHandle=".drag"
-          layouts={layouts}
-          onBreakpointChange={onBreakpointChange}
-        // compactType="vertical"
-        >
-          {layouts[breakpoint].map(itm => blkGen(itm))}
-        </ResponsiveReactGridLayout>
+    <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      <Scrollbars autoHide>
+        <div style={{ padding: 10, paddingRight: 13 }}>
+          <div className="_frm">
+            <ResponsiveReactGridLayout
+              width={builderWidth}
+              measureBeforeMount={false}
+              isDroppable={props.draggedElm[0] !== ''}
+              className="layout"
+              onDrop={onDrop}
+              onLayoutChange={onLayoutChange}
+              droppingItem={props.draggedElm[1]}
+              cols={cols}
+              breakpoints={{ lg: 800, md: 600, sm: 320 }}
+              rowHeight={40}
+              margin={[0, 0]}
+              containerPadding={[1, 1]}
+              draggableCancel=".no-drg"
+              draggableHandle=".drag"
+              layouts={layouts}
+              onBreakpointChange={onBreakpointChange}
+            // compactType="vertical"
+            >
+              {layouts[breakpoint].map(itm => blkGen(itm))}
+            </ResponsiveReactGridLayout>
 
-        <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
-          {compByTheme(props.subBtn)}
+            <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
+              {compByTheme(props.subBtn)}
+            </div>
+          </div>
         </div>
       </Scrollbars>
     </div>

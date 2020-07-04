@@ -3,6 +3,7 @@ import React from 'react'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import SelectBox2 from '../ElmSettings/Childs/SelectBox2'
+import Back2FldList from './Back2FldList'
 
 export default function SubmitBtnSettings(props) {
   console.log('%c $render SubmitBtnSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -56,8 +57,9 @@ export default function SubmitBtnSettings(props) {
   }
 
   return (
-    <div>
-      <div className="mt-2">
+    <div className="ml-2 mr-4">
+      <Back2FldList setElementSetting={props.setElementSetting} />
+      <div>
         <span className="font-w-m">Field Type : </span>
         Submit
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
+import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
@@ -12,7 +13,18 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
 
+  const defaultTheme = {
+    '._frm': {
+      background: 'rgba(0, 255, 212, 1)',
+    },
+  }
+
+  const [style, setStyle] = useState(defaultTheme)
+
+  const styleSheet = j2c.sheet(style)
+
   const conRef = React.createRef(null)
+
 
   const notIE = !window.document.documentMode
 
@@ -31,7 +43,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const updateFields = useCallback(updatedElm => {
     const tmp = { ...fields }
     tmp[updatedElm.id] = updatedElm.data
-    console.log('^', tmp)
     setFields(tmp)
   }, [fields, setFields])
 
@@ -65,18 +76,18 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const responsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
     if (view === 'lg') {
-      resizer.resizeSection(0, { toSize: 165 });
-      resizer.resizeSection(2, { toSize: 300 });
+      resizer.resizeSection(0, { toSize: 165 })
+      resizer.resizeSection(2, { toSize: 300 })
     } else if (view === 'md') {
       const s0 = ((window.innerWidth - 473) / 2.5) - 165
       const s2 = ((window.innerWidth - 473) / 2.5) - 300
-      resizer.resizeSection(0, { toSize: 165 + s0 });
-      resizer.resizeSection(2, { toSize: 300 + s2 });
+      resizer.resizeSection(0, { toSize: 165 + s0 })
+      resizer.resizeSection(2, { toSize: 300 + s2 })
     } else if (view === 'sm') {
       const s0 = ((window.innerWidth - 473) / 2) - 165
       const s2 = ((window.innerWidth - 473) / 2) - 300
-      resizer.resizeSection(0, { toSize: 165 + s0 });
-      resizer.resizeSection(2, { toSize: 300 + s2 });
+      resizer.resizeSection(0, { toSize: 165 + s0 })
+      resizer.resizeSection(2, { toSize: 300 + s2 })
     }
     conRef.current.applyResizer(resizer)
   }, [conRef])
@@ -89,6 +100,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       afterResizing={afterResizing}
       onActivate={onResizeActivate}
     >
+      <style>{styleSheet}</style>
       <Section
         className="tool-sec"
         defaultSize={165}
@@ -109,45 +121,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
         minSize={notIE && 320}
         defaultSize={gridWidth}
       >
-        {lay.lg !== undefined && (
-          <small
-            style={{
-              background: 'lightgray',
-              padding: 8,
-              display: 'none',
-            }}
-          >
-            {lay.lg.map((item, i) => (
-              <div
-                key={`k-${i + 10} `}
-                style={{
-                  display: 'inline-block',
-                  padding: 5,
-                  background: 'aliceblue',
-                  margin: 5,
-                }}
-              >
-                <div>{item.i}</div>
-                <span style={{ margin: 8 }}>
-                  X:
-                  {item.x}
-                </span>
-                <span style={{ margin: 8 }}>
-                  Y:
-                  {item.y}
-                </span>
-                <span style={{ margin: 8 }}>
-                  W:
-                  {item.w}
-                </span>
-                <span style={{ margin: 8 }}>
-                  H:
-                  {item.h}
-                </span>
-              </div>
-            ))}
-          </small>
-        )}
         {!isLoading ? (
           <>
             <div className="btcd-device-btn flx">
@@ -157,7 +130,8 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
             </div>
             <GridLayout
               theme={theme}
-              width={gridWidth}
+              style={style}
+              gridWidth={gridWidth}
               draggedElm={drgElm}
               setElmSetting={setElementSetting}
               fields={fields}
@@ -181,10 +155,13 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       <Bar className="bar bar-r" />
       <Section id="settings-menu" defaultSize={300}>
         <CompSettings
+          style={style}
+          setStyle={setStyle}
           fields={fields}
           elm={elmSetting}
           updateData={updateFields}
           setSubmitConfig={setSubmitConfig}
+          setElementSetting={setElementSetting}
         />
       </Section>
     </Container>
