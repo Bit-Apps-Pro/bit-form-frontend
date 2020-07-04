@@ -5,10 +5,6 @@ export default function StyleAccordion({ className, title, children }) {
   const [tgl, setTgl] = useState(false)
   const [H, setH] = useState(0)
 
-  const getHeight = el => {
-
-  }
-
   return (
     <div className={`${className} ${tgl && 'active'}`}>
       <div
