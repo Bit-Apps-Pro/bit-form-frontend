@@ -1,6 +1,6 @@
 import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Link, Switch, useRouteMatch, Route, NavLink, useParams, useLocation } from 'react-router-dom'
+import { Link, Switch, useRouteMatch, Route, NavLink, useParams } from 'react-router-dom'
 import TextFieldSettings from './TextFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import SelectSettings from './SelectSettings'
@@ -8,9 +8,10 @@ import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import FormStyle from './StyleCustomize/FormStyle'
+import FieldBlockStyle from './StyleCustomize/FieldBlockStyle'
 
-function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, setStyle }) {
-  const { url, path } = useRouteMatch()
+function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
+  const { path } = useRouteMatch()
   const { formType, formID } = useParams()
 
   const TabLink = ({ title, sub, icn, link }) => (
@@ -51,12 +52,18 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
                 <FieldOptionBtn icn="settigns" title="Form Customize" />
               </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
+                <FieldOptionBtn icn="settigns" title="Field Block Customize" />
+              </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
                 <FieldOptionBtn icn="settigns" title="Field Customize" />
               </Link>
             </Route>
             <Route path={`${path}/style/f`}>
-              <FormStyle style={style} setStyle={setStyle} />
+              <FormStyle frmStyle={style['._frm']} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
+            </Route>
+            <Route path={`${path}/style/fb`}>
+              <FieldBlockStyle blkStyle={style['.fld-wrp']} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
             </Route>
             <Route path={`${path}/style/fl`}>
               firldASDF ASDF ASDFASDFASDF
