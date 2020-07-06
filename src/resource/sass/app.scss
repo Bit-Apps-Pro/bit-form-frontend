@@ -415,6 +415,7 @@ body {
   }
   & input[type="number"] {
     width: 55px;
+    line-height: 1 !important;
     outline: none;
     border-radius: 5px;
     border: 1px solid rgb(224, 224, 224);
@@ -422,6 +423,7 @@ body {
     padding: 4px;
     &:hover,
     :focus {
+      box-shadow: none;
       border-color: gray;
     }
   }
@@ -3627,6 +3629,10 @@ select.btcd-ud-inp {
   position: absolute;
   right: 20%;
   top: 7px;
+  & .active {
+    background: transparentize(#fff, 0.7);
+    color: transparentize(#fff, 0);
+  }
   & > button {
     cursor: pointer;
     outline: none;
@@ -3657,8 +3663,13 @@ select.btcd-ud-inp {
 }
 
 .resp-btn {
+  /* & .active{
+    background-color: ;
+  } */
   & button:nth-child(2) {
-    transform: rotate(90deg);
+    & .btcd-icn {
+      transform: rotate(90deg);
+    }
   }
   & button {
     border: none;
