@@ -15,7 +15,7 @@ export default function ColorPicker({ value, onChange }) {
   let picrVal = { red: 0, green: 0, blue: 0, alpha: 0 }
 
   if (value !== undefined && !value.match(/gradient/g)) {
-    const [r, g, b, a] = value.match(/\d\d\d|\d\d|\d/g)
+    const [r, g, b, a] = value.match(/\d\.\d\d|\d\d\.\d\d|\d\d\d|\d\d|\d/g)
     // picrVal = { red: parseInt(r, 10), green: parseInt(g, 10), blue: parseInt(b, 10), alpha: parseInt(a, 10) }
     picrVal = { red: Number(r), green: Number(g), blue: Number(b), alpha: Number(a) }
   } else if (value !== undefined) {
