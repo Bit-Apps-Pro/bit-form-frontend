@@ -1,24 +1,25 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react'
+import React, { memo } from 'react'
 import BtnGrp from './ChildComp/BtnGrp'
 import ColorPicker from './ChildComp/ColorPicker'
 import StyleAccordion from './ChildComp/StyleAccordion'
 import Range from './ChildComp/Range'
+import ResponsiveBtns from './ChildComp/ResponsiveBtns'
 
-export default function FormStyle({ style, setStyle }) {
-  const bgClr = style['._frm'].background
+function FormStyle({ frmStyle, styleDispatch, brkPoint, setResponsiveView }) {
+  const bgClr = frmStyle.background
   let bgTyp = 'Transparent'
-  const bdrTyp = style['._frm']['border-style'] || 'None'
-  const bdrClr = style['._frm']['border-color']
-  const bdrW = style['._frm']['border-width']
-  const bdrRad = style['._frm']['border-radius'] || '0px 0px 0px 0px'
-  const padding = style['._frm'].padding || '0px 0px 0px 0px'
-  const margin = style['._frm'].margin || '0px 0px 0px 0px'
-  let shadw = style['._frm']['box-shadow']
+  const bdrTyp = frmStyle['border-style'] || 'None'
+  const bdrClr = frmStyle['border-color']
+  const bdrW = frmStyle['border-width']
+  const bdrRad = frmStyle['border-radius'] || '0px 0px 0px 0px'
+  const padding = frmStyle.padding || '0px 0px 0px 0px'
+  const margin = frmStyle.margin || '0px 0px 0px 0px'
+  let shadw = frmStyle['box-shadow']
   let shadwClr = ''
   let shadwTyp = 'None'
   let shadwInset = ''
-
+  console.log('ssss', 'formstyle')
   if (shadw !== undefined) {
     if (shadw.match(/inset/g)) {
       shadwTyp = 'Inside'
@@ -37,62 +38,62 @@ export default function FormStyle({ style, setStyle }) {
     bgTyp = 'Solid'
   }
 
-  const tmp = { ...style }
+  const tmp = { ...frmStyle }
 
   const setCss = (val, property) => {
     if (val === '0px 0px 0px 0px') {
-      delete tmp['._frm'][property]
+      delete tmp[property]
     } else {
-      tmp['._frm'][property] = val
+      tmp[property] = val
     }
-    setStyle(tmp)
+    styleDispatch({ typ: 'frm', newstyle: tmp })
   }
 
 
   const setBgTyp = (typ) => {
-    tmp['._frm'].background = 'rgba(242, 246, 249, 0.59)'
+    tmp.background = 'rgba(242, 246, 249, 0.59)'
     if (typ === 'Gradient') {
-      tmp['._frm'].background = 'gradientrgba(142, 146, 149, 0.59)'
+      tmp.background = 'gradientrgba(142, 146, 149, 0.59)'
     } else if (typ === 'Transparent') {
-      delete tmp['._frm'].background
+      delete tmp.background
     }
-    setStyle(tmp)
+    styleDispatch({ typ: 'frm', newstyle: tmp })
   }
 
   const setBdrType = (typ) => {
     if (typ === 'None') {
-      delete tmp['._frm']['border-style']
-      delete tmp['._frm']['border-width']
-      delete tmp['._frm']['border-color']
+      delete tmp['border-style']
+      delete tmp['border-width']
+      delete tmp['border-color']
     } else {
-      tmp['._frm']['border-style'] = typ
-      if (tmp['._frm']['border-width'] === undefined) {
-        tmp['._frm']['border-width'] = '1px 1px 1px 1px'
+      tmp['border-style'] = typ
+      if (tmp['border-width'] === undefined) {
+        tmp['border-width'] = '1px 1px 1px 1px'
       }
-      if (tmp['._frm']['border-color'] === undefined) {
-        tmp['._frm']['border-color'] = 'rgba(0, 0, 0, 1)'
+      if (tmp['border-color'] === undefined) {
+        tmp['border-color'] = 'rgba(0, 0, 0, 1)'
       }
     }
-    setStyle(tmp)
+    styleDispatch({ typ: 'frm', newstyle: tmp })
   }
 
   const setShadwType = (typ) => {
     if (typ === 'Outside') {
-      if (tmp['._frm']['box-shadow'] === undefined) {
-        tmp['._frm']['box-shadow'] = '0px 0px 8px -5px rgba(0, 0, 0, 1)'
+      if (tmp['box-shadow'] === undefined) {
+        tmp['box-shadow'] = '0px 0px 8px -5px rgba(0, 0, 0, 1)'
       } else {
-        tmp['._frm']['box-shadow'] = tmp['._frm']['box-shadow'].replace('inset', '')
+        tmp['box-shadow'] = tmp['box-shadow'].replace('inset', '')
       }
     } else if (typ === 'Inside') {
-      if (tmp['._frm']['box-shadow'] === undefined) {
-        tmp['._frm']['box-shadow'] = '0px 0px 8px -5px rgba(0, 0, 0, 1) inset'
-      } else if (!tmp['._frm']['box-shadow'].match(/inset/g)) {
-        tmp['._frm']['box-shadow'] += ' inset'
+      if (tmp['box-shadow'] === undefined) {
+        tmp['box-shadow'] = '0px 0px 8px -5px rgba(0, 0, 0, 1) inset'
+      } else if (!tmp['box-shadow'].match(/inset/g)) {
+        tmp['box-shadow'] += ' inset'
       }
     } else if (typ === 'None') {
-      delete tmp['._frm']['box-shadow']
+      delete tmp['box-shadow']
     }
-    setStyle(tmp)
+    styleDispatch({ typ: 'frm', newstyle: tmp })
   }
 
   return (
@@ -179,11 +180,7 @@ export default function FormStyle({ style, setStyle }) {
       </StyleAccordion>
       <div className="btcd-hr w-9 m-a" />
       <StyleAccordion className="style-acc w-9" title="Padding">
-        <div className="resp-btn flx">
-          <button className="br-50 flx mr-1" type="button" aria-label="reponcive view"><span className="btcd-icn icn-phone_android" /></button>
-          <button className="br-50 flx mr-1" type="button" aria-label="reponcive view"><span className="btcd-icn icn-tablet_android" /></button>
-          <button className="br-50 flx mr-1" type="button" aria-label="reponcive view"><span className="btcd-icn icn-laptop_mac" /></button>
-        </div>
+        <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
         <Range
           info={[
             { icn: 'd', lbl: 'Padding Top' },
@@ -199,12 +196,9 @@ export default function FormStyle({ style, setStyle }) {
           onChange={val => setCss(val, 'padding')}
         />
       </StyleAccordion>
+      <div className="btcd-hr w-9 m-a" />
       <StyleAccordion className="style-acc w-9" title="Margin">
-        <div className="resp-btn flx">
-          <button className="br-50 flx mr-1" type="button" aria-label="reponcive view"><span className="btcd-icn icn-phone_android" /></button>
-          <button className="br-50 flx mr-1" type="button" aria-label="reponcive view"><span className="btcd-icn icn-tablet_android" /></button>
-          <button className="br-50 flx mr-1" type="button" aria-label="reponcive view"><span className="btcd-icn icn-laptop_mac" /></button>
-        </div>
+        <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
         <Range
           info={[
             { icn: 'd', lbl: 'Margin Top' },
@@ -236,7 +230,7 @@ export default function FormStyle({ style, setStyle }) {
         </div>
         {shadwTyp !== 'None' && (
           <>
-            <div className="flx flx-between mb-2">
+            <div className="flx flx-between mb-2 mt-2">
               <span className="f-5">Shadow Color</span>
               <ColorPicker value={shadwClr} onChange={clr => setCss(`${shadw} ${clr.style} ${shadwInset}`, 'box-shadow')} />
             </div>
@@ -263,3 +257,4 @@ export default function FormStyle({ style, setStyle }) {
     </div>
   )
 }
+export default (FormStyle)
