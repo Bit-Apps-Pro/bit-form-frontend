@@ -45,10 +45,10 @@ function GridLayout(props) {
   // set builder width by style
   useEffect(() => {
     const newW = gridWidth - 32
+    let w = 0
     if (style['._frm']['border-width']
       || style['._frm'].padding
       || style['._frm'].margin) {
-      let w = 0
       if (style['._frm']['border-width']) {
         const vals = style['._frm']['border-width'].replace(/px|em|rem/g, '').split(' ')
         w += Number(vals[1])
@@ -64,8 +64,8 @@ function GridLayout(props) {
         w += Number(vals[1])
         w += Number(vals[3])
       }
-      setBuilderWidth(newW - w)
     }
+    setBuilderWidth(newW - w)
   }, [style, gridWidth])
 
   const sortLay = arr => {
@@ -370,7 +370,7 @@ function GridLayout(props) {
         <div style={{ padding: 10, paddingRight: 13 }}>
           <div className="_frm">
             <ResponsiveReactGridLayout
-              width={builderWidth}
+              width={Math.round(builderWidth)}
               measureBeforeMount={false}
               isDroppable={props.draggedElm[0] !== ''}
               className="layout"
@@ -378,9 +378,9 @@ function GridLayout(props) {
               onLayoutChange={onLayoutChange}
               droppingItem={props.draggedElm[1]}
               cols={cols}
-              breakpoints={{ lg: 800, md: 600, sm: 320 }}
+              breakpoints={{ lg: 750, md: 500, sm: 300 }}
               rowHeight={40}
-              margin={[0, 0]}
+              margin={[-0.2, 0]}
               containerPadding={[1, 1]}
               draggableCancel=".no-drg"
               draggableHandle=".drag"
