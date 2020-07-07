@@ -4,7 +4,8 @@ import BtnGrp from './ChildComp/BtnGrp'
 import ColorPicker from './ChildComp/ColorPicker'
 
 function FieldBlockStyle({ blkStyle, styleDispatch, brkPoint, setResponsiveView }) {
-  const bgClr = blkStyle.background
+  // console.log('ssssss', blkStyle)
+  const bgClr = blkStyle.background || 'rgba(0, 0, 0, 1)'
   let bgTyp = 'Transparent'
 
   if (bgClr !== undefined && bgClr.includes('gradient')) {
@@ -12,7 +13,6 @@ function FieldBlockStyle({ blkStyle, styleDispatch, brkPoint, setResponsiveView 
   } else if (bgClr !== undefined) {
     bgTyp = 'Solid'
   }
-  console.log('ssss', '--------block style ')
 
   const tmp = { ...blkStyle }
 
