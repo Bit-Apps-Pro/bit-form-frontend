@@ -23,7 +23,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
     {
       name: 'Multiline Text',
       icn: 'textarea',
-      pos: { h: 3, w: 6, i: 'block-5' },
+      pos: { h: 3, w: 6, i: 'block-5', minH: 3 },
       elm: {
         typ: 'textarea',
         lbl: 'Multi-Line Text',
