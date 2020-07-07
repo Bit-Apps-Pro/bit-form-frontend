@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
+import { Link, Switch, Route, useRouteMatch, useHistory, useParams } from 'react-router-dom'
 import Modal from './Modal'
 import zohoAnalytics from '../resource/img/integ/zohoAnalytics.png'
 import zohoDesk from '../resource/img/integ/zohoDesk.png'
@@ -13,13 +13,16 @@ import zohoPeople from '../resource/img/integ/zohoPeople.png'
 import NewInteg from './AllIntegrations/NewInteg'
 import EditInteg from './AllIntegrations/EditInteg'
 import ConfirmModal from './ConfirmModal'
+import bitsFetch from '../Utils/bitsFetch'
+import SnackMsg from './ElmSettings/Childs/SnackMsg'
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
-
+  const [snack, setSnackbar] = useState({ show: false })
   const { path, url } = useRouteMatch()
   const history = useHistory()
+  const { formID } = useParams()
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
@@ -33,8 +36,25 @@ function Integrations({ integrations, setIntegration, formFields }) {
   ]
 
   const removeInteg = i => {
+    console.log('i', integrations[i])
+    const tempIntegration = integrations[i]
     integrations.splice(i, 1)
     setIntegration([...integrations])
+    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_form_integration')
+      .then(response => {
+        if (response && response.success) {
+          setSnackbar({ show: true, msg: `${response.data.message}` })
+        } else if (response && response.data && response.data.data) {
+          integrations.splice(i, 0, tempIntegration)
+          setIntegration([...integrations])
+          setSnackbar({ show: true, msg: `Integration deletion failed Cause:${response.data.data}. please try again` })
+        } else {
+          integrations.splice(i, 0, tempIntegration)
+          setIntegration([...integrations])
+          setSnackbar({ show: true, msg: 'Integration deletion failed. please try again' })
+        }
+
+      })
   }
 
   const inteDelConf = i => {
@@ -67,6 +87,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
 
   return (
     <div>
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <ConfirmModal
         show={confMdl.show}
         close={closeConfMdl}
@@ -125,12 +146,15 @@ function Integrations({ integrations, setIntegration, formFields }) {
             ))}
           </div>
         </Route>
-        <Route exact path={`${path}/new/:type`}>
+        <Route path={`${path}/new/:type`}>
           <NewInteg url={url} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
         </Route>
-        <Route exact path={`${path}/edit/:id`}>
-          <EditInteg url={url} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        </Route>
+        {integrations && integrations.length > 0
+          && (
+            <Route exact path={`${path}/edit/:id`}>
+              <EditInteg url={url} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+            </Route>
+          )}
       </Switch>
 
     </div>
