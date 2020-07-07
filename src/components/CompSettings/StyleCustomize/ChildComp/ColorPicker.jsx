@@ -37,15 +37,17 @@ export default function ColorPicker({ value, onChange }) {
       <CSSTransition
         in={isComponentVisible}
         timeout={150}
-        classNames="btc-pk pos-rel"
+        classNames="btc-pk"
         unmountOnExit
       >
-        <div className="btc-pick">
-          <Picker
-            onEndChange={onChange}
-            color={picrVal}
-            isGradient={isGradient}
-          />
+        <div className="pos-rel">
+          <div className="btc-pick">
+            <Picker
+              onEndChange={onChange}
+              color={picrVal}
+              isGradient={isGradient}
+            />
+          </div>
         </div>
       </CSSTransition>
     </div>
