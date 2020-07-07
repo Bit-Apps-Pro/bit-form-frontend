@@ -1,5 +1,6 @@
 export const defaultTheme = {
   '._frm': {
+    overflow: 'hidden',
     background: 'rgba(0, 255, 212, 1)',
   },
   '.fld-wrp': {
@@ -17,15 +18,11 @@ export const defaultTheme = {
   },
 
   '@media only screen and (max-width: 600px)': {
-    '._frm': {
-      background: 'rgba(0, 215, 212, 1)',
-    },
+
   },
 
   '@media only screen and (max-width: 400px)': {
-    '._frm': {
-      background: 'rgba(0, 155, 212, 1)',
-    },
+
   },
 }
 export const them = {}
