@@ -7,13 +7,13 @@ import SelectSettings from './SelectSettings'
 import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
-import FormStyle from './StyleCustomize/FormStyle'
+import StyleEditor from './StyleCustomize/StyleEditor'
 import FieldBlockStyle from './StyleCustomize/FieldBlockStyle'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
-
+  // console.log('sssss', style)
   const TabLink = ({ title, sub, icn, link }) => (
     <NavLink to={`/form/builder/${formType}/${formID}/${link}`} activeClassName="s-t-l-active" className="btcd-s-tab-link active flx w-5 ">
       <span className={`btcd-icn icn-${icn} mr-2`} />
@@ -23,6 +23,14 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
       </div>
     </NavLink>
   )
+
+  const styleClasProvider = cls => {
+    if (style[cls] === undefined) {
+      // eslint-disable-next-line no-param-reassign
+      style[cls] = {}
+    }
+    return style[cls]
+  }
 
   return (
     <div className="elm-settings">
@@ -60,10 +68,11 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               </Link>
             </Route>
             <Route path={`${path}/style/f`}>
-              <FormStyle frmStyle={style['._frm']} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
+              <StyleEditor frmStyle={styleClasProvider('._frm')} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
             </Route>
             <Route path={`${path}/style/fb`}>
-              <FieldBlockStyle blkStyle={style['.fld-wrp']} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
+              <StyleEditor frmStyle={styleClasProvider('.fld-wrp')} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
+             {/*  <FieldBlockStyle blkStyle={styleClasProvider('.fld-wrp')} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} /> */}
             </Route>
             <Route path={`${path}/style/fl`}>
               firldASDF ASDF ASDFASDFASDF
