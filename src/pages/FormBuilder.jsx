@@ -9,17 +9,17 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 
 const styleReducer = (style, action) => {
-  switch (action.typ) {
-    case 'frm':
-      style['._frm'] = action.newstyle
-      return { ...style }
-    case 'fld-wrp':
-      style['.fld-wrp'] = action.newstyle
-      return { ...style }
-    case 'brkpoint':
-      return action.newstyle
-    default:
-      throw new Error('unknown set style type');
+  if (action.brkPoint === 'lg') {
+    style[action.cls] = action.newStyle
+    return { ...style }
+  }
+  if (action.brkPoint === 'md') {
+    style['@media only screen and (max-width: 600px)'][action.cls] = action.newStyle
+    return { ...style }
+  }
+  if (action.brkPoint === 'sm') {
+    style['@media only screen and (max-width: 400px)'][action.cls] = action.newStyle
+    return { ...style }
   }
 }
 
@@ -35,18 +35,24 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   useEffect(() => {
     if (brkPoint === 'md') {
-      styleDispatch({ typ: 'brkpoint', newstyle: defaultTheme['@media only screen and (max-width: 600px)'] })
-      // console.log('sssss', { ...defaultTheme, ...defaultTheme['@media only screen and (max-width: 600px)'] })
+      setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 600px)'] }))
     } else if (brkPoint === 'sm') {
-      styleDispatch({ typ: 'brkpoint', newstyle: defaultTheme['@media only screen and (max-width: 400px)'] })
+      setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 400px)'] }))
     } else if (brkPoint === 'lg') {
-      styleDispatch({ typ: 'brkpoint', newstyle: defaultTheme })
+      //  console.log('sssss', style)
+      setStyleSheet(j2c.sheet(style))
     }
-  }, [brkPoint])
+  }, [brkPoint, style])
 
-  useEffect(() => {
-    setStyleSheet(j2c.sheet(style))
-  }, [style])
+  const styleProvider = () => {
+    if (brkPoint === 'md') {
+      return { ...style, ...style['@media only screen and (max-width: 600px)'] }
+    }
+    if (brkPoint === 'sm') {
+      return { ...style, ...style['@media only screen and (max-width: 400px)'] }
+    }
+    return style
+  }
 
   const conRef = React.createRef(null)
 
@@ -171,7 +177,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
             </div>
             <GridLayout
               theme={theme}
-              style={style}
+              style={styleProvider()}
               gridWidth={gridWidth}
               draggedElm={drgElm}
               setElmSetting={setElementSetting}
@@ -197,7 +203,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       <Section id="settings-menu" defaultSize={300}>
         <CompSettings
           brkPoint={brkPoint}
-          style={style}
+          style={styleProvider()}
           setResponsiveView={setResponsiveView}
           styleDispatch={styleDispatch}
           fields={fields}
