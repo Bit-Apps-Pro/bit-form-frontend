@@ -117,7 +117,7 @@ export const checkLogic = (logics, fields) => {
         if (!targetFieldValue) {
           return false
         }
-        if ((fields[logics.field].multipletiple !== undefined && fields[logics.field].multipletiple)
+        if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
           || targetFieldValue === 'check'
         ) {
           const fieldValue = Array.isArray(targetFieldValue)

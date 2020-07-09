@@ -73,6 +73,24 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
   }
 
   const handleFieldMapping = (event, index) => {
+    if (event.target.name === 'formField'
+      && crmConf.field_map[index].zohoFormField !== ''
+      && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[crmConf.field_map[index].zohoFormField].data_type === 'fileupload'
+      && formFields[formFields.map(field => field.key).indexOf(event.target.value)].type !== 'file-up'
+    ) {
+      setSnackbar({ show: true, msg: 'Please select file field' })
+      console.log('formFieldsName')
+      return
+    }
+    if (event.target.name === 'zohoFormField'
+      && crmConf.field_map[index].formField !== ''
+      && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[event.target.value].data_type === 'fileupload'
+      && formFields[formFields.map(field => field.key).indexOf(crmConf.field_map[index].formField)].type !== 'file-up'
+    ) {
+      setSnackbar({ show: true, msg: 'Please select file field' })
+      console.log('formFieldsName 2')
+      return
+    }
     const newConf = { ...crmConf }
     newConf.field_map[index][event.target.name] = event.target.value
     setCrmConf({ ...crmConf, ...newConf })

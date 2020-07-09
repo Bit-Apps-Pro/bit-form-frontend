@@ -59,6 +59,29 @@ export default function FormStyle({ style, setStyle }) {
     setStyle(tmp)
   }
 
+  const setBgImg = () => {
+    if (wp && wp.media) {
+      const imgSelectionFrame = wp.media({
+        title: 'Media',
+        button: {
+          text: 'Select picture',
+        },
+        library: {
+          type: 'image',
+        },
+        multiple: false,
+      });
+      imgSelectionFrame.on('select', () => {
+        const attachment = imgSelectionFrame.state().get('selection').first().toJSON();
+
+        const imageUrlStr = `url('${attachment.url}')`
+
+        setCss(imageUrlStr, 'background-image')
+      });
+
+      imgSelectionFrame.open();
+    }
+  }
   const setBdrType = (typ) => {
     if (typ === 'None') {
       delete tmp['._frm']['border-style']
@@ -116,7 +139,7 @@ export default function FormStyle({ style, setStyle }) {
             <ColorPicker value={bgClr} onChange={clr => setCss(clr.style, 'background')} />
           </div>
         )}
-        Picture
+        <button onClick={setBgImg} type="button">Picture</button>
       </StyleAccordion>
       <div className="btcd-hr w-9 m-a" />
       <StyleAccordion className="style-acc w-9" title="Border">
