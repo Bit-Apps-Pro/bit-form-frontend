@@ -1,4 +1,5 @@
 import React from 'react'
+import ResponsiveBtns from './CompSettings/StyleCustomize/ChildComp/ResponsiveBtns';
 
 export default function Modal(props) {
   console.log('%c $render Modal', 'background:black;padding:3px;border-radius:5px;color:white')
@@ -17,7 +18,9 @@ export default function Modal(props) {
       onClick={handleClickOutside}
       className={`btcd-modal-wrp ${props.show && 'btcd-modal-show'}`}
     >
-      <div className={`btcd-modal ${props.sm && 'btcd-m-sm'} ${props.lg && 'btcd-m-lg'}`}>
+      <div className={`btcd-modal ${props.sm && 'btcd-m-sm'} ${props.lg && 'btcd-m-lg'} ${props.className}`}
+        style={props.style}
+      >
         <div className="btcd-modal-content">
           {props.hdrActn}
           <button onClick={() => props.setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><span className="btcd-icn icn-clear" /></button>
