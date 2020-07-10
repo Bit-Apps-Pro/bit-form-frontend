@@ -60,6 +60,13 @@ body {
 .d-in-b {
   display: inline-block;
 }
+.o-v {
+  overflow: visible !important;
+}
+.o-a{
+  overflow: auto;
+  height: 100%;
+}
 .font-w-m {
   font-weight: 600;
 }
@@ -82,6 +89,13 @@ body {
 }
 .f-5 {
   font-weight: 500;
+}
+.upsert_rec{
+  display: block;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+  padding: 5px 10px;
+  cursor: grab;
 }
 
 .unselectable {
@@ -712,14 +726,16 @@ body {
 }
 
 .btc-pick {
+  background: white;
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: -8px;
   z-index: 99;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   & .ui-color-picker {
     margin: 0;
-    border-radius: 10px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     & .picker-area {
       padding: 5px;
     }
@@ -945,6 +961,9 @@ body {
 }
 .mr-4 {
   margin-right: 20px;
+}
+.mr-8 {
+  margin-right: 40px;
 }
 .ml-1 {
   margin-left: 5px;
@@ -2053,10 +2072,8 @@ nav.top-nav {
 }
 
 .btcd-m-sm {
-  // border-radius: 15px !important;
   width: 400px !important;
   height: 220px !important;
-  text-align: center !important;
   & .content {
     height: 115px;
   }
@@ -2073,6 +2090,11 @@ nav.top-nav {
   position: relative;
   height: 97%;
 }
+.custom-conf-mdl {
+  display: block;
+  text-align: left;
+}
+
 .btcd-mdl-title {
   margin: 0;
   height: 27px;
