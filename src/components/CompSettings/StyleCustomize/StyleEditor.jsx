@@ -40,6 +40,10 @@ function StyleEditor({ frmStyle, styleDispatch, brkPoint, setResponsiveView, cls
   const newStyle = { ...frmStyle }
 
   const setCss = (val, property) => {
+    if (val.match(/gradient/g)) {
+      val += ')'
+    }
+
     if (val === '0px 0px 0px 0px') {
       delete newStyle[property]
     } else {
