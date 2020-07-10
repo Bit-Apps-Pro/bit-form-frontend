@@ -22,7 +22,16 @@ const Error404 = lazy(() => import('./pages/Error404'))
 function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={(
+      <Loader style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '90vh',
+      }}
+      />
+    )}
+    >
       <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
         <div className="Btcd-App">
 
