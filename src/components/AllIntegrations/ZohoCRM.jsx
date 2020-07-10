@@ -1,29 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { useRouteMatch, useHistory, useParams } from 'react-router-dom'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import Steps from '../ElmSettings/Childs/Steps'
 import TableCheckBox from '../ElmSettings/Childs/TableCheckBox'
 import CopyText from '../ElmSettings/Childs/CopyText'
 import SnackMsg from '../ElmSettings/Childs/SnackMsg'
 import bitsFetch from '../../Utils/bitsFetch'
+import Loader from '../Loaders/Loader'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import ConfirmModal from '../ConfirmModal'
 
 function ZohoCRM({ formFields, setIntegration, integrations }) {
   const { url } = useRouteMatch()
   const history = useHistory()
   const { formID } = useParams()
+  const [isAuthorized, setisAuthorized] = useState(false)
+  const [isLoading, setisLoading] = useState(false)
+  const [step, setstep] = useState(1)
+  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
+  const [snack, setSnackbar] = useState({ show: false })
+  const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: '1000.ZA3LMTY5X8TNNAWUJL8UU0B7NCW9KH',
-    clientSecret: '66aed74cb6d74af58569032c15d437b6c2b7ccef48',
+    clientId: '1000.W366Q8LPE5H74VDGZWXDIV6SL96HRH',
+    clientSecret: '1e7f458dd609c4aed2870c6c2c724b1822b13f20cc',
     module: '',
     layout: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
-    actions: ['Workflow'],
+    actions: {},
   })
-  const [isAuthorized, setisAuthorized] = useState(false)
-  const [isLoading, setisLoading] = useState(false)
+
+
   useEffect(() => {
     if (window.opener) {
       const grantTokenResponse = {}
@@ -42,6 +52,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
       window.close()
     }
   }, [])
+
   useEffect(() => {
     const newConf = { ...crmConf }
     newConf.layout = ''
@@ -61,9 +72,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
     }
     setCrmConf({ ...crmConf, ...newConf })
   }, [crmConf.layout])
-  const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
-  const [snack, setSnackbar] = useState({ show: false })
+
   const handleInput = e => {
     const rmError = { ...error }
     rmError[e.target.name] = ''
@@ -81,12 +90,12 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
   const nextPage = val => {
     if (val === 3) {
       const mappedFields = crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
-      console.log('mappedFields', mappedFields, crmConf.field_map)
+      console.log('mappedFields', mappedFields, crmConf.field_map, crmConf.module)
       if (mappedFields.length > 0) {
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
-      if (crmConf.module !== '' && crmConf.layout !== '' && crmConf.field_map.length > 0 && crmConf.actions.length > 0) {
+      if (crmConf.module !== '' && crmConf.layout !== '' && crmConf.field_map.length > 0) {
         setstep(val)
       }
     } else {
@@ -113,15 +122,6 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
     setCrmConf({ ...crmConf })
   }
 
-  const handleAtns = e => {
-    if (e.target.checked) {
-      crmConf.actions.push(e.target.value)
-    } else {
-      crmConf.actions.splice(crmConf.actions.indexOf(e.target.value), 1)
-    }
-    setCrmConf({ ...crmConf })
-  }
-
   const saveConfig = () => {
     const mappedFields = crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
     console.log('mappedFields', mappedFields, crmConf.field_map)
@@ -136,6 +136,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
 
   const refreshModules = () => {
     setisLoading(true)
+
     const refreshModulesRequestParams = {
       formID,
       dataCenter: crmConf.dataCenter,
@@ -143,6 +144,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
       clientSecret: crmConf.clientSecret,
       tokenDetails: crmConf.tokenDetails,
     }
+
     const response = bitsFetch(refreshModulesRequestParams, 'bitforms_zcrm_refresh_modules')
       .then(result => result)
     response.then(result => {
@@ -164,6 +166,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
     })
     setisLoading(false)
   }
+
   const refreshLayouts = () => {
     if (!crmConf.module) {
       return
@@ -199,7 +202,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         console.log('newConf', newConf)
         setCrmConf({ ...crmConf, ...newConf })
         setSnackbar({ show: true, msg: 'Layouts refreshed' })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result?.data?.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {
         setSnackbar({ show: true, msg: 'Layouts refresh failed. please try again' })
@@ -241,6 +244,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
       }
     }, 500)
   }
+
   const tokenHelper = (grantToken) => {
     console.log('grantToken', grantToken, crmConf)
     const tokenRequestParams = { ...grantToken }
@@ -262,12 +266,53 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
       }
     })
   }
+
+  const clsActionMdl = () => {
+    setActionMdl({ show: false })
+  }
+
+  const actioHandler = (val, typ) => {
+    if (typ === 'attachment') {
+      if (val !== '') {
+        crmConf.actions.attachment = val
+      } else {
+        delete crmConf.actions.attachment
+      }
+    }
+    if (typ === 'approval') {
+      if (val.target.checked) {
+        crmConf.actions.approval = true
+      } else {
+        delete crmConf.actions.approval
+      }
+    }
+    setCrmConf(JSON.parse(JSON.stringify(crmConf)))
+  }
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt="Ok"
+        show={actionMdl.show === 'attachment'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title="Select Attachment"
+      >
+        <div className="btcd-hr mt-1" />
+        <div className="mt-3">Select file upload fields</div>
+        <MultiSelect
+          className="mt-2 w-9"
+          onChange={(val) => actioHandler(val, 'attachment')}
+          options={formFields.map(itm => ({ label: itm.name, value: itm.key }))}
+        />
+      </ConfirmModal>
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
-      <div className="btcd-stp-page" style={{ ...{ width: step === 1 && `${80}%` }, ...{ height: step === 1 && `${100}%` } }}>
+      <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
 
@@ -289,7 +334,6 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="clientSecret" value={crmConf.clientSecret} type="text" placeholder="Client secret..." />
         <div style={{ color: 'red' }}>{error.clientSecret}</div>
 
-
         <div className="mt-3"><b>Redirect URI:</b></div>
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="cpyTxt" />
 
@@ -303,7 +347,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         </button>
       </div>
 
-      <div className="btcd-stp-page" style={{ width: step === 2 && `${80}%`, height: step === 2 && `${100}%` }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
         <br />
         <b className="wdt-100 d-in-b">Module:</b>
         <select onChange={handleInput} name="module" value={crmConf.module} className="btcd-paper-inp w-7">
@@ -323,7 +367,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         <select onChange={handleInput} name="layout" value={crmConf.layout} className="btcd-paper-inp w-7">
           <option value="">Select Layout</option>
           {
-            crmConf.default && crmConf.default.layouts && crmConf.default.layouts[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
+             crmConf?.default?.layouts?.[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
               <option value={layoutApiName}>
                 {layoutApiName}
               </option>
@@ -333,8 +377,18 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
         <button onClick={refreshLayouts} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
+        {isLoading && (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 100,
+            transform: 'scale(0.7)',
+          }}
+          />
+        )}
         {
-          crmConf.module && crmConf.module && crmConf.default && crmConf.default.layouts && crmConf.default.layouts[crmConf.module] && crmConf.default.layouts[crmConf.module][crmConf.layout] && crmConf.default.layouts[crmConf.module][crmConf.layout].fields
+          crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
           && (
             <>
               <div className="mt-4"><b className="wdt-100">Field Map</b></div>
@@ -345,54 +399,37 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
               </div>
 
               {crmConf.field_map.map((itm, i) => (
-                <div key={`f-m-${i + 9}`} className="flx flx-around mt-1 mr-1">
-                  <select className="btcd-paper-inp  mr-2" name="formField" value={itm.formField} onChange={(ev) => handleFieldMapping(ev, i)}>
-                    <option value="">Select Field</option>
-                    {formFields.map(f => itm.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
-                  </select>
-                  <select className="btcd-paper-inp " name="zohoFormField" value={itm.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
-                    <option value="">Select Field</option>
-                    {
-                      Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout].fields).map(fieldApiName => (
-                        <option value={fieldApiName}>
-                          {crmConf.default.layouts[crmConf.module][crmConf.layout].fields[fieldApiName].display_label}
-                        </option>
-                      ))
-                    }
-                  </select>
-                  <button onClick={() => addMap(i)} className="icn-btn sh-sm ml-2 mr-2" type="button">+</button>
-                  {
-                    crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(itm.zohoFormField) === -1
-                    && (
-                      <button onClick={() => delMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-                        <span className="btcd-icn icn-trash-2" />
-                      </button>
-                    )
-                  }
-                </div>
+                <MapField
+                  i={i}
+                  field={itm}
+                  crmConf={crmConf}
+                  formFields={formFields}
+                  handleFieldMapping={handleFieldMapping}
+                  addMap={addMap}
+                  delMap={delMap}
+                />
               ))}
-              <div className="txt-center  mt-2" style={{ marginRight: 80 }}><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
-
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
               <br />
               <br />
               <div className="mt-4"><b className="wdt-100">Actions</b></div>
               <div className="btcd-hr mt-1" />
 
               <div className="d-flx flx-wrp">
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Workflow')} className="wdt-200 mt-4" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Attachment')} className="wdt-200 mt-4" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Approval')} className="wdt-200 mt-4" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Capture_GCLID')} className="wdt-200 mt-4" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Upsert_Record')} className="wdt-200 mt-4" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Assignment_Rules')} className="wdt-200 mt-4" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
-                <TableCheckBox onChange={handleAtns} checked={crmConf.actions.some(i => i === 'Tag_Records')} className="wdt-200 mt-4" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
+                <TableCheckBox onChange={actioHandler} checked={'workflow' in crmConf.actions} className="wdt-200 mt-4" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
+                <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={'attachment' in crmConf.actions} className="wdt-200 mt-4" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
+                <TableCheckBox onChange={(e) => actioHandler(e, 'approval')} checked={'approval' in crmConf.actions} className="wdt-200 mt-4" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
+                <TableCheckBox onChange={actioHandler} checked={crmConf.actions.Capture_GCLID} className="wdt-200 mt-4" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
+                <TableCheckBox onChange={actioHandler} checked={crmConf.actions.Upsert_Record} className="wdt-200 mt-4" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
+                <TableCheckBox onChange={actioHandler} checked={crmConf.actions.Assignment_Rules} className="wdt-200 mt-4" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
+                <TableCheckBox onChange={actioHandler} checked={crmConf.actions.Tag_Records} className="wdt-200 mt-4" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
               </div>
             </>
           )
         }
         <button
           onClick={() => nextPage(3)}
-          disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1 || crmConf.actions.length < 1}
+          disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
@@ -402,7 +439,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
 
       </div>
 
-      <div className="btcd-stp-page txt-center" style={{ width: step === 3 && `${90}%`, height: step === 3 && `${100}% ` }}>
+      <div className="btcd-stp-page txt-center" style={{ width: step === 3 && 900, height: step === 3 && `${100}% ` }}>
         <h2 className="ml-3">Successfully Integrated</h2>
         <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm flx" type="button">
           Finish & Save
@@ -414,3 +451,41 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
 }
 
 export default ZohoCRM
+
+function MapField({ i, formFields, field, handleFieldMapping, crmConf, addMap, delMap }) {
+
+  const isNotRequired = crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required?.indexOf(field.zohoFormField) === -1
+
+  return (
+    <div key={`f-m-${i + 9}`} className="flx flx-around mt-1 mr-1">
+      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i)}>
+        <option value="">Select Field</option>
+        {formFields.map(f => field.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+      </select>
+      <select className="btcd-paper-inp"/*  disabled={!isNotRequired} */ name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
+        <option value="">Select Field</option>
+        {
+          Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout].fields).map(fieldApiName => (
+            <option value={fieldApiName}>
+              {crmConf.default.layouts[crmConf.module][crmConf.layout].fields[fieldApiName].display_label}
+            </option>
+          ))
+        }
+      </select>
+      <button
+        onClick={() => addMap(i)}
+        className={`icn-btn sh-sm ml-2 ${!isNotRequired && 'mr-8'}`}
+        type="button"
+      >
+        +
+      </button>
+      {
+        isNotRequired && (
+          <button onClick={() => delMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+            <span className="btcd-icn icn-trash-2" />
+          </button>
+        )
+      }
+    </div>
+  )
+}
