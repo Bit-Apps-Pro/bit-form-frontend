@@ -19,6 +19,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
+  const [tab, settab] = useState(0)
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
@@ -304,6 +305,10 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         </select>
         <button onClick={refreshModules} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
+        <div className="flx mt-2">
+          <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
+          <button onClick={() => settab(1)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
+        </div>
         <br />
         <b className="wdt-100 d-in-b">Layout:</b>
         <select onChange={handleInput} name="layout" value={crmConf.layout} className="btcd-paper-inp w-7">
