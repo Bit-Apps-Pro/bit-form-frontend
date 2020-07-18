@@ -1,7 +1,7 @@
 import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
-export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmConf }) {
+export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmConf, setSnackbar }) {
   const isNotRequired = crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required?.indexOf(field.zohoFormField) === -1
   //  console.log('ssssss', field)
   const addMap = ind => {
@@ -17,13 +17,24 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
   }
 
   const handleFieldMapping = (event, index) => {
-    const newConf = { ...crmConf }
-    if (event.target.value === 'custom') {
-      newConf.field_map[index][event.target.name] = event.target.value
-      newConf.field_map[index].customValue = ''
-    } else {
-      newConf.field_map[index][event.target.name] = event.target.value
+    if (event.target.name === 'formField'
+      && crmConf.field_map[index].zohoFormField !== ''
+      && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[crmConf.field_map[index].zohoFormField].data_type === 'fileupload'
+      && formFields[formFields.map(fld => fld.key).indexOf(event.target.value)].type !== 'file-up'
+    ) {
+      setSnackbar({ show: true, msg: 'Please select file field' })
+      return
     }
+    if (event.target.name === 'zohoFormField'
+      && crmConf.field_map[index].formField !== ''
+      && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[event.target.value].data_type === 'fileupload'
+      && formFields[formFields.map(fld => fld.key).indexOf(crmConf.field_map[index].formField)].type !== 'file-up'
+    ) {
+      setSnackbar({ show: true, msg: 'Please select file field' })
+      return
+    }
+    const newConf = { ...crmConf }
+    newConf.field_map[index][event.target.name] = event.target.value
     setCrmConf({ ...crmConf, ...newConf })
   }
 
