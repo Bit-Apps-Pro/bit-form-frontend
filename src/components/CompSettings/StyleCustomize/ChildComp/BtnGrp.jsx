@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function BtnGrp({ btns, value, onChange }) {
+export default function BtnGrp({ btns, value, onChange, className }) {
   return (
-    <div className="btc-btn-grp">
+    <div className={`btc-btn-grp ${className}`}>
       {btns.map(btn => (
         <button
           key={btn.lbl}
