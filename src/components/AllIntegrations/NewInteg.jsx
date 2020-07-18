@@ -2,13 +2,13 @@ import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import ZohoCRM from './ZohoCRM';
 
-function NewInteg({ url, formFields, setIntegration, integrations }) {
+function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
 
   const IntegType = () => {
     switch (type) {
       case 'Zoho CRM':
-        return <ZohoCRM formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        return <ZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
@@ -17,7 +17,7 @@ function NewInteg({ url, formFields, setIntegration, integrations }) {
   return (
     <div>
       <div className="flx">
-        <Link to={url} className="btn btcd-btn-o-gray">
+        <Link to={allIntegURL} className="btn btcd-btn-o-gray">
           <span className="btcd-icn icn-chevron-left" />
           &nbsp;Back
         </Link>
