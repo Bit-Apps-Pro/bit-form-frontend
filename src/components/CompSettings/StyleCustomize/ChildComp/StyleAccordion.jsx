@@ -28,6 +28,7 @@ export default function StyleAccordion({ className, title, children }) {
           onEntered={() => setH('auto')}
           onExit={el => setH(el.offsetHeight)}
           onExiting={() => setH(0)}
+          unmountOnExit
         >
           <div className="body">
             {children}
