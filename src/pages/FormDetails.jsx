@@ -1,5 +1,6 @@
 import React, { useState, useContext, memo, useEffect, lazy, Suspense } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
+import useSWR from 'swr'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
@@ -32,6 +33,8 @@ function Builder(props) {
   const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
 
+  // const { data, isValidating, error } = useSWR([formID, 'bitforms_get_a_form'], (id, action) => bitsFetch({ id }, action))
+  // console.log('userSWR', data, error, isValidating)
   const onMount = () => {
     if (sessionStorage.getItem('formData')) {
       const formData = JSON.parse(sessionStorage.getItem('formData'))

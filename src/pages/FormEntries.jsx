@@ -105,7 +105,8 @@ function FormEntries({ allResp, setAllResp }) {
       bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitforms_get_form_entries').then(res => {
         if (res !== undefined && res.success && mounted) {
           setPageCount(Math.ceil(res.data.count / pageSize))
-          allResp.length === 0 && setAllResp(res.data.entries)
+          // allResp.length === 0 && setAllResp(res.data.entries)
+          setAllResp(res.data.entries)
         }
         setisloading(false)
       })
@@ -269,7 +270,7 @@ function FormEntries({ allResp, setAllResp }) {
                   <th>{itm.column.Header}</th>
                   <td>{itm.value}</td>
                 </tr>
-              ))}
+            ))}
           </tbody>
         </table>
       </Drawer>

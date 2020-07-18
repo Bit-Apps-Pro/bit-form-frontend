@@ -73,7 +73,7 @@ function ZohoCRM({ formFields, setIntegration, integrations }) {
       setSnackbar({ show: true, msg: 'Please select file field' })
       console.log('formFieldsName')
       return
-    } 
+    }
     if (event.target.name === 'zohoFormField'
       && crmConf.field_map[index].formField !== ''
       && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[event.target.value].data_type === 'fileupload'

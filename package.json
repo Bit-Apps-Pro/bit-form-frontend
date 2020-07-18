@@ -25,7 +25,8 @@
     "react-table-sticky": "^1.0.0",
     "react-time-picker": "^4.0.1",
     "react-transition-group": "^4.4.1",
-    "slim-select": "1.23.1"
+    "slim-select": "1.23.1",
+    "swr": "^0.2.3"
   },
   "scripts": {
     "start": "react-scripts start",

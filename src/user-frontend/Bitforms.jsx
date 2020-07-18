@@ -10,7 +10,6 @@ export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
   const [message, setMessage] = useState(null)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
-  const [redirectPage, setredirectPage] = useState(null)
   const [fieldData, dispatchFieldData] = useReducer(reduceFieldData, props.data)
   const [layout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
@@ -262,18 +261,18 @@ export default function Bitforms(props) {
     }
   }
 
- /*  window.addEventListener('resize', () => {
-    // delay to get stable windows size after resized
-    setTimeout(() => {
-      if (window.innerWidth > 800) {
-        setlayoutConfig({ size: 'lg', cols: 6 })
-      } else if (window.innerWidth > 600) {
-        setlayoutConfig({ size: 'md', cols: 4 })
-      } else if (window.innerWidth > 400) {
-        setlayoutConfig({ size: 'sm', cols: 2 })
-      }
-    }, 1000);
-  }) */
+  /*  window.addEventListener('resize', () => {
+     // delay to get stable windows size after resized
+     setTimeout(() => {
+       if (window.innerWidth > 800) {
+         setlayoutConfig({ size: 'lg', cols: 6 })
+       } else if (window.innerWidth > 600) {
+         setlayoutConfig({ size: 'md', cols: 4 })
+       } else if (window.innerWidth > 400) {
+         setlayoutConfig({ size: 'sm', cols: 2 })
+       }
+     }, 1000);
+   }) */
 
   const handleSubmit = (event) => {
 
@@ -296,18 +295,18 @@ export default function Bitforms(props) {
         .then(response => response)
     }
     submitResponse.then(result => {
+      let responsedRedirectPage = null
       if (result !== undefined && result.success) {
         handleReset()
         if (typeof result.data === 'object') {
+          responsedRedirectPage = result.data.redirectPage
           setMessage(result.data.message)
-          setredirectPage(result.data.redirectPage)
           setSnack(true)
           if (hasError) {
             sethasError(false)
           }
         } else {
           setMessage(result.data)
-          setredirectPage(null)
           setSnack(true)
         }
       } else if (result.data && typeof result.data === 'string') {
@@ -333,6 +332,14 @@ export default function Bitforms(props) {
           });
           dispatchFieldData(newData)
         }
+      }
+      if (responsedRedirectPage) {
+        const timer = setTimeout(() => {
+          window.location = decodeURI(responsedRedirectPage)
+          if (timer) {
+            clearTimeout(timer)
+          }
+        }, 5000);
       }
       setbuttonDisabled(false)
     })
@@ -399,17 +406,17 @@ export default function Bitforms(props) {
                 entryID={props.entryID}
                 buttonDisabled={buttonDisabled}
                 handleReset={handleReset}
-                // handleSubmit={handleSubmit}
-                // id={`form-${props.contentID}-submit`}
+              // handleSubmit={handleSubmit}
+              // id={`form-${props.contentID}-submit`}
               />
             </div>
           )}
       </form>
       {
         snack
-        && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} redirectPage={redirectPage} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
+        && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
       }
-    </div >
+    </div>
   )
 }
 
@@ -463,11 +470,6 @@ function Toast(props) {
       if (props.show) {
         // !props.index && props.canClose === undefined && props.setSnack(false)
         props.setSnack(false)
-        if (!props.error) {
-          if (props.redirectPage !== null) {
-            window.location = decodeURI(props.redirectPage)
-          }
-        }
       }
     }, resetTime);
     return () => clearTimeout(timer);
