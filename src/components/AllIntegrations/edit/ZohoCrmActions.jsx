@@ -155,7 +155,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
               <small>Arrange fields in order of preferance for upsertion</small>
               <ReactSortable list={crmConf.actions.upsert.crmField} setList={l => setUpsertSettings(l, 'list')}>
                 {crmConf.actions.upsert.crmField.map((itm) => (
-                  <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1">
+                  <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
                     <span className="btcd-icn btcd-mnu mr-2" />
                     {itm.name}
                   </div>
