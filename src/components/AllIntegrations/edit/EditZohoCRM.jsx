@@ -8,7 +8,7 @@ import ZohoCrmFieldMap from './ZohoCrmFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
 import ZohoCrmActions from './ZohoCrmActions'
 
-function EditZohoCRM({ formFields, setIntegration, integrations, url }) {
+function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
   const saveForm = useContext(FromSaveContext)
@@ -74,7 +74,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, url }) {
     integrations[id] = { ...integrations[id], ...crmConf }
     setIntegration([...integrations])
     saveForm()
-    history.push(url)
+    history.push(allIntegURL)
   }
 
   const refreshModules = () => {
@@ -165,11 +165,6 @@ function EditZohoCRM({ formFields, setIntegration, integrations, url }) {
         <input className="btcd-paper-inp w-7" onChange={handleInput} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
       </div>
 
-      <div className="flx mt-2">
-        <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
-        <button onClick={() => settab(1)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
-      </div>
-
       <br />
       <b className="wdt-100 d-in-b">Module:</b>
       <select onChange={handleInput} name="module" value={crmConf.module} className="btcd-paper-inp w-7">
@@ -183,6 +178,12 @@ function EditZohoCRM({ formFields, setIntegration, integrations, url }) {
         }
       </select>
       <button onClick={refreshModules} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
+      <br />
+      <div className="flx mt-2">
+        <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
+        <button onClick={() => settab(1)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
+      </div>
+      <div className="btcd-hr" />
       <br />
       <br />
       <b className="wdt-100 d-in-b">Layout:</b>
@@ -206,13 +207,13 @@ function EditZohoCRM({ formFields, setIntegration, integrations, url }) {
             justifyContent: 'center',
             alignItems: 'center',
             height: 100,
-            transform: 'scale(0.7)',
+            transform: 'scale(0.6)',
           }}
           />
         )
       }
       {
-        crmConf.module && crmConf.module && crmConf.default && crmConf.default.layouts && crmConf.default.layouts[crmConf.module] && crmConf.default.layouts[crmConf.module][crmConf.layout] && crmConf.default.layouts[crmConf.module][crmConf.layout].fields
+        crmConf.module && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
         && (
           <>
             <div className="mt-4"><b className="wdt-100">Field Map</b></div>
