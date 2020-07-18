@@ -8,7 +8,7 @@ function EditInteg({ url, formFields, setIntegration, integrations }) {
   const IntegType = () => {
     switch (integrations[id].type) {
       case 'Zoho CRM':
-        return <EditZohoCRM formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        return <EditZohoCRM url={url} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
