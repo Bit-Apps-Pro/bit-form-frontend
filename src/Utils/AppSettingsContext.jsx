@@ -9,7 +9,8 @@ export default function AppSettingsProvider({ children }) {
       {
         siteKey: '',
         secretKey: '',
-      })
+      },
+  )
   return (
     <AppSettings.Provider value={{ reCaptchaV2, setreCaptchaV2 }}>
       {children}
