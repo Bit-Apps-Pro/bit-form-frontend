@@ -8,12 +8,11 @@ import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import StyleEditor from './StyleCustomize/StyleEditor'
-import FieldBlockStyle from './StyleCustomize/FieldBlockStyle'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
-  // console.log('sssss', style)
+
   const TabLink = ({ title, sub, icn, link }) => (
     <NavLink to={`/form/builder/${formType}/${formID}/${link}`} activeClassName="s-t-l-active" className="btcd-s-tab-link active flx w-5 ">
       <span className={`btcd-icn icn-${icn} mr-2`} />
@@ -23,14 +22,6 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
       </div>
     </NavLink>
   )
-
-  const styleClasProvider = cls => {
-    if (style[cls] === undefined) {
-      // eslint-disable-next-line no-param-reassign
-      style[cls] = {}
-    }
-    return style[cls]
-  }
 
   return (
     <div className="elm-settings">
@@ -53,10 +44,6 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               />
             </Route>
             <Route exact path={`${path}/style`}>
-              {/* <Link to="style/bg-s">
-                <FieldOptionBtn icn="settigns" title="Background Customize" />
-              </Link> */}
-
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
                 <FieldOptionBtn icn="settigns" title="Form Customize" />
               </Link>
@@ -68,14 +55,13 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               </Link>
             </Route>
             <Route path={`${path}/style/f`}>
-              <StyleEditor frmStyle={styleClasProvider('._frm')} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
+              <StyleEditor compStyle={style} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} />
             </Route>
             <Route path={`${path}/style/fb`}>
-              <StyleEditor frmStyle={styleClasProvider('.fld-wrp')} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} />
-             {/*  <FieldBlockStyle blkStyle={styleClasProvider('.fld-wrp')} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} /> */}
+              <StyleEditor compStyle={style} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} />
             </Route>
             <Route path={`${path}/style/fl`}>
-              firldASDF ASDF ASDFASDFASDF
+              <StyleEditor compStyle={style} cls="input.fld,textarea.fld" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} />
             </Route>
           </Switch>
           <div className="mb-50" />
@@ -84,7 +70,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
     </div>
   )
 }
-export default (CompSettings)
+export default CompSettings
 
 const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setSubmitConfig }) => {
   if ((fields !== null && fields[elm.id] !== undefined) || type === 'submit') {
@@ -140,6 +126,7 @@ function FieldOptionBtn({ icn, title, sub, action }) {
     extraProps.onKeyPress = action
     extraProps.onClick = action
   }
+
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="btc-s-l mt-2" {...extraProps}>
@@ -160,4 +147,26 @@ function FieldOptionBtn({ icn, title, sub, action }) {
       </div>
     </div>
   )
+}
+
+const styleEditorConfig = {
+  form: {
+    background: { hover: true, responsive: true },
+    border: { responsive: true, hover: true, type: true, radius: true, color: true, width: true },
+    padding: { responsive: true },
+    margin: { responsive: true },
+    shadow: { responsive: true, hover: true, type: true, color: true, style: true },
+  },
+  field_block: {
+    background: { hover: true, responsive: true },
+    border: { responsive: true, hover: true, type: true, radius: true, color: true, width: true },
+    shadow: { responsive: true, hover: true, type: true, color: true, style: true },
+  },
+  field: {
+    background: { focus: true, hover: true, responsive: true },
+    border: { focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true },
+    padding: { focus: true, responsive: true },
+    margin: { focus: true, responsive: true },
+    shadow: { focus: true, responsive: true, hover: true, type: true, color: true, style: true },
+  },
 }
