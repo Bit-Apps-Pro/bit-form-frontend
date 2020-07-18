@@ -1,10 +1,29 @@
-import React, { useState, useCallback } from 'react'
+/* eslint-disable no-param-reassign */
+import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
+import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
+import { multiAssign } from '../Utils/Helpers'
+
+const styleReducer = (style, action) => {
+  if (action.brkPoint === 'lg') {
+    multiAssign(style, action.apply)
+    return { ...style }
+  }
+  if (action.brkPoint === 'md') {
+    multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
+    return { ...style }
+  }
+  if (action.brkPoint === 'sm') {
+    multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
+    return { ...style }
+  }
+  return style
+}
 
 function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType }) {
   const [tolbarSiz, setTolbarSiz] = useState(false)
@@ -12,19 +31,32 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
+  const [brkPoint, setbrkPoint] = useState('lg')
+  const [style, styleDispatch] = useReducer(styleReducer, defaultTheme)
+  const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
 
-  const defaultTheme = {
-    '._frm': {
-      background: 'rgba(0, 255, 212, 1)',
-    },
+  useEffect(() => {
+    if (brkPoint === 'md') {
+      setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 600px)'] }))
+    } else if (brkPoint === 'sm') {
+      setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 400px)'] }))
+    } else if (brkPoint === 'lg') {
+      setStyleSheet(j2c.sheet(style))
+    }
+  }, [brkPoint, style])
+
+  const styleProvider = () => {
+    if (brkPoint === 'md') {
+      return { ...style, ...style['@media only screen and (max-width: 600px)'] }
+    }
+    if (brkPoint === 'sm') {
+      return { ...style, ...style['@media only screen and (max-width: 400px)'] }
+    }
+    return style
   }
-
-  const [style, setStyle] = useState(defaultTheme)
-
-  const styleSheet = j2c.sheet(style)
+  // console.log('ssssst', style)
 
   const conRef = React.createRef(null)
-
 
   const notIE = !window.document.documentMode
 
@@ -73,24 +105,38 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     document.querySelector('.tool-sec').style.transition = 'flex-grow 500ms'
   }, [])
 
-  const responsiveView = useCallback(view => {
+  const setResponsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
     if (view === 'lg') {
+      setbrkPoint('lg')
       resizer.resizeSection(0, { toSize: 165 })
       resizer.resizeSection(2, { toSize: 300 })
     } else if (view === 'md') {
-      const s0 = ((window.innerWidth - 473) / 2.5) - 165
-      const s2 = ((window.innerWidth - 473) / 2.5) - 300
+      setbrkPoint('md')
+      const s0 = ((window.innerWidth - 473) / 2.2) - 165
+      const s2 = ((window.innerWidth - 473) / 2.2) - 300
       resizer.resizeSection(0, { toSize: 165 + s0 })
       resizer.resizeSection(2, { toSize: 300 + s2 })
     } else if (view === 'sm') {
-      const s0 = ((window.innerWidth - 473) / 2) - 165
-      const s2 = ((window.innerWidth - 473) / 2) - 300
+      setbrkPoint('sm')
+      const s0 = ((window.innerWidth - 473) / 1.8) - 165
+      const s2 = ((window.innerWidth - 473) / 1.8) - 300
       resizer.resizeSection(0, { toSize: 165 + s0 })
       resizer.resizeSection(2, { toSize: 300 + s2 })
     }
     conRef.current.applyResizer(resizer)
   }, [conRef])
+
+  const setGrWidth = useCallback((gw) => {
+    setGridWidth(gw)
+    if (gw < 785 && gw > 535 && brkPoint !== 'md') {
+      setbrkPoint('md')
+    } else if (gw < 535 && brkPoint !== 'sm') {
+      setbrkPoint('sm')
+    } else if (gw > 785 && brkPoint !== 'lg') {
+      setbrkPoint('lg')
+    }
+  }, [brkPoint])
 
   return (
     <Container
@@ -117,20 +163,23 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       <Bar className="bar bar-l" />
 
       <Section
-        onSizeChanged={setGridWidth}
+        onSizeChanged={setGrWidth}
         minSize={notIE && 320}
         defaultSize={gridWidth}
       >
         {!isLoading ? (
           <>
             <div className="btcd-device-btn flx">
-              <button onClick={() => responsiveView('sm')} className="flx pos-rel tooltip phone" style={{ '--tooltip-txt': '"Phone View"' }} aria-label="responsive butoon" type="button"><span className="btcd-icn icn-phone_android" /></button>
-              <button onClick={() => responsiveView('md')} className="flx pos-rel tooltip tab" style={{ '--tooltip-txt': '"Tablet View"' }} aria-label="responsive butoon" type="button"><span className="btcd-icn icn-tablet_android" /></button>
-              <button onClick={() => responsiveView('lg')} className="flx pos-rel tooltip lap" style={{ '--tooltip-txt': '"Laptop View"' }} aria-label="responsive butoon" type="button"><span className="btcd-icn icn-laptop_mac" /></button>
+              {[
+                { lbl: 'sm', icn: 'phone_android', tip: 'Phone View' },
+                { lbl: 'md', icn: 'tablet_android', tip: 'Tablet View' },
+                { lbl: 'lg', icn: 'laptop_mac', tip: 'Laptop View' },
+              ]
+                .map(itm => <button key={itm.icn} onClick={() => setResponsiveView(itm.lbl)} className={`flx pos-rel tooltip phone ${brkPoint === itm.lbl && 'active'}`} style={{ '--tooltip-txt': `"${itm.tip}"` }} aria-label="responsive butoon" type="button"><span className={`btcd-icn icn-${itm.icn}`} /></button>)}
             </div>
             <GridLayout
               theme={theme}
-              style={style}
+              style={styleProvider()}
               gridWidth={gridWidth}
               draggedElm={drgElm}
               setElmSetting={setElementSetting}
@@ -155,8 +204,10 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       <Bar className="bar bar-r" />
       <Section id="settings-menu" defaultSize={300}>
         <CompSettings
-          style={style}
-          setStyle={setStyle}
+          brkPoint={brkPoint}
+          style={styleProvider()}
+          setResponsiveView={setResponsiveView}
+          styleDispatch={styleDispatch}
           fields={fields}
           elm={elmSetting}
           updateData={updateFields}

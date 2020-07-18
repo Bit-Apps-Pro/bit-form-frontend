@@ -1,14 +1,10 @@
 import React from 'react'
 
-export default function Loader() {
+export default function Loader({ style, className }) {
   return (
     <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '90vh',
-      }}
+      className={className}
+      style={style}
     >
       <div>
         <svg

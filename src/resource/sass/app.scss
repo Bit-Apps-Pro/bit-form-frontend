@@ -44,6 +44,7 @@ body {
 
 * {
   box-sizing: border-box;
+  line-height: 1;
 }
 
 #wpcontent {
@@ -60,6 +61,13 @@ body {
 .d-in-b {
   display: inline-block;
 }
+.o-v {
+  overflow: visible !important;
+}
+.o-a {
+  overflow: auto;
+  height: 100%;
+}
 .font-w-m {
   font-weight: 600;
 }
@@ -75,13 +83,16 @@ body {
 .txt-right {
   text-align: right;
 }
-.txt-a {
-  width: 100%;
-  height: 60px;
-  box-sizing: border-box;
-}
+
 .f-5 {
   font-weight: 500;
+}
+.upsert_rec {
+  display: block;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+  padding: 5px 10px;
+  cursor: grab;
 }
 
 .unselectable {
@@ -415,6 +426,7 @@ body {
   }
   & input[type="number"] {
     width: 55px;
+    line-height: 1 !important;
     outline: none;
     border-radius: 5px;
     border: 1px solid rgb(224, 224, 224);
@@ -422,6 +434,7 @@ body {
     padding: 4px;
     &:hover,
     :focus {
+      box-shadow: none;
       border-color: gray;
     }
   }
@@ -710,14 +723,16 @@ body {
 }
 
 .btc-pick {
+  background: white;
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: -8px;
   z-index: 99;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   & .ui-color-picker {
     margin: 0;
-    border-radius: 10px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     & .picker-area {
       padding: 5px;
     }
@@ -744,6 +759,8 @@ body {
   transition: transform 150ms;
 }
 .btc-pk-enter-done {
+  position: relative;
+  z-index: 99;
   transform: scale(1);
   transition: transform 100ms;
 }
@@ -897,7 +914,7 @@ body {
 .m-a {
   margin: auto;
 }
-.m-0 {
+4 .m-0 {
   margin: 0;
 }
 .mb-1 {
@@ -943,6 +960,12 @@ body {
 }
 .mr-4 {
   margin-right: 20px;
+}
+.mr-8 {
+  margin-right: 40px;
+}
+.ml-0 {
+  margin-left: 0 !important;
 }
 .ml-1 {
   margin-left: 5px;
@@ -1134,9 +1157,10 @@ body {
     position: absolute;
     z-index: 9;
     content: "Coming Soon";
-    font-size: 15px;
-    font-weight: bold;
-    background: transparentize(#000000, 0.7);
+    font-size: 12px;
+    font-weight: 500;
+    text-shadow: 0px 0px 4px black;
+    background: rgba(17, 27, 76, 0.67);
     width: 100%;
     height: 100%;
     display: flex;
@@ -1265,145 +1289,6 @@ body {
     color: red;
   }
 }
-
-// file upload style start
-.file-wrp {
-  background: #fff;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  & > label {
-    display: block;
-  }
-}
-
-.btcd-f-wrp {
-  cursor: pointer;
-  margin-top: 6px;
-}
-
-.btcd-f-input {
-  display: inline-block;
-  width: 90%;
-  position: relative;
-  overflow: hidden;
-}
-
-.btcd-f-input > div > input::-webkit-file-upload-button {
-  cursor: pointer;
-}
-
-.btcd-f-wrp > small {
-  color: gray;
-}
-
-.btcd-f-wrp > button {
-  cursor: pointer;
-  background: #f3f3f3;
-  padding: 5px;
-  display: inline-block;
-  border-radius: 9px;
-  border: none;
-  margin-right: 8px;
-  height: 35px;
-}
-
-.btcd-f-wrp > button > img {
-  width: 24px;
-}
-
-.btcd-f-wrp > button > span,
-.btcd-f-wrp > span,
-.btcd-f-wrp > small {
-  vertical-align: super;
-}
-
-.btcd-f-input > .btcd-f-wrp > input {
-  z-index: 100;
-  width: 100%;
-  position: absolute;
-  opacity: 0;
-  left: 0;
-  height: 37px;
-  cursor: pointer;
-}
-
-.btcd-f-wrp:hover {
-  background: #fafafa;
-  border-radius: 10px;
-}
-
-.btcd-chat-dot {
-  width: 10px;
-  height: 10px;
-  background: #07bc60;
-  display: inline-block;
-  border-radius: 10px;
-}
-
-.btcd-files > div {
-  display: flex;
-  align-items: center;
-  background: #f8f8f8;
-  border-radius: 10px;
-  margin-left: 30px;
-  width: 91%;
-  margin-top: 10px;
-  height: 40px;
-}
-
-.btcd-files > div > div {
-  display: inline-block;
-  width: 73%;
-}
-
-.btcd-files > div > div > small {
-  color: gray;
-}
-
-.btcd-files > div > img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 10px;
-}
-
-.btcd-files > div > div > span {
-  display: inline-block;
-  width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.btcd-files > div > button {
-  background: #e8e8e8;
-  border: none;
-  border-radius: 50px;
-  width: 25px;
-  height: 25px;
-  font-size: 20px;
-  margin-right: 6px;
-  padding: 0;
-}
-
-.btcd-files > div > button:hover {
-  background: #bbbbbb;
-}
-
-.btcd-old-file {
-  margin-left: 35px;
-  font-size: 12px;
-  & > div > a {
-    text-decoration: none;
-    color: #004077;
-    margin-right: 10px;
-    &:hover {
-      color: $blue;
-    }
-  }
-}
-// file upload end
 
 // navbar start
 nav.top-nav {
@@ -1870,7 +1755,7 @@ nav.top-nav {
   }
   & button {
     cursor: pointer;
-    padding: 10px;
+    padding: 11px;
     border: 1px solid #e4e4e4;
     border-left: none;
     border-radius: 0 8px 8px 0;
@@ -2022,6 +1907,23 @@ nav.top-nav {
   }
 }
 
+.btc-mdl-trn-enter {
+  & .btcd-modal {
+    overflow: hidden !important;
+  }
+  & .btcd-modal {
+    transform: scale(0);
+    border-radius: 300px;
+  }
+}
+.btc-mdl-trn-enter-active {
+  & .btcd-modal {
+    border-radius: 20px;
+    transform: scale(1);
+    transition: transform 0.3s, border-radius 0.5s;
+  }
+}
+
 .btcd-modal-wrp {
   position: fixed;
   background: rgba(18, 21, 60, 0.53);
@@ -2030,31 +1932,24 @@ nav.top-nav {
   left: 0;
   width: 100%;
   top: 0;
-  display: flex;
-  visibility: hidden;
   justify-content: center;
-  align-items: center;
   overflow: auto;
   backdrop-filter: blur(1px);
 }
 
 .btcd-modal {
+  border-radius: 20px;
   background: #fff;
-  border-radius: 400px;
   overflow: hidden;
   width: 700px;
   height: 70%;
-  border-radius: 300px;
-  transform: scale(0);
   transition: transform 0.3s, border-radius 0.5s ease;
   box-shadow: 0 0 14px 1px rgba(0, 0, 0, 0.64);
 }
 
 .btcd-m-sm {
-  // border-radius: 15px !important;
   width: 400px !important;
   height: 220px !important;
-  text-align: center !important;
   & .content {
     height: 115px;
   }
@@ -2071,6 +1966,11 @@ nav.top-nav {
   position: relative;
   height: 97%;
 }
+.custom-conf-mdl {
+  display: block;
+  text-align: left;
+}
+
 .btcd-mdl-title {
   margin: 0;
   height: 27px;
@@ -2394,32 +2294,30 @@ nav.top-nav {
 
 .btcd-f-c-t-o {
   cursor: pointer;
-  border: 0;
+  border: 2.5px solid white;
   outline: none;
   text-align: center;
   background: white;
   padding: 10px;
-  padding: 10px;
-  margin-right: 10px;
-  border-radius: 13px;
-  margin-left: 7px;
+  border-radius: 8px;
   margin-top: 10px;
   display: inline-block;
-  box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4);
+  &:hover:not(.btcd-f-c-t-o-a) {
+    border-color: transparentize($blue, 0.6);
+  }
 }
 
 .btcd-f-c-t-o-a {
   position: relative;
-  box-shadow: 0 3px 7px 0 rgba(145, 144, 168, 0.4), 0 0 0 2px $blue;
+  border-color: $blue;
   color: $blue;
-  font-weight: 600;
   &:after {
     content: "";
     position: absolute;
     top: 100%;
     left: 50%;
     margin-left: -10px;
-    border-width: 11px;
+    border-width: 8px;
     border-style: solid;
     border-color: $blue transparent transparent transparent;
   }
@@ -2443,13 +2341,6 @@ nav.top-nav {
   &:focus {
     border: 2px solid $blue;
   }
-}
-.btcd-f-c-t-d {
-  margin-left: 5px;
-  margin-top: 20px;
-  background: #eff1f7;
-  padding: 20px;
-  border-radius: 20px;
 }
 
 .f-lg {
@@ -3008,8 +2899,12 @@ select.btcd-paper-inp {
 }
 
 .btcd-s-tab-link {
+  cursor: pointer;
   color: $dp-blue;
   font-size: 15px;
+  border: none;
+  background: transparent;
+  outline: none;
   margin-top: 5px;
   justify-content: center;
   padding: 8px 10px 5px 8px;
@@ -3106,6 +3001,7 @@ select.btcd-paper-inp {
   position: relative;
   display: inline-block;
   padding-top: 6px;
+  margin-top: -6px;
   font-size: 16px;
   line-height: 1.5;
   overflow: hidden;
@@ -3627,6 +3523,10 @@ select.btcd-ud-inp {
   position: absolute;
   right: 20%;
   top: 7px;
+  & .active {
+    background: transparentize(#fff, 0.7);
+    color: transparentize(#fff, 0);
+  }
   & > button {
     cursor: pointer;
     outline: none;
@@ -3647,7 +3547,7 @@ select.btcd-ud-inp {
       box-shadow: 0 0 0 2px $blue;
     }
   }
-  & button.tab > span {
+  & button:nth-child(2) > span {
     transform: rotate(90deg);
   }
   & button.lap {
@@ -3657,8 +3557,13 @@ select.btcd-ud-inp {
 }
 
 .resp-btn {
+  /* & .active{
+    background-color: ;
+  } */
   & button:nth-child(2) {
-    transform: rotate(90deg);
+    & .btcd-icn {
+      transform: rotate(90deg);
+    }
   }
   & button {
     border: none;

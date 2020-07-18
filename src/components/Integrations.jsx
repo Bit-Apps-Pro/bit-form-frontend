@@ -21,6 +21,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
   const { path, url } = useRouteMatch()
+  const allIntegURL = url
   const history = useHistory()
   const { formID } = useParams()
   const integs = [
@@ -36,7 +37,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
   ]
 
   const removeInteg = i => {
-    console.log('i', integrations[i])
     const tempIntegration = integrations[i]
     integrations.splice(i, 1)
     setIntegration([...integrations])
@@ -53,7 +53,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
           setIntegration([...integrations])
           setSnackbar({ show: true, msg: 'Integration deletion failed. please try again' })
         }
-
       })
   }
 
@@ -77,7 +76,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
 
   const setNewInteg = (type) => {
     setShowMdl(false)
-    history.push(`${url}/new/${type}`)
+    history.push(`${allIntegURL}/new/${type}`)
   }
 
   const closeConfMdl = () => {
@@ -125,7 +124,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
               <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
-                  <Link to={`${url}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2" type="button">
+                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2" type="button">
                     <div>
                       <span className="btcd-icn icn-edit" />
                        &nbsp;Edit
@@ -147,12 +146,12 @@ function Integrations({ integrations, setIntegration, formFields }) {
           </div>
         </Route>
         <Route path={`${path}/new/:type`}>
-          <NewInteg url={url} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+          <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
         </Route>
         {integrations && integrations.length > 0
           && (
             <Route exact path={`${path}/edit/:id`}>
-              <EditInteg url={url} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+              <EditInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
             </Route>
           )}
       </Switch>

@@ -35,32 +35,31 @@ export default function ConfType(props) {
       <div>
         <button
           onClick={() => setPos(0)}
-          className={`btcd-f-c-t-o ${pos === 0 && 'btcd-f-c-t-o-a'}`}
+          className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 0 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
           Success/Error Messages
         </button>
         <button
           onClick={() => setPos(1)}
-          className={`btcd-f-c-t-o ${pos === 1 && 'btcd-f-c-t-o-a'}`}
+          className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 1 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
           Redirect Page
         </button>
         <button
           onClick={() => setPos(2)}
-          className={`btcd-f-c-t-o ${pos === 2 && 'btcd-f-c-t-o-a'}`}
+          className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 2 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
           Web Hooks
         </button>
       </div>
-
-      <div className="btcd-f-c-t-d">
-        {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
-        {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
-        {pos === 2 && <WebHooks formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
-      </div>
+      <br />
+      <br />
+      {pos === 0 && <ConfMsg formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+      {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
+      {pos === 2 && <WebHooks formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
-import { Switch, Route, NavLink, useRouteMatch, useParams, useHistory } from 'react-router-dom'
+import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import bitsFetch from '../Utils/bitsFetch'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
@@ -15,8 +15,7 @@ const SingleFormSettings = lazy(() => import('../components/SingleFormSettings')
 export default function FormSettings(props) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
 
-  const { path, url } = useRouteMatch()
-  const history = useHistory()
+  const { path } = useRouteMatch()
   const { formType, formID } = useParams()
 
   const [formFields, setformFields] = useState([])
@@ -38,7 +37,6 @@ export default function FormSettings(props) {
 
   return (
     <div className="btcd-f-settings">
-
       <aside className="btcd-f-sidebar">
         <br />
         <br />

@@ -1,16 +1,16 @@
 import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Link, Switch, useRouteMatch, Route, NavLink, useParams, useLocation } from 'react-router-dom'
+import { Link, Switch, useRouteMatch, Route, NavLink, useParams } from 'react-router-dom'
 import TextFieldSettings from './TextFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import SelectSettings from './SelectSettings'
 import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
-import FormStyle from './StyleCustomize/FormStyle'
+import StyleEditor from './StyleCustomize/StyleEditor'
 
-function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, setStyle }) {
-  const { url, path } = useRouteMatch()
+function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
+  const { path } = useRouteMatch()
   const { formType, formID } = useParams()
 
   const TabLink = ({ title, sub, icn, link }) => (
@@ -44,22 +44,24 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               />
             </Route>
             <Route exact path={`${path}/style`}>
-              {/* <Link to="style/bg-s">
-                <FieldOptionBtn icn="settigns" title="Background Customize" />
-              </Link> */}
-
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
                 <FieldOptionBtn icn="settigns" title="Form Customize" />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
+                <FieldOptionBtn icn="settigns" title="Field Block Customize" />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
                 <FieldOptionBtn icn="settigns" title="Field Customize" />
               </Link>
             </Route>
             <Route path={`${path}/style/f`}>
-              <FormStyle style={style} setStyle={setStyle} />
+              <StyleEditor compStyle={style} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} />
+            </Route>
+            <Route path={`${path}/style/fb`}>
+              <StyleEditor compStyle={style} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} />
             </Route>
             <Route path={`${path}/style/fl`}>
-              firldASDF ASDF ASDFASDFASDF
+              <StyleEditor compStyle={style} cls="input.fld,textarea.fld" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} />
             </Route>
           </Switch>
           <div className="mb-50" />
@@ -68,7 +70,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
     </div>
   )
 }
-export default (CompSettings)
+export default CompSettings
 
 const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setSubmitConfig }) => {
   if ((fields !== null && fields[elm.id] !== undefined) || type === 'submit') {
@@ -124,6 +126,7 @@ function FieldOptionBtn({ icn, title, sub, action }) {
     extraProps.onKeyPress = action
     extraProps.onClick = action
   }
+
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="btc-s-l mt-2" {...extraProps}>
@@ -144,4 +147,26 @@ function FieldOptionBtn({ icn, title, sub, action }) {
       </div>
     </div>
   )
+}
+
+const styleEditorConfig = {
+  form: {
+    background: { hover: true, responsive: true },
+    border: { responsive: true, hover: true, type: true, radius: true, color: true, width: true },
+    padding: { responsive: true },
+    margin: { responsive: true },
+    shadow: { responsive: true, hover: true, type: true, color: true, style: true },
+  },
+  field_block: {
+    background: { hover: true, responsive: true },
+    border: { responsive: true, hover: true, type: true, radius: true, color: true, width: true },
+    shadow: { responsive: true, hover: true, type: true, color: true, style: true },
+  },
+  field: {
+    background: { focus: true, hover: true, responsive: true },
+    border: { focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true },
+    padding: { focus: true, responsive: true },
+    margin: { focus: true, responsive: true },
+    shadow: { focus: true, responsive: true, hover: true, type: true, color: true, style: true },
+  },
 }

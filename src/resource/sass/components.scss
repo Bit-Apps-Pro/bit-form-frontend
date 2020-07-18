@@ -13,7 +13,7 @@ body {
   align-items: center;
 }
 
-.fld-wrp {
+/* .fld-wrp {
   min-height: inherit;
   padding: 10px;
   // background: white;
@@ -26,7 +26,7 @@ body {
   & > * {
     box-sizing: border-box !important;
   }
-}
+} */
 
 .fld-lbl {
   display: block;
@@ -75,12 +75,13 @@ input.fld {
   height: 40px !important;
 }
 
+/* 
 input.fld,
 textarea.fld {
   min-height: 40px !important;
   max-width: 100% !important;
   color: black !important;
-  // background: white !important;
+  background: white !important;
   background: transparent !important;
   font-family: sans-serif !important;
   padding: 8px !important;
@@ -92,11 +93,13 @@ textarea.fld {
   border-radius: 5px !important;
   border: 1.5px solid #505050 !important;
   transition: all 0s !important;
-  &:focus {
-    border-color: #505050 !important;
-    box-shadow: 0 0 0 1px #505050 !important;
-  }
-}
+} */
+
+/* input.fld:focus,
+textarea.fld:focus {
+  border-color: #505050 !important;
+  box-shadow: 0 0 0 1px #505050 !important;
+} */
 
 .fld[type="date"],
 .fld[type="datetime-local"],
@@ -327,7 +330,6 @@ textarea.fld {
 }
 // file upload style start
 .file-wrp {
-  background: #fff;
   font-family: sans-serif !important;
   height: 100%;
   padding: 10px;

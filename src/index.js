@@ -28,7 +28,18 @@ if (window.location.hash === '') {
 ReactDOM.render(
   <AllFormContextProvider>
     <AppSettingsProvider>
-      <Suspense fallback={<Loader />}><App /></Suspense>
+      <Suspense fallback={(
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '90vh',
+        }}
+        />
+      )}
+      >
+        <App />
+      </Suspense>
     </AppSettingsProvider>
   </AllFormContextProvider>, document.getElementById('btcd-app'),
 )
