@@ -66,7 +66,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
               {...'lbl' in itm && { defaultValue: itm.lbl }}
               {...itm.req && { required: true }}
               {...'name' in attr && { name: `${attr.name}[]` }}
-              {...{ checked: value && value.indexOf(itm.lbl) >= 0 }}
+              {...{ checked: Array.isArray(value) && value.indexOf(itm.lbl) >= 0 }}
               onChange={onChangeHandler}
             />
             <span className="btcd-mrk ck" />

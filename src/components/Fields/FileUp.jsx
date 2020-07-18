@@ -9,7 +9,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
 
   useEffect(() => {
     if (resetFieldValue) {
-      const element = document.getElementsByName(attr.name)[0]
+      const element = document.getElementsByName('mul' in attr ? `${attr.name}[]` : attr.name)[0]
       element.value = null
       element.nextElementSibling.innerHTML = ''
       element.previousElementSibling.children[1].innerHTML = 'No File Chosen'
@@ -49,7 +49,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
             {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
             {...'mul' in attr && { multiple: true }}
             {...'exts' in attr && { accept: attr.exts }}
-            {...'name' in attr && { name: attr.name }}
+            {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
             type="file"
             onClick={setPrevData}
             onChange={e => onFileChange(e)}
