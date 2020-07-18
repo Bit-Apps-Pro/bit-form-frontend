@@ -7,20 +7,22 @@ import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
+import { multiAssign } from '../Utils/Helpers'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
-    style[action.cls] = action.newStyle
+    multiAssign(style, action.apply)
     return { ...style }
   }
   if (action.brkPoint === 'md') {
-    style['@media only screen and (max-width: 600px)'][action.cls] = action.newStyle
+    multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
-    style['@media only screen and (max-width: 400px)'][action.cls] = action.newStyle
+    multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
     return { ...style }
   }
+  return style
 }
 
 function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType }) {
@@ -39,7 +41,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     } else if (brkPoint === 'sm') {
       setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 400px)'] }))
     } else if (brkPoint === 'lg') {
-      //  console.log('sssss', style)
       setStyleSheet(j2c.sheet(style))
     }
   }, [brkPoint, style])
@@ -53,6 +54,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     }
     return style
   }
+  // console.log('ssssst', style)
 
   const conRef = React.createRef(null)
 
