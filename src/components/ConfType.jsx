@@ -19,6 +19,9 @@ export default function ConfType(props) {
     let status = await bitsFetch({ formID: props.formID, id }, action)
     if (status !== undefined) {
       status = status.success
+    } else if (status.data && status.data.data) {
+      // if internet connection error than status will undefined and set null
+      status = status.data.data
     } else {
       // if internet connection error than status will undefined and set null
       status = null
