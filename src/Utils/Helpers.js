@@ -1,3 +1,5 @@
+
+/* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
   if (process.env.NODE_ENV === 'production') {
@@ -38,3 +40,29 @@ export const getNewId = flds => {
   return largestNumberFld + 1
 }
 
+export const assign = (obj, keyPath, value) => {
+  const lastKeyIndex = keyPath.length - 1
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < lastKeyIndex; ++i) {
+    const key = keyPath[i]
+    if (!(key in obj)) {
+      obj[key] = {}
+    }
+    obj = obj[key]
+  }
+  obj[keyPath[lastKeyIndex]] = value
+  return value
+}
+
+export const multiAssign = (obj, assignArr) => {
+  for (let i = 0; i < assignArr.length; i += 1) {
+    if (assignArr[i].delProp) {
+      delete obj?.[assignArr[i].cls]?.[assignArr[i].property]
+      if (Object.keys(obj[assignArr[i].cls]).length === 0 && obj[assignArr[i].cls].constructor === Object) {
+        delete obj[assignArr[i].cls]
+      }
+    } else {
+      assign(obj, [assignArr[i].cls, assignArr[i].property], assignArr[i].value)
+    }
+  }
+}
