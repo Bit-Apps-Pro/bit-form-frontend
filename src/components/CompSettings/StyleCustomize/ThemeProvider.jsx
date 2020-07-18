@@ -18,6 +18,29 @@ export const defaultTheme = {
     'box-sizing': 'border-box !important',
   },
 
+  'input.fld,textarea.fld': {
+    'min-height': '40px!important',
+    'max-width': '100%!important',
+    'font-family': 'sans-serif!important',
+    'font-size': '15px!important',
+    color: 'black!important',
+    // background: 'transparent',
+    padding: '8px 8px 8px 8px',
+    width: '100% !important',
+    outline: 'none!important',
+    display: 'inline-block!important',
+    margin: '5px 0 0 0',
+    'border-radius': '5px 5px 5px 5px',
+    'border-width': '2px 2px 2px 2px',
+    'border-style': 'solid',
+    'border-color': 'rgba(80, 80, 80, 1)',
+    transition: 'all 0s!important',
+  },
+
+  'input.fld:focus,textarea.fld:focus': {
+    'box-shadow': '0 0 0 1px rgba(80,80,80,1)!important',
+  },
+
   '@media only screen and (max-width: 600px)': {
 
   },
