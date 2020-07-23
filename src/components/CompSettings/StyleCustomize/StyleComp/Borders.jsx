@@ -8,11 +8,10 @@ import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 
 export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
-  const bdrStyle = style?.[pcls]?.['border-style'] || style?.[cls]?.['border-style'] || 'None'
+  const bdrStyle = style?.[pcls]?.['border-style']?.replace(/!important/g, '') || style?.[cls]?.['border-style']?.replace(/!important/g, '') || 'None'
   const bdrClr = style?.[pcls]?.['border-color'] || style?.[cls]?.['border-color']
   const bdrW = style?.[pcls]?.['border-width'] || style?.[cls]?.['border-width']
   const bdrRad = style?.[pcls]?.['border-radius'] || style?.[cls]?.['border-radius']
-
 
   const setBdrStyle = bStyle => {
     const actions = [
@@ -27,6 +26,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
       actions[2].delProp = true
       actions[3].delProp = true
     } else {
+      // actions[0].value = styleConfig.important ? `${bStyle}!important` : bStyle
       actions[0].value = bStyle
       if (style?.[pcls]?.['border-width']) {
         actions[1].value = style?.[pcls]?.['border-width']
@@ -41,7 +41,8 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
     styleDispatch({ apply: actions, brkPoint })
   }
 
-  const setBdr = (property, value) => {
+  const setBdr = (property, val) => {
+    const value = styleConfig.important ? `${val}!important` : val
     styleDispatch({ apply: [{ cls: pcls, property, delProp: false, value }], brkPoint })
   }
 
