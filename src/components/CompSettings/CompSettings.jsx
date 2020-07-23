@@ -8,6 +8,7 @@ import FileUpSettings from './FileUpSettings'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import StyleEditor from './StyleCustomize/StyleEditor'
+import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
@@ -44,6 +45,9 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               />
             </Route>
             <Route exact path={`${path}/style`}>
+              <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
+                <FieldOptionBtn icn="settigns" title="Background Customize" />
+              </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
                 <FieldOptionBtn icn="settigns" title="Form Customize" />
               </Link>
@@ -54,14 +58,18 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
                 <FieldOptionBtn icn="settigns" title="Field Customize" />
               </Link>
             </Route>
+            <Route path={`${path}/style/bg`}>
+              <StyleEditor editorLabel="Form Background" compStyle={style} cls="._frm-bg" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} />
+            </Route>
             <Route path={`${path}/style/f`}>
-              <StyleEditor compStyle={style} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} />
+              <StyleEditor editorLabel="Form style" compStyle={style} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} />
             </Route>
             <Route path={`${path}/style/fb`}>
-              <StyleEditor compStyle={style} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} />
+              <StyleEditor editorLabel="Field Block" compStyle={style} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} />
             </Route>
             <Route path={`${path}/style/fl`}>
-              <StyleEditor compStyle={style} cls="input.fld,textarea.fld" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} />
+              <StyleEditor editorLabel="Field Style" title="Label Style" compStyle={style} cls=".fld-lbl" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} />
+              <StyleEditor title="Field Style" noBack compStyle={style} cls="input.fld,textarea.fld" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} />
             </Route>
           </Switch>
           <div className="mb-50" />
@@ -147,26 +155,4 @@ function FieldOptionBtn({ icn, title, sub, action }) {
       </div>
     </div>
   )
-}
-
-const styleEditorConfig = {
-  form: {
-    background: { hover: true, responsive: true },
-    border: { responsive: true, hover: true, type: true, radius: true, color: true, width: true },
-    padding: { responsive: true },
-    margin: { responsive: true },
-    shadow: { responsive: true, hover: true, type: true, color: true, style: true },
-  },
-  field_block: {
-    background: { hover: true, responsive: true },
-    border: { responsive: true, hover: true, type: true, radius: true, color: true, width: true },
-    shadow: { responsive: true, hover: true, type: true, color: true, style: true },
-  },
-  field: {
-    background: { focus: true, hover: true, responsive: true },
-    border: { focus: true, responsive: true, hover: true, type: true, radius: true, color: true, width: true },
-    padding: { focus: true, responsive: true },
-    margin: { focus: true, responsive: true },
-    shadow: { focus: true, responsive: true, hover: true, type: true, color: true, style: true },
-  },
 }
