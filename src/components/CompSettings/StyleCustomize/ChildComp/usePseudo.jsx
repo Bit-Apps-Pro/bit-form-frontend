@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-
 export default function usePseudo(cls) {
   const [pseudo, setpseudo] = useState('Default')
   const [pcls, setpcls] = useState(cls || '')
