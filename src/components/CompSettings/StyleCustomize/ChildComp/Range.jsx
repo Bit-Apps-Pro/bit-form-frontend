@@ -8,12 +8,12 @@ Range.defaultProps = {
 
 export default function Range({ className, value, onChange, maxRange, minRange, info, unit, master }) {
   // eslint-disable-next-line no-param-reassign
-  value = value.split(' ')
+  value = value.replace(/px|em|rem|!important|%/g, '').split(' ')
 
   const handleVal = (v, ind) => {
     // eslint-disable-next-line no-param-reassign
-    value[ind] = v + unit
-    onChange(value.join(' '))
+    value[ind] = v
+    onChange(value.join(`${unit} `) + unit)
   }
 
   const handleMaster = e => {
@@ -35,6 +35,6 @@ const RSlider = ({ icn, lbl, action, rVal, unit, max, min }) => (
   <div className="flx flx-between mt-1 inp-grp">
     <span className="icn tooltip pos-rel br-50 flx mr-1" style={{ '--tooltip-txt': `"${lbl}"`, '--left': '95%' }}>{icn}</span>
     <input title={`${lbl} ${rVal} ${unit}`} onChange={action} className="btc-range mr-1" type="range" min={min} max={max} value={rVal} />
-    <input onChange={action} className="ml-1" type="number" placeholder="auto" value={rVal} min="0" />
+    <input onChange={action} className="ml-1" type="number" placeholder="auto" value={parseInt(rVal, 10)} min="0" />
   </div>
 )
