@@ -1,0 +1,37 @@
+/* eslint-disable no-undef */
+import React from 'react'
+import StyleAccordion from '../ChildComp/StyleAccordion'
+import usePseudo from '../ChildComp/usePseudo'
+import Range from '../ChildComp/Range'
+
+export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPoint }) {
+  const [pseudo, pcls, setPseudo] = usePseudo(cls)
+  const fSize = style?.[pcls]?.['font-size'] || style?.[cls]?.['font-size'] || '16px'
+
+  const setFontSize = value => {
+    const property = 'font-size'
+    const val = styleConfig.important ? `${value}!important` : value
+    styleDispatch({ apply: [{ cls: pcls, property, delProp: false, value: val }], brkPoint })
+  }
+
+  return (
+    <StyleAccordion className="style-acc w-9" title="Font">
+      {'size' in styleConfig && (
+        <div className="mt-2">
+          <span className="f-5">Font Size</span>
+          <Range
+            info={[
+              { icn: 'd', lbl: 'Font Size' },
+            ]}
+            className="btc-range"
+            unit="px"
+            maxRange={30}
+            minRange={5}
+            value={fSize}
+            onChange={setFontSize}
+          />
+        </div>
+      )}
+    </StyleAccordion>
+  )
+}
