@@ -129,7 +129,16 @@ module.exports = (env, argv) => {
         {
           test: /\.(s[ac]ss|css)$/i,
           use: [
-            production ? MiniCssExtractPlugin.loader : 'style-loader',
+            // production ? MiniCssExtractPlugin.loader : 'style-loader',
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                // only enable hot in development
+                hmr: process.env.NODE_ENV === 'development',
+                // if hmr does not work, this is a forceful method.
+                reloadAll: true,
+              },
+            },
             'css-loader',
             {
               loader: 'postcss-loader',
@@ -139,6 +148,9 @@ module.exports = (env, argv) => {
                   autoprefixer,
                 ],
                 minimize: true,
+
+                hmr: !production,
+                reloadAll: true,
               },
             },
             'sass-loader',
