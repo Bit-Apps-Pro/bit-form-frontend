@@ -1,4 +1,3 @@
-
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
@@ -58,7 +57,7 @@ export const multiAssign = (obj, assignArr) => {
   for (let i = 0; i < assignArr.length; i += 1) {
     if (assignArr[i].delProp) {
       delete obj?.[assignArr[i].cls]?.[assignArr[i].property]
-      if (Object.keys(obj[assignArr[i].cls]).length === 0 && obj[assignArr[i].cls].constructor === Object) {
+      if (Object.keys(obj?.[assignArr[i]?.cls]).length === 0 && obj[assignArr[i]?.cls]?.constructor === Object) {
         delete obj[assignArr[i].cls]
       }
     } else {
