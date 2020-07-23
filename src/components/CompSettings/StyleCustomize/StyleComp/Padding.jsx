@@ -6,7 +6,9 @@ import Range from '../ChildComp/Range'
 export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const padding = style?.[cls]?.['padding'] || '0px 0px 0px 0px'
 
-  const setPadding = value => {
+  const setPadding = val => {
+    // console.log('dddddddddddd', val)
+    const value = styleConfig.important ? `${val}!important` : val
     styleDispatch({ apply: [{ cls, property: 'padding', delProp: false, value }], brkPoint })
   }
 
