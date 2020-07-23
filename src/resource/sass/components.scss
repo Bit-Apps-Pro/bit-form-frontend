@@ -13,29 +13,26 @@ body {
   align-items: center;
 }
 
-/* .fld-wrp {
+.fld-wrp {
   min-height: inherit;
-  padding: 10px;
-  // background: white;
   font-family: sans-serif !important;
   box-sizing: border-box !important;
   width: 100%;
   cursor: default;
   height: 100%;
-  padding: 10px;
-  & > * {
-    box-sizing: border-box !important;
-  }
-} */
+  box-sizing: border-box !important;
+}
+
+.fld-wrp > * {
+  box-sizing: border-box !important;
+}
 
 .fld-lbl {
   display: block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 16px;
   margin: 0;
-  color: rgb(54, 54, 54);
   font-weight: 500;
 }
 
@@ -75,31 +72,16 @@ input.fld {
   height: 40px !important;
 }
 
-/* 
 input.fld,
 textarea.fld {
   min-height: 40px !important;
   max-width: 100% !important;
-  color: black !important;
-  background: white !important;
-  background: transparent !important;
   font-family: sans-serif !important;
-  padding: 8px !important;
-  font-size: 15px !important;
   width: 100% !important;
   outline: none !important;
   display: inline-block !important;
-  margin: 5px 0 0 0 !important;
-  border-radius: 5px !important;
-  border: 1.5px solid #505050 !important;
-  transition: all 0s !important;
-} */
-
-/* input.fld:focus,
-textarea.fld:focus {
-  border-color: #505050 !important;
-  box-shadow: 0 0 0 1px #505050 !important;
-} */
+  transition: all 200ms !important;
+}
 
 .fld[type="date"],
 .fld[type="datetime-local"],
@@ -122,9 +104,6 @@ textarea.fld:focus {
 textarea.fld {
   height: calc(100% - 30px);
   resize: vertical;
-}
-.fld::placeholder {
-  color: rgb(146, 146, 146) !important;
 }
 
 .fld + .slim {
@@ -184,9 +163,6 @@ textarea.fld {
   height: 19px;
   margin: 8px;
   width: auto;
-  & span:first-child {
-    color: #363636 !important;
-  }
 }
 
 .fld .btcd-ck-wrp input {

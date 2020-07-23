@@ -47,6 +47,8 @@ body {
   line-height: 1;
 }
 
+// WP OVERRIDE START
+
 #wpcontent {
   background: #f5f8ff;
   padding-left: 0;
@@ -54,6 +56,90 @@ body {
 #wpbody {
   position: static !important;
 }
+.media-modal-backdrop {
+  background: #262b4a !important;
+}
+.media-modal-content {
+  border-radius: 20px !important;
+}
+.media-menu-item.active {
+  border-radius: 8px 8px 0 0 !important;
+}
+.attachment-filters {
+  border-radius: 8px !important;
+}
+.media-modal-content .attachments-browser .search {
+  border-radius: 8px !important;
+}
+.wp-core-ui .attachment-preview {
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.media-toolbar .button-primary {
+  border-radius: 20px !important;
+  background: $blue !important;
+  color: white !important;
+  &:hover {
+    color: white !important;
+  }
+}
+.wp-core-ui .button-primary:disabled,
+.wp-core-ui .button-primary[disabled] {
+  background: transparentize($blue, 0.6) !important;
+  color: white !important;
+}
+.media-sidebar {
+  background: #f3f4ff;
+}
+.media-modal-content {
+  background: white;
+}
+.thumbnail {
+  overflow: hidden;
+  border-radius: 8px;
+}
+button.check {
+  background: $blue !important;
+}
+.media-modal {
+  & * {
+    font-family: "Montserrat", sans-serif !important;
+  }
+  & a {
+    color: $blue !important;
+  }
+  & button {
+    box-shadow: none !important;
+    &:hover {
+      color: $blue !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+  & input,
+  textarea,
+  select {
+    border-radius: 8px !important;
+    border-color: lightgray !important;
+    &:hover {
+      border-color: gray !important;
+    }
+    &:focus {
+      border-color: $blue !important;
+      box-shadow: 0 0 0 0px $blue, 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
+    }
+  }
+}
+.wp-core-ui .attachment.details,
+.attachment:focus {
+  box-shadow: 0 0 0 2px $blue !important;
+}
+/* .setting input,
+.setting textarea {
+  border-radius: 8px !important;
+} */
+// WP OVERRIDE END
 
 .d-non {
   display: none !important;
@@ -914,7 +1000,7 @@ body {
 .m-a {
   margin: auto;
 }
-4 .m-0 {
+.m-0 {
   margin: 0;
 }
 .mb-1 {
@@ -1747,7 +1833,7 @@ nav.top-nav {
   margin: 6px auto 10px auto;
   & input {
     outline: none;
-    width: 86%;
+    width: 82%;
     background: white;
     padding: 10px;
     border: 1px solid #e4e4e4;
@@ -2914,7 +3000,11 @@ select.btcd-paper-inp {
     font-size: 20px;
   }
   &:hover {
-    background: transparentize($blue, 0.95);
+    color: $blue;
+    background: transparentize($blue, 0.95) !important;
+  }
+  &:focus {
+    box-shadow: none;
   }
   & .title {
     font-weight: 500;
