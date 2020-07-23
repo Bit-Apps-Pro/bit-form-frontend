@@ -1,26 +1,121 @@
-import React from 'react'
+/* eslint-disable no-undef */
+import React, { useState } from 'react'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import usePseudo from '../ChildComp/usePseudo'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
+import Range from '../ChildComp/Range'
+import TableCheckBox from '../../../ElmSettings/Childs/TableCheckBox'
 
 export default function Background({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
-  const bgClr = style?.[pcls]?.background || style?.[cls]?.background
+  const bgClr = style?.[pcls]?.['background-color'] || style?.[cls]?.['background-color']
   const bgTyp = bgClr ? 'Color' : 'None'
+  const blendMode = style?.[pcls]?.['background-blend-mode'] || style?.[cls]?.['background-blend-mode']
+  const bgRepeat = style?.[pcls]?.['background-repeat'] || style?.[cls]?.['background-repeat']
+  const bgPos = style?.[pcls]?.['background-position'] || style?.[cls]?.['background-position'] || '0% 0%'
+  const bgSiz = style?.[pcls]?.['background-size'] || style?.[cls]?.['background-size'] || 'auto auto'
+  const bgFilter = style?.[pcls]?.['backdrop-filter'] || style?.[cls]?.['backdrop-filter'] || ''
+
+  let srcTyp = 'None'
+  let bgSrc = ''
+  if (style?.[cls]?.['background-image']) {
+    bgSrc = style[cls]['background-image'].match(/url\(.+\)/g)
+    if (style[cls]?.['background-image'].match(/wp-content/g)) {
+      srcTyp = 'Upload'
+    } else {
+      srcTyp = 'Link'
+    }
+  }
+
+  const [bgSrcTyp, setbgSrcTyp] = useState(srcTyp)
+  const [ImgWarn, setImgWarn] = useState('')
 
   const setBG = colr => {
-    const clr = 'type' in colr ? `${colr.style})` : colr.style
-    styleDispatch({ apply: [{ cls: pcls, property: 'background', delProp: false, value: clr }], brkPoint })
+    let property = 'background-color'
+    const value = colr.style
+    if ('type' in colr) {
+      property = 'background-image'
+    }
+    styleDispatch({ apply: [{ cls: pcls, property, delProp: false, value }], brkPoint })
   }
 
   const setBgTyp = typ => {
-    const actn = { apply: [{ cls: pcls, property: 'background', delProp: false, value: 'rgba(242, 246, 249, 0.59)' }], brkPoint }
-    if (typ === 'None') {
+    const actn = { apply: [{ cls: pcls, property: 'background-color', delProp: false, value: 'rgba(242, 246, 249, 0.59)' }], brkPoint }
+    if (typ === 'None' && !style[cls]['background-image']) {
       actn.apply[0].delProp = true
     }
     styleDispatch(actn)
+  }
+
+  const handlebgSrcTyp = (typ) => {
+    if (typ === 'None' && style[cls]?.['background-image']) {
+      styleDispatch({ apply: [{ cls: pcls, property: 'background-image', delProp: true, value: '' }], brkPoint })
+      setbgSrcTyp(typ)
+    } else {
+      setbgSrcTyp(typ)
+    }
+  }
+
+  const handleImgLink = e => {
+    const img = new Image()
+    img.src = e.target.value
+    img.addEventListener('load', () => {
+      setImgWarn('⚠ Larger size image might slow down this form load time')
+    })
+    const imgUrl = `url(${e.target.value})`
+    styleDispatch({ apply: [{ cls: pcls, property: 'background-image', delProp: false, value: imgUrl }], brkPoint })
+  }
+
+  const setBgImg = () => {
+    if (typeof wp !== 'undefined' && wp.media) {
+      const imgSelectionFrame = wp.media({
+        title: 'Media',
+        button: {
+          text: 'Select picture',
+        },
+        library: {
+          type: 'image',
+        },
+        multiple: false,
+      });
+      imgSelectionFrame.on('select', () => {
+        const attachment = imgSelectionFrame.state().get('selection').first().toJSON();
+        const imageUrlStr = `url('${attachment.url}')`
+        if (attachment.filesizeInBytes > 512000) {
+          setImgWarn('⚠ Larger size image might slow down this form load time')
+        }
+        styleDispatch({ apply: [{ cls, property: 'background-image', delProp: false, value: imageUrlStr }], brkPoint })
+      })
+
+      imgSelectionFrame.open();
+    }
+  }
+
+  const setBgProperty = (property, value) => {
+    const actn = { apply: [{ cls: pcls, property, delProp: false, value }], brkPoint }
+    if (value === 'None') {
+      actn.apply[0].delProp = true
+    }
+    styleDispatch(actn)
+  }
+
+  const setFilter = (e, val) => {
+    let fil = bgFilter
+    if (e.target.checked) {
+      fil += ` ${val}`
+    } else {
+      fil = fil.replace(new RegExp(`${e.target.value.toLowerCase()}\\(.+\\)`, 'g'), '')
+    }
+    styleDispatch({ apply: [{ cls: pcls, property: 'backdrop-filter', delProp: false, value: fil }], brkPoint })
+  }
+
+  const handleFilterVal = (filter, value) => {
+    const newVal = `${filter}(${value})`
+    let fil = bgFilter
+    fil = fil.replace(new RegExp(`${filter}\\(.+\\)`, 'g'), newVal)
+    styleDispatch({ apply: [{ cls: pcls, property: 'backdrop-filter', delProp: false, value: fil }], brkPoint })
   }
 
   return (
@@ -31,20 +126,25 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
         && (
           <div className="flx flx-between">
             {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
-            <BtnGrp
-              className="txt-center"
-              value={pseudo}
-              onChange={setPseudo}
-              btns={[
-                { lbl: 'Default', icn: 'Default' },
-                ...('hover' in styleConfig ? [{ lbl: 'On Mouse Over', icn: 'Hover' }] : []),
-                ...('focus' in styleConfig ? [{ lbl: 'On Focus', icn: 'Focus' }] : []),
-              ]}
-            />
+
+            {('hover' in styleConfig
+              || 'focus' in styleConfig)
+              && (
+                <BtnGrp
+                  className="txt-center"
+                  value={pseudo}
+                  onChange={setPseudo}
+                  btns={[
+                    { lbl: 'Default', icn: 'Default' },
+                    ...('hover' in styleConfig ? [{ lbl: 'On Mouse Over', icn: 'Hover' }] : []),
+                    ...('focus' in styleConfig ? [{ lbl: 'On Focus', icn: 'Focus' }] : []),
+                  ]}
+                />
+              )}
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">Type</span>
+        <span className="f-5">Background Color</span>
         <BtnGrp
           value={bgTyp}
           onChange={setBgTyp}
@@ -60,7 +160,197 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           <ColorPicker value={bgClr} onChange={setBG} />
         </div>
       )}
-      Picture
+      {'picture' in styleConfig && (
+        <>
+          <div className="flx flx-between mt-2">
+            <span className="f-5">Picture</span>
+            <BtnGrp
+              value={bgSrcTyp}
+              onChange={handlebgSrcTyp}
+              btns={[
+                { lbl: 'Upload', icn: 'Upload' },
+                { lbl: 'Link', icn: 'Link' },
+                { lbl: 'None', icn: 'None' },
+              ]}
+            />
+          </div>
+
+          {bgSrcTyp === 'Upload' && (
+            <div>
+              <div className="flx flx-between mt-2">
+                <span className="f-5">Picture Upload</span>
+                <button onClick={setBgImg} className="btn" type="button">Browse...</button>
+              </div>
+              {ImgWarn !== '' && <small className="txt-center" style={{ color: '#efbb28' }}>{ImgWarn}</small>}
+            </div>
+          )}
+          {bgSrcTyp === 'Link' && (
+            <div>
+              <div className="flx flx-between mt-2">
+                <span className="f-5">Link: </span>
+                <input defaultValue={bgSrc} onChange={handleImgLink} className="btcd-paper-inp ml-1" type="text" placeholder="Image Link...." />
+              </div>
+              {ImgWarn !== '' && <small className="txt-center" style={{ color: '#efbb28' }}>{ImgWarn}</small>}
+            </div>
+          )}
+          <div className="flx flx-between mt-2">
+            <span className="f-5">Background Blend Mode</span>
+            <select value={blendMode} onChange={e => setBgProperty('background-blend-mode', e.target.value)} className="btcd-paper-inp w-5">
+              <option value="None">None</option>
+              <option value="multiply">Multiply</option>
+              <option value="screen">Screen</option>
+              <option value="overlay">Overlay</option>
+              <option value="darken">Darken</option>
+              <option value="lighten">Lighten</option>
+              <option value="color=dodge">Color-dodge</option>
+              <option value="saturation">Saturation</option>
+              <option value="color">Color</option>
+              <option value="luminosity">Luminosity</option>
+            </select>
+          </div>
+
+          <div className="flx flx-between mt-2">
+            <span className="f-5">Background Repeat</span>
+            <select value={bgRepeat} onChange={e => setBgProperty('background-repeat', e.target.value)} className="btcd-paper-inp w-5">
+              <option value="None">None</option>
+              <option value="repeat">Repeat</option>
+              <option value="repeat-x">Repeat-X</option>
+              <option value="repeat-y">Repeat-Y</option>
+              <option value="no-repeat">Np Repeat</option>
+              <option value="space">Space</option>
+              <option value="round">Round</option>
+            </select>
+          </div>
+          <div className="mt-2">
+            <span className="f-5">Background Position</span>
+            <Range
+              info={[
+                { icn: <b>X</b>, lbl: 'BG Position X' },
+                { icn: <b>Y</b>, lbl: 'BG Position Y' },
+                { icn: <span className="btcd-icn icn-settings" />, lbl: 'XY Both' },
+              ]}
+              className="btc-range"
+              unit="%"
+              maxRange={100}
+              minRange={-10}
+              value={bgPos}
+              onChange={val => setBgProperty('background-position', val)}
+            />
+          </div>
+          <div className="mt-2">
+            <span className="f-5">Background Size</span>
+            <Range
+              info={[
+                { icn: <b>H</b>, lbl: 'BG Width' },
+                { icn: <b>W</b>, lbl: 'BG Height' },
+                { icn: <span className="btcd-icn icn-settings" />, lbl: 'BG Height/Width' },
+              ]}
+              className="btc-range"
+              unit="%"
+              maxRange={100}
+              value={bgSiz}
+              onChange={val => setBgProperty('background-size', val)}
+            />
+          </div>
+        </>
+      )}
+
+      {'backdropFilter' in styleConfig && (
+        <div className="mt-2">
+          <span className="f-5">Background Filter</span>
+          <div className="mt-2">
+            <TableCheckBox onChange={e => setFilter(e, 'blur(5px)')} checked={bgFilter.match(/blur/g) !== null} value="Blur" className="mr-1 mt-1" title="Blur" />
+            <TableCheckBox onChange={e => setFilter(e, 'brightness(120%)')} checked={bgFilter.match(/brightness/g) !== null} value="Brightness" className="mr-1 mt-1" title="Brightness" />
+            <TableCheckBox onChange={e => setFilter(e, 'contrast(10%)')} checked={bgFilter.match(/contrast/g) !== null} value="Contrast" className="mr-1 mt-1" title="Contrast" />
+            <TableCheckBox onChange={e => setFilter(e, 'grayscale(50%)')} checked={bgFilter.match(/grayscale/g) !== null} value="Grayscale" className="mr-1 mt-1" title="Grayscale" />
+            <TableCheckBox onChange={e => setFilter(e, 'invert(10%)')} checked={bgFilter.match(/invert/g) !== null} value="Invert" className="mr-1 mt-1" title="Invert" />
+            <TableCheckBox onChange={e => setFilter(e, 'opacity(10%)')} checked={bgFilter.match(/opacity/g) !== null} value="Opacity" className="mr-1 mt-1" title="Opacity" />
+            <TableCheckBox onChange={e => setFilter(e, 'sepia(10%)')} checked={bgFilter.match(/sepia/g) !== null} value="Sepia" className="mr-1 mt-1" title="Sepia" />
+            <TableCheckBox onChange={e => setFilter(e, 'saturate(10%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1" title="Saturate" />
+          </div>
+          {bgFilter?.match(/blur/g) && (
+            <Range
+              info={[{ icn: <b>B</b>, lbl: 'Blur' }]}
+              className="btc-range"
+              unit="px"
+              maxRange={50}
+              value={bgFilter.match(/blur\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('blur', val)}
+            />
+          )}
+          {bgFilter?.match(/brightness/g) && (
+            <Range
+              info={[{ icn: <b>B</b>, lbl: 'Brightness' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={200}
+              value={bgFilter.match(/brightness\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('brightness', val)}
+            />
+          )}
+          {bgFilter?.match(/contrast/g) && (
+            <Range
+              info={[{ icn: <b>C</b>, lbl: 'contrast' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={200}
+              value={bgFilter.match(/contrast\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('contrast', val)}
+            />
+          )}
+          {bgFilter?.match(/grayscale/g) && (
+            <Range
+              info={[{ icn: <b>G</b>, lbl: 'grayscale' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={100}
+              value={bgFilter.match(/grayscale\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('grayscale', val)}
+            />
+          )}
+          {bgFilter?.match(/invert/g) && (
+            <Range
+              info={[{ icn: <b>I</b>, lbl: 'invert' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={100}
+              value={bgFilter.match(/invert\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('invert', val)}
+            />
+          )}
+          {bgFilter?.match(/opacity/g) && (
+            <Range
+              info={[{ icn: <b>O</b>, lbl: 'opacity' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={200}
+              value={bgFilter.match(/opacity\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('opacity', val)}
+            />
+          )}
+          {bgFilter?.match(/sepia/g) && (
+            <Range
+              info={[{ icn: <b>S</b>, lbl: 'sepia' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={100}
+              value={bgFilter.match(/sepia\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('sepia', val)}
+            />
+          )}
+          {bgFilter?.match(/saturate/g) && (
+            <Range
+              info={[{ icn: <b>S</b>, lbl: 'saturate' }]}
+              className="btc-range"
+              unit="%"
+              maxRange={200}
+              value={bgFilter.match(/saturate\(.+\)/g)[0].match(/\d+/g)[0]}
+              onChange={val => handleFilterVal('saturate', val)}
+            />
+          )}
+        </div>
+      )}
+
     </StyleAccordion>
   )
 }
