@@ -14,25 +14,14 @@ import { AppSettings } from '../Utils/AppSettingsContext'
 function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
 
-  /*
-  typ: input type
-  lbl: label
-  cls: class
-  ph: placeholder
-  mn: min
-  mx: mix
-  val: default value
-  ac: autocomplete on/off
-  req: required
-  mul: multiple
-  */
   const { reCaptchaV2 } = useContext(AppSettings)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth } = props
-
   const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 6, md: 4, sm: 2 }
+  const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
+  const [rowHeight, setRowHeight] = useState(40)
 
   useEffect(() => {
     if (newData !== null) {
@@ -42,30 +31,29 @@ function GridLayout(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields])
 
-  // set builder width by style
   useEffect(() => {
-    const newW = gridWidth - 32
     let w = 0
-    if (style['._frm']['border-width']
-      || style['._frm'].padding
-      || style['._frm'].margin) {
-      if (style['._frm']['border-width']) {
-        const vals = style['._frm']['border-width'].replace(/px|em|rem/g, '').split(' ')
-        w += Number(vals[1])
-        w += Number(vals[3])
-      }
-      if (style['._frm'].padding) {
-        const vals = style['._frm'].padding.replace(/px|em|rem/g, '').split(' ')
-        w += Number(vals[1])
-        w += Number(vals[3])
-      }
-      if (style['._frm'].margin) {
-        const vals = style['._frm'].margin.replace(/px|em|rem/g, '').split(' ')
-        w += Number(vals[1])
-        w += Number(vals[3])
-      }
+    let h = 0
+    w += propertyValueSumX(style['._frm']['border-width'])
+    w += propertyValueSumX(style['._frm'].padding)
+    w += propertyValueSumX(style['._frm'].margin)
+    w += propertyValueSumX(style['._frm-bg']['border-width'])
+    w += propertyValueSumX(style['._frm-bg'].padding)
+    w += propertyValueSumX(style['._frm-bg'].margin)
+    setBuilderWidth(gridWidth - 32 - w)
+
+    if (style['._frm'].gap) {
+      const gaps = style['._frm'].gap.replace(/px/g, '').split(' ')
+      setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
-    setBuilderWidth(newW - w)
+
+    h += Number(style['.fld-lbl']['font-size'].replace(/px|em|rem|!important/g, ''))
+    h += Number(style['input.fld,textarea.fld']['font-size'].replace(/px|em|rem|!important/g, ''))
+    h += propertyValueSumY(style['.fld-wrp'].padding)
+    h += propertyValueSumY(style['input.fld,textarea.fld'].padding)
+    h += propertyValueSumY(style['input.fld,textarea.fld'].margin)
+    h += propertyValueSumY(style['input.fld,textarea.fld']['border-width'])
+    setRowHeight(h / 2)
   }, [style, gridWidth])
 
   const sortLay = arr => {
@@ -80,6 +68,20 @@ function GridLayout(props) {
       newArr[j + 1] = tmp
     }
     return newArr
+  }
+
+  const propertyValueSumX = (propertyValue = '') => {
+    let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
+    arr = [arr[1], arr[3]]
+    const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
+    return summ || 0
+  }
+
+  const propertyValueSumY = (propertyValue = '') => {
+    let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
+    arr = [arr[0], arr[2]]
+    const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
+    return summ || 0
   }
 
   // eslint-disable-next-line consistent-return
@@ -364,35 +366,38 @@ function GridLayout(props) {
       {compByTheme(fields[item.i])}
     </div>
   )
+
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
         <div style={{ padding: 10, paddingRight: 13 }}>
-          <div className="_frm">
-            <ResponsiveReactGridLayout
-              width={Math.round(builderWidth)}
-              measureBeforeMount={false}
-              isDroppable={props.draggedElm[0] !== ''}
-              className="layout"
-              onDrop={onDrop}
-              onLayoutChange={onLayoutChange}
-              droppingItem={props.draggedElm[1]}
-              cols={cols}
-              breakpoints={{ lg: 750, md: 500, sm: 300 }}
-              rowHeight={40}
-              margin={[-0.2, 0]}
-              containerPadding={[1, 1]}
-              draggableCancel=".no-drg"
-              draggableHandle=".drag"
-              layouts={layouts}
-              onBreakpointChange={onBreakpointChange}
-            // compactType="vertical"
-            >
-              {layouts[breakpoint].map(itm => blkGen(itm))}
-            </ResponsiveReactGridLayout>
+          <div className="_frm-bg">
+            <div className="_frm">
+              <ResponsiveReactGridLayout
+                width={Math.round(builderWidth)}
+                measureBeforeMount={false}
+                isDroppable={props.draggedElm[0] !== ''}
+                className="layout"
+                onDrop={onDrop}
+                onLayoutChange={onLayoutChange}
+                droppingItem={props.draggedElm[1]}
+                cols={cols}
+                breakpoints={{ lg: 750, md: 500, sm: 300 }}
+                rowHeight={rowHeight}
+                margin={gridContentMargin}
+                containerPadding={[1, 1]}
+                draggableCancel=".no-drg"
+                draggableHandle=".drag"
+                layouts={layouts}
+                onBreakpointChange={onBreakpointChange}
+              // compactType="vertical"
+              >
+                {layouts[breakpoint].map(itm => blkGen(itm))}
+              </ResponsiveReactGridLayout>
 
-            <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
-              {compByTheme(props.subBtn)}
+              <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
+                {compByTheme(props.subBtn)}
+              </div>
             </div>
           </div>
         </div>
