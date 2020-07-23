@@ -47,7 +47,6 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
     picrVal = color
   }
 
-
   return (
     <div ref={ref} className="pos-rel">
       <div
