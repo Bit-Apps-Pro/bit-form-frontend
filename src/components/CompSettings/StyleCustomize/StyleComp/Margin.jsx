@@ -6,7 +6,8 @@ import Range from '../ChildComp/Range'
 export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const margin = style?.[cls]?.['margin'] || '0px 0px 0px 0px'
 
-  const setMargin = value => {
+  const setMargin = val => {
+    const value = styleConfig.important ? `${val}!important` : val
     styleDispatch({ apply: [{ cls, property: 'margin', delProp: false, value }], brkPoint })
   }
 
