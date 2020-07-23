@@ -1,13 +1,26 @@
 import React from 'react'
-import ReCaptcha from './Fields/Recaptcha';
-import TextField from './Fields/TextField';
-import TextArea from './Fields/TextArea';
-import CheckBox from './Fields/CheckBox';
-import RadioBox from './Fields/RadioBox';
-import DropDown from './Fields/DropDown';
-import FileUp from './Fields/FileUp';
-import HiddenField from './Fields/HiddenField';
-import SubmitBtn from './Fields/SubmitBtn';
+import ReCaptcha from './Fields/Recaptcha'
+import TextField from './Fields/TextField'
+import TextArea from './Fields/TextArea'
+import CheckBox from './Fields/CheckBox'
+import RadioBox from './Fields/RadioBox'
+import DropDown from './Fields/DropDown'
+import FileUp from './Fields/FileUp'
+import HiddenField from './Fields/HiddenField'
+import SubmitBtn from './Fields/SubmitBtn'
+
+/*
+typ: input type
+lbl: label
+cls: class
+ph: placeholder
+mn: min
+mx: mix
+val: default value
+ac: autocomplete on/off
+req: required
+mul: multiple
+*/
 
 function CompGen(props) {
   switch (props.atts.typ) {
