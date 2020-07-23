@@ -46,7 +46,8 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
     }
   }
 
-  const setShadow = value => {
+  const setShadow = val => {
+    const value = (styleConfig.important && !val.match(/!important/g)) ? `${val}!important` : val
     styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value }], brkPoint })
   }
 
