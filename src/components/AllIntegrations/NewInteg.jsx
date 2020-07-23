@@ -14,6 +14,7 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
     }
     return ''
   }
+
   return (
     <div>
       <div className="flx">
