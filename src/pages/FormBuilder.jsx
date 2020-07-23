@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
+import merge from 'deepmerge-alt'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
@@ -37,9 +38,9 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   useEffect(() => {
     if (brkPoint === 'md') {
-      setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 600px)'] }))
+      setStyleSheet(j2c.sheet(merge(style, style['@media only screen and (max-width: 600px)'])))
     } else if (brkPoint === 'sm') {
-      setStyleSheet(j2c.sheet({ ...style, ...style['@media only screen and (max-width: 400px)'] }))
+      setStyleSheet(j2c.sheet(merge(style, style['@media only screen and (max-width: 400px)'])))
     } else if (brkPoint === 'lg') {
       setStyleSheet(j2c.sheet(style))
     }
@@ -47,14 +48,15 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const styleProvider = () => {
     if (brkPoint === 'md') {
-      return { ...style, ...style['@media only screen and (max-width: 600px)'] }
+      return merge(style, style['@media only screen and (max-width: 600px)'])
     }
     if (brkPoint === 'sm') {
-      return { ...style, ...style['@media only screen and (max-width: 400px)'] }
+      return merge(style, style['@media only screen and (max-width: 400px)'])
     }
     return style
   }
-  // console.log('ssssst', style)
+
+  console.log('ssssst', merge(style, style['@media only screen and (max-width: 600px)']))
 
   const conRef = React.createRef(null)
 
