@@ -21,7 +21,7 @@ export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPo
           <span className="f-5">Font Size</span>
           <Range
             info={[
-              { icn: 'd', lbl: 'Font Size' },
+              { icn: <i className="font-w-m"><u>A</u></i>, lbl: 'Font Size' },
             ]}
             className="btc-range"
             unit="px"
