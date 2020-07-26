@@ -1,22 +1,21 @@
 export const defaultTheme = {
   '._frm-bg': {
     overflow: 'auto',
-    'border-radius': '15px 15px 15px 15px',
+    'border-radius': '10px 10px 10px 10px',
     'backdrop-filter': 'blur(2px)',
     'background-size': '100% 100%',
-    'background-image': 'url(https://img1.goodfon.com/wallpaper/nbig/c/5d/colorful-abstract-background-4031.jpg)',
+    'background-image': 'url(https://jooinn.com/images/abstract-background-278.jpg)',
   },
   '._frm': {
     'backdrop-filter': 'blur(32px)',
     'background-color': 'rgba(242, 246, 249, 0.59)',
     'border-color': 'rgba(0, 0, 0, 1)',
-    'border-radius': '15px 15px 15px 15px',
+    'border-radius': '10px 10px 10px 10px',
     'border-style': 'solid',
     'border-width': '0px 0px 0px 0px',
-    margin: '25px 25px 25px 25px',
+    margin: '0px 0px 0px 0px',
     overflow: 'hidden',
-    padding: '25px 25px 25px 25px',
-
+    padding: '50px 50px 50px 50px',
   },
   '.fld-wrp': {
     padding: '10px 10px 10px 10px',
@@ -28,11 +27,11 @@ export const defaultTheme = {
   },
 
   'input.fld,textarea.fld': {
-    'background-color': 'rgba(0, 0, 0, 0.19)',
-    'border-color': 'rgba(80, 80, 80, 1)!important',
-    'border-radius': '5px 5px 5px 5px!important',
+    'background-color': 'rgba(0, 0, 0, 0)',
+    'border-color': 'rgba(100, 138, 168, 1)!important',
+    'border-radius': '0px 0px 0px 0px!important',
     'border-style': 'solid!important',
-    'border-width': '0px 0px 0px 0px!important',
+    'border-width': '0px 0px 1px 0px!important',
     color: 'rgba(0, 0, 0, 1)!important',
     'font-size': '15px!important',
     margin: '5px 0 0 0!important',
@@ -40,10 +39,10 @@ export const defaultTheme = {
   },
 
   'input.fld::placeholder,textarea.fld::placeholder': {
-    color: 'rgba(5, 5, 5, 1) !important',
+    color: 'rgba(16, 64, 86, 1) !important',
   },
   'input.fld:focus,textarea.fld:focus': {
-    'box-shadow': '0 0 0 1px rgba(80,80,80,1)!important',
+    'border-width': '0px 0px 2px 0px!important',
   },
 
   '.fld>.btcd-ck-wrp span:first-child': {
