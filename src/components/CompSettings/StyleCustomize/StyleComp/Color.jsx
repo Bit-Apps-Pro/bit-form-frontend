@@ -5,6 +5,8 @@ import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import usePseudo from '../ChildComp/usePseudo'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
+import ColorIcn from '../../../../Icons/ColorIcn'
+import NoneIcn from '../../../../Icons/NoneIcn'
 
 const setPlceholderPseudo = (cls) => {
   const clss = cls.split(',')
@@ -69,8 +71,8 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
           value={clrTyp}
           onChange={setClrTyp}
           btns={[
-            { lbl: 'Color', icn: 's' },
-            { lbl: 'None', icn: 'N' },
+            { lbl: 'Color', icn: <ColorIcn /> },
+            { lbl: 'None', icn: <NoneIcn /> },
           ]}
         />
       </div>
