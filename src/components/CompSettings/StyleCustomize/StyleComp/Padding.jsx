@@ -2,6 +2,7 @@ import React from 'react'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
+import BorderIcn from '../../../../Icons/BorderIcn'
 
 export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const padding = style?.[cls]?.['padding'] || '0px 0px 0px 0px'
@@ -18,11 +19,11 @@ export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoi
 
       <Range
         info={[
-          { icn: 'd', lbl: 'Padding Top' },
-          { icn: 'd', lbl: 'Padding Right' },
-          { icn: 'd', lbl: 'Padding Bottom' },
-          { icn: 'd', lbl: 'Padding Left' },
-          { icn: <span className="btcd-icn icn-settings" />, lbl: 'All Side' },
+          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Padding Top' },
+          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Padding Right' },
+          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Padding Bottom' },
+          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Padding Left' },
+          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
         ]}
         className="btc-range"
         unit="px"
