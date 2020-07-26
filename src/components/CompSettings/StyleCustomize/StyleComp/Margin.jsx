@@ -2,6 +2,7 @@ import React from 'react'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
+import BorderIcn from '../../../../Icons/BorderIcn'
 
 export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const margin = style?.[cls]?.['margin'] || '0px 0px 0px 0px'
@@ -17,11 +18,11 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
 
       <Range
         info={[
-          { icn: 'd', lbl: 'Margin Top' },
-          { icn: 'd', lbl: 'Margin Right' },
-          { icn: 'd', lbl: 'Margin Bottom' },
-          { icn: 'd', lbl: 'Margin Left' },
-          { icn: <span className="btcd-icn icn-settings" />, lbl: 'All Side' },
+          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Margin Top' },
+          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Margin Right' },
+          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Margin Bottom' },
+          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Margin Left' },
+          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
         ]}
         className="btc-range"
         unit="px"
