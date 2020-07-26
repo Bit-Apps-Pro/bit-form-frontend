@@ -493,11 +493,26 @@ button.check {
 }
 
 .btc-range {
+  & .icn {
+    & svg {
+      height: 13px;
+      width: 13px;
+    }
+  }
   & .inp-grp {
     &:hover {
       .icn {
         background-color: transparentize($blue, 0.92);
         color: $blue;
+        & .line-icn {
+          stroke: $blue;
+        }
+        & .fill-icn {
+          fill: $blue;
+        }
+        .border-icn {
+          border-color: $blue;
+        }
       }
     }
   }
@@ -531,8 +546,8 @@ button.check {
   $thumb-color: transparentize($dp-blue, 0.2) !default;
 
   $thumb-radius: 12px !default;
-  $thumb-height: 15px !default;
-  $thumb-width: 15px !default;
+  $thumb-height: 13px !default;
+  $thumb-width: 13px !default;
   $thumb-shadow-size: 2px !default;
   $thumb-shadow-blur: 4px !default;
   $thumb-shadow-color: rgba(0, 0, 0, 0.2) !default;
@@ -540,7 +555,7 @@ button.check {
   $thumb-border-color: #ff7777 !default;
 
   $track-width: 100% !default;
-  $track-height: 8px !default;
+  $track-height: 6px !default;
   $track-shadow-size: 0px !default;
   $track-shadow-blur: 0px !default;
   $track-shadow-color: rgba(0, 0, 0, 0.2) !default;
@@ -856,6 +871,7 @@ button.check {
     border-radius: 7px 0 0 7px;
   }
   & button {
+    font-size: 13px;
     position: relative;
     background: transparent;
     color: $dp-txt;
@@ -877,6 +893,23 @@ button.check {
     background: $blue;
     color: white;
     border-color: $blue;
+    & .line-icn {
+      stroke: white;
+    }
+    & .fill-icn {
+      fill: white;
+    }
+  }
+  & svg {
+    display: block;
+    height: 13px;
+    width: 13px;
+    & .line-icn {
+      stroke: $dp-blue;
+    }
+    & .fill-icn {
+      fill: $dp-blue;
+    }
   }
 }
 
@@ -1558,6 +1591,21 @@ nav.top-nav {
 
 .btcd-entries-f .tbody .tr .td:last-child {
   overflow: visible;
+}
+
+.btc-line-icn {
+  & .line-icn {
+    fill: none;
+    stroke: $dp-blue;
+    stroke-width: 16px;
+  }
+}
+.border-icn {
+  width: 13px;
+  height: 13px;
+  border-width: 1.5px;
+  border-color: $dp-bg;
+  border-style: solid;
 }
 
 .btcd-hid-icn {
@@ -3043,11 +3091,21 @@ select.btcd-paper-inp {
     border-radius: 30;
     justify-content: center;
     background: #f5f5f5;
+    & svg {
+      height: 16px;
+      width: 16px;
+    }
   }
   &:hover {
     color: $blue;
     & .lft-icn {
       background: #f0f5ff;
+      & .line-icn {
+        stroke: $blue;
+      }
+      & .fill-icn {
+        fill: $blue;
+      }
     }
   }
 }
