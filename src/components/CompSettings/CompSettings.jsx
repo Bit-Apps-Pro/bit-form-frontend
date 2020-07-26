@@ -9,6 +9,11 @@ import SubmitBtnSettings from './SubmitBtnSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
+import ImageIcn from '../../Icons/ImageIcn'
+import NoneIcn from '../../Icons/NoneIcn'
+import FormIcn from '../../Icons/FormIcn'
+import ItemBlockIcn from '../../Icons/ItemBlockIcn'
+import FieldIcn from '../../Icons/FieldIcn'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
@@ -46,16 +51,16 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             </Route>
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
-                <FieldOptionBtn icn="settigns" title="Background Customize" />
+                <FieldOptionBtn icn={<ImageIcn />} title="Background Customize" />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
-                <FieldOptionBtn icn="settigns" title="Form Customize" />
+                <FieldOptionBtn icn={<FormIcn />} title="Form Customize" />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
-                <FieldOptionBtn icn="settigns" title="Field Block Customize" />
+                <FieldOptionBtn icn={<ItemBlockIcn />} title="Field Block Customize" />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
-                <FieldOptionBtn icn="settigns" title="Field Customize" />
+                <FieldOptionBtn icn={<FieldIcn />} title="Field Customize" />
               </Link>
             </Route>
             <Route path={`${path}/style/bg`}>
@@ -140,7 +145,9 @@ function FieldOptionBtn({ icn, title, sub, action }) {
     <div className="btc-s-l mt-2" {...extraProps}>
       <div className="flx flx-between ">
         <div className="flx">
-          <span className="lft-icn mr-2 btcd-icn-lg flx br-50"><span className={`btcd-icn icn-${icn}`} /></span>
+          <span className="lft-icn mr-2 btcd-icn-lg flx br-50">
+            {typeof icn === 'object' ? icn : <span className={`btcd-icn icn-${icn}`} />}
+          </span>
           <div>
             <div>{title}</div>
             {sub && (
