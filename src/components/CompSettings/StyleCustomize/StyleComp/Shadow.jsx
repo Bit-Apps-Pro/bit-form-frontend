@@ -5,6 +5,9 @@ import ColorPicker from '../ChildComp/ColorPicker'
 import Range from '../ChildComp/Range'
 import usePseudo from '../ChildComp/usePseudo'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
+import BorderIcn from '../../../../Icons/BorderIcn'
+import BlurIcn from '../../../../Icons/BlurIcn'
+import SpreadIcn from '../../../../Icons/SpreadIcn'
 
 export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -92,10 +95,10 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
           <span className="f-5">Shadow Style</span>
           <Range
             info={[
-              { icn: <span className="btcd-icn icn-settings" />, lbl: 'X-axis' },
-              { icn: 'd', lbl: 'Y-axis' },
-              { icn: 'd', lbl: 'Blur' },
-              { icn: 'd', lbl: 'Spread' },
+              { icn: <BorderIcn borderWidth="1px 4px 1px 4px" />, lbl: 'X-axis' },
+              { icn: <BorderIcn borderWidth="4px 1px 4px 1px" />, lbl: 'Y-axis' },
+              { icn: <BlurIcn />, lbl: 'Blur' },
+              { icn: <SpreadIcn />, lbl: 'Spread' },
             ]}
             className="btc-range"
             unit="px"
