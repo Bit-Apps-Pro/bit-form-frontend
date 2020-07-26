@@ -96,7 +96,6 @@ function FormDetails(props) {
   const [workFlows, setworkFlows] = useState([])
 
   const [additional, setadditional] = useState({ enabled: {}, settings: {} })
-  console.log('STAreports', reports)
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
