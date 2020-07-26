@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function BtnGrp({ btns, value, onChange, className }) {
   return (
-    <div className={`btc-btn-grp ${className}`}>
+    <div className={`btc-btn-grp flx ${className}`}>
       {btns.map(btn => (
         <button
           key={btn.lbl}
