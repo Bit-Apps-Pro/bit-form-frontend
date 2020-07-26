@@ -83,7 +83,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
     },
     {
       name: 'Drop Down',
-      icn: 'dropdown',
+      icn: 'select',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
@@ -136,7 +136,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
     },
     {
       name: 'File Upload',
-      icn: 'fileup',
+      icn: 'file-up',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2, minW: 2 },
       elm: {
         typ: 'file-up',
