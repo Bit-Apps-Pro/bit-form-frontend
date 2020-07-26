@@ -5,6 +5,12 @@ import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import usePseudo from '../ChildComp/usePseudo'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
+import NoneIcn from '../../../../Icons/NoneIcn'
+import BdrDoubleIcn from '../../../../Icons/BdrDoubleIcn'
+import BdrDashIcn from '../../../../Icons/BdrDashIcn'
+import BdrDottedIcn from '../../../../Icons/BdrDottedIcn'
+import BdrSolidIcn from '../../../../Icons/BdrSolidIcn'
+import BorderIcn from '../../../../Icons/BorderIcn'
 
 export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -72,11 +78,11 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           value={bdrStyle}
           onChange={setBdrStyle}
           btns={[
-            { lbl: 'solid', icn: 's' },
-            { lbl: 'dotted', icn: 's' },
-            { lbl: 'dashed', icn: 's' },
-            { lbl: 'double', icn: 's' },
-            { lbl: 'None', icn: 's' },
+            { lbl: 'solid', icn: <BdrSolidIcn /> },
+            { lbl: 'dotted', icn: <BdrDottedIcn /> },
+            { lbl: 'dashed', icn: <BdrDashIcn /> },
+            { lbl: 'double', icn: <BdrDoubleIcn /> },
+            { lbl: 'None', icn: <NoneIcn /> },
           ]}
         />
       </div>
@@ -93,11 +99,11 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           <span className="f-5">Border Width</span>
           <Range
             info={[
-              { icn: 'd', lbl: 'Border Top' },
-              { icn: 'd', lbl: 'Border Right' },
-              { icn: 'd', lbl: 'Border Bottom' },
-              { icn: 'd', lbl: 'Border Left' },
-              { icn: <span className="btcd-icn icn-settings" />, lbl: 'All Side' },
+              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top ' },
+              { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Border Right' },
+              { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Border Bottom' },
+              { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Border Left' },
+              { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
             ]}
             className="btc-range"
             unit="px"
@@ -112,11 +118,11 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           <span className="f-5">Border Radius</span>
           <Range
             info={[
-              { icn: 'd', lbl: 'Radius Top' },
-              { icn: 'd', lbl: 'Radius Right' },
-              { icn: 'd', lbl: 'Radius Bottom' },
-              { icn: 'd', lbl: 'Radius Left' },
-              { icn: <span className="btcd-icn icn-settings" />, lbl: 'All Side' },
+              { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },
+              { icn: <BorderIcn borderRadius="1px 6px 1px 1px" />, lbl: 'Radius Top Right' },
+              { icn: <BorderIcn borderRadius="1px 1px 6px 1px" />, lbl: 'Radius Bottom Right' },
+              { icn: <BorderIcn borderRadius="1px 1px 1px 6px" />, lbl: 'Radius Bottom Left' },
+              { icn: <BorderIcn />, lbl: 'All Side' },
             ]}
             className="btc-range"
             unit="px"
