@@ -33,7 +33,7 @@ export default function Range({ className, value, onChange, maxRange, minRange, 
 
 const RSlider = ({ icn, lbl, action, rVal, unit, max, min }) => (
   <div className="flx flx-between mt-1 inp-grp">
-    <span className="icn tooltip pos-rel br-50 flx mr-1" style={{ '--tooltip-txt': `"${lbl}"`, '--left': '95%' }}>{icn}</span>
+    <span className="icn tooltip pos-rel br-50 flx mr-1" style={{ '--tooltip-txt': `"${lbl}"`, '--left': '100%' }}>{icn}</span>
     <input title={`${lbl} ${rVal} ${unit}`} onChange={action} className="btc-range mr-1" type="range" min={min} max={max} value={rVal} />
     <input onChange={action} className="ml-1" type="number" placeholder="auto" value={parseInt(rVal, 10)} min="0" />
   </div>
