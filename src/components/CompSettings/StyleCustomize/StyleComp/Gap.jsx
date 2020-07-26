@@ -5,7 +5,6 @@ import Range from '../ChildComp/Range'
 
 export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const gridGap = style?.['._frm']?.gap || '0px 0px'
-  console.log('ssssssssss--------', gridGap)
   const setGridGap = value => {
     styleDispatch({ apply: [{ cls: '._frm', property: 'gap', delProp: false, value }], brkPoint })
   }
