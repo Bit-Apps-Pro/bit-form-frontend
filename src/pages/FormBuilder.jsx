@@ -9,6 +9,7 @@ import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign } from '../Utils/Helpers'
+import autoprefixer from 'autoprefixer'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -56,7 +57,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     return style
   }
 
-  console.log('ssssst', merge(style, style['@media only screen and (max-width: 600px)']))
+  console.log('ssssst', style.toString())
 
   const conRef = React.createRef(null)
 
