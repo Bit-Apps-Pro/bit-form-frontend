@@ -7,6 +7,11 @@ import usePseudo from '../ChildComp/usePseudo'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 import TableCheckBox from '../../../ElmSettings/Childs/TableCheckBox'
+import ColorIcn from '../../../../Icons/ColorIcn'
+import NoneIcn from '../../../../Icons/NoneIcn'
+import XYordinateIcn from '../../../../Icons/XYordinateIcn'
+import HWordinateIcn from '../../../../Icons/HWordinateIcn'
+import BlurIcn from '../../../../Icons/BlurIcn'
 
 export default function Background({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -43,7 +48,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
 
   const setBgTyp = typ => {
     const actn = { apply: [{ cls: pcls, property: 'background-color', delProp: false, value: 'rgba(242, 246, 249, 0.59)' }], brkPoint }
-    if (typ === 'None' && !style[cls]['background-image']) {
+    if (typ === 'None' && style[cls]['background-image']) {
       actn.apply[0].delProp = true
     }
     styleDispatch(actn)
@@ -149,8 +154,8 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           value={bgTyp}
           onChange={setBgTyp}
           btns={[
-            { lbl: 'Color', icn: 's' },
-            { lbl: 'None', icn: 'N' },
+            { lbl: 'Color', icn: <ColorIcn /> },
+            { lbl: 'None', icn: <NoneIcn /> },
           ]}
         />
       </div>
@@ -225,9 +230,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <span className="f-5">Background Position</span>
             <Range
               info={[
-                { icn: <b>X</b>, lbl: 'BG Position X' },
-                { icn: <b>Y</b>, lbl: 'BG Position Y' },
-                { icn: <span className="btcd-icn icn-settings" />, lbl: 'XY Both' },
+                { icn: <i className="font-w-m">X</i>, lbl: 'BG Position X' },
+                { icn: <i className="font-w-m">Y</i>, lbl: 'BG Position Y' },
+                { icn: <XYordinateIcn />, lbl: 'XY Both' },
               ]}
               className="btc-range"
               unit="%"
@@ -241,9 +246,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <span className="f-5">Background Size</span>
             <Range
               info={[
-                { icn: <b>H</b>, lbl: 'BG Width' },
-                { icn: <b>W</b>, lbl: 'BG Height' },
-                { icn: <span className="btcd-icn icn-settings" />, lbl: 'BG Height/Width' },
+                { icn: <i className="font-w-m">H</i>, lbl: 'BG Width' },
+                { icn: <i className="font-w-m">w</i>, lbl: 'BG Height' },
+                { icn: <HWordinateIcn />, lbl: 'BG Height/Width' },
               ]}
               className="btc-range"
               unit="%"
@@ -266,11 +271,11 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <TableCheckBox onChange={e => setFilter(e, 'invert(10%)')} checked={bgFilter.match(/invert/g) !== null} value="Invert" className="mr-1 mt-1" title="Invert" />
             <TableCheckBox onChange={e => setFilter(e, 'opacity(10%)')} checked={bgFilter.match(/opacity/g) !== null} value="Opacity" className="mr-1 mt-1" title="Opacity" />
             <TableCheckBox onChange={e => setFilter(e, 'sepia(10%)')} checked={bgFilter.match(/sepia/g) !== null} value="Sepia" className="mr-1 mt-1" title="Sepia" />
-            <TableCheckBox onChange={e => setFilter(e, 'saturate(10%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1" title="Saturate" />
+            <TableCheckBox onChange={e => setFilter(e, 'saturate(110%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1" title="Saturate" />
           </div>
           {bgFilter?.match(/blur/g) && (
             <Range
-              info={[{ icn: <b>B</b>, lbl: 'Blur' }]}
+              info={[{ icn: <BlurIcn />, lbl: 'Blur' }]}
               className="btc-range"
               unit="px"
               maxRange={50}
