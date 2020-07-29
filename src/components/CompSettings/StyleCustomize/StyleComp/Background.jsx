@@ -107,20 +107,37 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   }
 
   const setFilter = (e, val) => {
-    let fil = bgFilter
+    const existingFilter = bgFilter
+    let fil = existingFilter
+    let delProp = false
     if (e.target.checked) {
       fil += ` ${val}`
     } else {
       fil = fil.replace(new RegExp(`${e.target.value.toLowerCase()}\\(.+\\)`, 'g'), '')
+      if (fil.trim() === '' || fil === undefined) {
+        delProp = true
+      }
     }
-    styleDispatch({ apply: [{ cls: pcls, property: 'backdrop-filter', delProp: false, value: fil }], brkPoint })
+    styleDispatch({
+      apply: [
+        { cls: pcls, property: 'backdrop-filter', delProp, value: fil },
+        { cls: pcls, property: '-webkit-backdrop-filter', delProp, value: fil },
+      ],
+      brkPoint,
+    })
   }
 
   const handleFilterVal = (filter, value) => {
     const newVal = `${filter}(${value})`
     let fil = bgFilter
     fil = fil.replace(new RegExp(`${filter}\\(.+\\)`, 'g'), newVal)
-    styleDispatch({ apply: [{ cls: pcls, property: 'backdrop-filter', delProp: false, value: fil }], brkPoint })
+    styleDispatch({
+      apply: [
+        { cls: pcls, property: 'backdrop-filter', delProp: false, value: fil },
+        { cls: pcls, property: '-webkit-backdrop-filter', delProp: false, value: fil },
+      ],
+      brkPoint,
+    })
   }
 
   return (
