@@ -8,16 +8,17 @@ import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import ColorIcn from '../../../../Icons/ColorIcn'
 import NoneIcn from '../../../../Icons/NoneIcn'
 
-const setPlceholderPseudo = (cls) => {
+const setPlceholderPseudo = (browserPrefix, cls) => {
   const clss = cls.split(',')
-  return `${clss.join('::placeholder,')}::placeholder`
+  return `${clss.join(`:${browserPrefix}placeholder,`)}:${browserPrefix}placeholder`
 }
 
 export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
   const clr = style?.[pcls]?.['color'] || style?.[cls]?.['color']
-  const placeholderClr = style?.[setPlceholderPseudo(pcls)]?.['color'] || style?.[setPlceholderPseudo(cls)]?.['color']
+  const placeholderClr = style?.[setPlceholderPseudo(':', pcls)]?.['color'] || style?.[setPlceholderPseudo(':', cls)]?.['color']
   const clrTyp = clr ? 'Color' : 'None'
+  const placeholderClrTyp = placeholderClr ? 'Color' : 'None'
 
   const setClr = colr => {
     const value = styleConfig.important ? `${colr.style}!important` : colr.style
@@ -29,13 +30,38 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
   }
 
   const setPlcholderClr = colr => {
-    styleDispatch({ apply: [{ cls: setPlceholderPseudo(pcls), property: 'color', delProp: false, value: `${colr.style}!important` }], brkPoint })
+    styleDispatch({
+      apply: [
+        { cls: setPlceholderPseudo(':', pcls), property: 'color', delProp: false, value: `${colr.style}!important` },
+        { cls: setPlceholderPseudo(':-webkit-input-', pcls), property: 'color', delProp: false, value: `${colr.style}!important` },
+        { cls: setPlceholderPseudo(':-ms-input-', pcls), property: 'color', delProp: false, value: `${colr.style}!important` },
+        { cls: setPlceholderPseudo('-ms-input-', pcls), property: 'color', delProp: false, value: `${colr.style}!important` },
+      ],
+      brkPoint,
+    })
   }
 
   const setClrTyp = typ => {
     const actn = { apply: [{ cls: pcls, property: 'color', delProp: false, value: 'rgba(0, 0, 0, 1)' }], brkPoint }
     if (typ === 'None' && style[cls].color) {
       actn.apply[0].delProp = true
+    }
+    styleDispatch(actn)
+  }
+
+  const setPlaceholderClrTyp = typ => {
+    let delProp = false
+    if (typ === 'None' && style[setPlceholderPseudo(':', pcls)].color) {
+      delProp = true
+    }
+    const actn = {
+      apply: [
+        { cls: setPlceholderPseudo(':', pcls), property: 'color', delProp, value: 'rgba(0, 0, 0, 1)!important' },
+        { cls: setPlceholderPseudo(':-webkit-input-', pcls), property: 'color', delProp, value: 'rgba(0, 0, 0, 1)!important' },
+        { cls: setPlceholderPseudo(':-ms-input-', pcls), property: 'color', delProp, value: 'rgba(0, 0, 0, 1)!important' },
+        { cls: setPlceholderPseudo('-ms-input-', pcls), property: 'color', delProp, value: 'rgba(0, 0, 0, 1)!important' },
+      ],
+      brkPoint,
     }
     styleDispatch(actn)
   }
@@ -83,6 +109,20 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
         </div>
       )}
       {'placeholder' in styleConfig && (
+        <div className="flx flx-between mt-2">
+          <span className="f-5">Placeholder Color</span>
+          <BtnGrp
+            value={placeholderClrTyp}
+            onChange={setPlaceholderClrTyp}
+            btns={[
+              { lbl: 'Color', icn: <ColorIcn /> },
+              { lbl: 'None', icn: <NoneIcn /> },
+            ]}
+          />
+        </div>
+      )}
+
+      {'placeholder' in styleConfig && placeholderClrTyp !== 'None' && (
         <div className="flx flx-between mt-2">
           <span className="f-5">Placeholder Color</span>
           <ColorPicker alwGradient={false} value={placeholderClr} onChange={setPlcholderClr} />
