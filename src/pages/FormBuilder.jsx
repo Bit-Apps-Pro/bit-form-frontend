@@ -2,8 +2,6 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import postcss from 'postcss'
-import removePrefixes from 'postcss-remove-prefixes'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
@@ -43,7 +41,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
 
   // console.log('ssssssssssss', sessionStorage.getItem('style'))
-  console.log('ssssssssssss', style)
+  // console.log('ssssssssssss', style)
 
   useEffect(() => {
     if (brkPoint === 'md') {
