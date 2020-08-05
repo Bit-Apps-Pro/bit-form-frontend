@@ -23,19 +23,19 @@ $select-arrow: "data:image/svg+xml;charset=utf8,%3Csvg width='20' height='20' xm
 
 html,
 body {
+  background: white;
   margin: 0;
   padding: 0;
-  background: white;
 }
 
 #btcd-app {
+  color: $dp-blue;
   font-family: "Montserrat", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   height: 100%;
   font-size: 16px;
-  color: $dp-blue;
   background-color: #f5f8ff;
   & a {
     text-decoration: none;
@@ -76,9 +76,9 @@ body {
   overflow: hidden;
 }
 .media-toolbar .button-primary {
-  border-radius: 20px !important;
   background: $blue !important;
   color: white !important;
+  border-radius: 20px !important;
   &:hover {
     color: white !important;
   }
@@ -322,9 +322,9 @@ button.check {
 }
 
 .tile {
+  background: gray;
   width: 150px;
   height: 200px;
-  background: gray;
 }
 
 .layout-wrapper {
@@ -345,13 +345,13 @@ button.check {
 }
 
 .toolBar-wrp {
+  background: $bg;
   height: 100%;
   overflow: hidden;
   max-width: 165px;
   min-width: 55px;
   padding: 5px;
   padding-bottom: 35px;
-  background: $bg;
   transition: width 500ms;
   & > h4 {
     width: 100%;
@@ -361,22 +361,22 @@ button.check {
 }
 
 .btcd-toolbar-title {
+  display: flex;
   white-space: nowrap;
   word-break: keep-all;
   -webkit-user-select: none;
   -ms-user-select: none;
   -webkit-user-drag: none;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 5px 0 10px 12px;
   font-weight: bold;
   & > button {
+    background: $bg;
+    color: #73818e;
     width: 25px;
     height: 25px;
     font-weight: bold;
-    background: $bg;
-    color: #73818e;
     &:hover {
       background: $bg;
     }
@@ -384,12 +384,15 @@ button.check {
 }
 
 .toolBar {
-  padding-bottom: 80px;
   display: flex;
+  padding-bottom: 80px;
   flex-wrap: wrap;
 }
 
 .tools {
+  display: flex;
+  background: white;
+  color: $dp-blue;
   font-size: 15px;
   white-space: nowrap;
   word-break: keep-all;
@@ -397,9 +400,6 @@ button.check {
   height: 35px;
   padding: 8px;
   border-radius: 8px;
-  background: white;
-  color: $dp-blue;
-  display: flex;
   align-items: center;
   cursor: grab;
   overflow: hidden;
@@ -408,18 +408,18 @@ button.check {
   transition: all 200ms;
 
   & > span {
-    font-size: 25px;
     display: inline-block;
     color: $dp-blue;
+    font-size: 25px;
     margin-right: 5px;
   }
 
   &:hover,
   &:focus {
+    color: $blue;
     outline: none;
     transform: scale(1.05);
     box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.3), -2px -2px 3px 0px white;
-    color: $blue;
     & > span {
       color: $blue;
     }
@@ -441,10 +441,10 @@ button.check {
 }
 
 .btcd-ck-wrp {
-  color: rgb(54, 54, 54);
   display: inline-flex;
-  align-items: center;
+  color: rgb(54, 54, 54);
   position: relative;
+  align-items: center;
   padding-left: 35px;
   font-weight: normal;
   cursor: pointer;
@@ -502,8 +502,8 @@ button.check {
   & .inp-grp {
     &:hover {
       .icn {
-        background-color: transparentize($blue, 0.92);
         color: $blue;
+        background-color: transparentize($blue, 0.92);
         & .line-icn {
           stroke: $blue;
         }
@@ -517,13 +517,13 @@ button.check {
     }
   }
   & .icn {
+    background: rgb(238, 243, 250);
     width: 30px;
     max-width: 30px;
     min-width: 30px;
     max-height: 30px;
     height: 30px;
     justify-content: center;
-    background: rgb(238, 243, 250);
   }
   & input[type="number"] {
     width: 55px;
@@ -579,7 +579,6 @@ button.check {
   }
 
   @mixin thumb {
-    @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
     background: $thumb-color;
     border: $thumb-border-width solid $thumb-border-color;
     border-radius: $thumb-radius;
@@ -587,11 +586,12 @@ button.check {
     cursor: pointer;
     height: $thumb-height;
     width: $thumb-width;
+    @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
   }
 
   [type="range"] {
-    -webkit-appearance: none;
     background: transparent;
+    -webkit-appearance: none;
     margin: $thumb-height / 2 0;
     width: $track-width;
     &::-moz-focus-outer {
@@ -629,26 +629,26 @@ button.check {
     }
 
     &::-webkit-slider-runnable-track {
-      @include track;
-      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
       background: $track-color;
       border: $track-border-width solid $track-border-color;
       border-radius: $track-radius;
+      @include track;
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
     }
 
     &::-webkit-slider-thumb {
-      @include thumb;
       -webkit-appearance: none;
       margin-top: ((-$track-border-width * 2 + $track-height) / 2 - $thumb-height / 2);
+      @include thumb;
     }
 
     &::-moz-range-track {
-      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
-      @include track;
       background: $track-color;
       border: $track-border-width solid $track-border-color;
       border-radius: $track-radius;
       height: $track-height / 2;
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+      @include track;
     }
 
     &::-moz-range-thumb {
@@ -656,30 +656,30 @@ button.check {
     }
 
     &::-ms-track {
-      @include track;
       background: transparent;
+      color: transparent;
       border-color: transparent;
       border-width: ($thumb-height / 2) 0;
-      color: transparent;
+      @include track;
     }
 
     &::-ms-fill-lower {
-      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
       background: $ie-bottom-track-color;
       border: $track-border-width solid $track-border-color;
       border-radius: ($track-radius * 2);
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
     }
 
     &::-ms-fill-upper {
-      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
       background: $track-color;
       border: $track-border-width solid $track-border-color;
       border-radius: ($track-radius * 2);
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
     }
 
     &::-ms-thumb {
-      @include thumb;
       margin-top: $track-height / 4;
+      @include thumb;
     }
 
     &:disabled {
@@ -696,9 +696,9 @@ button.check {
 }
 
 .btcd-mrk:after {
-  content: "";
-  position: absolute;
   display: none;
+  position: absolute;
+  content: "";
 }
 
 .btcd-ck-wrp input:checked ~ .btcd-mrk:after {
@@ -721,24 +721,24 @@ button.check {
 }
 
 .btcd-ck-wrp .btcd-mrk:not(.ck):after {
+  background: white;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 45%;
   height: 45%;
   border-radius: 50%;
-  background: white;
 }
 
 .btcd-no-data {
-  font-weight: 500;
   position: absolute;
-  opacity: 0.6;
   top: 240px;
   right: 45%;
+  font-weight: 500;
+  opacity: 0.6;
   & > div {
-    font-size: 18px;
     color: #374072;
+    font-size: 18px;
   }
   & img {
     width: 200px;
@@ -754,13 +754,13 @@ button.check {
   }
 
   &::before {
-    content: "\02551";
-    height: 64px;
     color: #b1b1b1;
     position: absolute;
     top: 47vh;
-    text-align: center;
     left: -2px;
+    content: "\02551";
+    height: 64px;
+    text-align: center;
   }
 
   &:hover::before {
@@ -769,9 +769,9 @@ button.check {
 }
 
 .bar-l {
+  background: #f8f8f8;
   width: 0;
   pointer-events: none;
-  background: #f8f8f8;
   &::before {
     content: "";
   }
@@ -871,10 +871,10 @@ button.check {
     border-radius: 7px 0 0 7px;
   }
   & button {
-    font-size: 13px;
-    position: relative;
     background: transparent;
     color: $dp-txt;
+    position: relative;
+    font-size: 13px;
     border: 1px solid lightgray;
     border-right: 0;
     border-radius: 0;
@@ -921,20 +921,20 @@ button.check {
 }
 
 .bit-blk-icn {
-  opacity: 0.7;
+  display: flex;
+  background: transparent;
   position: absolute;
-  font-size: 27px;
   top: 5px;
+  opacity: 0.7;
+  font-size: 27px;
   cursor: pointer;
   padding: 2px;
   border-radius: 3px;
-  background: transparent;
   width: 15px;
   height: 15px;
   padding: 2px;
   justify-content: center;
   align-items: center;
-  display: flex;
   overflow: hidden;
   -webkit--ms-user-select: none;
   -webkit-user-select: none;
@@ -950,8 +950,8 @@ button.check {
   transition: all 0.3s;
 
   &:hover {
-    opacity: 1;
     background: rgb(209, 209, 209) !important;
+    opacity: 1;
   }
 }
 
@@ -1173,6 +1173,7 @@ button.check {
   }
 }
 .btcd-inte-card {
+  position: relative;
   cursor: pointer;
   width: 160px;
   height: 200px;
@@ -1181,12 +1182,11 @@ button.check {
   border-radius: 20px;
   outline: none;
   box-shadow: 1px 2px 5px #d7e0ed;
-  position: relative;
   transition: box-shadow 0.2s, transform 0.3s;
   & > .btcd-inte-atn {
+    background: white;
     position: absolute;
     bottom: 38px;
-    background: white;
     height: 0px;
     width: 100%;
     text-align: center;
@@ -1194,9 +1194,9 @@ button.check {
     transition: height 0.2s;
   }
   & > .body {
+    background: #fff;
     width: 100%;
     padding-top: 3px;
-    background: #fff;
     & > div {
       width: 95%;
       height: 17px;
@@ -1207,12 +1207,12 @@ button.check {
     }
   }
   & a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
   }
   &.add-inte {
-    font-size: 100px;
     color: #ccd6fe;
+    font-size: 100px;
     cursor: pointer;
     outline: none;
     &:hover {
@@ -1227,20 +1227,20 @@ button.check {
     }
   }
   & img {
+    display: block;
     background-color: aliceblue;
     height: 160px;
     width: 160px;
-    display: block;
   }
 }
 
 .inte-sm {
+  background: aliceblue;
+  position: relative;
   width: 110px;
   height: 130px;
   border-radius: 15px;
   font-size: 11px;
-  position: relative;
-  background: aliceblue;
   & img {
     max-height: 110px;
     max-width: 110px;
@@ -1248,14 +1248,14 @@ button.check {
   }
   &:before {
     display: flex;
+    background: rgba(4, 37, 155, 0.18);
+    color: #fff;
+    position: absolute;
     justify-content: center;
     align-items: center;
     font-size: 100px;
-    color: #fff;
-    background: rgba(4, 37, 155, 0.18);
     width: 100%;
     height: 100%;
-    position: absolute;
   }
   &:hover:not(.btcd-inte-dis) {
     &:before {
@@ -1273,16 +1273,16 @@ button.check {
     filter: grayscale(1) !important;
   }
   &::before {
+    display: flex;
+    background: rgba(17, 27, 76, 0.67);
     position: absolute;
     z-index: 9;
     content: "Coming Soon";
     font-size: 12px;
     font-weight: 500;
     text-shadow: 0px 0px 4px black;
-    background: rgba(17, 27, 76, 0.67);
     width: 100%;
     height: 100%;
-    display: flex;
     justify-content: center;
     align-items: center;
   }
@@ -1301,24 +1301,24 @@ button.check {
 }
 
 .opt {
+  background: #eceef1;
   margin-top: 20px;
   padding: 10px;
-  background: #eceef1;
   border-radius: 8px;
 }
 
 .btn {
+  display: inline-flex;
+  color: inherit;
   border: none;
   padding: 7px 10px;
   border-radius: 8px;
-  display: inline-flex;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   outline: none;
-  color: inherit;
   font-size: 14px;
   text-decoration: none;
   white-space: nowrap;
@@ -1331,8 +1331,8 @@ button.check {
 
 .btcd-btn-o-blue {
   background: transparent;
-  border: 1px solid $blue;
   color: $blue !important;
+  border: 1px solid $blue;
   transition: background 0.2s !important;
   &:hover {
     background: $blue;
@@ -1342,8 +1342,8 @@ button.check {
 
 .btcd-btn-o-red {
   background: transparent;
-  border: 1px solid $red;
   color: $red !important;
+  border: 1px solid $red;
   transition: background 0.2s !important;
   &:hover {
     background: $red;
@@ -1352,8 +1352,8 @@ button.check {
 }
 .btcd-btn-o-gray {
   background: transparent;
-  border: 1px solid #9c9c9c;
   color: #4b4b4b !important;
+  border: 1px solid #9c9c9c;
   transition: background 0.2s !important;
   &:hover {
     background: #f7f7f7;
@@ -1411,15 +1411,15 @@ button.check {
 
 // navbar start
 nav.top-nav {
+  background: white;
   position: relative;
   white-space: nowrap;
-  background: white;
 }
 
 .logo {
+  background: white;
   height: 40px;
   width: 40px;
-  background: white;
   overflow: hidden;
   border-radius: 15px;
   box-shadow: 2px 2px 5px 0px #444444;
@@ -1444,8 +1444,8 @@ nav.top-nav {
   padding: 20px;
 }
 .route-wrp {
-  min-height: 80vh;
   background: white;
+  min-height: 80vh;
   margin: -150px 20px 30px;
   margin-top: -150px;
   border-radius: 20px;
@@ -1455,10 +1455,12 @@ nav.top-nav {
   }
 }
 .top-nav > a {
+  display: inline-block;
+  background: $dp-bg;
+  color: #fff;
   height: 40px;
   font-size: 13px;
   text-decoration: none;
-  display: inline-block;
   z-index: 10;
   font-weight: 500;
   width: 100px;
@@ -1466,8 +1468,6 @@ nav.top-nav {
   margin-left: 5px;
   text-align: center;
   cursor: pointer;
-  color: #fff;
-  background: $dp-bg;
   border-radius: 15px;
   box-shadow: none;
   &:hover {
@@ -1476,8 +1476,8 @@ nav.top-nav {
 }
 
 nav.top-nav {
-  color: black;
   background: transparent;
+  color: black;
 }
 
 // navbar end
@@ -1487,10 +1487,10 @@ nav.top-nav {
 }
 
 .f-table {
+  color: #4b5668;
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-  color: #4b5668;
 }
 
 .f-table [data-sticky-first-right-td="true"],
@@ -1528,8 +1528,8 @@ nav.top-nav {
 
 .f-table .tbody .tr,
 .f-table .thead .tr {
-  height: 49px;
   position: relative;
+  height: 49px;
   outline: none;
   align-items: center;
   &:hover {
@@ -1544,13 +1544,13 @@ nav.top-nav {
 }
 
 .f-table .tbody .tr .td {
+  color: $dp-bg;
   line-height: 1.9;
   padding: 5px 5px;
   font-size: 14px;
   font-weight: 600;
   word-break: break-all;
   border-bottom: 1px solid #dedce4;
-  color: $dp-bg;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -1613,16 +1613,16 @@ nav.top-nav {
 }
 
 .btcd-t-action-wrp {
-  position: absolute;
   background: white;
+  position: absolute;
   top: 0;
   right: 0;
   justify-content: flex-end;
   height: 100%;
   width: 100%;
   &:hover {
-    width: 172px;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 27%);
+    width: 172px;
   }
 }
 
@@ -1654,13 +1654,13 @@ nav.top-nav {
     }
     & > .btcd-accr-title > div {
       & > input {
+        background: transparent;
         border: none;
         line-height: 1;
         box-shadow: none;
         min-height: 10px;
         padding: 0;
         margin: 0;
-        background: transparent;
         font-size: 15px;
         border-radius: 5px;
         outline: none;
@@ -1670,8 +1670,8 @@ nav.top-nav {
         display: inline-block;
         margin-left: 3px;
         & > .btcd-icn {
-          font-size: 14px !important;
           color: transparentize(#000, 0.5);
+          font-size: 14px !important;
         }
       }
     }
@@ -1681,9 +1681,9 @@ nav.top-nav {
         box-shadow: 0 0 0 1px transparentize(#000000, 0.8);
       }
       &:focus {
+        background: transparentize($color: #fff, $amount: 0.4);
         color: black !important;
         box-shadow: 0 0 0 1px transparentize($dp-blue, 0.8);
-        background: transparentize($color: #fff, $amount: 0.4);
         padding: 0 4px;
       }
     }
@@ -1705,11 +1705,11 @@ nav.top-nav {
 }
 
 .f-search {
+  display: flex;
   font-size: 12 !important;
   float: right;
   margin-right: 25px;
   margin-bottom: 10px;
-  display: flex;
   & input {
     background: transparent;
     border-radius: 0;
@@ -1728,7 +1728,9 @@ nav.top-nav {
 }
 
 .icn-btn {
+  background: transparent;
   color: $dp-blue;
+  position: relative;
   cursor: pointer;
   font-size: 20px;
   border: 0;
@@ -1738,9 +1740,7 @@ nav.top-nav {
   min-height: 32px;
   border-radius: 50%;
   line-height: 1px;
-  background: transparent;
   outline: none;
-  position: relative;
   &:hover {
     background: #f3f3f3;
   }
@@ -1795,20 +1795,20 @@ nav.top-nav {
 }
 
 .btcd-toggle {
-  isolation: isolate;
+  background: #d6d6d6;
   position: relative;
+  isolation: isolate;
   height: 19px;
   width: 39px;
   border-radius: 20px;
-  background: #d6d6d6;
   overflow: hidden;
 }
 
 .btcd-toggle-inner {
-  z-index: 2;
   position: absolute;
   top: 1px;
   left: 1px;
+  z-index: 2;
   height: 17px;
   width: 37px;
   border-radius: 15px;
@@ -1816,12 +1816,12 @@ nav.top-nav {
 }
 
 .btcd-active-bg {
+  background: $blue;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 200%;
-  background: $blue;
   transform: translate3d(-100%, 0, 0);
   transition: transform 0.05s linear 0.17s;
 }
@@ -1831,9 +1831,9 @@ nav.top-nav {
 }
 
 .btcd-indicator {
+  background: white;
   height: 100%;
   width: 200%;
-  background: white;
   border-radius: 13px;
   transform: translate3d(-75%, 0, 0);
   transition: transform 0.35s cubic-bezier(0.85, 0.05, 0.18, 1.35);
@@ -1851,8 +1851,9 @@ nav.top-nav {
 .cpyTxt {
   width: 200px;
   & input {
-    font-weight: normal;
+    background: whitesmoke;
     color: $dp-blue;
+    font-weight: normal;
     margin-top: 0;
     letter-spacing: 1px;
     outline: none;
@@ -1860,13 +1861,12 @@ nav.top-nav {
     width: 160px;
     border-radius: 15px 0 0 15px;
     border: none;
-    background: whitesmoke;
   }
   & button {
-    outline: none;
-    position: relative;
-    padding: 3px 11px;
     background: #e0e0e0;
+    position: relative;
+    outline: none;
+    padding: 3px 11px;
     border: none;
     border-radius: 0 15px 15px 0;
   }
@@ -1880,20 +1880,20 @@ nav.top-nav {
 .field-key-cpy {
   margin: 6px auto 10px auto;
   & input {
+    background: white;
     outline: none;
     width: 82%;
-    background: white;
     padding: 10px;
     border: 1px solid #e4e4e4;
     border-radius: 8px 0 0 8px;
   }
   & button {
+    position: relative;
     cursor: pointer;
     padding: 11px;
     border: 1px solid #e4e4e4;
     border-left: none;
     border-radius: 0 8px 8px 0;
-    position: relative;
     &:hover {
       background: #fafafa;
     }
@@ -1902,21 +1902,21 @@ nav.top-nav {
 
 .tooltip {
   &::after {
+    display: block;
+    background: $dp-bg;
+    color: white;
+    position: absolute;
+    top: 110%;
+    left: var(--left);
     font-family: "Montserrat", sans-serif;
     line-height: 1;
     white-space: pre-wrap;
     font-size: 13px;
     font-weight: 600;
     content: var(--tooltip-txt);
-    background: $dp-bg;
-    color: white;
-    position: absolute;
-    display: block;
     border-radius: 50%;
     padding: 7px 10px;
     width: auto;
-    top: 110%;
-    left: var(--left);
     transform-origin: 0%;
     transform: scale(0) translate(-50%, 0);
     white-space: nowrap;
@@ -1928,8 +1928,8 @@ nav.top-nav {
     transition: transform 300ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
   &:hover::after {
-    border-radius: 7px;
     left: var(--left);
+    border-radius: 7px;
     transform-origin: 0%;
     transform: scale(1) translate(-50%, 0);
   }
@@ -1953,35 +1953,35 @@ nav.top-nav {
   background-color: $blue;
 }
 .btcd-menu {
-  font-weight: normal;
   position: relative;
+  font-weight: normal;
 }
 .btcd-menu-list {
+  background: rgb(255, 255, 255);
   position: absolute;
+  left: 0;
   width: 0;
   height: 0;
   border-radius: 50%;
   overflow: hidden;
-  left: 0;
-  background: rgb(255, 255, 255);
   z-index: 999;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.22);
   transition: left 200ms, width 0.3s, height 0.3s, border-radius 0.5s;
 
   & > a,
   button {
+    display: block;
+    background: transparent;
     color: inherit;
     font-weight: bold;
     font-size: 13px;
     text-decoration: none;
     padding: 10px;
-    display: block;
     cursor: pointer;
     border: none;
     width: 100%;
     height: 38px;
     text-align: left;
-    background: transparent;
     outline: none;
   }
   & > a:hover,
@@ -1995,16 +1995,17 @@ nav.top-nav {
 }
 .btcd-m-a {
   background: #fff;
+  left: -90px;
   width: 110px;
   height: 114px;
   border-radius: 8px;
-  left: -90px;
 }
 
 .btcd-menu-btn {
+  background: #ffffff;
+  color: $blue;
   position: relative;
   margin-right: 10px;
-  background: #ffffff;
   border: none;
   font-size: 14px;
   border-radius: 50px;
@@ -2014,7 +2015,6 @@ nav.top-nav {
   min-width: 30px;
   min-height: 30px;
   line-height: 0px;
-  color: $blue;
   outline: none;
   cursor: pointer;
   transition: all 0.3s;
@@ -2059,21 +2059,21 @@ nav.top-nav {
 }
 
 .btcd-modal-wrp {
-  position: fixed;
   background: rgba(18, 21, 60, 0.53);
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
   z-index: 9999;
-  left: 0;
   width: 100%;
-  top: 0;
   justify-content: center;
   overflow: auto;
   backdrop-filter: blur(1px);
 }
 
 .btcd-modal {
-  border-radius: 20px;
   background: #fff;
+  border-radius: 20px;
   overflow: hidden;
   width: 700px;
   height: 70%;
@@ -2096,8 +2096,8 @@ nav.top-nav {
 }
 
 .btcd-modal-content {
-  padding: 15px;
   position: relative;
+  padding: 15px;
   height: 97%;
 }
 .custom-conf-mdl {
@@ -2114,10 +2114,10 @@ nav.top-nav {
 }
 .btcd-mdl-close {
   background: #fafafa;
-  float: right;
   position: absolute;
-  right: 0;
   top: 0;
+  right: 0;
+  float: right;
   margin: 10px;
 }
 .btcd-mdl-div {
@@ -2127,8 +2127,8 @@ nav.top-nav {
 
 .btcd-mdl-hdr-btn {
   position: absolute;
-  right: 50px;
   top: 2px;
+  right: 50px;
 }
 
 .btcd-modal-show {
@@ -2143,6 +2143,7 @@ nav.top-nav {
   display: flex;
 }
 .btcd-tem {
+  display: flex;
   position: relative;
   width: 150px;
   height: 150px;
@@ -2150,7 +2151,6 @@ nav.top-nav {
   border-radius: 10px;
   margin-top: 10px;
   margin-left: 10px;
-  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -2176,12 +2176,12 @@ nav.top-nav {
 }
 
 .btcd-hid-btn {
-  position: absolute;
   display: block;
   background: $blue;
-  width: 100%;
-  left: 0;
+  position: absolute;
   bottom: -53px;
+  left: 0;
+  width: 100%;
   text-align: center;
   transition: bottom 300ms;
   & > a {
@@ -2201,12 +2201,12 @@ nav.top-nav {
 }
 
 .btcd-builder-wrp {
-  height: 100%;
   background: white !important;
   position: fixed !important;
-  left: 20px !important;
-  right: 20px !important;
   top: 80px !important;
+  right: 20px !important;
+  left: 20px !important;
+  height: 100%;
   margin-bottom: 30px !important;
   border-radius: 20px !important;
   overflow: hidden !important;
@@ -2214,19 +2214,19 @@ nav.top-nav {
   // transition: left 0.5s, right 0.5s, top 0.5s, margin-bottom 0.5s, border-radius 0.5s 0.5s !important;
 }
 .btcd-ful-scn {
-  left: 0 !important;
-  right: 0 !important;
   top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
   border-radius: 0 !important;
   margin-bottom: 0 !important;
 }
 
 .btcd-drawer {
-  height: 100%;
+  background: white;
   position: fixed;
   top: 0;
+  height: 100%;
   width: 400px;
-  background: white;
   z-index: 9;
   padding: 20px;
   box-shadow: -2px 0 4px 1px transparentize(#000000, 0.7);
@@ -2249,10 +2249,10 @@ nav.top-nav {
 }
 
 .btcd-bld-nav {
+  display: flex;
+  background: $dp-bg;
   height: 40px;
   overflow: hidden;
-  background: $dp-bg;
-  display: flex;
   justify-content: space-between;
 }
 
@@ -2260,12 +2260,12 @@ nav.top-nav {
   display: flex;
   box-shadow: none;
   & > a {
-    color: white;
+    display: inline-block;
     background: transparentize(#fff, 0.9);
+    color: white;
     padding: 6px 15px;
     margin: 6px;
     border-radius: 100px;
-    display: inline-block;
     text-decoration: none;
     line-height: 16px;
     transition: background 0.3s;
@@ -2324,10 +2324,10 @@ nav.top-nav {
   margin-right: 200px;
 
   & > .btcd-bld-title-inp {
+    background: transparentize(#fff, 0.8);
+    color: white;
     margin-top: 5px;
     padding: 6px;
-    color: white;
-    background: transparentize(#fff, 0.8);
     font-size: 16px;
     border: none;
     text-align: center;
@@ -2348,9 +2348,9 @@ nav.top-nav {
 }
 
 .app-link-active {
+  background: $light-bg !important;
   color: #0e112f !important;
   font-weight: bold !important;
-  background: $light-bg !important;
 }
 
 .btcd-f-settings {
@@ -2358,25 +2358,26 @@ nav.top-nav {
 }
 
 .btcd-f-sidebar {
+  background: $dp-bg;
   position: fixed;
   height: 100%;
   z-index: 9;
   width: 220px;
-  background: $dp-bg;
   box-shadow: -3px -6px 7px -1px rgb(0, 0, 0) inset;
   &::before {
-    content: "";
     position: absolute;
+    right: -15px;
+    content: "";
     height: 15px;
     width: 15px;
-    right: -15px;
     background-color: transparent;
     border-radius: 15px 0 0 0;
     box-shadow: -5px -3px 0 2px $dp-bg;
   }
   & > a {
-    position: relative;
     display: flex;
+    color: white;
+    position: relative;
     align-items: center;
     font-size: 15px;
     padding: 12px 10px 12px 20px;
@@ -2384,7 +2385,6 @@ nav.top-nav {
     border-radius: 50px 0 0 50px;
     text-decoration: none;
     font-weight: 600;
-    color: white;
     margin-bottom: 10px;
     &:focus {
       box-shadow: none;
@@ -2403,53 +2403,53 @@ nav.top-nav {
   color: $dp-blue !important;
   box-shadow: -4px 2px 3px 0 black;
   &:before {
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 18px;
     background: transparent;
+    position: absolute;
     top: -18px;
     right: 0;
+    content: "";
+    width: 15px;
+    height: 18px;
     border-radius: 0 0 15px 0;
     box-shadow: 5px 4px 0 3px $light-bg;
   }
   &:after {
-    content: "";
+    background: #6b424200;
     position: absolute;
+    right: 0;
+    bottom: -18px;
+    content: "";
     width: 15px;
     height: 18px;
-    background: #6b424200;
-    bottom: -18px;
-    right: 0;
     border-radius: 0 15px 0 0;
     box-shadow: 5px -9px 0 4px $light-bg;
   }
 }
 
 .btcd-f-c-t-o {
+  display: inline-block;
+  background: white;
   cursor: pointer;
   border: 2.5px solid white;
   outline: none;
   text-align: center;
-  background: white;
   padding: 10px;
   border-radius: 8px;
   margin-top: 10px;
-  display: inline-block;
   &:hover:not(.btcd-f-c-t-o-a) {
     border-color: transparentize($blue, 0.6);
   }
 }
 
 .btcd-f-c-t-o-a {
+  color: $blue;
   position: relative;
   border-color: $blue;
-  color: $blue;
   &:after {
-    content: "";
     position: absolute;
     top: 100%;
     left: 50%;
+    content: "";
     margin-left: -10px;
     border-width: 8px;
     border-style: solid;
@@ -2509,8 +2509,8 @@ nav.top-nav {
     box-shadow: 0 0 0 0px $blue, 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
   }
   &:disabled {
-    background-color: #fafafa;
     color: gray;
+    background-color: #fafafa;
   }
 }
 .btcd-paper-drpdwn {
@@ -2542,10 +2542,10 @@ nav.top-nav {
 }
 
 select.btcd-paper-inp {
+  background: url($select-arrow) no-repeat right #fff;
   box-shadow: none;
   padding: 10px 24px 10px 10px !important;
   appearance: none;
-  background: url($select-arrow) no-repeat right #fff;
   transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s !important;
   &:hover:not(:disabled),
   :focus {
@@ -2643,8 +2643,8 @@ select.btcd-paper-inp {
 }
 
 .btcd-tabl-lnk {
-  text-decoration: none;
   color: $blue;
+  text-decoration: none;
   &:focus {
     color: $dp-blue !important;
     outline: none !important;
@@ -2756,16 +2756,16 @@ select.btcd-paper-inp {
 // table checkbox end
 .btcd-t-resizer {
   display: inline-block;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 5px;
   height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
   //border-left: 1px solid #eaeaea;
   transform: translateX(50%);
   z-index: 1;
   touch-action: none;
-  background: transparent;
   &:hover {
     background: transparent;
     border-left: 2px solid #c0bfc5;
@@ -2778,15 +2778,15 @@ select.btcd-paper-inp {
 }
 
 .btcd-menu-li {
+  display: none;
+  background: transparentize($color: #fff, $amount: 0.1);
+  position: absolute;
   height: 350px;
   width: max-content;
-  position: absolute;
   backdrop-filter: blur(7px);
-  background: transparentize($color: #fff, $amount: 0.1);
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.22);
   z-index: 999;
   border-radius: 10px;
-  display: none;
   overflow: hidden;
   & > div:not(.btcd-m-li-itm) {
     //height: 280px !important;
@@ -2804,9 +2804,9 @@ select.btcd-paper-inp {
 
 .btcd-col-vis {
   background: red;
+  right: 40px;
   width: 200px;
   height: 100px;
-  right: 40px;
   z-index: 9;
 }
 
@@ -2826,20 +2826,20 @@ select.btcd-paper-inp {
   }
 }
 .btcd-pane-drg {
+  display: none;
+  position: relative;
   float: right;
   line-height: 1;
   font-size: 24px;
   font-weight: bold;
   cursor: move;
-  display: none;
   -ms-user-select: none;
   -webkit-user-select: none;
-  position: relative;
   &::before {
+    background: red;
     position: absolute;
     height: 10px;
     width: 10px;
-    background: red;
   }
 }
 
@@ -2848,8 +2848,8 @@ select.btcd-paper-inp {
 }
 
 .btcd-t-actions {
-  padding-left: 15px;
   display: inline-block;
+  padding-left: 15px;
   width: 500px;
 }
 
@@ -2859,21 +2859,21 @@ select.btcd-paper-inp {
     text-decoration: none;
   }
   & > div {
-    width: 70px;
     display: inline-block;
+    width: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
     & > a {
-      text-decoration: none;
       color: $dp-txt;
+      text-decoration: none;
       &:hover {
         color: $blue;
       }
     }
   }
   & > a {
-    color: $dp-txt;
     display: none;
+    color: $dp-txt;
   }
 
   &:hover {
@@ -2884,10 +2884,10 @@ select.btcd-paper-inp {
 }
 
 .btcd-eye-t {
+  display: inline-block;
   -ms-user-select: none;
   -webkit-user-select: none;
   cursor: pointer;
-  display: inline-block;
   input:checked {
     + {
       span > .eye-t-v {
@@ -2909,10 +2909,10 @@ select.btcd-paper-inp {
 }
 
 .btcd-pill {
+  background: transparentize($blue, 0.8);
+  color: $dp-blue;
   padding: 5px;
   border-radius: 5px;
-  color: $dp-blue;
-  background: transparentize($blue, 0.8);
 }
 
 .scl-7 {
@@ -2924,17 +2924,17 @@ select.btcd-paper-inp {
 }
 
 .btcd-snack {
+  background: #383838;
+  color: white;
+  position: fixed;
+  right: 20px;
+  bottom: -100px;
   -ms-user-select: none;
   -webkit-user-select: none;
-  background: #383838;
   font-weight: 300;
   font-size: 0.875rem;
   padding: 10px 15px;
-  color: white;
   border-radius: 5px;
-  position: fixed;
-  bottom: -100px;
-  right: 20px;
   transition: bottom 0.5s, transform 0.5s;
   z-index: 9999;
   transform: scale(0);
@@ -2942,22 +2942,22 @@ select.btcd-paper-inp {
     0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
 .btcd-snack-a {
-  font-weight: 500;
   bottom: 30px;
+  font-weight: 500;
   transform: scale(1);
 }
 
 .btcd-snack-cls {
-  -ms-user-select: none;
-  -webkit-user-select: none;
   display: inline-block;
   background: transparentize(#fff, 0.95);
+  color: white;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   height: 25px;
   width: 25px;
   border: none;
   font-size: 21px;
   padding: 3px 6px;
-  color: white;
   border-radius: 50px;
   line-height: 0.8;
   margin-left: 7px;
@@ -2977,18 +2977,18 @@ select.btcd-paper-inp {
 
 .btcd-param-t-wrp {
   & .btcd-param-t {
-    resize: horizontal;
     display: inline-block;
+    resize: horizontal;
     border: 1px solid #c7c7c7;
     border-radius: 8px;
     overflow: visible;
     & .tr {
-      min-width: 500px;
       position: relative;
+      min-width: 500px;
       &:first-child {
+        color: gray;
         border-bottom: 1px solid #c7c7c7;
         font-size: 13px;
-        color: gray;
         & .td {
           padding: 8px;
         }
@@ -2997,12 +2997,12 @@ select.btcd-paper-inp {
         border-bottom: 0;
       }
       & .p-atn {
-        padding-left: 3px;
+        display: none;
         position: absolute;
         top: 0;
         left: 100%;
+        padding-left: 3px;
         min-width: 170px;
-        display: none;
         & select {
           width: 78%;
         }
@@ -3014,16 +3014,16 @@ select.btcd-paper-inp {
       }
     }
     & .td {
+      display: inline-block;
       position: relative;
       padding: 5px;
-      display: inline-block;
       width: 50%;
     }
     & .add-pram {
+      background: #fafafa;
       width: 100%;
       height: 25px;
       border-radius: 0 0 8px 8px;
-      background: #fafafa;
       font-weight: bold;
       &:hover {
         background: #eeeeff;
@@ -3033,23 +3033,23 @@ select.btcd-paper-inp {
 }
 
 .btcd-s-tab-link {
-  cursor: pointer;
+  background: transparent;
   color: $dp-blue;
+  position: relative;
+  cursor: pointer;
   font-size: 15px;
   border: none;
-  background: transparent;
   outline: none;
   margin-top: 5px;
   justify-content: center;
   padding: 8px 10px 5px 8px;
   border-radius: 8px 8px 0 0;
-  position: relative;
   & .btcd-icn {
     font-size: 20px;
   }
   &:hover {
-    color: $blue;
     background: transparentize($blue, 0.95) !important;
+    color: $blue;
   }
   &:focus {
     box-shadow: none;
@@ -3065,32 +3065,32 @@ select.btcd-paper-inp {
   color: $blue;
   position: relative;
   &::before {
-    content: "";
+    background: $blue;
     position: absolute;
     top: 94%;
+    content: "";
     border-radius: 10px 10px 0 0;
     height: 4px;
     width: 85%;
-    background: $blue;
   }
 }
 .btc-s-l {
-  cursor: pointer;
+  display: block;
   background: white;
   color: $dp-txt;
+  cursor: pointer;
   width: 90%;
   border-radius: 8px;
   padding: 7px 12px;
-  display: block;
   margin-left: auto;
   margin-right: 20px;
   font-weight: 500;
   //box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   & .lft-icn {
+    background: #f5f5f5;
     border-radius: 30;
     justify-content: center;
-    background: #f5f5f5;
     & svg {
       height: 16px;
       width: 16px;
@@ -3110,10 +3110,10 @@ select.btcd-paper-inp {
   }
 }
 .btcd-li-side-btn {
-  position: absolute;
-  left: 100%;
   display: none;
+  position: absolute;
   top: 0;
+  left: 100%;
 }
 
 .pos-rel {
@@ -3121,10 +3121,10 @@ select.btcd-paper-inp {
 }
 
 .btcd-flow-icn {
+  color: transparentize($dp-txt, 0.7);
   font-size: 24px;
   font: bolder;
   line-height: 0;
-  color: transparentize($dp-txt, 0.7);
 }
 .rev-icn {
   transform: rotateY(180deg);
@@ -3143,11 +3143,11 @@ select.btcd-paper-inp {
 }
 
 .btcd-mt-inp {
+  display: inline-block;
+  position: relative;
   line-height: 1;
   border-radius: 8px;
   width: 100%;
-  position: relative;
-  display: inline-block;
   padding-top: 6px;
   margin-top: -6px;
   font-size: 16px;
@@ -3158,6 +3158,7 @@ select.btcd-paper-inp {
 /* Input, Textarea */
 .btcd-mt-inp > input,
 .btcd-mt-inp > textarea {
+  color: $dp-txt;
   resize: vertical;
   box-sizing: border-box;
   margin: 0;
@@ -3168,7 +3169,6 @@ select.btcd-paper-inp {
   padding: 7px 13px;
   width: 100%;
   height: inherit;
-  color: $dp-txt;
   background-color: transparent;
   box-shadow: none; /* Firefox */
   font-family: inherit;
@@ -3181,16 +3181,16 @@ select.btcd-paper-inp {
 /* Span */
 .btcd-mt-inp > input + span,
 .btcd-mt-inp > textarea + span {
-  -ms-user-select: none;
-  -webkit-user-select: none;
+  display: flex;
+  color: gray;
   position: absolute;
   top: 0;
   left: 0;
-  display: flex;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   border-color: $gray;
   width: 100%;
   max-height: 100%;
-  color: gray;
   font-size: 75%;
   line-height: 15px;
   cursor: text;
@@ -3202,8 +3202,8 @@ select.btcd-paper-inp {
 .btcd-mt-inp > input + span::after,
 .btcd-mt-inp > textarea + span::before,
 .btcd-mt-inp > textarea + span::after {
-  content: "";
   display: block;
+  content: "";
   box-sizing: border-box;
   margin-top: 6px;
   border-top: solid 1px;
@@ -3295,9 +3295,9 @@ select.btcd-paper-inp {
 .btcd-mt-inp > input:disabled + span,
 .btcd-mt-inp > textarea:disabled,
 .btcd-mt-inp > textarea:disabled + span {
+  color: rgba(var(--deep, 0, 0, 0), 0.38);
   border-color: rgba(var(--deep, 0, 0, 0), 0.38) !important;
   border-top-color: transparent !important;
-  color: rgba(var(--deep, 0, 0, 0), 0.38);
   pointer-events: none;
 }
 
@@ -3339,23 +3339,25 @@ select.btcd-paper-inp {
 }
 
 .btcd-mt-sel {
-  position: relative;
   display: inline-block;
+  position: relative;
   width: 100%;
   margin-top: 6px;
   & small {
+    display: block;
+    background: white;
     color: gray;
+    position: absolute;
+    top: -7px;
     -ms-user-select: none;
     -webkit-user-select: none;
     font-size: 12px;
-    top: -7px;
-    display: block;
-    position: absolute;
     margin-left: 10px;
-    background: white;
     padding: 0 4px;
   }
   & select {
+    display: block;
+    background: url($select-arrow) no-repeat right #fff;
     box-shadow: none;
     height: auto;
     line-height: 1;
@@ -3367,8 +3369,6 @@ select.btcd-paper-inp {
     transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s;
     appearance: none;
     font-size: 16px;
-    background: url($select-arrow) no-repeat right #fff;
-    display: block;
     &:focus {
       border-color: $blue;
       background-position-y: 12px;
@@ -3406,28 +3406,28 @@ select.btcd-paper-inp {
 }
 
 select.btcd-ud-inp {
-  appearance: none;
   background: url($select-arrow) no-repeat right #fff;
+  appearance: none;
   transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s;
 }
 
 .btcd-lgc {
+  display: inline-block;
+  color: #00a6ff;
   border: 2px solid #00a6ff;
   padding: 4px 10px;
   border-radius: 10px;
   font-weight: bold;
-  color: #00a6ff;
   font-size: 15px;
-  display: inline-block;
 }
 
 .btcd-lgc-sm {
+  display: inline-block;
+  color: #6faaff;
   border: 1.5px solid #6faaff;
   padding: 2px 7px;
   border-radius: 8px;
-  color: #6faaff;
   font-size: 11px;
-  display: inline-block;
   font-weight: bold;
 }
 
@@ -3439,17 +3439,17 @@ select.btcd-ud-inp {
 }
 
 .btcd-logic-chip {
+  display: inline-block !important;
+  background: url($select-arrow) no-repeat right #fff !important;
+  color: #00a6ff !important;
   height: auto;
   appearance: none !important;
-  background: url($select-arrow) no-repeat right #fff !important;
   border: 2px solid #00a6ff !important;
   padding: 4px 20px 4px 5px !important;
   border-radius: 10px !important;
   line-height: 1 !important;
   font-weight: bold !important;
-  color: #00a6ff !important;
   font-size: 15px !important;
-  display: inline-block !important;
   background-size: 13px !important;
   &:focus {
     box-shadow: none;
@@ -3459,11 +3459,11 @@ select.btcd-ud-inp {
 .btcd-lgc-btns {
   display: inline-block;
   & button {
+    transform: scale(0);
+    transition: transform 0.3s;
     &:nth-child(1) {
       transform: scale(1);
     }
-    transform: scale(0);
-    transition: transform 0.3s;
   }
   &:hover {
     & button:nth-child(2) {
@@ -3499,8 +3499,8 @@ select.btcd-ud-inp {
   border-radius: 10px;
   border: 1px solid #b2cce3;
   & .thead {
-    font-weight: bold;
     color: #244679;
+    font-weight: bold;
     font-size: 14px;
     padding: 5px 5px 15px 5px;
     border-bottom: 2px solid #b2cce3;
@@ -3526,8 +3526,8 @@ select.btcd-ud-inp {
       border-right: 1px solid #b2cce3;
       padding-left: 5px;
       &:hover:not(:last-child) {
-        border-radius: 5px;
         background: #ecf1ff;
+        border-radius: 5px;
       }
       &:last-child {
         border: none;
@@ -3537,15 +3537,15 @@ select.btcd-ud-inp {
 }
 
 .btcd-neu-btn {
-  text-decoration: none;
   display: inline-block;
+  background: $light-bg;
+  color: $dp-bg;
+  text-decoration: none;
   cursor: pointer;
   box-shadow: 6px 6px 10px rgba(120, 136, 194, 0.4), -6px -6px 10px rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   padding: 10px;
   border: none;
-  background: $light-bg;
-  color: $dp-bg;
   outline: none;
   transition: transform 0.2s, box-shadow 0.2s;
   &:hover {
@@ -3569,45 +3569,45 @@ select.btcd-ud-inp {
 }
 
 .btcd-neu-inp {
-  background-color: $light-bg;
   display: inline-block;
+  background-color: $light-bg;
   border-radius: 10px;
   & input,
   textarea {
+    background: lighten($light-bg, 5);
     width: 100%;
     border: 3px solid $light-bg;
     outline: none;
     margin: 0;
-    background: lighten($light-bg, 5);
     transition: box-shadow 0.2s, border 0.2s;
     &:focus {
+      background: white;
       box-shadow: 1px 1px 2px rgba(120, 136, 194, 0.4) inset, -1px -1px 2px rgba(255, 255, 255, 0.9) inset;
       border: 3px solid darken($light-bg, 7);
-      background: white;
     }
   }
 }
 .btcd-stp {
+  background: rgb(236, 236, 236);
+  color: gray;
   height: 35px;
   width: 35px;
-  color: gray;
   font-weight: bold;
   -ms-user-select: none;
   -webkit-user-select: none;
   border: 2px solid rgb(236, 236, 236);
-  background: rgb(236, 236, 236);
   border-radius: 30px;
   &.stp-a {
-    border-color: $blue;
-    color: $blue;
     background: transparentize($blue, 0.9);
+    color: $blue;
+    border-color: $blue;
   }
 }
 .btcd-stp-line {
   display: inline-block;
+  background: rgb(236, 236, 236);
   width: 50px;
   height: 3px;
-  background: rgb(236, 236, 236);
   &.stp-line-a {
     background: $blue;
   }
@@ -3624,8 +3624,8 @@ select.btcd-ud-inp {
 .error-404 {
   position: relative;
   & img {
-    border-radius: 20px;
     display: block;
+    border-radius: 20px;
   }
   & .four {
     font-size: 160px;
@@ -3635,16 +3635,16 @@ select.btcd-ud-inp {
     text-shadow: 36px 32px #0505320d;
   }
   & > div {
-    & .t {
-      font-size: 30px;
-      font-weight: 700;
-      position: relative;
-      margin-top: 20px;
-    }
     position: absolute;
     top: 50px;
     left: 150px;
     text-align: center;
+    & .t {
+      position: relative;
+      font-size: 30px;
+      font-weight: 700;
+      margin-top: 20px;
+    }
   }
 }
 
@@ -3669,22 +3669,22 @@ select.btcd-ud-inp {
 
 .btcd-device-btn {
   position: absolute;
-  right: 20%;
   top: 7px;
+  right: 20%;
   & .active {
     background: transparentize(#fff, 0.7);
     color: transparentize(#fff, 0);
   }
   & > button {
+    background: transparentize(#fff, 0.9);
+    color: transparentize(#fff, 0.4);
     cursor: pointer;
     outline: none;
     width: 34px;
     height: 29px;
     margin-right: 5px;
     border-radius: 5px;
-    background: transparentize(#fff, 0.9);
     border: none;
-    color: transparentize(#fff, 0.4);
     font-size: 21px;
     &:hover {
       background: transparentize(#fff, 0.7);
@@ -3714,11 +3714,11 @@ select.btcd-ud-inp {
     }
   }
   & button {
+    background: transparent;
+    color: $blue;
     border: none;
     outline: none;
     border: 1px solid $blue;
-    background: transparent;
-    color: $blue;
     width: 22px;
     height: 22px;
     padding: 3px;
@@ -3731,18 +3731,18 @@ select.btcd-ud-inp {
 }
 
 .btcd-app-setting-sidebar {
+  display: inline-block;
   padding: 15px;
   min-height: 80vh;
   border-right: 1px solid #e8e8e8;
-  display: inline-block;
   & > a {
-    padding: 12px 15px;
     display: flex;
+    color: $dp-bg;
+    padding: 12px 15px;
     align-items: center;
     width: 200px;
     margin-bottom: 10px;
     border-radius: 50px;
-    color: $dp-bg;
     font-weight: 600;
     & > span {
       margin-right: 10px;

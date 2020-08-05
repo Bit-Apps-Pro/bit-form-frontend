@@ -1,12 +1,8 @@
 body {
   scroll-behavior: smooth;
 }
-.btcd-fld-itm:empty {
-  display: none;
-}
-.btcd-form {
-  background: white;
-}
+.btcd-fld-itm:empty,
+.btcd-hidden {display:none;}
 
 .btcd-flx {
   display: flex;
@@ -37,9 +33,9 @@ body {
 }
 
 .fld-wrp .msl-vars {
-  margin-top: 5px;
-  background: white;
   --border-radius: 5px;
+  background: white;
+  margin-top: 5px;
   & > * {
     line-height: 1;
   }
@@ -74,12 +70,12 @@ input.fld {
 
 input.fld,
 textarea.fld {
+  display: inline-block !important;
   min-height: 40px !important;
   max-width: 100% !important;
   font-family: sans-serif !important;
   width: 100% !important;
   outline: none !important;
-  display: inline-block !important;
   transition: all 200ms !important;
 }
 
@@ -95,9 +91,9 @@ textarea.fld {
 }
 
 .fld[type="color"] {
+  background: white !important;
   cursor: pointer !important;
   height: 32px !important;
-  background: white !important;
   padding: 2px !important;
 }
 
@@ -140,9 +136,9 @@ textarea.fld {
 }
 
 .blnk-blk {
+  background: white;
   width: 100%;
   height: 100%;
-  background: white;
   &:hover {
     background: aliceblue;
   }
@@ -150,10 +146,10 @@ textarea.fld {
 
 // chek box style start
 .fld > .btcd-ck-wrp {
-  color: rgb(54, 54, 54);
   display: inline-flex;
-  align-items: center;
+  color: rgb(54, 54, 54);
   position: relative;
+  align-items: center;
   padding-left: 35px;
   font-weight: normal;
   cursor: pointer;
@@ -200,9 +196,9 @@ textarea.fld {
 }
 
 .fld .btcd-mrk:after {
-  content: "";
-  position: absolute;
   display: none;
+  position: absolute;
+  content: "";
 }
 
 .fld .btcd-ck-wrp input:checked ~ .btcd-mrk:after {
@@ -220,13 +216,13 @@ textarea.fld {
 }
 
 .fld .btcd-ck-wrp .btcd-mrk:not(.ck):after {
+  background: #ffffff;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 45%;
   height: 45%;
   border-radius: 50%;
-  background: #ffffff;
 }
 
 // chek box style end
@@ -240,9 +236,9 @@ textarea.fld {
 }
 
 .btcd-frm-sub {
+  display: flex !important;
   // background: white !important;
   height: 60px !important;
-  display: flex !important;
   align-items: center !important;
 }
 
@@ -266,10 +262,10 @@ textarea.fld {
 }
 .btcd-sub {
   background: #0083f3 !important;
+  color: white;
   text-transform: none !important;
   text-decoration: none !important;
   font-weight: bold !important;
-  color: white;
   &:hover {
     background: #0072d6 !important;
   }
@@ -279,10 +275,10 @@ textarea.fld {
 }
 .btcd-rst {
   background: #edf1f5 !important;
+  color: #23435f !important;
   text-transform: none !important;
   text-decoration: none !important;
   font-weight: normal !important;
-  color: #23435f !important;
   &:hover {
     background: #ededf1 !important;
   }
@@ -315,10 +311,10 @@ textarea.fld {
 }
 
 .btcd-f-wrp {
+  position: relative;
   cursor: pointer !important;
   margin-top: 6px !important;
   width: 100%;
-  position: relative;
 }
 
 .btcd-f-wrp .btn-wrp {
@@ -328,8 +324,8 @@ textarea.fld {
 
 .btcd-f-input {
   display: inline-block !important;
-  width: 100%;
   position: relative !important;
+  width: 100%;
   overflow: hidden !important;
 }
 
@@ -348,10 +344,10 @@ textarea.fld {
 }
 
 .btcd-f-wrp .btcd-inpBtn {
-  cursor: pointer;
-  background: #f3f3f3;
-  padding: 5px;
   display: inline-flex;
+  background: #0083f3 ;
+  cursor: pointer;
+  padding: 5px 11px;
   align-items: center;
   border-radius: 8px;
   border: none;
@@ -361,27 +357,27 @@ textarea.fld {
 }
 
 .btcd-f-wrp .btcd-inpBtn img {
-  width: 24px;
-  margin-right: 5px;
   display: inline-block;
+  margin-right: 5px;
+  width: 24px;
 }
 
 .btcd-f-wrp .btcd-inpBtn span,
 .btcd-f-wrp > span {
+  color: rgb(255, 255, 255);
   font-size: 14px !important;
-  color: rgb(75, 75, 75);
   font-weight: normal !important;
   vertical-align: middle !important;
   text-transform: none !important;
 }
 
 .btcd-f-input > .btcd-f-wrp > input {
-  z-index: 100;
-  width: 100%;
   position: absolute;
-  opacity: 0;
   top: 0;
   left: 0;
+  z-index: 100;
+  width: 100%;
+  opacity: 0;
   height: 42px;
   cursor: pointer;
 }
@@ -391,17 +387,17 @@ textarea.fld {
 } */
 
 .btcd-chat-dot {
+  display: inline-block;
+  background: #07bc60;
   width: 10px;
   height: 10px;
-  background: #07bc60;
-  display: inline-block;
   border-radius: 10px;
 }
 
 .btcd-files > div {
   display: flex;
-  align-items: center;
   background: #f8f8f8;
+  align-items: center;
   border-radius: 10px;
   margin-left: 10px;
   width: 90%;
@@ -470,8 +466,8 @@ textarea.fld {
   margin-left: 35px;
   font-size: 12px;
   & > div > a {
-    text-decoration: none;
     color: #004077;
+    text-decoration: none;
     margin-right: 10px;
     &:hover {
       color: #0a8dff;
