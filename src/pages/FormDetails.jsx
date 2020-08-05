@@ -190,6 +190,7 @@ function FormDetails(props) {
         mailTem,
         integrations,
         additional,
+        formStyle: sessionStorage.getItem('fs'),
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -203,6 +204,7 @@ function FormDetails(props) {
           workFlows,
           additional,
           reports,
+          formStyle: sessionStorage.getItem('fs'),
         }
         action = 'bitforms_update_form'
       }
@@ -237,7 +239,7 @@ function FormDetails(props) {
               allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
-          } else if (!response.data.success && response.data.data === 'Token expired') {
+          } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
             sessionStorage.setItem('formData', JSON.stringify(formData))
             window.location.reload()
           }
