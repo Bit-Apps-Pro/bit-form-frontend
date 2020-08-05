@@ -201,14 +201,14 @@ function AllFroms() {
         show={modal}
         setModal={setModal}
         title="Create Form"
-        subTitle="Choose a Template"
+        subTitle=""
       >
         <div className="btcd-tem-lay">
           <div className="btcd-tem">
             <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
             <div>Blank</div>
             <div className="btcd-hid-btn">
-              <NavLink to="/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
+              <NavLink to="/form/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
             </div>
           </div>
           {modal && <FormTemplates />}

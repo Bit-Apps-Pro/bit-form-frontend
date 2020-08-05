@@ -269,6 +269,12 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         </select>
         <div style={{ color: 'red' }}>{error.dataCenter}</div>
 
+        <div className="mt-3"><b>Homepage URL:</b></div>
+        <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+
+        <div className="mt-3"><b>Authorized Redirect URIs:</b></div>
+        <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+
         <div className="mt-3"><b>Client id:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="clientId" value={crmConf.clientId} type="text" placeholder="Client id..." />
         <div style={{ color: 'red' }}>{error.clientId}</div>
@@ -276,9 +282,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <div className="mt-3"><b>Client secret:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="clientSecret" value={crmConf.clientSecret} type="text" placeholder="Client secret..." />
         <div style={{ color: 'red' }}>{error.clientSecret}</div>
-
-        <div className="mt-3"><b>Redirect URI:</b></div>
-        <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
 
         <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
           {isAuthorized ? 'Authorized ✔' : 'Authorize'}
