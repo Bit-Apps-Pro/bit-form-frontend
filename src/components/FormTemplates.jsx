@@ -24,7 +24,7 @@ export default function FormTemplates() {
         <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
         <div>{template.title}</div>
         <div className="btcd-hid-btn">
-          <Link to={`builder/new/${template.title}`} className="btn btn-white sh-sm" type="button">
+          <Link to={`form/builder/new/${template.title}`} className="btn btn-white sh-sm" type="button">
             Create
           </Link>
         </div>
