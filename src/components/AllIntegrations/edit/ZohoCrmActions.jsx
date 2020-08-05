@@ -8,62 +8,118 @@ import ConfirmModal from '../../ConfirmModal'
 import Modal from '../../Modal'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
+export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+  const [actions] = useState(tab === 0 ? crmConf.actions : crmConf.relatedlist.actions)
 
   const actioHandler = (val, typ) => {
-    if (typ === 'attachment') {
-      if (val !== '') {
-        crmConf.actions.attachment = val
-      } else {
-        delete crmConf.actions.attachment
+    if (tab === 0) {
+      if (typ === 'attachment') {
+        if (val !== '') {
+          crmConf.actions.attachment = val
+        } else {
+          delete crmConf.actions.attachment
+        }
+      }
+      if (typ === 'approval') {
+        if (val.target.checked) {
+          crmConf.actions.approval = true
+        } else {
+          delete crmConf.actions.approval
+        }
+      }
+      if (typ === 'workflow') {
+        if (val.target.checked) {
+          crmConf.actions.workflow = true
+        } else {
+          delete crmConf.actions.workflow
+        }
+      }
+      if (typ === 'gclid') {
+        if (val.target.checked) {
+          crmConf.actions.gclid = true
+        } else {
+          delete crmConf.actions.gclid
+        }
+      }
+      if (typ === 'assignment_rules') {
+        if (val.target.checked) {
+          crmConf.actions.assignment_rules = true
+        } else {
+          delete crmConf.actions.assignment_rules
+        }
+      }
+      if (typ === 'tag_rec') {
+        if (val !== '') {
+          crmConf.actions.tag_rec = val
+        } else {
+          delete crmConf.actions.tag_rec
+        }
+      }
+      if (typ === 'upsert') {
+        if (val.target.checked) {
+          const crmField = crmConf.default.layouts[crmConf.module][crmConf.layout].required.map((name, i) => ({ i, name }))
+          crmConf.actions.upsert = { overwrite: true, crmField }
+          setUpsertMdl(true)
+        } else {
+          delete crmConf.actions.upsert
+        }
+      }
+    } else {
+      if (typ === 'attachment') {
+        if (val !== '') {
+          crmConf.relatedlist.actions.attachment = val
+        } else {
+          delete crmConf.relatedlist.actions.attachment
+        }
+      }
+      if (typ === 'approval') {
+        if (val.target.checked) {
+          crmConf.relatedlist.actions.approval = true
+        } else {
+          delete crmConf.relatedlist.actions.approval
+        }
+      }
+      if (typ === 'workflow') {
+        if (val.target.checked) {
+          crmConf.relatedlist.actions.workflow = true
+        } else {
+          delete crmConf.relatedlist.actions.workflow
+        }
+      }
+      if (typ === 'gclid') {
+        if (val.target.checked) {
+          crmConf.relatedlist.actions.gclid = true
+        } else {
+          delete crmConf.relatedlist.actions.gclid
+        }
+      }
+      if (typ === 'assignment_rules') {
+        if (val.target.checked) {
+          crmConf.relatedlist.actions.assignment_rules = true
+        } else {
+          delete crmConf.relatedlist.actions.assignment_rules
+        }
+      }
+      if (typ === 'tag_rec') {
+        if (val !== '') {
+          crmConf.relatedlist.actions.tag_rec = val
+        } else {
+          delete crmConf.relatedlist.actions.tag_rec
+        }
+      }
+      if (typ === 'upsert') {
+        if (val.target.checked) {
+          const crmField = crmConf.default.layouts[crmConf.relatedlist.module][crmConf.relatedlist.layout].required.map((name, i) => ({ i, name }))
+          crmConf.relatedlist.actions.upsert = { overwrite: true, crmField }
+          setUpsertMdl(true)
+        } else {
+          delete crmConf.relatedlist.actions.upsert
+        }
       }
     }
-    if (typ === 'approval') {
-      if (val.target.checked) {
-        crmConf.actions.approval = true
-      } else {
-        delete crmConf.actions.approval
-      }
-    }
-    if (typ === 'workflow') {
-      if (val.target.checked) {
-        crmConf.actions.workflow = true
-      } else {
-        delete crmConf.actions.workflow
-      }
-    }
-    if (typ === 'gclid') {
-      if (val.target.checked) {
-        crmConf.actions.gclid = true
-      } else {
-        delete crmConf.actions.gclid
-      }
-    }
-    if (typ === 'assignment_rules') {
-      if (val.target.checked) {
-        crmConf.actions.assignment_rules = true
-      } else {
-        delete crmConf.actions.assignment_rules
-      }
-    }
-    if (typ === 'tag_rec') {
-      if (val.target.value !== '') {
-        crmConf.actions.tag_rec = val.target.value
-      } else {
-        delete crmConf.actions.tag_rec
-      }
-    }
-    if (typ === 'upsert') {
-      if (val.target.checked) {
-        const crmField = crmConf.default.layouts[crmConf.module][crmConf.layout].required.map((name, i) => ({ i, name }))
-        crmConf.actions.upsert = { overwrite: true, crmField }
-        setUpsertMdl(true)
-      } else {
-        delete crmConf.actions.upsert
-      }
-    }
+
     setCrmConf({ ...crmConf })
   }
 
@@ -82,11 +138,20 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
   }
 
   const setUpsertSettings = (val, typ) => {
-    if (typ === 'list') {
-      crmConf.actions.upsert.crmField = val
-    }
-    if (typ === 'overwrite') {
-      crmConf.actions.upsert.overwrite = val
+    if (tab === 0) {
+      if (typ === 'list') {
+        crmConf.actions.upsert.crmField = val
+      }
+      if (typ === 'overwrite') {
+        crmConf.actions.upsert.overwrite = val
+      }
+    } else {
+      if (typ === 'list') {
+        crmConf.relatedlist.actions.upsert.crmField = val
+      }
+      if (typ === 'overwrite') {
+        crmConf.relatedlist.actions.upsert.overwrite = val
+      }
     }
     setCrmConf({ ...crmConf })
   }
@@ -94,13 +159,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
   return (
     <>
       <div className="d-flx flx-wrp">
-        <TableCheckBox onChange={(e) => actioHandler(e, 'workflow')} checked={'workflow' in crmConf.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={'attachment' in crmConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'approval')} checked={'approval' in crmConf.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'gclid')} checked={'gclid' in crmConf.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'upsert')} checked={crmConf.actions.Upsert_Record} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'assignment_rules')} checked={'assignment_rules' in crmConf.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
-        <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={'tag_rec' in crmConf.actions} className="wdt-200 mt-4 mr-2" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
+        <TableCheckBox onChange={(e) => actioHandler(e, 'workflow')} checked={'workflow' in actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
+        <TableCheckBox onChange={(e) => actioHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
+        <TableCheckBox onChange={(e) => actioHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
+        <TableCheckBox onChange={(e) => actioHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
+        <TableCheckBox onChange={(e) => actioHandler(e, 'assignment_rules')} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in crmConf.actions : 'tag_rec' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
       </div>
 
       <ConfirmModal
@@ -116,9 +181,10 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
         <div className="btcd-hr mt-1" />
         <div className="mt-3">Select file upload fields</div>
         <MultiSelect
+          defaultValue={tab === 0 ? crmConf.actions.attachment : crmConf.relatedlist.actions.attachment}
           className="mt-2 w-9"
           onChange={(val) => actioHandler(val, 'attachment')}
-          options={formFields.map(itm => ({ label: itm.name, value: itm.key }))}
+          options={formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.name, value: itm.key }))}
         />
       </ConfirmModal>
 
@@ -136,9 +202,11 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
         <small>Add a tag to records pushed to Zoho CRM</small>
         <div className="mt-3">Tag Name</div>
         <MultiSelect
+          defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
           className="mt-2"
           singleSelect
           options={getTags()}
+          onChange={(val) => actioHandler(val, 'tag_rec')}
         />
       </ConfirmModal>
 
@@ -149,27 +217,51 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields }) {
         title="Upsert Record"
       >
         <div className="o-a">
-          {crmConf?.actions?.upsert && (
-            <>
-              <div className="font-w-m mt-2">Upsert Using</div>
-              <small>Arrange fields in order of preferance for upsertion</small>
-              <ReactSortable list={crmConf.actions.upsert.crmField} setList={l => setUpsertSettings(l, 'list')}>
-                {crmConf.actions.upsert.crmField.map((itm) => (
-                  <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
-                    <span className="btcd-icn btcd-mnu mr-2" />
-                    {itm.name}
-                  </div>
-                ))}
-              </ReactSortable>
+          {
+            tab === 0
+              ? crmConf?.actions?.upsert && (
+                <>
+                  <div className="font-w-m mt-2">Upsert Using</div>
+                  <small>Arrange fields in order of preferance for upsertion</small>
+                  <ReactSortable list={crmConf.actions.upsert?.crmField} setList={l => setUpsertSettings(l, 'list')}>
+                    {crmConf.actions.upsert?.crmField.map((itm) => (
+                      <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
+                        <span className="btcd-icn btcd-mnu mr-2" />
+                        {itm.name}
+                      </div>
+                    ))}
+                  </ReactSortable>
 
-              <div className="font-w-m mt-3">Upsert Preferance</div>
-              <small>Overwrite existing field values in Zoho CRM with empty field values from Zoho Forms while upserting a record?</small>
-              <div>
-                <CheckBox onChange={() => setUpsertSettings(true, 'overwrite')} radio checked={crmConf.actions.upsert.overwrite} name="up-rec" title="Yes" />
-                <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.actions.upsert.overwrite} name="up-rec" title="No" />
-              </div>
-            </>
-          )}
+                  <div className="font-w-m mt-3">Upsert Preferance</div>
+                  <small>Overwrite existing field values in Zoho CRM with empty field values from Zoho Forms while upserting a record?</small>
+                  <div>
+                    <CheckBox onChange={() => setUpsertSettings(true, 'overwrite')} radio checked={crmConf.actions.upsert?.overwrite} name="up-rec" title="Yes" />
+                    <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.actions.upsert?.overwrite} name="up-rec" title="No" />
+                  </div>
+                </>
+            )
+              : crmConf?.relatedlist?.actions?.upsert && (
+                <>
+                  <div className="font-w-m mt-2">Upsert Using</div>
+                  <small>Arrange fields in order of preferance for upsertion</small>
+                  <ReactSortable list={crmConf.relatedlist.actions.upsert?.crmField} setList={l => setUpsertSettings(l, 'list')}>
+                    {crmConf.relatedlist.actions?.upsert?.crmField.map((itm) => (
+                      <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
+                        <span className="btcd-icn btcd-mnu mr-2" />
+                        {itm.name}
+                      </div>
+                    ))}
+                  </ReactSortable>
+
+                  <div className="font-w-m mt-3">Upsert Preferance</div>
+                  <small>Overwrite existing field values in Zoho CRM with empty field values from Zoho Forms while upserting a record?</small>
+                  <div>
+                    <CheckBox onChange={() => setUpsertSettings(true, 'overwrite')} radio checked={crmConf.relatedlist.actions.upsert?.overwrite} name="up-rec" title="Yes" />
+                    <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.relatedlist.actions.upsert?.overwrite} name="up-rec" title="No" />
+                  </div>
+                </>
+            )
+          }
         </div>
       </Modal>
     </>

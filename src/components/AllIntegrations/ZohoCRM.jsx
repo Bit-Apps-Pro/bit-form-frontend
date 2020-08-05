@@ -23,13 +23,14 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: '1000.W366Q8LPE5H74VDGZWXDIV6SL96HRH',
-    clientSecret: '1e7f458dd609c4aed2870c6c2c724b1822b13f20cc',
+    clientId: '1000.67VVR9O5MP40PTURJ62OHBRCWKHAKH',
+    clientSecret: '128b8daec4a960137d3b5ed92c8a2d1d27eaa52c09',
     module: '',
     layout: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
+    relatedlist: {},
     actions: {},
   })
 
@@ -54,32 +55,53 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
   useEffect(() => {
     const newConf = { ...crmConf }
-    newConf.layout = ''
-    newConf.field_map = [{ formField: '', zohoFormField: '' }]
+    const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
+    if (tab === 0) {
+      newConf.layout = ''
+      newConf.field_map = [{ formField: '', zohoFormField: '' }]
+    } else {
+      newConf.relatedlist.layout = ''
+      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+    }
     setCrmConf({ ...crmConf, ...newConf })
-    if (crmConf.default && (!crmConf.default.layouts || (crmConf.default.layouts && !crmConf.default.layouts[crmConf.module]))) {
-      refreshLayouts()
+    if (crmConf.default && (!crmConf.default.layouts || (crmConf.default.layouts && !crmConf.default.layouts[module]))) {
+      refreshLayouts(tab)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crmConf.module])
+  }, [crmConf.module, crmConf.relatedlist.module])
 
   useEffect(() => {
     const newConf = { ...crmConf }
-    newConf.field_map = [{ formField: '', zohoFormField: '' }]
-    if (crmConf.default && crmConf.default.layouts && newConf.default.layouts[crmConf.module] && newConf.default.layouts[crmConf.module][crmConf.layout] && newConf.default.layouts[crmConf.module][crmConf.layout].required) {
-      newConf.field_map = newConf.default.layouts[crmConf.module][crmConf.layout].required.map(field => ({ formField: '', zohoFormField: field }))
+    const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
+    const layout = tab === 0 ? crmConf.layout : crmConf.relatedlist.layout
+    if (tab === 0) {
+      newConf.field_map = [{ formField: '', zohoFormField: '' }]
+    } else {
+      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+    }
+    if (crmConf.default && crmConf.default.layouts && newConf.default.layouts[module] && newConf.default.layouts[module][layout] && newConf.default.layouts[module][layout].required) {
+      newConf.field_map = newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field }))
     }
     setCrmConf({ ...crmConf, ...newConf })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crmConf.layout])
+  }, [crmConf.layout, crmConf?.relatedlist?.layout])
 
-  const handleInput = e => {
-    const rmError = { ...error }
-    rmError[e.target.name] = ''
-    setError({ ...rmError })
-    crmConf[e.target.name] = e.target.value
+  const handleInput = (e, recordTab) => {
+    console.log('recordTab', recordTab)
+    if (recordTab === 0) {
+      const rmError = { ...error }
+      rmError[e.target.name] = ''
+      setError({ ...rmError })
+      crmConf[e.target.name] = e.target.value
+    } else {
+      if (!crmConf.relatedlist) {
+        crmConf.relatedlist = {}
+      }
+      crmConf.relatedlist[e.target.name] = e.target.value
+    }
     setCrmConf({ ...crmConf })
   }
+  console.log('crmConf', crmConf)
 
   const nextPage = val => {
     window.scrollTo(0, 0)
@@ -102,10 +124,19 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const addMap = i => {
-    if (i !== undefined) {
-      crmConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+    if (tab === 0) {
+      if (i !== undefined) {
+        crmConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+      } else {
+        crmConf.field_map.push({ formField: '', zohoFormField: '' })
+      }
+    } else if (i !== undefined) {
+      crmConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
     } else {
-      crmConf.field_map.push({ formField: '', zohoFormField: '' })
+      if (!crmConf.relatedlist.field_map) {
+        crmConf.relatedlist.field_map = []
+      }
+      crmConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
     }
     setCrmConf({ ...crmConf })
   }
@@ -154,14 +185,15 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       .catch(() => setisLoading(false))
   }
 
-  const refreshLayouts = () => {
-    if (!crmConf.module) {
+  const refreshLayouts = (recordTab) => {
+    const module = recordTab === 0 ? crmConf.module : crmConf?.relatedlist?.module
+    if (!module) {
       return
     }
     setisLoading(true)
     const refreshLayoutsRequestParams = {
       formID,
-      module: crmConf.module,
+      module,
       dataCenter: crmConf.dataCenter,
       clientId: crmConf.clientId,
       clientSecret: crmConf.clientSecret,
@@ -175,10 +207,14 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
             if (!newConf.default.layouts) {
               newConf.default.layouts = {}
             }
-            newConf.default.layouts[newConf.module] = { ...result.data.layouts }
+            newConf.default.layouts[module] = { ...result.data.layouts }
             const layouts = [...Object.keys(result.data.layouts)]
             if (layouts.length === 1) {
-              [newConf.layout] = layouts
+              if (recordTab === 0) {
+                [newConf.layout] = layouts
+              } else {
+                [newConf.relatedlist.layout] = layouts
+              }
             }
           }
           if (result.data.tokenDetails) {
@@ -190,6 +226,44 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar({ show: true, msg: `Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
         } else {
           setSnackbar({ show: true, msg: 'Layouts refresh failed. please try again' })
+        }
+        setisLoading(false)
+      })
+      .catch(() => setisLoading(false))
+  }
+
+  const refreshRelatedList = () => {
+    if (!crmConf.module) {
+      return
+    }
+    setisLoading(true)
+    const relatedListRequestParams = {
+      formID,
+      module: crmConf.module,
+      dataCenter: crmConf.dataCenter,
+      clientId: crmConf.clientId,
+      clientSecret: crmConf.clientSecret,
+      tokenDetails: crmConf.tokenDetails,
+    }
+    bitsFetch(relatedListRequestParams, 'bitforms_zcrm_get_related_lists')
+      .then(result => {
+        if (result && result.success) {
+          const newConf = { ...crmConf }
+          if (result.data.relatedLists) {
+            if (!newConf.default.relatedlists) {
+              newConf.default.relatedlists = {}
+            }
+            newConf.default.relatedlists[newConf.module] = { ...result.data.relatedLists }
+          }
+          if (result.data.tokenDetails) {
+            newConf.tokenDetails = result.data.tokenDetails
+          }
+          setCrmConf({ ...crmConf, ...newConf })
+          setSnackbar({ show: true, msg: 'RelatedLists refreshed' })
+        } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+          setSnackbar({ show: true, msg: `RelatedLists refresh failed Cause:${result.data.data || result.data}. please try again` })
+        } else {
+          setSnackbar({ show: true, msg: 'RelatedLists refresh failed. please try again' })
         }
         setisLoading(false)
       })
@@ -257,10 +331,10 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
 
         <div className="mt-3"><b>Data Center:</b></div>
-        <select onChange={handleInput} name="dataCenter" value={crmConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
+        <select onChange={event => handleInput(event, tab)} name="dataCenter" value={crmConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
           <option value="">--Select a data center--</option>
           <option value="com">zoho.com</option>
           <option value="eu">zoho.eu</option>
@@ -276,12 +350,15 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
 
         <div className="mt-3"><b>Client id:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="clientId" value={crmConf.clientId} type="text" placeholder="Client id..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="clientId" value={crmConf.clientId} type="text" placeholder="Client id..." />
         <div style={{ color: 'red' }}>{error.clientId}</div>
 
         <div className="mt-3"><b>Client secret:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={handleInput} name="clientSecret" value={crmConf.clientSecret} type="text" placeholder="Client secret..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="clientSecret" value={crmConf.clientSecret} type="text" placeholder="Client secret..." />
         <div style={{ color: 'red' }}>{error.clientSecret}</div>
+
+        <div className="mt-3"><b>Redirect URI:</b></div>
+        <CopyText value={encodeURI(decodeURI(`${window.location.href}/redirect`))} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
 
         <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
           {isAuthorized ? 'Authorized ✔' : 'Authorize'}
@@ -297,7 +374,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
         <br />
         <b className="wdt-100 d-in-b">Module:</b>
-        <select onChange={handleInput} name="module" value={crmConf.module} className="btcd-paper-inp w-7">
+        <select onChange={event => handleInput(event, tab)} name="module" value={crmConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
           <option value="">Select Module</option>
           {
             crmConf.default && crmConf.default.modules && Object.keys(crmConf.default.modules).map(moduleApiName => (
@@ -307,25 +384,63 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
             ))
           }
         </select>
-        <button onClick={refreshModules} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
+        {tab === 0 && <button onClick={refreshModules} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>}
         <br />
         <div className="flx mt-2">
           <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
           <button onClick={() => settab(1)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
         </div>
         <br />
+        {
+          tab === 1
+          && (
+            <>
+              <b className="wdt-100 d-in-b">Related List:</b>
+              <select onChange={event => handleInput(event, tab)} name="module" value={crmConf?.relatedlist?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
+                <option value="">Select Related Module</option>
+                {
+                  crmConf?.default?.relatedlists?.[crmConf.module] && Object.keys(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
+                    <option value={relatedlistApiName}>
+                      {relatedlistApiName}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={refreshRelatedList} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
+              <br />
+              <br />
+            </>
+          )
+        }
         <b className="wdt-100 d-in-b">Layout:</b>
-        <select onChange={handleInput} name="layout" value={crmConf.layout} className="btcd-paper-inp w-7">
-          <option value="">Select Layout</option>
-          {
-            crmConf?.default?.layouts?.[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
-              <option value={layoutApiName}>
-                {layoutApiName}
-              </option>
-            ))
-          }
-        </select>
-        <button onClick={refreshLayouts} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
+        {
+          tab === 0
+            ? (
+              <select onChange={event => handleInput(event, tab)} name="layout" value={crmConf.layout} className="btcd-paper-inp w-7">
+                <option value="">Select Layout</option>
+                {
+                  crmConf?.default?.layouts?.[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
+                    <option value={layoutApiName}>
+                      {layoutApiName}
+                    </option>
+                  ))
+                }
+              </select>
+            )
+            : (
+              <select onChange={event => handleInput(event, tab)} name="layout" value={crmConf?.relatedlist?.layout} className="btcd-paper-inp w-7" disabled={!crmConf?.relatedlist?.module}>
+                <option value="">Select Layout</option>
+                {
+                  crmConf?.default?.layouts?.[crmConf?.relatedlist?.module] && Object.keys(crmConf.default.layouts[crmConf?.relatedlist?.module]).map(layoutApiName => (
+                    <option value={layoutApiName}>
+                      {layoutApiName}
+                    </option>
+                  ))
+                }
+              </select>
+            )
+        }
+        <button onClick={() => refreshLayouts(tab)} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
         {isLoading && (
@@ -338,8 +453,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           }}
           />
         )}
-        {
-          crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
+        {tab === 0
+          && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
           && (
             <>
               <div className="mt-4"><b className="wdt-100">Field Map</b></div>
@@ -357,6 +472,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                   crmConf={crmConf}
                   formFields={formFields}
                   setCrmConf={setCrmConf}
+                  tab={tab}
                   setSnackbar={setSnackbar}
                 />
               ))}
@@ -370,10 +486,47 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                 formFields={formFields}
                 crmConf={crmConf}
                 setCrmConf={setCrmConf}
+                tab={tab}
               />
             </>
-          )
-        }
+          )}
+        {tab === 1
+          && crmConf?.default?.layouts?.[crmConf?.relatedlist?.module]?.[crmConf?.relatedlist?.layout]?.fields
+          && (
+            <>
+              <div className="mt-4"><b className="wdt-100">Field Map</b></div>
+              <div className="btcd-hr mt-1" />
+              <div className="flx flx-around mt-2 mb-1">
+                <div className="txt-dp"><b>Form Fields</b></div>
+                <div className="txt-dp"><b>Zoho Fields</b></div>
+              </div>
+
+              {crmConf?.relatedlist?.field_map?.map((itm, i) => (
+                <ZohoCrmFieldMap
+                  key={`crm-m-${i + 9}`}
+                  i={i}
+                  field={itm}
+                  crmConf={crmConf}
+                  formFields={formFields}
+                  setCrmConf={setCrmConf}
+                  tab={tab}
+                  setSnackbar={setSnackbar}
+                />
+              ))}
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
+              <br />
+              <br />
+              <div className="mt-4"><b className="wdt-100">Actions</b></div>
+              <div className="btcd-hr mt-1" />
+
+              <ZohoCrmActions
+                formFields={formFields}
+                crmConf={crmConf}
+                setCrmConf={setCrmConf}
+                tab={tab}
+              />
+            </>
+          )}
         <button
           onClick={() => nextPage(3)}
           disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1}

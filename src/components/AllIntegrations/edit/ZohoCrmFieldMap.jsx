@@ -1,37 +1,63 @@
 import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
-export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmConf, setSnackbar }) {
-  const isNotRequired = crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required?.indexOf(field.zohoFormField) === -1
-  //  console.log('ssssss', field)
+export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmConf, tab, setSnackbar }) {
+  const module = tab === 0 ? crmConf.module : crmConf?.relatedlist?.module
+  const layout = tab === 0 ? crmConf.layout : crmConf?.relatedlist?.layout
+  const isNotRequired = field.zohoFormField === '' || crmConf?.default?.layouts?.[module]?.[layout]?.required?.indexOf(field.zohoFormField) === -1
   const addMap = ind => {
-    crmConf.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
-    setCrmConf({ ...crmConf })
+    const newConf = { ...crmConf }
+    if (tab === 0) {
+      newConf.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
+    } else {
+      newConf.relatedlist.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
+    }
+    setCrmConf({ ...crmConf, ...newConf })
   }
 
   const delMap = ind => {
-    if (crmConf.field_map.length > 1) {
-      crmConf.field_map.splice(ind, 1)
+    if (tab === 0) {
+      if (crmConf.field_map.length > 1) {
+        crmConf.field_map.splice(ind, 1)
+      }
+    } else if (crmConf?.relatedlist?.field_map?.length > 1) {
+      crmConf.relatedlist.field_map.splice(ind, 1)
     }
     setCrmConf({ ...crmConf })
   }
 
   const handleFieldMapping = (event, index) => {
+    const newConf = { ...crmConf }
+    const selectedZohoField = tab === 0 ? crmConf.field_map[index].zohoFormField : crmConf.relatedlist.field_map[index].zohoFormField
+    const selectedformField = tab === 0 ? crmConf.field_map[index].formField : crmConf.relatedlist.field_map[index].formField
     if (event.target.name === 'formField'
-      && crmConf.field_map[index].zohoFormField !== ''
-      && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[crmConf.field_map[index].zohoFormField].data_type === 'fileupload'
+      && selectedZohoField !== ''
+      && crmConf.default.layouts[module][layout].fields[selectedZohoField].data_type === 'fileupload'
       && formFields[formFields.map(fld => fld.key).indexOf(event.target.value)].type !== 'file-up'
     ) {
       setSnackbar({ show: true, msg: 'Please select file field' })
       return
     }
     if (event.target.name === 'zohoFormField'
-      && crmConf.field_map[index].formField !== ''
-      && crmConf.default.layouts[crmConf.module][crmConf.layout].fields[event.target.value].data_type === 'fileupload'
-      && formFields[formFields.map(fld => fld.key).indexOf(crmConf.field_map[index].formField)].type !== 'file-up'
+      && selectedformField !== ''
+      && crmConf.default.layouts[module][layout].fields[event.target.value].data_type === 'fileupload'
+      && formFields[formFields.map(fld => fld.key).indexOf(selectedformField)].type !== 'file-up'
     ) {
       setSnackbar({ show: true, msg: 'Please select file field' })
       return
+    }
+    if (tab === 0) {
+      if (event.target.value === 'custom') {
+        newConf.field_map[index][event.target.name] = event.target.value
+        newConf.field_map[index].customValue = ''
+      } else {
+        newConf.field_map[index][event.target.name] = event.target.value
+      }
+    } else if (event.target.value === 'custom') {
+      newConf.relatedlist.field_map[index][event.target.name] = event.target.value
+      newConf.relatedlist.field_map[index].customValue = ''
+    } else {
+      newConf.relatedlist.field_map[index][event.target.name] = event.target.value
     }
     const newConf = { ...crmConf }
     newConf.field_map[index][event.target.name] = event.target.value
@@ -40,7 +66,11 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
 
   const handleCustomValue = (e, ind) => {
     const newConf = { ...crmConf }
-    newConf.field_map[ind].customValue = e.target.value
+    if (tab === 0) {
+      newConf.field_map[ind].customValue = e.target.value
+    } else {
+      newConf.relatedlist.field_map[ind].customValue = e.target.value
+    }
     setCrmConf({ ...crmConf, ...newConf })
   }
 
@@ -59,9 +89,9 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
       <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">Select Field</option>
         {
-          Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout].fields).map(fieldApiName => (
+          Object.keys(crmConf.default.layouts[module][layout].fields).map(fieldApiName => (
             <option key={fieldApiName} value={fieldApiName}>
-              {crmConf.default.layouts[crmConf.module][crmConf.layout].fields[fieldApiName].display_label}
+              {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
             </option>
           ))
         }

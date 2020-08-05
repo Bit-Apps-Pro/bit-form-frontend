@@ -282,10 +282,14 @@ export default function Bitforms(props) {
     }
     submitResponse.then(result => {
       let responsedRedirectPage = null
+      let hitCron = null
       if (result !== undefined && result.success) {
         handleReset()
         if (typeof result.data === 'object') {
           responsedRedirectPage = result.data.redirectPage
+          if (result.data.cron) {
+            hitCron = result.data.cron
+          }
           setMessage(result.data.message)
           setSnack(true)
           if (hasError) {
@@ -326,6 +330,13 @@ export default function Bitforms(props) {
             clearTimeout(timer)
           }
         }, 5000);
+      }
+      if (hitCron) {
+        if (responsedRedirectPage === null || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
+          fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron`)
+            .then(response => response.json())
+            .then(data => console.log(data))
+        }
       }
       setbuttonDisabled(false)
     })
