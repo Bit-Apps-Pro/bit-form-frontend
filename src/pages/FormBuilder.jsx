@@ -2,6 +2,8 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
+import postcss from 'postcss'
+import removePrefixes from 'postcss-remove-prefixes'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
@@ -9,19 +11,22 @@ import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign } from '../Utils/Helpers'
-import autoprefixer from 'autoprefixer'
+import cssToObject from 'css-to-object'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
     multiAssign(style, action.apply)
+    sessionStorage.setItem('fs', j2c.sheet(style))
     return { ...style }
   }
   if (action.brkPoint === 'md') {
     multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
+    sessionStorage.setItem('fs', j2c.sheet(style))
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
     multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
+    sessionStorage.setItem('fs', j2c.sheet(style))
     return { ...style }
   }
   return style
@@ -36,6 +41,9 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [brkPoint, setbrkPoint] = useState('lg')
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme)
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
+
+  // console.log('ssssssssssss', sessionStorage.getItem('style'))
+  console.log('ssssssssssss', style)
 
   useEffect(() => {
     if (brkPoint === 'md') {
@@ -57,7 +65,20 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     return style
   }
 
-  console.log('ssssst', style.toString())
+  /* const css = styleSheet.toString()
+  postcss([autoprefixer])
+    .process(css)
+    .then(result => {
+      console.log(result.css);
+      postcss([removePrefixes()])
+        .process(result.css)
+        .then(res => {
+          console.log(res.css);
+          console.log(cssToObject(res.css))
+        });
+    }); */
+
+  // console.log('ssssst', styleSheet.toString())
 
   const conRef = React.createRef(null)
 
