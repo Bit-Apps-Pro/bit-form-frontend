@@ -180,7 +180,7 @@ function FormDetails(props) {
       modal.msg = 'You can not save a blank form'
       setModal({ ...modal })
     } else {
-      setbuttonDisabled(true)
+      // setbuttonDisabled(true)
       let formData = {
         layout: lay,
         fields,
@@ -191,6 +191,7 @@ function FormDetails(props) {
         integrations,
         additional,
         formStyle: sessionStorage.getItem('fs'),
+        layoutChanged: sessionStorage.getItem('lc')
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -205,6 +206,7 @@ function FormDetails(props) {
           additional,
           reports,
           formStyle: sessionStorage.getItem('fs'),
+          layoutChanged: sessionStorage.getItem('lc')
         }
         action = 'bitforms_update_form'
       }
