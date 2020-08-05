@@ -234,18 +234,18 @@ function GridLayout(props) {
     setFields({ ...fields })
   }
 
-  const onDrop = elmPrms => {
+  const onDrop = (lay, elmPrms) => {
     /* if (layouts.lg.length === 4) {
       alert('You can not add more than 5 field in free version.')
       return false
     } */
-
+    console.log('aaaaaaaaaaaaaa', lay)
     const { draggedElm } = props
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `bf-${newCounter + 1}-`
+    const newBlk = `bf-${newCounter + 1}`
 
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
