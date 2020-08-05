@@ -59,7 +59,6 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
     } else {
       newConf.relatedlist.field_map[index][event.target.name] = event.target.value
     }
-    const newConf = { ...crmConf }
     newConf.field_map[index][event.target.name] = event.target.value
     setCrmConf({ ...crmConf, ...newConf })
   }
