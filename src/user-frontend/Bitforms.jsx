@@ -4,7 +4,6 @@ import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 import { checkLogic, replaceWithField } from './checkLogic'
 
-
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
   const [snack, setSnack] = useState(false)
@@ -261,19 +260,6 @@ export default function Bitforms(props) {
     }
   }
 
-  /*  window.addEventListener('resize', () => {
-     // delay to get stable windows size after resized
-     setTimeout(() => {
-       if (window.innerWidth > 800) {
-         setlayoutConfig({ size: 'lg', cols: 6 })
-       } else if (window.innerWidth > 600) {
-         setlayoutConfig({ size: 'md', cols: 4 })
-       } else if (window.innerWidth > 400) {
-         setlayoutConfig({ size: 'sm', cols: 2 })
-       }
-     }, 1000);
-   }) */
-
   const handleSubmit = (event) => {
 
     event.preventDefault()
@@ -357,6 +343,7 @@ export default function Bitforms(props) {
       setresetFieldValue(false)
     }
   }, [resetFieldValue])
+
   useEffect(() => {
     if (props.error) {
       if (props.error.$form !== undefined) {
@@ -391,26 +378,24 @@ export default function Bitforms(props) {
   return (
     <div>
       {console.log(layout)}
-      <form className="btcd-form" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
+      <form className="_frm-bg" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
-        <div className="btcd-grid-wrp">
+        <div className="_frm">
           {layout['lg'].map(field => blk(field))}
-        </div>
-        {!props.editMode && props.buttons
-          && (
-            <div>
+          {!props.editMode && props.buttons
+            && (
               <CompGen
                 atts={props.buttons}
-                // formID={bitFormsFront.contentID}
                 entryID={props.entryID}
                 buttonDisabled={buttonDisabled}
                 handleReset={handleReset}
+              // formID={bitFormsFront.contentID}
               // handleSubmit={handleSubmit}
               // id={`form-${props.contentID}-submit`}
               />
-            </div>
-          )}
+            )}
+        </div>
       </form>
       {
         snack
