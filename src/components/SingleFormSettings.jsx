@@ -249,7 +249,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
     <div>
       <h2>Settings</h2>
 
-      <div className="w-5 mt-3">
+      <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
           <div>
             <b>
@@ -261,7 +261,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         </div>
       </div>
 
-      <div className="w-5 mt-3">
+      <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
           <div className="">
             <b>
@@ -283,7 +283,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
             Restrict Form Period
           </b>
         )}
-        cls="w-5 mt-3"
+        cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additional.enabled} />
@@ -369,7 +369,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
             Blocked IP list
           </b>
         )}
-        cls="w-5 mt-3"
+        cls="w-6 mt-3"
       >
         {'blocked_ip' in additional.settings && additional.settings.blocked_ip.length > 0 && (
           <div className="flx mb-2">
@@ -397,7 +397,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
               &nbsp;Allowed IP
           </b>
         )}
-        cls="w-5 mt-3"
+        cls="w-6 mt-3"
       >
         <div>
           <b>Note:</b>

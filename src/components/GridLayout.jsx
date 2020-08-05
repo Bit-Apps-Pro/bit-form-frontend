@@ -245,7 +245,7 @@ function GridLayout(props) {
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `bf-${newCounter + 1}`
+    const newBlk = `bf-${newCounter + 1}-`
 
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])

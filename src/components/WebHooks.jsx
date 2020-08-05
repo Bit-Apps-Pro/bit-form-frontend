@@ -141,8 +141,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
               cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleHookTitle(e, i)}
             >
-              <Button onClick={() => testWebhook(i)} icn className="sh-sm white mt-2 mr-4 tooltip f-right" style={{ '--tooltip-txt': '"Test WebHook"' }}><span className="btcd-icn icn-loop" style={{ fontSize: 16 }} /></Button>
-              <br />
+              
               <br />
               <div className="flx">
                 <div className="w-7 mr-2">
@@ -164,6 +163,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                   </select>
                 </div>
               </div>
+              <Button onClick={() => testWebhook(i)} className="btn btcd-btn-o-blue">Test Webhook</Button>
               <br />
               <br />
               <div className="f-m">Add Url Parameter: (optional)</div>

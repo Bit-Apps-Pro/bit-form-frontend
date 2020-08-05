@@ -23,15 +23,15 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: '1000.67VVR9O5MP40PTURJ62OHBRCWKHAKH',
-    clientSecret: '128b8daec4a960137d3b5ed92c8a2d1d27eaa52c09',
+    clientId: '1000.6D7WFLXQVP74SO1XSED5UH137PRX2Z',
+    clientSecret: 'a934cc52edea787a82a7dba5982b151c0576a53c91',
     module: '',
     layout: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
     relatedlist: {},
-    actions: {},
+    actions: {}
   })
 
   useEffect(() => {
@@ -480,6 +480,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               <div className="btcd-hr mt-1" />
 
               <ZohoCrmActions
+                formID={formID}
                 formFields={formFields}
                 crmConf={crmConf}
                 setCrmConf={setCrmConf}
