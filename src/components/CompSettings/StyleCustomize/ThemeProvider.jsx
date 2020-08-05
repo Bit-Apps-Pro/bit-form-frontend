@@ -2,12 +2,11 @@ export const defaultTheme = {
   '._frm-bg': {
     overflow: 'auto',
     'border-radius': '10px 10px 10px 10px',
-    'backdrop-filter': 'blur(2px)',
     'background-size': '100% 100%',
     'background-image': 'url(https://jooinn.com/images/abstract-background-278.jpg)',
   },
   '._frm': {
-    'backdrop-filter': 'blur(32px)',
+    // 'backdrop-filter': 'blur(32px)',
     'background-color': 'rgba(242, 246, 249, 0.59)',
     'border-color': 'rgba(0, 0, 0, 1)',
     'border-radius': '10px 10px 10px 10px',
@@ -38,9 +37,9 @@ export const defaultTheme = {
     padding: '8px 8px 8px 8px!important',
   },
 
-  'input.fld::placeholder,textarea.fld::placeholder': {
-    color: 'rgba(16, 64, 86, 1) !important',
-  },
+  /*  'input.fld::placeholder,textarea.fld::placeholder': {
+     color: 'rgba(16, 64, 86, 1) !important',
+   }, */
   'input.fld:focus,textarea.fld:focus': {
     'border-width': '0px 0px 2px 0px!important',
   },
@@ -49,12 +48,7 @@ export const defaultTheme = {
     color: 'rgba(0, 0, 0, 1) !important',
   },
 
-  '@media only screen and (max-width: 600px)': {
-
-  },
-
-  '@media only screen and (max-width: 400px)': {
-
-  },
+  '@media only screen and (max-width: 600px)': {},
+  '@media only screen and (max-width: 400px)': {},
 }
 export const them = {}
