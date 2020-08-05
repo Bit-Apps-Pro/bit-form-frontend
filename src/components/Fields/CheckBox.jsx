@@ -14,7 +14,8 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
       defaultValue = attr.val
     }
   } else {
-    defaultValue = attr.opt.map(checkBoxElement => checkBoxElement.check && checkBoxElement.lbl)
+    // defaultValue = attr.opt.map(checkBoxElement => checkBoxElement.check && checkBoxElement.lbl)
+    defaultValue = attr.opt.filter(checkBoxElement => checkBoxElement.check).map(checkBoxElement => checkBoxElement.lbl)
   }
   const [value, setvalue] = useState(defaultValue || [])
   const checkBoxRef = useRef(null)
@@ -24,7 +25,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
     } else if (attr.conditional) {
       setvalue(defaultValue)
     }
-  }, [attr.val, attr.userinput, attr.conditional, defaultValue, value])
+  }, [attr.val, attr.userinput, attr.conditional, attr.opt])
   useEffect(() => {
     if (resetFieldValue) {
       setvalue([])
