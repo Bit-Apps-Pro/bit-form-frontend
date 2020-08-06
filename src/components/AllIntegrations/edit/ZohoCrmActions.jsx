@@ -153,7 +153,6 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formID, formFields
   }
 
   const getOwners = (recordTab) => {
-    console.log('sssss', 'gete owner')
     const module = recordTab === 0 ? crmConf.module : crmConf?.relatedlist?.module
     if (!module) {
       return
@@ -199,7 +198,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formID, formFields
 
   const openRecOwnerModal = () => {
     setActionMdl({ show: 'rec_owner' })
-    getOwners(0)
+    getOwners(tab)
   }
 
   return (
@@ -271,9 +270,12 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formID, formFields
         <small>Add a tag to records pushed to Zoho CRM</small>
         <div className="mt-3">Owner Name</div>
         <select
+          value={crmConf.actions.rec_owner}
           className="mt-2 btcd-paper-inp"
+          onChange={e => actionHandler(e.target.value, 'rec_owner')}
         >
-          {crmConf.default?.crmOwner?.map(owner => <option>{owner.full_name}</option>)}
+          <option value="">Select Owner</option>
+          {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
         </select>
       </ConfirmModal>
 
