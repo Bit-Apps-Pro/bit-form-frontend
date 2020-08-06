@@ -9,10 +9,9 @@ import ConfirmModal from '../../ConfirmModal'
 import Modal from '../../Modal'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function ZohoCrmActions({ crmConf, setCrmConf, formID, formFields, tab }) {
+export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
-  const [actions] = useState(tab === 0 ? crmConf.actions : crmConf.relatedlist.actions)
 
   const actionHandler = (val, typ) => {
     if (tab === 0) {
@@ -142,25 +141,56 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formID, formFields
     setActionMdl({ show: false })
   }
 
+  const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
   const getTags = () => {
+    if (!crmConf.default.tags?.[module] && actionMdl.show === 'tag_rec') {
+      refreshTags()
+    }
     const arr = [
-      { title: 'Zoho CRM Tags', type: 'group', child: [] },
-      { title: 'Form Fields', type: 'group', child: [] },
+      { title: 'Zoho CRM Tags', type: 'group', childs: [] },
+      { title: 'Form Fields', type: 'group', childs: [] },
     ]
-    arr[0].childs = [{ label: 'test 1', value: 1 }, { label: 'test 2', value: 2 }]
+    if (crmConf.default.tags?.[module]) {
+      console.log('crmConf.default.tags?.[module]', crmConf.default.tags?.[module])
+      arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
+    }
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: itm.key }))
     return arr
   }
 
-  const getOwners = (recordTab) => {
-    const module = recordTab === 0 ? crmConf.module : crmConf?.relatedlist?.module
-    if (!module) {
-      return
-    }
-
-    const getOwnersParams = {
+  const refreshTags = () => {
+    const refreshTagsParams = {
       formID,
       module,
+      dataCenter: crmConf.dataCenter,
+      clientId: crmConf.clientId,
+      clientSecret: crmConf.clientSecret,
+      tokenDetails: crmConf.tokenDetails,
+    }
+    bitsFetch(refreshTagsParams, 'bitforms_zcrm_get_tags').then(result => {
+      if (result && result.success) {
+        const newConf = { ...crmConf }
+        if (result.data.tags) {
+          if (!newConf.default.tags) {
+            newConf.default.tags = {}
+          }
+          newConf.default.tags[module] = { ...result.data.tags }
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        setCrmConf({ ...crmConf, ...newConf })
+        setSnackbar({ show: true, msg: 'Tags refreshed' })
+      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `Tags refresh failed Cause:${result.data.data || result.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Tags refresh failed. please try again' })
+      }
+    })
+  }
+  const getOwners = () => {
+    const getOwnersParams = {
+      formID,
       dataCenter: crmConf.dataCenter,
       clientId: crmConf.clientId,
       clientSecret: crmConf.clientSecret,
@@ -198,13 +228,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formID, formFields
 
   const openRecOwnerModal = () => {
     setActionMdl({ show: 'rec_owner' })
-    getOwners(tab)
+    getOwners()
   }
 
   return (
     <>
       <div className="d-flx flx-wrp">
-        <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={'workflow' in actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
         <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
         <TableCheckBox onChange={(e) => actionHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />

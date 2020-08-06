@@ -485,6 +485,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                 crmConf={crmConf}
                 setCrmConf={setCrmConf}
                 tab={tab}
+                formID={formID}
+                setSnackbar={setSnackbar}
               />
             </>
           )}
@@ -522,6 +524,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                 crmConf={crmConf}
                 setCrmConf={setCrmConf}
                 tab={tab}
+                formID={formID}
+                setSnackbar={setSnackbar}
               />
             </>
           )}

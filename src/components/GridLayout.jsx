@@ -217,6 +217,7 @@ function GridLayout(props) {
       && newLays.sm.length === layouts.sm.length) {
       setLayouts({ ...newLays })
       props.setLay({ ...newLays })
+      sessionStorage.setItem('lc', '-')
     }
   }
 
