@@ -335,7 +335,7 @@ button.check {
 
 .layout {
   overflow: hidden;
-  min-height: calc(100% - 60px) !important;
+  min-height: 100px !important;
 }
 
 .btcd-frm-sub {
@@ -1879,6 +1879,11 @@ nav.top-nav {
 }
 .field-key-cpy {
   margin: 6px auto 10px auto;
+  & label {
+    display: flex;
+    word-break: break-all;
+  }
+
   & input {
     background: white;
     outline: none;

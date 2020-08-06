@@ -222,7 +222,7 @@ function FormDetails(props) {
               if (savedFormId === 0 && buttonText === 'Save') {
                 setSavedFormId(data.id)
                 setButtonText('Update')
-                history.replace(`/builder/edit/${data.id}`)
+                history.replace(`/form/builder/edit/${data.id}`)
                 setSnackbar({ show: true, msg: data.message })
                 if ('formSettings' in data) setFormSettings(data.formSettings)
                 if ('workFlows' in data) setworkFlows(data.workFlows)
