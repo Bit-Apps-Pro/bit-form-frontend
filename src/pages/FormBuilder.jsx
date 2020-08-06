@@ -40,7 +40,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
 
   // console.log('ssssssssssss', sessionStorage.getItem('style'))
-  console.log('ssssssssssss', style)
+  // console.log('ssssssssssss', style)
 
   useEffect(() => {
     if (brkPoint === 'md') {
@@ -61,21 +61,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     }
     return style
   }
-
-  /* const css = styleSheet.toString()
-  postcss([autoprefixer])
-    .process(css)
-    .then(result => {
-      console.log(result.css);
-      postcss([removePrefixes()])
-        .process(result.css)
-        .then(res => {
-          console.log(res.css);
-          console.log(cssToObject(res.css))
-        });
-    }); */
-
-  // console.log('ssssst', styleSheet.toString())
 
   const conRef = React.createRef(null)
 

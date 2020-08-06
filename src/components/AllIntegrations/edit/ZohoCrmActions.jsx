@@ -3,17 +3,17 @@ import React, { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import bitsFetch from '../../../Utils/bitsFetch'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import ConfirmModal from '../../ConfirmModal'
 import Modal from '../../Modal'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
 
-  const actioHandler = (val, typ) => {
+  const actionHandler = (val, typ) => {
     if (tab === 0) {
       if (typ === 'attachment') {
         if (val !== '') {
@@ -55,6 +55,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           crmConf.actions.tag_rec = val
         } else {
           delete crmConf.actions.tag_rec
+        }
+      }
+      if (typ === 'rec_owner') {
+        if (val !== '') {
+          crmConf.actions.rec_owner = val
+        } else {
+          delete crmConf.actions.rec_owner
         }
       }
       if (typ === 'upsert') {
@@ -107,6 +114,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           crmConf.relatedlist.actions.tag_rec = val
         } else {
           delete crmConf.relatedlist.actions.tag_rec
+        }
+      }
+      if (typ === 'rec_owner') {
+        if (val !== '') {
+          crmConf.relatedlist.actions.rec_owner = val
+        } else {
+          delete crmConf.relatedlist.actions.rec_owner
         }
       }
       if (typ === 'upsert') {
@@ -174,6 +188,24 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
     })
   }
+  const getOwners = () => {
+    const getOwnersParams = {
+      formID,
+      dataCenter: crmConf.dataCenter,
+      clientId: crmConf.clientId,
+      clientSecret: crmConf.clientSecret,
+      tokenDetails: crmConf.tokenDetails,
+    }
+    bitsFetch(getOwnersParams, 'bitforms_zcrm_get_users')
+      .then(result => {
+        if (result && result.success) {
+          const newConf = { ...crmConf }
+          newConf.default.crmOwner = result.data.users
+          setCrmConf({ ...crmConf, ...newConf })
+        }
+      })
+      .catch(() => console.log("error"))
+  }
 
   const setUpsertSettings = (val, typ) => {
     if (tab === 0) {
@@ -194,16 +226,22 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
     setCrmConf({ ...crmConf })
   }
 
+  const openRecOwnerModal = () => {
+    setActionMdl({ show: 'rec_owner' })
+    getOwners()
+  }
+
   return (
     <>
       <div className="d-flx flx-wrp">
-        <TableCheckBox onChange={(e) => actioHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
-        <TableCheckBox onChange={(e) => actioHandler(e, 'assignment_rules')} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'assignment_rules')} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
         <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in crmConf.actions : 'tag_rec' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
+        <TableCheckBox onChange={openRecOwnerModal} checked={tab === 0 ? 'rec_owner' in crmConf.actions : 'rec_owner' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Record_Owner" title="Record Owner" subTitle="Add a tag to records pushed to Zoho CRM." />
       </div>
 
       <ConfirmModal
@@ -221,7 +259,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         <MultiSelect
           defaultValue={tab === 0 ? crmConf.actions.attachment : crmConf.relatedlist.actions.attachment}
           className="mt-2 w-9"
-          onChange={(val) => actioHandler(val, 'attachment')}
+          onChange={(val) => actionHandler(val, 'attachment')}
           options={formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.name, value: itm.key }))}
         />
       </ConfirmModal>
@@ -244,8 +282,28 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           className="mt-2"
           singleSelect
           options={getTags()}
-          onChange={(val) => actioHandler(val, 'tag_rec')}
+          onChange={(val) => actionHandler(val, 'tag_rec')}
         />
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt="Ok"
+        show={actionMdl.show === 'rec_owner'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title="Record Owner"
+      >
+        <div className="btcd-hr mt-1" />
+        <small>Add a tag to records pushed to Zoho CRM</small>
+        <div className="mt-3">Owner Name</div>
+        <select
+          className="mt-2 btcd-paper-inp"
+        >
+          {crmConf.default?.crmOwner?.map(owner => <option>{owner.full_name}</option>)}
+        </select>
       </ConfirmModal>
 
       <Modal
