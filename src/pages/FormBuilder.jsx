@@ -2,8 +2,6 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import postcss from 'postcss'
-import removePrefixes from 'postcss-remove-prefixes'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
@@ -11,7 +9,6 @@ import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign } from '../Utils/Helpers'
-import cssToObject from 'css-to-object'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
