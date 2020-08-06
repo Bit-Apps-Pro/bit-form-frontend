@@ -54,13 +54,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'tag_rec') {
         if (val !== '') {
-          if('tag_rec' in crmConf.actions && Array.isArray(crmConf.actions.tag_rec)){
-            console.log('hi')
-            crmConf.actions.tag_rec.push(val)
-          }else{
-            crmConf.actions.tag_rec = []
-            crmConf.actions.tag_rec.push(val)
-          }
+            crmConf.actions.tag_rec = val
         } else {
           delete crmConf.actions.tag_rec
         }
@@ -159,11 +153,9 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       { title: 'Form Fields', type: 'group', childs: [] },
     ]
     if (crmConf.default.tags?.[module]) {
-      console.log('crmConf.default.tags?.[module]', crmConf.default.tags?.[module])
       arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
     }
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: itm.key }))
-    console.log('tags', arr)
     return arr
 
     
@@ -292,7 +284,6 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         <MultiSelect
           defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
           className="mt-2"
-          singleSelect
           options={getTags()}
           onChange={(val) => actionHandler(val, 'tag_rec')}
         />
