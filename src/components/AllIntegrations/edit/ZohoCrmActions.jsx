@@ -13,6 +13,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
 
+
   const actionHandler = (val, typ) => {
     if (tab === 0) {
       if (typ === 'attachment') {
@@ -52,7 +53,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'tag_rec') {
         if (val !== '') {
-          crmConf.actions.tag_rec = val
+          if ('tag_rec' in crmConf.actions && Array.isArray(crmConf.actions.tag_rec)) {
+            console.log('hi')
+            crmConf.actions.tag_rec.push(val)
+          } else {
+            crmConf.actions.tag_rec = []
+            crmConf.actions.tag_rec.push(val)
+          }
         } else {
           delete crmConf.actions.tag_rec
         }
@@ -188,6 +195,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
     })
   }
+
   const getOwners = () => {
     const getOwnersParams = {
       formID,
@@ -204,7 +212,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           setCrmConf({ ...crmConf, ...newConf })
         }
       })
-      .catch(() => console.log("error"))
+      .catch(() => console.log('error'))
   }
 
   const setUpsertSettings = (val, typ) => {
@@ -300,9 +308,12 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         <small>Add a tag to records pushed to Zoho CRM</small>
         <div className="mt-3">Owner Name</div>
         <select
+          value={crmConf.actions.rec_owner}
           className="mt-2 btcd-paper-inp"
+          onChange={e => actionHandler(e.target.value, 'rec_owner')}
         >
-          {crmConf.default?.crmOwner?.map(owner => <option>{owner.full_name}</option>)}
+          <option value="">Select Owner</option>
+          {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
         </select>
       </ConfirmModal>
 
@@ -335,7 +346,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
                     <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.actions.upsert?.overwrite} name="up-rec" title="No" />
                   </div>
                 </>
-              )
+            )
               : crmConf?.relatedlist?.actions?.upsert && (
                 <>
                   <div className="font-w-m mt-2">Upsert Using</div>
@@ -356,7 +367,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
                     <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.relatedlist.actions.upsert?.overwrite} name="up-rec" title="No" />
                   </div>
                 </>
-              )
+            )
           }
         </div>
       </Modal>
