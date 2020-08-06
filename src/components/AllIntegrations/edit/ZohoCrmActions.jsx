@@ -13,6 +13,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
 
+  
+
   const actionHandler = (val, typ) => {
     if (tab === 0) {
       if (typ === 'attachment') {
@@ -52,7 +54,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'tag_rec') {
         if (val !== '') {
-          crmConf.actions.tag_rec = val
+          if('tag_rec' in crmConf.actions && Array.isArray(crmConf.actions.tag_rec)){
+            console.log('hi')
+            crmConf.actions.tag_rec.push(val)
+          }else{
+            crmConf.actions.tag_rec = []
+            crmConf.actions.tag_rec.push(val)
+          }
         } else {
           delete crmConf.actions.tag_rec
         }
@@ -155,7 +163,10 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
     }
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: itm.key }))
+    console.log('tags', arr)
     return arr
+
+    
   }
 
   const refreshTags = () => {
@@ -188,6 +199,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
     })
   }
+  
   const getOwners = () => {
     const getOwnersParams = {
       formID,
