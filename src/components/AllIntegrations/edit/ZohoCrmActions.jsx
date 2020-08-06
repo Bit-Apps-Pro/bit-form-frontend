@@ -154,7 +154,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       console.log('crmConf.default.tags?.[module]', crmConf.default.tags?.[module])
       arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
     }
-    arr[1].childs = formFields.map(itm => ({ label: itm.name, value: itm.key }))
+    arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
     return arr
   }
 
