@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import bitsFetch from '../../../Utils/bitsFetch'
+import Loader from '../../Loaders/Loader'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import ConfirmModal from '../../ConfirmModal'
 import Modal from '../../Modal'
+import {refreshTags, refreshOwners} from './ZohoCommonFunc'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
@@ -145,76 +146,24 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
   const getTags = () => {
     if (!crmConf.default.tags?.[module]) {
-      refreshTags()
+      refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)
     }
     const arr = [
       { title: 'Zoho CRM Tags', type: 'group', childs: [] },
       { title: 'Form Fields', type: 'group', childs: [] },
     ]
 
-    console.log('getTags', crmConf.default.tags?.[module]?.tags)
-    if (!crmConf.default.tags?.[module]?.tags) {
+    if (crmConf.default.tags?.[module]) {
       arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
     }
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
     return arr
   }
-
-  const refreshTags = () => {
-    const refreshTagsParams = {
-      formID,
-      module,
-      dataCenter: crmConf.dataCenter,
-      clientId: crmConf.clientId,
-      clientSecret: crmConf.clientSecret,
-      tokenDetails: crmConf.tokenDetails,
-    }
-    bitsFetch(refreshTagsParams, 'bitforms_zcrm_get_tags').then(result => {
-      if (result?.success) {
-        const newConf = { ...crmConf }
-        if (result.data.tags) {
-          if (!newConf.default.tags) {
-            newConf.default.tags = {}
-          }
-          newConf.default.tags[module] = { ...result.data.tags }
-        }
-        if (result.data.tokenDetails) {
-          newConf.tokenDetails = result.data.tokenDetails
-        }
-        setCrmConf({ ...crmConf, ...newConf })
-        setSnackbar({ show: true, msg: 'Tags refreshed' })
-      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Tags refresh failed Cause:${result.data.data || result.data}. please try again` })
-      } else {
-        setSnackbar({ show: true, msg: 'Tags refresh failed. please try again' })
-      }
-    })
-  }
   
   const getOwners = () => {
     if (!crmConf.default?.crmOwner) {
-      refreshOwners()
+      refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
     }
-  }
-
-  const refreshOwners = () => {
-    const getOwnersParams = {
-      formID,
-      dataCenter: crmConf.dataCenter,
-      clientId: crmConf.clientId,
-      clientSecret: crmConf.clientSecret,
-      tokenDetails: crmConf.tokenDetails,
-    }
-    bitsFetch(getOwnersParams, 'bitforms_zcrm_get_users')
-      .then(result => {
-        if (result?.success) {
-          const newConf = { ...crmConf }
-          newConf.default.crmOwner = result.data.users
-          setCrmConf({ ...crmConf, ...newConf })
-          setSnackbar({ show: true, msg: 'Owners refreshed' })
-        }
-      })
-      .catch(() => console.log("error"))
   }
 
   const setUpsertSettings = (val, typ) => {
@@ -247,9 +196,9 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
         <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
-        <TableCheckBox onChange={(e) => actionHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." />
+        {/* <TableCheckBox onChange={(e) => actionHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." /> */}
         <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
-        <TableCheckBox onChange={(e) => actionHandler(e, 'assignment_rules')} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
+        {/* <TableCheckBox onChange={(e) => actionHandler(e, 'assignment_rules')} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." /> */}
         <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in crmConf.actions : 'tag_rec' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
         <TableCheckBox onChange={openRecOwnerModal} checked={tab === 0 ? 'rec_owner' in crmConf.actions : 'rec_owner' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Record_Owner" title="Record Owner" subTitle="Add a tag to records pushed to Zoho CRM." />
       </div>
@@ -286,13 +235,26 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       >
         <div className="btcd-hr mt-1" />
         <small>Add a tag to records pushed to Zoho CRM</small>
-        <div className="mt-3 flx flx-between">Tag Name {<button onClick={refreshTags} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>}</div>
+        <div className="mt-3">Tag Name</div>
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        ) : (<div className="flx flx-between mt-2">
         <MultiSelect
+          className="msl-wrp-options"
           defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
-          className="mt-2"
           options={getTags()}
           onChange={(val) => actionHandler(val, 'tag_rec')}
         />
+        <button onClick={() => refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        </div>)}
+        
       </ConfirmModal>
 
       <ConfirmModal
@@ -307,7 +269,17 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       >
         <div className="btcd-hr mt-1" />
         <small>Add a tag to records pushed to Zoho CRM</small>
-        <div className="mt-3  flx flx-between">Owner Name <button onClick={refreshOwners} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button></div>
+        <div className="mt-3">Owner Name</div>
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        ) : (<div className="flx flx-between mt-2">
         <select
           value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlist.actions.rec_owner}
           className="mt-2 btcd-paper-inp"
@@ -316,6 +288,9 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           <option value="">Select Owner</option>
           {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
         </select>
+        <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        </div>
+        )}
       </ConfirmModal>
 
       <Modal

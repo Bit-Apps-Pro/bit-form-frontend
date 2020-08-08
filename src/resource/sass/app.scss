@@ -2549,6 +2549,10 @@ nav.top-nav {
   }
 }
 
+.msl-vars.msl-wrp-options {
+  --menu-max-height: 250px !important;
+}
+
 select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
   box-shadow: none;

@@ -1,14 +1,13 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
-import EditZohoCRM from './edit/EditZohoCRM';
+import EditZohoCRM from './zohocrm/EditZohoCRM'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
-
   const IntegType = () => {
     switch (integrations[id].type) {
       case 'Zoho CRM':
-        return <EditZohoCRM url={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        return <EditZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
