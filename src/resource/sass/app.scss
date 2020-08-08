@@ -2091,9 +2091,9 @@ nav.top-nav {
 
 .btcd-m-sm {
   width: 400px !important;
-  height: 220px !important;
+  height: auto !important;
   & .content {
-    height: 115px;
+    height: 100%;
   }
 }
 
@@ -2944,7 +2944,7 @@ select.btcd-paper-inp {
   padding: 10px 15px;
   border-radius: 5px;
   transition: bottom 0.5s, transform 0.5s;
-  z-index: 9999;
+  z-index: 999999;
   transform: scale(0);
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14),
     0px 1px 18px 0px rgba(0, 0, 0, 0.12);
