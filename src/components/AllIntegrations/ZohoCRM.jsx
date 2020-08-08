@@ -381,7 +381,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
             ))
           }
         </select>
-        {tab === 0 && <button onClick={refreshModules} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>}
+        {tab === 0 && <button onClick={refreshModules} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
         <br />
         <div className="flx mt-2">
           <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
@@ -403,7 +403,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                   ))
                 }
               </select>
-              <button onClick={refreshRelatedList} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={refreshRelatedList} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
               <br />
               <br />
             </>
@@ -437,7 +437,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               </select>
             )
         }
-        <button onClick={() => refreshLayouts(tab)} className="icn-btn sh-sm ml-2 mr-2" type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshLayouts(tab)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
         {isLoading && (

@@ -11,9 +11,8 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
+  const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
-
-  
 
   const actionHandler = (val, typ) => {
     if (tab === 0) {
@@ -145,20 +144,20 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
 
   const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
   const getTags = () => {
-    if (!crmConf.default.tags?.[module] && actionMdl.show === 'tag_rec') {
+    if (!crmConf.default.tags?.[module]) {
       refreshTags()
     }
     const arr = [
       { title: 'Zoho CRM Tags', type: 'group', childs: [] },
       { title: 'Form Fields', type: 'group', childs: [] },
     ]
-    if (crmConf.default.tags?.[module]) {
+
+    console.log('getTags', crmConf.default.tags?.[module]?.tags)
+    if (!crmConf.default.tags?.[module]?.tags) {
       arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
     }
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: itm.key }))
     return arr
-
-    
   }
 
   const refreshTags = () => {
@@ -171,7 +170,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       tokenDetails: crmConf.tokenDetails,
     }
     bitsFetch(refreshTagsParams, 'bitforms_zcrm_get_tags').then(result => {
-      if (result && result.success) {
+      if (result?.success) {
         const newConf = { ...crmConf }
         if (result.data.tags) {
           if (!newConf.default.tags) {
@@ -193,6 +192,12 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   }
   
   const getOwners = () => {
+    if (!crmConf.default?.crmOwner) {
+      refreshOwners()
+    }
+  }
+
+  const refreshOwners = () => {
     const getOwnersParams = {
       formID,
       dataCenter: crmConf.dataCenter,
@@ -202,10 +207,11 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
     }
     bitsFetch(getOwnersParams, 'bitforms_zcrm_get_users')
       .then(result => {
-        if (result && result.success) {
+        if (result?.success) {
           const newConf = { ...crmConf }
           newConf.default.crmOwner = result.data.users
           setCrmConf({ ...crmConf, ...newConf })
+          setSnackbar({ show: true, msg: 'Owners refreshed' })
         }
       })
       .catch(() => console.log("error"))
@@ -280,7 +286,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       >
         <div className="btcd-hr mt-1" />
         <small>Add a tag to records pushed to Zoho CRM</small>
-        <div className="mt-3">Tag Name</div>
+        <div className="mt-3 flx flx-between">Tag Name {<button onClick={refreshTags} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>}</div>
         <MultiSelect
           defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
           className="mt-2"
@@ -301,9 +307,9 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       >
         <div className="btcd-hr mt-1" />
         <small>Add a tag to records pushed to Zoho CRM</small>
-        <div className="mt-3">Owner Name</div>
+        <div className="mt-3  flx flx-between">Owner Name <button onClick={refreshOwners} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button></div>
         <select
-          value={crmConf.actions.rec_owner}
+          value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlist.actions.rec_owner}
           className="mt-2 btcd-paper-inp"
           onChange={e => actionHandler(e.target.value, 'rec_owner')}
         >
