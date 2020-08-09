@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
-import ZohoCRM from './ZohoCRM';
+import ZohoCRM from './zohocrm/ZohoCRM'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
