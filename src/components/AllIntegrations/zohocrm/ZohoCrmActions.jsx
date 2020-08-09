@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
@@ -7,13 +7,19 @@ import Loader from '../../Loaders/Loader'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import ConfirmModal from '../../ConfirmModal'
 import Modal from '../../Modal'
-import {refreshTags, refreshOwners} from './ZohoCommonFunc'
+import { refreshTags, refreshOwners } from './ZohoCommonFunc'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+
+  useEffect(() => {
+    if (!crmConf.default.tags?.[module]) {
+      refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)
+    }
+  }, [crmConf.module, crmConf?.relatedlist?.module])
 
   const actionHandler = (val, typ) => {
     if (tab === 0) {
@@ -54,7 +60,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'tag_rec') {
         if (val !== '') {
-            crmConf.actions.tag_rec = val
+          crmConf.actions.tag_rec = val
         } else {
           delete crmConf.actions.tag_rec
         }
@@ -145,9 +151,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
 
   const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
   const getTags = () => {
-    if (!crmConf.default.tags?.[module]) {
-      refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
+
     const arr = [
       { title: 'Zoho CRM Tags', type: 'group', childs: [] },
       { title: 'Form Fields', type: 'group', childs: [] },
@@ -159,7 +163,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
     return arr
   }
-  
+
   const getOwners = () => {
     if (!crmConf.default?.crmOwner) {
       refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
@@ -246,15 +250,15 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (<div className="flx flx-between mt-2">
-        <MultiSelect
-          className="msl-wrp-options"
-          defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
-          options={getTags()}
-          onChange={(val) => actionHandler(val, 'tag_rec')}
-        />
-        <button onClick={() => refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <MultiSelect
+            className="msl-wrp-options"
+            defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
+            options={getTags()}
+            onChange={(val) => actionHandler(val, 'tag_rec')}
+          />
+          <button onClick={() => refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>)}
-        
+
       </ConfirmModal>
 
       <ConfirmModal
@@ -280,17 +284,17 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (<div className="flx flx-between mt-2">
-        <select
-          value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlist.actions.rec_owner}
-          className="mt-2 btcd-paper-inp"
-          onChange={e => actionHandler(e.target.value, 'rec_owner')}
-        >
-          <option value="">Select Owner</option>
-          {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
-        </select>
-        <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <select
+            value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlist.actions.rec_owner}
+            className="mt-2 btcd-paper-inp"
+            onChange={e => actionHandler(e.target.value, 'rec_owner')}
+          >
+            <option value="">Select Owner</option>
+            {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
+          </select>
+          <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
-        )}
+          )}
       </ConfirmModal>
 
       <Modal

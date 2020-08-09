@@ -40,8 +40,10 @@ export default function SingleFormSettings({ additional, setadditional }) {
   }
 
   const setEntryLimit = e => {
-    additional.settings.entry_limit = e.target.value
-    setadditional({ ...additional })
+    if (e.target.value > 0) {
+      additional.settings.entry_limit = e.target.value
+      setadditional({ ...additional })
+    }
   }
 
   const setOnePerIp = e => {
@@ -128,7 +130,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
     if (e.target.checked) {
       if (additional.settings.restrict_form === undefined
         || additional.settings.restrict_form.date === undefined
-          || additional.settings.restrict_form.time === undefined) {
+        || additional.settings.restrict_form.time === undefined) {
         additional.settings.restrict_form = { day: ['Everyday'], date: { from: new Date(), to: new Date() }, time: { from: '00:00', to: '23:59' } }
       }
       additional.enabled.restrict_form = true
