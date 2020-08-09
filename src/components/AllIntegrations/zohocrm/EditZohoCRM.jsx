@@ -5,7 +5,7 @@ import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoCrmFieldMap from './ZohoCrmFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
-import {refreshModules, refreshLayouts, refreshRelatedList} from './ZohoCommonFunc'
+import { refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCommonFunc'
 import ZohoCrmActions from './ZohoCrmActions'
 
 function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -20,11 +20,21 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
   console.log('crmConf', crmConf)
+
+  useEffect(() => {
+    if (tab) {
+      if (!crmConf.default?.relatedlists || !crmConf.default?.relatedlists[crmConf.module]) {
+        refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
+      }
+    }
+  }, [tab])
+
   useEffect(() => {
     const newConf = { ...crmConf }
     if (tab === 1 && !newConf.relatedlist.actions) {
       newConf.relatedlist.actions = {}
     }
+
     const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
     const layout = tab === 0 ? crmConf.layout : crmConf.relatedlist.layout
     // let isLayoutRefreshed = false
@@ -38,13 +48,21 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             newConf.actions = {}
             [newConf.layout] = layouts
             if (newConf.layout === crmConf.layout) {
-              newConf.field_map = newConf.default.layouts[module][layout].required ? newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
+              if (newConf.default?.layouts[module][layout]?.required || newConf.default?.layouts[module][layout]) {
+                newConf.field_map = newConf.default?.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field }))
+              } else {
+                [{ formField: '', zohoFormField: '' }]
+              }
             }
           } else {
-            newConf.relatedlist.actions = {} 
+            newConf.relatedlist.actions = {}
             [newConf.relatedlist.layout] = layouts
             if (newConf.relatedlist.layout === crmConf.relatedlist.layout) {
-              newConf.relatedlist.field_map = newConf.default.layouts[module][layout].required ? newConf.default.layouts[module][layout].required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap) : [{ formField: '', zohoFormField: '' }]
+              if (newConf.default?.layouts[module][layout]?.required || newConf.default?.layouts[module][layout]) {
+                newConf.relatedlist.field_map = newConf.default?.layouts[module][layout]?.required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap)
+              } else {
+                [{ formField: '', zohoFormField: '' }]
+              }
             }
           }
         } else if (tab === 0) {
@@ -84,13 +102,13 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
       if (tab === 0) {
         newConf.actions = {}
         newConf.field_map = [{ formField: '', zohoFormField: '' }]
-        if (crmConf.default && crmConf.default.layouts && newConf.default.layouts[module][layout] && newConf.default.layouts[module][layout].required) {
+        if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
           newConf.field_map = newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field }))
         }
       } else {
         newConf.relatedlist.actions = {}
         newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-        if (crmConf.default && crmConf.default.layouts && newConf.default.layouts[module][layout] && newConf.default.layouts[module][layout].required) {
+        if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
           newConf.relatedlist.field_map = newConf.default.layouts[module][layout].required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap)
         }
       }
@@ -100,7 +118,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crmConf.layout, crmConf?.relatedlist?.layout])
-  
+
 
   const handleInput = (e, recordTab) => {
     if (recordTab === 0) {

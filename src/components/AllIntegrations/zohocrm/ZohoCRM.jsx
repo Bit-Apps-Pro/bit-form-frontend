@@ -7,7 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCrmFieldMap from './ZohoCrmFieldMap'
-import {refreshModules, refreshLayouts, refreshRelatedList} from './ZohoCommonFunc'
+import { refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCommonFunc'
 import ZohoCrmActions from './ZohoCrmActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
@@ -55,12 +55,18 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }, [])
 
   useEffect(() => {
+    if (!crmConf.default?.relatedlists) {
+      refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
+    }
+  }, [tab])
+
+  useEffect(() => {
     const newConf = { ...crmConf }
     const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
     if (tab === 0) {
       newConf.actions = {}
       newConf.field_map = [{ formField: '', zohoFormField: '' }]
-      
+
     } else {
       newConf.relatedlist.actions = {}
       newConf.relatedlist.layout = ''
@@ -422,7 +428,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
-          
+
         >
           Next &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />

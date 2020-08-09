@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
@@ -14,6 +14,12 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+
+  useEffect(() => {
+    if (!crmConf.default.tags?.[module]) {
+      refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)
+    }
+  }, [crmConf.module, crmConf?.relatedlist?.module])
 
   const actionHandler = (val, typ) => {
     if (tab === 0) {
@@ -145,9 +151,6 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
 
   const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
   const getTags = () => {
-    if (!crmConf.default.tags?.[module]) {
-      refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
     const arr = [
       { title: 'Zoho CRM Tags', type: 'group', childs: [] },
       { title: 'Form Fields', type: 'group', childs: [] },
