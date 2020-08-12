@@ -15,7 +15,7 @@ function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
 
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID } = props
   const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -27,7 +27,7 @@ function GridLayout(props) {
     if (newData !== null) {
       margeNewData()
     }
-    slimInit()
+    // slimInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields])
 
@@ -189,7 +189,7 @@ function GridLayout(props) {
     const x = 0
     const y = Infinity
     setNewData(null)
-    const newBlk = { i: `bf-${newCounter + 1}-`, x, y, w, h, minH, maxH, minW }
+    const newBlk = { i: `bf${formID}-${newCounter + 1}-`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
     tmpLayouts.lg.push(newBlk)
@@ -207,8 +207,9 @@ function GridLayout(props) {
     }
     setLayouts({ ...tmpLayouts })
     const tmpField = JSON.parse(JSON.stringify(newData[0]))
-    setFields({ ...fields, [`bf-${newCounter + 1}-`]: tmpField })
+    setFields({ ...fields, [`bf${formID}-${newCounter + 1}-`]: tmpField })
     setNewCounter(newCounter + 1)
+    sessionStorage.setItem('lc', '-')
   }
 
   const onLayoutChange = (newLay, newLays) => {
@@ -217,7 +218,6 @@ function GridLayout(props) {
       && newLays.sm.length === layouts.sm.length) {
       setLayouts({ ...newLays })
       props.setLay({ ...newLays })
-      sessionStorage.setItem('lc', '-')
     }
   }
 
@@ -233,6 +233,7 @@ function GridLayout(props) {
     delete fields[i]
     setLayouts(nwLay)
     setFields({ ...fields })
+    sessionStorage.setItem('lc', '-')
   }
 
   const onDrop = (lay, elmPrms) => {
@@ -240,13 +241,12 @@ function GridLayout(props) {
       alert('You can not add more than 5 field in free version.')
       return false
     } */
-    console.log('aaaaaaaaaaaaaa', lay)
     const { draggedElm } = props
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `bf-${newCounter + 1}-`
+    const newBlk = `bf${formID}-${newCounter + 1}-`
 
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
@@ -267,6 +267,7 @@ function GridLayout(props) {
     const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
     setFields({ ...fields, [newBlk]: tmpField })
     setNewCounter(newCounter + 1)
+    sessionStorage.setItem('lc', '-')
   }
 
   const getElmProp = e => {
@@ -306,6 +307,7 @@ function GridLayout(props) {
   }
 
   const editSubmit = () => {
+    const df_sadfs = 0
     props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
   }
 
@@ -391,7 +393,8 @@ function GridLayout(props) {
                 draggableHandle=".drag"
                 layouts={layouts}
                 onBreakpointChange={onBreakpointChange}
-              // compactType="vertical"
+                onDragStop={() => sessionStorage.setItem('lc', '-')}
+                onResizeStop={() => sessionStorage.setItem('lc', '-')}
               >
                 {layouts[breakpoint].map(itm => blkGen(itm))}
               </ResponsiveReactGridLayout>
