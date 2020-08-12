@@ -34,10 +34,13 @@ function FormDetails(props) {
   const { allFormsDispatchHandler } = allFormsData
   const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
-  const { history } = props
+  const { history, newFormId } = props
+
+  // const formID = (formType === 'new' && frmID === 'blank') ? getNewFormId() : frmID
 
   // const { data, isValidating, error } = useSWR([formID, 'bitforms_get_a_form'], (id, action) => bitsFetch({ id }, action))
   // console.log('userSWR', data, error, isValidating)
+
   const onMount = () => {
     if (sessionStorage.getItem('formData')) {
       const formData = JSON.parse(sessionStorage.getItem('formData'))
@@ -155,6 +158,8 @@ function FormDetails(props) {
             if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             // if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
             setisLoading(false)
+            sessionStorage.removeItem('lc')
+            sessionStorage.removeItem('fs')
           } else {
             if (!res.data.success && res.data.data === 'Token expired') {
               window.location.reload()
@@ -182,6 +187,7 @@ function FormDetails(props) {
     } else {
       // setbuttonDisabled(true)
       let formData = {
+        form_id: newFormId,
         layout: lay,
         fields,
         form_name: formName,
@@ -222,7 +228,7 @@ function FormDetails(props) {
               if (savedFormId === 0 && buttonText === 'Save') {
                 setSavedFormId(data.id)
                 setButtonText('Update')
-                history.replace(`/form/builder/edit/${data.id}`)
+                history.replace(`/form/builder/edit/${data.id}/fs`)
                 setSnackbar({ show: true, msg: data.message })
                 if ('formSettings' in data) setFormSettings(data.formSettings)
                 if ('workFlows' in data) setworkFlows(data.workFlows)
@@ -328,7 +334,7 @@ function FormDetails(props) {
                 setNewCounter={setNewCounter}
                 theme={formSettings.theme}
                 setFormName={setFormName}
-                formID={formID}
+                formID={formType === 'new' ? newFormId : formID}
                 formType={formType}
               />
             </Suspense>
