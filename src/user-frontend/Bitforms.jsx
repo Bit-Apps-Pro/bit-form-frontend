@@ -393,7 +393,9 @@ export default function Bitforms(props) {
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div className="_frm">
-          {layout['lg'].map(field => blk(field))}
+          <div className="_frm-g">
+            {layout['lg'].map(field => blk(field))}
+          </div>
           {!props.editMode && props.buttons
             && (
               <CompGen
