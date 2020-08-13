@@ -79,14 +79,13 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   }
 
   const save = () => {
-    history.push(`/builder/${formType}/${formID}/settings/email-templates`)
+    history.push(`/form/settings/${formType}/${formID}/email-templates`)
     saveForm()
   }
 
-
   return (
     mailTem.length < 1 ? <Redirect to={`/form/settings/edit/${formID}/email-templates`} /> : (
-      <div>
+      <div style={{ width: 900 }}>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className="btn btcd-btn-o-gray">
           <span className="btcd-icn icn-arrow_back" />
           &nbsp;
@@ -94,7 +93,6 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
         </NavLink>
 
         <button onClick={save} className="btn blue f-right" type="button">Save</button>
-
 
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>Template Name: </b>
@@ -127,8 +125,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
           </label>
         </div>
 
-
-      </div>
+      </div >
     )
   )
 }

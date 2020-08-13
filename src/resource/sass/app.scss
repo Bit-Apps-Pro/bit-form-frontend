@@ -28,6 +28,10 @@ body {
   padding: 0;
 }
 
+a {
+  transition: none !important;
+}
+
 #btcd-app {
   color: $dp-blue;
   font-family: "Montserrat", sans-serif !important;
@@ -147,7 +151,7 @@ button.check {
 .d-in-b {
   display: inline-block;
 }
-.d-block {
+.d-blk {
   display: block !important;
 }
 .o-v {
@@ -1375,6 +1379,10 @@ button.check {
   }
 }
 
+.cp {
+  cursor: pointer;
+}
+
 .btcd-btn-sm {
   padding: 5px;
   font-size: 10px;
@@ -2236,10 +2244,17 @@ nav.top-nav {
   height: 100%;
   width: 400px;
   z-index: 9;
-  padding: 20px;
+  padding: 5px 20px 20px;
   box-shadow: -2px 0 4px 1px transparentize(#000000, 0.7);
   transition-delay: right 0.5s;
   transition: right 0.5s ease;
+  overflow: auto;
+}
+
+.btcd-drawer-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .btcd-row-detail-tbl {
@@ -3770,7 +3785,7 @@ select.btcd-ud-inp {
   color: white !important;
   font-weight: bold;
   &:hover {
-    background: transparentize($dp-bg, 0.1) !important;
+    background: transparentize($dp-bg, 0.08) !important;
   }
 }
 .btcd-captcha {
@@ -3781,10 +3796,24 @@ select.btcd-ud-inp {
 
 .btcd-link {
   color: blue;
+  box-shadow: none !important;
   &:hover {
     color: rgb(142, 142, 255);
   }
 }
+
+.btcd-scroll > div:nth-child(2):hover{
+  height: 9px !important;
+}
+
+.btcd-scroll > div:nth-child(3):hover{
+  width: 8px !important;
+}
+
+
+
+
+
 // for IE11
 
 _:-ms-fullscreen,

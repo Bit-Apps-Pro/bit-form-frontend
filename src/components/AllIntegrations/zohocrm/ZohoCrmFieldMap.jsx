@@ -5,6 +5,7 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
   const module = tab === 0 ? crmConf.module : crmConf?.relatedlist?.module
   const layout = tab === 0 ? crmConf.layout : crmConf?.relatedlist?.layout
   const isNotRequired = field.zohoFormField === '' || crmConf?.default?.layouts?.[module]?.[layout]?.required?.indexOf(field.zohoFormField) === -1
+
   const addMap = ind => {
     const newConf = { ...crmConf }
     if (tab === 0) {
@@ -12,18 +13,19 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
     } else {
       newConf.relatedlist.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
     }
-    setCrmConf({ ...crmConf, ...newConf })
+    setCrmConf({ ...newConf })
   }
 
   const delMap = ind => {
+    const newConf = { ...crmConf }
     if (tab === 0) {
-      if (crmConf.field_map.length > 1) {
-        crmConf.field_map.splice(ind, 1)
+      if (newConf.field_map.length > 1) {
+        newConf.field_map.splice(ind, 1)
       }
-    } else if (crmConf?.relatedlist?.field_map?.length > 1) {
-      crmConf.relatedlist.field_map.splice(ind, 1)
+    } else if (newConf?.relatedlist?.field_map?.length > 1) {
+      newConf.relatedlist.field_map.splice(ind, 1)
     }
-    setCrmConf({ ...crmConf })
+    setCrmConf({ ...newConf })
   }
 
   const handleFieldMapping = (event, index) => {
@@ -59,8 +61,7 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
     } else {
       newConf.relatedlist.field_map[index][event.target.name] = event.target.value
     }
-    newConf.field_map[index][event.target.name] = event.target.value
-    setCrmConf({ ...crmConf, ...newConf })
+    setCrmConf({ ...newConf })
   }
 
   const handleCustomValue = (e, ind) => {
@@ -70,7 +71,7 @@ export default function ZohoCrmFieldMap({ i, formFields, field, crmConf, setCrmC
     } else {
       newConf.relatedlist.field_map[ind].customValue = e.target.value
     }
-    setCrmConf({ ...crmConf, ...newConf })
+    setCrmConf({ ...newConf })
   }
 
   return (

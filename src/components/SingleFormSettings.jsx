@@ -282,7 +282,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-date mr-2" />
-            Restrict Form Period
+            Limit Form Submission Period
           </b>
         )}
         cls="w-6 mt-3"

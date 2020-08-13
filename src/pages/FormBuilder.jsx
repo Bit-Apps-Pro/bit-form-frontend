@@ -39,8 +39,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme)
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
 
-  // console.log('ssssssssssss', sessionStorage.getItem('style'))
-  // console.log('ssssssssssss', style)
 
   useEffect(() => {
     if (brkPoint === 'md') {

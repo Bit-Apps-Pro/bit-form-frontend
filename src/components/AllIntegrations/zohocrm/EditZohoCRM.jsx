@@ -5,7 +5,7 @@ import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoCrmFieldMap from './ZohoCrmFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
-import { refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCommonFunc'
+import { refreshModules, refreshLayouts, refreshRelatedList, generateMappedField } from './ZohoCommonFunc'
 import ZohoCrmActions from './ZohoCrmActions'
 
 function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -15,8 +15,6 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
 
   const [crmConf, setCrmConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
-  const [isLayoutClearable, setisLayoutClearable] = useState(false)
-  const [isFieldMappingClearable, setisFieldMappingClearable] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
   console.log('crmConf', crmConf)
@@ -29,107 +27,85 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
     }
   }, [tab])
 
-  useEffect(() => {
-    const newConf = { ...crmConf }
-    if (tab === 1 && !newConf.relatedlist.actions) {
-      newConf.relatedlist.actions = {}
-    }
+  const moduleChange = (module, crmConfTmp) => {
+    let newConf = { ...crmConfTmp }
+    newConf.actions = {}
+    newConf.layout = ''
+    newConf.relatedlist.module = ''
+    newConf.relatedlist.layout = ''
+    newConf.relatedlist.actions = {}
+    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
 
-    const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
-    const layout = tab === 0 ? crmConf.layout : crmConf.relatedlist.layout
-    // let isLayoutRefreshed = false
-    if (crmConf.default && crmConf.default.layouts && !crmConf.default.layouts[module]) {
-      refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)
-    } else if (integrations[id].module) {
-      if (isLayoutClearable) {
-        const layouts = [...Object.keys(crmConf.default.layouts[module])]
-        if (layouts.length === 1) {
-          if (tab === 0) {
-            newConf.actions = {}
-            [newConf.layout] = layouts
-            if (newConf.layout === crmConf.layout) {
-              if (newConf.default?.layouts[module][layout]?.required || newConf.default?.layouts[module][layout]) {
-                newConf.field_map = newConf.default?.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field }))
-              } else {
-                [{ formField: '', zohoFormField: '' }]
-              }
-            }
-          } else {
-            newConf.relatedlist.actions = {}
-            [newConf.relatedlist.layout] = layouts
-            if (newConf.relatedlist.layout === crmConf.relatedlist.layout) {
-              if (newConf.default?.layouts[module][layout]?.required || newConf.default?.layouts[module][layout]) {
-                newConf.relatedlist.field_map = newConf.default?.layouts[module][layout]?.required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap)
-              } else {
-                [{ formField: '', zohoFormField: '' }]
-              }
-            }
-          }
-        } else if (tab === 0) {
-          newConf.actions = {}
-          newConf.layout = ''
-          newConf.field_map = [{ formField: '', zohoFormField: '' }]
-          if (newConf?.relatedlist?.layout) {
-            newConf.relatedlist.layout = ''
-            newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-          }
-          if (newConf?.relatedlist?.module) {
-            newConf.relatedlist.module = ''
-          }
-          if (newConf?.relatedlist?.field_map) {
-            newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-          }
-        } else {
-          newConf.relatedlist.actions = {}
-          newConf.relatedlist.layout = ''
-          newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-        }
-        setCrmConf({ ...crmConf, ...newConf })
-      } else {
-        setisLayoutClearable(true)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crmConf.module, crmConf?.relatedlist?.module])
-
-  useEffect(() => {
-    const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
-    const layout = tab === 0 ? crmConf.layout : crmConf.relatedlist.layout
-    if (integrations[id].layout
-      && isFieldMappingClearable
-    ) {
-      const newConf = { ...crmConf }
-      if (tab === 0) {
-        newConf.actions = {}
-        newConf.field_map = [{ formField: '', zohoFormField: '' }]
-        if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
-          newConf.field_map = newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field }))
-        }
-      } else {
-        newConf.relatedlist.actions = {}
-        newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-        if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
-          newConf.relatedlist.field_map = newConf.default.layouts[module][layout].required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap)
-        }
-      }
-      setCrmConf({ ...crmConf, ...newConf })
+    if (tab === 0) {
+      newConf.module = module
     } else {
-      setisFieldMappingClearable(true)
+      newConf.relatedlist.module = module
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crmConf.layout, crmConf?.relatedlist?.layout])
 
+    if (!newConf?.default?.layouts?.[module]) {
+      refreshLayouts(tab, module, formID, newConf, setCrmConf, setisLoading, setSnackbar)
+    } else {
+      const layouts = [...Object.keys(newConf.default.layouts[module])]
+      if (layouts.length == 1) {
+        if (tab === 0) {
+          [newConf.layout] = layouts
+          newConf = layoutChange(newConf.layout, newConf)
+        } else {
+          [newConf.relatedlist.layout] = layouts
+          newConf = layoutChange(newConf.relatedlist.layout, newConf)
+        }
+      }
+    }
+
+    return newConf
+
+  }
+
+  const layoutChange = (layout, crmConfTmp) => {
+    const newConf = { ...crmConfTmp }
+    newConf.actions = {}
+    newConf.layout = ''
+    const module = tab === 0 ? newConf.module : newConf.relatedlist.module
+    if (tab === 0) {
+      newConf.layout = layout
+      newConf.field_map = [{ formField: '', zohoFormField: '' }]
+      if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
+        newConf.field_map = generateMappedField(tab, newConf, module, layout)
+      }
+    } else {
+      newConf.relatedlist.layout = layout
+      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+      if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
+        newConf.relatedlist.field_map = generateMappedField(tab, newConf, module, layout)
+      }
+    }
+
+    return newConf
+  }
 
   const handleInput = (e, recordTab) => {
+    let returnConf = {}
+    const newConf = { ...crmConf }
     if (recordTab === 0) {
-      crmConf[e.target.name] = e.target.value
+      newConf.actions = {}
+      newConf[e.target.name] = e.target.value
     } else {
-      if (!crmConf.relatedlist) {
-        crmConf.relatedlist = {}
+      newConf.relatedlist.actions = {}
+      if (!newConf.relatedlist) {
+        newConf.relatedlist = {}
       }
-      crmConf.relatedlist[e.target.name] = e.target.value
+      newConf.relatedlist[e.target.name] = e.target.value
     }
-    setCrmConf({ ...crmConf })
+
+    switch (e.target.name) {
+      case 'module':
+        returnConf = moduleChange(e.target.value, newConf)
+        break;
+      case 'layout':
+        returnConf = layoutChange(e.target.value, newConf)
+        break;
+    }
+    setCrmConf({ ...newConf, ...returnConf })
   }
 
   const saveConfig = () => {
@@ -145,15 +121,16 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
   }
 
   const addFieldMap = () => {
+    const newConf = { ...crmConf }
     if (tab === 0) {
-      crmConf.field_map.push({ formField: '', zohoFormField: '' })
+      newConf.field_map.push({ formField: '', zohoFormField: '' })
     } else {
-      if (!crmConf.relatedlist.field_map) {
-        crmConf.relatedlist.field_map = []
+      if (!newConf.relatedlist.field_map) {
+        newConf.relatedlist.field_map = []
       }
-      crmConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
+      newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
     }
-    setCrmConf({ ...crmConf })
+    setCrmConf({ ...newConf })
   }
 
   return (
@@ -235,7 +212,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             </select>
           )
       }
-      <button onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshLayouts(tab, crmConf.module, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
       {

@@ -20,7 +20,7 @@ export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSna
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setCrmConf({ ...crmConf, ...newConf })
+        setCrmConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Modules refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {
@@ -31,8 +31,8 @@ export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSna
     .catch(() => setisLoading(false))
 }
 
-export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
-  const module = recordTab === 0 ? crmConf.module : crmConf?.relatedlist?.module
+export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
+  const newConf = { ...crmConf }
   if (!module) {
     return
   }
@@ -40,15 +40,14 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoad
   const refreshLayoutsRequestParams = {
     formID,
     module,
-    dataCenter: crmConf.dataCenter,
-    clientId: crmConf.clientId,
-    clientSecret: crmConf.clientSecret,
-    tokenDetails: crmConf.tokenDetails,
+    dataCenter: newConf.dataCenter,
+    clientId: newConf.clientId,
+    clientSecret: newConf.clientSecret,
+    tokenDetails: newConf.tokenDetails,
   }
   bitsFetch(refreshLayoutsRequestParams, 'bitforms_zcrm_refresh_layouts')
     .then(result => {
       if (result && result.success) {
-        const newConf = { ...crmConf }
         if (result.data.layouts) {
           if (!newConf.default.layouts) {
             newConf.default.layouts = {}
@@ -58,16 +57,18 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoad
           if (layouts.length === 1) {
             if (recordTab === 0) {
               [newConf.layout] = layouts
+              newConf.field_map = generateMappedField(recordTab, newConf, module, layouts)
             } else {
               [newConf.relatedlist.layout] = layouts
-              newConf.relatedlist.field_map = newConf.default.layouts[module][layouts[0]].required ? newConf.default.layouts[module][layouts[0]].required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap) : [{ formField: '', zohoFormField: '' }]
+              newConf.relatedlist.field_map = generateMappedField(recordTab, newConf, module, layouts)
             }
           }
         }
+
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setCrmConf({ ...crmConf, ...newConf })
+        setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Layouts refreshed' })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
@@ -77,6 +78,18 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoad
       setisLoading(false)
     })
     .catch(() => setisLoading(false))
+}
+
+export const generateMappedField = (tab, crmConf, module, layout) => {
+  const newConf = { ...crmConf }
+  let fieldMaps = []
+  if (tab === 0) {
+    fieldMaps = newConf.default?.layouts?.[module]?.[layout]?.required ? newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
+  } else {
+    fieldMaps = newConf.default?.layouts?.[module]?.[layout]?.required ? newConf.default.layouts[module][layout].required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap) : [{ formField: '', zohoFormField: '' }]
+  }
+
+  return fieldMaps
 }
 
 export const refreshRelatedList = (formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
@@ -105,7 +118,7 @@ export const refreshRelatedList = (formID, crmConf, setCrmConf, setisLoading, se
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setCrmConf({ ...crmConf, ...newConf })
+        setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'RelatedLists refreshed' })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `RelatedLists refresh failed Cause:${result.data.data || result.data}. please try again` })
@@ -140,7 +153,7 @@ export const refreshTags = (formID, module, crmConf, setCrmConf, setisLoading, s
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setCrmConf({ ...crmConf, ...newConf })
+        setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Tags refreshed' })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Tags refresh failed Cause:${result.data.data || result.data}. please try again` })
@@ -166,7 +179,7 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setisLoading, setSnac
       if (result?.success) {
         const newConf = { ...crmConf }
         newConf.default.crmOwner = result.data.users
-        setCrmConf({ ...crmConf, ...newConf })
+        setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Owners refreshed' })
       }
       setisLoading(false)

@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useReducer } from 'react'
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
+import { resetCaptcha } from '../components/Fields/Recaptcha'
 import { checkLogic, replaceWithField } from './checkLogic'
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
@@ -261,7 +262,6 @@ export default function Bitforms(props) {
   }
 
   const handleSubmit = (event) => {
-
     event.preventDefault()
     setbuttonDisabled(true)
     snack && setSnack(false)
@@ -329,7 +329,7 @@ export default function Bitforms(props) {
           if (timer) {
             clearTimeout(timer)
           }
-        }, 5000);
+        }, 1000);
       }
       if (hitCron) {
         if (responsedRedirectPage === null || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
@@ -344,6 +344,8 @@ export default function Bitforms(props) {
 
   const handleReset = () => {
     setresetFieldValue(true)
+
+    resetCaptcha()
   }
 
   useEffect(() => {
@@ -393,7 +395,7 @@ export default function Bitforms(props) {
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
         <div className="_frm">
-          {layout['lg'].map(field => blk(field))}
+          {layout.lg.map(field => blk(field))}
           {!props.editMode && props.buttons
             && (
               <CompGen

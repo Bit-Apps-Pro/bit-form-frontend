@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
@@ -15,134 +15,129 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
 
-  useEffect(() => {
-    if (!crmConf.default.tags?.[module]) {
-      refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
-  }, [crmConf.module, crmConf?.relatedlist?.module])
-
   const actionHandler = (val, typ) => {
+    const newConf = { ...crmConf }
     if (tab === 0) {
       if (typ === 'attachment') {
         if (val !== '') {
-          crmConf.actions.attachment = val
+          newConf.actions.attachment = val
         } else {
-          delete crmConf.actions.attachment
+          delete newConf.actions.attachment
         }
       }
       if (typ === 'approval') {
         if (val.target.checked) {
-          crmConf.actions.approval = true
+          newConf.actions.approval = true
         } else {
-          delete crmConf.actions.approval
+          delete newConf.actions.approval
         }
       }
       if (typ === 'workflow') {
         if (val.target.checked) {
-          crmConf.actions.workflow = true
+          newConf.actions.workflow = true
         } else {
-          delete crmConf.actions.workflow
+          delete newConf.actions.workflow
         }
       }
       if (typ === 'gclid') {
         if (val.target.checked) {
-          crmConf.actions.gclid = true
+          newConf.actions.gclid = true
         } else {
-          delete crmConf.actions.gclid
+          delete newConf.actions.gclid
         }
       }
       if (typ === 'assignment_rules') {
         if (val.target.checked) {
-          crmConf.actions.assignment_rules = true
+          newConf.actions.assignment_rules = true
         } else {
-          delete crmConf.actions.assignment_rules
+          delete newConf.actions.assignment_rules
         }
       }
       if (typ === 'tag_rec') {
         if (val !== '') {
-          crmConf.actions.tag_rec = val
+          newConf.actions.tag_rec = val
         } else {
-          delete crmConf.actions.tag_rec
+          delete newConf.actions.tag_rec
         }
       }
       if (typ === 'rec_owner') {
         if (val !== '') {
-          crmConf.actions.rec_owner = val
+          newConf.actions.rec_owner = val
         } else {
-          delete crmConf.actions.rec_owner
+          delete newConf.actions.rec_owner
         }
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = crmConf.default.layouts[crmConf.module][crmConf.layout].required.map((name, i) => ({ i, name }))
-          crmConf.actions.upsert = { overwrite: true, crmField }
+          const crmField = newConf.default.layouts[newConf.module][newConf.layout].required.map((name, i) => ({ i, name }))
+          newConf.actions.upsert = { overwrite: true, crmField }
           setUpsertMdl(true)
         } else {
-          delete crmConf.actions.upsert
+          delete newConf.actions.upsert
         }
       }
     } else {
       if (typ === 'attachment') {
         if (val !== '') {
-          crmConf.relatedlist.actions.attachment = val
+          newConf.relatedlist.actions.attachment = val
         } else {
-          delete crmConf.relatedlist.actions.attachment
+          delete newConf.relatedlist.actions.attachment
         }
       }
       if (typ === 'approval') {
         if (val.target.checked) {
-          crmConf.relatedlist.actions.approval = true
+          newConf.relatedlist.actions.approval = true
         } else {
-          delete crmConf.relatedlist.actions.approval
+          delete newConf.relatedlist.actions.approval
         }
       }
       if (typ === 'workflow') {
         if (val.target.checked) {
-          crmConf.relatedlist.actions.workflow = true
+          newConf.relatedlist.actions.workflow = true
         } else {
-          delete crmConf.relatedlist.actions.workflow
+          delete newConf.relatedlist.actions.workflow
         }
       }
       if (typ === 'gclid') {
         if (val.target.checked) {
-          crmConf.relatedlist.actions.gclid = true
+          newConf.relatedlist.actions.gclid = true
         } else {
-          delete crmConf.relatedlist.actions.gclid
+          delete newConf.relatedlist.actions.gclid
         }
       }
       if (typ === 'assignment_rules') {
         if (val.target.checked) {
-          crmConf.relatedlist.actions.assignment_rules = true
+          newConf.relatedlist.actions.assignment_rules = true
         } else {
-          delete crmConf.relatedlist.actions.assignment_rules
+          delete newConf.relatedlist.actions.assignment_rules
         }
       }
       if (typ === 'tag_rec') {
         if (val !== '') {
-          crmConf.relatedlist.actions.tag_rec = val
+          newConf.relatedlist.actions.tag_rec = val
         } else {
-          delete crmConf.relatedlist.actions.tag_rec
+          delete newConf.relatedlist.actions.tag_rec
         }
       }
       if (typ === 'rec_owner') {
         if (val !== '') {
-          crmConf.relatedlist.actions.rec_owner = val
+          newConf.relatedlist.actions.rec_owner = val
         } else {
-          delete crmConf.relatedlist.actions.rec_owner
+          delete newConf.relatedlist.actions.rec_owner
         }
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = crmConf.default.layouts[crmConf.relatedlist.module][crmConf.relatedlist.layout].required.map((name, i) => ({ i, name }))
-          crmConf.relatedlist.actions.upsert = { overwrite: true, crmField }
+          const crmField = newConf.default.layouts[newConf.relatedlist.module][newConf.relatedlist.layout].required.map((name, i) => ({ i, name }))
+          newConf.relatedlist.actions.upsert = { overwrite: true, crmField }
           setUpsertMdl(true)
         } else {
-          delete crmConf.relatedlist.actions.upsert
+          delete newConf.relatedlist.actions.upsert
         }
       }
     }
 
-    setCrmConf({ ...crmConf })
+    setCrmConf({ ...newConf })
   }
 
   const clsActionMdl = () => {
@@ -159,8 +154,10 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
     if (crmConf.default.tags?.[module]) {
       arr[0].childs = Object.values(crmConf.default.tags?.[module]).map(tagName => ({ label: tagName, value: tagName }))
     }
+
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
     return arr
+
   }
 
   const getOwners = () => {
@@ -170,22 +167,23 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   }
 
   const setUpsertSettings = (val, typ) => {
+    const newConf = { ...crmConf }
     if (tab === 0) {
       if (typ === 'list') {
-        crmConf.actions.upsert.crmField = val
+        newConf.actions.upsert.crmField = val
       }
       if (typ === 'overwrite') {
-        crmConf.actions.upsert.overwrite = val
+        newConf.actions.upsert.overwrite = val
       }
     } else {
       if (typ === 'list') {
-        crmConf.relatedlist.actions.upsert.crmField = val
+        newConf.relatedlist.actions.upsert.crmField = val
       }
       if (typ === 'overwrite') {
-        crmConf.relatedlist.actions.upsert.overwrite = val
+        newConf.relatedlist.actions.upsert.overwrite = val
       }
     }
-    setCrmConf({ ...crmConf })
+    setCrmConf({ ...newConf })
   }
 
   const openRecOwnerModal = () => {
@@ -249,16 +247,16 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <MultiSelect
-              className="msl-wrp-options"
-              defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
-              options={getTags()}
-              onChange={(val) => actionHandler(val, 'tag_rec')}
-            />
-            <button onClick={() => refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
-        )}
+            <div className="flx flx-between mt-2">
+              <MultiSelect
+                className="msl-wrp-options"
+                defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
+                options={getTags()}
+                onChange={(val) => actionHandler(val, 'tag_rec')}
+              />
+              <button onClick={() => refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
 
       </ConfirmModal>
 
@@ -273,7 +271,6 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         title="Record Owner"
       >
         <div className="btcd-hr mt-1" />
-        <small>Add a tag to records pushed to Zoho CRM</small>
         <div className="mt-3">Owner Name</div>
         {isLoading ? (
           <Loader style={{
@@ -285,18 +282,18 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <select
-              value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlist.actions.rec_owner}
-              className="mt-2 btcd-paper-inp"
-              onChange={e => actionHandler(e.target.value, 'rec_owner')}
-            >
-              <option value="">Select Owner</option>
-              {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
-            </select>
-            <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
-        )}
+            <div className="flx flx-between mt-2">
+              <select
+                value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlist.actions.rec_owner}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'rec_owner')}
+              >
+                <option value="">Select Owner</option>
+                {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
+              </select>
+              <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
       </ConfirmModal>
 
       <Modal
@@ -328,7 +325,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
                     <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.actions.upsert?.overwrite} name="up-rec" title="No" />
                   </div>
                 </>
-            )
+              )
               : crmConf?.relatedlist?.actions?.upsert && (
                 <>
                   <div className="font-w-m mt-2">Upsert Using</div>
@@ -349,7 +346,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
                     <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.relatedlist.actions.upsert?.overwrite} name="up-rec" title="No" />
                   </div>
                 </>
-            )
+              )
           }
         </div>
       </Modal>
