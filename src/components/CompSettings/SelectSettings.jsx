@@ -77,7 +77,7 @@ export default function SelectSettings(props) {
   }
 
   function addOpt() {
-    options.push({ label: `Option ${elmData.opt.length + 1}`, value: `option_${elmData.opt.length + 1}` })
+    options.push({ label: `Option ${elmData.opt.length + 1}`, value: `Option ${elmData.opt.length + 1}` })
     elmData.opt = options
     props.updateData({ id: elmId, data: elmData })
   }

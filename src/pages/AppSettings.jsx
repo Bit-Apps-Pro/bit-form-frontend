@@ -16,6 +16,7 @@ function AppSettingsPage() {
           if (res.data && res.data.id) {
             setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
           }
+          setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
         }
       })
   }

@@ -40,8 +40,10 @@ export default function SingleFormSettings({ additional, setadditional }) {
   }
 
   const setEntryLimit = e => {
-    additional.settings.entry_limit = e.target.value
-    setadditional({ ...additional })
+    if (e.target.value > 0) {
+      additional.settings.entry_limit = e.target.value
+      setadditional({ ...additional })
+    }
   }
 
   const setOnePerIp = e => {
@@ -128,7 +130,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
     if (e.target.checked) {
       if (additional.settings.restrict_form === undefined
         || additional.settings.restrict_form.date === undefined
-          || additional.settings.restrict_form.time === undefined) {
+        || additional.settings.restrict_form.time === undefined) {
         additional.settings.restrict_form = { day: ['Everyday'], date: { from: new Date(), to: new Date() }, time: { from: '00:00', to: '23:59' } }
       }
       additional.enabled.restrict_form = true
@@ -270,7 +272,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
             </b>
           </div>
           <div className="flx">
-            <input onChange={setEntryLimit} value={additional.settings.entry_limit} disabled={!('entry_limit' in additional.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" />
+            <input onChange={setEntryLimit} value={additional.settings.entry_limit} disabled={!('entry_limit' in additional.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
             <SingleToggle2 action={handleEntryLimit} checked={'entry_limit' in additional.enabled} className="flx" />
           </div>
         </div>
@@ -280,7 +282,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-date mr-2" />
-            Restrict Form Period
+            Limit Form Submission Period
           </b>
         )}
         cls="w-6 mt-3"

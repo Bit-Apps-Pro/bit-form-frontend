@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 import Modal from './Modal'
 
-function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
+function EmailTemplateNew({ mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
@@ -67,11 +67,10 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
     setTem({ ...tem })
   }
 
-
   const save = () => {
     mailTem.push(tem)
     setMailTem([...mailTem])
-    history.push(`/builder/${formType}/${formID}/settings/email-templates`)
+    history.push(`/form/settings/${formType}/${formID}/email-templates`)
     saveForm()
   }
 
@@ -138,9 +137,8 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
         </label>
       </div>
 
-
-    </div >
+    </div>
   )
 }
 
-export default EmailTemplateEdit
+export default EmailTemplateNew

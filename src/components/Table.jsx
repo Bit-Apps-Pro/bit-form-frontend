@@ -11,7 +11,6 @@ import ConfirmModal from './ConfirmModal'
 import TableLoader from './Loaders/TableLoader'
 import { AllFormContext } from '../Utils/AllFormContext'
 
-
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
@@ -326,7 +325,7 @@ function Table(props) {
             setSearch={setSearch}
           />
           <div className="mt-2">
-            <Scrollbars style={{ height: props.height }}>
+            <Scrollbars className="btcd-scroll" style={{ height: props.height }}>
               <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
                 <div className="thead">
                   {headerGroups.map((headerGroup, i) => (
@@ -370,8 +369,8 @@ function Table(props) {
                             key={`t-d-${cell.row.index}`}
                             className="td flx"
                             {...cell.getCellProps()}
-                            onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index)}
-                            onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index)}
+                            onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                            onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
                             role="button"
                             tabIndex={0}
                             aria-label="cell"

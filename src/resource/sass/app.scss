@@ -28,6 +28,10 @@ body {
   padding: 0;
 }
 
+a {
+  transition: none !important;
+}
+
 #btcd-app {
   color: $dp-blue;
   font-family: "Montserrat", sans-serif !important;
@@ -146,6 +150,9 @@ button.check {
 }
 .d-in-b {
   display: inline-block;
+}
+.d-blk {
+  display: block !important;
 }
 .o-v {
   overflow: visible !important;
@@ -340,7 +347,7 @@ button.check {
 
 .btcd-frm-sub {
   &:hover {
-    background: aliceblue;
+    background: rgba(0, 114, 255, 0.121569);
   }
 }
 
@@ -1372,6 +1379,10 @@ button.check {
   }
 }
 
+.cp {
+  cursor: pointer;
+}
+
 .btcd-btn-sm {
   padding: 5px;
   font-size: 10px;
@@ -2088,9 +2099,9 @@ nav.top-nav {
 
 .btcd-m-sm {
   width: 400px !important;
-  height: 220px !important;
+  height: auto !important;
   & .content {
-    height: 115px;
+    height: 100%;
   }
 }
 
@@ -2233,10 +2244,17 @@ nav.top-nav {
   height: 100%;
   width: 400px;
   z-index: 9;
-  padding: 20px;
+  padding: 5px 20px 20px;
   box-shadow: -2px 0 4px 1px transparentize(#000000, 0.7);
   transition-delay: right 0.5s;
   transition: right 0.5s ease;
+  overflow: auto;
+}
+
+.btcd-drawer-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .btcd-row-detail-tbl {
@@ -2544,6 +2562,10 @@ nav.top-nav {
     padding: 8px 5px;
     border-radius: 4px;
   }
+}
+
+.msl-vars.msl-wrp-options {
+  --menu-max-height: 250px !important;
 }
 
 select.btcd-paper-inp {
@@ -2941,7 +2963,7 @@ select.btcd-paper-inp {
   padding: 10px 15px;
   border-radius: 5px;
   transition: bottom 0.5s, transform 0.5s;
-  z-index: 9999;
+  z-index: 999999;
   transform: scale(0);
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14),
     0px 1px 18px 0px rgba(0, 0, 0, 0.12);
@@ -3763,7 +3785,7 @@ select.btcd-ud-inp {
   color: white !important;
   font-weight: bold;
   &:hover {
-    background: transparentize($dp-bg, 0.1) !important;
+    background: transparentize($dp-bg, 0.08) !important;
   }
 }
 .btcd-captcha {
@@ -3774,10 +3796,24 @@ select.btcd-ud-inp {
 
 .btcd-link {
   color: blue;
+  box-shadow: none !important;
   &:hover {
     color: rgb(142, 142, 255);
   }
 }
+
+.btcd-scroll > div:nth-child(2):hover{
+  height: 9px !important;
+}
+
+.btcd-scroll > div:nth-child(3):hover{
+  width: 8px !important;
+}
+
+
+
+
+
 // for IE11
 
 _:-ms-fullscreen,
