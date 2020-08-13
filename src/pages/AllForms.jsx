@@ -209,16 +209,7 @@ function AllFroms({ newFormId }) {
         title="Create Form"
         subTitle=""
       >
-        <div className="btcd-tem-lay">
-          <div className="btcd-tem">
-            <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
-            <div>Blank</div>
-            <div className="btcd-hid-btn">
-              <NavLink to={`/form/builder/new/blank/fs`} className="btn btn-white sh-sm" type="button">Create</NavLink>
-            </div>
-          </div>
-          <FormTemplates />
-        </div>
+        <FormTemplates />
       </Modal>
 
       {allForms.length > 0 ? (
