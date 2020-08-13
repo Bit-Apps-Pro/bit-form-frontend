@@ -74,7 +74,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = crmConf.default.layouts[crmConf.module][crmConf.layout].required.map((name, i) => ({ i, name }))
+          const crmField = crmConf.default.layouts[crmConf.module][crmConf.layout].unique?.map((name, i) => ({ i, name }))
           crmConf.actions.upsert = { overwrite: true, crmField }
           setUpsertMdl(true)
         } else {
