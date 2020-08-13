@@ -272,7 +272,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
             </b>
           </div>
           <div className="flx">
-            <input onChange={setEntryLimit} value={additional.settings.entry_limit} disabled={!('entry_limit' in additional.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" />
+            <input onChange={setEntryLimit} value={additional.settings.entry_limit} disabled={!('entry_limit' in additional.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
             <SingleToggle2 action={handleEntryLimit} checked={'entry_limit' in additional.enabled} className="flx" />
           </div>
         </div>

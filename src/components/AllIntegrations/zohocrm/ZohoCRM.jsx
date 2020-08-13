@@ -7,7 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCrmFieldMap from './ZohoCrmFieldMap'
-import { refreshModules, refreshLayouts, refreshRelatedList, generateMappedField } from './ZohoCommonFunc'
+import { handleTabChange, refreshModules, refreshLayouts, refreshRelatedList, generateMappedField } from './ZohoCommonFunc'
 import ZohoCrmActions from './ZohoCrmActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
@@ -54,25 +54,22 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }, [])
 
-  useEffect(() => {
-    if (!crmConf.default?.relatedlists) {
-      refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
-  }, [tab])
-
   const moduleChange = (module, crmConfTmp) => {
     let newConf = { ...crmConfTmp }
-    newConf.actions = {}
-    newConf.layout = ''
-    newConf.relatedlist.module = ''
-    newConf.relatedlist.layout = ''
-    newConf.relatedlist.actions = {}
-    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
 
     if (tab === 0) {
       newConf.module = module
+      newConf.actions = {}
+      newConf.layout = ''
+      newConf.relatedlist.module = ''
+      newConf.relatedlist.layout = ''
+      newConf.relatedlist.actions = {}
+      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
     } else {
       newConf.relatedlist.module = module
+      newConf.relatedlist.layout = ''
+      newConf.relatedlist.actions = {}
+      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
     }
 
     if (!newConf?.default?.layouts?.[module]) {
@@ -115,6 +112,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
     return newConf
   }
+
+
 
   const handleInput = (e, recordTab) => {
     let newConf = { ...crmConf }
@@ -312,8 +311,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         {tab === 0 && <button onClick={() => refreshModules(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
         <br />
         <div className="flx mt-2">
-          <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
-          <button onClick={() => settab(1)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
+          <button onClick={() => handleTabChange(0, settab)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
+          <button onClick={() => handleTabChange(1, settab, crmConf, setCrmConf, formID, setisLoading, setSnackbar)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
         </div>
         <br />
         {

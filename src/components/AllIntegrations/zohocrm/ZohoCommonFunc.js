@@ -1,5 +1,15 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
+export const handleTabChange = (tab, settab, crmConfTmp = '', setCrmConf = '', formID = '', setisLoading = '', setSnackbar = '') => {
+  if (tab) {
+    if (!crmConfTmp.default?.relatedlists?.[crmConfTmp.module]) {
+      refreshRelatedList(formID, crmConfTmp, setCrmConf, setisLoading, setSnackbar)
+    }
+  }
+
+  settab(tab)
+}
+
 export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
   setisLoading(true)
   const refreshModulesRequestParams = {
