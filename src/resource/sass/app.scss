@@ -2291,7 +2291,7 @@ nav.top-nav {
     border-radius: 100px;
     text-decoration: none;
     line-height: 16px;
-    transition: background 0.3s;
+    transition: background 0.3s !important;
     &:hover {
       background: transparentize(#fff, 0.7);
     }
@@ -2306,7 +2306,7 @@ nav.top-nav {
     width: 38px;
     overflow: hidden;
     padding: 8px;
-    transition: width 0.5s;
+    transition: width 0.5s !important;
     &:hover {
       width: 100px;
     }
