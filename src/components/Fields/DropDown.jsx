@@ -24,6 +24,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
     defaultValue = []
   }
   const [value, setvalue] = useState(defaultValue || [])
+
   useEffect(() => {
     if (defaultValue && !attr.userinput) {
       setvalue(defaultValue)
@@ -31,17 +32,20 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
       setvalue(defaultValue)
     }
   }, [attr.val, attr.userinput, attr.conditional])
+
   useEffect(() => {
     if (resetFieldValue) {
       setvalue([])
     }
   }, [resetFieldValue])
+
   useEffect(() => {
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}[]` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
     }
   }, [value])
+
   const onChangeHandler = (event) => {
     if (event && event.target && event.target.slim) {
       const newValue = []

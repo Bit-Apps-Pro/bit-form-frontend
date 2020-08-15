@@ -15,15 +15,14 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-function AllFroms() {
+function AllFroms({ newFormId }) {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
 
   const [modal, setModal] = useState(false)
-  const { allFormsData } = useContext(AllFormContext)
   const [snack, setSnackbar] = useState({ show: false })
+  const { allFormsData } = useContext(AllFormContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-
   const handleStatus = (e, id) => {
     const status = e.target.checked
     const data = { id, status }
@@ -68,21 +67,26 @@ function AllFroms() {
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
     { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at', Cell: row => formatDate(row.row.original.created_at) },
-    { sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={(e) => showDupMdl(val.row.original.formID)} /> },
   ])
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
       bitsFetch(null, 'bitforms_get_all_form')
         .then(res => {
-          if (res !== undefined && res.success && typeof res.data === 'object') {
+          if (res?.success) {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitforms id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
             allFormsDispatchHandler({ data: dbForms, type: 'set' })
           }
         })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    const ncols = cols.filter(itm => itm.accessor !== 't_action')
+    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} /> })
+    setCols([...ncols])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newFormId])
 
   const setBulkStatus = useCallback((e, rows) => {
     const status = e.target.innerHTML === 'Enable'
@@ -118,6 +122,7 @@ function AllFroms() {
       rowID.push(rows[i].id)
       formID.push(rows[i].original.formID)
     }
+    const tmp = [...allForms]
     const newData = [...allForms]
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
       newData.splice(Number(rowID[i]), 1)
@@ -145,8 +150,8 @@ function AllFroms() {
     })
   }
 
-  const handleDuplicate = formID => {
-    bitsFetch({ id: formID }, 'bitforms_duplicate_aform').then(response => {
+  const handleDuplicate = (formID) => {
+    bitsFetch({ id: formID, newFormId }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
         allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: 0, views: 0, conversion: (0).toPrecision(3), created_at: data.created_at } })
@@ -174,7 +179,7 @@ function AllFroms() {
     setconfMdl({ ...confMdl })
   }
 
-  const showDupMdl = formID => {
+  const showDupMdl = (formID, newId) => {
     confMdl.action = () => { handleDuplicate(formID); closeConfMdl() }
     confMdl.btnTxt = 'Duplicate'
     confMdl.btn2Txt = null
@@ -182,6 +187,7 @@ function AllFroms() {
     confMdl.body = 'Are you sure to duplicate this form ?'
     confMdl.show = true
     setconfMdl({ ...confMdl })
+    // setCols(JSON.parse(JSON.stringify(cols)))
   }
 
   return (
@@ -208,10 +214,10 @@ function AllFroms() {
             <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
             <div>Blank</div>
             <div className="btcd-hid-btn">
-              <NavLink to="/form/builder/new/blank" className="btn btn-white sh-sm" type="button">Create</NavLink>
+              <NavLink to={`/form/builder/new/blank/fs`} className="btn btn-white sh-sm" type="button">Create</NavLink>
             </div>
           </div>
-          {modal && <FormTemplates />}
+          <FormTemplates />
         </div>
       </Modal>
 
@@ -228,6 +234,7 @@ function AllFroms() {
               columns={cols}
               data={allForms}
               rowSeletable
+              newFormId={newFormId}
               resizable
               columnHidable
               setBulkStatus={setBulkStatus}

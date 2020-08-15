@@ -6,6 +6,7 @@ export default function FormTemplates() {
   console.log('%c $render FormTemplates', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const [templates, setTemplates] = useState(null)
+
   useEffect(() => {
     let mount = true
     bitsFetch(null, 'bitforms_templates')
@@ -18,13 +19,12 @@ export default function FormTemplates() {
   }, [])
 
   return (
-    templates
-    && templates.map(template => (
+    templates && templates.map(template => (
       <div key={template.title} className="btcd-tem">
         <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
         <div>{template.title}</div>
         <div className="btcd-hid-btn">
-          <Link to={`form/builder/new/${template.title}`} className="btn btn-white sh-sm" type="button">
+          <Link to={`form/builder/new/${template.title}/fs`} className="btn btn-white sh-sm" type="button">
             Create
           </Link>
         </div>
