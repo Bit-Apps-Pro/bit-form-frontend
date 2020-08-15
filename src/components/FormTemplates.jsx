@@ -7,6 +7,7 @@ export default function FormTemplates() {
 
   const [templates, setTemplates] = useState(null)
   const staticTem = [{ lbl: 'Blank', img: '' }, { lbl: 'Contact Form', img: '' }]
+
   useEffect(() => {
     let mount = true
     bitsFetch(null, 'bitforms_templates')
@@ -21,7 +22,7 @@ export default function FormTemplates() {
   return (
     <div className="btcd-tem-lay">
       {staticTem.map(tem => (
-        <div className="btcd-tem">
+        <div key={tem.lbl} className="btcd-tem">
           <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
