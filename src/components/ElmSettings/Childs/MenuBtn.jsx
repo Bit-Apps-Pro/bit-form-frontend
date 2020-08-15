@@ -26,7 +26,7 @@ export default function MenuBtn(props) {
     <div className="btcd-menu">
       <button className="btcd-menu-btn btcd-mnu sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
       <div className="btcd-menu-list">
-        <Link to={`/builder/edit/${props.formID}`} type="button" aria-label="actions">
+        <Link to={`/form/builder/edit/${props.formID}/fs`} type="button" aria-label="actions">
           <span className="btcd-icn icn-edit" />
           {'  '}
           Edit

@@ -10,7 +10,6 @@ import ReCaptchaSettigns from './ReCaptchaSettigns'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import ImageIcn from '../../Icons/ImageIcn'
-import NoneIcn from '../../Icons/NoneIcn'
 import FormIcn from '../../Icons/FormIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import FieldIcn from '../../Icons/FieldIcn'
@@ -153,7 +152,7 @@ function FieldOptionBtn({ icn, title, sub, action }) {
             {sub && (
               <small>
                 Key:
-                {sub}
+                {`${sub}${title && title.split(' ').join('_')}`}
               </small>
             )}
           </div>

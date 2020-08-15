@@ -8,6 +8,8 @@ export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
 
+  console.log('editData', allResp)
+
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
   const [error, setError] = useState(null)

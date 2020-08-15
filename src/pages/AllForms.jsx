@@ -65,7 +65,7 @@ function AllFroms({ newFormId }) {
     { width: 220, minWidth: 200, Header: 'Short Code', accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} setSnackbar={setSnackbar} className="cpyTxt" /> },
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
-    { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`formEntries/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
+    { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`form/responses/edit/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
     { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at', Cell: row => formatDate(row.row.original.created_at) },
   ])
 
@@ -209,16 +209,7 @@ function AllFroms({ newFormId }) {
         title="Create Form"
         subTitle=""
       >
-        <div className="btcd-tem-lay">
-          <div className="btcd-tem">
-            <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
-            <div>Blank</div>
-            <div className="btcd-hid-btn">
-              <NavLink to={`/form/builder/new/blank/fs`} className="btn btn-white sh-sm" type="button">Create</NavLink>
-            </div>
-          </div>
-          <FormTemplates />
-        </div>
+        <FormTemplates />
       </Modal>
 
       {allForms.length > 0 ? (

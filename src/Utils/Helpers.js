@@ -30,7 +30,7 @@ export const getNewId = flds => {
   let num = 0
   for (const fld in flds) {
     if (fld !== null && fld !== undefined) {
-      num = Number(fld.match(/[0-9]/g).join(''))
+      num = Number(fld.match(/-[0-9]+/g)?.[0]?.match(/[0-9]+/g))
       if (typeof num === 'number' && num > largestNumberFld) {
         largestNumberFld = num
       }

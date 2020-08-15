@@ -117,10 +117,11 @@ function FormDetails(props) {
 
   const fetchTemplate = () => {
     if (formType === 'new') {
-      if (formID === 'blank') {
+      const formTitle = formID
+      if (formTitle === 'Blank') {
         setisLoading(false)
       } else {
-        bitsFetch({ template: formID }, 'bitforms_get_template')
+        bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               let responseData = JSON.parse(res.data)
@@ -197,7 +198,7 @@ function FormDetails(props) {
         integrations,
         additional,
         formStyle: sessionStorage.getItem('fs'),
-        layoutChanged: sessionStorage.getItem('lc')
+        layoutChanged: sessionStorage.getItem('lc'),
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -212,7 +213,7 @@ function FormDetails(props) {
           additional,
           reports,
           formStyle: sessionStorage.getItem('fs'),
-          layoutChanged: sessionStorage.getItem('lc')
+          layoutChanged: sessionStorage.getItem('lc'),
         }
         action = 'bitforms_update_form'
       }
@@ -253,7 +254,7 @@ function FormDetails(props) {
           }
         })
     }
-  }, [additional, allFormsDispatchHandler, buttonText, fields, formName, formSettings, integrations, lay, mailTem, modal, history, reports, reportsDispatch, savedFormId, workFlows])
+  }, [lay, modal, newFormId, fields, formName, formSettings, workFlows, mailTem, integrations, additional, savedFormId, reports, buttonText, allFormsDispatchHandler, history, reportsDispatch])
 
   const closeModal = () => {
     modal.show = false

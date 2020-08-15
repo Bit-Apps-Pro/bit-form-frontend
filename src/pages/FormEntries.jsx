@@ -30,7 +30,6 @@ function FormEntries({ allResp, setAllResp }) {
   const { reports, reportsDispatch } = reportsData
   const [report] = useState(0)
   const [mounted, setmounted] = useState(true)
-
   useEffect(() => {
     bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(response => {
@@ -63,7 +62,7 @@ function FormEntries({ allResp, setAllResp }) {
           if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
-              return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `http://192.168.1.11/wp-content/uploads/bitforms/${formID}/${row.cell.row.original.entry_id}`}`} />)
+              return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `${window.location.origin}/wp-content/uploads/bitforms/${formID}/${row.cell.row.original.entry_id}`}`} />)
             }
             if (val.type === 'check' || val.type === 'select') {
               const vals = typeof row.cell.value === 'string' && row.cell.value.length > 0 && row.cell.value[0] === '[' ? JSON.parse(row.cell.value) : row.cell.value !== undefined && row.cell.value.split(',')
@@ -180,8 +179,14 @@ function FormEntries({ allResp, setAllResp }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const editData = useCallback(id => {
-    setEntryID(id.original.entry_id)
+  const editData = useCallback(row => {
+    if (row.idx !== undefined) {
+      // eslint-disable-next-line no-param-reassign
+      row.id = row.idx;
+      // eslint-disable-next-line no-param-reassign
+      row.original = row.data[0].row.original
+    }
+    setEntryID(row.original.entry_id)
     setShowEditMdl(true)
   }, [])
 
@@ -190,15 +195,17 @@ function FormEntries({ allResp, setAllResp }) {
     setRowDtl({ ...rowDtl })
   }, [rowDtl])
 
-  const onRowClick = useCallback((row, idx) => {
-    if (rowDtl.show && rowDtl.idx === idx) {
-      rowDtl.show = false
+  const onRowClick = useCallback((row, idx, rowFetchData) => {
+    const newRowDtl = { ...rowDtl }
+    if (newRowDtl.show && rowDtl.idx === idx) {
+      newRowDtl.show = false
     } else {
-      rowDtl.data = row
-      rowDtl.idx = idx
-      rowDtl.show = true
+      newRowDtl.data = row
+      newRowDtl.idx = idx
+      newRowDtl.fetchData = rowFetchData
+      newRowDtl.show = true
     }
-    setRowDtl({ ...rowDtl })
+    setRowDtl({ ...newRowDtl })
   }, [rowDtl])
 
   const closeConfMdl = useCallback(() => {
@@ -207,13 +214,20 @@ function FormEntries({ allResp, setAllResp }) {
   }, [confMdl])
 
   const delConfMdl = useCallback((row, data) => {
+    if (row.idx !== undefined) {
+      // eslint-disable-next-line no-param-reassign
+      row.id = row.idx;
+      // eslint-disable-next-line no-param-reassign
+      row.original = row.data[0].row.original
+    }
     confMdl.btnTxt = 'Delete'
     confMdl.body = 'Are you sure to delete this entry'
     confMdl.btnClass = ''
-    confMdl.action = () => { setBulkDelete(row, data); closeConfMdl() }
+
+    confMdl.action = () => { setBulkDelete(row, data); closeConfMdl(); closeRowDetail() }
     confMdl.show = true
     setconfMdl({ ...confMdl })
-  }, [closeConfMdl, confMdl, setBulkDelete])
+  }, [closeConfMdl, closeRowDetail, confMdl, setBulkDelete])
 
   const dupConfMdl = useCallback((row, data, pCount) => {
     confMdl.btnTxt = 'Duplicate'
@@ -251,11 +265,13 @@ function FormEntries({ allResp, setAllResp }) {
             setSnackbar={setSnackbar}
           />
         )}
-
+      {console.log('aaaaaaaaaaaaaa', allResp[rowDtl.idx], entryLabels[rowDtl.idx + 1])}
       <Drawer
         title="Response Details"
         show={rowDtl.show}
         close={closeRowDetail}
+        delConfMdl={() => delConfMdl(rowDtl, rowDtl.fetchData)}
+        editData={() => editData(rowDtl)}
       >
         <table className="btcd-row-detail-tbl">
           <tbody>
@@ -263,13 +279,15 @@ function FormEntries({ allResp, setAllResp }) {
               <th>Title</th>
               <th>Value</th>
             </tr>
-            {rowDtl.show && rowDtl.data.map((itm, i) => typeof itm.column.Header !== 'function'
-              && typeof itm.column.Header !== 'object'
-              && itm.column.Header !== '#' && (
-                <tr key={`rw-d-${i + 2}`}>
-                  <th>{itm.column.Header}</th>
-                  <td>{itm.value}</td>
-                </tr>
+            {/* {rowDtl.show && allResp[rowDtl.idx].map(itm => (
+              <div>{itm}</div>
+            ))} */}
+            {rowDtl.show && rowDtl.data.map((itm, i) => typeof itm.column.Header !== 'function' && typeof itm.column.Header !== 'object' && itm.column.Header !== '#' && (
+              <tr key={`rw-d-${i + 2}`}>
+                {console.log('itm', itm)}
+                <th>{itm.column.Header}</th>
+                <td>{typeof itm.value === 'string' && itm.value.length > 0 && itm.value[0] === '[' ? JSON.parse(itm.value)?.map((it, i) => (i < JSON.parse(itm.value).length - 1 ? `${it},` : it)) : itm.value}</td>
+              </tr>
             ))}
           </tbody>
         </table>

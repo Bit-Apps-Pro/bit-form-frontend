@@ -7,7 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCrmFieldMap from './ZohoCrmFieldMap'
-import { refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCommonFunc'
+import { handleTabChange, refreshModules, refreshLayouts, refreshRelatedList, generateMappedField } from './ZohoCommonFunc'
 import ZohoCrmActions from './ZohoCrmActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
@@ -54,63 +54,88 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }, [])
 
-  useEffect(() => {
-    if (!crmConf.default?.relatedlists) {
-      refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
-  }, [tab])
+  const moduleChange = (module, crmConfTmp) => {
+    let newConf = { ...crmConfTmp }
 
-  useEffect(() => {
-    const newConf = { ...crmConf }
-    const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
     if (tab === 0) {
+      newConf.module = module
       newConf.actions = {}
-      newConf.field_map = [{ formField: '', zohoFormField: '' }]
-
-    } else {
-      newConf.relatedlist.actions = {}
+      newConf.layout = ''
+      newConf.relatedlist.module = ''
       newConf.relatedlist.layout = ''
+      newConf.relatedlist.actions = {}
       newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    }
-    setCrmConf({ ...crmConf, ...newConf })
-    if (crmConf.default && (!crmConf.default.layouts || (crmConf.default.layouts && !crmConf.default.layouts[module]))) {
-      refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crmConf.module, crmConf.relatedlist.module])
-
-  useEffect(() => {
-    const newConf = { ...crmConf }
-    const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
-    const layout = tab === 0 ? crmConf.layout : crmConf.relatedlist.layout
-    if (tab === 0) {
-      newConf.actions = {}
-      newConf.field_map = [{ formField: '', zohoFormField: '' }]
     } else {
+      newConf.relatedlist.module = module
+      newConf.relatedlist.layout = ''
       newConf.relatedlist.actions = {}
       newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
     }
-    if (crmConf.default && crmConf.default.layouts && newConf.default.layouts[module] && newConf.default.layouts[module][layout] && newConf.default.layouts[module][layout].required) {
-      newConf.field_map = newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field }))
+
+    if (!newConf?.default?.layouts?.[module]) {
+      refreshLayouts(tab, module, formID, newConf, setCrmConf, setisLoading, setSnackbar)
+    } else {
+      const layouts = Object.keys(newConf?.default?.layouts?.[module])
+      if (layouts.length == 1) {
+        if (tab === 0) {
+          [newConf.layout] = layouts
+          newConf = layoutChange(newConf.layout, newConf)
+        } else {
+          [newConf.relatedlist.layout] = layouts
+          newConf = layoutChange(newConf.relatedlist.layout, newConf)
+        }
+      }
     }
-    setCrmConf({ ...crmConf, ...newConf })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crmConf.layout, crmConf?.relatedlist?.layout])
+
+    return newConf
+
+  }
+
+  const layoutChange = (layout, crmConfTmp) => {
+    const newConf = { ...crmConfTmp }
+    newConf.actions = {}
+    newConf.layout = ''
+    const module = tab === 0 ? newConf.module : newConf.relatedlist.module
+    if (tab === 0) {
+      newConf.layout = layout
+      newConf.field_map = [{ formField: '', zohoFormField: '' }]
+      if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
+        newConf.field_map = generateMappedField(tab, newConf, module, layout)
+      }
+    } else {
+      newConf.relatedlist.layout = layout
+      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+      if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
+        newConf.relatedlist.field_map = generateMappedField(tab, newConf, module, layout)
+      }
+    }
+
+    return newConf
+  }
+
+
 
   const handleInput = (e, recordTab) => {
-    console.log('recordTab', recordTab)
+    let newConf = { ...crmConf }
     if (recordTab === 0) {
       const rmError = { ...error }
       rmError[e.target.name] = ''
       setError({ ...rmError })
-      crmConf[e.target.name] = e.target.value
+      newConf[e.target.name] = e.target.value
     } else {
-      if (!crmConf.relatedlist) {
-        crmConf.relatedlist = {}
-      }
-      crmConf.relatedlist[e.target.name] = e.target.value
+      newConf.relatedlist[e.target.name] = e.target.value
     }
-    setCrmConf({ ...crmConf })
+
+    switch (e.target.name) {
+      case 'module':
+        newConf = moduleChange(e.target.value, newConf)
+        break;
+      case 'layout':
+        newConf = layoutChange(e.target.value, newConf)
+        break;
+    }
+    setCrmConf({ ...newConf })
+
   }
   console.log('crmConf', crmConf)
 
@@ -135,21 +160,22 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const addMap = i => {
+    const newConf = { ...crmConf }
     if (tab === 0) {
       if (i !== undefined) {
-        crmConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
       } else {
-        crmConf.field_map.push({ formField: '', zohoFormField: '' })
+        newConf.field_map.push({ formField: '', zohoFormField: '' })
       }
     } else if (i !== undefined) {
-      crmConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+      newConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
     } else {
-      if (!crmConf.relatedlist.field_map) {
-        crmConf.relatedlist.field_map = []
+      if (!newConf.relatedlist.field_map) {
+        newConf.relatedlist.field_map = []
       }
-      crmConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
+      newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
     }
-    setCrmConf({ ...crmConf })
+    setCrmConf({ ...newConf })
   }
 
   const saveConfig = () => {
@@ -165,15 +191,16 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const handleAuthorize = () => {
-    if (!crmConf.dataCenter || !crmConf.clientId || !crmConf.clientSecret) {
+    const newConf = { ...crmConf }
+    if (!newConf.dataCenter || !newConf.clientId || !newConf.clientSecret) {
       setError({
-        dataCenter: !crmConf.dataCenter ? 'Data center cann\'t be empty' : '',
-        clientId: !crmConf.clientId ? 'Client ID cann\'t be empty' : '',
-        clientSecret: !crmConf.clientSecret ? 'Secret key cann\'t be empty' : '',
+        dataCenter: !newConf.dataCenter ? 'Data center cann\'t be empty' : '',
+        clientId: !newConf.clientId ? 'Client ID cann\'t be empty' : '',
+        clientSecret: !newConf.clientSecret ? 'Secret key cann\'t be empty' : '',
       })
       return
     }
-    const apiEndpoint = `https://accounts.zoho.${crmConf.dataCenter}/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE&response_type=code&client_id=${crmConf.clientId}&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE&response_type=code&client_id=${newConf.clientId}&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
     const authWindow = window.open(apiEndpoint, 'zohoCRM', 'width=400,height=609,toolbar=off')
     const popupURLCheckTimer = setInterval(() => {
       if (authWindow.closed) {
@@ -190,7 +217,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
           setSnackbar({ show: true, msg: `Authorization failed ${errorCause}. please try again` })
         } else {
-          setCrmConf({ ...crmConf, accountServer: grantTokenResponse['accounts-server'] })
+          setCrmConf({ ...newConf, accountServer: grantTokenResponse['accounts-server'] })
           tokenHelper(grantTokenResponse)
         }
       }
@@ -198,16 +225,17 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const tokenHelper = (grantToken) => {
+    const newConf = { ...crmConf }
     const tokenRequestParams = { ...grantToken }
-    tokenRequestParams.dataCenter = crmConf.dataCenter
-    tokenRequestParams.clientId = crmConf.clientId
-    tokenRequestParams.clientSecret = crmConf.clientSecret
+    tokenRequestParams.dataCenter = newConf.dataCenter
+    tokenRequestParams.clientId = newConf.clientId
+    tokenRequestParams.clientSecret = newConf.clientSecret
     tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
     const response = bitsFetch(tokenRequestParams, 'bitforms_zcrm_generate_token')
       .then(result => result)
     response.then(result => {
       if (result && result.success) {
-        setCrmConf({ ...crmConf, tokenDetails: result.data })
+        setCrmConf({ ...newConf, tokenDetails: result.data })
         setisAuthorized(true)
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Authorization failed Cause:${result.data.data || result.data}. please try again` })
@@ -226,6 +254,11 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
+
+
+        <small className="d-blk mt-2">
+          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank">Zoho Api console</a>
+        </small>
 
         <div className="mt-3"><b>Data Center:</b></div>
         <select onChange={event => handleInput(event, tab)} name="dataCenter" value={crmConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
@@ -278,8 +311,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         {tab === 0 && <button onClick={() => refreshModules(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
         <br />
         <div className="flx mt-2">
-          <button onClick={() => settab(0)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
-          <button onClick={() => settab(1)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
+          <button onClick={() => handleTabChange(0, settab)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
+          <button onClick={() => handleTabChange(1, settab, crmConf, setCrmConf, formID, setisLoading, setSnackbar)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
         </div>
         <br />
         {
@@ -331,7 +364,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               </select>
             )
         }
-        <button onClick={() => () => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => () => refreshLayouts(tab, tab === 0 ? crmConf.module : crmConf.relatedlist.module, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
         {isLoading && (

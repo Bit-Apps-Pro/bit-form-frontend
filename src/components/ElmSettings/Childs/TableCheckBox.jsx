@@ -18,7 +18,7 @@ export default function TableCheckBox(props) {
         {props.subTitle && (
           <>
             <br />
-            <small className="d-block ml-5 txt-dp">
+            <small className="d-blk ml-5 txt-dp">
               {props.subTitle}
             </small>
           </>

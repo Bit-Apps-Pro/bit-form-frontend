@@ -31,7 +31,7 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue }) {
   }
   return (
     <div className="fld-wrp drag" btcd-fld="text-fld">
-      {'lbl' in attr && <label title={attr.lbl} className="fld-lbl">{attr.lbl}</label>}
+      {'lbl' in attr && <label title={attr.lbl} className="fld-lbl">{attr.lbl}{attr.valid?.req && ' *'}</label>}
       <input
         className="fld no-drg"
         type={attr.typ}
