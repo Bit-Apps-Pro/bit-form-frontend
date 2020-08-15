@@ -2261,6 +2261,7 @@ nav.top-nav {
   & tr th {
     text-align: left;
     padding: 10px;
+    min-width: 170px;
   }
   & tr td {
     padding: 10px;
@@ -2882,12 +2883,12 @@ select.btcd-paper-inp {
 
 .btcd-t-link {
   position: relative;
+  height: 32px;
   & > a {
     text-decoration: none;
   }
   & > div {
     display: inline-block;
-    width: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
     & > a {
@@ -2905,7 +2906,8 @@ select.btcd-paper-inp {
 
   &:hover {
     & > a {
-      display: inline-block;
+      display: flex;
+      justify-content: center;
     }
   }
 }

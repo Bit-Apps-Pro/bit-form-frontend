@@ -56,6 +56,7 @@ function FormEntries({ allResp, setAllResp }) {
     const cols = labels.map(val => ({
       Header: typeof val.name === 'string' && val.name,
       accessor: val.key,
+      fieldType: val.type,
       minWidth: 50,
       ...'type' in val && val.type.match(/^(file-up|check|select)$/) && {
         Cell: row => {
@@ -238,6 +239,8 @@ function FormEntries({ allResp, setAllResp }) {
     setconfMdl({ ...confMdl })
   }, [bulkDuplicateData, closeConfMdl, confMdl])
 
+  const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)
+
   return (
     <div id="form-res">
       <div className="af-header flx flx-between">
@@ -265,7 +268,7 @@ function FormEntries({ allResp, setAllResp }) {
             setSnackbar={setSnackbar}
           />
         )}
-      {console.log('aaaaaaaaaaaaaa', allResp[rowDtl.idx], entryLabels[rowDtl.idx + 1])}
+      {console.log('aaaaaaaaaaaaaa', allResp[rowDtl.idx], rowDtl)}
       <Drawer
         title="Response Details"
         show={rowDtl.show}
@@ -279,14 +282,10 @@ function FormEntries({ allResp, setAllResp }) {
               <th>Title</th>
               <th>Value</th>
             </tr>
-            {/* {rowDtl.show && allResp[rowDtl.idx].map(itm => (
-              <div>{itm}</div>
-            ))} */}
-            {rowDtl.show && rowDtl.data.map((itm, i) => typeof itm.column.Header !== 'function' && typeof itm.column.Header !== 'object' && itm.column.Header !== '#' && (
+            {rowDtl.show && filterEntryLabels().map((itm, i) => (
               <tr key={`rw-d-${i + 2}`}>
-                {console.log('itm', itm)}
-                <th>{itm.column.Header}</th>
-                <td>{typeof itm.value === 'string' && itm.value.length > 0 && itm.value[0] === '[' ? JSON.parse(itm.value)?.map((it, i) => (i < JSON.parse(itm.value).length - 1 ? `${it},` : it)) : itm.value}</td>
+                <th>{itm.Header}</th>
+                <td>{itm.fieldType === 'file-up' ? JSON.parse(allResp[rowDtl.idx][itm.accessor])?.map(it => <TableFileLink key={`file-n-${i}`} fname={it} width='150' link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}` : `${window.location.origin}/wp-content/uploads/bitforms/${formID}/${allResp[rowDtl.idx].entry_id}`}`} />) : allResp[rowDtl.idx][itm.accessor]}</td>
               </tr>
             ))}
           </tbody>
