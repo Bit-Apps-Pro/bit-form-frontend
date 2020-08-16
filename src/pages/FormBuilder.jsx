@@ -2,29 +2,29 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
+import cssToObject from 'css-to-object'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
-import { multiAssign } from '../Utils/Helpers'
-import cssToObject from 'css-to-object'
+import { multiAssign, bitCipher } from '../Utils/Helpers'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
     multiAssign(style, action.apply)
-    sessionStorage.setItem('fs', j2c.sheet(style))
+    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'md') {
     multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
-    sessionStorage.setItem('fs', j2c.sheet(style))
+    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
     multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
-    sessionStorage.setItem('fs', j2c.sheet(style))
+    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.type === 'init') {
@@ -48,7 +48,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   useEffect(() => {
     if (formType === 'new') {
-      sessionStorage.setItem('fs', j2c.sheet(defaultTheme))
+      sessionStorage.setItem('fs', bitCipher(j2c.sheet(defaultTheme)))
       setstyleLoading(false)
     } else {
       setExistingStyle()
@@ -81,6 +81,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       .then(styleText => {
         const oldStyle = cssToObject(styleText)
         styleDispatch({ type: 'init', style: merge(defaultTheme, oldStyle) })
+        console.log('wwwww', styleText, oldStyle)
         setstyleLoading(false)
       })
   }
