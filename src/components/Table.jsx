@@ -389,56 +389,64 @@ function Table(props) {
       )}
 
       <div className="btcd-pagination">
-        <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          &laquo;
-        </button>
-        {' '}
-        <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
-          &lsaquo;
-        </button>
-        {' '}
-        <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
-          &rsaquo;
-        </button>
-        {' '}
-        <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          &raquo;
-        </button>
-        {' '}
         <small>
-          &nbsp;Page
-          {' '}
-          <strong>
-            {pageIndex + 1}
-            {' '}
-            of
-            {' '}
-            {pageOptions.length}
-            {' '}
-            &nbsp;
-          </strong>
-          {' '}
+          {props.countEntries && (
+            `Total Response: 
+            ${props.countEntries}`
+          )}
         </small>
-        <label>
-          <select
-            className="btcd-paper-inp"
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value));
-              if (props.getPageSize) {
-                props.getPageSize(e.target.value, pageIndex)
-              }
-            }}
-          >
-            {[10, 20, 30, 40, 50, 100].map(pageSiz => (
-              <option key={pageSiz} value={pageSiz}>
-                Show
-                {' '}
-                {pageSiz}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div>
+          <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            &laquo;
+          </button>
+          {' '}
+          <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
+            &lsaquo;
+          </button>
+          {' '}
+          <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
+            &rsaquo;
+          </button>
+          {' '}
+          <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+            &raquo;
+          </button>
+          {' '}
+          <small>
+            &nbsp;Page
+            {' '}
+            <strong>
+              {pageIndex + 1}
+              {' '}
+              of
+              {' '}
+              {pageOptions.length}
+              {' '}
+            &nbsp;
+            </strong>
+            {' '}
+          </small>
+          <label>
+            <select
+              className="btcd-paper-inp"
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value));
+                if (props.getPageSize) {
+                  props.getPageSize(e.target.value, pageIndex)
+                }
+              }}
+            >
+              {[10, 20, 30, 40, 50, 100].map(pageSiz => (
+                <option key={pageSiz} value={pageSiz}>
+                  Show
+                  {' '}
+                  {pageSiz}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
       </div>
 
     </>

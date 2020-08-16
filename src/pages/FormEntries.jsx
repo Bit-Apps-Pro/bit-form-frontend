@@ -30,6 +30,7 @@ function FormEntries({ allResp, setAllResp }) {
   const { reports, reportsDispatch } = reportsData
   const [report] = useState(0)
   const [mounted, setmounted] = useState(true)
+  const [countEntries, setCountEntries] = useState(0)
   useEffect(() => {
     bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
       .then(response => {
@@ -106,6 +107,7 @@ function FormEntries({ allResp, setAllResp }) {
         if (res !== undefined && res.success && mounted) {
           setPageCount(Math.ceil(res.data.count / pageSize))
           // allResp.length === 0 && setAllResp(res.data.entries)
+          setCountEntries(res.data.count)
           setAllResp(res.data.entries)
         }
         setisloading(false)
@@ -241,6 +243,22 @@ function FormEntries({ allResp, setAllResp }) {
 
   const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)
 
+  const drawerEntryMap = (entry) => {
+    if (entry.fieldType === 'file-up') {
+      return allResp[rowDtl.idx]?.[entry.accessor] && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => <TableFileLink key={`file-n-${i}`} fname={it} width='100' link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}` : `${window.location.origin}/wp-content/uploads/bitforms/${formID}/${allResp[rowDtl.idx].entry_id}`}`} />)
+    } else if (entry.fieldType === 'color') {
+      return (<div className="flx">
+        {allResp[rowDtl.idx][entry.accessor]}
+        <span style={{ background: allResp[rowDtl.idx][entry.accessor], height: 20, width: 20, borderRadius: 5, display: "inline-block", marginLeft: 10 }} />
+      </div>)
+    } else if (entry.fieldType === 'check') {
+      return allResp[rowDtl.idx]?.[entry.accessor] && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, "")
+    } else {
+      return allResp[rowDtl.idx][entry.accessor]
+    }
+
+  }
+
   return (
     <div id="form-res">
       <div className="af-header flx flx-between">
@@ -268,7 +286,7 @@ function FormEntries({ allResp, setAllResp }) {
             setSnackbar={setSnackbar}
           />
         )}
-      {console.log('aaaaaaaaaaaaaa', allResp[rowDtl.idx], rowDtl)}
+      {console.log('filterEntryLabels', filterEntryLabels())}
       <Drawer
         title="Response Details"
         show={rowDtl.show}
@@ -282,10 +300,10 @@ function FormEntries({ allResp, setAllResp }) {
               <th>Title</th>
               <th>Value</th>
             </tr>
-            {rowDtl.show && filterEntryLabels().map((itm, i) => (
+            {rowDtl.show && filterEntryLabels().map((label, i) => (
               <tr key={`rw-d-${i + 2}`}>
-                <th>{itm.Header}</th>
-                <td>{itm.fieldType === 'file-up' ? JSON.parse(allResp[rowDtl.idx][itm.accessor])?.map(it => <TableFileLink key={`file-n-${i}`} fname={it} width='150' link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}` : `${window.location.origin}/wp-content/uploads/bitforms/${formID}/${allResp[rowDtl.idx].entry_id}`}`} />) : allResp[rowDtl.idx][itm.accessor]}</td>
+                <th>{label.Header}</th>
+                <td>{drawerEntryMap(label)}</td>
               </tr>
             ))}
           </tbody>
@@ -299,6 +317,7 @@ function FormEntries({ allResp, setAllResp }) {
           columns={entryLabels}
           data={allResp}
           loading={isloading}
+          countEntries={countEntries}
           rowSeletable
           resizable
           columnHidable

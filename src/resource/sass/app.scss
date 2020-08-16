@@ -1782,15 +1782,18 @@ nav.top-nav {
 .btcd-pagination {
   display: flex;
   line-height: 1;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin: 10px;
   padding-bottom: 10px;
-  & > select {
-    border-radius: 100px;
+  & > small {
+    padding-left: 10px;
+    color: #7b7676;
+  }
+  & select {
     padding: 5px;
     margin-top: 0;
-    width: 90px;
+    width: 105px;
   }
 }
 
@@ -2248,7 +2251,7 @@ nav.top-nav {
   box-shadow: -2px 0 4px 1px transparentize(#000000, 0.7);
   transition-delay: right 0.5s;
   transition: right 0.5s ease;
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 .btcd-drawer-title {
@@ -2265,6 +2268,7 @@ nav.top-nav {
   }
   & tr td {
     padding: 10px;
+    word-break: break-all;
   }
 }
 
@@ -2891,6 +2895,7 @@ select.btcd-paper-inp {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
     & > a {
       color: $dp-txt;
       text-decoration: none;

@@ -3,7 +3,7 @@ import React from 'react'
 function TableFileLink(props) {
   return (
     <div className="btcd-t-link flx mr-2">
-      <div className="tooltip" style={{ '--tooltip-txt': `"${props.fname}"`, whiteSpace: 'nowrap', width: `${props.width ? props.width : '80'}px` }}>
+      <div className="tooltip" style={{ '--tooltip-txt': `"${props.fname}"`, width: `${props.width ? props.width : '80'}px` }}>
         <a
           href={`${props.link}`}
           rel="noopener noreferrer"

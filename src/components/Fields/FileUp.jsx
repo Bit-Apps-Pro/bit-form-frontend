@@ -68,7 +68,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
               )}
               {filelist.map((itm, i) => (
                 <div key={`ol-f-${i + 3}`} className="flx ">
-                  <a href={typeof bits !== 'undefined' && bits.baseDLURL && `${formID}/${entryID}/${itm}`} target="_blank" rel="noopener noreferrer">
+                  <a href={typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${entryID}&fileID=${itm}` : ''} target="_blank" rel="noopener noreferrer">
                     <span className="btcd-icn icn-file" />
                     {' '}
                     {itm}

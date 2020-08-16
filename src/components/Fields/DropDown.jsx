@@ -5,9 +5,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   let defaultValue
-  // console.log('attr.val', typeof attr.val, Array.isArray(attr.val), attr.val && attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(','))
   if ('val' in attr && attr.val && attr.val.length > 0) {
-    console.log('defaultValue', attr.val)
     if (typeof attr.val === 'string') {
       if (attr.val[0] === '[') {
         defaultValue = JSON.parse(attr.val)
@@ -28,7 +26,6 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
 
   useEffect(() => {
     if (defaultValue && !attr.userinput && JSON.stringify(value) !== JSON.stringify(defaultValue)) {
-      console.log('defaultValue', JSON.stringify(value) === JSON.stringify(defaultValue), value, defaultValue)
       setvalue(defaultValue)
     } else if (defaultValue && attr.conditional) {
       setvalue(defaultValue)
@@ -36,14 +33,12 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   }, [attr.val, attr.userinput, attr.conditional])
 
   useEffect(() => {
-    console.log('resetFieldValue')
     if (resetFieldValue) {
       setvalue([])
     }
   }, [resetFieldValue])
 
   useEffect(() => {
-    console.log('value use effect')
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
@@ -51,7 +46,6 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
   }, [value])
 
   const onChangeHandler = (event) => {
-    console.log('onChange')
     if (event && event.target && event.target.slim) {
       const newValue = []
       event.target.slim.data.data.forEach((option => { option.selected && option.value && newValue.push(option.value) }))
