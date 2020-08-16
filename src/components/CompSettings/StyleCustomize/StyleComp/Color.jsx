@@ -15,8 +15,8 @@ const setPlceholderPseudo = (browserPrefix, cls) => {
 
 export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
-  const clr = style?.[pcls]?.['color'] || style?.[cls]?.['color']
-  const placeholderClr = style?.[setPlceholderPseudo(':', pcls)]?.['color'] || style?.[setPlceholderPseudo(':', cls)]?.['color']
+  const clr = style?.[pcls]?.color || style?.[cls]?.color
+  const placeholderClr = style?.[setPlceholderPseudo(':', pcls)]?.color || style?.[setPlceholderPseudo(':', cls)]?.color
   const clrTyp = clr ? 'Color' : 'None'
   const placeholderClrTyp = placeholderClr ? 'Color' : 'None'
 

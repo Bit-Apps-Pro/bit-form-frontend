@@ -34,10 +34,13 @@ function FormDetails(props) {
   const { allFormsDispatchHandler } = allFormsData
   const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
-  const { history } = props
+  const { history, newFormId } = props
+
+  // const formID = (formType === 'new' && frmID === 'blank') ? getNewFormId() : frmID
 
   // const { data, isValidating, error } = useSWR([formID, 'bitforms_get_a_form'], (id, action) => bitsFetch({ id }, action))
   // console.log('userSWR', data, error, isValidating)
+
   const onMount = () => {
     if (sessionStorage.getItem('formData')) {
       const formData = JSON.parse(sessionStorage.getItem('formData'))
@@ -114,10 +117,11 @@ function FormDetails(props) {
 
   const fetchTemplate = () => {
     if (formType === 'new') {
-      if (formID === 'blank') {
+      const formTitle = formID
+      if (formTitle === 'Blank') {
         setisLoading(false)
       } else {
-        bitsFetch({ template: formID }, 'bitforms_get_template')
+        bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
           .then(res => {
             if (res !== undefined && res.success) {
               let responseData = JSON.parse(res.data)
@@ -155,6 +159,8 @@ function FormDetails(props) {
             if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             // if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
             setisLoading(false)
+            sessionStorage.removeItem('lc')
+            sessionStorage.removeItem('fs')
           } else {
             if (!res.data.success && res.data.data === 'Token expired') {
               window.location.reload()
@@ -182,6 +188,7 @@ function FormDetails(props) {
     } else {
       // setbuttonDisabled(true)
       let formData = {
+        form_id: newFormId,
         layout: lay,
         fields,
         form_name: formName,
@@ -191,7 +198,7 @@ function FormDetails(props) {
         integrations,
         additional,
         formStyle: sessionStorage.getItem('fs'),
-        layoutChanged: sessionStorage.getItem('lc')
+        layoutChanged: sessionStorage.getItem('lc'),
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -206,7 +213,7 @@ function FormDetails(props) {
           additional,
           reports,
           formStyle: sessionStorage.getItem('fs'),
-          layoutChanged: sessionStorage.getItem('lc')
+          layoutChanged: sessionStorage.getItem('lc'),
         }
         action = 'bitforms_update_form'
       }
@@ -222,7 +229,7 @@ function FormDetails(props) {
               if (savedFormId === 0 && buttonText === 'Save') {
                 setSavedFormId(data.id)
                 setButtonText('Update')
-                history.replace(`/form/builder/edit/${data.id}`)
+                history.replace(`/form/builder/edit/${data.id}/fs`)
                 setSnackbar({ show: true, msg: data.message })
                 if ('formSettings' in data) setFormSettings(data.formSettings)
                 if ('workFlows' in data) setworkFlows(data.workFlows)
@@ -247,7 +254,7 @@ function FormDetails(props) {
           }
         })
     }
-  }, [additional, allFormsDispatchHandler, buttonText, fields, formName, formSettings, integrations, lay, mailTem, modal, history, reports, reportsDispatch, savedFormId, workFlows])
+  }, [lay, modal, newFormId, fields, formName, formSettings, workFlows, mailTem, integrations, additional, savedFormId, reports, buttonText, allFormsDispatchHandler, history, reportsDispatch])
 
   const closeModal = () => {
     modal.show = false
@@ -328,7 +335,7 @@ function FormDetails(props) {
                 setNewCounter={setNewCounter}
                 theme={formSettings.theme}
                 setFormName={setFormName}
-                formID={formID}
+                formID={formType === 'new' ? newFormId : formID}
                 formType={formType}
               />
             </Suspense>

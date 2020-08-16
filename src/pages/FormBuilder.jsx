@@ -9,6 +9,7 @@ import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign } from '../Utils/Helpers'
+import cssToObject from 'css-to-object'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -26,6 +27,9 @@ const styleReducer = (style, action) => {
     sessionStorage.setItem('fs', j2c.sheet(style))
     return { ...style }
   }
+  if (action.type === 'init') {
+    return action.style
+  }
   return style
 }
 
@@ -38,7 +42,18 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [brkPoint, setbrkPoint] = useState('lg')
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme)
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
+  const [styleLoading, setstyleLoading] = useState(true)
+  const conRef = React.createRef(null)
+  const notIE = !window.document.documentMode
 
+  useEffect(() => {
+    if (formType === 'new') {
+      sessionStorage.setItem('fs', j2c.sheet(defaultTheme))
+      setstyleLoading(false)
+    } else {
+      setExistingStyle()
+    }
+  }, [])
 
   useEffect(() => {
     if (brkPoint === 'md') {
@@ -60,9 +75,15 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     return style
   }
 
-  const conRef = React.createRef(null)
-
-  const notIE = !window.document.documentMode
+  const setExistingStyle = () => {
+    fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`)
+      .then(response => response.text())
+      .then(styleText => {
+        const oldStyle = cssToObject(styleText)
+        styleDispatch({ type: 'init', style: merge(defaultTheme, oldStyle) })
+        setstyleLoading(false)
+      })
+  }
 
   const setTolbar = useCallback(() => {
     const res = conRef.current.getResizer()
@@ -171,7 +192,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
         minSize={notIE && 320}
         defaultSize={gridWidth}
       >
-        {!isLoading ? (
+        {!isLoading && !styleLoading ? (
           <>
             <div className="btcd-device-btn flx">
               {[
