@@ -20,7 +20,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
   console.log('crmConf', crmConf)
 
   const handleInput = (e, recordTab) => {
-    const newConf = { ...crmConf }
+    let newConf = { ...crmConf }
     if (recordTab === 0) {
       newConf.actions = {}
       newConf[e.target.name] = e.target.value
