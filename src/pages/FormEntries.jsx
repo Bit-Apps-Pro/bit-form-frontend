@@ -198,17 +198,19 @@ function FormEntries({ allResp, setAllResp }) {
     setRowDtl({ ...rowDtl })
   }, [rowDtl])
 
-  const onRowClick = useCallback((row, idx, rowFetchData) => {
-    const newRowDtl = { ...rowDtl }
-    if (newRowDtl.show && rowDtl.idx === idx) {
-      newRowDtl.show = false
-    } else {
-      newRowDtl.data = row
-      newRowDtl.idx = idx
-      newRowDtl.fetchData = rowFetchData
-      newRowDtl.show = true
+  const onRowClick = useCallback((e, row, idx, rowFetchData) => {
+    if (!e.target.classList.contains('prevent-drawer')) {
+      const newRowDtl = { ...rowDtl }
+      if (newRowDtl.show && rowDtl.idx === idx) {
+        newRowDtl.show = false
+      } else {
+        newRowDtl.data = row
+        newRowDtl.idx = idx
+        newRowDtl.fetchData = rowFetchData
+        newRowDtl.show = true
+      }
+      setRowDtl({ ...newRowDtl })
     }
-    setRowDtl({ ...newRowDtl })
   }, [rowDtl])
 
   const closeConfMdl = useCallback(() => {

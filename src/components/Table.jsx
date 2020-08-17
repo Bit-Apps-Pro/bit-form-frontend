@@ -331,18 +331,20 @@ function Table(props) {
                   {headerGroups.map((headerGroup, i) => (
                     <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map(column => (
-                        <div key={column.id} className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
-                          {column.render('Header')}
-                          {' '}
-                          {(column.id !== 't_action' && column.id !== 'selection') && (
-                            <span>
-                              {column.isSorted
-                                ? column.isSortedDesc
-                                  ? String.fromCharCode(9662)
-                                  : String.fromCharCode(9652)
-                                : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                            </span>
-                          )}
+                        <div key={column.id} className="th flx" {...column.getHeaderProps()}>
+                          <div {...column.id !== 't_action' && column.getSortByToggleProps()}>
+                            {column.render('Header')}
+                            {' '}
+                            {(column.id !== 't_action' && column.id !== 'selection') && (
+                              <span>
+                                {column.isSorted
+                                  ? column.isSortedDesc
+                                    ? String.fromCharCode(9662)
+                                    : String.fromCharCode(9652)
+                                  : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                              </span>
+                            )}
+                          </div>
                           {props.resizable
                             && (
                               <div
@@ -369,8 +371,8 @@ function Table(props) {
                             key={`t-d-${cell.row.index}`}
                             className="td flx"
                             {...cell.getCellProps()}
-                            onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
-                            onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                            onClick={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                            onKeyPress={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
                             role="button"
                             tabIndex={0}
                             aria-label="cell"
