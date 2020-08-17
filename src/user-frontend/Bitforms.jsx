@@ -342,8 +342,9 @@ export default function Bitforms(props) {
 
   const handleReset = () => {
     setresetFieldValue(true)
-
-    resetCaptcha()
+    if (props.gRecaptchaSiteKey) {
+      resetCaptcha()
+    }
   }
 
   useEffect(() => {
