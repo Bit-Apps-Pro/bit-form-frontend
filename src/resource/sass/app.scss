@@ -977,20 +977,6 @@ button.check {
   }
 }
 
-.drag:not(.no-drg) {
-  cursor: grab;
-  &:hover {
-    background: rgba(0, 114, 255, 0.12156862745098039);
-  }
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-.no-drg {
-  cursor: default;
-}
-
 .elm-settings {
   background: $bg;
   height: 100%;
@@ -1096,14 +1082,17 @@ button.check {
 .ml-1 {
   margin-left: 5px;
 }
+.ml-2 {
+  margin-left: 10px;
+}
 .ml-4 {
   margin-left: 20px !important;
 }
 .ml-5 {
   margin-left: 25px !important;
 }
-.ml-2 {
-  margin-left: 10px;
+.ml-6 {
+  margin-left: 30px !important;
 }
 .w-md {
   width: 900px;

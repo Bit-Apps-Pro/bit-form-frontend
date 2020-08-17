@@ -18,7 +18,7 @@ export default function TableCheckBox(props) {
         {props.subTitle && (
           <>
             <br />
-            <small className="d-blk ml-5 txt-dp">
+            <small className="d-blk mt-1 ml-6 txt-dp" style={{ lineHeight: '18px' }}>
               {props.subTitle}
             </small>
           </>
