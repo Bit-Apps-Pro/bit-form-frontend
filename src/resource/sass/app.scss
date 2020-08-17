@@ -32,6 +32,11 @@ a {
   transition: none !important;
 }
 
+a:active,
+a:hover {
+  color: #007fa7;
+}
+
 #btcd-app {
   color: $dp-blue;
   font-family: "Montserrat", sans-serif !important;
@@ -1523,6 +1528,7 @@ nav.top-nav {
   box-shadow: 0px 2px 2px rgb(223, 223, 223);
   &:hover {
     background: #f0f2f8;
+    color: $dp-blue;
   }
 }
 
@@ -1576,7 +1582,7 @@ nav.top-nav {
 .f-table .tbody .tr .td {
   background-color: white;
   text-align: left;
-  padding: 10px 0 10px 10px;
+  padding: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
   // overflow: hidden;
@@ -2781,15 +2787,15 @@ select.btcd-paper-inp {
   position: absolute;
   top: 0;
   right: 0;
-  width: 5px;
+  width: 15px;
   height: 100%;
   //border-left: 1px solid #eaeaea;
   transform: translateX(50%);
   z-index: 1;
   touch-action: none;
   &:hover {
-    background: transparent;
-    border-left: 2px solid #c0bfc5;
+    background: #dbdbdb;
+    z-index: 9;
   }
 }
 
@@ -3798,17 +3804,13 @@ select.btcd-ud-inp {
   }
 }
 
-.btcd-scroll > div:nth-child(2):hover{
+.btcd-scroll > div:nth-child(2):hover {
   height: 9px !important;
 }
 
-.btcd-scroll > div:nth-child(3):hover{
+.btcd-scroll > div:nth-child(3):hover {
   width: 8px !important;
 }
-
-
-
-
 
 // for IE11
 

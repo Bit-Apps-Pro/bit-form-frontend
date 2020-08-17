@@ -4,7 +4,7 @@ import axios from 'axios'
 export default async function bitsFetch(data, action, contentType = null, queryParam = null) {
   const response = await axios({
     // eslint-disable-next-line no-undef
-    url: process.env.NODE_ENV === 'production' ? (typeof bits === 'undefined' ? bitFormsFront.ajaxURL : bits.ajaxURL) : 'http://bitcode.io/wp-admin/admin-ajax.php',
+    url: process.env.NODE_ENV === 'production' ? (typeof bits === 'undefined' ? bitFormsFront.ajaxURL : bits.ajaxURL) : 'http://wordpress.test/wp-admin/admin-ajax.php',
     // url: process.env.NODE_ENV === 'production' ? (typeof bits === 'undefined' ? bitFormsFront.ajaxURL : bits.ajaxURL) : 'http://192.168.1.11/wp-admin/admin-ajax.php',
     method: 'POST',
     headers: {
