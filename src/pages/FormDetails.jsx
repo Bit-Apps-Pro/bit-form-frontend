@@ -25,6 +25,7 @@ function FormDetails(props) {
   const [isLoading, setisLoading] = useState(true)
   const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
   const [fields, setFields] = useState(null)
+  const [allLabels, setallLabels] = useState([])
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
@@ -157,7 +158,9 @@ function FormDetails(props) {
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
             if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
-            // if ('reports' in responseData) /* setAllReport(responseData.reports) */ reportsDispatch({ type: 'set', reports: responseData.reports })
+            if ('Labels' in responseData) setallLabels(responseData.Labels)
+            if ('reports' in responseData) reportsDispatch({ type: 'set', reports: responseData.reports })
+            else reportsDispatch({ type: 'set', reports: [] })
             setisLoading(false)
             sessionStorage.removeItem('lc')
             sessionStorage.removeItem('fs')
@@ -235,7 +238,9 @@ function FormDetails(props) {
                 if ('workFlows' in data) setworkFlows(data.workFlows)
                 if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
                 if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
+                if ('Labels' in data) setallLabels(data.Labels)
                 if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
+                else reportsDispatch({ type: 'set', reports: [] })
               }
               allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             } else if (action === 'bitforms_update_form') {
@@ -244,7 +249,9 @@ function FormDetails(props) {
               if ('workFlows' in data) setworkFlows(data.workFlows)
               if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
               if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
+              if ('Labels' in data) setallLabels(data.Labels)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
+              else reportsDispatch({ type: 'set', reports: [] })
               allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
@@ -341,16 +348,20 @@ function FormDetails(props) {
             </Suspense>
           </Route>
           <Route path="/form/responses/:formType/:formID/">
-            <FormEntries
-              allResp={allResponse}
-              setAllResp={setAllResponse}
-            />
+            {!isLoading && (
+              <FormEntries
+                allResp={allResponse}
+                setAllResp={setAllResponse}
+                allLabels={allLabels}
+              />
+            )}
           </Route>
           <Route path="/form/settings/:formType/:formID/:settings?">
             <FormSettings
               saveForm={saveForm}
               formName={formName}
               setFormName={setFormName}
+              allLabels={allLabels}
               formSettings={formSettings}
               setFormSettings={setFormSettings}
               mailTem={mailTem}

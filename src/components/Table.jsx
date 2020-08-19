@@ -23,22 +23,28 @@ const IndeterminateCheckbox = React.forwardRef(
 )
 
 function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setSearch(globalFilter || undefined)
+    }, 1000)
+
+    return () => clearTimeout(delay)
+  }, [globalFilter])
+
   return (
     <div className="f-search">
       <button type="button" className="icn-btn" aria-label="icon-btn" onClick={e => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
       <label>
         <input
           value={globalFilter || ''}
-          onChange={e => {
-            setGlobalFilter(e.target.value || undefined)
-          }}
-          onBlur={e => { setSearch(globalFilter || undefined) }}
+          onChange={e => setGlobalFilter(e.target.value || undefined)}
           placeholder="Search"
         />
       </label>
     </div>
   )
 }
+
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
@@ -85,7 +91,6 @@ function Table(props) {
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder,
     setHiddenColumns,
-    toggleSortBy,
   } = useTable(
     {
       debug: true,
@@ -146,18 +151,14 @@ function Table(props) {
     if (reports[reportID] && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
       setColumnOrder(reports[reportID].details.order)
     }
-    return () => {
-      if (!stateSavable) {
-        reportsDispatch({ type: 'set', reports: [] })
-        setstateSavable(false)
-      }
-    }
   }, [])
+
   useEffect(() => {
     if (pageIndex > pageCount) {
       gotoPage(0)
     }
   }, [gotoPage, pageCount, pageIndex])
+
   useEffect(() => {
     if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
       let details
@@ -172,6 +173,7 @@ function Table(props) {
       setstateSavable(false)
     }
   }, [pageSize, sortBy, filters, globalFilter, hiddenColumns])
+
   useEffect(() => {
     // setReport if not initially setted
     if (typeof props.pageCount !== 'undefined' && state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && typeof reports[reportID].details === 'object' && reports[reportID].details) {
@@ -218,7 +220,7 @@ function Table(props) {
             // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
             setColumnOrder(reports[reportID].details.order)
           } else {
-            setColumnOrder(allColumns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor)))
+            setColumnOrder(details.order)
             reportsDispatch({ type: 'update', report: newReport, reportID })
           }
         } else if (!stateSavable && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
@@ -392,7 +394,7 @@ function Table(props) {
 
       <div className="btcd-pagination">
         <small>
-          {props.countEntries && (
+          {props.countEntries >= 0 && (
             `Total Response: 
             ${props.countEntries}`
           )}
