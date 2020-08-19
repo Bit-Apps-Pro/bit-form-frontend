@@ -9,7 +9,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, getNewId, bitDecipher } from '../Utils/Helpers'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -134,6 +134,7 @@ function FormDetails(props) {
               setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
+              sessionStorage.setItem('lc', '-')
             } else {
               setisLoading(false)
             }
@@ -162,8 +163,6 @@ function FormDetails(props) {
             if ('reports' in responseData) reportsDispatch({ type: 'set', reports: responseData.reports })
             else reportsDispatch({ type: 'set', reports: [] })
             setisLoading(false)
-            sessionStorage.removeItem('lc')
-            sessionStorage.removeItem('fs')
           } else {
             if (!res.data.success && res.data.data === 'Token expired') {
               window.location.reload()
@@ -182,6 +181,10 @@ function FormDetails(props) {
   }
 
   const saveForm = useCallback(() => {
+    let formStyle = sessionStorage.getItem('fs')
+    if (formStyle) {
+      formStyle = bitDecipher(formStyle)
+    }
     if (lay.md.length === 0 || typeof lay === 'undefined') {
       modal.show = true
       modal.title = 'Sorry'
@@ -200,8 +203,9 @@ function FormDetails(props) {
         mailTem,
         integrations,
         additional,
-        formStyle: sessionStorage.getItem('fs'),
+        formStyle,
         layoutChanged: sessionStorage.getItem('lc'),
+        rowHeight: sessionStorage.getItem('rh'),
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -215,8 +219,9 @@ function FormDetails(props) {
           workFlows,
           additional,
           reports,
-          formStyle: sessionStorage.getItem('fs'),
+          formStyle,
           layoutChanged: sessionStorage.getItem('lc'),
+          rowHeight: sessionStorage.getItem('rh'),
         }
         action = 'bitforms_update_form'
       }
@@ -255,6 +260,9 @@ function FormDetails(props) {
               allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitforms id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
+            sessionStorage.removeItem('lc')
+            sessionStorage.removeItem('fs')
+            sessionStorage.removeItem('rh')
           } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
             sessionStorage.setItem('formData', JSON.stringify(formData))
             window.location.reload()

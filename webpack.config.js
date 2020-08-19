@@ -12,6 +12,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = (env, argv) => {
   const production = argv.mode === 'production';
   return {
+    node: {
+      fs: 'empty',
+    },
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
       bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),

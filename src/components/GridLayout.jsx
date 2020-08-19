@@ -21,7 +21,7 @@ function GridLayout(props) {
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 6, md: 4, sm: 2 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
-  const [rowHeight, setRowHeight] = useState(40)
+  const [rowHeight, setRowHeight] = useState(43)
 
   useEffect(() => {
     if (newData !== null) {
@@ -42,18 +42,26 @@ function GridLayout(props) {
     w += propertyValueSumX(style['._frm-bg'].margin)
     setBuilderWidth(gridWidth - 32 - w)
 
-    if (style['._frm'].gap) {
-      const gaps = style['._frm'].gap.replace(/px/g, '').split(' ')
+    if (style['._frm-g'].gap) {
+      const gaps = style['._frm-g'].gap.replace(/px/g, '').split(' ')
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
 
     h += Number(style['.fld-lbl']['font-size'].replace(/px|em|rem|!important/g, ''))
-    h += Number(style['input.fld,textarea.fld']['font-size'].replace(/px|em|rem|!important/g, ''))
     h += propertyValueSumY(style['.fld-wrp'].padding)
-    h += propertyValueSumY(style['input.fld,textarea.fld'].padding)
     h += propertyValueSumY(style['input.fld,textarea.fld'].margin)
     h += propertyValueSumY(style['input.fld,textarea.fld']['border-width'])
+    // h += Number(style['input.fld,textarea.fld']['font-size'].replace(/px|em|rem|!important/g, ''))
+    const topNbottomPadding = propertyValueSumY(style['input.fld,textarea.fld'].padding)
+    if (topNbottomPadding > 39) {
+      h += topNbottomPadding - 39
+    }
+    h += 40 // default field height
+    console.log('wwwwww', h / 2)
     setRowHeight(h / 2)
+
+    // set row height in local
+    sessionStorage.setItem('rh', h / 2)
   }, [style, gridWidth])
 
   const sortLay = arr => {
@@ -307,7 +315,6 @@ function GridLayout(props) {
   }
 
   const editSubmit = () => {
-    const df_sadfs = 0
     props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
   }
 

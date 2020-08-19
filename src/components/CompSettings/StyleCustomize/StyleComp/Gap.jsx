@@ -4,9 +4,9 @@ import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 
 export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
-  const gridGap = style?.['._frm']?.gap || '0px 0px'
+  const gridGap = style?.['._frm-g']?.gap || '0px 0px'
   const setGridGap = value => {
-    styleDispatch({ apply: [{ cls: '._frm', property: 'gap', delProp: false, value }], brkPoint })
+    styleDispatch({ apply: [{ cls: '._frm-g', property: 'gap', delProp: false, value }], brkPoint })
   }
 
   return (
