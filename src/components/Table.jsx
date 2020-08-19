@@ -218,7 +218,9 @@ function Table(props) {
             // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
             setColumnOrder(reports[reportID].details.order)
           } else {
-            setColumnOrder(allColumns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor)))
+            // console.log('details 2', details.order, allColumns)
+            // setColumnOrder(allColumns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor)))
+            setColumnOrder(details.order)
             reportsDispatch({ type: 'update', report: newReport, reportID })
           }
         } else if (!stateSavable && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
