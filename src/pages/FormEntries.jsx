@@ -13,7 +13,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import noData from '../resource/img/nodata.jpg'
 
-function FormEntries({ allResp, setAllResp }) {
+function FormEntries({ allResp, setAllResp, allLabels }) {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
 
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
@@ -27,30 +27,21 @@ function FormEntries({ allResp, setAllResp }) {
   const [confMdl, setconfMdl] = useState({ show: false })
   const [entryLabels, setEntryLabels] = useState([])
   const { reportsData } = useContext(AllFormContext)
-  const { reports, reportsDispatch } = reportsData
+  const { reports } = reportsData
   const [report] = useState(0)
-  const [mounted, setmounted] = useState(true)
   const [countEntries, setCountEntries] = useState(0)
+
   useEffect(() => {
-    bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
-      .then(response => {
-        if (response !== undefined && response.success && mounted) {
-          if ('reports' in response.data && response.data.reports.length > 0) {
-            reportsDispatch({ type: 'set', reports: response.data.reports })
-            if ('details' in response.data.reports[0] && typeof response.data.reports[0].details === 'object' && response.data.reports[0].details && response.data.reports[0].details.order) {
-              const labels = []
-              response.data.reports[0].details.order.forEach(field => { if (field && field !== 'sl' && field !== 'selection' && field !== 'table_ac') { labels.push(response.data.fieldDetails[field]) } })
-              console.log('LA', labels)
-              tableHeaderHandler(labels)
-            } else {
-              tableHeaderHandler(response.data.Labels)
-            }
-          } else {
-            tableHeaderHandler(response.data.Labels)
-          }
-        }
-      })
-    return function cleanup() { setmounted(false) }
+    if (reports.length > 0) {
+      const allLabelObj = {}
+      allLabels.map(itm => allLabelObj[itm.key] = itm)
+      const labels = []
+      reports[0].details.order.forEach(field => { if (field && field !== 'sl' && field !== 'selection' && field !== 'table_ac') { allLabelObj[field] !== undefined && labels.push(allLabelObj[field]) } })
+      tableHeaderHandler(labels)
+    }
+    else if (allLabels.length > 0) {
+      tableHeaderHandler(allLabels)
+    }
   }, [])
 
   const tableHeaderHandler = (labels) => {
@@ -103,15 +94,16 @@ function FormEntries({ allResp, setAllResp }) {
     }
     if (fetchId === fetchIdRef.current) {
       const startRow = pageSize * pageIndex
-      bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitforms_get_form_entries').then(res => {
-        if (res !== undefined && res.success && mounted) {
-          setPageCount(Math.ceil(res.data.count / pageSize))
-          // allResp.length === 0 && setAllResp(res.data.entries)
-          setCountEntries(res.data.count)
-          setAllResp(res.data.entries)
-        }
-        setisloading(false)
-      })
+      bitsFetch({ id: formID, offset: startRow, pageSize, sortBy, filters, globalFilter }, 'bitforms_get_form_entries')
+        .then(res => {
+          if (res !== undefined && res.success) {
+            setPageCount(Math.ceil(res.data.count / pageSize))
+            setCountEntries(res.data.count)
+            setAllResp(res.data.entries)
+          }
+
+          setisloading(false)
+        })
     }
   }, [delConfMdl, dupConfMdl, editData, formID])
 
@@ -131,7 +123,7 @@ function FormEntries({ allResp, setAllResp }) {
 
     bitsFetch(ajaxData, 'bitforms_bulk_delete_form_entries')
       .then(res => {
-        if (res.success && mounted) {
+        if (res.success) {
           if (action && action.fetchData && action.data) {
             action.fetchData(action.data)
           }
@@ -158,7 +150,7 @@ function FormEntries({ allResp, setAllResp }) {
     const ajaxData = { formID, entries }
     bitsFetch(ajaxData, 'bitforms_duplicate_form_entries')
       .then(res => {
-        if (res.success && res.data.message !== 'undefined' && mounted) {
+        if (res.success && res.data.message !== 'undefined') {
           if (action && action.fetchData && action.data) {
             action.fetchData(action.data)
           } else {
@@ -288,7 +280,6 @@ function FormEntries({ allResp, setAllResp }) {
             setSnackbar={setSnackbar}
           />
         )}
-      {console.log('filterEntryLabels', filterEntryLabels())}
       <Drawer
         title="Response Details"
         show={rowDtl.show}

@@ -18,22 +18,7 @@ export default function FormSettings(props) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
 
-  const [formFields, setformFields] = useState([])
-
-  useEffect(() => {
-    let mount = true
-    bitsFetch({ id: formID }, 'bitforms_get_form_entry_count')
-      .then(res => {
-        if (res !== undefined && res.success) {
-          if (mount) {
-            setformFields(res.data.Labels)
-          }
-        }
-      })
-
-    return function cleanup() { mount = false }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const [formFields] = useState(props.allLabels)
 
   return (
     <div className="btcd-f-settings">
