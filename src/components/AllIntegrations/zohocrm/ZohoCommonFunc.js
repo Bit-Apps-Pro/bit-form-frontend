@@ -43,8 +43,6 @@ export const moduleChange = (module, recordTab, crmConfTmp, formID, setCrmConf, 
     }
   }
 
-  if (!newConf.default.tags?.[module]) refreshTags(formID, module, newConf, setCrmConf, setisLoading, setSnackbar)
-
   return newConf
 }
 
@@ -140,6 +138,7 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
         }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Layouts refreshed' })
+        if (!newConf.default.tags?.[module]) refreshTags(formID, module, newConf, setCrmConf, setisLoading, setSnackbar)
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {

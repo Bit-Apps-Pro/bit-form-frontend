@@ -23,13 +23,17 @@ const IndeterminateCheckbox = React.forwardRef(
 )
 
 function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      setSearch(globalFilter || undefined)
-    }, 1000)
+  const [delay, setDelay] = useState(null)
+  const handleSearch = e => {
+    delay && clearTimeout(delay)
+    const { value } = e.target
 
-    return () => clearTimeout(delay)
-  }, [globalFilter])
+    setGlobalFilter(value || undefined)
+
+    setDelay(setTimeout(() => {
+      setSearch(value || undefined)
+    }, 1000))
+  }
 
   return (
     <div className="f-search">
@@ -37,14 +41,13 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
       <label>
         <input
           value={globalFilter || ''}
-          onChange={e => setGlobalFilter(e.target.value || undefined)}
+          onChange={handleSearch}
           placeholder="Search"
         />
       </label>
     </div>
   )
 }
-
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
