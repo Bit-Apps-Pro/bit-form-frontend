@@ -1394,6 +1394,10 @@ button.check {
   height: 30px;
 }
 
+.btn-lg {
+  padding: 7px 60px;
+}
+
 .round {
   border-radius: 50px;
 }
@@ -2101,6 +2105,10 @@ nav.top-nav {
   & .content {
     height: 100%;
   }
+}
+
+.confirm-content {
+  padding: 50px 10px;
 }
 
 .btcd-m-lg {
