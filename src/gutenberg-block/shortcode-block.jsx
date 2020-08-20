@@ -53,6 +53,6 @@ registerBlockType('bitforms/form-shortcode', {
   },
   save: props => {
     const formID = parseInt(props.attributes.formID)
-    return `[bitforms id='${formID}']`;
+    return `[bitform id='${formID}']`;
   },
 });

@@ -9,7 +9,7 @@ import CompSettings from '../components/CompSettings/CompSettings'
 import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
-import { multiAssign } from '../Utils/Helpers'
+import { multiAssign, bitCipher } from '../Utils/Helpers'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
