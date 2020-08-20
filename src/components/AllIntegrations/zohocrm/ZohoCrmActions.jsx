@@ -229,8 +229,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Select Attachment"
       >
-        <div className="btcd-hr mt-1" />
-        <div className="mt-3">Select file upload fields</div>
+        <div className="btcd-hr mt-2" />
+        <div className="mt-2">Select file upload fields</div>
         <MultiSelect
           defaultValue={tab === 0 ? crmConf.actions.attachment : crmConf.relatedlist.actions.attachment}
           className="mt-2 w-9"
@@ -249,7 +249,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Assignment Rules"
       >
-        <div className="btcd-hr mt-1" />
+        <div className="btcd-hr mt-2 mb-2" />
         <small>Put assignment rule ID from Zoho CRM</small>
         <input onChange={e => actionHandler(e.target.value, 'assignment_rules')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlist.actions.assignment_rules} placeholder="Enter Assignment Rule" />
       </ConfirmModal>
@@ -264,9 +264,9 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Tag Records"
       >
-        <div className="btcd-hr mt-1" />
+        <div className="btcd-hr mt-2 mb-2" />
         <small>Add a tag to records pushed to Zoho CRM</small>
-        <div className="mt-3">Tag Name</div>
+        <div className="mt-2">Tag Name</div>
         {isLoading ? (
           <Loader style={{
             display: 'flex',
@@ -300,8 +300,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Record Owner"
       >
-        <div className="btcd-hr mt-1" />
-        <div className="mt-3">Owner Name</div>
+        <div className="btcd-hr mt-2" />
+        <div className="mt-2">Owner Name</div>
         {isLoading ? (
           <Loader style={{
             display: 'flex',
