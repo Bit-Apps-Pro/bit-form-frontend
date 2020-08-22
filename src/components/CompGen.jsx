@@ -36,23 +36,23 @@ function CompGen(props) {
     case 'week':
     case 'color':
 
-      return <TextField attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <TextField formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'textarea':
-      return <TextArea attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <TextArea formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'check':
-      return <CheckBox attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <CheckBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'radio':
-      return <RadioBox attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <RadioBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'select':
-      return <DropDown attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <DropDown formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'file-up':
-      return <FileUp attr={props.atts} formID={props.formID} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
+      return <FileUp formID={props.formID} attr={props.atts} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':
-      return <SubmitBtn attr={props.atts} buttonDisabled={props.buttonDisabled} handleReset={props.handleReset} />
+      return <SubmitBtn formID={props.formID} attr={props.atts} buttonDisabled={props.buttonDisabled} handleReset={props.handleReset} />
     case 'hidden':
-      return <HiddenField attr={props.atts} />
+      return <HiddenField formID={props.formID} attr={props.atts} />
     case 'recaptcha':
-      return <ReCaptcha attr={props.atts} />
+      return <ReCaptcha formID={props.formID} attr={props.atts} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:
