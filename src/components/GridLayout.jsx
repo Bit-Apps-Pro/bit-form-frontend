@@ -22,7 +22,7 @@ function GridLayout(props) {
   const cols = { lg: 6, md: 4, sm: 2 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
-
+  console.log('sssssssss', formID)
   useEffect(() => {
     if (newData !== null) {
       margeNewData()
@@ -34,35 +34,34 @@ function GridLayout(props) {
   useEffect(() => {
     let w = 0
     let h = 0
-    w += propertyValueSumX(style['._frm']['border-width'])
-    w += propertyValueSumX(style['._frm'].padding)
-    w += propertyValueSumX(style['._frm'].margin)
-    w += propertyValueSumX(style['._frm-bg']['border-width'])
-    w += propertyValueSumX(style['._frm-bg'].padding)
-    w += propertyValueSumX(style['._frm-bg'].margin)
+    w += propertyValueSumX(style[`._frm-${formID}`]['border-width'])
+    w += propertyValueSumX(style[`._frm-${formID}`].padding)
+    w += propertyValueSumX(style[`._frm-${formID}`].margin)
+    w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width'])
+    w += propertyValueSumX(style[`._frm-bg-${formID}`].padding)
+    w += propertyValueSumX(style[`._frm-bg-${formID}`].margin)
     setBuilderWidth(gridWidth - 32 - w)
 
-    if (style['._frm-g'].gap) {
-      const gaps = style['._frm-g'].gap.replace(/px/g, '').split(' ')
+    if (style[`._frm-g-${formID}`].gap) {
+      const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
 
-    h += Number(style['.fld-lbl']['font-size'].replace(/px|em|rem|!important/g, ''))
-    h += propertyValueSumY(style['.fld-wrp'].padding)
-    h += propertyValueSumY(style['input.fld,textarea.fld'].margin)
-    h += propertyValueSumY(style['input.fld,textarea.fld']['border-width'])
+    h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, ''))
+    h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding)
+    h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin)
+    h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width'])
     // h += Number(style['input.fld,textarea.fld']['font-size'].replace(/px|em|rem|!important/g, ''))
-    const topNbottomPadding = propertyValueSumY(style['input.fld,textarea.fld'].padding)
+    const topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
     if (topNbottomPadding > 39) {
       h += topNbottomPadding - 39
     }
     h += 40 // default field height
-    console.log('wwwwww', h / 2)
     setRowHeight(h / 2)
 
     // set row height in local
     sessionStorage.setItem('rh', h / 2)
-  }, [style, gridWidth])
+  }, [style, gridWidth, formID])
 
   const sortLay = arr => {
     const newArr = arr
@@ -325,7 +324,7 @@ function GridLayout(props) {
     }
     switch (props.theme) {
       case 'default':
-        return <CompGen atts={compData} />
+        return <CompGen formID={formID} atts={compData} />
       default:
         return null
     }
@@ -380,9 +379,9 @@ function GridLayout(props) {
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
-        <div style={{ padding: 10, paddingRight: 13 }}>
-          <div className="_frm-bg">
-            <div className="_frm">
+        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }}>
+          <div className={`_frm-bg-${formID}`}>
+            <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
                 measureBeforeMount={false}

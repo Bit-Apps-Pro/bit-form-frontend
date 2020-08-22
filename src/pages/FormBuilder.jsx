@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import cssToObject from 'css-to-object'
+import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
@@ -40,7 +40,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useState('lg')
-  const [style, styleDispatch] = useReducer(styleReducer, defaultTheme)
+  const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
   const conRef = React.createRef(null)
@@ -48,7 +48,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   useEffect(() => {
     if (formType === 'new') {
-      sessionStorage.setItem('fs', bitCipher(j2c.sheet(defaultTheme)))
+      sessionStorage.setItem('fs', bitCipher(j2c.sheet(defaultTheme(formID))))
       setstyleLoading(false)
     } else {
       setExistingStyle()
@@ -79,12 +79,14 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`)
       .then(response => response.text())
       .then(styleText => {
-        const oldStyle = cssToObject(styleText)
-        styleDispatch({ type: 'init', style: merge(defaultTheme, oldStyle) })
-        console.log('wwwww', styleText, oldStyle)
+        const oldStyle = css2json(styleText)
+        styleDispatch({ type: 'init', style: merge(defaultTheme(formID), oldStyle) })
+        // console.log('wwwww', oldStyle)
         setstyleLoading(false)
       })
   }
+
+  console.log('ssssssssssss', style)
 
   const setTolbar = useCallback(() => {
     const res = conRef.current.getResizer()
@@ -239,6 +241,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           updateData={updateFields}
           setSubmitConfig={setSubmitConfig}
           setElementSetting={setElementSetting}
+          formID={formID}
         />
       </Section>
     </Container>

@@ -389,12 +389,12 @@ export default function Bitforms(props) {
   }, [])
 
   return (
-    <div>
-      <form className="_frm-bg" ref={props.refer} id={`form-${props.contentID}`} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
+    <div id={`f-${props.formId}`}>
+      <form className={`_frm-bg-${props.formID}`} ref={props.refer} encType={props.file ? 'multipart/form-data' : ''} onSubmit={handleSubmit} onKeyDown={e => { e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.preventDefault() }} method="POST">
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
-        <div className="_frm">
-          <div className="_frm-g">
+        <div className={`_frm-${props.formID}`}>
+          <div className={`_frm-g _frm-g-${props.formID}`}>
             {layout.lg.map(field => blk(field))}
           </div>
           {!props.editMode && props.buttons

@@ -15,6 +15,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
       element.previousElementSibling.children[1].innerHTML = 'No File Chosen'
     }
   }, [resetFieldValue])
+
   const onFileChange = e => {
     handleFile(e)
     // set del action
@@ -32,8 +33,8 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
   }
 
   return (
-    <div className="file-wrp drag">
-      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+    <div className={`file-wrp file-wrp-${formID} drag"`}>
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       <div className="btcd-f-input">
         <div className="btcd-f-wrp">
           <div className="btn-wrp">
