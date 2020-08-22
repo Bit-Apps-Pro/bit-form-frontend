@@ -14,9 +14,9 @@ import FormIcn from '../../Icons/FormIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import FieldIcn from '../../Icons/FieldIcn'
 
-function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView }) {
+function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID }) {
   const { path } = useRouteMatch()
-  const { formType, formID } = useParams()
+  const { formType } = useParams()
 
   const TabLink = ({ title, sub, icn, link }) => (
     <NavLink to={`/form/builder/${formType}/${formID}/${link}`} activeClassName="s-t-l-active" className="btcd-s-tab-link active flx w-5 ">
@@ -63,17 +63,17 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               </Link>
             </Route>
             <Route path={`${path}/style/bg`}>
-              <StyleEditor editorLabel="Form Background" compStyle={style} cls="._frm-bg" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} />
+              <StyleEditor editorLabel="Form Background" compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
             </Route>
             <Route path={`${path}/style/f`}>
-              <StyleEditor editorLabel="Form style" compStyle={style} cls="._frm" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} />
+              <StyleEditor editorLabel="Form style" compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
             </Route>
             <Route path={`${path}/style/fb`}>
-              <StyleEditor editorLabel="Field Block" compStyle={style} cls=".fld-wrp" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} />
+              <StyleEditor editorLabel="Field Block" compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
             </Route>
             <Route path={`${path}/style/fl`}>
-              <StyleEditor editorLabel="Field Style" title="Label Style" compStyle={style} cls=".fld-lbl" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} />
-              <StyleEditor title="Field Style" noBack compStyle={style} cls="input.fld,textarea.fld" styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} />
+              <StyleEditor editorLabel="Field Style" title="Label Style" compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
+              <StyleEditor title="Field Style" noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
           </Switch>
           <div className="mb-50" />
