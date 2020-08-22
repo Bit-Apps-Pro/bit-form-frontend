@@ -23,16 +23,25 @@ const IndeterminateCheckbox = React.forwardRef(
 )
 
 function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
+  const [delay, setDelay] = useState(null)
+  const handleSearch = e => {
+    delay && clearTimeout(delay)
+    const { value } = e.target
+
+    setGlobalFilter(value || undefined)
+
+    setDelay(setTimeout(() => {
+      setSearch(value || undefined)
+    }, 1000))
+  }
+
   return (
     <div className="f-search">
       <button type="button" className="icn-btn" aria-label="icon-btn" onClick={e => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
       <label>
         <input
           value={globalFilter || ''}
-          onChange={e => {
-            setGlobalFilter(e.target.value || undefined)
-          }}
-          onBlur={e => { setSearch(globalFilter || undefined) }}
+          onChange={handleSearch}
           placeholder="Search"
         />
       </label>
@@ -85,7 +94,6 @@ function Table(props) {
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder,
     setHiddenColumns,
-    toggleSortBy,
   } = useTable(
     {
       debug: true,
@@ -146,18 +154,14 @@ function Table(props) {
     if (reports[reportID] && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
       setColumnOrder(reports[reportID].details.order)
     }
-    return () => {
-      if (!stateSavable) {
-        reportsDispatch({ type: 'set', reports: [] })
-        setstateSavable(false)
-      }
-    }
   }, [])
+
   useEffect(() => {
     if (pageIndex > pageCount) {
       gotoPage(0)
     }
   }, [gotoPage, pageCount, pageIndex])
+
   useEffect(() => {
     if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
       let details
@@ -172,6 +176,7 @@ function Table(props) {
       setstateSavable(false)
     }
   }, [pageSize, sortBy, filters, globalFilter, hiddenColumns])
+
   useEffect(() => {
     // setReport if not initially setted
     if (typeof props.pageCount !== 'undefined' && state.columnOrder.length === 0 && !isNaN(reportID) && reports.length > 0 && reports[reportID] !== null && typeof reports[reportID].details === 'object' && reports[reportID].details) {
@@ -218,7 +223,7 @@ function Table(props) {
             // props.setTableCols(reports[reportID].details.order.map(singleColumn => ('id' in singleColumn && singleColumn.id === 't_action' ? actionColumn : singleColumn)))
             setColumnOrder(reports[reportID].details.order)
           } else {
-            setColumnOrder(allColumns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor)))
+            setColumnOrder(details.order)
             reportsDispatch({ type: 'update', report: newReport, reportID })
           }
         } else if (!stateSavable && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
@@ -331,18 +336,20 @@ function Table(props) {
                   {headerGroups.map((headerGroup, i) => (
                     <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map(column => (
-                        <div key={column.id} className="th flx" {...column.getHeaderProps(column.id !== 't_action' && column.getSortByToggleProps())}>
-                          {column.render('Header')}
-                          {' '}
-                          {(column.id !== 't_action' && column.id !== 'selection') && (
-                            <span>
-                              {column.isSorted
-                                ? column.isSortedDesc
-                                  ? String.fromCharCode(9662)
-                                  : String.fromCharCode(9652)
-                                : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                            </span>
-                          )}
+                        <div key={column.id} className="th flx" {...column.getHeaderProps()}>
+                          <div {...column.id !== 't_action' && column.getSortByToggleProps()}>
+                            {column.render('Header')}
+                            {' '}
+                            {(column.id !== 't_action' && column.id !== 'selection') && (
+                              <span>
+                                {column.isSorted
+                                  ? column.isSortedDesc
+                                    ? String.fromCharCode(9662)
+                                    : String.fromCharCode(9652)
+                                  : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                              </span>
+                            )}
+                          </div>
                           {props.resizable
                             && (
                               <div
@@ -369,8 +376,8 @@ function Table(props) {
                             key={`t-d-${cell.row.index}`}
                             className="td flx"
                             {...cell.getCellProps()}
-                            onClick={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
-                            onKeyPress={() => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                            onClick={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                            onKeyPress={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
                             role="button"
                             tabIndex={0}
                             aria-label="cell"
@@ -389,56 +396,64 @@ function Table(props) {
       )}
 
       <div className="btcd-pagination">
-        <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          &laquo;
-        </button>
-        {' '}
-        <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
-          &lsaquo;
-        </button>
-        {' '}
-        <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
-          &rsaquo;
-        </button>
-        {' '}
-        <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          &raquo;
-        </button>
-        {' '}
         <small>
-          &nbsp;Page
-          {' '}
-          <strong>
-            {pageIndex + 1}
-            {' '}
-            of
-            {' '}
-            {pageOptions.length}
-            {' '}
-            &nbsp;
-          </strong>
-          {' '}
+          {props.countEntries >= 0 && (
+            `Total Response: 
+            ${props.countEntries}`
+          )}
         </small>
-        <label>
-          <select
-            className="btcd-paper-inp"
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value));
-              if (props.getPageSize) {
-                props.getPageSize(e.target.value, pageIndex)
-              }
-            }}
-          >
-            {[10, 20, 30, 40, 50, 100].map(pageSiz => (
-              <option key={pageSiz} value={pageSiz}>
-                Show
-                {' '}
-                {pageSiz}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div>
+          <button aria-label="Go first" className="icn-btn" type="button" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            &laquo;
+          </button>
+          {' '}
+          <button aria-label="Back" className="icn-btn" type="button" onClick={() => previousPage()} disabled={!canPreviousPage}>
+            &lsaquo;
+          </button>
+          {' '}
+          <button aria-label="Next" className="icn-btn" type="button" onClick={() => nextPage()} disabled={!canNextPage}>
+            &rsaquo;
+          </button>
+          {' '}
+          <button aria-label="Last" className="icn-btn" type="button" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+            &raquo;
+          </button>
+          {' '}
+          <small>
+            &nbsp;Page
+            {' '}
+            <strong>
+              {pageIndex + 1}
+              {' '}
+              of
+              {' '}
+              {pageOptions.length}
+              {' '}
+            &nbsp;
+            </strong>
+            {' '}
+          </small>
+          <label>
+            <select
+              className="btcd-paper-inp"
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value));
+                if (props.getPageSize) {
+                  props.getPageSize(e.target.value, pageIndex)
+                }
+              }}
+            >
+              {[10, 20, 30, 40, 50, 100].map(pageSiz => (
+                <option key={pageSiz} value={pageSiz}>
+                  Show
+                  {' '}
+                  {pageSiz}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
       </div>
 
     </>

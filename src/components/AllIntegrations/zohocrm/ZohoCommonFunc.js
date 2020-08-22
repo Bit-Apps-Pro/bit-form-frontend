@@ -1,13 +1,71 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const handleTabChange = (tab, settab, crmConfTmp = '', setCrmConf = '', formID = '', setisLoading = '', setSnackbar = '') => {
-  if (tab) {
+export const handleTabChange = (recordTab, settab, crmConfTmp = '', setCrmConf = '', formID = '', setisLoading = '', setSnackbar = '') => {
+  if (recordTab) {
     if (!crmConfTmp.default?.relatedlists?.[crmConfTmp.module]) {
       refreshRelatedList(formID, crmConfTmp, setCrmConf, setisLoading, setSnackbar)
     }
   }
 
-  settab(tab)
+  settab(recordTab)
+}
+
+export const moduleChange = (module, recordTab, crmConfTmp, formID, setCrmConf, setisLoading, setSnackbar) => {
+  let newConf = { ...crmConfTmp }
+
+  if (recordTab === 0) {
+    newConf.module = module
+    newConf.actions = {}
+    newConf.layout = ''
+    newConf.relatedlist.module = ''
+    newConf.relatedlist.layout = ''
+    newConf.relatedlist.actions = {}
+    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+  } else {
+    newConf.relatedlist.module = module
+    newConf.relatedlist.layout = ''
+    newConf.relatedlist.actions = {}
+    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+  }
+
+  if (!newConf?.default?.layouts?.[module]) {
+    refreshLayouts(recordTab, module, formID, newConf, setCrmConf, setisLoading, setSnackbar)
+  } else {
+    const layouts = Object.keys(newConf?.default?.layouts?.[module])
+    if (layouts.length === 1) {
+      if (recordTab === 0) {
+        [newConf.layout] = layouts
+        newConf = layoutChange(newConf.layout, recordTab, newConf)
+      } else {
+        [newConf.relatedlist.layout] = layouts
+        newConf = layoutChange(newConf.relatedlist.layout, recordTab, newConf)
+      }
+    }
+  }
+
+  return newConf
+}
+
+export const layoutChange = (layout, recordTab, crmConfTmp) => {
+  const newConf = { ...crmConfTmp }
+  newConf.actions = {}
+  newConf.layout = ''
+  const module = recordTab === 0 ? newConf.module : newConf.relatedlist.module
+  if (recordTab === 0) {
+    newConf.layout = layout
+    newConf.field_map = [{ formField: '', zohoFormField: '' }]
+    if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
+      newConf.field_map = generateMappedField(recordTab, newConf, module, layout)
+    }
+  } else {
+    newConf.relatedlist.layout = layout
+    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
+    if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
+      newConf.relatedlist.field_map = generateMappedField(recordTab, newConf, module, layout)
+    }
+  }
+
+  return newConf
 }
 
 export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
@@ -80,6 +138,7 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
         }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Layouts refreshed' })
+        if (!newConf.default.tags?.[module]) refreshTags(formID, module, newConf, setCrmConf, setisLoading, setSnackbar)
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {
@@ -90,10 +149,10 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
     .catch(() => setisLoading(false))
 }
 
-export const generateMappedField = (tab, crmConf, module, layout) => {
+export const generateMappedField = (recordTab, crmConf, module, layout) => {
   const newConf = { ...crmConf }
   let fieldMaps = []
-  if (tab === 0) {
+  if (recordTab === 0) {
     fieldMaps = newConf.default?.layouts?.[module]?.[layout]?.required ? newConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
   } else {
     fieldMaps = newConf.default?.layouts?.[module]?.[layout]?.required ? newConf.default.layouts[module][layout].required.map(field => field !== 'Parent_Id' && ({ formField: '', zohoFormField: field })).filter(fieldMap => fieldMap) : [{ formField: '', zohoFormField: '' }]

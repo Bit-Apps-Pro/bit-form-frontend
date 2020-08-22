@@ -7,7 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCrmFieldMap from './ZohoCrmFieldMap'
-import { handleTabChange, refreshModules, refreshLayouts, refreshRelatedList, generateMappedField } from './ZohoCommonFunc'
+import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCommonFunc'
 import ZohoCrmActions from './ZohoCrmActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
@@ -54,67 +54,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }, [])
 
-  const moduleChange = (module, crmConfTmp) => {
-    let newConf = { ...crmConfTmp }
-
-    if (tab === 0) {
-      newConf.module = module
-      newConf.actions = {}
-      newConf.layout = ''
-      newConf.relatedlist.module = ''
-      newConf.relatedlist.layout = ''
-      newConf.relatedlist.actions = {}
-      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    } else {
-      newConf.relatedlist.module = module
-      newConf.relatedlist.layout = ''
-      newConf.relatedlist.actions = {}
-      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    }
-
-    if (!newConf?.default?.layouts?.[module]) {
-      refreshLayouts(tab, module, formID, newConf, setCrmConf, setisLoading, setSnackbar)
-    } else {
-      const layouts = Object.keys(newConf?.default?.layouts?.[module])
-      if (layouts.length == 1) {
-        if (tab === 0) {
-          [newConf.layout] = layouts
-          newConf = layoutChange(newConf.layout, newConf)
-        } else {
-          [newConf.relatedlist.layout] = layouts
-          newConf = layoutChange(newConf.relatedlist.layout, newConf)
-        }
-      }
-    }
-
-    return newConf
-
-  }
-
-  const layoutChange = (layout, crmConfTmp) => {
-    const newConf = { ...crmConfTmp }
-    newConf.actions = {}
-    newConf.layout = ''
-    const module = tab === 0 ? newConf.module : newConf.relatedlist.module
-    if (tab === 0) {
-      newConf.layout = layout
-      newConf.field_map = [{ formField: '', zohoFormField: '' }]
-      if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
-        newConf.field_map = generateMappedField(tab, newConf, module, layout)
-      }
-    } else {
-      newConf.relatedlist.layout = layout
-      newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-      if (newConf?.default?.layouts?.[module]?.[layout]?.required) {
-        newConf.relatedlist.field_map = generateMappedField(tab, newConf, module, layout)
-      }
-    }
-
-    return newConf
-  }
-
-
-
   const handleInput = (e, recordTab) => {
     let newConf = { ...crmConf }
     if (recordTab === 0) {
@@ -128,10 +67,10 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
     switch (e.target.name) {
       case 'module':
-        newConf = moduleChange(e.target.value, newConf)
+        newConf = moduleChange(e.target.value, tab, newConf, formID, setCrmConf, setisLoading, setSnackbar)
         break;
       case 'layout':
-        newConf = layoutChange(e.target.value, newConf)
+        newConf = layoutChange(e.target.value, tab, newConf, formID, setCrmConf, setisLoading, setSnackbar)
         break;
     }
     setCrmConf({ ...newConf })

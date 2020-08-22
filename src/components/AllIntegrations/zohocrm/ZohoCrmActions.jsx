@@ -39,6 +39,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           delete newConf.actions.workflow
         }
       }
+      if (typ === 'blueprint') {
+        if (val.target.checked) {
+          newConf.actions.blueprint = true
+        } else {
+          delete newConf.actions.blueprint
+        }
+      }
       if (typ === 'gclid') {
         if (val.target.checked) {
           newConf.actions.gclid = true
@@ -47,8 +54,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         }
       }
       if (typ === 'assignment_rules') {
-        if (val.target.checked) {
-          newConf.actions.assignment_rules = true
+        if (val !== '') {
+          newConf.actions.assignment_rules = val
         } else {
           delete newConf.actions.assignment_rules
         }
@@ -69,7 +76,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = newConf.default.layouts[newConf.module][newConf.layout].required.map((name, i) => ({ i, name }))
+          const crmField = newConf.default.layouts[newConf.module][newConf.layout].unique?.map((name, i) => ({ i, name }))
           newConf.actions.upsert = { overwrite: true, crmField }
           setUpsertMdl(true)
         } else {
@@ -98,6 +105,13 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
           delete newConf.relatedlist.actions.workflow
         }
       }
+      if (typ === 'blueprint') {
+        if (val.target.checked) {
+          newConf.relatedlist.actions.blueprint = true
+        } else {
+          delete newConf.relatedlist.actions.blueprint
+        }
+      }
       if (typ === 'gclid') {
         if (val.target.checked) {
           newConf.relatedlist.actions.gclid = true
@@ -106,8 +120,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         }
       }
       if (typ === 'assignment_rules') {
-        if (val.target.checked) {
-          newConf.relatedlist.actions.assignment_rules = true
+        if (val !== '') {
+          newConf.relatedlist.actions.assignment_rules = val
         } else {
           delete newConf.relatedlist.actions.assignment_rules
         }
@@ -128,7 +142,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = newConf.default.layouts[newConf.relatedlist.module][newConf.relatedlist.layout].required.map((name, i) => ({ i, name }))
+          const crmField = newConf.default.layouts[newConf.relatedlist.module][newConf.relatedlist.layout].unique?.map((name, i) => ({ i, name }))
           newConf.relatedlist.actions.upsert = { overwrite: true, crmField }
           setUpsertMdl(true)
         } else {
@@ -197,9 +211,10 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
         <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
+        <TableCheckBox onChange={(e) => actionHandler(e, 'blueprint')} checked={tab === 0 ? 'blueprint' in crmConf.actions : 'blueprint' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Blueprint" title="Blueprint" subTitle="Trigger CRM Blueprint" />
         {/* <TableCheckBox onChange={(e) => actionHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." /> */}
         <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
-        {/* <TableCheckBox onChange={(e) => actionHandler(e, 'assignment_rules')} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rules" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." /> */}
+        <TableCheckBox onChange={() => setActionMdl({ show: 'assignment_rules' })} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rule" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
         <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in crmConf.actions : 'tag_rec' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
         <TableCheckBox onChange={openRecOwnerModal} checked={tab === 0 ? 'rec_owner' in crmConf.actions : 'rec_owner' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Record_Owner" title="Record Owner" subTitle="Add a tag to records pushed to Zoho CRM." />
       </div>
@@ -214,8 +229,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Select Attachment"
       >
-        <div className="btcd-hr mt-1" />
-        <div className="mt-3">Select file upload fields</div>
+        <div className="btcd-hr mt-2" />
+        <div className="mt-2">Select file upload fields</div>
         <MultiSelect
           defaultValue={tab === 0 ? crmConf.actions.attachment : crmConf.relatedlist.actions.attachment}
           className="mt-2 w-9"
@@ -229,14 +244,29 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         mainMdlCls="o-v"
         btnClass="blue"
         btnTxt="Ok"
+        show={actionMdl.show === 'assignment_rules'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title="Assignment Rules"
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <small>Put assignment rule ID from Zoho CRM</small>
+        <input onChange={e => actionHandler(e.target.value, 'assignment_rules')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlist.actions.assignment_rules} placeholder="Enter Assignment Rule" />
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt="Ok"
         show={actionMdl.show === 'tag_rec'}
         close={clsActionMdl}
         action={clsActionMdl}
         title="Tag Records"
       >
-        <div className="btcd-hr mt-1" />
+        <div className="btcd-hr mt-2 mb-2" />
         <small>Add a tag to records pushed to Zoho CRM</small>
-        <div className="mt-3">Tag Name</div>
+        <div className="mt-2">Tag Name</div>
         {isLoading ? (
           <Loader style={{
             display: 'flex',
@@ -270,8 +300,8 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Record Owner"
       >
-        <div className="btcd-hr mt-1" />
-        <div className="mt-3">Owner Name</div>
+        <div className="btcd-hr mt-2" />
+        <div className="mt-2">Owner Name</div>
         {isLoading ? (
           <Loader style={{
             display: 'flex',
@@ -310,7 +340,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
                   <div className="font-w-m mt-2">Upsert Using</div>
                   <small>Arrange fields in order of preferance for upsertion</small>
                   <ReactSortable list={crmConf.actions.upsert?.crmField} setList={l => setUpsertSettings(l, 'list')}>
-                    {crmConf.actions.upsert?.crmField.map((itm) => (
+                    {crmConf.actions.upsert?.crmField?.map((itm) => (
                       <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
                         <span className="btcd-icn btcd-mnu mr-2" />
                         {itm.name}

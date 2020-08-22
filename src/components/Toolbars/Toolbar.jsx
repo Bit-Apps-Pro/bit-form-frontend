@@ -47,9 +47,9 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
         typ: 'check',
         lbl: 'Check Boxs',
         opt: [
-          { lbl: 'option 1' },
-          { lbl: 'option 2' },
-          { lbl: 'option 3' },
+          { lbl: 'Option 1' },
+          { lbl: 'Option 2' },
+          { lbl: 'Option 3' },
         ],
         valid: {},
       },

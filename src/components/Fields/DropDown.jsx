@@ -5,7 +5,6 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID }) {
   let defaultValue
-  // console.log('attr.val', typeof attr.val, Array.isArray(attr.val), attr.val && attr.val.filter(defaulSelected => defaulSelected && defaulSelected !== null).join(','))
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
       if (attr.val[0] === '[') {
@@ -34,7 +33,6 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
   }, [attr.val, attr.userinput, attr.conditional])
 
   useEffect(() => {
-    console.log('resetFieldValue')
     if (resetFieldValue) {
       setvalue([])
     }

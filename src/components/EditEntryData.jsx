@@ -7,16 +7,21 @@ import Bitforms from '../user-frontend/Bitforms'
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
-
   console.log('editData', allResp)
 
   const [showEdit, setshowEdit] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
   const [error, setError] = useState(null)
+  const [formStyle, setFormStyle] = useState('')
   const ref = useRef(null)
 
   useEffect(() => {
     setshowEdit(true)
+    // eslint-disable-next-line no-undef
+    fetch(`${bits.styleURL}/bitform-${formID}.css`)
+      .then(response => response.text())
+      .then(styleData => setFormStyle(styleData))
+
     bitsFetch({ formID, entryID }, 'bitforms_edit_form_entry')
       .then(res => {
         if (res !== undefined && res.success) {
@@ -98,6 +103,22 @@ export default function EditEntryData(props) {
       setModal={props.close}
       title="Edit"
     >
+      {formStyle && (
+        <>
+          <style>{formStyle}</style>
+          <style>
+            {`
+              .drag:not(.no-drg), .drag:active {
+                cursor: default;
+              }
+
+              .drag:hover {
+                background: initial;
+              }
+            `}
+          </style>
+        </>
+      )}
       <Scrollbars style={{ height: 'calc(100% - 17px)' }}>
         {data.layout !== null && (
           <Bitforms

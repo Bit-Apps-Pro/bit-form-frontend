@@ -333,9 +333,7 @@ export default function Bitforms(props) {
       }
       if (hitCron) {
         if (responsedRedirectPage === null || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
-          fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron`)
-            .then(response => response.json())
-            .then(data => console.log(data))
+          fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron&${hitCron}`)
         }
       }
       setbuttonDisabled(false)
@@ -344,8 +342,9 @@ export default function Bitforms(props) {
 
   const handleReset = () => {
     setresetFieldValue(true)
-
-    resetCaptcha()
+    if (props.gRecaptchaSiteKey) {
+      resetCaptcha()
+    }
   }
 
   useEffect(() => {
