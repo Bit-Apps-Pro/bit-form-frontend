@@ -3,10 +3,10 @@ import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 
-export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
-  const gridGap = style?.['._frm-g']?.gap || '0px 0px'
+export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
+  const gridGap = style[`._frm-g-${formID}`].gap || '0px 0px'
   const setGridGap = value => {
-    styleDispatch({ apply: [{ cls: '._frm-g', property: 'gap', delProp: false, value }], brkPoint })
+    styleDispatch({ apply: [{ cls: `._frm-g-${formID}`, property: 'gap', delProp: false, value }], brkPoint })
   }
 
   return (
