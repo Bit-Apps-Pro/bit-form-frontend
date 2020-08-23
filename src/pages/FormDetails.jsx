@@ -9,7 +9,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId, bitDecipher } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -43,8 +43,8 @@ function FormDetails(props) {
   // console.log('userSWR', data, error, isValidating)
 
   const onMount = () => {
-    if (sessionStorage.getItem('formData')) {
-      const formData = JSON.parse(sessionStorage.getItem('formData'))
+    if (sessionStorage.getItem('btcd-fd')) {
+      const formData = bitDecipher(JSON.parse(sessionStorage.getItem('btcd-fd')))
       formData.layout !== undefined && setLay(formData.layout)
       setFields(formData.fields)
       setNewCounter(getNewId(formData.fields))
@@ -56,7 +56,7 @@ function FormDetails(props) {
       setIntegration(formData.formSettings.integrations)
       setMailTem(formData.formSettings.mailTem)
       if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
-      sessionStorage.removeItem('formData')
+      sessionStorage.removeItem('btcd-fd')
       setSnackbar({ show: true, msg: 'Please try again. Token was expired' })
       if (isLoading) {
         setisLoading(!isLoading)
@@ -134,7 +134,7 @@ function FormDetails(props) {
               setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
-              sessionStorage.setItem('lc', '-')
+              sessionStorage.setItem('btcd-lc', '-')
             } else {
               setisLoading(false)
             }
@@ -181,7 +181,7 @@ function FormDetails(props) {
   }
 
   const saveForm = useCallback(() => {
-    let formStyle = sessionStorage.getItem('fs')
+    let formStyle = sessionStorage.getItem('btcd-fs')
     if (formStyle) {
       formStyle = bitDecipher(formStyle)
     }
@@ -204,8 +204,8 @@ function FormDetails(props) {
         integrations,
         additional,
         formStyle,
-        layoutChanged: sessionStorage.getItem('lc'),
-        rowHeight: sessionStorage.getItem('rh'),
+        layoutChanged: sessionStorage.getItem('btcd-lc'),
+        rowHeight: sessionStorage.getItem('btcd-rh'),
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -220,8 +220,8 @@ function FormDetails(props) {
           additional,
           reports,
           formStyle,
-          layoutChanged: sessionStorage.getItem('lc'),
-          rowHeight: sessionStorage.getItem('rh'),
+          layoutChanged: sessionStorage.getItem('btcd-lc'),
+          rowHeight: sessionStorage.getItem('btcd-rh'),
         }
         action = 'bitforms_update_form'
       }
@@ -260,11 +260,11 @@ function FormDetails(props) {
               allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
-            sessionStorage.removeItem('lc')
-            sessionStorage.removeItem('fs')
-            sessionStorage.removeItem('rh')
+            sessionStorage.removeItem('btcd-lc')
+            sessionStorage.removeItem('btcd-fs')
+            sessionStorage.removeItem('btcd-rh')
           } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
-            sessionStorage.setItem('formData', JSON.stringify(formData))
+            sessionStorage.setItem('btcd-fd', bitCipher(JSON.stringify(formData)))
             window.location.reload()
           } else if (response?.data?.data) {
             setSnackbar({ show: true, msg: response?.data?.data })
