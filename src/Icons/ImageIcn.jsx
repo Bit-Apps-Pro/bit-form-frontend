@@ -4,7 +4,7 @@ export default function ImageIcn() {
   return (
     <svg
       className="btc-line-icn"
-      viewBox="0 0 175.3 158.5"
+      viewBox="0 0 172.3 163.8"
     >
       <path
         className="line-icn"
