@@ -60,7 +60,7 @@ function GridLayout(props) {
     setRowHeight(h / 2)
 
     // set row height in local
-    sessionStorage.setItem('rh', h / 2)
+    sessionStorage.setItem('btcd-rh', h / 2)
   }, [style, gridWidth, formID])
 
   const sortLay = arr => {
@@ -216,7 +216,7 @@ function GridLayout(props) {
     const tmpField = JSON.parse(JSON.stringify(newData[0]))
     setFields({ ...fields, [`bf${formID}-${newCounter + 1}-`]: tmpField })
     setNewCounter(newCounter + 1)
-    sessionStorage.setItem('lc', '-')
+    sessionStorage.setItem('btcd-lc', '-')
   }
 
   const onLayoutChange = (newLay, newLays) => {
@@ -240,7 +240,7 @@ function GridLayout(props) {
     delete fields[i]
     setLayouts(nwLay)
     setFields({ ...fields })
-    sessionStorage.setItem('lc', '-')
+    sessionStorage.setItem('btcd-lc', '-')
   }
 
   const onDrop = (lay, elmPrms) => {
@@ -274,7 +274,7 @@ function GridLayout(props) {
     const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
     setFields({ ...fields, [newBlk]: tmpField })
     setNewCounter(newCounter + 1)
-    sessionStorage.setItem('lc', '-')
+    sessionStorage.setItem('btcd-lc', '-')
   }
 
   const getElmProp = e => {
@@ -399,8 +399,8 @@ function GridLayout(props) {
                 draggableHandle=".drag"
                 layouts={layouts}
                 onBreakpointChange={onBreakpointChange}
-                onDragStop={() => sessionStorage.setItem('lc', '-')}
-                onResizeStop={() => sessionStorage.setItem('lc', '-')}
+                onDragStop={() => sessionStorage.setItem('btcd-lc', '-')}
+                onResizeStop={() => sessionStorage.setItem('btcd-lc', '-')}
               >
                 {layouts[breakpoint].map(itm => blkGen(itm))}
               </ResponsiveReactGridLayout>
