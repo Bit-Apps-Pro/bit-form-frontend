@@ -72,7 +72,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
     },
     {
       name: 'Number',
-      icn: 'num',
+      icn: 'number',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'number',
@@ -99,7 +99,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
     },
     {
       name: 'Password',
-      icn: 'pass',
+      icn: 'password',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'password',
@@ -167,7 +167,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
     },
     {
       name: 'Date-Time',
-      icn: 'datetime',
+      icn: 'datetime-local',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
