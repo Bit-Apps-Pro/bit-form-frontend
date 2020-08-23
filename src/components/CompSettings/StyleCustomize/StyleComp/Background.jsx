@@ -39,7 +39,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
 
   const setBG = colr => {
     let property = 'background-color'
-    const value = colr.style
+    const value = styleConfig.important ? `${colr.style}!important` : colr.style
     if ('type' in colr) {
       property = 'background-image'
     }
@@ -48,7 +48,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
 
   const setBgTyp = typ => {
     const actn = { apply: [{ cls: pcls, property: 'background-color', delProp: false, value: 'rgba(242, 246, 249, 0.59)' }], brkPoint }
-    if (typ === 'None' && style[cls]['background-image']) {
+    if (typ === 'None' || style[cls]['background-image']) {
       actn.apply[0].delProp = true
     }
     styleDispatch(actn)
