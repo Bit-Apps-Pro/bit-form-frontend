@@ -14,17 +14,17 @@ import { multiAssign, bitCipher } from '../Utils/Helpers'
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
     multiAssign(style, action.apply)
-    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'md') {
     multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
-    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
     multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
-    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.type === 'init') {
@@ -48,7 +48,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   useEffect(() => {
     if (formType === 'new') {
-      sessionStorage.setItem('fs', bitCipher(j2c.sheet(defaultTheme(formID))))
+      sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
       setstyleLoading(false)
     } else {
       setExistingStyle()
