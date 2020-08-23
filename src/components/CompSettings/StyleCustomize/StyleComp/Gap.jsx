@@ -2,6 +2,7 @@ import React from 'react'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
+import XYordinateIcn from '../../../../Icons/XYordinateIcn'
 
 export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
   const gridGap = style[`._frm-g-${formID}`].gap || '0px 0px'
@@ -15,9 +16,9 @@ export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, 
 
       <Range
         info={[
-          { icn: 'd', lbl: 'Column Gap' },
-          { icn: 'd', lbl: 'Row Gap' },
-          { icn: <span className="btcd-icn icn-settings" />, lbl: 'Both Side Gap' },
+          { icn: <b>C</b>, lbl: 'Column Gap' },
+          { icn: <b>R</b>, lbl: 'Row Gap' },
+          { icn: <XYordinateIcn />, lbl: 'Both Side Gap' },
         ]}
         className="btc-range"
         unit="px"
