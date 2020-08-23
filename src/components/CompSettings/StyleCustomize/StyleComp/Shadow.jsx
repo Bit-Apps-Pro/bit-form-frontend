@@ -8,6 +8,8 @@ import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import BorderIcn from '../../../../Icons/BorderIcn'
 import BlurIcn from '../../../../Icons/BlurIcn'
 import SpreadIcn from '../../../../Icons/SpreadIcn'
+import InsideIcn from '../../../../Icons/InsideIcn'
+import NoneIcn from '../../../../Icons/NoneIcn'
 
 export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -80,9 +82,9 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
           value={shadwTyp}
           onChange={setShadwType}
           btns={[
-            { lbl: 'Inside', icn: 's' },
-            { lbl: 'Outside', icn: 's' },
-            { lbl: 'None', icn: 's' },
+            { lbl: 'Inside', icn: <InsideIcn /> },
+            { lbl: 'Outside', icn: <SpreadIcn /> },
+            { lbl: 'None', icn: <NoneIcn /> },
           ]}
         />
       </div>
