@@ -17,7 +17,7 @@ export const defaultTheme = (formId) => ({
     color: 'rgba(42, 49, 99, 1)!important',
   },
   [`input.fld-${formId},textarea.fld-${formId}`]: {
-    'background-color': 'rgba(0, 0, 0, 0)',
+    'background-color': 'rgba(0, 0, 0, 0)!important',
     'border-color': 'rgba(199, 212, 221, 1)!important',
     'border-radius': '8px 8px 8px 8px!important',
     'border-style': 'solid!important',
