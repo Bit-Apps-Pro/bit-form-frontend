@@ -3,10 +3,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
-import ZohoCrmFieldMap from './ZohoCrmFieldMap'
+import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
-import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList, generateMappedField } from './ZohoCommonFunc'
-import ZohoCrmActions from './ZohoCrmActions'
+import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
+import ZohoCRMActions from './ZohoCRMActions'
 
 function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -45,7 +45,8 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
 
   const saveConfig = () => {
     const mappedFields = crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
-    if (mappedFields.length > 0) {
+    const mappedUploadFields = crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
+    if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
@@ -55,15 +56,36 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
     history.push(allIntegURL)
   }
 
-  const addFieldMap = () => {
+  const addFieldMap = (i, uploadFields) => {
     const newConf = { ...crmConf }
     if (tab === 0) {
-      newConf.field_map.push({ formField: '', zohoFormField: '' })
-    } else {
-      if (!newConf.relatedlist.field_map) {
-        newConf.relatedlist.field_map = []
+      if (uploadFields) {
+        if (i !== 0) {
+          newConf.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.upload_field_map.push({ formField: '', zohoFormField: '' })
+        }
+      } else {
+        if (i !== 0) {
+          newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.field_map.push({ formField: '', zohoFormField: '' })
+        }
       }
-      newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
+    } else {
+      if (uploadFields) {
+        if (i !== 0) {
+          newConf.relatedlist.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.relatedlist.upload_field_map.push({ formField: '', zohoFormField: '' })
+        }
+      } else {
+        if (i !== 0) {
+          newConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
+        }
+      }
     }
     setCrmConf({ ...newConf })
   }
@@ -174,7 +196,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             </div>
 
             {crmConf.field_map.map((itm, i) => (
-              <ZohoCrmFieldMap
+              <ZohoCRMFieldMap
                 key={`crm-m-${i + 9}`}
                 i={i}
                 field={itm}
@@ -185,13 +207,40 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
                 setSnackbar={setSnackbar}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap()} className="icn-btn sh-sm" type="button">+</button></div>
+            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
             <br />
             <br />
+            {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
+              <>
+                <div className="mt-4"><b className="wdt-100">Map File Upload Fields</b></div>
+                <div className="btcd-hr mt-1" />
+                <div className="flx flx-around mt-2 mb-1">
+                  <div className="txt-dp"><b>Form Fields</b></div>
+                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                </div>
+
+                {crmConf.upload_field_map.map((itm, i) => (
+                  <ZohoCRMFieldMap
+                    key={`crm-m-${i + 9}`}
+                    i={i}
+                    uploadFields={1}
+                    field={itm}
+                    crmConf={crmConf}
+                    formFields={formFields}
+                    setCrmConf={setCrmConf}
+                    tab={tab}
+                    setSnackbar={setSnackbar}
+                  />
+                ))}
+                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
+                <br />
+                <br />
+              </>
+            )}
             <div className="mt-4"><b className="wdt-100">Actions</b></div>
             <div className="btcd-hr mt-1" />
 
-            <ZohoCrmActions
+            <ZohoCRMActions
               formFields={formFields}
               crmConf={crmConf}
               setCrmConf={setCrmConf}
@@ -213,7 +262,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             </div>
 
             {crmConf?.relatedlist?.field_map?.map((itm, i) => (
-              <ZohoCrmFieldMap
+              <ZohoCRMFieldMap
                 key={`crm-m-${i + 9}`}
                 i={i}
                 field={itm}
@@ -224,13 +273,40 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
                 setSnackbar={setSnackbar}
               />
             ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap()} className="icn-btn sh-sm" type="button">+</button></div>
+            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.relatedlist.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
             <br />
             <br />
+            {crmConf.default.layouts[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout] && Object.keys(crmConf.default.layouts[crmConf.relatedlist.module][crmConf.relatedlist.layout].fileUploadFields).length !== 0 && (
+              <>
+                <div className="mt-4"><b className="wdt-100">File Upload Field Map</b></div>
+                <div className="btcd-hr mt-1" />
+                <div className="flx flx-around mt-2 mb-1">
+                  <div className="txt-dp"><b>Form Fields</b></div>
+                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                </div>
+
+                {crmConf.relatedlist.upload_field_map.map((itm, i) => (
+                  <ZohoCRMFieldMap
+                    key={`crm-m-${i + 9}`}
+                    i={i}
+                    uploadFields={1}
+                    field={itm}
+                    crmConf={crmConf}
+                    formFields={formFields}
+                    setCrmConf={setCrmConf}
+                    tab={tab}
+                    setSnackbar={setSnackbar}
+                  />
+                ))}
+                <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.relatedlist.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
+                <br />
+                <br />
+              </>
+            )}
             <div className="mt-4"><b className="wdt-100">Actions</b></div>
             <div className="btcd-hr mt-1" />
 
-            <ZohoCrmActions
+            <ZohoCRMActions
               formFields={formFields}
               crmConf={crmConf}
               setCrmConf={setCrmConf}
