@@ -6,9 +6,9 @@ import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import ZohoCrmFieldMap from './ZohoCrmFieldMap'
-import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCommonFunc'
-import ZohoCrmActions from './ZohoCrmActions'
+import ZohoCRMFieldMap from './ZohoCRMFieldMap'
+import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
+import ZohoCRMActions from './ZohoCRMActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
 function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -83,7 +83,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
     if (val === 3) {
       const mappedFields = crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
-      if (mappedFields.length > 0) {
+      const mappedUploadFields = crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
+      if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
@@ -98,28 +99,44 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }
 
-  const addMap = i => {
+  const addMap = (i, uploadFields) => {
     const newConf = { ...crmConf }
     if (tab === 0) {
-      if (i !== undefined) {
-        newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+      if (uploadFields) {
+        if (i !== 0) {
+          newConf.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.upload_field_map.push({ formField: '', zohoFormField: '' })
+        }
       } else {
-        newConf.field_map.push({ formField: '', zohoFormField: '' })
+        if (i !== 0) {
+          newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.field_map.push({ formField: '', zohoFormField: '' })
+        }
       }
-    } else if (i !== undefined) {
-      newConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
     } else {
-      if (!newConf.relatedlist.field_map) {
-        newConf.relatedlist.field_map = []
+      if (uploadFields) {
+        if (i !== 0) {
+          newConf.relatedlist.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.relatedlist.upload_field_map.push({ formField: '', zohoFormField: '' })
+        }
+      } else {
+        if (i !== 0) {
+          newConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
+        }
       }
-      newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
     }
     setCrmConf({ ...newConf })
   }
 
   const saveConfig = () => {
-    const mappedFields = crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
-    if (mappedFields.length > 0) {
+    const mappedFields = crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)
+    const mappedUploadFields = crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUplaodFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)
+    if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
@@ -204,8 +221,9 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           <option value="">--Select a data center--</option>
           <option value="com">zoho.com</option>
           <option value="eu">zoho.eu</option>
-          <option value="com.au">zoho.com.au</option>
+          <option value="com.cn">zoho.com.cn</option>
           <option value="in">zoho.in</option>
+          <option value="com.au">zoho.com.au</option>
         </select>
         <div style={{ color: 'red' }}>{error.dataCenter}</div>
 
@@ -240,7 +258,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <select onChange={event => handleInput(event, tab)} name="module" value={crmConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
           <option value="">Select Module</option>
           {
-            crmConf.default && crmConf.default.modules && Object.keys(crmConf.default.modules).map(moduleApiName => (
+            crmConf?.default?.modules && Object.keys(crmConf.default.modules).map(moduleApiName => (
               <option value={moduleApiName}>
                 {crmConf.default.modules[moduleApiName].plural_label}
               </option>
@@ -262,9 +280,9 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               <select onChange={event => handleInput(event, tab)} name="module" value={crmConf?.relatedlist?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
                 <option value="">Select Related Module</option>
                 {
-                  crmConf?.default?.relatedlists?.[crmConf.module] && Object.keys(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
-                    <option value={relatedlistApiName}>
-                      {relatedlistApiName}
+                  crmConf?.default?.relatedlists?.[crmConf.module] && Object.values(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
+                    <option value={relatedlistApiName.module} >
+                      {relatedlistApiName.name}
                     </option>
                   ))
                 }
@@ -303,7 +321,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               </select>
             )
         }
-        <button onClick={() => () => refreshLayouts(tab, tab === 0 ? crmConf.module : crmConf.relatedlist.module, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshLayouts(tab, tab === 0 ? crmConf.module : crmConf.relatedlist.module, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
         {isLoading && (
@@ -317,7 +335,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           />
         )}
         {tab === 0
-          && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
+          && crmConf.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.fields
           && (
             <>
               <div className="mt-4"><b className="wdt-100">Field Map</b></div>
@@ -328,7 +346,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               </div>
 
               {crmConf.field_map.map((itm, i) => (
-                <ZohoCrmFieldMap
+                <ZohoCRMFieldMap
                   key={`crm-m-${i + 9}`}
                   i={i}
                   field={itm}
@@ -339,13 +357,40 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                   setSnackbar={setSnackbar}
                 />
               ))}
-              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
               <br />
               <br />
+              {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
+                <>
+                  <div className="mt-4"><b className="wdt-100">Map File Upload Fields</b></div>
+                  <div className="btcd-hr mt-1" />
+                  <div className="flx flx-around mt-2 mb-1">
+                    <div className="txt-dp"><b>Form Fields</b></div>
+                    <div className="txt-dp"><b>Zoho Fields</b></div>
+                  </div>
+
+                  {crmConf.upload_field_map.map((itm, i) => (
+                    <ZohoCRMFieldMap
+                      key={`crm-m-${i + 9}`}
+                      i={i}
+                      uploadFields={1}
+                      field={itm}
+                      crmConf={crmConf}
+                      formFields={formFields}
+                      setCrmConf={setCrmConf}
+                      tab={tab}
+                      setSnackbar={setSnackbar}
+                    />
+                  ))}
+                  <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
+                  <br />
+                  <br />
+                </>
+              )}
               <div className="mt-4"><b className="wdt-100">Actions</b></div>
               <div className="btcd-hr mt-1" />
 
-              <ZohoCrmActions
+              <ZohoCRMActions
                 formID={formID}
                 formFields={formFields}
                 crmConf={crmConf}
@@ -357,7 +402,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
             </>
           )}
         {tab === 1
-          && crmConf?.default?.layouts?.[crmConf?.relatedlist?.module]?.[crmConf?.relatedlist?.layout]?.fields
+          && crmConf.default?.layouts?.[crmConf?.relatedlist?.module]?.[crmConf?.relatedlist?.layout]?.fields
           && (
             <>
               <div className="mt-4"><b className="wdt-100">Field Map</b></div>
@@ -367,8 +412,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                 <div className="txt-dp"><b>Zoho Fields</b></div>
               </div>
 
-              {crmConf?.relatedlist?.field_map?.map((itm, i) => (
-                <ZohoCrmFieldMap
+              {crmConf.relatedlist.field_map?.map((itm, i) => (
+                <ZohoCRMFieldMap
                   key={`crm-m-${i + 9}`}
                   i={i}
                   field={itm}
@@ -379,13 +424,40 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                   setSnackbar={setSnackbar}
                 />
               ))}
-              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap()} className="icn-btn sh-sm" type="button">+</button></div>
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.relatedlist.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
               <br />
               <br />
+              {crmConf.default.layouts[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout] && Object.keys(crmConf.default.layouts[crmConf.relatedlist.module][crmConf.relatedlist.layout].fileUploadFields).length !== 0 && (
+                <>
+                  <div className="mt-4"><b className="wdt-100">File Upload Field Map</b></div>
+                  <div className="btcd-hr mt-1" />
+                  <div className="flx flx-around mt-2 mb-1">
+                    <div className="txt-dp"><b>Form Fields</b></div>
+                    <div className="txt-dp"><b>Zoho Fields</b></div>
+                  </div>
+
+                  {crmConf.relatedlist.upload_field_map.map((itm, i) => (
+                    <ZohoCRMFieldMap
+                      key={`crm-m-${i + 9}`}
+                      i={i}
+                      uploadFields={1}
+                      field={itm}
+                      crmConf={crmConf}
+                      formFields={formFields}
+                      setCrmConf={setCrmConf}
+                      tab={tab}
+                      setSnackbar={setSnackbar}
+                    />
+                  ))}
+                  <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.relatedlist.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
+                  <br />
+                  <br />
+                </>
+              )}
               <div className="mt-4"><b className="wdt-100">Actions</b></div>
               <div className="btcd-hr mt-1" />
 
-              <ZohoCrmActions
+              <ZohoCRMActions
                 formFields={formFields}
                 crmConf={crmConf}
                 setCrmConf={setCrmConf}
@@ -416,7 +488,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           ✔
         </button>
       </div>
-    </div>
+    </div >
   )
 }
 

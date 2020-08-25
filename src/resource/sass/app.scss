@@ -1373,6 +1373,39 @@ button.check {
   }
 }
 
+.action-btn-wrapper {
+  position: relative;
+  &:hover .action-btn {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.action-btn {
+  right: 20px;
+  top: 20px;
+  z-index: 99;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 8px;
+  border: 0.5px solid gray;
+  padding: 4px;
+  display: none;
+  &:hover {
+    background: gray;
+  }
+  & svg {
+    height: 13px;
+    width: 15px;
+    & line,
+    circle {
+      fill: none;
+      stroke: black;
+    }
+  }
+}
+
 .cp {
   cursor: pointer;
 }

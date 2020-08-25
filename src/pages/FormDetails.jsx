@@ -159,7 +159,7 @@ function FormDetails(props) {
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
             if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
-            if ('Labels' in responseData) setallLabels(responseData.Labels)
+            setallLabels(responseData.Labels)
             if ('reports' in responseData) reportsDispatch({ type: 'set', reports: responseData.reports })
             else reportsDispatch({ type: 'set', reports: [] })
             setisLoading(false)
@@ -243,7 +243,7 @@ function FormDetails(props) {
                 if ('workFlows' in data) setworkFlows(data.workFlows)
                 if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
                 if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
-                if ('Labels' in data) setallLabels(data.Labels)
+                setallLabels(data.Labels)
                 if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
                 else reportsDispatch({ type: 'set', reports: [] })
               }
@@ -254,7 +254,7 @@ function FormDetails(props) {
               if ('workFlows' in data) setworkFlows(data.workFlows)
               if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
               if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
-              if ('Labels' in data) setallLabels(data.Labels)
+              setallLabels(data.Labels)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
               else reportsDispatch({ type: 'set', reports: [] })
               allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
@@ -371,7 +371,7 @@ function FormDetails(props) {
               saveForm={saveForm}
               formName={formName}
               setFormName={setFormName}
-              allLabels={allLabels}
+              formFields={allLabels}
               formSettings={formSettings}
               setFormSettings={setFormSettings}
               mailTem={mailTem}

@@ -151,7 +151,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'date',
-        lbl: 'Date Input:',
+        lbl: 'Date Input',
         valid: {},
       },
     },
@@ -161,7 +161,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'time',
-        lbl: 'Time Input:',
+        lbl: 'Time Input',
         valid: {},
       },
     },
@@ -171,7 +171,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
-        lbl: 'Date-Time Input:',
+        lbl: 'Date-Time Input',
         valid: {},
       },
     },
@@ -181,7 +181,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'month',
-        lbl: 'Month Input:',
+        lbl: 'Month Input',
         valid: {},
       },
     },
@@ -191,7 +191,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'week',
-        lbl: 'Week Input:',
+        lbl: 'Week Input',
         valid: {},
       },
     },
@@ -201,7 +201,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'color',
-        lbl: 'Color Picker:',
+        lbl: 'Color Picker',
         valid: {},
       },
     },
