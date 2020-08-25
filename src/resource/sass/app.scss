@@ -7,6 +7,7 @@ $blue: #0069ff;
 $dp-blue: #031b4e;
 $dp-bg: #13233c;
 $light-bg: #fff;
+$light-txt :#8fa4bd;
 //$light-bg: #f2f3f7;
 //$light-bg: #eaf0f7;
 //$bg: #f2f3f7;
@@ -206,7 +207,10 @@ button.check {
   // user-drag: none;
   pointer-events: none;
 }
-
+  
+.drag-enter{
+  box-shadow: inset 0px 0 3px 1px #004eff;
+}
 //scroll bar style start
 ::-webkit-scrollbar {
   width: 10px;
@@ -344,7 +348,9 @@ button.check {
   margin-top: 3px;
   height: calc(100% - 60px);
 }
-
+.isDragging{
+  box-shadow: inset 0 0 4px 1px #2c9eff;
+}
 .layout {
   overflow: hidden;
   min-height: 100px !important;
@@ -1556,6 +1562,7 @@ nav.top-nav {
 }
 
 .f-table .thead .tr .th {
+  color:$light-txt;
   font-weight: 600;
   line-height: 1.8;
   -ms-user-select: none;
@@ -1819,8 +1826,8 @@ nav.top-nav {
   margin: 10px;
   padding-bottom: 10px;
   & > small {
-    padding-left: 10px;
     color: #7b7676;
+    padding-left: 10px;
   }
   & select {
     padding: 5px;
@@ -1954,7 +1961,7 @@ nav.top-nav {
 .tooltip {
   &::after {
     display: block;
-    background: $dp-bg;
+    background: $dp-blue;
     color: white;
     position: absolute;
     top: 110%;
@@ -1976,13 +1983,14 @@ nav.top-nav {
     -ms-user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;
-    transition: transform 300ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
+    transition: transform 200ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
   &:hover::after {
     left: var(--left);
     border-radius: 7px;
     transform-origin: 0%;
     transform: scale(1) translate(-50%, 0);
+    transition: transform 400ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
 }
 
@@ -2108,6 +2116,9 @@ nav.top-nav {
     transition: transform 0.3s, border-radius 0.5s;
   }
 }
+.btc-mdl-trn-exit-active{
+  display: none;
+}
 
 .btcd-modal-wrp {
   background: rgba(18, 21, 60, 0.53);
@@ -2186,19 +2197,7 @@ nav.top-nav {
   right: 50px;
 }
 
-.btcd-modal-show {
-  visibility: visible;
-  & .btcd-modal {
-    transform: scale(1);
-    border-radius: 20px;
-  }
-}
-
-.btcd-tem-lay {
-  display: flex;
-}
 .btcd-tem {
-  display: flex;
   position: relative;
   width: 150px;
   height: 150px;
@@ -2207,7 +2206,6 @@ nav.top-nav {
   margin-top: 10px;
   margin-left: 10px;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   overflow: hidden;
   transition: border 300ms;
@@ -2249,8 +2247,10 @@ nav.top-nav {
   background: white;
   &:hover {
     background: #f1f1f1;
+    color:$blue;
   }
   &:active {
+    color:$blue;
     background: #e4e4e4;
   }
 }
@@ -2553,6 +2553,7 @@ nav.top-nav {
 }
 
 .btcd-paper-inp {
+  color: $dp-bg;
   box-shadow: none !important;
   height: auto;
   width: 100%;
@@ -2611,12 +2612,14 @@ nav.top-nav {
 
 select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
+  color: $dp-bg;
   box-shadow: none;
   padding: 10px 24px 10px 10px !important;
   appearance: none;
   transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s !important;
   &:hover:not(:disabled),
   :focus {
+    color: $dp-blue;
     background-position-y: 12px;
   }
 }
@@ -2713,6 +2716,7 @@ select.btcd-paper-inp {
 .btcd-tabl-lnk {
   color: $blue;
   text-decoration: none;
+  &:hover{color: $dp-blue;}
   &:focus {
     color: $dp-blue !important;
     outline: none !important;
@@ -3001,7 +3005,7 @@ select.btcd-paper-inp {
   bottom: -100px;
   -ms-user-select: none;
   -webkit-user-select: none;
-  font-weight: 300;
+  font-weight: 500;
   font-size: 0.875rem;
   padding: 10px 15px;
   border-radius: 5px;
@@ -3011,10 +3015,10 @@ select.btcd-paper-inp {
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14),
     0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
-.btcd-snack-a {
+.btcd-snack-a-enter-active{
   bottom: 30px;
-  font-weight: 500;
   transform: scale(1);
+  transition: bottom 0.5s, transform 0.5s;
 }
 
 .btcd-snack-cls {

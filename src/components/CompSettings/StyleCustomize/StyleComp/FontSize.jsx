@@ -25,6 +25,7 @@ export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPo
             ]}
             className="btc-range"
             unit="px"
+            master={false}
             maxRange={30}
             minRange={5}
             value={fSize}

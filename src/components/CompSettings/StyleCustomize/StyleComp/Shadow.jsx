@@ -32,16 +32,17 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   const setShadwType = (typ) => {
+    const isImportant = styleConfig.important ? '!important' : ''
     if (typ === 'Outside') {
       if (style?.[pcls]?.['box-shadow'] === undefined) {
-        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: '0px 0px 8px -5px rgba(0, 0, 0, 1)' }], brkPoint })
+        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: `0px 0px 8px -5px rgba(0, 0, 0, 1)${isImportant}` }], brkPoint })
       } else {
         const replaceOld = style?.[pcls]?.['box-shadow'].replace('inset', '')
         styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: replaceOld }], brkPoint })
       }
     } else if (typ === 'Inside') {
       if (style?.[pcls]?.['box-shadow'] === undefined) {
-        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: '0px 0px 8px -5px rgba(0, 0, 0, 1) inset' }], brkPoint })
+        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: `0px 0px 8px -5px rgba(0, 0, 0, 1) inset${isImportant}` }], brkPoint })
       } else if (!style?.[pcls]?.['box-shadow'].match(/inset/g)) {
         const replaceOld = `${style?.[pcls]?.['box-shadow']} inset`
         styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: replaceOld }], brkPoint })

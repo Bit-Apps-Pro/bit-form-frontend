@@ -14,7 +14,6 @@ const App = lazy(() => import('./App'))
 
 // Sentry.init({ dsn: 'https://ca450a3bacc2472bbe9b010388f11880@o400688.ingest.sentry.io/5259314' });
 
-
 if (process.env.NODE_ENV === 'production' && typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
   // eslint-disable-next-line camelcase
   __webpack_public_path__ = `${bits.assetsURL}/js/`

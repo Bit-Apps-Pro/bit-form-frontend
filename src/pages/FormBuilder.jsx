@@ -43,6 +43,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
+  const [isToolDragging, setisToolDragging] = useState(false)
   const conRef = React.createRef(null)
   const notIE = !window.document.documentMode
 
@@ -76,7 +77,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   }
 
   const setExistingStyle = () => {
-    fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`)
+    fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`, { cache: 'no-store' })
       .then(response => response.text())
       .then(styleText => {
         const oldStyle = css2json(styleText)
@@ -186,6 +187,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           className="tile"
           tolbarSiz={tolbarSiz}
           setTolbar={setTolbar}
+          setisToolDragging={setisToolDragging}
         />
       </Section>
       <Bar className="bar bar-l" />
@@ -223,6 +225,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
               newCounter={newCounter}
               setNewCounter={setNewCounter}
               layout={lay}
+              isToolDragging={isToolDragging}
             />
           </>
         ) : <GridLayoutLoader />}

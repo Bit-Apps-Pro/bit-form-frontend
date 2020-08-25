@@ -94,7 +94,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
         {mailTem.length > 0 ? (
           <Table
             height="60vh"
-            className="btcd-neu-table"
+            className="btcd-neu-table mr-1"
             columns={col}
             data={mailTem}
           />

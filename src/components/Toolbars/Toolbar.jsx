@@ -5,7 +5,7 @@ import React, { useMemo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
 
-function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
+function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
 
   const tools = [
@@ -228,7 +228,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar }) {
         <Scrollbars autoHide style={{ maxWidth: 400 }}>
           <div className="toolBar">
             {tools.map(tool => (
-              <Tools key={tool.name} setDrgElm={setDrgElm} setNewData={setNewData} value={[tool.elm, tool.pos]}>
+              <Tools key={tool.name} setisToolDragging={setisToolDragging} setDrgElm={setDrgElm} setNewData={setNewData} value={[tool.elm, tool.pos]}>
                 <span className={`btcd-icn  icn-${tool.icn}`} />
                 {!tolbarSiz && tool.name}
               </Tools>
