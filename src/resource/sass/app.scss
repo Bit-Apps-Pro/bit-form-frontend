@@ -7,7 +7,7 @@ $blue: #0069ff;
 $dp-blue: #031b4e;
 $dp-bg: #13233c;
 $light-bg: #fff;
-$light-txt :#818181;
+$light-txt :#8fa4bd;
 //$light-bg: #f2f3f7;
 //$light-bg: #eaf0f7;
 //$bg: #f2f3f7;
@@ -2214,8 +2214,10 @@ nav.top-nav {
   background: white;
   &:hover {
     background: #f1f1f1;
+    color:$blue;
   }
   &:active {
+    color:$blue;
     background: #e4e4e4;
   }
 }

@@ -54,7 +54,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
     if (typ === 'None') {
       actn.apply[0].delProp = true
       // chek any gradien exist then delete
-      if (style[cls]?.['background-image'].match(/gradient/g)) {
+      if (style[cls]?.['background-image']?.match(/gradient/g)) {
         actn.apply.push({ cls: pcls, property: 'background-image', delProp: true, value: 'rgba(242, 246, 249, 0.59)' })
       }
     }
