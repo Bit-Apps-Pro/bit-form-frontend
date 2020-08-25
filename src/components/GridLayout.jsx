@@ -15,14 +15,14 @@ function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
 
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging } = props
   const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 6, md: 4, sm: 2 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
-  console.log('sssssssss', formID)
+
   useEffect(() => {
     if (newData !== null) {
       margeNewData()
@@ -379,7 +379,7 @@ function GridLayout(props) {
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
-        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }}>
+        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={isToolDragging && 'isDragging'}>
           <div className={`_frm-bg-${formID}`}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout

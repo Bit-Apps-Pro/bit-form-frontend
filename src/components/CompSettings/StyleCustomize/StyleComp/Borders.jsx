@@ -26,14 +26,13 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
       { cls: pcls, property: 'border-color', delProp: false, value: 'rgba(0, 0, 0, 1)' },
       { cls: pcls, property: 'border-radius', delProp: false, value: '0px 0px 0px 0px' },
     ]
-    if (bStyle === 'None') {
+    if (bStyle === 'None' && style?.[pcls]) {
       actions[0].delProp = true
       actions[1].delProp = true
       actions[2].delProp = true
       actions[3].delProp = true
     } else {
-      // actions[0].value = styleConfig.important ? `${bStyle}!important` : bStyle
-      actions[0].value = bStyle
+      actions[0].value = styleConfig.important ? `${bStyle}!important` : bStyle
       if (style?.[pcls]?.['border-width']) {
         actions[1].value = style?.[pcls]?.['border-width']
       }

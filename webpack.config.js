@@ -59,6 +59,7 @@ module.exports = (env, argv) => {
       },
       minimizer: [
         new UglifyJsPlugin({
+          cache: true,
           test: /\.js(\?.*)?$/i,
           uglifyOptions: {
             output: {

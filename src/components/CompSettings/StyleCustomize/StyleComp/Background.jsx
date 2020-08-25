@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
@@ -23,19 +23,22 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   const bgSiz = style?.[pcls]?.['background-size'] || style?.[cls]?.['background-size'] || 'auto auto'
   const bgFilter = style?.[pcls]?.['backdrop-filter'] || style?.[cls]?.['backdrop-filter'] || ''
 
-  let srcTyp = 'None'
-  let bgSrc = ''
-  if (style?.[cls]?.['background-image']) {
-    bgSrc = style[cls]['background-image'].match(/url\(.+\)/g)
-    if (style[cls]?.['background-image'].match(/wp-content/g)) {
-      srcTyp = 'Upload'
-    } else {
-      srcTyp = 'Link'
-    }
-  }
-
-  const [bgSrcTyp, setbgSrcTyp] = useState(srcTyp)
+  const [bgSrcTyp, setbgSrcTyp] = useState('')
+  const [bgSrc, setbgSrc] = useState('')
   const [ImgWarn, setImgWarn] = useState('')
+
+  useEffect(() => {
+    let srcTyp = 'None'
+    if (style?.[cls]?.['background-image']) {
+      setbgSrc(style[cls]['background-image'].replace(/^url\(|\)$/g, ''))
+      if (style[cls]?.['background-image'].match(new RegExp(window.origin, 'g'))) {
+        srcTyp = 'Upload'
+      } else {
+        srcTyp = 'Link'
+      }
+    }
+    setbgSrcTyp(srcTyp)
+  }, [cls, style])
 
   const setBG = colr => {
     let property = 'background-color'
@@ -48,8 +51,12 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
 
   const setBgTyp = typ => {
     const actn = { apply: [{ cls: pcls, property: 'background-color', delProp: false, value: 'rgba(242, 246, 249, 0.59)' }], brkPoint }
-    if (typ === 'None' || style[cls]['background-image']) {
+    if (typ === 'None') {
       actn.apply[0].delProp = true
+      // chek any gradien exist then delete
+      if (style[cls]?.['background-image'].match(/gradient/g)) {
+        actn.apply.push({ cls: pcls, property: 'background-image', delProp: true, value: 'rgba(242, 246, 249, 0.59)' })
+      }
     }
     styleDispatch(actn)
   }
@@ -113,8 +120,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
     if (e.target.checked) {
       fil += ` ${val}`
     } else {
-      fil = fil.replace(new RegExp(`${e.target.value.toLowerCase()}\\(.+\\)`, 'g'), '')
-      if (fil.trim() === '' || fil === undefined) {
+      fil = fil.replace(new RegExp(`${e.target.value.toLowerCase()}\\(\\d+(px|%)\\)`, 'g'), '')
+      fil = fil.trim()
+      if (fil === '' || fil === undefined) {
         delProp = true
       }
     }
@@ -130,7 +138,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   const handleFilterVal = (filter, value) => {
     const newVal = `${filter}(${value})`
     let fil = bgFilter
-    fil = fil.replace(new RegExp(`${filter}\\(.+\\)`, 'g'), newVal)
+    fil = fil.replace(new RegExp(`${filter}\\(\\d+(px|%)\\)`, 'g'), newVal)
     styleDispatch({
       apply: [
         { cls: pcls, property: 'backdrop-filter', delProp: false, value: fil },
@@ -232,7 +240,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           </div>
 
           <div className="flx flx-between mt-2">
-            <span className="f-5">Background Repeat</span>
+            <span className="f-5">Background Img Repeat</span>
             <select value={bgRepeat} onChange={e => setBgProperty('background-repeat', e.target.value)} className="btcd-paper-inp w-5">
               <option value="None">None</option>
               <option value="repeat">Repeat</option>
@@ -244,7 +252,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             </select>
           </div>
           <div className="mt-2">
-            <span className="f-5">Background Position</span>
+            <span className="f-5">Background Img Position</span>
             <Range
               info={[
                 { icn: <i className="font-w-m">X</i>, lbl: 'BG Position X' },
@@ -260,7 +268,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             />
           </div>
           <div className="mt-2">
-            <span className="f-5">Background Size</span>
+            <span className="f-5">Background Img Size</span>
             <Range
               info={[
                 { icn: <i className="font-w-m">H</i>, lbl: 'BG Width' },
@@ -295,8 +303,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               info={[{ icn: <BlurIcn />, lbl: 'Blur' }]}
               className="btc-range"
               unit="px"
+              master={false}
               maxRange={50}
-              value={bgFilter.match(/blur\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/blur\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('blur', val)}
             />
           )}
@@ -305,8 +314,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               info={[{ icn: <b>B</b>, lbl: 'Brightness' }]}
               className="btc-range"
               unit="%"
+              master={false}
               maxRange={200}
-              value={bgFilter.match(/brightness\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/brightness\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('brightness', val)}
             />
           )}
@@ -314,9 +324,10 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <Range
               info={[{ icn: <b>C</b>, lbl: 'contrast' }]}
               className="btc-range"
+              master={false}
               unit="%"
               maxRange={200}
-              value={bgFilter.match(/contrast\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/contrast\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('contrast', val)}
             />
           )}
@@ -325,8 +336,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               info={[{ icn: <b>G</b>, lbl: 'grayscale' }]}
               className="btc-range"
               unit="%"
+              master={false}
               maxRange={100}
-              value={bgFilter.match(/grayscale\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/grayscale\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('grayscale', val)}
             />
           )}
@@ -335,8 +347,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               info={[{ icn: <b>I</b>, lbl: 'invert' }]}
               className="btc-range"
               unit="%"
+              master={false}
               maxRange={100}
-              value={bgFilter.match(/invert\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/invert\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('invert', val)}
             />
           )}
@@ -344,9 +357,10 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <Range
               info={[{ icn: <b>O</b>, lbl: 'opacity' }]}
               className="btc-range"
+              master={false}
               unit="%"
               maxRange={200}
-              value={bgFilter.match(/opacity\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/opacity\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('opacity', val)}
             />
           )}
@@ -354,9 +368,10 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <Range
               info={[{ icn: <b>S</b>, lbl: 'sepia' }]}
               className="btc-range"
+              master={false}
               unit="%"
               maxRange={100}
-              value={bgFilter.match(/sepia\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/sepia\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('sepia', val)}
             />
           )}
@@ -364,9 +379,10 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <Range
               info={[{ icn: <b>S</b>, lbl: 'saturate' }]}
               className="btc-range"
+              master={false}
               unit="%"
               maxRange={200}
-              value={bgFilter.match(/saturate\(.+\)/g)[0].match(/\d+/g)[0]}
+              value={bgFilter.match(/saturate\(\d+(px|%)\)/g)[0].match(/\d+/g)[0]}
               onChange={val => handleFilterVal('saturate', val)}
             />
           )}

@@ -12,7 +12,12 @@ function Tools(props) {
       unselectable="on"
       onClick={() => props.setNewData(props.value)}
       onKeyPress={() => props.setNewData(props.value)}
-      onDragStart={(e) => { e.dataTransfer.setData('text/plain', ''); props.setDrgElm(props.value) }}
+      onDragStart={(e) => {
+        e.dataTransfer.setData('text/plain', '')
+        props.setDrgElm(props.value)
+        props.setisToolDragging(true)
+      }}
+      onDragEnd={() => props.setisToolDragging(false)}
     >
       {props.children}
     </div>

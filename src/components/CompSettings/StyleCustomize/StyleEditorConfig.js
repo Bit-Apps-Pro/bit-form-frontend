@@ -15,7 +15,6 @@ const styleEditorConfig = {
   },
   field_block: {
     gap: { responsive: true },
-    color: { hover: true },
     direction: {},
     padding: { responsive: true },
     background: { hover: true, responsive: true, backdropFilter: true },
