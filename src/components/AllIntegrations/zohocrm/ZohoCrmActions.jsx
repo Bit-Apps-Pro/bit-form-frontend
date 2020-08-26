@@ -3,14 +3,15 @@ import React, { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import TitleModal from '../../TitleModal'
 import Loader from '../../Loaders/Loader'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import ConfirmModal from '../../ConfirmModal'
 import Modal from '../../Modal'
-import { refreshTags, refreshOwners } from './ZohoCommonFunc'
+import { refreshTags, refreshOwners, refreshAssigmentRules } from './ZohoCRMCommonFunc'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
+export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
@@ -76,9 +77,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = newConf.default.layouts[newConf.module][newConf.layout].unique?.map((name, i) => ({ i, name }))
-          newConf.actions.upsert = { overwrite: true, crmField }
-          setUpsertMdl(true)
+          newConf.actions.upsert = { overwrite: true, ...newConf.actions.upsert }
         } else {
           delete newConf.actions.upsert
         }
@@ -142,9 +141,7 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          const crmField = newConf.default.layouts[newConf.relatedlist.module][newConf.relatedlist.layout].unique?.map((name, i) => ({ i, name }))
-          newConf.relatedlist.actions.upsert = { overwrite: true, crmField }
-          setUpsertMdl(true)
+          newConf.relatedlist.actions.upsert = { overwrite: true, ...newConf.relatedlist.actions.upsert }
         } else {
           delete newConf.relatedlist.actions.upsert
         }
@@ -174,12 +171,6 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
 
   }
 
-  const getOwners = () => {
-    if (!crmConf.default?.crmOwner) {
-      refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
-    }
-  }
-
   const setUpsertSettings = (val, typ) => {
     const newConf = { ...crmConf }
     if (tab === 0) {
@@ -201,8 +192,32 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
   }
 
   const openRecOwnerModal = () => {
+    if (!crmConf.default?.crmOwner) {
+      refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
+    }
     setActionMdl({ show: 'rec_owner' })
-    getOwners()
+  }
+
+  const openAssignmentRulesModal = () => {
+    if (!crmConf?.default?.assignmentRules?.[module]) {
+      refreshAssigmentRules(module, crmConf, setCrmConf, setisLoading, setSnackbar)
+    }
+    setActionMdl({ show: 'assignment_rules' })
+  }
+
+  const openUpsertModal = () => {
+    if (tab && !crmConf.relatedlist.actions.upsert?.crmField) {
+      const newConf = { ...crmConf }
+      const crmField = newConf.default.layouts[newConf.relatedlist.module][newConf.relatedlist.layout].unique?.map((name, i) => ({ i, name }))
+      newConf.relatedlist.actions.upsert = { overwrite: true, crmField }
+      setCrmConf(newConf)
+    } else if (!crmConf.actions.upsert?.crmField) {
+      const newConf = { ...crmConf }
+      const crmField = newConf.default.layouts[newConf.module][newConf.layout].unique?.map((name, i) => ({ i, name }))
+      newConf.actions.upsert = { overwrite: true, crmField }
+      setCrmConf({ ...newConf })
+    }
+    setUpsertMdl(true)
   }
 
   return (
@@ -213,10 +228,12 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in crmConf.actions : 'approval' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to CRM approval list." />
         <TableCheckBox onChange={(e) => actionHandler(e, 'blueprint')} checked={tab === 0 ? 'blueprint' in crmConf.actions : 'blueprint' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Blueprint" title="Blueprint" subTitle="Trigger CRM Blueprint" />
         {/* <TableCheckBox onChange={(e) => actionHandler(e, 'gclid')} checked={tab === 0 ? 'gclid' in crmConf.actions : 'gclid' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Capture_GCLID" title="Capture GCLID" subTitle="Sends the click details of AdWords Ads to Zoho CRM." /> */}
-        <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="The record is updated if it already exists else it is inserted as a new record." />
-        <TableCheckBox onChange={() => setActionMdl({ show: 'assignment_rules' })} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rule" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
+        <TitleModal action={openUpsertModal}>
+          <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={tab === 0 ? 'upsert' in crmConf.actions : 'upsert' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Records" subTitle="The record is updated if it already exists else it is inserted as a new record." />
+        </TitleModal>
+        <TableCheckBox onChange={openAssignmentRulesModal} checked={tab === 0 ? 'assignment_rules' in crmConf.actions : 'assignment_rules' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Assignment_Rule" title="Assignment Rules" subTitle="Trigger Assignment Rules in Zoho CRM." />
         <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in crmConf.actions : 'tag_rec' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Tag_Records" title="Tag Records" subTitle="Add a tag to records pushed to Zoho CRM." />
-        <TableCheckBox onChange={openRecOwnerModal} checked={tab === 0 ? 'rec_owner' in crmConf.actions : 'rec_owner' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Record_Owner" title="Record Owner" subTitle="Add a tag to records pushed to Zoho CRM." />
+        <TableCheckBox onChange={openRecOwnerModal} checked={tab === 0 ? 'rec_owner' in crmConf.actions : 'rec_owner' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Record_Owner" title="Record Owner" subTitle="Add a owner to records pushed to Zoho CRM." />
       </div>
 
       <ConfirmModal
@@ -249,9 +266,30 @@ export default function ZohoCrmActions({ crmConf, setCrmConf, formFields, tab, f
         action={clsActionMdl}
         title="Assignment Rules"
       >
-        <div className="btcd-hr mt-2 mb-2" />
-        <small>Put assignment rule ID from Zoho CRM</small>
-        <input onChange={e => actionHandler(e.target.value, 'assignment_rules')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlist.actions.assignment_rules} placeholder="Enter Assignment Rule" />
+        <div className="btcd-hr mt-2" />
+        <div className="mt-2">Assignment Rules</div>
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        ) : (
+            <div className="flx flx-between mt-2">
+              <select
+                value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlist.actions.assignment_rules}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'assignment_rules')}
+              >
+                <option value="">Select Assignment Rule</option>
+                {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={crmConf.default.assignmentRules[module][assignmentName]} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
+              </select>
+              <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
       </ConfirmModal>
 
       <ConfirmModal
