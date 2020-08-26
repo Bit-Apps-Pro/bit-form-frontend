@@ -16,7 +16,7 @@ import ConfirmModal from './ConfirmModal'
 import bitsFetch from '../Utils/bitsFetch'
 import SnackMsg from './ElmSettings/Childs/SnackMsg'
 
-function Integrations({ integrations, setIntegration, formFields }) {
+function Integrations({ integrations, setIntegration, formFields, setProModal }) {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })

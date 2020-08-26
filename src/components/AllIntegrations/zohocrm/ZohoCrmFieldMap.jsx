@@ -21,12 +21,10 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
       } else {
         newConf.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
       }
+    } else if (uploadFields) {
+      newConf.relatedlist.upload_field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
     } else {
-      if (uploadFields) {
-        newConf.relatedlist.upload_field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
-      } else {
-        newConf.relatedlist.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
-      }
+      newConf.relatedlist.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
     }
     setCrmConf({ ...newConf })
   }
@@ -38,21 +36,15 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
         if (newConf.upload_field_map.length > 1) {
           newConf.upload_field_map.splice(ind, 1)
         }
-      } else {
-        if (newConf.field_map.length > 1) {
-          newConf.field_map.splice(ind, 1)
-        }
+      } else if (newConf.field_map.length > 1) {
+        newConf.field_map.splice(ind, 1)
       }
-    } else {
-      if (uploadFields) {
-        if (newConf.relatedlist.upload_field_map.length > 1) {
-          newConf.relatedlist.upload_field_map.splice(ind, 1)
-        }
-      } else {
-        if (newConf.relatedlist.field_map.length > 1) {
-          newConf.relatedlist.field_map.splice(ind, 1)
-        }
+    } else if (uploadFields) {
+      if (newConf.relatedlist.upload_field_map.length > 1) {
+        newConf.relatedlist.upload_field_map.splice(ind, 1)
       }
+    } else if (newConf.relatedlist.field_map.length > 1) {
+      newConf.relatedlist.field_map.splice(ind, 1)
     }
     setCrmConf({ ...newConf })
   }
@@ -83,20 +75,18 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
       } else {
         newConf.relatedlist.upload_field_map[index][event.target.name] = event.target.value
       }
-    } else {
-      if (tab === 0) {
-        if (event.target.value === 'custom') {
-          newConf.field_map[index][event.target.name] = event.target.value
-          newConf.field_map[index].customValue = ''
-        } else {
-          newConf.field_map[index][event.target.name] = event.target.value
-        }
-      } else if (event.target.value === 'custom') {
-        newConf.relatedlist.field_map[index][event.target.name] = event.target.value
-        newConf.relatedlist.field_map[index].customValue = ''
+    } else if (tab === 0) {
+      if (event.target.value === 'custom') {
+        newConf.field_map[index][event.target.name] = event.target.value
+        newConf.field_map[index].customValue = ''
       } else {
-        newConf.relatedlist.field_map[index][event.target.name] = event.target.value
+        newConf.field_map[index][event.target.name] = event.target.value
       }
+    } else if (event.target.value === 'custom') {
+      newConf.relatedlist.field_map[index][event.target.name] = event.target.value
+      newConf.relatedlist.field_map[index].customValue = ''
+    } else {
+      newConf.relatedlist.field_map[index][event.target.name] = event.target.value
     }
     setCrmConf({ ...newConf })
   }
@@ -129,19 +119,26 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
         <option value="">Select Field</option>
         {
           uploadFields ? Object.keys(crmConf.default.layouts[module][layout].fileUploadFields).filter(fld => fld.required !== true).map(fieldApiName => (
-            isNotRequired ? !crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].required &&
+            isNotRequired ? !crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].required && (
               <option key={fieldApiName} value={fieldApiName}>
                 {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
-              </option> : <option key={fieldApiName} value={fieldApiName}>
+              </option>
+            ) : (
+              <option key={fieldApiName} value={fieldApiName}>
                 {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
               </option>
+            )
           )) : Object.keys(crmConf.default.layouts[module][layout].fields).filter(fld => fld.required !== true).map(fieldApiName => (
-            isNotRequired ? !crmConf.default.layouts[module][layout].fields[fieldApiName].required &&
+            isNotRequired ? !crmConf.default.layouts[module][layout].fields[fieldApiName].required
+              && (
               <option key={fieldApiName} value={fieldApiName}>
                 {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
-              </option> : <option key={fieldApiName} value={fieldApiName}>
-                {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
               </option>
+              ) : (
+                <option key={fieldApiName} value={fieldApiName}>
+                  {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
+                </option>
+            )
           ))
         }
       </select>

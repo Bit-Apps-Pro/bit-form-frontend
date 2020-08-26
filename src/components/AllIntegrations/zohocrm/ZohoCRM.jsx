@@ -9,10 +9,11 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
 import ZohoCRMActions from './ZohoCRMActions'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FromSaveContext, ShowProModalContext } from '../../../pages/FormDetails'
 
 function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const saveForm = useContext(FromSaveContext)
+  const setProModal = useContext(ShowProModalContext)
   const history = useHistory()
   const { formID } = useParams()
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -21,11 +22,14 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
+  /* eslint-disable-next-line no-undef */
+  const isPro = typeof bits !== 'undefined' && bits.isPro
+
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: '1000.6D7WFLXQVP74SO1XSED5UH137PRX2Z',
-    clientSecret: 'a934cc52edea787a82a7dba5982b151c0576a53c91',
+    clientId: process.env === 'development' ? '1000.6D7WFLXQVP74SO1XSED5UH137PRX2Z' : '',
+    clientSecret: process.env === 'development' ? 'a934cc52edea787a82a7dba5982b151c0576a53c91' : '',
     module: '',
     layout: '',
     field_map: [
@@ -269,13 +273,17 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <br />
         <div className="flx mt-2">
           <button onClick={() => handleTabChange(0, settab)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
-          <button onClick={() => handleTabChange(1, settab, crmConf, setCrmConf, formID, setisLoading, setSnackbar)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
+          <button onClick={() => handleTabChange(1, settab, crmConf, setCrmConf, formID, setisLoading, setSnackbar, setProModal)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
         </div>
         <br />
         {
           tab === 1
           && (
-            <>
+            <div className="pos-rel">
+              {!isPro && (
+                <div className="pro-blur flx">
+                  <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
+                </div>)}
               <b className="wdt-100 d-in-b">Related List:</b>
               <select onChange={event => handleInput(event, tab)} name="module" value={crmConf?.relatedlist?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
                 <option value="">Select Related Module</option>
@@ -290,7 +298,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               <button onClick={() => refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
               <br />
               <br />
-            </>
+            </div>
           )
         }
         <b className="wdt-100 d-in-b">Layout:</b>
@@ -360,8 +368,12 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
               <br />
               <br />
-              {crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields && Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
-                <>
+              {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
+                <div className="pos-rel">
+                  {!isPro && (
+                    <div className="pro-blur flx">
+                      <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
+                    </div>)}
                   <div className="mt-4"><b className="wdt-100">Map File Upload Fields</b></div>
                   <div className="btcd-hr mt-1" />
                   <div className="flx flx-around mt-2 mb-1">
@@ -385,7 +397,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
                   <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
                   <br />
                   <br />
-                </>
+                </div>
               )}
               <div className="mt-4"><b className="wdt-100">Actions</b></div>
               <div className="btcd-hr mt-1" />

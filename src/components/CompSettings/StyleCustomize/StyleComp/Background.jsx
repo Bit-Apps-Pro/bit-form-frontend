@@ -223,6 +223,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               {ImgWarn !== '' && <small className="txt-center" style={{ color: '#efbb28' }}>{ImgWarn}</small>}
             </div>
           )}
+
           <div className="flx flx-between mt-2">
             <span className="f-5">Background Blend Mode</span>
             <select value={blendMode} onChange={e => setBgProperty('background-blend-mode', e.target.value)} className="btcd-paper-inp w-5">
@@ -251,6 +252,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               <option value="round">Round</option>
             </select>
           </div>
+
           <div className="mt-2">
             <span className="f-5">Background Img Position</span>
             <Range
@@ -267,6 +269,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
               onChange={val => setBgProperty('background-position', val)}
             />
           </div>
+
           <div className="mt-2">
             <span className="f-5">Background Img Size</span>
             <Range

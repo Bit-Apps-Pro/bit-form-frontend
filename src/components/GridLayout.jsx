@@ -15,7 +15,7 @@ function GridLayout(props) {
   console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
 
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, setProModal } = props
   const [layouts, setLayouts] = useState(props.layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -192,6 +192,10 @@ function GridLayout(props) {
   }
 
   const margeNewData = () => {
+    if (layouts.lg.length >= 5 && typeof bits !== 'undefined' && !bits.isPro) {
+      setProModal({ show: true, msg: 'You can add maximum 5 fields (any kind) in free version.' })
+      return
+    }
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
@@ -244,10 +248,10 @@ function GridLayout(props) {
   }
 
   const onDrop = (lay, elmPrms) => {
-    /* if (layouts.lg.length === 4) {
-      alert('You can not add more than 5 field in free version.')
-      return false
-    } */
+    if (layouts.lg.length >= 5 && typeof bits !== 'undefined' && !bits.isPro) {
+      setProModal({ show: true, msg: 'You can add maximum 5 fields (any kind) in free version.' })
+      return
+    }
     const { draggedElm } = props
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
@@ -379,7 +383,7 @@ function GridLayout(props) {
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
-        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={isToolDragging && 'isDragging'}>
+        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={isToolDragging ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID}`}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout

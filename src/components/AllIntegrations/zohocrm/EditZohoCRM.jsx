@@ -12,6 +12,8 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
   const history = useHistory()
   const { id, formID } = useParams()
   const saveForm = useContext(FromSaveContext)
+  /* eslint-disable-next-line no-undef */
+  const isPro = typeof bits !== 'undefined' && bits.isPro
 
   const [crmConf, setCrmConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
@@ -123,7 +125,11 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
       {
         tab === 1
         && (
-          <>
+          <div className="pos-rel">
+            {!isPro && (
+              <div className="pro-blur flx">
+                <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
+              </div>)}
             <b className="wdt-100 d-in-b">Related List:</b>
             <select onChange={event => handleInput(event, tab)} name="module" value={crmConf?.relatedlist?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
               <option value="">Select Related Module</option>
@@ -138,7 +144,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             <button onClick={() => refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             <br />
             <br />
-          </>
+          </div>
         )
       }
       <b className="wdt-100 d-in-b">Layout:</b>
@@ -210,8 +216,12 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
             <br />
             <br />
-            {crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields && Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
-              <>
+            {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
+              <div className="pos-rel">
+                {!isPro && (
+                  <div className="pro-blur flx">
+                    <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
+                  </div>)}
                 <div className="mt-4"><b className="wdt-100">Map File Upload Fields</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
@@ -235,7 +245,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
                 <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(crmConf.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
                 <br />
                 <br />
-              </>
+              </div>
             )}
             <div className="mt-4"><b className="wdt-100">Actions</b></div>
             <div className="btcd-hr mt-1" />
@@ -249,11 +259,17 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
               setSnackbar={setSnackbar}
             />
           </>
-        )}
-      {tab === 1
-        && crmConf?.default?.layouts?.[crmConf?.relatedlist?.module]?.[crmConf?.relatedlist?.layout]?.fields
+        )
+      }
+      {
+        tab === 1
+        && crmConf.default?.layouts?.[crmConf?.relatedlist?.module]?.[crmConf?.relatedlist?.layout]?.fields
         && (
-          <>
+          <div className="pos-rel">
+            {!isPro && (
+              <div className="pro-blur flx">
+                <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
+              </div>)}
             <div className="mt-4"><b className="wdt-100">Field Map</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
@@ -314,8 +330,9 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
               formID={formID}
               setSnackbar={setSnackbar}
             />
-          </>
-        )}
+          </div>
+        )
+      }
 
       <div className="txt-center w-9 mt-3">
         <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm flx" type="button">
@@ -323,7 +340,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
         </button>
       </div>
       <br />
-    </div>
+    </div >
   )
 }
 

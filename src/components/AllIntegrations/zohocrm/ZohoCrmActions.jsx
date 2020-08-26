@@ -15,6 +15,8 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+  /* eslint-disable-next-line no-undef */
+  const isPro = typeof bits !== 'undefined' && bits.isPro
 
   const actionHandler = (val, typ) => {
     const newConf = { ...crmConf }
@@ -221,7 +223,10 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
   }
 
   return (
-    <>
+    <div className="pos-rel">
+      {!isPro && (<div className="pro-blur flx">
+        <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
+      </div>)}
       <div className="d-flx flx-wrp">
         <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger CRM workflows" />
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachment" subTitle="Add attachments or signatures from BitFroms to CRM." />
@@ -418,6 +423,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
           }
         </div>
       </Modal>
-    </>
+    </div>
   )
 }

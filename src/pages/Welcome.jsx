@@ -7,7 +7,7 @@ export default function Welcome({ setModal }) {
       <img src={greeting} alt="" />
       <h2>Welcome to Bit Form</h2>
       <div className="sub">
-        Thank you for install Bit Form.
+        Thank you for installing Bit Form.
       </div>
       <div>
         Modern Form builder and database management  system
