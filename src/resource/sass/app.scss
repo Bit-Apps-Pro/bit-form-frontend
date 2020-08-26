@@ -1503,7 +1503,9 @@ nav.top-nav {
   }
 }
 .top-nav > a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: $dp-bg;
   color: #fff;
   height: 40px;
@@ -1563,7 +1565,7 @@ nav.top-nav {
 
 .f-table .thead .tr .th {
   color:$light-txt;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.8;
   -ms-user-select: none;
   -webkit-user-select: none;

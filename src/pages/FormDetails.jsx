@@ -10,6 +10,7 @@ import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
 import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
+import Loader from '../components/Loaders/Loader'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
@@ -358,13 +359,13 @@ function FormDetails(props) {
             </Suspense>
           </Route>
           <Route path="/form/responses/:formType/:formID/">
-            {!isLoading && (
+            {!isLoading ? (
               <FormEntries
                 allResp={allResponse}
                 setAllResp={setAllResponse}
                 allLabels={allLabels}
               />
-            )}
+            ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
           </Route>
           <Route path="/form/settings/:formType/:formID/:settings?">
             <FormSettings
