@@ -35,7 +35,7 @@
     "eject": "react-scripts eject",
     "build": "react-scripts build",
     "wp": "webpack --progress --colors --watch --mode=development",
-    "production": "webpack --progress --colors -p --config webpack.config.js --mode=production"
+    "pd": "webpack --progress --colors -p --config webpack.config.js --mode=production"
   },
   "eslintConfig": {
     "extends": "react-app"

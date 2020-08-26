@@ -2586,7 +2586,7 @@ select.btcd-paper-inp {
   transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s !important;
   &:hover:not(:disabled),
   :focus {
-    color: $dp-blue;
+    color: $dp-blue !important;
     background-position-y: 12px;
   }
 }
