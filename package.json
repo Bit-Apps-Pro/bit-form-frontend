@@ -8,7 +8,6 @@
     "babel-polyfill": "^6.26.0",
     "core-js": "3",
     "create-file-list": "^1.0.1",
-    "css-to-object": "^1.1.0",
     "deepmerge-alt": "^0.3.0",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
@@ -19,7 +18,7 @@
     "react-dom": "^16.13.1",
     "react-google-recaptcha": "^2.0.1",
     "react-grid-layout": "^1.0.0",
-    "react-multiple-select-dropdown-lite": "^1.0.12",
+    "react-multiple-select-dropdown-lite": "^1.0.15",
     "react-router-dom": "^5.1.2",
     "react-simple-resizer": "^2.1.0",
     "react-sortablejs": "^2.0.11",
@@ -36,7 +35,7 @@
     "eject": "react-scripts eject",
     "build": "react-scripts build",
     "wp": "webpack --progress --colors --watch --mode=development",
-    "production": "webpack --progress --colors -p --config webpack.config.js --mode=production"
+    "pd": "webpack --progress --colors -p --config webpack.config.js --mode=production"
   },
   "eslintConfig": {
     "extends": "react-app"

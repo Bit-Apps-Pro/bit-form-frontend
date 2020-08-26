@@ -20,9 +20,9 @@ export default function FormTemplates() {
   }, [])
 
   return (
-    <div className="btcd-tem-lay">
+    <div className="btcd-tem-lay flx">
       {staticTem.map(tem => (
-        <div key={tem.lbl} className="btcd-tem">
+        <div key={tem.lbl} className="btcd-tem flx">
           <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">

@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import cssToObject from 'css-to-object'
+import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
@@ -14,17 +14,17 @@ import { multiAssign, bitCipher } from '../Utils/Helpers'
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
     multiAssign(style, action.apply)
-    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'md') {
     multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
-    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
     multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
-    sessionStorage.setItem('fs', bitCipher(j2c.sheet(style)))
+    sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.type === 'init') {
@@ -40,15 +40,16 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useState('lg')
-  const [style, styleDispatch] = useReducer(styleReducer, defaultTheme)
+  const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
+  const [isToolDragging, setisToolDragging] = useState(false)
   const conRef = React.createRef(null)
   const notIE = !window.document.documentMode
 
   useEffect(() => {
     if (formType === 'new') {
-      sessionStorage.setItem('fs', bitCipher(j2c.sheet(defaultTheme)))
+      sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
       setstyleLoading(false)
     } else {
       setExistingStyle()
@@ -76,15 +77,17 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   }
 
   const setExistingStyle = () => {
-    fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`)
+    fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`, { cache: 'no-store' })
       .then(response => response.text())
       .then(styleText => {
-        const oldStyle = cssToObject(styleText)
-        styleDispatch({ type: 'init', style: merge(defaultTheme, oldStyle) })
-        console.log('wwwww', styleText, oldStyle)
+        const oldStyle = css2json(styleText)
+        styleDispatch({ type: 'init', style: merge(defaultTheme(formID), oldStyle) })
+        // console.log('wwwww', oldStyle)
         setstyleLoading(false)
       })
   }
+
+  console.log('ssssssssssss', style)
 
   const setTolbar = useCallback(() => {
     const res = conRef.current.getResizer()
@@ -184,6 +187,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           className="tile"
           tolbarSiz={tolbarSiz}
           setTolbar={setTolbar}
+          setisToolDragging={setisToolDragging}
         />
       </Section>
       <Bar className="bar bar-l" />
@@ -221,6 +225,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
               newCounter={newCounter}
               setNewCounter={setNewCounter}
               layout={lay}
+              isToolDragging={isToolDragging}
             />
           </>
         ) : <GridLayoutLoader />}
@@ -239,6 +244,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           updateData={updateFields}
           setSubmitConfig={setSubmitConfig}
           setElementSetting={setElementSetting}
+          formID={formID}
         />
       </Section>
     </Container>

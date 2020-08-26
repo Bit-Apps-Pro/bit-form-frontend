@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
+export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
@@ -53,11 +53,11 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue }) {
     }
   }
   return (
-    <div className="fld-wrp drag" btcd-fld="textarea">
-      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-      <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
+    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="textarea">
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+      <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         {attr.opt.map((itm, i) => (
-          <label key={`opt-${i + 22}`} className="btcd-ck-wrp">
+          <label key={`opt-${i + 24}`} className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
             <span>{itm.lbl}</span>
             <input
               type="checkbox"

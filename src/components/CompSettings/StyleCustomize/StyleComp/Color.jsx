@@ -13,7 +13,7 @@ const setPlceholderPseudo = (browserPrefix, cls) => {
   return `${clss.join(`:${browserPrefix}placeholder,`)}:${browserPrefix}placeholder`
 }
 
-export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
+export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
   const clr = style?.[pcls]?.color || style?.[cls]?.color
   const placeholderClr = style?.[setPlceholderPseudo(':', pcls)]?.color || style?.[setPlceholderPseudo(':', cls)]?.color
@@ -24,7 +24,7 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
     const value = styleConfig.important ? `${colr.style}!important` : colr.style
     const action = { apply: [{ cls: pcls, property: 'color', delProp: false, value }], brkPoint }
     if (styleConfig.checkBoxColor) {
-      action.apply.push({ cls: '.fld>.btcd-ck-wrp span:first-child', property: 'color', delProp: false, value })
+      action.apply.push({ cls: `.fld-${formID}>.btcd-ck-wrp span:first-child`, property: 'color', delProp: false, value })
     }
     styleDispatch(action)
   }

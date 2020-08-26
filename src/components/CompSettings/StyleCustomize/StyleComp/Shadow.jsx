@@ -8,6 +8,8 @@ import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import BorderIcn from '../../../../Icons/BorderIcn'
 import BlurIcn from '../../../../Icons/BlurIcn'
 import SpreadIcn from '../../../../Icons/SpreadIcn'
+import InsideIcn from '../../../../Icons/InsideIcn'
+import NoneIcn from '../../../../Icons/NoneIcn'
 
 export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -30,16 +32,17 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   const setShadwType = (typ) => {
+    const isImportant = styleConfig.important ? '!important' : ''
     if (typ === 'Outside') {
       if (style?.[pcls]?.['box-shadow'] === undefined) {
-        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: '0px 0px 8px -5px rgba(0, 0, 0, 1)' }], brkPoint })
+        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: `0px 0px 8px -5px rgba(0, 0, 0, 1)${isImportant}` }], brkPoint })
       } else {
         const replaceOld = style?.[pcls]?.['box-shadow'].replace('inset', '')
         styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: replaceOld }], brkPoint })
       }
     } else if (typ === 'Inside') {
       if (style?.[pcls]?.['box-shadow'] === undefined) {
-        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: '0px 0px 8px -5px rgba(0, 0, 0, 1) inset' }], brkPoint })
+        styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: `0px 0px 8px -5px rgba(0, 0, 0, 1) inset${isImportant}` }], brkPoint })
       } else if (!style?.[pcls]?.['box-shadow'].match(/inset/g)) {
         const replaceOld = `${style?.[pcls]?.['box-shadow']} inset`
         styleDispatch({ apply: [{ cls: pcls, property: 'box-shadow', delProp: false, value: replaceOld }], brkPoint })
@@ -80,9 +83,9 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
           value={shadwTyp}
           onChange={setShadwType}
           btns={[
-            { lbl: 'Inside', icn: 's' },
-            { lbl: 'Outside', icn: 's' },
-            { lbl: 'None', icn: 's' },
+            { lbl: 'Inside', icn: <InsideIcn /> },
+            { lbl: 'Outside', icn: <SpreadIcn /> },
+            { lbl: 'None', icn: <NoneIcn /> },
           ]}
         />
       </div>

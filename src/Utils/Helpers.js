@@ -57,7 +57,7 @@ export const multiAssign = (obj, assignArr) => {
   for (let i = 0; i < assignArr.length; i += 1) {
     if (assignArr[i].delProp) {
       delete obj?.[assignArr[i].cls]?.[assignArr[i].property]
-      if (Object.keys(obj?.[assignArr[i]?.cls]).length === 0 && obj[assignArr[i]?.cls]?.constructor === Object) {
+      if (obj[assignArr[i]?.cls]?.constructor === Object && Object.keys(obj?.[assignArr[i]?.cls]).length === 0) {
         delete obj[assignArr[i].cls]
       }
     } else {

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function TextArea({ attr, onBlurHandler, resetFieldValue }) {
+export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val)
   const textAreaRef = useRef(null)
   useEffect(() => {
@@ -29,10 +29,10 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue }) {
     setvalue(event.target.value)
   }
   return (
-    <div className="fld-wrp drag" btcd-fld="textarea">
-      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="textarea">
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       <textarea
-        className="fld no-drg"
+        className={`fld fld-${formID} no-drg`}
         ref={textAreaRef}
         {...'ph' in attr && { placeholder: attr.ph }}
         {...{ defaultValue: value }}

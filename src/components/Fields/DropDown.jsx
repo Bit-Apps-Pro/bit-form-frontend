@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
+export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
@@ -63,8 +63,8 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue }) {
     }
   }
   return (
-    <div className="fld-wrp drag" btcd-fld="select">
-      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
+    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="select">
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
       <MultiSelect

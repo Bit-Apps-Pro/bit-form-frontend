@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
+export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val)
   const radioRef = useRef(null)
   useEffect(() => {
@@ -44,11 +44,11 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue }) {
   const n = Math.random()
 
   return (
-    <div className="fld-wrp drag" btcd-fld="textarea">
-      {'lbl' in attr && <label className="fld-lbl">{attr.lbl}</label>}
-      <div className={`no-drg fld btcd-ck-con ${attr.round && 'btcd-round'}`}>
+    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="textarea">
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+      <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         {attr.opt.map((itm, i) => (
-          <label key={`opr-${i + 22}`} className="btcd-ck-wrp">
+          <label key={`opr-${i + 22}`} className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
             <span>{itm.lbl}</span>
             <input
               type="radio"

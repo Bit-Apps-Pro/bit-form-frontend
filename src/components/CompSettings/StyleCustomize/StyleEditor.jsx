@@ -11,7 +11,7 @@ import FontSize from './StyleComp/FontSize'
 import Direction from './StyleComp/Direction'
 import Gap from './StyleComp/Gap'
 
-function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig }) {
+function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const { formID, formType } = useParams()
   return (
     <div className="mt-2">
@@ -49,6 +49,7 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
             cls={cls}
             style={compStyle}
             brkPoint={brkPoint}
+            formID={genaratedID}
             styleConfig={styleConfig.color}
             styleDispatch={styleDispatch}
             setResponsiveView={setResponsiveView}
@@ -105,6 +106,7 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
               cls={cls}
               style={compStyle}
               brkPoint={brkPoint}
+              formID={genaratedID}
               styleDispatch={styleDispatch}
               styleConfig={styleConfig.gap}
               setResponsiveView={setResponsiveView}

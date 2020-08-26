@@ -8,7 +8,7 @@ import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import Menu from './ElmSettings/Childs/Menu'
 import ConfirmModal from './ConfirmModal'
-import TableLoader from './Loaders/TableLoader'
+import TableLoader2 from './Loaders/TableLoader2'
 import { AllFormContext } from '../Utils/AllFormContext'
 
 const IndeterminateCheckbox = React.forwardRef(
@@ -209,7 +209,6 @@ function Table(props) {
   useEffect(() => {
     if (columns.length > 0 && allColumns.length >= columns.length) {
       if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
-        console.log('stateSave', stateSavable, reports[reportID].details)
         if (stateSavable && reports[reportID].details) {
           let details
           if (typeof reports[reportID].details === 'object' && 'order' in reports[reportID].details) {
@@ -321,47 +320,47 @@ function Table(props) {
             )}
         </div>
       </div>
-      {props.loading ? <TableLoader /> : (
-        <>
-          <GlobalFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            setSearch={setSearch}
-          />
-          <div className="mt-2">
-            <Scrollbars className="btcd-scroll" style={{ height: props.height }}>
-              <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
-                <div className="thead">
-                  {headerGroups.map((headerGroup, i) => (
-                    <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map(column => (
-                        <div key={column.id} className="th flx" {...column.getHeaderProps()}>
-                          <div {...column.id !== 't_action' && column.getSortByToggleProps()}>
-                            {column.render('Header')}
-                            {' '}
-                            {(column.id !== 't_action' && column.id !== 'selection') && (
-                              <span>
-                                {column.isSorted
-                                  ? column.isSortedDesc
-                                    ? String.fromCharCode(9662)
-                                    : String.fromCharCode(9652)
-                                  : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
-                              </span>
-                            )}
-                          </div>
-                          {props.resizable
-                            && (
-                              <div
-                                {...column.getResizerProps()}
-                                className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
-                              />
-                            )}
+      <>
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+          setSearch={setSearch}
+        />
+        <div className="mt-2">
+          <Scrollbars className="btcd-scroll" style={{ height: props.height }}>
+            <div {...getTableProps()} className={`${props.className} ${props.rowClickable && 'rowClickable'}`}>
+              <div className="thead">
+                {headerGroups.map((headerGroup, i) => (
+                  <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map(column => (
+                      <div key={column.id} className="th flx" {...column.getHeaderProps()}>
+                        <div {...column.id !== 't_action' && column.getSortByToggleProps()}>
+                          {column.render('Header')}
+                          {' '}
+                          {(column.id !== 't_action' && column.id !== 'selection') && (
+                            <span>
+                              {column.isSorted
+                                ? column.isSortedDesc
+                                  ? String.fromCharCode(9662)
+                                  : String.fromCharCode(9652)
+                                : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                            </span>
+                          )}
                         </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
+                        {props.resizable
+                          && (
+                            <div
+                              {...column.getResizerProps()}
+                              className={`btcd-t-resizer ${column.isResizing ? 'isResizing' : ''}`}
+                            />
+                          )}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              {props.loading ? <TableLoader2 /> : (
                 <div className="tbody" {...getTableBodyProps()}>
                   {page.map(row => {
                     prepareRow(row)
@@ -389,11 +388,11 @@ function Table(props) {
                     )
                   })}
                 </div>
-              </div>
-            </Scrollbars>
-          </div>
-        </>
-      )}
+              )}
+            </div>
+          </Scrollbars>
+        </div>
+      </>
 
       <div className="btcd-pagination">
         <small>

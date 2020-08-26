@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function TextField({ attr, onBlurHandler, resetFieldValue }) {
+export default function TextField({ attr, onBlurHandler, resetFieldValue, formID }) {
   const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
@@ -25,15 +25,17 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue }) {
       onBlurHandler(current)
     }
   }, [value])
+
   const onChangeHandler = (event) => {
     const val = attr.typ === 'email' ? event.target.value.toLowerCase() : event.target.value
     setvalue(val)
   }
+
   return (
-    <div className="fld-wrp drag" btcd-fld="text-fld">
-      {'lbl' in attr && <label title={attr.lbl} className="fld-lbl">{attr.lbl}{attr.valid?.req && ' *'}</label>}
+    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="text-fld">
+      {'lbl' in attr && <label title={attr.lbl} className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}{attr.valid?.req && ' *'}</label>}
       <input
-        className="fld no-drg"
+        className={`fld fld-${formID} no-drg`}
         type={attr.typ}
         {...'req' in attr.valid && { required: attr.valid.req }}
         {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
