@@ -17,7 +17,8 @@ import ConfirmModal from './ConfirmModal'
 
 function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
-
+  /* eslint-disable-next-line no-undef */
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const mailOptions = vals => {
     const mail = []
     // eslint-disable-next-line no-undef
@@ -34,7 +35,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       })
       mail.push({ title: 'Form Fields', type: 'group', childs: flds })
     }
-    console.log('sss',mail)
+    console.log('sss', mail)
     /* const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
@@ -514,6 +515,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     return false
   }
 
+
   return (
     <div className="btcd-workflow" style={{ width: 900 }}>
       <ConfirmModal
@@ -524,266 +526,274 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
         body={confMdl.body}
         action={confMdl.action}
       />
-      <h2>Actions</h2>
-      <Button className="blue" onClick={addLogicGrp}>
-        <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
-        Add Action
-      </Button>
+      <h2>Workflows</h2>
+
+      {isPro && (
+        <Button className="blue" onClick={addLogicGrp}>
+          <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
+           Add Workflow
+        </Button>
+      )}
 
       {workFlows.length > 0 ? workFlows.map((lgcGrp, lgcGrpInd) => (
-        <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp d-flx mt-2">
-          <Accordions
-            title={`${lgcGrp.title}`}
-            header={(
-              <small className="f-right txt-dp mr-4">
-                <span className="mr-2">
-                  <i className="btcd-chat-dot mr-1" />
-                  {ActionsTitle(lgcGrp.action_run)}
-                </span>
-                {lgcGrp.action_type !== undefined && (
+        <>
+          <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp d-flx mt-2">
+            <Accordions
+              title={`${lgcGrp.title}`}
+              header={(
+                <small className="f-right txt-dp mr-4">
                   <span className="mr-2">
                     <i className="btcd-chat-dot mr-1" />
-                    {ActionsTitle(lgcGrp.action_type)}
+                    {ActionsTitle(lgcGrp.action_run)}
                   </span>
-                )}
-                <span>
-                  <i className="btcd-chat-dot mr-1" />
-                  {ActionsTitle(lgcGrp.action_behaviour)}
-                </span>
-              </small>
-            )}
-            titleEditable
-            onTitleChange={e => handleLgcTitle(e, lgcGrpInd)}
-            notScroll
-            cls="w-9"
-          >
-            <div className="flx">
-              <b className="txt-dp"><small>Action Run When:</small></b>
-              <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create/Edit</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
-              <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create</small>} checked={lgcGrp.action_run === 'create'} value="create" />
-              <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Edit</small>} checked={lgcGrp.action_run === 'edit'} value="edit" />
-              <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Delete</small>} checked={lgcGrp.action_run === 'delete'} value="delete" />
-            </div>
-            {lgcGrp.action_run !== 'delete' && (
+                  {lgcGrp.action_type !== undefined && (
+                    <span className="mr-2">
+                      <i className="btcd-chat-dot mr-1" />
+                      {ActionsTitle(lgcGrp.action_type)}
+                    </span>
+                  )}
+                  <span>
+                    <i className="btcd-chat-dot mr-1" />
+                    {ActionsTitle(lgcGrp.action_behaviour)}
+                  </span>
+                </small>
+              )}
+              titleEditable
+              onTitleChange={e => handleLgcTitle(e, lgcGrpInd)}
+              notScroll
+              cls={!isPro ? 'w-10' : 'w-9'}
+            >
               <div className="flx">
-                <b className="txt-dp"><small>Action Effect:</small></b>
-                <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Load</small>} checked={lgcGrp.action_type === 'onload'} value="onload" />
-                <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Field Input</small>} checked={lgcGrp.action_type === 'oninput'} value="oninput" />
-                <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Validate</small>} checked={lgcGrp.action_type === 'onvalidate'} value="onvalidate" />
-                <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Submit</small>} checked={lgcGrp.action_type === 'onsubmit'} value="onsubmit" />
+                <b className="txt-dp"><small>Action Run When:</small></b>
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create/Edit</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create</small>} checked={lgcGrp.action_run === 'create'} value="create" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Edit</small>} checked={lgcGrp.action_run === 'edit'} value="edit" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Delete</small>} checked={lgcGrp.action_run === 'delete'} value="delete" />
               </div>
-            )}
-            <div className="flx">
-              <b className="txt-dp"><small>Action Behaviour:</small></b>
-              {!lgcGrp?.action_type?.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
-              <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Condition</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
-            </div>
+              {lgcGrp.action_run !== 'delete' && (
+                <div className="flx">
+                  <b className="txt-dp"><small>Action Effect:</small></b>
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Load</small>} checked={lgcGrp.action_type === 'onload'} value="onload" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Field Input</small>} checked={lgcGrp.action_type === 'oninput'} value="oninput" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Validate</small>} checked={lgcGrp.action_type === 'onvalidate'} value="onvalidate" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Submit</small>} checked={lgcGrp.action_type === 'onsubmit'} value="onsubmit" />
+                </div>
+              )}
+              <div className="flx">
+                <b className="txt-dp"><small>Action Behaviour:</small></b>
+                {!lgcGrp?.action_type?.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
+                <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Condition</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
+              </div>
 
-            {lgcGrp.action_behaviour === 'cond' && <h3 className="m-0 mb-1 txt-gray">IF</h3>}
-            <div>
-              {
-                lgcGrp.action_behaviour === 'cond' && lgcGrp.logics.map((logic, ind) => (
-                  <span key={`logic-${ind + 44}`}>
-                    {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
-                    {typeof logic === 'string' && <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind)} />}
-                    {Array.isArray(logic) && (
-                      <div className="p-2 pl-6 br-10 btcd-logic-grp">
+              {lgcGrp.action_behaviour === 'cond' && <h3 className="m-0 mb-1 txt-gray">IF</h3>}
+              <div>
+                {
+                  lgcGrp.action_behaviour === 'cond' && lgcGrp.logics.map((logic, ind) => (
+                    <span key={`logic-${ind + 44}`}>
+                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
+                      {typeof logic === 'string' && <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind)} />}
+                      {Array.isArray(logic) && (
+                        <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
-                        {logic.map((subLogic, subInd) => (
-                          <span key={`subLogic-${subInd + 55}`}>
-                            {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
-                            {typeof subLogic === 'string' && <LogicChip logic={subLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd)} />}
-                            {Array.isArray(subLogic) && (
-                              <div className="p-2 pl-6 br-10 btcd-logic-grp">
+                          {logic.map((subLogic, subInd) => (
+                            <span key={`subLogic-${subInd + 55}`}>
+                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
+                              {typeof subLogic === 'string' && <LogicChip logic={subLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd)} />}
+                              {Array.isArray(subLogic) && (
+                                <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
-                                {subLogic.map((subSubLogic, subSubLgcInd) => (
-                                  <span key={`subsubLogic-${subSubLgcInd + 90}`}>
-                                    {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
-                                    {typeof subSubLogic === 'string' && <LogicChip logic={subSubLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd, subSubLgcInd)} />}
-                                  </span>
-                                ))}
-                                <div className=" btcd-workFlows-btns">
-                                  <div className="flx">
-                                    <Button icn className="blue"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
-                                    <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
-                                    <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
+                                  {subLogic.map((subSubLogic, subSubLgcInd) => (
+                                    <span key={`subsubLogic-${subSubLgcInd + 90}`}>
+                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
+                                      {typeof subSubLogic === 'string' && <LogicChip logic={subSubLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd, subSubLgcInd)} />}
+                                    </span>
+                                  ))}
+                                  <div className=" btcd-workFlows-btns">
+                                    <div className="flx">
+                                      <Button icn className="blue"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                                      <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
+                                      <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
-                          </span>
-                        ))}
-                        <div className=" btcd-workFlows-btns">
-                          <div className="flx">
-                            <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
-                            <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
-                            <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
-                            <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
-                            <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue ml-2"> AND Group</Button>
+                              )}
+                            </span>
+                          ))}
+                          <div className=" btcd-workFlows-btns">
+                            <div className="flx">
+                              <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                              <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
+                              <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
+                              <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
+                              <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue ml-2"> AND Group</Button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </span>
-                ))
-              }
-
-              {lgcGrp.action_behaviour === 'cond' && (
-                <div className="btcd-workFlows-btns">
-                  <div className="flx">
-                    <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
-                    <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
-                    <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
-                    <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
-                    <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue ml-2"> AND Group</Button>
-                  </div>
-                </div>
-              )}
-
-              <div className="txt-dp mt-2"><b>Action</b></div>
-              <div className="btcd-hr" />
-              {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
-                <div className="mb-2">
-                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                  {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-                  <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-                  {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
-                </div>
-              )}
-              {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
-
-              {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
-                <>
-                  {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
-                  {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
-
-                  {lgcGrp.action_run !== 'delete' && (
-                    <>
-                      <div className="mt-2" />
-                      {checkKeyInArr('successMsg', lgcGrpInd) && (
-                        <label className="f-m">
-                          Success Message:
-                          <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
-                            <option value="">Select Message</option>
-                            {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
-                          </select>
-                        </label>
-                      )}
-                      <div className="mt-2" />
-                      {checkKeyInArr('redirectPage', lgcGrpInd) && (
-                        <label className="f-m">
-                          Redirect URL:
-                          <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
-                            <option value="">Select Page To Redirect</option>
-                            {formSettings?.confirmation?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
-                          </select>
-                        </label>
-                      )}
-                    </>
-                  )}
-
-                  <div className="mt-2">
-                    {checkKeyInArr('mailNotify', lgcGrpInd) && (
-                      <>
-                        <label className="f-m">
-                          Email Notification:
-                          <br />
-                          <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
-                            <option value="">Select Email Template</option>
-                            {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
-                          </select>
-                        </label>
-                        <DropDown
-                          action={val => setEmailSetting('to', val, lgcGrpInd)}
-                          value={getValueFromArr('mailNotify', 'to', lgcGrpInd)}
-                          placeholder="Add Email Receiver"
-                          title={<span className="f-m">To</span>}
-                          isMultiple
-                          titleClassName="w-7 mt-2"
-                          addable
-                          options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
-                        />
-                        <DropDown
-                          action={val => setEmailSetting('cc', val, lgcGrpInd)}
-                          value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
-                          placeholder="Add Email CC"
-                          title={<span className="f-m">CC</span>}
-                          isMultiple
-                          titleClassName="w-7 mt-2"
-                          addable
-                          options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
-                        />
-
-                        <DropDown
-                          action={val => setEmailSetting('bcc', val, lgcGrpInd)}
-                          placeholder="Add Email BCC"
-                          value={getValueFromArr('mailNotify', 'bcc', lgcGrpInd)}
-                          title={<span className="f-m">BCC</span>}
-                          isMultiple
-                          titleClassName="w-7 mt-2"
-                          addable
-                          options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
-                        />
-                      </>
-                    )}
-                  </div>
-
-                  {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">Set another field value</b></div>}
-                </>
-              )}
-
-              {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
-                <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
-                  <option value="">Select Message</option>
-                  {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
-                </MtSelect>
-              )}
-
-              {(lgcGrp.action_type !== 'onvalidate' && lgcGrp.action_run !== 'delete') && (
-                <div className="ml-2 mt-2">
-                  {lgcGrp.actions.map((action, actionInd) => (
-                    <span key={`atn-${actionInd + 22}`}>
-                      <ActionBlock formFields={formFields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
-                      {lgcGrp.actions.length !== actionInd + 1 && (
-                        <>
-                          <div style={{ height: 5 }}>
-                            <svg height="60" width="50">
-                              <line x1="20" y1="10" x2="20" y2="0" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-                            </svg>
-                          </div>
-                          <h6 className="m-0 ml-2 mt-1 txt-gray">AND</h6>
-                          <div style={{ height: 5 }}>
-                            <svg height="60" width="50">
-                              <line x1="20" y1="10" x2="20" y2="0" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-                            </svg>
-                          </div>
-                        </>
                       )}
                     </span>
-                  ))}
-                  <br />
-                  <Button onClick={() => addAction(lgcGrpInd)} icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
-                </div>
-              )}
-            </div>
-          </Accordions>
+                  ))
+                }
 
-          <div className="mt-2">
-            <Button onClick={() => lgcGrpDelConf(lgcGrpInd)} icn className="ml-2 sh-sm btcd-menu-btn tooltip" style={{ '--tooltip-txt': '"Delete Action"' }}>
-              <span className="btcd-icn icn-trash-2" />
-            </Button>
+                {lgcGrp.action_behaviour === 'cond' && (
+                  <div className="btcd-workFlows-btns">
+                    <div className="flx">
+                      <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                      <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
+                      <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
+                      <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
+                      <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue ml-2"> AND Group</Button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="txt-dp mt-2"><b>Action</b></div>
+                <div className="btcd-hr" />
+                {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
+                  <div className="mb-2">
+                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
+                    {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
+                  </div>
+                )}
+                {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
+
+                {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
+                  <>
+                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
+                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
+
+                    {lgcGrp.action_run !== 'delete' && (
+                      <>
+                        <div className="mt-2" />
+                        {checkKeyInArr('successMsg', lgcGrpInd) && (
+                          <label className="f-m">
+                            Success Message:
+                            <br />
+                            <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
+                              <option value="">Select Message</option>
+                              {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            </select>
+                          </label>
+                        )}
+                        <div className="mt-2" />
+                        {checkKeyInArr('redirectPage', lgcGrpInd) && (
+                          <label className="f-m">
+                            Redirect URL:
+                            <br />
+                            <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
+                              <option value="">Select Page To Redirect</option>
+                              {formSettings?.confirmation?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            </select>
+                          </label>
+                        )}
+                      </>
+                    )}
+
+                    <div className="mt-2">
+                      {checkKeyInArr('mailNotify', lgcGrpInd) && (
+                        <>
+                          <label className="f-m">
+                            Email Notification:
+                            <br />
+                            <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
+                              <option value="">Select Email Template</option>
+                              {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                            </select>
+                          </label>
+                          <DropDown
+                            action={val => setEmailSetting('to', val, lgcGrpInd)}
+                            value={getValueFromArr('mailNotify', 'to', lgcGrpInd)}
+                            placeholder="Add Email Receiver"
+                            title={<span className="f-m">To</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('cc', val, lgcGrpInd)}
+                            value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
+                            placeholder="Add Email CC"
+                            title={<span className="f-m">CC</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
+                          />
+
+                          <DropDown
+                            action={val => setEmailSetting('bcc', val, lgcGrpInd)}
+                            placeholder="Add Email BCC"
+                            value={getValueFromArr('mailNotify', 'bcc', lgcGrpInd)}
+                            title={<span className="f-m">BCC</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
+                          />
+                        </>
+                      )}
+                    </div>
+
+                    {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">Set another field value</b></div>}
+                  </>
+                )}
+
+                {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
+                  <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
+                    <option value="">Select Message</option>
+                    {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                  </MtSelect>
+                )}
+
+                {(lgcGrp.action_type !== 'onvalidate' && lgcGrp.action_run !== 'delete') && (
+                  <div className="ml-2 mt-2">
+                    {lgcGrp.actions.map((action, actionInd) => (
+                      <span key={`atn-${actionInd + 22}`}>
+                        <ActionBlock formFields={formFields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
+                        {lgcGrp.actions.length !== actionInd + 1 && (
+                          <>
+                            <div style={{ height: 5 }}>
+                              <svg height="60" width="50">
+                                <line x1="20" y1="10" x2="20" y2="0" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
+                              </svg>
+                            </div>
+                            <h6 className="m-0 ml-2 mt-1 txt-gray">AND</h6>
+                            <div style={{ height: 5 }}>
+                              <svg height="60" width="50">
+                                <line x1="20" y1="10" x2="20" y2="0" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
+                              </svg>
+                            </div>
+                          </>
+                        )}
+                      </span>
+                    ))}
+                    <br />
+                    <Button onClick={() => addAction(lgcGrpInd)} icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                  </div>
+                )}
+              </div>
+            </Accordions>
+            {isPro && (
+              <div className="mt-2">
+                <Button onClick={() => lgcGrpDelConf(lgcGrpInd)} icn className="ml-2 sh-sm btcd-menu-btn tooltip" style={{ '--tooltip-txt': '"Delete Action"' }}>
+                  <span className="btcd-icn icn-trash-2" />
+                </Button>
+              </div>
+            )}
           </div>
-        </div>
+          {!isPro && <div className="txt-center bg-pro p-5 mt-2">For <span className="txt-pro">UNLIMITED</span> Workflows, <a href="https://bitpress.pro/" target="_blank"><b className="txt-pro">Buy Premium</b></a></div>}
+        </>
       )) : (
           <div className="txt-center btcd-empty">
             <span className="btcd-icn icn-stack" />
           Empty
           </div>
-        )}
-    </div>
+        )
+      }
+    </div >
   )
 }
 

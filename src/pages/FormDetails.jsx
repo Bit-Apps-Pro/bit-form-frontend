@@ -11,10 +11,13 @@ import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
 import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
+import LoaderSm from '../components/Loaders/LoaderSm'
+import Modal from '../components/Modal'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
 export const FromSaveContext = createContext(null)
+export const ShowProModalContext = createContext(null)
 
 function FormDetails(props) {
   console.log('%c $render Form Details', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -36,10 +39,8 @@ function FormDetails(props) {
   const { allFormsDispatchHandler } = allFormsData
   const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
+  const [proModal, setProModal] = useState(false)
   const { history, newFormId } = props
-
-  // const formID = (formType === 'new' && frmID === 'blank') ? getNewFormId() : frmID
-
   // const { data, isValidating, error } = useSWR([formID, 'bitforms_get_a_form'], (id, action) => bitsFetch({ id }, action))
   // console.log('userSWR', data, error, isValidating)
 
@@ -98,7 +99,7 @@ function FormDetails(props) {
 
   const [integrations, setIntegration] = useState([])
 
-  const [workFlows, setworkFlows] = useState([])
+  const [workFlows, setworkFlows] = useState([defaultWorkflow])
 
   const [additional, setadditional] = useState({ enabled: {}, settings: {} })
   const [formSettings, setFormSettings] = useState({
@@ -193,7 +194,7 @@ function FormDetails(props) {
       modal.msg = 'You can not save a blank form'
       setModal({ ...modal })
     } else {
-      // setbuttonDisabled(true)
+      setbuttonDisabled(true)
       let formData = {
         form_id: newFormId,
         layout: lay,
@@ -281,114 +282,168 @@ function FormDetails(props) {
 
   return (
     <FromSaveContext.Provider value={saveForm}>
-      <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
-        <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-        <ConfirmModal
-          title={modal.title}
-          action={modal.action}
-          show={modal.show}
-          body={modal.msg}
-          btnTxt={modal.btnTxt}
-          close={closeModal}
-        />
-        <nav className="btcd-bld-nav">
-          <div className="btcd-bld-lnk">
-            <NavLink exact to="/">
-              <span className="btcd-icn icn-arrow_back" />
-              {' '}
+      <ShowProModalContext.Provider value={setProModal}>
+        <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
+          <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+          <Modal
+            sm
+            show={proModal.show}
+            setModal={v => setProModal({ show: false })}
+            title="Premium Feature"
+            className="pro-modal"
+          >
+            <h4 className="txt-center mt-5">
+              {proModal.msg}
+            </h4>
+            <div className="txt-center">
+              <a href="https://bitpress.pro/" target="_blank"><button className="btn btn-lg blue" type="button">Buy Premium</button></a>
+            </div>
+
+          </Modal>
+          <ConfirmModal
+            title={modal.title}
+            action={modal.action}
+            show={modal.show}
+            body={modal.msg}
+            btnTxt={modal.btnTxt}
+            close={closeModal}
+          />
+          <nav className="btcd-bld-nav">
+            <div className="btcd-bld-lnk">
+              <NavLink exact to="/">
+                <span className="btcd-icn icn-arrow_back" />
+                {' '}
               Home
             </NavLink>
-            <NavLink
-              exact
-              to={`/form/builder/${formType}/${formID}/fs`}
-              activeClassName="app-link-active"
-              isActive={(m, l) => l.pathname.includes('/form/builder')}
-            >
-              Builder
+              <NavLink
+                exact
+                to={`/form/builder/${formType}/${formID}/fs`}
+                activeClassName="app-link-active"
+                isActive={(m, l) => l.pathname.match(/\/form\/builder/g)}
+              >
+                Builder
             </NavLink>
-            <NavLink
-              to={`/form/responses/${formType}/${formID}/`}
-              activeClassName="app-link-active"
-            >
-              Responses
+              <NavLink
+                to={`/form/responses/${formType}/${formID}/`}
+                activeClassName="app-link-active"
+              >
+                Responses
             </NavLink>
-            <NavLink
-              to={`/form/settings/${formType}/${formID}/form-settings`}
-              activeClassName="app-link-active"
-              isActive={(m, l) => l.pathname.includes('settings')}
-            >
-              Settings
+              <NavLink
+                to={`/form/settings/${formType}/${formID}/form-settings`}
+                activeClassName="app-link-active"
+                isActive={(m, l) => l.pathname.match(/settings/g)}
+              >
+                Settings
             </NavLink>
-          </div>
-          <div className="btcd-bld-title">
-            <input
-              className="btcd-bld-title-inp br-50"
-              onChange={handleFormName}
-              value={formName}
-            />
-          </div>
+            </div>
+            <div className="btcd-bld-title">
+              <input
+                className="btcd-bld-title-inp br-50"
+                onChange={handleFormName}
+                value={formName}
+              />
+            </div>
 
-          <div className="btcd-bld-btn">
-            <button className="btn blue" type="button" onClick={saveForm} disabled={buttonDisabled}>
-              {buttonText}
-            </button>
-            <NavLink to="/" className="btn btcd-btn-close">
-              <span className="btcd-icn icn-clear" />
-            </NavLink>
-          </div>
-        </nav>
+            <div className="btcd-bld-btn">
+              <button className="btn blue" type="button" onClick={saveForm} disabled={buttonDisabled}>
+                {buttonText}
+                {buttonDisabled && <LoaderSm size="20" clr="white" className="ml-1" />}
+              </button>
+              <NavLink to="/" className="btn btcd-btn-close">
+                <span className="btcd-icn icn-clear" />
+              </NavLink>
+            </div>
+          </nav>
 
-        <Switch>
-          <Route exact path="/form/builder/:formType/:formID/:s?/:s?">
-            <Suspense fallback={<BuilderLoader />}>
-              <FormBuilder
-                newCounter={newCounter}
-                isLoading={isLoading}
-                fields={fields}
-                setFields={setFields}
-                subBtn={subBtn}
-                setSubBtn={updateSubBtn}
-                lay={lay}
-                setLay={setLay}
-                setNewCounter={setNewCounter}
-                theme={formSettings.theme}
+          <Switch>
+            <Route exact path="/form/builder/:formType/:formID/:s?/:s?">
+              <Suspense fallback={<BuilderLoader />}>
+                <FormBuilder
+                  newCounter={newCounter}
+                  isLoading={isLoading}
+                  fields={fields}
+                  setFields={setFields}
+                  subBtn={subBtn}
+                  setSubBtn={updateSubBtn}
+                  lay={lay}
+                  setLay={setLay}
+                  setNewCounter={setNewCounter}
+                  theme={formSettings.theme}
+                  setFormName={setFormName}
+                  formID={formType === 'new' ? newFormId : formID}
+                  formType={formType}
+                  setProModal={setProModal}
+                />
+              </Suspense>
+            </Route>
+            <Route path="/form/responses/:formType/:formID/">
+              {!isLoading ? (
+                <FormEntries
+                  allResp={allResponse}
+                  setAllResp={setAllResponse}
+                  allLabels={allLabels}
+                />
+              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
+            </Route>
+            <Route path="/form/settings/:formType/:formID/:settings?">
+              <FormSettings
+                saveForm={saveForm}
+                formName={formName}
                 setFormName={setFormName}
-                formID={formType === 'new' ? newFormId : formID}
-                formType={formType}
+                formFields={allLabels}
+                formSettings={formSettings}
+                setFormSettings={setFormSettings}
+                mailTem={mailTem}
+                setMailTem={setMailTem}
+                integrations={integrations}
+                setIntegration={setIntegration}
+                workFlows={workFlows}
+                setworkFlows={setworkFlows}
+                additional={additional}
+                setadditional={setadditional}
+                setProModal={setProModal}
               />
-            </Suspense>
-          </Route>
-          <Route path="/form/responses/:formType/:formID/">
-            {!isLoading ? (
-              <FormEntries
-                allResp={allResponse}
-                setAllResp={setAllResponse}
-                allLabels={allLabels}
-              />
-            ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
-          </Route>
-          <Route path="/form/settings/:formType/:formID/:settings?">
-            <FormSettings
-              saveForm={saveForm}
-              formName={formName}
-              setFormName={setFormName}
-              formFields={allLabels}
-              formSettings={formSettings}
-              setFormSettings={setFormSettings}
-              mailTem={mailTem}
-              setMailTem={setMailTem}
-              integrations={integrations}
-              setIntegration={setIntegration}
-              workFlows={workFlows}
-              setworkFlows={setworkFlows}
-              additional={additional}
-              setadditional={setadditional}
-            />
-          </Route>
-        </Switch>
-      </div>
+            </Route>
+          </Switch>
+        </div>
+      </ShowProModalContext.Provider>
     </FromSaveContext.Provider>
   )
 }
 
 export default memo(withRouter(FormDetails))
+
+const defaultWorkflow = {
+  title: 'Show Success Message',
+  action_type: 'onsubmit',
+  action_run: 'create_edit',
+  action_behaviour: 'always',
+  logics: [
+    {
+      field: '',
+      logic: '',
+      val: '',
+    },
+    'or',
+    {
+      field: '',
+      logic: '',
+      val: '',
+    },
+  ],
+  actions: [
+    {
+      field: '',
+      action: 'value',
+    },
+  ],
+  successAction: [
+    {
+      type: 'successMsg',
+      details: {
+        id: '{"index":0}',
+      },
+    },
+  ],
+}

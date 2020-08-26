@@ -34,7 +34,7 @@ export default function FormSettings(props) {
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/workflow`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-flow-tree" />
-          Workflow
+          Workflows
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-envelope-open-o" />
@@ -75,12 +75,12 @@ export default function FormSettings(props) {
           </Route>
           <Route path={`${path}workflow`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <Workflow formFields={props.formFields} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
+              <Workflow formFields={props.formFields} setProModal={props.setProModal} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
             </Suspense>
           </Route>
           <Route path={`${path}integrations`}>
             <Suspense fallback={<IntegLoader />}>
-              <Integrations integrations={props.integrations} formFields={props.formFields} setIntegration={props.setIntegration} />
+              <Integrations integrations={props.integrations} setProModal={props.setProModal} formFields={props.formFields} setIntegration={props.setIntegration} />
             </Suspense>
           </Route>
         </Switch>
