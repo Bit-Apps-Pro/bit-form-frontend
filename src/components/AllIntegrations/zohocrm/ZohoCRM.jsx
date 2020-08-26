@@ -360,7 +360,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
               <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(crmConf.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
               <br />
               <br />
-              {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
+              {crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields && Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
                 <>
                   <div className="mt-4"><b className="wdt-100">Map File Upload Fields</b></div>
                   <div className="btcd-hr mt-1" />
