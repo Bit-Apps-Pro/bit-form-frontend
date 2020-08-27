@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import ZohoCRM from './zohocrm/ZohoCRM'
 import ZohoRecruit from './zohorecruit/ZohoRecruit'
+import ZohoAnalytics from './zohoanalytics/ZohoAnalytics'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -12,6 +13,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Recruit':
         return <ZohoRecruit allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Analytics':
+        return <ZohoAnalytics allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
