@@ -8,7 +8,7 @@ import { FromSaveContext } from '../../../pages/FormDetails'
 import { moduleChange, refreshModules } from './ZohoRecruitCommonFunc'
 import ZohoRecruitActions from './ZohoRecruitActions'
 
-function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
+function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
   const saveForm = useContext(FromSaveContext)
@@ -170,4 +170,4 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
   )
 }
 
-export default EditZohoCRM
+export default EditZohoRecruit

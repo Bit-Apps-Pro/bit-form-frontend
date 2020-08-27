@@ -1,7 +1,7 @@
 import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
-export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, setSnackbar }) {
+export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, setSnackbar }) {
   const module = recruitConf.module
   let isNotRequired;
 
