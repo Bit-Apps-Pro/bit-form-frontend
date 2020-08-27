@@ -11,7 +11,7 @@ import { moduleChange, refreshModules } from './ZohoRecruitCommonFunc'
 import ZohoRecruitActions from './ZohoRecruitActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
-function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
+function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const saveForm = useContext(FromSaveContext)
   const history = useHistory()
   const { formID } = useParams()
@@ -29,7 +29,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
-    actions: {}
+    actions: {},
   })
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const nextPage = val => {
-    document.querySelector(".btcd-s-wrp").scrollTop = 0
+    document.querySelector('.btcd-s-wrp').scrollTop = 0
 
     if (val === 3) {
       const mappedFields = recruitConf?.field_map ? recruitConf?.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].required && recruitConf.default.moduleData[recruitConf.module].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
@@ -95,12 +95,10 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       } else {
         newConf.upload_field_map.push({ formField: '', zohoFormField: '' })
       }
+    } else if (i !== 0) {
+      newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
     } else {
-      if (i !== 0) {
-        newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
-      } else {
-        newConf.field_map.push({ formField: '', zohoFormField: '' })
-      }
+      newConf.field_map.push({ formField: '', zohoFormField: '' })
     }
 
     setRecruitConf({ ...newConf })
@@ -186,7 +184,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={recruitConf.name} type="text" placeholder="Integration Name..." />
-
 
         <small className="d-blk mt-2">
           <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank">Zoho Api console</a>
@@ -337,4 +334,4 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   )
 }
 
-export default ZohoCRM
+export default ZohoRecruit

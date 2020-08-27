@@ -1,7 +1,7 @@
 import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
-export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, setSnackbar }) {
+export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, setSnackbar }) {
   const { module } = recruitConf
   let isNotRequired;
 
@@ -85,26 +85,26 @@ export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, re
           uploadFields
             ? Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map(fieldApiName => (
               isNotRequired ? recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].required === 'false'
-                  && (
+                && (
                   <option key={fieldApiName} value={fieldApiName}>
                     {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
                   </option>
-                  ) : (
-                    <option key={fieldApiName} value={fieldApiName}>
-                      {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
-                    </option>
+                ) : (
+                  <option key={fieldApiName} value={fieldApiName}>
+                    {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
+                  </option>
               )
             ))
             : Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName => (
               isNotRequired ? recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false'
-                  && (
+                && (
                   <option key={fieldApiName} value={fieldApiName}>
                     {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
                   </option>
-                  ) : (
-                    <option key={fieldApiName} value={fieldApiName}>
-                      {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
-                    </option>
+                ) : (
+                  <option key={fieldApiName} value={fieldApiName}>
+                    {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
+                  </option>
               )
             ))
         }
