@@ -33,8 +33,8 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
 
   const saveConfig = () => {
     console.log(recruitConf)
-    const mappedFields = recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].required && recruitConf.default.moduleData[recruitConf.module].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
-    const mappedUploadFields = recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields && recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField))
+    const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].required && recruitConf.default.moduleData[recruitConf.module].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
+    const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields && recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
     if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
