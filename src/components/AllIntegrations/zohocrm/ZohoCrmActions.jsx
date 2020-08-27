@@ -292,7 +292,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                 <option value="">Select Assignment Rule</option>
                 {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={crmConf.default.assignmentRules[module][assignmentName]} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
               </select>
-              <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => refreshAssigmentRules(module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           )}
       </ConfirmModal>

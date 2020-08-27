@@ -113,7 +113,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
         {!uploadFields && <option value="custom">Custom...</option>}
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" placeholder="Custom Value" />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" value={field.zohoFormField} placeholder="Custom Value" />}
 
       <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">Select Field</option>
@@ -131,9 +131,9 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
           )) : Object.keys(crmConf.default.layouts[module][layout].fields).filter(fld => fld.required !== true).map(fieldApiName => (
             isNotRequired ? !crmConf.default.layouts[module][layout].fields[fieldApiName].required
               && (
-              <option key={fieldApiName} value={fieldApiName}>
-                {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
-              </option>
+                <option key={fieldApiName} value={fieldApiName}>
+                  {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
+                </option>
               ) : (
                 <option key={fieldApiName} value={fieldApiName}>
                   {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}

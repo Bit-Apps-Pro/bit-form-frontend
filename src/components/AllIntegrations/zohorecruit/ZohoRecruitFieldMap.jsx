@@ -2,7 +2,7 @@ import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
 export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, setSnackbar }) {
-  const module = recruitConf.module
+  const { module } = recruitConf
   let isNotRequired;
 
   if (uploadFields) {
@@ -27,10 +27,8 @@ export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, re
       if (newConf.upload_field_map.length > 1) {
         newConf.upload_field_map.splice(ind, 1)
       }
-    } else {
-      if (newConf.field_map.length > 1) {
-        newConf.field_map.splice(ind, 1)
-      }
+    } else if (newConf.field_map.length > 1) {
+      newConf.field_map.splice(ind, 1)
     }
     setRecruitConf({ ...newConf })
   }
@@ -55,8 +53,7 @@ export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, re
         return
       }
       newConf.upload_field_map[index][event.target.name] = event.target.value
-    }
-    else {
+    } else {
       newConf.field_map[index][event.target.name] = event.target.value
     }
     setRecruitConf({ ...newConf })
@@ -80,30 +77,36 @@ export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, re
         {!uploadFields && <option value="custom">Custom...</option>}
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" placeholder="Custom Value" />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" value={field.customValue} placeholder="Custom Value" />}
 
       <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">Select Field</option>
         {
           uploadFields
-            ? Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map(fieldApiName =>
-              (
-                isNotRequired ? recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].required === 'false' &&
-                  < option key={fieldApiName} value={fieldApiName} >
-                    {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
-                  </option> : <option key={fieldApiName} value={fieldApiName}>
+            ? Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map(fieldApiName => (
+              isNotRequired ? recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].required === 'false'
+                  && (
+                  <option key={fieldApiName} value={fieldApiName}>
                     {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
                   </option>
-              ))
-            : Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName =>
-              (
-                isNotRequired ? recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false' &&
-                  < option key={fieldApiName} value={fieldApiName} >
-                    {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
-                  </option> : <option key={fieldApiName} value={fieldApiName}>
+                  ) : (
+                    <option key={fieldApiName} value={fieldApiName}>
+                      {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
+                    </option>
+              )
+            ))
+            : Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName => (
+              isNotRequired ? recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false'
+                  && (
+                  <option key={fieldApiName} value={fieldApiName}>
                     {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
                   </option>
-              ))
+                  ) : (
+                    <option key={fieldApiName} value={fieldApiName}>
+                      {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
+                    </option>
+              )
+            ))
         }
       </select>
       <button
@@ -120,6 +123,6 @@ export default function ZohoCrmFieldMap({ i, uploadFields, formFields, field, re
           </button>
         )
       }
-    </div >
+    </div>
   )
 }
