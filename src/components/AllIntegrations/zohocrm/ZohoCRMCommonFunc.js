@@ -32,9 +32,9 @@ export const moduleChange = (module, recordTab, crmConfTmp, formID, setCrmConf, 
     refreshLayouts(recordTab, module, formID, newConf, setCrmConf, setisLoading, setSnackbar)
   } else {
     const layouts = Object.keys(newConf.default.layouts?.[module])
-    if(layouts.length === 1) {
-    newConf = layoutChange(layouts, recordTab, newConf, formID, setCrmConf, setisLoading, setSnackbar)
-   }
+    if (layouts.length === 1) {
+      newConf = layoutChange(layouts, recordTab, newConf, formID, setCrmConf, setisLoading, setSnackbar)
+    }
   }
 
   return newConf
@@ -42,7 +42,7 @@ export const moduleChange = (module, recordTab, crmConfTmp, formID, setCrmConf, 
 
 export const layoutChange = (layout, recordTab, crmConfTmp, formID, setCrmConf, setisLoading, setSnackbar) => {
   const newConf = { ...crmConfTmp }
-  
+
   const module = recordTab === 0 ? newConf.module : newConf.relatedlist.module
   if (recordTab === 0) {
     newConf.layout = layout
@@ -55,7 +55,7 @@ export const layoutChange = (layout, recordTab, crmConfTmp, formID, setCrmConf, 
     newConf.relatedlist.layout = layout
     newConf.relatedlist.actions = {}
 
-    newConf.relatedlist.field_map = newConf.default.layouts[module][layout]?.required ?generateMappedField(newConf, module, layout, 0) : [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlist.field_map = newConf.default.layouts[module][layout]?.required ? generateMappedField(newConf, module, layout, 0) : [{ formField: '', zohoFormField: '' }]
 
     newConf.relatedlist.upload_field_map = Object.keys(newConf.default.layouts[module][layout]?.requiredFileUploadFields).length > 0 ? generateMappedField(newConf, module, layout, 1) : [{ formField: '', zohoFormField: '' }]
   }
@@ -80,10 +80,10 @@ export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSna
       if (result && result.success) {
         const newConf = { ...crmConf }
         newConf.default = result.data.modules && { ...newConf.default, modules: result.data.modules }
-        if(result.data.tokenDetails){
+        if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: `Modules refreshed` })
+        setSnackbar({ show: true, msg: 'Modules refreshed' })
         setCrmConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Modules refresh failed Cause:${result.data.data || result.data}. please try again` })
@@ -113,15 +113,14 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
     .then(result => {
       if (result && result.success) {
         if (result.data.layouts) {
-          if(!newConf.default.layouts)
-           newConf.default.layouts = {}
+          if (!newConf.default.layouts) newConf.default.layouts = {}
           newConf.default.layouts[module] = { ...result.data.layouts }
           const layouts = [...Object.keys(result.data.layouts)]
           if (layouts.length === 1) {
             if (recordTab === 0) {
               [newConf.layout] = layouts
               newConf.field_map = generateMappedField(newConf, module, layouts, 0)
-              if(Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0){
+              if (Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0) {
                 newConf.upload_field_map = generateMappedField(newConf, module, layouts, 1)
               }
             } else {
@@ -129,12 +128,11 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
               newConf.relatedlist.field_map = generateMappedField(newConf, module, layouts, 0)
 
               console.log('length', Object.keys(result.data.layouts[layouts].fileUploadFields).length)
-              if(Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0){
+              if (Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0) {
                 newConf.relatedlist.upload_field_map = generateMappedField(newConf, module, layouts, 1)
                 console.log('check', newConf.relatedlist.upload_field_map)
               }
             }
-
 
             console.log('rubel', newConf)
             if (!newConf.default.tags?.[module]) refreshTags(formID, module, newConf, setCrmConf, setisLoading, setSnackbar)
@@ -145,8 +143,6 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
           newConf.tokenDetails = result.data.tokenDetails
         }
 
-
-        
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Layouts refreshed' })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
@@ -160,11 +156,10 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
 }
 
 export const generateMappedField = (crmConf, module, layout, uploadFields) => {
-    if(uploadFields){
-      return crmConf.default.layouts[module][layout].requiredFileUploadFields.length > 0 ? crmConf.default.layouts[module][layout].requiredFileUploadFields.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
-    }else{
-      return crmConf.default.layouts[module][layout].required.length > 0 ? crmConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
-    }
+  if (uploadFields) {
+    return crmConf.default.layouts[module][layout].requiredFileUploadFields.length > 0 ? crmConf.default.layouts[module][layout].requiredFileUploadFields.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
+  }
+  return crmConf.default.layouts[module][layout].required.length > 0 ? crmConf.default.layouts[module][layout].required.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
 }
 
 export const refreshRelatedList = (formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
@@ -262,7 +257,6 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setisLoading, setSnac
     .catch(() => setisLoading(false))
 }
 
-
 export const refreshAssigmentRules = (module, crmConf, setCrmConf, setisLoading, setSnackbar) => {
   setisLoading(true)
   const getAssigmentRulesParams = {
@@ -276,14 +270,13 @@ export const refreshAssigmentRules = (module, crmConf, setCrmConf, setisLoading,
     .then(result => {
       if (result?.success) {
         const newConf = { ...crmConf }
-        if(!newConf.default.assignmentRules){
+        if (!newConf.default.assignmentRules) {
           newConf.default.assignmentRules = {}
         }
-        
+
         newConf.default.assignmentRules[module] = { ...result.data.assignmentRules }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Assignment Rules refreshed' })
-        
       }
       setisLoading(false)
     })
