@@ -34,7 +34,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
       })
       mail.push({ title: 'Form Fields', type: 'group', childs: flds })
     }
-    console.log('sss',mail)
+    console.log('sss', mail)
     /* const mailStr = JSON.stringify(mail)
     if (vals !== undefined) {
       // eslint-disable-next-line array-callback-return
@@ -498,7 +498,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
   const lgcGrpDelConf = i => {
     confMdl.btnTxt = 'Delete'
-    confMdl.body = 'Are you sure to delete this workflow'
+    confMdl.body = 'Are you sure to delete this workflow?'
     confMdl.btnClass = ''
     confMdl.action = () => { delLgcGrp(i); closeConfMdl() }
     confMdl.show = true

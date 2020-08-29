@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
@@ -77,7 +77,8 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          newConf.actions.upsert = { overwrite: true, ...newConf.actions.upsert }
+          const crmField = newConf.default.layouts[newConf.module][newConf.layout].unique?.map((name, i) => ({ i, name }))
+          newConf.actions.upsert = { overwrite: true, crmField }
         } else {
           delete newConf.actions.upsert
         }
@@ -141,7 +142,8 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       }
       if (typ === 'upsert') {
         if (val.target.checked) {
-          newConf.relatedlist.actions.upsert = { overwrite: true, ...newConf.relatedlist.actions.upsert }
+          const crmField = newConf.default.layouts[newConf.relatedlist.module][newConf.relatedlist.layout].unique?.map((name, i) => ({ i, name }))
+          newConf.relatedlist.actions.upsert = { overwrite: true, crmField }
         } else {
           delete newConf.relatedlist.actions.upsert
         }
@@ -287,7 +289,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                 <option value="">Select Assignment Rule</option>
                 {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={crmConf.default.assignmentRules[module][assignmentName]} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
               </select>
-              <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => refreshAssigmentRules(crmConf.module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Assignment Rules"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           )}
       </ConfirmModal>
@@ -399,7 +401,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                   <div className="font-w-m mt-2">Upsert Using</div>
                   <small>Arrange fields in order of preferance for upsertion</small>
                   <ReactSortable list={crmConf.relatedlist.actions.upsert?.crmField} setList={l => setUpsertSettings(l, 'list')}>
-                    {crmConf.relatedlist.actions?.upsert?.crmField.map((itm) => (
+                    {crmConf.relatedlist.actions.upsert?.crmField?.map((itm) => (
                       <div key={`cf-${itm.i}`} className="upsert_rec w-7 mt-1 flx">
                         <span className="btcd-icn btcd-mnu mr-2" />
                         {itm.name}

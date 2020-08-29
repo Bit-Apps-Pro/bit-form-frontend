@@ -58,7 +58,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
 
   const inteDelConf = i => {
     confMdl.btnTxt = 'Delete'
-    confMdl.body = 'Are you sure to delete this template'
+    confMdl.body = 'Are you sure to delete this integration?'
     confMdl.btnClass = ''
     confMdl.action = () => { removeInteg(i); closeConfMdl() }
     confMdl.show = true

@@ -27,7 +27,9 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const [confMdl, setconfMdl] = useState({ show: false })
   const [entryLabels, setEntryLabels] = useState([])
   const { reportsData } = useContext(AllFormContext)
+  const { allFormsData } = useContext(AllFormContext)
   const { reports } = reportsData
+  const { allFormsDispatchHandler } = allFormsData
   const [report] = useState(0)
   const [countEntries, setCountEntries] = useState(0)
 
@@ -102,9 +104,12 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             setAllResp(res.data.entries)
           }
 
+          allFormsDispatchHandler({ type: 'update', data: { formID, entries: res.data.count } })
+
           setisloading(false)
         })
     }
+
   }, [delConfMdl, dupConfMdl, editData, formID])
 
   const setBulkDelete = useCallback((rows, action) => {
@@ -229,7 +234,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const dupConfMdl = useCallback((row, data, pCount) => {
     confMdl.btnTxt = 'Duplicate'
     confMdl.btnClass = 'blue'
-    confMdl.body = 'Are you sure to duplicate this entry'
+    confMdl.body = 'Are you sure to duplicate this entry?'
     confMdl.action = () => { bulkDuplicateData(row, data, pCount); closeConfMdl() }
     confMdl.show = true
     setconfMdl({ ...confMdl })

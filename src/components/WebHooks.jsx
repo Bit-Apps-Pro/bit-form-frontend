@@ -127,7 +127,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
-        body="Are you sure to delete this message ?"
+        body="Are you sure to delete this web hook?"
         btnTxt="Delete"
         close={closeMdl}
       />

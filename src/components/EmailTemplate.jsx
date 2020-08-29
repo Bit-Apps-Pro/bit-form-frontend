@@ -47,7 +47,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
 
   const temDupConf = i => {
     confMdl.btnTxt = 'Dulicate'
-    confMdl.body = 'Are you sure to duplicate this template'
+    confMdl.body = 'Are you sure to duplicate this template?'
     confMdl.btnClass = 'blue'
     confMdl.action = () => { duplicateTem(i); closeConfMdl() }
     confMdl.show = true
