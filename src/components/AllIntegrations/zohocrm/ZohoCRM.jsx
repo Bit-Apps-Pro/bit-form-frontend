@@ -28,8 +28,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: process.env === 'development' ? '1000.6D7WFLXQVP74SO1XSED5UH137PRX2Z' : '',
-    clientSecret: process.env === 'development' ? 'a934cc52edea787a82a7dba5982b151c0576a53c91' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.6D7WFLXQVP74SO1XSED5UH137PRX2Z' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'a934cc52edea787a82a7dba5982b151c0576a53c91' : '',
     module: '',
     layout: '',
     field_map: [
@@ -38,6 +38,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     relatedlist: {},
     actions: {}
   })
+
+  console.log('kkkkkkk', process.env.NODE_ENV)
 
   useEffect(() => {
     if (window.opener) {
@@ -215,11 +217,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
 
-
-        <small className="d-blk mt-2">
-          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank">Zoho Api console</a>
-        </small>
-
         <div className="mt-3"><b>Data Center:</b></div>
         <select onChange={event => handleInput(event, tab)} name="dataCenter" value={crmConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
           <option value="">--Select a data center--</option>
@@ -236,6 +233,10 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
         <div className="mt-3"><b>Authorized Redirect URIs:</b></div>
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+
+        <small className="d-blk mt-5">
+          To get Client ID and SECRET , Please Visit <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank">Zoho API Console</a>
+        </small>
 
         <div className="mt-3"><b>Client id:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="clientId" value={crmConf.clientId} type="text" placeholder="Client id..." />
@@ -256,7 +257,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
+      <div className="btcd-stp-page" style={{ ...step === 2 && { width: 900, height: `${100}%`, overflow: 'visible' } }}>
         <br />
         <b className="wdt-100 d-in-b">Module:</b>
         <select onChange={event => handleInput(event, tab)} name="module" value={crmConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
@@ -281,7 +282,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           && (
             <div className="pos-rel">
               {!isPro && (
-                <div className="pro-blur flx">
+                <div className="pro-blur flx w-9">
                   <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
                 </div>)}
               <b className="wdt-100 d-in-b">Related List:</b>

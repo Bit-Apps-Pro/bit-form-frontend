@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
-  if (process.env.NODE_ENV === 'production') {
+  if (!process.env.hasOwnProperty('PUBLIC_URL')) {
     document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = 0
     document.getElementById('wpadminbar').style.display = 'none'
     document.getElementById('adminmenumain').style.display = 'none'
@@ -14,7 +14,7 @@ export const hideWpMenu = () => {
 
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
-  if (process.env.NODE_ENV === 'production') {
+  if (!process.env.hasOwnProperty('PUBLIC_URL')) {
     document.getElementsByClassName('wp-toolbar')[0].style.paddingTop = '32px'
     document.getElementById('wpadminbar').style.display = 'block'
     document.getElementById('adminmenumain').style.display = 'block'

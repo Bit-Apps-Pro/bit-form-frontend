@@ -28,7 +28,7 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
     { type: 'Zoho CRM', logo: zohoCRM },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
     { type: 'Zoho Campaigns', logo: zohoCamp, disable: true },
-    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true },
+    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true, pro: true },
     { type: 'Zoho Analytics', logo: zohoAnalytics, disable: true },
     { type: 'Zoho Desk', logo: zohoDesk, disable: true },
     { type: 'Zoho Creator', logo: zohoCreator, disable: true },
@@ -106,7 +106,24 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
             >
               <div className="flx flx-wrp">
                 {integs.map((inte, i) => (
-                  <div onClick={() => setNewInteg(inte.type)} onKeyPress={() => setNewInteg(inte.type)} role="button" tabIndex="0" className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && 'btcd-inte-dis'}`} key={`inte-sm-${i + 2}`}>
+                  <div
+                    key={`inte-sm-${i + 2}`}
+                    onClick={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
+                    onKeyPress={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
+                    role="button"
+                    tabIndex="0"
+                    className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
+                  >
+                    {inte.pro && (
+                      <div className="pro-filter">
+                        <div>
+                          {inte.type}
+                          {' '}
+                          Available on
+                        </div>
+                        <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">Premium</a></span>
+                      </div>
+                    )}
                     <img src={inte.logo} alt="" />
                     <div className="txt-center">
                       {inte.type}

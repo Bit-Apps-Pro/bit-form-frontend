@@ -44,7 +44,7 @@ function App() {
   console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
   return (
     <Suspense fallback={(<Loader style={loaderStyle} />)}>
-      <Router basename={process.env.NODE_ENV === 'production' ? bits.baseURL : '/'}>
+      <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
         <div className="Btcd-App">
 
           <div className="nav-wrp">

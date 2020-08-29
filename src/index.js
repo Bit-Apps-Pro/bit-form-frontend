@@ -5,7 +5,7 @@ import 'react-app-polyfill/stable'
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 // import * as Sentry from '@sentry/browser';
-import * as serviceWorker from './serviceWorker'
+// import * as serviceWorker from './serviceWorker'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
@@ -14,7 +14,7 @@ const App = lazy(() => import('./App'))
 
 // Sentry.init({ dsn: 'https://ca450a3bacc2472bbe9b010388f11880@o400688.ingest.sentry.io/5259314' });
 
-if (process.env.NODE_ENV === 'production' && typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
+if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
   // eslint-disable-next-line camelcase
   __webpack_public_path__ = `${bits.assetsURL}/js/`
 }
@@ -24,6 +24,19 @@ if (typeof bits !== 'undefined' && bits.baseURL && `${window.location.pathname +
 if (window.location.hash === '') {
   window.location = `${window.location.href}#/`
 }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}else{
+  console.log('no sw')
+}
+
+
 ReactDOM.render(
   <AllFormContextProvider>
     <AppSettingsProvider>
@@ -43,4 +56,4 @@ ReactDOM.render(
   </AllFormContextProvider>, document.getElementById('btcd-app'),
 )
 
-serviceWorker.register();
+// serviceWorker.register();

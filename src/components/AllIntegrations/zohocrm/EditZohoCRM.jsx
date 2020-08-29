@@ -127,7 +127,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
         && (
           <div className="pos-rel">
             {!isPro && (
-              <div className="pro-blur flx">
+              <div className="pro-blur flx w-9">
                 <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
               </div>)}
             <b className="wdt-100 d-in-b">Related List:</b>
@@ -175,7 +175,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
             </select>
           )
       }
-      <button onClick={() => refreshLayouts(tab, crmConf.module, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      {isPro && <button onClick={() => refreshLayouts(tab, crmConf.module, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
       <br />
       <br />
       {
