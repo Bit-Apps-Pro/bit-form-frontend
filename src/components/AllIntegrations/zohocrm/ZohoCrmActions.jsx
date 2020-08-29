@@ -226,7 +226,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
 
   return (
     <div className="pos-rel">
-      {!isPro && (<div className="pro-blur flx">
+      {!isPro && (<div className="pro-blur flx w-9" style={{ top: -25 }}>
         <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
       </div>)}
       <div className="d-flx flx-wrp">

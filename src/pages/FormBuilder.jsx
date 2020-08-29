@@ -77,7 +77,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   }
 
   const setExistingStyle = () => {
-    fetch(`${window.location.origin}/wp-content/uploads/bitforms/form-styles/bitform-${formID}.css`, { cache: 'no-store' })
+    fetch(`${bits.styleURL}/bitform-${formID}.css`, { cache: 'no-store' })
       .then(response => response.text())
       .then(styleText => {
         const oldStyle = css2json(styleText)

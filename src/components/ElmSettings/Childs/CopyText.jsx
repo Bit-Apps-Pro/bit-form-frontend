@@ -14,7 +14,7 @@ export default function CopyText({ value, setSnackbar, className }) {
 
   return (
     <div className={className}>
-      <label htmlFor={value}>
+      <label htmlFor={value} className="flx">
         <input value={value} readOnly />
         <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button"><span className="btcd-icn icn-copy" /></button>
       </label>

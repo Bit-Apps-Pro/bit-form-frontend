@@ -57,7 +57,10 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
-              return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink key={`file-n-${row.cell.row.index + i}`} fname={itm} link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}` : `${window.location.origin}/wp-content/uploads/bitforms/${formID}/${row.cell.row.original.entry_id}`}`} />)
+              return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink
+                key={`file-n-${row.cell.row.index + i}`}
+                fname={itm}
+                link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}`} />)
             }
             if (val.type === 'check' || val.type === 'select') {
               const vals = typeof row.cell.value === 'string' && row.cell.value.length > 0 && row.cell.value[0] === '[' ? JSON.parse(row.cell.value) : row.cell.value !== undefined && row.cell.value.split(',')
@@ -244,7 +247,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
 
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up') {
-      return allResp[rowDtl.idx]?.[entry.accessor] && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => <TableFileLink key={`file-n-${i}`} fname={it} width='100' link={`${typeof bits !== 'undefined' ? `${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}` : `${window.location.origin}/wp-content/uploads/bitforms/${formID}/${allResp[rowDtl.idx].entry_id}`}`} />)
+      return allResp[rowDtl.idx]?.[entry.accessor] && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => <TableFileLink key={`file-n-${i}`} fname={it} width='100' link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}`} />)
     } else if (entry.fieldType === 'color') {
       return (<div className="flx">
         {allResp[rowDtl.idx][entry.accessor]}

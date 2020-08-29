@@ -27,12 +27,15 @@ module.exports = (env, argv) => {
 
     output: {
       filename: '[name].js',
-      path: path.resolve('../assets/js/'),
+      path: path.resolve(__dirname, '../assets/js/'),
       chunkFilename: '[name].js',
       library: '_bitforms',
       libraryTarget: 'umd',
     },
-
+    /*  devServer: {
+       contentBase: path.join(__dirname, '../assets/js/'),
+       hot: true,
+     }, */
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {
@@ -56,7 +59,8 @@ module.exports = (env, argv) => {
       },
       minimizer: [
         new UglifyJsPlugin({
-          cache: true,
+          cache: !production,
+          parallel: true,
           test: /\.js(\?.*)?$/i,
           uglifyOptions: {
             output: {
@@ -73,9 +77,10 @@ module.exports = (env, argv) => {
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
+        cache: !production,
         filename: '../../views/view-root.php',
         path: path.resolve('../views/'),
-        template: `${__dirname}/public/index.html`,
+        template: `${__dirname}/public/wp_index.html`,
         // inject: 'true',
         chunks: ['webpackAssets'],
         chunksSortMode: 'auto',
@@ -86,15 +91,19 @@ module.exports = (env, argv) => {
       }), */
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': production
-          ? JSON.stringify('development')
-          : JSON.stringify('production'),
+          ? JSON.stringify('production')
+          : JSON.stringify('development'),
       }),
       new MiniCssExtractPlugin({
         filename: '../css/[name].css',
       }),
+      /* new WorkboxPlugin.InjectManifest({
+        swSrc: path.resolve(__dirname, '../assets/js/'),
+      }), */
       new WorkboxPlugin.GenerateSW({
         clientsClaim: true,
         skipWaiting: true,
+        // swDest: '/src/service-worker.js',
       }),
     ],
 
