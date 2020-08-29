@@ -5,7 +5,7 @@ import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
-import { workspaceChange, tableChange, refreshWorkspaces, refreshTables } from './ZohoAnalyticsCommonFunc'
+import { workspaceChange, tableChange, refreshWorkspaces, refreshTables, refreshTableHeaders } from './ZohoAnalyticsCommonFunc'
 // import ZohoRecruitActions from './ZohoRecruitActions'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -87,9 +87,11 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
           ))
         }
       </select>
-      <button onClick={() => refreshTables(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshTables(analyticsConf.workspace, formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
+      <small style={{ color: 'red', marginLeft: 100 }}>** Zoho Analytics doesn&apos;t support data INSERT / UPDATE in integration table</small>
+
       {isLoading && (
         <Loader style={{
           display: 'flex',
@@ -103,7 +105,10 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       {analyticsConf.default?.tables?.headers?.[analyticsConf.table]
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">Map Fields</b></div>
+            <div className="mt-4">
+              <b className="wdt-100">Map Fields</b>
+              <button onClick={() => refreshTableHeaders(analyticsConf.workspace, analyticsConf.table, formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Table Headers"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
               <div className="txt-dp"><b>Form Fields</b></div>

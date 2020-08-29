@@ -19,6 +19,8 @@ export const moduleChange = (module, recordTab, crmConfTmp, formID, setCrmConf, 
     newConf.relatedlist.module = ''
     newConf.relatedlist.layout = ''
     newConf.relatedlist.actions = {}
+    newConf.field_map = [{ formField: '', zohoFormField: '' }]
+    newConf.upload_field_map = [{ formField: '', zohoFormField: '' }]
     newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
     newConf.relatedlist.upload_field_map = [{ formField: '', zohoFormField: '' }]
   } else {
@@ -128,14 +130,11 @@ export const refreshLayouts = (recordTab, module, formID, crmConf, setCrmConf, s
               [newConf.relatedlist.layout] = layouts
               newConf.relatedlist.field_map = generateMappedField(newConf, module, layouts, 0)
 
-              console.log('length', Object.keys(result.data.layouts[layouts].fileUploadFields).length)
               if (Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0) {
                 newConf.relatedlist.upload_field_map = generateMappedField(newConf, module, layouts, 1)
-                console.log('check', newConf.relatedlist.upload_field_map)
               }
             }
 
-            console.log('rubel', newConf)
             if (!newConf.default.tags?.[module]) refreshTags(formID, module, newConf, setCrmConf, setisLoading, setSnackbar)
           }
         }
@@ -252,6 +251,8 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setisLoading, setSnac
         newConf.default.crmOwner = result.data.users
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Owners refreshed' })
+      } else {
+        setSnackbar({ show: true, msg: 'Owners refresh failed. please try again' })
       }
       setisLoading(false)
     })
@@ -278,6 +279,8 @@ export const refreshAssigmentRules = (module, crmConf, setCrmConf, setisLoading,
         newConf.default.assignmentRules[module] = { ...result.data.assignmentRules }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Assignment Rules refreshed' })
+      } else {
+        setSnackbar({ show: true, msg: 'Assignment Rules refresh failed. please try again' })
       }
       setisLoading(false)
     })

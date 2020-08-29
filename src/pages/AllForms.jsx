@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState, useEffect, useContext, useCallback, memo, lazy } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
 import CopyText from '../components/ElmSettings/Childs/CopyText'
@@ -174,7 +174,7 @@ function AllFroms({ newFormId }) {
     confMdl.btnTxt = 'Delete'
     confMdl.btn2Txt = null
     confMdl.btnClass = ''
-    confMdl.body = 'Are you sure to delete this form ?'
+    confMdl.body = 'Are you sure to delete this form?'
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }

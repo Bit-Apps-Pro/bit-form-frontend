@@ -3,10 +3,17 @@ import bitsFetch from '../../../Utils/bitsFetch'
 export const workspaceChange = (workspace, analyticsConf, formID, setAnalyticsConf, setisLoading, setSnackbar) => {
   const newConf = { ...analyticsConf }
   newConf.workspace = workspace
-  newConf.actions = {}
+  newConf.table = ''
+  newConf.field_map = [{ formField: '', zohoFormField: '' }]
 
-  if (!newConf.default?.tables?.[workspace]) {
+  if (!newConf?.default?.tables?.[workspace]) {
     refreshTables(workspace, formID, newConf, setAnalyticsConf, setisLoading, setSnackbar)
+  } else if (Object.keys(newConf?.default?.tables?.[workspace]).length === 1) {
+    newConf.table = newConf?.default?.tables?.[workspace][0].viewName
+
+    if (!newConf?.default?.tables?.headers?.[newConf.table]) {
+      refreshTableHeaders(workspace, newConf.table, formID, newConf, setAnalyticsConf, setisLoading, setSnackbar)
+    }
   }
 
   return newConf
@@ -15,9 +22,10 @@ export const workspaceChange = (workspace, analyticsConf, formID, setAnalyticsCo
 export const tableChange = (table, analyticsConf, formID, setAnalyticsConf, setisLoading, setSnackbar) => {
   const newConf = { ...analyticsConf }
   newConf.table = table
+  newConf.field_map = [{ formField: '', zohoFormField: '' }]
 
-  if (!newConf.default?.tables.headers?.[table]) {
-    getTableHeaders(newConf.workspace, table, formID, newConf, setAnalyticsConf, setisLoading, setSnackbar)
+  if (!newConf?.default?.tables?.headers?.[table]) {
+    refreshTableHeaders(newConf.workspace, table, formID, newConf, setAnalyticsConf, setisLoading, setSnackbar)
   }
 
   return newConf
@@ -41,8 +49,8 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setis
         if (result.data.workspaces) {
           newConf.default = { ...newConf.default, workspaces: result.data.workspaces }
         }
-        setAnalyticsConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Workspaces refreshed' })
+        setAnalyticsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Workspaces refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {
@@ -80,13 +88,17 @@ export const refreshTables = (workspace, formID, analyticsConf, setAnalyticsConf
 
           if (Object.keys(result.data.tables).length === 1) {
             newConf.table = result.data.tables[0].viewName
-            getTableHeaders(workspace, result.data.tables[0].viewName, formID, newConf, setAnalyticsConf, setisLoading, setSnackbar)
+
+            if (!newConf?.default?.tables?.headers?.[newConf.table]) {
+              refreshTableHeaders(workspace, newConf.table, formID, newConf, setAnalyticsConf, setisLoading, setSnackbar)
+            }
           }
         }
 
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
+        setSnackbar({ show: true, msg: 'Tables refreshed' })
         setAnalyticsConf({ ...newConf })
       } else {
         setSnackbar({ show: true, msg: 'Tables refresh failed. please try again' })
@@ -96,13 +108,13 @@ export const refreshTables = (workspace, formID, analyticsConf, setAnalyticsConf
     .catch(() => setisLoading(false))
 }
 
-export const getTableHeaders = (workspace, table, formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar) => {
+export const refreshTableHeaders = (workspace, table, formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar) => {
   if (!table) {
     return
   }
 
   setisLoading(true)
-  const refreshTablesRequestParams = {
+  const refreshTableHeadersRequestParams = {
     formID,
     workspace,
     table,
@@ -112,7 +124,7 @@ export const getTableHeaders = (workspace, table, formID, analyticsConf, setAnal
     tokenDetails: analyticsConf.tokenDetails,
     ownerEmail: analyticsConf.ownerEmail,
   }
-  bitsFetch(refreshTablesRequestParams, 'bitforms_zanalysis_get_table_headers')
+  bitsFetch(refreshTableHeadersRequestParams, 'bitforms_zanalysis_refresh_table_headers')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...analyticsConf }
@@ -121,6 +133,9 @@ export const getTableHeaders = (workspace, table, formID, analyticsConf, setAnal
             newConf.default.tables.headers = {}
           }
           newConf.default.tables.headers[table] = { ...result.data.table_headers }
+          setSnackbar({ show: true, msg: 'Table Headers refreshed' })
+        } else {
+          setSnackbar({ show: true, msg: "Zoho didn't provide column names for this table" })
         }
 
         if (result.data.tokenDetails) {

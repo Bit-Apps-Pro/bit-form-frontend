@@ -499,7 +499,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
 
   const lgcGrpDelConf = i => {
     confMdl.btnTxt = 'Delete'
-    confMdl.body = 'Are you sure to delete this workflow'
+    confMdl.body = 'Are you sure to delete this workflow?'
     confMdl.btnClass = ''
     confMdl.action = () => { delLgcGrp(i); closeConfMdl() }
     confMdl.show = true
