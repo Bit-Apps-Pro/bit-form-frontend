@@ -34,12 +34,12 @@ function GridLayout(props) {
   useEffect(() => {
     let w = 0
     let h = 0
-    w += propertyValueSumX(style[`._frm-${formID}`]['border-width'])
-    w += propertyValueSumX(style[`._frm-${formID}`].padding)
-    w += propertyValueSumX(style[`._frm-${formID}`].margin)
-    w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width'])
-    w += propertyValueSumX(style[`._frm-bg-${formID}`].padding)
-    w += propertyValueSumX(style[`._frm-bg-${formID}`].margin)
+    w += (style?.[`._frm-${formID}`]?.['border-width']) && propertyValueSumX(style[`._frm-${formID}`]['border-width'])
+    w += (style?.[`._frm-${formID}`]?.padding) && propertyValueSumX(style[`._frm-${formID}`].padding)
+    w += (style?.[`._frm-${formID}`]?.margin) && propertyValueSumX(style[`._frm-${formID}`].margin)
+    w += (style?.[`._frm-bg-${formID}`]?.['border-width']) && propertyValueSumX(style[`._frm-bg-${formID}`]['border-width'])
+    w += (style?.[`._frm-bg-${formID}`]?.padding) && propertyValueSumX(style[`._frm-bg-${formID}`].padding)
+    w += (style?.[`._frm-bg-${formID}`]?.margin) && propertyValueSumX(style[`._frm-bg-${formID}`].margin)
     setBuilderWidth(gridWidth - 32 - w)
 
     if (style?.[`._frm-g-${formID}`]?.gap) {
@@ -48,8 +48,8 @@ function GridLayout(props) {
     }
 
     h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, ''))
-    h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding)
-    h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin)
+    h += (style?.[`.fld-wrp-${formID}`]?.padding) && propertyValueSumY(style[`.fld-wrp-${formID}`].padding)
+    h += (style?.[`input.fld-${formID},textarea.fld-${formID}`]?.margin) && propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin)
     h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width'])
     // h += Number(style['input.fld,textarea.fld']['font-size'].replace(/px|em|rem|!important/g, ''))
     const topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
