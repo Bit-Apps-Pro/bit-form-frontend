@@ -42,7 +42,7 @@ function GridLayout(props) {
     w += propertyValueSumX(style[`._frm-bg-${formID}`].margin)
     setBuilderWidth(gridWidth - 32 - w)
 
-    if (style[`._frm-g-${formID}`].gap) {
+    if (style?.[`._frm-g-${formID}`]?.gap) {
       const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }

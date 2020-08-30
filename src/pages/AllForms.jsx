@@ -70,8 +70,7 @@ function AllFroms({ newFormId }) {
   ])
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('dev', bits)
+    if (Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
       bitsFetch(null, 'bitforms_get_all_form')
         .then(res => {
           if (res?.success) {

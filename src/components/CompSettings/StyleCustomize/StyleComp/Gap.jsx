@@ -5,7 +5,7 @@ import Range from '../ChildComp/Range'
 import XYordinateIcn from '../../../../Icons/XYordinateIcn'
 
 export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
-  const gridGap = style[`._frm-g-${formID}`].gap || '0px 0px'
+  const gridGap = style[`._frm-g-${formID}`]?.gap || '0px 0px'
   const setGridGap = value => {
     styleDispatch({ apply: [{ cls: `._frm-g-${formID}`, property: 'gap', delProp: false, value }], brkPoint })
   }
