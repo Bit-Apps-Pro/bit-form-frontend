@@ -13,7 +13,7 @@ const bitformsIcon = () => (
   />
 )
 registerBlockType('bitforms/form-shortcode', {
-  title: __('Bit Forms', 'bitforms'),
+  title: __('Bit Form', 'bitform'),
   icon: bitformsIcon,
   category: 'common',
   keywords: ['Form', 'Contact Form', 'Bitform'],
@@ -43,7 +43,7 @@ registerBlockType('bitforms/form-shortcode', {
       <div className={className}>
         <SelectControl
           style={blockStyle}
-          label={__('Select a form', 'bitforms')}
+          label={__('Select a form', 'bitform')}
           value={attributes.formID}
           options={AllForms}
           onChange={onChangeContent}
