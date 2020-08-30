@@ -4,8 +4,8 @@
   "description": "Modern From Builder for Wordpress",
   "icons": [
     {
-      "src": "../img/bit-form-logo.svg",
-      "sizes": "64x64",
+      "src": "../img/logo.svg",
+      "sizes": "177x211",
       "type": "image/svg"
     },
     {
