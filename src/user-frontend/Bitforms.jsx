@@ -403,8 +403,8 @@ export default function Bitforms(props) {
             && e.preventDefault()
         }}
       >
-        {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.nonce} name="bitforms_token" />}
-        {!props.editMode && <input type="hidden" value={process.env.NODE_ENV === 'production' && props.appID} name="bitforms_id" />}
+        {!props.editMode && <input type="hidden" value={bitFormsFront && props.nonce} name="bitforms_token" />}
+        {!props.editMode && <input type="hidden" value={bitFormsFront && props.appID} name="bitforms_id" />}
         <div className={`_frm-${props.formID}`}>
           <div className={`_frm-g _frm-g-${props.formID}`}>
             {layout.lg.map(field => blk(field))}
