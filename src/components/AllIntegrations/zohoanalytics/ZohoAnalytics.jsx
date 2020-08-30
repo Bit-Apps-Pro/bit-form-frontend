@@ -23,8 +23,8 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
     type: 'Zoho Analytics',
-    clientId: '1000.247PWDGPV1803DDP9UXGJ7VB9E0OMM',
-    clientSecret: '26aee47e84bc4286a9da7f04104390461a15140a27',
+    clientId: '',
+    clientSecret: '',
     workspace: '',
     table: '',
     ownerEmail: 'mdshakhawathosen122@gmail.com',

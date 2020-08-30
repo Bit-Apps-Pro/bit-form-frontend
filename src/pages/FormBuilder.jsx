@@ -88,10 +88,10 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       })
       .then(styleText => {
         const oldStyle = css2json(styleText)
-        styleDispatch({ type: 'init', style: merge(defaultTheme(formID), oldStyle) })
-        // console.log('wwwww', oldStyle)
+        styleDispatch({ type: 'init', style: oldStyle })
         setstyleLoading(false)
       })
+      .catch(() => sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID)))))
   }
 
   console.log('ssssssssssss', style)

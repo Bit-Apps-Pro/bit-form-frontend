@@ -23,8 +23,8 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   const [recruitConf, setRecruitConf] = useState({
     name: 'Zoho Recruit API',
     type: 'Zoho Recruit',
-    clientId: '1000.FI16AZ8YXNE7O3A3G5MALAWBZMTOVG',
-    clientSecret: '97297574b97f3bd081f2cb56e4ae1db3127bcabed7',
+    clientId: '',
+    clientSecret: '',
     module: '',
     field_map: [
       { formField: '', zohoFormField: '' },

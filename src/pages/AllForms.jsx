@@ -59,8 +59,6 @@ function AllFroms({ newFormId }) {
     )
   }
 
-  console.log('lllllllllllllllllllllll', 'PUBLIC_URL' in process.env)
-
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: 'Form Name', accessor: 'formName', Cell: v => <Link to={`/form/responses/edit/${v.row.original.formID}/`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
@@ -72,8 +70,7 @@ function AllFroms({ newFormId }) {
   ])
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('dev', bits)
+    if (Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
       bitsFetch(null, 'bitforms_get_all_form')
         .then(res => {
           if (res?.success) {

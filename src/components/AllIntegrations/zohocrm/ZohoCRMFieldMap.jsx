@@ -124,10 +124,10 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
                 {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
               </option>
             ) : (
-              <option key={fieldApiName} value={fieldApiName}>
-                {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
-              </option>
-            )
+                <option key={fieldApiName} value={fieldApiName}>
+                  {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
+                </option>
+              )
           )) : Object.keys(crmConf.default.layouts[module][layout].fields).filter(fld => fld.required !== true).map(fieldApiName => (
             isNotRequired ? !crmConf.default.layouts[module][layout].fields[fieldApiName].required
               && (
@@ -138,7 +138,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
                 <option key={fieldApiName} value={fieldApiName}>
                   {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
                 </option>
-            )
+              )
           ))
         }
       </select>

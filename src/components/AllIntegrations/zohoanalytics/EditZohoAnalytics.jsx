@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
 import { workspaceChange, tableChange, refreshWorkspaces, refreshTables, refreshTableHeaders } from './ZohoAnalyticsCommonFunc'
-// import ZohoRecruitActions from './ZohoRecruitActions'
+import ZohoAnalyticsActions from './ZohoAnalyticsActions'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -125,11 +125,12 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
               />
             ))}
             <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(analyticsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div>
-
-            {/* <ZohoRecruitActions
-                analyticsConf={analyticsConf}
-                setAnalyticsConf={setAnalyticsConf}
-              /> */}
+            <div className="mt-4"><b className="wdt-100">Actions</b></div>
+            <div className="btcd-hr mt-1" />
+            <ZohoAnalyticsActions
+              analyticsConf={analyticsConf}
+              setAnalyticsConf={setAnalyticsConf}
+            />
           </>
         )}
 
