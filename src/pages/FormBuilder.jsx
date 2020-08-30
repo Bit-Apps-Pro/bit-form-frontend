@@ -88,7 +88,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       })
       .then(styleText => {
         const oldStyle = css2json(styleText)
-        styleDispatch({ type: 'init', style: merge(defaultTheme(formID), oldStyle) })
+        styleDispatch({ type: 'init', style: oldStyle })
         // console.log('wwwww', oldStyle)
         setstyleLoading(false)
       })
