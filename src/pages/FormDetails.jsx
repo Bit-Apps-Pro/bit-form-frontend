@@ -45,8 +45,8 @@ function FormDetails(props) {
   // console.log('userSWR', data, error, isValidating)
 
   const onMount = () => {
-    if (sessionStorage.getItem('formData')) {
-      const formData = JSON.parse(sessionStorage.getItem('formData'))
+    if (sessionStorage.getItem('bitformData')) {
+      const formData = JSON.parse(sessionStorage.getItem('bitformData'))
       formData.layout !== undefined && setLay(formData.layout)
       setFields(formData.fields)
       setNewCounter(getNewId(formData.fields))
@@ -183,7 +183,7 @@ function FormDetails(props) {
   }
 
   const saveForm = useCallback(() => {
-    let formStyle = sessionStorage.getItem('fs')
+    let formStyle = sessionStorage.getItem('btcd-fs')
     if (formStyle) {
       formStyle = bitDecipher(formStyle)
     }
@@ -206,8 +206,8 @@ function FormDetails(props) {
         integrations,
         additional,
         formStyle,
-        layoutChanged: sessionStorage.getItem('lc'),
-        rowHeight: sessionStorage.getItem('rh'),
+        layoutChanged: sessionStorage.getItem('btcd-lc'),
+        rowHeight: sessionStorage.getItem('btcd-rh'),
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
@@ -222,8 +222,8 @@ function FormDetails(props) {
           additional,
           reports,
           formStyle,
-          layoutChanged: sessionStorage.getItem('lc'),
-          rowHeight: sessionStorage.getItem('rh'),
+          layoutChanged: sessionStorage.getItem('btcd-lc'),
+          rowHeight: sessionStorage.getItem('btcd-rh'),
         }
         action = 'bitforms_update_form'
       }
@@ -262,11 +262,11 @@ function FormDetails(props) {
               allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
-            sessionStorage.removeItem('lc')
-            sessionStorage.removeItem('fs')
-            sessionStorage.removeItem('rh')
+            sessionStorage.removeItem('btcd-lc')
+            sessionStorage.removeItem('btcd-fs')
+            sessionStorage.removeItem('btcd-rh')
           } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
-            sessionStorage.setItem('formData', JSON.stringify(formData))
+            sessionStorage.setItem('bitformData', JSON.stringify(formData))
             window.location.reload()
           } else if (response?.data?.data) {
             setSnackbar({ show: true, msg: response?.data?.data })

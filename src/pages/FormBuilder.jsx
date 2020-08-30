@@ -77,8 +77,15 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   }
 
   const setExistingStyle = () => {
+    // eslint-disable-next-line no-undef
     fetch(`${bits.styleURL}/bitform-${formID}.css`, { cache: 'no-store' })
-      .then(response => response.text())
+      .then(response => {
+        if (response.ok) {
+          return response.text()
+        }
+        setstyleLoading(false)
+        return Promise.reject(response.statusText)
+      })
       .then(styleText => {
         const oldStyle = css2json(styleText)
         styleDispatch({ type: 'init', style: merge(defaultTheme(formID), oldStyle) })
