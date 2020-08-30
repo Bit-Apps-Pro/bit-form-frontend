@@ -26,10 +26,10 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
   const { formID } = useParams()
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Zoho Recruit', logo: zohoRecruit, pro: !bits.isPro },
+    { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !bits.isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
     { type: 'Zoho Campaigns', logo: zohoCamp, disable: true },
-    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true, pro: true },
-    { type: 'Zoho Analytics', logo: zohoAnalytics, disable: true },
     { type: 'Zoho Desk', logo: zohoDesk, disable: true },
     { type: 'Zoho Creator', logo: zohoCreator, disable: true },
     { type: 'Zoho Projects', logo: zohoProjects, disable: true },

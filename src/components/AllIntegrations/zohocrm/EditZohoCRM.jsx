@@ -135,7 +135,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
               <option value="">Select Related Module</option>
               {
                 crmConf?.default?.relatedlists?.[crmConf.module] && Object.keys(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
-                  <option value={crmConf.default.relatedlists[crmConf.module][relatedlistApiName].module}>
+                  <option key={relatedlistApiName} value={crmConf.default.relatedlists[crmConf.module][relatedlistApiName].module}>
                     {relatedlistApiName}
                   </option>
                 ))
@@ -155,7 +155,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
               <option value="">Select Layout</option>
               {
                 crmConf?.default?.layouts?.[crmConf.module] && Object.keys(crmConf.default.layouts[crmConf.module]).map(layoutApiName => (
-                  <option value={layoutApiName}>
+                  <option key={layoutApiName} value={layoutApiName}>
                     {layoutApiName}
                   </option>
                 ))
@@ -167,7 +167,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
               <option value="">Select Layout</option>
               {
                 crmConf?.default?.layouts?.[crmConf?.relatedlist?.module] && Object.keys(crmConf.default.layouts[crmConf?.relatedlist?.module]).map(layoutApiName => (
-                  <option value={layoutApiName}>
+                  <option key={layoutApiName} value={layoutApiName}>
                     {layoutApiName}
                   </option>
                 ))

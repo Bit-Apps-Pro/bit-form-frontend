@@ -1,8 +1,8 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
-import EditZohoCRM from './zohocrm/EditZohoCRM'
-import EditZohoRecruit from './zohorecruit/EditZohoRecruit'
-import EditZohoAnalytics from './zohoanalytics/EditZohoAnalytics'
+import EditZohoCRM from './ZohoCRM/EditZohoCRM'
+import EditZohoRecruit from './ZohoRecruit/EditZohoRecruit'
+import EditZohoAnalytics from './ZohoAnalytics/EditZohoAnalytics'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
