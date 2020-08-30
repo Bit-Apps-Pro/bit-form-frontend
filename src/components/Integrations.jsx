@@ -24,12 +24,15 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
   const allIntegURL = url
   const history = useHistory()
   const { formID } = useParams()
+  /* eslint-disable-next-line no-undef */
+  const isPro = typeof bits !== 'undefined' && bits.isPro
+
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true, pro: !isPro },
+    { type: 'Zoho Analytics', logo: zohoAnalytics, disable: true, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
     { type: 'Zoho Campaigns', logo: zohoCamp, disable: true },
-    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true, pro: true },
-    { type: 'Zoho Analytics', logo: zohoAnalytics, disable: true },
     { type: 'Zoho Desk', logo: zohoDesk, disable: true },
     { type: 'Zoho Creator', logo: zohoCreator, disable: true },
     { type: 'Zoho Projects', logo: zohoProjects, disable: true },
@@ -116,11 +119,6 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
                   >
                     {inte.pro && (
                       <div className="pro-filter">
-                        <div>
-                          {inte.type}
-                          {' '}
-                          Available on
-                        </div>
                         <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">Premium</a></span>
                       </div>
                     )}
