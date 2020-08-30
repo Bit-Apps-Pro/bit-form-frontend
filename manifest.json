@@ -1,0 +1,21 @@
+{
+  "short_name": "Bit Form",
+  "name": "BitForm | From Builder for Wordpress",
+  "description": "Modern From Builder for Wordpress",
+  "icons": [
+    {
+      "src": "../img/bit-form-logo.svg",
+      "sizes": "64x64",
+      "type": "image/svg"
+    },
+    {
+      "src": "../img/main-logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "minimal-ui",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

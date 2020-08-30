@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
@@ -97,14 +98,34 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: '../css/[name].css',
       }),
-      /* new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, '../assets/js/'),
-      }), */
-      new WorkboxPlugin.GenerateSW({
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'manifest.json'),
+            to: path.resolve(__dirname, '../assets/js/manifest.json'),
+          },
+          {
+            from: path.resolve(__dirname, 'main-logo-512.png'),
+            to: path.resolve(__dirname, '../assets/img/main-logo-512.png'),
+          },
+          {
+            from: path.resolve(__dirname, 'main-logo-192.png'),
+            to: path.resolve(__dirname, '../assets/img/main-logo-192.png'),
+          },
+          {
+            from: path.resolve(__dirname, 'logo.svg'),
+            to: path.resolve(__dirname, '../assets/img/logo.svg'),
+          },
+        ],
+      }),
+      new WorkboxPlugin.InjectManifest({
+        swSrc: path.resolve(__dirname, 'serviceWorker.js'),
+      }),
+      /* new WorkboxPlugin.GenerateSW({
         clientsClaim: true,
         skipWaiting: true,
         // swDest: '/src/service-worker.js',
-      }),
+      }), */
     ],
 
     devtool: production ? '' : 'source-map',

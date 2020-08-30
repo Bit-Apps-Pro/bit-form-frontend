@@ -30,7 +30,7 @@ export default function BitformsRenderer(params) {
       contentID={params.contentID}
       appID={params.appID}
       nonce={params.nonce}
-      formId={params.formIdi}
+      formID={params.formId}
     />, document.getElementById(params.contentID))
   }
 

@@ -136,7 +136,7 @@ function FormDetails(props) {
               setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
-              sessionStorage.setItem('lc', '-')
+              sessionStorage.setItem('btcd-lc', '-')
             } else {
               setisLoading(false)
             }
