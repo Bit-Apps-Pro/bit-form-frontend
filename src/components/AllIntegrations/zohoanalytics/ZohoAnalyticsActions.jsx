@@ -12,7 +12,7 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
     const newConf = { ...analyticsConf }
     if (typ === 'update') {
       if (val.target.checked) {
-        newConf.actions.update = { overwrite: true, criteria: '' }
+        newConf.actions.update = { insert: true, criteria: '' }
       } else {
         delete newConf.actions.update
       }
@@ -28,8 +28,8 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
     if (typ === 'criteria') {
       newConf.actions.update.criteria = val
     }
-    if (typ === 'overwrite') {
-      newConf.actions.update.overwrite = val
+    if (typ === 'insert') {
+      newConf.actions.update.insert = val
     }
     setAnalyticsConf({ ...newConf })
   }
@@ -37,7 +37,7 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
   const openUpdateModal = () => {
     if (!analyticsConf.actions?.update) {
       const newConf = { ...analyticsConf }
-      newConf.actions.update = { overwrite: true, criteria: '' }
+      newConf.actions.update = { insert: true, criteria: '' }
       setAnalyticsConf({ ...newConf })
     }
 
@@ -66,18 +66,25 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
               <div className="mt-4">
                 <small>
                   Example:&nbsp;
-                  {'("Department" = \'Finance\' and "Salary" < 9000 or "Country" = \'USA\')'}
+                  {'("Table Name"."Department" = \'Finance\' and "Table Name"."Salary" < 9000 or "Table Name"."Country" = \'USA\')'}
                 </small>
                 <br />
                 <small>Here Department, Salary and Country are Zoho Analytics table column name</small>
+                {' '}
+                <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Supported Arithmetic Operators: +, -, *, /"' }} type="button">
+                  <span className="btcd-icn icn-information-outline" />
+                </button>
+                <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, LIKE, NOT LIKE, IN, NOT IN, BETWEEN"' }} type="button">
+                  <span className="btcd-icn icn-information-outline" />
+                </button>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={analyticsConf.actions?.update?.criteria} />
               </div>
 
               <div className="font-w-m mt-3">Update Preferance</div>
               <small>insert new row if the above criteria doesn&apos;t met?</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'overwrite')} radio checked={analyticsConf.actions.update?.overwrite} name="up-row" title="Yes" />
-                <CheckBox onChange={() => setUpdateSettings(false, 'overwrite')} radio checked={!analyticsConf.actions.update?.overwrite} name="up-row" title="No" />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={analyticsConf.actions.update?.insert} name="up-row" title="Yes" />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!analyticsConf.actions.update?.insert} name="up-row" title="No" />
               </div>
             </>
           )}

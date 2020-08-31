@@ -2,6 +2,7 @@
 import React, { useState, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
+import ConfirmModal from '../../ConfirmModal'
 import Loader from '../../Loaders/Loader'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 import { FromSaveContext } from '../../../pages/FormDetails'
@@ -16,6 +17,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   const [analyticsConf, setAnalyticsConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
+  const [actionMdl, setActionMdl] = useState({ show: false })
 
   const handleInput = (e) => {
     let newConf = { ...analyticsConf }
@@ -35,6 +37,10 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   }
 
   const saveConfig = () => {
+    if (analyticsConf.actions?.update && analyticsConf.actions?.update.criteria === '' && actionMdl.show !== 'criteria') {
+      setActionMdl({ show: 'criteria' })
+      return
+    }
     integrations[id] = { ...integrations[id], ...analyticsConf }
     setIntegration([...integrations])
     saveForm()
@@ -140,6 +146,20 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
         </button>
       </div>
       <br />
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Ok"
+        show={actionMdl.show === 'criteria'}
+        close={() => setActionMdl({ show: false })}
+        action={saveConfig}
+        title="Warning!!!"
+        warning
+      >
+        <div className="btcd-hr mt-2" />
+        <div className="mt-5">Without any criteria, all data of table will get replaced.</div>
+      </ConfirmModal>
     </div>
   )
 }
