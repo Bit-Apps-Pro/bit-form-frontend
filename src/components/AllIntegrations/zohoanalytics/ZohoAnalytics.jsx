@@ -3,12 +3,13 @@ import { useHistory, useParams } from 'react-router-dom'
 import Steps from '../../ElmSettings/Childs/Steps'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
+import ConfirmModal from '../../ConfirmModal'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 import { workspaceChange, tableChange, refreshWorkspaces, refreshTables, refreshTableHeaders } from './ZohoAnalyticsCommonFunc'
-// import ZohoAnalyticActions from './ZohoAnalyticActions'
+import ZohoAnalyticsActions from './ZohoAnalyticsActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
 function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -20,6 +21,7 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
+  const [actionMdl, setActionMdl] = useState({ show: false })
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
     type: 'Zoho Analytics',
@@ -74,9 +76,14 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   }
 
   const nextPage = val => {
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
-
     if (val === 3) {
+      if (analyticsConf.actions?.update && analyticsConf.actions?.update?.criteria === '' && actionMdl.show !== 'criteria') {
+        setActionMdl({ show: 'criteria' })
+        return
+      }
+      setActionMdl({ show: 'false' })
+
+      document.querySelector('.btcd-s-wrp').scrollTop = 0
       if (analyticsConf.workspace !== '' && analyticsConf.table !== '' && analyticsConf.field_map.length > 0) {
         setstep(val)
       }
@@ -289,15 +296,15 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
                 />
               ))}
               <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(analyticsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div>
-              {/* <br />
+              <br />
               <br />
               <div className="mt-4"><b className="wdt-100">Actions</b></div>
               <div className="btcd-hr mt-1" />
 
-              <ZohoAnalyticActions
+              <ZohoAnalyticsActions
                 analyticsConf={analyticsConf}
                 setAnalyticsConf={setAnalyticsConf}
-              /> */}
+              />
             </>
           )}
         <button
@@ -320,6 +327,20 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
           ✔
         </button>
       </div>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Ok"
+        show={actionMdl.show === 'criteria'}
+        close={() => setActionMdl({ show: false })}
+        action={() => nextPage(3)}
+        title="Warning!!!"
+        warning
+      >
+        <div className="btcd-hr mt-2" />
+        <div className="mt-5">Without any criteria, all data of table will get replaced.</div>
+      </ConfirmModal>
     </div>
   )
 }

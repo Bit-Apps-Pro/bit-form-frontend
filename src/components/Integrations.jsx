@@ -29,8 +29,8 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
 
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
-    { type: 'Zoho Recruit', logo: zohoRecruit, disable: true, pro: !isPro },
-    { type: 'Zoho Analytics', logo: zohoAnalytics, disable: true, pro: !isPro },
+    { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
+    { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
     { type: 'Zoho Campaigns', logo: zohoCamp, disable: true },
     { type: 'Zoho Desk', logo: zohoDesk, disable: true },

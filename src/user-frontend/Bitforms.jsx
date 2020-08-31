@@ -332,7 +332,7 @@ export default function Bitforms(props) {
         }, 1000);
       }
       if (hitCron) {
-        if (responsedRedirectPage === null || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
+        if (!responsedRedirectPage || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
           fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron&${hitCron}`)
         }
       }
