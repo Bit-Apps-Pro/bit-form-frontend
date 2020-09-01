@@ -46,7 +46,7 @@ function FormDetails(props) {
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
-      const formData = JSON.parse(sessionStorage.getItem('bitformData'))
+      const formData = bitDecipher(JSON.parse(sessionStorage.getItem('bitformData')))
       formData.layout !== undefined && setLay(formData.layout)
       setFields(formData.fields)
       setNewCounter(getNewId(formData.fields))
@@ -58,7 +58,7 @@ function FormDetails(props) {
       setIntegration(formData.formSettings.integrations)
       setMailTem(formData.formSettings.mailTem)
       if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
-      sessionStorage.removeItem('formData')
+      sessionStorage.removeItem('bitformData')
       setSnackbar({ show: true, msg: 'Please try again. Token was expired' })
       if (isLoading) {
         setisLoading(!isLoading)
@@ -136,7 +136,7 @@ function FormDetails(props) {
               setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
-              sessionStorage.setItem('lc', '-')
+              sessionStorage.setItem('btcd-lc', '-')
             } else {
               setisLoading(false)
             }
@@ -266,7 +266,7 @@ function FormDetails(props) {
             sessionStorage.removeItem('btcd-fs')
             sessionStorage.removeItem('btcd-rh')
           } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
-            sessionStorage.setItem('bitformData', JSON.stringify(formData))
+            sessionStorage.setItem('bitformData', bitCipher(JSON.stringify(formData)))
             window.location.reload()
           } else if (response?.data?.data) {
             setSnackbar({ show: true, msg: response?.data?.data })
@@ -296,7 +296,7 @@ function FormDetails(props) {
               {proModal.msg}
             </h4>
             <div className="txt-center">
-              <a href="https://bitpress.pro/" target="_blank"><button className="btn btn-lg blue" type="button">Buy Premium</button></a>
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">Buy Premium</button></a>
             </div>
 
           </Modal>

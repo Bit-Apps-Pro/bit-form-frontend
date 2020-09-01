@@ -34,24 +34,25 @@ function GridLayout(props) {
   useEffect(() => {
     let w = 0
     let h = 0
-    w += propertyValueSumX(style[`._frm-${formID}`]['border-width'])
-    w += propertyValueSumX(style[`._frm-${formID}`].padding)
-    w += propertyValueSumX(style[`._frm-${formID}`].margin)
-    w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width'])
-    w += propertyValueSumX(style[`._frm-bg-${formID}`].padding)
-    w += propertyValueSumX(style[`._frm-bg-${formID}`].margin)
+
+    if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
+    if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
+    if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
+    if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
+    if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
+    if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
     setBuilderWidth(gridWidth - 32 - w)
 
-    if (style?.[`._frm-g-${formID}`]?.gap) {
+    if (style[`._frm-g-${formID}`]?.gap) {
+      console.log('style[`._frm-g-${formID}`]')
       const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
 
     h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, ''))
-    h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding)
-    h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin)
-    h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width'])
-    // h += Number(style['input.fld,textarea.fld']['font-size'].replace(/px|em|rem|!important/g, ''))
+    if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
+    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
+    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
     const topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
     if (topNbottomPadding > 39) {
       h += topNbottomPadding - 39
