@@ -1,8 +1,9 @@
 import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
-export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, setSnackbar }) {
-  const { module } = recruitConf
+export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, tab }) {
+  const module = tab === 0 ? recruitConf.module : recruitConf.relatedlist.module
+
   let isNotRequired;
 
   if (uploadFields) {
@@ -13,55 +14,61 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
 
   const addMap = ind => {
     const newConf = { ...recruitConf }
-    if (uploadFields) {
-      newConf.upload_field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
+    if (tab === 0) {
+      if (uploadFields) {
+        newConf.upload_field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
+      } else {
+        newConf.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
+      }
+    } else if (uploadFields) {
+      newConf.relatedlist.upload_field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
     } else {
-      newConf.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
+      newConf.relatedlist.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
     }
     setRecruitConf({ ...newConf })
   }
 
   const delMap = ind => {
     const newConf = { ...recruitConf }
-    if (uploadFields) {
-      if (newConf.upload_field_map.length > 1) {
-        newConf.upload_field_map.splice(ind, 1)
+    if (tab === 0) {
+      if (uploadFields) {
+        if (newConf.upload_field_map.length > 1) {
+          newConf.upload_field_map.splice(ind, 1)
+        }
+      } else if (newConf.field_map.length > 1) {
+        newConf.field_map.splice(ind, 1)
       }
-    } else if (newConf.field_map.length > 1) {
-      newConf.field_map.splice(ind, 1)
+    } else if (uploadFields) {
+      if (newConf.relatedlist.upload_field_map.length > 1) {
+        newConf.relatedlist.upload_field_map.splice(ind, 1)
+      }
+    } else if (newConf.relatedlist.field_map.length > 1) {
+      newConf.relatedlist.field_map.splice(ind, 1)
     }
     setRecruitConf({ ...newConf })
   }
 
   const handleFieldMapping = (event, index) => {
     const newConf = { ...recruitConf }
-    if (uploadFields) {
-      const selectedZohoField = newConf.upload_field_map[index].zohoFormField
-      const selectedformField = newConf.upload_field_map[index].formField
-      if (event.target.name === 'formField'
-        && selectedZohoField !== ''
-        && formFields[formFields.map(fld => fld.key).indexOf(event.target.value)].type !== 'file-up'
-      ) {
-        setSnackbar({ show: true, msg: 'Please select file field' })
-        return
+    if (tab === 0) {
+      if (uploadFields) {
+        newConf.upload_field_map[index][event.target.name] = event.target.value
+      } else {
+        newConf.field_map[index][event.target.name] = event.target.value
       }
-      if (event.target.name === 'zohoFormField'
-        && selectedformField !== ''
-        && formFields[formFields.map(fld => fld.key).indexOf(selectedformField)].type !== 'file-up'
-      ) {
-        setSnackbar({ show: true, msg: 'Please select file field' })
-        return
-      }
-      newConf.upload_field_map[index][event.target.name] = event.target.value
+    } else if (uploadFields) {
+      newConf.relatedlist.upload_field_map[index][event.target.name] = event.target.value
     } else {
-      newConf.field_map[index][event.target.name] = event.target.value
+      newConf.relatedlist.field_map[index][event.target.name] = event.target.value
     }
     setRecruitConf({ ...newConf })
   }
 
   const handleCustomValue = (e, ind) => {
     const newConf = { ...recruitConf }
-    newConf.field_map[ind].customValue = e.target.value
+    tab === 0
+      ? newConf.field_map[ind].customValue = e.target.value
+      : newConf.relatedlist.field_map[ind].customValue = e.target.value
     setRecruitConf({ ...newConf })
   }
 
@@ -93,7 +100,7 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
                   <option key={fieldApiName} value={fieldApiName}>
                     {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
                   </option>
-                )
+              )
             ))
             : Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName => (
               isNotRequired ? recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false'
@@ -105,7 +112,7 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
                   <option key={fieldApiName} value={fieldApiName}>
                     {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
                   </option>
-                )
+              )
             ))
         }
       </select>

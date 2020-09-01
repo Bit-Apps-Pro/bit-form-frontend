@@ -7,7 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoRecruitFieldMap from './ZohoRecruitFieldMap'
-import { moduleChange, refreshModules } from './ZohoRecruitCommonFunc'
+import { handleTabChange, moduleChange, refreshModules, refreshRelatedList } from './ZohoRecruitCommonFunc'
 import ZohoRecruitActions from './ZohoRecruitActions'
 import { FromSaveContext } from '../../../pages/FormDetails'
 
@@ -20,15 +20,17 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
+  const [tab, settab] = useState(0)
   const [recruitConf, setRecruitConf] = useState({
     name: 'Zoho Recruit API',
     type: 'Zoho Recruit',
-    clientId: '',
-    clientSecret: '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
     module: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
+    relatedlist: {},
     actions: {},
   })
 
@@ -53,14 +55,21 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
 
   const handleInput = (e) => {
     let newConf = { ...recruitConf }
-    const rmError = { ...error }
-    rmError[e.target.name] = ''
-    setError({ ...rmError })
-    newConf[e.target.name] = e.target.value
+
+    if (tab === 0) {
+      const rmError = { ...error }
+      rmError[e.target.name] = ''
+      setError({ ...rmError })
+      newConf[e.target.name] = e.target.value
+    } else {
+      newConf.relatedlist[e.target.name] = e.target.value
+    }
 
     switch (e.target.name) {
       case 'module':
-        newConf = moduleChange(e.target.value, newConf, formID, setRecruitConf, setisLoading, setSnackbar)
+        newConf = moduleChange(e.target.value, tab, newConf, formID, setRecruitConf, setisLoading, setSnackbar)
+        break;
+      default:
         break;
     }
     setRecruitConf({ ...newConf })
@@ -70,9 +79,12 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
     document.querySelector('.btcd-s-wrp').scrollTop = 0
 
     if (val === 3) {
-      const mappedFields = recruitConf?.field_map ? recruitConf?.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].required && recruitConf.default.moduleData[recruitConf.module].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
-      const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields && recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
-      if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
+      const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+      const mappedRelatedFields = recruitConf?.relatedlist?.field_map ? recruitConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      const mappedRelatedUploadFields = recruitConf?.relatedlist?.upload_field_map ? recruitConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+
+      if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
@@ -89,25 +101,40 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
 
   const addMap = (i, uploadFields) => {
     const newConf = { ...recruitConf }
-    if (uploadFields) {
-      if (i !== 0) {
-        newConf.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+    if (tab === 0) {
+      if (uploadFields) {
+        if (i !== 0) {
+          newConf.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+        } else {
+          newConf.upload_field_map.push({ formField: '', zohoFormField: '' })
+        }
+      } else if (i !== 0) {
+        newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
       } else {
-        newConf.upload_field_map.push({ formField: '', zohoFormField: '' })
+        newConf.field_map.push({ formField: '', zohoFormField: '' })
+      }
+    } else if (uploadFields) {
+      if (i !== 0) {
+        newConf.relatedlist.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+      } else {
+        newConf.relatedlist.upload_field_map.push({ formField: '', zohoFormField: '' })
       }
     } else if (i !== 0) {
-      newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+      newConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
     } else {
-      newConf.field_map.push({ formField: '', zohoFormField: '' })
+      newConf.relatedlist.field_map.push({ formField: '', zohoFormField: '' })
     }
 
     setRecruitConf({ ...newConf })
   }
 
   const saveConfig = () => {
-    const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].required && recruitConf.default.moduleData[recruitConf.module].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
-    const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields && recruitConf.default.moduleData[recruitConf.module].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
-    if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
+    const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+    const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+    const mappedRelatedFields = recruitConf?.relatedlist?.field_map ? recruitConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+    const mappedRelatedUploadFields = recruitConf?.relatedlist?.upload_field_map ? recruitConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+
+    if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
@@ -135,7 +162,6 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
         let grantTokenResponse = {}
         let isauthRedirectLocation = false
         const bitformsZohoRecruit = localStorage.getItem('__bitforms_zohoRecruit')
-        console.log('bitforms', bitformsZohoRecruit)
         if (bitformsZohoRecruit) {
           isauthRedirectLocation = true
           grantTokenResponse = JSON.parse(bitformsZohoRecruit)
@@ -186,7 +212,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={recruitConf.name} type="text" placeholder="Integration Name..." />
 
         <small className="d-blk mt-2">
-          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank">Zoho Api console</a>
+          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">Zoho Api console</a>
         </small>
 
         <div className="mt-3"><b>Data Center:</b></div>
@@ -228,7 +254,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
         <br />
         <b className="wdt-100 d-in-b">Module:</b>
-        <select onChange={event => handleInput(event)} name="module" value={recruitConf.module} className="btcd-paper-inp w-7">
+        <select onChange={event => handleInput(event)} name="module" value={recruitConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
           <option value="">Select Module</option>
           {
             recruitConf.default && recruitConf.default.modules && Object.keys(recruitConf.default.modules).map(moduleApiName => (
@@ -238,9 +264,35 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
             ))
           }
         </select>
-        <button onClick={() => refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Recruit Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        {tab === 0 && <button onClick={() => refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Recruit Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
         <br />
+        <div className="flx mt-2">
+          <button onClick={() => handleTabChange(0, settab)} className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">New Record</button>
+          <button onClick={() => handleTabChange(1, settab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar)} className={`btcd-s-tab-link ${tab === 1 && 's-t-l-active'}`} type="button">Related List</button>
+        </div>
+        <div className="btcd-hr" />
         <br />
+        {
+          tab === 1
+          && (
+            <>
+              <b className="wdt-100 d-in-b">Related List:</b>
+              <select onChange={event => handleInput(event, tab)} name="module" value={recruitConf?.relatedlist?.module} className="btcd-paper-inp w-7" disabled={!recruitConf.module}>
+                <option value="">Select Related Module</option>
+                {
+                  recruitConf?.default.relatedlists?.[recruitConf.module] && Object.values(recruitConf.default.relatedlists[recruitConf.module]).map(relatedlistApiName => (
+                    <option value={relatedlistApiName.aMod}>
+                      {relatedlistApiName.pl}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={() => refreshRelatedList(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <br />
+              <br />
+            </>
+          )
+        }
         {isLoading && (
           <Loader style={{
             display: 'flex',
@@ -251,7 +303,8 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
           }}
           />
         )}
-        {recruitConf.default?.moduleData?.[recruitConf.module]?.fields
+        {tab === 0
+          && recruitConf.default?.moduleData?.[recruitConf.module]?.fields
           && (
             <>
               <div className="mt-4"><b className="wdt-100">Map Fields</b></div>
@@ -269,6 +322,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
                   recruitConf={recruitConf}
                   formFields={formFields}
                   setRecruitConf={setRecruitConf}
+                  tab={tab}
                   setSnackbar={setSnackbar}
                 />
               ))}
@@ -293,6 +347,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
                       recruitConf={recruitConf}
                       formFields={formFields}
                       setRecruitConf={setRecruitConf}
+                      tab={tab}
                       setSnackbar={setSnackbar}
                     />
                   ))}
@@ -307,6 +362,68 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
               <ZohoRecruitActions
                 recruitConf={recruitConf}
                 setRecruitConf={setRecruitConf}
+                tab={tab}
+              />
+            </>
+          )}
+        {tab === 1
+          && recruitConf.default?.moduleData?.[recruitConf.relatedlist.module]?.fields
+          && (
+            <>
+              <div className="mt-4"><b className="wdt-100">Map Fields</b></div>
+              <div className="btcd-hr mt-1" />
+              <div className="flx flx-around mt-2 mb-1">
+                <div className="txt-dp"><b>Form Fields</b></div>
+                <div className="txt-dp"><b>Zoho Fields</b></div>
+              </div>
+
+              {recruitConf.relatedlist.field_map.map((itm, i) => (
+                <ZohoRecruitFieldMap
+                  key={`crm-m-${i + 9}`}
+                  i={i}
+                  field={itm}
+                  recruitConf={recruitConf}
+                  formFields={formFields}
+                  setRecruitConf={setRecruitConf}
+                  tab={tab}
+                />
+              ))}
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(recruitConf.relatedlist.field_map.length, 0)} className="icn-btn sh-sm" type="button">+</button></div>
+              <br />
+              <br />
+              {Object.keys(recruitConf.default?.moduleData?.[recruitConf.relatedlist.module]?.fileUploadFields).length !== 0 && (
+                <>
+                  <div className="mt-4"><b className="wdt-100">Map Attachments</b></div>
+                  <div className="btcd-hr mt-1" />
+                  <div className="flx flx-around mt-2 mb-1">
+                    <div className="txt-dp"><b>Form Fields</b></div>
+                    <div className="txt-dp"><b>Zoho Fields</b></div>
+                  </div>
+
+                  {recruitConf.relatedlist.upload_field_map.map((itm, i) => (
+                    <ZohoRecruitFieldMap
+                      key={`crm-m-${i + 9}`}
+                      uploadFields={1}
+                      i={i}
+                      field={itm}
+                      recruitConf={recruitConf}
+                      formFields={formFields}
+                      setRecruitConf={setRecruitConf}
+                      tab={tab}
+                    />
+                  ))}
+                  <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(recruitConf.relatedlist.upload_field_map.length, 1)} className="icn-btn sh-sm" type="button">+</button></div>
+                  <br />
+                  <br />
+                </>
+              )}
+              <div className="mt-4"><b className="wdt-100">Actions</b></div>
+              <div className="btcd-hr mt-1" />
+
+              <ZohoRecruitActions
+                recruitConf={recruitConf}
+                setRecruitConf={setRecruitConf}
+                tab={tab}
               />
             </>
           )}
