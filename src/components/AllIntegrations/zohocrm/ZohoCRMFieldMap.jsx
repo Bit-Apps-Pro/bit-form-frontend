@@ -95,6 +95,8 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
     const newConf = { ...crmConf }
     if (tab === 0) {
       newConf.field_map[ind].customValue = e.target.value
+
+      console.log(newConf.field_map[ind].customValue)
     } else {
       newConf.relatedlist.field_map[ind].customValue = e.target.value
     }
@@ -113,7 +115,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
         {!uploadFields && <option value="custom">Custom...</option>}
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" value={field.zohoFormField} placeholder="Custom Value" />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" value={field.customValue} placeholder="Custom Value" />}
 
       <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">Select Field</option>
@@ -124,10 +126,10 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
                 {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
               </option>
             ) : (
-                <option key={fieldApiName} value={fieldApiName}>
-                  {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
-                </option>
-              )
+              <option key={fieldApiName} value={fieldApiName}>
+                {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
+              </option>
+            )
           )) : Object.keys(crmConf.default.layouts[module][layout].fields).filter(fld => fld.required !== true).map(fieldApiName => (
             isNotRequired ? !crmConf.default.layouts[module][layout].fields[fieldApiName].required
               && (
@@ -138,7 +140,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
                 <option key={fieldApiName} value={fieldApiName}>
                   {crmConf.default.layouts[module][layout].fields[fieldApiName].display_label}
                 </option>
-              )
+            )
           ))
         }
       </select>
