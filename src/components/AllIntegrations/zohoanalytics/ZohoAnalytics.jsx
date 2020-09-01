@@ -25,11 +25,11 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
     type: 'Zoho Analytics',
-    clientId: '',
-    clientSecret: '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
     workspace: '',
     table: '',
-    ownerEmail: 'mdshakhawathosen122@gmail.com',
+    ownerEmail: process.env.NODE_ENV === 'development' ? 'mdshakhawathosen122@gmail.com' : '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
