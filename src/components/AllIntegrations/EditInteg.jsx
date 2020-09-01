@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import EditZohoCRM from './ZohoCRM/EditZohoCRM'
 import EditZohoRecruit from './ZohoRecruit/EditZohoRecruit'
 import EditZohoAnalytics from './ZohoAnalytics/EditZohoAnalytics'
+import EditZohoCampaigns from './ZohoCampaigns/EditZohoCampaigns'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -14,6 +15,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditZohoRecruit allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Analytics':
         return <EditZohoAnalytics allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Campaigns':
+        return <EditZohoCampaigns allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
