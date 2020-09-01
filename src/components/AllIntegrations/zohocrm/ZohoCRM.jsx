@@ -28,8 +28,8 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.6D7WFLXQVP74SO1XSED5UH137PRX2Z' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'a934cc52edea787a82a7dba5982b151c0576a53c91' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
     module: '',
     layout: '',
     field_map: [
@@ -38,8 +38,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     relatedlist: {},
     actions: {}
   })
-
-  console.log('kkkkkkk', process.env.NODE_ENV)
 
   useEffect(() => {
     if (window.opener) {
@@ -88,9 +86,12 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     document.querySelector(".btcd-s-wrp").scrollTop = 0
 
     if (val === 3) {
-      const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].required && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
-      const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && (crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField)) : []
-      if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
+      const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+      const mappedRelatedFields = crmConf?.relatedlist?.field_map ? crmConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      const mappedRelatedUploadFields = crmConf?.relatedlist?.upload_field_map ? crmConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+
+      if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
@@ -140,9 +141,12 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const saveConfig = () => {
-    const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].required.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField) : []
-    const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUplaodFields.indexOf(mappedField.zohoFormField) !== -1) && mappedField.zohoFormField) : []
-    if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
+    const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+    const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+    const mappedRelatedFields = crmConf?.relatedlist?.field_map ? crmConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+    const mappedRelatedUploadFields = crmConf?.relatedlist?.upload_field_map ? crmConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+
+    if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }

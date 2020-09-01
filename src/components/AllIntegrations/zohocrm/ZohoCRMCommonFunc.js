@@ -1,7 +1,6 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const handleTabChange = (recordTab, settab, crmConfTmp = '', setCrmConf = '', formID = '', setisLoading = '', setSnackbar = '', setProModal) => {
-  // setProModal({ show: true, msg : ''})
+export const handleTabChange = (recordTab, settab, crmConfTmp = '', setCrmConf = '', formID = '', setisLoading = '', setSnackbar = '') => {
   if (recordTab) {
     !crmConfTmp.default.relatedlists?.[crmConfTmp.module] && refreshRelatedList(formID, crmConfTmp, setCrmConf, setisLoading, setSnackbar)
   }
