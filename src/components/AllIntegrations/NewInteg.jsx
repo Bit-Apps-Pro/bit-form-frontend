@@ -4,6 +4,7 @@ import ZohoCRM from './ZohoCRM/ZohoCRM'
 import ZohoRecruit from './ZohoRecruit/ZohoRecruit'
 import ZohoAnalytics from './ZohoAnalytics/ZohoAnalytics'
 import ZohoCampaigns from './ZohoCampaigns/ZohoCampaigns'
+import ZohoDesk from './ZohoDesk/ZohoDesk'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -18,6 +19,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoAnalytics allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Campaigns':
         return <ZohoCampaigns allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Desk':
+        return <ZohoDesk allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
