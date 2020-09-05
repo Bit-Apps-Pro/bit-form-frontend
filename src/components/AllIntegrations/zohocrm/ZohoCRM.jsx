@@ -9,10 +9,11 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
 import ZohoCRMActions from './ZohoCRMActions'
-import { FromSaveContext, ShowProModalContext } from '../../../pages/FormDetails'
+import { FormSaveContext, ShowProModalContext } from '../../../pages/FormDetails'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
   const setProModal = useContext(ShowProModalContext)
   const history = useHistory()
   const { formID } = useParams()
@@ -141,19 +142,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   }
 
   const saveConfig = () => {
-    const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedRelatedFields = crmConf?.relatedlist?.field_map ? crmConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedRelatedUploadFields = crmConf?.relatedlist?.upload_field_map ? crmConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-
-    if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
-      setSnackbar({ show: true, msg: 'Please map mandatory fields' })
-      return
-    }
-    integrations.push(crmConf)
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history)
   }
 
   const handleAuthorize = () => {
@@ -239,7 +228,9 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
 
         <small className="d-blk mt-5">
-          To get Client ID and SECRET , Please Visit <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank">Zoho API Console</a>
+          To get Client ID and SECRET , Please Visit
+          {' '}
+          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">Zoho API Console</a>
         </small>
 
         <div className="mt-3"><b>Client id:</b></div>
