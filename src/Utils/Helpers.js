@@ -66,6 +66,8 @@ export const multiAssign = (obj, assignArr) => {
   }
 }
 
+export const sortData = (data) => data.sort((a, b) => ((a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0)))
+
 const cipher = salt => {
   const textToChars = text => text.split('').map(c => c.charCodeAt(0));
   const byteHex = n => (`0${Number(n).toString(16)}`).substr(-2);
