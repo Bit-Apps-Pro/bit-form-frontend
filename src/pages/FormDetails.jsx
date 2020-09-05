@@ -1,6 +1,5 @@
-import React, { useCallback, useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
+import React, { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
-import useSWR from 'swr'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
@@ -9,14 +8,16 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortData } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Modal'
+// import useAsyncState from '../hooks/useAyncState'
+// import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
 
-export const FromSaveContext = createContext(null)
+export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
 
 function FormDetails(props) {
@@ -30,6 +31,7 @@ function FormDetails(props) {
   const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
   const [fields, setFields] = useState(null)
   const [allLabels, setallLabels] = useState([])
+  const [formFields, setFormFields] = useState([])
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Form Name')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
@@ -41,8 +43,10 @@ function FormDetails(props) {
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState(false)
   const { history, newFormId } = props
-  // const { data, isValidating, error } = useSWR([formID, 'bitforms_get_a_form'], (id, action) => bitsFetch({ id }, action))
-  // console.log('userSWR', data, error, isValidating)
+
+  useEffect(() => {
+    setFormFields(sortData(allLabels))
+  }, [allLabels])
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
@@ -182,7 +186,23 @@ function FormDetails(props) {
     setFormName(e.target.value)
   }
 
-  const saveForm = useCallback(() => {
+  const fSettings = {
+    formName,
+    theme: 'default',
+    submitBtn: subBtn,
+    confirmation: {
+      type: {
+        successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
+        redirectPage: [{ title: 'Redirect Url 1', url: '' }],
+        webHooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
+      },
+    },
+    mailTem,
+    integrations,
+    additional,
+  }
+
+  const saveForm = () => {
     let formStyle = sessionStorage.getItem('btcd-fs')
     if (formStyle) {
       formStyle = bitDecipher(formStyle)
@@ -200,7 +220,7 @@ function FormDetails(props) {
         layout: lay,
         fields,
         form_name: formName,
-        formSettings,
+        formSettings: fSettings,
         workFlows,
         mailTem,
         integrations,
@@ -217,7 +237,7 @@ function FormDetails(props) {
           layout: lay,
           fields,
           form_name: formName,
-          formSettings,
+          formSettings: fSettings,
           workFlows,
           additional,
           reports,
@@ -225,6 +245,7 @@ function FormDetails(props) {
           layoutChanged: sessionStorage.getItem('btcd-lc'),
           rowHeight: sessionStorage.getItem('btcd-rh'),
         }
+        console.log('ccccccccccccc 1', formData, integrations)
         action = 'bitforms_update_form'
       }
 
@@ -254,7 +275,10 @@ function FormDetails(props) {
               setSnackbar({ show: true, msg: data.message })
               if ('formSettings' in data) setFormSettings(data.formSettings)
               if ('workFlows' in data) setworkFlows(data.workFlows)
-              if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
+              if ('formSettings' in data && 'integrations' in formSettings) {
+                console.log('fffffffffffff fetahc from db', data.formSettings.integrations)
+                setIntegration(data.formSettings.integrations)
+              }
               if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
               setallLabels(data.Labels)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
@@ -273,15 +297,23 @@ function FormDetails(props) {
           }
         })
     }
-  }, [lay, modal, newFormId, fields, formName, formSettings, workFlows, mailTem, integrations, additional, savedFormId, reports, buttonText, allFormsDispatchHandler, history, reportsDispatch])
+  }
 
   const closeModal = () => {
     modal.show = false
     setModal({ ...modal })
   }
 
+  useEffect(() => {
+    console.log('ccccccccccccc', integrations)
+    if (integrations[integrations.length - 1]?.newItegration) {
+      integrations.pop()
+      saveForm()
+    }
+  }, [integrations])
+
   return (
-    <FromSaveContext.Provider value={saveForm}>
+    <FormSaveContext.Provider value={saveForm}>
       <ShowProModalContext.Provider value={setProModal}>
         <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
           <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -391,7 +423,7 @@ function FormDetails(props) {
                 saveForm={saveForm}
                 formName={formName}
                 setFormName={setFormName}
-                formFields={allLabels}
+                formFields={formFields}
                 formSettings={formSettings}
                 setFormSettings={setFormSettings}
                 mailTem={mailTem}
@@ -408,7 +440,7 @@ function FormDetails(props) {
           </Switch>
         </div>
       </ShowProModalContext.Provider>
-    </FromSaveContext.Provider>
+    </FormSaveContext.Provider>
   )
 }
 
