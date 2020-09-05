@@ -3,17 +3,17 @@ import { useHistory, useParams } from 'react-router-dom'
 import Steps from '../../ElmSettings/Childs/Steps'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import ConfirmModal from '../../ConfirmModal'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoCampaignsFieldMap from './ZohoCampaignsFieldMap'
 import { listChange, refreshLists, refreshContactFields } from './ZohoCampaignsCommonFunc'
 // import ZohoCampaignsActions from './ZohoCampaignsActions'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }) {
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
   const history = useHistory()
   const { formID } = useParams()
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -21,7 +21,6 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const [actionMdl, setActionMdl] = useState({ show: false })
   const [campaignsConf, setCampaignsConf] = useState({
     name: 'Zoho Campaigns API',
     type: 'Zoho Campaigns',
@@ -75,7 +74,6 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
-      setActionMdl({ show: 'false' })
 
       document.querySelector('.btcd-s-wrp').scrollTop = 0
       if (campaignsConf.list !== '' && campaignsConf.table !== '' && campaignsConf.field_map.length > 0) {
@@ -101,10 +99,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
   }
 
   const saveConfig = () => {
-    integrations.push(campaignsConf)
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, campaignsConf, history)
   }
 
   const handleAuthorize = () => {
@@ -175,10 +170,6 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={campaignsConf.name} type="text" placeholder="Integration Name..." />
 
-        <small className="d-blk mt-2">
-          <a className="btcd-link" href="https://api-console.zoho.com/" rel="noreferrer" target="_blank">Zoho Api console</a>
-        </small>
-
         <div className="mt-3"><b>Data Center:</b></div>
         <select onChange={event => handleInput(event)} name="dataCenter" value={campaignsConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
           <option value="">--Select a data center--</option>
@@ -195,6 +186,12 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
 
         <div className="mt-3"><b>Authorized Redirect URIs:</b></div>
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+
+        <small className="d-blk mt-5">
+          To get Client ID and SECRET , Please Visit
+          {' '}
+          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">Zoho API Console</a>
+        </small>
 
         <div className="mt-3"><b>Client id:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientId" value={campaignsConf.clientId} type="text" placeholder="Client id..." />

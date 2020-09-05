@@ -4,13 +4,14 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoCampaignsFieldMap from './ZohoCampaignsFieldMap'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
 import { listChange, refreshLists, refreshContactFields } from './ZohoCampaignsCommonFunc'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
 
   const [campaignsConf, setCampaignsConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
@@ -37,10 +38,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
-    integrations[id] = { ...integrations[id], ...campaignsConf }
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, campaignsConf, history, saveForm, id, 1)
   }
 
   const addFieldMap = (i) => {
