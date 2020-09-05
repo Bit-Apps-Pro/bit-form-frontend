@@ -10,10 +10,11 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 import { workspaceChange, tableChange, refreshWorkspaces, refreshTables, refreshTableHeaders } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsActions from './ZohoAnalyticsActions'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
   const history = useHistory()
   const { formID } = useParams()
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -107,10 +108,7 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   }
 
   const saveConfig = () => {
-    integrations.push(analyticsConf)
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, analyticsConf, history)
   }
 
   const checkValidEmail = email => {
@@ -189,10 +187,6 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={analyticsConf.name} type="text" placeholder="Integration Name..." />
 
-        <small className="d-blk mt-2">
-          <a className="btcd-link" href="https://api-console.zoho.com/" rel="noreferrer" target="_blank">Zoho Api console</a>
-        </small>
-
         <div className="mt-3"><b>Data Center:</b></div>
         <select onChange={event => handleInput(event)} name="dataCenter" value={analyticsConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
           <option value="">--Select a data center--</option>
@@ -209,6 +203,12 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
 
         <div className="mt-3"><b>Authorized Redirect URIs:</b></div>
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+
+        <small className="d-blk mt-5">
+          To get Client ID and SECRET , Please Visit
+          {' '}
+          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">Zoho API Console</a>
+        </small>
 
         <div className="mt-3"><b>Client id:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientId" value={analyticsConf.clientId} type="text" placeholder="Client id..." />
