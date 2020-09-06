@@ -4,14 +4,15 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
 import { handleTabChange, moduleChange, layoutChange, refreshModules, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
 import ZohoCRMActions from './ZohoCRMActions'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
   /* eslint-disable-next-line no-undef */
   const isPro = typeof bits !== 'undefined' && bits.isPro
 
@@ -55,10 +56,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
-    integrations[id] = { ...integrations[id], ...crmConf }
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history, saveForm, id, 1)
   }
 
   const addFieldMap = (i, uploadFields) => {
@@ -103,7 +101,6 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
         <b className="wdt-100 d-in-b">Integration Name:</b>
         <input className="btcd-paper-inp w-7" onChange={event => handleInput(event, 0)} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
       </div>
-
       <br />
       <b className="wdt-100 d-in-b">Module:</b>
       <select onChange={event => handleInput(event, tab)} name="module" value={crmConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>

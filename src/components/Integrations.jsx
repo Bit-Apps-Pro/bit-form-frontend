@@ -32,28 +32,29 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
+    { type: 'Zoho Desk', logo: zohoDesk, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
-    { type: 'Zoho Desk', logo: zohoDesk, disable: true },
     { type: 'Zoho Creator', logo: zohoCreator, disable: true },
     { type: 'Zoho Projects', logo: zohoProjects, disable: true },
     { type: 'Zoho People', logo: zohoPeople, disable: true },
   ]
-
+  console.log('ssssssssssss', integrations)
   const removeInteg = i => {
-    const tempIntegration = integrations[i]
-    integrations.splice(i, 1)
-    setIntegration([...integrations])
+    const tempIntegration = { ...integrations[i] }
+    const newInteg = [...integrations]
+    newInteg.splice(i, 1)
+    setIntegration(newInteg)
     bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_form_integration')
       .then(response => {
         if (response && response.success) {
           setSnackbar({ show: true, msg: `${response.data.message}` })
         } else if (response && response.data && response.data.data) {
-          integrations.splice(i, 0, tempIntegration)
-          setIntegration([...integrations])
+          newInteg.splice(i, 0, tempIntegration)
+          setIntegration([...newInteg])
           setSnackbar({ show: true, msg: `Integration deletion failed Cause:${response.data.data}. please try again` })
         } else {
-          integrations.splice(i, 0, tempIntegration)
-          setIntegration([...integrations])
+          newInteg.splice(i, 0, tempIntegration)
+          setIntegration([...newInteg])
           setSnackbar({ show: true, msg: 'Integration deletion failed. please try again' })
         }
       })

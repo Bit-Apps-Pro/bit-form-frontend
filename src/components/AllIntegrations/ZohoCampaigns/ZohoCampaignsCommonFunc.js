@@ -13,16 +13,15 @@ export const listChange = (list, campaignsConf, formID, setCampaignsConf, setisL
 
 export const refreshLists = (formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar) => {
   setisLoading(true)
-  const refreshModulesRequestParams = {
+  const refreshListsRequestParams = {
     formID,
     id: campaignsConf.id,
     dataCenter: campaignsConf.dataCenter,
     clientId: campaignsConf.clientId,
     clientSecret: campaignsConf.clientSecret,
     tokenDetails: campaignsConf.tokenDetails,
-    ownerEmail: campaignsConf.ownerEmail,
   }
-  bitsFetch(refreshModulesRequestParams, 'bitforms_zcampaigns_refresh_lists')
+  bitsFetch(refreshListsRequestParams, 'bitforms_zcampaigns_refresh_lists')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...campaignsConf }
@@ -54,7 +53,6 @@ export const refreshContactFields = (list, formID, campaignsConf, setCampaignsCo
     clientId: campaignsConf.clientId,
     clientSecret: campaignsConf.clientSecret,
     tokenDetails: campaignsConf.tokenDetails,
-    ownerEmail: campaignsConf.ownerEmail,
   }
   bitsFetch(refreshContactFieldsRequestParams, 'bitforms_zcampaigns_refresh_contact_fields')
     .then(result => {

@@ -9,10 +9,11 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoRecruitFieldMap from './ZohoRecruitFieldMap'
 import { handleTabChange, moduleChange, refreshModules, refreshRelatedList } from './ZohoRecruitCommonFunc'
 import ZohoRecruitActions from './ZohoRecruitActions'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
   const history = useHistory()
   const { formID } = useParams()
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -129,19 +130,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   }
 
   const saveConfig = () => {
-    const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedRelatedFields = recruitConf?.relatedlist?.field_map ? recruitConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedRelatedUploadFields = recruitConf?.relatedlist?.upload_field_map ? recruitConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-
-    if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
-      setSnackbar({ show: true, msg: 'Please map mandatory fields' })
-      return
-    }
-    integrations.push(recruitConf)
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, recruitConf, history)
   }
 
   const handleAuthorize = () => {
@@ -211,10 +200,6 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
         <div className="mt-3"><b>Integration Name:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={recruitConf.name} type="text" placeholder="Integration Name..." />
 
-        <small className="d-blk mt-2">
-          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">Zoho Api console</a>
-        </small>
-
         <div className="mt-3"><b>Data Center:</b></div>
         <select onChange={event => handleInput(event)} name="dataCenter" value={recruitConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
           <option value="">--Select a data center--</option>
@@ -231,6 +216,12 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
 
         <div className="mt-3"><b>Authorized Redirect URIs:</b></div>
         <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+
+        <small className="d-blk mt-5">
+          To get Client ID and SECRET , Please Visit
+          {' '}
+          <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">Zoho API Console</a>
+        </small>
 
         <div className="mt-3"><b>Client id:</b></div>
         <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientId" value={recruitConf.clientId} type="text" placeholder="Client id..." />

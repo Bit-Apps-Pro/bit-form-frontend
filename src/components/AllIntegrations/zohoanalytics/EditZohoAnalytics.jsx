@@ -5,14 +5,15 @@ import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import ConfirmModal from '../../ConfirmModal'
 import Loader from '../../Loaders/Loader'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
 import { workspaceChange, tableChange, refreshWorkspaces, refreshTables, refreshTableHeaders } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsActions from './ZohoAnalyticsActions'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
 
   const [analyticsConf, setAnalyticsConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
@@ -41,10 +42,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       setActionMdl({ show: 'criteria' })
       return
     }
-    integrations[id] = { ...integrations[id], ...analyticsConf }
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, analyticsConf, history, saveForm, id, 1)
   }
 
   const addFieldMap = (i) => {

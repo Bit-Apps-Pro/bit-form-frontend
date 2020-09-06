@@ -1,6 +1,5 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react'
+import React, { lazy, useEffect, Suspense } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
-import bitsFetch from '../Utils/bitsFetch'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 
