@@ -49,7 +49,8 @@ function GridLayout(props) {
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
 
-    h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, ''))
+    if (style[`.fld-lbl-${formID}`]['font-size']) { h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, '')) }
+    else {console.log(no) }
     if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
