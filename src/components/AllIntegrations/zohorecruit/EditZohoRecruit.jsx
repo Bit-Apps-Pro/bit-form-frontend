@@ -4,14 +4,15 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Loader from '../../Loaders/Loader'
 import ZohoRecruitFieldMap from './ZohoRecruitFieldMap'
-import { FromSaveContext } from '../../../pages/FormDetails'
+import { FormSaveContext } from '../../../pages/FormDetails'
 import { handleTabChange, moduleChange, refreshModules, refreshRelatedList } from './ZohoRecruitCommonFunc'
 import ZohoRecruitActions from './ZohoRecruitActions'
+import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
-  const saveForm = useContext(FromSaveContext)
+  const saveForm = useContext(FormSaveContext)
 
   const [recruitConf, setRecruitConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
@@ -39,19 +40,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   }
 
   const saveConfig = () => {
-    const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedRelatedFields = recruitConf?.relatedlist?.field_map ? recruitConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    const mappedRelatedUploadFields = recruitConf?.relatedlist?.upload_field_map ? recruitConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-
-    if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
-      setSnackbar({ show: true, msg: 'Please map mandatory fields' })
-      return
-    }
-    integrations[id] = { ...integrations[id], ...recruitConf }
-    setIntegration([...integrations])
-    saveForm()
-    history.push(allIntegURL)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, recruitConf, history, saveForm, id, 1)
   }
 
   const addFieldMap = (i, uploadFields) => {

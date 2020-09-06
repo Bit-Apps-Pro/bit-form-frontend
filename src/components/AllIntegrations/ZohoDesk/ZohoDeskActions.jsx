@@ -1,0 +1,160 @@
+/* eslint-disable no-param-reassign */
+import React, { useState } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import ConfirmModal from '../../ConfirmModal'
+import Loader from '../../Loaders/Loader'
+import { refreshOwners, refreshProducts } from './ZohoDeskCommonFunc'
+
+export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFields, setSnackbar }) {
+  const [isLoading, setisLoading] = useState(false)
+  const [actionMdl, setActionMdl] = useState({ show: false })
+
+  const actionHandler = (val, typ) => {
+    const newConf = { ...deskConf }
+    if (typ === 'ticket_owner') {
+      if (val !== '') {
+        newConf.actions.ticket_owner = val
+      } else {
+        delete newConf.actions.ticket_owner
+      }
+    } else if (typ === 'product') {
+      if (val !== '') {
+        newConf.actions.product = val
+      } else {
+        delete newConf.actions.product
+      }
+    } else if (typ === 'attachments') {
+      if (val !== '') {
+        newConf.actions.attachments = val
+      } else {
+        delete newConf.actions.attachments
+      }
+    }
+
+    setDeskConf({ ...newConf })
+  }
+
+  console.log('deskConf', deskConf)
+
+  const openRecOwnerModal = () => {
+    if (!deskConf.default?.owners?.[deskConf.orgId]) {
+      refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)
+    }
+    setActionMdl({ show: 'ticket_owner' })
+  }
+
+  const openProductModal = () => {
+    if (!deskConf.default?.products?.[deskConf.department]) {
+      refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)
+    }
+    setActionMdl({ show: 'product' })
+  }
+
+  const clsActionMdl = () => {
+    setActionMdl({ show: false })
+  }
+
+  return (
+    <div className="pos-rel">
+      <div className="d-flx flx-wrp">
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <TableCheckBox onChange={openRecOwnerModal} checked={'ticket_owner' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Ticket_Owner" title="Ticket Owner" subTitle="Add a owner to ticket pushed to Zoho Desk." />
+          {!deskConf.actions.ticket_owner && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>ticket owner is required</small>}
+        </div>
+        <TableCheckBox onChange={openProductModal} checked={'product' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Product_Name" title="Product Name" subTitle="Add a product to ticket pushed to Zoho Desk." />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachments" subTitle="Add attachments from BitForm to ticket pushed to Zoho Desk." />
+      </div>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt="Ok"
+        show={actionMdl.show === 'ticket_owner'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title="Ticket Owner"
+      >
+        <div className="btcd-hr mt-2" />
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        ) : (
+          <div className="flx flx-between mt-2">
+            <select
+              value={deskConf.actions.ticket_owner}
+              className="btcd-paper-inp"
+              onChange={e => actionHandler(e.target.value, 'ticket_owner')}
+            >
+              <option value="">Select Owner</option>
+              {deskConf.default?.owners?.[deskConf.orgId]?.map(owner => <option key={owner.ownerId} value={owner.ownerId}>{owner.ownerName}</option>)}
+            </select>
+            <button onClick={() => refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          </div>
+        )}
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt="Ok"
+        show={actionMdl.show === 'product'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title="Product Name"
+      >
+        <div className="btcd-hr mt-2" />
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        ) : (
+          <div className="flx flx-between mt-2">
+            <select
+              value={deskConf.actions.product}
+              className="btcd-paper-inp"
+              onChange={e => actionHandler(e.target.value, 'product')}
+            >
+              <option value="">Select Product</option>
+              {deskConf.default?.products?.[deskConf.department]?.map(product => <option key={product.productId} value={product.productId}>{product.productName}</option>)}
+            </select>
+            <button onClick={() => refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Products"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          </div>
+        )}
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt="Ok"
+        show={actionMdl.show === 'attachments'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title="Select Attachment"
+      >
+        <div className="btcd-hr mt-2" />
+        <div className="mt-2">Select file upload fields</div>
+        <MultiSelect
+          defaultValue={deskConf.actions.attachments}
+          className="mt-2 w-9"
+          onChange={(val) => actionHandler(val, 'attachments')}
+          options={formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.name, value: itm.key }))}
+        />
+      </ConfirmModal>
+    </div>
+  )
+}

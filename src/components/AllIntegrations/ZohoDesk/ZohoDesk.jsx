@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import Steps from '../../ElmSettings/Childs/Steps'
 import CopyText from '../../ElmSettings/Childs/CopyText'
@@ -6,30 +6,30 @@ import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import Loader from '../../Loaders/Loader'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import ZohoCampaignsFieldMap from './ZohoCampaignsFieldMap'
-import { listChange, refreshLists, refreshContactFields } from './ZohoCampaignsCommonFunc'
-// import ZohoCampaignsActions from './ZohoCampaignsActions'
-import { FormSaveContext } from '../../../pages/FormDetails'
+import ZohoDeskFieldMap from './ZohoDeskFieldMap'
+import { portalChange, departmentChange, refreshOrganizations, refreshDepartments, refreshFields } from './ZohoDeskCommonFunc'
+import ZohoDeskActions from './ZohoDeskActions'
 import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
 
-function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }) {
-  const saveForm = useContext(FormSaveContext)
-  const history = useHistory()
+function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
   const { formID } = useParams()
+  const history = useHistory()
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const [campaignsConf, setCampaignsConf] = useState({
-    name: 'Zoho Campaigns API',
-    type: 'Zoho Campaigns',
+  const [deskConf, setDeskConf] = useState({
+    name: 'Zoho Desk API',
+    type: 'Zoho Desk',
     clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
     clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
-    list: '',
+    orgId: '',
+    department: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
+    actions: {},
   })
 
   useEffect(() => {
@@ -46,64 +46,73 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
           }
         })
       }
-      localStorage.setItem('__bitforms_zohoCampaigns', JSON.stringify(grantTokenResponse))
+      localStorage.setItem('__bitforms_zohoDesk', JSON.stringify(grantTokenResponse))
       window.close()
     }
   }, [])
 
   const handleInput = (e) => {
-    let newConf = { ...campaignsConf }
+    let newConf = { ...deskConf }
     const rmError = { ...error }
     rmError[e.target.name] = ''
     setError({ ...rmError })
     newConf[e.target.name] = e.target.value
 
     switch (e.target.name) {
-      case 'list':
-        newConf = listChange(e.target.value, newConf, formID, setCampaignsConf, setisLoading, setSnackbar)
+      case 'orgId':
+        newConf = portalChange(newConf, formID, setDeskConf, setisLoading, setSnackbar)
+        break;
+      case 'department':
+        newConf = departmentChange(newConf, formID, setDeskConf, setisLoading, setSnackbar)
         break;
       default:
         break;
     }
-    setCampaignsConf({ ...newConf })
+    setDeskConf({ ...newConf })
   }
 
   const nextPage = val => {
     if (val === 3) {
-      if (campaignsConf.field_map[0].formField.length === 0) {
+      const mappedFields = deskConf?.field_map ? deskConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && deskConf?.default?.fields?.[deskConf.orgId]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      if (mappedFields.length > 0) {
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
 
-      document.querySelector('.btcd-s-wrp').scrollTop = 0
-      if (campaignsConf.list !== '' && campaignsConf.table !== '' && campaignsConf.field_map.length > 0) {
+      if (!deskConf.actions?.ticket_owner) {
+        setSnackbar({ show: true, msg: 'Please select a ticket owner' })
+        return
+      }
+
+      if (deskConf.department !== '' && deskConf.table !== '' && deskConf.field_map.length > 0) {
         setstep(val)
       }
     } else {
       setstep(val)
-      if (val === 2 && !campaignsConf.list) {
-        refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)
+      if (val === 2 && !deskConf.department) {
+        refreshOrganizations(formID, deskConf, setDeskConf, setisLoading, setSnackbar)
       }
     }
+    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   const addMap = (i) => {
-    const newConf = { ...campaignsConf }
+    const newConf = { ...deskConf }
     if (i !== 0) {
       newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
     } else {
       newConf.field_map.push({ formField: '', zohoFormField: '' })
     }
 
-    setCampaignsConf({ ...newConf })
+    setDeskConf({ ...newConf })
   }
 
   const saveConfig = () => {
-    saveIntegConfig(integrations, setIntegration, allIntegURL, campaignsConf, history)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, deskConf, history)
   }
 
   const handleAuthorize = () => {
-    const newConf = { ...campaignsConf }
+    const newConf = { ...deskConf }
     if (!newConf.dataCenter || !newConf.clientId || !newConf.clientSecret) {
       setError({
         dataCenter: !newConf.dataCenter ? 'Data center cann\'t be empty' : '',
@@ -113,24 +122,25 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
       return
     }
 
-    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=ZohoCampaigns.contact.READ,ZohoCampaigns.contact.CREATE&client_id=${newConf.clientId}&response_type=code&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
-    const authWindow = window.open(apiEndpoint, 'zohoCampaigns', 'width=400,height=609,toolbar=off')
+    // eslint-disable-next-line max-len
+    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=Desk.settings.READ,Desk.basic.READ,Desk.contacts.READ,Desk.contacts.CREATE,Desk.contacts.UPDATE,Desk.tickets.CREATE,Desk.tickets.UPDATE&client_id=${newConf.clientId}&response_type=code&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+    const authWindow = window.open(apiEndpoint, 'zohoDesk', 'width=400,height=609,toolbar=off')
     const popupURLCheckTimer = setInterval(() => {
       if (authWindow.closed) {
         clearInterval(popupURLCheckTimer)
         let grantTokenResponse = {}
         let isauthRedirectLocation = false
-        const bitformsZohoCampaigns = localStorage.getItem('__bitforms_zohoCampaigns')
-        if (bitformsZohoCampaigns) {
+        const bitformsZohoDesk = localStorage.getItem('__bitforms_zohoDesk')
+        if (bitformsZohoDesk) {
           isauthRedirectLocation = true
-          grantTokenResponse = JSON.parse(bitformsZohoCampaigns)
-          localStorage.removeItem('__bitforms_zohoCampaigns')
+          grantTokenResponse = JSON.parse(bitformsZohoDesk)
+          localStorage.removeItem('__bitforms_zohoDesk')
         }
         if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
           const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
           setSnackbar({ show: true, msg: `Authorization failed ${errorCause}. please try again` })
         } else {
-          setCampaignsConf({ ...newConf, accountServer: grantTokenResponse['accounts-server'] })
+          setDeskConf({ ...newConf, accountServer: grantTokenResponse['accounts-server'] })
           tokenHelper(grantTokenResponse)
         }
       }
@@ -138,17 +148,17 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
   }
 
   const tokenHelper = (grantToken) => {
-    const newConf = { ...campaignsConf }
+    const newConf = { ...deskConf }
     const tokenRequestParams = { ...grantToken }
     tokenRequestParams.dataCenter = newConf.dataCenter
     tokenRequestParams.clientId = newConf.clientId
     tokenRequestParams.clientSecret = newConf.clientSecret
     tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
-    const response = bitsFetch(tokenRequestParams, 'bitforms_zcampaigns_generate_token')
+    const response = bitsFetch(tokenRequestParams, 'bitforms_zdesk_generate_token')
       .then(result => result)
     response.then(result => {
       if (result && result.success) {
-        setCampaignsConf({ ...newConf, tokenDetails: result.data })
+        setDeskConf({ ...newConf, tokenDetails: result.data })
         setisAuthorized(true)
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Authorization failed Cause:${result.data.data || result.data}. please try again` })
@@ -158,7 +168,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
     })
   }
 
-  console.log('campaignsConf', campaignsConf);
+  console.log('deskConf', deskConf);
 
   return (
     <div>
@@ -168,10 +178,10 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={campaignsConf.name} type="text" placeholder="Integration Name..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="name" value={deskConf.name} type="text" placeholder="Integration Name..." />
 
         <div className="mt-3"><b>Data Center:</b></div>
-        <select onChange={event => handleInput(event)} name="dataCenter" value={campaignsConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
+        <select onChange={event => handleInput(event)} name="dataCenter" value={deskConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
           <option value="">--Select a data center--</option>
           <option value="com">zoho.com</option>
           <option value="eu">zoho.eu</option>
@@ -194,11 +204,11 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
         </small>
 
         <div className="mt-3"><b>Client id:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientId" value={campaignsConf.clientId} type="text" placeholder="Client id..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientId" value={deskConf.clientId} type="text" placeholder="Client id..." />
         <div style={{ color: 'red' }}>{error.clientId}</div>
 
         <div className="mt-3"><b>Client secret:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientSecret" value={campaignsConf.clientSecret} type="text" placeholder="Client secret..." />
+        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event)} name="clientSecret" value={deskConf.clientSecret} type="text" placeholder="Client secret..." />
         <div style={{ color: 'red' }}>{error.clientSecret}</div>
 
         <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
@@ -214,18 +224,32 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
         <br />
-        <b className="wdt-100 d-in-b">List:</b>
-        <select onChange={event => handleInput(event)} name="list" value={campaignsConf.list} className="btcd-paper-inp w-7">
-          <option value="">Select List</option>
+        <b className="wdt-100 d-in-b">Portal:</b>
+        <select onChange={event => handleInput(event)} name="orgId" value={deskConf.orgId} className="btcd-paper-inp w-7">
+          <option value="">Select Portal</option>
           {
-            campaignsConf?.default?.lists && campaignsConf.default.lists.map(listApiName => (
-              <option value={listApiName.listkey}>
-                {listApiName.listname}
+            deskConf?.default?.organizations && deskConf.default.organizations.map(organization => (
+              <option value={organization.orgId}>
+                {organization.portalName}
               </option>
             ))
           }
         </select>
-        <button onClick={() => refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Campaigns Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshOrganizations(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Desk Portals"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <br />
+        <br />
+        <b className="wdt-100 d-in-b">Department:</b>
+        <select onChange={event => handleInput(event)} name="department" value={deskConf.department} className="btcd-paper-inp w-7">
+          <option value="">Select Department</option>
+          {
+            deskConf?.default?.departments && deskConf.default.departments[deskConf?.orgId]?.map(department => (
+              <option value={department.departmentId}>
+                {department.departmentName}
+              </option>
+            ))
+          }
+        </select>
+        <button onClick={() => refreshDepartments(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Desk Departments"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
         {isLoading && (
@@ -241,10 +265,10 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
 
         <div className="mt-4">
           <b className="wdt-100">Map Fields</b>
-          <button onClick={() => refreshContactFields(campaignsConf.list, formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Campaigns Contact Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button onClick={() => refreshFields(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Desk Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
         <div className="btcd-hr mt-1" />
-        {campaignsConf.default?.fields?.[campaignsConf.list]
+        {deskConf.default?.fields?.[deskConf?.orgId]
           && (
             <>
               <div className="flx flx-around mt-2 mb-1">
@@ -252,21 +276,33 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
                 <div className="txt-dp"><b>Zoho Fields</b></div>
               </div>
 
-              {campaignsConf.field_map.map((itm, i) => (
-                <ZohoCampaignsFieldMap
+              {deskConf.field_map.map((itm, i) => (
+                <ZohoDeskFieldMap
                   i={i}
                   field={itm}
-                  campaignsConf={campaignsConf}
+                  deskConf={deskConf}
                   formFields={formFields}
-                  setCampaignsConf={setCampaignsConf}
+                  setDeskConf={setDeskConf}
                 />
               ))}
-              {/* <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(campaignsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div> */}
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(deskConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div>
+              <br />
+              <br />
+              <div className="mt-4"><b className="wdt-100">Actions</b></div>
+              <div className="btcd-hr mt-1" />
+
+              <ZohoDeskActions
+                deskConf={deskConf}
+                setDeskConf={setDeskConf}
+                formID={formID}
+                formFields={formFields}
+                setSnackbar={setSnackbar}
+              />
             </>
           )}
         <button
           onClick={() => nextPage(3)}
-          disabled={campaignsConf.module === '' || campaignsConf.field_map.length < 1}
+          disabled={deskConf.module === '' || deskConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
@@ -288,4 +324,4 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
   )
 }
 
-export default ZohoCampaigns
+export default ZohoDesk

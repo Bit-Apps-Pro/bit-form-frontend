@@ -4,6 +4,7 @@ import EditZohoCRM from './ZohoCRM/EditZohoCRM'
 import EditZohoRecruit from './ZohoRecruit/EditZohoRecruit'
 import EditZohoAnalytics from './ZohoAnalytics/EditZohoAnalytics'
 import EditZohoCampaigns from './ZohoCampaigns/EditZohoCampaigns'
+import EditZohoDesk from './ZohoDesk/EditZohoDesk'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -17,6 +18,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditZohoAnalytics allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Campaigns':
         return <EditZohoCampaigns allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Desk':
+        return <EditZohoDesk allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
