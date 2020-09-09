@@ -1,0 +1,163 @@
+import bitsFetch from '../../../Utils/bitsFetch'
+import { sortData } from '../../../Utils/Helpers'
+
+export const teamChange = (workDriveConf, formID, setWorkDriveConf, setisLoading, setSnackbar) => {
+  const newConf = { ...workDriveConf }
+  newConf.folder = ''
+
+  if (newConf.team && !newConf?.default?.teamFolders?.[newConf.team]) {
+    refreshTeamFolders(formID, newConf, setWorkDriveConf, setisLoading, setSnackbar)
+  }
+  return newConf
+}
+
+export const folderChange = (workDriveConf, formID, setWorkDriveConf, setisLoading, setSnackbar) => {
+  const newConf = { ...workDriveConf }
+  delete newConf.teamType
+
+  if (newConf.folder && !newConf.default?.folders?.[newConf.folder]) {
+    if (newConf.default?.teamFolders?.[newConf.team]?.[newConf.folder]?.type === 'private') {
+      newConf.teamType = 'private'
+    }
+    refreshSubFolders(formID, newConf, setWorkDriveConf, setisLoading, setSnackbar)
+  } else if (newConf.folder && newConf.folder !== newConf.folderMap[newConf.folderMap.length - 1]) newConf.folderMap.push(newConf.folder)
+
+  return newConf
+}
+
+export const refreshTeams = (formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar) => {
+  setisLoading(true)
+  const refreshTeamsRequestParams = {
+    formID,
+    id: workDriveConf.id,
+    dataCenter: workDriveConf.dataCenter,
+    clientId: workDriveConf.clientId,
+    clientSecret: workDriveConf.clientSecret,
+    tokenDetails: workDriveConf.tokenDetails,
+  }
+  bitsFetch(refreshTeamsRequestParams, 'bitforms_zworkdrive_refresh_teams')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...workDriveConf }
+        if (result.data.teams) {
+          newConf.default = { ...newConf.default, teams: result.data.teams }
+        }
+        setSnackbar({ show: true, msg: 'Teams refreshed' })
+        setWorkDriveConf({ ...newConf })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `Teams refresh failed Cause:${result.data.data || result.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Teams refresh failed. please try again' })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}
+
+export const refreshTeamFolders = (formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar) => {
+  setisLoading(true)
+  const refreshTeamFoldersRequestParams = {
+    formID,
+    id: workDriveConf.id,
+    dataCenter: workDriveConf.dataCenter,
+    clientId: workDriveConf.clientId,
+    clientSecret: workDriveConf.clientSecret,
+    tokenDetails: workDriveConf.tokenDetails,
+    team: workDriveConf.team,
+  }
+  bitsFetch(refreshTeamFoldersRequestParams, 'bitforms_zworkdrive_refresh_team_folders')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...workDriveConf }
+        if (!newConf.default.teamFolders) {
+          newConf.default.teamFolders = {}
+        }
+        if (result.data.teamFolders) {
+          newConf.default.teamFolders[newConf.team] = result.data.teamFolders
+        }
+        setSnackbar({ show: true, msg: 'Folders refreshed' })
+        setWorkDriveConf({ ...newConf })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `Folders refresh failed Cause:${result.data.data || result.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Folders refresh failed. please try again' })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}
+
+export const refreshSubFolders = (formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar, ind) => {
+  const folder = ind ? workDriveConf.folderMap[ind] : workDriveConf.folder
+  setisLoading(true)
+  const refreshSubFoldersRequestParams = {
+    formID,
+    dataCenter: workDriveConf.dataCenter,
+    clientId: workDriveConf.clientId,
+    clientSecret: workDriveConf.clientSecret,
+    tokenDetails: workDriveConf.tokenDetails,
+    team: workDriveConf.team,
+    folder,
+    teamType: 'teamType' in workDriveConf ? 'private' : 'team',
+  }
+
+  bitsFetch(refreshSubFoldersRequestParams, 'bitforms_zworkdrive_refresh_sub_folders')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...workDriveConf }
+        if (result.data.folders) {
+          if (!newConf.default.folders) {
+            newConf.default.folders = {}
+          }
+
+          newConf.default.folders[folder] = sortData(result.data.folders, 'folderName')
+          if (!newConf.folderMap.includes(folder)) newConf.folderMap.push(folder)
+          setSnackbar({ show: true, msg: 'Sub Folders refreshed' })
+        } else {
+          setSnackbar({ show: true, msg: 'No Sub Folder Found' })
+        }
+
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        setWorkDriveConf({ ...newConf })
+      } else {
+        setSnackbar({ show: true, msg: 'Sub Folders refresh failed. please try again' })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}
+
+export const refreshUsers = (formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar) => {
+  setisLoading(true)
+  const refreshUsersRequestParams = {
+    formID,
+    id: workDriveConf.id,
+    dataCenter: workDriveConf.dataCenter,
+    clientId: workDriveConf.clientId,
+    clientSecret: workDriveConf.clientSecret,
+    tokenDetails: workDriveConf.tokenDetails,
+    team: workDriveConf.team,
+  }
+  bitsFetch(refreshUsersRequestParams, 'bitforms_zworkdrive_refresh_users')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...workDriveConf }
+        if (!newConf.default.users) {
+          newConf.default.users = {}
+        }
+        if (result.data.users) {
+          newConf.default.users[workDriveConf.team] = result.data.users
+        }
+        setSnackbar({ show: true, msg: 'Users refreshed' })
+        setWorkDriveConf({ ...newConf })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `Users refresh failed Cause:${result.data.data || result.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Users refresh failed. please try again' })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}

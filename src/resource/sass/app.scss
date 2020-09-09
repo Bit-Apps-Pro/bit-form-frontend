@@ -151,6 +151,10 @@ button.check {
 } */
 // WP OVERRIDE END
 
+.sub-folder:hover button {
+  display: block !important;
+}
+
 .d-non {
   display: none !important;
 }

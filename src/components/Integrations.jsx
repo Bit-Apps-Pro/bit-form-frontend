@@ -33,6 +33,7 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
     { type: 'Zoho Desk', logo: zohoDesk, pro: !isPro },
+    { type: 'Zoho WorkDrive', logo: zohoDesk, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
     { type: 'Zoho Creator', logo: zohoCreator, disable: true },
     { type: 'Zoho Projects', logo: zohoProjects, disable: true },
