@@ -1,21 +1,24 @@
 :root {
   --tooltip-txt: "";
-  --left: 50%;
+  --tt-left: 50%;
+  --tt-width: auto;
+  --tt-wrap: nowrap;
 }
 
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0069ff;
+$light-blue-bg: #f0f5ff;
 //$blue: #0a8dff;
 //$blue: #0083f3;
 // $dp-blue: #0b1655;
+//$light-bg: #f2f3f7;
+//$light-bg: #eaf0f7;
+//$bg: #f2f3f7;
 $dp-blue: #031b4e;
 $dp-bg: #13233c;
 $light-bg: #fff;
 $light-txt: #8fa4bd;
-//$light-bg: #f2f3f7;
-//$light-bg: #eaf0f7;
-//$bg: #f2f3f7;
 $bg: #f7f8fc;
 $red: #ff4646;
 $dp-txt: #545582;
@@ -162,6 +165,9 @@ button.check {
 }
 .o-v {
   overflow: visible !important;
+}
+.o-h {
+  overflow: hidden;
 }
 .o-a {
   overflow: auto;
@@ -861,7 +867,8 @@ button.check {
     padding: 10px;
   }
 }
-.style-acc.active {
+.style-acc.active,
+.delay-overflow {
   overflow: visible;
   animation: 800ms delay-overflow;
 }
@@ -973,31 +980,28 @@ button.check {
   background: transparent;
   position: absolute;
   top: 5px;
-  opacity: 0.7;
+  opacity: 0.8;
   font-size: 27px;
   cursor: pointer;
-  padding: 2px;
   border-radius: 3px;
   width: 15px;
   height: 15px;
-  padding: 2px;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   -webkit--ms-user-select: none;
   -webkit-user-select: none;
   -khtml--ms-user-select: none;
-  -webkit-user-select: none;
   -moz--ms-user-select: none;
-  -webkit-user-select: none;
   -o--ms-user-select: none;
-  -webkit-user-select: none;
   -ms-user-select: none;
-  -webkit-user-select: none;
   transform: scale(0);
   z-index: 99;
   transition: all 0.3s;
-
+  & svg {
+    display: inline-block;
+    padding-top: 3px;
+  }
   &:hover {
     background: rgb(209, 209, 209) !important;
     opacity: 1;
@@ -1210,6 +1214,13 @@ button.check {
     border-color: $dp-txt;
   }
 }
+
+.btcd-inte-wrp {
+  justify-content: center;
+  overflow-y: scroll;
+  height: 100%;
+}
+
 .btcd-inte-card {
   position: relative;
   cursor: pointer;
@@ -1219,7 +1230,8 @@ button.check {
   overflow: hidden;
   border-radius: 20px;
   outline: none;
-  box-shadow: 1px 2px 5px #d7e0ed;
+  box-shadow: 1px 2px 3px #d7e0ed;
+  background-color: aliceblue;
   transition: box-shadow 0.2s, transform 0.3s;
   & > .btcd-inte-atn {
     background: white;
@@ -1235,6 +1247,7 @@ button.check {
     background: #fff;
     width: 100%;
     padding-top: 3px;
+    padding-bottom: 3px;
     & > div {
       width: 95%;
       height: 17px;
@@ -1266,9 +1279,9 @@ button.check {
   }
   & img {
     display: block;
-    background-color: aliceblue;
-    height: 160px;
-    width: 160px;
+    max-height: 160px;
+    max-width: 160px;
+    transform: scale(0.8);
   }
 }
 
@@ -1282,7 +1295,8 @@ button.check {
   & img {
     max-height: 110px;
     max-width: 110px;
-    margin-bottom: 2px;
+    margin: 0;
+    padding: 12px;
   }
   &:before {
     display: flex;
@@ -1774,6 +1788,9 @@ nav.top-nav {
     }
     &:hover {
       background-color: #eaedff;
+      & .edit-icn {
+        display: inline-block;
+      }
     }
     & > .btcd-accr-title > div {
       & > input {
@@ -1790,7 +1807,7 @@ nav.top-nav {
         cursor: pointer;
       }
       & > div {
-        display: inline-block;
+        display: none;
         margin-left: 3px;
         & > .btcd-icn {
           color: transparentize(#000, 0.5);
@@ -1811,11 +1828,8 @@ nav.top-nav {
       }
     }
   }
-  & > .btcd-accr-cont {
-    transition: max-height 0.5s ease-in-out;
-    & > div {
-      padding: 10px;
-    }
+  & .edit-icn {
+    display: none;
   }
 }
 
@@ -2013,6 +2027,7 @@ nav.top-nav {
   }
 
   & input {
+    height: 39px;
     background: white;
     outline: none;
     width: 82%;
@@ -2024,12 +2039,15 @@ nav.top-nav {
   & button {
     position: relative;
     cursor: pointer;
+    height: 39px;
     padding: 11px;
     border: 1px solid #e4e4e4;
     border-left: none;
+    color: $dp-blue;
     border-radius: 0 8px 8px 0;
     &:hover {
-      background: #fafafa;
+      background: $light-blue-bg;
+      color: $blue;
     }
   }
 }
@@ -2041,7 +2059,7 @@ nav.top-nav {
     color: white;
     position: absolute;
     top: 110%;
-    left: var(--left);
+    left: var(--tt-left);
     font-family: "Montserrat", sans-serif;
     line-height: 1;
     white-space: pre-wrap;
@@ -2050,21 +2068,23 @@ nav.top-nav {
     content: var(--tooltip-txt);
     border-radius: 50%;
     padding: 7px 10px;
-    width: auto;
+    width: var(--tt-width);
     transform-origin: 0%;
-    transform: scale(0) translate(-50%, 0);
-    white-space: nowrap;
+    transform: scale(0.5) translate(-50%, 0);
+    white-space: var(--tt-wrap);
     z-index: 999;
     pointer-events: none;
     -ms-user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;
-    transition: transform 200ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
+    opacity: 0;
+    transition: transform 100ms, opacity 300ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
   &:hover::after {
-    left: var(--left);
+    left: var(--tt-left);
     border-radius: 7px;
     transform-origin: 0%;
+    opacity: 1;
     transform: scale(1) translate(-50%, 0);
     transition: transform 400ms, border-radius cubic-bezier(0, 0, 0, 1) 500ms;
   }
@@ -2189,7 +2209,7 @@ nav.top-nav {
   & .btcd-modal {
     border-radius: 20px;
     transform: scale(1);
-    transition: transform 0.3s, border-radius 0.5s;
+    transition: transform 0.1s, border-radius 0.2s;
   }
 }
 .btc-mdl-trn-exit-active {
@@ -2537,7 +2557,7 @@ nav.top-nav {
     border-radius: 50px 0 0 50px;
     text-decoration: none;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     &:focus {
       box-shadow: none;
     }
@@ -3272,7 +3292,7 @@ select.btcd-paper-inp {
   &:hover {
     color: $blue;
     & .lft-icn {
-      background: #f0f5ff;
+      background: $light-blue-bg;
       & .line-icn {
         stroke: $blue;
       }
