@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { Link, Switch, Route, useRouteMatch, useHistory, useParams } from 'react-router-dom'
 import Modal from './Modal'
-import zohoAnalytics from '../resource/img/integ/zohoAnalytics.png'
-import zohoDesk from '../resource/img/integ/zohoDesk.png'
-import zohoCRM from '../resource/img/integ/zohoCRM.png'
-import zohoRecruit from '../resource/img/integ/zohoRecruit.png'
-import zohoCamp from '../resource/img/integ/zohoCamp.png'
-import zohoHub from '../resource/img/integ/zohoHub.png'
-import zohoCreator from '../resource/img/integ/zohoCreator.png'
-import zohoProjects from '../resource/img/integ/zohoProjects.png'
-import zohoPeople from '../resource/img/integ/zohoPeople.png'
+import zohoAnalytics from '../resource/img/integ/analytics.svg'
+import zohoCreator from '../resource/img/integ/creator.svg'
+import zohoHub from '../resource/img/integ/hub.svg'
+import zohoDesk from '../resource/img/integ/desk.svg'
+import zohoProjects from '../resource/img/integ/projects.svg'
+import zohoRecruit from '../resource/img/integ/recruit.svg'
+import zohoPeople from '../resource/img/integ/people.svg'
+import zohoCRM from '../resource/img/integ/crm.svg'
+import zohoCamp from '../resource/img/integ/campaigns.svg'
+import zohoMail from '../resource/img/integ/mail.svg'
+import zohoSheet from '../resource/img/integ/sheet.svg'
+import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import NewInteg from './AllIntegrations/NewInteg'
 import EditInteg from './AllIntegrations/EditInteg'
 import ConfirmModal from './ConfirmModal'
@@ -32,13 +35,16 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
+    { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
+    { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
+    { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro },
+    { type: 'Zoho People', logo: zohoPeople, pro: !isPro },
+    { type: 'Zoho Mail', logo: zohoMail, pro: !isPro },
+    { type: 'Zoho Wordrive', logo: zohoWorkdrive, pro: !isPro },
+    { type: 'Zoho Sheet', logo: zohoSheet, pro: !isPro },
     { type: 'Zoho Desk', logo: zohoDesk, pro: !isPro },
-    { type: 'Zoho Marketing Hub', logo: zohoHub, disable: true },
-    { type: 'Zoho Creator', logo: zohoCreator, disable: true },
-    { type: 'Zoho Projects', logo: zohoProjects, disable: true },
-    { type: 'Zoho People', logo: zohoPeople, disable: true },
   ]
-  console.log('ssssssssssss', integrations)
+
   const removeInteg = i => {
     const tempIntegration = { ...integrations[i] }
     const newInteg = [...integrations]
@@ -108,7 +114,7 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
               show={showMdl}
               setModal={setShowMdl}
             >
-              <div className="flx flx-wrp">
+              <div className="flx flx-wrp btcd-inte-wrp">
                 {integs.map((inte, i) => (
                   <div
                     key={`inte-sm-${i + 2}`}
