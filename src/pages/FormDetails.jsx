@@ -45,7 +45,7 @@ function FormDetails(props) {
   const { history, newFormId } = props
 
   useEffect(() => {
-    setFormFields(sortData(allLabels))
+    setFormFields(sortData(allLabels, 'name'))
   }, [allLabels])
 
   const onMount = () => {
