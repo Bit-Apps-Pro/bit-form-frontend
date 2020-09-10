@@ -146,12 +146,12 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
               <div className="flx">
                 <div className="w-7 mr-2">
                   <div className="f-m">Link:</div>
-                  <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
+                  <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp mt-1" type="text" value={itm.url} />
                 </div>
 
                 <div className="w-3">
                   <div className="f-m">Method:</div>
-                  <select onChange={e => handleMethod(e.target.value, i)} defaultValue={itm.method} className="btcd-paper-inp">
+                  <select onChange={e => handleMethod(e.target.value, i)} defaultValue={itm.method} className="btcd-paper-inp mt-1">
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
                     <option value="PUT">PUT</option>
@@ -182,7 +182,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
                         <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
-                          <select className="btcd-paper-inp p-i-sm" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
+                          <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
                             <option value="">Select Form Field</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                           </select>

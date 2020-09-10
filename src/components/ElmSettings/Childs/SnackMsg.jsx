@@ -7,10 +7,10 @@ function SnackMsg({ snack, setSnackbar }) {
   return (
     <CSSTransition
       in={show}
-      timeout={3500}
-      unmountOnExit
+      timeout={3000}
       classNames="flx btcd-snack btcd-snack-a"
-      onEntered={() => setTimeout(() => { setSnackbar({ show: false, msg }) }, 3500)}
+      onEntered={() => setTimeout(() => { setSnackbar({ show: false, msg }) }, 1)}
+      unmountOnExit
     >
       <div>
         {msg}

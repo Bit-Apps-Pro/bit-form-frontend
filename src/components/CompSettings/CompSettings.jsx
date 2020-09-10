@@ -13,6 +13,7 @@ import ImageIcn from '../../Icons/ImageIcn'
 import FormIcn from '../../Icons/FormIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import FieldIcn from '../../Icons/FieldIcn'
+import BrushIcn from '../../Icons/BrushIcn'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID }) {
   const { path } = useRouteMatch()
@@ -20,7 +21,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
 
   const TabLink = ({ title, sub, icn, link }) => (
     <NavLink to={`/form/builder/${formType}/${formID}/${link}`} activeClassName="s-t-l-active" className="btcd-s-tab-link active flx w-5 ">
-      <span className={`btcd-icn icn-${icn} mr-2`} />
+      {typeof icn === 'string' ? <span className={`btcd-icn icn-${icn} mr-2`} /> : icn}
       <div className="d-in-b">
         <div className="title">{title}</div>
         <div className="sub">{sub}</div>
@@ -32,7 +33,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
     <div className="elm-settings">
       <div className="flx mr-2">
         <TabLink title="Field" sub="Settings" icn="settings" link="fs" />
-        <TabLink title="Style" sub="Customize" icn="settings" link="style" />
+        <TabLink title="Style" sub="Customize" icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
       </div>
       <div className="btcd-hr" />
       <div className="settings">

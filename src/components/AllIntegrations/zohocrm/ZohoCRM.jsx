@@ -208,7 +208,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>Integration Name:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
+        <input className="btcd-paper-inp w-6 mt-1" onChange={event => handleInput(event, tab)} name="name" value={crmConf.name} type="text" placeholder="Integration Name..." />
 
         <div className="mt-3"><b>Data Center:</b></div>
         <select onChange={event => handleInput(event, tab)} name="dataCenter" value={crmConf.dataCenter} className="btcd-paper-inp w-9 mt-1">
@@ -222,10 +222,10 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         <div style={{ color: 'red' }}>{error.dataCenter}</div>
 
         <div className="mt-3"><b>Homepage URL:</b></div>
-        <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+        <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" />
 
         <div className="mt-3"><b>Authorized Redirect URIs:</b></div>
-        <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-5 ml-0" />
+        <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" />
 
         <small className="d-blk mt-5">
           To get Client ID and SECRET , Please Visit
@@ -234,11 +234,11 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         </small>
 
         <div className="mt-3"><b>Client id:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="clientId" value={crmConf.clientId} type="text" placeholder="Client id..." />
+        <input className="btcd-paper-inp w-6 mt-1" onChange={event => handleInput(event, tab)} name="clientId" value={crmConf.clientId} type="text" placeholder="Client id..." />
         <div style={{ color: 'red' }}>{error.clientId}</div>
 
         <div className="mt-3"><b>Client secret:</b></div>
-        <input className="btcd-paper-inp w-9 mt-1" onChange={event => handleInput(event, tab)} name="clientSecret" value={crmConf.clientSecret} type="text" placeholder="Client secret..." />
+        <input className="btcd-paper-inp w-6 mt-1" onChange={event => handleInput(event, tab)} name="clientSecret" value={crmConf.clientSecret} type="text" placeholder="Client secret..." />
         <div style={{ color: 'red' }}>{error.clientSecret}</div>
 
         <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>

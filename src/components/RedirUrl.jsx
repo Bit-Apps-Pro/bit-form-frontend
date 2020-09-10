@@ -4,7 +4,6 @@ import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './ConfirmModal'
 
-
 function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [redirectUrls, setredirectUrls] = useState(null)
@@ -139,7 +138,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               onTitleChange={e => handleUrlTitle(e, i)}
             >
               <div className="f-m">Select A Page:</div>
-              <select className="btcd-paper-inp" onChange={e => handlePage(e, i)}>
+              <select className="btcd-paper-inp mt-1" onChange={e => handlePage(e, i)}>
                 <option value="">Custom Link</option>
                 {redirectUrls
                   && redirectUrls.map((urlDetail, i) => (
@@ -149,7 +148,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               <br />
               <br />
               <div className="f-m">Link:</div>
-              <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp" type="text" value={itm.url} />
+              <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp mt-1" type="text" value={itm.url} />
               <br />
               <br />
               <div className="f-m">Add Url Parameter: (optional)</div>
@@ -168,7 +167,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
                         <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
-                          <select className="btcd-paper-inp p-i-sm" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
+                          <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
                             <option value="">Select Form Field</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                           </select>

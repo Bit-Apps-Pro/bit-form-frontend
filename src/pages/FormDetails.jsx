@@ -190,13 +190,7 @@ function FormDetails(props) {
     formName,
     theme: 'default',
     submitBtn: subBtn,
-    confirmation: {
-      type: {
-        successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
-        redirectPage: [{ title: 'Redirect Url 1', url: '' }],
-        webHooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
-      },
-    },
+    confirmation: formSettings.confirmation,
     mailTem,
     integrations,
     additional,

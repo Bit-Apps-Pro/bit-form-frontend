@@ -14,7 +14,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     setFormSettings(tmp)
   }
 
-  useEffect(() => {
+  const tinyMceInit = () => {
     if (typeof tinymce !== 'undefined' && formFields.length > 0) {
       const s = document.querySelectorAll('.form-fields')
       for (let i = 0; i < s.length; i += 1) {
@@ -49,6 +49,10 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         },
       })
     }
+  }
+
+  useEffect(() => {
+    tinyMceInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])
 
@@ -122,6 +126,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
               titleEditable
               cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleMsgTitle(e, i)}
+              onExpand={tinyMceInit}
             >
               <div className="flx flx-between">
                 <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">

@@ -1,5 +1,6 @@
 export const defaultTheme = (formId) => ({
   [`._frm-bg-${formId}`]: {
+    overflow: 'auto',
     'border-radius': '10px 10px 10px 10px',
     'background-size': '100% 100%',
   },
