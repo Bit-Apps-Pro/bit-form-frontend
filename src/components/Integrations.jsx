@@ -35,14 +35,14 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
-    { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
-    { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
-    { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro },
-    { type: 'Zoho People', logo: zohoPeople, pro: !isPro },
-    { type: 'Zoho Mail', logo: zohoMail, pro: !isPro },
-    { type: 'Zoho Wordrive', logo: zohoWorkdrive, pro: !isPro },
-    { type: 'Zoho Sheet', logo: zohoSheet, pro: !isPro },
+    { type: 'Zoho WorkDrive', logo: zohoWorkdrive, pro: !isPro },
     { type: 'Zoho Desk', logo: zohoDesk, pro: !isPro },
+    { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro, disable: true },
+    { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro, disable: true },
+    { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro, disable: true },
+    { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
+    { type: 'Zoho Mail', logo: zohoMail, pro: !isPro, disable: true },
+    { type: 'Zoho Sheet', logo: zohoSheet, pro: !isPro, disable: true },
   ]
 
   const removeInteg = i => {
