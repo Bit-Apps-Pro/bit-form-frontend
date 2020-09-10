@@ -1,13 +1,13 @@
-export default function saveIntegConfig(allIntegrations, setIntegration, allIntegURL, deskConf, history, saveForm, id, edit) {
-  const integrations = [];
+export default function saveIntegConfig(allintegs, setIntegration, allIntegURL, deskConf, history, saveForm, id, edit) {
+  const integs = [...allintegs]
 
   if (edit) {
-    integrations[id] = { ...allIntegrations[id], ...deskConf }
-    setIntegration([...integrations])
+    integs[id] = { ...allintegs[id], ...deskConf }
+    setIntegration([...integs])
     saveForm()
     history.push(allIntegURL)
   } else {
-    const newInteg = [...integrations]
+    const newInteg = [...integs]
     newInteg.push(deskConf)
     newInteg.push({ newItegration: true })
     setIntegration(newInteg)
