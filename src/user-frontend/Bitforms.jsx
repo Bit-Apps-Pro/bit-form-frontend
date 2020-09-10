@@ -29,9 +29,9 @@ export default function Bitforms(props) {
     maxRowIndex = maxRowIndex > field.y + field.h ? maxRowIndex : field.y + field.h
     return (
       <div
+        key={field.i}
         className={`btcd-fld-itm ${field.i} ${dataToPass[field.i].valid.hide ? 'btcd-hidden' : ''}`}
       // btcd-id={field.i}
-      // key={field.i}
       // data-grid={field}
       >
         <CompGen
