@@ -123,7 +123,7 @@ function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
     }
 
     // eslint-disable-next-line max-len
-    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=Desk.settings.READ,Desk.basic.READ,Desk.contacts.READ,Desk.contacts.CREATE,Desk.contacts.UPDATE,Desk.tickets.CREATE,Desk.tickets.UPDATE&client_id=${newConf.clientId}&response_type=code&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=Desk.settings.READ,Desk.basic.READ,Desk.search.READ,Desk.contacts.READ,Desk.contacts.CREATE,Desk.contacts.UPDATE,Desk.tickets.CREATE,Desk.tickets.UPDATE&client_id=${newConf.clientId}&response_type=code&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
     const authWindow = window.open(apiEndpoint, 'zohoDesk', 'width=400,height=609,toolbar=off')
     const popupURLCheckTimer = setInterval(() => {
       if (authWindow.closed) {
