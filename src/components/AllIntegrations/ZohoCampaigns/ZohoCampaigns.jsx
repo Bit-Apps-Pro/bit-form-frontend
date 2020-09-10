@@ -113,7 +113,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
       return
     }
 
-    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=ZohoCampaigns.contact.READ,ZohoCampaigns.contact.CREATE&client_id=${newConf.clientId}&response_type=code&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+    const apiEndpoint = `https://accounts.zoho.${newConf.dataCenter}/oauth/v2/auth?scope=ZohoCampaigns.contact.READ,ZohoCampaigns.contact.CREATE,ZohoCampaigns.contact.UPDATE&client_id=${newConf.clientId}&response_type=code&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
     const authWindow = window.open(apiEndpoint, 'zohoCampaigns', 'width=400,height=609,toolbar=off')
     const popupURLCheckTimer = setInterval(() => {
       if (authWindow.closed) {
@@ -261,7 +261,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
                   setCampaignsConf={setCampaignsConf}
                 />
               ))}
-              {/* <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(campaignsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div> */}
+              <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addMap(campaignsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div>
             </>
           )}
         <button

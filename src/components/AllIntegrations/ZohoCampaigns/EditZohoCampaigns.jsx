@@ -109,7 +109,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
                 setCampaignsConf={setCampaignsConf}
               />
             ))}
-            {/* <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(campaignsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div> */}
+            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(campaignsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div>
           </>
         )}
 

@@ -3,7 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 export const listChange = (list, campaignsConf, formID, setCampaignsConf, setisLoading, setSnackbar) => {
   const newConf = { ...campaignsConf }
   newConf.list = list
-  newConf.field_map = [{ formField: '', zohoFormField: 'contact_email' }]
+  newConf.field_map = [{ formField: '', zohoFormField: 'Contact Email' }]
 
   if (!newConf?.default?.fields?.[newConf.list]) {
     refreshContactFields(list, formID, newConf, setCampaignsConf, setisLoading, setSnackbar)
@@ -63,8 +63,8 @@ export const refreshContactFields = (list, formID, campaignsConf, setCampaignsCo
             newConf.default.fields = {}
           }
 
-          newConf.default.fields[list] = result.data.fields
-          newConf.field_map = [{ formField: '', zohoFormField: 'contact_email' }]
+          newConf.default.fields[list] = result.data.fields.sort()
+          newConf.field_map = [{ formField: '', zohoFormField: 'Contact Email' }]
           setSnackbar({ show: true, msg: 'Contact Fields refreshed' })
         } else {
           setSnackbar({ show: true, msg: "Zoho didn't provide fields names for this list" })
