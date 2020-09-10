@@ -10,9 +10,10 @@ import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import BrushIcn from '../Icons/BrushIcn'
+import { useHistory } from 'react-router-dom'
 
 function GridLayout(props) {
-  console.log('%c $render GridLayout', 'background:black;padding:3px;border-radius:5px;color:white')
 
   const { reCaptchaV2 } = useContext(AppSettings)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, setProModal } = props
@@ -22,6 +23,7 @@ function GridLayout(props) {
   const cols = { lg: 6, md: 4, sm: 2 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
+  const history = useHistory()
 
   useEffect(() => {
     if (newData !== null) {
@@ -44,13 +46,11 @@ function GridLayout(props) {
     setBuilderWidth(gridWidth - 32 - w)
 
     if (style[`._frm-g-${formID}`]?.gap) {
-      console.log('style[`._frm-g-${formID}`]')
       const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
 
-    if (style[`.fld-lbl-${formID}`]['font-size']) { h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, '')) }
-    else {console.log(no) }
+    if (style[`.fld-lbl-${formID}`]?.['font-size']) { h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, '')) }
     if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
@@ -123,7 +123,6 @@ function GridLayout(props) {
                   vgrid[r][c] = 1
                 }
               }
-              // console.log("row", i, "col", j);
               return { x: j, y: i, vgrid, w }
             }
           } else {
@@ -374,13 +373,37 @@ function GridLayout(props) {
         className="bit-blk-icn drag "
         aria-label="Settings"
         title="Settings"
+        onClick={navigateToFieldSettings}
+        onKeyPress={navigateToFieldSettings}
+        role="button"
+        tabIndex="0"
       >
         <span className="btcd-icn icn-settings" />
       </div>
-
+      <div
+        style={{ right: 67, fontSize: 15 }}
+        className="bit-blk-icn drag "
+        aria-label="Style"
+        title="Style"
+        onClick={() => navigateToStyle(fields[item.i].typ)}
+        onKeyPress={() => navigateToStyle(fields[item.i].typ)}
+        role="button"
+        tabIndex="0"
+      >
+        <BrushIcn style={{ height: 20, width:20 }} />
+      </div>
       {compByTheme(fields[item.i])}
     </div>
   )
+
+  const navigateToFieldSettings = () => {
+    history.replace(history.location.pathname.replace(/style|style\/.+/g, "fs"))
+  }
+
+  const navigateToStyle = typ => {
+    // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
+    history.replace(history.location.pathname.replace(/fs|style\/.+/g, "style"))
+  }
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
