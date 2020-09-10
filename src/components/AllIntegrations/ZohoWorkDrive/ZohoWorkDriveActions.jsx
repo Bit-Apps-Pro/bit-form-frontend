@@ -115,7 +115,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
         <TitleModal action={openCreateFolderMdl}>
           <TableCheckBox onChange={(e) => actionHandler(e, 'create_folder')} checked={'create_folder' in workDriveConf?.actions} className="wdt-200 mt-4 mr-2" value="Create_Folder" title="Create New Folder" subTitle="Create a new folder in the selected folder" />
         </TitleModal>
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in workDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachments" subTitle="Add attachments from BitForm to Zoho Workdrive folder." />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in workDriveConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Upload Files" subTitle="Add attachments from BitForm to Zoho Workdrive folder." />
       </div>
 
       <ConfirmModal
@@ -145,7 +145,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
         && (
         <>
           <div className="btcd-hr mt-2" />
-          <div className="mt-2">Share with users:</div>
+          <div className="mt-2">Share with users: (optional)</div>
           {isLoading ? (
             <Loader style={{
               display: 'flex',
@@ -210,7 +210,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
         && (
         <>
           <div className="btcd-hr mt-2" />
-          <div className="mt-2">Share with users:</div>
+          <div className="mt-2">Share with users: (optional)</div>
           {isLoading ? (
             <Loader style={{
               display: 'flex',

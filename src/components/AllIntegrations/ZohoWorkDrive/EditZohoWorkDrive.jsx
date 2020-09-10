@@ -66,7 +66,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <br />
       <br />
       <b className="wdt-100 d-in-b">Folder:</b>
-      <select onChange={event => handleInput(event, 0)} name="folder" value={workDriveConf.folderMap[0]} className="btcd-paper-inp w-7">
+      <select onChange={event => handleInput(event, 0)} name="folder" value={workDriveConf.folderMap[0] || workDriveConf.folder} className="btcd-paper-inp w-7">
         <option value="">Select Folder</option>
         {
             workDriveConf?.default?.teamFolders?.[workDriveConf.team] && Object.values(workDriveConf.default.teamFolders[workDriveConf.team]).map(teamFolderApi => (
@@ -85,7 +85,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
             <b className="wdt-100 d-in-b" />
             <div className="d-in-b" style={{ width: (i + 1) * 10, height: 30 }} />
             <div className="flx sub-folder w-7">
-              <select onChange={event => handleInput(event, i + 1)} name="folder" value={workDriveConf.folderMap[i + 1]} className="btcd-paper-inp">
+              <select onChange={event => handleInput(event, i + 1)} name="folder" value={workDriveConf.folderMap[i + 1] || workDriveConf.folder} className="btcd-paper-inp">
                 <option value={workDriveConf.folderMap[i]}>/ root</option>
                 {
                   workDriveConf?.default?.folders?.[folder] && workDriveConf.default.folders[folder].map(folderApi => (
