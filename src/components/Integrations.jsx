@@ -113,6 +113,7 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
               title="Available Integrations"
               show={showMdl}
               setModal={setShowMdl}
+              style={{ width: 1000 }}
             >
               <div className="flx flx-wrp btcd-inte-wrp">
                 {integs.map((inte, i) => (
