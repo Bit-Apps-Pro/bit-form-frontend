@@ -9,6 +9,7 @@
     "core-js": "3",
     "create-file-list": "^1.0.1",
     "deepmerge-alt": "^0.3.0",
+    "offline-plugin": "^5.0.7",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-color-gradient-picker": "^0.1.2",

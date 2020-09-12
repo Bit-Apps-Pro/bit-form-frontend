@@ -14,7 +14,7 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": ".",
+  "start_url": "./sdf",
   "display": "minimal-ui",
   "theme_color": "#000000",
   "background_color": "#ffffff"
