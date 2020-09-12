@@ -3,7 +3,7 @@ import React, { useState, useRef, memo } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import Button from './Button'
 
-function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand }) {
+function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse }) {
   console.log('%c $render Accordions', 'background:aquamarine;padding:3px;border-radius:5px;')
 
   const [tgl, setTgl] = useState(false)
@@ -24,6 +24,13 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
     setH('auto')
     if (onExpand) {
       onExpand()
+    }
+  }
+
+  const onAccordionCollapse = el => {
+    setH(el.offsetHeight)
+    if (onCollapse) {
+      onCollapse()
     }
   }
 
@@ -51,8 +58,8 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
           timeout={300}
           onEntering={el => setH(el.offsetHeight)}
           onEntered={onAccordionExpand}
-          onExit={el => setH(el.offsetHeight)}
           onExiting={() => setH(0)}
+          onExit={el => onAccordionCollapse(el)}
           unmountOnExit
         >
           <div className="p-2">
