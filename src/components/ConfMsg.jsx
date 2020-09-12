@@ -53,6 +53,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
 
   useEffect(() => {
     tinyMceInit()
+    // return () => tinymce.remove()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])
 
@@ -65,12 +66,12 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   const addMoreMsg = () => {
     if (!('confirmation' in formSettings)) {
       formSettings.confirmation = { type: { successMsg: [] } }
-      formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      formSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     } else if ('successMsg' in formSettings.confirmation.type) {
-      formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      formSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     } else {
       formSettings.confirmation.type.successMsg = []
-      formSettings.confirmation.type.successMsg.push({ title: `Message Title ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      formSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     }
     setFormSettings({ ...formSettings })
   }
@@ -98,6 +99,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
+    tinymce.remove()
     if (tmpData.id !== undefined) {
       const status = await removeIntegration(tmpData.id, 'msg')
       if (!status) {
@@ -105,6 +107,10 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         setFormSettings({ ...formSettings })
       }
     }
+  }
+
+  const tinymceDestroy = () => {
+    tinymce.remove()
   }
 
   return (
