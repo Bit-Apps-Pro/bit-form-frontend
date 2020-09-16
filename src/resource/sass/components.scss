@@ -1,11 +1,13 @@
 body {
   scroll-behavior: smooth;
 }
-.btcd-fld-itm{
+.btcd-fld-itm {
   height: 100%;
 }
 .btcd-fld-itm:empty,
-.btcd-hidden {display:none;}
+.btcd-hidden {
+  display: none;
+}
 
 .btcd-flx {
   display: flex;
@@ -265,7 +267,7 @@ textarea.fld {
 }
 .btcd-sub {
   background: #0083f3 !important;
-  color: white;
+  color: white !important;
   text-transform: none !important;
   text-decoration: none !important;
   font-weight: bold !important;
@@ -348,7 +350,7 @@ textarea.fld {
 
 .btcd-f-wrp .btcd-inpBtn {
   display: inline-flex;
-  background: #0083f3 ;
+  background: #0083f3;
   cursor: pointer;
   padding: 5px 11px;
   align-items: center;

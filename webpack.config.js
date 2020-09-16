@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const OfflinePlugin = require('offline-plugin');
 const autoprefixer = require('autoprefixer');
-const WorkboxPlugin = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -118,14 +118,9 @@ module.exports = (env, argv) => {
           },
         ],
       }),
-      new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, 'serviceWorker.js'),
+      new OfflinePlugin({
+        publicPath: '/wp-content/plugins/BitForm/assets/js/',
       }),
-      /* new WorkboxPlugin.GenerateSW({
-        clientsClaim: true,
-        skipWaiting: true,
-        // swDest: '/src/service-worker.js',
-      }), */
     ],
 
     devtool: production ? '' : 'source-map',

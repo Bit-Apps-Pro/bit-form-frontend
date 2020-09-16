@@ -55,7 +55,15 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
   }
 
   const col = [
-    { Header: 'Template Name', accessor: 'title' },
+    {
+      Header: 'Template Name',
+      accessor: 'title',
+      Cell: row => (
+        <NavLink to={`${url}/${row.row.index}`}>
+          {row.cell.value}
+        </NavLink>
+      ),
+    },
     {
       Header: 'Action',
       accessor: 'action',

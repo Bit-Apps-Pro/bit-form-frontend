@@ -33,7 +33,7 @@ function FormDetails(props) {
   const [allLabels, setallLabels] = useState([])
   const [formFields, setFormFields] = useState([])
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const [formName, setFormName] = useState('Form Name')
+  const [formName, setFormName] = useState('Untitled Form')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [buttonDisabled, setbuttonDisabled] = useState(false)
   const { allFormsData, reportsData } = useContext(AllFormContext)
@@ -112,9 +112,9 @@ function FormDetails(props) {
     submitBtn: subBtn,
     confirmation: {
       type: {
-        successMsg: [{ title: 'Message Title 1', msg: 'Successfully Submitted.' }],
-        redirectPage: [{ title: 'Redirect Url 1', url: '' }],
-        webHooks: [{ title: 'Web Hook 1', url: '', method: 'GET' }],
+        successMsg: [{ title: 'Untitled Message 1', msg: 'Successfully Submitted.' }],
+        redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
+        webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
       },
     },
     mailTem,
