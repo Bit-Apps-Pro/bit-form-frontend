@@ -1246,6 +1246,12 @@ button.check {
     text-align: center;
     overflow: hidden;
     transition: height 0.2s;
+    & .btn {
+      padding: 3px;
+    }
+    & span.btcd-icn {
+      font-size: 16px;
+    }
   }
   & > .body {
     background: #fff;
@@ -1279,6 +1285,7 @@ button.check {
     box-shadow: 2px 2px 7px #cdd4e7;
     & > .btcd-inte-atn {
       height: 42px;
+      overflow: visible;
     }
   }
   & img {
@@ -2040,6 +2047,9 @@ nav.top-nav {
     border-radius: 8px 0 0 8px;
     margin: 0;
   }
+  & input.readonly {
+    background-color: #eee;
+  }
   & button {
     position: relative;
     cursor: pointer;
@@ -2686,8 +2696,8 @@ nav.top-nav {
     box-shadow: 0 0 0 0px $blue, 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
   }
   &:disabled {
-    color: gray;
-    background-color: #fafafa;
+    color: #000 !important;
+    background-color: #eee !important;
   }
 }
 .btcd-paper-drpdwn {

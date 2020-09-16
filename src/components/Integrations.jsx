@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
-import { Link, Switch, Route, useRouteMatch, useHistory, useParams } from 'react-router-dom'
-import Modal from './Modal'
+import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
+import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
-import zohoHub from '../resource/img/integ/hub.svg'
+import zohoCRM from '../resource/img/integ/crm.svg'
 import zohoDesk from '../resource/img/integ/desk.svg'
+import zohoHub from '../resource/img/integ/hub.svg'
+import zohoMail from '../resource/img/integ/mail.svg'
+import zohoPeople from '../resource/img/integ/people.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
 import zohoRecruit from '../resource/img/integ/recruit.svg'
-import zohoPeople from '../resource/img/integ/people.svg'
-import zohoCRM from '../resource/img/integ/crm.svg'
-import zohoCamp from '../resource/img/integ/campaigns.svg'
-import zohoMail from '../resource/img/integ/mail.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
-import NewInteg from './AllIntegrations/NewInteg'
-import EditInteg from './AllIntegrations/EditInteg'
-import ConfirmModal from './ConfirmModal'
 import bitsFetch from '../Utils/bitsFetch'
+import EditInteg from './AllIntegrations/EditInteg'
+import IntegInfo from './AllIntegrations/IntegInfo'
+import NewInteg from './AllIntegrations/NewInteg'
+import ConfirmModal from './ConfirmModal'
 import SnackMsg from './ElmSettings/Childs/SnackMsg'
+import Modal from './Modal'
 
-function Integrations({ integrations, setIntegration, formFields, setProModal }) {
+function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
@@ -146,18 +147,15 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
               <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
-                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2" type="button">
-                    <div>
-                      <span className="btcd-icn icn-edit" />
-                       &nbsp;Edit
-                    </div>
+                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"' }} type="button">
+                    <span className="btcd-icn icn-edit" />
                   </Link>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm" onClick={() => inteDelConf(i)} type="button">
-                    <div>
-                      <span className="btcd-icn icn-trash-2" />
-                        &nbsp;Delete
-                    </div>
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Delete"' }} onClick={() => inteDelConf(i)} type="button">
+                    <span className="btcd-icn icn-trash-2" />
                   </button>
+                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': '"Info"' }} type="button">
+                    <span className="btcd-icn icn-information-outline" />
+                  </Link>
                 </div>
                 <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>
@@ -174,6 +172,12 @@ function Integrations({ integrations, setIntegration, formFields, setProModal })
           && (
             <Route exact path={`${path}/edit/:id`}>
               <EditInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+            </Route>
+          )}
+        {integrations && integrations.length > 0
+          && (
+            <Route exact path={`${path}/info/:id`}>
+              <IntegInfo allIntegURL={allIntegURL} integrations={integrations} />
             </Route>
           )}
       </Switch>
