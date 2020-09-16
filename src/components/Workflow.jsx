@@ -438,7 +438,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
   }
 
   const setEmailSetting = (typ, e, lgcGrpInd) => {
-    console.log('ssss', e.split(','))
+    console.log('ssss', e)
     if (typ === 'tem') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
@@ -449,21 +449,21 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     } else if (typ === 'to') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.to = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.to = e
           break
         }
       }
     } else if (typ === 'cc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.cc = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.cc = e
           break
         }
       }
     } else if (typ === 'bcc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.bcc = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.bcc = e
           break
         }
       }
