@@ -1,12 +1,30 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const listChange = (list, campaignsConf, formID, setCampaignsConf, setisLoading, setSnackbar) => {
+export const handleInput = (e, formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar, isNew, error, setError) => {
+  let newConf = { ...campaignsConf }
+  if (isNew) {
+    const rmError = { ...error }
+    rmError[e.target.name] = ''
+    setError({ ...rmError })
+  }
+  newConf[e.target.name] = e.target.value
+
+  switch (e.target.name) {
+    case 'list':
+      newConf = listChange(newConf, formID, setCampaignsConf, setisLoading, setSnackbar)
+      break;
+    default:
+      break;
+  }
+  setCampaignsConf({ ...newConf })
+}
+
+export const listChange = (campaignsConf, formID, setCampaignsConf, setisLoading, setSnackbar) => {
   const newConf = { ...campaignsConf }
-  newConf.list = list
   newConf.field_map = [{ formField: '', zohoFormField: 'Contact Email' }]
 
   if (!newConf?.default?.fields?.[newConf.list]) {
-    refreshContactFields(list, formID, newConf, setCampaignsConf, setisLoading, setSnackbar)
+    refreshContactFields(formID, newConf, setCampaignsConf, setisLoading, setSnackbar)
   }
   return newConf
 }
@@ -40,7 +58,8 @@ export const refreshLists = (formID, campaignsConf, setCampaignsConf, setisLoadi
     .catch(() => setisLoading(false))
 }
 
-export const refreshContactFields = (list, formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar) => {
+export const refreshContactFields = (formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar) => {
+  const { list } = campaignsConf
   if (!list) {
     return
   }
@@ -63,7 +82,7 @@ export const refreshContactFields = (list, formID, campaignsConf, setCampaignsCo
             newConf.default.fields = {}
           }
 
-          newConf.default.fields[list] = result.data.fields.sort()
+          newConf.default.fields[list] = result.data
           newConf.field_map = [{ formField: '', zohoFormField: 'Contact Email' }]
           setSnackbar({ show: true, msg: 'Contact Fields refreshed' })
         } else {
@@ -80,4 +99,13 @@ export const refreshContactFields = (list, formID, campaignsConf, setCampaignsCo
       setisLoading(false)
     })
     .catch(() => setisLoading(false))
+}
+
+export const checkMappedFields = (campaignsConf) => {
+  const mappedFields = campaignsConf?.field_map ? campaignsConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && campaignsConf?.default?.fields?.[campaignsConf.list]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+  if (mappedFields.length > 0) {
+    return false
+  }
+
+  return true
 }

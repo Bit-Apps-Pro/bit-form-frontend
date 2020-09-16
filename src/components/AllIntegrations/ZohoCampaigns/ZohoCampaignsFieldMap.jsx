@@ -1,43 +1,15 @@
 import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsConf, setCampaignsConf }) {
-  const { list } = campaignsConf
-  const isNotRequired = field.zohoFormField !== 'Contact Email'
-
-  const addMap = ind => {
-    const newConf = { ...campaignsConf }
-
-    newConf.field_map.splice(ind, 0, { formField: '', zohoFormField: '' })
-
-    setCampaignsConf({ ...newConf })
-  }
-
-  const delMap = ind => {
-    const newConf = { ...campaignsConf }
-    if (newConf.field_map.length > 1) {
-      newConf.field_map.splice(ind, 1)
-    }
-    setCampaignsConf({ ...newConf })
-  }
-
-  const handleFieldMapping = (event, index) => {
-    const newConf = { ...campaignsConf }
-    newConf.field_map[index][event.target.name] = event.target.value
-    setCampaignsConf({ ...newConf })
-  }
-
-  const handleCustomValue = (e, ind) => {
-    const newConf = { ...campaignsConf }
-    newConf.field_map[ind].customValue = e.target.value
-    setCampaignsConf({ ...newConf })
-  }
+  const isNotRequired = field.zohoFormField === '' || campaignsConf.default.fields[campaignsConf.list].required?.indexOf(field.zohoFormField) === -1
 
   return (
     <div
       className={`flx flx-around mt-2 ${isNotRequired && 'mr-1'}`}
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i)}>
+      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
         <option value="">Select Field</option>
         {
           formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
@@ -45,17 +17,19 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
         <option value="custom">Custom...</option>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label="Custom Value" className="mr-2" type="text" value={field.customValue} placeholder="Custom Value" />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, campaignsConf, setCampaignsConf)} label="Custom Value" className="mr-2" type="text" value={field.customValue} placeholder="Custom Value" />}
 
-      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i)}>
+      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
         <option value="">Select Field</option>
         {
           isNotRequired
-            ? Object.values(campaignsConf.default.fields[list]).map(contactField => contactField !== 'Contact Email' && (
-              <option key={`${contactField}-1`} value={contactField}>
-                {contactField}
-              </option>
-            )) : (
+            ? campaignsConf?.default?.fields?.[campaignsConf.list]?.fields && campaignsConf.default.fields[campaignsConf.list].fields.map(contactField => contactField !== 'Contact Email'
+              && (
+                <option key={`${contactField}-1`} value={contactField}>
+                  {contactField}
+                </option>
+              ))
+            : (
               <option key="contact_email" value="Contact Email">
                 Contact Email
               </option>
@@ -63,7 +37,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
         }
       </select>
       <button
-        onClick={() => addMap(i)}
+        onClick={() => addFieldMap(i, campaignsConf, setCampaignsConf)}
         className={`icn-btn sh-sm ml-2 ${!isNotRequired && 'mr-8'}`}
         type="button"
       >
@@ -71,7 +45,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
       </button>
       {
         isNotRequired && (
-          <button onClick={() => delMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+          <button onClick={() => delFieldMap(i, campaignsConf, setCampaignsConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
             <span className="btcd-icn icn-trash-2" />
           </button>
         )
