@@ -8,7 +8,7 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortData } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Modal'
@@ -45,7 +45,7 @@ function FormDetails(props) {
   const { history, newFormId } = props
 
   useEffect(() => {
-    setFormFields(sortData(allLabels, 'name'))
+    setFormFields(sortArrOfObj(allLabels, 'name'))
   }, [allLabels])
 
   const onMount = () => {
