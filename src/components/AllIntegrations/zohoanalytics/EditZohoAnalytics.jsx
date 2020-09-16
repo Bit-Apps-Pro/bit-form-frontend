@@ -1,14 +1,12 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import ConfirmModal from '../../ConfirmModal'
-import Loader from '../../Loaders/Loader'
-import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 import { FormSaveContext } from '../../../pages/FormDetails'
-import { workspaceChange, tableChange, refreshWorkspaces, refreshTables, refreshTableHeaders } from './ZohoAnalyticsCommonFunc'
-import ZohoAnalyticsActions from './ZohoAnalyticsActions'
-import saveIntegConfig from '../IntegrationHelpers/IntegrationHelpers'
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { handleInput } from './ZohoAnalyticsCommonFunc'
+import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -20,23 +18,6 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   const [snack, setSnackbar] = useState({ show: false })
   const [actionMdl, setActionMdl] = useState({ show: false })
 
-  const handleInput = (e) => {
-    let newConf = { ...analyticsConf }
-    newConf[e.target.name] = e.target.value
-
-    switch (e.target.name) {
-      case 'workspace':
-        newConf = workspaceChange(e.target.value, newConf, formID, setAnalyticsConf, setisLoading, setSnackbar)
-        break;
-      case 'table':
-        newConf = tableChange(e.target.value, newConf, formID, setAnalyticsConf, setisLoading, setSnackbar)
-        break;
-      default:
-        break;
-    }
-    setAnalyticsConf({ ...newConf })
-  }
-
   const saveConfig = () => {
     if (analyticsConf.actions?.update && analyticsConf.actions?.update.criteria === '' && actionMdl.show !== 'criteria') {
       setActionMdl({ show: 'criteria' })
@@ -45,119 +26,37 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
     saveIntegConfig(integrations, setIntegration, allIntegURL, analyticsConf, history, saveForm, id, 1)
   }
 
-  const addFieldMap = (i) => {
-    const newConf = { ...analyticsConf }
-    if (i !== 0) {
-      newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
-    } else {
-      newConf.field_map.push({ formField: '', zohoFormField: '' })
-    }
-
-    setAnalyticsConf({ ...newConf })
-  }
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
         <b className="wdt-100 d-in-b">Integration Name:</b>
-        <input className="btcd-paper-inp w-7" onChange={event => handleInput(event)} name="name" value={analyticsConf.name} type="text" placeholder="Integration Name..." />
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, analyticsConf, setAnalyticsConf)} name="name" value={analyticsConf.name} type="text" placeholder="Integration Name..." />
       </div>
       <br />
       <br />
-      <b className="wdt-100 d-in-b">Workspace:</b>
-      <select onChange={event => handleInput(event)} name="workspace" value={analyticsConf.workspace} className="btcd-paper-inp w-7">
-        <option value="">Select Workspace</option>
-        {
-          analyticsConf?.default?.workspaces && analyticsConf.default.workspaces.map(workspaceApiName => (
-            <option value={workspaceApiName.workspaceName}>
-              {workspaceApiName.workspaceName}
-            </option>
-          ))
-        }
-      </select>
-      <button onClick={() => refreshWorkspaces(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Workspaces"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-      <br />
-      <br />
-      <b className="wdt-100 d-in-b">Table:</b>
-      <select onChange={event => handleInput(event)} name="table" value={analyticsConf.table} className="btcd-paper-inp w-7">
-        <option value="">Select Table</option>
-        {
-          analyticsConf?.default?.tables?.[analyticsConf.workspace] && Object.values(analyticsConf.default.tables[analyticsConf.workspace]).map(tableApiName => (
-            <option value={tableApiName.viewName}>
-              {tableApiName.viewName}
-            </option>
-          ))
-        }
-      </select>
-      <button onClick={() => refreshTables(analyticsConf.workspace, formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-      <br />
-      <br />
-      <small style={{ color: 'red', marginLeft: 100 }}>** Zoho Analytics doesn&apos;t support data INSERT / UPDATE in integration table</small>
 
-      {isLoading && (
-        <Loader style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 100,
-          transform: 'scale(0.7)',
-        }}
-        />
-      )}
-      {analyticsConf.default?.tables?.headers?.[analyticsConf.table]
-        && (
-          <>
-            <div className="mt-4">
-              <b className="wdt-100">Map Fields</b>
-              <button onClick={() => refreshTableHeaders(analyticsConf.workspace, analyticsConf.table, formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Table Headers"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-            </div>
-            <div className="btcd-hr mt-1" />
-            <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>Form Fields</b></div>
-              <div className="txt-dp"><b>Zoho Fields</b></div>
-            </div>
-
-            {analyticsConf.field_map.map((itm, i) => (
-              <ZohoAnalyticsFieldMap
-                i={i}
-                field={itm}
-                analyticsConf={analyticsConf}
-                formFields={formFields}
-                setAnalyticsConf={setAnalyticsConf}
-              />
-            ))}
-            <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(analyticsConf.field_map.length)} className="icn-btn sh-sm" type="button">+</button></div>
-            <div className="mt-4"><b className="wdt-100">Actions</b></div>
-            <div className="btcd-hr mt-1" />
-            <ZohoAnalyticsActions
-              analyticsConf={analyticsConf}
-              setAnalyticsConf={setAnalyticsConf}
-            />
-          </>
-        )}
-
-      <div className="txt-center w-9 mt-3">
-        <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm flx" type="button">
-          Save
-        </button>
-      </div>
-      <br />
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="red"
-        btnTxt="Ok"
-        show={actionMdl.show === 'criteria'}
-        close={() => setActionMdl({ show: false })}
+      <ZohoAnalyticsIntegLayout
+        formID={formID}
+        formFields={formFields}
+        handleInput={(e) => handleInput(e, analyticsConf, setAnalyticsConf, formID, setisLoading, setSnackbar)}
+        analyticsConf={analyticsConf}
+        setAnalyticsConf={setAnalyticsConf}
+        isLoading={isLoading}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
+        actionMdl={actionMdl}
+        setActionMdl={setActionMdl}
         action={saveConfig}
-        title="Warning!!!"
-        warning
-      >
-        <div className="btcd-hr mt-2" />
-        <div className="mt-5">Without any criteria, all data of table will get replaced.</div>
-      </ConfirmModal>
+      />
+
+      <IntegrationStepThree
+        edit
+        saveConfig={saveConfig}
+        disabled={analyticsConf.workspace === '' || analyticsConf.table === '' || analyticsConf.field_map.length < 1}
+      />
+      <br />
     </div>
   )
 }
