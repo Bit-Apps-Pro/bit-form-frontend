@@ -1,5 +1,27 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
+export const handleInput = (e, deskConf, setDeskConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
+  let newConf = { ...deskConf }
+  if (isNew) {
+    const rmError = { ...error }
+    rmError[e.target.name] = ''
+    setError({ ...rmError })
+  }
+  newConf[e.target.name] = e.target.value
+
+  switch (e.target.name) {
+    case 'orgId':
+      newConf = portalChange(newConf, formID, setDeskConf, setisLoading, setSnackbar)
+      break;
+    case 'department':
+      newConf = departmentChange(newConf, formID, setDeskConf, setisLoading, setSnackbar)
+      break;
+    default:
+      break;
+  }
+  setDeskConf({ ...newConf })
+}
+
 export const portalChange = (deskConf, formID, setDeskConf, setisLoading, setSnackbar) => {
   const newConf = { ...deskConf }
   newConf.department = ''
@@ -195,4 +217,13 @@ export const refreshProducts = (formID, deskConf, setDeskConf, setisLoading, set
     .catch(() => setisLoading(false))
 }
 
-export const generateMappedField = (recruitConf) => (recruitConf.default.fields[recruitConf.orgId].required.length > 0 ? recruitConf.default.fields[recruitConf.orgId].required?.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }])
+export const generateMappedField = deskConf => (deskConf.default.fields[deskConf.orgId].required.length > 0 ? deskConf.default.fields[deskConf.orgId].required?.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }])
+
+export const checkMappedFields = deskConf => {
+  const mappedFields = deskConf?.field_map ? deskConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && deskConf?.default?.fields?.[deskConf.orgId]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+  if (mappedFields.length > 0) {
+    return false
+  }
+
+  return true
+}
