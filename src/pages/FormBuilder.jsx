@@ -86,14 +86,18 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
         setstyleLoading(false)
         return Promise.reject(response.statusText)
       })
-      .then(styleText => {
-        const oldStyle = css2json(styleText)
+      .then(oldStyleText => {
+        const oldStyle = css2json(oldStyleText)
         styleDispatch({ type: 'init', style: oldStyle })
         setstyleLoading(false)
+        recheckStyleById(oldStyleText)
       })
       .catch(() => sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID)))))
   }
 
+  const recheckStyleById = (oldStyleText) => {
+    //console.log('===== style', new RegExp(`._frm-bg-${formID}`, 'g').test(oldStyleText))
+  }
   console.log('ssssssssssss', style)
 
   const setTolbar = useCallback(() => {
