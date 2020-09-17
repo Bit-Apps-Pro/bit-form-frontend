@@ -75,6 +75,7 @@ input.fld {
 
 input.fld,
 textarea.fld {
+  direction: inherit !important;
   display: inline-block !important;
   min-height: 40px !important;
   max-width: 100% !important;
