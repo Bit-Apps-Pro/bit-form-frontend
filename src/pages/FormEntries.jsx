@@ -11,7 +11,7 @@ import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import { AllFormContext } from '../Utils/AllFormContext'
-import noData from '../resource/img/nodata.jpg'
+import noData from '../resource/img/nodata.svg'
 
 function FormEntries({ allResp, setAllResp, allLabels }) {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
