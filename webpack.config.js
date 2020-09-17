@@ -114,8 +114,12 @@ module.exports = (env, argv) => {
             to: path.resolve(__dirname, '../assets/img/logo-256.png'),
           },
           {
-            from: path.resolve(__dirname, 'logo.svg'),
+            from: path.resolve(__dirname, 'logo-bg.svg'),
             to: path.resolve(__dirname, '../assets/img/logo-bg.svg'),
+          },
+          {
+            from: path.resolve(__dirname, 'logo.svg'),
+            to: path.resolve(__dirname, '../assets/img/logo.svg'),
           },
           {
             from: path.resolve(__dirname, 'redirect.php'),
