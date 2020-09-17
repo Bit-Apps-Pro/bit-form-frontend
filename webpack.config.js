@@ -7,6 +7,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
@@ -29,7 +30,7 @@ module.exports = (env, argv) => {
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, '../assets/js/'),
-      chunkFilename: '[name].js',
+      chunkFilename: '[name].js?[hash:6]',
       library: '_bitforms',
       libraryTarget: 'umd',
     },
@@ -96,7 +97,7 @@ module.exports = (env, argv) => {
           : JSON.stringify('development'),
       }),
       new MiniCssExtractPlugin({
-        filename: '../css/[name].css',
+        filename: '../css/[name].css?[hash:6]',
       }),
       new CopyPlugin({
         patterns: [
@@ -109,17 +110,22 @@ module.exports = (env, argv) => {
             to: path.resolve(__dirname, '../assets/img/bitform-logo-icon.ico'),
           },
           {
-            from: path.resolve(__dirname, 'main-logo-192.png'),
-            to: path.resolve(__dirname, '../assets/img/main-logo-192.png'),
+            from: path.resolve(__dirname, 'logo-256.png'),
+            to: path.resolve(__dirname, '../assets/img/logo-256.png'),
           },
           {
             from: path.resolve(__dirname, 'logo.svg'),
-            to: path.resolve(__dirname, '../assets/img/logo.svg'),
+            to: path.resolve(__dirname, '../assets/img/logo-bg.svg'),
+          },
+          {
+            from: path.resolve(__dirname, 'redirect.php'),
+            to: path.resolve(__dirname, '../assets/js/index.php'),
           },
         ],
       }),
-      new OfflinePlugin({
-        publicPath: '/wp-content/plugins/BitForm/assets/js/',
+      new WorkboxPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
       }),
     ],
 

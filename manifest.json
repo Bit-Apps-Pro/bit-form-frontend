@@ -1,21 +1,22 @@
 {
-  "short_name": "Bit Form",
   "name": "BitForm | From Builder for Wordpress",
+  "version": "1.0.3",
+  "short_name": "Bit Form",
   "description": "Modern From Builder for Wordpress",
   "icons": [
     {
-      "src": "../img/logo.svg",
-      "sizes": "177x211",
+      "src": "../img/logo-bg.svg",
+      "sizes": "256x256",
       "type": "image/svg"
     },
     {
-      "src": "../img/main-logo-192.png",
+      "src": "../img/logo-256.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "256x256"
     }
   ],
-  "start_url": "./sdf",
+  "start_url": ".",
   "display": "minimal-ui",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#13233c",
+  "background_color": "#13233c"
 }

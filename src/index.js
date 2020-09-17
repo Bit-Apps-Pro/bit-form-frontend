@@ -1,17 +1,16 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-filename-extension */
 import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
 import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
-// import * as Sentry from '@sentry/browser';
-// import * as serviceWorker from './serviceWorker'
-import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
+// import * as Sentry from '@sentry/browser';
+// import * as serviceWorker from './serviceWorker'
 
-OfflinePluginRuntime.install();
 const App = lazy(() => import('./App'))
 
 // Sentry.init({ dsn: 'https://ca450a3bacc2472bbe9b010388f11880@o400688.ingest.sentry.io/5259314' });
@@ -26,10 +25,9 @@ if (typeof bits !== 'undefined' && bits.baseURL && `${window.location.pathname +
 if (window.location.hash === '') {
   window.location = `${window.location.href}#/`
 }
-/* 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/wp-admin/admin.php?page=bitform#/service-worker.js').then(registration => {
+    navigator.serviceWorker.register(`${__webpack_public_path__}service-worker.js`).then(registration => {
       console.log('SW registered: ', registration);
     }).catch(registrationError => {
       console.log('SW registration failed: ', registrationError);
@@ -37,7 +35,7 @@ if ('serviceWorker' in navigator) {
   });
 } else {
   console.log('no sw')
-} */
+}
 
 ReactDOM.render(
   <AllFormContextProvider>
