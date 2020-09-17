@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import ConfirmModal from '../../ConfirmModal'
+import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 
 export default function ZohoRecruitActions({ recruitConf, setRecruitConf, tab }) {
+  const [recOwnerMdl, setrecOwnerMdl] = useState(false)
   const actionHandler = (val, typ) => {
     const newConf = { ...recruitConf }
     if (tab === 0) {
@@ -62,27 +63,18 @@ export default function ZohoRecruitActions({ recruitConf, setRecruitConf, tab })
     setRecruitConf({ ...newConf })
   }
 
-  const [recOwnerMdl, setrecOwnerMdl] = useState(false)
-  const openRecOwnerModal = () => {
-    setrecOwnerMdl(true)
-  }
-
-  const clsActionMdl = () => {
-    setrecOwnerMdl(false)
-  }
-
   return (
     <>
       <div className="d-flx flx-wrp">
         {recruitConf?.relatedlist?.module !== 'Notes'
           && (
-          <>
-            <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in recruitConf.actions : 'workflow' in recruitConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger workflows in Zoho Recruit." />
-            <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in recruitConf.actions : 'approval' in recruitConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to approval list in Zoho Recruit." />
-            {tab === 0 && <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={'upsert' in recruitConf.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="A record gets updated if the email already exists, else a new record will be created." />}
-          </>
+            <>
+              <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in recruitConf.actions : 'workflow' in recruitConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title="Workflow" subTitle="Trigger workflows in Zoho Recruit." />
+              <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in recruitConf.actions : 'approval' in recruitConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="Approval" title="Approval" subTitle="Send entries to approval list in Zoho Recruit." />
+              {tab === 0 && <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={'upsert' in recruitConf.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Upsert Record" subTitle="A record gets updated if the email already exists, else a new record will be created." />}
+            </>
           )}
-        <TableCheckBox onChange={openRecOwnerModal} checked={tab === 0 ? 'recordOwner' in recruitConf.actions : 'recordOwner' in recruitConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="recordOwner" title="Record Owner" subTitle="Set owner of current record" />
+        <TableCheckBox onChange={() => setrecOwnerMdl(true)} checked={tab === 0 ? 'recordOwner' in recruitConf.actions : 'recordOwner' in recruitConf.relatedlist.actions} className="wdt-200 mt-4 mr-2" value="recordOwner" title="Record Owner" subTitle="Set owner of current record" />
       </div>
       <ConfirmModal
         className="custom-conf-mdl"
@@ -90,15 +82,14 @@ export default function ZohoRecruitActions({ recruitConf, setRecruitConf, tab })
         btnClass="blue"
         btnTxt="Ok"
         show={recOwnerMdl}
-        close={clsActionMdl}
-        action={clsActionMdl}
+        close={() => setrecOwnerMdl(false)}
+        action={() => setrecOwnerMdl(false)}
         title="Record Owner"
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <small>Add an owner to Zoho Recruit record</small>
         <div className="mt-2">Owner ID</div>
-        <div className="flx flx-between mt-2">
-          <input onChange={e => actionHandler(e.target.value, 'recordOwner')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? recruitConf?.actions?.recordOwner : recruitConf.relatedlist?.actions?.recordOwner} placeholder="Enter Owner ID" />
+        <div className="flx flx-between">
+          <input onChange={e => actionHandler(e.target.value, 'recordOwner')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? (recruitConf?.actions?.recordOwner || '') : (recruitConf.relatedlist?.actions?.recordOwner || '')} placeholder="Enter Owner ID" />
         </div>
 
       </ConfirmModal>

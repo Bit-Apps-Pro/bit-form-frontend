@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import ConfirmModal from '../../ConfirmModal'
+import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import Loader from '../../Loaders/Loader'
 import { refreshOwners, refreshProducts } from './ZohoDeskCommonFunc'
 
@@ -87,18 +87,18 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <select
-              value={deskConf.actions.ticket_owner}
-              className="btcd-paper-inp"
-              onChange={e => actionHandler(e.target.value, 'ticket_owner')}
-            >
-              <option value="">Select Owner</option>
-              {deskConf.default?.owners?.[deskConf.orgId]?.map(owner => <option key={owner.ownerId} value={owner.ownerId}>{owner.ownerName}</option>)}
-            </select>
-            <button onClick={() => refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
-        )}
+            <div className="flx flx-between mt-2">
+              <select
+                value={deskConf.actions.ticket_owner}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'ticket_owner')}
+              >
+                <option value="">Select Owner</option>
+                {deskConf.default?.owners?.[deskConf.orgId]?.map(owner => <option key={owner.ownerId} value={owner.ownerId}>{owner.ownerName}</option>)}
+              </select>
+              <button onClick={() => refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
       </ConfirmModal>
 
       <ConfirmModal
@@ -122,18 +122,18 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <select
-              value={deskConf.actions.product}
-              className="btcd-paper-inp"
-              onChange={e => actionHandler(e.target.value, 'product')}
-            >
-              <option value="">Select Product</option>
-              {deskConf.default?.products?.[deskConf.department]?.map(product => <option key={product.productId} value={product.productId}>{product.productName}</option>)}
-            </select>
-            <button onClick={() => refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Products"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
-        )}
+            <div className="flx flx-between mt-2">
+              <select
+                value={deskConf.actions.product}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'product')}
+              >
+                <option value="">Select Product</option>
+                {deskConf.default?.products?.[deskConf.department]?.map(product => <option key={product.productId} value={product.productId}>{product.productName}</option>)}
+              </select>
+              <button onClick={() => refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Products"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
       </ConfirmModal>
 
       <ConfirmModal

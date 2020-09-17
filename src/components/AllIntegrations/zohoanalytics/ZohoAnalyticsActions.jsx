@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
+import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import Modal from '../../Modal'
 import TitleModal from '../../TitleModal'
 

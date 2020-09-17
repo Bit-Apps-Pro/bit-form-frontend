@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { ReactSortable } from 'react-sortablejs'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import TitleModal from '../../TitleModal'
-import Loader from '../../Loaders/Loader'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
-import ConfirmModal from '../../ConfirmModal'
-import Modal from '../../Modal'
-import { refreshTags, refreshOwners, refreshAssigmentRules } from './ZohoCRMCommonFunc'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { ReactSortable } from 'react-sortablejs'
+import ConfirmModal from '../../ConfirmModal'
+import CheckBox from '../../ElmSettings/Childs/CheckBox'
+import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import Loader from '../../Loaders/Loader'
+import Modal from '../../Modal'
+import TitleModal from '../../TitleModal'
+import { refreshAssigmentRules, refreshOwners, refreshTags } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {
   const [upsertMdl, setUpsertMdl] = useState(false)
@@ -164,6 +164,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
     const arr = [
       { title: 'Zoho CRM Tags', type: 'group', childs: [] },
       { title: 'Form Fields', type: 'group', childs: [] },
+      { label: "Email test  ", value: "bf19-7-Email_Field" }
     ]
 
     if (crmConf.default.tags?.[module]) {
@@ -172,7 +173,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
 
     arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
     return arr
-
   }
 
   const setUpsertSettings = (val, typ) => {
@@ -204,7 +204,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
 
   const openAssignmentRulesModal = () => {
     if (!crmConf?.default?.assignmentRules?.[module]) {
-      refreshAssigmentRules(module, crmConf, setCrmConf, setisLoading, setSnackbar)
+      refreshAssigmentRules(tab, crmConf, setCrmConf, setisLoading, setSnackbar)
     }
     setActionMdl({ show: 'assignment_rules' })
   }
@@ -226,7 +226,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
 
   return (
     <div className="pos-rel">
-      {!isPro && (<div className="pro-blur flx w-9" style={{ top: -25 }}>
+      {!isPro && (<div className="pro-blur flx w-10" style={{ top: -25 }}>
         <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
       </div>)}
       <div className="d-flx flx-wrp">
@@ -292,9 +292,9 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                 onChange={e => actionHandler(e.target.value, 'assignment_rules')}
               >
                 <option value="">Select Assignment Rule</option>
-                {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={crmConf.default.assignmentRules[module][assignmentName]} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
+                {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={assignmentName} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
               </select>
-              <button onClick={() => refreshAssigmentRules(crmConf.module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Assignment Rules"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => refreshAssigmentRules(tab, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Assignment Rules"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           )}
       </ConfirmModal>
@@ -329,7 +329,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                 options={getTags()}
                 onChange={(val) => actionHandler(val, 'tag_rec')}
               />
-              <button onClick={() => refreshTags(formID, module, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+              <button onClick={() => refreshTags(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
           )}
 
@@ -364,7 +364,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                 onChange={e => actionHandler(e.target.value, 'rec_owner')}
               >
                 <option value="">Select Owner</option>
-                {crmConf.default?.crmOwner?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
+                {crmConf.default?.crmOwner && Object.values(crmConf.default.crmOwner)?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
               </select>
               <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>

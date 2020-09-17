@@ -1,5 +1,28 @@
 import bitsFetch from '../../../Utils/bitsFetch'
-import { sortData } from '../../../Utils/Helpers'
+import { sortArrOfObj } from '../../../Utils/Helpers'
+
+export const handleInput = (e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, ind, isNew, error, setError) => {
+  let newConf = { ...workDriveConf }
+  if (isNew) {
+    const rmError = { ...error }
+    rmError[e.target.name] = ''
+    setError({ ...rmError })
+  }
+  newConf[e.target.name] = e.target.value
+
+  switch (e.target.name) {
+    case 'team':
+      newConf = teamChange(newConf, formID, setWorkDriveConf, setisLoading, setSnackbar)
+      break;
+    case 'folder':
+      newConf.folderMap = newConf.folderMap.slice(0, ind)
+      newConf = folderChange(newConf, formID, setWorkDriveConf, setisLoading, setSnackbar)
+      break;
+    default:
+      break;
+  }
+  setWorkDriveConf({ ...newConf })
+}
 
 export const teamChange = (workDriveConf, formID, setWorkDriveConf, setisLoading, setSnackbar) => {
   const newConf = { ...workDriveConf }
@@ -110,7 +133,7 @@ export const refreshSubFolders = (formID, workDriveConf, setWorkDriveConf, setis
             newConf.default.folders = {}
           }
 
-          newConf.default.folders[folder] = sortData(result.data.folders, 'folderName')
+          newConf.default.folders[folder] = sortArrOfObj(result.data.folders, 'folderName')
           if (!newConf.folderMap.includes(folder)) newConf.folderMap.push(folder)
           setSnackbar({ show: true, msg: 'Sub Folders refreshed' })
         } else {
