@@ -374,7 +374,7 @@ function FormDetails(props) {
             <div className="btcd-bld-btn">
               <button className="btn blue" type="button" onClick={saveForm} disabled={buttonDisabled}>
                 {buttonText}
-                {buttonDisabled && <LoaderSm size="20" clr="white" className="ml-1" />}
+                {buttonDisabled && <LoaderSm size={20} clr="white" className="ml-1" />}
               </button>
               <NavLink to="/" className="btn btcd-btn-close">
                 <span className="btcd-icn icn-clear" />
