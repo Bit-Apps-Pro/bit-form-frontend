@@ -92,13 +92,24 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
         setstyleLoading(false)
         recheckStyleById(oldStyleText)
       })
-      .catch(() => sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID)))))
+      .catch(() => {
+        const dfThm = defaultTheme(formID)
+        styleDispatch({ type: 'init', style: dfThm })
+        sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(dfThm)))
+      })
   }
 
   const recheckStyleById = (oldStyleText) => {
-    //console.log('===== style', new RegExp(`._frm-bg-${formID}`, 'g').test(oldStyleText))
+    if (!new RegExp(`._frm-bg-${formID}|._frm-${formID}`, 'g').test(oldStyleText)) {
+      const replaceId = oldStyleText.match(/._frm-bg-\d+/g)?.[0].replace(/._frm-bg-/g, '')?.[0]
+      if (replaceId !== undefined) {
+        oldStyleText = oldStyleText.replaceAll(new RegExp(`-${replaceId}`, 'g'), `-${formID}`)
+      }
+    }
+    const modifiedStyle = css2json(oldStyleText)
+    styleDispatch({ type: 'init', style: modifiedStyle })
+    sessionStorage.setItem('btcd-fs', bitCipher(oldStyleText))
   }
-  console.log('ssssssssssss', style)
 
   const setTolbar = useCallback(() => {
     const res = conRef.current.getResizer()
