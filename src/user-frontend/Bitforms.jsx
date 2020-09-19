@@ -17,7 +17,7 @@ export default function Bitforms(props) {
   let maxRowIndex = 0
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
-    const name = dataToPass[field.i].lbl ? field.i + dataToPass[field.i].lbl.split(' ').join('_') : field.i
+    const name = dataToPass[field.i].lbl ? field.i + dataToPass[field.i].lbl.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_') : field.i
     // eslint-disable-next-line no-param-reassign
     dataToPass[field.i].name = name
     if (props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && dataToPass[field.i].typ === 'recaptcha') {
