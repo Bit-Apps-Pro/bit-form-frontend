@@ -19,7 +19,7 @@
     "react-dom": "^16.13.1",
     "react-google-recaptcha": "^2.0.1",
     "react-grid-layout": "^1.0.0",
-    "react-multiple-select-dropdown-lite": "^1.0.15",
+    "react-multiple-select-dropdown-lite": "^1.0.17",
     "react-router-dom": "^5.1.2",
     "react-simple-resizer": "^2.1.0",
     "react-sortablejs": "^2.0.11",

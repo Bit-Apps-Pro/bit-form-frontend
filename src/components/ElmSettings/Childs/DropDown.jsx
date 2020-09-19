@@ -2,7 +2,7 @@ import React from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-function DropDown({ options, placeholder, action, className, isMultiple, value, addable, titleClassName, title, jsonValue }) {
+function DropDown({ options, placeholder, action, className, isMultiple, allowCustomOpt, value, addable, titleClassName, title, jsonValue }) {
   if (!options || options === null || options.length === 0) {
     // eslint-disable-next-line no-param-reassign
     options = undefined
@@ -35,6 +35,7 @@ function DropDown({ options, placeholder, action, className, isMultiple, value, 
         className={`btcd-paper-drpdwn msl-wrp-options ${className}`}
         onChange={action}
         singleSelect={!isMultiple}
+        customValue={allowCustomOpt}
         placeholder={placeholder}
         jsonValue={jsonValue}
         options={(options !== null && options !== false) && options}

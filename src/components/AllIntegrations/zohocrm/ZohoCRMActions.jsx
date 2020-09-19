@@ -164,7 +164,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
     const arr = [
       { title: 'Zoho CRM Tags', type: 'group', childs: [] },
       { title: 'Form Fields', type: 'group', childs: [] },
-      { label: "Email test  ", value: "bf19-7-Email_Field" }
     ]
 
     if (crmConf.default.tags?.[module]) {
