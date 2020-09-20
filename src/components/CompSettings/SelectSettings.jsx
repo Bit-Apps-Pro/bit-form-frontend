@@ -18,6 +18,7 @@ export default function SelectSettings(props) {
 
   const isRequired = elmData.valid.req !== undefined
   const isMultiple = elmData.mul
+  const allowCustomOpt = elmData.customOpt !== undefined
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
 
@@ -66,6 +67,15 @@ export default function SelectSettings(props) {
       elmData.mul = true
     } else {
       delete elmData.mul
+    }
+    props.updateData({ id: elmId, data: elmData })
+  }
+
+  function setAllowCustomOption(e) {
+    if (e.target.checked) {
+      elmData.customOpt = true
+    } else {
+      delete elmData.customOpt
     }
     props.updateData({ id: elmId, data: elmData })
   }
@@ -124,6 +134,7 @@ export default function SelectSettings(props) {
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />
+      <SingleToggle title="Allow Other Option:" action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3" />
       {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
       <div className="opt">
         <span className="font-w-m">Options:</span>

@@ -76,6 +76,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
         {...'name' in attr && { name: 'mul' in attr ? `${attr.name}` : attr.name }}
         // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
         singleSelect={!attr.mul}
+        customValue={attr.customOpt}
         options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
         onChange={onChangeHandler}
         {...{ defaultValue: value }}
