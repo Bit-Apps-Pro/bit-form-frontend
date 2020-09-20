@@ -299,8 +299,7 @@ function FormDetails(props) {
   }
 
   useEffect(() => {
-    console.log('ccccccccccccc', integrations)
-    if (integrations[integrations.length - 1]?.newItegration) {
+    if (integrations[integrations.length - 1]?.newItegration||integrations[integrations.length - 1]?.editItegration) {
       integrations.pop()
       saveForm()
     }
