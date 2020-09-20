@@ -12,7 +12,7 @@ export default function SelectSettings(props) {
   const options = [...elmData.opt]
   let fldKey = elmId
   if ('lbl' in elmData) {
-    fldKey = elmId + elmData.lbl.split(' ').join('_')
+    fldKey = elmId + elmData.lbl.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
   }
   console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
 
