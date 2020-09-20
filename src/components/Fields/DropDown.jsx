@@ -30,7 +30,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
     } else if (defaultValue && attr.conditional) {
       setvalue(defaultValue)
     }
-  }, [attr.val, attr.userinput, attr.conditional])
+  }, [attr.val, attr.userinput, attr.conditional, defaultValue, value])
 
   useEffect(() => {
     if (resetFieldValue) {
@@ -43,7 +43,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
     }
-  }, [value])
+  }, [attr, defaultValue, onBlurHandler, value])
 
   const onChangeHandler = (event) => {
     if (event && event.target && event.target.slim) {

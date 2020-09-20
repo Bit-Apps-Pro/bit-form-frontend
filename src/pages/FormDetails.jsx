@@ -418,6 +418,7 @@ function FormDetails(props) {
                 formName={formName}
                 setFormName={setFormName}
                 formFields={formFields}
+                fields={fields}
                 formSettings={formSettings}
                 setFormSettings={setFormSettings}
                 mailTem={mailTem}

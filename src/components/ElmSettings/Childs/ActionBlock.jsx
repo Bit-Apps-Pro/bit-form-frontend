@@ -1,10 +1,30 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import MtSelect from './MtSelect'
-import MtInput from './MtInput'
+import React, { useState } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
+import MtInput from './MtInput'
+import MtSelect from './MtSelect'
 
-function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
+function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
+  const [fieldVal, setFieldVal] = useState('')
+
+  let fieldKey = ''
+  let type = '';
+
+  if (formFields !== null) {
+    let fieldLbl = ''
+    // eslint-disable-next-line array-callback-return
+    formFields.map(itm => {
+      if (itm.key === fieldVal) {
+        type = itm.type
+        fieldLbl = itm.name.replace(/[ ]/gi, '_')
+      }
+    })
+
+    fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
+  }
+
   const changeAction = val => {
     setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].action = val
@@ -20,6 +40,7 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
   }
 
   const changeAtnField = val => {
+    setFieldVal(val)
     setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].field = val
       return [...prv]
@@ -69,7 +90,17 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
             <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
           </svg>
 
-          <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val} />
+          {type === 'select'
+            ? (
+              <MultiSelect
+                className="msl-wrp-options btcd-paper-drpdwn w-10"
+                defaultValue={action.val}
+                onChange={changeAtnVal}
+                options={fields?.[fieldKey]?.opt}
+                customValue={fields?.[fieldKey]?.customOpt}
+                singleSelect={!fields?.[fieldKey]?.mul}
+              />
+            ) : (<MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />)}
         </>
       )}
 
