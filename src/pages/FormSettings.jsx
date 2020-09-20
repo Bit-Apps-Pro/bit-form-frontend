@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
@@ -74,7 +74,7 @@ export default function FormSettings(props) {
           </Route>
           <Route path={`${path}workflow`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <Workflow formFields={props.formFields} setProModal={props.setProModal} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
+              <Workflow formFields={props.formFields} fields={props.fields} setProModal={props.setProModal} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
             </Suspense>
           </Route>
           <Route path={`${path}integrations`}>

@@ -15,7 +15,7 @@ import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './ConfirmModal'
 
-function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID }) {
+function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
   /* eslint-disable-next-line no-undef */
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -449,21 +449,21 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
     } else if (typ === 'to') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.to = e
+          workFlows[lgcGrpInd].successAction[i].details.to = e.split(',')
           break
         }
       }
     } else if (typ === 'cc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.cc = e
+          workFlows[lgcGrpInd].successAction[i].details.cc = e.split(',')
           break
         }
       }
     } else if (typ === 'bcc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.bcc = e
+          workFlows[lgcGrpInd].successAction[i].details.bcc = e.split(',')
           break
         }
       }
@@ -590,21 +590,21 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                 {
                   lgcGrp.action_behaviour === 'cond' && lgcGrp.logics.map((logic, ind) => (
                     <span key={`logic-${ind + 44}`}>
-                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
+                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
                       {typeof logic === 'string' && <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind)} />}
                       {Array.isArray(logic) && (
                         <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                           {logic.map((subLogic, subInd) => (
                             <span key={`subLogic-${subInd + 55}`}>
-                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
+                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
                               {typeof subLogic === 'string' && <LogicChip logic={subLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd)} />}
                               {Array.isArray(subLogic) && (
                                 <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                                   {subLogic.map((subSubLogic, subSubLgcInd) => (
                                     <span key={`subsubLogic-${subSubLgcInd + 90}`}>
-                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={formFields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
+                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
                                       {typeof subSubLogic === 'string' && <LogicChip logic={subSubLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd, subSubLgcInd)} />}
                                     </span>
                                   ))}
@@ -752,7 +752,7 @@ function Workflow({ formFields, formSettings, workFlows, setworkFlows, formID })
                   <div className="ml-2 mt-2">
                     {lgcGrp.actions.map((action, actionInd) => (
                       <span key={`atn-${actionInd + 22}`}>
-                        <ActionBlock formFields={formFields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
+                        <ActionBlock formFields={formFields} fields={fields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
                         {lgcGrp.actions.length !== actionInd + 1 && (
                           <>
                             <div style={{ height: 5 }}>

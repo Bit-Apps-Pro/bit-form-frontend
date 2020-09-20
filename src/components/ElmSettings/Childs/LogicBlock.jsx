@@ -1,10 +1,13 @@
 import React from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import MtSelect from './MtSelect'
 import MtInput from './MtInput'
 import Button from './Button'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
+function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   let type = ''
+  let fieldLbl = ''
   if (formFields !== null) {
     // eslint-disable-next-line array-callback-return
     formFields.map(itm => {
@@ -14,9 +17,12 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         } else {
           type = itm.type
         }
+        fieldLbl = itm.name.replace(/[ ]/gi, '_')
       }
     })
   }
+
+  const fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
@@ -64,13 +70,25 @@ function LogicBlock({ fieldVal, formFields, delLogic, lgcGrpInd, lgcInd, subLgcI
         {/* <circle cx="31" cy="20" r="3" fill="#b9c5ff" /> */}
       </svg>
 
-      <MtInput
-        label="Value"
-        type={type}
-        disabled={logicValue === 'null' || logicValue === 'not_null'}
-        onChange={e => changeValue(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-        value={value}
-      />
+      {type === 'select'
+        ? (
+          <MultiSelect
+            className="msl-wrp-options btcd-paper-drpdwn w-10"
+            defaultValue={value}
+            onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+            options={fields[fieldKey].opt}
+            customValue
+          />
+        ) : (
+          <MtInput
+            label="Value"
+            type={type}
+            disabled={logicValue === 'null' || logicValue === 'not_null'}
+            onChange={e => changeValue(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+            value={value}
+          />
+        )}
+
       <div className="btcd-li-side-btn">
         <Button onClick={() => delLogic(lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} icn className="ml-2 white mr-2 sh-sm">
           <span className="btcd-icn icn-trash-2" />
