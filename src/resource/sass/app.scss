@@ -1263,12 +1263,16 @@ button.check {
     padding-top: 3px;
     padding-bottom: 3px;
     & > div {
-      width: 95%;
+      width: 85%;
+      font-size: 14px;
       height: 17px;
       text-overflow: ellipsis;
       overflow: hidden;
       margin: auto;
       white-space: pre;
+    }
+    & small{
+      font-size: 12px;
     }
   }
   & a {
@@ -4004,4 +4008,11 @@ select.btcd-ud-inp {
 _:-ms-fullscreen,
 :root .f-table [data-sticky-first-right-td="true"] {
   position: relative;
+}
+
+.sub-tree {
+  height: 100%;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #eeeeee;
 }
