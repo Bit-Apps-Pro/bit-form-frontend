@@ -1,17 +1,17 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import React, { useState, memo, useCallback, useEffect, useContext } from 'react'
+import React, { memo, useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import bitsFetch from '../Utils/bitsFetch'
-import Table from '../components/Table'
-import TableAction from '../components/ElmSettings/Childs/TableAction'
-import EditEntryData from '../components/EditEntryData'
-import Drawer from '../components/Drawer'
-import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
 import ConfirmModal from '../components/ConfirmModal'
+import Drawer from '../components/Drawer'
+import EditEntryData from '../components/EditEntryData'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
-import { AllFormContext } from '../Utils/AllFormContext'
+import TableAction from '../components/ElmSettings/Childs/TableAction'
+import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
+import Table from '../components/Table'
 import noData from '../resource/img/nodata.svg'
+import { AllFormContext } from '../Utils/AllFormContext'
+import bitsFetch from '../Utils/bitsFetch'
 
 function FormEntries({ allResp, setAllResp, allLabels }) {
   console.log('%c $render FormEntries', 'background:skyblue;padding:3px;border-radius:5px')
@@ -32,7 +32,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const { allFormsDispatchHandler } = allFormsData
   const [report] = useState(0)
   const [countEntries, setCountEntries] = useState(0)
-  const [refreshData, setRefreshData] = useState(0)
+  const [refreshResp, setRefreshResp] = useState(0)
 
   useEffect(() => {
     if (reports.length > 0) {
@@ -94,8 +94,8 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
 
   const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
     // eslint-disable-next-line no-plusplus
-    if (refreshData) {
-      setRefreshData(0)
+    if (refreshResp) {
+      setRefreshResp(0)
       setisloading(true)
     }
 
@@ -118,7 +118,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           setisloading(false)
         })
     }
-  }, [delConfMdl, dupConfMdl, editData, formID, refreshData])
+  }, [delConfMdl, dupConfMdl, editData, formID, refreshResp])
 
   const setBulkDelete = useCallback((rows, action) => {
     const rowID = []
@@ -270,7 +270,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
     <div id="form-res">
       <div className="af-header flx">
         <h2>Form Responses</h2>
-        <button className="icn-btn sh-sm ml-2 mr-2 tooltip" onClick={() => setRefreshData(1)} style={{ '--tooltip-txt': '"Refresh Form Responses"' }} type="button" disabled={isloading}>&#x21BB;</button>
+        <button className="icn-btn sh-sm ml-2 mr-2 tooltip" onClick={() => setRefreshResp(1)} style={{ '--tooltip-txt': '"Refresh Form Responses"' }} type="button" disabled={isloading}>&#x21BB;</button>
       </div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
