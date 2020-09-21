@@ -1,15 +1,15 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, memo, useState, useContext } from 'react'
-import { useTable, useFilters, usePagination, useGlobalFilter, useSortBy, useRowSelect, useResizeColumns, /* useBlockLayout */ useFlexLayout, useColumnOrder } from 'react-table'
-import { useSticky } from 'react-table-sticky'
+import React, { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
-import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
-import Menu from './ElmSettings/Childs/Menu'
-import ConfirmModal from './ConfirmModal'
-import TableLoader2 from './Loaders/TableLoader2'
+import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
+import { useSticky } from 'react-table-sticky'
 import { AllFormContext } from '../Utils/AllFormContext'
+import ConfirmModal from './ConfirmModal'
+import Menu from './ElmSettings/Childs/Menu'
+import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
+import TableLoader2 from './Loaders/TableLoader2'
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -37,7 +37,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
 
   return (
     <div className="f-search">
-      <button type="button" className="icn-btn" aria-label="icon-btn" onClick={e => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
+      <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
       <label>
         <input
           value={globalFilter || ''}
@@ -443,7 +443,7 @@ function Table(props) {
                 }
               }}
             >
-              {[10, 20, 30, 40, 50, 100].map(pageSiz => (
+              {[10, 20, 30, 40, 50].map(pageSiz => (
                 <option key={pageSiz} value={pageSiz}>
                   Show
                   {' '}

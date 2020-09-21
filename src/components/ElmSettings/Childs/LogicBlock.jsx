@@ -59,7 +59,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         <option value="null">Is Null</option>
         <option value="not_null">Is Not Null</option>
         {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain">Contain</option>}
-        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain_all">Contain All</option>}
+        {((fldType === 'select' && fields?.[fieldKey]?.mul) || fldType === 'check') && <option value="contain_all">Contain All</option>}
         {!type.match(/^(date|time|datetime|month|week)$/) && <option value="not_contain">Not Contain</option>}
         {!type.match(/^(color|url|password|email|text)$/) && <option value="greater">Greater Than</option>}
         {!type.match(/^(color|url|password|email|text)$/) && <option value="less">Less Than</option>}

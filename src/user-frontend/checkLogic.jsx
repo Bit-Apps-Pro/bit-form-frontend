@@ -123,6 +123,31 @@ export const checkLogic = (logics, fields) => {
         return checker > 0
       }
 
+      case 'contain_all': {
+        if (!targetFieldValue) {
+          return false
+        }
+        const valueToCheck = logicsVal.split(',')
+        let checker = 0
+        if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
+        ) {
+          const fieldValue = Array.isArray(targetFieldValue)
+            ? targetFieldValue
+            : JSON.parse(targetFieldValue)
+          valueToCheck.forEach(singleToken => {
+            if (fieldValue.length > 0 && fieldValue.indexOf(singleToken) !== -1) {
+              checker += 1
+            }
+          })
+          if (checker >= valueToCheck.length) {
+            return true
+          }
+          return false
+        }
+        break
+      }
+
       case 'not_contain': {
         if (!targetFieldValue) {
           return false
