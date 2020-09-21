@@ -39,7 +39,9 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
           <br />
           <div className="flx">
             <b className="wdt-100 d-in-b" />
-            <div className="d-in-b" style={{ width: (i + 1) * 10, height: 30 }} />
+            <div className="d-in-b" style={{ width: (i + 1) * 10, height: 30, marginLeft: 1, marginRight: 2, height: 58, marginTop: -60 }}>
+              <div className="sub-tree" />
+            </div>
             <div className="flx sub-folder w-7">
               <select onChange={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, i + 1)} name="folder" value={workDriveConf.folderMap[i + 1] || workDriveConf.folder} className="btcd-paper-inp">
                 <option value={workDriveConf.folderMap[i]}>/ root</option>

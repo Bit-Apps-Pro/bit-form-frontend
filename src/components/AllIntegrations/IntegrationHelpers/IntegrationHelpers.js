@@ -5,6 +5,7 @@ export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, deskConf
 
   if (edit) {
     integs[id] = { ...allintegs[id], ...deskConf }
+    integs.push({ editItegration: true })
     setIntegration([...integs])
     saveForm()
     history.push(allIntegURL)
