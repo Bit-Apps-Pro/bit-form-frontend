@@ -43,7 +43,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   const onChangeHandler = (event) => {
@@ -65,7 +65,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
   }
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="select">
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl} {attr.valid.req && ' *'}</label>}
       {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
       <MultiSelect

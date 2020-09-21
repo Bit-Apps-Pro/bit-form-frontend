@@ -7,6 +7,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   let type = ''
+  let fldType = ''
   let fieldLbl = ''
   if (formFields !== null) {
     // eslint-disable-next-line array-callback-return
@@ -17,10 +18,13 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         } else {
           type = itm.type
         }
+        fldType = itm.type
         fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
       }
     })
   }
+
+  console.log('sssss', fields)
 
   const fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
 
@@ -70,13 +74,13 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         {/* <circle cx="31" cy="20" r="3" fill="#b9c5ff" /> */}
       </svg>
 
-      {type === 'select'
+      {fldType === 'select' || fldType === 'check' || fldType === 'radio'
         ? (
           <MultiSelect
             className="msl-wrp-options btcd-paper-drpdwn w-10"
             defaultValue={value}
             onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-            options={fields[fieldKey].opt}
+            options={fldType === 'select' ? fields?.[fieldKey]?.opt : (fldType === 'check' || fldType === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}
             customValue
           />
         ) : (
