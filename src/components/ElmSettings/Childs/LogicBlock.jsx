@@ -17,7 +17,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         } else {
           type = itm.type
         }
-        fieldLbl = itm.name.replace(/[ ]/gi, '_')
+        fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
       }
     })
   }

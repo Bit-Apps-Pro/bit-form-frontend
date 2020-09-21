@@ -44,7 +44,7 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
@@ -68,7 +68,7 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
@@ -94,7 +94,7 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
@@ -118,7 +118,7 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
@@ -146,7 +146,6 @@ export const checkLogic = (logics, fields) => {
         }
         return targetFieldValue !== '' && targetFieldValue > logicsVal
 
-
       case 'less':
         if (!targetFieldValue) {
           return false
@@ -155,7 +154,6 @@ export const checkLogic = (logics, fields) => {
           return targetFieldValue !== '' && Number(targetFieldValue) < Number(logicsVal)
         }
         return targetFieldValue !== '' && targetFieldValue < logicsVal
-
 
       case 'greater_or_equal':
         if (!targetFieldValue) {
@@ -166,7 +164,6 @@ export const checkLogic = (logics, fields) => {
         }
         return targetFieldValue !== '' && targetFieldValue >= logicsVal
 
-
       case 'less_or_equal':
         if (!targetFieldValue) {
           return false
@@ -175,7 +172,6 @@ export const checkLogic = (logics, fields) => {
           return targetFieldValue !== '' && Number(targetFieldValue) <= Number(logicsVal)
         }
         return targetFieldValue !== '' && targetFieldValue <= logicsVal
-
 
       case 'start_with':
         if (!targetFieldValue) {
@@ -188,7 +184,6 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         return logicsVal === targetFieldValue.substr(targetFieldValue.length - logicsVal.length, targetFieldValue.length)
-
 
       default:
         return false
@@ -245,7 +240,6 @@ export const evalMathExpression = (stringToReplace) => {
     try {
       mutatedString = Function(`"use strict";return (${mutatedString})`)()
     } catch (error) {
-      console.log('errorMathexpr', error)
       return stringToReplace
     }
   }

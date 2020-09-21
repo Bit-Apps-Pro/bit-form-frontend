@@ -43,7 +43,8 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
     }
-  }, [attr, defaultValue, onBlurHandler, value])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
 
   const onChangeHandler = (event) => {
     if (event && event.target && event.target.slim) {
