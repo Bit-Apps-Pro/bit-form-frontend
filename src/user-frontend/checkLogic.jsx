@@ -74,12 +74,16 @@ export const checkLogic = (logics, fields) => {
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
           const valueToCheck = logicsVal.split(',')
+          if (fieldValue.length !== valueToCheck.length) {
+            return true;
+          }
+          let checker = 0;
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
-              return true
+              checker += 1
             }
           })
-          return targetFieldValue !== logicsVal
+          return valueToCheck.length === checker
         }
         return targetFieldValue !== logicsVal
 

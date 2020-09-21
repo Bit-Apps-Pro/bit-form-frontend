@@ -7,7 +7,6 @@ export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, deskConf
     integs[id] = { ...allintegs[id], ...deskConf }
     integs.push({ editItegration: true })
     setIntegration([...integs])
-    saveForm()
     history.push(allIntegURL)
   } else {
     const newInteg = [...integs]
