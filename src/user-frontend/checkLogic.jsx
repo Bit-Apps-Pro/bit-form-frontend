@@ -89,20 +89,20 @@ export const checkLogic = (logics, fields) => {
       case 'not_null':
         return targetFieldValue.length > 0
 
-      case 'contain':
+      case 'contain': {
         if (!targetFieldValue) {
           return false
         }
+        const valueToCheck = logicsVal.split(',')
+        let checker = 0
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
           || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
-          const valueToCheck = logicsVal.split(',')
-          let checker = 0
-          valueToCheck.forEach(value => {
-            if (fieldValue.length > 0 && fieldValue.indexOf(value) !== -1) {
+          valueToCheck.forEach(singleToken => {
+            if (fieldValue.length > 0 && fieldValue.indexOf(singleToken) !== -1) {
               checker += 1
             }
           })
@@ -111,31 +111,40 @@ export const checkLogic = (logics, fields) => {
           }
           return false
         }
-        return targetFieldValue !== '' && targetFieldValue.indexOf(logicsVal) !== -1
+        valueToCheck.forEach(singleToken => {
+          if (targetFieldValue.length > 0 && targetFieldValue.indexOf(singleToken) !== -1) {
+            checker += 1
+          }
+        })
+        return checker > 0
+      }
 
-      case 'not_contain':
+      case 'not_contain': {
         if (!targetFieldValue) {
           return false
         }
+        const valueToCheck = logicsVal.split(',')
+        let checker = 0
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
           || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
-          const valueToCheck = logicsVal.split(',')
-          let checker = 0
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
               checker += 1
             }
           })
-          if (checker === valueToCheck.length) {
-            return true
-          }
-          return false
+          return checker === valueToCheck.length
         }
-        return logicsVal.length > 0 && targetFieldValue.indexOf(logicsVal) === -1
+        valueToCheck.forEach(singleToken => {
+          if (targetFieldValue.length > 0 && targetFieldValue.indexOf(singleToken) === -1) {
+            checker += 1
+          }
+        })
+        return checker === valueToCheck.length
+      }
 
       case 'greater':
         if (!targetFieldValue) {
