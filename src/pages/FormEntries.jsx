@@ -32,6 +32,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const { allFormsDispatchHandler } = allFormsData
   const [report] = useState(0)
   const [countEntries, setCountEntries] = useState(0)
+  const [refreshData, setRefreshData] = useState(0)
 
   useEffect(() => {
     if (reports.length > 0) {
@@ -93,6 +94,11 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
 
   const fetchData = useCallback(({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
     // eslint-disable-next-line no-plusplus
+    if (refreshData) {
+      setRefreshData(0)
+      setisloading(true)
+    }
+
     const fetchId = ++fetchIdRef.current
     if (allResp.length < 1) {
       setisloading(true)
@@ -112,8 +118,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           setisloading(false)
         })
     }
-
-  }, [delConfMdl, dupConfMdl, editData, formID])
+  }, [delConfMdl, dupConfMdl, editData, formID, refreshData])
 
   const setBulkDelete = useCallback((rows, action) => {
     const rowID = []
@@ -263,8 +268,9 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
 
   return (
     <div id="form-res">
-      <div className="af-header flx flx-between">
+      <div className="af-header flx">
         <h2>Form Responses</h2>
+        <button className="icn-btn sh-sm ml-2 mr-2 tooltip" onClick={() => setRefreshData(1)} style={{ '--tooltip-txt': '"Refresh Form Responses"' }} type="button" disabled={isloading}>&#x21BB;</button>
       </div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 

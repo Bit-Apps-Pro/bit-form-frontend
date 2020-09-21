@@ -91,7 +91,8 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
           {type === 'select' || type === 'check' || type === 'radio'
             ? (
               <MultiSelect
-                className="msl-wrp-options btcd-paper-drpdwn w-10"
+                width="100%"
+                className="msl-wrp-options btcd-paper-drpdwn"
                 defaultValue={action.val}
                 onChange={changeAtnVal}
                 options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}

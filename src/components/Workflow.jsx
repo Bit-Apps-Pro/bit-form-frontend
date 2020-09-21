@@ -250,16 +250,19 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     if (subSubLgcInd !== undefined) {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].field = val
+        prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].val = ''
         return [...prv]
       })
     } else if (subLgcInd !== undefined) {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].field = val
+        prv[lgcGrpInd].logics[lgcInd][subLgcInd].val = ''
         return [...prv]
       })
     } else {
       setworkFlows(prv => {
         prv[lgcGrpInd].logics[lgcInd].field = val
+        prv[lgcGrpInd].logics[lgcInd].val = ''
         return [...prv]
       })
     }
