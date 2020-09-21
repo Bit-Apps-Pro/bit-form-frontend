@@ -105,7 +105,7 @@ export default function Bitforms(props) {
           let value
           let multiple
           let { type } = fieldDetails[0]
-          if (fieldDetails[0].name === element.name) {
+          if (fieldDetails[0].name === element.name && type !== 'checkbox') {
             // console.log('fieldDetails[0].', fieldDetails[0].nextElementSibling, fieldDetails[0].value, element.value, fieldDetails[0].name === element.name, fieldDetails[0].name, targetFieldName)
             value = element.value
             multiple = element.multiple

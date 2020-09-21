@@ -25,6 +25,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     } else if (attr.conditional) {
       setvalue(defaultValue)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.val, attr.userinput, attr.conditional, attr.opt])
   useEffect(() => {
     if (resetFieldValue) {
@@ -62,6 +63,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
             <input
               type="checkbox"
               ref={checkBoxRef}
+              disabled={attr?.valid?.disabled}
               // {...itm.check && { defaultChecked: true }}
               // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
               {...'lbl' in itm && { defaultValue: itm.lbl }}
