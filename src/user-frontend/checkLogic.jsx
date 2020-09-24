@@ -252,10 +252,9 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
         mutatedString = mutatedString.replace(field, fieldValues[fieldName].value)
       }
     })
-    mutatedString = evalMathExpression(mutatedString)
   }
 
-  return mutatedString
+  return evalMathExpression(mutatedString)
 }
 
 export const evalMathExpression = (stringToReplace) => {

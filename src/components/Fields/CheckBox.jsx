@@ -54,7 +54,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     }
   }
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="textarea">
+    <div className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
       {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         {attr.opt.map((itm, i) => (
