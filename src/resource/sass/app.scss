@@ -1183,6 +1183,9 @@ button.check {
 .wdt-100 {
   width: 100px !important;
 }
+.wdt-150 {
+  width: 150px !important;
+}
 .wdt-200 {
   width: 200px !important;
 }
@@ -1271,7 +1274,7 @@ button.check {
       margin: auto;
       white-space: pre;
     }
-    & small{
+    & small {
       font-size: 12px;
     }
   }
