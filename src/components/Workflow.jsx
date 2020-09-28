@@ -30,21 +30,11 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
       const flds = []
       formFields.map(fld => {
         if (fld.type === 'email') {
-          flds.push({ label: fld.name, value: fld.key })
+          flds.push({ label: fld.name, value: `\${${fld.key}}` })
         }
       })
       mail.push({ title: 'Form Fields', type: 'group', childs: flds })
     }
-    console.log('sss', mail)
-    /* const mailStr = JSON.stringify(mail)
-    if (vals !== undefined) {
-      // eslint-disable-next-line array-callback-return
-      vals.map(i => {
-        if (i !== 'admin' && mailStr.indexOf(i) === -1) {
-          mail.push({ label: i, value: i })
-        }
-      })
-    } */
     return mail
   }
   const getValueFromArr = (key, subkey, lgcGrpInd) => {
@@ -725,7 +715,6 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             addable
                             options={mailOptions(getValueFromArr('mailNotify', 'cc', lgcGrpInd))}
                           />
-
                           <DropDown
                             action={val => setEmailSetting('bcc', val, lgcGrpInd)}
                             placeholder="Add Email BCC"
