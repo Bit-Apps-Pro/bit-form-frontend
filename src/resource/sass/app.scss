@@ -1183,6 +1183,9 @@ button.check {
 .wdt-100 {
   width: 100px !important;
 }
+.wdt-150 {
+  width: 150px !important;
+}
 .wdt-200 {
   width: 200px !important;
 }
@@ -1271,7 +1274,7 @@ button.check {
       margin: auto;
       white-space: pre;
     }
-    & small{
+    & small {
       font-size: 12px;
     }
   }
@@ -2742,7 +2745,7 @@ nav.top-nav {
 
 select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
-  color: $dp-bg;
+  color: $dp-bg !important;
   box-shadow: none;
   padding: 10px 24px 10px 10px !important;
   appearance: none;
@@ -3359,6 +3362,7 @@ select.btcd-paper-inp {
 }
 
 .btcd-mt-inp {
+  color: $dp-bg !important;
   display: inline-block;
   position: relative;
   line-height: 1;
@@ -3575,6 +3579,7 @@ select.btcd-paper-inp {
     display: block;
     background: url($select-arrow) no-repeat right #fff;
     box-shadow: none;
+    color: $dp-bg !important;
     height: auto;
     line-height: 1;
     border-radius: 8px;

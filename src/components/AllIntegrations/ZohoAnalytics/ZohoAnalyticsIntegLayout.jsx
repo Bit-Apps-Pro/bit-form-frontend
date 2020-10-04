@@ -1,12 +1,11 @@
 import React from 'react'
-import ConfirmModal from '../../ConfirmModal'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoAnalyticsActions from './ZohoAnalyticsActions'
 import { refreshTableHeaders, refreshTables, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
 
-export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInput, analyticsConf, setAnalyticsConf, isLoading, setisLoading, setSnackbar, actionMdl, setActionMdl, action }) {
+export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInput, analyticsConf, setAnalyticsConf, isLoading, setisLoading, setSnackbar }) {
   return (
     <>
       <br />
@@ -85,21 +84,6 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
             />
           </>
         )}
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="red"
-        btnTxt="Ok"
-        show={actionMdl.show === 'criteria'}
-        close={() => setActionMdl({ show: false })}
-        action={action}
-        title="Warning!!!"
-        warning
-      >
-        <div className="btcd-hr mt-2" />
-        <div className="mt-5">Without any criteria, all data of table will get replaced.</div>
-      </ConfirmModal>
     </>
   )
 }

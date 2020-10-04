@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { FormSaveContext } from '../../../pages/FormDetails'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
@@ -11,7 +10,6 @@ import ZohoCRMIntegLayout from './ZohoCRMIntegLayout'
 function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
-  const saveForm = useContext(FormSaveContext)
 
   const [crmConf, setCrmConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
@@ -25,7 +23,7 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
-    saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history, saveForm, id, 1)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history, id, 1)
   }
 
   return (

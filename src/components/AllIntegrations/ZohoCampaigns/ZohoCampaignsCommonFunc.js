@@ -83,7 +83,7 @@ export const refreshContactFields = (formID, campaignsConf, setCampaignsConf, se
           }
 
           newConf.default.fields[list] = result.data
-          newConf.field_map = [{ formField: '', zohoFormField: 'Contact Email' }]
+
           setSnackbar({ show: true, msg: 'Contact Fields refreshed' })
         } else {
           setSnackbar({ show: true, msg: "Zoho didn't provide fields names for this list" })

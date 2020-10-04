@@ -1,17 +1,15 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, deskConf, history, saveForm, id, edit) => {
+export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, confTmp, history, id, edit) => {
   const integs = [...allintegs]
-
   if (edit) {
-    integs[id] = { ...allintegs[id], ...deskConf }
+    integs[id] = { ...allintegs[id], ...confTmp }
     integs.push({ editItegration: true })
     setIntegration([...integs])
-    saveForm()
     history.push(allIntegURL)
   } else {
     const newInteg = [...integs]
-    newInteg.push(deskConf)
+    newInteg.push(confTmp)
     newInteg.push({ newItegration: true })
     setIntegration(newInteg)
     history.push(allIntegURL)
@@ -52,10 +50,10 @@ export const handleAuthorize = (integ, ajaxInteg, scopes, confTmp, setConf, setE
       clearInterval(popupURLCheckTimer)
       let grantTokenResponse = {}
       let isauthRedirectLocation = false
-      const bitformsZohoCrm = localStorage.getItem(`__bitforms_${integ}`)
-      if (bitformsZohoCrm) {
+      const bitformsZoho = localStorage.getItem(`__bitforms_${integ}`)
+      if (bitformsZoho) {
         isauthRedirectLocation = true
-        grantTokenResponse = JSON.parse(bitformsZohoCrm)
+        grantTokenResponse = JSON.parse(bitformsZoho)
         localStorage.removeItem(`__bitforms_${integ}`)
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {

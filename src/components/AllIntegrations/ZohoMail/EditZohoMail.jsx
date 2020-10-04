@@ -4,22 +4,26 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput } from './ZohoWorkDriveCommonFunc'
-import ZohoWorkDriveIntegLayout from './ZohoWorkDriveIntegLayout'
+import { handleInput } from './ZohoMailCommonFunc'
+import ZohoMailIntegLayout from './ZohoMailIntegLayout'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
-  const { id, formID } = useParams()
+  const { id } = useParams()
 
-  const [workDriveConf, setWorkDriveConf] = useState({ ...integrations[id] })
-  const [isLoading, setisLoading] = useState(false)
+  const [mailConf, setMailConf] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
-
-  console.log('workDriveConf', workDriveConf)
+  const [actionMdl, setActionMdl] = useState({ show: false })
 
   const saveConfig = () => {
-    saveIntegConfig(integrations, setIntegration, allIntegURL, workDriveConf, history, id, 1)
+    if (mailConf.actions?.update && mailConf.actions?.update.criteria === '' && actionMdl.show !== 'criteria') {
+      setActionMdl({ show: 'criteria' })
+      return
+    }
+    saveIntegConfig(integrations, setIntegration, allIntegURL, mailConf, history, id, 1)
   }
+
+  console.log('mailConf', mailConf)
 
   return (
     <div style={{ width: 900 }}>
@@ -27,26 +31,23 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
 
       <div className="flx mt-3">
         <b className="wdt-100 d-in-b">Integration Name:</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, workDriveConf, setWorkDriveConf)} name="name" value={workDriveConf.name} type="text" placeholder="Integration Name..." />
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, mailConf, setMailConf)} name="name" value={mailConf.name} type="text" placeholder="Integration Name..." />
       </div>
       <br />
       <br />
 
-      <ZohoWorkDriveIntegLayout
-        formID={formID}
+      <ZohoMailIntegLayout
         formFields={formFields}
-        workDriveConf={workDriveConf}
-        setWorkDriveConf={setWorkDriveConf}
-        isLoading={isLoading}
-        setisLoading={setisLoading}
-        setSnackbar={setSnackbar}
+        mailConf={mailConf}
+        setMailConf={setMailConf}
       />
 
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={workDriveConf.team === '' || workDriveConf.folder === ''}
+        // disabled={mailConf.workspace === '' || mailConf.table === '' || mailConf.field_map.length < 1}
       />
+      <br />
     </div>
   )
 }

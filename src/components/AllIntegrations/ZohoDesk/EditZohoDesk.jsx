@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { FormSaveContext } from '../../../pages/FormDetails'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
@@ -14,7 +13,6 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   const [deskConf, setDeskConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-  const saveForm = useContext(FormSaveContext)
 
   console.log('deskConf', deskConf)
 
@@ -28,7 +26,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       setSnackbar({ show: true, msg: 'Please select a ticket owner' })
       return
     }
-    saveIntegConfig(integrations, setIntegration, allIntegURL, deskConf, history, saveForm, id, 1)
+    saveIntegConfig(integrations, setIntegration, allIntegURL, deskConf, history, id, 1)
   }
 
   return (

@@ -30,7 +30,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
     } else if (defaultValue && attr.conditional) {
       setvalue(defaultValue)
     }
-  }, [attr.val, attr.userinput, attr.conditional])
+  }, [attr.val, attr.userinput, attr.conditional, defaultValue, value])
 
   useEffect(() => {
     if (resetFieldValue) {
@@ -43,6 +43,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   const onChangeHandler = (event) => {
@@ -63,8 +64,8 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
     }
   }
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="select">
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="select">
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl} {attr.valid.req && ' *'}</label>}
       {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
       <MultiSelect

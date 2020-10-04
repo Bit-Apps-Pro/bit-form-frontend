@@ -105,12 +105,13 @@ export default function Bitforms(props) {
           let value
           let multiple
           let { type } = fieldDetails[0]
-          if (fieldDetails[0].name === element.name) {
+          if (fieldDetails[0].name === element.name && type !== 'checkbox') {
             // console.log('fieldDetails[0].', fieldDetails[0].nextElementSibling, fieldDetails[0].value, element.value, fieldDetails[0].name === element.name, fieldDetails[0].name, targetFieldName)
             value = element.value
             multiple = element.multiple
             type = element.type
           } else if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
+            console.log('type', type)
             switch (type) {
               case 'checkbox':
                 // eslint-disable-next-line no-case-declarations
@@ -160,7 +161,7 @@ export default function Bitforms(props) {
       });
       props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
         const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldValues)
-        console.log('checkLogic', targetFieldName, element.value, logicStatus, props.conditional[LogicIndex]/* , newData, fieldData */)
+        console.log('checkLogic', targetFieldName, fieldValues, logicStatus, props.conditional[LogicIndex]/* , newData, fieldData */)
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {

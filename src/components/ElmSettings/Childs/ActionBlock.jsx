@@ -1,10 +1,28 @@
 /* eslint-disable no-param-reassign */
 import React from 'react'
-import MtSelect from './MtSelect'
-import MtInput from './MtInput'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
+import MtInput from './MtInput'
+import MtSelect from './MtSelect'
 
-function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
+function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
+  let fieldKey = ''
+  let type = '';
+
+  if (formFields !== null) {
+    let fieldLbl = ''
+    // eslint-disable-next-line array-callback-return
+    formFields.map(itm => {
+      if (itm.key === action.field) {
+        type = itm.type
+        fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
+      }
+    })
+
+    fieldKey = action.field.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
+  }
+
   const changeAction = val => {
     setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].action = val
@@ -22,6 +40,7 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
   const changeAtnField = val => {
     setworkFlows(prv => {
       prv[lgcGrpInd].actions[actionInd].field = val
+      prv[lgcGrpInd].actions[actionInd].val = ''
       return [...prv]
     })
   }
@@ -69,7 +88,18 @@ function ActionBlock({ formFields, action, lgcGrpInd, actionInd, setworkFlows, a
             <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
           </svg>
 
-          <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val} />
+          {type === 'select' || type === 'check' || type === 'radio'
+            ? (
+              <MultiSelect
+                width="100%"
+                className="msl-wrp-options btcd-paper-drpdwn"
+                defaultValue={action.val}
+                onChange={changeAtnVal}
+                options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}
+                customValue={fields?.[fieldKey]?.customOpt}
+                singleSelect={type === 'select' ? !fields?.[fieldKey]?.mul : type === 'check' ? false : type === 'radio' && true}
+              />
+            ) : (<MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />)}
         </>
       )}
 

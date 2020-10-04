@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, Suspense } from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
@@ -16,6 +16,7 @@ export default function FormSettings(props) {
 
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
+  const [newTemplate, setNewTemplate] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
 
   return (
     <div className="btcd-f-settings">
@@ -64,7 +65,7 @@ export default function FormSettings(props) {
           </Route>
           <Route exact path={`${path}email-templates/new`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateNew saveForm={props.saveForm} formFields={props.formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
+              <EmailTemplateNew tem={newTemplate} setTem={setNewTemplate} saveForm={props.saveForm} formFields={props.formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
@@ -74,7 +75,7 @@ export default function FormSettings(props) {
           </Route>
           <Route path={`${path}workflow`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <Workflow formFields={props.formFields} setProModal={props.setProModal} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
+              <Workflow formFields={props.formFields} fields={props.fields} setProModal={props.setProModal} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
             </Suspense>
           </Route>
           <Route path={`${path}integrations`}>

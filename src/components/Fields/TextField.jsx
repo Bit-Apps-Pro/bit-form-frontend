@@ -32,7 +32,7 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue, formID
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="text-fld">
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="text-fld">
       {'lbl' in attr && <label title={attr.lbl} className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}{attr.valid?.req && ' *'}</label>}
       <input
         className={`fld fld-${formID} no-drg`}

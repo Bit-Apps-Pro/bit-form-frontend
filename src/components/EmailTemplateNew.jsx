@@ -3,27 +3,34 @@ import React, { useState, useEffect } from 'react'
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 import Modal from './Modal'
 
-function EmailTemplateNew({ mailTem, setMailTem, formFields, saveForm }) {
+function EmailTemplateNew({ tem, setTem, mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
 
-  const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
   const [showTemplateModal, setTemplateModal] = useState(false)
   const { formType, formID, id } = useParams()
   const history = useHistory()
 
+  console.log('kkkkkkkk', tem)
   const handleBody = val => {
-    tem.body = val
-    setTem({ ...tem })
+    const tmp = { ...tem }
+    console.log('kkkkkkk', tmp)
+    tmp.body = val
+    setTem(tmp)
   }
 
-  useEffect(() => {
+  const tinyMceInit = () => {
     if (typeof tinymce !== 'undefined' && formFields.length > 0) {
-      const s = document.querySelectorAll('.form-fields-em')
+      const s = document.querySelectorAll('.form-fields')
       for (let i = 0; i < s.length; i += 1) {
         s[i].style.display = 'none'
       }
+
       // eslint-disable-next-line no-undef
       tinymce.init({
+        // mode: "exact",
+        // elements: 'pre-details',
+        // statusbar: false,
+        // skin: 'lightgray',
         selector: '.btcd-editor',
         plugins: 'link hr lists wpview wpemoji',
         theme: 'modern',
@@ -34,7 +41,7 @@ function EmailTemplateNew({ mailTem, setMailTem, formFields, saveForm }) {
         toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
-            handleBody(editor.getContent(), editor.targetElm.getAttribute('data-idx'))
+            handleBody(editor.getContent())
           })
 
           editor.addButton('addFormField', {
@@ -47,6 +54,11 @@ function EmailTemplateNew({ mailTem, setMailTem, formFields, saveForm }) {
         },
       })
     }
+  }
+
+  const { title, sub } = tem
+  useEffect(() => {
+    tinyMceInit()
 
     return function cleanup() {
       if (typeof tinymce !== 'undefined') {
@@ -55,16 +67,12 @@ function EmailTemplateNew({ mailTem, setMailTem, formFields, saveForm }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields])
+  }, [formFields, title, sub, handleBody])
 
-  const handleTitle = e => {
-    tem.title = e.target.value
-    setTem({ ...tem })
-  }
-
-  const handleSubject = e => {
-    tem.sub = e.target.value
-    setTem({ ...tem })
+  const handleInput = e => {
+    const tmp = { ...tem }
+    tmp[e.target.name] = e.target.value
+    setTem(tmp)
   }
 
   const save = () => {
@@ -106,11 +114,11 @@ function EmailTemplateNew({ mailTem, setMailTem, formFields, saveForm }) {
 
       <div className="mt-3 flx">
         <b style={{ width: 103 }}>Template Name: </b>
-        <input onChange={handleTitle} type="text" className="btcd-paper-inp w-9" placeholder="Name" value={tem.title} />
+        <input onChange={handleInput} name="title" type="text" className="btcd-paper-inp w-9" placeholder="Name" value={tem.title} />
       </div>
       <div className="mt-3 flx">
         <b style={{ width: 100 }}>Subject:</b>
-        <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
+        <input onChange={handleInput} name="sub" type="text" className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={tem.sub} />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
           <option value="">Add form field</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}

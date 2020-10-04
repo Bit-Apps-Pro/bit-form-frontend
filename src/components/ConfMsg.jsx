@@ -53,7 +53,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
 
   useEffect(() => {
     tinyMceInit()
-    // return () => tinymce.remove()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formSettings, formFields])
 

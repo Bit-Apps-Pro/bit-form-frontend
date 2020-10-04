@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import Modal from '../../Modal'
@@ -11,8 +11,9 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
   const actionHandler = (val, typ) => {
     const newConf = { ...analyticsConf }
     if (typ === 'update') {
-      if (val.target.checked) {
+      if (val.target.checked && !newConf?.actions?.update) {
         newConf.actions.update = { insert: true, criteria: '' }
+        setUpdateMdl(true)
       } else {
         delete newConf.actions.update
       }
@@ -44,6 +45,15 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
     setUpdateMdl(true)
   }
 
+  useEffect(() => {
+    if (!updateMdl && !analyticsConf.actions?.update?.criteria) {
+      const newConf = { ...analyticsConf }
+      delete newConf.actions.update
+      setAnalyticsConf({ ...newConf })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateMdl])
+
   return (
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
@@ -69,14 +79,11 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf }
                   {'("Table Name"."Department" = \'Finance\' and "Table Name"."Salary" < 9000 or "Table Name"."Country" = \'USA\')'}
                 </small>
                 <br />
+                <br />
                 <small>Here Department, Salary and Country are Zoho Analytics table column name</small>
-                {' '}
-                <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Supported Arithmetic Operators: +, -, *, /"' }} type="button">
+                <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': '"Supported Arithmetic Operators: ( +, -, *, / ) and Supported Relational Operators: ( =, !=, <, >, <=, >=, LIKE, NOT LIKE, IN, NOT IN, BETWEEN )"', '--tt-wrap': 'wrap', '--tt-width': '225px', fontSize: 15 }}>
                   <span className="btcd-icn icn-information-outline" />
-                </button>
-                <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, LIKE, NOT LIKE, IN, NOT IN, BETWEEN"' }} type="button">
-                  <span className="btcd-icn icn-information-outline" />
-                </button>
+                </span>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={analyticsConf.actions?.update?.criteria} />
               </div>
 

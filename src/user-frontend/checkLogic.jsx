@@ -44,7 +44,7 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
@@ -68,18 +68,22 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
           const valueToCheck = logicsVal.split(',')
+          if (fieldValue.length !== valueToCheck.length) {
+            return true;
+          }
+          let checker = 0;
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
-              return true
+              checker += 1
             }
           })
-          return targetFieldValue !== logicsVal
+          return valueToCheck.length === checker
         }
         return targetFieldValue !== logicsVal
 
@@ -89,20 +93,20 @@ export const checkLogic = (logics, fields) => {
       case 'not_null':
         return targetFieldValue.length > 0
 
-      case 'contain':
+      case 'contain': {
         if (!targetFieldValue) {
           return false
         }
+        const valueToCheck = logicsVal.split(',')
+        let checker = 0
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
-          const valueToCheck = logicsVal.split(',')
-          let checker = 0
-          valueToCheck.forEach(value => {
-            if (fieldValue.length > 0 && fieldValue.indexOf(value) !== -1) {
+          valueToCheck.forEach(singleToken => {
+            if (fieldValue.length > 0 && fieldValue.indexOf(singleToken) !== -1) {
               checker += 1
             }
           })
@@ -111,31 +115,65 @@ export const checkLogic = (logics, fields) => {
           }
           return false
         }
-        return targetFieldValue !== '' && targetFieldValue.indexOf(logicsVal) !== -1
+        valueToCheck.forEach(singleToken => {
+          if (targetFieldValue.length > 0 && targetFieldValue.indexOf(singleToken) !== -1) {
+            checker += 1
+          }
+        })
+        return checker > 0
+      }
 
-      case 'not_contain':
+      case 'contain_all': {
         if (!targetFieldValue) {
           return false
         }
+        const valueToCheck = logicsVal.split(',')
+        let checker = 0
         if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
-          || targetFieldValue === 'check'
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
         ) {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
-          const valueToCheck = logicsVal.split(',')
-          let checker = 0
+          valueToCheck.forEach(singleToken => {
+            if (fieldValue.length > 0 && fieldValue.indexOf(singleToken) !== -1) {
+              checker += 1
+            }
+          })
+          if (checker >= valueToCheck.length) {
+            return true
+          }
+          return false
+        }
+        break
+      }
+
+      case 'not_contain': {
+        if (!targetFieldValue) {
+          return false
+        }
+        const valueToCheck = logicsVal.split(',')
+        let checker = 0
+        if ((fields[logics.field].multiple !== undefined && fields[logics.field].multiple)
+          || targetFieldValue === 'check' || Array.isArray(targetFieldValue)
+        ) {
+          const fieldValue = Array.isArray(targetFieldValue)
+            ? targetFieldValue
+            : JSON.parse(targetFieldValue)
           valueToCheck.forEach(value => {
             if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
               checker += 1
             }
           })
-          if (checker === valueToCheck.length) {
-            return true
-          }
-          return false
+          return checker === valueToCheck.length
         }
-        return logicsVal.length > 0 && targetFieldValue.indexOf(logicsVal) === -1
+        valueToCheck.forEach(singleToken => {
+          if (targetFieldValue.length > 0 && targetFieldValue.indexOf(singleToken) === -1) {
+            checker += 1
+          }
+        })
+        return checker === valueToCheck.length
+      }
 
       case 'greater':
         if (!targetFieldValue) {
@@ -146,7 +184,6 @@ export const checkLogic = (logics, fields) => {
         }
         return targetFieldValue !== '' && targetFieldValue > logicsVal
 
-
       case 'less':
         if (!targetFieldValue) {
           return false
@@ -155,7 +192,6 @@ export const checkLogic = (logics, fields) => {
           return targetFieldValue !== '' && Number(targetFieldValue) < Number(logicsVal)
         }
         return targetFieldValue !== '' && targetFieldValue < logicsVal
-
 
       case 'greater_or_equal':
         if (!targetFieldValue) {
@@ -166,7 +202,6 @@ export const checkLogic = (logics, fields) => {
         }
         return targetFieldValue !== '' && targetFieldValue >= logicsVal
 
-
       case 'less_or_equal':
         if (!targetFieldValue) {
           return false
@@ -175,7 +210,6 @@ export const checkLogic = (logics, fields) => {
           return targetFieldValue !== '' && Number(targetFieldValue) <= Number(logicsVal)
         }
         return targetFieldValue !== '' && targetFieldValue <= logicsVal
-
 
       case 'start_with':
         if (!targetFieldValue) {
@@ -188,7 +222,6 @@ export const checkLogic = (logics, fields) => {
           return false
         }
         return logicsVal === targetFieldValue.substr(targetFieldValue.length - logicsVal.length, targetFieldValue.length)
-
 
       default:
         return false
@@ -219,10 +252,9 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
         mutatedString = mutatedString.replace(field, fieldValues[fieldName].value)
       }
     })
-    mutatedString = evalMathExpression(mutatedString)
   }
 
-  return mutatedString
+  return evalMathExpression(mutatedString)
 }
 
 export const evalMathExpression = (stringToReplace) => {
@@ -245,7 +277,6 @@ export const evalMathExpression = (stringToReplace) => {
     try {
       mutatedString = Function(`"use strict";return (${mutatedString})`)()
     } catch (error) {
-      console.log('errorMathexpr', error)
       return stringToReplace
     }
   }

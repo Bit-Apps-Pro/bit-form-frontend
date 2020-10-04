@@ -25,6 +25,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     } else if (attr.conditional) {
       setvalue(defaultValue)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.val, attr.userinput, attr.conditional, attr.opt])
   useEffect(() => {
     if (resetFieldValue) {
@@ -53,7 +54,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     }
   }
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="textarea">
+    <div className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
       {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         {attr.opt.map((itm, i) => (
@@ -62,6 +63,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
             <input
               type="checkbox"
               ref={checkBoxRef}
+              disabled={attr?.valid?.disabled}
               // {...itm.check && { defaultChecked: true }}
               // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
               {...'lbl' in itm && { defaultValue: itm.lbl }}

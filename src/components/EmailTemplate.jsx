@@ -9,6 +9,7 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
   console.log('%c $render EmailTemplate', 'background:green;padding:3px;border-radius:5px;color:white')
 
   const [confMdl, setconfMdl] = useState({ show: false })
+
   const { url } = useRouteMatch()
 
   const duplicateTem = i => {

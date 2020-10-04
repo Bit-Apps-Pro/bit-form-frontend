@@ -29,7 +29,7 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID 
     setvalue(event.target.value)
   }
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag`} btcd-fld="textarea">
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
       {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       <textarea
         className={`fld fld-${formID} no-drg`}

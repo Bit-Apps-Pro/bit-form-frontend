@@ -327,6 +327,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                 defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlist.actions.tag_rec}
                 options={getTags()}
                 onChange={(val) => actionHandler(val, 'tag_rec')}
+                customValue
               />
               <button onClick={() => refreshTags(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>

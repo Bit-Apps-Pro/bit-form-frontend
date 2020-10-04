@@ -17,7 +17,6 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const [actionMdl, setActionMdl] = useState({ show: false })
   const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update'
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
@@ -46,12 +45,6 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
 
   const nextPage = val => {
     if (val === 3) {
-      if (analyticsConf.actions?.update && analyticsConf.actions?.update?.criteria === '' && actionMdl.show !== 'criteria') {
-        setActionMdl({ show: 'criteria' })
-        return
-      }
-      setActionMdl({ show: 'false' })
-
       if (analyticsConf.workspace !== '' && analyticsConf.table !== '' && analyticsConf.field_map.length > 0) {
         setstep(val)
       }
@@ -107,9 +100,6 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
           isLoading={isLoading}
           setisLoading={setisLoading}
           setSnackbar={setSnackbar}
-          actionMdl={actionMdl}
-          setActionMdl={setActionMdl}
-          action={() => nextPage(3)}
         />
 
         <button

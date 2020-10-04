@@ -37,7 +37,7 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
         <>
           <div className="mt-4">
             <b className="wdt-100">Map Fields</b>
-            <button onClick={() => refreshContactFields(campaignsConf.list, formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Campaigns Contact Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button onClick={() => refreshContactFields(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Campaigns Contact Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
           <div className="btcd-hr mt-1" />
           {campaignsConf.default?.fields?.[campaignsConf.list]
