@@ -313,7 +313,7 @@ function FormDetails(props) {
           <Modal
             sm
             show={proModal.show}
-            setModal={v => setProModal({ show: false })}
+            setModal={() => setProModal({ show: false })}
             title="Premium Feature"
             className="pro-modal"
           >
@@ -398,7 +398,6 @@ function FormDetails(props) {
                   setFormName={setFormName}
                   formID={formType === 'new' ? newFormId : formID}
                   formType={formType}
-                  setProModal={setProModal}
                 />
               </Suspense>
             </Route>

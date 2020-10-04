@@ -33,7 +33,7 @@ const styleReducer = (style, action) => {
   return style
 }
 
-function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType, setProModal }) {
+function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType }) {
   const [tolbarSiz, setTolbarSiz] = useState(false)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
@@ -248,7 +248,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
               setNewCounter={setNewCounter}
               layout={lay}
               isToolDragging={isToolDragging}
-              setProModal={setProModal}
             />
           </>
         ) : <GridLayoutLoader />}
