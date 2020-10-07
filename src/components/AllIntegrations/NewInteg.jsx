@@ -5,6 +5,7 @@ import ZohoCampaigns from './ZohoCampaigns/ZohoCampaigns'
 import ZohoCRM from './ZohoCRM/ZohoCRM'
 import ZohoDesk from './ZohoDesk/ZohoDesk'
 import ZohoMail from './ZohoMail/ZohoMail'
+import ZohoProjects from './ZohoProjects/ZohoProjects'
 import ZohoRecruit from './ZohoRecruit/ZohoRecruit'
 import ZohoSheet from './ZohoSheet/ZohoSheet'
 import ZohoWorkDrive from './ZohoWorkDrive/ZohoWorkDrive'
@@ -30,6 +31,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoMail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Sheet':
         return <ZohoSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Projects':
+        return <ZohoProjects allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
