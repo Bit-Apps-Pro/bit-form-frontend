@@ -5,6 +5,7 @@ import EditZohoCampaigns from './ZohoCampaigns/EditZohoCampaigns'
 import EditZohoCRM from './ZohoCRM/EditZohoCRM'
 import EditZohoDesk from './ZohoDesk/EditZohoDesk'
 import EditZohoMail from './ZohoMail/EditZohoMail'
+import EditZohoProjects from './ZohoProjects/EditZohoProjects'
 import EditZohoRecruit from './ZohoRecruit/EditZohoRecruit'
 import EditZohoSheet from './ZohoSheet/EditZohoSheet'
 import EditZohoWorkDrive from './ZohoWorkDrive/EditZohoWorkDrive'
@@ -29,6 +30,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditZohoMail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Sheet':
         return <EditZohoSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Projects':
+        return <EditZohoProjects allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

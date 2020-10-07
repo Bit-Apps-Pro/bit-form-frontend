@@ -37,7 +37,7 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
       <button onClick={() => refreshTables(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Analytics Tables"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
-      <small style={{ color: 'red', marginLeft: 100 }}>** Zoho Analytics doesn&apos;t support data INSERT / UPDATE in other integration table</small>
+      <small style={{ color: 'red', marginLeft: 105 }}>** Zoho Analytics doesn&apos;t support data INSERT / UPDATE in other integration table</small>
 
       {isLoading && (
         <Loader style={{

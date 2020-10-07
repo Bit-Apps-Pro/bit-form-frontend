@@ -40,7 +40,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Desk', logo: zohoDesk, pro: !isPro },
     { type: 'Zoho Mail', logo: zohoMail, pro: !isPro },
     { type: 'Zoho Sheet', logo: zohoSheet, pro: !isPro },
-    { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro, disable: true },
+    { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro, disable: true },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro, disable: true },
     { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
