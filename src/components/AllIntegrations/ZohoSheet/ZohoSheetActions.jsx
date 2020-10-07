@@ -84,7 +84,7 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf }) {
                 <br />
                 <small>Here Month and Amount are Zoho Sheet&apos;s worksheet header name</small>
                 {' '}
-                <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, >, <, contains"', fontSize: 15 }}>
+                <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"', fontSize: 15 }}>
                   <span className="btcd-icn icn-information-outline" />
                 </span>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={sheetConf.actions?.update?.criteria} />
