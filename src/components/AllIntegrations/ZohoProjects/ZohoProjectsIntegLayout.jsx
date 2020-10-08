@@ -52,12 +52,16 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
       <b className="wdt-150 d-in-b">Event:</b>
       <select onChange={handleInput} name="event" value={projectsConf.event} className="btcd-paper-inp w-7">
         <option value="">Select Event</option>
-        <option value="project">Create Project</option>
-        <option value="milestone">Create Milestone</option>
-        <option value="tasklist">Create Tasklist</option>
-        <option value="task">Create Task</option>
-        <option value="subtask">Create Sub Task</option>
-        <option value="issue">Create Issue</option>
+        {projectsConf?.portalId && (
+          <>
+            <option value="project">Create Project</option>
+            <option value="milestone">Create Milestone</option>
+            <option value="tasklist">Create Tasklist</option>
+            <option value="task">Create Task</option>
+            <option value="subtask">Create Sub Task</option>
+            <option value="issue">Create Issue</option>
+          </>
+          )}
       </select>
       <br />
       <br />

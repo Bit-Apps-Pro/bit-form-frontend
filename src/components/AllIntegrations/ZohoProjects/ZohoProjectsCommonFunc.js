@@ -7,6 +7,7 @@ const clearLowerEvents = (projectsConf, name) => {
     // eslint-disable-next-line array-callback-return
     .map(event => {
       if (newConf?.[event]) { newConf[event] = '' }
+      newConf.actions[event.split('Id')[0]] = {}
     })
 
   return { ...newConf }
@@ -42,6 +43,7 @@ export const handleInput = (e, projectsConf, setProjectsConf, formID, setisLoadi
       newConf.field_map = {}
       newConf.actions[inputValue] = {}
       newConf = eventChange(clearLowerEvents(newConf), formID, setProjectsConf, setisLoading, setSnackbar)
+
       break;
     case 'projectId':
     case 'milestoneId':
@@ -51,6 +53,8 @@ export const handleInput = (e, projectsConf, setProjectsConf, formID, setisLoadi
       newConf = clearLowerEvents(newConf, inputName)
       // close create new event
       const subEvent = inputName.split('Id')[0]
+      newConf.actions[subEvent] = {}
+      newConf.actions[newConf.event] = {}
       if (newConf.subEvent.includes(subEvent)) newConf.subEvent.splice(newConf.subEvent.indexOf(subEvent), 1)
 
       if (!['project', 'milestone'].includes(newConf.event) && subEvent === 'project' && !projectsConf?.default?.milestones?.[newConf.portalId]) {
@@ -81,10 +85,11 @@ export const portalChange = (projectsConf, formID, setProjectsConf, setisLoading
   newConf.event = ''
   newConf.field_map = {}
   newConf.actions = {}
+  newConf.subEvent = []
 
-  if (!projectsConf.default.tags?.[newConf.portalId]) refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
+  if (projectsConf?.portalId && !projectsConf.default.tags?.[newConf.portalId]) refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
 
-  if (!projectsConf.default.projects?.[newConf.portalId]) refreshProjects(formID, newConf, setProjectsConf, setisLoading, setSnackbar)
+  if (projectsConf?.portalId && !projectsConf.default.projects?.[newConf.portalId]) refreshProjects(formID, newConf, setProjectsConf, setisLoading, setSnackbar)
 
   return newConf
 }
@@ -94,10 +99,12 @@ export const eventChange = (projectsConf, formID, setProjectsConf, setisLoading,
   newConf.field_map = {}
   newConf.field_map[newConf.event] = [{ formField: '', zohoFormField: '' }]
 
-  if (newConf?.event && !newConf?.default?.fields?.[newConf.portalId]?.[newConf.event]) {
-    refreshFields(formID, newConf, setProjectsConf, setisLoading, setSnackbar)
-  } else {
-    newConf.field_map[newConf.event] = generateMappedField(newConf)
+  if (newConf?.event) {
+    if (!newConf?.default?.fields?.[newConf.portalId]?.[newConf.event]) {
+      refreshFields(formID, newConf, setProjectsConf, setisLoading, setSnackbar)
+    } else {
+      newConf.field_map[newConf.event] = generateMappedField(newConf)
+    }
   }
 
   return newConf
@@ -363,6 +370,7 @@ export const refreshUsers = (formID, projectsConf, setProjectsConf, setisLoading
     tokenDetails: projectsConf.tokenDetails,
     portalId: projectsConf.portalId,
   }
+  if (projectsConf?.projectId) refreshOwnersRequestParams.projectId = projectsConf.projectId
   bitsFetch(refreshOwnersRequestParams, 'bitforms_zprojects_refresh_users')
     .then(result => {
       if (result && result.success) {
@@ -372,7 +380,10 @@ export const refreshUsers = (formID, projectsConf, setProjectsConf, setisLoading
         }
         if (result.data.users) {
           if (Object.keys(result.data.users).length > 0) {
-            newConf.default.users[portalId] = result.data.users
+            if (projectsConf?.projectId) {
+              if (!newConf.default.users[portalId]) newConf.default.users[portalId] = {}
+              newConf.default.users[portalId][projectsConf.projectId] = result.data.users
+            } else newConf.default.users[portalId] = result.data.users
             setSnackbar({ show: true, msg: 'Owners refreshed' })
           } else setSnackbar({ show: true, msg: 'No Owner Found' })
         }
@@ -511,19 +522,20 @@ export const generateMappedField = (projectsConf, eve) => {
 
 export const checkMappedFields = projectsConf => {
   let allOk = true
-  // eslint-disable-next-line array-callback-return
-  projectsConf.subEvent.map(event => {
-    let mappedFields = []
-    if (projectsConf?.projectId) {
-      mappedFields = projectsConf?.field_map?.[event] ? projectsConf.field_map[event].filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && projectsConf?.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    } else {
-      mappedFields = projectsConf?.field_map?.[event] ? projectsConf.field_map[event].filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && projectsConf?.default?.fields?.[projectsConf.portalId]?.[event]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-    }
+  if (projectsConf?.subEvent) {
+    projectsConf.subEvent.map(event => {
+      let mappedFields = []
+      if (projectsConf?.projectId) {
+        mappedFields = projectsConf?.field_map?.[event] ? projectsConf.field_map[event].filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && projectsConf?.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      } else {
+        mappedFields = projectsConf?.field_map?.[event] ? projectsConf.field_map[event].filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && projectsConf?.default?.fields?.[projectsConf.portalId]?.[event]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
+      }
 
-    if (mappedFields.length > 0) {
-      allOk = false
-    }
-  })
+      if (mappedFields.length > 0) {
+        allOk = false
+      }
+    })
+  }
   if (allOk) return true
   return false
 }
@@ -538,12 +550,36 @@ export const checkRequiredActions = projectsConf => {
     subtask: ['owner'],
     issue: ['owner', 'flag'],
   }
-  projectsConf.subEvent.map(event => {
-    required[event].map(act => {
-      if (!projectsConf.actions[event][act]) allOk = false
+  if (projectsConf?.subEvent) {
+    projectsConf.subEvent.map(event => {
+      required[event].map(act => {
+        if (!projectsConf.actions[event][act]) allOk = false
+      })
     })
-  })
+  }
 
   if (allOk) return true
   return false
+}
+
+export const checkAllRequired = (projectsConf, setSnackbar) => {
+  if (!checkMappedFields(projectsConf)) {
+    setSnackbar({ show: true, msg: 'please map mandatory fields' })
+    return false;
+  }
+  if (!checkRequiredActions(projectsConf)) {
+    setSnackbar({ show: true, msg: 'please fill up the required actions' })
+    return false;
+  }
+  if (projectsConf?.event === 'subtask' && !(projectsConf?.taskId || projectsConf.subEvent.includes('task'))) {
+    setSnackbar({ show: true, msg: 'to create a subtask you must select a task or create a new task' })
+    return false;
+  }
+  if (['task', 'subtask'].includes(projectsConf?.event)) {
+    if ((projectsConf?.milestoneId || projectsConf.subEvent.includes('milestone')) && !(projectsConf?.tasklistId || projectsConf.subEvent.includes('tasklist'))) {
+      setSnackbar({ show: true, msg: `to create a ${projectsConf.event} under milestone you must select a tasklist or create a new tasklist` })
+      return false;
+    }
+  }
+  return true
 }

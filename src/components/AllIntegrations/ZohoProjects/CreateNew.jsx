@@ -4,6 +4,14 @@ import { refreshFields } from './ZohoProjectsCommonFunc'
 import ZohoProjectsFieldMap, { addFieldMap } from './ZohoProjectsFieldMap'
 
 export default function CreateNew({ event, projectsConf, setProjectsConf, formID, formFields, isLoading, setisLoading, setSnackbar }) {
+  let allFieldsMapped = ''
+
+  if (projectsConf?.projectId && projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.fields) {
+    allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default.fields[projectsConf.portalId][projectsConf.projectId][event].fields).length
+  } else if (projectsConf.default?.fields?.[projectsConf.portalId]?.[event]?.fields) {
+    allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default.fields[projectsConf.portalId][event]?.fields).length
+  }
+
   const removeSubEvent = () => {
     const newConf = { ...projectsConf }
     newConf.subEvent.splice(newConf.subEvent.indexOf(event), 1)
@@ -40,7 +48,10 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
           setProjectsConf={setProjectsConf}
         />
       ))}
-      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(projectsConf.field_map[event].length, projectsConf, setProjectsConf, event)} className="icn-btn sh-sm" type="button">+</button></div>
+
+      {!allFieldsMapped && (
+        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(projectsConf.field_map[event].length, projectsConf, setProjectsConf, event)} className="icn-btn sh-sm" type="button">+</button></div>
+      )}
       <br />
       <br />
       <div className="mt-4"><b className="wdt-100">{`${event.charAt(0).toUpperCase() + event.slice(1)}`} Actions</b></div>
@@ -54,8 +65,8 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
         formFields={formFields}
         setSnackbar={setSnackbar}
       />
-      <br/>
-      <br/>
+      <br />
+      <br />
     </div>
   )
 }

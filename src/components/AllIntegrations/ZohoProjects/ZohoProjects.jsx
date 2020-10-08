@@ -6,7 +6,7 @@ import Steps from '../../ElmSettings/Childs/Steps'
 import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, checkRequiredActions, handleInput, refreshPortals } from './ZohoProjectsCommonFunc'
+import { checkAllRequired, handleInput, refreshPortals } from './ZohoProjectsCommonFunc'
 import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
 
 function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -18,7 +18,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   // eslint-disable-next-line max-len
-  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.tags.READ,ZohoProjects.tags.CREATE,ZohoProjects.users.READ,ZohoPC.files.ALL'
+  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.tags.READ,ZohoProjects.tags.CREATE,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoPC.files.ALL'
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
     type: 'Zoho Projects',
@@ -36,14 +36,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
 
   const nextPage = val => {
     if (val === 3) {
-      if (!checkMappedFields(projectsConf)) {
-        setSnackbar({ show: true, msg: 'please map mandatory fields' })
-        return
-      }
-      if (!checkRequiredActions(projectsConf)) {
-        setSnackbar({ show: true, msg: 'please fill up the required actions' })
-        return
-      }
+      if (!checkAllRequired(projectsConf, setSnackbar)) return
       setstep(val)
     } else {
       setstep(val)

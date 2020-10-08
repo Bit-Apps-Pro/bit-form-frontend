@@ -18,6 +18,14 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
     isNotRequired = field.zohoFormField === '' || projectsConf.default.fields?.[portalId]?.[event]?.required?.indexOf(field.zohoFormField) === -1
   }
 
+  let allFieldsMapped = ''
+
+  if (projectsConf?.projectId) {
+    allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.fields).length
+  } else {
+    allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default?.fields?.[projectsConf.portalId]?.[event]?.fields).length
+  }
+
   const delFieldMap = (ind) => {
     const newConf = { ...projectsConf }
 
@@ -63,32 +71,45 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
         <option value="">Select Field</option>
         {
           projectsConf?.projectId
-            ? projectsConf.default?.fields?.[portalId]?.[projectsConf.projectId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][projectsConf.projectId][event].fields).map(ticketField => (
-              <option key={ticketField.displayLabel} value={ticketField.apiName}>
-                {ticketField.displayLabel}
-              </option>
+            ? projectsConf.default?.fields?.[portalId]?.[projectsConf.projectId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][projectsConf.projectId][event].fields).map(pfield => (
+              !isNotRequired ? pfield?.required && (
+                <option key={pfield.displayLabel} value={pfield.apiName}>
+                  {pfield.displayLabel}
+                </option>
+              ) : !pfield?.required && (
+                <option key={pfield.displayLabel} value={pfield.apiName}>
+                  {pfield.displayLabel}
+                </option>
+              )
             ))
-            : projectsConf.default?.fields?.[portalId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][event].fields).map(ticketField => (
-              <option key={ticketField.displayLabel} value={ticketField.apiName}>
-                {ticketField.displayLabel}
-              </option>
+            : projectsConf.default?.fields?.[portalId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][event].fields).map(pfield => (
+              !isNotRequired ? pfield?.required && (
+                <option key={pfield.displayLabel} value={pfield.apiName}>
+                  {pfield.displayLabel}
+                </option>
+              ) : !pfield?.required && (
+                <option key={pfield.displayLabel} value={pfield.apiName}>
+                  {pfield.displayLabel}
+                </option>
+              )
             ))
         }
       </select>
-      <button
-        onClick={() => addFieldMap(i, projectsConf, setProjectsConf, event)}
-        className={`icn-btn sh-sm ml-2 ${!isNotRequired && 'mr-8'}`}
-        type="button"
-      >
-        +
-      </button>
-      {
-        isNotRequired && (
-          <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-            <span className="btcd-icn icn-trash-2" />
-          </button>
-        )
-      }
+
+      {!allFieldsMapped && (
+        <button
+          onClick={() => addFieldMap(i, projectsConf, setProjectsConf, event)}
+          className={`icn-btn sh-sm ml-2 ${!isNotRequired && 'mr-8'}`}
+          type="button"
+        >
+          +
+        </button>
+      )}
+      {isNotRequired && (
+        <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+          <span className="btcd-icn icn-trash-2" />
+        </button>
+      )}
     </div>
   )
 }
