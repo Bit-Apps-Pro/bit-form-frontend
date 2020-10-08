@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, checkRequiredActions, handleInput } from './ZohoProjectsCommonFunc'
+import { checkAllRequired, handleInput } from './ZohoProjectsCommonFunc'
 import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -17,14 +17,8 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   console.log('projectsConf', projectsConf)
 
   const saveConfig = () => {
-    if (!checkMappedFields(projectsConf)) {
-      setSnackbar({ show: true, msg: 'please map mandatory fields' })
-      return
-    }
-    if (!checkRequiredActions(projectsConf)) {
-      setSnackbar({ show: true, msg: 'please fill up the required actions' })
-      return
-    }
+    if (!checkAllRequired(projectsConf, setSnackbar)) return
+
     saveIntegConfig(integrations, setIntegration, allIntegURL, projectsConf, history, id, 1)
   }
 

@@ -4,12 +4,44 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import ConfirmModal from '../../ConfirmModal'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import Loader from '../../Loaders/Loader'
-// import {  } from '../ZohoCRM/ZohoCRMCommonFunc'
 import { refreshUsers, refreshTaskLays, refreshTags, refreshGroups } from './ZohoProjectsCommonFunc'
 
 export default function ZohoProjectsActions({ event, projectsConf, setProjectsConf, formID, formFields, setSnackbar }) {
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
+
+  const allUsers = () => {
+    let allUsers = []
+
+    if (projectsConf?.projectId) {
+      if (projectsConf?.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]?.length > 0) {
+        allUsers = projectsConf.default.users[projectsConf.portalId][projectsConf.projectId]
+      }
+    } else if (event !== 'project' && projectsConf?.subEvent.includes('project')) {
+      if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
+        let owner = '',
+          users = ''
+        if (projectsConf.actions.project.owner)
+          owner = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId === projectsConf.actions.project.owner)
+
+        if (projectsConf.actions.project.users)
+          users = projectsConf?.actions?.project?.users?.split(',').map(user => projectsConf.default.users[projectsConf.portalId].filter(usr => usr.userEmail === user)).map(filteredUser => filteredUser[0])
+
+        if (owner && users) {
+          users.push(owner[0])
+          allUsers = users
+        } else if (owner && !users) {
+          allUsers = owner
+        } else if (users && !owner) {
+          allUsers = users
+        }
+      }
+    } else if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
+      allUsers = projectsConf.default.users[projectsConf.portalId]
+    }
+
+    return allUsers
+  }
 
   const actionHandler = (val, typ) => {
     const newConf = { ...projectsConf }
@@ -19,11 +51,16 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
   }
 
   const openUsersModal = (attr) => {
-    if (!projectsConf.default?.users?.[projectsConf.portalId]) {
+    if (projectsConf?.projectId && !projectsConf.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]) {
+      refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
+    } else if (!projectsConf.default?.users?.[projectsConf.portalId]) {
       refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
     }
     if (!attr) setActionMdl({ show: 'owner' })
     else setActionMdl({ show: attr })
+    if (attr === 'users' && !projectsConf?.actions?.project?.role) {
+      projectsConf.actions.project.role = 'employee'
+    }
   }
 
   const openTaskLayModal = () => {
@@ -83,6 +120,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               <TableCheckBox onChange={() => setActionMdl({ show: 'access' })} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_Access" title="Project Access" subTitle="Change the access control of project" />
               {!projectsConf.actions.project.public && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>project access is required</small>}
             </div>
+            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_User" title="Project user" subTitle="Assign users to project pushed to Zoho Projects." />
             <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_Group" title="Group Name" subTitle="Add a group to project pushed to Zoho Projects." />
           </>
         )}
@@ -113,7 +151,6 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         <div className="coming-feature pos-rel mt-2">
           <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_tags`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Tags`} subTitle={`Add tags to ${event} pushed to Zoho Projects.`} />
         </div>
-
       </div>
 
       {/* Modals */}
@@ -147,7 +184,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       defaultValue={projectsConf.actions[event].owner}
                       className="mt-2 w-9"
                       onChange={(val) => actionHandler(val, 'owner')}
-                      options={projectsConf.default?.users?.[projectsConf.portalId].map(user => ({ label: user.userName, value: user.userId }))}
+                      options={allUsers().map(user => ({ label: user.userName, value: user.userId }))}
                     />
                   )
                   : (
@@ -157,7 +194,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       onChange={e => actionHandler(e.target.value, 'owner')}
                     >
                       <option value="">Select Owner</option>
-                      {projectsConf.default?.users?.[projectsConf.portalId]?.map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
+                      {allUsers().length > 0 && allUsers().map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
                     </select>
                   )}
 
@@ -228,6 +265,51 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               </select>
             </div>
 
+          </ConfirmModal>
+
+          <ConfirmModal
+            className="custom-conf-mdl"
+            mainMdlCls="o-v"
+            btnClass="blue"
+            btnTxt="Ok"
+            show={actionMdl.show === 'users'}
+            close={clsActionMdl}
+            action={clsActionMdl}
+            title="Assign Project Users"
+          >
+            <div className="btcd-hr mt-2" />
+            {isLoading ? (
+              <Loader style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 45,
+                transform: 'scale(0.5)',
+              }}
+              />
+            )
+              : (
+                <>
+                  <div className="flx flx-between mt-2">
+                    <MultiSelect
+                      defaultValue={projectsConf.actions[event].users}
+                      className="mt-2 w-9"
+                      onChange={(val) => actionHandler(val, 'users')}
+                      options={allUsers().map(user => ({ label: user.userName, value: user.userEmail }))}
+                    />
+                    <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Project Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  </div>
+                  <select
+                    value={projectsConf.actions.project.role}
+                    className="btcd-paper-inp mt-3"
+                    onChange={e => actionHandler(e.target.value, 'role')}
+                  >
+                    <option value="employee">Employee</option>
+                    <option value="manager">Manager</option>
+                    <option value="contractor">Contractor</option>
+                  </select>
+                </>
+              )}
           </ConfirmModal>
 
           <ConfirmModal
