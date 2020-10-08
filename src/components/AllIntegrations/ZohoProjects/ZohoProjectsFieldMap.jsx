@@ -21,10 +21,8 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
   let allFieldsMapped = ''
 
   if (projectsConf?.projectId) {
-    allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.fields).length
-  } else {
-    allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default?.fields?.[projectsConf.portalId]?.[event]?.fields).length
-  }
+    if (projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.fields) allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.fields).length
+  } else if (projectsConf.default?.fields?.[projectsConf.portalId]?.[event]?.fields) allFieldsMapped = projectsConf.field_map[event].length === Object.keys(projectsConf.default?.fields?.[projectsConf.portalId]?.[event]?.fields).length
 
   const delFieldMap = (ind) => {
     const newConf = { ...projectsConf }
