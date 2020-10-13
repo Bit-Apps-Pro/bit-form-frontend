@@ -50,7 +50,7 @@ function FormDetails(props) {
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
-      const formData = bitDecipher(JSON.parse(sessionStorage.getItem('bitformData')))
+      const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
       formData.layout !== undefined && setLay(formData.layout)
       setFields(formData.fields)
       setNewCounter(getNewId(formData.fields))
