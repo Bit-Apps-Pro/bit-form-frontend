@@ -47,7 +47,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={projectsConf.department === '' || projectsConf.table === '' || projectsConf.field_map.length < 1}
+        disabled={projectsConf.portalId === '' || projectsConf.event === ''}
       />
     </div>
   )

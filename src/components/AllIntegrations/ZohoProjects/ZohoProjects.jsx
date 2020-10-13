@@ -18,7 +18,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   // eslint-disable-next-line max-len
-  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.tags.READ,ZohoProjects.tags.CREATE,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoPC.files.ALL'
+  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
     type: 'Zoho Projects',
@@ -82,7 +82,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
 
         <button
           onClick={() => nextPage(3)}
-          // disabled={projectsConf.event === '' || projectsConf.table === '' || projectsConf.field_map.length < 1}
+          disabled={projectsConf.portalId === '' || projectsConf.event === ''}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
