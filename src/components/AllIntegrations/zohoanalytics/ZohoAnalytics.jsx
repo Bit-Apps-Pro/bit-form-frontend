@@ -6,7 +6,7 @@ import Steps from '../../ElmSettings/Childs/Steps'
 import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
+import { handleInput, refreshUsers, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
 
 function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -17,7 +17,7 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update'
+  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
     type: 'Zoho Analytics',
