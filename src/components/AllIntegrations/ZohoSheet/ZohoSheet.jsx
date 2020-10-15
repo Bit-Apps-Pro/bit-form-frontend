@@ -28,6 +28,7 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
+    headerRow: 1,
     actions: {},
   })
 

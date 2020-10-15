@@ -72,6 +72,9 @@ export const refreshWorkbooks = (formID, sheetConf, setSheetConf, setisLoading, 
         if (result.data.workbooks) {
           newConf.default.workbooks = result.data.workbooks
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Workbooks refreshed' })
         setSheetConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -149,7 +152,13 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
           if (!newConf.default.worksheets.headers) {
             newConf.default.worksheets.headers = {}
           }
-          newConf.default.worksheets.headers[worksheet] = result.data.worksheet_headers
+          if (!newConf.default.worksheets.headers[worksheet]) {
+            newConf.default.worksheets.headers[worksheet] = {}
+          }
+          newConf.default.worksheets.headers[worksheet][headerRow] = result.data.worksheet_headers
+          if (result.data.tokenDetails) {
+            newConf.tokenDetails = result.data.tokenDetails
+          }
           setSnackbar({ show: true, msg: 'Worksheet Headers refreshed' })
         } else {
           setSnackbar({ show: true, msg: 'No Worksheet headers found. Try changing the header row number or try again' })
