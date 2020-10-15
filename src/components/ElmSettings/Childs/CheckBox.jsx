@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react'
 
-function CheckBox({ checked, onChange, radio, name, title, value }) {
+function CheckBox({ className, disabled, checked, onChange, radio, name, title, value, sqr }) {
   return (
-    <label className="btcd-ck-wrp">
-      {title}
-      <input type={radio ? 'radio' : 'checkbox'} checked={checked} onChange={onChange} name={name} value={value} />
-      <span className={`btcd-mrk br-50 ${radio ? 'rdo' : 'ck'}`} />
+    <label className={`btcd-ck-wrp ${className}`}>
+      { title}
+      <input type={radio ? 'radio' : 'checkbox'} checked={checked} onChange={onChange} name={name} value={value} disabled={disabled} />
+      <span className={`btcd-mrk ${!sqr && 'br-50'} ${radio ? 'rdo' : 'ck'}`} />
     </label>
   )
 }
