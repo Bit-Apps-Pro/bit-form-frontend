@@ -11,10 +11,16 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
 
-  const actionHandler = (val, typ) => {
+  const actionHandler = (val, typ, checked) => {
     const newConf = { ...projectsConf }
-    if (val !== '') newConf.actions[event][typ] = val
-    else delete newConf.actions[event][typ]
+    if (checked !== undefined) {
+      if (checked) newConf.actions[event][typ] = val
+      else delete newConf.actions[event][typ]
+    }
+    else {
+      if (val) newConf.actions[event][typ] = val
+      else delete newConf.actions[event][typ]
+    }
     setProjectsConf({ ...newConf })
   }
 
@@ -219,7 +225,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
       <div className="d-flx flx-wrp">
         {event !== 'tasklist' && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <TableCheckBox onChange={() => openUsersModal()} checked={'owner' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_owner`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Owner`} subTitle={`Add an owner to ${event}  pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => openUsersModal()} checked={'owner' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_owner`} title={`${event} Owner`} subTitle={`Add an owner to ${event}  pushed to Zoho Projects.`} />
             {!projectsConf.actions[event].owner && (
               <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>
                 {`${event} owner is required`}
@@ -231,22 +237,19 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         {event === 'project' && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={openTaskLayModal} checked={'tasklayoutid' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Task_Owner" title="Task Layout" subTitle="Add a layout to project pushed to Zoho Projects." />
+              <TableCheckBox onChange={openTaskLayModal} checked={'tasklayoutid' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Task_Owner" title="Task Layout" subTitle="Add a layout to project pushed to Zoho Projects." />
               {!projectsConf.actions.project.tasklayoutid && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>task layout is required</small>}
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={() => setActionMdl({ show: 'access' })} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_Access" title="Project Access" subTitle="Change the access control of project" />
-              {!projectsConf.actions.project.public && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>project access is required</small>}
-            </div>
-            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_User" title="Project user" subTitle="Assign users to project pushed to Zoho Projects." />
-            <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_Group" title="Group Name" subTitle="Add a group to project pushed to Zoho Projects." />
+            <TableCheckBox onChange={(e) => actionHandler(e.target.value, 'public', e.target.checked)} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="yes" title="Public Project" subTitle="by default, it is set as private project." />
+            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_User" title="Project user" subTitle="Assign users to project pushed to Zoho Projects." />
+            <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_Group" title="Group Name" subTitle="Add a group to project pushed to Zoho Projects." />
           </>
         )}
 
         {(event === 'milestone' || event === 'tasklist' || event === 'issue') && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_flag`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Flag`} subTitle={`Add a flag to ${event} pushed to Zoho Projects.`} />
+              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_flag`} title={`${event} Flag`} subTitle={`Add a flag to ${event} pushed to Zoho Projects.`} />
               {!projectsConf.actions[event].flag && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{`${event} flag is required`}</small>}
             </div>
           </>
@@ -254,42 +257,42 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
 
         {event === 'issue' && (
           <>
-            <TableCheckBox onChange={() => openUsersModal('followers')} checked={'bug_followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value="Issue_Followers" title="Issue Followers" subTitle="Add followers to issue pushed to Zoho Projects" />
+            <TableCheckBox onChange={() => openUsersModal('followers')} checked={'bug_followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Issue_Followers" title="Issue Followers" subTitle="Add followers to issue pushed to Zoho Projects" />
             {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
-              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={act} title={`Issue ${act.charAt(0).toUpperCase() + act.slice(1)}`} subTitle={`Add ${act} to issue pushed to Zoho Projects`} />)}
+              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={act} title={`Issue ${act}`} subTitle={`Add ${act} to issue pushed to Zoho Projects`} />)}
           </>
         )}
 
         {(event === 'task' || event === 'subtask' || event === 'issue') && (
           <>
-            <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_attachments`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Attachments`} subTitle={`Add attachments to ${event} pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_attachments`} title={`${event} Attachments`} subTitle={`Add attachments to ${event} pushed to Zoho Projects.`} />
 
-            <TableCheckBox onChange={() => setActionMdl({ show: 'timelog' })} checked={'timelog' in projectsConf.actions[event] && 'date' in projectsConf.actions[event]?.timelog} className="wdt-200 mt-4 mr-2" value={`${event}_timelog`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Time Log`} subTitle={`Add time log to ${event} pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => setActionMdl({ show: 'timelog' })} checked={'timelog' in projectsConf.actions[event] && 'date' in projectsConf.actions[event]?.timelog} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_timelog`} title={`${event} Time Log`} subTitle={`Add time log to ${event} pushed to Zoho Projects.`} />
           </>
         )}
 
         {event === 'task' && (
-          <TableCheckBox onChange={() => setActionMdl({ show: 'recurrence_string' })} checked={'recurrence_string' in projectsConf.actions[event] && 'recurring_frequency' in projectsConf.actions[event]?.recurrence_string} className="wdt-200 mt-4 mr-2" value={`${event}_reminder`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Recurrence`} subTitle={`Add recurrence to ${event} pushed to Zoho Projects.`} />
+          <TableCheckBox onChange={() => setActionMdl({ show: 'recurrence_string' })} checked={'recurrence_string' in projectsConf.actions[event] && 'recurring_frequency' in projectsConf.actions[event]?.recurrence_string} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_reminder`} title={`${event} Recurrence`} subTitle={`Add recurrence to ${event} pushed to Zoho Projects.`} />
         )}
 
         {(event === 'task' || event === 'subtask' || event === 'issue') && (
-          <TableCheckBox onChange={() => setActionMdl({ show: 'reminder_string' })} checked={'reminder_string' in projectsConf.actions[event] && 'reminder_criteria' in projectsConf.actions[event]?.reminder_string} className="wdt-200 mt-4 mr-2" value={`${event}_reminder`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Reminder`} subTitle={`Add reminder to ${event} pushed to Zoho Projects.`} />
+          <TableCheckBox onChange={() => setActionMdl({ show: 'reminder_string' })} checked={'reminder_string' in projectsConf.actions[event] && 'reminder_criteria' in projectsConf.actions[event]?.reminder_string} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_reminder`} title={`${event} Reminder`} subTitle={`Add reminder to ${event} pushed to Zoho Projects.`} />
         )}
 
-        <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event] || projectsConf?.actions?.[event]?.customTags} className="wdt-200 mt-4 mr-2" value={`${event}_tags`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Tags`} subTitle={`Add tags to ${event} pushed to Zoho Projects.`} />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event] || projectsConf?.actions?.[event]?.customTags} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_tags`} title={`${event} Tags`} subTitle={`Add tags to ${event} pushed to Zoho Projects.`} />
       </div>
 
       {/* Modals */}
       {event !== 'tasklist' && (
         <ConfirmModal
           className="custom-conf-mdl"
-          mainMdlCls="o-v"
+          mainMdlCls="o-v btcd-ttc"
           btnClass="blue"
           btnTxt="Ok"
           show={actionMdl.show === 'owner'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={`${event.charAt(0).toUpperCase() + event.slice(1)} Owner`}
+          title={`${event} Owner`}
         >
           <div className="btcd-hr mt-2" />
           {isLoading ? (
@@ -368,31 +371,9 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               )}
           </ConfirmModal>
 
-          <ConfirmModal
-            className="custom-conf-mdl"
-            mainMdlCls="o-v"
-            btnClass="blue"
-            btnTxt="Ok"
-            show={actionMdl.show === 'access'}
-            close={clsActionMdl}
-            action={clsActionMdl}
-            title="Access Control"
-          >
-            <div className="btcd-hr mt-2" />
-            <div className="flx flx-between mt-2">
-              <select
-                value={projectsConf.actions.project.public}
-                className="btcd-paper-inp"
-                onChange={e => actionHandler(e.target.value, 'public')}
-              >
-                <option value="">Select Access</option>
-                {/* <option value="no">Private</option> */}
-                <option value="yes">Public</option>
-              </select>
-            </div>
-          </ConfirmModal>
 
-          <ConfirmModal
+
+          < ConfirmModal
             className="custom-conf-mdl"
             mainMdlCls="o-v"
             btnClass="blue"
@@ -403,32 +384,34 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             title="Assign Project Users"
           >
             <div className="btcd-hr mt-2" />
-            {isLoading ? (
-              <Loader style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 45,
-                transform: 'scale(0.5)',
-              }}
-              />
-            )
-              : (
-                <>
-                  {projectsConf.actions.project?.users && projectsConf.actions.project.users.map((user, i) => (
-                    <div key={i} className="flx flx-between mt-1">
-                      <MultiSelect
-                        className="btcd-paper-drpdwn mt-2"
-                        defaultValue={user.email}
-                        options={getUsers('users').map(usr => ({ label: usr.userName, value: usr.userEmail }))}
-                        onChange={e => handleProjectUser('value', i, 'email', e)}
-                      />
-                      <input type="text" value={user.role} readOnly className="btcd-paper-inp mt-2 w-3 ml-1" />
-                    </div>
-                  ))}
-                </>
-              )}
-          </ConfirmModal>
+            {
+              isLoading ? (
+                <Loader style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 45,
+                  transform: 'scale(0.5)',
+                }}
+                />
+              )
+                : (
+                  <>
+                    {projectsConf.actions.project?.users && projectsConf.actions.project.users.map((user, i) => (
+                      <div key={i} className="flx flx-between mt-1">
+                        <MultiSelect
+                          className="btcd-paper-drpdwn mt-2"
+                          defaultValue={user.email}
+                          options={getUsers('users').map(usr => ({ label: usr.userName, value: usr.userEmail }))}
+                          onChange={e => handleProjectUser('value', i, 'email', e)}
+                        />
+                        <input type="text" value={user.role} readOnly className="btcd-paper-inp mt-2 w-3 ml-1" />
+                      </div>
+                    ))}
+                  </>
+                )
+            }
+          </ConfirmModal >
 
           <ConfirmModal
             className="custom-conf-mdl"
@@ -473,13 +456,13 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         (event === 'tasklist' || event === 'milestone' || event === 'issue') && (
           <ConfirmModal
             className="custom-conf-mdl"
-            mainMdlCls="o-v"
+            mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
             btnTxt="Ok"
             show={actionMdl.show === 'flag'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={`${event.charAt(0).toUpperCase() + event.slice(1)} Flag`}
+            title={`${event} Flag`}
           >
             <div className="btcd-hr mt-2" />
             <div className="flx flx-between mt-2">
@@ -522,13 +505,13 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
 
             <ConfirmModal
               className="custom-conf-mdl"
-              mainMdlCls="o-v"
+              mainMdlCls="o-v btcd-ttc"
               btnClass="blue"
               btnTxt="Ok"
               show={actionMdl.show === 'timelog'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title={`${event.charAt(0).toUpperCase() + event.slice(1)} Time Log`}
+              title={`${event} Time Log`}
             >
               <div className="btcd-hr mt-2" />
               <div className="mt-2 mb-1">Select Date</div>
@@ -623,13 +606,13 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         (event === 'task' || event === 'subtask' || event === 'issue') && (
           <ConfirmModal
             className="custom-conf-mdl"
-            mainMdlCls="o-v"
+            mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
             btnTxt="Ok"
             show={actionMdl.show === 'reminder_string'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={`${event.charAt(0).toUpperCase() + event.slice(1)} Reminder`}
+            title={`${event} Reminder`}
           >
             <div className="btcd-hr mt-2" />
             <div className="mt-2 mb-1">Select Reminder Type</div>
@@ -681,13 +664,13 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         event === 'task' && (
           <ConfirmModal
             className="custom-conf-mdl"
-            mainMdlCls="o-v"
+            mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
             btnTxt="Ok"
             show={actionMdl.show === 'recurrence_string'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={`${event.charAt(0).toUpperCase() + event.slice(1)} Recurrence`}
+            title={`${event} Recurrence`}
           >
             <div className="btcd-hr mt-2" />
             <div className="mt-2 mb-1">Select Recurring Frequency</div>
@@ -755,7 +738,6 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       className="mt-2 w-9"
                       onChange={(val) => actionHandler(val, 'bug_followers')}
                       options={getUsers().map(user => ({ label: user.userName, value: user.userId }))}
-                      singleSelect
                     />
                     <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Portal Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
                   </div>
@@ -766,13 +748,13 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               .map(act => <ConfirmModal
                 key={act}
                 className="custom-conf-mdl"
-                mainMdlCls="o-v"
+                mainMdlCls="o-v btcd-ttc"
                 btnClass="blue"
                 btnTxt="Ok"
                 show={actionMdl.show === act}
                 close={clsActionMdl}
                 action={clsActionMdl}
-                title={`Issue ${act.charAt(0).toUpperCase() + act.slice(1)}`}
+                title={`Issue ${act}`}
               >
                 <div className="btcd-hr mt-2" />
                 <div className="flx flx-between mt-2">
@@ -781,7 +763,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     className="btcd-paper-inp"
                     onChange={e => actionHandler(e.target.value, act === 'priority' ? 'reproducible_id' : `${act}_id`)}
                   >
-                    <option value="">{`Select ${act.charAt(0).toUpperCase() + act.slice(1)}`}</option>
+                    <option value="">{`Select ${act}`}</option>
                     {projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.defaultfields?.[`${act}_details`] && Object.values(projectsConf.default.fields[projectsConf.portalId][projectsConf.projectId][event].defaultfields[`${act}_details`]).map(field =>
                       <option key={field[`${act}_id`]} value={field[`${act}_id`]}>
                         {field[`${act}_name`]}
@@ -797,13 +779,13 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
 
       <ConfirmModal
         className="custom-conf-mdl"
-        mainMdlCls="o-v"
+        mainMdlCls="o-v btcd-ttc"
         btnClass="blue"
         btnTxt="Ok"
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={`${event.charAt(0).toUpperCase() + event.slice(1)} Tags`}
+        title={`${event} Tags`}
       >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
@@ -843,7 +825,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                 <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2"><span className="btcd-icn icn-trash-2"></span></button>
               </div>
               ))}
-              <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': '"Add Custom Tag"' }} type="button" disabled={isLoading}>&#x271A;</button>
+              <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': '"Add Custom Tag"' }} type="button">+</button>
             </>
           )}
       </ConfirmModal>
