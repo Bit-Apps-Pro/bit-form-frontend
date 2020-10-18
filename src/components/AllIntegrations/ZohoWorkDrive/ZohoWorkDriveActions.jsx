@@ -35,11 +35,11 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
         newConf.actions.share = {}
       }
       if (share === 'folder') {
-        if (val.target.checked) newConf.actions.share.folder.mail = true
-        else newConf.actions.share.folder.mail = false
+        if (val.target.checked) newConf.actions.share.folder.mail = 'true'
+        else newConf.actions.share.folder.mail = 'false'
       } else if (share === 'file') {
-        if (val.target.checked) newConf.actions.share.file.mail = true
-        else newConf.actions.share.file.mail = false
+        if (val.target.checked) newConf.actions.share.file.mail = 'true'
+        else newConf.actions.share.file.mail = 'false'
       }
     }
 
@@ -85,7 +85,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
           { email: '', field: '', access: '3', accessLabel: 'Organize' },
           { email: '', field: '', access: '7', accessLabel: 'Upload' },
         ],
-        mail: false,
+        mail: 'false',
       }
     }
 
@@ -93,10 +93,6 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
   }
 
   const openUploadFileMdl = () => {
-    if (!workDriveConf.actions?.create_folder) {
-      workDriveConf.actions.create_folder = { name: '', suffix: false }
-    }
-
     if (!workDriveConf.actions?.share) workDriveConf.actions.share = {}
 
     if (!workDriveConf.actions?.share?.file) {
@@ -107,7 +103,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
           { email: '', field: '', access: '4', accessLabel: 'Share' },
           { email: '', field: '', access: '6', accessLabel: 'View and Comment' },
         ],
-        mail: false,
+        mail: 'false',
       }
     }
 
@@ -187,7 +183,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
 
                 {
                   workDriveConf.actions?.share?.folder?.permissions?.map((permission, i) => (
-                    <div className="flx flx-between mt-2">
+                    <div key={i} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
                         className="btcd-paper-drpdwn w-6 mr-2"
@@ -202,7 +198,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                     </div>
                   ))
                 }
-                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'folder')} checked={workDriveConf?.actions?.share?.folder?.mail || false} className="wd-100 mt-4 mr-2" value="Send_Mail" title="Send Notification Mail" />
+                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'folder')} checked={workDriveConf?.actions?.share?.folder?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title="Send Notification Mail" />
               </>
             )}
         </div>
@@ -233,7 +229,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                 </div>
                 {
                   workDriveConf.actions?.share?.file?.permissions?.map((permission, i) => (
-                    <div className="flx flx-between mt-2">
+                    <div key={i} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
                         className="btcd-paper-drpdwn w-6 mr-2"
@@ -248,7 +244,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                     </div>
                   ))
                 }
-                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'file')} checked={workDriveConf?.actions?.share?.file?.mail || false} className="wd-100 mt-4 mr-2" value="Send_Mail" title="Send Notification Mail" />
+                <TableCheckBox onChange={(e) => actionHandler(e, 'mail', 'file')} checked={workDriveConf?.actions?.share?.file?.mail === 'true' || false} className="wd-100 mt-4 mr-2" value="true" title="Send Notification Mail" />
               </>
             )}
         </div>
