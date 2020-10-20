@@ -57,7 +57,7 @@ const AllFormContext = createContext()
 
 const AllFormContextProvider = (props) => {
   let allFormsInitialState = []
-  // eslint-disable-next-line no-undef
+  //  eslint-disable-next-line no-undef
   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')
     && typeof bits !== 'undefined'
     && bits.allForms !== null) {

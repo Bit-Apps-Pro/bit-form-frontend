@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const OfflinePlugin = require('offline-plugin');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -9,7 +8,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-// const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports = (env, argv) => {
   const production = argv.mode === 'production';
@@ -29,15 +27,12 @@ module.exports = (env, argv) => {
 
     output: {
       filename: '[name].js',
+      //publicPath: path.resolve(__dirname, '../assets/js/'),
       path: path.resolve(__dirname, '../assets/js/'),
       chunkFilename: '[name].js?[hash:6]',
       library: '_bitforms',
       libraryTarget: 'umd',
     },
-    /*  devServer: {
-       contentBase: path.join(__dirname, '../assets/js/'),
-       hot: true,
-     }, */
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {
@@ -69,7 +64,7 @@ module.exports = (env, argv) => {
               comments: /^\**!|@preserve|@license/,
             },
             compress: {
-              drop_console: production && true,
+              drop_console: production,
             },
           },
         }),
@@ -87,10 +82,6 @@ module.exports = (env, argv) => {
         chunks: ['webpackAssets'],
         chunksSortMode: 'auto',
       }),
-      /* new PreloadWebpackPlugin({
-        rel: 'preload',
-        include: ['vendors-main']
-      }), */
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': production
           ? JSON.stringify('production')
@@ -142,10 +133,10 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(jsx?)$/,
           exclude: /node_modules\/(?!react-table-sticky)/,
           loader: 'babel-loader',
-          query: {
+          options: {
             presets: [
               '@babel/preset-react',
               [
@@ -163,33 +154,31 @@ module.exports = (env, argv) => {
           },
         },
         {
-          test: /\.(s[ac]ss|css)$/i,
+          test: /\.(sa|sc|c)ss$/,
           use: [
-            // production ? MiniCssExtractPlugin.loader : 'style-loader',
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                // only enable hot in development
-                hmr: process.env.NODE_ENV === 'development',
-                // if hmr does not work, this is a forceful method.
-                reloadAll: true,
-              },
-            },
+            MiniCssExtractPlugin.loader,
             'css-loader',
             {
               loader: 'postcss-loader',
               options: {
-                ident: 'postcss',
-                plugins: [
-                  autoprefixer,
-                ],
-                minimize: true,
-
-                hmr: !production,
-                reloadAll: true,
+                postcssOptions: {
+                  plugins: [
+                    [
+                      'autoprefixer',
+                    ],
+                  ],
+                }
               },
             },
-            'sass-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: production,
+                sassOptions: {
+                  outputStyle: 'compressed',
+                },
+              },
+            },
           ],
         },
         {

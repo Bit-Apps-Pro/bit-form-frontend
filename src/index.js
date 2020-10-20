@@ -8,12 +8,8 @@ import ReactDOM from 'react-dom'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
-// import * as Sentry from '@sentry/browser';
-// import * as serviceWorker from './serviceWorker'
 
 const App = lazy(() => import('./App'))
-
-// Sentry.init({ dsn: 'https://ca450a3bacc2472bbe9b010388f11880@o400688.ingest.sentry.io/5259314' });
 
 if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
   // eslint-disable-next-line camelcase
@@ -31,11 +27,12 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       console.log('SW registered: ', registration);
     }).catch(registrationError => {
       console.log('SW registration failed: ', registrationError);
-    });
-  });
+    })
+  })
 } else {
   console.log('no sw')
 }
+
 
 ReactDOM.render(
   <AllFormContextProvider>
