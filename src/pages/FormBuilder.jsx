@@ -77,8 +77,11 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   }
 
   const setExistingStyle = () => {
+    const headers = new Headers()
+    headers.append('pragma', 'no-cache')
+    headers.append('cache-control', 'no-cache')
     // eslint-disable-next-line no-undef
-    fetch(`${bits.styleURL}/bitform-${formID}.css`, { cache: 'no-store' })
+    fetch(`${bits.styleURL}/bitform-${formID}.css`, { cache: 'no-store', headers })
       .then(response => {
         if (response.ok) {
           return response.text()
