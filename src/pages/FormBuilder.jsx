@@ -81,7 +81,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     headers.append('pragma', 'no-cache')
     headers.append('cache-control', 'no-cache')
     // eslint-disable-next-line no-undef
-    fetch(`${bits.styleURL}/bitform-${formID}.txt`, { cache: 'no-store', headers })
+    fetch(`${bits.styleURL}/bitform-${formID}.css`, { cache: 'no-store', headers })
       .then(response => {
         if (response.ok) {
           return response.text()

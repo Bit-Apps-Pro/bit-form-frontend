@@ -18,7 +18,7 @@ export default function EditEntryData(props) {
   useEffect(() => {
     setshowEdit(true)
     // eslint-disable-next-line no-undef
-    fetch(`${bits.styleURL}/bitform-${formID}.txt`)
+    fetch(`${bits.styleURL}/bitform-${formID}.css`)
       .then(response => response.text())
       .then(styleData => setFormStyle(styleData))
 
