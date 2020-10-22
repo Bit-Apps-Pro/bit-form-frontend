@@ -1,5 +1,3 @@
-import React from 'react'
-
 function TableFileLink(props) {
   return (
     <div className="btcd-t-link flx mr-2 prevent-drawer">

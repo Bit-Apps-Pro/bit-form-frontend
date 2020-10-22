@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import SingleInput from '../ElmSettings/Childs/SingleInput'
+import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import SelectBox2 from '../ElmSettings/Childs/SelectBox2'
 import Back2FldList from './Back2FldList'

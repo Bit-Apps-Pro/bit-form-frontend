@@ -1,4 +1,3 @@
-import React from 'react'
 import ZohoProjectsActions from './ZohoProjectsActions'
 import { refreshFields } from './ZohoProjectsCommonFunc'
 import ZohoProjectsFieldMap, { addFieldMap } from './ZohoProjectsFieldMap'

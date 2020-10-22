@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
 /* import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable' */
-import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import Bitforms from './Bitforms'
 
 if (!window._babelPolyfill) {

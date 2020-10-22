@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import React, { lazy, Suspense, useState, useEffect, useContext } from 'react'
+import { lazy, Suspense, useState, useEffect, useContext } from 'react'
 import {
   BrowserRouter as Router, Switch, Route, NavLink, Link,
 } from 'react-router-dom'

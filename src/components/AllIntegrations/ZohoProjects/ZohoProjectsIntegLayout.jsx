@@ -1,7 +1,6 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-nested-ternary */
-import React from 'react'
-import Loader from '../../Loaders/Loader'
+import Loader from '../../Loaders/Loader';
 import CreateNew from './CreateNew'
 import { refreshPortals, refreshProjects, refreshMilestones, refreshTasklists, refreshTasks, regenerateMappedField } from './ZohoProjectsCommonFunc'
 

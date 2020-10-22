@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { memo, useContext, useEffect, useState } from 'react'
+import { memo, useContext, useEffect, useState, useRef, forwardRef } from 'react';
+
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
@@ -11,11 +12,11 @@ import Menu from './ElmSettings/Childs/Menu'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import TableLoader2 from './Loaders/TableLoader2'
 
-const IndeterminateCheckbox = React.forwardRef(
+const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef()
+    const defaultRef = useRef()
     const resolvedRef = ref || defaultRef
-    React.useEffect(() => {
+    useEffect(() => {
       resolvedRef.current.indeterminate = indeterminate
     }, [resolvedRef, indeterminate])
     return <TableCheckBox refer={resolvedRef} rest={rest} />

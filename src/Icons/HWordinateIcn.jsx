@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function HWordinateIcn({ h, w, className, style }) {
   return (
     <svg

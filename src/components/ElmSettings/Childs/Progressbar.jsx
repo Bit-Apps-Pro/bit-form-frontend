@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Progressbar({ value }) {
   return (
     <div className="flx" style={{ width: '100%' }}>

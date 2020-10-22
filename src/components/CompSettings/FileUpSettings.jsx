@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import SingleInput from '../ElmSettings/Childs/SingleInput'
+import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import DropDown from '../ElmSettings/Childs/DropDown'
 import CopyText from '../ElmSettings/Childs/CopyText'

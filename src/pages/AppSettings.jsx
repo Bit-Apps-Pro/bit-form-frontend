@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext, useState } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom'
 import Captcha from '../components/Captcha'
 import { AppSettings } from '../Utils/AppSettingsContext'

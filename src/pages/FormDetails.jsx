@@ -1,4 +1,4 @@
-import React, { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
+import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react';
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'

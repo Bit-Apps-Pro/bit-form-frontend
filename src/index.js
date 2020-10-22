@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
-import React, { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'

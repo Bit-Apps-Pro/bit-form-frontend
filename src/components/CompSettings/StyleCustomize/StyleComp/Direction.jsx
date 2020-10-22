@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
-import React from 'react'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import StyleAccordion from '../ChildComp/StyleAccordion';
 
 export default function Direction({ style, cls, styleConfig, styleDispatch, brkPoint }) {
   const dir = style?.[cls]?.['direction'] || 'ltr'

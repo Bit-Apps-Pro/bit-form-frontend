@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react';
 import { AppSettings } from '../Utils/AppSettingsContext'
 
 export default function Captcha({ saveCaptcha }) {

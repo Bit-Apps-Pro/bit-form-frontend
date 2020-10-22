@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useCallback, useReducer, useEffect } from 'react'
+import { createRef, useState, useCallback, useReducer, useEffect } from 'react';
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
 import css2json from '../Utils/css2json'
@@ -46,7 +46,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
   const [isToolDragging, setisToolDragging] = useState(false)
-  const conRef = React.createRef(null)
+  const conRef = createRef(null)
   const notIE = !window.document.documentMode
 
   useEffect(() => {

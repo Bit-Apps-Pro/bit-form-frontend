@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'

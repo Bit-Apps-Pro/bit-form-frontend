@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { memo } from 'react';
 
 function Button({ className, type, onClick, icn, children, style }) {
   // console.log('%c $render Button', 'background:lightgray;padding:3px;border-radius:5px;')

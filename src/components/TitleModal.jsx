@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
-import EditIcn from '../Icons/EditIcn'
+import EditIcn from '../Icons/EditIcn';
 
 export default function TitleModal(props) {
   return (

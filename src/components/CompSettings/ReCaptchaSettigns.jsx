@@ -1,4 +1,3 @@
-import React from 'react'
 import Back2FldList from './Back2FldList'
 
 export default function ReCaptchaSettigns({ elm, updateData, setElementSetting }) {

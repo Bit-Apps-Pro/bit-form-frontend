@@ -1,4 +1,3 @@
-import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
 export const addFieldMap = (i, projectsConf, setProjectsConf, event) => {

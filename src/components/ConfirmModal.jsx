@@ -1,4 +1,3 @@
-import React from 'react'
 import Modal from './Modal'
 
 function ConfirmModal({ close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning }) {

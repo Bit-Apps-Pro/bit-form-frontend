@@ -1,4 +1,3 @@
-import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, Switch, useRouteMatch, Route, NavLink, useParams } from 'react-router-dom'
 import TextFieldSettings from './TextFieldSettings'

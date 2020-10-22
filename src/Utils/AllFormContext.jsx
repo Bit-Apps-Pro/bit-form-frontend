@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import React, { createContext, useReducer } from 'react'
+import { createContext, useReducer } from 'react';
 
 const AllFormsDispatchHandler = (allForms, action) => {
   switch (action.type) {

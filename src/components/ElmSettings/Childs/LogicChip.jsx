@@ -1,5 +1,3 @@
-import React from 'react'
-
 function LogicChip({ logic, nested, onChange }) {
   return (
     <>

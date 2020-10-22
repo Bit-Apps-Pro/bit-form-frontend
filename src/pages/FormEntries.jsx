@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import React, { memo, useCallback, useContext, useEffect, useState } from 'react'
+import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react';
+
 import { useParams } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
@@ -19,8 +20,8 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(false)
   const { formID } = useParams()
-  const fetchIdRef = React.useRef(0)
-  const [pageCount, setPageCount] = React.useState(0)
+  const fetchIdRef = useRef(0)
+  const [pageCount, setPageCount] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
@@ -53,7 +54,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
       accessor: val.key,
       fieldType: val.type,
       minWidth: 50,
-      ...'type' in val && val.type.match(/^(file-up|check|select)$/) && {
+      ...('type' in val && val.type.match(/^(file-up|check|select)$/) && {
         Cell: row => {
           if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
             if (val.type === 'file-up') {
@@ -70,7 +71,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           }
           return null
         },
-      },
+      }),
     }))
     cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.state.pageIndex * value.state.pageSize) + Number(value.row.id) + 1}</>, width: 40 })
     cols.push({

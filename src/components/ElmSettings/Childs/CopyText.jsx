@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function CopyText({ value, setSnackbar, className, readOnly }) {
   const copyText = e => {
     const cpyBtn = e.target

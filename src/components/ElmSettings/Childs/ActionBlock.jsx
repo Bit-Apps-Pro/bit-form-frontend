@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
+import MultiSelect from 'react-multiple-select-dropdown-lite';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'

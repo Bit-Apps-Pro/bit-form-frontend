@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { useState, useEffect, memo, useContext } from 'react'
+import { useState, useEffect, memo, useContext } from 'react';
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { Scrollbars } from 'react-custom-scrollbars'
 import SlimSelect from 'slim-select'

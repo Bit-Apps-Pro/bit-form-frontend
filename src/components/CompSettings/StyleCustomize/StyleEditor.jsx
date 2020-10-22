@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom';
 import Background from './StyleComp/Background'
 import Borders from './StyleComp/Borders'
 import Padding from './StyleComp/Padding'

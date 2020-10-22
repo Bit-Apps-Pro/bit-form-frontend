@@ -1,6 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
-
 export default function SubmitBtn({ attr, buttonDisabled, handleReset }) {
   return (
     <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>

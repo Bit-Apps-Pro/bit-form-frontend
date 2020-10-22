@@ -1,4 +1,3 @@
-import React from 'react'
 import Range from '../ChildComp/Range'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'

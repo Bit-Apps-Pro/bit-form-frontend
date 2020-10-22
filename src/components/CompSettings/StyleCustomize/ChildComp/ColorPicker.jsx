@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { ColorPicker as Picker } from 'react-color-gradient-picker';
 import 'react-color-gradient-picker/dist/index.css';
 import { CSSTransition } from 'react-transition-group';

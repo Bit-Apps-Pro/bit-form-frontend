@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { memo } from 'react';
 
 function MtInput({ label, onChange, value, disabled, type, textarea, className }) {
   return (

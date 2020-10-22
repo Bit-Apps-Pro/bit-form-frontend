@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function LoaderSm({ size, className, clr = '#0a8dff' }) {
   return (
     <div

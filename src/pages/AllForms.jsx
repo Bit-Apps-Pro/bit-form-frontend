@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useContext, useCallback, memo, lazy } from 'react'
+import { useState, useEffect, useContext, useCallback, memo, lazy } from 'react';
 import { Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'

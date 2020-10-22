@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useEffect } from 'react'
+import { useEffect } from 'react';
 import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
 
 function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {

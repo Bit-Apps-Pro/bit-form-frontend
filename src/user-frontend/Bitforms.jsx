@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState, useReducer } from 'react'
+import { useEffect, useState, useReducer } from 'react';
 import bitsFetch from '../Utils/bitsFetch'
 import CompGen from '../components/CompGen'
 import { resetCaptcha } from '../components/Fields/Recaptcha'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams, useHistory } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -76,7 +76,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...step === 2 && { width: 900, height: `${100}%`, overflow: 'visible' } }}>
+      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: `${100}%`, overflow: 'visible' }) }}>
 
         <ZohoCRMIntegLayout
           tab={tab}
@@ -108,7 +108,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history)}
       />
     </div>
-  )
+  );
 }
 
 export default ZohoCRM
