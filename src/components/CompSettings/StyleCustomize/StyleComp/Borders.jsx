@@ -11,13 +11,17 @@ import BdrDashIcn from '../../../../Icons/BdrDashIcn'
 import BdrDottedIcn from '../../../../Icons/BdrDottedIcn'
 import BdrSolidIcn from '../../../../Icons/BdrSolidIcn'
 import BorderIcn from '../../../../Icons/BorderIcn'
+import { spreadIn4Value } from '../../../../Utils/Helpers'
 
 export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
   const bdrStyle = style?.[pcls]?.['border-style']?.replace(/!important/g, '') || style?.[cls]?.['border-style']?.replace(/!important/g, '') || 'None'
   const bdrClr = style?.[pcls]?.['border-color'] || style?.[cls]?.['border-color']
-  const bdrW = style?.[pcls]?.['border-width'] || style?.[cls]?.['border-width']
-  const bdrRad = style?.[pcls]?.['border-radius'] || style?.[cls]?.['border-radius']
+  let bdrW = style?.[pcls]?.['border-width'] || style?.[cls]?.['border-width']
+  let bdrRad = style?.[pcls]?.['border-radius'] || style?.[cls]?.['border-radius']
+  bdrW = spreadIn4Value(bdrW)
+  bdrRad = spreadIn4Value(bdrRad)
+
 
   const setBdrStyle = bStyle => {
     const actions = [

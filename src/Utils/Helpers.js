@@ -94,5 +94,14 @@ const decipher = salt => {
     .join('');
 }
 
-export const bitCipher = cipher('btcd');
+export const bitCipher = cipher('btcd')
 export const bitDecipher = decipher('btcd')
+
+export function spreadIn4Value(value) {
+  if (!value) return undefined
+  const valArr = value.split(' ')
+  if (valArr.length === 4) return value
+  if (valArr.length === 1) return Array(4).fill(valArr[0]).join(' ')
+  if (valArr.length === 2) return [valArr[0], valArr[1], valArr[0], valArr[1]].join(' ')
+  if (valArr.length === 3) return [valArr[0], valArr[1], valArr[2], valArr[1]].join(' ')
+}

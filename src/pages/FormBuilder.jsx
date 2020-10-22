@@ -18,12 +18,14 @@ const styleReducer = (style, action) => {
     return { ...style }
   }
   if (action.brkPoint === 'md') {
-    multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
+    const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+    multiAssign(st, action.apply)
     sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
-    multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
+    const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+    multiAssign(st, action.apply)
     sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
@@ -58,9 +60,11 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   useEffect(() => {
     if (brkPoint === 'md') {
-      setStyleSheet(j2c.sheet(merge(style, style['@media only screen and (max-width: 600px)'])))
+      const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+      setStyleSheet(j2c.sheet(merge(style, st)))
     } else if (brkPoint === 'sm') {
-      setStyleSheet(j2c.sheet(merge(style, style['@media only screen and (max-width: 400px)'])))
+      const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+      setStyleSheet(j2c.sheet(merge(style, st)))
     } else if (brkPoint === 'lg') {
       setStyleSheet(j2c.sheet(style))
     }
@@ -68,10 +72,12 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const styleProvider = () => {
     if (brkPoint === 'md') {
-      return merge(style, style['@media only screen and (max-width: 600px)'])
+      const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+      return merge(style, st)
     }
     if (brkPoint === 'sm') {
-      return merge(style, style['@media only screen and (max-width: 400px)'])
+      const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+      return merge(style, st)
     }
     return style
   }

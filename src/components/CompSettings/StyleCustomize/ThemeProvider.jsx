@@ -50,7 +50,7 @@ export const defaultTheme = (formId) => ({
   [`input.fld-${formId}:hover,textarea.fld-${formId}:hover`]: {
     'border-color': 'rgba(29, 158, 249, 1)!important',
   },
-  '@media only screen and (max-width: 600px)': {},
-  '@media only screen and (max-width: 400px)': {},
+  '@media only screen and (max-width:600px)': {},
+  '@media only screen and (max-width:400px)': {},
 })
 export const them = {}
