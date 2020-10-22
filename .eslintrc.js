@@ -31,6 +31,8 @@ module.exports = {
     "object-curly-newline": 0,
     "max-len": ["error", { "code": 350 }],
     "linebreak-style": ["error", "unix"],
-    "react-hooks/exhaustive-deps": 'warn' 
+    "react-hooks/exhaustive-deps": 'warn',
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
   },
 };
