@@ -4,6 +4,8 @@
   "version": "1.22.5",
   "dependencies": {
     "axios": "^0.20.0",
+    "@bumaga/tabs": "^0.2.0",
+    "@sentry/browser": "^5.15.5",
     "babel-polyfill": "^6.26.0",
     "core-js": "3",
     "create-file-list": "^1.0.1",

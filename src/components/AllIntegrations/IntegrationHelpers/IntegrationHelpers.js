@@ -96,7 +96,7 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
 export const addFieldMap = (i, confTmp, setConf, uploadFields, tab) => {
   const newConf = { ...confTmp }
   if (tab) {
-    uploadFields ? newConf.relatedlist.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' }) : newConf.relatedlist.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+    uploadFields ? newConf.relatedlists[tab - 1].upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' }) : newConf.relatedlists[tab - 1].field_map.splice(i, 0, { formField: '', zohoFormField: '' })
   } else {
     uploadFields ? newConf.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' }) : newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
   }
@@ -108,11 +108,11 @@ export const delFieldMap = (i, confTmp, setConf, uploadFields, tab) => {
   const newConf = { ...confTmp }
   if (tab) {
     if (uploadFields) {
-      if (newConf.relatedlist.upload_field_map.length > 1) {
-        newConf.relatedlist.upload_field_map.splice(i, 1)
+      if (newConf.relatedlists[tab - 1].upload_field_map.length > 1) {
+        newConf.relatedlists[tab - 1].upload_field_map.splice(i, 1)
       }
-    } else if (newConf.relatedlist.field_map.length > 1) {
-      newConf.relatedlist.field_map.splice(i, 1)
+    } else if (newConf.relatedlists[tab - 1].field_map.length > 1) {
+      newConf.relatedlists[tab - 1].field_map.splice(i, 1)
     }
   } else if (uploadFields) {
     if (newConf.upload_field_map.length > 1) {
@@ -127,15 +127,15 @@ export const delFieldMap = (i, confTmp, setConf, uploadFields, tab) => {
 
 export const handleFieldMapping = (event, index, conftTmp, setConf, uploadFields, tab) => {
   const newConf = { ...conftTmp }
-  if (tab === 1) {
-    if (uploadFields) newConf.relatedlist.upload_field_map[index][event.target.name] = event.target.value
-    else newConf.relatedlist.field_map[index][event.target.name] = event.target.value
+  if (tab) {
+    if (uploadFields) newConf.relatedlists[tab - 1].upload_field_map[index][event.target.name] = event.target.value
+    else newConf.relatedlists[tab - 1].field_map[index][event.target.name] = event.target.value
   } else if (uploadFields) newConf.upload_field_map[index][event.target.name] = event.target.value
   else newConf.field_map[index][event.target.name] = event.target.value
 
   if (event.target.value === 'custom') {
-    if (tab === 1) {
-      newConf.relatedlist.field_map[index].customValue = ''
+    if (tab) {
+      newConf.relatedlists[tab - 1].field_map[index].customValue = ''
     } else newConf.field_map[index].customValue = ''
   }
 
@@ -144,8 +144,8 @@ export const handleFieldMapping = (event, index, conftTmp, setConf, uploadFields
 
 export const handleCustomValue = (event, index, conftTmp, setConf, tab) => {
   const newConf = { ...conftTmp }
-  if (tab === 1) {
-    newConf.relatedlist.field_map[index].customValue = event.target.value
+  if (tab) {
+    newConf.relatedlists[tab - 1].field_map[index].customValue = event.target.value
   } else {
     newConf.field_map[index].customValue = event.target.value
   }

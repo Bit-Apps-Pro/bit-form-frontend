@@ -31,7 +31,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
-    relatedlist: {},
+    relatedlists: [],
     actions: {},
   })
 

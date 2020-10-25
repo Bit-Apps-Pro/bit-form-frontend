@@ -3,15 +3,15 @@ import MtInput from '../../ElmSettings/Childs/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, crmConf, setCrmConf, tab }) {
-  const module = tab === 0 ? crmConf.module : crmConf.relatedlist.module
-  const layout = tab === 0 ? crmConf.layout : crmConf.relatedlist.layout
+  const module = tab === 0 ? crmConf.module : crmConf.relatedlists?.[tab - 1]?.module
+  const layout = tab === 0 ? crmConf.layout : crmConf.relatedlists?.[tab - 1]?.layout
 
   let isNotRequired;
 
   if (uploadFields) {
-    isNotRequired = field.zohoFormField === '' || crmConf.default.layouts[module][layout]?.requiredFileUploadFields?.indexOf(field.zohoFormField) === -1
+    isNotRequired = field.zohoFormField === '' || crmConf.default.layouts?.[module]?.[layout]?.requiredFileUploadFields?.indexOf(field.zohoFormField) === -1
   } else {
-    isNotRequired = field.zohoFormField === '' || crmConf.default.layouts[module][layout]?.required?.indexOf(field.zohoFormField) === -1
+    isNotRequired = field.zohoFormField === '' || crmConf.default.layouts?.[module]?.[layout]?.required?.indexOf(field.zohoFormField) === -1
   }
 
   return (
@@ -31,7 +31,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
       <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i, crmConf, setCrmConf, uploadFields, tab)}>
         <option value="">Select Field</option>
         {
-          uploadFields ? Object.keys(crmConf.default.layouts[module][layout].fileUploadFields).filter(fld => fld.required !== true).map(fieldApiName => (
+          uploadFields ? crmConf.default.layouts?.[module]?.[layout]?.fileUploadFields && Object.keys(crmConf.default.layouts[module][layout].fileUploadFields).filter(fld => fld.required !== true).map(fieldApiName => (
             isNotRequired
               ? !crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].required && (
                 <option key={fieldApiName} value={fieldApiName}>
@@ -43,7 +43,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
                   {crmConf.default.layouts[module][layout].fileUploadFields[fieldApiName].display_label}
                 </option>
               )
-          )) : Object.keys(crmConf.default.layouts[module][layout].fields).filter(fld => fld.required !== true).map(fieldApiName => (
+          )) : crmConf.default.layouts?.[module]?.[layout]?.fields && Object.keys(crmConf.default.layouts[module][layout].fields).filter(fld => fld.required !== true).map(fieldApiName => (
             isNotRequired
               ? !crmConf.default.layouts[module][layout].fields[fieldApiName].required && (
                 <option key={fieldApiName} value={fieldApiName}>

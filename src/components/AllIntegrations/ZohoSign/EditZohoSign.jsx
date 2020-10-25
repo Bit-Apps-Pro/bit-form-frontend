@@ -4,41 +4,43 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkAllRequired, handleInput } from './ZohoProjectsCommonFunc'
-import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
+import { handleInput } from './ZohoSignCommonFunc'
+import ZohoSignIntegLayout from './ZohoSignIntegLayout'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
-  const { id, formID } = useParams()
   const history = useHistory()
-  const [projectsConf, setProjectsConf] = useState({ ...integrations[id] })
+  const { id, formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
+  const [signConf, setSignConf] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
-
-  console.log('projectsConf', projectsConf)
+  const [actionMdl, setActionMdl] = useState({ show: false })
 
   const saveConfig = () => {
-    if (!checkAllRequired(projectsConf, setSnackbar)) return
-
-    saveIntegConfig(integrations, setIntegration, allIntegURL, projectsConf, history, id, 1)
+    if (signConf.actions?.update && signConf.actions?.update.criteria === '' && actionMdl.show !== 'criteria') {
+      setActionMdl({ show: 'criteria' })
+      return
+    }
+    saveIntegConfig(integrations, setIntegration, allIntegURL, signConf, history, id, 1)
   }
 
+  console.log('signConf', signConf)
+
   return (
-    <div style={{ width: 900 }}>
+    <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-150 d-in-b">Integration Name:</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, projectsConf, setProjectsConf)} name="name" value={projectsConf.name} type="text" placeholder="Integration Name..." />
+        <b className="wdt-100 d-in-b">Integration Name:</b>
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, signConf, setSignConf)} name="name" value={signConf.name} type="text" placeholder="Integration Name..." />
       </div>
       <br />
       <br />
 
-      <ZohoProjectsIntegLayout
+      <ZohoSignIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, projectsConf, setProjectsConf, formID, setisLoading, setSnackbar)}
-        projectsConf={projectsConf}
-        setProjectsConf={setProjectsConf}
+        signConf={signConf}
+        setSignConf={setSignConf}
         isLoading={isLoading}
         setisLoading={setisLoading}
         setSnackbar={setSnackbar}
@@ -47,8 +49,9 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={projectsConf.portalId === '' || projectsConf.event === ''}
+      // disabled={signConf.workspace === '' || signConf.table === '' || signConf.field_map.length < 1}
       />
+      <br />
     </div>
   )
 }
