@@ -42,7 +42,7 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
       <select onChange={handleInput} name="layout" value={crmConf?.relatedlists?.[tab - 1]?.layout} className="btcd-paper-inp w-7" disabled={!crmConf?.relatedlists?.[tab - 1]?.module}>
         <option value="">Select Layout</option>
         {
-          crmConf?.default?.layouts?.[crmConf.relatedlists[tab - 1]?.module] && Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module]).map(layoutApiName => (
+          crmConf?.default?.layouts?.[crmConf.relatedlists?.[tab - 1]?.module] && Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module]).map(layoutApiName => (
             <option key={layoutApiName} value={layoutApiName}>
               {layoutApiName}
             </option>
@@ -65,7 +65,7 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
         )
       } */}
       {
-        crmConf.default?.layouts?.[crmConf?.relatedlists[tab - 1]?.module]?.[crmConf?.relatedlists[tab - 1]?.layout]?.fields
+        crmConf.default?.layouts?.[crmConf?.relatedlists?.[tab - 1]?.module]?.[crmConf?.relatedlists?.[tab - 1]?.layout]?.fields
         && (
           <>
             <div className="mt-4"><b className="wdt-100">Field Map</b></div>
@@ -75,7 +75,7 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
               <div className="txt-dp"><b>Zoho Fields</b></div>
             </div>
 
-            {crmConf.relatedlists[tab - 1].field_map?.map((itm, i) => (
+            {crmConf.relatedlists?.[tab - 1]?.field_map?.map((itm, i) => (
               <ZohoCRMFieldMap
                 key={`crm-m-${i + 9}`}
                 i={i}

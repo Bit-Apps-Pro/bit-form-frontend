@@ -394,7 +394,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                   </ReactSortable>
 
                   <div className="font-w-m mt-3">Upsert Preferance</div>
-                  <small>Overwrite existing field values in Zoho CRM with empty field values from Zoho Forms while upserting a record?</small>
+                  <small>Overwrite existing field values in Zoho CRM with empty field values from Bit Form while upserting a record?</small>
                   <div>
                     <CheckBox onChange={() => setUpsertSettings(true, 'overwrite')} radio checked={crmConf.actions.upsert?.overwrite} name="up-rec" title="Yes" />
                     <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.actions.upsert?.overwrite} name="up-rec" title="No" />
@@ -415,7 +415,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
                   </ReactSortable>
 
                   <div className="font-w-m mt-3">Upsert Preferance</div>
-                  <small>Overwrite existing field values in Zoho CRM with empty field values from Zoho Forms while upserting a record?</small>
+                  <small>Overwrite existing field values in Zoho CRM with empty field values from Bit Form while upserting a record?</small>
                   <div>
                     <CheckBox onChange={() => setUpsertSettings(true, 'overwrite')} radio checked={crmConf.relatedlists[tab - 1].actions.upsert?.overwrite} name="up-rec" title="Yes" />
                     <CheckBox onChange={() => setUpsertSettings(false, 'overwrite')} radio checked={!crmConf.relatedlists[tab - 1].actions.upsert?.overwrite} name="up-rec" title="No" />

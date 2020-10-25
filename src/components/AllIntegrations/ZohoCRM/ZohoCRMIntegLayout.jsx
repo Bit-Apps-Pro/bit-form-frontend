@@ -1,8 +1,8 @@
+import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import React from 'react'
-import { Tabs, Tab, Panel } from '@bumaga/tabs'
-import { refreshModules } from './ZohoCRMCommonFunc'
 import NewRecord from './NewRecord'
 import RelatedRecord from './RelatedRecord'
+import { refreshModules } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, handleInput, crmConf, setCrmConf, isLoading, setisLoading, setSnackbar }) {
   const addNewRelatedTab = () => {
@@ -25,6 +25,8 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
     const newConf = { ...crmConf }
 
     newConf.relatedlists.splice(indx, 1)
+
+    if (!newConf.relatedlists.length) settab(0)
 
     setCrmConf({ ...newConf })
   }
@@ -67,6 +69,7 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
             ))}
             {crmConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>}
           </div>
+          <div className="btcd-hr" />
 
           <Panel>
             <NewRecord
