@@ -11,7 +11,7 @@ export const handleInput = (e, recordTab, recruitConf, setRecruitConf, formID, s
     }
     newConf[e.target.name] = e.target.value
   } else {
-    newConf.relatedlist[e.target.name] = e.target.value
+    newConf.relatedlists[recordTab - 1][e.target.name] = e.target.value
   }
 
   switch (e.target.name) {
@@ -24,9 +24,9 @@ export const handleInput = (e, recordTab, recruitConf, setRecruitConf, formID, s
   setRecruitConf({ ...newConf })
 }
 
-export const handleTabChange = (recordTab, settab, recruitConf = '', setRecruitConf = '', formID = '', setisLoading = '', setSnackbar = '') => {
+export const handleTabChange = (recordTab, settab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar) => {
   if (recordTab) {
-    !recruitConf.default.relatedlists?.[recruitConf.module] && refreshRelatedList(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)
+    !recruitConf?.default?.relatedlists?.[recruitConf.module] && refreshRelatedList(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)
   }
 
   settab(recordTab)
@@ -34,21 +34,18 @@ export const handleTabChange = (recordTab, settab, recruitConf = '', setRecruitC
 
 export const moduleChange = (recordTab, recruitConf, formID, setRecruitConf, setisLoading, setSnackbar) => {
   const newConf = { ...recruitConf }
-  const module = recordTab === 0 ? newConf.module : newConf.relatedlist.module
+  const module = recordTab === 0 ? newConf.module : newConf.relatedlists.[recordTab - 1].module
 
   if (recordTab === 0) {
     newConf.actions = {}
     newConf.field_map = [{ formField: '', zohoFormField: '' }]
     newConf.upload_field_map = [{ formField: '', zohoFormField: '' }]
 
-    newConf.relatedlist.module = ''
-    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    newConf.relatedlist.upload_field_map = [{ formField: '', zohoFormField: '' }]
-    newConf.relatedlist.actions = {}
+    if (recordTab) newConf.relatedlists[recordTab - 1] = {}
   } else {
-    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    newConf.relatedlist.upload_field_map = [{ formField: '', zohoFormField: '' }]
-    newConf.relatedlist.actions = {}
+    newConf.relatedlists[recordTab - 1].field_map = [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists[recordTab - 1].upload_field_map = [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists[recordTab - 1].actions = {}
   }
 
   if (!newConf.default?.moduleData?.[module]) {
@@ -59,9 +56,9 @@ export const moduleChange = (recordTab, recruitConf, formID, setRecruitConf, set
       newConf.upload_field_map = generateMappedField(recordTab, newConf, true)
     }
   } else {
-    newConf.relatedlist.field_map = generateMappedField(recordTab, newConf)
+    newConf.relatedlists[recordTab - 1].field_map = generateMappedField(recordTab, newConf)
     if (Object.keys(newConf.default.moduleData[module].fileUploadFields).length > 0) {
-      newConf.relatedlist.upload_field_map = generateMappedField(recordTab, newConf, true)
+      newConf.relatedlists[recordTab - 1].upload_field_map = generateMappedField(recordTab, newConf, true)
     }
   }
 
@@ -88,12 +85,50 @@ export const refreshModules = (formID, recruitConf, setRecruitConf, setisLoading
         if (result.data.modules) {
           newConf.default.modules = result.data.modules
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setRecruitConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Modules refreshed' })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `Modules refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {
         setSnackbar({ show: true, msg: 'Modules refresh failed. please try again' })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}
+
+export const refreshNoteTypes = (formID, recruitConf, setRecruitConf, setisLoading, setSnackbar) => {
+  setisLoading(true)
+  const refreshModulesRequestParams = {
+    formID,
+    id: recruitConf.id,
+    dataCenter: recruitConf.dataCenter,
+    clientId: recruitConf.clientId,
+    clientSecret: recruitConf.clientSecret,
+    tokenDetails: recruitConf.tokenDetails,
+  }
+  bitsFetch(refreshModulesRequestParams, 'bitforms_zrecruit_refresh_notetypes')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...recruitConf }
+        if (!newConf.default) {
+          newConf.default = {}
+        }
+        if (result.data.noteTypes) {
+          newConf.default.noteTypes = result.data.noteTypes
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        setRecruitConf({ ...newConf })
+        setSnackbar({ show: true, msg: 'Note Types refreshed' })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `Note Types refresh failed Cause:${result.data.data || result.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Note Types refresh failed. please try again' })
       }
       setisLoading(false)
     })
@@ -139,7 +174,7 @@ export const refreshRelatedList = (formID, recruitConf, setRecruitConf, setisLoa
 }
 
 export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setisLoading, setSnackbar) => {
-  const module = recordTab === 0 ? recruitConf.module : recruitConf.relatedlist.module
+  const module = recordTab === 0 ? recruitConf.module : recruitConf.relatedlists[recordTab - 1].module
   if (!module) {
     return
   }
@@ -168,9 +203,9 @@ export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setisL
               newConf.upload_field_map = generateMappedField(recordTab, newConf, true)
             }
           } else {
-            newConf.relatedlist.field_map = generateMappedField(recordTab, newConf)
+            newConf.relatedlists[recordTab - 1].field_map = generateMappedField(recordTab, newConf)
             if (Object.keys(newConf.default.moduleData[module].fileUploadFields).length > 0) {
-              newConf.relatedlist.upload_field_map = generateMappedField(recordTab, newConf, true)
+              newConf.relatedlists[recordTab - 1].upload_field_map = generateMappedField(recordTab, newConf, true)
             }
           }
         }
@@ -180,7 +215,7 @@ export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setisL
         }
         setRecruitConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Layouts refresh failed. please try again' })
+        setSnackbar({ show: true, msg: 'Fields refresh failed. please try again' })
       }
       setisLoading(false)
     })
@@ -188,7 +223,7 @@ export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setisL
 }
 
 export const generateMappedField = (recordTab, recruitConf, uploadFields) => {
-  const module = recordTab === 0 ? recruitConf.module : recruitConf.relatedlist.module
+  const module = recordTab === 0 ? recruitConf.module : recruitConf.relatedlists[recordTab - 1].module
   if (uploadFields) {
     return recruitConf.default.moduleData[module].requiredFileUploadFields.length > 0 ? recruitConf.default.moduleData[module].requiredFileUploadFields?.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
   }
@@ -198,10 +233,10 @@ export const generateMappedField = (recordTab, recruitConf, uploadFields) => {
 export const checkMappedFields = (recruitConf) => {
   const mappedFields = recruitConf?.field_map ? recruitConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
   const mappedUploadFields = recruitConf?.upload_field_map ? recruitConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-  const mappedRelatedFields = recruitConf?.relatedlist?.field_map ? recruitConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-  const mappedRelatedUploadFields = recruitConf?.relatedlist?.upload_field_map ? recruitConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && recruitConf?.default?.moduleData?.[recruitConf.relatedlist.module]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+  const mappedRelatedFields = recruitConf.relatedlists.map(relatedlist => relatedlist.field_map.filter(mappedField => !mappedField.formField && mappedField.zohoFormField))
+  const mappedRelatedUploadFields = recruitConf.relatedlists.map(relatedlist => relatedlist.upload_field_map.filter(mappedField => !mappedField.formField && mappedField.zohoFormField))
 
-  if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
+  if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.some(relatedField => relatedField.length) || mappedRelatedUploadFields.some(relatedField => relatedField.length)) {
     return false
   }
 

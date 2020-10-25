@@ -3,14 +3,14 @@ import MtInput from '../../ElmSettings/Childs/MtInput';
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers';
 
 export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, tab }) {
-  const module = tab === 0 ? recruitConf.module : recruitConf.relatedlist.module
+  const module = tab === 0 ? recruitConf.module : recruitConf.relatedlists?.[tab - 1]?.module
 
   let isNotRequired;
 
   if (uploadFields) {
-    isNotRequired = field.zohoFormField === '' || recruitConf.default.moduleData[module].requiredFileUploadFields?.indexOf(field.zohoFormField) === -1
+    isNotRequired = field.zohoFormField === '' || recruitConf.default.moduleData?.[module]?.requiredFileUploadFields?.indexOf(field.zohoFormField) === -1
   } else {
-    isNotRequired = field.zohoFormField === '' || recruitConf.default.moduleData[module].required?.indexOf(field.zohoFormField) === -1
+    isNotRequired = field.zohoFormField === '' || recruitConf.default.moduleData?.[module]?.required?.indexOf(field.zohoFormField) === -1
   }
 
   return (
@@ -31,7 +31,7 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
         <option value="">Select Field</option>
         {
           uploadFields
-            ? Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map(fieldApiName => (
+            ? recruitConf.default.moduleData?.[module]?.fileUploadFields && Object.keys(recruitConf.default.moduleData[module].fileUploadFields).map(fieldApiName => (
               isNotRequired ? recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].required === 'false'
                 && (
                   <option key={fieldApiName} value={fieldApiName}>
@@ -43,7 +43,7 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
                   </option>
                 )
             ))
-            : Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName => (
+            : recruitConf.default.moduleData?.[module]?.fields && Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName => (
               isNotRequired ? recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false'
                 && (
                   <option key={fieldApiName} value={fieldApiName}>
