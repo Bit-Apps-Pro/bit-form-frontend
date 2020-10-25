@@ -17,7 +17,7 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update'
+  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
     type: 'Zoho Analytics',

@@ -8,6 +8,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
   let type = ''
   let fldType = ''
   let fieldLbl = ''
+  let fieldKey = ''
   if (formFields !== null) {
     // eslint-disable-next-line array-callback-return
     formFields.map(itm => {
@@ -20,11 +21,22 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         fldType = itm.type
         // eslint-disable-next-line no-useless-escape
         fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
+        fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
       }
     })
   }
 
-  const fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
+  const getOptions = () => {
+    let options = []
+
+    if (fldType === 'select') {
+      options = fields?.[fieldKey]?.opt
+    } else {
+      options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))
+    }
+
+    return options
+  }
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
@@ -39,9 +51,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">
-        {/* <circle cx="0" cy="20" r="3" fill="#b9c5ff" /> */}
         <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-        {/* <circle cx="31" cy="20" r="3" fill="#b9c5ff" /> */}
       </svg>
 
       <MtSelect
@@ -68,29 +78,35 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">
-        {/* <circle cx="0" cy="20" r="3" fill="#b9c5ff" /> */}
         <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-        {/* <circle cx="31" cy="20" r="3" fill="#b9c5ff" /> */}
       </svg>
 
-      {fldType === 'select' || fldType === 'check' || fldType === 'radio'
-        ? (
-          <MultiSelect
-            className="msl-wrp-options btcd-paper-drpdwn w-10"
-            defaultValue={value}
-            onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-            options={fldType === 'select' ? fields?.[fieldKey]?.opt : (fldType === 'check' || fldType === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}
-            customValue
-          />
-        ) : (
-          <MtInput
-            label="Value"
-            type={type}
-            disabled={logicValue === 'null' || logicValue === 'not_null'}
-            onChange={e => changeValue(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-            value={value}
-          />
-        )}
+      {
+        fldType.match(/select|check|radio/g)
+          ? (
+            <>
+              <MultiSelect
+                className="msl-wrp-options btcd-paper-drpdwn w-10"
+                defaultValue={value}
+                onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+                options={getOptions()}
+                customValue
+                fldType={fldType}
+              />
+            </>
+            // <select>
+            //   {getOptions().map(option => <option>{option.label}</option>)}
+            // </select>
+          ) : (
+            <MtInput
+              label="Value"
+              type={type}
+              disabled={logicValue === 'null' || logicValue === 'not_null'}
+              onChange={e => changeValue(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
+              value={value}
+            />
+          )
+      }
 
       <div className="btcd-li-side-btn">
         <Button onClick={() => delLogic(lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} icn className="ml-2 white mr-2 sh-sm">

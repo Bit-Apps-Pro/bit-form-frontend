@@ -17,13 +17,13 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
     setProjectsConf({ ...newConf })
   }
   return (
-    <div id={event}>
+    <div className="btcd-ttc">
       <div className="mt-4">
         <div className="d-flx flx-between">
           <div>
             <b className="wdt-100">
-              Create a
-              {` ${event.charAt(0).toUpperCase() + event.slice(1)}`}
+              Create
+              {` ${event}`}
             </b>
             <button onClick={() => refreshFields(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar, event)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
@@ -55,7 +55,7 @@ export default function CreateNew({ event, projectsConf, setProjectsConf, formID
       <br />
       <div className="mt-4">
         <b className="wdt-100">
-          {`${event.charAt(0).toUpperCase() + event.slice(1)}`}
+          {`${event}`}
           {' '}
           Actions
         </b>

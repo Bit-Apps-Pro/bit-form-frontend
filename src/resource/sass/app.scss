@@ -145,6 +145,12 @@ button.check {
     }
   }
 }
+
+input[type="checkbox"]:disabled:checked:before,
+input[type="checkbox"].disabled:checked:before {
+  opacity: 0 !important;
+}
+
 .wp-core-ui .attachment.details,
 .attachment:focus {
   box-shadow: 0 0 0 2px $blue !important;
@@ -179,7 +185,7 @@ button.check {
   height: 100%;
 }
 .font-w-m {
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 .txt-gray {
   color: $gray;
@@ -4043,4 +4049,8 @@ _:-ms-fullscreen,
     background-color: white;
     box-shadow: 0px 0 29px -9px #1e1d3f;
   }
+}
+
+.btcd-ttc {
+  text-transform: capitalize;
 }

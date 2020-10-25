@@ -225,7 +225,7 @@ function FormDetails(props) {
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
-        setFormSettings({ ...formSettings })
+        setFormSettings({ ...formSettings, integrations })
         formData = {
           id: savedFormId,
           layout: lay,
@@ -239,7 +239,7 @@ function FormDetails(props) {
           layoutChanged: sessionStorage.getItem('btcd-lc'),
           rowHeight: sessionStorage.getItem('btcd-rh'),
         }
-        console.log('ccccccccccccc 1', formData, integrations)
+        console.log('ccccccccccccc 1', formData, integrations, formSettings)
         action = 'bitforms_update_form'
       }
 
@@ -264,7 +264,7 @@ function FormDetails(props) {
                 if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
                 else reportsDispatch({ type: 'set', reports: [] })
               }
-              allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+              allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             } else if (action === 'bitforms_update_form') {
               setSnackbar({ show: true, msg: data.message })
               if ('formSettings' in data) setFormSettings(data.formSettings)
@@ -277,7 +277,7 @@ function FormDetails(props) {
               setallLabels(data.Labels)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
               else reportsDispatch({ type: 'set', reports: [] })
-              allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+              allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
             sessionStorage.removeItem('btcd-lc')

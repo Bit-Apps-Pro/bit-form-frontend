@@ -37,7 +37,7 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
       <br />
       <br />
       <b className="wdt-150 d-in-b">Header Row:</b>
-      <input type="number" min="1" className="btcd-paper-inp w-4" placeholder="Header Row" onChange={handleInput} value={sheetConf?.headerRow > 0 ? sheetConf.headerRow : 1} name="headerRow" />
+      <input type="number" min="1" className="btcd-paper-inp w-4" placeholder="Header Row" onChange={handleInput} value={sheetConf.headerRow} name="headerRow" />
       <button onClick={() => refreshWorksheetHeaders(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Worksheet Headers"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <small className="mt-3 d-blk" style={{ marginLeft: 155, lineHeight: 1.8 }}>By default, first row of the worksheet is considered as header row. This can be used if tabular data starts from any row other than the first row.</small>
@@ -53,7 +53,7 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
         }}
         />
       )}
-      {sheetConf.default?.worksheets?.headers?.[sheetConf.worksheet]
+      {sheetConf.default?.worksheets?.headers?.[sheetConf.worksheet]?.[sheetConf.headerRow]
         && (
           <>
             <div className="mt-4">
@@ -78,15 +78,20 @@ export default function ZohoSheetIntegLayout({ formID, formFields, handleInput, 
             <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(sheetConf.field_map.length, sheetConf, setSheetConf)} className="icn-btn sh-sm" type="button">+</button></div>
             <br />
             <br />
-            <div className="mt-4"><b className="wdt-100">Actions</b></div>
-            <div className="btcd-hr mt-1" />
 
-            <ZohoSheetActions
-              sheetConf={sheetConf}
-              setSheetConf={setSheetConf}
-            />
           </>
         )}
+      {sheetConf.workbook && (
+        <>
+          <div className="mt-4"><b className="wdt-100">Actions</b></div>
+          <div className="btcd-hr mt-1" />
+          <ZohoSheetActions
+            sheetConf={sheetConf}
+            setSheetConf={setSheetConf}
+            formFields={formFields}
+          />
+        </>
+      )}
     </>
   )
 }

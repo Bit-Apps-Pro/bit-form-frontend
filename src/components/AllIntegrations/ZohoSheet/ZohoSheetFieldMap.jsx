@@ -19,7 +19,7 @@ export default function ZohoSheetFieldMap({ i, formFields, field, sheetConf, set
       <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
         <option value="">Select Field</option>
         {
-          Object.values(sheetConf.default.worksheets.headers[sheetConf.worksheet]).map(header => (
+          sheetConf.default.worksheets?.headers?.[sheetConf.worksheet]?.[sheetConf.headerRow] && Object.values(sheetConf.default.worksheets.headers[sheetConf.worksheet][sheetConf.headerRow]).map(header => (
             <option key={`${header}-1`} value={header}>
               {header}
             </option>

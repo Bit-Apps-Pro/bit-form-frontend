@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import Modal from '../../Modal'
 import TitleModal from '../../TitleModal'
 
-export default function ZohoSheetActions({ sheetConf, setSheetConf }) {
+export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)
+  const [actionMdl, setActionMdl] = useState({ show: false })
 
   const actionHandler = (val, typ) => {
     const newConf = { ...sheetConf }
@@ -22,19 +24,21 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf }) {
     setSheetConf({ ...newConf })
   }
 
+  const handleShareSetting = (i, act, val) => {
+    const newConf = { ...sheetConf }
+
+    if (!newConf.actions?.share) newConf.actions.share = []
+
+    newConf.actions.share[i][act] = val
+
+    setSheetConf({ ...newConf })
+  }
+
   console.log('sheetConf', sheetConf)
 
   const setUpdateSettings = (val, typ) => {
     const newConf = { ...sheetConf }
-    if (typ === 'criteria') {
-      newConf.actions.update.criteria = val
-    }
-    if (typ === 'insert') {
-      newConf.actions.update.insert = val
-    }
-    if (typ === 'firstMatch') {
-      newConf.actions.update.firstMatch = val
-    }
+    newConf.actions.update[typ] = val
     setSheetConf({ ...newConf })
   }
 
@@ -48,21 +52,40 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf }) {
     setUpdateMdl(true)
   }
 
+  const openShareModal = () => {
+    const newConf = { ...sheetConf }
+    if (!newConf.actions.share) {
+      newConf.actions.share = [
+        { email: '', field: '', access: 'view', accessLabel: 'Read Only' },
+        { email: '', field: '', access: 'view_and_comment', accessLabel: 'Read/Comment' },
+        { email: '', field: '', access: 'edit', accessLabel: 'Read/Edit' },
+        { email: '', field: '', access: 'share', accessLabel: 'Co-Owner' },
+        { email: '', field: '', access: 'remove_share', accessLabel: 'Remove Share' },
+      ]
+    }
+    setSheetConf({ ...newConf })
+    setActionMdl({ show: 'share' })
+  }
+
   useEffect(() => {
     if (!updateMdl && !sheetConf.actions?.update?.criteria) {
       const newConf = { ...sheetConf }
       delete newConf.actions.update
       setSheetConf({ ...newConf })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateMdl])
 
   return (
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
-        <TitleModal action={openUpdateModal}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in sheetConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Update Row" subTitle="Control how the row gets updated." />
-        </TitleModal>
+        {sheetConf.default?.worksheets?.headers?.[sheetConf.worksheet]?.[sheetConf.headerRow] && (
+          <TitleModal action={openUpdateModal}>
+            <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in sheetConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Update Row" subTitle="Control how the row gets updated." />
+          </TitleModal>
+        )}
+
+        <TableCheckBox onChange={openShareModal} checked={sheetConf?.actions?.share?.find(userShare => userShare.email) || false} className="wdt-200 mt-4 mr-2" value="user_share" title="Share Workbook" subTitle="Share workbook with users pushed to Zoho Sheet." />
       </div>
 
       <Modal
@@ -105,6 +128,35 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf }) {
           )}
         </div>
       </Modal>
+
+      <Modal
+        md
+        show={actionMdl.show === 'share'}
+        setModal={() => setActionMdl({ show: false })}
+        title="Share Settings"
+      >
+        <div className="o-a" style={{ height: '95%' }}>
+          {sheetConf?.actions?.share?.length > 0 && sheetConf.actions.share.map((user, i) => (
+            <div key={i} className="flx flx-between mt-2">
+              <MultiSelect
+                className="btcd-paper-drpdwn"
+                placeholder="Input Email Address(s)"
+                defaultValue={user.email}
+                onChange={(e) => handleShareSetting(i, 'email', e)}
+                options={[]}
+                customValue
+              />
+
+              <select className="btcd-paper-inp w-2" value={user.field} onChange={(e) => handleShareSetting(i, 'field', e.target.value)}>
+                <option value="">Field</option>
+                {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+              </select>
+              <input className="btcd-paper-inp w-3" type="text" value={user.accessLabel} readOnly />
+            </div>
+          ))}
+        </div>
+      </Modal>
+
     </div>
   )
 }

@@ -10,10 +10,10 @@ export const handleInput = (e, recordTab, crmConf, setCrmConf, formID, setisLoad
     }
     newConf[e.target.name] = e.target.value
   } else {
-    if (!newConf.relatedlist) {
-      newConf.relatedlist = {}
+    if (!newConf.relatedlists) {
+      newConf.relatedlists = []
     }
-    newConf.relatedlist[e.target.name] = e.target.value
+    newConf.relatedlists[recordTab - 1][e.target.name] = e.target.value
   }
 
   switch (e.target.name) {
@@ -33,13 +33,13 @@ export const handleTabChange = (recordTab, settab, formID, crmConf, setCrmConf, 
   if (recordTab) {
     !crmConf.default?.relatedlists?.[crmConf.module] && refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
   }
-
   settab(recordTab)
 }
 
 export const moduleChange = (recordTab, formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
   let newConf = { ...crmConf }
-  const module = recordTab === 0 ? newConf.module : newConf.relatedlist.module
+  const module = recordTab === 0 ? newConf.module : newConf.relatedlists[recordTab - 1].module
+  if (!newConf.relatedlists[recordTab - 1]) newConf.relatedlists[recordTab - 1] = {}
 
   if (recordTab === 0) {
     newConf.layout = ''
@@ -47,16 +47,12 @@ export const moduleChange = (recordTab, formID, crmConf, setCrmConf, setisLoadin
     newConf.field_map = [{ formField: '', zohoFormField: '' }]
     newConf.upload_field_map = [{ formField: '', zohoFormField: '' }]
 
-    newConf.relatedlist.module = ''
-    newConf.relatedlist.layout = ''
-    newConf.relatedlist.actions = {}
-    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    newConf.relatedlist.upload_field_map = [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists = []
   } else {
-    newConf.relatedlist.layout = ''
-    newConf.relatedlist.actions = {}
-    newConf.relatedlist.field_map = [{ formField: '', zohoFormField: '' }]
-    newConf.relatedlist.upload_field_map = [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists[recordTab - 1].layout = ''
+    newConf.relatedlists[recordTab - 1].actions = {}
+    newConf.relatedlists[recordTab - 1].field_map = [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists[recordTab - 1].upload_field_map = [{ formField: '', zohoFormField: '' }]
   }
 
   if (!newConf.default.layouts?.[module]) {
@@ -64,8 +60,7 @@ export const moduleChange = (recordTab, formID, crmConf, setCrmConf, setisLoadin
   } else {
     const layouts = Object.keys(newConf.default.layouts?.[module])
     if (layouts.length === 1) {
-      if (recordTab === 0) [newConf.layout] = layouts
-      else [newConf.relatedlist.layout] = layouts
+      if (recordTab === 0) { [newConf.layout] = layouts } else { [newConf.relatedlists[recordTab - 1].layout] = layouts }
       newConf = layoutChange(recordTab, formID, newConf, setCrmConf, setisLoading, setSnackbar)
     }
   }
@@ -76,8 +71,8 @@ export const moduleChange = (recordTab, formID, crmConf, setCrmConf, setisLoadin
 export const layoutChange = (recordTab, formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
   const newConf = { ...crmConf }
 
-  const module = recordTab === 0 ? newConf.module : newConf.relatedlist.module
-  const layout = recordTab === 0 ? newConf.layout : newConf.relatedlist.layout
+  const module = recordTab === 0 ? newConf.module : newConf.relatedlists[recordTab - 1].module
+  const layout = recordTab === 0 ? newConf.layout : newConf.relatedlists[recordTab - 1].layout
 
   if (recordTab === 0) {
     newConf.actions = {}
@@ -86,11 +81,11 @@ export const layoutChange = (recordTab, formID, crmConf, setCrmConf, setisLoadin
 
     newConf.upload_field_map = (newConf?.default?.layouts?.[module]?.[layout]?.requiredFileUploadFields && Object.keys(newConf.default.layouts[module][layout].requiredFileUploadFields).length > 0) ? generateMappedField(recordTab, newConf, true) : [{ formField: '', zohoFormField: '' }]
   } else {
-    newConf.relatedlist.actions = {}
+    newConf.relatedlists[recordTab - 1].actions = {}
 
-    newConf.relatedlist.field_map = newConf?.default?.layouts?.[module]?.[layout]?.required ? generateMappedField(recordTab, newConf) : [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists[recordTab - 1].field_map = newConf?.default?.layouts?.[module]?.[layout]?.required ? generateMappedField(recordTab, newConf) : [{ formField: '', zohoFormField: '' }]
 
-    newConf.relatedlist.upload_field_map = (newConf?.default?.layouts?.[module]?.[layout]?.requiredFileUploadFields && Object.keys(newConf.default.layouts[module][layout].requiredFileUploadFields).length > 0) ? generateMappedField(recordTab, newConf, true) : [{ formField: '', zohoFormField: '' }]
+    newConf.relatedlists[recordTab - 1].upload_field_map = (newConf?.default?.layouts?.[module]?.[layout]?.requiredFileUploadFields && Object.keys(newConf.default.layouts[module][layout].requiredFileUploadFields).length > 0) ? generateMappedField(recordTab, newConf, true) : [{ formField: '', zohoFormField: '' }]
   }
 
   !newConf.default.tags?.[module] && refreshTags(recordTab, formID, newConf, setCrmConf, setisLoading, setSnackbar)
@@ -133,7 +128,7 @@ export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSna
 
 export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
   const newConf = { ...crmConf }
-  const module = recordTab === 0 ? newConf.module : newConf.relatedlist.module
+  const module = recordTab === 0 ? newConf.module : newConf.relatedlists[recordTab - 1].module
   if (!module) {
     return
   }
@@ -161,11 +156,11 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoad
                 newConf.upload_field_map = generateMappedField(recordTab, newConf, true)
               }
             } else {
-              [newConf.relatedlist.layout] = layouts
-              newConf.relatedlist.field_map = generateMappedField(recordTab, newConf)
+              [newConf.relatedlists[recordTab - 1].layout] = layouts
+              newConf.relatedlists[recordTab - 1].field_map = generateMappedField(recordTab, newConf)
 
               if (Object.keys(result.data.layouts[layouts].fileUploadFields).length > 0) {
-                newConf.relatedlist.upload_field_map = generateMappedField(recordTab, newConf, true)
+                newConf.relatedlists[recordTab - 1].upload_field_map = generateMappedField(recordTab, newConf, true)
               }
             }
 
@@ -228,7 +223,7 @@ export const refreshRelatedList = (formID, crmConf, setCrmConf, setisLoading, se
 }
 
 export const refreshTags = (recordTab, formID, crmConf, setCrmConf, setisLoading, setSnackbar) => {
-  const module = recordTab === 0 ? crmConf.module : crmConf.relatedlist.module
+  const module = recordTab === 0 ? crmConf.module : crmConf.relatedlists[recordTab - 1].module
   if (!module) return
   setisLoading(true)
   const refreshTagsParams = {
@@ -289,7 +284,7 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setisLoading, setSnac
 }
 
 export const refreshAssigmentRules = (recordTab, crmConf, setCrmConf, setisLoading, setSnackbar) => {
-  const module = recordTab === 0 ? crmConf.module : crmConf.relatedlist.module
+  const module = recordTab === 0 ? crmConf.module : crmConf.relatedlists[recordTab - 1].module
   if (!module) return
   setisLoading(true)
   const getAssigmentRulesParams = {
@@ -319,8 +314,8 @@ export const refreshAssigmentRules = (recordTab, crmConf, setCrmConf, setisLoadi
 }
 
 export const generateMappedField = (recordTab, crmConf, uploadFields) => {
-  const module = recordTab === 0 ? crmConf.module : crmConf.relatedlist.module
-  const layout = recordTab === 0 ? crmConf.layout : crmConf.relatedlist.layout
+  const module = recordTab === 0 ? crmConf.module : crmConf.relatedlists[recordTab - 1].module
+  const layout = recordTab === 0 ? crmConf.layout : crmConf.relatedlists[recordTab - 1].layout
 
   if (uploadFields) {
     return crmConf.default.layouts[module][layout].requiredFileUploadFields.length > 0 ? crmConf.default.layouts[module][layout].requiredFileUploadFields.map(field => ({ formField: '', zohoFormField: field })) : [{ formField: '', zohoFormField: '' }]
@@ -331,13 +326,10 @@ export const generateMappedField = (recordTab, crmConf, uploadFields) => {
 export const checkMappedFields = (crmConf) => {
   const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
   const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
-  const mappedRelatedFields = crmConf?.relatedlist?.field_map ? crmConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-  const mappedRelatedUploadFields = crmConf?.relatedlist?.upload_field_map
-    ? crmConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField
-      && mappedField.zohoFormField
-      && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+  const mappedRelatedFields = crmConf.relatedlists.map(relatedlist => relatedlist.field_map.filter(mappedField => !mappedField.formField && mappedField.zohoFormField))
+  const mappedRelatedUploadFields = crmConf.relatedlists.map(relatedlist => relatedlist.upload_field_map.filter(mappedField => !mappedField.formField && mappedField.zohoFormField))
 
-  if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
+  if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.some(relatedField => relatedField.length) || mappedRelatedUploadFields.some(relatedField => relatedField.length)) {
     return false
   }
 

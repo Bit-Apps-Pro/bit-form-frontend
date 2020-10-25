@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -6,10 +6,10 @@ import Steps from '../../ElmSettings/Childs/Steps'
 import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc'
-import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
+import { checkMappedFields, handleInput, refreshApplications } from './ZohoCreatorCommonFunc'
+import ZohoCreatorIntegLayout from './ZohoCreatorIntegLayout'
 
-function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
+function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -17,45 +17,49 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const [tab, settab] = useState(0)
-  const scopes = 'ZohoRecruit.users.ALL,ZohoRecruit.modules.all'
-  const [recruitConf, setRecruitConf] = useState({
-    name: 'Zoho Recruit API',
-    type: 'Zoho Recruit',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
-    module: '',
+  const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE'
+  const [creatorConf, setCreatorConf] = useState({
+    name: 'Zoho Creator API',
+    type: 'Zoho Creator',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.PFZHKP6NP8HCCM90TDLLPDNUFCCTZX' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'da7c284de2969d24dda6a167bd4980d225d4a9233b' : '',
+    applicationId: '',
+    department: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
-    relatedlists: [],
     actions: {},
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse('zohoRecruit')
+    window.opener && setGrantTokenResponse('zohoCreator')
   }, [])
 
   const nextPage = val => {
     if (val === 3) {
-      if (!checkMappedFields(recruitConf)) {
+      if (!checkMappedFields(creatorConf)) {
         setSnackbar({ show: true, msg: 'Please map mandatory fields' })
         return
       }
-      if (recruitConf.module !== '' && recruitConf.field_map.length > 0) {
-        setstep(val)
-      }
+
+      // if (!creatorConf.actions?.ticket_owner) {
+      //   setSnackbar({ show: true, msg: 'Please select a ticket owner' })
+      //   return
+      // }
+
+      // if (creatorConf.department !== '' && creatorConf.table !== '' && creatorConf.field_map.length > 0) {
+      // }
+      setstep(val)
     } else {
       setstep(val)
-      if (val === 2 && !recruitConf.module) {
-        refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)
+      if (val === 2 && !creatorConf.department) {
+        refreshApplications(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)
       }
     }
-
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('recruitConf', recruitConf);
+  console.log('creatorConf', creatorConf);
 
   return (
     <div>
@@ -65,11 +69,11 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
       {/* STEP 1 */}
       <IntegrationStepOne
         step={step}
-        confTmp={recruitConf}
-        handleInput={(e) => handleInput(e, tab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar, true, error, setError)}
+        confTmp={creatorConf}
+        handleInput={(e) => handleInput(e, creatorConf, setCreatorConf, formID, setisLoading, setSnackbar, true, error, setError)}
         error={error}
         setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoRecruit', 'zrecruit', scopes, recruitConf, setRecruitConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        handleAuthorize={() => handleAuthorize('zohoCreator', 'zcreator', scopes, creatorConf, setCreatorConf, setError, setisAuthorized, setisLoading, setSnackbar)}
         isLoading={isLoading}
         isAuthorized={isAuthorized}
         nextPage={nextPage}
@@ -77,15 +81,12 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
 
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
-
-        <ZohoRecruitIntegLayout
-          tab={tab}
-          settab={settab}
+        <ZohoCreatorIntegLayout
           formID={formID}
           formFields={formFields}
-          handleInput={(e) => handleInput(e, tab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar)}
-          recruitConf={recruitConf}
-          setRecruitConf={setRecruitConf}
+          handleInput={(e) => handleInput(e, creatorConf, setCreatorConf, formID, setisLoading, setSnackbar)}
+          creatorConf={creatorConf}
+          setCreatorConf={setCreatorConf}
           isLoading={isLoading}
           setisLoading={setisLoading}
           setSnackbar={setSnackbar}
@@ -93,7 +94,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
 
         <button
           onClick={() => nextPage(3)}
-          disabled={recruitConf.module === '' || recruitConf.field_map.length < 1}
+          // disabled={creatorConf.department === '' || creatorConf.table === '' || creatorConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
@@ -106,10 +107,10 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, recruitConf, history)}
+        saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, creatorConf, history)}
       />
     </div>
   )
 }
 
-export default ZohoRecruit
+export default ZohoCreator

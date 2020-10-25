@@ -80,6 +80,7 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
             <ZohoAnalyticsActions
               analyticsConf={analyticsConf}
               setAnalyticsConf={setAnalyticsConf}
+              formFields={formFields}
             />
           </>
         )}
