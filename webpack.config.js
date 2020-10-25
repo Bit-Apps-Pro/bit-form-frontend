@@ -1,18 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-//const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const autoprefixer = require('autoprefixer');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development';
-  console.log('--------------------', production, argv, env)
   return {
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
@@ -148,7 +147,7 @@ module.exports = (env, argv) => {
           options: {
             presets: [
               ['@babel/preset-react',
-                { 'runtime': 'automatic' },],
+                { runtime: 'automatic' }],
               [
                 '@babel/preset-env',
                 {
@@ -162,8 +161,8 @@ module.exports = (env, argv) => {
             ],
             plugins: [
               ['@babel/plugin-transform-react-jsx', {
-                'runtime': 'automatic'
-              }]
+                runtime: 'automatic',
+              }],
             ],
           },
         },
@@ -181,7 +180,7 @@ module.exports = (env, argv) => {
                       'autoprefixer',
                     ],
                   ],
-                }
+                },
               },
             },
             {
