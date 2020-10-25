@@ -332,7 +332,10 @@ export const checkMappedFields = (crmConf) => {
   const mappedFields = crmConf?.field_map ? crmConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.module]?.[crmConf.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
   const mappedUploadFields = crmConf?.upload_field_map ? crmConf.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf.default.layouts[crmConf.module][crmConf.layout].requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
   const mappedRelatedFields = crmConf?.relatedlist?.field_map ? crmConf.relatedlist.field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.required.indexOf(mappedField.zohoFormField) !== -1)) : []
-  const mappedRelatedUploadFields = crmConf?.relatedlist?.upload_field_map ? crmConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField && mappedField.zohoFormField && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
+  const mappedRelatedUploadFields = crmConf?.relatedlist?.upload_field_map
+    ? crmConf.relatedlist.upload_field_map.filter(mappedField => (!mappedField.formField
+      && mappedField.zohoFormField
+      && crmConf?.default?.layouts?.[crmConf.relatedlist.module]?.[crmConf.relatedlist.layout]?.requiredFileUploadFields.indexOf(mappedField.zohoFormField) !== -1)) : []
 
   if (mappedFields.length > 0 || mappedUploadFields.length > 0 || mappedRelatedFields.length > 0 || mappedRelatedUploadFields.length > 0) {
     return false

@@ -39,6 +39,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
   return (
     <div className="f-search">
       <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label>
         <input
           value={globalFilter || ''}
@@ -155,6 +156,7 @@ function Table(props) {
     if (reports[reportID] && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
       setColumnOrder(reports[reportID].details.order)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -176,6 +178,7 @@ function Table(props) {
     } else if (stateSavable) {
       setstateSavable(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, sortBy, filters, globalFilter, hiddenColumns])
 
   useEffect(() => {
@@ -194,8 +197,7 @@ function Table(props) {
         if ('sortBy' in reports[reportID].details && reports[reportID].details.sortBy !== state.sortBy && data !== null) {
           // reports[reportID].details.sortBy.map(fieldToSort => { console.log({...fieldToSort}); toggleSortBy(fieldToSort.id, fieldToSort.desc) })
         }
-        if ('filters' in reports[reportID].details && reports[reportID].details.filters !== state.filters) {
-        }
+        // if ('filters' in reports[reportID].details && reports[reportID].details.filters !== state.filters) {}
         if ('globalFilter' in reports[reportID].details && reports[reportID].details.globalFilter !== state.globalFilter) {
           setGlobalFilter(reports[reportID].details.globalFilter)
           setSearch(reports[reportID].details.globalFilter)
@@ -205,6 +207,7 @@ function Table(props) {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reports[report]])
 
   useEffect(() => {
@@ -240,6 +243,7 @@ function Table(props) {
         reportsDispatch({ type: 'add', report: { details, type: 'table' } })
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columns])
 
   const showBulkDupMdl = () => {
@@ -433,6 +437,7 @@ function Table(props) {
             </strong>
             {' '}
           </small>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label>
             <select
               className="btcd-paper-inp"

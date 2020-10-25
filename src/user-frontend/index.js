@@ -4,12 +4,13 @@ import 'react-app-polyfill/stable' */
 import ReactDOM from 'react-dom';
 import Bitforms from './Bitforms'
 
+// eslint-disable-next-line no-underscore-dangle
 if (!window._babelPolyfill) {
+  // eslint-disable-next-line global-require
   require('babel-polyfill')
 }
 export default function BitformsRenderer(params) {
   const renderApp = () => {
-
     /* const isJS = document.getElementById(`${params.contentID}no-js`)
     if (isJS) {
       isJS.innerHTML = ''

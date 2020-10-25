@@ -14,7 +14,6 @@ import BrushIcn from '../Icons/BrushIcn'
 import { useHistory } from 'react-router-dom'
 
 function GridLayout(props) {
-
   const { reCaptchaV2 } = useContext(AppSettings)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging } = props
   const [layouts, setLayouts] = useState(props.layout)
@@ -399,12 +398,12 @@ function GridLayout(props) {
   )
 
   const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style|style\/.+/g, "fs"))
+    history.replace(history.location.pathname.replace(/style|style\/.+/g, 'fs'))
   }
 
   const navigateToStyle = typ => {
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    history.replace(history.location.pathname.replace(/fs|style\/.+/g, "style"))
+    history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
   }
 
   return (

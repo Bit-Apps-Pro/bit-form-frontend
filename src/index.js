@@ -33,7 +33,6 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   console.log('no sw')
 }
 
-
 ReactDOM.render(
   <AllFormContextProvider>
     <AppSettingsProvider>

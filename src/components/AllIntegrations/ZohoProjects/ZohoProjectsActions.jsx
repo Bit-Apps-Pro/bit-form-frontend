@@ -19,13 +19,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
       }
     } else if (event !== 'project' && projectsConf?.subEvent.includes('project')) {
       if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
-        let owner = '',
-          users = ''
-        if (projectsConf.actions.project.owner)
-          owner = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId === projectsConf.actions.project.owner)
+        let owner = '';
+          let users = ''
+        if (projectsConf.actions.project.owner) owner = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId === projectsConf.actions.project.owner)
 
-        if (projectsConf.actions.project.users)
-          users = projectsConf?.actions?.project?.users?.split(',').map(user => projectsConf.default.users[projectsConf.portalId].filter(usr => usr.userEmail === user)).map(filteredUser => filteredUser[0])
+        if (projectsConf.actions.project.users) users = projectsConf?.actions?.project?.users?.split(',').map(user => projectsConf.default.users[projectsConf.portalId].filter(usr => usr.userEmail === user)).map(filteredUser => filteredUser[0])
 
         if (owner && users) {
           users.push(owner[0])
@@ -435,34 +433,35 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           </ConfirmModal>
 
           {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
-            .map(act => <ConfirmModal
-              key={act}
-              className="custom-conf-mdl"
-              mainMdlCls="o-v"
-              btnClass="blue"
-              btnTxt="Ok"
-              show={actionMdl.show === act}
-              close={clsActionMdl}
-              action={clsActionMdl}
-              title={`Issue ${act.charAt(0).toUpperCase() + act.slice(1)}`}
-            >
-              <div className="btcd-hr mt-2" />
-              <div className="flx flx-between mt-2">
-                <select
-                  value={projectsConf.actions[event][act === 'priority' ? 'reproducible_id' : `${act}_id`]}
-                  className="btcd-paper-inp"
-                  onChange={e => actionHandler(e.target.value, act === 'priority' ? 'reproducible_id' : `${act}_id`)}
-                >
-                  <option value="">{`Select ${act.charAt(0).toUpperCase() + act.slice(1)}`}</option>
-                  {projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.defaultfields?.[`${act}_details`] && Object.values(projectsConf.default.fields[projectsConf.portalId][projectsConf.projectId][event].defaultfields[`${act}_details`]).map(field =>
-                    <option key={field[`${act}_id`]} value={field[`${act}_id`]}>
-                      {field[`${act}_name`]}
-                    </option>
-                  )}
-                </select>
-              </div>
-            </ConfirmModal>
-            )}
+            .map(act => (
+              <ConfirmModal
+                key={act}
+                className="custom-conf-mdl"
+                mainMdlCls="o-v"
+                btnClass="blue"
+                btnTxt="Ok"
+                show={actionMdl.show === act}
+                close={clsActionMdl}
+                action={clsActionMdl}
+                title={`Issue ${act.charAt(0).toUpperCase() + act.slice(1)}`}
+              >
+                <div className="btcd-hr mt-2" />
+                <div className="flx flx-between mt-2">
+                  <select
+                    value={projectsConf.actions[event][act === 'priority' ? 'reproducible_id' : `${act}_id`]}
+                    className="btcd-paper-inp"
+                    onChange={e => actionHandler(e.target.value, act === 'priority' ? 'reproducible_id' : `${act}_id`)}
+                  >
+                    <option value="">{`Select ${act.charAt(0).toUpperCase() + act.slice(1)}`}</option>
+                    {projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.defaultfields?.[`${act}_details`] && Object.values(projectsConf.default.fields[projectsConf.portalId][projectsConf.projectId][event].defaultfields[`${act}_details`]).map(field => (
+                      <option key={field[`${act}_id`]} value={field[`${act}_id`]}>
+                        {field[`${act}_name`]}
+                      </option>
+                  ))}
+                  </select>
+                </div>
+              </ConfirmModal>
+))}
         </>
       )}
 
@@ -487,16 +486,16 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           }}
           />
         ) : (
-            <div className="flx flx-between mt-2">
-              <MultiSelect
-                className="msl-wrp-options"
-                defaultValue={projectsConf.actions[event].tags}
-                options={getTags()}
-                onChange={(val) => actionHandler(val, 'tags')}
-                customValue
-              />
-              <button onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-            </div>
+          <div className="flx flx-between mt-2">
+            <MultiSelect
+              className="msl-wrp-options"
+              defaultValue={projectsConf.actions[event].tags}
+              options={getTags()}
+              onChange={(val) => actionHandler(val, 'tags')}
+              customValue
+            />
+            <button onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+          </div>
           )}
       </ConfirmModal>
 

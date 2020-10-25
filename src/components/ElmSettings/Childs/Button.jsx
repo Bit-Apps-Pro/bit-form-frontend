@@ -6,7 +6,7 @@ function Button({ className, type, onClick, icn, children, style }) {
     <button
       style={style}
       className={`${icn ? 'icn-btn' : 'btn'}  ${className}`}
-      type={type === undefined ? 'button' : type}
+      type={type || 'button'}
       onClick={onClick}
       aria-label="btcd-button"
     >

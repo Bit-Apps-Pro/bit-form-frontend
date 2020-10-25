@@ -7,7 +7,7 @@ const GridLayoutLoader = () => {
       speed={0.5}
       width="100%"
       height={430}
-      viewBox={`0 0 1000 430`}
+      viewBox="0 0 1000 430"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
     >

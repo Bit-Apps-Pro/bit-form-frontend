@@ -5,7 +5,7 @@ import BorderIcn from '../../../../Icons/BorderIcn'
 import { spreadIn4Value } from '../../../../Utils/Helpers'
 
 export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
-  let margin = style?.[cls]?.['margin'] || '0px 0px 0px 0px'
+  let margin = style?.[cls]?.margin || '0px 0px 0px 0px'
   margin = spreadIn4Value(margin)
 
   console.log('wwwwwwwwwwwwwwww', margin)

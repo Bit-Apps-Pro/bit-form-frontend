@@ -66,7 +66,11 @@ export const multiAssign = (obj, assignArr) => {
   }
 }
 
-export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => ((a[sortLabel] < b[sortLabel]) ? -1 : ((a[sortLabel] > b[sortLabel]) ? 1 : 0)))
+export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
+  if (a[sortLabel] < b[sortLabel]) return -1
+  if (a[sortLabel] > b[sortLabel]) return 1
+  return 0
+})
 
 const cipher = salt => {
   const textToChars = text => text.split('').map(c => c.charCodeAt(0));
@@ -104,4 +108,5 @@ export function spreadIn4Value(value) {
   if (valArr.length === 1) return Array(4).fill(valArr[0]).join(' ')
   if (valArr.length === 2) return [valArr[0], valArr[1], valArr[0], valArr[1]].join(' ')
   if (valArr.length === 3) return [valArr[0], valArr[1], valArr[2], valArr[1]].join(' ')
+  return value
 }

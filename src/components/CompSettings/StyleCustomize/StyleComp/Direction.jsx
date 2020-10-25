@@ -2,7 +2,7 @@
 import StyleAccordion from '../ChildComp/StyleAccordion';
 
 export default function Direction({ style, cls, styleConfig, styleDispatch, brkPoint }) {
-  const dir = style?.[cls]?.['direction'] || 'ltr'
+  const dir = style?.[cls]?.direction || 'ltr'
 
   const setDirecation = value => {
     const property = 'direction'

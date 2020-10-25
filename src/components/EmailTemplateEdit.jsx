@@ -125,7 +125,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
           </label>
         </div>
 
-      </div >
+      </div>
     )
   )
 }

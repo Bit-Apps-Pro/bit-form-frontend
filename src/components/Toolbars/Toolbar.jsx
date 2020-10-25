@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
@@ -235,6 +236,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
             ))}
           </div>
         </Scrollbars>
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       ), [tolbarSiz])}
     </div>
   )

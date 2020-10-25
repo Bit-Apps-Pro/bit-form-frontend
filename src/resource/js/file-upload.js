@@ -3,7 +3,7 @@
 import createFileList from 'create-file-list'
 
 let fileList = { files: [] }
-let fName = null
+const fName = null
 let mxSiz = null
 
 function getFileSize(size) {
@@ -75,10 +75,8 @@ function unfade(element) {
   };
 } */
 
-
 export function setPrevData(e) {
   if (e.target.hasAttribute('multiple') && fName !== e.target.name) {
-    console.log('multiple')
     fileList = { files: [] }
     if (e.target.files.length > 0) {
       for (let i = 0; i < e.target.files.length; i += 1) {
@@ -168,8 +166,7 @@ export function handleFile(e) {
                   <span>${err[i]}</span>
               </div>`)
     }
-    const errNods = e.target.parentNode.parentNode.querySelectorAll('.btcd-files>.btcd-f-err')
-    console.log(errNods)
+    const errNods = e.target.parentNode.parentNode.querySelec
 
     for (let i = 0; i < errNods.length; i += 1) {
       unfade(errNods[i])

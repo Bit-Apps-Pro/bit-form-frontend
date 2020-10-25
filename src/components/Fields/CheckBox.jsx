@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react';
 
@@ -25,7 +26,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     } else if (attr.conditional) {
       setvalue(defaultValue)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.val, attr.userinput, attr.conditional, attr.opt])
   useEffect(() => {
     if (resetFieldValue) {
@@ -38,6 +39,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
       const { current } = checkBoxRef
       onBlurHandler(current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
   const onChangeHandler = (event) => {
     if (attr.valid.disabled) {

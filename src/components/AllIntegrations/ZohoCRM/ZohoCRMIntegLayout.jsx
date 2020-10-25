@@ -34,14 +34,18 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
           <div className="pos-rel">
             {!isPro && (
               <div className="pro-blur flx w-9">
-                <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
-              </div>)}
+                <div className="pro">
+                  Available On
+                  <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a>
+                </div>
+              </div>
+)}
             <b className="wdt-100 d-in-b">Related List:</b>
             <select onChange={handleInput} name="module" value={crmConf?.relatedlist?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
               <option value="">Select Related Module</option>
               {
                 crmConf?.default?.relatedlists?.[crmConf.module] && Object.values(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
-                  <option key={relatedlistApiName.module} value={relatedlistApiName.module} >
+                  <option key={relatedlistApiName.module} value={relatedlistApiName.module}>
                     {relatedlistApiName.name}
                   </option>
                 ))
@@ -124,8 +128,12 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
               <div className="pos-rel">
                 {!isPro && (
                   <div className="pro-blur flx">
-                    <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
-                  </div>)}
+                    <div className="pro">
+                      Available On
+                      <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a>
+                    </div>
+                  </div>
+)}
                 <div className="mt-4"><b className="wdt-100">Map File Upload Fields</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">

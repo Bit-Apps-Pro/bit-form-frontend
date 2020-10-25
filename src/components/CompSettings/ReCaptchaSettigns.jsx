@@ -7,7 +7,6 @@ export default function ReCaptchaSettigns({ elm, updateData, setElementSetting }
     updateData(tmp)
   }
 
-
   return (
     <div className="ml-2 mr-4">
       <Back2FldList setElementSetting={setElementSetting} />

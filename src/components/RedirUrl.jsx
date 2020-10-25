@@ -141,8 +141,8 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               <select className="btcd-paper-inp mt-1" onChange={e => handlePage(e, i)}>
                 <option value="">Custom Link</option>
                 {redirectUrls
-                  && redirectUrls.map((urlDetail, i) => (
-                    <option key={`r-url-${i + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
+                  && redirectUrls.map((urlDetail, ind) => (
+                    <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                   ))}
               </select>
               <br />

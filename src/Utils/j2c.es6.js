@@ -247,6 +247,7 @@ function sheet(statements, buf, prefix, rawPrefix, vendors, local, ns) {
           inDeclaration = (inDeclaration && buf.push('}') && 0)
 
           sheet(v, buf,
+            // eslint-disable-next-line no-cond-assign
             (kk = /,/.test(prefix) || prefix && /,/.test(k))
               ? cartesian(prefix.split(','), (local
                 ? k.replace(

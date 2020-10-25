@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import bitsFetch from '../../../Utils/bitsFetch'
 
 const clearLowerEvents = (projectsConf, name) => {

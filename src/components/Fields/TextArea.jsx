@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react';
 
@@ -24,6 +25,7 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID 
       // console.log('value', value, current, attr.name)
       onBlurHandler(current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
   const onChangeHandler = (event) => {
     setvalue(event.target.value)

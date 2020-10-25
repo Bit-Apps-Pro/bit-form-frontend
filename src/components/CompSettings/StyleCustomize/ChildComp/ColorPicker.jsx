@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ColorPicker as Picker } from 'react-color-gradient-picker';
 import 'react-color-gradient-picker/dist/index.css';
 import { CSSTransition } from 'react-transition-group';
-import { hexToRGBA } from '../../../../Utils/hex2RGBA';
+import hexToRGBA from '../../../../Utils/hex2RGBA';
 import useComponentVisible from './useComponentVisible';
 
 ColorPicker.defaultProps = {
@@ -17,7 +17,6 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
   let isGradient = false
 
   let picrVal = { red: 0, green: 0, blue: 0, alpha: 0 }
-
 
   if (value !== undefined && !value.match(/gradient/g) && value?.[0] !== '#') {
     const [r, g, b, a] = value.replace(/rgba?|\(|\)/g, '').split(',')

@@ -17,6 +17,7 @@ export default function Bitforms(props) {
   let maxRowIndex = 0
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+    // eslint-disable-next-line no-useless-escape
     const name = dataToPass[field.i].lbl ? field.i + dataToPass[field.i].lbl.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_') : field.i
     // eslint-disable-next-line no-param-reassign
     dataToPass[field.i].name = name
@@ -111,7 +112,6 @@ export default function Bitforms(props) {
             multiple = element.multiple
             type = element.type
           } else if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
-            console.log('type', type)
             switch (type) {
               case 'checkbox':
                 // eslint-disable-next-line no-case-declarations
@@ -161,7 +161,6 @@ export default function Bitforms(props) {
       });
       props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
         const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldValues)
-        console.log('checkLogic', targetFieldName, fieldValues, logicStatus, props.conditional[LogicIndex]/* , newData, fieldData */)
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
@@ -313,11 +312,12 @@ export default function Bitforms(props) {
           setMessage(JSON.parse(JSON.stringify(result.data.data.$form)))
           sethasError(true)
           setSnack(true)
+          // eslint-disable-next-line no-param-reassign
           delete result.data.data.$form
         }
-        console.log(typeof result.data.data, result.data.data, Object.keys(result.data.data).length)
         if (Object.keys(result.data.data).length > 0) {
           const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+          // eslint-disable-next-line array-callback-return
           Object.keys(result.data.data).map(element => {
             newData[props.fieldsKey[element]].error = result.data.data[element]
           });
@@ -363,6 +363,7 @@ export default function Bitforms(props) {
         sethasError(true)
         setMessage(JSON.parse(JSON.stringify(props.error.$form)))
         setSnack(true)
+        // eslint-disable-next-line no-param-reassign
         delete props.error.$form
       }
       if (Object.keys(props.error).length > 0) {
@@ -373,6 +374,7 @@ export default function Bitforms(props) {
         dispatchFieldData(newData)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.error])
 
   useEffect(() => {

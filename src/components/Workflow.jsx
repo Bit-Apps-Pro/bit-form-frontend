@@ -19,7 +19,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
   const [confMdl, setconfMdl] = useState({ show: false })
   /* eslint-disable-next-line no-undef */
   const isPro = typeof bits !== 'undefined' && bits.isPro
-  const mailOptions = vals => {
+  const mailOptions = () => {
     const mail = []
     // eslint-disable-next-line no-undef
     if (typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail)) {
@@ -28,6 +28,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     }
     if (emailInFormField()) {
       const flds = []
+      // eslint-disable-next-line array-callback-return
       formFields.map(fld => {
         if (fld.type === 'email') {
           flds.push({ label: fld.name, value: `\${${fld.key}}` })
@@ -508,7 +509,6 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     return false
   }
 
-
   return (
     <div className="btcd-workflow" style={{ width: 900 }}>
       <ConfirmModal
@@ -524,7 +524,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
       {isPro && (
         <Button className="blue" onClick={addLogicGrp}>
           <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
-           Add Workflow
+          Add Workflow
         </Button>
       )}
 
@@ -776,16 +776,23 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
               </div>
             )}
           </div>
-          {!isPro && <div className="txt-center bg-pro p-5 mt-2">For <span className="txt-pro">UNLIMITED</span> Workflows, <a href="https://bitpress.pro/" target="_blank"><b className="txt-pro">Buy Premium</b></a></div>}
+          {!isPro && (
+            <div className="txt-center bg-pro p-5 mt-2">
+              For
+              <span className="txt-pro">UNLIMITED</span>
+              {' '}
+              Workflows,
+              <a href="https://bitpress.pro/" target="_blank"><b className="txt-pro">Buy Premium</b></a>
+            </div>
+          )}
         </>
       )) : (
-          <div className="txt-center btcd-empty">
-            <span className="btcd-icn icn-stack" />
+        <div className="txt-center btcd-empty">
+          <span className="btcd-icn icn-stack" />
           Empty
-          </div>
-        )
-      }
-    </div >
+        </div>
+        )}
+    </div>
   )
 }
 

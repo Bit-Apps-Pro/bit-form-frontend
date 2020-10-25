@@ -18,12 +18,11 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
           type = itm.type
         }
         fldType = itm.type
+        // eslint-disable-next-line no-useless-escape
         fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
       }
     })
   }
-
-  console.log('sssss', fields)
 
   const fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
 

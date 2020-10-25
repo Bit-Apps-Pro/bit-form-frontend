@@ -21,7 +21,6 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
   bdrW = spreadIn4Value(bdrW)
   bdrRad = spreadIn4Value(bdrRad)
 
-
   const setBdrStyle = bStyle => {
     const actions = [
       { cls: pcls, property: 'border-style', delProp: false, value: 'solid' },

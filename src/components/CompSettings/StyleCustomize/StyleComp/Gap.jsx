@@ -7,6 +7,7 @@ const spreadIn2Val = value => {
   const valArr = value.split(' ')
   if (valArr.length === 2) return value
   if (valArr.length === 1) return Array(2).fill(valArr[0]).join(' ')
+  return value
 }
 
 export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView, formID }) {
