@@ -225,7 +225,7 @@ function FormDetails(props) {
       }
       let action = 'bitforms_create_new_form'
       if (savedFormId > 0) {
-        setFormSettings({ ...formSettings })
+        setFormSettings({ ...formSettings, integrations })
         formData = {
           id: savedFormId,
           layout: lay,
@@ -239,7 +239,7 @@ function FormDetails(props) {
           layoutChanged: sessionStorage.getItem('btcd-lc'),
           rowHeight: sessionStorage.getItem('btcd-rh'),
         }
-        console.log('ccccccccccccc 1', formData, integrations)
+        console.log('ccccccccccccc 1', formData, integrations, formSettings)
         action = 'bitforms_update_form'
       }
 
