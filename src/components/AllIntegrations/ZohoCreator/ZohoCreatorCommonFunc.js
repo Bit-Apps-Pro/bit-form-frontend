@@ -142,6 +142,7 @@ export const refreshFields = (formID, creatorConf, setCreatorConf, setisLoading,
           }
           if (result.data.tokenDetails) {
             newConf.tokenDetails = result.data.tokenDetails
+            // eslint-disable-next-line no-param-reassign
             delete result.data.tokenDetails
           }
           newConf.default.fields[applicationId][formId] = { ...result.data }
@@ -181,6 +182,5 @@ export const checkMappedFields = creatorConf => {
   if (mappedFields.length > 0 || mappedUploadFields.length > 0) {
     return false
   }
-
   return true
 }

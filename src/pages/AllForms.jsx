@@ -193,7 +193,7 @@ function AllFroms({ newFormId }) {
 
   return (
     <div id="all-forms">
-      <Editor />
+      {/* <Editor /> */}
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <ConfirmModal
         show={confMdl.show}
