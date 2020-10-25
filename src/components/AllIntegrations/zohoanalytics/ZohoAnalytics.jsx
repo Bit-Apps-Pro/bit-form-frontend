@@ -6,7 +6,7 @@ import Steps from '../../ElmSettings/Childs/Steps'
 import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshUsers, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
+import { handleInput, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
 
 function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
