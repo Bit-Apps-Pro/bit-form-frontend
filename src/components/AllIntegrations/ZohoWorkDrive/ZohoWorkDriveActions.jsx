@@ -179,7 +179,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
 
                 {
                   workDriveConf.actions?.share?.folder?.permissions?.map((permission, i) => (
-                    <div key={`pm-${i + 98}`} className="flx flx-between mt-2">
+                    <div key={permission.accessLabel} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
                         className="btcd-paper-drpdwn w-6 mr-2"
@@ -225,7 +225,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                 </div>
                 {
                   workDriveConf.actions?.share?.file?.permissions?.map((permission, i) => (
-                    <div key={`pr-${i + 44}`} className="flx flx-between mt-2">
+                    <div key={permission.accessLabel} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
                         className="btcd-paper-drpdwn w-6 mr-2"

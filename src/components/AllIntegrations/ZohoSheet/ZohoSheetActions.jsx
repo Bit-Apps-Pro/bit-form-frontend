@@ -135,7 +135,7 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
       >
         <div className="o-a" style={{ height: '95%' }}>
           {sheetConf?.actions?.share?.length > 0 && sheetConf.actions.share.map((user, i) => (
-            <div key={`sh-${i + 66}`} className="flx flx-between mt-2">
+            <div key={user.accessLabel} className="flx flx-between mt-2">
               <MultiSelect
                 className="btcd-paper-drpdwn"
                 placeholder="Input Email Address(s)"
