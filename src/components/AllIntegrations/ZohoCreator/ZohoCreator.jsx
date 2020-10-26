@@ -15,16 +15,15 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
+  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', accountOwner: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE'
+  const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE,ZohoCreator.report.UPDATE'
   const [creatorConf, setCreatorConf] = useState({
     name: 'Zoho Creator API',
     type: 'Zoho Creator',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.PFZHKP6NP8HCCM90TDLLPDNUFCCTZX' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'da7c284de2969d24dda6a167bd4980d225d4a9233b' : '',
-    applicationId: '',
-    department: '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.YN34H0SNYOASNVTOYPKPO158PD8VTD' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '04e7b570f25f7702d93a84a3ab8121880788782464' : '',
+    accountOwner: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
@@ -42,15 +41,14 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
         return
       }
 
-      // if (!creatorConf.actions?.ticket_owner) {
-      //   setSnackbar({ show: true, msg: 'Please select a ticket owner' })
-      //   return
-      // }
-
-      // if (creatorConf.department !== '' && creatorConf.table !== '' && creatorConf.field_map.length > 0) {
-      // }
       setstep(val)
     } else {
+      if (!creatorConf.accountOwner) {
+        setError({
+          accountOwner: 'Account Owner Name is mandatory!',
+        })
+        return
+      }
       setstep(val)
       if (val === 2 && !creatorConf.department) {
         refreshApplications(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)
@@ -77,7 +75,11 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
         isLoading={isLoading}
         isAuthorized={isAuthorized}
         nextPage={nextPage}
-      />
+      >
+        <div className="mt-3"><b>Owner Name (Your Zoho Creator screen name):</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e, creatorConf, setCreatorConf)} name="accountOwner" value={creatorConf.accountOwner} type="text" placeholder="Your Zoho Creator screen name..." />
+        <div style={{ color: 'red' }}>{error.accountOwner}</div>
+      </IntegrationStepOne>
 
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>

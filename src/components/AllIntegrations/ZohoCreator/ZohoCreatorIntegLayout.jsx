@@ -1,6 +1,7 @@
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import { refreshFields, refreshApplications, refreshForms } from './ZohoCreatorCommonFunc'
+import ZohoCreatorActions from './ZohoCreatorActions'
+import { refreshApplications, refreshFields, refreshForms } from './ZohoCreatorCommonFunc'
 import ZohoCreatorFieldMap from './ZohoCreatorFieldMap'
 
 export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput, creatorConf, setCreatorConf, isLoading, setisLoading, setSnackbar }) {
@@ -94,21 +95,18 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
                         uploadFields
                       />
                     ))}
-                    <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(creatorConf.upload_field_map.length, creatorConf, setCreatorConf, true)} className="icn-btn sh-sm" type="button">+</button></div>
+                    <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(creatorConf?.upload_field_map?.length, creatorConf, setCreatorConf, true)} className="icn-btn sh-sm" type="button">+</button></div>
                     <br />
                     <br />
                   </>
                 )}
-                {/* <div className="mt-4"><b className="wdt-100">Actions</b></div>
+                <div className="mt-4"><b className="wdt-100">Actions</b></div>
                 <div className="btcd-hr mt-1" />
 
                 <ZohoCreatorActions
                   creatorConf={creatorConf}
                   setCreatorConf={setCreatorConf}
-                  formID={formID}
-                  formFields={formFields}
-                  setSnackbar={setSnackbar}
-                /> */}
+                />
               </>
             )}
         </>

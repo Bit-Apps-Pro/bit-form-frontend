@@ -21,11 +21,6 @@ function EditZohoCreator({ formFields, setIntegration, integrations, allIntegURL
       setSnackbar({ show: true, msg: 'Please map mandatory fields' })
       return
     }
-
-    // if (!creatorConf.actions?.ticket_owner) {
-    //   setSnackbar({ show: true, msg: 'Please select a ticket owner' })
-    //   return
-    // }
     saveIntegConfig(integrations, setIntegration, allIntegURL, creatorConf, history, id, 1)
   }
 
@@ -37,8 +32,6 @@ function EditZohoCreator({ formFields, setIntegration, integrations, allIntegURL
         <b className="wdt-100 d-in-b">Integration Name:</b>
         <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, creatorConf, setCreatorConf)} name="name" value={creatorConf.name} type="text" placeholder="Integration Name..." />
       </div>
-      <br />
-      <br />
 
       <ZohoCreatorIntegLayout
         formID={formID}

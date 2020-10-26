@@ -1,5 +1,5 @@
-import MtInput from '../../ElmSettings/Childs/MtInput'
-import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
+import MtInput from '../../ElmSettings/Childs/MtInput';
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers';
 
 export default function ZohoCreatorFieldMap({ i, formFields, uploadFields, field, creatorConf, setCreatorConf }) {
   const { applicationId, formId } = creatorConf
@@ -15,7 +15,7 @@ export default function ZohoCreatorFieldMap({ i, formFields, uploadFields, field
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i, creatorConf, setCreatorConf, uploadFields)}>
         <option value="">Select Field</option>
         {
-          formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+          uploadFields ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>) : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
         }
         <option value="custom">Custom...</option>
       </select>

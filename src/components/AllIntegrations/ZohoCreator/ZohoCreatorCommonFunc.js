@@ -37,6 +37,7 @@ export const applicationChange = (creatorConf, formID, setCreatorConf, setisLoad
 export const formChange = (creatorConf, formID, setCreatorConf, setisLoading, setSnackbar) => {
   const newConf = { ...creatorConf }
   newConf.field_map = [{ formField: '', zohoFormField: '' }]
+  newConf.upload_field_map = [{ formField: '', zohoFormField: '' }]
   newConf.actions = {}
 
   if (!newConf?.default?.fields?.[newConf.orgId]) {
@@ -80,7 +81,7 @@ export const refreshApplications = (formID, creatorConf, setCreatorConf, setisLo
 }
 
 export const refreshForms = (formID, creatorConf, setCreatorConf, setisLoading, setSnackbar) => {
-  const { applicationId } = creatorConf
+  const { accountOwner, applicationId } = creatorConf
   setisLoading(true)
   const refreshFormsRequestParams = {
     formID,
@@ -89,6 +90,7 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setisLoading, 
     clientId: creatorConf.clientId,
     clientSecret: creatorConf.clientSecret,
     tokenDetails: creatorConf.tokenDetails,
+    accountOwner,
     applicationId,
   }
   bitsFetch(refreshFormsRequestParams, 'bitforms_zcreator_refresh_forms')
@@ -101,10 +103,6 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setisLoading, 
         if (result.data.forms) {
           newConf.default.forms[applicationId] = result.data.forms
         }
-        // if (result.data.forms.length === 1) {
-        //   newConf.formId = result.data.forms[0].formId
-        //   !newConf.default?.fields?.[newConf.orgId] && refreshFields(formID, newConf, setCreatorConf, setisLoading, setSnackbar)
-        // }
         setSnackbar({ show: true, msg: 'Forms refreshed' })
         setCreatorConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -118,7 +116,7 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setisLoading, 
 }
 
 export const refreshFields = (formID, creatorConf, setCreatorConf, setisLoading, setSnackbar) => {
-  const { applicationId, formId } = creatorConf
+  const { accountOwner, applicationId, formId } = creatorConf
   setisLoading(true)
   const refreshFieldsRequestParams = {
     formID,
@@ -126,6 +124,7 @@ export const refreshFields = (formID, creatorConf, setCreatorConf, setisLoading,
     clientId: creatorConf.clientId,
     clientSecret: creatorConf.clientSecret,
     tokenDetails: creatorConf.tokenDetails,
+    accountOwner,
     applicationId,
     formId,
   }
