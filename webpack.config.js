@@ -60,7 +60,7 @@ module.exports = (env, argv) => {
           extractComments: {
             condition: true,
             filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
-            banner: (commentsFile) => `My custom banner about license information ${commentsFile}`,
+            banner: (commentsFile) => `Bitcode license information ${commentsFile}`,
           },
         }),
         /* new UglifyJsPlugin({
@@ -129,6 +129,8 @@ module.exports = (env, argv) => {
       new WorkboxPlugin.GenerateSW({
         clientsClaim: production,
         skipWaiting: production,
+        dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
       }),
     ],
 
@@ -146,23 +148,25 @@ module.exports = (env, argv) => {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-react',
-                { runtime: 'automatic' }],
               [
                 '@babel/preset-env',
                 {
                   useBuiltIns: 'entry',
                   corejs: 3,
                   targets: {
+                    esmodules: true,
                     browsers: ['>0.2%', 'ie 11', 'not dead', 'not op_mini all'],
                   },
                 },
               ],
+              ['@babel/preset-react',
+                { runtime: 'automatic' }],
             ],
             plugins: [
               ['@babel/plugin-transform-react-jsx', {
                 runtime: 'automatic',
               }],
+              // "@babel/plugin-transform-regenerator"
             ],
           },
         },
