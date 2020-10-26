@@ -1,8 +1,6 @@
-import React from 'react'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import ZohoCreatorActions from './ZohoCreatorActions'
-import { refreshDepartments, refreshFields, refreshApplications, refreshForms } from './ZohoCreatorCommonFunc'
+import { refreshFields, refreshApplications, refreshForms } from './ZohoCreatorCommonFunc'
 import ZohoCreatorFieldMap from './ZohoCreatorFieldMap'
 
 export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput, creatorConf, setCreatorConf, isLoading, setisLoading, setSnackbar }) {

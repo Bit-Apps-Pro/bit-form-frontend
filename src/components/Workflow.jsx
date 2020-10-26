@@ -432,7 +432,6 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
   }
 
   const setEmailSetting = (typ, e, lgcGrpInd) => {
-    console.log('ssss', e)
     if (typ === 'tem') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
@@ -782,7 +781,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
               <span className="txt-pro">UNLIMITED</span>
               {' '}
               Workflows,
-              <a href="https://bitpress.pro/" target="_blank"><b className="txt-pro">Buy Premium</b></a>
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">Buy Premium</b></a>
             </div>
           )}
         </>

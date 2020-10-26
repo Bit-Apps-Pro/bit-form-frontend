@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoRecruitActions from './ZohoRecruitActions'
@@ -8,7 +8,9 @@ import ZohoRecruitFieldMap from './ZohoRecruitFieldMap'
 export default function NewRecord({ tab, settab, formID, formFields, recruitConf, setRecruitConf, isLoading, setSnackbar }) {
   useEffect(() => {
     handleTabChange(0, settab)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <>
       {isLoading && (

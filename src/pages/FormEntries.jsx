@@ -46,6 +46,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
     } else if (allLabels.length > 0) {
       tableHeaderHandler(allLabels)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const tableHeaderHandler = (labels) => {

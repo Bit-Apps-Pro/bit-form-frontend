@@ -54,7 +54,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
 
           {recruitConf?.relatedlists && recruitConf.relatedlists.map((relatelist, indx) => (
             <>
-              <Tab key={indx}>
+              <Tab key={`rel-${indx + 64}`}>
                 <button className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`} type="button">
                   Related List #
                   {indx + 1}
@@ -81,7 +81,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
         </Panel>
         {
           recruitConf?.relatedlists && recruitConf.relatedlists.map((relatelist, indx) => (
-            <Panel key={indx}>
+            <Panel key={`rlt-${indx + 89}`}>
               <RelatedRecord
                 indx={indx}
                 tab={tab}

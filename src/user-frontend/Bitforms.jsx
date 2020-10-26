@@ -368,9 +368,10 @@ export default function Bitforms(props) {
       }
       if (Object.keys(props.error).length > 0) {
         const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+        // eslint-disable-next-line array-callback-return
         Object.keys(props.error).map(element => {
           newData[props.fieldsKey[element]].error = props.error[element]
-        });
+        })
         dispatchFieldData(newData)
       }
     }
@@ -477,6 +478,7 @@ function Toast(props) {
     } else if (!snack && !props.index && props.show) {
       props.setSnack(false)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snack])
   useEffect(() => {
     const resetTime = props.error ? 10000 : 5000
@@ -496,6 +498,7 @@ function Toast(props) {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
           ? (
             <div
+              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: props.msg }}
             />
           )

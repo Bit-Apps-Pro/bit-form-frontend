@@ -50,8 +50,6 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
     setAnalyticsConf({ ...newConf })
   }
 
-  console.log('analyticsConf', analyticsConf)
-
   const setUpdateSettings = (val, typ) => {
     const newConf = { ...analyticsConf }
     if (typ === 'criteria') {
@@ -201,7 +199,18 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
             <div key={permission}>
               <CheckBox className="font-w-m btcd-ttc" onChange={() => handleShareSetting('parent', permission)} title={`${permission} Options`} checked={permissions[permission].map(perm => perm.apiName).every(perm => analyticsConf?.actions?.share?.permissions?.[permission]?.includes(perm))} />
               <div className="flx">
-                {permissions[permission].map(perm => <CheckBox className="scl-7" key={perm.apiName} value="true" title={<span>{perm.displayLabel}</span>} sqr checked={analyticsConf.actions?.share?.permissions?.[permission]?.indexOf(perm.apiName) >= 0} onChange={() => handleShareSetting('value', perm.apiName, permission)} disabled={perm.apiName === 'ZOHO_READ' || false} />)}
+                {permissions[permission].map(perm => (
+                  <CheckBox
+                    key={perm.apiName}
+                    className="scl-7"
+                    value="true"
+                    title={<span>{perm.displayLabel}</span>}
+                    sqr
+                    checked={analyticsConf.actions?.share?.permissions?.[permission]?.indexOf(perm.apiName) >= 0}
+                    onChange={() => handleShareSetting('value', perm.apiName, permission)}
+                    disabled={perm.apiName === 'ZOHO_READ' || false}
+                  />
+                ))}
               </div>
               <div className="btcd-hr mt-2" />
             </div>

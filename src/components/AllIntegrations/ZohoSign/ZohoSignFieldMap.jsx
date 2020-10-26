@@ -1,12 +1,9 @@
-import React from 'react'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSignConf }) {
   return (
-    <div
-      className="flx flx-around mt-2 mr-1"
-    >
+    <div className="flx flx-around mt-2 mr-1">
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}>
         <option value="">Select Field</option>
         {

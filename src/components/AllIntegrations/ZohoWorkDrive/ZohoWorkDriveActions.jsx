@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import ConfirmModal from '../../ConfirmModal'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import Loader from '../../Loaders/Loader'
 import Modal from '../../Modal'
 import TitleModal from '../../TitleModal'
 import { refreshUsers } from './ZohoWorkDriveCommonFunc'
@@ -53,8 +51,6 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
 
     setWorkDriveConf({ ...newConf })
   }
-
-  console.log('workDriveConf', workDriveConf)
 
   const setCreateFolderSettings = (e, type, field) => {
     const newConf = { ...workDriveConf }
@@ -183,7 +179,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
 
                 {
                   workDriveConf.actions?.share?.folder?.permissions?.map((permission, i) => (
-                    <div key={i} className="flx flx-between mt-2">
+                    <div key={`pm-${i + 98}`} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
                         className="btcd-paper-drpdwn w-6 mr-2"
@@ -229,7 +225,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                 </div>
                 {
                   workDriveConf.actions?.share?.file?.permissions?.map((permission, i) => (
-                    <div key={i} className="flx flx-between mt-2">
+                    <div key={`pr-${i + 44}`} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
                         className="btcd-paper-drpdwn w-6 mr-2"

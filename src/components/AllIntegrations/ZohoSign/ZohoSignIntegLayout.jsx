@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import ConfirmModal from '../../ConfirmModal';
 import Loader from '../../Loaders/Loader';
@@ -7,6 +7,7 @@ import { handleInput, refreshTemplates } from './ZohoSignCommonFunc';
 export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
   if (!signConf?.templateActions && signConf?.default?.templateDetails?.[signConf?.template]) {
+    // eslint-disable-next-line no-param-reassign
     signConf.templateActions = signConf.default.templateDetails[signConf.template].actions.map(action => ({
       action_id: action.action_id,
       action_type: action.action_type,
@@ -22,6 +23,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
       verify_recipient: action.verify_recipient,
       verification_type: action.verification_type || '',
     }))
+    // eslint-disable-next-line no-param-reassign
     signConf.notes = signConf.default.templateDetails[signConf.template].notes || ''
   }
 
@@ -39,8 +41,6 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
         delete newConf.templateActions[indx][`${typ}_fld`]
       }
     }
-
-
 
     setSignConf({ ...newConf })
   }
@@ -101,12 +101,12 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
           {action.action_type === 'INPERSONSIGN' && (
             <div className="flx mt-2" style={{ marginLeft: 45 }}>
               <input type="text" value="Signer" readOnly className="btcd-paper-inp mr-1 w-1" />
-              <input type="email" onChange={e => handleAction(i, 'in_person_email', e.target.value)} value={action.in_person_email} className="btcd-paper-inp mr-1 w-3" placeholder='Signer Email (optional)' />
+              <input type="email" onChange={e => handleAction(i, 'in_person_email', e.target.value)} value={action.in_person_email} className="btcd-paper-inp mr-1 w-3" placeholder="Signer Email (optional)" />
               <select className="btcd-paper-inp mr-1 w-1" onChange={e => handleAction(i, 'in_person_email_fld', e.target.value, 'field')} value={action?.in_person_email_fld || ''}>
                 <option value="">Field</option>
                 {formFields.map(f => f.type !== 'file-up' && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
               </select>
-              <input type="text" onChange={e => handleAction(i, 'in_person_name', e.target.value)} value={action.in_person_name} className="btcd-paper-inp mr-1 w-3" placeholder='Signer Name' />
+              <input type="text" onChange={e => handleAction(i, 'in_person_name', e.target.value)} value={action.in_person_name} className="btcd-paper-inp mr-1 w-3" placeholder="Signer Name" />
               <select className="btcd-paper-inp mr-1 w-1" onChange={e => handleAction(i, 'in_person_name_fld', e.target.value, 'field')} value={action?.in_person_name_fld || ''}>
                 <option value="">Field</option>
                 {formFields.map(f => f.type !== 'file-up' && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
@@ -115,12 +115,12 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
           )}
           <div className="flx mt-2" style={{ marginLeft: 45 }}>
             {action.action_type === 'INPERSONSIGN' && <input type="text" value="Host" readOnly className="btcd-paper-inp mr-1 w-1" />}
-            <input onChange={e => handleAction(i, 'recipient_email', e.target.value)} type="email" value={action.recipient_email} className="btcd-paper-inp mr-1 w-3" placeholder='Recipient Email' />
+            <input onChange={e => handleAction(i, 'recipient_email', e.target.value)} type="email" value={action.recipient_email} className="btcd-paper-inp mr-1 w-3" placeholder="Recipient Email" />
             <select className="btcd-paper-inp mr-1 w-1" onChange={e => handleAction(i, 'recipient_email_fld', e.target.value, 'field')} value={action?.recipient_email_fld || ''}>
               <option value="">Field</option>
               {formFields.map(f => f.type !== 'file-up' && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
             </select>
-            <input type="text" onChange={e => handleAction(i, 'recipient_name', e.target.value)} value={action.recipient_name} className="btcd-paper-inp mr-1 w-3" placeholder='Recipient Name' />
+            <input type="text" onChange={e => handleAction(i, 'recipient_name', e.target.value)} value={action.recipient_name} className="btcd-paper-inp mr-1 w-3" placeholder="Recipient Name" />
             <select className="btcd-paper-inp mr-1 w-1" onChange={e => handleAction(i, 'recipient_name_fld', e.target.value, 'field')} value={action?.recipient_name_fld || ''}>
               <option value="">Field</option>
               {formFields.map(f => f.type !== 'file-up' && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}

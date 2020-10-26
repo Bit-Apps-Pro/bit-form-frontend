@@ -28,10 +28,12 @@ function App() {
 
   useEffect(() => {
     setnewFormId(getNewFormId())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allForms])
 
   const getNewFormId = () => {
     let max = 0
+    // eslint-disable-next-line array-callback-return
     allForms.map(frm => {
       const fid = Number(frm.formID)
       if (fid > max) {

@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoCRMActions from './ZohoCRMActions'
 import { handleTabChange, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 
 export default function RelatedRecord({ indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar }) {
-  console.log('indx', indx)
-
   useEffect(() => {
     handleTabChange(indx + 1, settab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // settab(indx + 1)
@@ -21,14 +20,18 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
       <div className="pos-rel">
         {!isPro && (
           <div className="pro-blur flx w-9">
-            <div className="pro">Available On <a href="https://bitpress.pro/" target="_blank"><span className="txt-pro">Premium</span></a></div>
-          </div>)}
+            <div className="pro">
+              Available On
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro">Premium</span></a>
+            </div>
+          </div>
+        )}
         <b className="wdt-100 d-in-b">Related List:</b>
         <select onChange={handleInput} name="module" value={crmConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
           <option value="">Select Related Module</option>
           {
             crmConf?.default?.relatedlists?.[crmConf.module] && Object.values(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
-              <option key={relatedlistApiName.module} value={relatedlistApiName.module} >
+              <option key={relatedlistApiName.module} value={relatedlistApiName.module}>
                 {relatedlistApiName.name}
               </option>
             ))
@@ -131,13 +134,6 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
           </>
         )
       }
-
-
-
-
-
-
-
 
     </>
   )

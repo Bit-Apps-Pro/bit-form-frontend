@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { useState } from 'react';
+import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import ConfirmModal from '../../ConfirmModal'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import Loader from '../../Loaders/Loader'
 import { refreshUsers, refreshTaskLays, refreshTags, refreshGroups } from './ZohoProjectsCommonFunc'
 
@@ -10,54 +11,129 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
 
-  const allUsers = () => {
-    let allUsers = []
-
-    if (projectsConf?.projectId) {
-      if (projectsConf?.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]?.length > 0) {
-        allUsers = projectsConf.default.users[projectsConf.portalId][projectsConf.projectId]
-      }
-    } else if (event !== 'project' && projectsConf?.subEvent.includes('project')) {
-      if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
-        let owner = '';
-          let users = ''
-        if (projectsConf.actions.project.owner) owner = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId === projectsConf.actions.project.owner)
-
-        if (projectsConf.actions.project.users) users = projectsConf?.actions?.project?.users?.split(',').map(user => projectsConf.default.users[projectsConf.portalId].filter(usr => usr.userEmail === user)).map(filteredUser => filteredUser[0])
-
-        if (owner && users) {
-          users.push(owner[0])
-          allUsers = users
-        } else if (owner && !users) {
-          allUsers = owner
-        } else if (users && !owner) {
-          allUsers = users
-        }
-      }
-    } else if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
-      allUsers = projectsConf.default.users[projectsConf.portalId]
-    }
-
-    return allUsers
-  }
-
-  const actionHandler = (val, typ) => {
+  const actionHandler = (val, typ, checked) => {
     const newConf = { ...projectsConf }
-    if (val !== '') newConf.actions[event][typ] = val
+    if (checked !== undefined) {
+      if (checked) newConf.actions[event][typ] = val
+      else delete newConf.actions[event][typ]
+    } else if (val) newConf.actions[event][typ] = val
     else delete newConf.actions[event][typ]
     setProjectsConf({ ...newConf })
   }
 
+  const handleCustomTag = (typ, i, act, val) => {
+    const newConf = { ...projectsConf }
+
+    if (!newConf.actions[event]?.customTags) newConf.actions[event].customTags = []
+
+    if (typ === 'add') {
+      newConf.actions[event].customTags.push({ name: '', color: '' })
+    } else if (typ === 'remove') {
+      newConf.actions[event].customTags.splice(i, 1)
+    } else if (typ === 'value') {
+      if (act === 'field') {
+        newConf.actions[event].customTags[i].name += val
+      } else newConf.actions[event].customTags[i][act] = val
+    }
+
+    setProjectsConf({ ...newConf })
+  }
+
+  const handleProjectUser = (typ, i, act, val) => {
+    const newConf = { ...projectsConf }
+
+    if (!newConf.actions.project?.users) newConf.actions.project.users = []
+
+    if (typ === 'add') {
+      newConf.actions.project.users.push({ name: '', role: '' })
+    } else if (typ === 'remove') {
+      newConf.actions.project.users.splice(i, 1)
+    } else if (typ === 'value') {
+      newConf.actions.project.users[i][act] = val
+    }
+
+    setProjectsConf({ ...newConf })
+  }
+
+  const handleReminder = (val, typ) => {
+    const newConf = { ...projectsConf }
+
+    if (!newConf.actions[event].reminder_string || typ === 'reminder_criteria') newConf.actions[event].reminder_string = {}
+
+    if (val !== '') newConf.actions[event].reminder_string[typ] = val
+    else delete newConf.actions[event].reminder_string[typ]
+
+    if (['custom_date_fld', 'reminder_time_fld'].includes(typ)) {
+      delete newConf.actions[event].reminder_string[typ.replace('_fld', '')]
+    } else if (['custom_date', 'reminder_time'].includes(typ)) {
+      delete newConf.actions[event].reminder_string[`${typ}_fld`]
+    }
+
+    setProjectsConf({ ...newConf })
+  }
+
+  const handleRecurrence = (val, typ, checked) => {
+    const newConf = { ...projectsConf }
+
+    if (!newConf.actions[event].recurrence_string || typ === 'recurring_frequency') newConf.actions[event].recurrence_string = {}
+
+    if (checked !== undefined) {
+      if (checked) newConf.actions[event].recurrence_string[typ] = val
+      else delete newConf.actions[event].recurrence_string[typ]
+    } else if (val) newConf.actions[event].recurrence_string[typ] = val
+    else delete newConf.actions[event].recurrence_string[typ]
+
+    if (['time_span_fld', 'number_of_occurrences_fld'].includes(typ)) {
+      delete newConf.actions[event].recurrence_string[typ.replace('_fld', '')]
+    } else if (['time_span', 'number_of_occurrences'].includes(typ)) {
+      delete newConf.actions[event].recurrence_string[`${typ}_fld`]
+    }
+
+    setProjectsConf({ ...newConf })
+  }
+
+  const handleTimeLog = (val, typ) => {
+    const newConf = { ...projectsConf }
+
+    if (!newConf.actions[event].timelog) newConf.actions[event].timelog = {}
+
+    if (!projectsConf?.actions[event].timelog?.bill_status) {
+      projectsConf.actions[event].timelog.bill_status = 'Billable'
+    }
+
+    if (val) newConf.actions[event].timelog[typ] = val
+    else delete newConf.actions[event].timelog[typ]
+
+    if (['date_fld', 'hours_fld', 'start_time_fld', 'end_time_fld'].includes(typ)) {
+      delete newConf.actions[event].timelog[typ.replace('_fld', '')]
+    } else if (['date', 'hours', 'start_time', 'end_time'].includes(typ)) {
+      delete newConf.actions[event].timelog[`${typ}_fld`]
+    }
+
+    if (typ === 'settime') {
+      delete newConf.actions[event].timelog.hours
+      delete newConf.actions[event].timelog.hours_fld
+      delete newConf.actions[event].timelog.start_time
+      delete newConf.actions[event].timelog.start_time_fld
+      delete newConf.actions[event].timelog.end_time
+      delete newConf.actions[event].timelog.end_time_fld
+    }
+
+    setProjectsConf({ ...newConf })
+  }
+
   const openUsersModal = (attr) => {
-    if (projectsConf?.projectId && !projectsConf.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]) {
-      refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
-    } else if (!projectsConf.default?.users?.[projectsConf.portalId]) {
+    if ((projectsConf?.projectId && !projectsConf.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]) || !projectsConf.default?.users?.[projectsConf.portalId]) {
       refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
     }
     if (!attr) setActionMdl({ show: 'owner' })
     else setActionMdl({ show: attr })
-    if (attr === 'users' && !projectsConf?.actions?.project?.role) {
-      projectsConf.actions.project.role = 'employee'
+    if (attr === 'users' && !projectsConf?.actions?.project?.users) {
+      projectsConf.actions.project.users = [
+        { email: '', role: 'employee' },
+        { email: '', role: 'manager' },
+        { email: '', role: 'contractor' },
+      ]
     }
   }
 
@@ -89,6 +165,51 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
     return arr
   }
 
+  const getUsers = (attr) => {
+    let allUsers = []
+    if (attr === 'taskuser') {
+      if (projectsConf?.projectId && projectsConf?.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]?.length > 0) {
+        allUsers = projectsConf?.actions?.[event]?.owner ? projectsConf.actions?.[event].owner.split(',').map(user => projectsConf.default.users[projectsConf.portalId][projectsConf.projectId].filter(usr => usr.userId === user)).map(filteredUser => filteredUser[0]) : []
+      } else if (projectsConf?.default?.users?.[projectsConf.portalId]?.length > 0) {
+        allUsers = projectsConf?.actions?.[event]?.owner ? projectsConf.actions?.[event].owner.split(',').map(user => projectsConf.default.users[projectsConf.portalId].filter(usr => usr.userId === user)).map(filteredUser => filteredUser[0]) : []
+      }
+    } else if (projectsConf?.projectId && projectsConf?.default?.users?.[projectsConf.portalId]?.[projectsConf.projectId]?.length > 0) {
+      allUsers = projectsConf.default.users[projectsConf.portalId][projectsConf.projectId]
+    } else if (event !== 'project' && projectsConf?.subEvent.includes('project')) {
+      if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
+        let owner = '';
+        let users = ''
+        if (projectsConf.actions.project.owner) owner = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId === projectsConf.actions.project.owner)
+
+        if (projectsConf.actions.project.users) {
+          users = projectsConf?.actions?.project?.users?.map(puser => puser.email && puser.email.split(',').map(user => projectsConf.default.users[projectsConf.portalId].filter(usr => usr.userEmail === user)).map(filteredUser => filteredUser[0]))
+          const projectUsers = []
+          for (let i = 0; i < users.length; i += 1) {
+            for (let j = 0; j < users[i].length; j += 1) {
+              projectUsers.push(users[i][j])
+            }
+          }
+          users = projectUsers
+        }
+
+        if (owner && users) {
+          users.push(owner[0])
+          allUsers = users
+        } else if (owner && !users) {
+          allUsers = owner
+        } else if (users && !owner) {
+          allUsers = users
+        }
+      }
+    } else if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
+      if (attr === 'users') {
+        allUsers = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId !== projectsConf?.actions?.project?.owner)
+      } else allUsers = projectsConf.default.users[projectsConf.portalId]
+    }
+
+    return allUsers
+  }
+
   const clsActionMdl = () => {
     setActionMdl({ show: false })
   }
@@ -96,10 +217,9 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
   return (
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
-
         {event !== 'tasklist' && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <TableCheckBox onChange={() => openUsersModal()} checked={'owner' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_owner`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Owner`} subTitle={`Add an owner to ${event}  pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => openUsersModal()} checked={'owner' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_owner`} title={`${event} Owner`} subTitle={`Add an owner to ${event}  pushed to Zoho Projects.`} />
             {!projectsConf.actions[event].owner && (
               <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>
                 {`${event} owner is required`}
@@ -111,57 +231,68 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         {event === 'project' && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={openTaskLayModal} checked={'tasklayoutid' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Task_Owner" title="Task Layout" subTitle="Add a layout to project pushed to Zoho Projects." />
+              <TableCheckBox onChange={openTaskLayModal} checked={'tasklayoutid' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Task_Owner" title="Task Layout" subTitle="Add a layout to project pushed to Zoho Projects." />
               {!projectsConf.actions.project.tasklayoutid && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>task layout is required</small>}
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={() => setActionMdl({ show: 'access' })} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_Access" title="Project Access" subTitle="Change the access control of project" />
-              {!projectsConf.actions.project.public && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>project access is required</small>}
-            </div>
-            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_User" title="Project user" subTitle="Assign users to project pushed to Zoho Projects." />
-            <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2" value="Project_Group" title="Group Name" subTitle="Add a group to project pushed to Zoho Projects." />
+            <TableCheckBox onChange={(e) => actionHandler(e.target.value, 'public', e.target.checked)} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="yes" title="Public Project" subTitle="by default, it is set as private project." />
+            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_User" title="Project user" subTitle="Assign users to project pushed to Zoho Projects." />
+            <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_Group" title="Group Name" subTitle="Add a group to project pushed to Zoho Projects." />
           </>
         )}
-
         {(event === 'milestone' || event === 'tasklist' || event === 'issue') && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_flag`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Flag`} subTitle={`Add a flag to ${event} pushed to Zoho Projects.`} />
+              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_flag`} title={`${event} Flag`} subTitle={`Add a flag to ${event} pushed to Zoho Projects.`} />
               {!projectsConf.actions[event].flag && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{`${event} flag is required`}</small>}
             </div>
           </>
         )}
-
         {event === 'issue' && (
           <>
-            <TableCheckBox onChange={() => openUsersModal('followers')} checked={'followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value="Issue_Followers" title="Issue Followers" subTitle="Add followers to issue pushed to Zoho Projects" />
+            <TableCheckBox onChange={() => openUsersModal('followers')} checked={'bug_followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Issue_Followers" title="Issue Followers" subTitle="Add followers to issue pushed to Zoho Projects" />
             {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
-              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={act} title={`Issue ${act.charAt(0).toUpperCase() + act.slice(1)}`} subTitle={`Add ${act} to issue pushed to Zoho Projects`} />)}
+              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={act} title={`Issue ${act}`} subTitle={`Add ${act} to issue pushed to Zoho Projects`} />)}
           </>
         )}
-
         {(event === 'task' || event === 'subtask' || event === 'issue') && (
-          <div className="coming-feature pos-rel mt-2">
-            <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_attachments`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Attachments`} subTitle={`Add attachments to ${event} pushed to Zoho Projects.`} />
-          </div>
+          <>
+            <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_attachments`} title={`${event} Attachments`} subTitle={`Add attachments to ${event} pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => setActionMdl({ show: 'timelog' })} checked={'timelog' in projectsConf.actions[event] && 'date' in projectsConf.actions[event]?.timelog} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_timelog`} title={`${event} Time Log`} subTitle={`Add time log to ${event} pushed to Zoho Projects.`} />
+          </>
         )}
-
-        <div className="coming-feature pos-rel mt-2">
-          <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2" value={`${event}_tags`} title={`${event.charAt(0).toUpperCase() + event.slice(1)} Tags`} subTitle={`Add tags to ${event} pushed to Zoho Projects.`} />
-        </div>
+        {event === 'task' && (
+          <TableCheckBox
+            onChange={() => setActionMdl({ show: 'recurrence_string' })}
+            checked={'recurrence_string' in projectsConf.actions[event] && 'recurring_frequency' in projectsConf.actions[event]?.recurrence_string}
+            className="wdt-200 mt-4 mr-2 btcd-ttc"
+            value={`${event}_reminder`}
+            title={`${event} Recurrence`}
+            subTitle={`Add recurrence to ${event} pushed to Zoho Projects.`}
+          />
+        )}
+        {(event === 'task' || event === 'subtask' || event === 'issue') && (
+          <TableCheckBox
+            onChange={() => setActionMdl({ show: 'reminder_string' })}
+            checked={'reminder_string' in projectsConf.actions[event] && 'reminder_criteria' in projectsConf.actions[event]?.reminder_string}
+            className="wdt-200 mt-4 mr-2 btcd-ttc"
+            value={`${event}_reminder`}
+            title={`${event} Reminder`}
+            subTitle={`Add reminder to ${event} pushed to Zoho Projects.`}
+          />
+        )}
+        <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event] || projectsConf?.actions?.[event]?.customTags} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_tags`} title={`${event} Tags`} subTitle={`Add tags to ${event} pushed to Zoho Projects.`} />
       </div>
-
       {/* Modals */}
       {event !== 'tasklist' && (
         <ConfirmModal
           className="custom-conf-mdl"
-          mainMdlCls="o-v"
+          mainMdlCls="o-v btcd-ttc"
           btnClass="blue"
           btnTxt="Ok"
           show={actionMdl.show === 'owner'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={`${event.charAt(0).toUpperCase() + event.slice(1)} Owner`}
+          title={`${event} Owner`}
         >
           <div className="btcd-hr mt-2" />
           {isLoading ? (
@@ -182,7 +313,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       defaultValue={projectsConf.actions[event].owner}
                       className="mt-2 w-9"
                       onChange={(val) => actionHandler(val, 'owner')}
-                      options={allUsers().map(user => ({ label: user.userName, value: user.userId }))}
+                      options={getUsers().map(user => ({ label: user.userName, value: user.userId }))}
                     />
                   )
                   : (
@@ -192,16 +323,14 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       onChange={e => actionHandler(e.target.value, 'owner')}
                     >
                       <option value="">Select Owner</option>
-                      {allUsers().length > 0 && allUsers().map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
+                      {getUsers().length > 0 && getUsers().map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
                     </select>
                   )}
-
                 <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Portal Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
               </div>
             )}
         </ConfirmModal>
       )}
-
       {event === 'project' && (
         <>
           <ConfirmModal
@@ -239,32 +368,6 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                 </div>
               )}
           </ConfirmModal>
-
-          <ConfirmModal
-            className="custom-conf-mdl"
-            mainMdlCls="o-v"
-            btnClass="blue"
-            btnTxt="Ok"
-            show={actionMdl.show === 'access'}
-            close={clsActionMdl}
-            action={clsActionMdl}
-            title="Access Control"
-          >
-            <div className="btcd-hr mt-2" />
-            <div className="flx flx-between mt-2">
-              <select
-                value={projectsConf.actions.project.public}
-                className="btcd-paper-inp"
-                onChange={e => actionHandler(e.target.value, 'public')}
-              >
-                <option value="">Select Access</option>
-                <option value="no">Private</option>
-                <option value="yes">Public</option>
-              </select>
-            </div>
-
-          </ConfirmModal>
-
           <ConfirmModal
             className="custom-conf-mdl"
             mainMdlCls="o-v"
@@ -276,40 +379,34 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             title="Assign Project Users"
           >
             <div className="btcd-hr mt-2" />
-            {isLoading ? (
-              <Loader style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 45,
-                transform: 'scale(0.5)',
-              }}
-              />
-            )
-              : (
-                <>
-                  <div className="flx flx-between mt-2">
-                    <MultiSelect
-                      defaultValue={projectsConf.actions[event].users}
-                      className="mt-2 w-9"
-                      onChange={(val) => actionHandler(val, 'users')}
-                      options={allUsers().map(user => ({ label: user.userName, value: user.userEmail }))}
-                    />
-                    <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Project Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-                  </div>
-                  <select
-                    value={projectsConf.actions.project.role}
-                    className="btcd-paper-inp mt-3"
-                    onChange={e => actionHandler(e.target.value, 'role')}
-                  >
-                    <option value="employee">Employee</option>
-                    <option value="manager">Manager</option>
-                    <option value="contractor">Contractor</option>
-                  </select>
-                </>
-              )}
+            {
+              isLoading ? (
+                <Loader style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 45,
+                  transform: 'scale(0.5)',
+                }}
+                />
+              )
+                : (
+                  <>
+                    {projectsConf.actions.project?.users && projectsConf.actions.project.users.map((user, i) => (
+                      <div key={`us-${i + 10}`} className="flx flx-between mt-1">
+                        <MultiSelect
+                          className="btcd-paper-drpdwn mt-2"
+                          defaultValue={user.email}
+                          options={getUsers('users').map(usr => ({ label: usr.userName, value: usr.userEmail }))}
+                          onChange={e => handleProjectUser('value', i, 'email', e)}
+                        />
+                        <input type="text" value={user.role} readOnly className="btcd-paper-inp mt-2 w-3 ml-1" />
+                      </div>
+                    ))}
+                  </>
+                )
+            }
           </ConfirmModal>
-
           <ConfirmModal
             className="custom-conf-mdl"
             mainMdlCls="o-v"
@@ -347,133 +444,326 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           </ConfirmModal>
         </>
       )}
-
-      {(event === 'tasklist' || event === 'milestone' || event === 'issue') && (
-        <ConfirmModal
-          className="custom-conf-mdl"
-          mainMdlCls="o-v"
-          btnClass="blue"
-          btnTxt="Ok"
-          show={actionMdl.show === 'flag'}
-          close={clsActionMdl}
-          action={clsActionMdl}
-          title={`${event.charAt(0).toUpperCase() + event.slice(1)} Flag`}
-        >
-          <div className="btcd-hr mt-2" />
-          <div className="flx flx-between mt-2">
-            <select
-              value={projectsConf.actions[event].flag}
-              className="btcd-paper-inp"
-              onChange={e => actionHandler(e.target.value, 'flag')}
-            >
-              <option value="">Select Flag</option>
-              <option value={event === 'issue' ? 'Internal' : 'internal'}>Internal</option>
-              <option value={event === 'issue' ? 'External' : 'external'}>External</option>
-            </select>
-          </div>
-        </ConfirmModal>
-      )}
-
-      {(event === 'task' || event === 'subtask' || event === 'issue') && (
-        <ConfirmModal
-          className="custom-conf-mdl"
-          mainMdlCls="o-v"
-          btnClass="blue"
-          btnTxt="Ok"
-          show={actionMdl.show === 'attachments'}
-          close={clsActionMdl}
-          action={clsActionMdl}
-          title="Select Attachment"
-        >
-          <div className="btcd-hr mt-2" />
-          <div className="mt-2">Select file upload fields</div>
-          <MultiSelect
-            defaultValue={projectsConf.actions[event].attachments}
-            className="mt-2 w-9"
-            onChange={(val) => actionHandler(val, 'attachments')}
-            options={formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.name, value: itm.key }))}
-          />
-        </ConfirmModal>
-      )}
-
-      {event === 'issue' && (
-        <>
+      {
+        (event === 'tasklist' || event === 'milestone' || event === 'issue') && (
           <ConfirmModal
             className="custom-conf-mdl"
-            mainMdlCls="o-v"
+            mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
             btnTxt="Ok"
-            show={actionMdl.show === 'followers'}
+            show={actionMdl.show === 'flag'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title="Issue Followers"
+            title={`${event} Flag`}
           >
             <div className="btcd-hr mt-2" />
-            {isLoading ? (
-              <Loader style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 45,
-                transform: 'scale(0.5)',
-              }}
-              />
-            )
-              : (
-                <div className="flx flx-between mt-2">
-                  <MultiSelect
-                    defaultValue={projectsConf.actions[event].bug_followers}
-                    className="mt-2 w-9"
-                    onChange={(val) => actionHandler(val, 'bug_followers')}
-                    options={projectsConf.default?.users?.[projectsConf.portalId].map(user => ({ label: user.userName, value: user.userId }))}
-                  />
-                  <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Portal Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-                </div>
-              )}
-          </ConfirmModal>
-
-          {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
-            .map(act => (
-              <ConfirmModal
-                key={act}
-                className="custom-conf-mdl"
-                mainMdlCls="o-v"
-                btnClass="blue"
-                btnTxt="Ok"
-                show={actionMdl.show === act}
-                close={clsActionMdl}
-                action={clsActionMdl}
-                title={`Issue ${act.charAt(0).toUpperCase() + act.slice(1)}`}
+            <div className="flx flx-between mt-2">
+              <select
+                value={projectsConf.actions[event].flag}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'flag')}
               >
-                <div className="btcd-hr mt-2" />
-                <div className="flx flx-between mt-2">
-                  <select
-                    value={projectsConf.actions[event][act === 'priority' ? 'reproducible_id' : `${act}_id`]}
-                    className="btcd-paper-inp"
-                    onChange={e => actionHandler(e.target.value, act === 'priority' ? 'reproducible_id' : `${act}_id`)}
+                <option value="">Select Flag</option>
+                <option value={event === 'issue' ? 'Internal' : 'internal'}>Internal</option>
+                <option value={event === 'issue' ? 'External' : 'external'}>External</option>
+              </select>
+            </div>
+          </ConfirmModal>
+        )
+      }
+      {
+        (event === 'task' || event === 'subtask' || event === 'issue') && (
+          <>
+            <ConfirmModal
+              className="custom-conf-mdl"
+              mainMdlCls="o-v"
+              btnClass="blue"
+              btnTxt="Ok"
+              show={actionMdl.show === 'attachments'}
+              close={clsActionMdl}
+              action={clsActionMdl}
+              title="Select Attachment"
+            >
+              <div className="btcd-hr mt-2" />
+              <div className="mt-2">Select file upload fields</div>
+              <MultiSelect
+                defaultValue={projectsConf.actions[event].attachments}
+                className="mt-2 w-9"
+                onChange={(val) => actionHandler(val, 'attachments')}
+                options={formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.name, value: itm.key }))}
+              />
+            </ConfirmModal>
+            <ConfirmModal
+              className="custom-conf-mdl"
+              mainMdlCls="o-v btcd-ttc"
+              btnClass="blue"
+              btnTxt="Ok"
+              show={actionMdl.show === 'timelog'}
+              close={clsActionMdl}
+              action={clsActionMdl}
+              title={`${event} Time Log`}
+            >
+              <div className="btcd-hr mt-2" />
+              <div className="mt-2 mb-1">Select Date</div>
+              <div className="flx">
+                <input type="date" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'date')} value={projectsConf.actions[event]?.timelog?.date || ''} style={{ height: 40 }} max={new Date().toISOString().split('T')[0]} />
+                <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'date_fld')} value={projectsConf.actions[event]?.timelog?.date_fld || ''}>
+                  <option value="">Field</option>
+                  {formFields.map(f => f.type === 'date' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+                </select>
+              </div>
+              <div className="mt-2 mb-1">Billing Status</div>
+              <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'bill_status')} value={projectsConf.actions[event]?.timelog?.bill_status || ''}>
+                <option value="Billable">Billable</option>
+                <option value="Non Billable">Non Billable</option>
+              </select>
+              {!projectsConf?.actions[event]?.timelog?.settime && (
+                <>
+                  <div className="mt-2 mb-1">Enter Hours</div>
+                  <div className="flx mb-2">
+                    <input type="number" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'hours')} value={projectsConf.actions[event]?.timelog?.hours || ''} />
+                    <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'hours_fld')} value={projectsConf.actions[event]?.timelog?.hours_fld || ''}>
+                      <option value="">Field</option>
+                      {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+                    </select>
+                  </div>
+                  <span
+                    className="btcd-link cp"
+                    onClick={() => handleTimeLog(true, 'settime')}
+                    onKeyDown={() => handleTimeLog(true, 'settime')}
+                    role="button"
+                    tabIndex="0"
                   >
-                    <option value="">{`Select ${act.charAt(0).toUpperCase() + act.slice(1)}`}</option>
-                    {projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.defaultfields?.[`${act}_details`] && Object.values(projectsConf.default.fields[projectsConf.portalId][projectsConf.projectId][event].defaultfields[`${act}_details`]).map(field => (
-                      <option key={field[`${act}_id`]} value={field[`${act}_id`]}>
-                        {field[`${act}_name`]}
-                      </option>
-                  ))}
+                    set start & end time
+                  </span>
+                </>
+              )}
+              {projectsConf?.actions[event]?.timelog?.settime && (
+                <>
+                  <div className="mt-2 mb-1">Start Time</div>
+                  <div className="flx">
+                    <input type="time" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'start_time')} value={projectsConf.actions[event]?.timelog?.start_time || ''} style={{ height: 40 }} />
+                    <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'start_time_fld')} value={projectsConf.actions[event]?.timelog?.start_time_fld || ''}>
+                      <option value="">Field</option>
+                      {formFields.map(f => f.type === 'time' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+                    </select>
+                  </div>
+                  <div className="mt-2 mb-1">End Time</div>
+                  <div className="flx mb-2">
+                    <input type="time" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'end_time')} value={projectsConf.actions[event]?.timelog?.end_time || ''} style={{ height: 40 }} />
+                    <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'end_time_fld')} value={projectsConf.actions[event]?.timelog?.end_time_fld || ''}>
+                      <option value="">Field</option>
+                      {formFields.map(f => f.type === 'time' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+                    </select>
+                  </div>
+                  <span
+                    className="btcd-link cp"
+                    onClick={() => handleTimeLog(false, 'settime')}
+                    onKeyDown={() => handleTimeLog(false, 'settime')}
+                    role="button"
+                    tabIndex="0"
+                  >
+                    set hours
+                  </span>
+                </>
+              )}
+              <div className="mt-2 mb-1">User</div>
+              <select
+                value={projectsConf.actions[event]?.timelog?.owner}
+                className="btcd-paper-inp"
+                onChange={e => handleTimeLog(e.target.value, 'owner')}
+              >
+                <option value="">Select Owner</option>
+                {getUsers('taskuser').length > 0 && getUsers('taskuser').map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
+              </select>
+              <div className="mt-2 mb-1">Notes</div>
+              <select className="btcd-paper-inp mb-2" onChange={(e) => handleTimeLog(e.target.value, 'notes_fld')} value={projectsConf.actions[event]?.timelog?.notes_fld || ''}>
+                <option value="">Field</option>
+                {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+              </select>
+            </ConfirmModal>
+          </>
+        )
+      }
+      {
+        (event === 'task' || event === 'subtask' || event === 'issue') && (
+          <ConfirmModal
+            className="custom-conf-mdl"
+            mainMdlCls="o-v btcd-ttc"
+            btnClass="blue"
+            btnTxt="Ok"
+            show={actionMdl.show === 'reminder_string'}
+            close={clsActionMdl}
+            action={clsActionMdl}
+            title={`${event} Reminder`}
+          >
+            <div className="btcd-hr mt-2" />
+            <div className="mt-2 mb-1">Select Reminder Type</div>
+            <select className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'reminder_criteria')} value={projectsConf.actions[event]?.reminder_string?.reminder_criteria || ''}>
+              <option value="">Select Type</option>
+              <option value="daily">Daily</option>
+              <option value="on same day">On Same Day</option>
+              <option value="before due date">Before Due Date</option>
+              <option value="customdate">Custom Date</option>
+            </select>
+            {projectsConf.actions[event]?.reminder_string?.reminder_criteria === 'before due date' && (
+              <>
+                <div className="mt-2 mb-1">Day Before</div>
+                <input type="number" className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'day_before')} value={projectsConf.actions[event]?.reminder_string?.day_before || ''} />
+              </>
+            )}
+            {projectsConf.actions[event]?.reminder_string?.reminder_criteria === 'customdate' && (
+              <>
+                <div className="mt-2 mb-1">Select Date</div>
+                <div className="flx">
+                  <input type="date" className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'custom_date')} value={projectsConf.actions[event]?.reminder_string?.custom_date || ''} style={{ height: 40 }} />
+                  <select className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'custom_date_fld')} value={projectsConf.actions[event]?.reminder_string?.custom_date_fld || ''}>
+                    <option value="">Field</option>
+                    {formFields.map(f => f.type === 'date' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                   </select>
                 </div>
-              </ConfirmModal>
-))}
-        </>
-      )}
-
+              </>
+            )}
+            <div className="mt-2 mb-1">Select Time</div>
+            <div className="flx">
+              <input type="time" className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'reminder_time')} value={projectsConf.actions[event]?.reminder_string?.reminder_time || ''} style={{ height: 40 }} />
+              <select className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'reminder_time_fld')} value={projectsConf.actions[event]?.reminder_string?.reminder_time_fld || ''}>
+                <option value="">Field</option>
+                {formFields.map(f => f.type === 'time' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+              </select>
+            </div>
+            <div className="mt-2">Notify Users</div>
+            <MultiSelect
+              defaultValue={projectsConf.actions[event]?.reminder_string?.reminder_notify_users}
+              className="mt-1 w-10 btcd-paper-drpdwn"
+              onChange={(val) => handleReminder(val, 'reminder_notify_users')}
+              options={getUsers().map(user => ({ label: user.userName, value: user.userId }))}
+            />
+          </ConfirmModal>
+        )
+      }
+      {
+        event === 'task' && (
+          <ConfirmModal
+            className="custom-conf-mdl"
+            mainMdlCls="o-v btcd-ttc"
+            btnClass="blue"
+            btnTxt="Ok"
+            show={actionMdl.show === 'recurrence_string'}
+            close={clsActionMdl}
+            action={clsActionMdl}
+            title={`${event} Recurrence`}
+          >
+            <div className="btcd-hr mt-2" />
+            <div className="mt-2 mb-1">Select Recurring Frequency</div>
+            <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'recurring_frequency')} value={projectsConf.actions[event]?.recurrence_string?.recurring_frequency}>
+              <option value="">Select Frequency</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekley</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+            <div className="mt-2 mb-1">Once Every</div>
+            <div className="flx">
+              <input type="number" className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'time_span')} min="1" max="15" value={projectsConf.actions[event]?.recurrence_string?.time_span || ''} />
+              <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'time_span_fld')} value={projectsConf.actions[event]?.recurrence_string?.time_span_fld || ''}>
+                <option value="">Field</option>
+                {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+              </select>
+            </div>
+            <div className="mt-2 mb-1">End After</div>
+            <div className="flx mb-2">
+              <input type="number" className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'number_of_occurrences')} min="2" max="30" value={projectsConf.actions[event]?.recurrence_string?.number_of_occurrences || ''} />
+              <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'number_of_occurrences_fld')} value={projectsConf.actions[event]?.recurrence_string?.number_of_occurrences_fld || ''}>
+                <option value="">Field</option>
+                {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+              </select>
+            </div>
+            {['monthly', 'yearly'].includes(projectsConf.actions[event]?.recurrence_string?.recurring_frequency)
+              && (<CheckBox onChange={(e) => handleRecurrence(e.target.value, 'set_previous_business_day', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.set_previous_business_day || false} value="true" title="Set to previous business day" />)}
+            <CheckBox onChange={(e) => handleRecurrence(e.target.value, 'is_comments_recurred', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.is_comments_recurred || false} value="true" title="Retain comments for subsequent recurrences" />
+            <CheckBox onChange={(e) => handleRecurrence(e.target.value, 'recurrence_type', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.recurrence_type || false} value="after_current_task_completed" title="Create next recurrence after the close of current task." />
+          </ConfirmModal>
+        )
+      }
+      {
+        event === 'issue' && (
+          <>
+            <ConfirmModal
+              className="custom-conf-mdl"
+              mainMdlCls="o-v"
+              btnClass="blue"
+              btnTxt="Ok"
+              show={actionMdl.show === 'followers'}
+              close={clsActionMdl}
+              action={clsActionMdl}
+              title="Issue Followers"
+            >
+              <div className="btcd-hr mt-2" />
+              {isLoading ? (
+                <Loader style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 45,
+                  transform: 'scale(0.5)',
+                }}
+                />
+              )
+                : (
+                  <div className="flx flx-between mt-2">
+                    <MultiSelect
+                      defaultValue={projectsConf.actions[event].bug_followers}
+                      className="mt-2 w-9"
+                      onChange={(val) => actionHandler(val, 'bug_followers')}
+                      options={getUsers().map(user => ({ label: user.userName, value: user.userId }))}
+                    />
+                    <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Portal Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  </div>
+                )}
+            </ConfirmModal>
+            {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
+              .map(act => (
+                <ConfirmModal
+                  key={act}
+                  className="custom-conf-mdl"
+                  mainMdlCls="o-v btcd-ttc"
+                  btnClass="blue"
+                  btnTxt="Ok"
+                  show={actionMdl.show === act}
+                  close={clsActionMdl}
+                  action={clsActionMdl}
+                  title={`Issue ${act}`}
+                >
+                  <div className="btcd-hr mt-2" />
+                  <div className="flx flx-between mt-2">
+                    <select
+                      value={projectsConf.actions[event][act === 'priority' ? 'reproducible_id' : `${act}_id`]}
+                      className="btcd-paper-inp"
+                      onChange={e => actionHandler(e.target.value, act === 'priority' ? 'reproducible_id' : `${act}_id`)}
+                    >
+                      <option value="">{`Select ${act}`}</option>
+                      {projectsConf.default?.fields?.[projectsConf.portalId]?.[projectsConf.projectId]?.[event]?.defaultfields?.[`${act}_details`] && Object.values(projectsConf.default.fields[projectsConf.portalId][projectsConf.projectId][event].defaultfields[`${act}_details`]).map(field => (
+                        <option key={field[`${act}_id`]} value={field[`${act}_id`]}>
+                          {field[`${act}_name`]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </ConfirmModal>
+              ))}
+          </>
+        )
+      }
       <ConfirmModal
         className="custom-conf-mdl"
-        mainMdlCls="o-v"
+        mainMdlCls="o-v btcd-ttc"
         btnClass="blue"
         btnTxt="Ok"
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={`${event.charAt(0).toUpperCase() + event.slice(1)} Tags`}
+        title={`${event} Tags`}
       >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
@@ -486,16 +776,36 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <MultiSelect
-              className="msl-wrp-options"
-              defaultValue={projectsConf.actions[event].tags}
-              options={getTags()}
-              onChange={(val) => actionHandler(val, 'tags')}
-              customValue
-            />
-            <button onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
+          <>
+            <div className="flx flx-between mt-2">
+              <MultiSelect
+                className="msl-wrp-options"
+                defaultValue={projectsConf.actions[event].tags}
+                options={getTags()}
+                onChange={(val) => actionHandler(val, 'tags')}
+              />
+              <button onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+            <hr />
+            <small>Custom Tags</small>
+            {projectsConf?.actions?.[event]?.customTags?.length > 0 && projectsConf.actions[event].customTags.map((tag, i) => (
+              <div key={`tg=${i + 79}`} className="flx flx-between mt-2 mb-2">
+                <input type="text" className="btcd-paper-inp" onChange={(e) => handleCustomTag('value', i, 'name', e.target.value)} value={tag.name} />
+                <select className="btcd-paper-inp w-3" value={tag.field} onChange={(e) => handleCustomTag('value', i, 'field', e.target.value)}>
+                  <option value="">Field</option>
+                  {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
+                </select>
+                <select className="btcd-paper-inp w-3" style={{ backgroundColor: `${tag.color.replace('bg', '#')}` }} value={tag.color} onChange={(e) => handleCustomTag('value', i, 'color', e.target.value)}>
+                  <option value="">Color</option>
+                  {['0dd3d3', 'e2b910', '7f78e0', 'f28840', 'd359aa', '83b727', 'b58a61', 'ffac14', '48b7b4', 'f56b62', '728099', '609100', '0d6fb7', '0995ba', '15a8e2', 'ff5acd', '898985', '3b92ff', 'ac57f2', '895a59'].map(tagColor => (
+                    <option key={tagColor} value={`bg${tagColor}`} style={{ backgroundColor: `#${tagColor}` }} aria-label="color" />
+                    ))}
+                </select>
+                <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2" aria-label="delete" type="button"><span className="btcd-icn icn-trash-2" /></button>
+              </div>
+              ))}
+            <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': '"Add Custom Tag"' }} type="button">+</button>
+          </>
           )}
       </ConfirmModal>
 

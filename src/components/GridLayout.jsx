@@ -4,14 +4,14 @@
 
 import { useState, useEffect, memo, useContext } from 'react';
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { useHistory } from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
-import SlimSelect from 'slim-select'
-import '../resource/css/slimselect.min.css'
+// import SlimSelect from 'slim-select'
+// import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import BrushIcn from '../Icons/BrushIcn'
-import { useHistory } from 'react-router-dom'
 
 function GridLayout(props) {
   const { reCaptchaV2 } = useContext(AppSettings)
@@ -175,7 +175,7 @@ function GridLayout(props) {
     return nlay;
   }
 
-  const slimInit = () => {
+  /* const slimInit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
@@ -199,7 +199,7 @@ function GridLayout(props) {
         }
       }
     }
-  }
+  } */
 
   const margeNewData = () => {
     const { w, h, minH, maxH, minW } = newData[1]

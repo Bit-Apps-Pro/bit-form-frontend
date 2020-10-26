@@ -25,6 +25,7 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue, formID
       // console.log('value', value, current, attr.name)
       onBlurHandler(current)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   const onChangeHandler = (event) => {

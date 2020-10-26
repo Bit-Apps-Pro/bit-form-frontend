@@ -108,10 +108,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     }
   }
 
-  const tinymceDestroy = () => {
-    tinymce.remove()
-  }
-
   return (
     <div>
       <ConfirmModal

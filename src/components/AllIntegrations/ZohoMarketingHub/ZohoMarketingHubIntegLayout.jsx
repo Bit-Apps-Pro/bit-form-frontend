@@ -1,4 +1,3 @@
-import React from 'react'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshContactFields, refreshLists } from './ZohoMarketingHubCommonFunc'
