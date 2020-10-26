@@ -59,6 +59,13 @@ export default function IntegInfo({ allIntegURL, integrations }) {
             <input className="btcd-paper-inp w-6 mt-1" name="ownerEmail" defaultValue={integrations[id].ownerEmail} type="email" placeholder="Owner Email" readOnly />
           </>
         )}
+
+        {integrations[id].type === 'Zoho Creator' && (
+          <>
+            <div className="mt-3"><b>Owner Name (Your Zoho Creator screen name):</b></div>
+            <input className="btcd-paper-inp w-6 mt-1" name="accountOwner" defaultValue={integrations[id].accountOwner} type="text" placeholder="Your Zoho Creator screen name..." readOnly />
+          </>
+        )}
       </div>
     </>
   )
