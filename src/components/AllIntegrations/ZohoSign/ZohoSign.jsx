@@ -21,8 +21,8 @@ function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
   const [signConf, setSignConf] = useState({
     name: 'Zoho Sign API',
     type: 'Zoho Sign',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.67J41WQIOYYH44QY0QUBJDRK2M2J5I' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'bc98018ebc5f2af8c51d9bf5e013ac2208b2322fd9' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.01ZB6YV7B8BEIXGPX6821NIK29K0HZ' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '79d6d0bf4b8104aea4c167a2e2e10d78a916af7c6b' : '',
   })
 
   useEffect(() => {

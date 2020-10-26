@@ -21,8 +21,8 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
   const [workDriveConf, setWorkDriveConf] = useState({
     name: 'Zoho WorkDrive API',
     type: 'Zoho WorkDrive',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.67J41WQIOYYH44QY0QUBJDRK2M2J5I' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'bc98018ebc5f2af8c51d9bf5e013ac2208b2322fd9' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.BWH0YC45BQ9PQMTZGKW5J3VUKUO18N' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'a01e54cfa1bb3de6283fbbb4d0d5ccee7404b29847' : '',
     team: '',
     folder: '',
     folderMap: [],

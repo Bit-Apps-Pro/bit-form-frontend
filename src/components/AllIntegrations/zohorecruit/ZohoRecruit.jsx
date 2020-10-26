@@ -22,8 +22,8 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   const [recruitConf, setRecruitConf] = useState({
     name: 'Zoho Recruit API',
     type: 'Zoho Recruit',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.BWH0YC45BQ9PQMTZGKW5J3VUKUO18N' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'a01e54cfa1bb3de6283fbbb4d0d5ccee7404b29847' : '',
     module: '',
     field_map: [
       { formField: '', zohoFormField: '' },

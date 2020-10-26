@@ -21,8 +21,8 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
   const [marketingHubConf, setMarketingHubConf] = useState({
     name: 'Zoho Marketing Hub API',
     type: 'Zoho Marketing Hub',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.PFZHKP6NP8HCCM90TDLLPDNUFCCTZX' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'da7c284de2969d24dda6a167bd4980d225d4a9233b' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.YN34H0SNYOASNVTOYPKPO158PD8VTD' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '04e7b570f25f7702d93a84a3ab8121880788782464' : '',
     list: '',
     field_map: [
       { formField: '', zohoFormField: '' },
