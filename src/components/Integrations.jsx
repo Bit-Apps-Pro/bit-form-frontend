@@ -12,6 +12,8 @@ import zohoProjects from '../resource/img/integ/projects.svg'
 import zohoRecruit from '../resource/img/integ/recruit.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
+import zohoSign from '../resource/img/integ/sign.svg'
+import zohoCliq from '../resource/img/integ/cliq.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -41,9 +43,10 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Mail', logo: zohoMail, pro: !isPro },
     { type: 'Zoho Sheet', logo: zohoSheet, pro: !isPro },
     { type: 'Zoho Projects', logo: zohoProjects, pro: !isPro },
-    { type: 'Zoho Sign', logo: '', pro: !isPro },
+    { type: 'Zoho Sign', logo: zohoSign, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
+    { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
   ]
 
