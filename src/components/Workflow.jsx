@@ -38,14 +38,14 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     }
     return mail
   }
+
   const getValueFromArr = (key, subkey, lgcGrpInd) => {
     const value = workFlows[lgcGrpInd].successAction.find(val => val.type === key)
-
     if (value !== undefined) { return value.details[subkey] }
     return ''
   }
 
-  const checkKeyInArr = (key, lgcGrpInd) => workFlows[lgcGrpInd].successAction && workFlows[lgcGrpInd].successAction.some(v => v.type === key)
+  const checkKeyInArr = (key, lgcGrpInd) => workFlows[lgcGrpInd]?.successAction?.some(v => v.type === key)
 
   const ActionsTitle = type => (
     <>
@@ -518,7 +518,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
         body={confMdl.body}
         action={confMdl.action}
       />
-      <h2>Workflows</h2>
+      <h2>Conditional Logics</h2>
 
       {isPro && (
         <Button className="blue" onClick={addLogicGrp}>
@@ -786,10 +786,10 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           )}
         </>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack" />
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
           Empty
-        </div>
+          </div>
         )}
     </div>
   )
