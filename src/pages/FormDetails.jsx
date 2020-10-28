@@ -401,7 +401,7 @@ function FormDetails(props) {
                   lay={lay}
                   setLay={setLay}
                   setNewCounter={setNewCounter}
-                  theme={formSettings.theme}
+                  theme={fSettings.theme}
                   setFormName={setFormName}
                   formID={formType === 'new' ? newFormId : formID}
                   formType={formType}
@@ -424,7 +424,7 @@ function FormDetails(props) {
                 setFormName={setFormName}
                 formFields={formFields}
                 fields={fields}
-                formSettings={formSettings}
+                formSettings={fSettings}
                 setFormSettings={setFormSettings}
                 mailTem={mailTem}
                 setMailTem={setMailTem}

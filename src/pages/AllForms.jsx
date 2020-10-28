@@ -12,7 +12,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
-import Editor from '../Editor'
+// import Editor from '../Editor'
 
 const Welcome = lazy(() => import('./Welcome'))
 

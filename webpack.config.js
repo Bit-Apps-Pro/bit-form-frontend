@@ -6,13 +6,27 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
+
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env, argv) => {
-  const production = argv.mode !== 'development';
+  const production = argv.mode !== 'development'
   return {
+    devtool: production ? '' : 'source-map',
+    node: {
+      module: 'empty',
+      dgram: 'empty',
+      dns: 'mock',
+      fs: 'empty',
+      http2: 'empty',
+      net: 'empty',
+      tls: 'empty',
+      child_process: 'empty',
+    },
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
       bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
@@ -21,11 +35,10 @@ module.exports = (env, argv) => {
       'bitforms-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
       components: [
         path.resolve(__dirname, 'src/resource/sass/components.scss'),
-        path.resolve(__dirname, 'src/resource/css/slimselect.min.css'),
         path.resolve(__dirname, 'node_modules/react-multiple-select-dropdown-lite/dist/index.css'),
+        // path.resolve(__dirname, 'src/resource/css/slimselect.min.css'),
       ],
     },
-
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, '../assets/js/'),
@@ -35,7 +48,6 @@ module.exports = (env, argv) => {
     },
     optimization: {
       runtimeChunk: 'single',
-      minimize: production,
       splitChunks: {
         cacheGroups: {
           main: {
@@ -55,12 +67,43 @@ module.exports = (env, argv) => {
           },
         },
       },
+      minimize: production,
       minimizer: [
         new TerserPlugin({
+          terserOptions: {
+            parse: { ecma: 8 },
+            compress: {
+              ecma: 5,
+              warnings: false,
+              comparisons: false,
+              inline: 2,
+            },
+            mangle: { safari10: true },
+            output: {
+              ecma: 5,
+              comments: false,
+              ascii_only: true,
+            },
+          },
+          sourceMap: !production,
           extractComments: {
             condition: true,
             filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
             banner: (commentsFile) => `Bitcode license information ${commentsFile}`,
+          },
+        }),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            parser: safePostCssParser,
+            map: !production
+              ? {
+                inline: false,
+                annotation: true,
+              }
+              : false,
+          },
+          cssProcessorPluginOptions: {
+            preset: ['default', { minifyFontValues: { removeQuotes: false } }],
           },
         }),
         /* new UglifyJsPlugin({
@@ -97,6 +140,7 @@ module.exports = (env, argv) => {
       }),
       new MiniCssExtractPlugin({
         filename: '../css/[name].css?[hash:6]',
+        ignoreOrder: true,
       }),
       new CopyPlugin({
         patterns: [
@@ -134,17 +178,16 @@ module.exports = (env, argv) => {
       }),
     ],
 
-    devtool: production ? '' : 'source-map',
-
     resolve: {
-      extensions: ['.js', '.jsx', '.json'],
+      extensions: ['.js', '.jsx', '.json', '.css'],
     },
 
     module: {
+      strictExportPresence: true,
       rules: [
         {
           test: /\.(jsx?)$/,
-          exclude: /node_modules\/(?!react-table-sticky)/,
+          exclude: /node_modules/,
           loader: 'babel-loader',
           options: {
             presets: [
@@ -154,35 +197,40 @@ module.exports = (env, argv) => {
                   useBuiltIns: 'entry',
                   corejs: 3,
                   targets: {
-                    esmodules: true,
                     browsers: ['>0.2%', 'ie 11', 'not dead', 'not op_mini all'],
                   },
                 },
               ],
-              ['@babel/preset-react',
-                { runtime: 'automatic' }],
+              ['@babel/preset-react', { runtime: 'automatic' }],
             ],
             plugins: [
-              ['@babel/plugin-transform-react-jsx', {
-                runtime: 'automatic',
-              }],
+              ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               // "@babel/plugin-transform-regenerator"
             ],
           },
         },
         {
           test: /\.(sa|sc|c)ss$/,
+          exclude: /node_modules/,
           use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader',
+            !production
+              ? 'style-loader'
+              : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                },
+              },
+            {
+              loader: 'css-loader',
+              options: {
+              },
+            },
             {
               loader: 'postcss-loader',
               options: {
                 postcssOptions: {
                   plugins: [
-                    [
-                      'autoprefixer',
-                    ],
+                    ['autoprefixer'],
                   ],
                 },
               },
@@ -190,7 +238,6 @@ module.exports = (env, argv) => {
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: production,
                 sassOptions: {
                   outputStyle: 'compressed',
                 },
@@ -199,13 +246,18 @@ module.exports = (env, argv) => {
           ],
         },
         {
+          test: /\.css$/,
+          include: /node_modules/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
           test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot)$/i,
           use: [
             {
               loader: 'url-loader',
               options: {
-                limit: 1,
-                name: '[name].[ext]',
+                limit: 10000,
+                name: production ? '[name].[ext]' : '[name][hash:8].[ext]',
                 outputPath: '../img',
               },
             },
