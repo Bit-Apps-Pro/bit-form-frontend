@@ -11,9 +11,8 @@ const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
-export default function FormSettings(props) {
+export default function FormSettings({ additional, setadditional, formFields, formSettings, setFormSettings, mailTem, setMailTem, setProModal, saveForm, fields, workFlows, setworkFlows, integrations, setIntegration }) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
-
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   const [newTemplate, setNewTemplate] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
@@ -34,7 +33,7 @@ export default function FormSettings(props) {
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/workflow`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-flow-tree" />
-          Workflows
+          Conditional Logics
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-envelope-open-o" />
@@ -50,37 +49,37 @@ export default function FormSettings(props) {
         <Switch>
           <Route path={`${path}form-settings`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <SingleFormSettings additional={props.additional} setadditional={props.setadditional} />
+              <SingleFormSettings additional={additional} setadditional={setadditional} />
             </Suspense>
           </Route>
           <Route path={`${path}confirmations`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <ConfType formFields={props.formFields} formID={formID} formSettings={props.formSettings} setFormSettings={props.setFormSettings} />
+              <ConfType formFields={formFields} formID={formID} formSettings={formSettings} setFormSettings={setFormSettings} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplate mailTem={props.mailTem} setMailTem={props.setMailTem} formID={formID} />
+              <EmailTemplate mailTem={mailTem} setMailTem={setMailTem} formID={formID} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/new`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateNew tem={newTemplate} setTem={setNewTemplate} saveForm={props.saveForm} formFields={props.formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
+              <EmailTemplateNew tem={newTemplate} setTem={setNewTemplate} saveForm={saveForm} formFields={formFields} mailTem={mailTem} setMailTem={setMailTem} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateEdit saveForm={props.saveForm} formFields={props.formFields} mailTem={props.mailTem} setMailTem={props.setMailTem} />
+              <EmailTemplateEdit saveForm={saveForm} formFields={formFields} mailTem={mailTem} setMailTem={setMailTem} />
             </Suspense>
           </Route>
           <Route path={`${path}workflow`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <Workflow formFields={props.formFields} fields={props.fields} setProModal={props.setProModal} formSettings={props.formSettings} workFlows={props.workFlows} setworkFlows={props.setworkFlows} formID={formID} />
+              <Workflow formFields={formFields} fields={fields} setProModal={setProModal} formSettings={formSettings} workFlows={workFlows} setworkFlows={setworkFlows} formID={formID} />
             </Suspense>
           </Route>
           <Route path={`${path}integrations`}>
             <Suspense fallback={<IntegLoader />}>
-              <Integrations integrations={props.integrations} setProModal={props.setProModal} formFields={props.formFields} setIntegration={props.setIntegration} />
+              <Integrations integrations={integrations} setProModal={setProModal} formFields={formFields} setIntegration={setIntegration} />
             </Suspense>
           </Route>
         </Switch>
