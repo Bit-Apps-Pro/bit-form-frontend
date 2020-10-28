@@ -27,12 +27,15 @@ if (window.location.hash === '') {
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(`${__webpack_public_path__}service-worker.js`).then(registration => {
+      // eslint-disable-next-line no-console
       console.log('SW registered: ', registration);
     }).catch(registrationError => {
+      // eslint-disable-next-line no-console
       console.log('SW registration failed: ', registrationError);
     })
   })
 } else {
+  // eslint-disable-next-line no-console
   console.log('no sw')
 }
 

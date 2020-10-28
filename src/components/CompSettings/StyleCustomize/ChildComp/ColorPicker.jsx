@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import { ColorPicker as Picker } from 'react-color-gradient-picker';
-import 'react-color-gradient-picker/dist/index.css';
 import { CSSTransition } from 'react-transition-group';
 import hexToRGBA from '../../../../Utils/hex2RGBA';
 import useComponentVisible from './useComponentVisible';
+import 'react-color-gradient-picker/dist/index.css';
 
 ColorPicker.defaultProps = {
   alwGradient: true,
