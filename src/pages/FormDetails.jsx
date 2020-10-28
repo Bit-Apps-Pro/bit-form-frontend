@@ -12,6 +12,7 @@ import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj 
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Modal'
+import { checkLogic } from '../user-frontend/checkLogic'
 // import useAsyncState from '../hooks/useAyncState'
 // import useSWR from 'swr'
 
@@ -264,7 +265,7 @@ function FormDetails(props) {
                 if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
                 else reportsDispatch({ type: 'set', reports: [] })
               }
-              allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+              allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             } else if (action === 'bitforms_update_form') {
               setSnackbar({ show: true, msg: data.message })
               if ('formSettings' in data) setFormSettings(data.formSettings)
@@ -277,7 +278,7 @@ function FormDetails(props) {
               setallLabels(data.Labels)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
               else reportsDispatch({ type: 'set', reports: [] })
-              allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
+              allFormsDispatchHandler({ type: 'update', data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at } })
             }
             setbuttonDisabled(false)
             sessionStorage.removeItem('btcd-lc')
@@ -286,8 +287,9 @@ function FormDetails(props) {
           } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
             sessionStorage.setItem('bitformData', bitCipher(JSON.stringify(formData)))
             window.location.reload()
-          } else if (response?.data?.data) {
-            setSnackbar({ show: true, msg: response?.data?.data })
+          } else if (!response?.data?.success) {
+            setSnackbar({ show: true, msg: response?.data?.data?.message })
+            setTimeout(() => { window.location.reload() }, 2000)
           }
         })
     }
