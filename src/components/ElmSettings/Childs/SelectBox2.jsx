@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function SelectBox(props) {
   return (
     <div className="mt-3 setting-inp">

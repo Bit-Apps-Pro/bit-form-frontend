@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useCallback, useReducer, useEffect } from 'react'
+import { createRef, useState, useCallback, useReducer, useEffect } from 'react';
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
 import css2json from '../Utils/css2json'
@@ -18,12 +18,14 @@ const styleReducer = (style, action) => {
     return { ...style }
   }
   if (action.brkPoint === 'md') {
-    multiAssign(style['@media only screen and (max-width: 600px)'], action.apply)
+    const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+    multiAssign(st, action.apply)
     sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
   if (action.brkPoint === 'sm') {
-    multiAssign(style['@media only screen and (max-width: 400px)'], action.apply)
+    const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+    multiAssign(st, action.apply)
     sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(style)))
     return { ...style }
   }
@@ -44,7 +46,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
   const [isToolDragging, setisToolDragging] = useState(false)
-  const conRef = React.createRef(null)
+  const conRef = createRef(null)
   const notIE = !window.document.documentMode
 
   useEffect(() => {
@@ -54,13 +56,16 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     } else {
       setExistingStyle()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if (brkPoint === 'md') {
-      setStyleSheet(j2c.sheet(merge(style, style['@media only screen and (max-width: 600px)'])))
+      const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+      setStyleSheet(j2c.sheet(merge(style, st)))
     } else if (brkPoint === 'sm') {
-      setStyleSheet(j2c.sheet(merge(style, style['@media only screen and (max-width: 400px)'])))
+      const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+      setStyleSheet(j2c.sheet(merge(style, st)))
     } else if (brkPoint === 'lg') {
       setStyleSheet(j2c.sheet(style))
     }
@@ -68,10 +73,12 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const styleProvider = () => {
     if (brkPoint === 'md') {
-      return merge(style, style['@media only screen and (max-width: 600px)'])
+      const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+      return merge(style, st)
     }
     if (brkPoint === 'sm') {
-      return merge(style, style['@media only screen and (max-width: 400px)'])
+      const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+      return merge(style, st)
     }
     return style
   }
@@ -81,7 +88,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     headers.append('pragma', 'no-cache')
     headers.append('cache-control', 'no-cache')
     // eslint-disable-next-line no-undef
-    fetch(`${bits.styleURL}/bitform-${formID}.txt`, { cache: 'no-store', headers })
+    fetch(`${bits.styleURL}/bitform-${formID}.css`, { cache: 'no-store', headers })
       .then(response => {
         if (response.ok) {
           return response.text()

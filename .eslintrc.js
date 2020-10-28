@@ -2,6 +2,8 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    "commonjs": true,
+    "browser": true
   },
   extends: [
     'airbnb',
@@ -22,8 +24,12 @@ module.exports = {
   plugins: [
     'react',
     'react-hooks',
+    "jsx-a11y",
   ],
   rules: {
+    "template-curly-spacing": "off",
+    "indent": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "semi": 0,
     "react/destructuring-assignment": 0,
     "arrow-parens": 0,
@@ -31,6 +37,8 @@ module.exports = {
     "object-curly-newline": 0,
     "max-len": ["error", { "code": 350 }],
     "linebreak-style": ["error", "unix"],
-    "react-hooks/exhaustive-deps": 'warn' 
+    "react-hooks/exhaustive-deps": 'warn',
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
   },
 };

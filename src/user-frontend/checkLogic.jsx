@@ -1,3 +1,4 @@
+// eslint-disable-next-line consistent-return
 export const checkLogic = (logics, fields) => {
   if (Array.isArray(logics)) {
     let conditionSatus = false;
@@ -51,8 +52,8 @@ export const checkLogic = (logics, fields) => {
             : JSON.parse(targetFieldValue)
           const valueToCheck = logicsVal.split(',')
           let checker = 0
-          fieldValue.forEach(value => {
-            if (fieldValue.length > 0 && valueToCheck.indexOf(value) !== -1) {
+          fieldValue.forEach(fValue => {
+            if (fieldValue.length > 0 && valueToCheck.indexOf(fValue) !== -1) {
               checker += 1
             }
           })
@@ -78,8 +79,8 @@ export const checkLogic = (logics, fields) => {
             return true;
           }
           let checker = 0;
-          valueToCheck.forEach(value => {
-            if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
+          valueToCheck.forEach(chkValue => {
+            if (fieldValue.length > 0 && fieldValue.indexOf(chkValue) === -1) {
               checker += 1
             }
           })
@@ -160,8 +161,8 @@ export const checkLogic = (logics, fields) => {
           const fieldValue = Array.isArray(targetFieldValue)
             ? targetFieldValue
             : JSON.parse(targetFieldValue)
-          valueToCheck.forEach(value => {
-            if (fieldValue.length > 0 && fieldValue.indexOf(value) === -1) {
+          valueToCheck.forEach(ckValue => {
+            if (fieldValue.length > 0 && fieldValue.indexOf(ckValue) === -1) {
               checker += 1
             }
           })
@@ -246,6 +247,7 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
   }
   const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
   if (matchedFields) {
+    // eslint-disable-next-line array-callback-return
     matchedFields.map(field => {
       const fieldName = field.substring(2, field.length - 1)
       if (fieldValues[fieldName]) {
@@ -262,7 +264,7 @@ export const evalMathExpression = (stringToReplace) => {
     return stringToReplace
   }
   let mutatedString = stringToReplace
-  const isMathEpr = stringToReplace.match(/[\+\-\*\/\%]/g)
+  const isMathEpr = stringToReplace.match(/[\\+\-\\*\\/\\%]/g)
   if (isMathEpr && isMathEpr.length > 0) {
     const mathEpr = stringToReplace.match(/\w+/g)
     if (!mathEpr) {
@@ -275,6 +277,7 @@ export const evalMathExpression = (stringToReplace) => {
     mutatedString = mutatedString.replace(/\{|\[/g, '(')
     mutatedString = mutatedString.replace(/\}|\]/g, ')')
     try {
+      // eslint-disable-next-line no-new-func
       mutatedString = Function(`"use strict";return (${mutatedString})`)()
     } catch (error) {
       return stringToReplace

@@ -1,16 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+// const autoprefixer = require('autoprefixer');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env, argv) => {
-  const production = argv.mode === 'production';
+  const production = argv.mode !== 'development';
   return {
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
@@ -27,7 +28,6 @@ module.exports = (env, argv) => {
 
     output: {
       filename: '[name].js',
-      //publicPath: path.resolve(__dirname, '../assets/js/'),
       path: path.resolve(__dirname, '../assets/js/'),
       chunkFilename: '[name].js?[hash:6]',
       library: '_bitforms',
@@ -35,6 +35,7 @@ module.exports = (env, argv) => {
     },
     optimization: {
       runtimeChunk: 'single',
+      minimize: production,
       splitChunks: {
         cacheGroups: {
           main: {
@@ -55,8 +56,15 @@ module.exports = (env, argv) => {
         },
       },
       minimizer: [
-        new UglifyJsPlugin({
-          cache: !production,
+        new TerserPlugin({
+          extractComments: {
+            condition: true,
+            filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
+            banner: (commentsFile) => `Bitcode license information ${commentsFile}`,
+          },
+        }),
+        /* new UglifyJsPlugin({
+          cache: production,
           parallel: true,
           test: /\.js(\?.*)?$/i,
           uglifyOptions: {
@@ -67,14 +75,14 @@ module.exports = (env, argv) => {
               drop_console: production,
             },
           },
-        }),
+        }), */
       ],
     },
     plugins: [
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        cache: !production,
+        cache: production,
         filename: '../../views/view-root.php',
         path: path.resolve('../views/'),
         template: `${__dirname}/public/wp_index.html`,
@@ -119,8 +127,10 @@ module.exports = (env, argv) => {
         ],
       }),
       new WorkboxPlugin.GenerateSW({
-        clientsClaim: true,
-        skipWaiting: true,
+        clientsClaim: production,
+        skipWaiting: production,
+        dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
       }),
     ],
 
@@ -138,19 +148,26 @@ module.exports = (env, argv) => {
           loader: 'babel-loader',
           options: {
             presets: [
-              '@babel/preset-react',
               [
                 '@babel/preset-env',
                 {
                   useBuiltIns: 'entry',
                   corejs: 3,
                   targets: {
+                    esmodules: true,
                     browsers: ['>0.2%', 'ie 11', 'not dead', 'not op_mini all'],
                   },
                 },
               ],
+              ['@babel/preset-react',
+                { runtime: 'automatic' }],
             ],
-            plugins: ['@babel/proposal-class-properties'],
+            plugins: [
+              ['@babel/plugin-transform-react-jsx', {
+                runtime: 'automatic',
+              }],
+              // "@babel/plugin-transform-regenerator"
+            ],
           },
         },
         {
@@ -167,7 +184,7 @@ module.exports = (env, argv) => {
                       'autoprefixer',
                     ],
                   ],
-                }
+                },
               },
             },
             {

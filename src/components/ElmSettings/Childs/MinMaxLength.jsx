@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-
 export default function MinMaxLength(props) {
   const updateMinLength = e => {
     e.preventDefault()

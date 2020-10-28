@@ -1,4 +1,5 @@
-import React, { memo } from 'react'
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { memo } from 'react';
 
 function MtInput({ label, onChange, value, disabled, type, textarea, className }) {
   return (

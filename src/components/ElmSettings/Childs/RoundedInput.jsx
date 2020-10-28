@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-
 export default function RoundedInput(props) {
   const regx = /round/
   const isRound = regx.test(props.elm.data.child[1].attr.className)

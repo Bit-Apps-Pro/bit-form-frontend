@@ -1,13 +1,16 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-filename-extension */
-import 'react-app-polyfill/ie11'
-import 'react-app-polyfill/stable'
-import React, { lazy, Suspense } from 'react'
+// import 'react-app-polyfill/ie11'
+// import 'react-app-polyfill/stable'
+
+import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
+// import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 const App = lazy(() => import('./App'))
 
@@ -32,7 +35,6 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 } else {
   console.log('no sw')
 }
-
 
 ReactDOM.render(
   <AllFormContextProvider>

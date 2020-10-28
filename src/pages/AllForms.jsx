@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useContext, useCallback, memo, lazy } from 'react'
+import { useState, useEffect, useContext, useCallback, memo, lazy } from 'react';
 import { Link } from 'react-router-dom'
 import Table from '../components/Table'
 import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
@@ -12,6 +12,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import ConfirmModal from '../components/ConfirmModal'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import Editor from '../Editor'
 
 const Welcome = lazy(() => import('./Welcome'))
 
@@ -79,6 +80,7 @@ function AllFroms({ newFormId }) {
           }
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -191,6 +193,7 @@ function AllFroms({ newFormId }) {
 
   return (
     <div id="all-forms">
+      {/* <Editor /> */}
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <ConfirmModal
         show={confMdl.show}

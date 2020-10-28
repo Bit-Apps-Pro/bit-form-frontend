@@ -1,13 +1,15 @@
-import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ZohoAnalytics from './ZohoAnalytics/ZohoAnalytics'
 import ZohoCampaigns from './ZohoCampaigns/ZohoCampaigns'
+import ZohoCreator from './ZohoCreator/ZohoCreator'
 import ZohoCRM from './ZohoCRM/ZohoCRM'
 import ZohoDesk from './ZohoDesk/ZohoDesk'
 import ZohoMail from './ZohoMail/ZohoMail'
+import ZohoMarketingHub from './ZohoMarketingHub/ZohoMarketingHub'
 import ZohoProjects from './ZohoProjects/ZohoProjects'
 import ZohoRecruit from './ZohoRecruit/ZohoRecruit'
 import ZohoSheet from './ZohoSheet/ZohoSheet'
+import ZohoSign from './ZohoSign/ZohoSign'
 import ZohoWorkDrive from './ZohoWorkDrive/ZohoWorkDrive'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
@@ -33,6 +35,12 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Projects':
         return <ZohoProjects allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Sign':
+        return <ZohoSign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Marketing Hub':
+        return <ZohoMarketingHub allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Creator':
+        return <ZohoCreator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

@@ -1,14 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
-import EditIcn from '../Icons/EditIcn'
+import EditIcn from '../Icons/EditIcn';
 
-export default function TitleModal(props) {
+export default function TitleModal({ action, children }) {
   return (
     <div className="action-btn-wrapper">
-      <div className="action-btn" onClick={props.action} >
+      <div className="action-btn" tabIndex="0" role="button" onClick={action} onKeyPress={action}>
         <EditIcn />
       </div>
-      {props.children}
+      {children}
     </div>
   )
 }

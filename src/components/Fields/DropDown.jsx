@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
@@ -65,7 +66,13 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
   }
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="select">
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl} {attr.valid.req && ' *'}</label>}
+      {'lbl' in attr && (
+        <label className={`fld-lbl fld-lbl-${formID}`}>
+          {attr.lbl}
+          {' '}
+          {attr.valid.req && ' *'}
+        </label>
+      )}
       {/* props options
         https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
       <MultiSelect

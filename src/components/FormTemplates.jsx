@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import bitsFetch from '../Utils/bitsFetch'
 
 export default function FormTemplates() {
   console.log('%c $render FormTemplates', 'background:purple;padding:3px;border-radius:5px;color:white')
 
-  const [templates, setTemplates] = useState(null)
+  const [, setTemplates] = useState(null)
   const staticTem = [{ lbl: 'Blank', img: '' }, { lbl: 'Contact Form', img: '' }]
 
   useEffect(() => {

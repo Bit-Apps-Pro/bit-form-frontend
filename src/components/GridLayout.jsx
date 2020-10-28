@@ -2,19 +2,18 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import React, { useState, useEffect, memo, useContext } from 'react'
+import { useState, useEffect, memo, useContext } from 'react';
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { useHistory } from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
-import SlimSelect from 'slim-select'
-import '../resource/css/slimselect.min.css'
+// import SlimSelect from 'slim-select'
+// import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import BrushIcn from '../Icons/BrushIcn'
-import { useHistory } from 'react-router-dom'
 
 function GridLayout(props) {
-
   const { reCaptchaV2 } = useContext(AppSettings)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging } = props
   const [layouts, setLayouts] = useState(props.layout)
@@ -85,6 +84,9 @@ function GridLayout(props) {
 
   const propertyValueSumX = (propertyValue = '') => {
     let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
+    if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
+    if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
+    if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
     arr = [arr[1], arr[3]]
     const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
     return summ || 0
@@ -92,6 +94,9 @@ function GridLayout(props) {
 
   const propertyValueSumY = (propertyValue = '') => {
     let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
+    if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
+    if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
+    if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
     arr = [arr[0], arr[2]]
     const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
     return summ || 0
@@ -170,7 +175,7 @@ function GridLayout(props) {
     return nlay;
   }
 
-  const slimInit = () => {
+  /* const slimInit = () => {
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
@@ -194,7 +199,7 @@ function GridLayout(props) {
         }
       }
     }
-  }
+  } */
 
   const margeNewData = () => {
     const { w, h, minH, maxH, minW } = newData[1]
@@ -393,12 +398,12 @@ function GridLayout(props) {
   )
 
   const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style|style\/.+/g, "fs"))
+    history.replace(history.location.pathname.replace(/style|style\/.+/g, 'fs'))
   }
 
   const navigateToStyle = typ => {
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    history.replace(history.location.pathname.replace(/fs|style\/.+/g, "style"))
+    history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
   }
 
   return (

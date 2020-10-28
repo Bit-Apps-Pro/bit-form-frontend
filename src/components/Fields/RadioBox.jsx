@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react';
 
 export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val)
@@ -31,7 +32,9 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
       const { current } = radioRef
       onBlurHandler(current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
+
   const onChangeHandler = (event) => {
     if (attr.valid.disabled) {
       return

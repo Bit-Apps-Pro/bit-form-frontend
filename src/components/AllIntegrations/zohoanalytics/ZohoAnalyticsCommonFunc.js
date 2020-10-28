@@ -37,6 +37,10 @@ export const workspaceChange = (analyticsConf, formID, setAnalyticsConf, setisLo
     }
   }
 
+  if (!analyticsConf.default.users) {
+    refreshUsers(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)
+  }
+
   return newConf
 }
 
@@ -78,6 +82,39 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setis
         setSnackbar({ show: true, msg: `Workspaces refresh failed Cause:${result.data.data || result.data}. please try again` })
       } else {
         setSnackbar({ show: true, msg: 'Workspaces refresh failed. please try again' })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}
+
+export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar) => {
+  setisLoading(true)
+  const refreshUsersRequestParams = {
+    formID,
+    id: analyticsConf.id,
+    dataCenter: analyticsConf.dataCenter,
+    clientId: analyticsConf.clientId,
+    clientSecret: analyticsConf.clientSecret,
+    tokenDetails: analyticsConf.tokenDetails,
+    ownerEmail: analyticsConf.ownerEmail,
+  }
+  bitsFetch(refreshUsersRequestParams, 'bitforms_zanalytics_refresh_users')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...analyticsConf }
+        if (!newConf.default) {
+          newConf.default = {}
+        }
+        if (result.data.users) {
+          newConf.default.users = result.data.users
+        }
+        setSnackbar({ show: true, msg: 'Users refreshed' })
+        setAnalyticsConf({ ...newConf })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `Users refresh failed Cause:${result.data.data || result.data}. please try again` })
+      } else {
+        setSnackbar({ show: true, msg: 'Users refresh failed. please try again' })
       }
       setisLoading(false)
     })

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react';
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'
@@ -141,8 +141,8 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               <select className="btcd-paper-inp mt-1" onChange={e => handlePage(e, i)}>
                 <option value="">Custom Link</option>
                 {redirectUrls
-                  && redirectUrls.map((urlDetail, i) => (
-                    <option key={`r-url-${i + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
+                  && redirectUrls.map((urlDetail, ind) => (
+                    <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
                   ))}
               </select>
               <br />

@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
-import React from 'react'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import StyleAccordion from '../ChildComp/StyleAccordion';
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
 
 export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPoint }) {
-  const [pseudo, pcls, setPseudo] = usePseudo(cls)
+  const [, pcls] = usePseudo(cls)
   const fSize = style?.[pcls]?.['font-size'] || style?.[cls]?.['font-size'] || '16px'
 
   const setFontSize = value => {

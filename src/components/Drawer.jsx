@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Drawer(props) {
   console.log('%c $render Drawer', 'background:tomato;padding:3px;border-radius:5px')
   return (

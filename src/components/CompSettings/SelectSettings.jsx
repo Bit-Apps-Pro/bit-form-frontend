@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import SingleInput from '../ElmSettings/Childs/SingleInput'
+import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
 import Back2FldList from './Back2FldList'
@@ -12,6 +11,7 @@ export default function SelectSettings(props) {
   const options = [...elmData.opt]
   let fldKey = elmId
   if ('lbl' in elmData) {
+    // eslint-disable-next-line no-useless-escape
     fldKey = elmId + elmData.lbl.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
   }
   console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')

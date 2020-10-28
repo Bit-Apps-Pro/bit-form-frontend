@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
   return (
     <div className="resp-btn pos-rel flx">

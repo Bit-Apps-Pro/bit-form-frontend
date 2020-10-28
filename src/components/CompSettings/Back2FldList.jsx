@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Back2FldList({ setElementSetting }) {
   return (
     <div className="flx cp" onClick={() => setElementSetting({ id: null, data: { typ: '' } })} type="button" role="button" tabIndex="0" onKeyPress={() => setElementSetting({ id: null, data: { typ: '' } })}>

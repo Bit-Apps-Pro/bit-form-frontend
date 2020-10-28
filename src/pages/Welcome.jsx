@@ -1,4 +1,3 @@
-import React from 'react'
 import greeting from '../resource/img/home.svg'
 
 export default function Welcome({ setModal }) {

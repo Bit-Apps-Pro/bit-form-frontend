@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react'
-
 export default function Boxes(props) {
   return (
     <div className="flx flx-between">

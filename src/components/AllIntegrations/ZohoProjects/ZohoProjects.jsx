@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -18,12 +18,12 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   // eslint-disable-next-line max-len
-  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.tags.READ,ZohoProjects.tags.CREATE,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoPC.files.ALL'
+  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
     type: 'Zoho Projects',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.67J41WQIOYYH44QY0QUBJDRK2M2J5I' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'bc98018ebc5f2af8c51d9bf5e013ac2208b2322fd9' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.01ZB6YV7B8BEIXGPX6821NIK29K0HZ' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '79d6d0bf4b8104aea4c167a2e2e10d78a916af7c6b' : '',
     portalId: '',
     event: '',
     field_map: {},
@@ -82,7 +82,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
 
         <button
           onClick={() => nextPage(3)}
-          // disabled={projectsConf.event === '' || projectsConf.table === '' || projectsConf.field_map.length < 1}
+          disabled={projectsConf.portalId === '' || projectsConf.event === ''}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

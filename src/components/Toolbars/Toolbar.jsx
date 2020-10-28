@@ -1,7 +1,8 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import React, { useMemo } from 'react'
+import { useMemo } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
 
@@ -235,6 +236,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
             ))}
           </div>
         </Scrollbars>
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       ), [tolbarSiz])}
     </div>
   )

@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function SingleToggle(props) {
   return (
     <div className={`flx flx-between ${props.className}`}>

@@ -145,6 +145,12 @@ button.check {
     }
   }
 }
+
+input[type="checkbox"]:disabled:checked:before,
+input[type="checkbox"].disabled:checked:before {
+  opacity: 0 !important;
+}
+
 .wp-core-ui .attachment.details,
 .attachment:focus {
   box-shadow: 0 0 0 2px $blue !important;
@@ -179,7 +185,7 @@ button.check {
   height: 100%;
 }
 .font-w-m {
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 .txt-gray {
   color: $gray;
@@ -464,7 +470,7 @@ button.check {
   cursor: grab;
   overflow: hidden;
   margin: 5px;
-  box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.3), -1px -1px 3px 1px rgba(255, 255, 255, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: all 200ms;
 
   & > span {
@@ -479,7 +485,7 @@ button.check {
     color: $blue;
     outline: none;
     transform: scale(1.05);
-    box-shadow: 3px 3px 5px -1px rgba(0, 0, 0, 0.3), -2px -2px 3px 0px white;
+    box-shadow: 0 1px 11px -4px #b1b1b1;
     & > span {
       color: $blue;
     }
@@ -1392,6 +1398,7 @@ button.check {
       font-weight: 600;
       margin-top: 5px;
       border-radius: 5px;
+      z-index: 4;
     }
   }
 }
@@ -4042,4 +4049,8 @@ _:-ms-fullscreen,
     background-color: white;
     box-shadow: 0px 0 29px -9px #1e1d3f;
   }
+}
+
+.btcd-ttc {
+  text-transform: capitalize;
 }

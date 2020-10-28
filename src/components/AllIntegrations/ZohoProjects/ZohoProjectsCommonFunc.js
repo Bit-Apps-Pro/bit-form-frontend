@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import bitsFetch from '../../../Utils/bitsFetch'
 
 const clearLowerEvents = (projectsConf, name) => {
@@ -543,7 +544,7 @@ export const checkMappedFields = projectsConf => {
 export const checkRequiredActions = projectsConf => {
   let allOk = true
   const required = {
-    project: ['owner', 'tasklayoutid', 'public'],
+    project: ['owner', 'tasklayoutid'],
     milestone: ['owner', 'flag'],
     tasklist: ['flag'],
     task: ['owner'],

@@ -1,4 +1,3 @@
-import React from 'react'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoAnalyticsActions from './ZohoAnalyticsActions'
@@ -81,6 +80,7 @@ export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInp
             <ZohoAnalyticsActions
               analyticsConf={analyticsConf}
               setAnalyticsConf={setAnalyticsConf}
+              formFields={formFields}
             />
           </>
         )}

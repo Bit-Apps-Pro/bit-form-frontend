@@ -1,16 +1,16 @@
 /* eslint-disable no-undef */
 /* import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable' */
-import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import Bitforms from './Bitforms'
-
-if (!window._babelPolyfill) {
+// eslint-disable-next-line no-underscore-dangle
+/* if (!window._babelPolyfill) {
+  // eslint-disable-next-line global-require
   require('babel-polyfill')
-}
+} */
+
 export default function BitformsRenderer(params) {
   const renderApp = () => {
-
     /* const isJS = document.getElementById(`${params.contentID}no-js`)
     if (isJS) {
       isJS.innerHTML = ''

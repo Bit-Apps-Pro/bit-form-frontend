@@ -1,4 +1,3 @@
-import React from 'react'
 import ReCaptcha from './Fields/Recaptcha'
 import TextField from './Fields/TextField'
 import TextArea from './Fields/TextArea'

@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import DatePicker from 'react-date-picker'
+import DatePicker from 'react-date-picker';
 import TimePicker from 'react-time-picker'
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
 import Accordions from './ElmSettings/Childs/Accordions'

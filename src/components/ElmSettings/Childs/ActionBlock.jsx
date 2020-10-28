@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React from 'react'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
+import MultiSelect from 'react-multiple-select-dropdown-lite';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'
@@ -16,6 +15,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
     formFields.map(itm => {
       if (itm.key === action.field) {
         type = itm.type
+        // eslint-disable-next-line no-useless-escape
         fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
       }
     })
@@ -97,6 +97,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
                 onChange={changeAtnVal}
                 options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}
                 customValue={fields?.[fieldKey]?.customOpt}
+                // eslint-disable-next-line no-nested-ternary
                 singleSelect={type === 'select' ? !fields?.[fieldKey]?.mul : type === 'check' ? false : type === 'radio' && true}
               />
             ) : (<MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />)}

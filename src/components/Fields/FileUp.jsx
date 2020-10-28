@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect, createRef } from 'react'
+import { useState, useEffect, createRef } from 'react';
 import { setPrevData, handleFile, delItem } from '../../resource/js/file-upload'
 
 export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
@@ -14,6 +15,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
       element.nextElementSibling.innerHTML = ''
       element.previousElementSibling.children[1].innerHTML = 'No File Chosen'
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetFieldValue])
 
   const onFileChange = e => {
@@ -39,6 +41,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
         <div className="btcd-f-wrp">
           <div className="btn-wrp">
             <button className="btcd-inpBtn" type="button">
+              {/* eslint-disable-next-line max-len */}
               <img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDY0IDY0IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGlkPSJDbGlwIj48cGF0aCBkPSJtMTIuMDggNTcuNzQ5YTkgOSAwIDAgMCAxMi43MjggMGwzMS4xMTItMzEuMTEzYTEzIDEzIDAgMSAwIC0xOC4zODQtMTguMzg1bC0yMC41MDcgMjAuNTA2IDEuNDE1IDEuNDE1IDIwLjUwNi0yMC41MDZhMTEgMTEgMCAxIDEgMTUuNTU2IDE1LjU1NmwtMzEuMTEyIDMxLjExMmE3IDcgMCAwIDEgLTkuOS05LjlsMjYuODctMjYuODdhMyAzIDAgMCAxIDQuMjQyIDQuMjQzbC0xNi4yNjMgMTYuMjY0IDEuNDE0IDEuNDE0IDE2LjI2NC0xNi4yNjNhNSA1IDAgMCAwIC03LjA3MS03LjA3MWwtMjYuODcgMjYuODdhOSA5IDAgMCAwIDAgMTIuNzI4eiIvPjwvZz48L3N2Zz4=" alt="file-upload" />
               <span>{` ${attr.upBtnTxt}`}</span>
             </button>

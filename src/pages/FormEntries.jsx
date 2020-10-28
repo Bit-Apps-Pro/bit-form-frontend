@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import React, { memo, useCallback, useContext, useEffect, useState } from 'react'
+import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react';
+
 import { useParams } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
@@ -20,8 +21,8 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(false)
   const { formID } = useParams()
-  const fetchIdRef = React.useRef(0)
-  const [pageCount, setPageCount] = React.useState(0)
+  const fetchIdRef = useRef(0)
+  const [pageCount, setPageCount] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
   const [showTimelineMdl, setshowTimelineMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
@@ -39,14 +40,15 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   useEffect(() => {
     if (reports.length > 0) {
       const allLabelObj = {}
-      allLabels.map(itm => allLabelObj[itm.key] = itm)
+      // eslint-disable-next-line array-callback-return
+      allLabels.map(itm => { allLabelObj[itm.key] = itm })
       const labels = []
       reports[0].details.order.forEach(field => { if (field && field !== 'sl' && field !== 'selection' && field !== 'table_ac') { allLabelObj[field] !== undefined && labels.push(allLabelObj[field]) } })
       tableHeaderHandler(labels)
-    }
-    else if (allLabels.length > 0) {
+    } else if (allLabels.length > 0) {
       tableHeaderHandler(allLabels)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const tableHeaderHandler = (labels) => {
@@ -55,15 +57,18 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
       accessor: val.key,
       fieldType: val.type,
       minWidth: 50,
-      ...'type' in val && val.type.match(/^(file-up|check|select)$/) && {
+      ...('type' in val && val.type.match(/^(file-up|check|select)$/) && {
         Cell: row => {
           if (row.cell.value !== null && row.cell.value !== undefined && row.cell.value !== '') {
             if (val.type === 'file-up') {
               // eslint-disable-next-line max-len
-              return JSON.parse(row.cell.value).map((itm, i) => <TableFileLink
-                key={`file-n-${row.cell.row.index + i}`}
-                fname={itm}
-                link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}`} />)
+              return JSON.parse(row.cell.value).map((itm, i) => (
+                <TableFileLink
+                  key={`file-n-${row.cell.row.index + i}`}
+                  fname={itm}
+                  link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}`}
+                />
+              ))
             }
             if (val.type === 'check' || val.type === 'select') {
               const vals = typeof row.cell.value === 'string' && row.cell.value.length > 0 && row.cell.value[0] === '[' ? JSON.parse(row.cell.value) : row.cell.value !== undefined && row.cell.value.split(',')
@@ -72,7 +77,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           }
           return null
         },
-      },
+      }),
     }))
     cols.unshift({ Header: '#', accessor: 'sl', Cell: value => <>{Number(value.state.pageIndex * value.state.pageSize) + Number(value.row.id) + 1}</>, width: 40 })
     cols.push({
@@ -101,6 +106,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
       setisloading(true)
     }
 
+    // eslint-disable-next-line no-plusplus
     const fetchId = ++fetchIdRef.current
     if (allResp.length < 1) {
       setisloading(true)
@@ -120,6 +126,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           setisloading(false)
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [delConfMdl, dupConfMdl, editData, formID, refreshResp])
 
   const setBulkDelete = useCallback((rows, action) => {
@@ -170,10 +177,9 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             action.fetchData(action.data)
           } else {
             let duplicatedEntry
-            let duplicatedEntryCount = 0
+            // let duplicatedEntryCount = 0
             Object.entries(res.data.details).forEach(([resEntryId, duplicatedId]) => {
               duplicatedEntryCount += 1
-              console.log('duplicatedEntry ', resEntryId, tmpData)
               duplicatedEntry = JSON.parse(JSON.stringify(newData[rowID[resEntryId]]))
               // duplicatedEntry = [...newData.slice(rowID[resEntryId], parseInt(rowID[resEntryId], 10) + 1)]
               duplicatedEntry.entry_id = duplicatedId
@@ -266,18 +272,18 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
 
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up') {
-      return allResp[rowDtl.idx]?.[entry.accessor] && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => <TableFileLink key={`file-n-${i}`} fname={it} width='100' link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}`} />)
-    } else if (entry.fieldType === 'color') {
-      return (<div className="flx">
-        {allResp[rowDtl.idx][entry.accessor]}
-        <span style={{ background: allResp[rowDtl.idx][entry.accessor], height: 20, width: 20, borderRadius: 5, display: "inline-block", marginLeft: 10 }} />
-      </div>)
-    } else if (entry.fieldType === 'check') {
-      return allResp[rowDtl.idx]?.[entry.accessor] && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, "")
-    } else {
-      return allResp[rowDtl.idx][entry.accessor]
+      return allResp[rowDtl.idx]?.[entry.accessor] && JSON.parse(allResp[rowDtl.idx][entry.accessor])?.map((it, i) => <TableFileLink key={`file-n-${i + 1.1}`} fname={it} width="100" link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}`} />)
+    } if (entry.fieldType === 'color') {
+      return (
+        <div className="flx">
+          {allResp[rowDtl.idx][entry.accessor]}
+          <span style={{ background: allResp[rowDtl.idx][entry.accessor], height: 20, width: 20, borderRadius: 5, display: 'inline-block', marginLeft: 10 }} />
+        </div>
+      )
+    } if (entry.fieldType === 'check') {
+      return allResp[rowDtl.idx]?.[entry.accessor] && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
     }
-
+    return allResp[rowDtl.idx][entry.accessor]
   }
 
   return (

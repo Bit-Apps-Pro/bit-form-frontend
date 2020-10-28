@@ -1,4 +1,3 @@
-import React from 'react'
 import Back2FldList from './Back2FldList'
 
 export default function ReCaptchaSettigns({ elm, updateData, setElementSetting }) {
@@ -7,7 +6,6 @@ export default function ReCaptchaSettigns({ elm, updateData, setElementSetting }
     tmp.data[e.target.name] = e.target.value
     updateData(tmp)
   }
-
 
   return (
     <div className="ml-2 mr-4">

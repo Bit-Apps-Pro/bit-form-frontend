@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import React, { createContext, useReducer } from 'react'
+import { createContext, useReducer } from 'react';
 
 const AllFormsDispatchHandler = (allForms, action) => {
   switch (action.type) {
@@ -61,7 +61,8 @@ const AllFormContextProvider = (props) => {
   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')
     && typeof bits !== 'undefined'
     && bits.allForms !== null) {
-    allFormsInitialState = bits.allForms.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, conversion: form.entries === 0 ? 0.00 : ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
+    allFormsInitialState = bits.allForms.map(form => (
+      { formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, conversion: form.entries === 0 ? 0.00 : ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)
   const [reports, reportsDispatch] = useReducer(reportsReducer, [])

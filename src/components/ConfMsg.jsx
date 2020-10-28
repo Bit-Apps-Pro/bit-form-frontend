@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import React, { useEffect, memo, useState } from 'react'
+import { useEffect, memo, useState } from 'react';
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
@@ -106,10 +106,6 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         setFormSettings({ ...formSettings })
       }
     }
-  }
-
-  const tinymceDestroy = () => {
-    tinymce.remove()
   }
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 // This optional code is used to register a service worker.
 // register() is not called by default.
@@ -33,6 +34,7 @@ export function register(config) {
     }
 
     window.addEventListener('load', () => {
+      // eslint-disable-next-line camelcase
       const swUrl = `${__webpack_public_path__}service-worker.js`;
 
       if (isLocalhost) {
@@ -59,6 +61,7 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+      // eslint-disable-next-line no-param-reassign
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {

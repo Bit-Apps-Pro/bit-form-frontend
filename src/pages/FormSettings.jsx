@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useState } from 'react';
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'

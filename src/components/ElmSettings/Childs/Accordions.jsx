@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useRef, memo } from 'react'
+import { useState, useRef, memo } from 'react';
 import { CSSTransition } from 'react-transition-group'
 import Button from './Button'
 

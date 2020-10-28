@@ -1,6 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
-
 export default function HiddenField({ attr }) {
   return (
     <div className="fld-wrp drag" btcd-fld="text-fld">

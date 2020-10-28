@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import React, { lazy, Suspense, useState, useEffect, useContext } from 'react'
+import { lazy, Suspense, useState, useEffect, useContext } from 'react'
 import {
   BrowserRouter as Router, Switch, Route, NavLink, Link,
 } from 'react-router-dom'
@@ -28,10 +28,12 @@ function App() {
 
   useEffect(() => {
     setnewFormId(getNewFormId())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allForms])
 
   const getNewFormId = () => {
     let max = 0
+    // eslint-disable-next-line array-callback-return
     allForms.map(frm => {
       const fid = Number(frm.formID)
       if (fid > max) {

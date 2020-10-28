@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -47,7 +47,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={projectsConf.department === '' || projectsConf.table === '' || projectsConf.field_map.length < 1}
+        disabled={projectsConf.portalId === '' || projectsConf.event === ''}
       />
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext, useState } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom'
 import Captcha from '../components/Captcha'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -21,18 +21,17 @@ function AppSettingsPage() {
       })
   }
 
-  useEffect(() => {
-    return () => {
-      bitsFetch({ reCaptchaV2 }, 'bitforms_save_grecaptcha')
-        .then(res => {
-          if (res !== undefined && res.success) {
-            if (res.data && res.data.id) {
-              setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
-              setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
-            }
+  useEffect(() => () => {
+    bitsFetch({ reCaptchaV2 }, 'bitforms_save_grecaptcha')
+      .then(res => {
+        if (res !== undefined && res.success) {
+          if (res.data && res.data.id) {
+            setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
+            setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
           }
-        })
-    }
+        }
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

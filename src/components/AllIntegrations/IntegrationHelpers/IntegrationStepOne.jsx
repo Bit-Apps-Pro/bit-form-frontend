@@ -1,4 +1,3 @@
-import React from 'react'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 

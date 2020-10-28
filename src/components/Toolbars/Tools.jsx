@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Tools(props) {
   console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')
   return (

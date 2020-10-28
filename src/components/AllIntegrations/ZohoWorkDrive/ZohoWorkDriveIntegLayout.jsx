@@ -1,4 +1,3 @@
-import React from 'react'
 import Loader from '../../Loaders/Loader'
 import ZohoWorkDriveActions from './ZohoWorkDriveActions'
 import { handleInput, refreshSubFolders, refreshTeamFolders, refreshTeams } from './ZohoWorkDriveCommonFunc'
@@ -39,7 +38,7 @@ export default function ZohoWorkDriveIntegLayout({ formID, formFields, workDrive
           <br />
           <div className="flx">
             <b className="wdt-100 d-in-b" />
-            <div className="d-in-b" style={{ width: (i + 1) * 10, height: 30, marginLeft: 1, marginRight: 2, height: 58, marginTop: -60 }}>
+            <div className="d-in-b" style={{ width: (i + 1) * 10, marginLeft: 1, marginRight: 2, height: 58, marginTop: -60 }}>
               <div className="sub-tree" />
             </div>
             <div className="flx sub-folder w-7">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams, useHistory } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -24,14 +24,14 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
     type: 'Zoho CRM',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.ADOPSXBMMW800FBDEFBH4V14Y6UKQK' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '904a27ac7bcb1ea120c3f61c7007c0f2b7fc5ef584' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.BWH0YC45BQ9PQMTZGKW5J3VUKUO18N' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'a01e54cfa1bb3de6283fbbb4d0d5ccee7404b29847' : '',
     module: '',
     layout: '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
-    relatedlist: {},
+    relatedlists: [],
     actions: {},
   })
 
@@ -76,7 +76,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...step === 2 && { width: 900, height: `${100}%`, overflow: 'visible' } }}>
+      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: `${100}%`, overflow: 'visible' }) }}>
 
         <ZohoCRMIntegLayout
           tab={tab}
@@ -108,7 +108,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, crmConf, history)}
       />
     </div>
-  )
+  );
 }
 
 export default ZohoCRM

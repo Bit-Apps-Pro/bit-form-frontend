@@ -1,11 +1,12 @@
-import React from 'react'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 import BorderIcn from '../../../../Icons/BorderIcn'
+import { spreadIn4Value } from '../../../../Utils/Helpers'
 
 export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
-  const padding = style?.[cls]?.padding || '0px 0px 0px 0px'
+  let padding = style?.[cls]?.padding || '0px 0px 0px 0px'
+  padding = spreadIn4Value(padding)
 
   const setPadding = val => {
     const value = styleConfig.important ? `${val}!important` : val
