@@ -104,6 +104,21 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
     setAnalyticsConf({ ...newConf })
   }
 
+  const getEmailAndFields = () => {
+    const arr = [
+      { title: 'Zoho Analytics Users', type: 'group', childs: [] },
+      { title: 'Form Fields', type: 'group', childs: [] },
+    ]
+
+    if (analyticsConf?.default?.users.length > 0) {
+      arr[0].childs = analyticsConf.default.users.map(user => ({ label: user, value: user }))
+    }
+
+    arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
+
+    return arr
+  }
+
   // const openShareModal = () => {
   //   const newConf = { ...analyticsConf }
   //   if (!newConf.actions.share) {
@@ -177,21 +192,16 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
         title="Share Settings"
       >
         <div className="o-a" style={{ height: '95%' }}>
-          <div className="flx flx-between mt-2">
-            <MultiSelect
-              className="btcd-paper-drpdwn w-8 mr-2"
-              placeholder="Input Email Address(s)"
-              defaultValue={analyticsConf?.actions?.share?.email}
-              onChange={(e) => handleShareSetting('email', e)}
-              options={analyticsConf?.default?.users?.map(user => ({ label: user, value: user }))}
-              customValue
-            />
-
-            <select className="btcd-paper-inp w-2" value={analyticsConf?.actions?.share?.field} onChange={(e) => handleShareSetting('field', e.target.value)}>
-              <option value="">Field</option>
-              {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
-            </select>
-          </div>
+          <div className="mt-2 mb-1">Enter Email Addresses</div>
+          <MultiSelect
+            className="btcd-paper-drpdwn w-9 mr-2"
+            placeholder="Input Email Address(s)"
+            defaultValue={analyticsConf?.actions?.share?.email}
+            onChange={(e) => handleShareSetting('email', e)}
+            options={getEmailAndFields()}
+            customValue
+          />
+          <small>you can select analytics users or select form fields value or even can input custom email address as well</small>
           <div className="btcd-hr mt-2" />
           <div className="mt-2 mb-1 font-w-m">Permissions Settings</div>
           <div className="btcd-hr mt-2" />
