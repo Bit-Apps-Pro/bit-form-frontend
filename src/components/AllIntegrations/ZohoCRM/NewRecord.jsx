@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Loader from '../../Loaders/Loader';
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers';
 import ZohoCRMActions from './ZohoCRMActions';
 import { handleTabChange, refreshLayouts } from './ZohoCRMCommonFunc';
@@ -7,12 +8,22 @@ import ZohoCRMFieldMap from './ZohoCRMFieldMap';
 export default function NewRecord({ tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar }) {
   useEffect(() => {
     handleTabChange(0, settab)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   return (
     <>
+      {isLoading && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
       <br />
       <br />
       <b className="wdt-100 d-in-b">Layout:</b>

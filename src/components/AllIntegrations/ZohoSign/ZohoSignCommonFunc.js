@@ -42,7 +42,6 @@ export const refreshTemplates = (formID, signConf, setSignConf, setisLoading, se
     clientId: signConf.clientId,
     clientSecret: signConf.clientSecret,
     tokenDetails: signConf.tokenDetails,
-    ownerEsign: signConf.ownerEsign,
   }
   bitsFetch(refreshModulesRequestParams, 'bitforms_zsign_refresh_templates')
     .then(result => {
@@ -54,6 +53,7 @@ export const refreshTemplates = (formID, signConf, setSignConf, setisLoading, se
         if (result.data.templates) {
           newConf.default.templates = result.data.templates
         }
+        if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setSnackbar({ show: true, msg: 'Templates refreshed' })
         setSignConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -76,7 +76,6 @@ export const refreshTemplateDetails = (formID, signConf, setSignConf, setisLoadi
     clientId: signConf.clientId,
     clientSecret: signConf.clientSecret,
     tokenDetails: signConf.tokenDetails,
-    ownerEsign: signConf.ownerEsign,
     template,
   }
   bitsFetch(refreshModulesRequestParams, 'bitforms_zsign_refresh_template_details')
@@ -90,6 +89,7 @@ export const refreshTemplateDetails = (formID, signConf, setSignConf, setisLoadi
         if (result.data.templateDetails) {
           newConf.default.templateDetails[template] = result.data.templateDetails
         }
+        if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setSnackbar({ show: true, msg: 'Template Details refreshed' })
         setSignConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {

@@ -492,7 +492,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
   const lgcGrpDelConf = i => {
     confMdl.btnTxt = 'Delete'
-    confMdl.body = 'Are you sure to delete this workflow?'
+    confMdl.body = 'Are you sure to delete this conditional logic?'
     confMdl.btnClass = ''
     confMdl.action = () => { delLgcGrp(i); closeConfMdl() }
     confMdl.show = true
@@ -523,7 +523,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
       {isPro && (
         <Button className="blue" onClick={addLogicGrp}>
           <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
-          Add Workflow
+          Add Conditional Logic
         </Button>
       )}
 
@@ -780,7 +780,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
               For
               <span className="txt-pro">UNLIMITED</span>
               {' '}
-              Workflows,
+              Conditional Logics,
               <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">Buy Premium</b></a>
             </div>
           )}

@@ -65,6 +65,15 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
     setActionMdl({ show: 'share' })
   }
 
+  const getUsers = () => {
+    const arr = [
+      { title: 'Form Fields', type: 'group', childs: [] },
+    ]
+
+    arr[0].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
+    return arr
+  }
+
   useEffect(() => {
     if (!updateMdl && !sheetConf.actions?.update?.criteria) {
       const newConf = { ...sheetConf }
@@ -137,18 +146,13 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
           {sheetConf?.actions?.share?.length > 0 && sheetConf.actions.share.map((user, i) => (
             <div key={user.accessLabel} className="flx flx-between mt-2">
               <MultiSelect
-                className="btcd-paper-drpdwn"
+                className="btcd-paper-drpdwn w-7 mr-2"
                 placeholder="Input Email Address(s)"
                 defaultValue={user.email}
                 onChange={(e) => handleShareSetting(i, 'email', e)}
-                options={[]}
+                options={getUsers()}
                 customValue
               />
-
-              <select className="btcd-paper-inp w-2" value={user.field} onChange={(e) => handleShareSetting(i, 'field', e.target.value)}>
-                <option value="">Field</option>
-                {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
-              </select>
               <input className="btcd-paper-inp w-3" type="text" value={user.accessLabel} readOnly />
             </div>
           ))}

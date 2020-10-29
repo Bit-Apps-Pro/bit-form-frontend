@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoCRMActions from './ZohoCRMActions'
 import { handleTabChange, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
@@ -10,11 +11,20 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // settab(indx + 1)
   // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   return (
     <>
+      {isLoading && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
       <br />
       <br />
       <div className="pos-rel">
@@ -55,18 +65,6 @@ export default function RelatedRecord({ indx, tab, settab, formID, formFields, c
       <button onClick={() => refreshLayouts(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
-      {/* {
-        isLoading && (
-          <Loader style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 100,
-            transform: 'scale(0.7)',
-          }}
-          />
-        )
-      } */}
       {
         crmConf.default?.layouts?.[crmConf?.relatedlists?.[tab - 1]?.module]?.[crmConf?.relatedlists?.[tab - 1]?.layout]?.fields
         && (
