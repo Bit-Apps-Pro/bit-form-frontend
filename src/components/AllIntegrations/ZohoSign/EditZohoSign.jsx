@@ -26,7 +26,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   console.log('signConf', signConf)
 
   return (
-    <div>
+    <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
