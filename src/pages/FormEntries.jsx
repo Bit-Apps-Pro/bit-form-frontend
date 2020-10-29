@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
 import EditEntryData from '../components/EditEntryData'
+import FormEntryTimeline from '../components/FormEntryTimeline'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
@@ -23,6 +24,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const fetchIdRef = useRef(0)
   const [pageCount, setPageCount] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
+  const [showTimelineMdl, setshowTimelineMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -201,8 +203,20 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
       row.original = row.data[0].row.original
     }
     setEntryID(row.original.entry_id)
+
+
     setShowEditMdl(true)
   }, [])
+  const timeline = useCallback((row) => {
+    if (row.idx !== undefined) {
+      // eslint-disable-next-line no-param-reassign
+      row.id = row.idx;
+      // eslint-disable-next-line no-param-reassign
+      row.original = row.data[0].row.original
+    }
+    setEntryID(row.original.entry_id)
+    setshowTimelineMdl(true)
+  }, []);
 
   const closeRowDetail = useCallback(() => {
     rowDtl.show = false
@@ -300,10 +314,20 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             setSnackbar={setSnackbar}
           />
         )}
+      {showTimelineMdl
+        && (
+          <FormEntryTimeline
+            close={setshowTimelineMdl}
+            formID={formID}
+            entryID={entryID}
+            setSnackbar={setSnackbar}
+          />
+        )}
       <Drawer
         title="Response Details"
         show={rowDtl.show}
         close={closeRowDetail}
+        timeline={() => timeline(rowDtl)}
         delConfMdl={() => delConfMdl(rowDtl, rowDtl.fetchData)}
         editData={() => editData(rowDtl)}
       >
@@ -321,6 +345,8 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             ))}
           </tbody>
         </table>
+
+
       </Drawer>
 
       <div className="forms">

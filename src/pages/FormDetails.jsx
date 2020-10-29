@@ -12,6 +12,7 @@ import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj 
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Modal'
+import { checkLogic } from '../user-frontend/checkLogic'
 // import useAsyncState from '../hooks/useAyncState'
 // import useSWR from 'swr'
 
@@ -292,8 +293,9 @@ function FormDetails(props) {
           } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
             sessionStorage.setItem('bitformData', bitCipher(JSON.stringify(formData)))
             window.location.reload()
-          } else if (response?.data?.data) {
-            setSnackbar({ show: true, msg: response?.data?.data })
+          } else if (!response?.data?.success) {
+            setSnackbar({ show: true, msg: response?.data?.data?.message })
+            setTimeout(() => { window.location.reload() }, 2000)
           }
         })
     }
