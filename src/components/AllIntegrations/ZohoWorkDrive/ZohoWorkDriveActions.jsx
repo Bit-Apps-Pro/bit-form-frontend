@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import Loader from '../../Loaders/Loader';
 import Modal from '../../Modal'
 import TitleModal from '../../TitleModal'
 import { refreshUsers } from './ZohoWorkDriveCommonFunc'
@@ -76,10 +77,10 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
     if (!workDriveConf.actions?.share?.folder) {
       workDriveConf.actions.share.folder = {
         permissions: [
-          { email: '', field: '', access: '34', accessLabel: 'View' },
-          { email: '', field: '', access: '5', accessLabel: 'Edit' },
-          { email: '', field: '', access: '3', accessLabel: 'Organize' },
-          { email: '', field: '', access: '7', accessLabel: 'Upload' },
+          { email: '', access: '34', accessLabel: 'View' },
+          { email: '', access: '5', accessLabel: 'Edit' },
+          { email: '', access: '3', accessLabel: 'Organize' },
+          { email: '', access: '7', accessLabel: 'Upload' },
         ],
         mail: 'false',
       }
@@ -94,10 +95,10 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
     if (!workDriveConf.actions?.share?.file) {
       workDriveConf.actions.share.file = {
         permissions: [
-          { email: '', field: '', access: '34', accessLabel: 'View' },
-          { email: '', field: '', access: '5', accessLabel: 'Edit' },
-          { email: '', field: '', access: '4', accessLabel: 'Share' },
-          { email: '', field: '', access: '6', accessLabel: 'View and Comment' },
+          { email: '', access: '34', accessLabel: 'View' },
+          { email: '', access: '5', accessLabel: 'Edit' },
+          { email: '', access: '4', accessLabel: 'Share' },
+          { email: '', access: '6', accessLabel: 'View and Comment' },
         ],
         mail: 'false',
       }
@@ -109,22 +110,27 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
   const getFileUpFields = () => formFields.filter(itm => (itm.type === 'file-up')).map(itm => ({ label: itm.name, value: itm.key }))
 
   useEffect(() => {
-    const usersOption = []
+    const usersOption = [
+      { title: 'Zoho Workdrive Users', type: 'group', childs: [] },
+      { title: 'Form Fields', type: 'group', childs: [] },
+    ]
     if (workDriveConf.team && !workDriveConf.default?.users?.[workDriveConf.team]) {
       refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)
     }
 
     if (workDriveConf.default?.users?.[workDriveConf.team]) {
-      usersOption[0] = { label: 'All Users', value: 'all_users' }
+      usersOption[0].childs[0] = { label: 'All Users', value: 'all_users' }
       const teamUsers = Object.values(workDriveConf.default.users[workDriveConf.team])
 
       for (let i = 0; i < teamUsers.length; i += 1) {
-        usersOption[i + 1] = { label: teamUsers[i].userName, value: teamUsers[i].userId }
+        usersOption[0].childs[i + 1] = { label: teamUsers[i].userName, value: teamUsers[i].userId }
       }
     }
 
+    usersOption[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
+
     setUsers(usersOption)
-  }, [formID, setSnackbar, setWorkDriveConf, workDriveConf, workDriveConf.team])
+  }, [workDriveConf.team, workDriveConf.default?.users?.[workDriveConf.team]])
 
   return (
     <div className="pos-rel">
@@ -163,33 +169,27 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                   <div>Share with users: (optional)</div>
                   <button onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Team Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
-                {/* {isLoading
-                ? (
-                  <Loader style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: 45,
-                    transform: 'scale(0.5)',
-                  }}
-                  />
-                )
-                :
-              } */}
+                {isLoading
+                  && (
+                    <Loader style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 45,
+                      transform: 'scale(0.5)',
+                    }}
+                    />
+                  )}
 
                 {
                   workDriveConf.actions?.share?.folder?.permissions?.map((permission, i) => (
                     <div key={permission.accessLabel} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
-                        className="btcd-paper-drpdwn w-6 mr-2"
+                        className="btcd-paper-drpdwn w-8 mr-2"
                         onChange={(val) => handleShareSetting(i, 'email', val, 'folder')}
                         options={users}
                       />
-                      <select className="btcd-paper-inp w-2 mr-2" value={permission.field} onChange={(e) => handleShareSetting(i, 'field', e.target.value, 'folder')}>
-                        <option value="">Field</option>
-                        {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
-                      </select>
                       <input type="text" value={permission.accessLabel} className="btcd-paper-inp w-2" readOnly />
                     </div>
                   ))
@@ -223,19 +223,26 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
                   <div>Share with users: (optional)</div>
                   <button onClick={() => refreshUsers(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Team Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
+                {isLoading
+                  && (
+                    <Loader style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 45,
+                      transform: 'scale(0.5)',
+                    }}
+                    />
+                  )}
                 {
                   workDriveConf.actions?.share?.file?.permissions?.map((permission, i) => (
                     <div key={permission.accessLabel} className="flx flx-between mt-2">
                       <MultiSelect
                         defaultValue={permission.email}
-                        className="btcd-paper-drpdwn w-6 mr-2"
+                        className="btcd-paper-drpdwn w-7 mr-2"
                         onChange={(val) => handleShareSetting(i, 'email', val, 'file')}
                         options={users}
                       />
-                      <select className="btcd-paper-inp w-2 mr-2" value={permission.field} onChange={(e) => handleShareSetting(i, 'field', e.target.value, 'file')}>
-                        <option value="">Field</option>
-                        {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
-                      </select>
                       <input type="text" value={permission.accessLabel} className="btcd-paper-inp w-3" readOnly />
                     </div>
                   ))
