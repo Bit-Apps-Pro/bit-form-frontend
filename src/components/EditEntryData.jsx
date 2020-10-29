@@ -73,6 +73,9 @@ export default function EditEntryData(props) {
     bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
+          if (response.data.cron) {
+            fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron&${response.data.cron}`)
+          }
           setSnackbar({ show: true, msg: response.data.message })
           const tmp = [...allResp]
           for (let i = 0; i < tmp.length; i += 1) {
