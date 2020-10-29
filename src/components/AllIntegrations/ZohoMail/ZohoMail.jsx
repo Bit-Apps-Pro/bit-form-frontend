@@ -17,7 +17,7 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoMail.accounts.Read,ZohoMail.messages.CREATE,ZohoMail.messages.UPDATE'
+  const scopes = 'ZohoMail.accounts.Read,ZohoMail.messages.CREATE,ZohoMail.messages.UPDATE,ZohoMail.Attachments.CREATE,ZohoMail.Attachments.READ,ZohoMail.Attachments.UPDATE'
   const [mailConf, setMailConf] = useState({
     name: 'Zoho Mail API',
     type: 'Zoho Mail',
