@@ -77,6 +77,7 @@ module.exports = (env, argv) => {
               warnings: false,
               comparisons: false,
               inline: 2,
+              drop_console: production,
             },
             mangle: { safari10: true },
             output: {

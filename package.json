@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "lint": "eslint --ext .jsx --ext .js src/ --fix",
     "wp": "webpack --progress --color --watch --mode=development",
-    "pd": "webpack --progress --color -p --config webpack.config.js --mode=production",
+    "pd": "webpack --progress --color --config webpack.config.js --mode=production",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache"
   },
   "eslintConfig": {
