@@ -1,4 +1,3 @@
-import { memo } from 'react';
 
 function TableAction(props) {
   console.log('%c $render TableAction', 'background:orange;padding:3px;border-radius:5px')
@@ -29,4 +28,4 @@ function TableAction(props) {
     </div>
   )
 }
-export default memo(TableAction)
+export default TableAction
