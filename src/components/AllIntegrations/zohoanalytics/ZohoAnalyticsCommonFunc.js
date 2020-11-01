@@ -76,6 +76,9 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setis
         if (result.data.workspaces) {
           newConf.default.workspaces = result.data.workspaces
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Workspaces refreshed' })
         setAnalyticsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -108,6 +111,9 @@ export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setisLoadi
         }
         if (result.data.users) {
           newConf.default.users = result.data.users
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
         }
         setSnackbar({ show: true, msg: 'Users refreshed' })
         setAnalyticsConf({ ...newConf })

@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput } from './ZohoMailCommonFunc'
-import ZohoMailIntegLayout from './ZohoMailIntegLayout'
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import handleInput from './ZohoMailCommonFunc';
+import ZohoMailIntegLayout from './ZohoMailIntegLayout';
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -45,7 +45,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        // disabled={mailConf.workspace === '' || mailConf.table === '' || mailConf.field_map.length < 1}
+      // disabled={mailConf.workspace === '' || mailConf.table === '' || mailConf.field_map.length < 1}
       />
       <br />
     </div>

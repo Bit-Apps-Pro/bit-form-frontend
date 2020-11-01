@@ -103,6 +103,9 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setisLoading, 
         if (result.data.forms) {
           newConf.default.forms[applicationId] = result.data.forms
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Forms refreshed' })
         setCreatorConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -139,17 +142,14 @@ export const refreshFields = (formID, creatorConf, setCreatorConf, setisLoading,
           if (!newConf.default.fields[applicationId]) {
             newConf.default.fields[applicationId] = {}
           }
-          if (result.data.tokenDetails) {
-            newConf.tokenDetails = result.data.tokenDetails
-            // eslint-disable-next-line no-param-reassign
-            delete result.data.tokenDetails
-          }
           newConf.default.fields[applicationId][formId] = { ...result.data }
           newConf.field_map = generateMappedField(newConf)
           if (Object.keys(result.data.fileUploadFields).length > 0) {
             newConf.upload_field_map = generateMappedField(newConf, true)
           }
-
+          if (result.data.tokenDetails) {
+            newConf.tokenDetails = result.data.tokenDetails
+          }
           setSnackbar({ show: true, msg: 'Fields refreshed' })
         } else {
           setSnackbar({ show: true, msg: `Fields refresh failed Cause:${result.data.data || result.data}. please try again` })

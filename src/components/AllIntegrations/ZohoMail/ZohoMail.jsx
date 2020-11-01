@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput } from './ZohoMailCommonFunc'
-import ZohoMailIntegLayout from './ZohoMailIntegLayout'
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import Steps from '../../ElmSettings/Childs/Steps';
+import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import handleInput from './ZohoMailCommonFunc';
+import ZohoMailIntegLayout from './ZohoMailIntegLayout';
 
 function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
