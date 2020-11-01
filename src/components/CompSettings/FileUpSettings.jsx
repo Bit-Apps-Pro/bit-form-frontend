@@ -14,10 +14,7 @@ export default function FileUpSettings(props) {
   const { upBtnTxt } = props.elm.data
   const mxUp = props.elm.data.mxUp === undefined ? '' : props.elm.data.mxUp
   const exts = props.elm.data.exts === undefined ? [] : props.elm.data.exts.split(',._RF_,')
-  let fldKey = props.elm.id
-  if ('lbl' in props.elm.data) {
-    fldKey = props.elm.id + props.elm.data.lbl.split(' ').join('_')
-  }
+  const fldKey = props.elm.id
   const options = [
     { label: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
     { label: 'Audios', value: '.opus,.flac,.webm,.weba,.wav,.ogg,.m4a,.mp3,.oga,.mid,.amr,.aiff,.wma,.au,.acc,.wpl' },
