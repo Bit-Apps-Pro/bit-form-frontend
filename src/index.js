@@ -9,8 +9,8 @@ import ReactDOM from 'react-dom'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
-// import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+// import 'core-js/stable'
+// import 'regenerator-runtime/runtime';
 
 const App = lazy(() => import('./App'))
 
