@@ -11,7 +11,6 @@ export default function FormEntryTimeline(props) {
     // eslint-disable-next-line no-undef
     bitsFetch({ formID, entryID }, 'bitforms_form_log_history').then((res) => {
       if (res !== undefined && res.success) {
-        console.log('test', res.data);
         setLog(res.data);
       }
     });
@@ -25,15 +24,9 @@ export default function FormEntryTimeline(props) {
           <span>
             {new Date(data.created_at).toDateString()}
             {' '}
-            {new Date(data.created_at)
-              .toLocaleTimeString()
-              .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, '$1$3')}
+            {new Date(data.created_at).toLocaleTimeString()}
           </span>
           <p>
-            <span
-              className="btcd-icn icn-document-edit"
-              style={{ fontSize: 16 }}
-            />
             {' '}
             {(() => {
               if (data.meta_key === null && data.log_type === 'update') {
@@ -41,7 +34,16 @@ export default function FormEntryTimeline(props) {
               } if (data.meta_key === null && data.log_type === 'Create') {
                 return 'Form Submitted';
               }
-                return data.meta_key;
+              return data.meta_key.split(';').map((key) => (
+                <p>
+                  {' '}
+                  <span
+                    className="btcd-icn icn-document-edit"
+                    style={{ fontSize: 16 }}
+                  />
+                  {key}
+                </p>
+              ));
             })()}
           </p>
         </div>
