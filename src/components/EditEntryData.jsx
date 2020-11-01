@@ -40,7 +40,7 @@ export default function EditEntryData(props) {
         if (el.files.length > 1) {
           el.files.forEach(file => formData.append(`${el.name}[]`, file))
         } else {
-          el.files.forEach(file => formData.append(el.name, file))
+          [...el.files].forEach(file => formData.append(el.name, file))
         }
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
         if (formData.getAll(el.name).indexOf(el.value) === -1) {
