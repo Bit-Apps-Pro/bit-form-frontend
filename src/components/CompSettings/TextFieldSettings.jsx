@@ -15,10 +15,7 @@ function TextFieldSettings(props) {
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
   const min = elmData.mn === undefined ? '' : elmData.mn
   const max = elmData.mx === undefined ? '' : elmData.mx
-  let fldKey = elmId
-  if ('lbl' in elmData) {
-    fldKey = elmId + elmData.lbl.split(' ').join('_')
-  }
+  const fldKey = elmId
 
   function setRequired(e) {
     if (e.target.checked) {

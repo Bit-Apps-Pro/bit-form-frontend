@@ -46,6 +46,9 @@ export const refreshLists = (formID, marketingHubConf, setMarketingHubConf, seti
         if (result.data.lists) {
           newConf.default = { ...newConf.default, lists: result.data.lists }
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Lists refreshed' })
         setMarketingHubConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {

@@ -65,6 +65,7 @@ export const refreshTeams = (formID, workDriveConf, setWorkDriveConf, setisLoadi
         if (result.data.teams) {
           newConf.default = { ...newConf.default, teams: result.data.teams }
         }
+        if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setSnackbar({ show: true, msg: 'Teams refreshed' })
         setWorkDriveConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -98,6 +99,7 @@ export const refreshTeamFolders = (formID, workDriveConf, setWorkDriveConf, seti
         if (result.data.teamFolders) {
           newConf.default.teamFolders[newConf.team] = result.data.teamFolders
         }
+        if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setSnackbar({ show: true, msg: 'Folders refreshed' })
         setWorkDriveConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -173,6 +175,7 @@ export const refreshUsers = (formID, workDriveConf, setWorkDriveConf, setisLoadi
         if (result.data.users) {
           newConf.default.users[workDriveConf.team] = result.data.users
         }
+        if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setSnackbar({ show: true, msg: 'Users refreshed' })
         setWorkDriveConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {

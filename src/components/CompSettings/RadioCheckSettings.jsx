@@ -11,11 +11,7 @@ function RadioCheckSettings(props) {
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...props.fields[elmId].opt]
-  let fldKey = elmId
-  if ('lbl' in elmData) {
-    fldKey = elmId + elmData.lbl.split(' ').join('_')
-  }
-
+  const fldKey = elmId
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const isRound = elmData.round !== undefined
 

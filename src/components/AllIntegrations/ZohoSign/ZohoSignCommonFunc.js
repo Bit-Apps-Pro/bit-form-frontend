@@ -1,7 +1,6 @@
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, signConf, setSignConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
-  console.log('e', e)
   let newConf = { ...signConf }
   if (isNew) {
     const rmError = { ...error }

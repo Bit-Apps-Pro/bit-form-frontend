@@ -64,6 +64,9 @@ export const refreshOrganizations = (formID, deskConf, setDeskConf, setisLoading
         if (result.data.organizations) {
           newConf.default = { ...newConf.default, organizations: result.data.organizations }
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Portals refreshed' })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -101,6 +104,9 @@ export const refreshDepartments = (formID, deskConf, setDeskConf, setisLoading, 
           newConf.department = result.data.departments[newConf.orgId][0].departmentName
           !newConf.default?.fields?.[newConf.orgId] && refreshFields(formID, newConf, setDeskConf, setisLoading, setSnackbar)
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Departments refreshed' })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -133,6 +139,9 @@ export const refreshFields = (formID, deskConf, setDeskConf, setisLoading, setSn
           }
           newConf.default.fields[newConf.orgId] = { ...result.data }
           newConf.field_map = generateMappedField(newConf)
+          if (result.data.tokenDetails) {
+            newConf.tokenDetails = result.data.tokenDetails
+          }
           setSnackbar({ show: true, msg: 'Fields refreshed' })
         } else {
           setSnackbar({ show: true, msg: `Fields refresh failed Cause:${result.data.data || result.data}. please try again` })
@@ -171,6 +180,9 @@ export const refreshOwners = (formID, deskConf, setDeskConf, setisLoading, setSn
         if (result.data.owners) {
           newConf.default.owners[newConf.orgId] = result.data.owners
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Owners refreshed' })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -204,6 +216,9 @@ export const refreshProducts = (formID, deskConf, setDeskConf, setisLoading, set
         }
         if (result.data.products) {
           newConf.default.products[newConf.department] = result.data.products
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
         }
         setSnackbar({ show: true, msg: 'Products refreshed' })
         setDeskConf({ ...newConf })
