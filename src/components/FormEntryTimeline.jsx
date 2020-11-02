@@ -16,10 +16,13 @@ export default function FormEntryTimeline(props) {
 
   const replaceFieldWithLabel = str => {
     const pattern = /\${\w[^ ${}]*}/g
-    const subKey = str.match(pattern)[0]
-    const key = subKey.substr(2, subKey.length - 3)
-    const fieldName = props.allLabels.find(label => label.key === key).name
-    return str.replace(pattern, fieldName)
+    const pattern2 = /[\]["]/g
+    const key = str.match(pattern)[0]
+    const field = props.allLabels.find(label => `$\{${label.key}}` === key)
+    const fieldName = field ? field.adminLbl : ''
+    const replacedField = fieldName ? str.replace(pattern, fieldName) : ''
+    return replacedField ? replacedField.replace(pattern2, '') : 'Field Deleted'
+    // /[\]["]/g
   }
 
   return (
@@ -40,8 +43,8 @@ export default function FormEntryTimeline(props) {
               } if (data.meta_key === null && data.log_type === 'Create') {
                 return 'Form Submitted';
               }
-              return data.meta_key.split(';').map((str) => (
-                <p>
+              return data.meta_key.split(';').map((str, i) => (
+                <p key={i}>
                   {' '}
                   <span
                     className="btcd-icn icn-document-edit"
