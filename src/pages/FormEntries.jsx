@@ -48,7 +48,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
     } else if (allLabels.length > 0) {
       tableHeaderHandler(allLabels)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const tableHeaderHandler = (labels) => {
@@ -104,6 +104,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
     if (refreshResp) {
       setRefreshResp(0)
       setisloading(true)
+      return
     }
 
     // eslint-disable-next-line no-plusplus
@@ -321,6 +322,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             formID={formID}
             entryID={entryID}
             setSnackbar={setSnackbar}
+            allLabels={allLabels}
           />
         )}
       <Drawer
