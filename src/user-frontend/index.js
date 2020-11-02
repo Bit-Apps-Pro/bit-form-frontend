@@ -3,7 +3,7 @@
 import 'react-app-polyfill/stable' */
 import ReactDOM from 'react-dom';
 import Bitforms from './Bitforms'
-import 'regenerator-runtime/runtime';
+// import 'regenerator-runtime/runtime';
 // eslint-disable-next-line no-underscore-dangle
 /* if (!window._babelPolyfill) {
   // eslint-disable-next-line global-require

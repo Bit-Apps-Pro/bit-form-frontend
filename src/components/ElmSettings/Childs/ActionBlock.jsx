@@ -10,17 +10,13 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
   let type = '';
 
   if (formFields !== null) {
-    let fieldLbl = ''
     // eslint-disable-next-line array-callback-return
     formFields.map(itm => {
       if (itm.key === action.field) {
         type = itm.type
-        // eslint-disable-next-line no-useless-escape
-        fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
+        fieldKey = itm.key
       }
     })
-
-    fieldKey = action.field.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
   }
 
   const changeAction = val => {
