@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -528,8 +528,8 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
       )}
 
       {workFlows.length > 0 ? workFlows.map((lgcGrp, lgcGrpInd) => (
-        <>
-          <div key={`workFlows-grp-${lgcGrpInd + 13}`} className="workflow-grp d-flx mt-2">
+        <Fragment key={`workFlows-grp-${lgcGrpInd + 13}`}>
+          <div className="workflow-grp d-flx mt-2">
             <Accordions
               title={`${lgcGrp.title}`}
               header={(
@@ -588,7 +588,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                         <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                           {logic.map((subLogic, subInd) => (
-                            <span key={`subLogic-${subInd + 55}`}>
+                            <span key={`subLogic-${subInd * 7}`}>
                               {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
                               {typeof subLogic === 'string' && <LogicChip logic={subLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd)} />}
                               {Array.isArray(subLogic) && (
@@ -784,7 +784,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
               <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">Buy Premium</b></a>
             </div>
           )}
-        </>
+        </Fragment>
       )) : (
           <div className="txt-center btcd-empty">
             <span className="btcd-icn icn-stack" />

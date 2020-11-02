@@ -20,7 +20,7 @@ export const defaultTheme = (formId) => ({
   [`input.fld-${formId},textarea.fld-${formId}`]: {
     'background-color': 'rgba(0, 0, 0, 0)!important',
     'border-color': 'rgba(199, 212, 221, 1)!important',
-    'border-radius': '8px 8px 8px 8px!important',
+    'border-radius': '6px 6px 6px 6px!important',
     'border-style': 'solid!important',
     'border-width': '1px 1px 1px 1px!important',
     'font-size': '15px!important',

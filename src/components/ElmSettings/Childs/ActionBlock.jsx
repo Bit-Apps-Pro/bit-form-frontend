@@ -100,7 +100,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
                 // eslint-disable-next-line no-nested-ternary
                 singleSelect={type === 'select' ? !fields?.[fieldKey]?.mul : type === 'check' ? false : type === 'radio' && true}
               />
-            ) : (<MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />)}
+            ) : (<MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val} />)}
         </>
       )}
 

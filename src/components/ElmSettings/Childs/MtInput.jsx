@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { memo } from 'react';
 
 function MtInput({ label, onChange, value, disabled, type, textarea, className }) {
   return (
@@ -11,4 +10,4 @@ function MtInput({ label, onChange, value, disabled, type, textarea, className }
   )
 }
 
-export default memo(MtInput)
+export default MtInput

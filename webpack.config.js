@@ -8,7 +8,7 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
-
+const svgToMiniDataURI = require('mini-svg-data-uri')
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -16,16 +16,18 @@ const safePostCssParser = require('postcss-safe-parser');
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
-    devtool: production ? '' : 'source-map',
+    devtool: production ? false : 'source-map',
     node: {
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
+      // module: 'empty',
+      // dgram: 'empty',
+      // dns: 'mock',
+      // fs: 'empty',
+      // http2: 'empty',
+      // net: 'empty',
+      // tls: 'empty',
+      // child_process: 'empty',
+      // Buffer: false,
+      // process: false,
     },
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
@@ -42,9 +44,10 @@ module.exports = (env, argv) => {
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, '../assets/js/'),
-      chunkFilename: '[name].js?[hash:6]',
+      chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
       library: '_bitforms',
       libraryTarget: 'umd',
+      // publicPath: path.resolve(__dirname, '../assets/js/'),
     },
     optimization: {
       runtimeChunk: 'single',
@@ -73,6 +76,7 @@ module.exports = (env, argv) => {
           terserOptions: {
             parse: { ecma: 8 },
             compress: {
+              drop_console: production,
               ecma: 5,
               warnings: false,
               comparisons: false,
@@ -80,13 +84,7 @@ module.exports = (env, argv) => {
               drop_console: production,
             },
             mangle: { safari10: true },
-            output: {
-              ecma: 5,
-              comments: false,
-              ascii_only: true,
-            },
           },
-          sourceMap: !production,
           extractComments: {
             condition: true,
             filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
@@ -135,12 +133,12 @@ module.exports = (env, argv) => {
         chunksSortMode: 'auto',
       }),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': production
-          ? JSON.stringify('production')
-          : JSON.stringify('development'),
+        'process.env': {
+          NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
+        },
       }),
       new MiniCssExtractPlugin({
-        filename: '../css/[name].css?[hash:6]',
+        filename: '../css/[name].css?v=[contenthash:6]',
         ignoreOrder: true,
       }),
       new CopyPlugin({
@@ -195,10 +193,10 @@ module.exports = (env, argv) => {
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'entry',
-                  corejs: 3,
+                  // useBuiltIns: 'entry',
+                  // corejs: 3,
                   targets: {
-                    browsers: ['>0.2%', 'ie 11', 'not dead', 'not op_mini all'],
+                    browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
                   },
                 },
               ],
@@ -206,6 +204,7 @@ module.exports = (env, argv) => {
             ],
             plugins: [
               ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+              '@babel/plugin-transform-runtime',
               // "@babel/plugin-transform-regenerator"
             ],
           },
@@ -219,6 +218,7 @@ module.exports = (env, argv) => {
               : {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
+                  publicPath: '',
                 },
               },
             {
@@ -252,13 +252,28 @@ module.exports = (env, argv) => {
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.(jpe?g|png|gif|svg|ttf|woff|woff2|eot)$/i,
+          test: /\.svg$/i,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                options: {
+                  generator: (content) => svgToMiniDataURI(content.toString()),
+                },
+                name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
+                outputPath: '../img',
+              },
+            },
+          ],
+        },
+        {
+          test: /\.(jpe?g|png|gif|ttf|woff|woff2|eot)$/i,
           use: [
             {
               loader: 'url-loader',
               options: {
                 limit: 10000,
-                name: production ? '[name].[ext]' : '[name][hash:8].[ext]',
+                name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
                 outputPath: '../img',
               },
             },
