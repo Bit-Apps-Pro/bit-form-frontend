@@ -17,6 +17,7 @@ export default function SelectSettings(props) {
   const isMultiple = elmData.mul
   const allowCustomOpt = elmData.customOpt !== undefined
   const label = elmData.lbl === undefined ? '' : elmData.lbl
+  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
 
   // set defaults
@@ -46,6 +47,15 @@ export default function SelectSettings(props) {
       delete elmData.lbl
     } else {
       elmData.lbl = e.target.value
+    }
+    props.updateData({ id: elmId, data: elmData })
+  }
+
+  function setAdminLabel(e) {
+    if (e.target.value === '') {
+      delete elmData.adminLbl
+    } else {
+      elmData.adminLbl = e.target.value
     }
     props.updateData({ id: elmId, data: elmData })
   }
@@ -129,7 +139,8 @@ export default function SelectSettings(props) {
       <span className="font-w-m">Field Key</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
-      <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
+      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
+      <SingleInput inpType="text" title="Field Label:" value={label} action={setLabel} />
       <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />
       <SingleToggle title="Allow Other Option:" action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3" />
       {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}

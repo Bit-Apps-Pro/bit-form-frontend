@@ -12,6 +12,7 @@ function TextFieldSettings(props) {
   const isRequired = elmData.valid.req !== undefined
   const isAutoComplete = elmData.ac === 'on'
   const label = elmData.lbl === undefined ? '' : elmData.lbl
+  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
   const min = elmData.mn === undefined ? '' : elmData.mn
   const max = elmData.mx === undefined ? '' : elmData.mx
@@ -46,6 +47,15 @@ function TextFieldSettings(props) {
     props.updateData({ id: elmId, data: elmData })
   }
 
+  function setAdminLabel(e) {
+    if (e.target.value === '') {
+      delete elmData.adminLbl
+    } else {
+      elmData.adminLbl = e.target.value
+    }
+    props.updateData({ id: elmId, data: elmData })
+  }
+
   function setPlaceholder(e) {
     if (e.target.value === '') {
       delete elmData.ph
@@ -73,6 +83,8 @@ function TextFieldSettings(props) {
     props.updateData({ id: elmId, data: elmData })
   }
 
+  console.log('elmId', props.elm.id)
+
   return (
     <div className="mr-4 ml-2">
       <Back2FldList setElementSetting={props.setElementSetting} />
@@ -83,11 +95,12 @@ function TextFieldSettings(props) {
       </div>
       <span className="font-w-m">Field Key</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
+      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} className="mt-3" />
       {elmData.typ !== 'textarea'
         && elmData.typ.match(/^(text|url|password|number|email|)$/)
         && <SingleToggle title="Auto Fill:" action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
-      <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
+      <SingleInput inpType="text" title="Field Label:" value={label} action={setLabel} />
       {elmData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
       {elmData.typ === 'number' && <SingleInput inpType="number" title="Min:" value={min} action={setMin} width={100} className="mr-4" />}
       {elmData.typ === 'number' && <SingleInput inpType="number" title="Max:" value={max} action={setMax} width={100} />}

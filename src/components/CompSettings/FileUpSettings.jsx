@@ -11,6 +11,7 @@ export default function FileUpSettings(props) {
   const isRequired = props.elm.data.valid.req !== undefined
   const isMultiple = props.elm.data.mul !== undefined
   const label = props.elm.data.lbl === undefined ? '' : props.elm.data.lbl
+  const adminLabel = props.elm.data.adminLbl === undefined ? '' : props.elm.data.adminLbl
   const { upBtnTxt } = props.elm.data
   const mxUp = props.elm.data.mxUp === undefined ? '' : props.elm.data.mxUp
   const exts = props.elm.data.exts === undefined ? [] : props.elm.data.exts.split(',._RF_,')
@@ -53,6 +54,15 @@ export default function FileUpSettings(props) {
     props.updateData(props.elm)
   }
 
+  function setAdminLabel(e) {
+    if (e.target.value === '') {
+      delete props.elm.data.adminLbl
+    } else {
+      props.elm.data.adminLbl = e.target.value
+    }
+    props.updateData(props.elm)
+  }
+
   function setUpBtnTxt(e) {
     props.elm.data.upBtnTxt = e.target.value
     props.updateData(props.elm)
@@ -90,6 +100,7 @@ export default function FileUpSettings(props) {
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       </div>
       <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} className="mt-2" />
+      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
       <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
       <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
       <SingleInput inpType="number" title="Max Upload Size:" value={mxUp} action={setMxUp} placeholder="Any Size" />

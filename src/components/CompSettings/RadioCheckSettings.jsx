@@ -13,6 +13,7 @@ function RadioCheckSettings(props) {
   const options = [...props.fields[elmId].opt]
   const fldKey = elmId
   const label = elmData.lbl === undefined ? '' : elmData.lbl
+  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
   const isRound = elmData.round !== undefined
 
   function setLabel(e) {
@@ -20,6 +21,15 @@ function RadioCheckSettings(props) {
       delete elmData.lbl
     } else {
       elmData.lbl = e.target.value
+    }
+    props.updateData({ id: elmId, data: elmData })
+  }
+
+  function setAdminLabel(e) {
+    if (e.target.value === '') {
+      delete elmData.adminLbl
+    } else {
+      elmData.adminLbl = e.target.value
     }
     props.updateData({ id: elmId, data: elmData })
   }
@@ -93,7 +103,8 @@ function RadioCheckSettings(props) {
       </div>
       <span className="font-w-m">Field Key</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleInput inpType="text" title="Label:" value={label} action={setLabel} className="mt-0" />
+      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
+      <SingleInput inpType="text" title="Field Label:" value={label} action={setLabel} />
       <SingleToggle title="Rounded:" action={setRound} isChecked={isRound} className="mt-3" />
       <div className="opt">
         <span className="font-w-m">Options:</span>
