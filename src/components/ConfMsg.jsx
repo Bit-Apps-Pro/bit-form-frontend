@@ -63,16 +63,17 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   }
 
   const addMoreMsg = () => {
-    if (!('confirmation' in formSettings)) {
-      formSettings.confirmation = { type: { successMsg: [] } }
-      formSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
-    } else if ('successMsg' in formSettings.confirmation.type) {
-      formSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+    const tmpFormSettings = JSON.parse(JSON.stringify(formSettings))
+    if (!('confirmation' in tmpFormSettings)) {
+      tmpFormSettings.confirmation = { type: { successMsg: [] } }
+      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+    } else if ('successMsg' in tmpFormSettings.confirmation.type) {
+      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     } else {
-      formSettings.confirmation.type.successMsg = []
-      formSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${formSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      tmpFormSettings.confirmation.type = { successMsg: [], ...tmpFormSettings.confirmation.type }
+      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
     }
-    setFormSettings({ ...formSettings })
+    setFormSettings(tmpFormSettings)
   }
 
   const addFormField = (val, i) => {
