@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Scrollbars from 'react-custom-scrollbars';
+import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import bitsFetch from '../Utils/bitsFetch';
-import Bitforms from '../user-frontend/Bitforms';
 
 export default function FormEntryTimeline(props) {
   const { formID, entryID } = props;
@@ -15,6 +13,14 @@ export default function FormEntryTimeline(props) {
       }
     });
   }, [entryID, formID]);
+
+  const replaceFieldWithLabel = str => {
+    const pattern = /\${\w[^ ${}]*}/g
+    const subKey = str.match(pattern)[0]
+    const key = subKey.substr(2, subKey.length - 3)
+    const fieldName = props.allLabels.find(label => label.key === key).name
+    return str.replace(pattern, fieldName)
+  }
 
   return (
     <Modal lg show setModal={props.close} title="Time Line">
@@ -34,14 +40,14 @@ export default function FormEntryTimeline(props) {
               } if (data.meta_key === null && data.log_type === 'Create') {
                 return 'Form Submitted';
               }
-              return data.meta_key.split(';').map((key) => (
+              return data.meta_key.split(';').map((str) => (
                 <p>
                   {' '}
                   <span
                     className="btcd-icn icn-document-edit"
                     style={{ fontSize: 16 }}
                   />
-                  {key}
+                  {replaceFieldWithLabel(str)}
                 </p>
               ));
             })()}

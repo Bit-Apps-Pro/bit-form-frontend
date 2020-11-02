@@ -18,7 +18,7 @@ export default function Bitforms(props) {
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
     // eslint-disable-next-line no-useless-escape
-    const name = dataToPass[field.i].lbl ? field.i + dataToPass[field.i].lbl.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_') : field.i
+    const name = field.i
     // eslint-disable-next-line no-param-reassign
     dataToPass[field.i].name = name
     if (props.gRecaptchaSiteKey && props.gRecaptchaSiteKey !== null && dataToPass[field.i].typ === 'recaptcha') {
@@ -478,7 +478,7 @@ function Toast(props) {
     } else if (!snack && !props.index && props.show) {
       props.setSnack(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snack])
   useEffect(() => {
     const resetTime = props.error ? 10000 : 5000

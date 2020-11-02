@@ -7,7 +7,6 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   let type = ''
   let fldType = ''
-  let fieldLbl = ''
   let fieldKey = ''
   if (formFields !== null) {
     // eslint-disable-next-line array-callback-return
@@ -19,9 +18,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
           type = itm.type
         }
         fldType = itm.type
-        // eslint-disable-next-line no-useless-escape
-        fieldLbl = itm.name.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
-        fieldKey = fieldVal.replace(new RegExp(`\\b${fieldLbl}\\b`, 'g'), '')
+        fieldKey = itm.key
       }
     })
   }
@@ -94,9 +91,6 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
                 fldType={fldType}
               />
             </>
-            // <select>
-            //   {getOptions().map(option => <option>{option.label}</option>)}
-            // </select>
           ) : (
             <MtInput
               label="Value"
