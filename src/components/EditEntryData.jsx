@@ -3,6 +3,7 @@ import Scrollbars from 'react-custom-scrollbars'
 import Modal from './Modal'
 import bitsFetch from '../Utils/bitsFetch'
 import Bitforms from '../user-frontend/Bitforms'
+import LoaderSm from './Loaders/LoaderSm';
 
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
@@ -10,6 +11,7 @@ export default function EditEntryData(props) {
   console.log('editData', allResp)
 
   const [showEdit, setshowEdit] = useState(false)
+  const [isLoading, setisLoading] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
   const [error, setError] = useState(null)
   const [formStyle, setFormStyle] = useState('')
@@ -32,6 +34,7 @@ export default function EditEntryData(props) {
 
   const updateData = (event) => {
     event.preventDefault()
+    setisLoading(true)
     const formData = new FormData()
     const fields = Array.prototype.slice.call(ref.current)
     // eslint-disable-next-line array-callback-return
@@ -89,12 +92,16 @@ export default function EditEntryData(props) {
         } else if (response.data && response.data.data) {
           setError(response.data.data)
         }
+        setisLoading(false)
       })
   }
 
   function SaveBtn() {
     return (
-      <button onClick={updateData} type="button" className="btn btn-md blue btcd-mdl-hdr-btn">Update</button>
+      <button onClick={updateData} disabled={isLoading} type="button" className="btn btn-md blue btcd-mdl-hdr-btn">
+        Update
+        {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+      </button>
     )
   }
 
