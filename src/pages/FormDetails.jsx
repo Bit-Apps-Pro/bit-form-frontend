@@ -46,11 +46,13 @@ function FormDetails(props) {
   const { history, newFormId } = props
 
   useEffect(() => {
-    setFormFields(sortArrOfObj(allLabels, 'adminLbl'))
+    setFormFields(sortArrOfObj([...allLabels], 'adminLbl'))
   }, [allLabels])
 
   useEffect(() => {
-    formFields.map(fld => fld.name = fld.adminLbl)
+    for (let i = 0; i < formFields.length; i += 1) {
+      formFields[i].name = formFields[i].adminLbl
+    }
   }, [formFields])
 
   const onMount = () => {
