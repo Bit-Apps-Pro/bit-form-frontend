@@ -167,11 +167,9 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoad
             if (!newConf.default.tags?.[module]) refreshTags(recordTab, formID, newConf, setCrmConf, setisLoading, setSnackbar)
           }
         }
-
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Layouts refreshed' })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
@@ -273,6 +271,9 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setisLoading, setSnac
       if (result?.success) {
         const newConf = { ...crmConf }
         newConf.default.crmOwner = result.data.users
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Owners refreshed' })
       } else {
@@ -301,7 +302,9 @@ export const refreshAssigmentRules = (recordTab, crmConf, setCrmConf, setisLoadi
         if (!newConf.default.assignmentRules) {
           newConf.default.assignmentRules = {}
         }
-
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         newConf.default.assignmentRules[module] = { ...result.data.assignmentRules }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: 'Assignment Rules refreshed' })

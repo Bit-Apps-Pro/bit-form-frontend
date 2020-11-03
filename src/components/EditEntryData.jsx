@@ -40,7 +40,7 @@ export default function EditEntryData(props) {
         if (el.files.length > 1) {
           el.files.forEach(file => formData.append(`${el.name}[]`, file))
         } else {
-          el.files.forEach(file => formData.append(el.name, file))
+          [...el.files].forEach(file => formData.append(el.name, file))
         }
       } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
         if (formData.getAll(el.name).indexOf(el.value) === -1) {
@@ -73,6 +73,9 @@ export default function EditEntryData(props) {
     bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
+          if (response.data.cron) {
+            fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron&${response.data.cron}`)
+          }
           setSnackbar({ show: true, msg: response.data.message })
           const tmp = [...allResp]
           for (let i = 0; i < tmp.length; i += 1) {

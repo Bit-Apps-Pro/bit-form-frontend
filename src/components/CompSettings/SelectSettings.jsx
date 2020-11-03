@@ -9,11 +9,8 @@ export default function SelectSettings(props) {
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...elmData.opt]
-  let fldKey = elmId
-  if ('lbl' in elmData) {
-    // eslint-disable-next-line no-useless-escape
-    fldKey = elmId + elmData.lbl.replaceAll(/[\`\~\!\@\#\$\'\.\s\?\+\-\*\&\|\/\!\\]/g, '_')
-  }
+  const fldKey = elmId
+
   console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
 
   const isRequired = elmData.valid.req !== undefined

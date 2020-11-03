@@ -46,6 +46,9 @@ export const refreshLists = (formID, campaignsConf, setCampaignsConf, setisLoadi
         if (result.data.lists) {
           newConf.default = { ...newConf.default, lists: result.data.lists }
         }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
         setSnackbar({ show: true, msg: 'Lists refreshed' })
         setCampaignsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
@@ -81,9 +84,10 @@ export const refreshContactFields = (formID, campaignsConf, setCampaignsConf, se
           if (!newConf.default.fields) {
             newConf.default.fields = {}
           }
-
           newConf.default.fields[list] = result.data
-
+          if (result.data.tokenDetails) {
+            newConf.tokenDetails = result.data.tokenDetails
+          }
           setSnackbar({ show: true, msg: 'Contact Fields refreshed' })
         } else {
           setSnackbar({ show: true, msg: "Zoho didn't provide fields names for this list" })

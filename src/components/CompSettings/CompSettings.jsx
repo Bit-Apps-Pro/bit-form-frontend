@@ -152,7 +152,7 @@ function FieldOptionBtn({ icn, title, sub, action }) {
             {sub && (
               <small>
                 Key:
-                {`${sub}${title && title.split(' ').join('_')}`}
+                {` ${sub}`}
               </small>
             )}
           </div>
