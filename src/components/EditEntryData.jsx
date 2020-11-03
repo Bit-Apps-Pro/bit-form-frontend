@@ -68,7 +68,7 @@ export default function EditEntryData(props) {
         }
       }
     })
-
+    console.log('===================', formData)
     const queryParam = { formID, entryID: props.entryID }
     bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
