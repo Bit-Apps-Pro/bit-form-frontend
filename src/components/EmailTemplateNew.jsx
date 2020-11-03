@@ -38,7 +38,7 @@ function EmailTemplateNew({ tem, setTem, mailTem, setMailTem, formFields, saveFo
         branding: false,
         resize: 'verticle',
         min_width: 300,
-        toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
+        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
             handleBody(editor.getContent())
@@ -56,16 +56,21 @@ function EmailTemplateNew({ tem, setTem, mailTem, setMailTem, formFields, saveFo
     }
   }
 
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    tinymce.remove()
+  }, [])
+
   const { title, sub } = tem
   useEffect(() => {
     tinyMceInit()
 
-    return function cleanup() {
+    /* return function cleanup() {
       if (typeof tinymce !== 'undefined') {
         // eslint-disable-next-line no-undef
         tinymce.remove()
       }
-    }
+    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formFields, title, sub, handleBody])
 
