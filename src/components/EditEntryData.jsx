@@ -8,13 +8,13 @@ import LoaderSm from './Loaders/LoaderSm';
 export default function EditEntryData(props) {
   console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
-  console.log('editData', allResp)
 
   const [showEdit, setshowEdit] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
   const [error, setError] = useState(null)
   const [formStyle, setFormStyle] = useState('')
+  const [formLayoutStyle, setFormLayoutStyle] = useState('')
   const ref = useRef(null)
 
   useEffect(() => {
@@ -23,6 +23,11 @@ export default function EditEntryData(props) {
     fetch(`${bits.styleURL}/bitform-${formID}.css`)
       .then(response => response.text())
       .then(styleData => setFormStyle(styleData))
+
+    // eslint-disable-next-line no-undef
+    fetch(`${bits.styleURL}/bitform-layout-${formID}.css`)
+      .then(response => response.text())
+      .then(styleData => setFormLayoutStyle(styleData))
 
     bitsFetch({ formID, entryID }, 'bitforms_edit_form_entry')
       .then(res => {
@@ -34,43 +39,7 @@ export default function EditEntryData(props) {
 
   const updateData = (event) => {
     event.preventDefault()
-    setisLoading(true)
-    const formData = new FormData()
-    const fields = Array.prototype.slice.call(ref.current)
-    // eslint-disable-next-line array-callback-return
-    fields.filter(el => {
-      if (el.type === 'file' && el.files.length > 0) {
-        if (el.files.length > 1) {
-          el.files.forEach(file => formData.append(`${el.name}[]`, file))
-        } else {
-          [...el.files].forEach(file => formData.append(el.name, file))
-        }
-      } else if ((el.type === 'checkbox' || el.type === 'radio') && el.checked) {
-        if (formData.getAll(el.name).indexOf(el.value) === -1) {
-          formData.append(el.name, el.value)
-        }
-      } else if (el.type === 'select-multiple') {
-        if ('slim' in el && 'data' in el.slim && 'data' in el.slim.data && el.slim.data.data.length > 0) {
-          const selectedData = el.slim.data.data
-          const name = el.name.substr(el.name.length - 2, el.name.length) === '[]' ? el.name : `${el.name}[]`
-          selectedData.forEach(optionData => {
-            if (optionData.selected && formData.getAll(name).indexOf(optionData.selected) === -1) {
-              formData.append(name, optionData.value)
-            }
-          })
-        } else if (formData.getAll(el.name).indexOf(el.value) === -1) {
-          formData.append(el.name, el.value)
-        }
-      } else if (el.type === 'select-one' || el.type === 'select') {
-        if (formData.getAll(el.name).indexOf(el.value) === -1) {
-          formData.append(el.name, el.value)
-        }
-      } else if (!(el.type === 'checkbox' || el.type === 'radio' || el.type === 'file' || el.type === 'select')) {
-        if (formData.getAll(el.name).indexOf(el.value) === -1) {
-          formData.append(el.name, el.value)
-        }
-      }
-    })
+    const formData = new FormData(ref.current)
 
     const queryParam = { formID, entryID: props.entryID }
     bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
@@ -116,14 +85,11 @@ export default function EditEntryData(props) {
       {formStyle && (
         <>
           <style>{formStyle}</style>
+          <style>{formLayoutStyle}</style>
           <style>
             {`
               .drag:not(.no-drg), .drag:active {
                 cursor: default;
-              }
-
-              .drag:hover {
-                background: initial;
               }
             `}
           </style>

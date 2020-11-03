@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoMailActions from './ZohoMailActions';
@@ -21,46 +22,54 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
     return mail
   }
 
-  // useEffect(() => {
-  //   if (typeof tinymce !== 'undefined' && formFields.length > 0) {
-  //     const s = document.querySelectorAll('.form-fields-em')
-  //     for (let i = 0; i < s.length; i += 1) {
-  //       s[i].style.display = 'none'
-  //     }
-  //     // eslint-disable-next-line no-undef
-  //     tinymce.init({
-  //       selector: '.btcd-editor',
-  //       plugins: 'link hr lists wpview wpemoji',
-  //       theme: 'modern',
-  //       menubar: false,
-  //       branding: false,
-  //       resize: 'verticle',
-  //       min_width: 300,
-  //       toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
-  //       setup(editor) {
-  //         editor.on('Paste Change input Undo Redo', () => {
-  //           handleBody(editor.getContent(), editor.targetElm.getAttribute('data-idx'))
-  //         })
+  const timyMceInit = () => {
+    if (typeof tinymce !== 'undefined' && formFields.length > 0) {
+      const s = document.querySelectorAll('.form-fields-em')
+      for (let i = 0; i < s.length; i += 1) {
+        s[i].style.display = 'none'
+      }
+      // eslint-disable-next-line no-undef
+      tinymce.init({
+        selector: '#body-content',
+        plugins: 'link hr lists wpview wpemoji',
+        theme: 'modern',
+        menubar: false,
+        branding: false,
+        resize: 'verticle',
+        min_width: 300,
+        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
+        setup(editor) {
+          editor.on('Paste Change input Undo Redo', () => {
+            handleInput(editor.getContent(), 'body')
+          })
 
-  //         editor.addButton('addFormField', {
-  //           text: 'Form Fields ',
-  //           tooltip: 'Add Form Field Value in Message',
-  //           type: 'menubutton',
-  //           icon: false,
-  //           menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
-  //         })
-  //       },
-  //     })
-  //   }
+          editor.addButton('addFormField', {
+            text: 'Form Fields ',
+            tooltip: 'Add Form Field Value in Message',
+            type: 'menubutton',
+            icon: false,
+            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+          })
+        },
+      })
+    }
+  }
 
-  //   return function cleanup() {
-  //     if (typeof tinymce !== 'undefined') {
-  //       // eslint-disable-next-line no-undef
-  //       tinymce.remove()
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [formFields])
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    tinymce.remove()
+  }, [])
+
+  useEffect(() => {
+    timyMceInit()
+    /* return () => {
+      if (typeof tinymce !== 'undefined') {
+        // eslint-disable-next-line no-undef
+        // tinymce.remove()
+      }
+    } */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formFields, mailConf])
 
   const handleInput = (val, typ) => {
     const newConf = { ...mailConf }

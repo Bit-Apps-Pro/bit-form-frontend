@@ -12,8 +12,6 @@ import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj 
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Modal'
-import { checkLogic } from '../user-frontend/checkLogic'
-// import useAsyncState from '../hooks/useAyncState'
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
