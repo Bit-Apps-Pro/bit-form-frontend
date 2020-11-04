@@ -1,9 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoMailActions from './ZohoMailActions';
 
-export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
+const mailReducer = (state, { val, typ }) => {
+  const newstate = { ...state }
+  newstate[typ] = val
+  return newstate
+}
+
+export default function ZohoMailIntegLayout({ formFields, mailConf: mcf, setMailConf }) {
+  const [mailConf, setmailconfig] = useReducer(mailReducer, mcf)
+
   const mailOptions = () => {
     const mail = []
     // eslint-disable-next-line no-undef
@@ -62,39 +70,21 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
 
   useEffect(() => {
     timyMceInit()
-    /* return () => {
-      if (typeof tinymce !== 'undefined') {
-        // eslint-disable-next-line no-undef
-        // tinymce.remove()
-      }
-    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields, mailConf])
+  }, [formFields])
+
+  useEffect(() => {
+    setMailConf(mailConf)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mailConf])
 
   const handleInput = (val, typ) => {
-    const newConf = { ...mailConf }
-    newConf[typ] = val
-    setMailConf({ ...newConf })
+    setmailconfig({ val, typ })
   }
-
-  // const handleBody = val => {
-  //   const newConf = { ...mailConf }
-  //   newConf.body = val
-  //   setMailConf({ ...newConf })
-  // }
 
   const addFieldToSubject = e => {
-    const newConf = { ...mailConf }
-    if (!newConf.subject) newConf.subject = ''
-    newConf.subject += e.target.value
-    setMailConf({ ...newConf })
-    e.target.value = ''
-  }
-
-  const addFieldToBody = e => {
-    const newConf = { ...mailConf }
-    newConf.body += e.target.value
-    setMailConf({ ...newConf })
+    mailConf.subject += e.target.value
+    setmailconfig({ val: mailConf.subject, typ: 'subject' })
     e.target.value = ''
   }
 
@@ -158,10 +148,6 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
         <div className="flx flx-between">
           <b>Body:</b>
         </div>
-        <select onChange={addFieldToBody} className="btcd-paper-inp mt-2 form-fields-em w-5">
-          <option value="">Add form field</option>
-          {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
-        </select>
         <label htmlFor="body-content" className="mt-2 w-10">
           <textarea
             id="body-content"
@@ -181,7 +167,6 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
         setMailConf={setMailConf}
         formFields={formFields}
       />
-
     </div>
   )
 }
