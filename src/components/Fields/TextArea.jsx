@@ -37,7 +37,6 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID 
         className={`fld fld-${formID} no-drg`}
         ref={textAreaRef}
         {...'ph' in attr && { placeholder: attr.ph }}
-        {...{ defaultValue: value }}
         {...{ value }}
         {...'ac' in attr && { autoComplete: attr.ac }}
         {...'req' in attr.valid && { required: attr.valid.req }}
