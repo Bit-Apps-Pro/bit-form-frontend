@@ -12,7 +12,10 @@ function SnackMsg({ snack, setSnackbar }) {
       unmountOnExit
     >
       <div>
-        {msg}
+        <span
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: msg }}
+        />
         <button onClick={() => setSnackbar({ show: false, msg })} className="btcd-snack-cls" type="button">&times;</button>
       </div>
     </CSSTransition>
