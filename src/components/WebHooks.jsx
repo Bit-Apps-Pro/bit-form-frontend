@@ -69,7 +69,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
       formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     } else {
       // eslint-disable-next-line no-param-reassign
-      formSettings.confirmation.type.webHooks = []
+      formSettings.confirmation.type = { webHooks: [], ...formSettings.confirmation.type }
       formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     }
     setFormSettings({ ...formSettings })
