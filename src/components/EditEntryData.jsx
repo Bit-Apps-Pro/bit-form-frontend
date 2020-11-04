@@ -39,6 +39,8 @@ export default function EditEntryData(props) {
 
   const updateData = (event) => {
     event.preventDefault()
+    setisLoading(true)
+    props.close(false)
     const formData = new FormData(ref.current)
 
     const queryParam = { formID, entryID: props.entryID }
@@ -57,7 +59,6 @@ export default function EditEntryData(props) {
             }
           }
           setAllResp(tmp)
-          props.close(false)
         } else if (response.data && response.data.data) {
           setError(response.data.data)
         }
