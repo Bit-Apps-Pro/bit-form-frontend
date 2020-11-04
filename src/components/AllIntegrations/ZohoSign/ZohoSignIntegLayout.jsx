@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import ConfirmModal from '../../ConfirmModal';
 import Loader from '../../Loaders/Loader';
@@ -8,7 +7,8 @@ import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSig
 
 export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
-  if (!signConf?.templateActions && signConf?.default?.templateDetails?.[signConf?.template]) {
+
+  if (signConf?.default?.templateDetails?.[signConf?.template] && (!signConf?.templateActions || (signConf.templateActions.length !== signConf?.default?.templateDetails?.[signConf?.template]?.actions?.length))) {
     // eslint-disable-next-line no-param-reassign
     signConf.templateActions = signConf.default.templateDetails[signConf.template].actions.map(action => ({
       action_id: action.action_id,
@@ -29,32 +29,67 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
     signConf.notes = signConf.default.templateDetails[signConf.template].notes || ''
   }
 
-  const handleAction = (indx, typ, val) => {
-    const newConf = { ...signConf }
+  const timyMceInit = () => {
+    if (typeof tinymce !== 'undefined' && formFields.length > 0) {
+      const s = document.querySelectorAll('.form-fields-em')
+      for (let i = 0; i < s.length; i += 1) {
+        s[i].style.display = 'none'
+      }
+      // eslint-disable-next-line no-undef
+      tinymce.init({
+        selector: '#body-content',
+        plugins: 'link hr lists wpview wpemoji',
+        theme: 'modern',
+        menubar: false,
+        branding: false,
+        resize: 'verticle',
+        min_width: 300,
+        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
+        setup(editor) {
+          editor.on('Paste Change input Undo Redo', () => {
+            handleAction('notes', 'notes', editor.getContent())
+          })
 
-    if (indx === 'notes') {
-      newConf.notes = val
-    } else {
-      newConf.templateActions[indx][typ] = val
+          editor.addButton('addFormField', {
+            text: 'Form Fields ',
+            tooltip: 'Add Form Field Value in Message',
+            type: 'menubutton',
+            icon: false,
+            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+          })
+        },
+      })
     }
+  }
 
-    setSignConf({ ...newConf })
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    tinymce.remove()
+  }, [])
+
+  useEffect(() => {
+    timyMceInit()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formFields])
+
+  const handleAction = (indx, typ, val) => {
+    setSignConf(oldState => {
+      const tmp = JSON.parse(JSON.stringify(oldState))
+      if (indx === 'notes') {
+        tmp.notes = val
+      } else {
+        tmp.templateActions[indx][typ] = val
+      }
+      return tmp
+    })
   }
 
   const privateMsgField = val => {
-    const newConf = { ...signConf }
-
-    newConf.templateActions[actionMdl.indx].private_notes += val
-
-    setSignConf({ ...newConf })
-  }
-
-  const notesField = val => {
-    const newConf = { ...signConf }
-
-    newConf.notes += val
-
-    setSignConf({ ...newConf })
+    setSignConf(oldState => {
+      const tmp = JSON.parse(JSON.stringify(oldState))
+      tmp.templateActions[actionMdl.indx].private_notes += val
+      return tmp
+    })
   }
 
   const openPrivateMsgMdl = indx => {
@@ -111,7 +146,6 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
                   customValue
                 />
               </div>
-
               <div className="mr-2 w-4">
                 <div className="mb-1">In Person Name</div>
                 <MultiSelect
@@ -155,7 +189,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
             <div className="mr-2 w-1">
               <div className="mb-1">Language</div>
-              <select onChange={e => handleAction(i, 'Language', e.target.value)} className="btcd-paper-inp" value={action.language}>
+              <select onChange={e => handleAction(i, 'language', e.target.value)} className="btcd-paper-inp" value={action.language}>
                 <option value="en">English</option>
                 <option value="fr">French</option>
                 <option value="de">German</option>
@@ -180,11 +214,18 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
       <div className="mt-5">
         <b className="wdt-100">Leave a Note:</b>
-        <select className="btcd-paper-inp w-2 ml-4" onChange={e => notesField(e.target.value)}>
+        {/* <select className="btcd-paper-inp w-2 ml-4" onChange={e => notesField(e.target.value)}>
           <option value="">Field</option>
           {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
-        </select>
-        <textarea rows="5" className="btcd-paper-inp mt-2 w-7" onChange={e => handleAction('notes', 'notes', e.target.value)} value={signConf.notes} />
+        </select> */}
+        {/* <textarea rows="5" className="btcd-paper-inp mt-2 w-7" onChange={e => handleAction('notes', 'notes', e.target.value)} value={signConf.notes} /> */}
+        <textarea
+          id="body-content"
+          className="btcd-paper-inp mt-1"
+          rows="5"
+          value={signConf.notes}
+          onChange={e => handleAction('notes', 'notes', e.target.value)}
+        />
       </div>
 
       <ConfirmModal
