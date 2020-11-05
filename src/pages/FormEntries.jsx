@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react';
+import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react'
 
 import { useParams } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
