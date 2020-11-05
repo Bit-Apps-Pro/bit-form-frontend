@@ -417,7 +417,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           type="button"
           disabled={isloading}
         >
-          &#x21BB
+          &#x21BB;
         </button>
       </div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
