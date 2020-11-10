@@ -5,9 +5,8 @@ import { refreshModules } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, handleInput, crmConf, setCrmConf, isLoading, setisLoading, setSnackbar }) {
   const addNewRelatedTab = () => {
-    const newConf = { ...crmConf }
-
-    if (newConf.relatedlists.length < 3) {
+    if (crmConf.relatedlists.length < 3) {
+      const newConf = { ...crmConf }
       newConf.relatedlists.push({
         actions: {},
         field_map: [{ formField: '', zohoFormField: '' }],
@@ -15,9 +14,8 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
         module: '',
         upload_field_map: [{ formField: '', zohoFormField: '' }],
       })
+      setCrmConf({ ...newConf })
     }
-
-    setCrmConf({ ...newConf })
   }
 
   const removeRelatedTab = indx => {
@@ -55,7 +53,7 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
               </button>
             </Tab>
 
-            {crmConf?.relatedlists && crmConf.relatedlists.map((relatelist, indx) => (
+            {crmConf?.relatedlists && crmConf.relatedlists.map((_, indx) => (
               <>
                 <Tab key={`t-${indx * 3}`}>
                   <button className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`} type="button">
@@ -85,7 +83,7 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
             />
           </Panel>
           {
-            crmConf?.relatedlists && crmConf.relatedlists.map((relatelist, indx) => (
+            crmConf?.relatedlists && crmConf.relatedlists.map((_, indx) => (
               <Panel key={`p-${indx + 2.4}`}>
                 <RelatedRecord
                   indx={indx}

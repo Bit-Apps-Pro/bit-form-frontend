@@ -205,9 +205,9 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
     }
     setEntryID(row.original.entry_id)
 
-
     setShowEditMdl(true)
   }, [])
+
   const timeline = useCallback((row) => {
     if (row.idx !== undefined) {
       // eslint-disable-next-line no-param-reassign
@@ -315,6 +315,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             setSnackbar={setSnackbar}
           />
         )}
+
       {showTimelineMdl
         && (
           <FormEntryTimeline
@@ -325,6 +326,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             allLabels={allLabels}
           />
         )}
+
       <Drawer
         title="Response Details"
         show={rowDtl.show}
@@ -347,8 +349,6 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             ))}
           </tbody>
         </table>
-
-
       </Drawer>
 
       <div className="forms">
