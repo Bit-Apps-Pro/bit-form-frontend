@@ -17,8 +17,8 @@ export default function FormEntryTimeline(props) {
   const replaceFieldWithLabel = str => {
     const pattern = /\${\w[^ ${}]*}/g
     const pattern2 = /[\]["]/g
-    const key = str.match(pattern)[0]
-    const field = props.allLabels.find(label => `$\{${label.key}}` === key)
+    const key = str.match(pattern)?.[0] || ''
+    const field = key ? props.allLabels.find(label => `$\{${label.key}}` === key) : ''
     const fieldName = field ? field.adminLbl : ''
     const replacedField = fieldName ? str.replace(pattern, fieldName) : ''
     return replacedField ? replacedField.replace(pattern2, '') : 'Field Deleted'
