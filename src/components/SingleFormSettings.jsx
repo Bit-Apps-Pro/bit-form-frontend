@@ -8,6 +8,9 @@ import CheckBox from './ElmSettings/Childs/CheckBox'
 export default function SingleFormSettings({ additional, setadditional }) {
   console.log('..render singlefromsettings')
 
+  // eslint-disable-next-line no-undef
+  const isPro = typeof bits !== 'undefined' && bits.isPro
+
   const addMoreBlockIp = () => {
     if ('blocked_ip' in additional.settings) {
       additional.settings.blocked_ip.push({ ip: '', status: false })
@@ -50,6 +53,14 @@ export default function SingleFormSettings({ additional, setadditional }) {
       additional.enabled.onePerIp = true
     } else {
       delete additional.enabled.onePerIp
+    }
+    setadditional({ ...additional })
+  }
+  const toggleCaptureGCLID = e => {
+    if (e.target.checked) {
+      additional.enabled.captureGCLID = true
+    } else {
+      delete additional.enabled.captureGCLID
     }
     setadditional({ ...additional })
   }
@@ -259,6 +270,17 @@ export default function SingleFormSettings({ additional, setadditional }) {
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />
+        </div>
+      </div>
+      <div className={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}>
+        <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
+          <div>
+            <b>
+              <span className="btcd-icn icn-one mr-2" />
+              Capture GCLID
+            </b>
+          </div>
+          <SingleToggle2 action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
         </div>
       </div>
 
