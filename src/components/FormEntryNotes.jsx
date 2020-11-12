@@ -64,11 +64,11 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     bitsFetch({ noteID: confMdl.noteID }, 'bitforms_form_entry_delete_note').then((res) => {
       if (res !== undefined && res.success) {
         setSnackbar({ show: true, msg: 'Note Deleted Successfully' })
-        setIsLoading(false)
         confMdl.show = false
         setConfMdl({ ...confMdl })
         setFetchData(true)
       }
+      setIsLoading(false)
     })
   }
 
@@ -149,8 +149,8 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)',
+              height: 70,
+              transform: 'scale(0.7)',
             }}
             />
           )

@@ -54,8 +54,8 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)',
+              height: 70,
+              transform: 'scale(0.7)',
             }}
             />
           )

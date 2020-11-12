@@ -74,11 +74,10 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
         .then(response => {
           if (response !== undefined && response.success) {
             setSnackbar({ show: true, msg: 'Note Updated Successfully' })
-            setIsLoading(false)
-            // eslint-disable-next-line no-undef
             cancelEditMode()
             setFetchData(true)
           }
+          setIsLoading(false)
         })
     } else {
       const queryParam = { formID, entryID }
@@ -87,12 +86,12 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
         .then(response => {
           if (response !== undefined && response.success) {
             setSnackbar({ show: true, msg: 'Note Added Successfully' })
-            setIsLoading(false)
             setNoteTitle('')
             // eslint-disable-next-line no-undef
             tinymce.get('body-content').setContent('')
             setFetchData(true)
           }
+          setIsLoading(false)
         })
     }
   }
