@@ -19,7 +19,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
   useEffect(() => {
     settab('note')
-    setIsLoading('allNotes')
+    isPro && setIsLoading('allNotes')
   }, [])
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
       return
     }
     // eslint-disable-next-line no-undef
-    bitsFetch({ formID, entryID }, 'bitforms_form_entry_get_notes').then((res) => {
+    isPro && bitsFetch({ formID, entryID }, 'bitforms_form_entry_get_notes').then((res) => {
       if (res !== undefined && res.success) {
         setAllNotes(res.data)
       }
