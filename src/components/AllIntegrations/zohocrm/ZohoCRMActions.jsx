@@ -229,7 +229,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
         <div className="pro-blur flx w-10" style={{ top: -25 }}>
           <div className="pro">
             Available On
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro">Premium</span></a>
+            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro"> Premium</span></a>
           </div>
         </div>
       )}
@@ -289,17 +289,17 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <select
-              value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlists[tab - 1].actions.assignment_rules}
-              className="btcd-paper-inp"
-              onChange={e => actionHandler(e.target.value, 'assignment_rules')}
-            >
-              <option value="">Select Assignment Rule</option>
-              {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={assignmentName} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
-            </select>
-            <button onClick={() => refreshAssigmentRules(tab, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Assignment Rules"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
+            <div className="flx flx-between mt-2">
+              <select
+                value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlists[tab - 1].actions.assignment_rules}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'assignment_rules')}
+              >
+                <option value="">Select Assignment Rule</option>
+                {crmConf?.default?.assignmentRules?.[module] && Object.keys(crmConf.default.assignmentRules[module]).map(assignmentName => <option key={assignmentName} value={crmConf.default.assignmentRules[module][assignmentName]}>{assignmentName}</option>)}
+              </select>
+              <button onClick={() => refreshAssigmentRules(tab, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Assignment Rules"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
           )}
       </ConfirmModal>
 
@@ -326,16 +326,16 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <MultiSelect
-              className="msl-wrp-options"
-              defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlists[tab - 1].actions.tag_rec}
-              options={getTags()}
-              onChange={(val) => actionHandler(val, 'tag_rec')}
-              customValue
-            />
-            <button onClick={() => refreshTags(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
+            <div className="flx flx-between mt-2">
+              <MultiSelect
+                className="msl-wrp-options"
+                defaultValue={tab === 0 ? crmConf.actions.tag_rec : crmConf.relatedlists[tab - 1].actions.tag_rec}
+                options={getTags()}
+                onChange={(val) => actionHandler(val, 'tag_rec')}
+                customValue
+              />
+              <button onClick={() => refreshTags(tab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
           )}
 
       </ConfirmModal>
@@ -362,17 +362,17 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
           }}
           />
         ) : (
-          <div className="flx flx-between mt-2">
-            <select
-              value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlists[tab - 1].actions.rec_owner}
-              className="btcd-paper-inp"
-              onChange={e => actionHandler(e.target.value, 'rec_owner')}
-            >
-              <option value="">Select Owner</option>
-              {crmConf.default?.crmOwner && Object.values(crmConf.default.crmOwner)?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
-            </select>
-            <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-          </div>
+            <div className="flx flx-between mt-2">
+              <select
+                value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlists[tab - 1].actions.rec_owner}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'rec_owner')}
+              >
+                <option value="">Select Owner</option>
+                {crmConf.default?.crmOwner && Object.values(crmConf.default.crmOwner)?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
+              </select>
+              <button onClick={() => refreshOwners(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
           )}
       </ConfirmModal>
 

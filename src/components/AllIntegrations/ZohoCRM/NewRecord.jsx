@@ -72,7 +72,7 @@ export default function NewRecord({ tab, settab, formID, formFields, crmConf, se
                   <div className="pro-blur flx">
                     <div className="pro">
                       Available On
-                      <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro">Premium</span></a>
+                      <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro"> Premium</span></a>
                     </div>
                   </div>
                 )}
