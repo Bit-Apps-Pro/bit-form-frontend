@@ -29,7 +29,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
     const rowDtl = allResp.find(resp => resp.entry_id === entryID)
     for (let i = 0; i < uniqueKeys.length; i += 1) {
-      replacedStr = replacedStr.replaceAll(uniqueKeys[i], rowDtl?.[uniqueKeys[i].slice(2, -1)] || '[Field Deleted]')
+      replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKeys[i].slice(2, -1) in rowDtl ? rowDtl[uniqueKeys[i].slice(2, -1)] : '[Field Deleted]')
     }
     return replacedStr
   }
