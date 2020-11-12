@@ -19,20 +19,8 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
   useEffect(() => {
     settab('note')
+    setIsLoading('allNotes')
   }, [])
-
-  const replaceFieldWithValue = str => {
-    const pattern = /\${\w[^ ${}]*}/g
-    const keys = str.match(pattern)
-    const uniqueKeys = keys?.filter?.((key, index) => keys.indexOf(key) === index) || []
-    let replacedStr = str;
-
-    const rowDtl = allResp.find(resp => resp.entry_id === entryID)
-    for (let i = 0; i < uniqueKeys.length; i += 1) {
-      replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKeys[i].slice(2, -1) in rowDtl ? rowDtl[uniqueKeys[i].slice(2, -1)] : '[Field Deleted]')
-    }
-    return replacedStr
-  }
 
   useEffect(() => {
     if (fetchData) {
@@ -42,10 +30,12 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     // eslint-disable-next-line no-undef
     bitsFetch({ formID, entryID }, 'bitforms_form_entry_get_notes').then((res) => {
       if (res !== undefined && res.success) {
-        setAllNotes(res.data);
+        setAllNotes(res.data)
       }
+      setIsLoading(false)
     })
-  }, [entryID, formID, fetchData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchData])
 
   useEffect(() => {
     if (data.content) setShowForm(true)
@@ -56,6 +46,17 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     const noteDetails = allNotes.find(note => note.id === noteID)
     const { title, content } = JSON.parse(noteDetails.info_details)
     setData({ noteID, title, content })
+  }
+
+  const confDeleteNote = noteID => {
+    confMdl.noteID = noteID
+    confMdl.show = true
+    setConfMdl({ ...confMdl })
+  }
+
+  const closeConfMdl = () => {
+    confMdl.show = false
+    setConfMdl({ ...confMdl })
   }
 
   const deleteNote = () => {
@@ -71,15 +72,17 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     })
   }
 
-  const confDeleteNote = noteID => {
-    confMdl.noteID = noteID
-    confMdl.show = true
-    setConfMdl({ ...confMdl })
-  }
+  const replaceFieldWithValue = str => {
+    const pattern = /\${\w[^ ${}]*}/g
+    const keys = str.match(pattern)
+    const uniqueKeys = keys?.filter?.((key, index) => keys.indexOf(key) === index) || []
+    let replacedStr = str;
 
-  const closeConfMdl = () => {
-    confMdl.show = false
-    setConfMdl({ ...confMdl })
+    const rowDtl = allResp.find(resp => resp.entry_id === entryID)
+    for (let i = 0; i < uniqueKeys.length; i += 1) {
+      replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKeys[i].slice(2, -1) in rowDtl ? rowDtl[uniqueKeys[i].slice(2, -1)] : '[Field Deleted]')
+    }
+    return replacedStr
   }
 
   const renderNote = note => {
@@ -140,8 +143,21 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
             />
           )
           : <button type="button" className="btn" onClick={() => setShowForm(true)}>create new note</button>}
-        {allNotes.map(note => renderNote(note))}
+        {isLoading === 'allNotes'
+          ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+          : allNotes.map(note => renderNote(note))}
       </div>
+
+      {/* Delete Confirm Modal */}
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
