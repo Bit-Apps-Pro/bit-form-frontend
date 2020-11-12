@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import Modal from './Modal';
-import bitsFetch from '../Utils/bitsFetch';
+import { useState, useEffect } from 'react'
+import bitsFetch from '../Utils/bitsFetch'
 
-export default function FormEntryTimeline(props) {
-  const { formID, entryID } = props
+export default function FormEntryTimeline({ formID, entryID, allLabels, settab }) {
   const [log, setLog] = useState([])
+  useEffect(() => {
+    settab('timeline')
+  }, [])
   useEffect(() => {
     // eslint-disable-next-line no-undef
     bitsFetch({ formID, entryID }, 'bitforms_form_log_history').then((res) => {
@@ -18,7 +19,7 @@ export default function FormEntryTimeline(props) {
     const pattern = /\${\w[^ ${}]*}/g
     const pattern2 = /[\]["]/g
     const key = str.match(pattern)?.[0] || ''
-    const field = key ? props.allLabels.find(label => `$\{${label.key}}` === key) : ''
+    const field = key ? allLabels.find(label => `$\{${label.key}}` === key) : ''
     const fieldName = field ? field.adminLbl : ''
     const replacedField = fieldName ? str.replace(pattern, fieldName) : ''
     return replacedField ? replacedField.replace(pattern2, '') : 'Field Deleted'
@@ -30,8 +31,8 @@ export default function FormEntryTimeline(props) {
     } if (data.meta_key === null && data.log_type === 'Create') {
       return <p>Form Submitted</p>
     }
-    return data.meta_key.split(';').map((str, i) => (
-      <p key={i}>
+    return data.meta_key.split('b::f').map((str, i) => (
+      <p key={str}>
         {' '}
         <span
           className="btcd-icn icn-document-edit"
@@ -43,7 +44,7 @@ export default function FormEntryTimeline(props) {
   }
 
   return (
-    <Modal lg show setModal={props.close} title="Time Line">
+    <>
       {log.map((data) => (
         <div key={data.id}>
           <br />
@@ -57,6 +58,6 @@ export default function FormEntryTimeline(props) {
           </div>
         </div>
       ))}
-    </Modal>
+    </>
   )
 }

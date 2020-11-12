@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
 import EditEntryData from '../components/EditEntryData'
-import FormEntryTimeline from '../components/FormEntryTimeline'
+import EntryRelatedInfo from '../components/EntryRelatedInfo'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
@@ -27,7 +27,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
   const fetchIdRef = useRef(0)
   const [pageCount, setPageCount] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
-  const [showTimelineMdl, setshowTimelineMdl] = useState(false)
+  const [showRelatedInfoMdl, setshowRelatedInfoMdl] = useState(false)
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -80,7 +80,6 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             && row.cell.value !== ''
           ) {
             if (val.type === 'file-up') {
-              console.log('filep', row.cell.value)
               // eslint-disable-next-line max-len
               return JSON.parse(row.cell.value).map((itm, i) => (
                 <TableFileLink
@@ -163,6 +162,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
       if (refreshResp) {
         setRefreshResp(0)
         setisloading(true)
+        return
       }
 
       // eslint-disable-next-line no-plusplus
@@ -280,7 +280,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
     setShowEditMdl(true)
   }, [])
 
-  const timeline = useCallback((row) => {
+  const relatedinfo = row => {
     if (row.idx !== undefined) {
       // eslint-disable-next-line no-param-reassign
       row.id = row.idx
@@ -288,8 +288,8 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
       row.original = row.data[0].row.original
     }
     setEntryID(row.original.entry_id)
-    setshowTimelineMdl(true)
-  }, [])
+    setshowRelatedInfoMdl(true)
+  }
 
   const closeRowDetail = useCallback(() => {
     rowDtl.show = false
@@ -437,14 +437,15 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           />
         )}
 
-      {showTimelineMdl
+      {showRelatedInfoMdl
         && (
-          <FormEntryTimeline
-            close={setshowTimelineMdl}
+          <EntryRelatedInfo
+            close={setshowRelatedInfoMdl}
             formID={formID}
             entryID={entryID}
             setSnackbar={setSnackbar}
             allLabels={allLabels}
+            allResp={allResp}
           />
         )}
 
@@ -452,7 +453,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
         title="Response Details"
         show={rowDtl.show}
         close={closeRowDetail}
-        timeline={() => timeline(rowDtl)}
+        relatedinfo={() => relatedinfo(rowDtl)}
         delConfMdl={() => delConfMdl(rowDtl, rowDtl.fetchData)}
         editData={() => editData(rowDtl)}
       >

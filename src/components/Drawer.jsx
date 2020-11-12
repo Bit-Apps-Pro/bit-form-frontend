@@ -5,7 +5,7 @@ function Drawer(props) {
       <div className="flx flx-between">
         <div className="btcd-drawer-title">{props.title}</div>
         <div className="flx">
-          <button onClick={props.timeline} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"timeline"' }} aria-label="icon-btn" type="button">
+          <button onClick={props.relatedinfo} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Related Info"' }} aria-label="icon-btn" type="button">
             <span className="btcd-icn icn-information-outline" style={{ fontSize: 16 }} />
           </button>
           <button onClick={props.editData} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Edit"' }} aria-label="icon-btn" type="button">
