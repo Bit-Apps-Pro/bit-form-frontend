@@ -68,8 +68,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
     const formData = new FormData(formRef.current)
 
     if (editMode) {
-      const queryParam = { noteID: data.noteID }
-
+      const queryParam = { noteID: data.noteID, formID, entryID }
       bitsFetch(formData, 'bitforms_form_entry_update_note', 'multipart/form-data', queryParam)
         .then(response => {
           if (response !== undefined && response.success) {
