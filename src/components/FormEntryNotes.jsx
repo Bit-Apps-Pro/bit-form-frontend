@@ -61,7 +61,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
   const deleteNote = () => {
     setIsLoading(true)
-    bitsFetch({ noteID: confMdl.noteID }, 'bitforms_form_entry_delete_note').then((res) => {
+    bitsFetch({ noteID: confMdl.noteID, formID, entryID }, 'bitforms_form_entry_delete_note').then((res) => {
       if (res !== undefined && res.success) {
         setSnackbar({ show: true, msg: 'Note Deleted Successfully' })
         confMdl.show = false
