@@ -28,12 +28,12 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
   }
 
   const renderLog = data => {
-    if (data.meta_key === null && data.log_type === 'update') {
+    if (data.content === null && data.action_type === 'update') {
       return <p>No field data change</p>
-    } if (data.meta_key === null && data.log_type === 'Create') {
+    } if (data.content === null && data.action_type === 'create') {
       return <p>Form Submitted</p>
     }
-    return data.meta_key.split('b::f').map(str => (
+    return data.content.split('b::f').map(str => (
       <p key={str}>
         {' '}
         <span
@@ -45,6 +45,52 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
     ))
   }
 
+  // eslint-disable-next-line consistent-return
+  const renderNodeLog = data => {
+    const note = JSON.parse(data.content)
+    if (data.content !== null && data.action_type === 'create') {
+      return (
+        <>
+          <p>
+            Note Added:
+          </p>
+          {note.title && <h4>{note.title}</h4>}
+          <div
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: note.content }}
+          />
+        </>
+      )
+    } if (data.content === null && data.action_type === 'update') {
+      return <p>Note no change</p>
+    } if (data.content !== null && data.action_type === 'delete') {
+      return (
+        <>
+          <p>
+            Note Deleted:
+          </p>
+          {note.title && <h4>{note.title}</h4>}
+          <div
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: note.content }}
+          />
+        </>
+      )
+    } if (data.content !== null && data.action_type === 'update') {
+      return (
+        <>
+          <p>
+            Note Updated:
+          </p>
+          {note.title && <h4>{note.title}</h4>}
+          <div
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: note.content }}
+          />
+        </>
+      )
+    }
+  }
   return (
     <>
       {
@@ -68,7 +114,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
                 {new Date(data.created_at).toLocaleTimeString()}
               </span>
               <div>
-                {renderLog(data)}
+                {data.log_type === 'entry' ? renderLog(data) : renderNodeLog(data)}
               </div>
             </div>
           ))
