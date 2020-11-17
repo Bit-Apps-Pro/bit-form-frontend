@@ -272,17 +272,22 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />
         </div>
       </div>
-      <div className={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}>
-        <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
-          <div>
-            <b>
-              <span className="btcd-icn icn-one mr-2" />
-              Capture GCLID
-            </b>
-          </div>
+
+      <Accordions
+        customTitle={(
+          <b>
+            <span className="btcd-icn icn-one mr-2" />
+            Capture GCLID
+            {' '}
+          </b>
+        )}
+        cls={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}
+      >
+        <div className="flx mb-2 ml-2">
           <SingleToggle2 action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
+          Enable / Disable
         </div>
-      </div>
+      </Accordions>
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
