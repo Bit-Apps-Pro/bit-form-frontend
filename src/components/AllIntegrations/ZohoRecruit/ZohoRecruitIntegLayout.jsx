@@ -1,6 +1,6 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-import NewRecord from './NewRecord'
-import RelatedRecord from './RelatedRecord'
+import ZohoRecruitNewRecord from './ZohoRecruitNewRecord'
+import ZohoRecruitRelatedRecord from './ZohoRecruitRelatedRecord'
 import { refreshModules } from './ZohoRecruitCommonFunc'
 
 export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields, handleInput, recruitConf, setRecruitConf, isLoading, setisLoading, setSnackbar }) {
@@ -68,7 +68,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
         <div className="btcd-hr" />
 
         <Panel>
-          <NewRecord
+          <ZohoRecruitNewRecord
             tab={tab}
             settab={settab}
             formID={formID}
@@ -82,7 +82,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
         {
           recruitConf?.relatedlists && recruitConf.relatedlists.map((relatelist, indx) => (
             <Panel key={`rlt-${indx + 89}`}>
-              <RelatedRecord
+              <ZohoRecruitRelatedRecord
                 indx={indx}
                 tab={tab}
                 settab={settab}
