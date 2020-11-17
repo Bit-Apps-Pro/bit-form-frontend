@@ -1,6 +1,6 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-import NewRecord from './NewRecord'
-import RelatedRecord from './RelatedRecord'
+import ZohoCRMNewRecord from './ZohoCRMNewRecord'
+import ZohoCRMRelatedRecord from './ZohoCRMRelatedRecord'
 import { refreshModules } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, handleInput, crmConf, setCrmConf, isLoading, setisLoading, setSnackbar }) {
@@ -69,7 +69,7 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
           <div className="btcd-hr" />
 
           <Panel>
-            <NewRecord
+            <ZohoCRMNewRecord
               tab={tab}
               settab={settab}
               formID={formID}
@@ -85,7 +85,7 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
           {
             crmConf?.relatedlists && crmConf.relatedlists.map((_, indx) => (
               <Panel key={`p-${indx + 2.4}`}>
-                <RelatedRecord
+                <ZohoCRMRelatedRecord
                   indx={indx}
                   tab={tab}
                   settab={settab}

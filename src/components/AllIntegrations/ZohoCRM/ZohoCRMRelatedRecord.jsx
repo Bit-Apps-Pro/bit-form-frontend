@@ -5,7 +5,7 @@ import ZohoCRMActions from './ZohoCRMActions'
 import { handleTabChange, refreshLayouts, refreshRelatedList } from './ZohoCRMCommonFunc'
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 
-export default function RelatedRecord({ indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar }) {
+export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar }) {
   useEffect(() => {
     handleTabChange(indx + 1, settab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps

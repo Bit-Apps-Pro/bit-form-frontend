@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { ReactSortable } from 'react-sortablejs'
 import ConfirmModal from '../../ConfirmModal'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
@@ -279,16 +278,18 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">Assignment Rules</div>
-        {isLoading ? (
-          <Loader style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 45,
-            transform: 'scale(0.5)',
-          }}
-          />
-        ) : (
+        {isLoading
+          ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+          : (
             <div className="flx flx-between mt-2">
               <select
                 value={tab === 0 ? crmConf.actions.assignment_rules : crmConf.relatedlists[tab - 1].actions.assignment_rules}
@@ -316,16 +317,18 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
         <div className="btcd-hr mt-2 mb-2" />
         <small>Add a tag to records pushed to Zoho CRM</small>
         <div className="mt-2">Tag Name</div>
-        {isLoading ? (
-          <Loader style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 45,
-            transform: 'scale(0.5)',
-          }}
-          />
-        ) : (
+        {isLoading
+          ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+          : (
             <div className="flx flx-between mt-2">
               <MultiSelect
                 className="msl-wrp-options"
@@ -352,16 +355,18 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">Owner Name</div>
-        {isLoading ? (
-          <Loader style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 45,
-            transform: 'scale(0.5)',
-          }}
-          />
-        ) : (
+        {isLoading
+          ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+          : (
             <div className="flx flx-between mt-2">
               <select
                 value={tab === 0 ? crmConf.actions.rec_owner : crmConf.relatedlists[tab - 1].actions.rec_owner}
