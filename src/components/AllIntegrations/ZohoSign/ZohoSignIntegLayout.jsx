@@ -7,8 +7,9 @@ import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSig
 
 export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
+  const [note, setNote] = useState('')
 
-  if (signConf?.default?.templateDetails?.[signConf?.template] && (!signConf?.templateActions || (signConf.templateActions.length !== signConf?.default?.templateDetails?.[signConf?.template]?.actions?.length))) {
+  if (signConf.template && signConf?.default?.templateDetails?.[signConf?.template] && (!signConf?.templateActions || (signConf.templateActions.length !== signConf?.default?.templateDetails?.[signConf?.template]?.actions?.length))) {
     // eslint-disable-next-line no-param-reassign
     signConf.templateActions = signConf.default.templateDetails[signConf.template].actions.map(action => ({
       action_id: action.action_id,
@@ -47,7 +48,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
         toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
-            handleAction('notes', 'notes', editor.getContent())
+            handleNote(editor.getContent())
           })
 
           editor.addButton('addFormField', {
@@ -72,6 +73,14 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formFields])
 
+  useEffect(() => {
+    setSignConf(oldState => {
+      const tmp = { ...oldState }
+      tmp.notes = note
+      return tmp
+    })
+  }, [note])
+
   const handleAction = (indx, typ, val) => {
     setSignConf(oldState => {
       const tmp = JSON.parse(JSON.stringify(oldState))
@@ -82,6 +91,10 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
       }
       return tmp
     })
+  }
+
+  const handleNote = val => {
+    setNote(val)
   }
 
   const privateMsgField = val => {
@@ -224,7 +237,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
           className="btcd-paper-inp mt-1"
           rows="5"
           value={signConf.notes}
-          onChange={e => handleAction('notes', 'notes', e.target.value)}
+          onChange={e => handleNote(e.target.value)}
         />
       </div>
 

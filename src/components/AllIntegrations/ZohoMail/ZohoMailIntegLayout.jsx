@@ -1,16 +1,10 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import ZohoMailActions from './ZohoMailActions';
 
-const mailReducer = (state, { val, typ }) => {
-  const newstate = { ...state }
-  newstate[typ] = val
-  return newstate
-}
-
-export default function ZohoMailIntegLayout({ formFields, mailConf: mcf, setMailConf }) {
-  const [mailConf, setmailconfig] = useReducer(mailReducer, mcf)
+export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
+  const [mailBody, setMailBody] = useState('')
 
   const mailOptions = () => {
     const mail = []
@@ -48,7 +42,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf: mcf, setMail
         toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
-            handleInput(editor.getContent(), 'body')
+            handleMailBody(editor.getContent())
           })
 
           editor.addButton('addFormField', {
@@ -74,17 +68,26 @@ export default function ZohoMailIntegLayout({ formFields, mailConf: mcf, setMail
   }, [formFields])
 
   useEffect(() => {
-    setMailConf(mailConf)
+    setMailConf({ ...mailConf, body: mailBody })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mailConf])
+  }, [mailBody])
 
   const handleInput = (val, typ) => {
-    setmailconfig({ val, typ })
+    setMailConf(prevState => {
+      const tmp = { ...prevState }
+      tmp[typ] = val
+      return tmp
+    })
+  }
+
+  const handleMailBody = val => {
+    setMailBody(val)
   }
 
   const addFieldToSubject = e => {
-    mailConf.subject += e.target.value
-    setmailconfig({ val: mailConf.subject, typ: 'subject' })
+    const newConf = { ...mailConf }
+    newConf.subject += e.target.value
+    setMailConf({ ...newConf })
     e.target.value = ''
   }
 
@@ -153,7 +156,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf: mcf, setMail
             id="body-content"
             className="btcd-paper-inp mt-1"
             rows="5"
-            value={mailConf.body}
+            value={mailBody}
             onChange={(e) => handleInput(e.target.value, 'body')}
           />
         </label>
