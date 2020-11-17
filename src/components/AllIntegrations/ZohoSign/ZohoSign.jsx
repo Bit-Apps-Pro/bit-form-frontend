@@ -73,7 +73,7 @@ function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          // disabled={signConf.workspace === '' || signConf.table === '' || signConf.field_map.length < 1}
+          disabled={signConf.template === ''}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

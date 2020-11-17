@@ -49,7 +49,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-      // disabled={signConf.workspace === '' || signConf.table === '' || signConf.field_map.length < 1}
+        disabled={signConf.template === ''}
       />
       <br />
     </div>
