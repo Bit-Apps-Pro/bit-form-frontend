@@ -46,6 +46,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Sign', logo: zohoSign, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
+    { type: 'Zoho Bigin', logo: '', pro: !isPro },
     { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
   ]

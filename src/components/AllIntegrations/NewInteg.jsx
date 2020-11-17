@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import ZohoAnalytics from './ZohoAnalytics/ZohoAnalytics'
+import ZohoBigin from './ZohoBigin/ZohoBigin'
 import ZohoCampaigns from './ZohoCampaigns/ZohoCampaigns'
 import ZohoCreator from './ZohoCreator/ZohoCreator'
 import ZohoCRM from './ZohoCRM/ZohoCRM'
@@ -41,6 +42,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoMarketingHub allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Creator':
         return <ZohoCreator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Bigin':
+        return <ZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
