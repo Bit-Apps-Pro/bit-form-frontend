@@ -4,6 +4,7 @@ import Loader from './Loaders/Loader'
 
 export default function FormEntryTimeline({ formID, entryID, allLabels, settab }) {
   const [log, setLog] = useState([])
+  const [logShowMore, setLogShowMore] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     settab('timeline')
@@ -27,6 +28,8 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
     return replacedField ? replacedField.replace(pattern2, '') : 'Field Deleted'
   }
 
+  const truncate = (str, n) => ((str.length > n) ? `${str.substr(0, n - 1)}&hellip;` : str);
+
   const renderLog = data => {
     if (data.content === null && data.action_type === 'update') {
       return <p>No field data change</p>
@@ -45,52 +48,47 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
     ))
   }
 
+  const showMore = id => {
+    const newLogShowMore = [...logShowMore]
+    newLogShowMore.push(id)
+    setLogShowMore([...newLogShowMore])
+  }
+
+  const showLess = id => {
+    const newLogShowMore = [...logShowMore]
+    newLogShowMore.splice(newLogShowMore.indexOf(id), 1)
+    setLogShowMore([...newLogShowMore])
+  }
+
   // eslint-disable-next-line consistent-return
-  const renderNodeLog = data => {
+  const renderNoteLog = data => {
+    const logShow = logShowMore.find(log => log === data.id)
     const note = JSON.parse(data.content)
-    if (data.content !== null && data.action_type === 'create') {
+    if (data.content !== null) {
       return (
         <>
           <p>
-            Note Added:
+            Note
+            {' '}
+            {data.action_type === 'create' && 'Added'}
+            {data.action_type === 'update' && 'Updated'}
+            {data.action_type === 'delete' && 'Deleted'}
+            :
           </p>
           {note.title && <h4>{note.title}</h4>}
           <div
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: note.content }}
+            dangerouslySetInnerHTML={{ __html: logShow ? note.content : truncate(note.content, 20) }}
           />
+          {(!logShow && note.content.length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>Read More</small>}
+          {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>Show Less</small>}
         </>
       )
     } if (data.content === null && data.action_type === 'update') {
       return <p>Note no change</p>
-    } if (data.content !== null && data.action_type === 'delete') {
-      return (
-        <>
-          <p>
-            Note Deleted:
-          </p>
-          {note.title && <h4>{note.title}</h4>}
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: note.content }}
-          />
-        </>
-      )
-    } if (data.content !== null && data.action_type === 'update') {
-      return (
-        <>
-          <p>
-            Note Updated:
-          </p>
-          {note.title && <h4>{note.title}</h4>}
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: note.content }}
-          />
-        </>
-      )
     }
   }
+
   return (
     <>
       {
@@ -114,7 +112,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
                 {new Date(data.created_at).toLocaleTimeString()}
               </span>
               <div>
-                {data.log_type === 'entry' ? renderLog(data) : renderNodeLog(data)}
+                {data.log_type === 'entry' ? renderLog(data) : renderNoteLog(data)}
               </div>
             </div>
           ))

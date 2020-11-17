@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './ConfirmModal'
 import Loader from './Loaders/Loader'
+import LoaderSm from './Loaders/LoaderSm'
 import NoteForm from './NoteForm'
 
 export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, allResp, settab }) {
@@ -60,12 +61,11 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
   }
 
   const deleteNote = () => {
-    setIsLoading(true)
+    setIsLoading('delete')
+    closeConfMdl()
     bitsFetch({ noteID: confMdl.noteID, formID, entryID }, 'bitforms_form_entry_delete_note').then((res) => {
       if (res !== undefined && res.success) {
         setSnackbar({ show: true, msg: 'Note Deleted Successfully' })
-        confMdl.show = false
-        setConfMdl({ ...confMdl })
         setFetchData(true)
       }
       setIsLoading(false)
@@ -87,6 +87,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
   const renderNote = note => {
     const noteDetails = JSON.parse(note.info_details)
+    const isDeleting = (isLoading === 'delete' && confMdl.noteID === note.id)
 
     return (
       <div key={note.id}>
@@ -107,8 +108,9 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
           <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"', fontSize: 16 }} onClick={() => setEditMode(note.id)}>
             <span className="btcd-icn icn-document-edit" />
           </button>
-          <button type="button" onClick={() => confDeleteNote(note.id)} className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': '"Delete"', fontSize: 16 }}>
+          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? 'btn' : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': '"Delete"', fontSize: 16 }} disabled={isDeleting}>
             <span className="btcd-icn icn-trash-fill" />
+            {isDeleting && <LoaderSm size="20" clr="#000" className="ml-2" />}
           </button>
         </div>
         <div>
