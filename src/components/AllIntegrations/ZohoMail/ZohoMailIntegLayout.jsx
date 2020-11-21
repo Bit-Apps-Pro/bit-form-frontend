@@ -67,11 +67,6 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formFields])
 
-  useEffect(() => {
-    setMailConf({ ...mailConf, body: mailBody })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mailBody])
-
   const handleInput = (val, typ) => {
     setMailConf(prevState => {
       const tmp = { ...prevState }
@@ -82,6 +77,10 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
 
   const handleMailBody = val => {
     setMailBody(val)
+
+    const tmp = JSON.parse(JSON.stringify(mailConf))
+    tmp.body = val
+    setMailConf({ ...tmp })
   }
 
   const addFieldToSubject = e => {
@@ -156,7 +155,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
             id="body-content"
             className="btcd-paper-inp mt-1"
             rows="5"
-            value={mailBody}
+            value={mailConf.body || ''}
             onChange={(e) => handleInput(e.target.value, 'body')}
           />
         </label>

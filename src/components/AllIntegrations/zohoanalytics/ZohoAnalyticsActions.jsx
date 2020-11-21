@@ -146,7 +146,7 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
           <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in analyticsConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Update Row" subTitle="Control how the row gets updated." />
         </TitleModal>
 
-        <TableCheckBox checked={analyticsConf?.actions?.share?.email} onChange={() => setActionMdl({ show: 'share' })} className="wdt-200 mt-4 mr-2" value="user_share" title="Share Table" subTitle="Share Table with users pushed to Zoho Analytics." />
+        <TableCheckBox checked={analyticsConf?.actions?.share?.email || false} onChange={() => setActionMdl({ show: 'share' })} className="wdt-200 mt-4 mr-2" value="user_share" title="Share Table" subTitle="Share Table with users pushed to Zoho Analytics." />
       </div>
 
       <Modal
