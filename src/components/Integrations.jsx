@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
-import zohoAnalytics from '../resource/img/integ/analytics.svg'
-import zohoCamp from '../resource/img/integ/campaigns.svg'
-import zohoCreator from '../resource/img/integ/creator.svg'
-import zohoCRM from '../resource/img/integ/crm.svg'
-import zohoDesk from '../resource/img/integ/desk.svg'
-import zohoHub from '../resource/img/integ/hub.svg'
-import zohoMail from '../resource/img/integ/mail.svg'
-import zohoPeople from '../resource/img/integ/people.svg'
-import zohoProjects from '../resource/img/integ/projects.svg'
-import zohoRecruit from '../resource/img/integ/recruit.svg'
-import zohoSheet from '../resource/img/integ/sheet.svg'
-import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
-import zohoSign from '../resource/img/integ/sign.svg'
-import zohoCliq from '../resource/img/integ/cliq.svg'
-import bitsFetch from '../Utils/bitsFetch'
-import EditInteg from './AllIntegrations/EditInteg'
-import IntegInfo from './AllIntegrations/IntegInfo'
-import NewInteg from './AllIntegrations/NewInteg'
-import ConfirmModal from './ConfirmModal'
-import SnackMsg from './ElmSettings/Childs/SnackMsg'
-import Modal from './Modal'
+import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import zohoAnalytics from '../resource/img/integ/analytics.svg';
+import zohoBigin from '../resource/img/integ/bigin.svg';
+import zohoCamp from '../resource/img/integ/campaigns.svg';
+import zohoCliq from '../resource/img/integ/cliq.svg';
+import zohoCreator from '../resource/img/integ/creator.svg';
+import zohoCRM from '../resource/img/integ/crm.svg';
+import zohoDesk from '../resource/img/integ/desk.svg';
+import zohoHub from '../resource/img/integ/hub.svg';
+import zohoMail from '../resource/img/integ/mail.svg';
+import zohoPeople from '../resource/img/integ/people.svg';
+import zohoProjects from '../resource/img/integ/projects.svg';
+import zohoRecruit from '../resource/img/integ/recruit.svg';
+import zohoSheet from '../resource/img/integ/sheet.svg';
+import zohoSign from '../resource/img/integ/sign.svg';
+import zohoTransmail from '../resource/img/integ/transmail.svg';
+import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
+import bitsFetch from '../Utils/bitsFetch';
+import EditInteg from './AllIntegrations/EditInteg';
+import IntegInfo from './AllIntegrations/IntegInfo';
+import NewInteg from './AllIntegrations/NewInteg';
+import ConfirmModal from './ConfirmModal';
+import SnackMsg from './ElmSettings/Childs/SnackMsg';
+import Modal from './Modal';
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
@@ -46,7 +48,8 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Sign', logo: zohoSign, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
-    { type: 'Zoho Bigin', logo: '', pro: !isPro },
+    { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
+    { type: 'Zoho Transmail', logo: zohoTransmail, disable: true, pro: !isPro },
     { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
   ]
