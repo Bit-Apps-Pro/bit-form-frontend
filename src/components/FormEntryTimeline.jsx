@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import bitsFetch from '../Utils/bitsFetch'
+import { dateTimeFormatter } from '../Utils/Helpers'
 import Loader from './Loaders/Loader'
 
 export default function FormEntryTimeline({ formID, entryID, allLabels, settab }) {
+  // eslint-disable-next-line no-undef
+  const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const [log, setLog] = useState([])
   const [logShowMore, setLogShowMore] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -107,9 +110,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab }
             <div key={data.id}>
               <br />
               <span>
-                {new Date(data.created_at).toDateString()}
-                {' '}
-                {new Date(data.created_at).toLocaleTimeString()}
+                {dateTimeFormatter(data.created_at, dateTimeFormat)}
               </span>
               <div>
                 {data.log_type === 'entry' ? renderLog(data) : renderNoteLog(data)}

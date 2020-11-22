@@ -1,17 +1,18 @@
 /* eslint-disable no-undef */
-import { useState, useEffect, useContext, useCallback, memo, lazy } from 'react';
-import { Link } from 'react-router-dom'
-import Table from '../components/Table'
-import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2'
-import CopyText from '../components/ElmSettings/Childs/CopyText'
-import Progressbar from '../components/ElmSettings/Childs/Progressbar'
-import MenuBtn from '../components/ElmSettings/Childs/MenuBtn'
-import Modal from '../components/Modal'
-import FormTemplates from '../components/FormTemplates'
-import bitsFetch from '../Utils/bitsFetch'
-import { AllFormContext } from '../Utils/AllFormContext'
-import ConfirmModal from '../components/ConfirmModal'
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal';
+import CopyText from '../components/ElmSettings/Childs/CopyText';
+import MenuBtn from '../components/ElmSettings/Childs/MenuBtn';
+import Progressbar from '../components/ElmSettings/Childs/Progressbar';
+import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2';
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
+import FormTemplates from '../components/FormTemplates';
+import Modal from '../components/Modal';
+import Table from '../components/Table';
+import { AllFormContext } from '../Utils/AllFormContext';
+import bitsFetch from '../Utils/bitsFetch';
+import { dateTimeFormatter } from '../Utils/Helpers';
 // import Editor from '../Editor'
 
 const Welcome = lazy(() => import('./Welcome'))
@@ -40,25 +41,14 @@ function AllFroms({ newFormId }) {
       })
   }
 
-  const formatDate = dt => {
-    let d = new Date(dt)
-    if (`${d}` === 'Invalid Date') {
-      d = new Date(dt.split(' ').join('T'))
-    }
-    const ye = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d)
-    const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
-    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
-    const hr = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', second: 'numeric' }).format(d)
-    return (
-      <div style={{ lineHeight: 0.7, fontWeight: 500 }}>
-        {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-        {da}-{mo}-{ye}
-        <br />
-        <br />
-        <small>{hr}</small>
-      </div>
-    )
-  }
+  const showDateTime = date => (
+    <div style={{ lineHeight: 0.7, fontWeight: 500 }}>
+      {dateTimeFormatter(date, bits.dateFormat)}
+      <br />
+      <br />
+      <small>{dateTimeFormatter(date, bits.timeFormat)}</small>
+    </div>
+  )
 
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: 'Status', accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
@@ -67,7 +57,7 @@ function AllFroms({ newFormId }) {
     { width: 80, minWidth: 60, Header: 'Views', accessor: 'views' },
     { width: 170, minWidth: 130, Header: 'Completion Rate', accessor: 'conversion', Cell: val => <Progressbar value={val.row.values.conversion} /> },
     { width: 100, minWidth: 60, Header: 'Responses', accessor: 'entries', Cell: value => <Link to={`form/responses/edit/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },
-    { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at', Cell: row => formatDate(row.row.original.created_at) },
+    { width: 160, minWidth: 60, Header: 'Created', accessor: 'created_at', Cell: row => showDateTime(row.row.original.created_at) },
   ])
 
   useEffect(() => {

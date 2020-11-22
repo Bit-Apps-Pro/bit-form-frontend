@@ -1,13 +1,16 @@
+/* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
 import bitsFetch from '../Utils/bitsFetch'
+import { dateTimeFormatter } from '../Utils/Helpers'
 import ConfirmModal from './ConfirmModal'
 import Loader from './Loaders/Loader'
 import LoaderSm from './Loaders/LoaderSm'
 import NoteForm from './NoteForm'
 
 export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, allResp, settab }) {
-  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
+  const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
+  console.log({ dateTimeFormat })
   const [isLoading, setIsLoading] = useState(false)
   const [confMdl, setConfMdl] = useState({ show: false })
   const [showForm, setShowForm] = useState(false)
@@ -96,13 +99,13 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
             ? (
               <small>
                 updated on:
-                {` ${note.updated_at}`}
+                {` ${dateTimeFormatter(note.updated_at, dateTimeFormat)}`}
               </small>
             )
             : (
               <small>
                 created at:
-                {` ${note.created_at}`}
+                {` ${dateTimeFormatter(note.created_at, dateTimeFormat)}`}
               </small>
             )}
           <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"', fontSize: 16 }} onClick={() => setEditMode(note.id)}>

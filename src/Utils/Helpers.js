@@ -72,6 +72,110 @@ export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
   return 0
 })
 
+export const dateTimeFormatter = (oldDate, format) => {
+  const newDate = new Date(oldDate);
+
+  if (newDate.toString() === 'Invalid Date') {
+    return 'Invalid Date'
+  }
+
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thusday',
+    'Friday',
+    'Saturday',
+  ]
+  const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
+  const monthsShort = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+  const l = days[newDate.getDay()]
+  const D = daysShort[newDate.getDay()]
+  const date = newDate.getDate()
+  const j = date
+  const d = (date < 10 ? '0' : '') + date
+  let S = date
+  if (date % 10 === 1 && date !== 11) {
+    S += 'st'
+  } else if (date % 10 === 2 && date !== 12) {
+    S += 'nd'
+  } else if (date % 10 === 3 && date !== 13) {
+    S += 'rd'
+  } else {
+    S += 'th'
+  }
+  const month = newDate.getMonth()
+  const F = months[month]
+  const M = monthsShort[month]
+  const m = (month < 10 ? '0' : '') + (month + 1)
+  const n = month + 1
+  const fullYear = newDate.getFullYear()
+  const Y = fullYear
+  const y = fullYear.toString().substr(-2)
+  const hour = newDate.getHours()
+  const g = hour % 12
+  const G = hour
+  const a = hour >= 12 ? 'pm' : 'am'
+  const A = hour >= 12 ? 'PM' : 'AM'
+  const h = ((hour % 12 || 12) < 10 ? '0' : '') + (hour % 12 || 12)
+  const H = (hour < 10 ? '0' : '') + hour
+  const minute = newDate.getMinutes()
+  const i = (minute < 10 ? '0' : '') + minute
+  const second = newDate.getSeconds()
+  const s = (second < 10 ? '0' : '') + second
+  const T = newDate.toLocaleTimeString(navigator.language, { timeZoneName: 'short' }).split(' ')[2]
+  const c = newDate.toISOString()
+  const r = newDate.toUTCString()
+  const U = newDate.valueOf()
+  let formattedDate = ''
+  const allFormatObj = { a, A, c, d, D, F, g, G, h, H, i, j, l, m, M, n, r, s, S, T, U, y, Y }
+
+  const keys = Object.keys(allFormatObj)
+
+  for (let v = 0; v < format.length; v += 1) {
+    const latter = keys.find((key) => key === format[v])
+
+    if (format[v] === '\\') {
+      v += 1;
+      formattedDate += format[v];
+    } else if (latter) {
+      formattedDate += format[v].replace(latter, allFormatObj[latter]);
+    } else {
+      formattedDate += format[v];
+    }
+  }
+
+  return formattedDate;
+}
+
 const cipher = salt => {
   const textToChars = text => text.split('').map(c => c.charCodeAt(0));
   const byteHex = n => (`0${Number(n).toString(16)}`).substr(-2);
