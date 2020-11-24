@@ -409,7 +409,7 @@ export default function Bitforms(props) {
       >
         {!props.editMode && <input type="hidden" value={bitFormsFront && props.nonce} name="bitforms_token" />}
         {!props.editMode && <input type="hidden" value={bitFormsFront && props.appID} name="bitforms_id" />}
-        {props.gclid && <input type="hidden" name="gclid" />}
+        {props.GCLID && <input type="hidden" name="GCLID" />}
         <div className={`_frm-${props.formID}`}>
           <div className={`_frm-g _frm-g-${props.formID}`}>
             {layout.lg.map(field => blk(field))}
