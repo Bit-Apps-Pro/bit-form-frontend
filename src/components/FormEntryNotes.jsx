@@ -5,16 +5,17 @@ import { dateTimeFormatter } from '../Utils/Helpers'
 import ConfirmModal from './ConfirmModal'
 import Loader from './Loaders/Loader'
 import LoaderSm from './Loaders/LoaderSm'
+import noData from '../resource/img/nodata.svg'
 import NoteForm from './NoteForm'
 
 export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, allResp, settab }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
-  console.log({ dateTimeFormat })
   const [isLoading, setIsLoading] = useState(false)
   const [confMdl, setConfMdl] = useState({ show: false })
   const [showForm, setShowForm] = useState(false)
   const [allNotes, setAllNotes] = useState([])
+  const [firstLoad, setFirstLoad] = useState(false)
   const [fetchData, setFetchData] = useState(false)
   const [data, setData] = useState({
     title: '',
@@ -24,6 +25,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
   useEffect(() => {
     settab('note')
     isPro && setIsLoading('allNotes')
+    setFirstLoad(true)
   }, [])
 
   useEffect(() => {
@@ -83,7 +85,8 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
     const rowDtl = allResp.find(resp => resp.entry_id === entryID)
     for (let i = 0; i < uniqueKeys.length; i += 1) {
-      replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKeys[i].slice(2, -1) in rowDtl ? rowDtl[uniqueKeys[i].slice(2, -1)] : '[Field Deleted]')
+      const uniqueKey = uniqueKeys[i].slice(2, -1)
+      replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKey in rowDtl ? rowDtl[uniqueKey] : '[Field Deleted]')
     }
     return replacedStr
   }
@@ -128,6 +131,8 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     )
   }
 
+  const renderAllNotes = () => (allNotes.length ? allNotes.map(note => renderNote(note)) : firstLoad && <img src={noData} alt="no data found" style={{ height: 150, width: '100%' }} />)
+
   return (
     <>
       <div className="pos-rel">
@@ -159,7 +164,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
             }}
             />
           )
-          : allNotes.map(note => renderNote(note))}
+          : renderAllNotes()}
       </div>
 
       {/* Delete Confirm Modal */}
