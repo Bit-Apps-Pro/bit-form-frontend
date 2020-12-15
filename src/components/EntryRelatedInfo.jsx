@@ -4,12 +4,11 @@ import FormEntryNotes from './FormEntryNotes'
 import FormEntryTimeline from './FormEntryTimeline'
 import Modal from './Modal'
 
-export default function EntryRelatedInfo(props) {
-  const { formID, entryID, allLabels, setSnackbar } = props
+export default function EntryRelatedInfo({ formID, entryID, allLabels, allResp, setSnackbar, integrations, close }) {
   const [tab, settab] = useState('')
 
   return (
-    <Modal lg show setModal={props.close} title="Related Info">
+    <Modal lg show setModal={close} title="Related Info">
       <Tabs>
         <Tab>
           <button className={`btcd-s-tab-link ${tab === 'timeline' && 's-t-l-active'}`} type="button">
@@ -29,6 +28,7 @@ export default function EntryRelatedInfo(props) {
             entryID={entryID}
             allLabels={allLabels}
             settab={settab}
+            integrations={integrations}
           />
         </Panel>
         {/* Notes Panel */}
@@ -38,7 +38,7 @@ export default function EntryRelatedInfo(props) {
             entryID={entryID}
             allLabels={allLabels}
             setSnackbar={setSnackbar}
-            allResp={props.allResp}
+            allResp={allResp}
             settab={settab}
           />
         </Panel>
