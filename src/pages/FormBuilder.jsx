@@ -175,8 +175,8 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       resizer.resizeSection(2, { toSize: 300 })
     } else if (view === 'md') {
       setbrkPoint('md')
-      const s0 = ((window.innerWidth - 473) / 2.2) - 165
-      const s2 = ((window.innerWidth - 473) / 2.2) - 300
+      const s0 = ((window.innerWidth - 473) / 2.7) - 165
+      const s2 = ((window.innerWidth - 473) / 2.7) - 300
       resizer.resizeSection(0, { toSize: 165 + s0 })
       resizer.resizeSection(2, { toSize: 300 + s2 })
     } else if (view === 'sm') {
@@ -274,10 +274,12 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           styleDispatch={styleDispatch}
           fields={fields}
           elm={elmSetting}
+          setElementSetting={setElementSetting}
           updateData={updateFields}
           setSubmitConfig={setSubmitConfig}
-          setElementSetting={setElementSetting}
           formID={formID}
+          lay={lay}
+          setLay={setLay}
         />
       </Section>
     </Container>

@@ -1,20 +1,22 @@
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Link, Switch, useRouteMatch, Route, NavLink, useParams } from 'react-router-dom'
-import TextFieldSettings from './TextFieldSettings'
-import RadioCheckSettings from './RadioCheckSettings'
-import SelectSettings from './SelectSettings'
+import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import BrushIcn from '../../Icons/BrushIcn'
+import FieldIcn from '../../Icons/FieldIcn'
+import FormIcn from '../../Icons/FormIcn'
+import ImageIcn from '../../Icons/ImageIcn'
+import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import FileUpSettings from './FileUpSettings'
-import SubmitBtnSettings from './SubmitBtnSettings'
+import PaypalSettings from './PaypalSettings'
+import RadioCheckSettings from './RadioCheckSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
+import SelectSettings from './SelectSettings'
+import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
-import ImageIcn from '../../Icons/ImageIcn'
-import FormIcn from '../../Icons/FormIcn'
-import ItemBlockIcn from '../../Icons/ItemBlockIcn'
-import FieldIcn from '../../Icons/FieldIcn'
-import BrushIcn from '../../Icons/BrushIcn'
+import SubmitBtnSettings from './SubmitBtnSettings'
+import TextFieldSettings from './TextFieldSettings'
 
-function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID }) {
+function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
   const { path } = useRouteMatch()
   const { formType } = useParams()
 
@@ -71,9 +73,29 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             <Route path={`${path}/style/fb`}>
               <StyleEditor editorLabel="Field Block" compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
             </Route>
-            <Route path={`${path}/style/fl`}>
+            <Route exact path={`${path}/style/fl`}>
+              <Link to={`/form/builder/${formType}/${formID}/style`}>
+                <h4 className="w-9 mt-2 m-a flx txt-dp">
+                  <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
+                  <div className="flx w-10">
+                    <span>Back</span>
+                    <div className="txt-center w-10 f-5">Field Customize</div>
+                  </div>
+                </h4>
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
+                <FieldOptionBtn icn={<FieldIcn />} title="Field Style" />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
+                <FieldOptionBtn icn={<FieldIcn />} title="Paypal Style" />
+              </Link>
+            </Route>
+            <Route path={`${path}/style/fl/fld`}>
               <StyleEditor editorLabel="Field Style" title="Label Style" compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
               <StyleEditor title="Field Style" noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
+            </Route>
+            <Route path={`${path}/style/fl/ppl`}>
+              <PaypalStyleEditor elm={elm} setElementSetting={setElementSetting} updateData={updateData} lay={lay} setLay={setLay} fields={fields} />
             </Route>
           </Switch>
           <div className="mb-50" />
@@ -111,6 +133,8 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
         return <SubmitBtnSettings setElementSetting={setElementSetting} fields={fields} elm={elm} setSubmitConfig={setSubmitConfig} />
       case 'recaptcha':
         return <ReCaptchaSettigns setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'paypal':
+        return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       default:
         return <FieldList fields={fields} setElementSetting={setElementSetting} />
     }

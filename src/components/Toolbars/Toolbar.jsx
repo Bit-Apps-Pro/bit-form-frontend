@@ -217,6 +217,23 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         valid: {},
       },
     },
+    {
+      name: 'Paypal',
+      icn: 'recaptcha',
+      pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },
+      elm: {
+        typ: 'paypal',
+        currency: 'USD',
+        lbl: '',
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+        },
+        valid: {},
+      },
+    },
   ]
 
   return (
@@ -236,7 +253,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
             ))}
           </div>
         </Scrollbars>
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       ), [tolbarSiz])}
     </div>
   )
