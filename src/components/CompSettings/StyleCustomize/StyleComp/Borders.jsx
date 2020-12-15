@@ -29,7 +29,6 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
       { cls: pcls, property: 'border-radius', delProp: false, value: '0px 0px 0px 0px' },
     ]
     if (bStyle === 'None' && style?.[pcls]) {
-      console.log('dddddddd', style[pcls])
       actions[0].delProp = true
       actions[1].delProp = true
       actions[2].delProp = true
@@ -46,6 +45,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
         actions[3].value = style?.[pcls]?.['border-radius']
       }
     }
+    console.log('ssssssssssssssss', style)
     styleDispatch({ apply: actions, brkPoint })
   }
 
