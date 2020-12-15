@@ -8,8 +8,6 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
   let margin = style?.[cls]?.margin || '0px 0px 0px 0px'
   margin = spreadIn4Value(margin)
 
-  console.log('wwwwwwwwwwwwwwww', margin)
-
   const setMargin = val => {
     const value = styleConfig.important ? `${val}!important` : val
     styleDispatch({ apply: [{ cls, property: 'margin', delProp: false, value }], brkPoint })
