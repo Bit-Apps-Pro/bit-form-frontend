@@ -73,11 +73,9 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
           {attr.valid.req && ' *'}
         </label>
       )}
-      {/* props options
-        https://github.com/Arif-un/react-multiple-select-dropdown-lite#readme */}
       <MultiSelect
         width="100%"
-        className="no-drg"
+        className={`fld fld-${formID} no-drg`}
         {...'req' in attr.valid && { required: attr.valid.req }}
         {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
         {...'ph' in attr && { placeholder: attr.ph }}
