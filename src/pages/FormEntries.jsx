@@ -15,7 +15,7 @@ import noData from '../resource/img/nodata.svg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 
-function FormEntries({ allResp, setAllResp, allLabels }) {
+function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   console.log(
     '%c $render FormEntries',
     'background:skybluepadding:3pxborder-radius:5px',
@@ -446,6 +446,7 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
             setSnackbar={setSnackbar}
             allLabels={allLabels}
             allResp={allResp}
+            integrations={integrations}
           />
         )}
 

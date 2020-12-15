@@ -6,8 +6,6 @@ import { useState, useEffect, memo, useContext } from 'react';
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
-// import SlimSelect from 'slim-select'
-// import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -15,8 +13,8 @@ import BrushIcn from '../Icons/BrushIcn'
 
 function GridLayout(props) {
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging } = props
-  const [layouts, setLayouts] = useState(props.layout)
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout } = props
+  const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 6, md: 4, sm: 2 }
@@ -25,10 +23,14 @@ function GridLayout(props) {
   const history = useHistory()
 
   useEffect(() => {
+    setLayouts(JSON.parse(JSON.stringify(layout)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout])
+
+  useEffect(() => {
     if (newData !== null) {
       margeNewData()
     }
-    // slimInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields])
 
@@ -55,7 +57,6 @@ function GridLayout(props) {
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
     let topNbottomPadding = 0
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
-      console.log('----------- row h', topNbottomPadding)
       topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
     }
     if (topNbottomPadding > 39) {
@@ -175,32 +176,6 @@ function GridLayout(props) {
     return nlay;
   }
 
-  /* const slimInit = () => {
-    if (document.querySelector('.slim') != null) {
-      const allSel = document.querySelectorAll('select.slim')
-      for (let i = 0; i < allSel.length; i += 1) {
-        // eslint-disable-next-line no-unused-vars
-        const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
-            'btcd-id',
-          )}"] > div > .slim`,
-          allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        });
-        if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[
-              i
-            ].nextSibling.children[1].children[1].style.maxHeight = `${Number(
-              allSel[i].getAttribute('data-max-show'),
-            ) * 2}pc`;
-          }
-        }
-      }
-    }
-  } */
-
   const margeNewData = () => {
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
@@ -250,6 +225,7 @@ function GridLayout(props) {
     delete fields[i]
     setLayouts(nwLay)
     setFields({ ...fields })
+    props.setElmSetting({ id: null, data: { typ: '' } })
     sessionStorage.setItem('btcd-lc', '-')
   }
 
@@ -398,12 +374,13 @@ function GridLayout(props) {
   )
 
   const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style|style\/.+/g, 'fs'))
+    history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
   }
 
   const navigateToStyle = typ => {
+    if (typ === 'paypal') history.replace(history.location.pathname.replace(/fs|style\/.+|style/g, 'style/fl/ppl'))
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
+    else history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
   }
 
   return (

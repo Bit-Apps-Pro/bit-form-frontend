@@ -7,7 +7,7 @@ import DropDown from './Fields/DropDown'
 import FileUp from './Fields/FileUp'
 import HiddenField from './Fields/HiddenField'
 import SubmitBtn from './Fields/SubmitBtn'
-
+import Paypal from './Fields/Paypal'
 /*
 typ: input type
 lbl: label
@@ -52,6 +52,8 @@ function CompGen(props) {
       return <HiddenField formID={props.formID} attr={props.atts} />
     case 'recaptcha':
       return <ReCaptcha formID={props.formID} attr={props.atts} />
+    case 'paypal':
+      return <Paypal formID={props.formID} attr={props.atts} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

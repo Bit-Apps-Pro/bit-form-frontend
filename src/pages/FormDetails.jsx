@@ -400,7 +400,7 @@ function FormDetails(props) {
           </nav>
 
           <Switch>
-            <Route exact path="/form/builder/:formType/:formID/:s?/:s?">
+            <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
               <Suspense fallback={<BuilderLoader />}>
                 <FormBuilder
                   newCounter={newCounter}
@@ -425,6 +425,7 @@ function FormDetails(props) {
                   allResp={allResponse}
                   setAllResp={setAllResponse}
                   allLabels={allLabels}
+                  integrations={integrations}
                 />
               ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
             </Route>
