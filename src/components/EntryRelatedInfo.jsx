@@ -1,4 +1,5 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import FormEntryNotes from './FormEntryNotes'
 import FormEntryTimeline from './FormEntryTimeline'
@@ -12,12 +13,12 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, allResp, 
       <Tabs>
         <Tab>
           <button className={`btcd-s-tab-link ${tab === 'timeline' && 's-t-l-active'}`} type="button">
-            Timeline
+            {__('Timeline', 'bitform')}
           </button>
         </Tab>
         <Tab>
           <button className={`btcd-s-tab-link ${tab === 'note' && 's-t-l-active'}`} type="button">
-            Notes
+            {__('Notes', 'bitform')}
           </button>
         </Tab>
 

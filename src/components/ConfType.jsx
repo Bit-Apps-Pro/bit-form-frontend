@@ -4,6 +4,7 @@ import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
 import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '@wordpress/i18n';
 
 export default function ConfType(props) {
   console.log('%c $render ConfType', 'background:lightgreen;padding:3px;border-radius:5px;')
@@ -31,28 +32,28 @@ export default function ConfType(props) {
 
   return (
     <div className="mt-4" style={{ width: 900 }}>
-      <h2>Confirmations</h2>
+      <h2>{__('Confirmations', 'bitform')}</h2>
       <div>
         <button
           onClick={() => setPos(0)}
           className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 0 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Success/Error Messages
+          {__('Success/Error Messages', 'bitform')}
         </button>
         <button
           onClick={() => setPos(1)}
           className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 1 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Redirect Page
+          {__('Redirect Page', 'bitform')}
         </button>
         <button
           onClick={() => setPos(2)}
           className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 2 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Web Hooks
+          {__('Web Hooks', 'bitform')}
         </button>
       </div>
       <br />

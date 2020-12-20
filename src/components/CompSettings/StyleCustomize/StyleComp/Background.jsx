@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
+import { __ } from '@wordpress/i18n';
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
@@ -208,8 +209,8 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           {bgSrcTyp === 'Upload' && (
             <div>
               <div className="flx flx-between mt-2">
-                <span className="f-5">Picture Upload</span>
-                <button onClick={setBgImg} className="btn" type="button">Browse...</button>
+                <span className="f-5">{__('Picture Upload', 'bitform')}</span>
+                <button onClick={setBgImg} className="btn" type="button">{__('Browse...', 'bitform')}</button>
               </div>
               {ImgWarn !== '' && <small className="txt-center" style={{ color: '#efbb28' }}>{ImgWarn}</small>}
             </div>
@@ -217,8 +218,11 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           {bgSrcTyp === 'Link' && (
             <div>
               <div className="flx flx-between mt-2">
-                <span className="f-5">Link: </span>
-                <input defaultValue={bgSrc} onChange={handleImgLink} className="btcd-paper-inp ml-1" type="text" placeholder="Image Link...." />
+                <span className="f-5">
+                  {__('Link:', 'bitform')}
+                  {' '}
+                </span>
+                <input defaultValue={bgSrc} onChange={handleImgLink} className="btcd-paper-inp ml-1" type="text" placeholder={__('Image Link....', 'bitform')} />
               </div>
               {ImgWarn !== '' && <small className="txt-center" style={{ color: '#efbb28' }}>{ImgWarn}</small>}
             </div>
@@ -227,34 +231,34 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           <div className="flx flx-between mt-2">
             <span className="f-5">Background Blend Mode</span>
             <select value={blendMode} onChange={e => setBgProperty('background-blend-mode', e.target.value)} className="btcd-paper-inp w-5">
-              <option value="None">None</option>
-              <option value="multiply">Multiply</option>
-              <option value="screen">Screen</option>
-              <option value="overlay">Overlay</option>
-              <option value="darken">Darken</option>
-              <option value="lighten">Lighten</option>
-              <option value="color=dodge">Color-dodge</option>
-              <option value="saturation">Saturation</option>
-              <option value="color">Color</option>
-              <option value="luminosity">Luminosity</option>
+              <option value="None">{__('None', 'bitform')}</option>
+              <option value="multiply">{__('Multiply', 'bitform')}</option>
+              <option value="screen">{__('Screen', 'bitform')}</option>
+              <option value="overlay">{__('Overlay', 'bitform')}</option>
+              <option value="darken">{__('Darken', 'bitform')}</option>
+              <option value="lighten">{__('Lighten', 'bitform')}</option>
+              <option value="color=dodge">{__('Color-dodge', 'bitform')}</option>
+              <option value="saturation">{__('Saturation', 'bitform')}</option>
+              <option value="color">{__('Color', 'bitform')}</option>
+              <option value="luminosity">{__('Luminosity', 'bitform')}</option>
             </select>
           </div>
 
           <div className="flx flx-between mt-2">
-            <span className="f-5">Background Img Repeat</span>
+            <span className="f-5">{__('Background Img Repeat', 'bitform')}</span>
             <select value={bgRepeat} onChange={e => setBgProperty('background-repeat', e.target.value)} className="btcd-paper-inp w-5">
-              <option value="None">None</option>
-              <option value="repeat">Repeat</option>
-              <option value="repeat-x">Repeat-X</option>
-              <option value="repeat-y">Repeat-Y</option>
-              <option value="no-repeat">Np Repeat</option>
-              <option value="space">Space</option>
-              <option value="round">Round</option>
+              <option value="None">{__('None', 'bitform')}</option>
+              <option value="repeat">{__('Repeat', 'bitform')}</option>
+              <option value="repeat-x">{__('Repeat-X', 'bitform')}</option>
+              <option value="repeat-y">{__('Repeat-Y', 'bitform')}</option>
+              <option value="no-repeat">{__('Np Repeat', 'bitform')}</option>
+              <option value="space">{__('Space', 'bitform')}</option>
+              <option value="round">{__('Round', 'bitform')}</option>
             </select>
           </div>
 
           <div className="mt-2">
-            <span className="f-5">Background Img Position</span>
+            <span className="f-5">{__('Background Img Position', 'bitform')}</span>
             <Range
               info={[
                 { icn: <i className="font-w-m">X</i>, lbl: 'BG Position X' },
@@ -271,12 +275,12 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           </div>
 
           <div className="mt-2">
-            <span className="f-5">Background Img Size</span>
+            <span className="f-5">{__('Background Img Size', 'bitform')}</span>
             <Range
               info={[
-                { icn: <i className="font-w-m">H</i>, lbl: 'BG Width' },
-                { icn: <i className="font-w-m">w</i>, lbl: 'BG Height' },
-                { icn: <HWordinateIcn />, lbl: 'BG Height/Width' },
+                { icn: <i className="font-w-m">H</i>, lbl: __('BG Width', 'bitform') },
+                { icn: <i className="font-w-m">w</i>, lbl: __('BG Height', 'bitform') },
+                { icn: <HWordinateIcn />, lbl: __('BG Height/Width', 'bitform') },
               ]}
               className="btc-range"
               unit="%"

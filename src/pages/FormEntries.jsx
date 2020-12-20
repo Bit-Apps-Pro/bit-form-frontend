@@ -3,6 +3,7 @@
 import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react'
 
 import { useParams } from 'react-router-dom'
+import { __ } from '@wordpress/i18n'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
 import EditEntryData from '../components/EditEntryData'
@@ -123,7 +124,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
       Header: (
         <span
           className="btcd-icn btcd-icn-sm icn-settings ml-2"
-          title="Settings"
+          title={__('Settings', 'bitform')}
         />
       ),
       accessor: 'table_ac',
@@ -344,9 +345,9 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
 
   const dupConfMdl = useCallback(
     (row, data, pCount) => {
-      confMdl.btnTxt = 'Duplicate'
+      confMdl.btnTxt = __('Duplicate', 'bitform')
       confMdl.btnClass = 'blue'
-      confMdl.body = 'Are you sure to duplicate this entry?'
+      confMdl.body = __('Are you sure to duplicate this entry?', 'bitform')
       confMdl.action = () => {
         bulkDuplicateData(row, data, pCount)
         closeConfMdl()
@@ -407,7 +408,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         <button
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           onClick={() => setRefreshResp(1)}
-          style={{ '--tooltip-txt': '"Refresh Form Responses"' }}
+          style={{ '--tooltip-txt': `'${ __('Refresh Form Responses', 'bitform') }'` }}
           type="button"
           disabled={isloading}
         >
@@ -451,7 +452,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         )}
 
       <Drawer
-        title="Response Details"
+        title={__('Response Details', 'bitform')}
         show={rowDtl.show}
         close={closeRowDetail}
         relatedinfo={() => relatedinfo(rowDtl)}
@@ -461,8 +462,8 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         <table className="btcd-row-detail-tbl">
           <tbody>
             <tr className="txt-dp">
-              <th>Title</th>
-              <th>Value</th>
+              <th>{__('Title', '')}</th>
+              <th>{__('Value', '')}</th>
             </tr>
             {rowDtl.show
               && filterEntryLabels().map((label, i) => (
@@ -500,7 +501,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
             <img src={noData} alt="no data found" />
-            <div className="mt-2">No Response Found.</div>
+            <div className="mt-2">{__('No Response Found.', 'bitform')}</div>
           </div>
         )}
       </div>

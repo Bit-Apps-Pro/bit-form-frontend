@@ -1,4 +1,5 @@
 import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react';
+import { __ } from '@wordpress/i18n'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
@@ -212,9 +213,9 @@ function FormDetails(props) {
     }
     if (lay.md.length === 0 || typeof lay === 'undefined') {
       modal.show = true
-      modal.title = 'Sorry'
-      modal.btnTxt = 'Close'
-      modal.msg = 'You can not save a blank form'
+      modal.title = __('Sorry', 'bitform')
+      modal.btnTxt = __('Close', 'bitform')
+      modal.msg = __('You can not save a blank form', 'bitform')
       setModal({ ...modal })
     } else {
       setbuttonDisabled(true)
@@ -339,7 +340,7 @@ function FormDetails(props) {
               {proModal.msg}
             </h4>
             <div className="txt-center">
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">Buy Premium</button></a>
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
             </div>
 
           </Modal>
@@ -356,7 +357,7 @@ function FormDetails(props) {
               <NavLink exact to="/">
                 <span className="btcd-icn icn-arrow_back" />
                 {' '}
-                Home
+                {__('Home', 'bitform')}
               </NavLink>
               <NavLink
                 exact
@@ -364,20 +365,20 @@ function FormDetails(props) {
                 activeClassName="app-link-active"
                 isActive={(m, l) => l.pathname.match(/\/form\/builder/g)}
               >
-                Builder
+                {__('Builder', 'bitform')}
               </NavLink>
               <NavLink
                 to={`/form/responses/${formType}/${formID}/`}
                 activeClassName="app-link-active"
               >
-                Responses
+                {__('Responses', 'bitform')}
               </NavLink>
               <NavLink
                 to={`/form/settings/${formType}/${formID}/form-settings`}
                 activeClassName="app-link-active"
                 isActive={(m, l) => l.pathname.match(/settings/g)}
               >
-                Settings
+                {__('Settings', 'bitform')}
               </NavLink>
             </div>
             <div className="btcd-bld-title">
@@ -459,7 +460,7 @@ function FormDetails(props) {
 export default memo(withRouter(FormDetails))
 
 const defaultWorkflow = {
-  title: 'Show Success Message',
+  title: __('Show Success Message', 'bitform'),
   action_type: 'onsubmit',
   action_run: 'create_edit',
   action_behaviour: 'always',

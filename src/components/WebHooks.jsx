@@ -1,4 +1,5 @@
 import { memo, useState } from 'react';
+import { __ } from '@wordpress/i18n'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
@@ -114,9 +115,9 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
       if (response && response.success) {
         setSnackbar({ show: true, msg: `${response.data}` })
       } else if (response && response.data && response.data.data) {
-        setSnackbar({ show: true, msg: `${response.data.data}. please try again` })
+        setSnackbar({ show: true, msg: `${response.data.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Webhook tests failed. please try again' })
+        setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
       }
     })
   }
@@ -127,8 +128,8 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
-        body="Are you sure to delete this web hook?"
-        btnTxt="Delete"
+        body={__('Are you sure to delete this web hook?', 'bitform')}
+        btnTxt={__('Delete', 'bitform')}
         close={closeMdl}
       />
       {'confirmation' in formSettings
@@ -145,12 +146,12 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
               <br />
               <div className="flx">
                 <div className="w-7 mr-2">
-                  <div className="f-m">Link:</div>
+                  <div className="f-m">{__('Link:', 'bitform')}</div>
                   <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp mt-1" type="text" value={itm.url} />
                 </div>
 
                 <div className="w-3">
-                  <div className="f-m">Method:</div>
+                  <div className="f-m">{__('Method:', 'bitform')}</div>
                   <select onChange={e => handleMethod(e.target.value, i)} defaultValue={itm.method} className="btcd-paper-inp mt-1">
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
@@ -163,15 +164,15 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                   </select>
                 </div>
               </div>
-              <Button onClick={() => testWebhook(i)} className="btn btcd-btn-o-blue">Test Webhook</Button>
+              <Button onClick={() => testWebhook(i)} className="btn btcd-btn-o-blue">{__('Test Webhook', 'bitform')}</Button>
               <br />
               <br />
-              <div className="f-m">Add Url Parameter: (optional)</div>
+              <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
               <div className="btcd-param-t-wrp mt-1">
                 <div className="btcd-param-t">
                   <div className="tr">
-                    <div className="td">Key</div>
-                    <div className="td">Value</div>
+                    <div className="td">{__('Key', 'bitform')}</div>
+                    <div className="td">{__('Value', 'bitform')}</div>
                   </div>
                   {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
                     <div key={`url-p-${childIdx + 11}`} className="tr">
@@ -181,9 +182,9 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                        <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
+                        <span className="tooltip" style={{ '--tooltip-txt': `'${ __('set Form Field', 'bitform') }'`, position: 'relative' }}>
                           <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
-                            <option value="">Select Form Field</option>
+                            <option value="">{__('Select Form Field', 'bitform')}</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                           </select>
                         </span>
@@ -199,10 +200,10 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
         )) : (
           <div className="txt-center btcd-empty">
             <span className="btcd-icn icn-stack" />
-            Empty
+            {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Hook"' }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${ __('Add More Hook', 'bitform') }'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { memo } from 'react';
+import { __ } from '@wordpress/i18n'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
@@ -103,23 +104,23 @@ function RadioCheckSettings(props) {
       </div>
       <span className="font-w-m">Field Key</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
-      <SingleInput inpType="text" title="Field Label:" value={label} action={setLabel} />
-      <SingleToggle title="Rounded:" action={setRound} isChecked={isRound} className="mt-3" />
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
       <div className="opt">
-        <span className="font-w-m">Options:</span>
+        <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {options.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
             <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
             <div className="flx mt-1">
               {elmData.typ === 'check'
                 && (
-                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Required"' }}>
+                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${ __('Required', 'bitform') }'` }}>
                     <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
                     <span className="btcd-mrk ck br-50 " />
                   </label>
                 )}
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${ __('Check by Default', 'bitform') }'` }}>
                 <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                 <span className="btcd-mrk ck br-50 " />
               </label>
@@ -127,7 +128,7 @@ function RadioCheckSettings(props) {
             </div>
           </div>
         ))}
-        <button onClick={addOpt} className="btn blue" type="button">Add More +</button>
+        <button onClick={addOpt} className="btn blue" type="button">{__('Add More +', 'bitform')}</button>
       </div>
     </div>
   )

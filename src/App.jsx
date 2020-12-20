@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router, Switch, Route, NavLink, Link,
 } from 'react-router-dom'
 import './resource/sass/app.scss'
+import { __ } from '@wordpress/i18n'
 import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'
@@ -62,13 +63,15 @@ function App() {
                   exact
                   to="/"
                   activeClassName="app-link-active"
-                >My Forms
+                >
+                  {__('My Forms', 'bitform')}
                 </NavLink>
 
                 <NavLink
                   to="/app-settings/recaptcha"
                   activeClassName="app-link-active"
-                >Settings
+                >
+                  {__('Settings', 'bitform')}
                 </NavLink>
               </nav>
             </div>

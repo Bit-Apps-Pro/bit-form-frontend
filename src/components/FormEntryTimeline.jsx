@@ -3,6 +3,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
 import Loader from './Loaders/Loader'
 import CopyText from './ElmSettings/Childs/CopyText'
+import { __ } from '@wordpress/i18n'
 
 export default function FormEntryTimeline({ formID, entryID, allLabels, settab, integrations }) {
   // eslint-disable-next-line no-undef
@@ -58,9 +59,9 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
       }
     })
     if (data.content === null && data.action_type === 'update') {
-      return <p>No field data change</p>
+      return <p>{__('No field data change', 'bitform')}</p>
     } if (data.content === null && data.action_type === 'create') {
-      return <p>Form Submitted</p>
+      return <p>{__('Form Submitted', 'bitform')}</p>
     }
     return (
       <div>
@@ -76,8 +77,8 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
             </p>
           ))
         }
-        {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>Show Integration Logs</small>}
-        {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>Hide Integration Logs</small>}
+        {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
+        {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}
         {logShow && data.integration && renderIntegLog(integInfo)}
       </div>
     )
@@ -111,11 +112,11 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
       return (
         <>
           <p>
-            Note
+            {__('Note', 'bitform')}
             {' '}
-            {data.action_type === 'create' && 'Added'}
-            {data.action_type === 'update' && 'Updated'}
-            {data.action_type === 'delete' && 'Deleted'}
+            {data.action_type === 'create' && __('Added', 'bitform')}
+            {data.action_type === 'update' && __('Updated', 'bitform')}
+            {data.action_type === 'delete' && __('Deleted', 'bitform')}
             :
           </p>
           {note.title && <h4>{note.title}</h4>}
@@ -123,12 +124,12 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: logShow ? note.content : truncate(note.content, 20) }}
           />
-          {(!logShow && note.content.length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>Read More</small>}
-          {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>Show Less</small>}
+          {(!logShow && note.content.length > 20) && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Read More', 'bitform')}</small>}
+          {logShow && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Show Less', 'bitform')}</small>}
         </>
       )
     } if (data.content === null && data.action_type === 'update') {
-      return <p>Note no change</p>
+      return <p>{__('Note no change', 'bitform')}</p>
     }
   }
 

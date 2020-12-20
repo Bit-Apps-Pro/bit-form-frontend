@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import BrushIcn from '../../Icons/BrushIcn'
@@ -33,8 +34,8 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
   return (
     <div className="elm-settings">
       <div className="flx mr-2">
-        <TabLink title="Field" sub="Settings" icn="settings" link="fs" />
-        <TabLink title="Style" sub="Customize" icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
+        <TabLink title={__('Field', 'bitform')} sub={__('Settings', 'bitform')} icn="settings" link="fs" />
+        <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
       </div>
       <div className="btcd-hr" />
       <div className="settings">
@@ -52,47 +53,47 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             </Route>
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
-                <FieldOptionBtn icn={<ImageIcn />} title="Background Customize" />
+                <FieldOptionBtn icn={<ImageIcn />} title={__('Background Customize', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
-                <FieldOptionBtn icn={<FormIcn />} title="Form Customize" />
+                <FieldOptionBtn icn={<FormIcn />} title={__('Form Customize', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
-                <FieldOptionBtn icn={<ItemBlockIcn />} title="Field Block Customize" />
+                <FieldOptionBtn icn={<ItemBlockIcn />} title={__('Field Block Customize', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
-                <FieldOptionBtn icn={<FieldIcn />} title="Field Customize" />
+                <FieldOptionBtn icn={<FieldIcn />} title={__('Field Customize', 'bitform')} />
               </Link>
             </Route>
             <Route path={`${path}/style/bg`}>
-              <StyleEditor editorLabel="Form Background" compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
+              <StyleEditor editorLabel={__('Form Background', 'bitform')} compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
             </Route>
             <Route path={`${path}/style/f`}>
-              <StyleEditor editorLabel="Form style" compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
+              <StyleEditor editorLabel={__('Form style', 'bitform')} compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
             </Route>
             <Route path={`${path}/style/fb`}>
-              <StyleEditor editorLabel="Field Block" compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
+              <StyleEditor editorLabel={__('Field Block', 'bitform')} compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
             </Route>
             <Route exact path={`${path}/style/fl`}>
               <Link to={`/form/builder/${formType}/${formID}/style`}>
                 <h4 className="w-9 mt-2 m-a flx txt-dp">
                   <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
                   <div className="flx w-10">
-                    <span>Back</span>
-                    <div className="txt-center w-10 f-5">Field Customize</div>
+                    <span>{__('Back', 'bitform')}</span>
+                    <div className="txt-center w-10 f-5">{__('Field Customize', 'bitform')}</div>
                   </div>
                 </h4>
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
-                <FieldOptionBtn icn={<FieldIcn />} title="Field Style" />
+                <FieldOptionBtn icn={<FieldIcn />} title={__('Field Style', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
-                <FieldOptionBtn icn={<FieldIcn />} title="Paypal Style" />
+                <FieldOptionBtn icn={<FieldIcn />} title={__('Paypal Style', 'bitform')} />
               </Link>
             </Route>
             <Route path={`${path}/style/fl/fld`}>
-              <StyleEditor editorLabel="Field Style" title="Label Style" compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
-              <StyleEditor title="Field Style" noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
+              <StyleEditor editorLabel={__('Field Style', 'bitform')} title={__('Label Style', 'bitform')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
+              <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
             <Route path={`${path}/style/fl/ppl`}>
               <PaypalStyleEditor elm={elm} setElementSetting={setElementSetting} updateData={updateData} lay={lay} setLay={setLay} fields={fields} />
@@ -175,7 +176,7 @@ function FieldOptionBtn({ icn, title, sub, action }) {
             <div>{title}</div>
             {sub && (
               <small>
-                Key:
+                {__('Key:', 'bitform')}
                 {` ${sub}`}
               </small>
             )}

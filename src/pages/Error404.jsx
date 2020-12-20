@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n'
 import { Link, useHistory } from 'react-router-dom'
 import space from '../resource/img/space.svg'
 
@@ -17,15 +18,15 @@ export default function Error404() {
   return (
     <div className="error-404">
       <div>
-        <div className="four">404</div>
-        <div className="t">Lost In Space</div>
+        <div className="four">{__('404', 'bitform')}</div>
+        <div className="t">{__('Lost In Space', 'bitform')}</div>
         <br />
-        Redirecting Home in
+        {__('Redirecting Home in', 'bitform')}
         {' '}
         {sec}
         <br />
         <br />
-        <Link to="/" className="btn dp-blue btcd-btn-lg">Go Home</Link>
+        <Link to="/" className="btn dp-blue btcd-btn-lg">{__('Go Home', 'bitform')}</Link>
       </div>
       <img src={space} alt="404 not found" />
     </div>

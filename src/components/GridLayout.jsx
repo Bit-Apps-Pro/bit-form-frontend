@@ -3,6 +3,7 @@
 /* eslint-disable no-undef */
 
 import { useState, useEffect, memo, useContext } from 'react';
+import { __ } from '@wordpress/i18n'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -333,7 +334,7 @@ function GridLayout(props) {
         onKeyPress={() => onRemoveItem(item.i)}
         role="button"
         tabIndex="0"
-        title="Remove"
+        title={__('Remove', 'bitform')}
       >
         <span className="btcd-icn icn-clear" />
       </div>
@@ -341,7 +342,7 @@ function GridLayout(props) {
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Move"
-        title="Move"
+        title={__('Move', 'bitform')}
       >
         <span className="btcd-icn icn-move1" />
       </div>
@@ -349,7 +350,7 @@ function GridLayout(props) {
         style={{ right: 47, fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Settings"
-        title="Settings"
+        title={__('Settings', 'bitform')}
         onClick={navigateToFieldSettings}
         onKeyPress={navigateToFieldSettings}
         role="button"
@@ -361,7 +362,7 @@ function GridLayout(props) {
         style={{ right: 67, fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Style"
-        title="Style"
+        title={__('Style', 'bitform')}
         onClick={() => navigateToStyle(fields[item.i].typ)}
         onKeyPress={() => navigateToStyle(fields[item.i].typ)}
         role="button"

@@ -76,12 +76,11 @@ module.exports = (env, argv) => {
           terserOptions: {
             parse: { ecma: 8 },
             compress: {
-              drop_console: production,
+              // drop_console: production,
               ecma: 5,
               warnings: false,
               comparisons: false,
               inline: 2,
-              drop_console: production,
             },
             mangle: { safari10: true },
           },
@@ -205,7 +204,8 @@ module.exports = (env, argv) => {
             plugins: [
               ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               '@babel/plugin-transform-runtime',
-              // "@babel/plugin-transform-regenerator"
+              // "@babel/plugin-transform-regenerator",
+              ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
             ],
           },
         },
@@ -280,6 +280,14 @@ module.exports = (env, argv) => {
           ],
         },
       ],
+    },
+    externals: {
+      '@wordpress/i18n': {
+      commonjs: ['wp', 'i18n'],
+      commonjs2: ['wp', 'i18n'],
+      amd: ['wp', 'i18n'],
+      root: ['wp', 'i18n'],
+    },
     },
   };
 };
