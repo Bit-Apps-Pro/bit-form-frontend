@@ -15,7 +15,7 @@ export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPo
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Font">
+    <StyleAccordion className="style-acc w-9"title={__('Font', 'bitform')}>
       {'size' in styleConfig && (
         <div className="mt-2">
           <span className="f-5">{__('Font Size', 'bitform')}</span>

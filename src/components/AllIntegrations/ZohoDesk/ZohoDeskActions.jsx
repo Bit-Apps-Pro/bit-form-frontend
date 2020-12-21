@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import ConfirmModal from '../../ConfirmModal'
@@ -59,22 +60,22 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <TableCheckBox onChange={openRecOwnerModal} checked={'ticket_owner' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Ticket_Owner" title="Ticket Owner" subTitle="Add a owner to ticket pushed to Zoho Desk." />
-          {!deskConf.actions.ticket_owner && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>ticket owner is required</small>}
+          <TableCheckBox onChange={openRecOwnerModal} checked={'ticket_owner' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Ticket_Owner" title={__('Ticket Owner', 'bitform')} subTitle={__('Add a owner to ticket pushed to Zoho Desk.', 'bitform')} />
+          {!deskConf.actions.ticket_owner && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{__('ticket owner is required', 'bitform')}</small>}
         </div>
-        <TableCheckBox onChange={openProductModal} checked={'product' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Product_Name" title="Product Name" subTitle="Add a product to ticket pushed to Zoho Desk." />
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachments" subTitle="Add attachments from BitForm to ticket pushed to Zoho Desk." />
+        <TableCheckBox onChange={openProductModal} checked={'product' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Product_Name" title={__('Product Name', 'bitform')} subTitle={__('Add a product to ticket pushed to Zoho Desk.', 'bitform')} />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in deskConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachments', 'bitform')} subTitle={__('Add attachments from BitForm to ticket pushed to Zoho Desk.', 'bitform')} />
       </div>
 
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt="Ok"
+        btnTxt={__('Ok', 'bitform')}
         show={actionMdl.show === 'ticket_owner'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title="Ticket Owner"
+        title={__('Ticket Owner', 'bitform')}
       >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
@@ -94,7 +95,7 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
                 className="btcd-paper-inp"
                 onChange={e => actionHandler(e.target.value, 'ticket_owner')}
               >
-                <option value="">Select Owner</option>
+                <option value="">{__('Select Owner', 'bitform')}</option>
                 {deskConf.default?.owners?.[deskConf.orgId]?.map(owner => <option key={owner.ownerId} value={owner.ownerId}>{owner.ownerName}</option>)}
               </select>
               <button onClick={() => refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Ticket Owners"' }} type="button" disabled={isLoading}>&#x21BB;</button>
@@ -106,11 +107,11 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt="Ok"
+        btnTxt={__('Ok', 'bitform')}
         show={actionMdl.show === 'product'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title="Product Name"
+        title={__('Product Name', 'bitform')}
       >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
@@ -129,7 +130,7 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
               className="btcd-paper-inp"
               onChange={e => actionHandler(e.target.value, 'product')}
             >
-              <option value="">Select Product</option>
+              <option value="">{__('Select Product', 'bitform')}</option>
               {deskConf.default?.products?.[deskConf.department]?.map(product => <option key={product.productId} value={product.productId}>{product.productName}</option>)}
             </select>
             <button onClick={() => refreshProducts(formID, deskConf, setDeskConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Products"' }} type="button" disabled={isLoading}>&#x21BB;</button>
@@ -141,14 +142,14 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
-        btnTxt="Ok"
+        btnTxt={__('Ok', 'bitform')}
         show={actionMdl.show === 'attachments'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title="Select Attachment"
+        title={__('Select Attachment', 'bitform')}
       >
         <div className="btcd-hr mt-2" />
-        <div className="mt-2">Select file upload fields</div>
+        <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
         <MultiSelect
           defaultValue={deskConf.actions.attachments}
           className="mt-2 w-9"

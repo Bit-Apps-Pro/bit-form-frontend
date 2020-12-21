@@ -87,7 +87,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
       <Modal
         show={showTemplateModal}
         setModal={setTemplateModal}
-        title="Browse Template"
+       title={__('Browse Template', 'bitform')}
       >
         <h4 className="txt-dp">{__('Email Templates Coming soon', 'bitform')}</h4>
       </Modal>
@@ -98,7 +98,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
         {__('Back', 'bitfrom')}
       </NavLink>
 
-      <button onClick={save} className="btn blue f-right" type="button">Save</button>
+      <button onClick={save} className="btn blue f-right" type="button">{__('Save', 'bitform')}</button>
 
       <div className="mt-3 flx">
         <b style={{ width: 103 }}>

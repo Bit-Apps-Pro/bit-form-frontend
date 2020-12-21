@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, creatorConf, setCreatorConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -68,12 +69,12 @@ export const refreshApplications = (formID, creatorConf, setCreatorConf, setisLo
         if (result.data.applications) {
           newConf.default = { ...newConf.default, applications: result.data.applications }
         }
-        setSnackbar({ show: true, msg: 'Applications refreshed' })
+        setSnackbar({ show: true, msg: __('Applications refreshed', 'bitform') })
         setCreatorConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Applications refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Applications refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Applications refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Applications refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -106,12 +107,12 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setisLoading, 
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Forms refreshed' })
+        setSnackbar({ show: true, msg: __('Forms refreshed', 'bitform') })
         setCreatorConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Forms refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Forms refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Forms refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Forms refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -150,9 +151,9 @@ export const refreshFields = (formID, creatorConf, setCreatorConf, setisLoading,
           if (result.data.tokenDetails) {
             newConf.tokenDetails = result.data.tokenDetails
           }
-          setSnackbar({ show: true, msg: 'Fields refreshed' })
+          setSnackbar({ show: true, msg: __('Fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: `Fields refresh failed Cause:${result.data.data || result.data}. please try again` })
+          setSnackbar({ show: true, msg: `${__('Fields refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
         }
 
         if (result.data.tokenDetails) {
@@ -160,7 +161,7 @@ export const refreshFields = (formID, creatorConf, setCreatorConf, setisLoading,
         }
         setCreatorConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Fields refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

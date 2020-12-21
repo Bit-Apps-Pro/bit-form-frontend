@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
@@ -5,17 +6,17 @@ export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSi
   return (
     <div className="flx flx-around mt-2 mr-1">
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}>
-        <option value="">Select Field</option>
+        <option value="">{__('Select Field', 'bitform')}</option>
         {
           formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
         }
-        <option value="custom">Custom...</option>
+        <option value="custom">{__('Custom...', 'bitform')}</option>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, signConf, setSignConf)} label="Custom Value" className="mr-2" type="text" value={field.customValue} placeholder="Custom Value" />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, signConf, setSignConf)} label={__("Custom Value",'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__("Custom Value",'bitform')} />}
 
       <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}>
-        <option value="">Select Field</option>
+        <option value="">{__('Select Field', 'bitform')}</option>
         {
           Object.values(signConf.default.tables.headers[signConf.table]).map(header => (
             <option key={`${header}-1`} value={header}>

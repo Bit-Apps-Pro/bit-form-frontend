@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import ConfirmModal from '../../ConfirmModal'
@@ -29,7 +30,7 @@ export default function ZohoMailActions({ formFields, mailConf, setMailConf }) {
       </div> */}
 
       <div className="d-flx flx-wrp">
-        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in mailConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title="Attachments" subTitle="Add attachments from BitForm to mail pushed to Zoho Mail." />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in mailConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachments', 'bitform')} subTitle={__('Add attachments from BitForm to mail pushed to Zoho Mail.', 'bitform')} />
       </div>
 
       <ConfirmModal
@@ -40,10 +41,10 @@ export default function ZohoMailActions({ formFields, mailConf, setMailConf }) {
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-        title="Select Attachment"
+       title={__('Select Attachment', 'bitform')}
       >
         <div className="btcd-hr mt-2" />
-        <div className="mt-2">Select file upload fields</div>
+        <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
         <MultiSelect
           defaultValue={mailConf.actions.attachments}
           className="mt-2 w-9"

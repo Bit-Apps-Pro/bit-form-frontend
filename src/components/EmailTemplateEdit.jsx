@@ -93,7 +93,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
           {__('Back', 'bitform')}
         </NavLink>
 
-        <button onClick={save} className="btn blue f-right" type="button">Save</button>
+        <button onClick={save} className="btn blue f-right" type="button">{__('Save', 'bitform')}</button>
 
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>

@@ -184,7 +184,7 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData, 
       <div className="w-9 m-a">
         {fields === null || !checkPaypalExist(fields)
           ? (
-            <div className="mt-2">There is no paypal field in your form.</div>
+            <div className="mt-2">{__('There is no paypal field in your form.', 'bitform')}</div>
           )
           : elm.id === null && checkPaypalExist(fields) > 1
             ? (
@@ -265,7 +265,7 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData, 
                   <div className="flx flx-between mt-1 inp-grp">
                     <b className="icn br-50 mr-1">{__('Height', 'bitform')}</b>
                     <input
-                      title="Height"
+                     title={__('Height', 'bitform')}
                       className="btc-range mr-1"
                       type="range"
                       min="25"
@@ -287,9 +287,9 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData, 
                 </div>
                 {/* <div className="mt-2">
                 <div className="flx flx-between mt-1 inp-grp">
-                  <b className="icn br-50 mr-1">Width</b>
+                  <b className="icn br-50 mr-1">{__('Width', 'bitform')}</b>
                   <input
-                    title="Width"
+                   title={__('Width', 'bitform')}
                     className="btc-range mr-1"
                     type="range"
                     min="150"

@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import { useEffect } from 'react'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
@@ -31,14 +32,19 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
         {!isPro && (
           <div className="pro-blur flx w-9">
             <div className="pro">
-              Available On
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro"> Premium</span></a>
+              {__('Available On', 'bitform')}
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
             </div>
           </div>
         )}
-        <b className="wdt-100 d-in-b">Related List:</b>
+        <b className="wdt-100 d-in-b">{__('Related List:', 'bitform')}</b>
         <select onChange={handleInput} name="module" value={crmConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
-          <option value="">Select Related Module</option>
+          <option value="">{__('Select Related Module', 'bitform')}</option>
           {
             crmConf?.default?.relatedlists?.[crmConf.module] && Object.values(crmConf.default.relatedlists[crmConf.module]).map(relatedlistApiName => (
               <option key={relatedlistApiName.module} value={relatedlistApiName.module}>
@@ -47,13 +53,13 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
             ))
           }
         </select>
-        <button onClick={() => refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshRelatedList(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh CRM Related Lists', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         <br />
         <br />
       </div>
-      <b className="wdt-100 d-in-b">Layout:</b>
+      <b className="wdt-100 d-in-b">{__('Layout:', 'bitform')}</b>
       <select onChange={handleInput} name="layout" value={crmConf?.relatedlists?.[tab - 1]?.layout} className="btcd-paper-inp w-7" disabled={!crmConf?.relatedlists?.[tab - 1]?.module}>
-        <option value="">Select Layout</option>
+        <option value="">{__('Select Layout', 'bitform')}</option>
         {
           crmConf?.default?.layouts?.[crmConf.relatedlists?.[tab - 1]?.module] && Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module]).map(layoutApiName => (
             <option key={layoutApiName} value={layoutApiName}>
@@ -69,11 +75,11 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
         crmConf.default?.layouts?.[crmConf?.relatedlists?.[tab - 1]?.module]?.[crmConf?.relatedlists?.[tab - 1]?.layout]?.fields
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">Field Map</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Field Map', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>Form Fields</b></div>
-              <div className="txt-dp"><b>Zoho Fields</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
             </div>
 
             {crmConf.relatedlists?.[tab - 1]?.field_map?.map((itm, i) => (
@@ -93,11 +99,11 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
             <br />
             {crmConf.default?.layouts[crmConf.relatedlists[tab - 1].module]?.[crmConf.relatedlists[tab - 1].layout] && Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module][crmConf.relatedlists[tab - 1].layout].fileUploadFields).length !== 0 && (
               <>
-                <div className="mt-4"><b className="wdt-100">File Upload Field Map</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('File Upload Field Map', 'bitform')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>Form Fields</b></div>
-                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {crmConf.relatedlists[tab - 1].upload_field_map.map((itm, i) => (
@@ -118,7 +124,7 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
                 <br />
               </>
             )}
-            <div className="mt-4"><b className="wdt-100">Actions</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
 
             <ZohoCRMActions

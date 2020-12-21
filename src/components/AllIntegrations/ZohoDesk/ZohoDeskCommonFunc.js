@@ -1,3 +1,4 @@
+import { __, sprintf } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, deskConf, setDeskConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -67,12 +68,12 @@ export const refreshOrganizations = (formID, deskConf, setDeskConf, setisLoading
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Portals refreshed' })
+        setSnackbar({ show: true, msg: __('Portals refreshed', 'bitform') })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Portals refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Portals refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Portals refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Portals refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -107,12 +108,12 @@ export const refreshDepartments = (formID, deskConf, setDeskConf, setisLoading, 
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Departments refreshed' })
+        setSnackbar({ show: true, msg: __('Departments refreshed', 'bitform') })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Departments refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Departments refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Departments refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Departments refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -142,9 +143,9 @@ export const refreshFields = (formID, deskConf, setDeskConf, setisLoading, setSn
           if (result.data.tokenDetails) {
             newConf.tokenDetails = result.data.tokenDetails
           }
-          setSnackbar({ show: true, msg: 'Fields refreshed' })
+          setSnackbar({ show: true, msg: __('Fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: `Fields refresh failed Cause:${result.data.data || result.data}. please try again` })
+          setSnackbar({ show: true, msg: `${__('Fields refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
         }
 
         if (result.data.tokenDetails) {
@@ -152,7 +153,7 @@ export const refreshFields = (formID, deskConf, setDeskConf, setisLoading, setSn
         }
         setDeskConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Fields refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -183,12 +184,12 @@ export const refreshOwners = (formID, deskConf, setDeskConf, setisLoading, setSn
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Owners refreshed' })
+        setSnackbar({ show: true, msg: __('Owners refreshed', 'bitform') })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Owners refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Owners refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Owners refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Owners refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -220,12 +221,12 @@ export const refreshProducts = (formID, deskConf, setDeskConf, setisLoading, set
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Products refreshed' })
+        setSnackbar({ show: true, msg: __('Products refreshed', 'bitform') })
         setDeskConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Products refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Products refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Products refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Products refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
@@ -56,7 +57,7 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
         <TitleModal action={openUpdateModal}>
-          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in creatorConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title="Update Record" subTitle="Control how the record gets updated." />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'update')} checked={'update' in creatorConf?.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Update Record', 'bitform')} subTitle={__('Control how the record gets updated.', 'bitform')} />
         </TitleModal>
       </div>
 
@@ -64,33 +65,34 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
         md
         show={updateMdl}
         setModal={setUpdateMdl}
-        title="Update Row"
+       title={__('Update Row', 'bitform')}
       >
         <div className="o-a">
           {creatorConf?.actions?.update && (
             <>
-              <small>Enter the criteria to update records. Please use the below format.</small>
+              <small>{__('Enter the criteria to update records. Please use the below format.', 'bitform')}</small>
               <br />
               <div className="mt-4">
                 <small>
-                  Example:&nbsp;
+                  {__('Example:', 'bitform')}
+&nbsp;
                   {'("Status"==\\"Finance\\"&&"Total>=250.43")'}
                 </small>
                 <br />
                 <br />
                 <small>
-                  Here Status, Total are Zoho Creator Field link name. info:
+                  {__('Here Status, Total are Zoho Creator Field link name. info:', 'bitform')}
                   {' '}
-                  <a href="https://www.zoho.com/creator/help/api/v2/update-records.html" target="_blank" rel="noreferrer">Zoho Creator Criteria Guide</a>
+                  <a href="https://www.zoho.com/creator/help/api/v2/update-records.html" target="_blank" rel="noreferrer">{__('Zoho Creator Criteria Guide', 'bitform')}</a>
                 </small>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={creatorConf.actions?.update?.criteria} />
               </div>
 
-              <div className="font-w-m mt-3">Update Preferance</div>
-              <small>insert new record if the above criteria doesn&apos;t met?</small>
+              <div className="font-w-m mt-3">{__('Update Preferance', 'bitform')}</div>
+              <small>{__('insert new record if the above criteria doesn&apos;t met?', 'bitfomr')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={creatorConf.actions.update?.insert} name="up-row" title="Yes" />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!creatorConf.actions.update?.insert} name="up-row" title="No" />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={creatorConf.actions.update?.insert} name="up-row"title={__('Yes', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!creatorConf.actions.update?.insert} name="up-row"title={__('No', 'bitform')} />
               </div>
             </>
           )}

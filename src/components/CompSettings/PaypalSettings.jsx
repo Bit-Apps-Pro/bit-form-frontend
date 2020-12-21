@@ -134,7 +134,7 @@ export default function PaypalSettings({ elm, fields, updateData, setElementSett
             />
           </div>
           <div className="mt-2">
-            <b>Disable Card</b>
+            <b>{__('Disable Card', 'bitform')}</b>
             <MultiSelect
               className="w-10 btcd-paper-drpdwn mt-1 btcd-ttc"
               options={fundOptions()}

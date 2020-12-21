@@ -104,7 +104,7 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
       </div>
       {clrTyp !== 'None' && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">Color</span>
+          <span className="f-5">{__('Color', 'bitform')}</span>
           <ColorPicker alwGradient={false} value={clr} onChange={setClr} />
         </div>
       )}

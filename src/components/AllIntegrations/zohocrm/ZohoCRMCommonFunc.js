@@ -1,3 +1,4 @@
+import { __, sprintf } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, recordTab, crmConf, setCrmConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -115,11 +116,11 @@ export const refreshModules = (formID, crmConf, setCrmConf, setisLoading, setSna
           newConf.tokenDetails = result.data.tokenDetails
         }
         setCrmConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Modules refreshed' })
+        setSnackbar({ show: true, msg: __('Modules refreshed', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Modules refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Modules refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -171,11 +172,11 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setisLoad
           newConf.tokenDetails = result.data.tokenDetails
         }
         setCrmConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Layouts refreshed' })
+        setSnackbar({ show: true, msg: __('Layouts refreshed', 'bitform') })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Layouts refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Layouts refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Layouts refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -209,11 +210,11 @@ export const refreshRelatedList = (formID, crmConf, setCrmConf, setisLoading, se
           newConf.tokenDetails = result.data.tokenDetails
         }
         setCrmConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'RelatedLists refreshed' })
+        setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bitform') })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `RelatedLists refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('RelatedLists refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'RelatedLists refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -246,11 +247,11 @@ export const refreshTags = (recordTab, formID, crmConf, setCrmConf, setisLoading
           newConf.tokenDetails = result.data.tokenDetails
         }
         setCrmConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Tags refreshed' })
+        setSnackbar({ show: true, msg: __('Tags refreshed', 'bitform') })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Tags refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Tags refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Tags refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Tags refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -275,9 +276,9 @@ export const refreshOwners = (formID, crmConf, setCrmConf, setisLoading, setSnac
           newConf.tokenDetails = result.data.tokenDetails
         }
         setCrmConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Owners refreshed' })
+        setSnackbar({ show: true, msg: __('Owners refreshed', 'bitform') })
       } else {
-        setSnackbar({ show: true, msg: 'Owners refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Owners refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -307,9 +308,9 @@ export const refreshAssigmentRules = (recordTab, crmConf, setCrmConf, setisLoadi
         }
         newConf.default.assignmentRules[module] = { ...result.data.assignmentRules }
         setCrmConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Assignment Rules refreshed' })
+        setSnackbar({ show: true, msg: __('Assignment Rules refreshed', 'bitform') })
       } else {
-        setSnackbar({ show: true, msg: 'Assignment Rules refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Assignment Rules refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

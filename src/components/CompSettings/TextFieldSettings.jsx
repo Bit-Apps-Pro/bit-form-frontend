@@ -94,7 +94,7 @@ function TextFieldSettings(props) {
         {' '}
         {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
       </div>
-      <span className="font-w-m">Field Key</span>
+      <span className="font-w-m">{__('Field Key', 'bitform')}</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />

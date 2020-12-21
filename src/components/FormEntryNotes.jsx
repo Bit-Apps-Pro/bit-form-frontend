@@ -158,7 +158,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
               }}
             />
           )
-          : <button type="button" className="btn" onClick={() => setShowForm(true)}>create new note</button>}
+          : <button type="button" className="btn" onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}
         {isLoading === 'allNotes'
           ? (
             <Loader style={{
@@ -182,7 +182,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
         show={confMdl.show}
         close={closeConfMdl}
         action={deleteNote}
-        title="Confirmation"
+       title={__('Confirmation', 'bitform')}
       >
         <div className="txt-center mt-5 mb-4">
           {__('Are you sure to delete this note', 'bitform')}

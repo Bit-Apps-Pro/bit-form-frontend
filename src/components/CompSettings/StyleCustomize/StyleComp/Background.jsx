@@ -150,7 +150,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Background">
+    <StyleAccordion className="style-acc w-9"title={__('Background', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -175,7 +175,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">Background Color</span>
+        <span className="f-5">{__('Background Color', 'bitform')}</span>
         <BtnGrp
           value={bgTyp}
           onChange={setBgTyp}
@@ -187,14 +187,14 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
       </div>
       {bgTyp !== 'None' && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">Color Fill</span>
+          <span className="f-5">{__('Color Fill', 'bitform')}</span>
           <ColorPicker value={bgClr} onChange={setBG} />
         </div>
       )}
       {'picture' in styleConfig && (
         <>
           <div className="flx flx-between mt-2">
-            <span className="f-5">Picture</span>
+            <span className="f-5">{__('Picture', 'bitform')}</span>
             <BtnGrp
               value={bgSrcTyp}
               onChange={handlebgSrcTyp}
@@ -229,7 +229,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           )}
 
           <div className="flx flx-between mt-2">
-            <span className="f-5">Background Blend Mode</span>
+            <span className="f-5">{__('Background Blend Mode', 'bitform')}</span>
             <select value={blendMode} onChange={e => setBgProperty('background-blend-mode', e.target.value)} className="btcd-paper-inp w-5">
               <option value="None">{__('None', 'bitform')}</option>
               <option value="multiply">{__('Multiply', 'bitform')}</option>
@@ -294,16 +294,16 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
 
       {'backdropFilter' in styleConfig && (
         <div className="mt-2">
-          <span className="f-5">Background Filter</span>
+          <span className="f-5">{__('Background Filter', 'bitform')}</span>
           <div className="mt-2">
-            <TableCheckBox onChange={e => setFilter(e, 'blur(5px)')} checked={bgFilter.match(/blur/g) !== null} value="Blur" className="mr-1 mt-1" title="Blur" />
-            <TableCheckBox onChange={e => setFilter(e, 'brightness(120%)')} checked={bgFilter.match(/brightness/g) !== null} value="Brightness" className="mr-1 mt-1" title="Brightness" />
-            <TableCheckBox onChange={e => setFilter(e, 'contrast(10%)')} checked={bgFilter.match(/contrast/g) !== null} value="Contrast" className="mr-1 mt-1" title="Contrast" />
-            <TableCheckBox onChange={e => setFilter(e, 'grayscale(50%)')} checked={bgFilter.match(/grayscale/g) !== null} value="Grayscale" className="mr-1 mt-1" title="Grayscale" />
-            <TableCheckBox onChange={e => setFilter(e, 'invert(10%)')} checked={bgFilter.match(/invert/g) !== null} value="Invert" className="mr-1 mt-1" title="Invert" />
-            <TableCheckBox onChange={e => setFilter(e, 'opacity(10%)')} checked={bgFilter.match(/opacity/g) !== null} value="Opacity" className="mr-1 mt-1" title="Opacity" />
-            <TableCheckBox onChange={e => setFilter(e, 'sepia(10%)')} checked={bgFilter.match(/sepia/g) !== null} value="Sepia" className="mr-1 mt-1" title="Sepia" />
-            <TableCheckBox onChange={e => setFilter(e, 'saturate(110%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1" title="Saturate" />
+            <TableCheckBox onChange={e => setFilter(e, 'blur(5px)')} checked={bgFilter.match(/blur/g) !== null} value="Blur" className="mr-1 mt-1"title={__('Blur', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'brightness(120%)')} checked={bgFilter.match(/brightness/g) !== null} value="Brightness" className="mr-1 mt-1"title={__('Brightness', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'contrast(10%)')} checked={bgFilter.match(/contrast/g) !== null} value="Contrast" className="mr-1 mt-1"title={__('Contrast', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'grayscale(50%)')} checked={bgFilter.match(/grayscale/g) !== null} value="Grayscale" className="mr-1 mt-1"title={__('Grayscale', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'invert(10%)')} checked={bgFilter.match(/invert/g) !== null} value="Invert" className="mr-1 mt-1"title={__('Invert', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'opacity(10%)')} checked={bgFilter.match(/opacity/g) !== null} value="Opacity" className="mr-1 mt-1"title={__('Opacity', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'sepia(10%)')} checked={bgFilter.match(/sepia/g) !== null} value="Sepia" className="mr-1 mt-1"title={__('Sepia', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'saturate(110%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1"title={__('Saturate', 'bitform')} />
           </div>
           {bgFilter?.match(/blur/g) && (
             <Range

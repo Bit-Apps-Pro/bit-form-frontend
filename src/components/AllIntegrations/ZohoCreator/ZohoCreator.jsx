@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
@@ -37,7 +38,7 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
   const nextPage = val => {
     if (val === 3) {
       if (!checkMappedFields(creatorConf)) {
-        setSnackbar({ show: true, msg: 'Please map mandatory fields' })
+        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
         return
       }
 
@@ -45,7 +46,7 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
     } else {
       if (!creatorConf.accountOwner) {
         setError({
-          accountOwner: 'Account Owner Name is mandatory!',
+          accountOwner: __('Account Owner Name is mandatory!', 'bitform'),
         })
         return
       }
@@ -76,8 +77,8 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
         isAuthorized={isAuthorized}
         nextPage={nextPage}
       >
-        <div className="mt-3"><b>Owner Name (Your Zoho Creator screen name):</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e, creatorConf, setCreatorConf)} name="accountOwner" value={creatorConf.accountOwner} type="text" placeholder="Your Zoho Creator screen name..." />
+        <div className="mt-3"><b>{__('Owner Name (Your Zoho Creator screen name):', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e, creatorConf, setCreatorConf)} name="accountOwner" value={creatorConf.accountOwner} type="text" placeholder={__('Your Zoho Creator screen name...', 'bitform')} />
         <div style={{ color: 'red' }}>{error.accountOwner}</div>
       </IntegrationStepOne>
 
@@ -100,7 +101,9 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          Next &nbsp;
+          {__('Next', 'bitform')}
+          {' '}
+&nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
 

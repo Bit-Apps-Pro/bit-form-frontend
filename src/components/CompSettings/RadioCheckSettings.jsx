@@ -102,7 +102,7 @@ function RadioCheckSettings(props) {
         <span className="font-w-m">Field Type : </span>
         {elmData.typ === 'check' ? 'Check Box' : 'Radio'}
       </div>
-      <span className="font-w-m">Field Key</span>
+      <span className="font-w-m">{__('Field Key', 'bitform')}</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />

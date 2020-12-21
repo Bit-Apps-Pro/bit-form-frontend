@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -30,8 +31,8 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">Integration Name:</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, signConf, setSignConf)} name="name" value={signConf.name} type="text" placeholder="Integration Name..." />
+        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, signConf, setSignConf)} name="name" value={signConf.name} type="text" placeholder={__("Integration Name...", 'bitform')} />
       </div>
       <br />
       <br />

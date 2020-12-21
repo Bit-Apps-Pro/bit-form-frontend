@@ -58,7 +58,7 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         </Link>
         <div className="w-8 txt-center">
           <b className="f-lg">{integrations[id].type}</b>
-          <div>Integration Settings</div>
+          <div>{__('Integration Settings', 'bitform')}</div>
         </div>
       </div>
       <IntegType />

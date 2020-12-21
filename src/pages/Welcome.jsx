@@ -14,7 +14,7 @@ export default function Welcome({ setModal }) {
         <br />
         {__('for Wordpress', 'bitform')}
       </div>
-      <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg dp-blue">Create First From</button>
+      <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg dp-blue">{__('Create First From', 'bitform')}</button>
     </div>
   )
 }

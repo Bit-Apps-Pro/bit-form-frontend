@@ -643,19 +643,19 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 <div className="btcd-hr" />
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <div className="mb-2">
-                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                    {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
+                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2"title={__('Success Message', 'bitform')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
+                    {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2"title={__('Redirect URL', 'bitform')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2"title={__('Web Hook', 'bitform')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2"title={__('Email Notification', 'bitform')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2"title={__('Integration', 'bitform')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
                   </div>
                 )}
                 {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
 
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <>
-                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
-                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
+                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">{__('Web Hooks', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
+                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">{__('Integrations', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
 
                     {lgcGrp.action_run !== 'delete' && (
                       <>
@@ -665,7 +665,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             {__('Success Message:', 'bitform')}
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
-                              <option value="">Select Message</option>
+                              <option value="">{__('Select Message', 'bitform')}</option>
                               {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
@@ -676,7 +676,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             {__('Redirect URL:', 'bitform')}
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
-                              <option value="">Select Page To Redirect</option>
+                              <option value="">{__('Select Page To Redirect', 'bitform')}</option>
                               {formSettings?.confirmation?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
@@ -691,7 +691,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             {__('Email Notification:', 'bitform')}
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
-                              <option value="">Select Email Template</option>
+                              <option value="">{__('Select Email Template', 'bitform')}</option>
                               {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
@@ -699,7 +699,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             action={val => setEmailSetting('to', val, lgcGrpInd)}
                             value={getValueFromArr('mailNotify', 'to', lgcGrpInd)}
                             placeholder={__('Add Email Receiver', 'bitform')}
-                            title={<span className="f-m">To</span>}
+                            title={<span className="f-m">{__('To', 'bitform')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -709,7 +709,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             action={val => setEmailSetting('cc', val, lgcGrpInd)}
                             value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
                             placeholder={__('Add Email CC', 'bitform')}
-                            title={<span className="f-m">CC</span>}
+                            title={<span className="f-m">{__('CC', 'bitform')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -719,7 +719,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             action={val => setEmailSetting('bcc', val, lgcGrpInd)}
                             placeholder={__('Add Email BCC', 'bitform')}
                             value={getValueFromArr('mailNotify', 'bcc', lgcGrpInd)}
-                            title={<span className="f-m">BCC</span>}
+                            title={<span className="f-m">{__('BCC', 'bitform')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -729,13 +729,13 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                       )}
                     </div>
 
-                    {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">Set another field value</b></div>}
+                    {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">{__('Set another field value', 'bitform')}</b></div>}
                   </>
                 )}
 
                 {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                   <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
-                    <option value="">Select Message</option>
+                    <option value="">{__('Select Message', 'bitform')}</option>
                     {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                   </MtSelect>
                 )}

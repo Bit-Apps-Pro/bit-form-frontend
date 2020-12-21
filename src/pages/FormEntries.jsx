@@ -404,7 +404,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   return (
     <div id="form-res">
       <div className="af-header flx">
-        <h2>Form Responses</h2>
+        <h2>{__('Form Responses', 'bitform')}</h2>
         <button
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           onClick={() => setRefreshResp(1)}

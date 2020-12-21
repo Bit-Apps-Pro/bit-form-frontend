@@ -9,7 +9,7 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, allResp, 
   const [tab, settab] = useState('')
 
   return (
-    <Modal lg show setModal={close} title="Related Info">
+    <Modal lg show setModal={close}title={__('Related Info', 'bitform')}>
       <Tabs>
         <Tab>
           <button className={`btcd-s-tab-link ${tab === 'timeline' && 's-t-l-active'}`} type="button">

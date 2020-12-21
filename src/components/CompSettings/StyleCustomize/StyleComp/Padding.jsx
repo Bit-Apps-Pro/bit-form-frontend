@@ -15,7 +15,7 @@ export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Padding">
+    <StyleAccordion className="style-acc w-9"title={__('Padding', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range

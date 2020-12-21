@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -19,7 +20,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
 
   const saveConfig = () => {
     if (!checkMappedFields(recruitConf)) {
-      setSnackbar({ show: true, msg: 'Please map mandatory fields' })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, recruitConf, history, id, 1)
@@ -29,8 +30,8 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">Integration Name:</b>
-        <input className="btcd-paper-inp w-7" onChange={event => handleInput(event, tab, recruitConf, setRecruitConf)} name="name" value={recruitConf.name} type="text" placeholder="Integration Name..." />
+        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
+        <input className="btcd-paper-inp w-7" onChange={event => handleInput(event, tab, recruitConf, setRecruitConf)} name="name" value={recruitConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
       </div>
       <br />
       <br />

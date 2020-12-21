@@ -1,4 +1,5 @@
 /* eslint-disable array-callback-return */
+import { sprintf, __ } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 const clearLowerEvents = (projectsConf, name) => {
@@ -128,16 +129,16 @@ export const refreshPortals = (formID, projectsConf, setProjectsConf, setisLoadi
         if (result.data.portals) {
           if (Object.keys(result.data.portals).length > 0) {
             newConf.default = { ...newConf.default, portals: result.data.portals }
-            setSnackbar({ show: true, msg: 'Portals refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Portal Found' })
+            setSnackbar({ show: true, msg: __('Portals refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Portal Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
-        setSnackbar({ show: true, msg: 'Portals refreshed' })
+        setSnackbar({ show: true, msg: __('Portals refreshed', 'bitform') })
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Portals refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Portals refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Portals refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Portals refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -164,16 +165,16 @@ export const refreshProjects = (formID, projectsConf, setProjectsConf, setisLoad
         if (result.data.projects) {
           if (Object.keys(result.data.projects).length > 0) {
             newConf.default.projects[portalId] = result.data.projects
-            setSnackbar({ show: true, msg: 'Projects refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Project Found' })
+            setSnackbar({ show: true, msg: __('Projects refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Project Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
 
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Projects refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Projects refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Projects refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Projects refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -201,16 +202,16 @@ export const refreshMilestones = (formID, projectsConf, setProjectsConf, setisLo
           if (!newConf.default.milestones) newConf.default.milestones = {}
           if (Object.keys(result.data.milestones).length > 0) {
             newConf.default.milestones[projectId] = result.data.milestones
-            setSnackbar({ show: true, msg: 'Milestones refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Milestone Found' })
+            setSnackbar({ show: true, msg: __('Milestones refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Milestone Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
 
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Milestones refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Milestones refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Milestones refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Milestones refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -245,17 +246,17 @@ export const refreshTasklists = (formID, projectsConf, setProjectsConf, setisLoa
           } else {
             newConf.default.tasklists[portalId][tasklistFlag] = result.data.tasklists
           }
-          setSnackbar({ show: true, msg: 'Tasklists refreshed' })
+          setSnackbar({ show: true, msg: __('Tasklists refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: 'No Tasklist Found' })
+          setSnackbar({ show: true, msg: __('No Tasklist Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
 
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Tasklists refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Tasklists refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Tasklists refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Tasklists refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -294,16 +295,16 @@ export const refreshTasks = (formID, projectsConf, setProjectsConf, setisLoading
             }
           } else if (projectsConf?.tasklistId) newConf.default.tasks[portalId][projectsConf?.tasklistId] = result.data.tasks
           else newConf.default.tasks[portalId] = result.data.tasks
-          setSnackbar({ show: true, msg: 'Tasks refreshed' })
+          setSnackbar({ show: true, msg: __('Tasks refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: 'No Task Found' })
+          setSnackbar({ show: true, msg: __('No Task Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Tasks refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Tasks refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Tasks refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Tasks refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -342,9 +343,9 @@ export const refreshFields = (formID, projectsConf, setProjectsConf, setisLoadin
           }
 
           newConf.field_map[event] = generateMappedField(newConf, event)
-          setSnackbar({ show: true, msg: 'Fields refreshed' })
+          setSnackbar({ show: true, msg: __('Fields refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: `Fields refresh failed Cause:${result.data.data || result.data}. please try again` })
+          setSnackbar({ show: true, msg: sprintf(__('Fields refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
         }
 
         if (result.data.tokenDetails) {
@@ -352,7 +353,7 @@ export const refreshFields = (formID, projectsConf, setProjectsConf, setisLoadin
         }
         setProjectsConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Fields refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -385,15 +386,15 @@ export const refreshUsers = (formID, projectsConf, setProjectsConf, setisLoading
               if (!newConf.default.users[portalId]) newConf.default.users[portalId] = {}
               newConf.default.users[portalId][projectsConf.projectId] = result.data.users
             } else newConf.default.users[portalId] = result.data.users
-            setSnackbar({ show: true, msg: 'Owners refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Owner Found' })
+            setSnackbar({ show: true, msg: __('Owners refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Owner Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Owners refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Owners refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Owners refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Owners refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -422,15 +423,15 @@ export const refreshTaskLays = (formID, projectsConf, setProjectsConf, setisLoad
         if (result.data.taskLays) {
           if (Object.keys(result.data.taskLays).length > 0) {
             newConf.default.taskLays[portalId] = result.data.taskLays
-            setSnackbar({ show: true, msg: 'Task Layouts refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Task Layout Found' })
+            setSnackbar({ show: true, msg: __('Task Layouts refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Task Layout Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Task Layouts refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Task Layouts refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Task Layouts refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Task Layouts refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -459,15 +460,15 @@ export const refreshGroups = (formID, projectsConf, setProjectsConf, setisLoadin
         if (result.data.groups) {
           if (Object.keys(result.data.groups).length > 0) {
             newConf.default.groups[portalId] = result.data.groups
-            setSnackbar({ show: true, msg: 'Project Groups refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Project Group Found' })
+            setSnackbar({ show: true, msg: __('Project Groups refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Project Group Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Project Groups refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Project Groups refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Project Groups refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Project Groups refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -496,15 +497,15 @@ export const refreshTags = (formID, projectsConf, setProjectsConf, setisLoading,
         if (result.data.tags) {
           if (Object.keys(result.data.tags).length > 0) {
             newConf.default.tags[portalId] = result.data.tags
-            setSnackbar({ show: true, msg: 'Tags refreshed' })
-          } else setSnackbar({ show: true, msg: 'No Tag Found' })
+            setSnackbar({ show: true, msg: __('Tags refreshed', 'bitform') })
+          } else setSnackbar({ show: true, msg: __('No Tag Found', 'bitform') })
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
         setProjectsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Tags refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Tags refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Tags refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Tags refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -565,20 +566,20 @@ export const checkRequiredActions = projectsConf => {
 
 export const checkAllRequired = (projectsConf, setSnackbar) => {
   if (!checkMappedFields(projectsConf)) {
-    setSnackbar({ show: true, msg: 'please map mandatory fields' })
+    setSnackbar({ show: true, msg: __('please map mandatory fields', 'bitform') })
     return false;
   }
   if (!checkRequiredActions(projectsConf)) {
-    setSnackbar({ show: true, msg: 'please fill up the required actions' })
+    setSnackbar({ show: true, msg: __('please fill up the required actions', 'bitform') })
     return false;
   }
   if (projectsConf?.event === 'subtask' && !(projectsConf?.taskId || projectsConf.subEvent.includes('task'))) {
-    setSnackbar({ show: true, msg: 'to create a subtask you must select a task or create a new task' })
+    setSnackbar({ show: true, msg: __('to create a subtask you must select a task or create a new task', 'bitform') })
     return false;
   }
   if (['task', 'subtask'].includes(projectsConf?.event)) {
     if ((projectsConf?.milestoneId || projectsConf.subEvent.includes('milestone')) && !(projectsConf?.tasklistId || projectsConf.subEvent.includes('tasklist'))) {
-      setSnackbar({ show: true, msg: `to create a ${projectsConf.event} under milestone you must select a tasklist or create a new tasklist` })
+      setSnackbar({ show: true, msg: sprintf(__('to create a %s under milestone you must select a tasklist or create a new tasklist', 'bitform'), projectsConf.event) })
       return false;
     }
   }

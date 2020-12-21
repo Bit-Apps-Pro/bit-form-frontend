@@ -3,8 +3,8 @@ export default function SelectType(props) {
     <div className="mt-3 setting-inp">
       <span>Type:</span>
       <select value={props.multipleSelct ? '1' : '0'} onChange={props.updateType}>
-        <option value="0">Single Select</option>
-        <option value="1">Multiple Select</option>
+        <option value="0">{__('Single Select', 'bitform')}</option>
+        <option value="1">{__('Multiple Select', 'bitform')}</option>
       </select>
 
       {props.multipleSelct && (

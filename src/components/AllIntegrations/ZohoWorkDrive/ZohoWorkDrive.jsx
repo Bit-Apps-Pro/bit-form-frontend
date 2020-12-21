@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -85,7 +86,9 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          Next &nbsp;
+          {__('Next', 'bitform')}
+          {' '}
+&nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
 

@@ -15,7 +15,7 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Margin">
+    <StyleAccordion className="style-acc w-9"title={__('Margin', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range

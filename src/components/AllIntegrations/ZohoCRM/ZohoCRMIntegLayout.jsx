@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import ZohoCRMNewRecord from './ZohoCRMNewRecord'
 import ZohoCRMRelatedRecord from './ZohoCRMRelatedRecord'
@@ -31,9 +32,9 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">Module:</b>
+      <b className="wdt-100 d-in-b">{__('Module:', 'bitform')}</b>
       <select onChange={handleInput} name="module" value={crmConf.module} className="btcd-paper-inp w-7" disabled={tab}>
-        <option value="">Select Module</option>
+        <option value="">{__('Select Module', 'bitform')}</option>
         {
           crmConf?.default?.modules && Object.keys(crmConf.default.modules).map(moduleApiName => (
             <option key={moduleApiName} value={moduleApiName}>
@@ -42,14 +43,14 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
           ))
         }
       </select>
-      {tab === 0 && <button onClick={() => refreshModules(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh CRM Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
+      {tab === 0 && <button onClick={() => refreshModules(formID, crmConf, setCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh CRM Modules', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>}
       <br />
       <div>
         <Tabs>
           <div className="flx mt-2">
             <Tab>
               <button className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">
-                New Record
+                {__('New Record', 'bitform')}
               </button>
             </Tab>
 
@@ -57,14 +58,14 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
               <>
                 <Tab key={`t-${indx * 3}`}>
                   <button className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`} type="button">
-                    Related List #
+                    {__('Related List #', 'bitform')}
                     {indx + 1}
                   </button>
                 </Tab>
                 <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><span className="btcd-icn icn-clear" /></button>
               </>
             ))}
-            {crmConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>}
+            {crmConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Add More Related List', 'bitform')}'` }} type="button">+</button>}
           </div>
           <div className="btcd-hr" />
 

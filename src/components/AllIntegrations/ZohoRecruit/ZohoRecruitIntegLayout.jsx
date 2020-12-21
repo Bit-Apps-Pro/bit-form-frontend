@@ -1,4 +1,5 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+import { __ } from '@wordpress/i18n'
 import ZohoRecruitNewRecord from './ZohoRecruitNewRecord'
 import ZohoRecruitRelatedRecord from './ZohoRecruitRelatedRecord'
 import { refreshModules } from './ZohoRecruitCommonFunc'
@@ -33,7 +34,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
       <br />
       <b className="wdt-100 d-in-b">Module:</b>
       <select onChange={handleInput} name="module" value={recruitConf.module} className="btcd-paper-inp w-7" disabled={tab === 1}>
-        <option value="">Select Module</option>
+        <option value="">{__('Select Module', 'bitform')}</option>
         {
           recruitConf.default && recruitConf.default.modules && Object.keys(recruitConf.default.modules).map(moduleApiName => (
             <option key={moduleApiName} value={moduleApiName}>
@@ -48,7 +49,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
         <div className="flx mt-2">
           <Tab>
             <button className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">
-              New Record
+              {__('New Record', 'bitform')}
             </button>
           </Tab>
 
@@ -56,7 +57,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
             <>
               <Tab key={`rel-${indx + 64}`}>
                 <button className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`} type="button">
-                  Related List #
+                  {__('Related List #', 'bitform')}
                   {indx + 1}
                 </button>
               </Tab>

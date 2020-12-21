@@ -55,7 +55,7 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
     <div ref={ref} className="pos-rel">
       <div
         aria-label="color picker"
-        title="Color Picker"
+       title={__('Color Picker', 'bitform')}
         onClick={() => setIsComponentVisible(!isComponentVisible)}
         onKeyPress={() => setIsComponentVisible(!isComponentVisible)}
         tabIndex="0"

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoRecruitActions from './ZohoRecruitActions'
@@ -26,11 +27,11 @@ export default function ZohoRecruitNewRecord({ tab, settab, formID, formFields, 
       {recruitConf.default?.moduleData?.[recruitConf.module]?.fields
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">Map Fields</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Map Fields', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>Form Fields</b></div>
-              <div className="txt-dp"><b>Zoho Fields</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
             </div>
 
             {recruitConf.field_map.map((itm, i) => (
@@ -50,11 +51,11 @@ export default function ZohoRecruitNewRecord({ tab, settab, formID, formFields, 
             <br />
             {Object.keys(recruitConf.default?.moduleData?.[recruitConf.module]?.fileUploadFields).length !== 0 && (
               <>
-                <div className="mt-4"><b className="wdt-100">Map Attachments</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('Map Attachments', 'bitform')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>Form Fields</b></div>
-                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {recruitConf.upload_field_map.map((itm, i) => (
@@ -75,7 +76,7 @@ export default function ZohoRecruitNewRecord({ tab, settab, formID, formFields, 
                 <br />
               </>
             )}
-            <div className="mt-4"><b className="wdt-100">Actions</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
 
             <ZohoRecruitActions

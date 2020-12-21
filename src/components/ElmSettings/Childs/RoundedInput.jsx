@@ -16,8 +16,8 @@ export default function RoundedInput(props) {
       <div className="mt-3 setting-inp">
         <span>Check Box isRound:</span>
         <select value={!isRound ? 'Square' : 'Round'} onChange={updateisRound} name="" id="">
-          <option value="Square">Square</option>
-          <option value="Round">Round</option>
+          <option value="Square">{__('Square', 'bitform')}</option>
+          <option value="Round">{__('Round', 'bitform')}</option>
         </select>
       </div>
     </div>
