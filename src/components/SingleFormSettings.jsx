@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import DatePicker from 'react-date-picker';
 import TimePicker from 'react-time-picker'
+import { __ } from '@wordpress/i18n';
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
 import Accordions from './ElmSettings/Childs/Accordions'
 import CheckBox from './ElmSettings/Childs/CheckBox'
@@ -259,14 +260,14 @@ export default function SingleFormSettings({ additional, setadditional }) {
 
   return (
     <div>
-      <h2>Settings</h2>
+      <h2>{__('Settings', 'bitform')}</h2>
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
           <div>
             <b>
               <span className="btcd-icn icn-one mr-2" />
-              Allow Single Entry for each IP address
+              {__('Allow Single Entry for each IP address', 'bitform')}
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />
@@ -277,7 +278,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-one mr-2" />
-            Capture GCLID
+            {__('Capture GCLID', 'bitform')}
             {' '}
           </b>
         )}
@@ -285,7 +286,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
-          Enable / Disable
+          {__('Enable / Disable', 'bitform')}
         </div>
       </Accordions>
 
@@ -294,7 +295,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <div className="">
             <b>
               <span className="btcd-icn icn-block mr-2" />
-              Disable this form after limited entry
+              {__('Disable this form after limited entry', 'bitform')}
             </b>
           </div>
           <div className="flx">
@@ -308,14 +309,14 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-date mr-2" />
-            Limit Form Submission Period
+            {__('Limit Form Submission Period', 'bitform')}
           </b>
         )}
         cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additional.enabled} />
-          Enable / Disable
+          {__('Enable / Disable', 'bitform')}
         </div>
         <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Everyday')} value="Everyday" title="Every Day" />
         <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Friday')} value="Friday" title="Friday" />
@@ -367,7 +368,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         )}
 
         <div className="flx mt-2">
-          <span className="mt-2 ml-2">Time:</span>
+          <span className="mt-2 ml-2">{__('Time:', 'bitform')}</span>
           <div className="mr-2 ml-2">
             <div><small>From</small></div>
             <TimePicker
@@ -394,7 +395,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-r-block mr-2" />
-            Blocked IP list
+            {__('Blocked IP list', 'bitform')}
           </b>
         )}
         cls="w-6 mt-3"
@@ -402,7 +403,7 @@ export default function SingleFormSettings({ additional, setadditional }) {
         {'blocked_ip' in additional.settings && additional.settings.blocked_ip.length > 0 && (
           <div className="flx mb-2">
             <SingleToggle2 cls="flx" action={toggleAllIpStatus} checked={'blocked_ip' in additional.enabled} />
-            Enable / Disable
+            {__('Enable / Disable', 'bitform')}
           </div>
         )}
 
@@ -422,21 +423,24 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-lock mr-2" />
-              &nbsp;Allowed IP
+            {__('Allowed IP', 'bitform')}
           </b>
         )}
         cls="w-6 mt-3"
       >
         <div>
-          <b>Note:</b>
+          <b>
+            {__('Note', 'bitform')}
+            :
+          </b>
           {' '}
-          By enabling this option only listed IP can submit this form.
+          {__('By enabling this option only listed IP can submit this form.', 'bitform')}
         </div>
 
         {'private_ip' in additional.settings && additional.settings.private_ip.length > 0 && (
           <div className="flx mb-2 mt-3">
             <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additional.enabled} />
-            Enable / Disable
+            {__('Enable / Disable', 'bitform')}
           </div>
         )}
 

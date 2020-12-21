@@ -2,6 +2,7 @@
 import StyleAccordion from '../ChildComp/StyleAccordion';
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
+import { __ } from '@wordpress/i18n';
 
 export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPoint }) {
   const [, pcls] = usePseudo(cls)
@@ -17,10 +18,10 @@ export default function FontSize({ style, cls, styleConfig, styleDispatch, brkPo
     <StyleAccordion className="style-acc w-9" title="Font">
       {'size' in styleConfig && (
         <div className="mt-2">
-          <span className="f-5">Font Size</span>
+          <span className="f-5">{__('Font Size', 'bitform')}</span>
           <Range
             info={[
-              { icn: <i className="font-w-m"><u>A</u></i>, lbl: 'Font Size' },
+              { icn: <i className="font-w-m"><u>A</u></i>, lbl: __('Font Size', 'bitform') },
             ]}
             className="btc-range"
             unit="px"

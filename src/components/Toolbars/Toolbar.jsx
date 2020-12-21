@@ -2,6 +2,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
+import { __ } from '@wordpress/i18n';
 import { useMemo } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars'
 import Tools from './Tools'
@@ -11,24 +12,24 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
 
   const tools = [
     {
-      name: 'Text',
+      name: __('Text', 'bitform'),
       icn: 'text',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'text',
-        lbl: 'Text Field',
-        ph: 'Placeholder Text...',
+        lbl: __('Text Field', 'bitform'),
+        ph: __('Placeholder Text...', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Multiline Text',
+      name: __('Multiline Text', 'bitform'),
       icn: 'textarea',
       pos: { h: 3, w: 6, i: 'block-5', minH: 3 },
       elm: {
         typ: 'textarea',
-        lbl: 'Multi-Line Text',
-        ph: 'Placeholder Text...',
+        lbl: __('Multi-Line Text', 'bitform'),
+        ph: __('Placeholder Text...', 'bitform'),
         valid: {},
       },
     },
@@ -41,54 +42,54 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     }, */
     {
-      name: 'Check Box',
+      name: __('Check Box', 'bitform'),
       icn: 'check',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'check',
-        lbl: 'Check Boxs',
+        lbl: __('Check Boxs', 'bitform'),
         opt: [
-          { lbl: 'Option 1' },
-          { lbl: 'Option 2' },
-          { lbl: 'Option 3' },
+          { lbl: __('Option 1', 'bitform') },
+          { lbl: __('Option 2', 'bitform') },
+          { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
       },
     },
     {
-      name: 'Radio',
+      name: __('Radio', 'bitform'),
       icn: 'radio',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'radio',
-        lbl: 'Radio',
+        lbl: __('Radio', 'bitform'),
         round: true,
         opt: [
-          { lbl: 'Option 1' },
-          { lbl: 'Option 2' },
-          { lbl: 'Option 3' },
+          { lbl: __('Option 1', 'bitform') },
+          { lbl: __('Option 2', 'bitform') },
+          { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
       },
     },
     {
-      name: 'Number',
+      name: __('Number', 'bitform'),
       icn: 'number',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'number',
-        lbl: 'Number Field',
-        ph: 'Placeholder...',
+        lbl: __('Number Field', 'bitform'),
+        ph: __('Placeholder...', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Drop Down',
+      name: __('Drop Down', 'bitform'),
       icn: 'select',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
-        lbl: 'Drop-Down',
+        lbl: __('Drop-Down', 'bitform'),
         mul: false,
         opt: [
           { label: 'Option 1', value: 'Option 1' },
@@ -99,29 +100,29 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
-      name: 'Password',
+      name: __('Password', 'bitform'),
       icn: 'password',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'password',
-        lbl: 'Password Field',
-        ph: 'Placeholder...',
+        lbl: __('Password Field', 'bitform'),
+        ph: __('Placeholder...', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Email',
+      name: __('Email', 'bitform'),
       icn: 'email',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'email',
-        lbl: 'Email Field',
-        ph: 'example@mail.com',
+        lbl: __('Email Field', 'bitform'),
+        ph: __('example@mail.com', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'URL',
+      name: __('URL', 'bitform'),
       icn: 'url',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
@@ -130,90 +131,107 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           title: 'https://www.example.com  or  www.example.com',
           pattern: '(https:\/\/www.*.*)|(http:\/\/www.*.*)|(http:\/\/*.*)|(https:\/\/*.*|www.*.*)',
         },
-        lbl: 'URL Field',
-        ph: 'https://www.example.com',
+        lbl: __('URL Field', 'bitform'),
+        ph: __('https://www.example.com', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'File Upload',
+      name: __('File Upload', 'bitform'),
       icn: 'file-up',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2, minW: 2 },
       elm: {
         typ: 'file-up',
-        lbl: 'File Upload',
+        lbl: __('File Upload', 'bitform'),
         upBtnTxt: 'Attach File',
         valid: {},
       },
     },
     {
-      name: 'Date',
+      name: __('Date', 'bitform'),
       icn: 'date',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'date',
-        lbl: 'Date Input',
+        lbl: __('Date Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Time',
+      name: __('Time', 'bitform'),
       icn: 'time',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'time',
-        lbl: 'Time Input',
+        lbl: __('Time Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Date-Time',
+      name: __('Date-Time', 'bitform'),
       icn: 'datetime-local',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
-        lbl: 'Date-Time Input',
+        lbl: __('Date-Time Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Month',
+      name: __('Month', 'bitform'),
       icn: 'month',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'month',
-        lbl: 'Month Input',
+        lbl: __('Month Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Week',
+      name: __('Week', 'bitform'),
       icn: 'week',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'week',
-        lbl: 'Week Input',
+        lbl: __('Week Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Color Picker',
+      name: __('Color Picker', 'bitform'),
       icn: 'color',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'color',
-        lbl: 'Color Picker',
+        lbl: __('Color Picker', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'reCaptcha v2',
+      name: __('reCaptcha v2', 'bitform'),
       icn: 'recaptcha',
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2, minW: 2 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
         lbl: '',
+        valid: {},
+      },
+    },
+    {
+      name: __('Paypal', 'bitform'),
+      icn: 'recaptcha',
+      pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },
+      elm: {
+        typ: 'paypal',
+        currency: 'USD',
+        lbl: '',
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+        },
         valid: {},
       },
     },
@@ -236,7 +254,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
             ))}
           </div>
         </Scrollbars>
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       ), [tolbarSiz])}
     </div>
   )

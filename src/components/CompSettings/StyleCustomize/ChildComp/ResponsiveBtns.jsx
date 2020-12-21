@@ -1,10 +1,12 @@
+import { __ } from "@wordpress/i18n";
+
 export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
   return (
     <div className="resp-btn pos-rel flx">
       {[
-        { lbl: 'sm', icn: 'phone_android', tip: 'Phone View' },
-        { lbl: 'md', icn: 'tablet_android', tip: 'Tablet View' },
-        { lbl: 'lg', icn: 'laptop_mac', tip: 'Laptop View' }]
+        { lbl: 'sm', icn: 'phone_android', tip: __('Phone View', 'bitform') },
+        { lbl: 'md', icn: 'tablet_android', tip: __('Tablet View', 'bitform') },
+        { lbl: 'lg', icn: 'laptop_mac', tip: __('Laptop View', 'bitform') }]
         .map(itm => (
           <button
             key={itm.icn}

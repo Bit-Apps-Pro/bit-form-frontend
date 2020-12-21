@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n';
 import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import DropDown from '../ElmSettings/Childs/DropDown'
@@ -99,13 +100,13 @@ export default function FileUpSettings(props) {
         <span className="font-w-m">Field Key</span>
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       </div>
-      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} className="mt-2" />
-      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
-      <SingleInput inpType="text" title="Label:" value={label} action={setLabel} />
-      <SingleInput inpType="text" title="Upload Button Text:" value={upBtnTxt} action={setUpBtnTxt} />
-      <SingleInput inpType="number" title="Max Upload Size:" value={mxUp} action={setMxUp} placeholder="Any Size" />
-      <SingleToggle title="Allow Multiple:" action={setMultiple} isChecked={isMultiple} className="mt-5" />
-      <DropDown className="mt-2" titleClassName="mt-3 setting-inp" title="Allowed File Type:" isMultiple addable options={options} placeholder="Select File Type" jsonValue action={setFileFilter} value={exts} />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-2" />
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <SingleInput inpType="text" title={__('Label:', 'bitform')} value={label} action={setLabel} />
+      <SingleInput inpType="text" title={__('Upload Button Text:', 'bitform')} value={upBtnTxt} action={setUpBtnTxt} />
+      <SingleInput inpType="number" title={__('Max Upload Size:', 'bitform')} value={mxUp} action={setMxUp} placeholder="Any Size" />
+      <SingleToggle title={__('Allow Multiple:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-5" />
+      <DropDown className="mt-2" titleClassName="mt-3 setting-inp" title={__('Allowed File Type:', 'bitform')} isMultiple addable options={options} placeholder={__('Select File Type', 'bitform')} jsonValue action={setFileFilter} value={exts} />
     </div>
   )
 }

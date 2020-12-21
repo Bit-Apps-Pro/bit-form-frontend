@@ -3,6 +3,7 @@ import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 import BorderIcn from '../../../../Icons/BorderIcn'
 import { spreadIn4Value } from '../../../../Utils/Helpers'
+import { __ } from '@wordpress/i18n'
 
 export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   let padding = style?.[cls]?.padding || '0px 0px 0px 0px'
@@ -19,11 +20,11 @@ export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoi
 
       <Range
         info={[
-          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Padding Top' },
-          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Padding Right' },
-          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Padding Bottom' },
-          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Padding Left' },
-          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
+          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: __('Padding Top', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: __('Padding Right', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: __('Padding Bottom', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: __('Padding Left', 'bitform') },
+          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: __('All Side', 'bitform') },
         ]}
         className="btc-range"
         unit="px"

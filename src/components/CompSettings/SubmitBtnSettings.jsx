@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { __ } from '@wordpress/i18n';
 import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import SelectBox2 from '../ElmSettings/Childs/SelectBox2'
@@ -12,9 +13,9 @@ export default function SubmitBtnSettings(props) {
   const { subBtnTxt, align, fulW, btnSiz } = props.elm.data
 
   const pos = [
-    { name: 'Left', value: 'left' },
-    { name: 'Center', value: 'center' },
-    { name: 'Right', value: 'right' },
+    { name: __('Left', 'bitform'), value: 'left' },
+    { name: __('Center', 'bitform'), value: 'center' },
+    { name: __('Right', 'bitform'), value: 'right' },
   ]
 
   function setSubBtnTxt(e) {
@@ -29,7 +30,7 @@ export default function SubmitBtnSettings(props) {
 
   function setResetAlw(e) {
     if (e.target.checked) {
-      props.elm.data.rstBtnTxt = 'Reset'
+      props.elm.data.rstBtnTxt = __('Reset', 'bitform')
     } else {
       delete props.elm.data.rstBtnTxt
     }
@@ -59,15 +60,15 @@ export default function SubmitBtnSettings(props) {
     <div className="ml-2 mr-4">
       <Back2FldList setElementSetting={props.setElementSetting} />
       <div>
-        <span className="font-w-m">Field Type : </span>
-        Submit
+        <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
+        {__('Submit', 'bitform')}
       </div>
-      <SingleInput inpType="text" title="Submit Button Text:" value={subBtnTxt} action={setSubBtnTxt} />
-      <SingleToggle title="Show Reset Button:" action={setResetAlw} isChecked={isAlwReset} className="mt-5" />
-      {isAlwReset && <SingleInput inpType="text" title="Reset Button Text:" value={rstBtnTxt} action={setRstBtnTxt} />}
-      <SelectBox2 title="Button Align:" options={pos} value={align} action={setButtonAlign} />
-      <SingleToggle title="Full Width Button:" action={setFulW} isChecked={fulW} className="mt-5" />
-      <SingleToggle title="Small Button:" action={setBtnSiz} isChecked={btnSiz === 'sm'} className="mt-5" />
+      <SingleInput inpType="text" title={__('Submit Button Text:', 'bitform')} value={subBtnTxt} action={setSubBtnTxt} />
+      <SingleToggle title={__('Show Reset Button:', 'bitform')} action={setResetAlw} isChecked={isAlwReset} className="mt-5" />
+      {isAlwReset && <SingleInput inpType="text" title={__('Reset Button Text:', 'bitform')} value={rstBtnTxt} action={setRstBtnTxt} />}
+      <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={align} action={setButtonAlign} />
+      <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} className="mt-5" />
+      <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} className="mt-5" />
     </div>
   )
 }

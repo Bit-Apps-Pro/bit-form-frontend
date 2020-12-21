@@ -9,6 +9,7 @@ import BlurIcn from '../../../../Icons/BlurIcn'
 import SpreadIcn from '../../../../Icons/SpreadIcn'
 import InsideIcn from '../../../../Icons/InsideIcn'
 import NoneIcn from '../../../../Icons/NoneIcn'
+import { __ } from '@wordpress/i18n'
 
 export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -69,9 +70,9 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
               value={pseudo}
               onChange={setPseudo}
               btns={[
-                { lbl: 'Default', icn: 'Default' },
-                ...('hover' in styleConfig ? [{ lbl: 'On Mouse Over', icn: 'Hover' }] : []),
-                ...('focus' in styleConfig ? [{ lbl: 'On Focus', icn: 'Focus' }] : []),
+                { lbl: __('Default', 'bitform'), icn: 'Default' },
+                ...('hover' in styleConfig ? [{ lbl: __('On Mouse Over', 'bitform'), icn: 'Hover' }] : []),
+                ...('focus' in styleConfig ? [{ lbl: __('On Focus', 'bitform'), icn: 'Focus' }] : []),
               ]}
             />
           </div>
@@ -82,9 +83,9 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
           value={shadwTyp}
           onChange={setShadwType}
           btns={[
-            { lbl: 'Inside', icn: <InsideIcn /> },
-            { lbl: 'Outside', icn: <SpreadIcn /> },
-            { lbl: 'None', icn: <NoneIcn /> },
+            { lbl: __('Inside', 'bitform'), icn: <InsideIcn /> },
+            { lbl: __('Outside', 'bitform'), icn: <SpreadIcn /> },
+            { lbl: __('None', 'bitform'), icn: <NoneIcn /> },
           ]}
         />
       </div>

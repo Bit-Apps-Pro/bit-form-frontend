@@ -12,10 +12,10 @@ export default function Direction({ style, cls, styleConfig, styleDispatch, brkP
   return (
     <StyleAccordion className="style-acc w-9" title="Direction">
       <div className="mt-2 flx flx-between">
-        <span className="f-5">Content Direction</span>
+        <span className="f-5">{__('Content Direction', 'bitform')}</span>
         <select value={dir} className="btcd-paper-inp w-7" onChange={e => setDirecation(e.target.value)}>
-          <option value="ltr">Left to Right</option>
-          <option value="rtl">Right to Left</option>
+          <option value="ltr">{__('Left to Right', 'bitform')}</option>
+          <option value="rtl">{__('Right to Left', 'bitform')}</option>
         </select>
       </div>
     </StyleAccordion>

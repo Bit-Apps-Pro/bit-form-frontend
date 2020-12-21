@@ -4,6 +4,7 @@ import Captcha from '../components/Captcha'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import { __ } from '@wordpress/i18n';
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
@@ -16,7 +17,7 @@ function AppSettingsPage() {
           if (res.data && res.data.id) {
             setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
           }
-          setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
+          setsnack({ ...{ show: true, msg: __('Captcha Settings Updated', 'bitform') } })
         }
       })
   }
@@ -27,7 +28,7 @@ function AppSettingsPage() {
         if (res !== undefined && res.success) {
           if (res.data && res.data.id) {
             setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
-            setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
+            setsnack({ ...{ show: true, msg: __('Captcha Settings Updated', 'bitform') } })
           }
         }
       })
@@ -40,7 +41,7 @@ function AppSettingsPage() {
       <aside className="btcd-app-setting-sidebar mr-4">
         <NavLink to="/app-settings/recaptcha" activeClassName="btcd-app-s-a">
           <span className="btcd-icn icn-loop" />
-          reCAPTCHA
+          {__('reCAPTCHA', 'bitform')}
         </NavLink>
       </aside>
 

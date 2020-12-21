@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { memo } from 'react';
+import { __ } from '@wordpress/i18n';
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
@@ -95,15 +96,15 @@ function TextFieldSettings(props) {
       </div>
       <span className="font-w-m">Field Key</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} className="mt-3" />
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
       {elmData.typ !== 'textarea'
         && elmData.typ.match(/^(text|url|password|number|email|)$/)
-        && <SingleToggle title="Auto Fill:" action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
-      <SingleInput inpType="text" title="Field Label:" value={label} action={setLabel} />
-      {elmData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
-      {elmData.typ === 'number' && <SingleInput inpType="number" title="Min:" value={min} action={setMin} width={100} className="mr-4" />}
-      {elmData.typ === 'number' && <SingleInput inpType="number" title="Max:" value={max} action={setMax} width={100} />}
+        && <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
+      <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      {elmData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
+      {elmData.typ === 'number' && <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} width={100} className="mr-4" />}
+      {elmData.typ === 'number' && <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} width={100} />}
     </div>
   )
 }
