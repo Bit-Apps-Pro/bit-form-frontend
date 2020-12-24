@@ -14,6 +14,7 @@ export default function Bitforms(props) {
   const [layout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
+  console.log('check', fieldData)
   let maxRowIndex = 0
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
@@ -42,6 +43,8 @@ export default function Bitforms(props) {
           entryID={props.entryID}
           onBlurHandler={onBlurHandler}
           resetFieldValue={resetFieldValue}
+          contentID={props.contentID}
+          fieldData={fieldData}
         />
       </div>
     )
@@ -421,6 +424,8 @@ export default function Bitforms(props) {
                 entryID={props.entryID}
                 buttonDisabled={buttonDisabled}
                 handleReset={handleReset}
+                contentID={props.contentID}
+                fieldData={fieldData}
               // formID={bitFormsFront.contentID}
               // handleSubmit={handleSubmit}
               // id={`form-${props.contentID}-submit`}

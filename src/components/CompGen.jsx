@@ -22,6 +22,7 @@ mul: multiple
 */
 
 function CompGen(props) {
+  console.log('props', props)
   switch (props.atts.typ) {
     case 'text':
     case 'number':
@@ -53,7 +54,7 @@ function CompGen(props) {
     case 'recaptcha':
       return <ReCaptcha formID={props.formID} attr={props.atts} />
     case 'paypal':
-      return <Paypal formID={props.formID} attr={props.atts} />
+      return <Paypal formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

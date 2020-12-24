@@ -225,7 +225,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'paypal',
         currency: 'USD',
-        lbl: '',
+        lbl: __('PayPal', 'bitform'),
         style: {
           layout: 'vertical',
           color: 'gold',
