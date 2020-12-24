@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { useEffect, useRef, useState } from 'react'
-import bitsFetch from '../Utils/bitsFetch'
-import LoaderSm from './Loaders/LoaderSm'
+import bitsFetch from '../../Utils/bitsFetch'
+import LoaderSm from '../Loaders/LoaderSm'
 
 export default function NoteForm({ formID, entryID, allLabels, showForm, setShowForm, setSnackbar, setFetchData, data, setData }) {
   const editMode = Boolean(data.noteID)
