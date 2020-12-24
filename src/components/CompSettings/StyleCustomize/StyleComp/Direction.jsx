@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { __ } from '@wordpress/i18n';
 import StyleAccordion from '../ChildComp/StyleAccordion';
 
 export default function Direction({ style, cls, styleConfig, styleDispatch, brkPoint }) {

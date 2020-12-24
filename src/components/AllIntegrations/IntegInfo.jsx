@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState } from 'react'
+import { __ } from '@wordpress/i18n'
 import { Link, useParams } from 'react-router-dom'
 import CopyText from '../ElmSettings/Childs/CopyText'
 import SnackMsg from '../ElmSettings/Childs/SnackMsg'
