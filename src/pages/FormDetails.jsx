@@ -41,7 +41,7 @@ function FormDetails(props) {
   const { allFormsDispatchHandler } = allFormsData
   const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
-  const [proModal, setProModal] = useState(false)
+  const [proModal, setProModal] = useState({ show: false, msg: '' })
   const { history, newFormId } = props
 
   useEffect(() => {
@@ -168,7 +168,6 @@ function FormDetails(props) {
             setFormName(responseData.form_content.form_name)
             setSubBtn(responseData.formSettings.submitBtn)
             setFormSettings(responseData.formSettings)
-            console.log('backend', responseData.formSettings)
             setworkFlows(responseData.workFlows)
             setadditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
@@ -204,7 +203,6 @@ function FormDetails(props) {
     integrations,
     additional,
   }
-  // console.log('======', fSettings)
 
   const saveForm = () => {
     let formStyle = sessionStorage.getItem('btcd-fs')
