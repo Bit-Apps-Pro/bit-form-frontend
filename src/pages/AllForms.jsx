@@ -199,7 +199,7 @@ function AllFroms({ newFormId }) {
       <Modal
         show={modal}
         setModal={setModal}
-        title={_('Create Form', 'bitform')}
+        title={__('Create Form', 'bitform')}
         subTitle=""
       >
         <FormTemplates />
