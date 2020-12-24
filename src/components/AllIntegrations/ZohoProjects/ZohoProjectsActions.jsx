@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { sprintf, __ } from '@wordpress/i18n'
 import ConfirmModal from '../../ConfirmModal'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'

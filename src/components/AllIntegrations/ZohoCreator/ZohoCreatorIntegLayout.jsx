@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
@@ -52,7 +53,7 @@ export default function ZohoCreatorIntegLayout({ formID, formFields, handleInput
         <>
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
-            <button onClick={() => refreshFields(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Creator Fields','bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <button onClick={() => refreshFields(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Creator Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
           <div className="btcd-hr mt-1" />
           {creatorConf.default?.fields?.[creatorConf?.applicationId]?.[creatorConf?.formId]

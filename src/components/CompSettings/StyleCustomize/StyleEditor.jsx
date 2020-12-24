@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useHistory } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import Background from './StyleComp/Background'
 import Borders from './StyleComp/Borders'

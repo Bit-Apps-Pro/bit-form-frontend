@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+
 export default function IntegrationStepThree({ step, saveConfig, edit, disabled }) {
   return (
     edit

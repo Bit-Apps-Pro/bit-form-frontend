@@ -1,9 +1,10 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 import BorderIcn from '../../../../Icons/BorderIcn'
 import { spreadIn4Value } from '../../../../Utils/Helpers'
-import { __ } from '@wordpress/i18n'
 
 export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   let margin = style?.[cls]?.margin || '0px 0px 0px 0px'
@@ -15,7 +16,7 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <StyleAccordion className="style-acc w-9"title={__('Margin', 'bitform')}>
+    <StyleAccordion className="style-acc w-9" title={__('Margin', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range

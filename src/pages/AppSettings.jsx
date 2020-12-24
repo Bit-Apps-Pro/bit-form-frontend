@@ -1,10 +1,11 @@
 import { useEffect, useContext, useState } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import Captcha from '../components/Captcha'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
-import { __ } from '@wordpress/i18n';
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)

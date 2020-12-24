@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Link } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal';
@@ -199,7 +200,7 @@ function AllFroms({ newFormId }) {
       <Modal
         show={modal}
         setModal={setModal}
-        title={_('Create Form', 'bitform')}
+        title={__('Create Form', 'bitform')}
         subTitle=""
       >
         <FormTemplates />

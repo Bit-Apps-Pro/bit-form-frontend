@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
@@ -65,7 +66,7 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
         md
         show={updateMdl}
         setModal={setUpdateMdl}
-       title={__('Update Row', 'bitform')}
+        title={__('Update Row', 'bitform')}
       >
         <div className="o-a">
           {creatorConf?.actions?.update && (
@@ -91,8 +92,8 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
               <div className="font-w-m mt-3">{__('Update Preferance', 'bitform')}</div>
               <small>{__('insert new record if the above criteria doesn&apos;t met?', 'bitfomr')}</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={creatorConf.actions.update?.insert} name="up-row"title={__('Yes', 'bitform')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!creatorConf.actions.update?.insert} name="up-row"title={__('No', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={creatorConf.actions.update?.insert} name="up-row" title={__('Yes', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!creatorConf.actions.update?.insert} name="up-row" title={__('No', 'bitform')} />
               </div>
             </>
           )}

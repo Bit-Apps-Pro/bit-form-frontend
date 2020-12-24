@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import zohoAnalytics from '../resource/img/integ/analytics.svg';
@@ -120,7 +121,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
           <h2>{__('Integrations', 'bitform')}</h2>
           <div className="flx flx-wrp">
             <Modal
-              title={__("Available Integrations", 'bitform')}
+              title={__('Available Integrations', 'bitform')}
               show={showMdl}
               setModal={setShowMdl}
               style={{ width: 1000 }}

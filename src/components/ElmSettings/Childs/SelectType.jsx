@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
+
 export default function SelectType(props) {
   return (
     <div className="mt-3 setting-inp">

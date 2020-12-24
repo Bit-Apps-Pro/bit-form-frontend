@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useReducer } from 'react';
 import { NavLink, useParams, useHistory } from 'react-router-dom'
@@ -87,7 +88,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
       <Modal
         show={showTemplateModal}
         setModal={setTemplateModal}
-       title={__('Browse Template', 'bitform')}
+        title={__('Browse Template', 'bitform')}
       >
         <h4 className="txt-dp">{__('Email Templates Coming soon', 'bitform')}</h4>
       </Modal>

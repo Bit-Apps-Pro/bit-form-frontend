@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -98,7 +99,9 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__('Next', 'bitform')} &nbsp;
+          {__('Next', 'bitform')}
+          {' '}
+&nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
 

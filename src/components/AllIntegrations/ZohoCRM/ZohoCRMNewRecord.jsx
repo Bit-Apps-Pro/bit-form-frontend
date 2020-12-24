@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
 import Loader from '../../Loaders/Loader';
@@ -73,7 +74,12 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
                   <div className="pro-blur flx">
                     <div className="pro">
                       Available On
-                      <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro"> {__('Premium', 'bitform')}</span></a>
+                      <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                        <span className="txt-pro">
+                          {' '}
+                          {__('Premium', 'bitform')}
+                        </span>
+                      </a>
                     </div>
                   </div>
                 )}

@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -154,7 +155,7 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
         md
         show={updateMdl}
         setModal={setUpdateMdl}
-       title={__('Update Row', 'bitform')}
+        title={__('Update Row', 'bitform')}
       >
         <div className="o-a">
           {analyticsConf?.actions?.update && (
@@ -179,8 +180,8 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
               <div className="font-w-m mt-3">{__('Update Preferance', 'bitform')}</div>
               <small>insert new row if the above criteria doesn&apos;t met?</small>
               <div>
-                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={analyticsConf.actions.update?.insert} name="up-row"title={__('Yes', 'bitform')} />
-                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!analyticsConf.actions.update?.insert} name="up-row"title={__('No', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(true, 'insert')} radio checked={analyticsConf.actions.update?.insert} name="up-row" title={__('Yes', 'bitform')} />
+                <CheckBox onChange={() => setUpdateSettings(false, 'insert')} radio checked={!analyticsConf.actions.update?.insert} name="up-row" title={__('No', 'bitform')} />
               </div>
             </>
           )}
@@ -191,7 +192,7 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
         md
         show={actionMdl.show === 'share'}
         setModal={() => setActionMdl({ show: false })}
-       title={__('Share Settings', 'bitform')}
+        title={__('Share Settings', 'bitform')}
       >
         <div className="o-a" style={{ height: '95%' }}>
           <div className="mt-2 mb-1">{__('Enter Email Addresses', 'bitform')}</div>

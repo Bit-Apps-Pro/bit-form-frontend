@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -41,7 +42,7 @@ export default function ZohoMailActions({ formFields, mailConf, setMailConf }) {
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}
         action={() => setActionMdl({ show: false })}
-       title={__('Select Attachment', 'bitform')}
+        title={__('Select Attachment', 'bitform')}
       >
         <div className="btcd-hr mt-2" />
         <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>

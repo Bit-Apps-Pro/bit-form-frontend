@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import ZohoCRMNewRecord from './ZohoCRMNewRecord'

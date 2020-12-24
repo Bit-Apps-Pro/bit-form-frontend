@@ -1,4 +1,5 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import FormEntryNotes from './FormEntryNotes'
@@ -9,7 +10,7 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, allResp, 
   const [tab, settab] = useState('')
 
   return (
-    <Modal lg show setModal={close}title={__('Related Info', 'bitform')}>
+    <Modal lg show setModal={close} title={__('Related Info', 'bitform')}>
       <Tabs>
         <Tab>
           <button className={`btcd-s-tab-link ${tab === 'timeline' && 's-t-l-active'}`} type="button">

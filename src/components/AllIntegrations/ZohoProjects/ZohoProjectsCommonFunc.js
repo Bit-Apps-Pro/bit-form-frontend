@@ -1,4 +1,5 @@
 /* eslint-disable array-callback-return */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { sprintf, __ } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 

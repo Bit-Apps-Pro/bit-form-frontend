@@ -3,6 +3,7 @@
 /* eslint-disable no-undef */
 
 import { useState, useEffect, memo, useContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'

@@ -3,6 +3,7 @@
 import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react'
 
 import { useParams } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'

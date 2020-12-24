@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
@@ -13,7 +14,7 @@ export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSi
         <option value="custom">{__('Custom...', 'bitform')}</option>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, signConf, setSignConf)} label={__("Custom Value",'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__("Custom Value",'bitform')} />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, signConf, setSignConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
       <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i, signConf, setSignConf)}>
         <option value="">{__('Select Field', 'bitform')}</option>

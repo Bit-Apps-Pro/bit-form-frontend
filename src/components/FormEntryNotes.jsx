@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
@@ -182,7 +183,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
         show={confMdl.show}
         close={closeConfMdl}
         action={deleteNote}
-       title={__('Confirmation', 'bitform')}
+        title={__('Confirmation', 'bitform')}
       >
         <div className="txt-center mt-5 mb-4">
           {__('Are you sure to delete this note', 'bitform')}

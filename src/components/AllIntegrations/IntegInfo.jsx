@@ -1,4 +1,5 @@
 import { useState } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Link, useParams } from 'react-router-dom'
 import CopyText from '../ElmSettings/Childs/CopyText'
@@ -31,7 +32,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
 
       <div className="btcd-stp-page" style={{ width: 900, height: `${100}%` }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" name="name" defaultValue={integrations[id].name} type="text" placeholder={__("Integration Name...", 'bitform')} readOnly />
+        <input className="btcd-paper-inp w-6 mt-1" name="name" defaultValue={integrations[id].name} type="text" placeholder={__('Integration Name...', 'bitform')} readOnly />
 
         <div className="mt-3"><b>Data Center:</b></div>
         <select name="dataCenter" defaultValue={integrations[id].dataCenter} className="btcd-paper-inp w-9 mt-1" disabled>

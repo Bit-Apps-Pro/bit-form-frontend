@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import EditZohoAnalytics from './ZohoAnalytics/EditZohoAnalytics'
 import EditZohoBigin from './ZohoBigin/EditZohoBigin'

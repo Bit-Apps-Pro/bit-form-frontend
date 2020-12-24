@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -265,7 +266,7 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData, 
                   <div className="flx flx-between mt-1 inp-grp">
                     <b className="icn br-50 mr-1">{__('Height', 'bitform')}</b>
                     <input
-                     title={__('Height', 'bitform')}
+                      title={__('Height', 'bitform')}
                       className="btc-range mr-1"
                       type="range"
                       min="25"

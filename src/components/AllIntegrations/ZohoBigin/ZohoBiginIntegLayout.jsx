@@ -1,8 +1,9 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import ZohoBiginNewRecord from './ZohoBiginNewRecord'
 import ZohoBiginRelatedRecord from './ZohoBiginRelatedRecord'
 import { refreshModules } from './ZohoBiginCommonFunc'
-import { __ } from '@wordpress/i18n'
 
 export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, handleInput, biginConf, setBiginConf, isLoading, setisLoading, setSnackbar }) {
   const addNewRelatedTab = () => {

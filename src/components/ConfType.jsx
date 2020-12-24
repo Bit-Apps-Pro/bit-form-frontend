@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
 import bitsFetch from '../Utils/bitsFetch'
-import { __ } from '@wordpress/i18n';
 
 export default function ConfType(props) {
   console.log('%c $render ConfType', 'background:lightgreen;padding:3px;border-radius:5px;')

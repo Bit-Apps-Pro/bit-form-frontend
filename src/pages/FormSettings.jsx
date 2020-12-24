@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { lazy, Suspense, useState } from 'react';
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'

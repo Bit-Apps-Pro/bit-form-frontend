@@ -1,4 +1,5 @@
 import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import FormSettings from './FormSettings'
@@ -333,7 +334,7 @@ function FormDetails(props) {
             sm
             show={proModal.show}
             setModal={() => setProModal({ show: false })}
-           title={__('Premium Feature', 'bitform')}
+            title={__('Premium Feature', 'bitform')}
             className="pro-modal"
           >
             <h4 className="txt-center mt-5">

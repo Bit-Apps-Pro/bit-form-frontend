@@ -1,4 +1,5 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import CheckBox from '../ElmSettings/Childs/CheckBox'
 import SingleInput from '../ElmSettings/Childs/SingleInput'

@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import DatePicker from 'react-date-picker';
 import TimePicker from 'react-time-picker'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
 import Accordions from './ElmSettings/Childs/Accordions'
@@ -318,16 +319,16 @@ export default function SingleFormSettings({ additional, setadditional }) {
           <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additional.enabled} />
           {__('Enable / Disable', 'bitform')}
         </div>
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Everyday')} value="Everyday"title={__('Every Day', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Friday')} value="Friday"title={__('Friday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Saturday')} value="Saturday"title={__('Saturday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Sunday')} value="Sunday"title={__('Sunday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Monday')} value="Monday"title={__('Monday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Tuesday')} value="Tuesday"title={__('Tuesday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Wednesday')} value="Wednesday"title={__('Wednesday', 'bitform')} />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Thursday')} value="Thursday"title={__('Thursday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Everyday')} value="Everyday" title={__('Every Day', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Friday')} value="Friday" title={__('Friday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Saturday')} value="Saturday" title={__('Saturday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Sunday')} value="Sunday" title={__('Sunday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Monday')} value="Monday" title={__('Monday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Tuesday')} value="Tuesday" title={__('Tuesday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Wednesday')} value="Wednesday" title={__('Wednesday', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Thursday')} value="Thursday" title={__('Thursday', 'bitform')} />
         <br />
-        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Custom')} value="Custom"title={__('Custom Date', 'bitform')} />
+        <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Custom')} value="Custom" title={__('Custom Date', 'bitform')} />
         {'restrict_form' in additional.settings && additional.settings.restrict_form.day.indexOf('Custom') > -1 && (
 
           <div className="flx">

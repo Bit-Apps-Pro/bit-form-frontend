@@ -1,4 +1,5 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import MtSelect from './MtSelect'
 import MtInput from './MtInput'

@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
+
 export default function RoundedInput(props) {
   const regx = /round/
   const isRound = regx.test(props.elm.data.child[1].attr.className)

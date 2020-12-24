@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { NavLink, useRouteMatch, Link } from 'react-router-dom'
 import Table from './Table'

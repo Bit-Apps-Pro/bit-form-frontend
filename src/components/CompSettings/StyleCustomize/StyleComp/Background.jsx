@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
@@ -150,7 +151,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   }
 
   return (
-    <StyleAccordion className="style-acc w-9"title={__('Background', 'bitform')}>
+    <StyleAccordion className="style-acc w-9" title={__('Background', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -296,14 +297,14 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
         <div className="mt-2">
           <span className="f-5">{__('Background Filter', 'bitform')}</span>
           <div className="mt-2">
-            <TableCheckBox onChange={e => setFilter(e, 'blur(5px)')} checked={bgFilter.match(/blur/g) !== null} value="Blur" className="mr-1 mt-1"title={__('Blur', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'brightness(120%)')} checked={bgFilter.match(/brightness/g) !== null} value="Brightness" className="mr-1 mt-1"title={__('Brightness', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'contrast(10%)')} checked={bgFilter.match(/contrast/g) !== null} value="Contrast" className="mr-1 mt-1"title={__('Contrast', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'grayscale(50%)')} checked={bgFilter.match(/grayscale/g) !== null} value="Grayscale" className="mr-1 mt-1"title={__('Grayscale', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'invert(10%)')} checked={bgFilter.match(/invert/g) !== null} value="Invert" className="mr-1 mt-1"title={__('Invert', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'opacity(10%)')} checked={bgFilter.match(/opacity/g) !== null} value="Opacity" className="mr-1 mt-1"title={__('Opacity', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'sepia(10%)')} checked={bgFilter.match(/sepia/g) !== null} value="Sepia" className="mr-1 mt-1"title={__('Sepia', 'bitform')} />
-            <TableCheckBox onChange={e => setFilter(e, 'saturate(110%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1"title={__('Saturate', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'blur(5px)')} checked={bgFilter.match(/blur/g) !== null} value="Blur" className="mr-1 mt-1" title={__('Blur', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'brightness(120%)')} checked={bgFilter.match(/brightness/g) !== null} value="Brightness" className="mr-1 mt-1" title={__('Brightness', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'contrast(10%)')} checked={bgFilter.match(/contrast/g) !== null} value="Contrast" className="mr-1 mt-1" title={__('Contrast', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'grayscale(50%)')} checked={bgFilter.match(/grayscale/g) !== null} value="Grayscale" className="mr-1 mt-1" title={__('Grayscale', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'invert(10%)')} checked={bgFilter.match(/invert/g) !== null} value="Invert" className="mr-1 mt-1" title={__('Invert', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'opacity(10%)')} checked={bgFilter.match(/opacity/g) !== null} value="Opacity" className="mr-1 mt-1" title={__('Opacity', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'sepia(10%)')} checked={bgFilter.match(/sepia/g) !== null} value="Sepia" className="mr-1 mt-1" title={__('Sepia', 'bitform')} />
+            <TableCheckBox onChange={e => setFilter(e, 'saturate(110%)')} checked={bgFilter.match(/saturate/g) !== null} value="Saturate" className="mr-1 mt-1" title={__('Saturate', 'bitform')} />
           </div>
           {bgFilter?.match(/blur/g) && (
             <Range

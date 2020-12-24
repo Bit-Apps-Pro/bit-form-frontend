@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
+
 function LogicChip({ logic, nested, onChange }) {
   return (
     <>

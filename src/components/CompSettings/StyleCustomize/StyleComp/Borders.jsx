@@ -1,5 +1,6 @@
-import Range from '../ChildComp/Range'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import Range from '../ChildComp/Range'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
@@ -56,7 +57,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <StyleAccordion className="style-acc w-9"title={__('Border', 'bitform')}>
+    <StyleAccordion className="style-acc w-9" title={__('Border', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)

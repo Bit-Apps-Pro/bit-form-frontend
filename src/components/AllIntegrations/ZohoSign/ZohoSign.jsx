@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
@@ -78,7 +79,9 @@ function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          {__('Next', 'bitform')} &nbsp;
+          {__('Next', 'bitform')}
+          {' '}
+&nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
 
