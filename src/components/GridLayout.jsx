@@ -12,7 +12,7 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { ShowProModalContext } from '../pages/FormDetails'
 import BrushIcn from '../Icons/BrushIcn'
-import ConfirmModal from '../components/ConfirmModal'
+import ConfirmModal from './ConfirmModal'
 
 function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -247,7 +247,14 @@ function GridLayout(props) {
         msg = __(`${fld[0]} is in Pro Version!`, 'bitform')
         setProModal({ show: true, msg })
       } else if (payFields.length) {
-        msg = __(`Only one ${fld[0]} field is allowed!`, 'bitform')
+        msg = __(
+          <p>
+            You cannot add more than one &nbsp;
+            {fld[0]}
+            &nbsp;
+            field in same form.
+          </p>, 'bitform',
+        )
         setAlertMdl({ show: true, msg })
       }
       if (msg) {
@@ -456,7 +463,7 @@ function GridLayout(props) {
         show={alertMdl.show}
         close={clsAlertMdl}
         action={clsAlertMdl}
-        title="Alert"
+        title="Sorry"
       >
         <div className="txt-center">
           {alertMdl.msg}
