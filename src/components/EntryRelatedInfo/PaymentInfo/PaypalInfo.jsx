@@ -4,7 +4,6 @@ import noData from '../../../resource/img/nodata.svg'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
 
 export default function PaypalInfo({ paymentInfo }) {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
 
   const renderPayaplInfo = payInfo => {
@@ -15,17 +14,17 @@ export default function PaypalInfo({ paymentInfo }) {
     return (
       <div key={paypalResp.id}>
         <small>
+          {dateTimeFormatter(paypalResp.create_time, dateTimeFormat)}
+        </small>
+        <br />
+        <br />
+        <small>
           {`${__('Type', 'bitform')}: ${isSubscription ? __('Subscription', 'biform') : __('Order', 'bitform')}`}
         </small>
         <br />
         <br />
         <small>
           <b>{`${__('Transaction ID', 'bitform')}: ${paypalResp.id}`}</b>
-        </small>
-        <br />
-        <br />
-        <small>
-          {dateTimeFormatter(paypalResp.create_time, dateTimeFormat)}
         </small>
         <h3>{`${userInfo.name.given_name} ${userInfo.name.surname}`}</h3>
         <small>{userInfo.email_address}</small>
@@ -53,20 +52,7 @@ export default function PaypalInfo({ paymentInfo }) {
   }
 
   return (
-    <div className="pos-rel">
-      {!isPro && (
-        <div className="pro-blur mt-4 flx">
-          <div className="pro">
-            {__('Available On', 'bitform')}
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
-              <span className="txt-pro">
-                {' '}
-                {__('Premium', 'bitform')}
-              </span>
-            </a>
-          </div>
-        </div>
-      )}
+    <div>
       {paymentInfo?.length
         ? (
           <>
