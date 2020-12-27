@@ -2,10 +2,28 @@ import { __ } from '@wordpress/i18n'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import BrushIcn from '../../Icons/BrushIcn'
+import CheckBoxIcn from '../../Icons/CheckBoxIcn'
+import ColorPickerIcn from '../../Icons/ColorPickerIcn'
+import DateIcn from '../../Icons/DateIcn'
+import DateTimeIcn from '../../Icons/DateTimeIcn'
+import DropDownIcn from '../../Icons/DropDownIcn'
 import FieldIcn from '../../Icons/FieldIcn'
+import FileUploadIcn from '../../Icons/FileUploadIcn'
 import FormIcn from '../../Icons/FormIcn'
 import ImageIcn from '../../Icons/ImageIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
+import MailIcn from '../../Icons/MailIcn'
+import MonthIcn from '../../Icons/MonthIcn'
+import NumberIcn from '../../Icons/NumberIcn'
+import PasswordIcn from '../../Icons/PasswordIcn'
+import PaypalIcn from '../../Icons/PaypalIcn'
+import RadioIcn from '../../Icons/RadioIcn'
+import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
+import TextareaIcn from '../../Icons/TextareaIcn'
+import TextIcn from '../../Icons/TextIcn'
+import TimeIcn from '../../Icons/TimeIcn'
+import UrlIcn from '../../Icons/UrlIcn'
+import WeekIcn from '../../Icons/WeekIcn'
 import FileUpSettings from './FileUpSettings'
 import PaypalSettings from './PaypalSettings'
 import RadioCheckSettings from './RadioCheckSettings'
@@ -53,16 +71,16 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             </Route>
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
-                <FieldOptionBtn icn={<ImageIcn />} title={__('Background Customize', 'bitform')} />
+                <FieldOptionBtn icn={<ImageIcn w="20" />} title={__('Background Customize', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/f`}>
-                <FieldOptionBtn icn={<FormIcn />} title={__('Form Customize', 'bitform')} />
+                <FieldOptionBtn icn={<FormIcn w="20" />} title={__('Form Customize', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
-                <FieldOptionBtn icn={<ItemBlockIcn />} title={__('Field Block Customize', 'bitform')} />
+                <FieldOptionBtn icn={<ItemBlockIcn w="20" />} title={__('Field Block Customize', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
-                <FieldOptionBtn icn={<FieldIcn />} title={__('Field Customize', 'bitform')} />
+                <FieldOptionBtn icn={<FieldIcn w="20" />} title={__('Field Customize', 'bitform')} />
               </Link>
             </Route>
             <Route path={`${path}/style/bg`}>
@@ -85,10 +103,10 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
                 </h4>
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
-                <FieldOptionBtn icn={<FieldIcn />} title={__('Field Style', 'bitform')} />
+                <FieldOptionBtn icn={<FieldIcn w="20" />} title={__('Field Style', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
-                <FieldOptionBtn icn={<FieldIcn />} title={__('Paypal Style', 'bitform')} />
+                <FieldOptionBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
               </Link>
             </Route>
             <Route path={`${path}/style/fl/fld`}>
@@ -155,6 +173,49 @@ function FieldList({ fields, setElementSetting }) {
   return arr
 }
 
+const renderFieldIcn = icn => {
+  switch (icn) {
+    case 'text':
+      return <TextIcn size="23" />
+    case 'textarea':
+      return <TextareaIcn size="23" />
+    case 'check':
+      return <CheckBoxIcn w="23" />
+    case 'radio':
+      return <RadioIcn size="23" />
+    case 'number':
+      return <NumberIcn w="23" />
+    case 'select':
+      return <DropDownIcn w="23" />
+    case 'password':
+      return <PasswordIcn size="23" />
+    case 'email':
+      return <MailIcn size="23" />
+    case 'url':
+      return <UrlIcn w="23" />
+    case 'file-up':
+      return <FileUploadIcn w="23" />
+    case 'date':
+      return <DateIcn w="23" />
+    case 'time':
+      return <TimeIcn size="23" />
+    case 'datetime-local':
+      return <DateTimeIcn w="23" />
+    case 'month':
+      return <MonthIcn w="23" />
+    case 'week':
+      return <WeekIcn size="23" />
+    case 'color':
+      return <ColorPickerIcn w="23" />
+    case 'recaptcha':
+      return <ReCaptchaIcn size="23" />
+    case 'paypal':
+      return <PaypalIcn w="23" />
+    default:
+      return false
+  }
+}
+
 function FieldOptionBtn({ icn, title, sub, action }) {
   const extraProps = {}
   if (action !== undefined) {
@@ -170,7 +231,9 @@ function FieldOptionBtn({ icn, title, sub, action }) {
       <div className="flx flx-between ">
         <div className="flx">
           <span className="lft-icn mr-2 btcd-icn-lg flx br-50">
-            {typeof icn === 'object' ? icn : <span className={`btcd-icn icn-${icn}`} />}
+            {console.log(typeof icn)}
+            {/* {typeof icn === 'object' ? icn : <span className={`btcd-icn icn-${icn}`} />} */}
+            {typeof icn === 'string' ? renderFieldIcn(icn) : icn}
           </span>
           <div>
             <div>{title}</div>
