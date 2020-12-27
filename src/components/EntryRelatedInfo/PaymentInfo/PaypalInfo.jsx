@@ -4,7 +4,6 @@ import noData from '../../../resource/img/nodata.svg'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
 
 export default function PaypalInfo({ paymentInfo }) {
-  console.log('paypal', paymentInfo)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
 

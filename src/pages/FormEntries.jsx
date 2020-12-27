@@ -401,8 +401,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
     return allResp[rowDtl.idx][entry.accessor]
   }
 
-  console.log('allResp[rowDtl.idx]', allResp[rowDtl.idx])
-
   return (
     <div id="form-res">
       <div className="af-header flx">

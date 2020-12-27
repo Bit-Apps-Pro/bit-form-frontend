@@ -12,7 +12,6 @@ import Gap from './StyleComp/Gap'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()
-  // console.log('test', history.location.pathname)
   const goBackUrl = () => {
     if (history.location.pathname.match(/style\/fl\/.+/g)) return history.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){

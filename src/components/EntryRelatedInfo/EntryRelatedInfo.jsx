@@ -10,8 +10,6 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
   const [tab, settab] = useState('')
   const payPattern = /paypal/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
-  console.log('paymentFields', paymentFields)
-  console.log('allLabels', allLabels)
   return (
     <Modal lg show setModal={close} title="Related Info">
       <Tabs>

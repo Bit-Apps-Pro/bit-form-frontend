@@ -23,8 +23,6 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
     saveIntegConfig(integrations, setIntegration, allIntegURL, signConf, history, id, 1)
   }
 
-  console.log('signConf', signConf)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

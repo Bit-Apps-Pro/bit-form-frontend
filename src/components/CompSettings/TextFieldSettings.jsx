@@ -84,8 +84,6 @@ function TextFieldSettings(props) {
     props.updateData({ id: elmId, data: elmData })
   }
 
-  console.log('elmId', props.elm.id)
-
   return (
     <div className="mr-4 ml-2">
       <Back2FldList setElementSetting={props.setElementSetting} />

@@ -22,7 +22,6 @@ mul: multiple
 */
 
 function CompGen(props) {
-  console.log('props', props)
   switch (props.atts.typ) {
     case 'text':
     case 'number':
@@ -35,7 +34,6 @@ function CompGen(props) {
     case 'month':
     case 'week':
     case 'color':
-
       return <TextField formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'textarea':
       return <TextArea formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />

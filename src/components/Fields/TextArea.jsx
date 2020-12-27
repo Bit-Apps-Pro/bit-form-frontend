@@ -22,7 +22,6 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID 
   useEffect(() => {
     if (attr.hasWorkflow && attr.val === value && onBlurHandler && !attr.userinput) {
       const { current } = textAreaRef
-      // console.log('value', value, current, attr.name)
       onBlurHandler(current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

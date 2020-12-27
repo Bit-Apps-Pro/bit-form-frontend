@@ -128,8 +128,6 @@ function FormDetails(props) {
     additional,
   })
 
-  // console.log('hi', formSettings)
-
   const fetchTemplate = () => {
     if (formType === 'new') {
       const formTitle = formID
@@ -247,7 +245,6 @@ function FormDetails(props) {
           layoutChanged: sessionStorage.getItem('btcd-lc'),
           rowHeight: sessionStorage.getItem('btcd-rh'),
         }
-        console.log('fsettin', formData.formSettings)
         action = 'bitforms_update_form'
       }
 

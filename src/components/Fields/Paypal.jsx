@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 
 function Paypal({ formID, attr, contentID, fieldData }) {
-  console.log('contentID', fieldData)
-  console.log('attr', attr)
   const [render, setrender] = useState(false)
   const [amount, setAmount] = useState(attr?.amount || 1)
   const [shipping, setShipping] = useState(attr?.shipping || 0)
