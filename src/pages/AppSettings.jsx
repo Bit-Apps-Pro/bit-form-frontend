@@ -1,11 +1,11 @@
-import { useEffect, useContext, useState } from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom'
-import Captcha from '../components/Captcha'
-import GCLID from '../components/GCLID'
-import { AppSettings } from '../Utils/AppSettingsContext'
-import bitsFetch from '../Utils/bitsFetch'
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
-import { __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n';
+import { useContext, useEffect, useState } from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import Captcha from '../components/Captcha';
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
+// import GCLID from '../components/GCLID'
+import { AppSettings } from '../Utils/AppSettingsContext';
+import bitsFetch from '../Utils/bitsFetch';
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
@@ -44,19 +44,19 @@ function AppSettingsPage() {
           <span className="btcd-icn icn-loop" />
           {__('reCAPTCHA', 'bitform')}
         </NavLink>
-        <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
+        {/* <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
           <span className="btcd-icn icn-loop" />
           GCLID
-        </NavLink>
+        </NavLink> */}
       </aside>
 
       <Switch>
         <Route path="/app-settings/recaptcha">
           <Captcha saveCaptcha={saveCaptcha} />
         </Route>
-        <Route path="/app-settings/gclid">
+        {/* <Route path="/app-settings/gclid">
           <GCLID saveCaptcha={saveCaptcha} />
-        </Route>
+        </Route> */}
       </Switch>
     </div>
   )
