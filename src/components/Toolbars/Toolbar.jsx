@@ -4,8 +4,26 @@
 
 import { __ } from '@wordpress/i18n';
 import { useMemo } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars'
-import Tools from './Tools'
+import { Scrollbars } from 'react-custom-scrollbars';
+import CheckBoxIcn from '../../Icons/CheckBoxIcn';
+import DateIcn from '../../Icons/DateIcn';
+import DateTimeIcn from '../../Icons/DateTimeIcn';
+import DropDownIcn from '../../Icons/DropDownIcn';
+import FileUploadIcn from '../../Icons/FileUploadIcn';
+import MailIcn from '../../Icons/MailIcn';
+import MonthIcn from '../../Icons/MonthIcn';
+import NumberIcn from '../../Icons/NumberIcn';
+import PasswordIcn from '../../Icons/PasswordIcn';
+import PaypalIcn from '../../Icons/PaypalIcn';
+import RadioIcn from '../../Icons/RadioIcn';
+import TextareaIcn from '../../Icons/TextareaIcn';
+import TextIcn from '../../Icons/TextIcn';
+import WeekIcn from '../../Icons/WeekIcn';
+import TimeIcn from '../../Icons/TimeIcn';
+import UrlIcn from '../../Icons/UrlIcn';
+import Tools from './Tools';
+import ColorPickerIcn from '../../Icons/ColorPickerIcn';
+import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
@@ -13,7 +31,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
   const tools = [
     {
       name: __('Text', 'bitform'),
-      icn: 'text',
+      icn: <TextIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'text',
@@ -24,7 +42,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Multiline Text', 'bitform'),
-      icn: 'textarea',
+      icn: <TextareaIcn size="23" />,
       pos: { h: 3, w: 6, i: 'block-5', minH: 3 },
       elm: {
         typ: 'textarea',
@@ -43,7 +61,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     }, */
     {
       name: __('Check Box', 'bitform'),
-      icn: 'check',
+      icn: <CheckBoxIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'check',
@@ -58,7 +76,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Radio', 'bitform'),
-      icn: 'radio',
+      icn: <RadioIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'radio',
@@ -74,7 +92,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Number', 'bitform'),
-      icn: 'number',
+      icn: <NumberIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'number',
@@ -85,7 +103,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Drop Down', 'bitform'),
-      icn: 'select',
+      icn: <DropDownIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
@@ -101,7 +119,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Password', 'bitform'),
-      icn: 'password',
+      icn: <PasswordIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'password',
@@ -112,7 +130,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Email', 'bitform'),
-      icn: 'email',
+      icn: <MailIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'email',
@@ -123,10 +141,10 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('URL', 'bitform'),
-      icn: 'url',
+      icn: <UrlIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
-        typ: 'text',
+        typ: 'url',
         attr: {
           title: 'https://www.example.com  or  www.example.com',
           pattern: '(https:\/\/www.*.*)|(http:\/\/www.*.*)|(http:\/\/*.*)|(https:\/\/*.*|www.*.*)',
@@ -138,7 +156,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('File Upload', 'bitform'),
-      icn: 'file-up',
+      icn: <FileUploadIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2, minW: 2 },
       elm: {
         typ: 'file-up',
@@ -149,7 +167,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Date', 'bitform'),
-      icn: 'date',
+      icn: <DateIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'date',
@@ -159,7 +177,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Time', 'bitform'),
-      icn: 'time',
+      icn: <TimeIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'time',
@@ -169,7 +187,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Date-Time', 'bitform'),
-      icn: 'datetime-local',
+      icn: <DateTimeIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
@@ -179,7 +197,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Month', 'bitform'),
-      icn: 'month',
+      icn: <MonthIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'month',
@@ -189,7 +207,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Week', 'bitform'),
-      icn: 'week',
+      icn: <WeekIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'week',
@@ -199,7 +217,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('Color Picker', 'bitform'),
-      icn: 'color',
+      icn: <ColorPickerIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'color',
@@ -209,18 +227,18 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: __('reCaptcha v2', 'bitform'),
-      icn: 'recaptcha',
+      icn: <ReCaptchaIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2, minW: 2 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
-        lbl: '',
+        lbl: __('ReCaptcha', 'bitform'),
         valid: {},
       },
     },
     {
       name: __('Paypal', 'bitform'),
-      icn: 'recaptcha',
+      icn: <PaypalIcn w="23" />,
       pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },
       elm: {
         typ: 'paypal',
@@ -248,7 +266,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           <div className="toolBar">
             {tools.map(tool => (
               <Tools key={tool.name} setisToolDragging={setisToolDragging} setDrgElm={setDrgElm} setNewData={setNewData} value={[tool.elm, tool.pos]}>
-                <span className={`btcd-icn  icn-${tool.icn}`} />
+                <span className="mr-1">{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}
