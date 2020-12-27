@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -5,6 +6,7 @@ import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'
 
 export default function FormEntryPayments({ formID, allLabels, rowDtl, settab }) {
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const [paymentInfo, setPaymentInfo] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const payPattern = /paypal/
@@ -12,13 +14,15 @@ export default function FormEntryPayments({ formID, allLabels, rowDtl, settab })
   const payFld = paymentFields.find(field => rowDtl[field.key])
   useEffect(() => {
     settab('payment')
-    setIsLoading(true)
-    const transactionID = rowDtl?.[payFld?.key]
-    bitsFetch({ formID, transactionID }, 'bitforms_payment_details')
-      .then(result => {
-        setPaymentInfo(result.data)
-        setIsLoading(false)
-      })
+    if (isPro) {
+      setIsLoading(true)
+      const transactionID = rowDtl?.[payFld?.key]
+      bitsFetch({ formID, transactionID }, 'bitforms_payment_details')
+        .then(result => {
+          setPaymentInfo(result.data)
+          setIsLoading(false)
+        })
+    }
   }, [])
 
   const showPaymentInfo = () => {
@@ -33,7 +37,20 @@ export default function FormEntryPayments({ formID, allLabels, rowDtl, settab })
   }
 
   return (
-    <div>
+    <div className="pos-rel">
+      {!isPro && (
+        <div className="pro-blur mt-4 flx">
+          <div className="pro">
+            {__('Available On', 'bitform')}
+            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+              <span className="txt-pro">
+                {' '}
+                {__('Premium', 'bitform')}
+              </span>
+            </a>
+          </div>
+        </div>
+      )}
       {isLoading ? (
         <Loader style={{
           display: 'flex',
