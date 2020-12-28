@@ -67,8 +67,8 @@ export const multiAssign = (obj, assignArr) => {
 }
 
 export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
-  if (a[sortLabel].toLowerCase() < b[sortLabel].toLowerCase()) return -1
-  if (a[sortLabel].toLowerCase() > b[sortLabel].toLowerCase()) return 1
+  if (a?.[sortLabel]?.toLowerCase() < b?.[sortLabel]?.toLowerCase()) return -1
+  if (a?.[sortLabel]?.toLowerCase() > b?.[sortLabel]?.toLowerCase()) return 1
   return 0
 })
 
