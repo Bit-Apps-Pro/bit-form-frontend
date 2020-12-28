@@ -383,7 +383,7 @@ function GridLayout(props) {
         <span className="btcd-icn icn-move1" />
       </div>
       <div
-        style={{ right: 47, fontSize: 15 }}
+        style={{ right: 47, fontSize: 15, cursor: 'pointer' }}
         className="bit-blk-icn drag "
         aria-label="Settings"
         title={__('Settings', 'bitform')}
@@ -395,7 +395,7 @@ function GridLayout(props) {
         <span className="btcd-icn icn-settings" />
       </div>
       <div
-        style={{ right: 67, fontSize: 15 }}
+        style={{ right: 67, fontSize: 15, cursor: 'pointer' }}
         className="bit-blk-icn drag "
         aria-label="Style"
         title={__('Style', 'bitform')}
