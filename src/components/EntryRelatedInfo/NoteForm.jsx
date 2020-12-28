@@ -1,6 +1,8 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { useEffect, useRef, useState } from 'react'
-import bitsFetch from '../Utils/bitsFetch'
-import LoaderSm from './Loaders/LoaderSm'
+import bitsFetch from '../../Utils/bitsFetch'
+import LoaderSm from '../Loaders/LoaderSm'
 
 export default function NoteForm({ formID, entryID, allLabels, showForm, setShowForm, setSnackbar, setFetchData, data, setData }) {
   const editMode = Boolean(data.noteID)
@@ -27,8 +29,8 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
           })
 
           editor.addButton('addFormField', {
-            text: 'Form Fields ',
-            tooltip: 'Add Form Field Value in Message',
+            text: __('Form Fields ', 'bitform'),
+            tooltip: __('Add Form Field Value in Message', 'bitform'),
             type: 'menubutton',
             icon: false,
             menu: allLabels.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.adminLbl, onClick() { editor.insertContent(`\${${i.key}}`) } })),
@@ -72,7 +74,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
       bitsFetch(formData, 'bitforms_form_entry_update_note', 'multipart/form-data', queryParam)
         .then(response => {
           if (response !== undefined && response.success) {
-            setSnackbar({ show: true, msg: 'Note Updated Successfully' })
+            setSnackbar({ show: true, msg: __('Note Updated Successfully', 'bitform') })
             cancelEditMode()
             setFetchData(true)
           }
@@ -84,7 +86,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
       bitsFetch(formData, 'bitforms_form_entry_create_note', 'multipart/form-data', queryParam)
         .then(response => {
           if (response !== undefined && response.success) {
-            setSnackbar({ show: true, msg: 'Note Added Successfully' })
+            setSnackbar({ show: true, msg: __('Note Added Successfully', 'bitform') })
             setNoteTitle('')
             // eslint-disable-next-line no-undef
             tinymce.get('body-content').setContent('')
@@ -103,7 +105,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
   return (
     <div className="mt-2 w-7">
       <b>
-        {editMode ? 'Edit Note ' : 'Create New Note '}
+        {editMode ? __('Edit Note ', 'bitform') : __('Create New Note ', 'bitform')}
         <button type="button" className="btn" onClick={() => (editMode ? cancelEditMode() : setShowForm(false))} style={{ fontSize: 16 }}>x</button>
       </b>
       <br />
@@ -122,13 +124,13 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
         <textarea rows="5" name="content" id="body-content" className="btcd-paper-inp mt-2" placeholder="Note Content" defaultValue={noteContent} />
         {editMode && (
           <button type="button" className="btn btn-md mr-2" onClick={cancelEditMode}>
-            Cancel
+            {__('Cancel', 'bitform')}
           </button>
         )}
         <button type="submit" className="btn btn-md blue" disabled={isLoading}>
-          {editMode ? 'Edit' : 'Add'}
+          {editMode ? __('Edit', 'bitform') : __('Add', 'bitform')}
           {' '}
-          Note
+          {__('Note', 'bitform')}
           {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
         </button>
       </form>

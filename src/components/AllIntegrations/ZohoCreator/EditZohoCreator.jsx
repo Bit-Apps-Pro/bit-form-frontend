@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
@@ -18,7 +20,7 @@ function EditZohoCreator({ formFields, setIntegration, integrations, allIntegURL
 
   const saveConfig = () => {
     if (!checkMappedFields(creatorConf)) {
-      setSnackbar({ show: true, msg: 'Please map mandatory fields' })
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
     saveIntegConfig(integrations, setIntegration, allIntegURL, creatorConf, history, id, 1)
@@ -29,8 +31,8 @@ function EditZohoCreator({ formFields, setIntegration, integrations, allIntegURL
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
-        <b className="wdt-100 d-in-b">Integration Name:</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, creatorConf, setCreatorConf)} name="name" value={creatorConf.name} type="text" placeholder="Integration Name..." />
+        <b className="wdt-100 d-in-b">{__('Integration Name:', 'bitform')}</b>
+        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, creatorConf, setCreatorConf)} name="name" value={creatorConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
       </div>
 
       <ZohoCreatorIntegLayout

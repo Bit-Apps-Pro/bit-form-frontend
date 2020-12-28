@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import { lazy, Suspense, useState } from 'react';
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
@@ -25,23 +27,23 @@ export default function FormSettings({ additional, setadditional, formFields, fo
         <br />
         <NavLink to={`/form/settings/${formType}/${formID}/form-settings`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-params" />
-          Form Settings
+          {__('Form Settings', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/confirmations`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-information-outline" />
-          Confirmations
+          {__('Confirmations', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/workflow`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-flow-tree" />
-          Conditional Logics
+          {__('Conditional Logics', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-envelope-open-o" />
-          Email Templates
+          {__('Email Templates', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/integrations`} activeClassName="btcd-f-a em-tem">
           <span className="btcd-icn icn-code" />
-          Integrations
+          {__('Integrations', 'bitform')}
         </NavLink>
       </aside>
 

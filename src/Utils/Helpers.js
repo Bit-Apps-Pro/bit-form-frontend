@@ -72,108 +72,70 @@ export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
   return 0
 })
 
-export const dateTimeFormatter = (oldDate, format) => {
-  const newDate = new Date(oldDate);
+export const dateTimeFormatter = (date, format) => {
+  const newDate = new Date(date);
 
   if (newDate.toString() === 'Invalid Date') {
     return 'Invalid Date'
   }
 
-  const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thusday',
-    'Friday',
-    'Saturday',
-  ]
-  const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
-  const monthsShort = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ]
-  const l = days[newDate.getDay()]
-  const D = daysShort[newDate.getDay()]
-  const date = newDate.getDate()
-  const j = date
-  const d = (date < 10 ? '0' : '') + date
-  let S = date
-  if (date % 10 === 1 && date !== 11) {
+  // Day
+  const d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
+  const j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
+  let S = newDate.getDate()
+  if (S % 10 === 1 && S !== 11) {
     S += 'st'
-  } else if (date % 10 === 2 && date !== 12) {
+  } else if (S % 10 === 2 && S !== 12) {
     S += 'nd'
-  } else if (date % 10 === 3 && date !== 13) {
+  } else if (S % 10 === 3 && S !== 13) {
     S += 'rd'
   } else {
     S += 'th'
   }
-  const month = newDate.getMonth()
-  const F = months[month]
-  const M = monthsShort[month]
-  const m = (month < 10 ? '0' : '') + (month + 1)
-  const n = month + 1
-  const fullYear = newDate.getFullYear()
-  const Y = fullYear
-  const y = fullYear.toString().substr(-2)
-  const hour = newDate.getHours()
-  const g = hour % 12
-  const G = hour
-  const a = hour >= 12 ? 'pm' : 'am'
-  const A = hour >= 12 ? 'PM' : 'AM'
-  const h = ((hour % 12 || 12) < 10 ? '0' : '') + (hour % 12 || 12)
-  const H = (hour < 10 ? '0' : '') + hour
-  const minute = newDate.getMinutes()
-  const i = (minute < 10 ? '0' : '') + minute
-  const second = newDate.getSeconds()
-  const s = (second < 10 ? '0' : '') + second
-  const T = newDate.toLocaleTimeString(navigator.language, { timeZoneName: 'short' }).split(' ')[2]
+  // Weekday
+  const l = newDate.toLocaleDateString('en-US', { weekday: 'long' })
+  const D = newDate.toLocaleDateString('en-US', { weekday: 'short' })
+  // Month
+  const m = newDate.toLocaleDateString('en-US', { month: '2-digit' })
+  const n = newDate.toLocaleDateString('en-US', { month: 'numeric' })
+  const F = newDate.toLocaleDateString('en-US', { month: 'long' })
+  const M = newDate.toLocaleDateString('en-US', { month: 'short' })
+  // Year
+  const Y = newDate.toLocaleDateString('en-US', { year: 'numeric' })
+  const y = newDate.toLocaleDateString('en-US', { year: '2-digit' })
+  // Time
+  const a = newDate.toLocaleTimeString('en-US', { hour12: true }).split(' ')[1].toLowerCase()
+  const A = newDate.toLocaleTimeString('en-US', { hour12: true }).split(' ')[1]
+  // Hour
+  const g = newDate.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric' }).split(' ')[0]
+  const h = newDate.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit' }).split(' ')[0]
+  const G = newDate.toLocaleTimeString('en-US', { hour12: false, hour: 'numeric' })
+  const H = newDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit' })
+  // Minute
+  const i = newDate.toLocaleTimeString('en-US', { minute: '2-digit' })
+  // Second
+  const s = newDate.toLocaleTimeString('en-US', { second: '2-digit' })
+  // Additional
+  const T = newDate.toLocaleTimeString('en-US', { timeZoneName: 'short' }).split(' ')[2]
   const c = newDate.toISOString()
   const r = newDate.toUTCString()
   const U = newDate.valueOf()
   let formattedDate = ''
   const allFormatObj = { a, A, c, d, D, F, g, G, h, H, i, j, l, m, M, n, r, s, S, T, U, y, Y }
 
-  const keys = Object.keys(allFormatObj)
+  const allFormatkeys = Object.keys(allFormatObj)
 
   for (let v = 0; v < format.length; v += 1) {
-    const latter = keys.find((key) => key === format[v])
-
     if (format[v] === '\\') {
-      v += 1;
-      formattedDate += format[v];
-    } else if (latter) {
-      formattedDate += format[v].replace(latter, allFormatObj[latter]);
+      v += 1
+      formattedDate += format[v]
     } else {
-      formattedDate += format[v];
+      const formatKey = allFormatkeys.find(key => key === format[v])
+      formattedDate += formatKey ? format[v].replace(formatKey, allFormatObj[formatKey]) : format[v]
     }
   }
 
-  return formattedDate;
+  return formattedDate
 }
 
 const cipher = salt => {

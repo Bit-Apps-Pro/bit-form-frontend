@@ -129,18 +129,6 @@ textarea.fld {
   }
 }
 
-.ss-main .ss-content .ss-search input:focus {
-  border: 1px solid #87bfff !important;
-  box-shadow: none !important;
-}
-
-.ss-content {
-  border-radius: 6px !important;
-}
-.ss-main .ss-content .ss-search input {
-  font-size: 13px !important;
-}
-
 .blnk-blk {
   background: white;
   width: 100%;
@@ -350,6 +338,7 @@ textarea.fld {
 }
 
 .btcd-f-wrp .btcd-inpBtn {
+  color: white;
   display: inline-flex;
   background: #0083f3;
   cursor: pointer;
@@ -362,15 +351,13 @@ textarea.fld {
   box-shadow: none;
 }
 
-.btcd-f-wrp .btcd-inpBtn img {
+.btcd-f-wrp .btcd-inpBtn svg {
   display: inline-block;
   margin-right: 5px;
-  width: 24px;
 }
 
 .btcd-f-wrp .btcd-inpBtn span,
 .btcd-f-wrp > span {
-  color: rgb(255, 255, 255);
   font-size: 14px !important;
   font-weight: normal !important;
   vertical-align: middle !important;
@@ -413,7 +400,7 @@ textarea.fld {
 
 .btcd-files > div > div {
   display: inline-block;
-  width: 75%;
+  width: 93%;
 }
 
 .btcd-files > div > div > small {
@@ -481,3 +468,9 @@ textarea.fld {
   }
 }
 // file upload end
+
+
+// paypal
+.paypal-buttons {
+  padding: 50px !important;
+}

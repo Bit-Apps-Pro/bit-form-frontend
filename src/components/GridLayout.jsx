@@ -3,32 +3,40 @@
 /* eslint-disable no-undef */
 
 import { useState, useEffect, memo, useContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars'
-// import SlimSelect from 'slim-select'
-// import '../resource/css/slimselect.min.css'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import { ShowProModalContext } from '../pages/FormDetails'
 import BrushIcn from '../Icons/BrushIcn'
+import ConfirmModal from './ConfirmModal'
 
 function GridLayout(props) {
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging } = props
-  const [layouts, setLayouts] = useState(props.layout)
+  const setProModal = useContext(ShowProModalContext)
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout } = props
+  const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 6, md: 4, sm: 2 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
+  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const history = useHistory()
+  useEffect(() => {
+    setLayouts(JSON.parse(JSON.stringify(layout)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout])
 
   useEffect(() => {
     if (newData !== null) {
       margeNewData()
     }
-    // slimInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newData, fields])
 
@@ -55,7 +63,6 @@ function GridLayout(props) {
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
     let topNbottomPadding = 0
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
-      console.log('----------- row h', topNbottomPadding)
       topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
     }
     if (topNbottomPadding > 39) {
@@ -175,37 +182,12 @@ function GridLayout(props) {
     return nlay;
   }
 
-  /* const slimInit = () => {
-    if (document.querySelector('.slim') != null) {
-      const allSel = document.querySelectorAll('select.slim')
-      for (let i = 0; i < allSel.length; i += 1) {
-        // eslint-disable-next-line no-unused-vars
-        const s = new SlimSelect({
-          select: `[btcd-id="${allSel[i].parentNode.parentNode.getAttribute(
-            'btcd-id',
-          )}"] > div > .slim`,
-          allowDeselect: true,
-          placeholder: allSel[i].getAttribute('placeholder'),
-          limit: Number(allSel[i].getAttribute('limit')),
-        });
-        if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[
-              i
-            ].nextSibling.children[1].children[1].style.maxHeight = `${Number(
-              allSel[i].getAttribute('data-max-show'),
-            ) * 2}pc`;
-          }
-        }
-      }
-    }
-  } */
-
   const margeNewData = () => {
+    setNewData(null)
+    if (!checkPaymentFields(newData[0])) return;
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
-    setNewData(null)
     const newBlk = { i: `bf${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
@@ -250,11 +232,42 @@ function GridLayout(props) {
     delete fields[i]
     setLayouts(nwLay)
     setFields({ ...fields })
+    props.setElmSetting({ id: null, data: { typ: '' } })
     sessionStorage.setItem('btcd-lc', '-')
+  }
+
+  const clsAlertMdl = () => setAlertMdl({ show: false, msg: '' })
+
+  const checkPaymentFields = elm => {
+    const payPattern = /paypal/
+    const fld = elm.typ.match(payPattern)
+    if (fld) {
+      const payFields = fields ? Object.values(fields).filter(field => field.typ === fld[0]) : []
+      let msg;
+      if (!isPro) {
+        msg = __(`${fld[0]} is in Pro Version!`, 'bitform')
+        setProModal({ show: true, msg })
+      } else if (payFields.length) {
+        msg = __(
+          <p>
+            You cannot add more than one &nbsp;
+            {fld[0]}
+            &nbsp;
+            field in same form.
+          </p>, 'bitform',
+        )
+        setAlertMdl({ show: true, msg })
+      }
+      if (msg) {
+        return false;
+      }
+    }
+    return true;
   }
 
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
+    if (!checkPaymentFields(draggedElm[0])) return;
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
@@ -357,7 +370,7 @@ function GridLayout(props) {
         onKeyPress={() => onRemoveItem(item.i)}
         role="button"
         tabIndex="0"
-        title="Remove"
+        title={__('Remove', 'bitform')}
       >
         <span className="btcd-icn icn-clear" />
       </div>
@@ -365,7 +378,7 @@ function GridLayout(props) {
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Move"
-        title="Move"
+        title={__('Move', 'bitform')}
       >
         <span className="btcd-icn icn-move1" />
       </div>
@@ -373,7 +386,7 @@ function GridLayout(props) {
         style={{ right: 47, fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Settings"
-        title="Settings"
+        title={__('Settings', 'bitform')}
         onClick={navigateToFieldSettings}
         onKeyPress={navigateToFieldSettings}
         role="button"
@@ -385,7 +398,7 @@ function GridLayout(props) {
         style={{ right: 67, fontSize: 15 }}
         className="bit-blk-icn drag "
         aria-label="Style"
-        title="Style"
+        title={__('Style', 'bitform')}
         onClick={() => navigateToStyle(fields[item.i].typ)}
         onKeyPress={() => navigateToStyle(fields[item.i].typ)}
         role="button"
@@ -398,12 +411,13 @@ function GridLayout(props) {
   )
 
   const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style|style\/.+/g, 'fs'))
+    history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
   }
 
   const navigateToStyle = typ => {
+    if (typ === 'paypal') history.replace(history.location.pathname.replace(/fs|style\/.+|style/g, 'style/fl/ppl'))
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
+    else history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
   }
 
   return (
@@ -442,6 +456,20 @@ function GridLayout(props) {
           </div>
         </div>
       </Scrollbars>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Ok"
+        show={alertMdl.show}
+        close={clsAlertMdl}
+        action={clsAlertMdl}
+        title="Sorry"
+      >
+        <div className="txt-center">
+          {alertMdl.msg}
+        </div>
+      </ConfirmModal>
     </div>
   )
 }

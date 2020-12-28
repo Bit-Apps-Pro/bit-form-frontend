@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
@@ -57,7 +59,7 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Shadow">
+    <StyleAccordion className="style-acc w-9" title={__('Shadow', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -69,32 +71,32 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
               value={pseudo}
               onChange={setPseudo}
               btns={[
-                { lbl: 'Default', icn: 'Default' },
-                ...('hover' in styleConfig ? [{ lbl: 'On Mouse Over', icn: 'Hover' }] : []),
-                ...('focus' in styleConfig ? [{ lbl: 'On Focus', icn: 'Focus' }] : []),
+                { lbl: __('Default', 'bitform'), icn: 'Default' },
+                ...('hover' in styleConfig ? [{ lbl: __('On Mouse Over', 'bitform'), icn: 'Hover' }] : []),
+                ...('focus' in styleConfig ? [{ lbl: __('On Focus', 'bitform'), icn: 'Focus' }] : []),
               ]}
             />
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">Type</span>
+        <span className="f-5">{__('Type', 'bitform')}</span>
         <BtnGrp
           value={shadwTyp}
           onChange={setShadwType}
           btns={[
-            { lbl: 'Inside', icn: <InsideIcn /> },
-            { lbl: 'Outside', icn: <SpreadIcn /> },
-            { lbl: 'None', icn: <NoneIcn /> },
+            { lbl: __('Inside', 'bitform'), icn: <InsideIcn /> },
+            { lbl: __('Outside', 'bitform'), icn: <SpreadIcn /> },
+            { lbl: __('None', 'bitform'), icn: <NoneIcn /> },
           ]}
         />
       </div>
       {shadwTyp !== 'None' && (
         <>
           <div className="flx flx-between mb-2 mt-2">
-            <span className="f-5">Shadow Color</span>
+            <span className="f-5">{__('Shadow Color', 'bitform')}</span>
             <ColorPicker alwGradient={false} value={shadwClr} onChange={clr => setShadow(`${shadw} ${clr.style} ${shadwInset}`)} />
           </div>
-          <span className="f-5">Shadow Style</span>
+          <span className="f-5">{__('Shadow Style', 'bitform')}</span>
           <Range
             info={[
               { icn: <BorderIcn borderWidth="1px 4px 1px 4px" />, lbl: 'X-axis' },

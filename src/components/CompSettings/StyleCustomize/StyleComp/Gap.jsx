@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
@@ -19,14 +21,14 @@ export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, 
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Block Gap">
+    <StyleAccordion className="style-acc w-9" title={__('Block Gap', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
         info={[
-          { icn: <b>C</b>, lbl: 'Column Gap' },
-          { icn: <b>R</b>, lbl: 'Row Gap' },
-          { icn: <XYordinateIcn />, lbl: 'Both Side Gap' },
+          { icn: <b>C</b>, lbl: __('Column Gap', 'bitform') },
+          { icn: <b>R</b>, lbl: __('Row Gap', 'bitform') },
+          { icn: <XYordinateIcn />, lbl: __('Both Side Gap', 'bitform') },
         ]}
         className="btc-range"
         unit="px"

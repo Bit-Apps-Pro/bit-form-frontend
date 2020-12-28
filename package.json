@@ -4,6 +4,7 @@
   "version": "1.22.5",
   "dependencies": {
     "@bumaga/tabs": "^0.2.0",
+    "@paypal/react-paypal-js": "^3.0.2",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "create-file-list": "^1.0.1",
@@ -21,6 +22,7 @@
     "react-sortablejs": "^6.0.0",
     "react-table-sticky": "^1.0.0",
     "react-time-picker": "^4.0.1",
+    "react-table": "^7.6.1",
     "react-transition-group": "^4.4.1",
     "regenerator-runtime": "^0.13.7",
     "sortablejs": "^1.12.0",
@@ -34,8 +36,9 @@
     "build": "react-scripts build",
     "lint": "eslint --ext .jsx --ext .js src/ --fix",
     "wp": "webpack --progress --color --watch --mode=development",
-    "pd": "webpack --progress --color --config webpack.config.js --mode=production",
-    "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache"
+    "pd": "webpack --progress --color --config webpack.config.js --mode=production & npm run i18n",
+    "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
+    "i18n": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,6 +72,8 @@
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@wordpress/babel-plugin-makepot": "^3.9.0",
+    "@wordpress/i18n": "^3.16.0",
     "autoprefixer": "^9.8.6",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
@@ -101,7 +106,6 @@
     "prettier": "^2.1.2",
     "react-content-loader": "^5.1.4",
     "react-scripts": "^4.0.0",
-    "react-table": "^7.6.1",
     "sass": "^1.28.0",
     "sass-loader": "^10.0.4",
     "style-loader": "^2.0.0",
@@ -110,6 +114,7 @@
     "webpack": "^5.3.2",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^4.1.0",
+    "webpack-extract-translation-keys-plugin": "^5.0.2",
     "workbox-webpack-plugin": "^5.1.4"
   }
 }

@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { ColorPicker as Picker } from 'react-color-gradient-picker';
 import { CSSTransition } from 'react-transition-group';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import hexToRGBA from '../../../../Utils/hex2RGBA';
 import useComponentVisible from './useComponentVisible';
 import 'react-color-gradient-picker/dist/index.css';
@@ -54,7 +56,7 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
     <div ref={ref} className="pos-rel">
       <div
         aria-label="color picker"
-        title="Color Picker"
+        title={__('Color Picker', 'bitform')}
         onClick={() => setIsComponentVisible(!isComponentVisible)}
         onKeyPress={() => setIsComponentVisible(!isComponentVisible)}
         tabIndex="0"
@@ -73,8 +75,8 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
         <div className="pos-rel">
           <div className="btc-pick">
             <div className="txt-center">
-              <button onClick={(() => setgradient(false))} className={`btcd-btn-sm btn mr-1 ${gradient ? 'btcd-btn-o-blue' : 'blue'}`} type="button">Solid</button>
-              {alwGradient && <button onClick={(() => setgradient(true))} className={`btcd-btn-sm btn ${gradient ? 'blue' : 'btcd-btn-o-blue'}`} type="button">Gradient</button>}
+              <button onClick={(() => setgradient(false))} className={`btcd-btn-sm btn mr-1 ${gradient ? 'btcd-btn-o-blue' : 'blue'}`} type="button">{__('Solid', 'bitform')}</button>
+              {alwGradient && <button onClick={(() => setgradient(true))} className={`btcd-btn-sm btn ${gradient ? 'blue' : 'btcd-btn-o-blue'}`} type="button">{__('Gradient', 'bitform')}</button>}
             </div>
             <Picker
               onChange={onChange}

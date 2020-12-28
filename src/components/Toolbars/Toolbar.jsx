@@ -2,33 +2,53 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import { useMemo } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars'
-import Tools from './Tools'
+import { Scrollbars } from 'react-custom-scrollbars';
+import CheckBoxIcn from '../../Icons/CheckBoxIcn';
+import DateIcn from '../../Icons/DateIcn';
+import DateTimeIcn from '../../Icons/DateTimeIcn';
+import DropDownIcn from '../../Icons/DropDownIcn';
+import FileUploadIcn from '../../Icons/FileUploadIcn';
+import MailIcn from '../../Icons/MailIcn';
+import MonthIcn from '../../Icons/MonthIcn';
+import NumberIcn from '../../Icons/NumberIcn';
+import PasswordIcn from '../../Icons/PasswordIcn';
+import PaypalIcn from '../../Icons/PaypalIcn';
+import RadioIcn from '../../Icons/RadioIcn';
+import TextareaIcn from '../../Icons/TextareaIcn';
+import TextIcn from '../../Icons/TextIcn';
+import WeekIcn from '../../Icons/WeekIcn';
+import TimeIcn from '../../Icons/TimeIcn';
+import UrlIcn from '../../Icons/UrlIcn';
+import Tools from './Tools';
+import ColorPickerIcn from '../../Icons/ColorPickerIcn';
+import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
 
   const tools = [
     {
-      name: 'Text',
-      icn: 'text',
+      name: __('Text', 'bitform'),
+      icn: <TextIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'text',
-        lbl: 'Text Field',
-        ph: 'Placeholder Text...',
+        lbl: __('Text Field', 'bitform'),
+        ph: __('Placeholder Text...', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Multiline Text',
-      icn: 'textarea',
+      name: __('Multiline Text', 'bitform'),
+      icn: <TextareaIcn size="23" />,
       pos: { h: 3, w: 6, i: 'block-5', minH: 3 },
       elm: {
         typ: 'textarea',
-        lbl: 'Multi-Line Text',
-        ph: 'Placeholder Text...',
+        lbl: __('Multi-Line Text', 'bitform'),
+        ph: __('Placeholder Text...', 'bitform'),
         valid: {},
       },
     },
@@ -41,54 +61,54 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     }, */
     {
-      name: 'Check Box',
-      icn: 'check',
+      name: __('Check Box', 'bitform'),
+      icn: <CheckBoxIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'check',
-        lbl: 'Check Boxs',
+        lbl: __('Check Boxs', 'bitform'),
         opt: [
-          { lbl: 'Option 1' },
-          { lbl: 'Option 2' },
-          { lbl: 'Option 3' },
+          { lbl: __('Option 1', 'bitform') },
+          { lbl: __('Option 2', 'bitform') },
+          { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
       },
     },
     {
-      name: 'Radio',
-      icn: 'radio',
+      name: __('Radio', 'bitform'),
+      icn: <RadioIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'radio',
-        lbl: 'Radio',
+        lbl: __('Radio', 'bitform'),
         round: true,
         opt: [
-          { lbl: 'Option 1' },
-          { lbl: 'Option 2' },
-          { lbl: 'Option 3' },
+          { lbl: __('Option 1', 'bitform') },
+          { lbl: __('Option 2', 'bitform') },
+          { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
       },
     },
     {
-      name: 'Number',
-      icn: 'number',
+      name: __('Number', 'bitform'),
+      icn: <NumberIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'number',
-        lbl: 'Number Field',
-        ph: 'Placeholder...',
+        lbl: __('Number Field', 'bitform'),
+        ph: __('Placeholder...', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Drop Down',
-      icn: 'select',
+      name: __('Drop Down', 'bitform'),
+      icn: <DropDownIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
-        lbl: 'Drop-Down',
+        lbl: __('Drop-Down', 'bitform'),
         mul: false,
         opt: [
           { label: 'Option 1', value: 'Option 1' },
@@ -99,121 +119,138 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
-      name: 'Password',
-      icn: 'password',
+      name: __('Password', 'bitform'),
+      icn: <PasswordIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'password',
-        lbl: 'Password Field',
-        ph: 'Placeholder...',
+        lbl: __('Password Field', 'bitform'),
+        ph: __('Placeholder...', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Email',
-      icn: 'email',
+      name: __('Email', 'bitform'),
+      icn: <MailIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'email',
-        lbl: 'Email Field',
-        ph: 'example@mail.com',
+        lbl: __('Email Field', 'bitform'),
+        ph: __('example@mail.com', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'URL',
-      icn: 'url',
+      name: __('URL', 'bitform'),
+      icn: <UrlIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
-        typ: 'text',
+        typ: 'url',
         attr: {
           title: 'https://www.example.com  or  www.example.com',
           pattern: '(https:\/\/www.*.*)|(http:\/\/www.*.*)|(http:\/\/*.*)|(https:\/\/*.*|www.*.*)',
         },
-        lbl: 'URL Field',
-        ph: 'https://www.example.com',
+        lbl: __('URL Field', 'bitform'),
+        ph: __('https://www.example.com', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'File Upload',
-      icn: 'file-up',
+      name: __('File Upload', 'bitform'),
+      icn: <FileUploadIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2, minW: 2 },
       elm: {
         typ: 'file-up',
-        lbl: 'File Upload',
+        lbl: __('File Upload', 'bitform'),
         upBtnTxt: 'Attach File',
         valid: {},
       },
     },
     {
-      name: 'Date',
-      icn: 'date',
+      name: __('Date', 'bitform'),
+      icn: <DateIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'date',
-        lbl: 'Date Input',
+        lbl: __('Date Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Time',
-      icn: 'time',
+      name: __('Time', 'bitform'),
+      icn: <TimeIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'time',
-        lbl: 'Time Input',
+        lbl: __('Time Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Date-Time',
-      icn: 'datetime-local',
+      name: __('Date-Time', 'bitform'),
+      icn: <DateTimeIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'datetime-local',
-        lbl: 'Date-Time Input',
+        lbl: __('Date-Time Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Month',
-      icn: 'month',
+      name: __('Month', 'bitform'),
+      icn: <MonthIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'month',
-        lbl: 'Month Input',
+        lbl: __('Month Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Week',
-      icn: 'week',
+      name: __('Week', 'bitform'),
+      icn: <WeekIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'week',
-        lbl: 'Week Input',
+        lbl: __('Week Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'Color Picker',
-      icn: 'color',
+      name: __('Color Picker', 'bitform'),
+      icn: <ColorPickerIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
       elm: {
         typ: 'color',
-        lbl: 'Color Picker',
+        lbl: __('Color Picker', 'bitform'),
         valid: {},
       },
     },
     {
-      name: 'reCaptcha v2',
-      icn: 'recaptcha',
+      name: __('reCaptcha v2', 'bitform'),
+      icn: <ReCaptchaIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2, minW: 2 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
-        lbl: '',
+        lbl: __('ReCaptcha', 'bitform'),
+        valid: {},
+      },
+    },
+    {
+      name: __('Paypal', 'bitform'),
+      icn: <PaypalIcn w="23" />,
+      pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },
+      elm: {
+        typ: 'paypal',
+        currency: 'USD',
+        lbl: __('PayPal', 'bitform'),
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+        },
         valid: {},
       },
     },
@@ -230,13 +267,13 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           <div className="toolBar">
             {tools.map(tool => (
               <Tools key={tool.name} setisToolDragging={setisToolDragging} setDrgElm={setDrgElm} setNewData={setNewData} value={[tool.elm, tool.pos]}>
-                <span className={`btcd-icn  icn-${tool.icn}`} />
+                <span className="mr-1">{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}
           </div>
         </Scrollbars>
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       ), [tolbarSiz])}
     </div>
   )

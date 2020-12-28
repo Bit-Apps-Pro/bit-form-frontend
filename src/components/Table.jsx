@@ -1,5 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import { memo, useContext, useEffect, useState, useRef, forwardRef } from 'react';
 
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -45,7 +47,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
         <input
           value={globalFilter || ''}
           onChange={handleSearch}
-          placeholder="Search"
+          placeholder={__('Search', 'bitform')}
         />
       </label>
       {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} />}
@@ -250,10 +252,10 @@ function Table(props) {
 
   const showBulkDupMdl = () => {
     confMdl.action = () => { props.duplicateData(selectedFlatRows, data, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
-    confMdl.btnTxt = 'Duplicate'
+    confMdl.btnTxt = __('Duplicate', 'bitform')
     confMdl.btn2Txt = null
     confMdl.btnClass = 'blue'
-    confMdl.body = `Do You want Deplicate these ${selectedFlatRows.length} item ?`
+    confMdl.body = `${__('Do You want Deplicate these', 'bitform')} ${selectedFlatRows.length} ${__('item', 'bitform')} ?`
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
@@ -261,19 +263,19 @@ function Table(props) {
   const showStModal = () => {
     confMdl.action = (e) => { props.setBulkStatus(e, selectedFlatRows); closeConfMdl() }
     confMdl.btn2Action = (e) => { props.setBulkStatus(e, selectedFlatRows); closeConfMdl() }
-    confMdl.btnTxt = 'Disable'
-    confMdl.btn2Txt = 'Enable'
-    confMdl.body = `Do you want to change these ${selectedFlatRows.length} status ?`
+    confMdl.btnTxt = __('Disable', 'bitform')
+    confMdl.btn2Txt = __('Enable', 'bitform')
+    confMdl.body = `${__('Do you want to change these', 'bitform')} ${selectedFlatRows.length} ${__('status', 'bitform')} ?`
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
 
   const showDelModal = () => {
     confMdl.action = () => { props.setBulkDelete(selectedFlatRows, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
-    confMdl.btnTxt = 'Delete'
+    confMdl.btnTxt = __('Delete', 'bitform')
     confMdl.btn2Txt = null
     confMdl.btnClass = ''
-    confMdl.body = `Are you sure to delete these ${selectedFlatRows.length} items ?`
+    confMdl.body = `${__('Are you sure to delete these', 'bitform')} ${selectedFlatRows.length} ${__('items', 'bitform')} ?`
     confMdl.show = true
     setconfMdl({ ...confMdl })
   }
@@ -321,7 +323,7 @@ function Table(props) {
                 <small className="btcd-pill">
                   {selectedFlatRows.length}
                   {' '}
-                  Row Selected
+                  {__('Row Selected', 'bitform')}
                 </small>
               </>
             )}
@@ -409,7 +411,7 @@ function Table(props) {
       <div className="btcd-pagination">
         <small>
           {props.countEntries >= 0 && (
-            `Total Response: 
+            `${__('Total Response:', 'bitform')}
             ${props.countEntries}`
           )}
         </small>
@@ -431,12 +433,13 @@ function Table(props) {
           </button>
           {' '}
           <small>
-            &nbsp;Page
+            &nbsp;
+            {__('Page', 'bitform')}
             {' '}
             <strong>
               {pageIndex + 1}
               {' '}
-              of
+              {__('of', 'bitform')}
               {' '}
               {pageOptions.length}
               {' '}
@@ -458,7 +461,7 @@ function Table(props) {
             >
               {[10, 20, 30, 40, 50].map(pageSiz => (
                 <option key={pageSiz} value={pageSiz}>
-                  Show
+                  {__('Show', 'bitform')}
                   {' '}
                   {pageSiz}
                 </option>

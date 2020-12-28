@@ -1,4 +1,6 @@
 import { memo, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'
@@ -123,8 +125,8 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
-        body="Are you sure to delete this URL ?"
-        btnTxt="Delete"
+        body={__('Are you sure to delete this URL ?', 'bitform')}
+        btnTxt={__('Delete', 'bitform')}
         close={closeMdl}
       />
       {'confirmation' in formSettings
@@ -137,9 +139,9 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleUrlTitle(e, i)}
             >
-              <div className="f-m">Select A Page:</div>
+              <div className="f-m">{__('Select A Page:', 'bitform')}</div>
               <select className="btcd-paper-inp mt-1" onChange={e => handlePage(e, i)}>
-                <option value="">Custom Link</option>
+                <option value="">{__('Custom Link', 'bitform')}</option>
                 {redirectUrls
                   && redirectUrls.map((urlDetail, ind) => (
                     <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
@@ -151,12 +153,12 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
               <input onChange={e => handleLink(e.target.value, i)} className="btcd-paper-inp mt-1" type="text" value={itm.url} />
               <br />
               <br />
-              <div className="f-m">Add Url Parameter: (optional)</div>
+              <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
               <div className="btcd-param-t-wrp mt-1">
                 <div className="btcd-param-t">
                   <div className="tr">
-                    <div className="td">Key</div>
-                    <div className="td">Value</div>
+                    <div className="td">{__('Key', 'bitform')}</div>
+                    <div className="td">{__('Value', 'bitform')}</div>
                   </div>
                   {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
                     <div key={`url-p-${childIdx + 21}`} className="tr">
@@ -166,9 +168,9 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                        <span className="tooltip" style={{ '--tooltip-txt': '"set Form Field"', position: 'relative' }}>
+                        <span className="tooltip" style={{ '--tooltip-txt': `'${ __('set Form Field', 'bitform') }'`, position: 'relative' }}>
                           <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
-                            <option value="">Select Form Field</option>
+                            <option value="">{__('Select Form Field', 'bitform')}</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                           </select>
                         </span>
@@ -184,10 +186,10 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
         )) : (
           <div className="txt-center btcd-empty">
             <span className="btcd-icn icn-stack" />
-            Empty
+            {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative URl"' }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${ __('Add More Alternative URl', 'bitform') }'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }

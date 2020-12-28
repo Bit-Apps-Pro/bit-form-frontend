@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import { Link } from 'react-router-dom'
 import bitsFetch from '../Utils/bitsFetch'
 
@@ -26,7 +28,7 @@ export default function FormTemplates() {
           <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
-            <Link to={`/form/builder/new/${tem.lbl}/fs`} className="btn btn-white sh-sm" type="button">Create</Link>
+            <Link to={`/form/builder/new/${tem.lbl}/fs`} className="btn btn-white sh-sm" type="button">{__('Create', 'bitform')}</Link>
           </div>
         </div>
       ))}

@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoBiginActions from './ZohoBiginActions'
@@ -14,9 +16,9 @@ export default function ZohoBiginRelatedRecord({ indx, tab, settab, formID, form
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">Related List:</b>
+      <b className="wdt-100 d-in-b">{__('Related List:', 'bitform')}</b>
       <select onChange={handleInput} name="module" value={biginConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!biginConf.module}>
-        <option value="">Select Related Module</option>
+        <option value="">{__('Select Related Module', 'bitform')}</option>
         {
           biginConf?.default.relatedlists?.[biginConf.module] && Object.values(biginConf.default.relatedlists[biginConf.module]).map(relatedlistApiName => (
             <option key={relatedlistApiName.api_name} value={relatedlistApiName.aMod}>
@@ -25,7 +27,7 @@ export default function ZohoBiginRelatedRecord({ indx, tab, settab, formID, form
           ))
         }
       </select>
-      <button onClick={() => refreshRelatedList(formID, biginConf, setBiginConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Bigin Related Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshRelatedList(formID, biginConf, setBiginConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Bigin Related Lists', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
       {isLoading && (
@@ -41,11 +43,11 @@ export default function ZohoBiginRelatedRecord({ indx, tab, settab, formID, form
       {biginConf.default?.moduleData?.[biginConf.relatedlists?.[tab - 1]?.module]?.fields
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">Map Fields</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Map Fields', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>Form Fields</b></div>
-              <div className="txt-dp"><b>Zoho Fields</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
             </div>
 
             {biginConf.relatedlists[tab - 1].field_map.map((itm, i) => (
@@ -64,11 +66,11 @@ export default function ZohoBiginRelatedRecord({ indx, tab, settab, formID, form
             <br />
             {Object.keys(biginConf.default?.moduleData?.[biginConf.relatedlists[tab - 1].module]?.fileUploadFields).length !== 0 && (
               <>
-                <div className="mt-4"><b className="wdt-100">Map Attachments</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('Map Attachments', 'bitform')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>Form Fields</b></div>
-                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {biginConf.relatedlists[tab - 1].upload_field_map.map((itm, i) => (
@@ -88,7 +90,7 @@ export default function ZohoBiginRelatedRecord({ indx, tab, settab, formID, form
                 <br />
               </>
             )}
-            <div className="mt-4"><b className="wdt-100">Actions</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
 
             <ZohoBiginActions

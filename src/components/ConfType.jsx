@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
@@ -31,28 +33,28 @@ export default function ConfType(props) {
 
   return (
     <div className="mt-4" style={{ width: 900 }}>
-      <h2>Confirmations</h2>
+      <h2>{__('Confirmations', 'bitform')}</h2>
       <div>
         <button
           onClick={() => setPos(0)}
           className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 0 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Success/Error Messages
+          {__('Success/Error Messages', 'bitform')}
         </button>
         <button
           onClick={() => setPos(1)}
           className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 1 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Redirect Page
+          {__('Redirect Page', 'bitform')}
         </button>
         <button
           onClick={() => setPos(2)}
           className={`btcd-f-c-t-o mr-4 sh-sm ${pos === 2 && 'btcd-f-c-t-o-a'}`}
           type="button"
         >
-          Web Hooks
+          {__('Web Hooks', 'bitform')}
         </button>
       </div>
       <br />

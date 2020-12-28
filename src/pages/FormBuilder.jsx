@@ -2,6 +2,8 @@
 import { createRef, useState, useCallback, useReducer, useEffect } from 'react';
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
@@ -175,8 +177,8 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       resizer.resizeSection(2, { toSize: 300 })
     } else if (view === 'md') {
       setbrkPoint('md')
-      const s0 = ((window.innerWidth - 473) / 2.2) - 165
-      const s2 = ((window.innerWidth - 473) / 2.2) - 300
+      const s0 = ((window.innerWidth - 473) / 2.7) - 165
+      const s2 = ((window.innerWidth - 473) / 2.7) - 300
       resizer.resizeSection(0, { toSize: 165 + s0 })
       resizer.resizeSection(2, { toSize: 300 + s2 })
     } else if (view === 'sm') {
@@ -234,9 +236,9 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           <>
             <div className="btcd-device-btn flx">
               {[
-                { lbl: 'sm', icn: 'phone_android', tip: 'Phone View' },
-                { lbl: 'md', icn: 'tablet_android', tip: 'Tablet View' },
-                { lbl: 'lg', icn: 'laptop_mac', tip: 'Laptop View' },
+                { lbl: 'sm', icn: 'phone_android', tip: __('Phone View', 'bitform') },
+                { lbl: 'md', icn: 'tablet_android', tip: __('Tablet View', 'bitform') },
+                { lbl: 'lg', icn: 'laptop_mac', tip: __('Laptop View', 'bitform') },
               ]
                 .map(itm => <button key={itm.icn} onClick={() => setResponsiveView(itm.lbl)} className={`flx pos-rel tooltip phone ${brkPoint === itm.lbl && 'active'}`} style={{ '--tooltip-txt': `"${itm.tip}"` }} aria-label="responsive butoon" type="button"><span className={`btcd-icn icn-${itm.icn}`} /></button>)}
             </div>
@@ -274,10 +276,12 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
           styleDispatch={styleDispatch}
           fields={fields}
           elm={elmSetting}
+          setElementSetting={setElementSetting}
           updateData={updateFields}
           setSubmitConfig={setSubmitConfig}
-          setElementSetting={setElementSetting}
           formID={formID}
+          lay={lay}
+          setLay={setLay}
         />
       </Section>
     </Container>

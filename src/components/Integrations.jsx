@@ -1,4 +1,6 @@
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import zohoAnalytics from '../resource/img/integ/analytics.svg';
 import zohoBigin from '../resource/img/integ/bigin.svg';
@@ -66,18 +68,18 @@ function Integrations({ integrations, setIntegration, formFields }) {
         } else if (response && response.data && response.data.data) {
           newInteg.splice(i, 0, tempIntegration)
           setIntegration([...newInteg])
-          setSnackbar({ show: true, msg: `Integration deletion failed Cause:${response.data.data}. please try again` })
+          setSnackbar({ show: true, msg: `${__('Integration deletion failed Cause', 'bitform')}:${response.data.data}. ${__('please try again', 'bitform')}` })
         } else {
           newInteg.splice(i, 0, tempIntegration)
           setIntegration([...newInteg])
-          setSnackbar({ show: true, msg: 'Integration deletion failed. please try again' })
+          setSnackbar({ show: true, msg: __('Integration deletion failed. please try again', 'bitform') })
         }
       })
   }
 
   const inteDelConf = i => {
-    confMdl.btnTxt = 'Delete'
-    confMdl.body = 'Are you sure to delete this integration?'
+    confMdl.btnTxt = __('Delete', 'bitform')
+    confMdl.body = __('Are you sure to delete this integration?', 'bitform')
     confMdl.btnClass = ''
     confMdl.action = () => { removeInteg(i); closeConfMdl() }
     confMdl.show = true
@@ -116,10 +118,10 @@ function Integrations({ integrations, setIntegration, formFields }) {
       />
       <Switch>
         <Route exact path={path}>
-          <h2>Integrations</h2>
+          <h2>{__('Integrations', 'bitform')}</h2>
           <div className="flx flx-wrp">
             <Modal
-              title="Available Integrations"
+              title={__('Available Integrations', 'bitform')}
               show={showMdl}
               setModal={setShowMdl}
               style={{ width: 1000 }}
@@ -136,7 +138,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                   >
                     {inte.pro && (
                       <div className="pro-filter">
-                        <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">Premium</a></span>
+                        <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                       </div>
                     )}
                     <img src={inte.logo} alt="" />
@@ -156,13 +158,13 @@ function Integrations({ integrations, setIntegration, formFields }) {
               <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
-                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"' }} type="button">
+                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Edit', 'bitform') }'` }} type="button">
                     <span className="btcd-icn icn-edit" />
                   </Link>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': '"Delete"' }} onClick={() => inteDelConf(i)} type="button">
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Delete', 'bitform') }'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': '"Info"' }} type="button">
+                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
                     <span className="btcd-icn icn-information-outline" />
                   </Link>
                 </div>

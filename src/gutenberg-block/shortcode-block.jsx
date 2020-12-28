@@ -17,6 +17,7 @@ const bitformsIcon = () => (
   )}
   />
 )
+
 registerBlockType('bitforms/form-shortcode', {
   title: __('Bit Form', 'bitform'),
   icon: bitformsIcon,
@@ -61,4 +62,4 @@ registerBlockType('bitforms/form-shortcode', {
     const formID = parseInt(props.attributes.formID, 10)
     return `[bitform id='${formID}']`;
   },
-});
+})

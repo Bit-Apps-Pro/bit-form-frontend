@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import Background from './StyleComp/Background'
 import Borders from './StyleComp/Borders'
 import Padding from './StyleComp/Padding'
@@ -11,15 +13,20 @@ import Direction from './StyleComp/Direction'
 import Gap from './StyleComp/Gap'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
-  const { formID, formType } = useParams()
+  const history = useHistory()
+  const goBackUrl = () => {
+    if (history.location.pathname.match(/style\/fl\/.+/g)) return history.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
+    // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
+    return history.location.pathname.replace(/style\/.+/g, 'style')
+  }
   return (
     <div className="mt-2">
       {!noBack && (
-        <Link to={`/form/builder/${formType}/${formID}/style`}>
+        <Link to={`${goBackUrl()}`}>
           <h4 className="w-9 m-a flx txt-dp">
             <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
             <div className="flx w-10">
-              <span>Back</span>
+              <span>{__('Back', 'bitform')}</span>
               <div className="txt-center w-10 f-5">{editorLabel}</div>
             </div>
           </h4>

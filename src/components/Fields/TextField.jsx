@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 export default function TextField({ attr, onBlurHandler, resetFieldValue, formID }) {
+  const type = attr.typ === 'url' ? 'text' : attr.typ
   const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
@@ -22,7 +23,6 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue, formID
   useEffect(() => {
     if (attr.hasWorkflow && attr.val === value && onBlurHandler && !attr.userinput) {
       const { current } = textFieldRef
-      // console.log('value', value, current, attr.name)
       onBlurHandler(current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,7 +43,7 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue, formID
       )}
       <input
         className={`fld fld-${formID} no-drg`}
-        type={attr.typ}
+        type={type}
         {...'req' in attr.valid && { required: attr.valid.req }}
         {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
         {...'ph' in attr && { placeholder: attr.ph }}

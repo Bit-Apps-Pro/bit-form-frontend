@@ -3,6 +3,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -518,12 +520,12 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
         body={confMdl.body}
         action={confMdl.action}
       />
-      <h2>Conditional Logics</h2>
+      <h2>{__('Conditional Logics', 'bitform')}</h2>
 
       {isPro && (
         <Button className="blue" onClick={addLogicGrp}>
           <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
-          Add Conditional Logic
+          {__('Add Conditional Logic', 'bitform')}
         </Button>
       )}
 
@@ -557,24 +559,24 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
             >
               <div className="flx">
                 <b className="txt-dp"><small>Action Run When:</small></b>
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create/Edit</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Create</small>} checked={lgcGrp.action_run === 'create'} value="create" />
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Edit</small>} checked={lgcGrp.action_run === 'edit'} value="edit" />
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">Record Delete</small>} checked={lgcGrp.action_run === 'delete'} value="delete" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Create/Edit', 'bitform')}</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Create', 'bitform')}</small>} checked={lgcGrp.action_run === 'create'} value="create" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Edit', 'bitform')}</small>} checked={lgcGrp.action_run === 'edit'} value="edit" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Delete', 'bitform')}</small>} checked={lgcGrp.action_run === 'delete'} value="delete" />
               </div>
               {lgcGrp.action_run !== 'delete' && (
                 <div className="flx">
                   <b className="txt-dp"><small>Action Effect:</small></b>
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Load</small>} checked={lgcGrp.action_type === 'onload'} value="onload" />
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Field Input</small>} checked={lgcGrp.action_type === 'oninput'} value="oninput" />
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Validate</small>} checked={lgcGrp.action_type === 'onvalidate'} value="onvalidate" />
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">On Form Submit</small>} checked={lgcGrp.action_type === 'onsubmit'} value="onsubmit" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Form Load', 'bitform')}</small>} checked={lgcGrp.action_type === 'onload'} value="onload" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Field Input', 'bitform')}</small>} checked={lgcGrp.action_type === 'oninput'} value="oninput" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Form Validate', 'bitform')}</small>} checked={lgcGrp.action_type === 'onvalidate'} value="onvalidate" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Form Submit', 'bitform')}</small>} checked={lgcGrp.action_type === 'onsubmit'} value="onsubmit" />
                 </div>
               )}
               <div className="flx">
                 <b className="txt-dp"><small>Action Behaviour:</small></b>
-                {!lgcGrp?.action_type?.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Always</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
-                <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">Condition</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
+                {!lgcGrp?.action_type?.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">{__('Always', 'bitform')}</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
+                <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">{__('Condition', 'bitform')}</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
               </div>
 
               {lgcGrp.action_behaviour === 'cond' && <h3 className="m-0 mb-1 txt-gray">IF</h3>}
@@ -642,29 +644,29 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 <div className="btcd-hr" />
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <div className="mb-2">
-                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title="Success Message" checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
-                    {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title="Redirect URL" checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
-                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title="Web Hook" checked={checkKeyInArr('webHooks', lgcGrpInd)} />
-                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title="Email Notification" checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
-                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title="Integration" checked={checkKeyInArr('integ', lgcGrpInd)} />}
+                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message', 'bitform')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
+                    {!lgcGrp.action_run.match(/^(delete|edit)$/) && <TableCheckBox onChange={e => enableAction(e.target.checked, 'redirectPage', lgcGrpInd)} className="ml-2 mt-2" title={__('Redirect URL', 'bitform')} checked={checkKeyInArr('redirectPage', lgcGrpInd)} />}
+                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'webHooks', lgcGrpInd)} className="ml-2 mt-2" title={__('Web Hook', 'bitform')} checked={checkKeyInArr('webHooks', lgcGrpInd)} />
+                    <TableCheckBox onChange={e => enableAction(e.target.checked, 'mailNotify', lgcGrpInd)} className="ml-2 mt-2" title={__('Email Notification', 'bitform')} checked={checkKeyInArr('mailNotify', lgcGrpInd)} />
+                    {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'integ', lgcGrpInd)} className="ml-2 mt-2" title={__('Integration', 'bitform')} checked={checkKeyInArr('integ', lgcGrpInd)} />}
                   </div>
                 )}
                 {lgcGrp.action_run === 'delete' && <CheckBox onChange={e => preventDelete(e.target.checked, lgcGrpInd)} checked={workFlows[lgcGrpInd].avoid_delete} title={<small className="txt-dp">Prevent Delete</small>} />}
 
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <>
-                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">Web Hooks</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Hooks to Call" />}
-                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">Integrations</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder="Select Integation" />}
+                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">{__('Web Hooks', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
+                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">{__('Integrations', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
 
                     {lgcGrp.action_run !== 'delete' && (
                       <>
                         <div className="mt-2" />
                         {checkKeyInArr('successMsg', lgcGrpInd) && (
                           <label className="f-m">
-                            Success Message:
+                            {__('Success Message:', 'bitform')}
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
-                              <option value="">Select Message</option>
+                              <option value="">{__('Select Message', 'bitform')}</option>
                               {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
@@ -672,10 +674,10 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                         <div className="mt-2" />
                         {checkKeyInArr('redirectPage', lgcGrpInd) && (
                           <label className="f-m">
-                            Redirect URL:
+                            {__('Redirect URL:', 'bitform')}
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
-                              <option value="">Select Page To Redirect</option>
+                              <option value="">{__('Select Page To Redirect', 'bitform')}</option>
                               {formSettings?.confirmation?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
@@ -687,18 +689,18 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                       {checkKeyInArr('mailNotify', lgcGrpInd) && (
                         <>
                           <label className="f-m">
-                            Email Notification:
+                            {__('Email Notification:', 'bitform')}
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
-                              <option value="">Select Email Template</option>
+                              <option value="">{__('Select Email Template', 'bitform')}</option>
                               {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
                           <DropDown
                             action={val => setEmailSetting('to', val, lgcGrpInd)}
                             value={getValueFromArr('mailNotify', 'to', lgcGrpInd)}
-                            placeholder="Add Email Receiver"
-                            title={<span className="f-m">To</span>}
+                            placeholder={__('Add Email Receiver', 'bitform')}
+                            title={<span className="f-m">{__('To', 'bitform')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -707,8 +709,8 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                           <DropDown
                             action={val => setEmailSetting('cc', val, lgcGrpInd)}
                             value={getValueFromArr('mailNotify', 'cc', lgcGrpInd)}
-                            placeholder="Add Email CC"
-                            title={<span className="f-m">CC</span>}
+                            placeholder={__('Add Email CC', 'bitform')}
+                            title={<span className="f-m">{__('CC', 'bitform')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -716,9 +718,9 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                           />
                           <DropDown
                             action={val => setEmailSetting('bcc', val, lgcGrpInd)}
-                            placeholder="Add Email BCC"
+                            placeholder={__('Add Email BCC', 'bitform')}
                             value={getValueFromArr('mailNotify', 'bcc', lgcGrpInd)}
-                            title={<span className="f-m">BCC</span>}
+                            title={<span className="f-m">{__('BCC', 'bitform')}</span>}
                             isMultiple
                             titleClassName="w-7 mt-2"
                             addable
@@ -728,13 +730,13 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                       )}
                     </div>
 
-                    {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">Set another field value</b></div>}
+                    {lgcGrp.action_run !== 'delete' && <div className="mt-2"><b className="txt-dp">{__('Set another field value', 'bitform')}</b></div>}
                   </>
                 )}
 
                 {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                   <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
-                    <option value="">Select Message</option>
+                    <option value="">{__('Select Message', 'bitform')}</option>
                     {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                   </MtSelect>
                 )}
@@ -777,19 +779,20 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           </div>
           {!isPro && (
             <div className="txt-center bg-pro p-5 mt-2">
-              For
-              <span className="txt-pro">UNLIMITED</span>
+              {__('For', 'bitform')}
+              <span className="txt-pro">{__('UNLIMITED', 'bitform')}</span>
               {' '}
-              Conditional Logics,
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">Buy Premium</b></a>
+              {__('Conditional Logics', 'bitform')}
+              ,
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">{__('Buy Premium', 'bitform')}</b></a>
             </div>
           )}
         </Fragment>
       )) : (
-          <div className="txt-center btcd-empty">
-            <span className="btcd-icn icn-stack" />
-          Empty
-          </div>
+        <div className="txt-center btcd-empty">
+          <span className="btcd-icn icn-stack" />
+          {__('Empty', 'bitform')}
+        </div>
         )}
     </div>
   )
