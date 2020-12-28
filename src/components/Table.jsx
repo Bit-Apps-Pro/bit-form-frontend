@@ -11,6 +11,7 @@ import ConfirmModal from './ConfirmModal'
 import Menu from './ElmSettings/Childs/Menu'
 import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
 import TableLoader2 from './Loaders/TableLoader2'
+import ExportImportMenu from './ExportImport/ExportImportMenu'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -23,7 +24,7 @@ const IndeterminateCheckbox = forwardRef(
   },
 )
 
-function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
+function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols,formID }) {
   const [delay, setDelay] = useState(null)
   const handleSearch = e => {
     delay && clearTimeout(delay)
@@ -47,6 +48,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
           placeholder="Search"
         />
       </label>
+      {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} />}
     </div>
   )
 }
@@ -331,6 +333,11 @@ function Table(props) {
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
           setSearch={setSearch}
+          exportImportMenu={props.exportImportMenu}
+          data={props.data}
+          cols={props.columns}
+          formID={props.formID}
+
         />
         <div className="mt-2">
           <Scrollbars className="btcd-scroll" style={{ height: props.height }}>

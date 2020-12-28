@@ -15,7 +15,7 @@ import noData from '../resource/img/nodata.svg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 
-function FormEntries({ allResp, setAllResp, allLabels }) {
+function FormEntries({ allResp, setAllResp, allLabels, formName }) {
   console.log(
     '%c $render FormEntries',
     'background:skybluepadding:3pxborder-radius:5px',
@@ -487,6 +487,8 @@ function FormEntries({ allResp, setAllResp, allLabels }) {
           columnHidable
           hasAction
           rowClickable
+          exportImportMenu
+          formID={formID}
           setTableCols={setEntryLabels}
           fetchData={fetchData}
           setBulkDelete={setBulkDelete}
