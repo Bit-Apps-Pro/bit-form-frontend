@@ -1,11 +1,11 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
 import CheckBox from '../ElmSettings/Childs/CheckBox'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import Back2FldList from './Back2FldList'
-import { fundLists, currencyCodes, localeCodes } from '../../Utils/StaticData/paypalData'
 
 export default function PaypalSettings({ elm, fields, updateData, setElementSetting }) {
   const formFields = Object.entries(fields)

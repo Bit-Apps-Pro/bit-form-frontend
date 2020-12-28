@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
 import EditEntryData from '../components/EditEntryData'
-import EntryRelatedInfo from '../components/EntryRelatedInfo'
+import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
@@ -409,7 +409,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         <button
           className="icn-btn sh-sm ml-2 mr-2 tooltip"
           onClick={() => setRefreshResp(1)}
-          style={{ '--tooltip-txt': `'${ __('Refresh Form Responses', 'bitform') }'` }}
+          style={{ '--tooltip-txt': `'${__('Refresh Form Responses', 'bitform')}'` }}
           type="button"
           disabled={isloading}
         >
@@ -447,7 +447,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
             entryID={entryID}
             setSnackbar={setSnackbar}
             allLabels={allLabels}
-            allResp={allResp}
+            rowDtl={allResp[rowDtl.idx]}
             integrations={integrations}
           />
         )}

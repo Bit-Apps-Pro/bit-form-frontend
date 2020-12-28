@@ -47,7 +47,6 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
         actions[3].value = style?.[pcls]?.['border-radius']
       }
     }
-    console.log('ssssssssssssssss', style)
     styleDispatch({ apply: actions, brkPoint })
   }
 

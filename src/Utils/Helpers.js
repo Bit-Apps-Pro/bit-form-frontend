@@ -72,8 +72,8 @@ export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
   return 0
 })
 
-export const dateTimeFormatter = (oldDate, format) => {
-  const newDate = new Date(oldDate);
+export const dateTimeFormatter = (date, format) => {
+  const newDate = new Date(date);
 
   if (newDate.toString() === 'Invalid Date') {
     return 'Invalid Date'

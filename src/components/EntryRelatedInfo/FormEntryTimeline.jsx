@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import bitsFetch from '../Utils/bitsFetch'
-import { dateTimeFormatter } from '../Utils/Helpers'
-import Loader from './Loaders/Loader'
-import CopyText from './ElmSettings/Childs/CopyText'
+import { useEffect, useState } from 'react'
+import bitsFetch from '../../Utils/bitsFetch'
+import { dateTimeFormatter } from '../../Utils/Helpers'
+import CopyText from '../ElmSettings/Childs/CopyText'
+import Loader from '../Loaders/Loader'
 
 export default function FormEntryTimeline({ formID, entryID, allLabels, settab, integrations }) {
   // eslint-disable-next-line no-undef

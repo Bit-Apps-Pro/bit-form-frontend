@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { useEffect, useState } from 'react';
-import { FUNDING, PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import bitsFetch from '../../Utils/bitsFetch';
 
-function Paypal({ formID, attr }) {
+function Paypal({ formID, attr, contentID, fieldData }) {
   const [render, setrender] = useState(false)
   const [amount, setAmount] = useState(attr?.amount || 1)
   const [shipping, setShipping] = useState(attr?.shipping || 0)
@@ -59,7 +60,28 @@ function Paypal({ formID, attr }) {
   }
 
   const onApproveHanlder = (data, actions) => {
-    console.log(isSubscription ? actions.subscription.get().value : actions.order.capture().value)
+    const order = isSubscription ? actions.subscription.get() : actions.order.capture()
+    order.then(result => {
+      const form = document.getElementById(`form-${contentID}`)
+      if (typeof (form) != 'undefined' && form != null) {
+        const paypalFieldKey = Object.keys(fieldData).find(fieldKey => fieldData[fieldKey].typ === 'paypal')
+        const input = document.createElement('input')
+        input.setAttribute('type', 'hidden')
+        input.setAttribute('name', paypalFieldKey)
+        input.setAttribute('value', result.id)
+        form.appendChild(input)
+        const submitBtn = form.querySelector('button[type="submit"]')
+        submitBtn.click()
+        const paymentParams = {
+          formID,
+          transactionID: result.id,
+          payment_name: 'paypal',
+          payment_type: isSubscription ? 'subscription' : 'order',
+          payment_response: result,
+        }
+        bitsFetch(paymentParams, 'bitforms_payment_insert')
+      }
+    })
   }
 
   return (

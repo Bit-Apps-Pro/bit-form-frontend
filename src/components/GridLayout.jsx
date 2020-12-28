@@ -11,10 +11,14 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import CompGen from './CompGen'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import { ShowProModalContext } from '../pages/FormDetails'
 import BrushIcn from '../Icons/BrushIcn'
+import ConfirmModal from './ConfirmModal'
 
 function GridLayout(props) {
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const { reCaptchaV2 } = useContext(AppSettings)
+  const setProModal = useContext(ShowProModalContext)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout } = props
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
@@ -22,8 +26,8 @@ function GridLayout(props) {
   const cols = { lg: 6, md: 4, sm: 2 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
+  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const history = useHistory()
-
   useEffect(() => {
     setLayouts(JSON.parse(JSON.stringify(layout)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -179,10 +183,11 @@ function GridLayout(props) {
   }
 
   const margeNewData = () => {
+    setNewData(null)
+    if (!checkPaymentFields(newData[0])) return;
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
-    setNewData(null)
     const newBlk = { i: `bf${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
@@ -231,8 +236,38 @@ function GridLayout(props) {
     sessionStorage.setItem('btcd-lc', '-')
   }
 
+  const clsAlertMdl = () => setAlertMdl({ show: false, msg: '' })
+
+  const checkPaymentFields = elm => {
+    const payPattern = /paypal/
+    const fld = elm.typ.match(payPattern)
+    if (fld) {
+      const payFields = fields ? Object.values(fields).filter(field => field.typ === fld[0]) : []
+      let msg;
+      if (!isPro) {
+        msg = __(`${fld[0]} is in Pro Version!`, 'bitform')
+        setProModal({ show: true, msg })
+      } else if (payFields.length) {
+        msg = __(
+          <p>
+            You cannot add more than one &nbsp;
+            {fld[0]}
+            &nbsp;
+            field in same form.
+          </p>, 'bitform',
+        )
+        setAlertMdl({ show: true, msg })
+      }
+      if (msg) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
+    if (!checkPaymentFields(draggedElm[0])) return;
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
@@ -421,6 +456,20 @@ function GridLayout(props) {
           </div>
         </div>
       </Scrollbars>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Ok"
+        show={alertMdl.show}
+        close={clsAlertMdl}
+        action={clsAlertMdl}
+        title="Sorry"
+      >
+        <div className="txt-center">
+          {alertMdl.msg}
+        </div>
+      </ConfirmModal>
     </div>
   )
 }
