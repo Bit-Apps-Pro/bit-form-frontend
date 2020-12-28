@@ -39,21 +39,21 @@ body {
 }
 
 .fld-wrp .msl-vars {
-  --border-radius: 5px;
+  --border-radius: 6px;
+  --input-width:100%;
   margin-top: 5px;
   & > * {
     line-height: 1;
   }
-  & > .msl:not(.msl-active) {
+  & .msl:not(.msl-active):not(.msl-active-up) {
     height: 40px;
-    border: 1.5px solid;
-    border-color: #505050;
+    border: 1px solid#c7d4dd !important;
   }
   & .msl-input {
-    margin: 8px;
+    // margin: 8px;
   }
   .msl-single-value {
-    margin: 8px;
+    // margin: 8px;
   }
   & .msl-option {
     padding: 7px 5px;
@@ -106,21 +106,6 @@ textarea.fld {
 textarea.fld {
   height: calc(100% - 30px);
   resize: vertical;
-}
-
-.fld + .slim {
-  margin: 5px 0 0 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  & > .ss-multi-selected,
-  .ss-single-selected {
-    min-height: 40px !important;
-    border: 1.5px solid #505050 !important;
-    border-radius: 5px !important;
-  }
-  & .ss-disabled {
-    color: rgb(133, 133, 133) !important;
-  }
 }
 
 .fld {
