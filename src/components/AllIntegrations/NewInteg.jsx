@@ -1,4 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import ZohoAnalytics from './ZohoAnalytics/ZohoAnalytics'
 import ZohoBigin from './ZohoBigin/ZohoBigin'
 import ZohoCampaigns from './ZohoCampaigns/ZohoCampaigns'
@@ -59,7 +61,7 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         </Link>
         <div className="w-8 txt-center">
           <b className="f-lg">{type}</b>
-          <div>Integration Settings</div>
+          <div>{__('Integration Settings', 'bitform')}</div>
         </div>
       </div>
       <IntegType />

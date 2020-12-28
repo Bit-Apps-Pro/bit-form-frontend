@@ -1,5 +1,6 @@
-import { __ } from '@wordpress/i18n'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
 import CheckBox from '../ElmSettings/Childs/CheckBox'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
@@ -134,7 +135,7 @@ export default function PaypalSettings({ elm, fields, updateData, setElementSett
             />
           </div>
           <div className="mt-2">
-            <b>Disable Card</b>
+            <b>{__('Disable Card', 'bitform')}</b>
             <MultiSelect
               className="w-10 btcd-paper-drpdwn mt-1 btcd-ttc"
               options={fundOptions()}

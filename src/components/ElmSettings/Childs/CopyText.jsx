@@ -1,8 +1,11 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
+
 export default function CopyText({ value, setSnackbar, className, readOnly }) {
   const copyText = e => {
     const cpyBtn = e.target
     cpyBtn.setAttribute('style', '--tooltip-txt: "Copied"')
-    setSnackbar({ show: true, msg: 'Copied on Clipboard.' })
+    setSnackbar({ show: true, msg: __('Copied on Clipboard.', 'bitform') })
     const text = e.target.parentNode.children[0]
     text.select();
     text.setSelectionRange(0, 99999);

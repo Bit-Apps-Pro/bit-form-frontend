@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
@@ -97,7 +98,7 @@ export default function FileUpSettings(props) {
         File Upload
       </div>
       <div className="mt-1">
-        <span className="font-w-m">Field Key</span>
+        <span className="font-w-m">{__('Field Key', 'bitform')}</span>
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
       </div>
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-2" />

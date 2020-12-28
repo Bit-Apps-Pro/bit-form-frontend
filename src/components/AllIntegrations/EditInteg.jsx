@@ -1,4 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import EditZohoAnalytics from './ZohoAnalytics/EditZohoAnalytics'
 import EditZohoBigin from './ZohoBigin/EditZohoBigin'
 import EditZohoCampaigns from './ZohoCampaigns/EditZohoCampaigns'
@@ -58,7 +60,7 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         </Link>
         <div className="w-8 txt-center">
           <b className="f-lg">{integrations[id].type}</b>
-          <div>Integration Settings</div>
+          <div>{__('Integration Settings', 'bitform')}</div>
         </div>
       </div>
       <IntegType />

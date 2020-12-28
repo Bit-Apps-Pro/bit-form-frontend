@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import Background from './StyleComp/Background'
 import Borders from './StyleComp/Borders'
 import Padding from './StyleComp/Padding'
@@ -24,7 +26,7 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
           <h4 className="w-9 m-a flx txt-dp">
             <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
             <div className="flx w-10">
-              <span>Back</span>
+              <span>{__('Back', 'bitform')}</span>
               <div className="txt-center w-10 f-5">{editorLabel}</div>
             </div>
           </h4>

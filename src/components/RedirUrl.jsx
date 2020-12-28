@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
@@ -169,7 +170,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
                         <span className="tooltip" style={{ '--tooltip-txt': `'${ __('set Form Field', 'bitform') }'`, position: 'relative' }}>
                           <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
-                            <option value="">Select Form Field</option>
+                            <option value="">{__('Select Form Field', 'bitform')}</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                           </select>
                         </span>

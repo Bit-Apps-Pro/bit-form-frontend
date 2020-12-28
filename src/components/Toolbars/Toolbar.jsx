@@ -2,6 +2,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useMemo } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';

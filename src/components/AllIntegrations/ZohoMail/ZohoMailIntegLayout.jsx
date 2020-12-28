@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -93,11 +95,11 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
   return (
     <div style={{ width: 875 }}>
       <div className="flx">
-        <b style={{ width: 100 }}>Type:</b>
+        <b style={{ width: 100 }}>{__('Type:', 'bitform')}</b>
         <select onChange={(e) => handleInput(e.target.value, 'mailType')} className="btcd-paper-inp" style={{ width: 150 }} value={mailConf.mailType}>
-          <option value="">Select type</option>
-          <option value="send">Send Email</option>
-          <option value="draft">Save as Draft</option>
+          <option value="">{__('Select type', 'bitform')}</option>
+          <option value="send">{__('Send Email', 'bitform')}</option>
+          <option value="draft">{__('Save as Draft', 'bitform')}</option>
         </select>
       </div>
 
@@ -106,7 +108,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
         <MultiSelect
           className="w-7 mt-2 btcd-paper-drpdwn"
           defaultValue={mailConf.to}
-          placeholder="Add Email Receiver"
+          placeholder={__('Add Email Receiver', 'bitform')}
           onChange={(e) => handleInput(e, 'to')}
           options={mailOptions()}
           customValue
@@ -114,11 +116,11 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
       </div>
 
       <div className="flx">
-        <b style={{ width: 100 }}>CC:</b>
+        <b style={{ width: 100 }}>{__('CC:', 'bitform')}</b>
         <MultiSelect
           className="w-7 mt-2 btcd-paper-drpdwn"
           defaultValue={mailConf.cc}
-          placeholder="Add Email CC"
+          placeholder={__('Add Email CC', 'bitform')}
           onChange={(e) => handleInput(e, 'cc')}
           options={mailOptions()}
           customValue
@@ -126,11 +128,11 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
       </div>
 
       <div className="flx">
-        <b style={{ width: 100 }}>BCC:</b>
+        <b style={{ width: 100 }}>{__('BCC:', 'bitform')}</b>
         <MultiSelect
           className="w-7 mt-2 btcd-paper-drpdwn"
           defaultValue={mailConf.bcc}
-          placeholder="Add Email BCC"
+          placeholder={__('Add Email BCC', 'bitform')}
           onChange={(e) => handleInput(e, 'bcc')}
           options={mailOptions()}
           customValue
@@ -138,17 +140,17 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
       </div>
 
       <div className="mt-2 flx">
-        <b style={{ width: 100 }}>Subject:</b>
-        <input type="text" onChange={(e) => handleInput(e.target.value, 'subject')} className="btcd-paper-inp w-7" placeholder="Email Subject Here" value={mailConf.subject || ''} />
+        <b style={{ width: 100 }}>{__('Subject:', 'bitform')}</b>
+        <input type="text" onChange={(e) => handleInput(e.target.value, 'subject')} className="btcd-paper-inp w-7" placeholder={__('Email Subject Here', 'bitform')} value={mailConf.subject || ''} />
         <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
-          <option value="">Add form field</option>
+          <option value="">{__('Add form field', 'bitform')}</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
         </select>
       </div>
 
       <div className="mt-3">
         <div className="flx flx-between">
-          <b>Body:</b>
+          <b>{__('Body:', 'bitform')}</b>
         </div>
         <label htmlFor="body-content" className="mt-2 w-10">
           <textarea
@@ -162,7 +164,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
       </div>
       <br />
       <br />
-      <div className="mt-4"><b className="wdt-100">Actions</b></div>
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
       <ZohoMailActions
         mailConf={mailConf}

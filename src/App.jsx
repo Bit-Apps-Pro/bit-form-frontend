@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router, Switch, Route, NavLink, Link,
 } from 'react-router-dom'
 import './resource/sass/app.scss'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
@@ -52,7 +53,7 @@ function App() {
 
           <div className="nav-wrp">
             <div className="flx">
-              <div className="logo flx" title="Bit Form">
+              <div className="logo flx" title={__('Bit Form', 'bitform')}>
                 <Link to="/" className="flx">
                   <img src={logo} alt="bit form logo" className="ml-2" />
                   <span className="ml-2">Bit Form</span>

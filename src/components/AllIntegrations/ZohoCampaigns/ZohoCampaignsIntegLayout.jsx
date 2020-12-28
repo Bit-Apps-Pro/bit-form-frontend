@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshContactFields, refreshLists } from './ZohoCampaignsCommonFunc'
@@ -7,9 +9,9 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
   return (
     <>
       <br />
-      <b className="wdt-100 d-in-b">List:</b>
+      <b className="wdt-100 d-in-b">{__('List:', 'bitform')}</b>
       <select onChange={event => handleInput(event)} name="list" value={campaignsConf.list} className="btcd-paper-inp w-7">
-        <option value="">Select List</option>
+        <option value="">{__('Select List', 'bitform')}</option>
         {
           campaignsConf?.default?.lists && Object.values(campaignsConf.default.lists).map(listApiName => (
             <option key={listApiName.listkey} value={listApiName.listkey}>
@@ -18,7 +20,7 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
           ))
         }
       </select>
-      <button onClick={() => refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Campaigns Lists"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Campaigns Lists', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
       {isLoading && (
@@ -35,16 +37,16 @@ export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInp
       {campaignsConf.list && (
         <>
           <div className="mt-4">
-            <b className="wdt-100">Map Fields</b>
-            <button onClick={() => refreshContactFields(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Campaigns Contact Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+            <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+            <button onClick={() => refreshContactFields(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Campaigns Contact Fields', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
           <div className="btcd-hr mt-1" />
           {campaignsConf.default?.fields?.[campaignsConf.list]
             && (
               <>
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>Form Fields</b></div>
-                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {campaignsConf.field_map.map((itm, i) => (

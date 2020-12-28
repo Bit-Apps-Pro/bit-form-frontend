@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
@@ -51,7 +53,7 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
     } else {
       if (!checkValidEmail(analyticsConf.ownerEmail)) {
         setError({
-          ownerEmail: !checkValidEmail(analyticsConf.ownerEmail) ? 'Email is invalid' : '',
+          ownerEmail: !checkValidEmail(analyticsConf.ownerEmail) ? __('Email is invalid', 'bitform') : '',
         })
         return
       }
@@ -83,8 +85,8 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
         isAuthorized={isAuthorized}
         nextPage={nextPage}
       >
-        <div className="mt-3"><b>Zoho Analytics Owner Email:</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={e => handleInput(e, analyticsConf, setAnalyticsConf, formID, setisLoading, setSnackbar, true, error, setError)} name="ownerEmail" value={analyticsConf.ownerEmail} type="email" placeholder="Owner Email" />
+        <div className="mt-3"><b>{__('Zoho Analytics Owner Email:', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={e => handleInput(e, analyticsConf, setAnalyticsConf, formID, setisLoading, setSnackbar, true, error, setError)} name="ownerEmail" value={analyticsConf.ownerEmail} type="email" placeholder={__('Owner Email', 'bitform')} />
         <div style={{ color: 'red' }}>{error.ownerEmail}</div>
       </IntegrationStepOne>
 
@@ -108,7 +110,9 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
-          Next &nbsp;
+          {__('Next', 'bitform')}
+          {' '}
+&nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
 

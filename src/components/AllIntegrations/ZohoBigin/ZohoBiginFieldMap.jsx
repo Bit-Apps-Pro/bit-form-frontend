@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import MtInput from '../../ElmSettings/Childs/MtInput';
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers';
 
@@ -11,17 +13,17 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
       className={`flx flx-around mt-2 ${isNotRequired && 'mr-1'}`}
     >
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
-        <option value="">Select Field</option>
+        <option value="">{__('Select Field', 'bitform')}</option>
         {
           uploadFields ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>) : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
         }
-        {!uploadFields && <option value="custom">Custom...</option>}
+        {!uploadFields && <option value="custom">{__('Custom...', 'bitform')}</option>}
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, biginConf, setBiginConf, tab)} label="Custom Value" className="mr-2" type="text" value={field.customValue} placeholder="Custom Value" />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, biginConf, setBiginConf, tab)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
       <select className="btcd-paper-inp" disabled={!isNotRequired} name="zohoFormField" value={field.zohoFormField} onChange={(ev) => handleFieldMapping(ev, i, biginConf, setBiginConf, uploadFields, tab)}>
-        <option value="">Select Field</option>
+        <option value="">{__('Select Field', 'bitform')}</option>
         {
           biginConf.default.moduleData?.[module]?.fields && Object.values(biginConf.default.moduleData[module].fields).map(fieldApiName => (
             isNotRequired ? !fieldApiName.required

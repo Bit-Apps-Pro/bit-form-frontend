@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Link } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal';
@@ -208,8 +209,8 @@ function AllFroms({ newFormId }) {
       {allForms.length > 0 ? (
         <>
           <div className="af-header flx flx-between">
-            <h2>Forms</h2>
-            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">Create From</button>
+            <h2>{__('Forms', 'bitform')}</h2>
+            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">{__('Create From', 'bitform')}</button>
           </div>
           <div className="forms">
             <Table

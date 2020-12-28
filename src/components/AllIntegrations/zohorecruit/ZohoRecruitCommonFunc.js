@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { sprintf, __ } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, recordTab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -89,11 +91,11 @@ export const refreshModules = (formID, recruitConf, setRecruitConf, setisLoading
           newConf.tokenDetails = result.data.tokenDetails
         }
         setRecruitConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Modules refreshed' })
+        setSnackbar({ show: true, msg: __('Modules refreshed', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Modules refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Modules refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -124,11 +126,11 @@ export const refreshNoteTypes = (formID, recruitConf, setRecruitConf, setisLoadi
           newConf.tokenDetails = result.data.tokenDetails
         }
         setRecruitConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Note Types refreshed' })
+        setSnackbar({ show: true, msg: __('Note Types refreshed', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Note Types refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Note Types refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Note Types refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Note Types refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -162,11 +164,11 @@ export const refreshRelatedList = (formID, recruitConf, setRecruitConf, setisLoa
           newConf.tokenDetails = result.data.tokenDetails
         }
         setRecruitConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'RelatedLists refreshed' })
+        setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bitform') })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `RelatedLists refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('RelatedLists refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'RelatedLists refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -215,7 +217,7 @@ export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setisL
         }
         setRecruitConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Fields refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

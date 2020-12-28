@@ -1,4 +1,5 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import FormEntryNotes from './FormEntryNotes'
@@ -11,7 +12,7 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
   const payPattern = /paypal/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   return (
-    <Modal lg show setModal={close} title="Related Info">
+    <Modal lg show setModal={close} title={__('Related Info', 'bitform')}>
       <Tabs>
         {paymentFields?.length ? (
           <Tab>

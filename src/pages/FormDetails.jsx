@@ -1,4 +1,5 @@
 import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import FormSettings from './FormSettings'
@@ -69,7 +70,7 @@ function FormDetails(props) {
       setMailTem(formData.formSettings.mailTem)
       if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
       sessionStorage.removeItem('bitformData')
-      setSnackbar({ show: true, msg: 'Please try again. Token was expired' })
+      setSnackbar({ show: true, msg: __('Please try again. Token was expired', 'bitform') })
       if (isLoading) {
         setisLoading(!isLoading)
       }
@@ -118,7 +119,7 @@ function FormDetails(props) {
     submitBtn: subBtn,
     confirmation: {
       type: {
-        successMsg: [{ title: 'Untitled Message 1', msg: 'Successfully Submitted.' }],
+        successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
         redirectPage: [{ title: 'Untitled Redirect-Url 1', url: '' }],
         webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
       },
@@ -328,7 +329,7 @@ function FormDetails(props) {
             sm
             show={proModal.show}
             setModal={() => setProModal({ show: false })}
-            title="Premium Feature"
+            title={__('Premium Feature', 'bitform')}
             className="pro-modal"
           >
             <h4 className="txt-center mt-5">

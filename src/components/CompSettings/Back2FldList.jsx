@@ -1,4 +1,5 @@
-import { __ } from "@wordpress/i18n";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 
 export default function Back2FldList({ setElementSetting }) {
   return (

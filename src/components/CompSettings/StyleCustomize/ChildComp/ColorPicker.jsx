@@ -2,10 +2,11 @@
 import { useState } from 'react';
 import { ColorPicker as Picker } from 'react-color-gradient-picker';
 import { CSSTransition } from 'react-transition-group';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import hexToRGBA from '../../../../Utils/hex2RGBA';
 import useComponentVisible from './useComponentVisible';
 import 'react-color-gradient-picker/dist/index.css';
-import { __ } from '@wordpress/i18n';
 
 ColorPicker.defaultProps = {
   alwGradient: true,
@@ -55,7 +56,7 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
     <div ref={ref} className="pos-rel">
       <div
         aria-label="color picker"
-        title="Color Picker"
+        title={__('Color Picker', 'bitform')}
         onClick={() => setIsComponentVisible(!isComponentVisible)}
         onKeyPress={() => setIsComponentVisible(!isComponentVisible)}
         tabIndex="0"

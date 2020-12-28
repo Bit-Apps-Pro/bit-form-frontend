@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __, sprintf } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -75,12 +77,12 @@ export const refreshWorkbooks = (formID, sheetConf, setSheetConf, setisLoading, 
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Workbooks refreshed' })
+        setSnackbar({ show: true, msg: __('Workbooks refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Workbooks refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Workbooks refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Workbooks refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Workbooks refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -116,10 +118,10 @@ export const refreshWorksheets = (formID, sheetConf, setSheetConf, setisLoading,
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Worksheets refreshed' })
+        setSnackbar({ show: true, msg: __('Worksheets refreshed', 'bitform') })
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Worksheets refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Worksheets refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -159,9 +161,9 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
           if (result.data.tokenDetails) {
             newConf.tokenDetails = result.data.tokenDetails
           }
-          setSnackbar({ show: true, msg: 'Worksheet Headers refreshed' })
+          setSnackbar({ show: true, msg: __('Worksheet Headers refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: 'No Worksheet headers found. Try changing the header row number or try again' })
+          setSnackbar({ show: true, msg: __('No Worksheet headers found. Try changing the header row number or try again', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -169,7 +171,7 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
         }
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Worksheet Headers refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Worksheet Headers refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

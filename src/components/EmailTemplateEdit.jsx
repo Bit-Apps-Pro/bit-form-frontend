@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
 import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
@@ -93,7 +94,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
           {__('Back', 'bitform')}
         </NavLink>
 
-        <button onClick={save} className="btn blue f-right" type="button">Save</button>
+        <button onClick={save} className="btn blue f-right" type="button">{__('Save', 'bitform')}</button>
 
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>
@@ -104,7 +105,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
         </div>
         <div className="mt-3 flx">
           <b style={{ width: 100 }}>{__('Subject:', 'bitform')}</b>
-          <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder={__("Email Subject Here", 'bitform')} value={mailTem[id].sub} />
+          <input onChange={handleSubject} type="text" className="btcd-paper-inp w-7" placeholder={__('Email Subject Here', 'bitform')} value={mailTem[id].sub} />
           <select onChange={addFieldToSubject} className="btcd-paper-inp ml-2" style={{ width: 150 }}>
             <option value="">{__('Add form field', 'bitform')}</option>
             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}

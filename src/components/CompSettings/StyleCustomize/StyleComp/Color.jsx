@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import StyleAccordion from '../ChildComp/StyleAccordion';
 import BtnGrp from '../ChildComp/BtnGrp'
@@ -104,7 +105,7 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
       </div>
       {clrTyp !== 'None' && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">Color</span>
+          <span className="f-5">{__('Color', 'bitform')}</span>
           <ColorPicker alwGradient={false} value={clr} onChange={setClr} />
         </div>
       )}

@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
-import MultiSelect from 'react-multiple-select-dropdown-lite';
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'
@@ -57,7 +59,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         value={action.field}
         onChange={e => changeAtnField(e.target.value)}
       >
-        <option value="">Select One</option>
+        <option value="">{__('Select One', 'bitform')}</option>
         {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
@@ -70,12 +72,12 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         onChange={e => changeAction(e.target.value)}
         value={action.action}
       >
-        <option value="">Select One</option>
-        <option value="value">Value</option>
-        {actionType !== 'onsubmit' && <option value="disable">Disable</option>}
-        {actionType !== 'onsubmit' && <option value="enable">Enable</option>}
-        {actionType !== 'onsubmit' && <option value="hide">Hide</option>}
-        {actionType !== 'onsubmit' && <option value="show">Show</option>}
+        <option value="">{__('Select One', 'bitform')}</option>
+        <option value="value">{__('Value', 'bitform')}</option>
+        {actionType !== 'onsubmit' && <option value="disable">{__('Disable', 'bitform')}</option>}
+        {actionType !== 'onsubmit' && <option value="enable">{__('Enable', 'bitform')}</option>}
+        {actionType !== 'onsubmit' && <option value="hide">{__('Hide', 'bitform')}</option>}
+        {actionType !== 'onsubmit' && <option value="show">{__('Show', 'bitform')}</option>}
       </MtSelect>
 
       {action.action === 'value' && (
