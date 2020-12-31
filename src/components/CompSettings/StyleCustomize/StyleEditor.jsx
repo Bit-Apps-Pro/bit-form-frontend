@@ -1,14 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useHistory } from 'react-router-dom';
-import Background from './StyleComp/Background'
-import Borders from './StyleComp/Borders'
-import Padding from './StyleComp/Padding'
-import Margin from './StyleComp/Margin'
-import Shadow from './StyleComp/Shadow'
-import Color from './StyleComp/Color'
-import FontSize from './StyleComp/FontSize'
-import Direction from './StyleComp/Direction'
-import Gap from './StyleComp/Gap'
+import Background from './StyleComponents/Background'
+import Borders from './StyleComponents/Borders'
+import Padding from './StyleComponents/Padding'
+import Margin from './StyleComponents/Margin'
+import Shadow from './StyleComponents/Shadow'
+import Color from './StyleComponents/Color'
+import FontSetting from './StyleComponents/FontSetting'
+import Direction from './StyleComponents/Direction'
+import Gap from './StyleComponents/Gap'
+import Height from './StyleComponents/Height';
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()
@@ -29,10 +30,12 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
               <div className="txt-center w-10 f-5">{editorLabel}</div>
             </div>
           </h4>
+          <div className="btcd-hr m-a" />
+          <div className="btcd-hr m-a" />
         </Link>
       )}
 
-      {title && <h4 className="ml-2">{title}</h4>}
+      {title && <h4 className="ml-2 txt-blue">{title}</h4>}
 
       {'background' in styleConfig && (
         <>
@@ -65,7 +68,7 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
 
       {'font' in styleConfig && (
         <>
-          <FontSize
+          <FontSetting
             cls={cls}
             style={compStyle}
             brkPoint={brkPoint}
@@ -90,7 +93,20 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
           <div className="btcd-hr w-9 m-a" />
         </>
       )}
-
+      {'height' in styleConfig && (
+        <>
+          <Height
+            cls={cls}
+            style={compStyle}
+            brkPoint={brkPoint}
+            formID={genaratedID}
+            styleDispatch={styleDispatch}
+            styleConfig={styleConfig.height}
+            setResponsiveView={setResponsiveView}
+          />
+          <div className="btcd-hr w-9 m-a" />
+        </>
+      )}
       {'padding' in styleConfig && (
         <>
           <Padding
