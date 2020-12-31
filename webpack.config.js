@@ -81,7 +81,6 @@ module.exports = (env, argv) => {
               warnings: false,
               comparisons: false,
               inline: 2,
-              drop_console: production,
             },
             mangle: { safari10: true },
           },
@@ -105,19 +104,6 @@ module.exports = (env, argv) => {
             preset: ['default', { minifyFontValues: { removeQuotes: false } }],
           },
         }),
-        /* new UglifyJsPlugin({
-          cache: production,
-          parallel: true,
-          test: /\.js(\?.*)?$/i,
-          uglifyOptions: {
-            output: {
-              comments: /^\**!|@preserve|@license/,
-            },
-            compress: {
-              drop_console: production,
-            },
-          },
-        }), */
       ],
     },
     plugins: [
@@ -128,7 +114,6 @@ module.exports = (env, argv) => {
         filename: '../../views/view-root.php',
         path: path.resolve('../views/'),
         template: `${__dirname}/public/wp_index.html`,
-        // inject: 'true',
         chunks: ['webpackAssets'],
         chunksSortMode: 'auto',
       }),
@@ -213,18 +198,9 @@ module.exports = (env, argv) => {
           test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
           use: [
-            !production
-              ? 'style-loader'
-              : {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                  publicPath: '',
-                },
-              },
+            'style-loader',
             {
               loader: 'css-loader',
-              options: {
-              },
             },
             {
               loader: 'postcss-loader',
