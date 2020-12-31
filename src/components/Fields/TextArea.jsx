@@ -34,7 +34,8 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID 
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
       {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
       <textarea
-        className={`fld fld-${formID} no-drg`}
+        className={`fld fld-${formID} no-drg textarea`}
+        style={{ height: 'calc(100% - 30px)' }}
         ref={textAreaRef}
         {...'ph' in attr && { placeholder: attr.ph }}
         {...{ value }}
