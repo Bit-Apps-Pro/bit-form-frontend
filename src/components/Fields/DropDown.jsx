@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID }) {
+export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID, dev }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
@@ -23,14 +23,16 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
   } else {
     defaultValue = []
   }
+
   const [value, setvalue] = useState(defaultValue || [])
 
   useEffect(() => {
-    if (defaultValue && !attr.userinput && JSON.stringify(value) !== JSON.stringify(defaultValue)) {
+    if (!dev && defaultValue && !attr.userinput && JSON.stringify(value) !== JSON.stringify(defaultValue)) {
       setvalue(defaultValue)
     } else if (defaultValue && attr.conditional) {
       setvalue(defaultValue)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.val, attr.userinput, attr.conditional, defaultValue, value])
 
   useEffect(() => {
@@ -64,6 +66,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
       onBlurHandler(eventLikeData)
     }
   }
+
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="select">
       {'lbl' in attr && (
@@ -73,9 +76,9 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
           {attr.valid.req && ' *'}
         </label>
       )}
+
       <MultiSelect
-        width="100%"
-        className={`fld fld-${formID} no-drg`}
+        className={`fld fld-${formID} dpd no-drg`}
         {...'req' in attr.valid && { required: attr.valid.req }}
         {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
         {...'ph' in attr && { placeholder: attr.ph }}
@@ -85,26 +88,8 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID 
         customValue={attr.customOpt}
         options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
         onChange={onChangeHandler}
-        {...{ defaultValue: value }}
+        defaultValue={value}
       />
-      {/* <select
-          className="fld slim no-drg"
-          ref={selectFieldRef}
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-          {...'mul' in attr && { multiple: attr.mul }}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'name' in attr && { name: 'mul' in attr ? `${attr.name}[]` : attr.name }}
-          {...{ defaultValue: value }}
-          {...{ value }}
-          {...resetFieldValue && { value: [] }}
-          onChange={onChangeHandler}
-        >
-          <option data-placeholder="true" aria-label="option placeholder" />
-          {attr.opt.map((itm, i) => (
-            <option key={`op-${i + 87}-${(!attr.userinput || resetFieldValue) && Math.random()}`} value={itm.lbl}>{itm.lbl}</option>
-          ))}
-        </select> */}
     </div>
   )
 }
