@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-export default function StyleAccordion({ className, title, children }) {
-  const [tgl, setTgl] = useState(false)
+StyleAccordion.defaultProps = {
+  onOpen: () => { },
+  open: false,
+}
+
+export default function StyleAccordion({ className, title, children, open, onOpen }) {
+  const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(0)
+
+  const toggleAccordion = (val) => {
+    setTgl(val)
+    val && onOpen()
+  }
+
+  useEffect(() => {
+    toggleAccordion(open)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   return (
     <div className={`${className} ${tgl && 'active'}`}>
@@ -11,8 +26,8 @@ export default function StyleAccordion({ className, title, children }) {
         className="tgl"
         tabIndex="0"
         role="button"
-        onClick={() => setTgl(!tgl)}
-        onKeyPress={() => setTgl(!tgl)}
+        onClick={() => toggleAccordion(!tgl)}
+        onKeyPress={() => toggleAccordion(!tgl)}
       >
         <div className="flx flx-between">
           <span>{title}</span>
