@@ -56,7 +56,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
-      name: 'Radio',
+      name: 'Radio Button',
       icn: 'radio',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
@@ -78,17 +78,17 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'number',
         lbl: 'Number Field',
-        ph: 'Placeholder...',
+        ph: 'Number Input',
         valid: {},
       },
     },
     {
-      name: 'Drop Down',
+      name: 'Dropdown',
       icn: 'select',
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'select',
-        lbl: 'Drop-Down',
+        lbl: 'Dropdown',
         mul: false,
         opt: [
           { label: 'Option 1', value: 'Option 1' },
