@@ -12,14 +12,13 @@ ColorPicker.defaultProps = {
 
 export default function ColorPicker({ value, onChange, alwGradient }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
-
   const [gradient, setgradient] = useState(false)
   let isGradient = false
 
   let picrVal = { red: 0, green: 0, blue: 0, alpha: 0 }
 
   if (value !== undefined && !value.match(/gradient/g) && value?.[0] !== '#') {
-    const [r, g, b, a] = value.replace(/rgba?|\(|\)/g, '').split(',')
+    const [r, g, b, a] = value.replace(/!important|rgba?|\(|\)/g, '').split(',')
     picrVal = { red: Number(r), green: Number(g), blue: Number(b), alpha: Number(a) }
   } else if (value?.[0] === '#') {
     picrVal = hexToRGBA(value)
@@ -49,7 +48,6 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
     color.degree = Number(str[0].replace(/\D/g, ''))
     picrVal = color
   }
-
   return (
     <div ref={ref} className="pos-rel">
       <div
