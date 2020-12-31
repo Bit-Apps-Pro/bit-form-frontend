@@ -1,9 +1,12 @@
-import { useEffect, useContext, useState } from 'react';
-import { NavLink, Switch, Route } from 'react-router-dom'
-import Captcha from '../components/Captcha'
-import { AppSettings } from '../Utils/AppSettingsContext'
-import bitsFetch from '../Utils/bitsFetch'
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
+import { useContext, useEffect, useState } from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import Captcha from '../components/Captcha';
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
+// import GCLID from '../components/GCLID'
+import { AppSettings } from '../Utils/AppSettingsContext';
+import bitsFetch from '../Utils/bitsFetch';
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
@@ -16,7 +19,7 @@ function AppSettingsPage() {
           if (res.data && res.data.id) {
             setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
           }
-          setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
+          setsnack({ ...{ show: true, msg: __('Captcha Settings Updated', 'bitform') } })
         }
       })
   }
@@ -27,7 +30,7 @@ function AppSettingsPage() {
         if (res !== undefined && res.success) {
           if (res.data && res.data.id) {
             setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
-            setsnack({ ...{ show: true, msg: 'Captcha Settings Updated' } })
+            setsnack({ ...{ show: true, msg: __('Captcha Settings Updated', 'bitform') } })
           }
         }
       })
@@ -40,14 +43,21 @@ function AppSettingsPage() {
       <aside className="btcd-app-setting-sidebar mr-4">
         <NavLink to="/app-settings/recaptcha" activeClassName="btcd-app-s-a">
           <span className="btcd-icn icn-loop" />
-          reCAPTCHA
+          {__('reCAPTCHA', 'bitform')}
         </NavLink>
+        {/* <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
+          <span className="btcd-icn icn-loop" />
+          GCLID
+        </NavLink> */}
       </aside>
 
       <Switch>
         <Route path="/app-settings/recaptcha">
           <Captcha saveCaptcha={saveCaptcha} />
         </Route>
+        {/* <Route path="/app-settings/gclid">
+          <GCLID saveCaptcha={saveCaptcha} />
+        </Route> */}
       </Switch>
     </div>
   )

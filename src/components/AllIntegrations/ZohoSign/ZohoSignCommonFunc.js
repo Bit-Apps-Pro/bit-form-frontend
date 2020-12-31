@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __, sprintf } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, signConf, setSignConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -53,12 +55,12 @@ export const refreshTemplates = (formID, signConf, setSignConf, setisLoading, se
           newConf.default.templates = result.data.templates
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
-        setSnackbar({ show: true, msg: 'Templates refreshed' })
+        setSnackbar({ show: true, msg: __('Templates refreshed', 'bitform') })
         setSignConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Templates refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Templates refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Templates refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Templates refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -89,12 +91,12 @@ export const refreshTemplateDetails = (formID, signConf, setSignConf, setisLoadi
           newConf.default.templateDetails[template] = result.data.templateDetails
         }
         if (result.data.tokenDetails) newConf.tokenDetails = result.data.tokenDetails
-        setSnackbar({ show: true, msg: 'Template Details refreshed' })
+        setSnackbar({ show: true, msg: __('Template Details refreshed', 'bitform') })
         setSignConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Template Details refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Template Details refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Template Details refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Template Details refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

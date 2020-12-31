@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __, sprintf } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, recordTab, biginConf, setBiginConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -89,11 +91,11 @@ export const refreshModules = (formID, biginConf, setBiginConf, setisLoading, se
           newConf.tokenDetails = result.data.tokenDetails
         }
         setBiginConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'Modules refreshed' })
+        setSnackbar({ show: true, msg: __('Modules refreshed', 'bitform') })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Modules refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: 'Modules refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -127,11 +129,11 @@ export const refreshRelatedList = (formID, biginConf, setBiginConf, setisLoading
           newConf.tokenDetails = result.data.tokenDetails
         }
         setBiginConf({ ...newConf })
-        setSnackbar({ show: true, msg: 'RelatedLists refreshed' })
+        setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bitform') })
       } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `RelatedLists refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('RelatedLists refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'RelatedLists refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -180,7 +182,7 @@ export const getFields = (recordTab, formID, biginConf, setBiginConf, setisLoadi
         }
         setBiginConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Fields refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Fields refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -211,7 +213,7 @@ export const refreshTags = (recordTab, formID, biginConf, setBiginConf, setisLoa
             newConf.default.moduleData = {}
           }
           newConf.default.moduleData[module].tags = result.data.tags
-          setSnackbar({ show: true, msg: 'Tags Refreshed' })
+          setSnackbar({ show: true, msg: __('Tags Refreshed', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -219,7 +221,7 @@ export const refreshTags = (recordTab, formID, biginConf, setBiginConf, setisLoa
         }
         setBiginConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Tags refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Tags refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -244,7 +246,7 @@ export const refreshUsers = (formID, biginConf, setBiginConf, setisLoading, setS
             newConf.default = {}
           }
           newConf.default.users = result.data.users
-          setSnackbar({ show: true, msg: 'Users Refreshed' })
+          setSnackbar({ show: true, msg: __('Users Refreshed', 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -252,7 +254,7 @@ export const refreshUsers = (formID, biginConf, setBiginConf, setisLoading, setS
         }
         setBiginConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Users refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Users refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

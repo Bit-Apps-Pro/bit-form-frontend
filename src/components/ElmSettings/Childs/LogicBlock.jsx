@@ -1,4 +1,6 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import MtSelect from './MtSelect'
 import MtInput from './MtInput'
 import Button from './Button'
@@ -43,7 +45,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         style={{ width: 720 }}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
-        <option value="">Select Form Field</option>
+        <option value="">{__('Select Form Field', 'bitform')}</option>
         {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/) && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
@@ -58,20 +60,20 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-4"
       >
-        <option value="">Select One</option>
-        <option value="equal">Equal</option>
-        <option value="not_equal">Not Equal</option>
-        <option value="null">Is Null</option>
-        <option value="not_null">Is Not Null</option>
-        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain">Contain</option>}
-        {((fldType === 'select' && fields?.[fieldKey]?.mul) || fldType === 'check') && <option value="contain_all">Contain All</option>}
-        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="not_contain">Not Contain</option>}
-        {type === 'number' && <option value="greater">Greater Than</option>}
-        {type === 'number' && <option value="less">Less Than</option>}
-        {type === 'number' && <option value="greater_or_equal">Greater Than or Equal</option>}
-        {type === 'number' && <option value="less_or_equal">Less Than or Equal</option>}
-        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="start_with">Start With</option>}
-        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="end_with">End With</option>}
+        <option value="">{__('Select One', 'bitform')}</option>
+        <option value="equal">{__('Equal', 'bitform')}</option>
+        <option value="not_equal">{__('Not Equal', 'bitform')}</option>
+        <option value="null">{__('Is Null', 'bitform')}</option>
+        <option value="not_null">{__('Is Not Null', 'bitform')}</option>
+        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="contain">{__('Contain', 'bitform')}</option>}
+        {((fldType === 'select' && fields?.[fieldKey]?.mul) || fldType === 'check') && <option value="contain_all">{__('Contain All', 'bitform')}</option>}
+        {!type.match(/^(date|time|datetime|month|week)$/) && <option value="not_contain">{__('Not Contain', 'bitform')}</option>}
+        {type === 'number' && <option value="greater">{__('Greater Than', 'bitform')}</option>}
+        {type === 'number' && <option value="less">{__('Less Than', 'bitform')}</option>}
+        {type === 'number' && <option value="greater_or_equal">{__('Greater Than or Equal', 'bitform')}</option>}
+        {type === 'number' && <option value="less_or_equal">{__('Less Than or Equal', 'bitform')}</option>}
+        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="start_with">{__('Start With', 'bitform')}</option>}
+        {!type.match(/^(color|url|password|email|date|time|datetime|month|week)$/) && <option value="end_with">{__('End With', 'bitform')}</option>}
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">

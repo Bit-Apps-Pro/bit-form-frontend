@@ -1,14 +1,16 @@
 /* eslint-disable no-undef */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
-import bitsFetch from '../Utils/bitsFetch'
-import { dateTimeFormatter } from '../Utils/Helpers'
-import ConfirmModal from './ConfirmModal'
-import Loader from './Loaders/Loader'
-import LoaderSm from './Loaders/LoaderSm'
-import noData from '../resource/img/nodata.svg'
+import noData from '../../resource/img/nodata.svg'
+import bitsFetch from '../../Utils/bitsFetch'
+import { dateTimeFormatter } from '../../Utils/Helpers'
+import ConfirmModal from '../ConfirmModal'
+import Loader from '../Loaders/Loader'
+import LoaderSm from '../Loaders/LoaderSm'
 import NoteForm from './NoteForm'
 
-export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, allResp, settab }) {
+export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, rowDtl, settab }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const [isLoading, setIsLoading] = useState(false)
@@ -70,7 +72,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     closeConfMdl()
     bitsFetch({ noteID: confMdl.noteID, formID, entryID }, 'bitforms_form_entry_delete_note').then((res) => {
       if (res !== undefined && res.success) {
-        setSnackbar({ show: true, msg: 'Note Deleted Successfully' })
+        setSnackbar({ show: true, msg: __('Note Deleted Successfully', 'bitform') })
         setFetchData(true)
       }
       setIsLoading(false)
@@ -83,7 +85,6 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     const uniqueKeys = keys?.filter?.((key, index) => keys.indexOf(key) === index) || []
     let replacedStr = str;
 
-    const rowDtl = allResp.find(resp => resp.entry_id === entryID)
     for (let i = 0; i < uniqueKeys.length; i += 1) {
       const uniqueKey = uniqueKeys[i].slice(2, -1)
       replacedStr = replacedStr.replaceAll(uniqueKeys[i], uniqueKey in rowDtl ? rowDtl[uniqueKey] : '[Field Deleted]')
@@ -101,20 +102,20 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
           {note.updated_at
             ? (
               <small>
-                updated on:
+                {__('updated on:', 'bitform')}
                 {` ${dateTimeFormatter(note.updated_at, dateTimeFormat)}`}
               </small>
             )
             : (
               <small>
-                created at:
+                {__('created at:', 'bitform')}
                 {` ${dateTimeFormatter(note.created_at, dateTimeFormat)}`}
               </small>
             )}
-          <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': '"Edit"', fontSize: 16 }} onClick={() => setEditMode(note.id)}>
+          <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'`, fontSize: 16 }} onClick={() => setEditMode(note.id)}>
             <span className="btcd-icn icn-document-edit" />
           </button>
-          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? 'btn' : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': '"Delete"', fontSize: 16 }} disabled={isDeleting}>
+          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? 'btn' : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'`, fontSize: 16 }} disabled={isDeleting}>
             <span className="btcd-icn icn-trash-fill" />
             {isDeleting && <LoaderSm size="20" clr="#000" className="ml-2" />}
           </button>
@@ -139,8 +140,13 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
         {!isPro && (
           <div className="pro-blur mt-4 flx">
             <div className="pro">
-              Available On
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><span className="txt-pro"> Premium</span></a>
+              {__('Available On', 'bitform')}
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
             </div>
           </div>
         )}
@@ -152,7 +158,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
               }}
             />
           )
-          : <button type="button" className="btn" onClick={() => setShowForm(true)}>create new note</button>}
+          : <button type="button" className="btn" onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}
         {isLoading === 'allNotes'
           ? (
             <Loader style={{
@@ -176,10 +182,10 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
         show={confMdl.show}
         close={closeConfMdl}
         action={deleteNote}
-        title="Confirmation"
+        title={__('Confirmation', 'bitform')}
       >
         <div className="txt-center mt-5 mb-4">
-          Are you sure to delete this note
+          {__('Are you sure to delete this note', 'bitform')}
         </div>
         {isLoading && (
           <Loader style={{

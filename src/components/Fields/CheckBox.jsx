@@ -34,7 +34,6 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     }
   }, [resetFieldValue])
   useEffect(() => {
-    // console.log('value',typeof value, attr.name, defaultValue , defaultValue === value , onBlurHandler , !attr.isRecursive)
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
       const { current } = checkBoxRef
       onBlurHandler(current)

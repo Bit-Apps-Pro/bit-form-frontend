@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import CopyText from '../ElmSettings/Childs/CopyText'
@@ -136,21 +138,21 @@ export default function SelectSettings(props) {
         <span className="font-w-m">Field Type : </span>
         {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
       </div>
-      <span className="font-w-m">Field Key</span>
+      <span className="font-w-m">{__('Field Key', 'bitform')}</span>
       <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleToggle title="Required:" action={setRequired} isChecked={isRequired} />
-      <SingleInput inpType="text" title="Admin Label:" value={adminLabel} action={setAdminLabel} />
-      <SingleInput inpType="text" title="Field Label:" value={label} action={setLabel} />
-      <SingleToggle title="Multiple Select:" action={setMultiple} isChecked={isMultiple} className="mt-3" />
-      <SingleToggle title="Allow Other Option:" action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3" />
-      {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title="Placeholder:" value={placeholder} action={setPlaceholder} />}
+      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} />
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
+      <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3" />
+      {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
       <div className="opt">
-        <span className="font-w-m">Options:</span>
+        <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {elmData.opt.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
             <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': '"Check by Default"' }}>
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${ __('Check by Default', 'bitform') }'` }}>
                 <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
@@ -158,7 +160,7 @@ export default function SelectSettings(props) {
             </div>
           </div>
         ))}
-        <button onClick={addOpt} className="btn blue" type="button">Add More +</button>
+        <button onClick={addOpt} className="btn blue" type="button">{__('Add More +', 'bitform')}</button>
       </div>
     </div>
   )

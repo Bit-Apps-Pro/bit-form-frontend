@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import Range from '../ChildComp/Range'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
@@ -54,7 +56,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Border">
+    <StyleAccordion className="style-acc w-9" title={__('Border', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -74,7 +76,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           </div>
         )}
       <div className="flx flx-between mt-2">
-        <span className="f-5">Type</span>
+        <span className="f-5">{__('Type', 'bitform')}</span>
         <BtnGrp
           value={bdrStyle}
           onChange={setBdrStyle}
@@ -90,14 +92,14 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
 
       {bdrClr && (
         <div className="flx flx-between mt-2">
-          <span className="f-5">Border Color</span>
+          <span className="f-5">{__('Border Color', 'bitform')}</span>
           <ColorPicker alwGradient={false} value={bdrClr} onChange={clr => setBdr('border-color', clr.style)} />
         </div>
       )}
 
       {styleConfig.width && bdrW && (
         <div className="mt-2">
-          <span className="f-5">Border Width</span>
+          <span className="f-5">{__('Border Width', 'bitform')}</span>
           <Range
             info={[
               { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
@@ -116,7 +118,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
       )}
       {styleConfig.radius && bdrRad && (
         <div className="mt-2">
-          <span className="f-5">Border Radius</span>
+          <span className="f-5">{__('Border Radius', 'bitform')}</span>
           <Range
             info={[
               { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },

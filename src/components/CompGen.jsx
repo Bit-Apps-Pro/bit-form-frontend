@@ -34,7 +34,6 @@ function CompGen(props) {
     case 'month':
     case 'week':
     case 'color':
-
       return <TextField formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'textarea':
       return <TextArea formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
@@ -53,7 +52,7 @@ function CompGen(props) {
     case 'recaptcha':
       return <ReCaptcha formID={props.formID} attr={props.atts} />
     case 'paypal':
-      return <Paypal formID={props.formID} attr={props.atts} />
+      return <Paypal formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

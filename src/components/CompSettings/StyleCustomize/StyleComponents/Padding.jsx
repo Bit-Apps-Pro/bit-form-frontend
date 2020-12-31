@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
@@ -14,16 +16,16 @@ export default function Padding({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Padding">
+    <StyleAccordion className="style-acc w-9" title={__('Padding', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
         info={[
-          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Padding Top' },
-          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Padding Right' },
-          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Padding Bottom' },
-          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Padding Left' },
-          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
+          { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: __('Padding Top', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: __('Padding Right', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: __('Padding Bottom', 'bitform') },
+          { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: __('Padding Left', 'bitform') },
+          { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: __('All Side', 'bitform') },
         ]}
         className="btc-range"
         unit="px"

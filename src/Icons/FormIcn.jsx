@@ -1,8 +1,9 @@
-export default function FormIcn() {
+export default function FormIcn({ w }) {
   return (
     <svg
       className="btc-line-icn"
       viewBox="0 0 164.6 192.9"
+      width={w}
     >
       <path
         className="line-icn"

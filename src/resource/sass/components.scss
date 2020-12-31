@@ -44,22 +44,21 @@
 }
 /* 
 .fld-wrp .msl-vars {
-  --border-radius: 5px;
-  --input-width: 100%;
-  .msl-wrp {
-    width: 100%;
-  }
+  --border-radius: 6px;
+  --input-width:100%;
   margin-top: 5px;
   & > * {
     line-height: 1;
   }
-  & > .msl:not(.msl-active,.msl-active-up) {
+  & .msl:not(.msl-active):not(.msl-active-up) {
     height: 40px;
-    border: 1.5px solid;
-    border-color: #505050;
+    border: 1px solid#c7d4dd !important;
+  }
+  & .msl-input {
+    // margin: 8px;
   }
   .msl-single-value {
-    margin: 8px;
+    // margin: 8px;
   }
   & .msl-option {
     padding: 7px 5px;

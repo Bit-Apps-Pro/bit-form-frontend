@@ -2,10 +2,10 @@ export const defaultTheme = (formId) => ({
   [`._frm-bg-${formId}`]: {
     'border-radius': '10px 10px 10px 10px',
     'background-size': '100% 100%',
+    'background-color': 'rgba(255, 255, 255, 1)',
   },
   [`._frm-g-${formId}`]: {},
   [`._frm-${formId}`]: {
-    'background-color': 'rgba(255, 255, 255, 1)',
     margin: '0px 0px 0px 0px',
     padding: '15px 15px 15px 15px',
   },

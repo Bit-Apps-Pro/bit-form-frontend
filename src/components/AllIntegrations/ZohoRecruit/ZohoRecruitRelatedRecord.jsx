@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoRecruitActions from './ZohoRecruitActions'
@@ -16,7 +18,7 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
       <br />
       <b className="wdt-100 d-in-b">Related List:</b>
       <select onChange={handleInput} name="module" value={recruitConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!recruitConf.module}>
-        <option value="">Select Related Module</option>
+        <option value="">{__('Select Related Module', 'bitform')}</option>
         {
           recruitConf?.default.relatedlists?.[recruitConf.module] && Object.values(recruitConf.default.relatedlists[recruitConf.module]).map(relatedlistApiName => (
             <option key={relatedlistApiName.aMod} value={relatedlistApiName.aMod}>
@@ -41,11 +43,11 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
       {recruitConf.default?.moduleData?.[recruitConf.relatedlists?.[tab - 1]?.module]?.fields
         && (
           <>
-            <div className="mt-4"><b className="wdt-100">Map Fields</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Map Fields', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
-              <div className="txt-dp"><b>Form Fields</b></div>
-              <div className="txt-dp"><b>Zoho Fields</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+              <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
             </div>
 
             {recruitConf.relatedlists[tab - 1].field_map.map((itm, i) => (
@@ -64,11 +66,11 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
             <br />
             {Object.keys(recruitConf.default?.moduleData?.[recruitConf.relatedlists[tab - 1].module]?.fileUploadFields).length !== 0 && (
               <>
-                <div className="mt-4"><b className="wdt-100">Map Attachments</b></div>
+                <div className="mt-4"><b className="wdt-100">{__('Map Attachments', 'bitform')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">
-                  <div className="txt-dp"><b>Form Fields</b></div>
-                  <div className="txt-dp"><b>Zoho Fields</b></div>
+                  <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+                  <div className="txt-dp"><b>{__('Zoho Fields', 'bitform')}</b></div>
                 </div>
 
                 {recruitConf.relatedlists[tab - 1].upload_field_map.map((itm, i) => (
@@ -88,7 +90,7 @@ export default function ZohoRecruitRelatedRecord({ indx, tab, settab, formID, fo
                 <br />
               </>
             )}
-            <div className="mt-4"><b className="wdt-100">Actions</b></div>
+            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
             <div className="btcd-hr mt-1" />
 
             <ZohoRecruitActions

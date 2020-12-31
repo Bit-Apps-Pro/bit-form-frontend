@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, analyticsConf, setAnalyticsConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
@@ -79,12 +81,12 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setis
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Workspaces refreshed' })
+        setSnackbar({ show: true, msg: __('Workspaces refreshed', 'bitform') })
         setAnalyticsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Workspaces refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Workspaces refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Workspaces refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Workspaces refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -115,12 +117,12 @@ export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setisLoadi
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Users refreshed' })
+        setSnackbar({ show: true, msg: __('Users refreshed', 'bitform') })
         setAnalyticsConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `Users refresh failed Cause:${result.data.data || result.data}. please try again` })
+        setSnackbar({ show: true, msg: `${__('Users refresh failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
       } else {
-        setSnackbar({ show: true, msg: 'Users refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Users refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -157,10 +159,10 @@ export const refreshTables = (formID, analyticsConf, setAnalyticsConf, setisLoad
         if (result.data.tokenDetails) {
           newConf.tokenDetails = result.data.tokenDetails
         }
-        setSnackbar({ show: true, msg: 'Tables refreshed' })
+        setSnackbar({ show: true, msg: __('Tables refreshed', 'bitform') })
         setAnalyticsConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Tables refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Tables refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })
@@ -193,9 +195,9 @@ export const refreshTableHeaders = (formID, analyticsConf, setAnalyticsConf, set
             newConf.default.tables.headers = {}
           }
           newConf.default.tables.headers[table] = result.data.table_headers
-          setSnackbar({ show: true, msg: 'Table Headers refreshed' })
+          setSnackbar({ show: true, msg: __('Table Headers refreshed', 'bitform') })
         } else {
-          setSnackbar({ show: true, msg: "Zoho didn't provide column names for this table" })
+          setSnackbar({ show: true, msg: __("Zoho didn't provide column names for this table", 'bitform') })
         }
 
         if (result.data.tokenDetails) {
@@ -203,7 +205,7 @@ export const refreshTableHeaders = (formID, analyticsConf, setAnalyticsConf, set
         }
         setAnalyticsConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: 'Table Headers refresh failed. please try again' })
+        setSnackbar({ show: true, msg: __('Table Headers refresh failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

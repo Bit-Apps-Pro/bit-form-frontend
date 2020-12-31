@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { sprintf, __ } from '@wordpress/i18n'
 import ConfirmModal from '../../ConfirmModal'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
@@ -219,7 +221,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
       <div className="d-flx flx-wrp">
         {event !== 'tasklist' && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <TableCheckBox onChange={() => openUsersModal()} checked={'owner' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_owner`} title={`${event} Owner`} subTitle={`Add an owner to ${event}  pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => openUsersModal()} checked={'owner' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_owner`} title={sprintf(__('%s Owner', 'bitform'), event)} subTitle={sprintf(__('Add an owner to %s  pushed to Zoho Projects.', 'bitform'), event)} />
             {!projectsConf.actions[event].owner && (
               <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>
                 {`${event} owner is required`}
@@ -231,33 +233,33 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         {event === 'project' && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={openTaskLayModal} checked={'tasklayoutid' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Task_Owner" title="Task Layout" subTitle="Add a layout to project pushed to Zoho Projects." />
-              {!projectsConf.actions.project.tasklayoutid && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>task layout is required</small>}
+              <TableCheckBox onChange={openTaskLayModal} checked={'tasklayoutid' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Task_Owner" title={__('Task Layout', 'bitform')} subTitle={__('Add a layout to project pushed to Zoho Projects.', 'bitform')} />
+              {!projectsConf.actions.project.tasklayoutid && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{__('task layout is required', 'bitform')}</small>}
             </div>
-            <TableCheckBox onChange={(e) => actionHandler(e.target.value, 'public', e.target.checked)} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="yes" title="Public Project" subTitle="by default, it is set as private project." />
-            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_User" title="Project user" subTitle="Assign users to project pushed to Zoho Projects." />
-            <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_Group" title="Group Name" subTitle="Add a group to project pushed to Zoho Projects." />
+            <TableCheckBox onChange={(e) => actionHandler(e.target.value, 'public', e.target.checked)} checked={'public' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="yes" title={__('Public Project', 'bitform')} subTitle={__('by default, it is set as private project.', 'bitform')} />
+            <TableCheckBox onChange={() => openUsersModal('users')} checked={'users' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_User" title={__('Project user', 'bitform')} subTitle={__('Assign users to project pushed to Zoho Projects.', 'bitform')} />
+            <TableCheckBox onChange={openGroupModal} checked={'group_id' in projectsConf.actions.project} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Project_Group" title={__('Group Name', 'bitform')} subTitle={__('Add a group to project pushed to Zoho Projects.', 'bitform')} />
           </>
         )}
         {(event === 'milestone' || event === 'tasklist' || event === 'issue') && (
           <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_flag`} title={`${event} Flag`} subTitle={`Add a flag to ${event} pushed to Zoho Projects.`} />
-              {!projectsConf.actions[event].flag && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{`${event} flag is required`}</small>}
+              <TableCheckBox onChange={() => setActionMdl({ show: 'flag' })} checked={'flag' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_flag`} title={sprintf(__('%s Flag', 'bitform'), event)} subTitle={`${__('Add a flag to', 'bitform')} ${event} ${__('pushed to Zoho Projects.', 'bitform')}`} />
+              {!projectsConf.actions[event].flag && <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{`${event} ${__('flag is required', 'bitform')}`}</small>}
             </div>
           </>
         )}
         {event === 'issue' && (
           <>
-            <TableCheckBox onChange={() => openUsersModal('followers')} checked={'bug_followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Issue_Followers" title="Issue Followers" subTitle="Add followers to issue pushed to Zoho Projects" />
+            <TableCheckBox onChange={() => openUsersModal('followers')} checked={'bug_followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Issue_Followers" title={__('Issue Followers', 'bitform')} subTitle={__('Add followers to issue pushed to Zoho Projects', 'bitform')} />
             {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
-              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={act} title={`Issue ${act}`} subTitle={`Add ${act} to issue pushed to Zoho Projects`} />)}
+              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={act} title={sprintf(__('Issue %s', 'bitform'), act)} subTitle={sprintf(__('Add %s to issue pushed to Zoho Projects', 'bitform'), act)} />)}
           </>
         )}
         {(event === 'task' || event === 'subtask' || event === 'issue') && (
           <>
-            <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_attachments`} title={`${event} Attachments`} subTitle={`Add attachments to ${event} pushed to Zoho Projects.`} />
-            <TableCheckBox onChange={() => setActionMdl({ show: 'timelog' })} checked={'timelog' in projectsConf.actions[event] && 'date' in projectsConf.actions[event]?.timelog} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_timelog`} title={`${event} Time Log`} subTitle={`Add time log to ${event} pushed to Zoho Projects.`} />
+            <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_attachments`} title={sprintf(__('%s Attachments', 'bitform'), event)} subTitle={sprintf('Add attachments to %s pushed to Zoho Projects.', event)} />
+            <TableCheckBox onChange={() => setActionMdl({ show: 'timelog' })} checked={'timelog' in projectsConf.actions[event] && 'date' in projectsConf.actions[event]?.timelog} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_timelog`} title={sprintf(__('%s Time Log', 'bitform'), event)} subTitle={sprintf(__('Add time log to %s pushed to Zoho Projects.', 'bitform'), event)} />
           </>
         )}
         {event === 'task' && (
@@ -266,8 +268,8 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             checked={'recurrence_string' in projectsConf.actions[event] && 'recurring_frequency' in projectsConf.actions[event]?.recurrence_string}
             className="wdt-200 mt-4 mr-2 btcd-ttc"
             value={`${event}_reminder`}
-            title={`${event} Recurrence`}
-            subTitle={`Add recurrence to ${event} pushed to Zoho Projects.`}
+            title={sprintf(__('%s Recurrence', 'bitform'), event)}
+            subTitle={sprintf(__('Add recurrence to %s pushed to Zoho Projects.', 'bitform'), event)}
           />
         )}
         {(event === 'task' || event === 'subtask' || event === 'issue') && (
@@ -276,11 +278,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             checked={'reminder_string' in projectsConf.actions[event] && 'reminder_criteria' in projectsConf.actions[event]?.reminder_string}
             className="wdt-200 mt-4 mr-2 btcd-ttc"
             value={`${event}_reminder`}
-            title={`${event} Reminder`}
-            subTitle={`Add reminder to ${event} pushed to Zoho Projects.`}
+            title={sprintf(__('%s Reminder', 'bitform'), event)}
+            subTitle={sprintf(__('Add reminder to %s pushed to Zoho Projects.', 'bitform'), event)}
           />
         )}
-        <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event] || projectsConf?.actions?.[event]?.customTags} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_tags`} title={`${event} Tags`} subTitle={`Add tags to ${event} pushed to Zoho Projects.`} />
+        <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event] || projectsConf?.actions?.[event]?.customTags} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_tags`} title={sprintf(__('%s Tags', 'bitform'), event)} subTitle={sprintf(__('Add tags to %s pushed to Zoho Projects.', 'bitform'), event)} />
       </div>
       {/* Modals */}
       {event !== 'tasklist' && (
@@ -288,11 +290,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           className="custom-conf-mdl"
           mainMdlCls="o-v btcd-ttc"
           btnClass="blue"
-          btnTxt="Ok"
+          btnTxt={__('Ok', 'bitform')}
           show={actionMdl.show === 'owner'}
           close={clsActionMdl}
           action={clsActionMdl}
-          title={`${event} Owner`}
+          title={sprintf(__('%s Owner', 'bitform'), event)}
         >
           <div className="btcd-hr mt-2" />
           {isLoading ? (
@@ -322,11 +324,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       className="btcd-paper-inp"
                       onChange={e => actionHandler(e.target.value, 'owner')}
                     >
-                      <option value="">Select Owner</option>
+                      <option value="">{__('Select Owner', 'bitform')}</option>
                       {getUsers().length > 0 && getUsers().map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
                     </select>
                   )}
-                <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Portal Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Portal Users', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
               </div>
             )}
         </ConfirmModal>
@@ -337,11 +339,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             className="custom-conf-mdl"
             mainMdlCls="o-v"
             btnClass="blue"
-            btnTxt="Ok"
+            btnTxt={__('Ok', 'bitform')}
             show={actionMdl.show === 'task_layout'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title="Task Layout"
+            title={__('Task Layout', 'bitform')}
           >
             <div className="btcd-hr mt-2" />
             {isLoading ? (
@@ -361,10 +363,10 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     className="btcd-paper-inp"
                     onChange={e => actionHandler(e.target.value, 'tasklayoutid')}
                   >
-                    <option value="">Select Layout</option>
+                    <option value="">{__('Select Layout', 'bitform')}</option>
                     {projectsConf.default?.taskLays?.[projectsConf.portalId]?.map(taskLay => <option key={taskLay.taskLayId} value={taskLay.taskLayId}>{taskLay.taskLayName}</option>)}
                   </select>
-                  <button onClick={() => refreshTaskLays(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Task Layouts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button onClick={() => refreshTaskLays(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Task Layouts', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
               )}
           </ConfirmModal>
@@ -372,11 +374,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             className="custom-conf-mdl"
             mainMdlCls="o-v"
             btnClass="blue"
-            btnTxt="Ok"
+            btnTxt={__('Ok', 'bitform')}
             show={actionMdl.show === 'users'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title="Assign Project Users"
+            title={__('Assign Project Users', 'bitform')}
           >
             <div className="btcd-hr mt-2" />
             {
@@ -411,11 +413,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             className="custom-conf-mdl"
             mainMdlCls="o-v"
             btnClass="blue"
-            btnTxt="Ok"
+            btnTxt={__('Ok', 'bitform')}
             show={actionMdl.show === 'group'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title="Project Group"
+            title={__('Project Group', 'bitform')}
           >
             <div className="btcd-hr mt-2" />
             {isLoading ? (
@@ -435,10 +437,10 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     className="btcd-paper-inp"
                     onChange={e => actionHandler(e.target.value, 'group_id')}
                   >
-                    <option value="">Select Group</option>
+                    <option value="">{__('Select Group', 'bitform')}</option>
                     {projectsConf.default?.groups?.[projectsConf.portalId]?.map(group => <option key={group.groupId} value={group.groupId}>{group.groupName}</option>)}
                   </select>
-                  <button onClick={() => refreshGroups(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Project Groups"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                  <button onClick={() => refreshGroups(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Project Groups', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                 </div>
               )}
           </ConfirmModal>
@@ -450,11 +452,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             className="custom-conf-mdl"
             mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
-            btnTxt="Ok"
+            btnTxt={__('Ok', 'bitform')}
             show={actionMdl.show === 'flag'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={`${event} Flag`}
+            title={sprintf(__('%s Flag', 'bitform'), event)}
           >
             <div className="btcd-hr mt-2" />
             <div className="flx flx-between mt-2">
@@ -463,9 +465,9 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                 className="btcd-paper-inp"
                 onChange={e => actionHandler(e.target.value, 'flag')}
               >
-                <option value="">Select Flag</option>
-                <option value={event === 'issue' ? 'Internal' : 'internal'}>Internal</option>
-                <option value={event === 'issue' ? 'External' : 'external'}>External</option>
+                <option value="">{__('Select Flag', 'bitform')}</option>
+                <option value={event === 'issue' ? 'Internal' : 'internal'}>{__('Internal', 'bitform')}</option>
+                <option value={event === 'issue' ? 'External' : 'external'}>{__('External', 'bitform')}</option>
               </select>
             </div>
           </ConfirmModal>
@@ -478,14 +480,14 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               className="custom-conf-mdl"
               mainMdlCls="o-v"
               btnClass="blue"
-              btnTxt="Ok"
+              btnTxt={__('Ok', 'bitform')}
               show={actionMdl.show === 'attachments'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title="Select Attachment"
+              title={__('Select Attachment', 'bitform')}
             >
               <div className="btcd-hr mt-2" />
-              <div className="mt-2">Select file upload fields</div>
+              <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
               <MultiSelect
                 defaultValue={projectsConf.actions[event].attachments}
                 className="mt-2 w-9"
@@ -497,33 +499,33 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               className="custom-conf-mdl"
               mainMdlCls="o-v btcd-ttc"
               btnClass="blue"
-              btnTxt="Ok"
+              btnTxt={__('Ok', 'bitform')}
               show={actionMdl.show === 'timelog'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title={`${event} Time Log`}
+              title={sprintf(__('%s Time Log', 'bitform'), event)}
             >
               <div className="btcd-hr mt-2" />
-              <div className="mt-2 mb-1">Select Date</div>
+              <div className="mt-2 mb-1">{__('Select Date', 'bitform')}</div>
               <div className="flx">
                 <input type="date" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'date')} value={projectsConf.actions[event]?.timelog?.date || ''} style={{ height: 40 }} max={new Date().toISOString().split('T')[0]} />
                 <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'date_fld')} value={projectsConf.actions[event]?.timelog?.date_fld || ''}>
-                  <option value="">Field</option>
+                  <option value="">{__('Field', 'bitform')}</option>
                   {formFields.map(f => f.type === 'date' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                 </select>
               </div>
-              <div className="mt-2 mb-1">Billing Status</div>
+              <div className="mt-2 mb-1">{__('Billing Status', 'bitform')}</div>
               <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'bill_status')} value={projectsConf.actions[event]?.timelog?.bill_status || ''}>
-                <option value="Billable">Billable</option>
-                <option value="Non Billable">Non Billable</option>
+                <option value="Billable">{__('Billable', 'bitform')}</option>
+                <option value="Non Billable">{__('Non Billable', 'bitform')}</option>
               </select>
               {!projectsConf?.actions[event]?.timelog?.settime && (
                 <>
-                  <div className="mt-2 mb-1">Enter Hours</div>
+                  <div className="mt-2 mb-1">{__('Enter Hours', 'bitform')}</div>
                   <div className="flx mb-2">
                     <input type="number" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'hours')} value={projectsConf.actions[event]?.timelog?.hours || ''} />
                     <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'hours_fld')} value={projectsConf.actions[event]?.timelog?.hours_fld || ''}>
-                      <option value="">Field</option>
+                      <option value="">{__('Field', 'bitform')}</option>
                       {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                     </select>
                   </div>
@@ -534,25 +536,25 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     role="button"
                     tabIndex="0"
                   >
-                    set start & end time
+                    {__('set start & end time', 'bitform')}
                   </span>
                 </>
               )}
               {projectsConf?.actions[event]?.timelog?.settime && (
                 <>
-                  <div className="mt-2 mb-1">Start Time</div>
+                  <div className="mt-2 mb-1">{__('Start Time', 'bitform')}</div>
                   <div className="flx">
                     <input type="time" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'start_time')} value={projectsConf.actions[event]?.timelog?.start_time || ''} style={{ height: 40 }} />
                     <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'start_time_fld')} value={projectsConf.actions[event]?.timelog?.start_time_fld || ''}>
-                      <option value="">Field</option>
+                      <option value="">{__('Field', 'bitform')}</option>
                       {formFields.map(f => f.type === 'time' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                     </select>
                   </div>
-                  <div className="mt-2 mb-1">End Time</div>
+                  <div className="mt-2 mb-1">{__('End Time', 'bitform')}</div>
                   <div className="flx mb-2">
                     <input type="time" className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'end_time')} value={projectsConf.actions[event]?.timelog?.end_time || ''} style={{ height: 40 }} />
                     <select className="btcd-paper-inp" onChange={(e) => handleTimeLog(e.target.value, 'end_time_fld')} value={projectsConf.actions[event]?.timelog?.end_time_fld || ''}>
-                      <option value="">Field</option>
+                      <option value="">{__('Field', 'bitform')}</option>
                       {formFields.map(f => f.type === 'time' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                     </select>
                   </div>
@@ -563,22 +565,22 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     role="button"
                     tabIndex="0"
                   >
-                    set hours
+                    {__('set hours', 'bitform')}
                   </span>
                 </>
               )}
-              <div className="mt-2 mb-1">User</div>
+              <div className="mt-2 mb-1">{__('User', 'bitform')}</div>
               <select
                 value={projectsConf.actions[event]?.timelog?.owner}
                 className="btcd-paper-inp"
                 onChange={e => handleTimeLog(e.target.value, 'owner')}
               >
-                <option value="">Select Owner</option>
+                <option value="">{__('Select Owner', 'bitform')}</option>
                 {getUsers('taskuser').length > 0 && getUsers('taskuser').map(user => <option key={user.userId} value={user.userId}>{user.userName}</option>)}
               </select>
-              <div className="mt-2 mb-1">Notes</div>
+              <div className="mt-2 mb-1">{__('Notes', 'bitform')}</div>
               <select className="btcd-paper-inp mb-2" onChange={(e) => handleTimeLog(e.target.value, 'notes_fld')} value={projectsConf.actions[event]?.timelog?.notes_fld || ''}>
-                <option value="">Field</option>
+                <option value="">{__('Field', 'bitform')}</option>
                 {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
               </select>
             </ConfirmModal>
@@ -591,48 +593,48 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             className="custom-conf-mdl"
             mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
-            btnTxt="Ok"
+            btnTxt={__('Ok', 'bitform')}
             show={actionMdl.show === 'reminder_string'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={`${event} Reminder`}
+            title={sprintf(__('%s Reminder', 'bitform'), event)}
           >
             <div className="btcd-hr mt-2" />
-            <div className="mt-2 mb-1">Select Reminder Type</div>
+            <div className="mt-2 mb-1">{__('Select Reminder Type', 'bitform')}</div>
             <select className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'reminder_criteria')} value={projectsConf.actions[event]?.reminder_string?.reminder_criteria || ''}>
-              <option value="">Select Type</option>
-              <option value="daily">Daily</option>
-              <option value="on same day">On Same Day</option>
-              <option value="before due date">Before Due Date</option>
-              <option value="customdate">Custom Date</option>
+              <option value="">{__('Select Type', 'bitform')}</option>
+              <option value="daily">{__('Daily', 'bitform')}</option>
+              <option value="on same day">{__('On Same Day', 'bitform')}</option>
+              <option value="before due date">{__('Before Due Date', 'bitform')}</option>
+              <option value="customdate">{__('Custom Date', 'bitform')}</option>
             </select>
             {projectsConf.actions[event]?.reminder_string?.reminder_criteria === 'before due date' && (
               <>
-                <div className="mt-2 mb-1">Day Before</div>
+                <div className="mt-2 mb-1">{__('Day Before', 'bitform')}</div>
                 <input type="number" className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'day_before')} value={projectsConf.actions[event]?.reminder_string?.day_before || ''} />
               </>
             )}
             {projectsConf.actions[event]?.reminder_string?.reminder_criteria === 'customdate' && (
               <>
-                <div className="mt-2 mb-1">Select Date</div>
+                <div className="mt-2 mb-1">{__('Select Date', 'bitform')}</div>
                 <div className="flx">
                   <input type="date" className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'custom_date')} value={projectsConf.actions[event]?.reminder_string?.custom_date || ''} style={{ height: 40 }} />
                   <select className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'custom_date_fld')} value={projectsConf.actions[event]?.reminder_string?.custom_date_fld || ''}>
-                    <option value="">Field</option>
+                    <option value="">{__('Field', 'bitform')}</option>
                     {formFields.map(f => f.type === 'date' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                   </select>
                 </div>
               </>
             )}
-            <div className="mt-2 mb-1">Select Time</div>
+            <div className="mt-2 mb-1">{__('Select Time', 'bitform')}</div>
             <div className="flx">
               <input type="time" className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'reminder_time')} value={projectsConf.actions[event]?.reminder_string?.reminder_time || ''} style={{ height: 40 }} />
               <select className="btcd-paper-inp" onChange={(e) => handleReminder(e.target.value, 'reminder_time_fld')} value={projectsConf.actions[event]?.reminder_string?.reminder_time_fld || ''}>
-                <option value="">Field</option>
+                <option value="">{__('Field', 'bitform')}</option>
                 {formFields.map(f => f.type === 'time' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
               </select>
             </div>
-            <div className="mt-2">Notify Users</div>
+            <div className="mt-2">{__('Notify Users', 'bitform')}</div>
             <MultiSelect
               defaultValue={projectsConf.actions[event]?.reminder_string?.reminder_notify_users}
               className="mt-1 w-10 btcd-paper-drpdwn"
@@ -648,41 +650,41 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             className="custom-conf-mdl"
             mainMdlCls="o-v btcd-ttc"
             btnClass="blue"
-            btnTxt="Ok"
+            btnTxt={__('Ok', 'bitform')}
             show={actionMdl.show === 'recurrence_string'}
             close={clsActionMdl}
             action={clsActionMdl}
-            title={`${event} Recurrence`}
+            title={sprintf(__('%s Recurrence', 'bitform'), event)}
           >
             <div className="btcd-hr mt-2" />
-            <div className="mt-2 mb-1">Select Recurring Frequency</div>
+            <div className="mt-2 mb-1">{__('Select Recurring Frequency', 'bitform')}</div>
             <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'recurring_frequency')} value={projectsConf.actions[event]?.recurrence_string?.recurring_frequency}>
-              <option value="">Select Frequency</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekley</option>
-              <option value="monthly">Monthly</option>
-              <option value="yearly">Yearly</option>
+              <option value="">{__('Select Frequency', 'bitform')}</option>
+              <option value="daily">{__('Daily', 'bitform')}</option>
+              <option value="weekly">{__('Weekley', 'bitform')}</option>
+              <option value="monthly">{__('Monthly', 'bitform')}</option>
+              <option value="yearly">{__('Yearly', 'bitform')}</option>
             </select>
-            <div className="mt-2 mb-1">Once Every</div>
+            <div className="mt-2 mb-1">{__('Once Every', 'bitform')}</div>
             <div className="flx">
               <input type="number" className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'time_span')} min="1" max="15" value={projectsConf.actions[event]?.recurrence_string?.time_span || ''} />
               <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'time_span_fld')} value={projectsConf.actions[event]?.recurrence_string?.time_span_fld || ''}>
-                <option value="">Field</option>
+                <option value="">{__('Field', 'bitform')}</option>
                 {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
               </select>
             </div>
-            <div className="mt-2 mb-1">End After</div>
+            <div className="mt-2 mb-1">{__('End After', 'bitform')}</div>
             <div className="flx mb-2">
               <input type="number" className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'number_of_occurrences')} min="2" max="30" value={projectsConf.actions[event]?.recurrence_string?.number_of_occurrences || ''} />
               <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'number_of_occurrences_fld')} value={projectsConf.actions[event]?.recurrence_string?.number_of_occurrences_fld || ''}>
-                <option value="">Field</option>
+                <option value="">{__('Field', 'bitform')}</option>
                 {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
               </select>
             </div>
             {['monthly', 'yearly'].includes(projectsConf.actions[event]?.recurrence_string?.recurring_frequency)
-              && (<CheckBox onChange={(e) => handleRecurrence(e.target.value, 'set_previous_business_day', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.set_previous_business_day || false} value="true" title="Set to previous business day" />)}
-            <CheckBox onChange={(e) => handleRecurrence(e.target.value, 'is_comments_recurred', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.is_comments_recurred || false} value="true" title="Retain comments for subsequent recurrences" />
-            <CheckBox onChange={(e) => handleRecurrence(e.target.value, 'recurrence_type', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.recurrence_type || false} value="after_current_task_completed" title="Create next recurrence after the close of current task." />
+              && (<CheckBox onChange={(e) => handleRecurrence(e.target.value, 'set_previous_business_day', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.set_previous_business_day || false} value="true" title={__('Set to previous business day', 'bitform')} />)}
+            <CheckBox onChange={(e) => handleRecurrence(e.target.value, 'is_comments_recurred', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.is_comments_recurred || false} value="true" title={__('Retain comments for subsequent recurrences', 'bitform')} />
+            <CheckBox onChange={(e) => handleRecurrence(e.target.value, 'recurrence_type', e.target.checked)} checked={projectsConf.actions[event]?.recurrence_string?.recurrence_type || false} value="after_current_task_completed" title={__('Create next recurrence after the close of current task.', 'bitform')} />
           </ConfirmModal>
         )
       }
@@ -693,11 +695,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               className="custom-conf-mdl"
               mainMdlCls="o-v"
               btnClass="blue"
-              btnTxt="Ok"
+              btnTxt={__('Ok', 'bitform')}
               show={actionMdl.show === 'followers'}
               close={clsActionMdl}
               action={clsActionMdl}
-              title="Issue Followers"
+              title={__('Issue Followers', 'bitform')}
             >
               <div className="btcd-hr mt-2" />
               {isLoading ? (
@@ -718,7 +720,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                       onChange={(val) => actionHandler(val, 'bug_followers')}
                       options={getUsers().map(user => ({ label: user.userName, value: user.userId }))}
                     />
-                    <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Portal Users"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+                    <button onClick={() => refreshUsers(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Portal Users', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
                   </div>
                 )}
             </ConfirmModal>
@@ -729,11 +731,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                   className="custom-conf-mdl"
                   mainMdlCls="o-v btcd-ttc"
                   btnClass="blue"
-                  btnTxt="Ok"
+                  btnTxt={__('Ok', 'bitform')}
                   show={actionMdl.show === act}
                   close={clsActionMdl}
                   action={clsActionMdl}
-                  title={`Issue ${act}`}
+                  title={sprintf(__('Issue %', 'bitform'), act)}
                 >
                   <div className="btcd-hr mt-2" />
                   <div className="flx flx-between mt-2">
@@ -759,11 +761,11 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
         className="custom-conf-mdl"
         mainMdlCls="o-v btcd-ttc"
         btnClass="blue"
-        btnTxt="Ok"
+        btnTxt={__('Ok', 'bitform')}
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={`${event} Tags`}
+        title={sprintf(__('%s Tags', 'bitform'), event)}
       >
         <div className="btcd-hr mt-2" />
         {isLoading ? (
@@ -787,12 +789,12 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               <button onClick={() => refreshTags(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tags"' }} type="button" disabled={isLoading}>&#x21BB;</button>
             </div>
             <hr />
-            <small>Custom Tags</small>
+            <small>{__('Custom Tags', 'bitform')}</small>
             {projectsConf?.actions?.[event]?.customTags?.length > 0 && projectsConf.actions[event].customTags.map((tag, i) => (
               <div key={`tg=${i + 79}`} className="flx flx-between mt-2 mb-2">
                 <input type="text" className="btcd-paper-inp" onChange={(e) => handleCustomTag('value', i, 'name', e.target.value)} value={tag.name} />
                 <select className="btcd-paper-inp w-3" value={tag.field} onChange={(e) => handleCustomTag('value', i, 'field', e.target.value)}>
-                  <option value="">Field</option>
+                  <option value="">{__('Field', 'bitform')}</option>
                   {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
                 </select>
                 <select className="btcd-paper-inp w-3" style={{ backgroundColor: `${tag.color.replace('bg', '#')}` }} value={tag.color} onChange={(e) => handleCustomTag('value', i, 'color', e.target.value)}>
@@ -804,7 +806,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                 <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2" aria-label="delete" type="button"><span className="btcd-icn icn-trash-2" /></button>
               </div>
               ))}
-            <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': '"Add Custom Tag"' }} type="button">+</button>
+            <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': `'${__('Add Custom Tag', 'nitform')}'` }} type="button">+</button>
           </>
           )}
       </ConfirmModal>

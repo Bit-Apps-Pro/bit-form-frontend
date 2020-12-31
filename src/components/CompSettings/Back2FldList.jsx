@@ -1,10 +1,13 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
+
 export default function Back2FldList({ setElementSetting }) {
   return (
     <div className="flx cp" onClick={() => setElementSetting({ id: null, data: { typ: '' } })} type="button" role="button" tabIndex="0" onKeyPress={() => setElementSetting({ id: null, data: { typ: '' } })}>
       <button className="icn-btn" type="button" aria-label="back to field list">
         <span className="btcd-icn icn-arrow_back" />
       </button>
-      <h4>All Field List</h4>
+      <h4>{__('All Field List', 'bitform')}</h4>
     </div>
   )
 }

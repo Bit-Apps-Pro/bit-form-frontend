@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
 import { useEffect, memo, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
@@ -40,8 +42,8 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
           })
 
           editor.addButton('addFormField', {
-            text: 'Form Fields ',
-            tooltip: 'Add Form Field Value in Message',
+            text: __('Form Fields', 'bitform'),
+            tooltip: __('Add Form Field Value in Message', 'bitform'),
             type: 'menubutton',
             icon: false,
             menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
@@ -66,12 +68,12 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     const tmpFormSettings = JSON.parse(JSON.stringify(formSettings))
     if (!('confirmation' in tmpFormSettings)) {
       tmpFormSettings.confirmation = { type: { successMsg: [] } }
-      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: __('Successfully Submitted.', 'bitform') })
     } else if ('successMsg' in tmpFormSettings.confirmation.type) {
-      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: __('Successfully Submitted.', 'bitform') })
     } else {
       tmpFormSettings.confirmation.type = { successMsg: [], ...tmpFormSettings.confirmation.type }
-      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: 'Successfully Submitted.' })
+      tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: __('Successfully Submitted.', 'bitform') })
     }
     setFormSettings(tmpFormSettings)
   }
@@ -114,8 +116,8 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
       <ConfirmModal
         action={confMdl.action}
         show={confMdl.show}
-        body="Are you sure to delete this message ?"
-        btnTxt="Delete"
+        body={__('Are you sure to delete this message ?', 'bitform')}
+        btnTxt={__('Delete', 'bitform')}
         close={closeMdl}
       />
 
@@ -132,7 +134,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
             >
               <div className="flx flx-between">
                 <select onChange={e => addFormField(e.target.value, i)} className="btcd-paper-inp p-i-sm w-3 f-right mt-0 form-fields">
-                  <option value="">Add form field</option>
+                  <option value="">{__('Add form field', 'bitform')}</option>
                   {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
                 </select>
               </div>
@@ -149,10 +151,10 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
         )) : (
           <div className="txt-center btcd-empty">
             <span className="btcd-icn icn-stack" />
-            Empty
+            {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': '"Add More Alternative Success Message"' }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${ __('Add More Alternative Success Message', 'bitform') }'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }

@@ -1,4 +1,3 @@
-
 function Button({ className, type, onClick, icn, children, style }) {
   return (
     <button

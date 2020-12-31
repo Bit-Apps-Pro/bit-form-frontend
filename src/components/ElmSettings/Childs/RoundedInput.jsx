@@ -1,4 +1,7 @@
 /* eslint-disable no-param-reassign */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n';
+
 export default function RoundedInput(props) {
   const regx = /round/
   const isRound = regx.test(props.elm.data.child[1].attr.className)
@@ -16,8 +19,8 @@ export default function RoundedInput(props) {
       <div className="mt-3 setting-inp">
         <span>Check Box isRound:</span>
         <select value={!isRound ? 'Square' : 'Round'} onChange={updateisRound} name="" id="">
-          <option value="Square">Square</option>
-          <option value="Round">Round</option>
+          <option value="Square">{__('Square', 'bitform')}</option>
+          <option value="Round">{__('Round', 'bitform')}</option>
         </select>
       </div>
     </div>
