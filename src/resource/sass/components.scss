@@ -1,6 +1,7 @@
-body {
-  scroll-behavior: smooth;
+._frm-bg {
+  overflow: visible !important;
 }
+
 .btcd-fld-itm {
   height: 100%;
 }
@@ -37,20 +38,25 @@ body {
   margin: 0;
   font-weight: 500;
 }
+.fld-wrp .msl-vars{
+  --input-width: 100%;
 
+}
+/* 
 .fld-wrp .msl-vars {
   --border-radius: 5px;
+  --input-width: 100%;
+  .msl-wrp {
+    width: 100%;
+  }
   margin-top: 5px;
   & > * {
     line-height: 1;
   }
-  & > .msl:not(.msl-active) {
+  & > .msl:not(.msl-active,.msl-active-up) {
     height: 40px;
     border: 1.5px solid;
     border-color: #505050;
-  }
-  & .msl-input {
-    margin: 8px;
   }
   .msl-single-value {
     margin: 8px;
@@ -64,14 +70,10 @@ body {
     box-shadow: none !important;
   }
 }
-
+ */
 /* input:invalid{
   background: red;
 } */
-
-input.fld {
-  height: 40px !important;
-}
 
 input.fld,
 textarea.fld {
@@ -82,6 +84,7 @@ textarea.fld {
   font-family: sans-serif !important;
   width: 100% !important;
   outline: none !important;
+  line-height: 1;
   // transition: border 200ms !important;
 }
 
@@ -90,10 +93,8 @@ textarea.fld {
 .fld[type="time"],
 .fld[type="month"],
 .fld[type="week"] {
-  // display: flow-root;
-  line-height: 1 !important;
-  width: 100%;
-  padding: 5px !important;
+  //  width: 100%;
+  // padding: 5px !important;
 }
 
 .fld[type="color"] {
@@ -107,20 +108,9 @@ textarea.fld {
   height: calc(100% - 30px);
   resize: vertical;
 }
-
-.fld + .slim {
-  margin: 5px 0 0 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  & > .ss-multi-selected,
-  .ss-single-selected {
-    min-height: 40px !important;
-    border: 1.5px solid #505050 !important;
-    border-radius: 5px !important;
-  }
-  & .ss-disabled {
-    color: rgb(133, 133, 133) !important;
-  }
+.textarea {
+  height: calc(100% - 30px) !important;
+  resize: vertical;
 }
 
 .fld {
@@ -248,7 +238,6 @@ textarea.fld {
   margin: 10px 5px !important;
   cursor: pointer !important;
   outline: none !important;
-  // grid-template-columns: repeat(2, minmax(1fr, 1fr));
   box-shadow: 2px 2px 4px -2px transparentize(#000000, 0.6) !important;
   &:active {
     transform: scale(0.95) !important;
@@ -468,7 +457,6 @@ textarea.fld {
   }
 }
 // file upload end
-
 
 // paypal
 .paypal-buttons {

@@ -190,6 +190,9 @@ input[type="checkbox"].disabled:checked:before {
 .txt-gray {
   color: $gray;
 }
+.txt-blue {
+  color: $blue;
+}
 .txt-pro {
   color: crimson;
 }
@@ -408,6 +411,9 @@ input[type="checkbox"].disabled:checked:before {
     background: rgba(0, 114, 255, 0.121569);
   }
 }
+/* ._frm-bg {
+  overflow: auto;
+} */
 
 .toolBar-wrp {
   background: $bg;
@@ -1019,6 +1025,9 @@ input[type="checkbox"].disabled:checked:before {
     opacity: 1;
   }
 }
+.fld-lbl {
+  cursor: default;
+}
 
 .blk {
   outline: none;
@@ -1222,12 +1231,8 @@ input[type="checkbox"].disabled:checked:before {
 .br-15 {
   border-radius: 15px;
 }
-.btcd-app-slim + .ss-main .ss-multi-selected {
-  border-radius: 8px !important;
-  padding: 5px 0 5px 9px !important;
-  &:hover {
-    border-color: $dp-txt;
-  }
+.col-2 {
+  columns: 2;
 }
 
 .btcd-inte-wrp {
