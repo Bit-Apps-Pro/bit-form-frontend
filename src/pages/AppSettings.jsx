@@ -5,6 +5,7 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import Captcha from '../components/Captcha';
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
 // import GCLID from '../components/GCLID'
+ import SMTP from '../components/Smtp/SMTP'
 import { AppSettings } from '../Utils/AppSettingsContext';
 import bitsFetch from '../Utils/bitsFetch';
 
@@ -49,6 +50,10 @@ function AppSettingsPage() {
           <span className="btcd-icn icn-loop" />
           GCLID
         </NavLink> */}
+        <NavLink to="/app-settings/smtp" activeClassName="btcd-app-s-a">
+          <span className="btcd-icn icn-envelope-open-o" />
+          {__('SMTP Settings', 'bitform')}
+        </NavLink>
       </aside>
 
       <Switch>
@@ -58,6 +63,9 @@ function AppSettingsPage() {
         {/* <Route path="/app-settings/gclid">
           <GCLID saveCaptcha={saveCaptcha} />
         </Route> */}
+        <Route path="/app-settings/smtp">
+          <SMTP setsnack={setsnack} />
+        </Route>
       </Switch>
     </div>
   )
