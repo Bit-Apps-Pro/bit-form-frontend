@@ -1,6 +1,5 @@
 export const defaultTheme = (formId) => ({
   [`._frm-bg-${formId}`]: {
-    overflow: 'auto',
     'border-radius': '10px 10px 10px 10px',
     'background-size': '100% 100%',
     'background-color': 'rgba(255, 255, 255, 1)',
@@ -16,6 +15,7 @@ export const defaultTheme = (formId) => ({
   [`.fld-lbl-${formId}`]: {
     'font-size': '16px',
     color: 'rgba(42, 49, 99, 1)!important',
+    'line-height': '1.4!important',
   },
   [`input.fld-${formId},textarea.fld-${formId}`]: {
     'background-color': 'rgba(0, 0, 0, 0)!important',
@@ -27,6 +27,7 @@ export const defaultTheme = (formId) => ({
     color: 'rgba(0, 0, 0, 1)!important',
     margin: '5px 0 0 0!important',
     padding: '10px 8px 10px 8px!important',
+    'line-height': '1.4!important',
   },
   [`input.fld-${formId}:focus,textarea.fld-${formId}:focus`]: {
     'box-shadow': '0px 0px 0px 3px rgba(151, 203, 252, 0.38) !important',
@@ -50,6 +51,16 @@ export const defaultTheme = (formId) => ({
   [`input.fld-${formId}:hover,textarea.fld-${formId}:hover`]: {
     'border-color': 'rgba(29, 158, 249, 1)!important',
   },
+  // dropdown style start
+  [`.fld-${formId}.dpd`]: {
+    '--border-radius': '20px',
+    'background-color': 'rgba(29, 158, 249, 1)!important',
+  },
+  [`.fld-${formId}.dpd .msl`]: {
+
+  },
+  // dropdown style end
+  // media queries
   '@media only screen and (max-width:600px)': {},
   '@media only screen and (max-width:400px)': {},
 })

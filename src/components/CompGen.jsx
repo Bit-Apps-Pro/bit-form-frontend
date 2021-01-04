@@ -42,7 +42,7 @@ function CompGen(props) {
     case 'radio':
       return <RadioBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'select':
-      return <DropDown formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <DropDown dev formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'file-up':
       return <FileUp formID={props.formID} attr={props.atts} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':

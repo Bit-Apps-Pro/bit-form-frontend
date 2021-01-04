@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { useState } from 'react'
 import { __ } from '@wordpress/i18n'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
@@ -30,6 +31,7 @@ import PaypalSettings from './PaypalSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import SelectSettings from './SelectSettings'
+import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
 import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
@@ -39,6 +41,7 @@ import TextFieldSettings from './TextFieldSettings'
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
   const { path } = useRouteMatch()
   const { formType } = useParams()
+  const [scrollTopShadow, setScrollTopShadow] = useState(false)
 
   const TabLink = ({ title, sub, icn, link }) => (
     <NavLink to={`/form/builder/${formType}/${formID}/${link}`} activeClassName="s-t-l-active" className="btcd-s-tab-link active flx w-5 ">
@@ -50,15 +53,23 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
     </NavLink>
   )
 
+  const onSettingScroll = ({ target: { scrollTop } }) => {
+    if (scrollTop > 20) {
+      setScrollTopShadow(true)
+    } else {
+      setScrollTopShadow(false)
+    }
+  }
+
   return (
     <div className="elm-settings">
-      <div className="flx mr-2">
+      <div className="flx">
         <TabLink title={__('Field', 'bitform')} sub={__('Settings', 'bitform')} icn="settings" link="fs" />
         <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
       </div>
       <div className="btcd-hr" />
       <div className="settings">
-        <Scrollbars autoHide>
+        <Scrollbars onScroll={onSettingScroll} autoHide>
           <Switch>
             <Route path={`${path}/fs`}>
               <RenderSettings
@@ -106,6 +117,9 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
                 <FieldOptionBtn icn={<FieldIcn w="20" />} title={__('Field Style', 'bitform')} />
               </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/dpd`}>
+                <FieldOptionBtn icn={<FieldIcn />} title="Dropdown Style" />
+              </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
                 <FieldOptionBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
               </Link>
@@ -116,6 +130,12 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             </Route>
             <Route path={`${path}/style/fl/ppl`}>
               <PaypalStyleEditor elm={elm} setElementSetting={setElementSetting} updateData={updateData} lay={lay} setLay={setLay} fields={fields} />
+            </Route>
+            <Route path={`${path}/style/fl/dpd`}>
+              <DropdownStyleEditors
+                editorLabel="Dropdown Style"
+                {...{ style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }}
+              />
             </Route>
           </Switch>
           <div className="mb-50" />

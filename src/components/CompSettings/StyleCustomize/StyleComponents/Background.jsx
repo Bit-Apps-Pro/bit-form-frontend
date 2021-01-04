@@ -52,12 +52,12 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   }
 
   const setBgTyp = typ => {
-    const actn = { apply: [{ cls: pcls, property: 'background-color', delProp: false, value: 'rgba(242, 246, 249, 0.59)' }], brkPoint }
+    const actn = { apply: [{ cls: pcls, property: 'background-color', delProp: false, value: 'rgba(242, 246, 249, 1)' }], brkPoint }
     if (typ === 'None') {
       actn.apply[0].delProp = true
       // chek any gradien exist then delete
       if (style[cls]?.['background-image']?.match(/gradient/g)) {
-        actn.apply.push({ cls: pcls, property: 'background-image', delProp: true, value: 'rgba(242, 246, 249, 0.59)' })
+        actn.apply.push({ cls: pcls, property: 'background-image', delProp: true, value: 'rgba(242, 246, 249, 1)' })
       }
     }
     styleDispatch(actn)
@@ -296,7 +296,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
       {'backdropFilter' in styleConfig && (
         <div className="mt-2">
           <span className="f-5">{__('Background Filter', 'bitform')}</span>
-          <div className="mt-2">
+          <div className="mt-2 col-2" style={{ columnWidth: 110 }}>
             <TableCheckBox onChange={e => setFilter(e, 'blur(5px)')} checked={bgFilter.match(/blur/g) !== null} value="Blur" className="mr-1 mt-1" title={__('Blur', 'bitform')} />
             <TableCheckBox onChange={e => setFilter(e, 'brightness(120%)')} checked={bgFilter.match(/brightness/g) !== null} value="Brightness" className="mr-1 mt-1" title={__('Brightness', 'bitform')} />
             <TableCheckBox onChange={e => setFilter(e, 'contrast(10%)')} checked={bgFilter.match(/contrast/g) !== null} value="Contrast" className="mr-1 mt-1" title={__('Contrast', 'bitform')} />

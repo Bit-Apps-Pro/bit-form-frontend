@@ -76,7 +76,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
-      name: __('Radio', 'bitform'),
+      name: __('Radio Button', 'bitform'),
       icn: <RadioIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
@@ -98,12 +98,12 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'number',
         lbl: __('Number Field', 'bitform'),
-        ph: __('Placeholder...', 'bitform'),
+        ph: __('Number Input', 'bitform'),
         valid: {},
       },
     },
     {
-      name: __('Drop Down', 'bitform'),
+      name: __('Dropdown', 'bitform'),
       icn: <DropDownIcn w="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {

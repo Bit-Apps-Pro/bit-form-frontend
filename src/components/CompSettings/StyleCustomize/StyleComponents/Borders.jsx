@@ -97,12 +97,12 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
         </div>
       )}
 
-      {bdrW && (
+      {styleConfig.width && bdrW && (
         <div className="mt-2">
           <span className="f-5">{__('Border Width', 'bitform')}</span>
           <Range
             info={[
-              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top ' },
+              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
               { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Border Right' },
               { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Border Bottom' },
               { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Border Left' },
@@ -116,7 +116,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           />
         </div>
       )}
-      {bdrRad && (
+      {styleConfig.radius && bdrRad && (
         <div className="mt-2">
           <span className="f-5">{__('Border Radius', 'bitform')}</span>
           <Range

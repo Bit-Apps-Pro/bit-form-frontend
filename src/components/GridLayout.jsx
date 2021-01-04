@@ -57,23 +57,33 @@ function GridLayout(props) {
       setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
     }
 
-    if (style[`.fld-lbl-${formID}`]?.['font-size']) { h += Number(style[`.fld-lbl-${formID}`]['font-size'].replace(/px|em|rem|!important/g, '')) }
+    if (style[`.fld-lbl-${formID}`]?.['font-size']) {
+      let lineHeight = 1
+      if (style[`.fld-lbl-${formID}`]?.['line-height']) {
+        lineHeight = filterNumber(style[`.fld-lbl-${formID}`]['line-height'])
+      }
+      h += filterNumber(style[`.fld-lbl-${formID}`]['font-size']) * lineHeight
+    }
     if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
-    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
-    let topNbottomPadding = 0
-    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
-      topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
-    }
-    if (topNbottomPadding > 39) {
-      h += topNbottomPadding - 39
-    }
-    h += 40 // default field height
+    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.height) { h += filterNumber(style[`input.fld-${formID},textarea.fld-${formID}`].height) }
+    else { h += 40 /* default field height */ }
+    // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
+    // let topNbottomPadding = 0
+    // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
+    //   topNbottomPadding = propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].padding)
+    // }
+    // if (topNbottomPadding > 39) {
+    //   h += topNbottomPadding - 39
+    // }
+    // h += 40 // default field height
     setRowHeight(h / 2)
 
     // set row height in local
     sessionStorage.setItem('btcd-rh', h / 2)
   }, [style, gridWidth, formID])
+
+  const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
 
   const sortLay = arr => {
     const newArr = arr
@@ -424,7 +434,7 @@ function GridLayout(props) {
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={isToolDragging ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID}`}>
+          <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
