@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     setnewFormId(getNewFormId())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allForms])
 
   const getNewFormId = () => {
@@ -71,6 +71,7 @@ function App() {
                 <NavLink
                   to="/app-settings/recaptcha"
                   activeClassName="app-link-active"
+                  isActive={(m, l) => l.pathname.match(/app-settings\/recaptcha|app-settings\/smtp/g)}
                 >
                   {__('Settings', 'bitform')}
                 </NavLink>
