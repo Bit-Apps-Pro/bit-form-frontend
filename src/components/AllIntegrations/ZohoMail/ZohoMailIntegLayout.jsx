@@ -61,7 +61,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    tinymce.remove()
+    window.tinymce && tinymce.remove()
   }, [])
 
   useEffect(() => {

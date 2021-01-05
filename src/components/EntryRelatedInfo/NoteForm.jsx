@@ -42,7 +42,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    tinymce.remove()
+    window.tinymce && tinymce.remove()
   }, [])
 
   useEffect(() => {

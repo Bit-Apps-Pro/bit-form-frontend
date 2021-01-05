@@ -101,7 +101,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
     setFormSettings({ ...formSettings })
     confMdl.show = false
     setConfMdl({ ...confMdl })
-    tinymce.remove()
+    window.tinymce && tinymce.remove()
     if (tmpData.id !== undefined) {
       const status = await removeIntegration(tmpData.id, 'msg')
       if (!status) {
