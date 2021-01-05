@@ -199,7 +199,13 @@ module.exports = (env, argv) => {
           test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
           use: [
-            'style-loader',
+            // 'style-loader',
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '',
+              },
+            },
             {
               loader: 'css-loader',
             },
@@ -260,11 +266,11 @@ module.exports = (env, argv) => {
     },
     externals: {
       '@wordpress/i18n': {
-      commonjs: ['wp', 'i18n'],
-      commonjs2: ['wp', 'i18n'],
-      amd: ['wp', 'i18n'],
-      root: ['wp', 'i18n'],
-    },
+        commonjs: ['wp', 'i18n'],
+        commonjs2: ['wp', 'i18n'],
+        amd: ['wp', 'i18n'],
+        root: ['wp', 'i18n'],
+      },
     },
   };
 };

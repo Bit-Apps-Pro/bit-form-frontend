@@ -219,6 +219,7 @@ input[type="checkbox"].disabled:checked:before {
   border-radius: 8px;
   border: 1px solid lightgray;
   padding: 5px 10px;
+  cursor: -webkit-grab;
   cursor: grab;
 }
 
@@ -473,6 +474,7 @@ input[type="checkbox"].disabled:checked:before {
   padding: 8px;
   border-radius: 8px;
   align-items: center;
+  cursor: -webkit-grab;
   cursor: grab;
   overflow: hidden;
   margin: 5px;
@@ -1018,7 +1020,6 @@ input[type="checkbox"].disabled:checked:before {
   transition: all 0.3s;
   & svg {
     display: inline-block;
-    padding-top: 3px;
   }
   &:hover {
     background: rgb(209, 209, 209) !important;
@@ -1641,6 +1642,7 @@ nav.top-nav {
   border-radius: 15px;
   box-shadow: none;
   &:hover {
+    -webkit-filter: brightness(1.2);
     filter: brightness(1.2);
   }
 }
@@ -1665,6 +1667,7 @@ nav.top-nav {
 
 .f-table [data-sticky-first-right-td="true"],
 .f-table [data-sticky-last-left-td="true"] {
+  position: -webkit-sticky !important;
   position: sticky !important;
 }
 
@@ -1673,6 +1676,7 @@ nav.top-nav {
 }
 
 .f-table .thead {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -2264,6 +2268,7 @@ nav.top-nav {
   width: 100%;
   justify-content: center;
   overflow: auto;
+  -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
 }
 
@@ -3003,6 +3008,7 @@ select.btcd-paper-inp {
   position: absolute;
   height: 350px;
   width: max-content;
+  -webkit-backdrop-filter: blur(7px);
   backdrop-filter: blur(7px);
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.22);
   z-index: 999;
@@ -4041,6 +4047,7 @@ _:-ms-fullscreen,
   align-items: center;
   padding: 5px;
   background: #07316f38;
+  -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
   border-radius: 8px;
   &::before {

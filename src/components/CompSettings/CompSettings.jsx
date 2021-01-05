@@ -63,7 +63,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
 
   return (
     <div className="elm-settings">
-      <div className="flx">
+      <div className="flx" style={{ ...scrollTopShadow && { boxShadow: '0 0px 16px 2px #b0b7d8' } }}>
         <TabLink title={__('Field', 'bitform')} sub={__('Settings', 'bitform')} icn="settings" link="fs" />
         <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
       </div>
@@ -118,7 +118,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
                 <FieldOptionBtn icn={<FieldIcn w="20" />} title={__('Field Style', 'bitform')} />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/dpd`}>
-                <FieldOptionBtn icn={<FieldIcn />} title="Dropdown Style" />
+                <FieldOptionBtn icn={<DropDownIcn w="20" />} title="Dropdown Style" />
               </Link>
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
                 <FieldOptionBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />

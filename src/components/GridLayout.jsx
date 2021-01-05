@@ -66,8 +66,9 @@ function GridLayout(props) {
     }
     if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
     if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
-    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.height) { h += filterNumber(style[`input.fld-${formID},textarea.fld-${formID}`].height) }
-    else { h += 40 /* default field height */ }
+    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.height) {
+      h += filterNumber(style[`input.fld-${formID},textarea.fld-${formID}`].height)
+    } else { h += 40 /* default field height */ }
     // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
     // let topNbottomPadding = 0
     // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
@@ -414,7 +415,7 @@ function GridLayout(props) {
         role="button"
         tabIndex="0"
       >
-        <BrushIcn style={{ height: 20, width: 20 }} />
+        <BrushIcn style={{ height: 15, width: 15 }} />
       </div>
       {compByTheme(fields[item.i])}
     </div>

@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import StyleAccordion from '../ChildComp/StyleAccordion';
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
+import HeightIcn from '../../../../Icons/HeightIcn';
 
 export default function FontSetting({ style, cls, styleConfig, styleDispatch, brkPoint }) {
   const [, pcls] = usePseudo(cls)
@@ -29,7 +30,7 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
           <span className="f-5">{__('Font Size', 'bitform')}</span>
           <Range
             info={[
-              { icn: <i className="font-w-m"><u>A</u></i>, lbl: __('Font Size', 'bitform') },
+              { icn: <i className="font-w-m"><b>T</b></i>, lbl: __('Font Size', 'bitform') },
             ]}
             className="btc-range"
             unit="px"
@@ -46,7 +47,7 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
           <span className="f-5">Line height</span>
           <Range
             info={[
-              { icn: <i className="font-w-m"><u>A</u></i>, lbl: 'Font Size' },
+              { icn: <span><b>T</b><HeightIcn h="12" /></span>, lbl: 'Text line height' },
             ]}
             className="btc-range"
             master={false}
