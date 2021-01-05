@@ -54,7 +54,9 @@ export const defaultTheme = (formId) => ({
   // dropdown style start
   [`.fld-${formId}.dpd`]: {
     '--border-radius': '8px',
-    'border-color': 'rgba(29, 158, 249, 1)!important',
+  },
+  [`.fld-${formId}.dpd .msl`]: {
+    'border-color': 'rgba(199, 212, 221, 1)!important',
   },
   // dropdown style end
   // media queries
