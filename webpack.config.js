@@ -76,7 +76,7 @@ module.exports = (env, argv) => {
           terserOptions: {
             parse: { ecma: 8 },
             compress: {
-              // drop_console: production,
+              drop_console: production,
               ecma: 5,
               warnings: false,
               comparisons: false,
