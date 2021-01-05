@@ -27,8 +27,6 @@ import ColorPickerIcn from '../../Icons/ColorPickerIcn';
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
-  console.log('%c $render Toolbar indec', 'background:pink;padding:3px;border-radius:5px;')
-
   const tools = [
     {
       name: __('Text', 'bitform'),
