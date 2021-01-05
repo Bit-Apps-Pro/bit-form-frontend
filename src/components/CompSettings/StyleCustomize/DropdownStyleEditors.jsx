@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import BorderIcn from '../../../Icons/BorderIcn';
+import HeightIcn from '../../../Icons/HeightIcn';
 import ColorPicker from './ChildComp/ColorPicker';
 import Range from './ChildComp/Range';
 import StyleAccordion from './ChildComp/StyleAccordion';
@@ -19,7 +20,7 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
   const borderRadius = style?.[`.fld-${formID}.dpd`]?.['--border-radius'] || '5px 5px 5px 5px'
   const fontSize = style?.[`.fld-${formID}.dpd`]?.['--font-size'] || '16px'
   const lineHeight = style?.[`.fld-${formID}.dpd`]?.['--line-height'] || '1.4'
-  const minHeight = style?.[`.fld-${formID}.dpd`]?.['min-height'] || '40px'
+  const minHeight = style?.[`.fld-${formID}.dpd .msl`]?.['min-height'] || '40px'
   const activeMenuBgColor = style?.[`.fld-${formID}.dpd`]?.['--active-menu-background'] || 'rgba(255, 255, 255, 1)'
   const activeMenuRadius = style?.[`.fld-${formID}.dpd`]?.['--active-menu-radius'] || borderRadius
 
@@ -52,7 +53,7 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
 
         <StyleAccordion title="Min Height" className="style-acc w-9">
           <Range
-            info={[{ icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' }]}
+            info={[{ icn: <HeightIcn h="20" />, lbl: 'Minimum Height' }]}
             className="btc-range"
             unit="px"
             master={false}
@@ -67,11 +68,11 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
         <StyleAccordion title="Border Radius" className="style-acc w-9">
           <Range
             info={[
-              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
-              { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Border Right' },
-              { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Border Bottom' },
-              { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Border Left' },
-              { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
+              { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },
+              { icn: <BorderIcn borderRadius="1px 6px 1px 1px" />, lbl: 'Radius Top Right' },
+              { icn: <BorderIcn borderRadius="1px 1px 6px 1px" />, lbl: 'Radius Bottom Right' },
+              { icn: <BorderIcn borderRadius="1px 1px 1px 6px" />, lbl: 'Radius Bottom Left' },
+              { icn: <BorderIcn />, lbl: 'All Side' },
             ]}
             className="btc-range"
             unit="px"
@@ -86,7 +87,7 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
         <StyleAccordion title="Font Size" className="style-acc w-9">
           <Range
             info={[
-              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
+              { icn: <b>T</b>, lbl: 'Font Size' },
             ]}
             className="btc-range"
             unit="px"
@@ -101,14 +102,13 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
 
         <StyleAccordion title="Line Height" className="style-acc w-9">
           <Range
-            info={[
-              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
-            ]}
+            info={[{ icn: <span><b>T</b><HeightIcn h="12" /></span>, lbl: 'Text Line Height' }]}
             className="btc-range"
             master={false}
             maxRange={8}
             minRange={0}
             value={lineHeight}
+            step={0.1}
             onChange={(val) => setValueByProperty(val, '--line-height')}
           />
         </StyleAccordion>
@@ -127,11 +127,11 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
         <StyleAccordion title="Border Radius" className="style-acc w-9">
           <Range
             info={[
-              { icn: <BorderIcn borderWidth="3px 1px 1px 1px" />, lbl: 'Border Top' },
-              { icn: <BorderIcn borderWidth="1px 3px 1px 1px" />, lbl: 'Border Right' },
-              { icn: <BorderIcn borderWidth="1px 1px 3px 1px" />, lbl: 'Border Bottom' },
-              { icn: <BorderIcn borderWidth="1px 1px 1px 3px" />, lbl: 'Border Left' },
-              { icn: <BorderIcn borderWidth="3px 3px 3px 3px" />, lbl: 'All Side' },
+              { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },
+              { icn: <BorderIcn borderRadius="1px 6px 1px 1px" />, lbl: 'Radius Top Right' },
+              { icn: <BorderIcn borderRadius="1px 1px 6px 1px" />, lbl: 'Radius Bottom Right' },
+              { icn: <BorderIcn borderRadius="1px 1px 1px 6px" />, lbl: 'Radius Bottom Left' },
+              { icn: <BorderIcn />, lbl: 'All Side' },
             ]}
             className="btc-range"
             unit="px"
