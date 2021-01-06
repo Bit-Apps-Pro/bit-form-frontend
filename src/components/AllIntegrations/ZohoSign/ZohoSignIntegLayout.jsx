@@ -67,7 +67,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    tinymce.remove()
+    window.tinymce && tinymce.remove()
   }, [])
 
   useEffect(() => {

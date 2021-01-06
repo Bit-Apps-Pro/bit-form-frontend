@@ -57,7 +57,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
-    tinymce.remove()
+    window.tinymce && tinymce.remove()
   }, [])
 
   const { title, sub } = tem
