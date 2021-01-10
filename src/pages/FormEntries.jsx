@@ -44,7 +44,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
 
   useEffect(() => {
     if (reports.length > 0) {
-      console.log('test', reports)
       const allLabelObj = {}
       // eslint-disable-next-line array-callback-return
       allLabels.map((itm) => {
@@ -69,7 +68,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   }, [])
 
   const tableHeaderHandler = (labels) => {
-    console.log('labels', labels)
     const cols = labels.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
       accessor: val.key,

@@ -38,7 +38,6 @@ export const checkLogic = (logics, fields) => {
       value = parseInt(value, 10)
     }
     const targetFieldValue = value
-    // console.log('logicsCC', logicsVal, typeof logicsVal, targetFieldValue, typeof fields[logics.field].value)
     switch (logics.logic) {
       case 'equal':
         if (!fields[logics.field].value) {

@@ -14,7 +14,6 @@ export default function Bitforms(props) {
   const [layout] = useState(props.layout)
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
-  console.log('check', fieldData)
   let maxRowIndex = 0
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
@@ -49,7 +48,6 @@ export default function Bitforms(props) {
       </div>
     )
   }
-  // console.log('fieldData', fieldData)
   const onBlurHandler = (event) => {
     if (!event) {
       return
@@ -92,7 +90,6 @@ export default function Bitforms(props) {
       dataToSet[props.fieldsKey[targetFieldName]] = newData[props.fieldsKey[targetFieldName]]
       maybeReset = true
     }
-    // console.log('______o_n_b_l_u_r______________________', isInteracted)
 
     if (props.fieldToCheck[targetFieldName] !== undefined) {
       Object.keys(props.fieldsKey).forEach(fieldName => {
@@ -104,13 +101,11 @@ export default function Bitforms(props) {
         }
         const fieldDetails = form.querySelectorAll(`[name^='${currentField}']`)
         // const fieldDetails = document.getElementsByName(currentField)
-        // console.log('fieldDetails', form.querySelectorAll(`*[name='${currentField}']`))
         if (fieldDetails.length > 0) {
           let value
           let multiple
           let { type } = fieldDetails[0]
           if (fieldDetails[0].name === element.name && type !== 'checkbox') {
-            // console.log('fieldDetails[0].', fieldDetails[0].nextElementSibling, fieldDetails[0].value, element.value, fieldDetails[0].name === element.name, fieldDetails[0].name, targetFieldName)
             value = element.value
             multiple = element.multiple
             type = element.type
@@ -125,7 +120,6 @@ export default function Bitforms(props) {
                 break;
 
               case 'select-multiple':
-                // console.log('MULPLfieldDetails', fieldDetails)
                 // eslint-disable-next-line no-case-declarations
                 const selectedValue = []
                 if (fieldDetails[0].slim) {
