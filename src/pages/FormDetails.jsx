@@ -46,14 +46,14 @@ function FormDetails(props) {
   const { history, newFormId } = props
 
   useEffect(() => {
-    setFormFields(sortArrOfObj([...allLabels], 'adminLbl'))
-  }, [allLabels])
-
-  useEffect(() => {
-    for (let i = 0; i < formFields.length; i += 1) {
-      formFields[i].name = formFields[i].adminLbl
+    const tmpLabels = [...allLabels]
+    let i = 0
+    while (i < tmpLabels.length) {
+      tmpLabels[i].name = tmpLabels[i].adminLbl || tmpLabels[i].name || tmpLabels[i].key
+      i += 1
     }
-  }, [formFields])
+    setFormFields(sortArrOfObj(tmpLabels, 'name'))
+  }, [allLabels])
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
