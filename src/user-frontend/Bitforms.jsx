@@ -428,8 +428,7 @@ export default function Bitforms(props) {
         </div>
       </form>
       {
-        snack
-        && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
+        snack && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
       }
     </div>
   )
@@ -437,11 +436,27 @@ export default function Bitforms(props) {
 
 function Toast(props) {
   const [snack, setSnack] = useState(true)
+  const toatStyles = {
+    userSelect: 'none',
+    minWidth: !props.editMode && 150,
+    background: '#383838',
+    padding: '10px 15px',
+    color: 'white',
+    borderRadius: '8px',
+    position: 'fixed',
+    bottom: 20,
+    right: 20,
+    left: props.editMode && 20,
+    marginBottom: !props.editMode && 10,
+    paddingRight: 40,
+    boxShadow: '1px 5px 11px -3px #0000004d',
+    transition: 'right 0.5s',
+  }
   const closeButtonStyle = {
-    position: props.editMode ? 'absolute' : 'inherit',
+    position: 'absolute',
     top: props.editMode && -20,
-    right: props.editMode && -15,
-    background: 'red',
+    right: props.editMode ? -15 : 10,
+    background: props.error ? 'red' : '#666',
     height: '25px',
     width: '25px',
     fontSize: '21px',
@@ -452,20 +467,6 @@ function Toast(props) {
     marginLeft: '7px',
     cursor: 'pointer',
     float: !props.editMode && 'right',
-  }
-  const toatStyles = {
-    userSelect: 'none',
-    background: '#383838',
-    padding: '10px 15px',
-    color: 'white',
-    borderRadius: '5px',
-    position: props.editMode ? 'fixed' : 'inherit',
-    bottom: props.editMode && 20,
-    right: props.editMode && 20,
-    left: props.editMode && 20,
-    marginBottom: !props.editMode && 10,
-    boxShadow: '1px 1px 3px 0px #0000004d',
-    transition: 'right 0.5s',
   }
   if (props.index && props.index > 0) {
     if (props.editMode) {
