@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
-import { useEffect, useState, useReducer } from 'react';
-import bitsFetch from '../Utils/bitsFetch'
-import CompGen from '../components/CompGen'
-import { resetCaptcha } from '../components/Fields/Recaptcha'
-import { checkLogic, replaceWithField } from './checkLogic'
+import { useEffect, useReducer, useState } from 'react';
+import CompGen from '../components/CompGen';
+import { resetCaptcha } from '../components/Fields/Recaptcha';
+import bitsFetch from '../Utils/bitsFetch';
+import { deepCopy } from '../Utils/Helpers';
+import { checkLogic, replaceWithField } from './checkLogic';
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
@@ -16,7 +17,7 @@ export default function Bitforms(props) {
   const [resetFieldValue, setresetFieldValue] = useState(false)
   let maxRowIndex = 0
   const blk = (field) => {
-    const dataToPass = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+    const dataToPass = fieldData !== undefined && deepCopy(fieldData)
     // eslint-disable-next-line no-useless-escape
     const name = field.i
     // eslint-disable-next-line no-param-reassign
@@ -37,6 +38,7 @@ export default function Bitforms(props) {
       >
         <CompGen
           editMode
+          key={field.i}
           atts={dataToPass[field.i]}
           formID={props.formID}
           entryID={props.entryID}
@@ -68,7 +70,7 @@ export default function Bitforms(props) {
       }
       form = document.getElementById(`form-${props.contentID}`)
     }
-    const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+    const newData = fieldData !== undefined && deepCopy(fieldData)
     if (resetFieldValue) {
       setresetFieldValue(false)
     }
@@ -306,14 +308,14 @@ export default function Bitforms(props) {
         setSnack(true)
       } else if (result.data && result.data.data) {
         if (result.data.data.$form !== undefined) {
-          setMessage(JSON.parse(JSON.stringify(result.data.data.$form)))
+          setMessage(deepCopy(result.data.data.$form))
           sethasError(true)
           setSnack(true)
           // eslint-disable-next-line no-param-reassign
           delete result.data.data.$form
         }
         if (Object.keys(result.data.data).length > 0) {
-          const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+          const newData = fieldData !== undefined && deepCopy(fieldData)
           // eslint-disable-next-line array-callback-return
           Object.keys(result.data.data).map(element => {
             newData[props.fieldsKey[element]].error = result.data.data[element]
@@ -358,13 +360,13 @@ export default function Bitforms(props) {
     if (props.error) {
       if (props.error.$form !== undefined) {
         sethasError(true)
-        setMessage(JSON.parse(JSON.stringify(props.error.$form)))
+        setMessage(deepCopy(props.error.$form))
         setSnack(true)
         // eslint-disable-next-line no-param-reassign
         delete props.error.$form
       }
       if (Object.keys(props.error).length > 0) {
-        const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
+        const newData = fieldData !== undefined && deepCopy(fieldData)
         // eslint-disable-next-line array-callback-return
         Object.keys(props.error).map(element => {
           newData[props.fieldsKey[element]].error = props.error[element]

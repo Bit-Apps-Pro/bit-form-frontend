@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n'
+import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import ZohoMailActions from './ZohoMailActions';
+import { deepCopy } from '../../../Utils/Helpers'
+import ZohoMailActions from './ZohoMailActions'
 
 export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
   const [mailBody, setMailBody] = useState('')
@@ -80,7 +81,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
   const handleMailBody = val => {
     setMailBody(val)
 
-    const tmp = JSON.parse(JSON.stringify(mailConf))
+    const tmp = deepCopy(mailConf)
     tmp.body = val
     setMailConf({ ...tmp })
   }

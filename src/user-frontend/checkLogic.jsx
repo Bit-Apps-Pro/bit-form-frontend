@@ -1,3 +1,5 @@
+import { deepCopy } from '../Utils/Helpers'
+
 // eslint-disable-next-line consistent-return
 export const checkLogic = (logics, fields) => {
   if (Array.isArray(logics)) {
@@ -239,7 +241,7 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
   if (typeof stringToReplace === 'object') {
     mutatedString = JSON.stringify(stringToReplace)
   } else {
-    mutatedString = JSON.parse(JSON.stringify(stringToReplace))
+    mutatedString = deepCopy(stringToReplace)
   }
   if (typeof mutatedString !== 'string') {
     return stringToReplace

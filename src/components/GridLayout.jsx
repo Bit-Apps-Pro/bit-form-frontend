@@ -2,17 +2,18 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import { useState, useEffect, memo, useContext } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { memo, useContext, useEffect, useState } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
-import { Scrollbars } from 'react-custom-scrollbars'
-import CompGen from './CompGen'
+import BrushIcn from '../Icons/BrushIcn'
+import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { ShowProModalContext } from '../pages/FormDetails'
-import BrushIcn from '../Icons/BrushIcn'
+import { deepCopy } from '../Utils/Helpers'
+import CompGen from './CompGen'
 import ConfirmModal from './ConfirmModal'
 
 function GridLayout(props) {
@@ -29,7 +30,7 @@ function GridLayout(props) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const history = useHistory()
   useEffect(() => {
-    setLayouts(JSON.parse(JSON.stringify(layout)))
+    setLayouts(deepCopy(layout))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout])
 
@@ -216,7 +217,7 @@ function GridLayout(props) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const tmpField = JSON.parse(JSON.stringify(newData[0]))
+    const tmpField = deepCopy(newData[0])
     setFields({ ...fields, [`bf${formID}-${newCounter + 1}`]: tmpField })
     setNewCounter(newCounter + 1)
     sessionStorage.setItem('btcd-lc', '-')
@@ -301,7 +302,7 @@ function GridLayout(props) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const tmpField = JSON.parse(JSON.stringify(draggedElm[0]))
+    const tmpField = deepCopy(draggedElm[0])
     setFields({ ...fields, [newBlk]: tmpField })
     setNewCounter(newCounter + 1)
     sessionStorage.setItem('btcd-lc', '-')

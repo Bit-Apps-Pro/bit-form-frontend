@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import BrushIcn from '../../../Icons/BrushIcn'
+import { deepCopy } from '../../../Utils/Helpers'
 
 export default function PaypalStyleEditor({ elm, setElementSetting, updateData, lay, setLay, fields }) {
   const { formID, formType } = useParams()
@@ -37,7 +38,7 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData, 
     }
 
     if (name === 'layout') {
-      const tmpLay = JSON.parse(JSON.stringify(lay))
+      const tmpLay = deepCopy(lay)
       const lgIndx = tmpLay.lg.findIndex(layout => layout.i === elm.id)
       const mdIndx = tmpLay.md.findIndex(layout => layout.i === elm.id)
       const smIndx = tmpLay.sm.findIndex(layout => layout.i === elm.id)

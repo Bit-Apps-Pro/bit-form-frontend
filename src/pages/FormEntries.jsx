@@ -1,21 +1,22 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import { memo, useCallback, useContext, useEffect, useState, useRef } from 'react'
-
-import { useParams } from 'react-router-dom'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
 import EditEntryData from '../components/EditEntryData'
-import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import TableAction from '../components/ElmSettings/Childs/TableAction'
 import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
+import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import Table from '../components/Table'
 import noData from '../resource/img/nodata.svg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
+
 
 function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   console.log(
@@ -240,7 +241,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
       rowID[rows.original.entry_id] = rows.id
       entries.push(rows.original.entry_id)
     }
-    const newData = JSON.parse(JSON.stringify(tmpData))
+    const newData = deepCopy(tmpData)
 
     const ajaxData = { formID, entries }
     bitsFetch(ajaxData, 'bitforms_duplicate_form_entries').then((res) => {

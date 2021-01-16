@@ -1,11 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n'
+import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import ConfirmModal from '../../ConfirmModal';
-import Loader from '../../Loaders/Loader';
-import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSignCommonFunc';
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { deepCopy } from '../../../Utils/Helpers'
+import ConfirmModal from '../../ConfirmModal'
+import Loader from '../../Loaders/Loader'
+import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSignCommonFunc'
 
 export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
@@ -85,7 +86,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
   const handleAction = (indx, typ, val) => {
     setSignConf(oldState => {
-      const tmp = JSON.parse(JSON.stringify(oldState))
+      const tmp = deepCopy(oldState)
       if (indx === 'notes') {
         tmp.notes = val
       } else {
@@ -101,7 +102,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
 
   const privateMsgField = val => {
     setSignConf(oldState => {
-      const tmp = JSON.parse(JSON.stringify(oldState))
+      const tmp = deepCopy(oldState)
       tmp.templateActions[actionMdl.indx].private_notes += val
       return tmp
     })

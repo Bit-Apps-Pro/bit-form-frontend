@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { useEffect, memo, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'
+import { memo, useEffect, useState } from 'react'
+import { deepCopy } from '../Utils/Helpers'
+import ConfirmModal from './ConfirmModal'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
-import ConfirmModal from './ConfirmModal'
 
 function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -65,7 +66,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
   }
 
   const addMoreMsg = () => {
-    const tmpFormSettings = JSON.parse(JSON.stringify(formSettings))
+    const tmpFormSettings = deepCopy(formSettings)
     if (!('confirmation' in tmpFormSettings)) {
       tmpFormSettings.confirmation = { type: { successMsg: [] } }
       tmpFormSettings.confirmation.type.successMsg.push({ title: `Untitled Message ${tmpFormSettings.confirmation.type.successMsg.length + 1}`, msg: __('Successfully Submitted.', 'bitform') })
@@ -154,7 +155,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
             {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${ __('Add More Alternative Success Message', 'bitform') }'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Alternative Success Message', 'bitform')}'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }
