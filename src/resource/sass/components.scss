@@ -462,3 +462,9 @@ textarea.fld {
 .paypal-buttons {
   padding: 50px !important;
 }
+
+.tinymce-content.frntend {
+  * {
+    margin-bottom: 0 !important;
+  }
+}

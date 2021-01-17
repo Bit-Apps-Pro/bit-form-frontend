@@ -25,6 +25,7 @@ import UrlIcn from '../../Icons/UrlIcn';
 import Tools from './Tools';
 import ColorPickerIcn from '../../Icons/ColorPickerIcn';
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
+import DecisionBoxIcn from '../../Icons/DecisionBoxIcn';
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   const tools = [
@@ -248,6 +249,23 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           color: 'gold',
           shape: 'rect',
           label: 'paypal',
+        },
+        valid: {},
+      },
+    },
+    {
+      name: __('Decision Box', 'bitform'),
+      icn: <DecisionBoxIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 1 },
+      elm: {
+        typ: 'decision-box',
+        adminLbl: __('Decision Box', 'bitform'),
+        info: {
+          lbl: __('Decision Box', 'bitform'),
+        },
+        msg: {
+          checked: 'Accepted',
+          unchecked: 'Not Accepted',
         },
         valid: {},
       },

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useState } from 'react'
 import { __ } from '@wordpress/i18n'
+import { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import BrushIcn from '../../Icons/BrushIcn'
@@ -8,6 +8,7 @@ import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import DateIcn from '../../Icons/DateIcn'
 import DateTimeIcn from '../../Icons/DateTimeIcn'
+import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FieldIcn from '../../Icons/FieldIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
@@ -26,6 +27,7 @@ import TextIcn from '../../Icons/TextIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import WeekIcn from '../../Icons/WeekIcn'
+import DecisionBoxSettings from './DecisionBoxSettings'
 import FileUpSettings from './FileUpSettings'
 import PaypalSettings from './PaypalSettings'
 import RadioCheckSettings from './RadioCheckSettings'
@@ -175,6 +177,8 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
         return <ReCaptchaSettigns setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'paypal':
         return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'decision-box':
+        return <DecisionBoxSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       default:
         return <FieldList fields={fields} setElementSetting={setElementSetting} />
     }
@@ -232,6 +236,8 @@ const renderFieldIcn = icn => {
       return <ReCaptchaIcn size="23" />
     case 'paypal':
       return <PaypalIcn w="23" />
+    case 'decision-box':
+      return <DecisionBoxIcn size="23" />
     default:
       return false
   }
