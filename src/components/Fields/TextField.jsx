@@ -2,8 +2,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react';
 
-export default function TextField({ attr, onBlurHandler, resetFieldValue, formID }) {
+export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const type = attr.typ === 'url' ? 'text' : attr.typ
+  console.log('attr', attr)
   const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
@@ -36,12 +37,13 @@ export default function TextField({ attr, onBlurHandler, resetFieldValue, formID
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="text-fld">
       {'lbl' in attr && (
-        <label title={attr.lbl} className={`fld-lbl fld-lbl-${formID}`}>
+        <label title={attr.lbl} className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
           {attr.lbl}
           {attr.valid?.req && ' *'}
         </label>
       )}
       <input
+        id={fieldKey}
         className={`fld fld-${formID} no-drg`}
         type={type}
         {...'req' in attr.valid && { required: attr.valid.req }}

@@ -38,7 +38,7 @@ export default function Bitforms(props) {
       >
         <CompGen
           editMode
-          key={field.i}
+          fieldKey={field.i}
           atts={dataToPass[field.i]}
           formID={props.formID}
           entryID={props.entryID}

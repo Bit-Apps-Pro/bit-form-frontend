@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react';
 
-export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID }) {
+export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val)
   const textAreaRef = useRef(null)
   useEffect(() => {
@@ -31,8 +31,9 @@ export default function TextArea({ attr, onBlurHandler, resetFieldValue, formID 
   }
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>{attr.lbl}</label>}
       <textarea
+        id={fieldKey}
         className={`fld fld-${formID} no-drg textarea`}
         style={{ height: 'calc(100% - 30px)' }}
         ref={textAreaRef}
