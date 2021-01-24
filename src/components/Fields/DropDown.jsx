@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID, dev }) {
+export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
@@ -27,12 +27,12 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
   const [value, setvalue] = useState(defaultValue || [])
 
   useEffect(() => {
-    if (!dev && defaultValue && !attr.userinput && JSON.stringify(value) !== JSON.stringify(defaultValue)) {
+    if (!isBuilder && defaultValue && !attr.userinput && JSON.stringify(value) !== JSON.stringify(defaultValue)) {
       setvalue(defaultValue)
     } else if (defaultValue && attr.conditional) {
       setvalue(defaultValue)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.val, attr.userinput, attr.conditional, defaultValue, value])
 
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
   }, [resetFieldValue])
 
   useEffect(() => {
+    console.log('object', attr.hasWorkflow, JSON.stringify(defaultValue) === JSON.stringify(value), !attr.userinput)
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)
@@ -59,11 +60,11 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
       event.target.childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
       setvalue([...selectedValue])
     } else {
+      if (onBlurHandler) {
+        const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value: event.split(','), type: 'dropdown', multiple: 'mul' in attr && attr.mul, userinput: true }
+        onBlurHandler(eventLikeData)
+      }
       setvalue(event.split(','))
-    }
-    if (onBlurHandler && event) {
-      const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value: event.split(','), type: 'dropdown', multiple: 'mul' in attr && attr.mul, userinput: true }
-      onBlurHandler(eventLikeData)
     }
   }
 
