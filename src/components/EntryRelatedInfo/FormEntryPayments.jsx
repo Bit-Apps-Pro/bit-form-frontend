@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react'
 import bitsFetch from '../../Utils/bitsFetch'
 import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'
+import RazorpayInfo from './PaymentInfo/RazorpayInfo'
 
 export default function FormEntryPayments({ formID, allLabels, rowDtl, settab }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [paymentInfo, setPaymentInfo] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const payPattern = /paypal/
+  const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   const payFld = paymentFields.find(field => rowDtl[field.key])
   useEffect(() => {
@@ -26,14 +27,14 @@ export default function FormEntryPayments({ formID, allLabels, rowDtl, settab })
   }, [])
 
   const showPaymentInfo = () => {
-    if (payFld?.type === 'paypal') {
-      return (
-        <PaypalInfo
-          paymentInfo={paymentInfo}
-        />
-      )
+    switch (payFld?.type) {
+      case 'paypal':
+        return <PaypalInfo paymentInfo={paymentInfo} />
+      case 'razorpay':
+        return <RazorpayInfo paymentInfo={paymentInfo} />
+      default:
+        return <h1>{__('No Payment Info Found!', 'bitform')}</h1>
     }
-    return <h1>{__('No Payment Info Found!', 'bitform')}</h1>;
   }
 
   return (

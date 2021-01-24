@@ -251,7 +251,7 @@ function GridLayout(props) {
   const clsAlertMdl = () => setAlertMdl({ show: false, msg: '' })
 
   const checkPaymentFields = elm => {
-    const payPattern = /paypal/
+    const payPattern = /paypal|razorpay/
     const fld = elm.typ.match(payPattern)
     if (fld) {
       const payFields = fields ? Object.values(fields).filter(field => field.typ === fld[0]) : []
@@ -355,7 +355,7 @@ function GridLayout(props) {
     }
     switch (props.theme) {
       case 'default':
-        return <CompGen formID={formID} atts={compData} />
+        return <CompGen isBuilder formID={formID} atts={compData} />
       default:
         return null
     }
@@ -472,7 +472,7 @@ function GridLayout(props) {
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="red"
-        btnTxt="Ok"
+        btnTxt="Close"
         show={alertMdl.show}
         close={clsAlertMdl}
         action={clsAlertMdl}

@@ -9,7 +9,7 @@ import Modal from '../Modal'
 
 export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, setSnackbar, integrations, close }) {
   const [tab, settab] = useState('')
-  const payPattern = /paypal/
+  const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   return (
     <Modal lg show setModal={close} title={__('Related Info', 'bitform')}>

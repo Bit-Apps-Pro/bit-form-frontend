@@ -9,6 +9,7 @@ import FileUp from './Fields/FileUp'
 import HiddenField from './Fields/HiddenField'
 import SubmitBtn from './Fields/SubmitBtn'
 import Paypal from './Fields/Paypal'
+import RazorPay from './Fields/RazorPay'
 /*
 typ: input type
 lbl: label
@@ -43,7 +44,7 @@ function CompGen(props) {
     case 'radio':
       return <RadioBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'select':
-      return <DropDown dev formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <DropDown isBuilder={props.isBuilder} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'file-up':
       return <FileUp formID={props.formID} attr={props.atts} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':
@@ -52,10 +53,12 @@ function CompGen(props) {
       return <HiddenField formID={props.formID} attr={props.atts} />
     case 'recaptcha':
       return <ReCaptcha formID={props.formID} attr={props.atts} />
-    case 'paypal':
-      return <Paypal formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} />
     case 'decision-box':
-      return <DecisionBox formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+      return <DecisionBox formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+    case 'paypal':
+      return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+    case 'razorpay':
+      return <RazorPay fieldKey={props.fieldKey} contentID={props.contentID} formID={props.formID} attr={props.atts} buttonDisabled={props.buttonDisabled} resetFieldValue={props.resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

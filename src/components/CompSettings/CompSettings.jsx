@@ -21,6 +21,7 @@ import NumberIcn from '../../Icons/NumberIcn'
 import PasswordIcn from '../../Icons/PasswordIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import RadioIcn from '../../Icons/RadioIcn'
+import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TextIcn from '../../Icons/TextIcn'
@@ -31,6 +32,7 @@ import DecisionBoxSettings from './DecisionBoxSettings'
 import FileUpSettings from './FileUpSettings'
 import PaypalSettings from './PaypalSettings'
 import RadioCheckSettings from './RadioCheckSettings'
+import RazorpaySettings from './RazorpaySettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import SelectSettings from './SelectSettings'
 import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
@@ -175,10 +177,12 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
         return <SubmitBtnSettings setElementSetting={setElementSetting} fields={fields} elm={elm} setSubmitConfig={setSubmitConfig} />
       case 'recaptcha':
         return <ReCaptchaSettigns setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
-      case 'paypal':
-        return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'decision-box':
         return <DecisionBoxSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'paypal':
+        return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'razorpay':
+        return <RazorpaySettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       default:
         return <FieldList fields={fields} setElementSetting={setElementSetting} />
     }
@@ -234,10 +238,12 @@ const renderFieldIcn = icn => {
       return <ColorPickerIcn w="23" />
     case 'recaptcha':
       return <ReCaptchaIcn size="23" />
-    case 'paypal':
-      return <PaypalIcn w="23" />
     case 'decision-box':
       return <DecisionBoxIcn size="23" />
+    case 'paypal':
+      return <PaypalIcn w="23" />
+    case 'razorpay':
+      return <RazorPayIcn w="17" h="23" />
     default:
       return false
   }
@@ -258,8 +264,6 @@ function FieldOptionBtn({ icn, title, sub, action }) {
       <div className="flx flx-between ">
         <div className="flx">
           <span className="lft-icn mr-2 btcd-icn-lg flx br-50">
-            {console.log(typeof icn)}
-            {/* {typeof icn === 'object' ? icn : <span className={`btcd-icn icn-${icn}`} />} */}
             {typeof icn === 'string' ? renderFieldIcn(icn) : icn}
           </span>
           <div>
