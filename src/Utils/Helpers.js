@@ -172,6 +172,19 @@ export const dateTimeFormatter = (date, format) => {
   return formattedDate
 }
 
+export const loadScript = (src, type) => new Promise((resolve) => {
+  const script = document.createElement('script')
+  script.src = src
+  script.onload = () => {
+    resolve(true)
+  }
+  script.onerror = () => {
+    resolve(false)
+  }
+  script.id = type
+  document.body.appendChild(script)
+})
+
 const cipher = salt => {
   const textToChars = text => text.split('').map(c => c.charCodeAt(0));
   const byteHex = n => (`0${Number(n).toString(16)}`).substr(-2);
