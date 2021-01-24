@@ -39,11 +39,6 @@ function DropDown({ options, placeholder, action, className, isMultiple, allowCu
         jsonValue={jsonValue}
         options={(options !== null && options !== false) && options}
       />
-      {/* <select value={props.value} ref={s} multiple={props.isMultiple} onChange={props.action} className={`btcd-app-slim ${props.className}`}>
-        {props.options !== null
-          && props.options !== false
-          && props.options.map(item => <option key={`key${item.name}`} value={item.value}>{item.name}</option>)}
-      </select> */}
     </div>
   )
 }

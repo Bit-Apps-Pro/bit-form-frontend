@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const type = attr.typ === 'url' ? 'text' : attr.typ
-  console.log('attr', attr)
   const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
   useEffect(() => {
