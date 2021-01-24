@@ -32,7 +32,7 @@ export default function Bitforms(props) {
     return (
       <div
         key={field.i}
-        className={`btcd-fld-itm ${field.i} ${dataToPass[field.i].valid.hide ? 'btcd-hidden' : ''}`}
+        className={`btcd-fld-itm ${field.i} ${dataToPass[field.i]?.valid?.hide ? 'btcd-hidden' : ''}`}
       // btcd-id={field.i}
       // data-grid={field}
       >
