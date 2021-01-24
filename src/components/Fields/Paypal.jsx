@@ -3,7 +3,7 @@ import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-payp
 import { useEffect, useState } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 
-function Paypal({ formID, attr, contentID, fieldData }) {
+function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
   const [render, setrender] = useState(false)
   const [amount, setAmount] = useState(attr?.amount || 1)
   const [shipping, setShipping] = useState(attr?.shipping || 0)
@@ -12,6 +12,15 @@ function Paypal({ formID, attr, contentID, fieldData }) {
   const { currency } = attr
   const isSubscription = attr.payType === 'subscription'
   const isStandalone = attr.style.layout === 'standalone'
+
+  useEffect(() => {
+    if (resetFieldValue) {
+      const paypalField = document.getElementById('paypalfield')
+      if (paypalField) {
+        paypalField.remove()
+      }
+    }
+  }, [resetFieldValue])
 
   const amountFld = document.getElementsByName(attr?.amountFld)[0]
   amountFld?.addEventListener('change', e => setAmount(e.target.value))
@@ -63,11 +72,11 @@ function Paypal({ formID, attr, contentID, fieldData }) {
     const order = isSubscription ? actions.subscription.get() : actions.order.capture()
     order.then(result => {
       const form = document.getElementById(`form-${contentID}`)
-      if (typeof (form) != 'undefined' && form != null) {
-        const paypalFieldKey = Object.keys(fieldData).find(fieldKey => fieldData[fieldKey].typ === 'paypal')
+      if (typeof form !== 'undefined' && form !== null) {
         const input = document.createElement('input')
         input.setAttribute('type', 'hidden')
-        input.setAttribute('name', paypalFieldKey)
+        input.setAttribute('name', fieldKey)
+        input.setAttribute('id', 'paypalfield')
         input.setAttribute('value', result.id)
         form.appendChild(input)
         const submitBtn = form.querySelector('button[type="submit"]')
@@ -85,7 +94,7 @@ function Paypal({ formID, attr, contentID, fieldData }) {
   }
 
   return (
-    <div className={`drag fld-wrp fld-wrp-${formID}`}>
+    <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''}`}>
       <div
         style={{
           width: 'auto',

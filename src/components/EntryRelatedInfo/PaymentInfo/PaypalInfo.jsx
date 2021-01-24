@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import noData from '../../../resource/img/nodata.svg'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
@@ -6,7 +7,7 @@ import { dateTimeFormatter } from '../../../Utils/Helpers'
 export default function PaypalInfo({ paymentInfo }) {
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
 
-  const renderPayaplInfo = payInfo => {
+  const renderPaypalInfo = payInfo => {
     const paypalResp = JSON.parse(payInfo.payment_response)
     const isSubscription = 'subscriber' in paypalResp
     const userInfo = isSubscription ? paypalResp.subscriber : paypalResp.payer
@@ -57,7 +58,7 @@ export default function PaypalInfo({ paymentInfo }) {
         ? (
           <>
             <h1>{__('PayPal', 'bitform')}</h1>
-            {paymentInfo.map(payInfo => renderPayaplInfo(payInfo))}
+            {paymentInfo.map(payInfo => renderPaypalInfo(payInfo))}
           </>
         )
         : <img src={noData} alt={__('no data found', 'bitform')} style={{ height: 150, width: '100%' }} />}
