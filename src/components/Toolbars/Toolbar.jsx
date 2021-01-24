@@ -26,6 +26,7 @@ import Tools from './Tools';
 import ColorPickerIcn from '../../Icons/ColorPickerIcn';
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn';
+import RazorPayIcn from '../../Icons/RazorPayIcn';
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   const tools = [
@@ -237,6 +238,23 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
+      name: __('Decision Box', 'bitform'),
+      icn: <DecisionBoxIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 1 },
+      elm: {
+        typ: 'decision-box',
+        adminLbl: __('Decision Box', 'bitform'),
+        info: {
+          lbl: __('Decision Box', 'bitform'),
+        },
+        msg: {
+          checked: 'Accepted',
+          unchecked: 'Not Accepted',
+        },
+        valid: {},
+      },
+    },
+    {
       name: __('Paypal', 'bitform'),
       icn: <PaypalIcn w="23" />,
       pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },
@@ -254,18 +272,22 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
-      name: __('Decision Box', 'bitform'),
-      icn: <DecisionBoxIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'n_blk', minH: 1 },
+      name: __('Razorpay', 'bitform'),
+      icn: <RazorPayIcn w="17" h="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2, maxH: 7, minW: 2 },
       elm: {
-        typ: 'decision-box',
-        adminLbl: __('Decision Box', 'bitform'),
-        info: {
-          lbl: __('Decision Box', 'bitform'),
-        },
-        msg: {
-          checked: 'Accepted',
-          unchecked: 'Not Accepted',
+        typ: 'razorpay',
+        lbl: __('Razorpay', 'bitform'),
+        btnSiz: 'md',
+        fulW: false,
+        align: 'left',
+        btnTxt: 'Pay with Razorpay',
+        options: {
+          currency: 'INR',
+          theme: {},
+          modal: {},
+          prefill: {},
+          notes: {},
         },
         valid: {},
       },
