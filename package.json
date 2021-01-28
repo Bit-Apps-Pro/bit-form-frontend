@@ -36,7 +36,10 @@
     "build": "react-scripts build",
     "lint": "eslint --ext .jsx --ext .js src/ --fix",
     "wp": "webpack --progress --color --watch --mode=development",
+    "fwp": "webpack --progress --color --config webpack.frontend.config.js --watch --mode=development",
     "pd": "webpack --progress --color --config webpack.config.js --mode=production & npm run i18n",
+    "fpd": "webpack --progress --color --config webpack.frontend.config.js --mode=production",
+    "pda": "npm run pd & npm run fpd",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
     "i18n": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x"
   },

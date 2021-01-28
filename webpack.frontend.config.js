@@ -30,15 +30,7 @@ module.exports = (env, argv) => {
       // process: false,
     },
     entry: {
-      index: path.resolve(__dirname, 'src/index.js'),
-      'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
-      bitforms: path.resolve(__dirname, 'src/resource/sass/app.scss'),
-      'bitforms-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
-      components: [
-        path.resolve(__dirname, 'src/resource/sass/components.scss'),
-        path.resolve(__dirname, 'node_modules/react-multiple-select-dropdown-lite/dist/index.css'),
-        // path.resolve(__dirname, 'src/resource/css/slimselect.min.css'),
-      ],
+      bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
     },
     output: {
       filename: '[name].js',
@@ -49,18 +41,12 @@ module.exports = (env, argv) => {
       // publicPath: path.resolve(__dirname, '../assets/js/'),
     },
     optimization: {
-      runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
-          main: {
+          frontend: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors-main',
-            chunks: chunk => chunk.name === 'index',
-          },
-          gutenbergBlock: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors-block',
-            chunks: chunk => chunk.name === 'bitforms-shortcode-block',
+            name: 'vendors-frontend',
+            chunks: chunk => chunk.name === 'bitformsFrontend',
           },
         },
       },
@@ -102,15 +88,7 @@ module.exports = (env, argv) => {
     },
     plugins: [
       // new BundleAnalyzerPlugin(),
-      new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({
-        cache: production,
-        filename: '../../views/view-root.php',
-        path: path.resolve('../views/'),
-        template: `${__dirname}/public/wp_index.html`,
-        chunks: ['webpackAssets'],
-        chunksSortMode: 'auto',
-      }),
+      // new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
@@ -119,40 +97,6 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: '../css/[name].css?v=[contenthash:6]',
         ignoreOrder: true,
-      }),
-      new CopyPlugin({
-        patterns: [
-          {
-            from: path.resolve(__dirname, 'manifest.json'),
-            to: path.resolve(__dirname, '../assets/js/manifest.json'),
-          },
-          {
-            from: path.resolve(__dirname, 'bitform-logo-icon.ico'),
-            to: path.resolve(__dirname, '../assets/img/bitform-logo-icon.ico'),
-          },
-          {
-            from: path.resolve(__dirname, 'logo-256.png'),
-            to: path.resolve(__dirname, '../assets/img/logo-256.png'),
-          },
-          {
-            from: path.resolve(__dirname, 'logo-bg.svg'),
-            to: path.resolve(__dirname, '../assets/img/logo-bg.svg'),
-          },
-          {
-            from: path.resolve(__dirname, 'logo.svg'),
-            to: path.resolve(__dirname, '../assets/img/logo.svg'),
-          },
-          {
-            from: path.resolve(__dirname, 'redirect.php'),
-            to: path.resolve(__dirname, '../assets/js/index.php'),
-          },
-        ],
-      }),
-      new WorkboxPlugin.GenerateSW({
-        clientsClaim: production,
-        skipWaiting: production,
-        dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
       }),
     ],
 
@@ -184,8 +128,6 @@ module.exports = (env, argv) => {
             plugins: [
               ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               '@babel/plugin-transform-runtime',
-              // "@babel/plugin-transform-regenerator",
-              ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
             ],
           },
         },
@@ -257,14 +199,6 @@ module.exports = (env, argv) => {
           ],
         },
       ],
-    },
-    externals: {
-      '@wordpress/i18n': {
-        commonjs: ['wp', 'i18n'],
-        commonjs2: ['wp', 'i18n'],
-        amd: ['wp', 'i18n'],
-        root: ['wp', 'i18n'],
-      },
     },
   };
 };
