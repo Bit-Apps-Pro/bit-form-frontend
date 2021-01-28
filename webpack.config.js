@@ -264,13 +264,5 @@ module.exports = (env, argv) => {
         },
       ],
     },
-    externals: {
-      '@wordpress/i18n': {
-        commonjs: ['wp', 'i18n'],
-        commonjs2: ['wp', 'i18n'],
-        amd: ['wp', 'i18n'],
-        root: ['wp', 'i18n'],
-      },
-    },
   };
 };
