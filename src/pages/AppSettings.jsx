@@ -8,6 +8,8 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
  import SMTP from '../components/Smtp/SMTP'
 import { AppSettings } from '../Utils/AppSettingsContext';
 import bitsFetch from '../Utils/bitsFetch';
+// import Cpt from '../components/Cpt/Cpt';
+import Apikey from '../components/Apikey';
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
@@ -54,6 +56,14 @@ function AppSettingsPage() {
           <span className="btcd-icn icn-envelope-open-o" />
           {__('SMTP Settings', 'bitform')}
         </NavLink>
+        {/* <NavLink to="/app-settings/cpt" activeClassName="btcd-app-s-a">
+          <span className="btcd-icn icn-envelope-open-o" />
+          {__('CPT', 'bitform')}
+        </NavLink> */}
+        <NavLink to="/app-settings/api-key" activeClassName="btcd-app-s-a">
+          <span className="btcd-icn icn-envelope-open-o" />
+          {__('Api Key', 'bitform')}
+        </NavLink>
       </aside>
 
       <Switch>
@@ -65,6 +75,12 @@ function AppSettingsPage() {
         </Route> */}
         <Route path="/app-settings/smtp">
           <SMTP setsnack={setsnack} />
+        </Route>
+        {/* <Route path="/app-settings/cpt">
+          <Cpt />
+        </Route> */}
+        <Route path="/app-settings/api-key">
+          <Apikey />
         </Route>
       </Switch>
     </div>
