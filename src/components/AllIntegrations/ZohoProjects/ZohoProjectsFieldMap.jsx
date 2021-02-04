@@ -58,7 +58,7 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
     <div
       className={`flx flx-around mt-2 ${isNotRequired && 'mr-1'}`}
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField} onChange={(ev) => handleFieldMapping(ev, i, projectsConf, setProjectsConf)}>
+      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, projectsConf, setProjectsConf)}>
         <option value="">{__('Select Field', 'bitform')}</option>
         {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
         <option value="custom">{__('Custom...', 'bitform')}</option>
@@ -66,7 +66,7 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
 
       {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i)}>
+      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>
         {
           projectsConf?.projectId
