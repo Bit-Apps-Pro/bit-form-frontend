@@ -98,9 +98,9 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
 export const addFieldMap = (i, confTmp, setConf, uploadFields, tab) => {
   const newConf = { ...confTmp }
   if (tab) {
-    uploadFields ? newConf.relatedlists[tab - 1].upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' }) : newConf.relatedlists[tab - 1].field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+    uploadFields ? newConf.relatedlists[tab - 1].upload_field_map.splice(i, 0, {}) : newConf.relatedlists[tab - 1].field_map.splice(i, 0, {})
   } else {
-    uploadFields ? newConf.upload_field_map.splice(i, 0, { formField: '', zohoFormField: '' }) : newConf.field_map.splice(i, 0, { formField: '', zohoFormField: '' })
+    uploadFields ? newConf.upload_field_map.splice(i, 0, {}) : newConf.field_map.splice(i, 0, {})
   }
 
   setConf({ ...newConf })
