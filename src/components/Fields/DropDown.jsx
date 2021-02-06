@@ -51,11 +51,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
   }, [value])
 
   const onChangeHandler = (event) => {
-    if (event && event.target && event.target.slim) {
-      const newValue = []
-      event.target.slim.data.data.forEach((option => { option.selected && option.value && newValue.push(option.value) }))
-      setvalue(newValue)
-    } else if (event && event.target && event.target.multiple && value) {
+    if (event && event.target && event.target.multiple && value) {
       const selectedValue = []
       event.target.childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
       setvalue([...selectedValue])

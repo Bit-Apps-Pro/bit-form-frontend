@@ -2,12 +2,14 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useState, useEffect } from 'react'
+import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import bitsFetch from '../../Utils/bitsFetch'
 import ConfigForm from './ConfigForm'
 import MailSendTest from './MailSendTest'
 
 export default function SMTP({ setsnack }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
+  const [tab, settab] = useState('mail_config')
   const [mail, setMail] = useState({})
   const [status, setStatus] = useState('')
 
@@ -23,10 +25,10 @@ export default function SMTP({ setsnack }) {
   }, [])
 
   return (
-    <div className="btcd-captcha w-5">
-      <h2>{__('SMTP Configuration', 'bitform')}</h2>
+    <div className="btcd-captcha w-5" style={{ overflow: 'scroll', padding: 10 }}>
+      {/* <h2>{__('SMTP Configuration', 'bitform')}</h2>
       <br />
-      <div className="btcd-hr" />
+      <div className="btcd-hr" /> */}
       <div className="pos-rel">
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '101%', left: -15, width: '104%' }}>
@@ -41,10 +43,34 @@ export default function SMTP({ setsnack }) {
             </div>
           </div>
         )}
-        <ConfigForm mail={mail} setMail={setMail} status={status} smtpStatus={setStatus} setsnack={setsnack} />
-        <br />
-        <br />
-        <MailSendTest setsnack={setsnack} />
+        <Tabs>
+          <Tab>
+            <button className={`btcd-s-tab-link ${tab === 'mail_config' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+              {__('Configuration', 'bitform')}
+            </button>
+          </Tab>
+          <Tab>
+            <button className={`btcd-s-tab-link ${tab === 'test_mail' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+              {__('Mail Test', 'bitform')}
+            </button>
+          </Tab>
+          <Panel>
+            <ConfigForm
+              settab={settab}
+              mail={mail}
+              setMail={setMail}
+              status={status}
+              smtpStatus={setStatus}
+              setsnack={setsnack}
+            />
+          </Panel>
+          <Panel>
+            <MailSendTest
+              settab={settab}
+              setsnack={setsnack}
+            />
+          </Panel>
+        </Tabs>
       </div>
     </div>
   )

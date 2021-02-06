@@ -4,12 +4,23 @@ import { useState, useEffect } from 'react'
 import bitsFetch from '../../Utils/bitsFetch'
 import LoaderSm from '../Loaders/LoaderSm'
 
-export default function MailSendTest({ setsnack }) {
+export default function MailSendTest({ setsnack, settab }) {
     const [isTestLoading, setisTestLoading] = useState(false)
     const [toEmail, setToEmail] = useState('')
     const [toSubject, setToSubject] = useState('')
     const [toMessage, setToMessage] = useState('')
     const testEmailHandle = (e) => {
+        if (toEmail === '') {
+          alert('Email Field is required')
+          return false
+        } if (toSubject === '') {
+          alert('Subject Field is required')
+          return false
+        }
+        if (toMessage === '') {
+          alert('Message Field is required')
+          return false
+        }
         e.preventDefault()
         setisTestLoading(true)
         bitsFetch({ to: toEmail, subject: toSubject, message: toMessage },
@@ -36,6 +47,11 @@ export default function MailSendTest({ setsnack }) {
       const messageHandle = (e) => {
         setToMessage(e.target.value)
       }
+
+      useEffect(() => {
+        settab('test_mail')
+      }, [])
+
     return (
       <div>
         <h2>
