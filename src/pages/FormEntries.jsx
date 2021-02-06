@@ -51,7 +51,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         allLabelObj[itm.key] = itm
       })
       const labels = []
-      reports[0].details.order.forEach((field) => {
+      reports[0].details.order?.forEach((field) => {
         if (
           field
           && field !== 'sl'
