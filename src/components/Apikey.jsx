@@ -12,7 +12,7 @@ const randomKey = length => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   const charactersLength = characters.length
   for (let i = 0; i < length; i++) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
   }
   return result
 }
@@ -26,23 +26,21 @@ export default function Apikey() {
     setisLoading(true)
     bitsFetch({ api_key: key }, 'bitforms_api_key').then((res) => {
       if (res !== undefined && res.success) {
-          setKey(res.data)
-          setsnack({ ...{ show: true, msg: __('api key save successfully', 'bitform') } })
-        }
-        setisLoading(false)
+        setKey(res.data)
+        setsnack({ ...{ show: true, msg: __('api key save successfully', 'bitform') } })
+      }
+      setisLoading(false)
     })
-   }
+  }
 
   const changeKey = () => {
     setKey(randomKey(40))
   }
 
   useEffect(() => {
-    bitsFetch({ }, 'bitforms_api_key').then((res) => {
+    bitsFetch({}, 'bitforms_api_key').then((res) => {
       if (res !== undefined && res.success) {
-        if (res.data) {
           setKey(res.data)
-        }
       }
     })
   }, [])
@@ -50,16 +48,16 @@ export default function Apikey() {
   return (
     <div className="btcd-captcha w-5">
       <SnackMsg snack={snack} setSnackbar={setsnack} />
-      <h2>{__('Api Secret Key', 'bitform')}</h2>
+      <h2>{__('API Integration', 'bitform')}</h2>
       <br />
       <br />
       <div className="btcd-hr" />
 
       <div className="mt-2">
         <label htmlFor="captcha-key">
-          {__('Api Key', 'bitform')}
+          {__('API Key', 'bitform')}
           <CopyText value={key} name="siteKey" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
-          <a className="btcd-link" onClick={changeKey}>{__('change', 'bitform')}</a>
+          <a className="btcd-link" onClick={changeKey}>{__('Genarate new API key', 'bitform')}</a>
         </label>
       </div>
       <button type="button" onClick={(e) => handleSubmit(e)} className="btn btn-md f-right blue" disabled={isLoading}>
