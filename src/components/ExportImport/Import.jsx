@@ -1,12 +1,11 @@
 import { useRef, useState } from 'react'
 import Modal from '../Modal'
-import bitsFetch from '../../Utils/bitsFetch'
 import ImportStepOne from './ImportStepOne'
 import ImportStepTwo from './ImportStepTwo'
 
 export default function Import({ cols, formID, close, showImportMdl }) {
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
-  const formName = bits.allForms.find(form => form.id === formID)?.form_name
+  const formName = bits?.allForms?.find(form => form.id === formID)?.form_name
   const formRef = useRef(null)
   const [fileResponses, setResponses] = useState([])
   const [filecolumns, setFilieColumns] = useState([])
@@ -16,7 +15,7 @@ export default function Import({ cols, formID, close, showImportMdl }) {
     const formData = new FormData(formRef.current)
     const file = document.getElementById('file').files
     if (file.length === 0) {
-      alert("Please select a file")
+      alert('Please select a file')
       return false
     }
     // eslint-disable-next-line default-case
