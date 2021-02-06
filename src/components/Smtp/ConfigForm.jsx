@@ -6,7 +6,7 @@ import LoaderSm from '../Loaders/LoaderSm'
 import CheckBox from '../ElmSettings/Childs/CheckBox'
 import SingleToggle2 from '../ElmSettings/Childs/SingleToggle2'
 
-export default function ConfigForm({ mail, setMail, status, smtpStatus, setsnack }) {
+export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, setsnack }) {
   const [isLoading, setIsLoading] = useState(false)
    const [isShowing, setIsShowing] = useState(true)
    const [isAuthentic, setIsAuthentic] = useState(true)
@@ -54,6 +54,10 @@ export default function ConfigForm({ mail, setMail, status, smtpStatus, setsnack
       setIsShowing(false)
     }
   }
+
+  useEffect(() => {
+    settab('mail_config')
+  }, [])
 
   // const toggleCaptureGCLID = e => {
   //   if (e.target.checked) {
