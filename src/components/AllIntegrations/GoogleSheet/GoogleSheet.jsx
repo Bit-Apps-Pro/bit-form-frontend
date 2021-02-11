@@ -23,8 +23,8 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
   const [sheetConf, setSheetConf] = useState({
     name: 'Google Sheet API',
     type: 'Google Sheet',
-    clientId: process.env.NODE_ENV === 'development' ? '25479227878-me1emkbubs0nhqbkojsg3458284p4l5d.apps.googleusercontent.com' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'D9It36Sx4CpaU4XARx8mRwL1' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '937096431638-sk2jfc24vb8fevgjei524bknbvgn2g8v.apps.googleusercontent.com' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '4J6Yk2JBcCd71Pz7XxIIm__P' : '',
     spreadsheetId: '',
     worksheetName: '',
     field_map: [
