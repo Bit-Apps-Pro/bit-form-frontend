@@ -1,13 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
-import { useContext, useEffect, useState } from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { __ } from '@wordpress/i18n'
+import { useContext, useEffect, useState } from 'react'
+import { NavLink, Route, Switch } from 'react-router-dom'
 import Captcha from '../components/Captcha';
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
+import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 // import GCLID from '../components/GCLID'
- import SMTP from '../components/Smtp/SMTP'
-import { AppSettings } from '../Utils/AppSettingsContext';
-import bitsFetch from '../Utils/bitsFetch';
+import SMTP from '../components/Smtp/SMTP'
+import { AppSettings } from '../Utils/AppSettingsContext'
+import bitsFetch from '../Utils/bitsFetch'
+// import Cpt from '../components/Cpt/Cpt'
+import Apikey from '../components/Apikey'
+// import CPTIcn from '../Icons/CPTIcn';
+import APIIcon from '../Icons/APIIcon';
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
@@ -54,6 +58,14 @@ function AppSettingsPage() {
           <span className="btcd-icn icn-envelope-open-o" />
           {__('SMTP Settings', 'bitform')}
         </NavLink>
+        {/* <NavLink to="/app-settings/cpt" activeClassName="btcd-app-s-a">
+          <span className="mr-1"><CPTIcn size={21} /></span>
+          {__('CPT', 'bitform')}
+        </NavLink> */}
+        <NavLink to="/app-settings/api" activeClassName="btcd-app-s-a">
+          <span className="mr-1"><APIIcon size={21} /></span>
+          {__('API', 'bitform')}
+        </NavLink>
       </aside>
 
       <Switch>
@@ -65,6 +77,12 @@ function AppSettingsPage() {
         </Route> */}
         <Route path="/app-settings/smtp">
           <SMTP setsnack={setsnack} />
+        </Route>
+        {/* <Route path="/app-settings/cpt">
+          <Cpt />
+        </Route> */}
+        <Route path="/app-settings/api">
+          <Apikey />
         </Route>
       </Switch>
     </div>

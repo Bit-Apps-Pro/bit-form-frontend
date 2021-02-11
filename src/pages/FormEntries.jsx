@@ -17,7 +17,6 @@ import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 
-
 function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   console.log(
     '%c $render FormEntries',
@@ -51,7 +50,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         allLabelObj[itm.key] = itm
       })
       const labels = []
-      reports[0].details.order.forEach((field) => {
+      reports?.[0]?.details?.order?.forEach((field) => {
         if (
           field
           && field !== 'sl'
@@ -251,7 +250,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         } else {
           let duplicatedEntry
           // let duplicatedEntryCount = 0
-          Object.entries(res.data.details).forEach(
+          Object.entries(res?.data?.details || {})?.forEach(
             ([resEntryId, duplicatedId]) => {
               duplicatedEntryCount += 1
               duplicatedEntry = JSON.parse(

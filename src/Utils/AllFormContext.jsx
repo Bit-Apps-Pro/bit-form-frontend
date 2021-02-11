@@ -13,7 +13,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
     case 'update': {
       allForms.map(form => {
         if (form.formID === action.data.formID) {
-          Object.entries(action.data).forEach(([field, fieldV]) => {
+          Object.entries(action?.data || {})?.forEach(([field]) => {
             form[field] = action.data[field]
           })
         }
@@ -61,7 +61,7 @@ const AllFormContextProvider = (props) => {
   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')
     && typeof bits !== 'undefined'
     && bits.allForms !== null) {
-    allFormsInitialState = bits.allForms.map(form => (
+    allFormsInitialState = bits?.allForms?.map(form => (
       { formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, conversion: form.entries === 0 ? 0.00 : ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
   }
   const [allForms, allFormsDispatchHandler] = useReducer(AllFormsDispatchHandler, allFormsInitialState)

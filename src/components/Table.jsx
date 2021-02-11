@@ -2,8 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
-import { memo, useContext, useEffect, useState, useRef, forwardRef } from 'react';
-
+import { memo, useContext, useEffect, useState, useRef, forwardRef } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
