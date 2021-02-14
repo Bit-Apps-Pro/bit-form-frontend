@@ -14,6 +14,7 @@ import EditZohoRecruit from './ZohoRecruit/EditZohoRecruit'
 import EditZohoSheet from './ZohoSheet/EditZohoSheet'
 import EditZohoSign from './ZohoSign/EditZohoSign'
 import EditZohoWorkDrive from './ZohoWorkDrive/EditZohoWorkDrive'
+import EditCpt from './Cpt/EditCpt'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -45,6 +46,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditZohoCreator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Bigin':
         return <EditZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        case 'CPT':
+          return <EditCpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

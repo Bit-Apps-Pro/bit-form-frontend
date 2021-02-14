@@ -18,6 +18,7 @@ import zohoSheet from '../resource/img/integ/sheet.svg';
 import zohoSign from '../resource/img/integ/sign.svg';
 import zohoTransmail from '../resource/img/integ/transmail.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
+import cpt from '../resource/img/integ/cpt.svg';
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -51,6 +52,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
+    { type: 'CPT', logo: cpt, pro: !isPro },
     { type: 'Zoho Transmail', logo: zohoTransmail, disable: true, pro: !isPro },
     { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
@@ -164,9 +166,11 @@ function Integrations({ integrations, setIntegration, formFields }) {
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Delete', 'bitform') }'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
-                    <span className="btcd-icn icn-information-outline" />
-                  </Link>
+                  {inte.type !== 'CPT' && (
+                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
+                      <span className="btcd-icn icn-information-outline" />
+                    </Link>
+                  )}
                 </div>
                 <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>

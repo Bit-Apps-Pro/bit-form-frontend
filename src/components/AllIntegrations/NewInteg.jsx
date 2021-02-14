@@ -14,6 +14,7 @@ import ZohoRecruit from './ZohoRecruit/ZohoRecruit'
 import ZohoSheet from './ZohoSheet/ZohoSheet'
 import ZohoSign from './ZohoSign/ZohoSign'
 import ZohoWorkDrive from './ZohoWorkDrive/ZohoWorkDrive'
+import Cpt from './Cpt/Cpt'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -46,6 +47,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoCreator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Bigin':
         return <ZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'CPT':
+        return <Cpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
