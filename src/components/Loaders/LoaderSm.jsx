@@ -1,8 +1,8 @@
-export default function LoaderSm({ size, className, clr = '#0a8dff' }) {
+export default function LoaderSm({ size, className, clr = '#0a8dff', style }) {
   return (
     <div
       className={className}
-      style={{ height: size, width: size }}
+      style={{ height: size, width: size, ...style }}
     >
       <svg
         version="1.1"
