@@ -31,7 +31,7 @@ export default function SMTP({ setsnack }) {
       <div className="btcd-hr" /> */}
       <div className="pos-rel">
         {!isPro && (
-          <div className="pro-blur flx" style={{ height: '101%', left: -15, width: '104%' }}>
+          <div className="pro-blur flx" style={{ height: '111%', left: -15, width: '104%' }}>
             <div className="pro">
               {__('Available On', 'bitform')}
               <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
