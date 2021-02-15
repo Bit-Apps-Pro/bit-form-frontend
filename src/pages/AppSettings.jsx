@@ -8,9 +8,9 @@ import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
 import SMTP from '../components/Smtp/SMTP'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
-// import Cpt from '../components/Cpt/Cpt'
+import Cpt from '../components/Cpt/Cpt'
 import Apikey from '../components/Apikey'
-// import CPTIcn from '../Icons/CPTIcn';
+import CPTIcn from '../Icons/CPTIcn';
 import APIIcon from '../Icons/APIIcon';
 
 function AppSettingsPage() {
@@ -58,10 +58,10 @@ function AppSettingsPage() {
           <span className="btcd-icn icn-envelope-open-o" />
           {__('SMTP Settings', 'bitform')}
         </NavLink>
-        {/* <NavLink to="/app-settings/cpt" activeClassName="btcd-app-s-a">
+        <NavLink to="/app-settings/cpt" activeClassName="btcd-app-s-a">
           <span className="mr-1"><CPTIcn size={21} /></span>
           {__('CPT', 'bitform')}
-        </NavLink> */}
+        </NavLink>
         <NavLink to="/app-settings/api" activeClassName="btcd-app-s-a">
           <span className="mr-1"><APIIcon size={21} /></span>
           {__('API', 'bitform')}
@@ -78,9 +78,9 @@ function AppSettingsPage() {
         <Route path="/app-settings/smtp">
           <SMTP setsnack={setsnack} />
         </Route>
-        {/* <Route path="/app-settings/cpt">
+        <Route path="/app-settings/cpt">
           <Cpt />
-        </Route> */}
+        </Route>
         <Route path="/app-settings/api">
           <Apikey />
         </Route>
