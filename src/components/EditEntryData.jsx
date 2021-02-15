@@ -48,8 +48,29 @@ export default function EditEntryData(props) {
     bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
-          if (response.data.cron) {
-            fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron&${response.data.cron}`)
+          if (response.data.cron || response.data.cronNotOk) {
+            const hitCron = response.data.cron || response.data.cronNotOk
+            console.log('hitCron', hitCron)
+            if (typeof hitCron === 'string') {
+              const uri = new URL(hitCron)
+              if (uri.protocol !== window.location.protocol) {
+                uri.protocol = window.location.protocol
+              }
+              fetch(uri)
+            } else {
+              const uri = new URL(bits.ajaxURL)
+              uri.searchParams.append('action', 'bitforms_trigger_workflow')
+              const triggerData = { cronNotOk: hitCron, id: `bitforms_${formID}` }
+              fetch(uri,
+                {
+                  method: 'POST',
+                  body: JSON.stringify(triggerData),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+                .then(res => res.json())
+            }
           }
           setSnackbar({ show: true, msg: response.data.message })
           const tmp = [...allResp]
