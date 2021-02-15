@@ -357,7 +357,7 @@ export default function Bitforms(props) {
           const uri = new URL(bitFormsFront.ajaxURL)
           uri.searchParams.append('action', 'bitforms_trigger_workflow')
           const data = { cronNotOk: hitCron, token: props.nonce, id: props.appID }
-          const triggerReponse = fetch(uri,
+          fetch(uri,
             {
               method: 'POST',
               body: JSON.stringify(data),
@@ -366,7 +366,6 @@ export default function Bitforms(props) {
               },
             })
             .then(response => response.json())
-            console.log('triggerReponse', triggerReponse)
         }
       }
       setbuttonDisabled(false)
