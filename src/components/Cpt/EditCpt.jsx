@@ -77,7 +77,7 @@ export default function AllCpt({ settab, posts, types }) {
             <div className="mt-2">
               <label htmlFor="slug">
                 {__('Post Type Slug *', 'bitform')}
-                <input id="name" name="name" className="btcd-paper-inp mt-1" onChange={(e) => handleInput(e, 'text')} placeholder="" value={editPost?.name} type="text" required />
+                <input id="name" name="name" className="btcd-paper-inp mt-1" onChange={(e) => handleInput(e, 'text')} placeholder="" value={editPost?.name} type="text" readOnly />
               </label>
             </div>
             <div className="mt-2">
