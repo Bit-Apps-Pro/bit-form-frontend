@@ -2,7 +2,6 @@
 import { useEffect, useReducer, useState } from 'react';
 import CompGen from '../components/CompGen';
 import { resetCaptcha } from '../components/Fields/Recaptcha';
-import bitsFetch from '../Utils/bitsFetch';
 import { deepCopy } from '../Utils/Helpers';
 import { checkLogic, replaceWithField } from './checkLogic';
 
@@ -16,6 +15,7 @@ export default function Bitforms(props) {
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
   let maxRowIndex = 0
+
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && deepCopy(fieldData)
     // eslint-disable-next-line no-useless-escape

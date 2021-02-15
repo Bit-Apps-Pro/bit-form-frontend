@@ -45,7 +45,7 @@ export default function EditEntryData(props) {
     const formData = new FormData(ref.current)
     console.log('ref.current', ref.current)
     const queryParam = { formID, entryID: props.entryID }
-    bitsFetch(formData, 'bitforms_update_form_entry', 'multipart/form-data', queryParam)
+    bitsFetch(formData, 'bitforms_update_form_entry', undefined, queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
           if (response.data.cron || response.data.cronNotOk) {

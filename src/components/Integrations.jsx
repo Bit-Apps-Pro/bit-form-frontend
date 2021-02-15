@@ -18,8 +18,8 @@ import zohoSheet from '../resource/img/integ/sheet.svg';
 import zohoSign from '../resource/img/integ/sign.svg';
 import zohoTransmail from '../resource/img/integ/transmail.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
-import googleSheet from '../resource/img/integ/googleSheet.svg'
 import cpt from '../resource/img/integ/cpt.svg';
+import googleSheet from '../resource/img/integ/googleSheets.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
