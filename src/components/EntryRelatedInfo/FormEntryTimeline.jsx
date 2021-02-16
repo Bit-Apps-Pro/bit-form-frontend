@@ -59,24 +59,29 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
         if (data.id === integ.log_id) integInfo[integName].push(integ)
       }
     })
-    if (data.content === null && data.action_type === 'update') {
-      return <p>{__('No field data change', 'bitform')}</p>
-    } if (data.content === null && data.action_type === 'create') {
-      return <p>{__('Form Submitted', 'bitform')}</p>
+
+    const showLogs = () => {
+      if (data.content === null && data.action_type === 'update') {
+        return <p>{__('No field data change', 'bitform')}</p>
+      } if (data.content === null && data.action_type === 'create') {
+        return <p>{__('Form Submitted', 'bitform')}</p>
+      }
+      return data.content.split('b::f').map(str => (
+        <p key={str}>
+          {' '}
+          <span
+            className="btcd-icn icn-document-edit"
+            style={{ fontSize: 16 }}
+          />
+          {replaceFieldWithLabel(str)}
+        </p>
+      ))
     }
+
     return (
       <div>
         {
-          data.content.split('b::f').map(str => (
-            <p key={str}>
-              {' '}
-              <span
-                className="btcd-icn icn-document-edit"
-                style={{ fontSize: 16 }}
-              />
-              {replaceFieldWithLabel(str)}
-            </p>
-          ))
+          showLogs()
         }
         {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
         {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}
