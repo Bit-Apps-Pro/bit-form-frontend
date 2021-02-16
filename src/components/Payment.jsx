@@ -72,12 +72,12 @@ export default function Payment({ allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {
         {
-          paypal: <PaypalSettings
+          PayPal: <PaypalSettings
             paySetting={paySetting}
             setPaySetting={setPaySetting}
             handleInput={handleInput}
           />,
-          razorpay: <RazorpaySettings
+          Razorpay: <RazorpaySettings
             paySetting={paySetting}
             setPaySetting={setPaySetting}
             handleInput={handleInput}

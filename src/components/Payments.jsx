@@ -23,8 +23,8 @@ export default function Payments() {
   const history = useHistory()
 
   const pays = [
-    { type: 'paypal', logo: paypal },
-    { type: 'razorpay', logo: razorpay },
+    { type: 'PayPal', logo: paypal },
+    { type: 'Razorpay', logo: razorpay },
   ]
 
   const removeInteg = i => {
@@ -113,7 +113,7 @@ export default function Payments() {
                 setModal={setShowMdl}
                 style={{ width: 700 }}
               >
-                <div className="flx flx-wrp btcd-inte-wrp">
+                <div className="d-flx flx-wrp btcd-inte-wrp">
                   {pays.map((pay, i) => (
                     <div
                       key={`inte-sm-${i + 2}`}

@@ -18,6 +18,13 @@ export default function RazorpaySettings({ paySetting, handleInput }) {
         <b className="wdt-150">{__('API Secret:', 'bitform')}</b>
         <input type="text" className="btcd-paper-inp" placeholder="API Secret" value={paySetting.apiSecret} name="apiSecret" onChange={handleInput} />
       </div>
+      <div className="flx">
+        <small className="d-blk mt-5" style={{ marginLeft: 130 }}>
+          {__('To get API Key & Secret, Please Visit', 'bitform')}
+          {' '}
+          <a className="btcd-link" href="https://dashboard.razorpay.com/app/keys" target="_blank" rel="noreferrer">{__('Razorpay Dashboard', 'bitform')}</a>
+        </small>
+      </div>
     </div>
   )
 }

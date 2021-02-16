@@ -14,6 +14,13 @@ export default function PaypalSettings({ paySetting, handleInput }) {
         <b className="wdt-150">{__('Client ID:', 'bitform')}</b>
         <input type="text" className="btcd-paper-inp" placeholder="Client ID" value={paySetting.clientID} name="clientID" onChange={handleInput} />
       </div>
+      <div className="flx">
+        <small className="d-blk mt-5" style={{ marginLeft: 130 }}>
+          {__('To get Client ID, Please Visit', 'bitform')}
+          {' '}
+          <a className="btcd-link" href="https://developer.paypal.com/developer/applications/" target="_blank" rel="noreferrer">{__('PayPal Dashboard', 'bitform')}</a>
+        </small>
+      </div>
     </div>
   )
 }
