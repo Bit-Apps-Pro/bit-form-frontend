@@ -43,6 +43,7 @@ a:hover {
 }
 
 #btcd-app {
+  direction: ltr !important;
   color: $dp-blue;
   font-family: "Montserrat", sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -1063,6 +1064,183 @@ input[type="checkbox"].disabled:checked:before {
     font-size: 14px;
     height: calc(100% - 85px);
   }
+}
+
+.d-flx {
+  display: flex;
+}
+.flx {
+  display: flex;
+  align-items: center;
+}
+
+.flx-wrp {
+  flex-wrap: wrap;
+}
+
+.flx-col {
+  flex-direction: column;
+}
+
+.flx-around {
+  justify-content: space-around;
+}
+
+.flx-between {
+  justify-content: space-between;
+}
+.flx-center {
+  justify-content: center;
+}
+.m-a {
+  margin: auto;
+}
+.m-0 {
+  margin: 0;
+}
+.mb-1 {
+  margin-bottom: 5px;
+}
+.mb-2 {
+  margin-bottom: 10px;
+}
+.mb-4 {
+  margin-bottom: 20px;
+}
+.mb-50 {
+  margin-bottom: 250px;
+}
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.mt-1 {
+  margin-top: 5px;
+}
+
+.mt-2 {
+  margin-top: 10px;
+}
+
+.mt-3 {
+  margin-top: 15px;
+}
+.mt-4 {
+  margin-top: 20px;
+}
+
+.mt-5 {
+  margin-top: 25px;
+}
+.mr-1 {
+  margin-right: 5px;
+}
+.mr-2 {
+  margin-right: 10px;
+}
+.mr-4 {
+  margin-right: 20px;
+}
+.mr-8 {
+  margin-right: 40px;
+}
+.ml-0 {
+  margin-left: 0 !important;
+}
+.ml-1 {
+  margin-left: 5px;
+}
+.ml-2 {
+  margin-left: 10px;
+}
+.ml-4 {
+  margin-left: 20px !important;
+}
+.ml-5 {
+  margin-left: 25px !important;
+}
+.ml-6 {
+  margin-left: 30px !important;
+}
+.w-md {
+  width: 900px;
+}
+.w-1 {
+  width: 10% !important;
+}
+.w-2 {
+  width: 20% !important;
+}
+.w-3 {
+  width: 30% !important;
+}
+.w-4 {
+  width: 40% !important;
+}
+.w-5 {
+  width: 50% !important;
+}
+.w-6 {
+  width: 60% !important;
+}
+.w-7 {
+  width: 70% !important;
+}
+.w-8 {
+  width: 80% !important;
+}
+.w-9 {
+  width: 90% !important;
+}
+.w-10 {
+  width: 100% !important;
+}
+
+.wdt-100 {
+  width: 100px !important;
+}
+.wdt-150 {
+  width: 150px !important;
+}
+.wdt-200 {
+  width: 200px !important;
+}
+
+.btcd-hr {
+  border-bottom: 1px solid $gray;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+.p-1 {
+  padding: 5px;
+}
+.p-2 {
+  padding: 10px;
+}
+.p-3 {
+  padding: 15px;
+}
+.p-4 {
+  padding: 20px;
+}
+
+.pl-6 {
+  padding-left: 30px;
+}
+.pb-6 {
+  padding-bottom: 30px;
+}
+.br-10 {
+  border-radius: 10px !important;
+}
+.br-15 {
+  border-radius: 15px;
+}
+.col-2 {
+  columns: 2;
 }
 
 .btcd-inte-wrp {
@@ -3066,7 +3244,7 @@ select.btcd-paper-inp {
       }
       &:hover {
         & .p-atn {
-          display: block;
+          display: flex;
         }
       }
     }
