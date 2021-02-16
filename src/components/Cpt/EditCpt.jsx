@@ -97,7 +97,7 @@ export default function AllCpt({ settab, posts, types }) {
                 {__('Menu Icon *', 'bitform')}
                 <input id="menu_icon" name="menu_icon" onChange={(e) => handleInput(e, 'text')} value={editPost?.menu_icon} className="btcd-paper-inp mt-1" placeholder="" type="text" />
                 <span className="mt-1">
-                  <a href="https://developer.wordpress.org/resource/dashicons/#admin-site-alt">Dashicon class name </a>
+                  <a target="blank" href="https://developer.wordpress.org/resource/dashicons/#admin-site-alt">Dashicon class name </a>
                   {' '}
                   to use for icon.
                 </span>

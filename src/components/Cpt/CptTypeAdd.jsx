@@ -97,7 +97,7 @@ export default function Cpt({ settab, types }) {
             {__('Menu Icon ', 'bitform')}
             <input id="menu_icon" name="menu_icon" className="btcd-paper-inp mt-1" style={{ marginBottom: 6 }} placeholder="(e.g. dashicons-admin-site-alt)" type="text" />
             <small className="mt-1">
-              <a className="btcd-link" href="https://developer.wordpress.org/resource/dashicons/#admin-site-alt">Dashicon class name </a>
+              <a className="btcd-link" target="blank" href="https://developer.wordpress.org/resource/dashicons/#admin-site-alt">Dashicon class name </a>
               {' '}
               to use for icon.
             </small>
