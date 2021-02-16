@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID }) {
-  const [value, setvalue] = useState(attr.val)
+  const [value, setvalue] = useState(attr.val || '')
   const radioRef = useRef(null)
   useEffect(() => {
     if (attr.val && !attr.userinput) {

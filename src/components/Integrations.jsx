@@ -65,7 +65,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     const newInteg = [...integrations]
     newInteg.splice(i, 1)
     setIntegration(newInteg)
-    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_form_integration')
+    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_integration')
       .then(response => {
         if (response && response.success) {
           setSnackbar({ show: true, msg: `${response.data.message}` })
