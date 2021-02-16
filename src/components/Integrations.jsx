@@ -61,7 +61,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     const newInteg = [...integrations]
     newInteg.splice(i, 1)
     setIntegration(newInteg)
-    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_form_integration')
+    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_integration')
       .then(response => {
         if (response && response.success) {
           setSnackbar({ show: true, msg: `${response.data.message}` })
@@ -158,13 +158,13 @@ function Integrations({ integrations, setIntegration, formFields }) {
               <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
-                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Edit', 'bitform') }'` }} type="button">
+                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
                     <span className="btcd-icn icn-edit" />
                   </Link>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Delete', 'bitform') }'` }} onClick={() => inteDelConf(i)} type="button">
+                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
+                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                     <span className="btcd-icn icn-information-outline" />
                   </Link>
                 </div>
