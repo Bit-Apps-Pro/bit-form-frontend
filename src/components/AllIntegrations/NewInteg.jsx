@@ -15,6 +15,7 @@ import ZohoSheet from './ZohoSheet/ZohoSheet'
 import ZohoSign from './ZohoSign/ZohoSign'
 import ZohoWorkDrive from './ZohoWorkDrive/ZohoWorkDrive'
 import GoogleSheet from './GoogleSheet/GoogleSheet'
+import MailChimp from './MailChimp/MailChimp'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -49,6 +50,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Google Sheet':
         return <GoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Mail Chimp':
+        return <MailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
