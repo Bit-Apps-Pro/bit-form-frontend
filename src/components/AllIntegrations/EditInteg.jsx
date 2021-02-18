@@ -15,6 +15,7 @@ import EditZohoSheet from './ZohoSheet/EditZohoSheet'
 import EditZohoSign from './ZohoSign/EditZohoSign'
 import EditZohoWorkDrive from './ZohoWorkDrive/EditZohoWorkDrive'
 import EditGoogleSheet from './GoogleSheet/EditGoogleSheet'
+import EditMailChimp from './MailChimp/EditMailChimp'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -48,6 +49,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Google Sheet':
         return <EditGoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Mail Chimp':
+        return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
