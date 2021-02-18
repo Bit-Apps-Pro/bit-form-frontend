@@ -15,6 +15,13 @@ export default function IntegInfo({ allIntegURL, integrations }) {
   const toReplaceInd = location.indexOf('/info')
   location = window.encodeURI(`${location.slice(0, toReplaceInd)}/new/${integrations[id].type}`)
 
+  let activeStatus = 0
+  if(integrations[id].type === 'Google Sheet') {
+    activeStatus = 1
+  } else if(integrations[id].type === 'Mail Chimp'){
+    activeStatus = 1
+  }
+
   // console.log(allIntegURL)
   return (
     <>
@@ -33,7 +40,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
       <div className="btcd-stp-page" style={{ width: 900, height: `${100}%` }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" name="name" defaultValue={integrations[id].name} type="text" placeholder={__('Integration Name...', 'bitform')} readOnly />
-        {integrations[id].type !== 'Google Sheet' ? (
+        { activeStatus === 0 && (
           <>
             <div className="mt-3"><b>Data Center:</b></div>
             <select name="dataCenter" defaultValue={integrations[id].dataCenter} className="btcd-paper-inp w-9 mt-1" disabled>
@@ -44,7 +51,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
               <option value="com.au">zoho.com.au</option>
             </select>
           </>
-        ) : ''}
+        ) }
         <div className="mt-3"><b>Homepage URL:</b></div>
         <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" readOnly />
 
