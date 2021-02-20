@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default function HeightIcn({ h }) {
   return (
     <svg height={h} style={{ height: h }} xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" version="1.2" viewBox="0 0 65.4 261.2">

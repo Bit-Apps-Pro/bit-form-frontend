@@ -1,3 +1,5 @@
+import LoaderSm from '../Loaders/LoaderSm'
+
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SubmitBtn({ attr, buttonDisabled, handleReset }) {
   return (
@@ -7,7 +9,8 @@ export default function SubmitBtn({ attr, buttonDisabled, handleReset }) {
         disabled={buttonDisabled}
         type="submit"
       >
-        {buttonDisabled ? 'Submitting....' : attr.subBtnTxt}
+        {attr.subBtnTxt}
+        {buttonDisabled && <LoaderSm clr="currentColor" size={12} style={{ display: 'inline-block', marginLeft: 5 }} />}
       </button>
       {'rstBtnTxt' in attr && (
         <button

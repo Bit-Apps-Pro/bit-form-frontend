@@ -77,12 +77,12 @@ export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
                 <small>
                   {__('Example:', 'bitform')}
 &nbsp;
-                  {'("Status"==\\"Finance\\"&&"Total>=250.43")'}
+                  {'(Email==\\"test@mail.com\\")'}
                 </small>
                 <br />
                 <br />
                 <small>
-                  {__('Here Status, Total are Zoho Creator Field link name. info:', 'bitform')}
+                  {__('Here Email is Zoho Creator Field link name. info:', 'bitform')}
                   {' '}
                   <a href="https://www.zoho.com/creator/help/api/v2/update-records.html" target="_blank" rel="noreferrer">{__('Zoho Creator Criteria Guide', 'bitform')}</a>
                 </small>

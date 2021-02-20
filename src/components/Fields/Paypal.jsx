@@ -1,9 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppSettings } from '../../Utils/AppSettingsContext';
 import bitsFetch from '../../Utils/bitsFetch';
 
 function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
+  const appSettingsContext = useContext(AppSettings)
+  const [clientID, setClientID] = useState('')
   const [render, setrender] = useState(false)
   const [amount, setAmount] = useState(attr?.amount || 1)
   const [shipping, setShipping] = useState(attr?.shipping || 0)
@@ -12,6 +15,22 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   const { currency } = attr
   const isSubscription = attr.payType === 'subscription'
   const isStandalone = attr.style.layout === 'standalone'
+  useEffect(() => {
+    let key = ''
+    const payFld = document.getElementById(`paypal-client-${fieldKey}`)
+    if (payFld) {
+      const payClient = payFld?.getAttribute('paypal-client-key')
+      if (payClient) {
+        key = atob(payClient)
+      }
+    } else {
+      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
+      if (payInteg) {
+        key = payInteg.clientID
+      }
+    }
+    setClientID(key)
+  }, [attr.payIntegID])
 
   useEffect(() => {
     if (resetFieldValue) {
@@ -39,7 +58,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     setTimeout(() => {
       setrender(true)
     }, 1);
-  }, [attr.clientId, attr.currency, attr.payType, attr.locale, attr.disableFunding])
+  }, [clientID, attr.currency, attr.payType, attr.locale, attr.disableFunding])
 
   const createSubscriptionHandler = (data, actions) => actions.subscription.create({
     plan_id: attr?.planId,
@@ -92,9 +111,9 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       }
     })
   }
-
+  console.log('==================', attr.valid)
   return (
-    <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''}`}>
+    <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''} ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
       <div
         style={{
           width: 'auto',
@@ -104,10 +123,10 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           marginRight: 'auto',
         }}
       >
-        {render && (
+        {(render && clientID) && (
           <PayPalScriptProvider
             options={{
-              'client-id': attr.clientId || 'sb',
+              'client-id': clientID,
               ...!isSubscription && { currency },
               ...isSubscription && { vault: true, intent: 'subscription' },
               ...attr?.locale && { locale: attr.locale },

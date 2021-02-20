@@ -2,7 +2,6 @@
 import { useEffect, useReducer, useState } from 'react';
 import CompGen from '../components/CompGen';
 import { resetCaptcha } from '../components/Fields/Recaptcha';
-import bitsFetch from '../Utils/bitsFetch';
 import { deepCopy } from '../Utils/Helpers';
 import { checkLogic, replaceWithField } from './checkLogic';
 
@@ -16,6 +15,7 @@ export default function Bitforms(props) {
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
   let maxRowIndex = 0
+
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && deepCopy(fieldData)
     // eslint-disable-next-line no-useless-escape
@@ -271,13 +271,25 @@ export default function Bitforms(props) {
       grecaptcha.ready(() => {
         grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'homepage' }).then((token) => {
           formData.append('g-recaptcha-response', token)
-          submitResponse = bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
-            .then(response => response)
+          const uri = new URL(bitFormsFront.ajaxURL)
+          uri.searchParams.append('action', 'bitforms_submit_form')
+          submitResponse = fetch(uri,
+            {
+              method: 'POST',
+              body: formData,
+            })
+            .then(response => response.json())
         })
       })
     } else {
-      submitResponse = bitsFetch(formData, 'bitforms_submit_form', 'multipart/form-data')
-        .then(response => response)
+      const uri = new URL(bitFormsFront.ajaxURL)
+      uri.searchParams.append('action', 'bitforms_submit_form')
+      submitResponse = fetch(uri,
+        {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => response.json())
     }
     submitResponse.then(result => {
       let responsedRedirectPage = null
@@ -288,6 +300,9 @@ export default function Bitforms(props) {
           responsedRedirectPage = result.data.redirectPage
           if (result.data.cron) {
             hitCron = result.data.cron
+          }
+          if (result.data.cronNotOk) {
+            hitCron = result.data.cronNotOk
           }
           setMessage(result.data.message)
           setSnack(true)
@@ -332,8 +347,25 @@ export default function Bitforms(props) {
         }, 1000);
       }
       if (hitCron) {
-        if (!responsedRedirectPage || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
-          fetch(`${window.location.origin}/wp-cron.php?doing_wp_cron&${hitCron}`)
+        if (typeof hitCron === 'string' && !responsedRedirectPage || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
+          const uri = new URL(hitCron)
+          if (uri.protocol !== window.location.protocol) {
+            uri.protocol = window.location.protocol
+          }
+          fetch(uri)
+        } else {
+          const uri = new URL(bitFormsFront.ajaxURL)
+          uri.searchParams.append('action', 'bitforms_trigger_workflow')
+          const data = { cronNotOk: hitCron, token: props.nonce, id: props.appID }
+          fetch(uri,
+            {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+            .then(response => response.json())
         }
       }
       setbuttonDisabled(false)

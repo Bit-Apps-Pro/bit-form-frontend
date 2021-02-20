@@ -19,9 +19,11 @@ export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, confTmp,
 }
 
 export const setGrantTokenResponse = (integ) => {
+  // console.log('this is setGrant')
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
   const queryParams = authWindowLocation.replace(`${window.opener.location.href}/redirect`, '').split('&')
+    // console.log(queryParams)
   if (queryParams) {
     queryParams.forEach(element => {
       const gtKeyValue = element.split('=')
@@ -35,27 +37,26 @@ export const setGrantTokenResponse = (integ) => {
   window.close()
 }
 
-export const handleAuthorize = (integ, ajaxInteg, scopes, confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
-  if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
+export const handleGoogleAuthorize = (integ, ajaxInteg, scopes, confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
+  if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',
       clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
       clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
     })
     return
   }
   setisLoading(true)
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+  const apiEndpoint = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.googleRedirectURL)}&client_id=${confTmp.clientId}`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
       clearInterval(popupURLCheckTimer)
       let grantTokenResponse = {}
       let isauthRedirectLocation = false
-      const bitformsZoho = localStorage.getItem(`__bitforms_${integ}`)
-      if (bitformsZoho) {
+      const bitsGoogleSheet = localStorage.getItem(`__bitforms_${integ}`)
+      if (bitsGoogleSheet) {
         isauthRedirectLocation = true
-        grantTokenResponse = JSON.parse(bitformsZoho)
+        grantTokenResponse = JSON.parse(bitsGoogleSheet)
         localStorage.removeItem(`__bitforms_${integ}`)
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
@@ -73,10 +74,10 @@ export const handleAuthorize = (integ, ajaxInteg, scopes, confTmp, setConf, setE
 
 const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, setisLoading, setSnackbar) => {
   const tokenRequestParams = { ...grantToken }
-  tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
+  tokenRequestParams.redirectURI = bits.googleRedirectURL
+
   bitsFetch(tokenRequestParams, `bitforms_${ajaxInteg}_generate_token`)
     .then(result => result)
     .then(result => {

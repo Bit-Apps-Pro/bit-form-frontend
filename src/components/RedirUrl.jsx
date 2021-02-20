@@ -5,6 +5,7 @@ import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './ConfirmModal'
+import { deepCopy } from '../Utils/Helpers'
 
 function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -80,18 +81,19 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
   }
 
   const addMoreUrl = () => {
-    if (!('confirmation' in formSettings)) {
+    const fs = deepCopy(formSettings)
+    if (!('confirmation' in fs)) {
       // eslint-disable-next-line no-param-reassign
-      formSettings.confirmation = { type: { redirectPage: [] } }
-      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
-    } else if ('redirectPage' in formSettings.confirmation.type) {
-      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
+      fs.confirmation = { type: { redirectPage: [] } }
+      fs.confirmation.type.redirectPage.push({ title: `Redirect Url ${fs.confirmation.type.redirectPage.length + 1}`, url: '' })
+    } else if ('redirectPage' in fs.confirmation.type) {
+      fs.confirmation.type.redirectPage.push({ title: `Redirect Url ${fs.confirmation.type.redirectPage.length + 1}`, url: '' })
     } else {
       // eslint-disable-next-line no-param-reassign
-      formSettings.confirmation.type.redirectPage = []
-      formSettings.confirmation.type.redirectPage.push({ title: `Redirect Url ${formSettings.confirmation.type.redirectPage.length + 1}`, url: '' })
+      fs.confirmation.type = { redirectPage: [], ...fs.confirmation.type }
+      fs.confirmation.type.redirectPage.push({ title: `Redirect Url ${fs.confirmation.type.redirectPage.length + 1}`, url: '' })
     }
-    setFormSettings({ ...formSettings })
+    setFormSettings({ ...fs })
   }
 
   const rmvUrl = async i => {

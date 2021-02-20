@@ -12,10 +12,11 @@ import Bitforms from './Bitforms'
 
 export default function BitformsRenderer(params) {
   const renderApp = () => {
-    /* const isJS = document.getElementById(`${params.contentID}no-js`)
-    if (isJS) {
-      isJS.innerHTML = ''
-    } */
+    const ajaxURL = new URL(bitFormsFront.ajaxURL)
+    if (ajaxURL.protocol !== window.location.protocol) {
+        ajaxURL.protocol = window.location.protocol
+        bitFormsFront.ajaxURL = ajaxURL
+    }
     // eslint-disable-next-line react/jsx-filename-extension
     ReactDOM.hydrate(<Bitforms
       buttons={params.buttons}
