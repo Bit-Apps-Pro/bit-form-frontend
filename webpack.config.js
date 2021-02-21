@@ -156,7 +156,7 @@ module.exports = (env, argv) => {
         clientsClaim: production,
         skipWaiting: production,
         dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
+        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /view-root.php/],
       }),
     ],
 
