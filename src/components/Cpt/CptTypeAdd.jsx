@@ -104,12 +104,12 @@ export default function Cpt({ settab, types }) {
           </label>
         </div>
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.public} className="wdt-200 mt-4 mr-2" name="public" value={cptConfig.public} title={__('public', 'bitform')} subTitle={__('Whether or not posts of this type should be shown in the admin UI and is publicly queryable', 'bitform')} />
-          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.public_queryable} className="wdt-200 mt-4 mr-2" value={cptConfig.public_queryable} name="public_queryable" style={{ marginLeft: 60 }} title={__('Publicly Queryable', 'bitform')} subTitle={__('Whether or not queries can be performed on the front end as part of parse_request()', 'bitform')} />
+          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.public} className="wdt-200 mt-4 mr-2" name="public" value={cptConfig.public} title={__('public', 'bitform')} subTitle={__('This type should be shown in the admin UI and is publicly queryable', 'bitform')} />
+          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.public_queryable} className="wdt-200 mt-4 mr-2" value={cptConfig.public_queryable} name="public_queryable" style={{ marginLeft: 60 }} title={__('Publicly Queryable', 'bitform')} subTitle={__('Queries can be performed on the front end as part of parse_request()', 'bitform')} />
         </div>
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_in_rest} className="wdt-200 mt-4 mr-2" value={cptConfig.show_in_rest} name="show_in_rest" title={__('Show in REST API', 'bitform')} subTitle={__('Whether or not to show this post type data in the WP REST API', 'bitform')} />
-          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_in_menu} className="wdt-200 mt-4 mr-2" value={cptConfig.show_in_menu} name="show_in_menu" style={{ marginLeft: 60 }} title={__('Show in Menu', 'bitform')} subTitle={__('Add attachments or signatures from BitForm to CRM.', 'bitform')} />
+          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_in_rest} className="wdt-200 mt-4 mr-2" value={cptConfig.show_in_rest} name="show_in_rest" title={__('Show in REST API', 'bitform')} subTitle={__('To show this post type data in the WP REST API', 'bitform')} />
+          <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_in_menu} className="wdt-200 mt-4 mr-2" value={cptConfig.show_in_menu} name="show_in_menu" style={{ marginLeft: 60 }} title={__('Show in Menu', 'bitform')} subTitle={__('This show the post type in the admin menu and where to show that menu.', 'bitform')} />
         </div>
         <div className="d-flx flx-wrp">
           <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_ui} name="show_ui" className="wdt-200 mt-4 mr-2 " value={cptConfig.show_ui} title={__('Show UI', 'bitform')} subTitle={__('Whether or not to generate a default UI for managing this post type', 'bitform')} />
