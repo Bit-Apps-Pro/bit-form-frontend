@@ -68,7 +68,6 @@ export const handleMailChimpAuthorize = (integ, ajaxInteg, confTmp, setConf, set
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        console.log('nwkkkk ', newConf)
         tokenHelper(ajaxInteg, grantTokenResponse, newConf, setConf, setisAuthorized, setisLoading, setSnackbar)
       }
     }
@@ -80,14 +79,12 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
   tokenRequestParams.redirectURI = window.location.href
-  console.log('token Request params', tokenRequestParams, ajaxInteg)
 
   bitsFetch(tokenRequestParams, `bitforms_${ajaxInteg}_generate_token`)
     .then(result => result)
     .then(result => {
       if (result && result.success) {
         const newConf = { ...confTmp }
-        console.log('auth success ', result)
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
@@ -157,5 +154,23 @@ export const handleCustomValue = (event, index, conftTmp, setConf, tab) => {
   } else {
     newConf.field_map[index].customValue = event.target.value
   }
+  setConf({ ...newConf })
+}
+export const handleAddress = (event, index, confTmp, setConf, addressField, tab) => {
+  const newConf = { ...confTmp }
+  newConf.address_field[index][event.target.name] = event.target.value
+  setConf({ ...newConf })
+}
+
+export const addAddressFieldMap = (i, confTmp, setConf) => {
+  const newConf = { ...confTmp }
+  if (!newConf.address_field) newConf.address_field = []
+  newConf.address_field.push({})
+  setConf({ ...newConf })
+}
+
+export const delAddressFieldMap = (i, confTmp, setConf) => {
+  const newConf = { ...confTmp }
+  if (newConf.address_field && newConf.address_field.length > 1) newConf.address_field.splice(i, 1)
   setConf({ ...newConf })
 }
