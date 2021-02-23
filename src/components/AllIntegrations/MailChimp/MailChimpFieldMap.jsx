@@ -4,6 +4,7 @@ import MtInput from '../../ElmSettings/Childs/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
 export default function MailChimpFieldMap({ i, formFields, field, sheetConf, setSheetConf }) {
+  const newConf = { ...sheetConf }
   return (
     <div
       className="flx flx-around mt-2 mr-1"
