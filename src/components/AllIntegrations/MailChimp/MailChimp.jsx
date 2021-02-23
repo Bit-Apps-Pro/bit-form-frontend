@@ -17,7 +17,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ clientId: '', clientSecret: '', ownerEmail: '' })
+  const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [sheetConf, setSheetConf] = useState({
     name: 'Mail Chimp API',
@@ -29,9 +29,9 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
     field_map: [
       { formField: '', mailChimpField: '' },
     ],
+    address_field: [],
     actions: {},
   })
-
   console.log('sheetConf', sheetConf)
 
   useEffect(() => {
@@ -51,7 +51,6 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
     }
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -83,7 +82,6 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
           setisLoading={setisLoading}
           setSnackbar={setSnackbar}
         />
-        {console.log('field map', sheetConf.listId, sheetConf.listName, sheetConf.field_map.length)}
         <button
           onClick={() => nextPage(3)}
           disabled={!sheetConf.listId || sheetConf.field_map.length < 1}
