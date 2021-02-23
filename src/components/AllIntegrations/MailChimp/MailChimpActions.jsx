@@ -1,39 +1,35 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import { useEffect, useState } from 'react'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 
-export default function MailChimpActions({ sheetConf, setSheetConf, formFields }) {
-  const [updateMdl, setUpdateMdl] = useState(false)
-
+export default function MailChimpActions({ sheetConf, setSheetConf, formFields, address }) {
   const actionHandler = (e, type) => {
     const newConf = { ...sheetConf }
-    // if (typ === 'update') {
-    //   if (val.target.checked && !newConf?.actions?.update) {
-    //     newConf.actions.update = { insert: true, criteria: '', firstMatch: false }
-    //     setUpdateMdl(true)
-    //   } else {
-    //     delete newConf.actions.update
-    //   }
-    // }
-    // setSheetConf({ ...newConf })
-    console.log(newConf)
-  }
-  useEffect(() => {
-    if (!updateMdl && !sheetConf.actions?.update?.criteria) {
-      const newConf = { ...sheetConf }
-      delete newConf.actions.update
-      setSheetConf({ ...newConf })
+    if (type === 'update') {
+      if (e.target.checked) {
+        newConf.actions.update = true
+      } else {
+        delete newConf.actions.update
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateMdl])
+    if (type === 'address') {
+      if (e.target.checked) {
+        newConf.actions.address = true
+        newConf.address_field = address.filter(addr => addr.required).map(adr => ({ formField: '', mailChimpAddressField: adr.tag, required: true }))
+      } else {
+        delete newConf.actions.address
+        newConf.address_field = ''
+      }
+    }
+    setSheetConf({ ...newConf })
+  }
 
   return (
-    <div className="pos-rel">
-      <div className="d-flx flx-wrp">
-        <TableCheckBox checked={true} onchange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Mail Chimp', 'bitform')} subTitle={__('Update Responses with Mail Chimp?', 'bitform')} />
-      </div>
+
+    <div className="pos-rel d-flx w-8">
+      <TableCheckBox checked={sheetConf.actions?.address || false} onChange={(e) => actionHandler(e, 'address')} className="wdt-200 mt-4 mr-2" value="address" title={__('Add Address Field', 'bitform')} subTitle={__('Add Address Field', 'bitform')} />
+      <TableCheckBox checked={sheetConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Mail Chimp', 'bitform')} subTitle={__('Update Responses with MailChimp exist Aduience?', 'bitform')} />
     </div>
   )
 }
