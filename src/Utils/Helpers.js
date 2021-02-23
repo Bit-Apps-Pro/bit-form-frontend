@@ -116,15 +116,15 @@ export const dateTimeFormatter = (date, format) => {
   // Day
   const d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
   const j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
-  let S = newDate.getDate()
+  let S = ''
   if (S % 10 === 1 && S !== 11) {
-    S += 'st'
+    S = 'st'
   } else if (S % 10 === 2 && S !== 12) {
-    S += 'nd'
+    S = 'nd'
   } else if (S % 10 === 3 && S !== 13) {
-    S += 'rd'
+    S = 'rd'
   } else {
-    S += 'th'
+    S = 'th'
   }
   // Weekday
   const l = newDate.toLocaleDateString('en-US', { weekday: 'long' })
