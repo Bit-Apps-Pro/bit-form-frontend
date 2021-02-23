@@ -9,7 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 
-function EditGoogleRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
+function EditMailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
 
@@ -51,4 +51,4 @@ function EditGoogleRecruit({ formFields, setIntegration, integrations, allIntegU
   )
 }
 
-export default EditGoogleRecruit
+export default EditMailChimp
