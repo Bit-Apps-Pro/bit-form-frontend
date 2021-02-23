@@ -6,6 +6,7 @@ import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
 import bitsFetch from '../Utils/bitsFetch'
 import SnackMsg from './ElmSettings/Childs/SnackMsg'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -183,12 +184,13 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                        <span className="tooltip" style={{ '--tooltip-txt': `'${ __('set Form Field', 'bitform') }'`, position: 'relative' }}>
-                          <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
-                            <option value="">{__('Select Form Field', 'bitform')}</option>
-                            {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
-                          </select>
-                        </span>
+                        <MultiSelect
+                          options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
+                          className="btcd-paper-drpdwn wdt-200 ml-2"
+                          singleSelect
+                          onChange={val => setFromField(val, i, item)}
+                          defaultValue={item.split('=')[1]}
+                        />
                       </div>
                     </div>
                   ))}
@@ -204,7 +206,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
             {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${ __('Add More Hook', 'bitform') }'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Hook', 'bitform')}'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
     </div>
   )
 }

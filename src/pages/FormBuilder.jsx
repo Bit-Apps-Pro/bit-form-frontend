@@ -176,33 +176,39 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const setResponsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
-    if (view === 'lg') {
+    const leftBarWidth = 165
+    const rightBarWidth = 307
+    const mobileSize = 320
+    const tabletSize = 510
+      if (view === 'lg') {
       setbrkPoint('lg')
-      resizer.resizeSection(0, { toSize: 165 })
-      resizer.resizeSection(2, { toSize: 300 })
+      resizer.resizeSection(0, { toSize: leftBarWidth })
+      resizer.resizeSection(2, { toSize: rightBarWidth })
     } else if (view === 'md') {
       setbrkPoint('md')
-      const s0 = ((window.innerWidth - 473) / 2.7) - 165
-      const s2 = ((window.innerWidth - 473) / 2.7) - 300
-      resizer.resizeSection(0, { toSize: 165 + s0 })
-      resizer.resizeSection(2, { toSize: 300 + s2 })
+      const dividedWidth = (window.innerWidth - tabletSize) / 2
+      const s0 = dividedWidth - leftBarWidth
+      const s2 = dividedWidth - rightBarWidth
+      resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
+      resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     } else if (view === 'sm') {
       setbrkPoint('sm')
-      const s0 = ((window.innerWidth - 473) / 1.8) - 165
-      const s2 = ((window.innerWidth - 473) / 1.8) - 300
-      resizer.resizeSection(0, { toSize: 165 + s0 })
-      resizer.resizeSection(2, { toSize: 300 + s2 })
+      const dividedWidth = (window.innerWidth - mobileSize) / 2
+      const s0 = dividedWidth - leftBarWidth
+      const s2 = dividedWidth - rightBarWidth
+      resizer.resizeSection(0, { toSize: leftBarWidth + s0 })
+      resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     }
     conRef.current.applyResizer(resizer)
   }, [conRef])
 
   const setGrWidth = useCallback((gw) => {
     setGridWidth(gw)
-    if (gw < 785 && gw > 535 && brkPoint !== 'md') {
+    if (gw < 765 && gw > 525 && brkPoint !== 'md') {
       setbrkPoint('md')
-    } else if (gw < 535 && brkPoint !== 'sm') {
+    } else if (gw < 525 && brkPoint !== 'sm') {
       setbrkPoint('sm')
-    } else if (gw > 785 && brkPoint !== 'lg') {
+    } else if (gw > 765 && brkPoint !== 'lg') {
       setbrkPoint('lg')
     }
   }, [brkPoint])

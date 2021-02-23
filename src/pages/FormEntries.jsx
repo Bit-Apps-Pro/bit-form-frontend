@@ -185,7 +185,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
           },
           'bitforms_get_form_entries',
         ).then((res) => {
-          if (res !== undefined && res.success) {
+          if (res?.success) {
             setPageCount(Math.ceil(res.data.count / pageSize))
             setCountEntries(res.data.count)
             setAllResp(res.data.entries)

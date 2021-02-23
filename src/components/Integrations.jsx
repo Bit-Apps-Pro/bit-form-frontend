@@ -18,6 +18,7 @@ import zohoSheet from '../resource/img/integ/sheet.svg';
 import zohoSign from '../resource/img/integ/sign.svg';
 import zohoTransmail from '../resource/img/integ/transmail.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
+import cpt from '../resource/img/integ/cpt.svg';
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import bitsFetch from '../Utils/bitsFetch';
@@ -58,6 +59,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     // { type: 'Zoho Transmail', logo: zohoTransmail, disable: true, pro: !isPro },
     // { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     // { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
+    { type: 'CPT', logo: cpt, pro: !isPro },
   ]
 
   const removeInteg = i => {
@@ -65,7 +67,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     const newInteg = [...integrations]
     newInteg.splice(i, 1)
     setIntegration(newInteg)
-    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_form_integration')
+    bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_integration')
       .then(response => {
         if (response && response.success) {
           setSnackbar({ show: true, msg: `${response.data.message}` })
@@ -168,9 +170,11 @@ function Integrations({ integrations, setIntegration, formFields }) {
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
-                    <span className="btcd-icn icn-information-outline" />
-                  </Link>
+                  {inte.type !== 'CPT' && (
+                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
+                      <span className="btcd-icn icn-information-outline" />
+                    </Link>
+                  )}
                 </div>
                 <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>

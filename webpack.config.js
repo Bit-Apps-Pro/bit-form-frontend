@@ -12,7 +12,7 @@ const svgToMiniDataURI = require('mini-svg-data-uri')
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
+console.log('${__dirname}/public/wp_index.html', path.resolve(`${__dirname}/public/wp_index.html`))
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
@@ -103,14 +103,14 @@ module.exports = (env, argv) => {
     plugins: [
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({
+      /* new HtmlWebpackPlugin({
         cache: production,
         filename: '../../views/view-root.php',
         path: path.resolve('../views/'),
-        template: `${__dirname}/public/wp_index.html`,
+        template: path.resolve(__dirname, 'public/wp_index.html'),
         chunks: ['webpackAssets'],
         chunksSortMode: 'auto',
-      }),
+      }), */
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
@@ -122,6 +122,10 @@ module.exports = (env, argv) => {
       }),
       new CopyPlugin({
         patterns: [
+          {
+            from: path.resolve(__dirname, 'public/wp_index.html'),
+            to: path.resolve(__dirname, '../views/view-root.php'),
+          },
           {
             from: path.resolve(__dirname, 'manifest.json'),
             to: path.resolve(__dirname, '../assets/js/manifest.json'),
@@ -152,7 +156,7 @@ module.exports = (env, argv) => {
         clientsClaim: production,
         skipWaiting: production,
         dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
+        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /view-root.php/],
       }),
     ],
 

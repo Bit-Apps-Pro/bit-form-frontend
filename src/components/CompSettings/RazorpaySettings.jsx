@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AppSettings } from '../../Utils/AppSettingsContext';
 import { sortArrOfObj } from '../../Utils/Helpers';
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData';
 import CheckBox from '../ElmSettings/Childs/CheckBox';
@@ -11,6 +12,7 @@ import Back2FldList from './Back2FldList';
 import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion';
 
 export default function RazorpaySettings({ elm, fields, updateData, setElementSetting }) {
+  const { payments } = useContext(AppSettings)
   const formFields = Object.entries(fields)
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = elm.data?.payType === 'subscription'
@@ -122,6 +124,13 @@ export default function RazorpaySettings({ elm, fields, updateData, setElementSe
     return filteredFields.map(itm => (<option key={itm[0]} value={itm[0]}>{itm[1].adminLbl || itm[1].lbl}</option>))
   }
 
+  const getRazorpayConfigs = () => {
+    const razorpayConfigs = payments.filter(pay => pay.type === 'razorpay')
+    return razorpayConfigs.map(razor => (
+      <option key={razor.id} value={razor.id}>{razor.name}</option>
+    ))
+  }
+
   return (
     <div className="ml-2 mr-4">
       <Back2FldList setElementSetting={setElementSetting} />
@@ -130,8 +139,15 @@ export default function RazorpaySettings({ elm, fields, updateData, setElementSe
         {__('Razor Pay', 'bitform')}
       </div>
 
-      <SingleInput inpType="text" title={__('API Key', 'bitform')} value={elm.data.options.apiKey || ''} action={e => handleInput('apiKey', e.target.value)} />
-      <SingleInput inpType="text" title={__('API Secret', 'bitform')} value={elm.data.options.apiSecret || ''} action={e => handleInput('apiSecret', e.target.value)} />
+      <div className="mt-3">
+        <b>{__('Select Config', 'bitform')}</b>
+        <br />
+        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={elm.data.options.payIntegID}>
+          <option value="">Select Config</option>
+          {getRazorpayConfigs()}
+        </select>
+      </div>
+
       {/* <div className="mt-2">
         <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
         {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={elm.data.planId || ''} action={e => handleInput('planId', e.target.value)} />}

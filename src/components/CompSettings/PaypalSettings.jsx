@@ -1,6 +1,8 @@
-import MultiSelect from 'react-multiple-select-dropdown-lite'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { useContext } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { AppSettings } from '../../Utils/AppSettingsContext'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
 import CheckBox from '../ElmSettings/Childs/CheckBox'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
@@ -8,6 +10,7 @@ import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import Back2FldList from './Back2FldList'
 
 export default function PaypalSettings({ elm, fields, updateData, setElementSetting }) {
+  const { payments } = useContext(AppSettings)
   const formFields = Object.entries(fields)
   const isSubscription = elm.data?.payType === 'subscription'
   const isDynamicDesc = elm.data?.descType === 'dynamic'
@@ -107,6 +110,13 @@ export default function PaypalSettings({ elm, fields, updateData, setElementSett
     value: `${locale.region} - ${locale.code}`,
   }))
 
+  const getPaypalConfigs = () => {
+    const paypalConfigs = payments.filter(pay => pay.type === 'paypal')
+    return paypalConfigs.map(paypal => (
+      <option key={paypal.id} value={paypal.id}>{paypal.name}</option>
+    ))
+  }
+
   const fundOptions = () => fundLists.map(fund => ({ label: fund.label, value: fund.value }))
 
   return (
@@ -116,7 +126,15 @@ export default function PaypalSettings({ elm, fields, updateData, setElementSett
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Paypal', 'bitform')}
       </div>
-      <SingleInput inpType="text" title={__('Client Id', 'bitform')} value={elm.data.clientId || ''} action={e => handleInput('clientId', e.target.value)} />
+      <div className="mt-3">
+        <b>{__('Select Config', 'bitform')}</b>
+        <br />
+        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={elm.data.payIntegID}>
+          <option value="">Select Config</option>
+          {getPaypalConfigs()}
+        </select>
+      </div>
+      {/* <SingleInput inpType="text" title={__('Client Id', 'bitform')} value={elm.data.clientId || ''} action={e => handleInput('clientId', e.target.value)} /> */}
       <div className="mt-2">
         <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
         {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={elm.data.planId || ''} action={e => handleInput('planId', e.target.value)} />}

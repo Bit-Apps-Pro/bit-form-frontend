@@ -38,6 +38,10 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
       } else newConf.actions[event].customTags[i][act] = val
     }
 
+    if (!newConf.actions[event].customTags.length) {
+      delete newConf.actions[event].customTags
+    }
+
     setProjectsConf({ ...newConf })
   }
 
@@ -112,6 +116,10 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
       delete newConf.actions[event].timelog[`${typ}_fld`]
     }
 
+    if (!newConf.actions[event].timelog.date || !newConf.actions[event].timelog.date_fld) {
+      delete newConf.actions[event].timelog
+    }
+
     if (typ === 'settime') {
       delete newConf.actions[event].timelog.hours
       delete newConf.actions[event].timelog.hours_fld
@@ -156,14 +164,12 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
   const getTags = () => {
     const arr = [
       { title: 'Zoho Projects Tags', type: 'group', childs: [] },
-      { title: 'Form Fields', type: 'group', childs: [] },
     ]
 
     if (projectsConf.default.tags?.[projectsConf.portalId]) {
       arr[0].childs = Object.values(projectsConf.default.tags?.[projectsConf.portalId]).map(tag => ({ label: tag.tagName, value: tag.tagId }))
     }
 
-    arr[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
     return arr
   }
 
@@ -216,6 +222,14 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
     setActionMdl({ show: false })
   }
 
+  const getRecurrenceFrequency = frequency => {
+    if (frequency === 'daily') return '(Day)'
+    if (frequency === 'weekly') return '(Week)'
+    if (frequency === 'monthly') return '(Month)'
+    if (frequency === 'yearly') return '(Year)'
+    return ''
+  }
+
   return (
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
@@ -253,13 +267,30 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
           <>
             <TableCheckBox onChange={() => openUsersModal('followers')} checked={'bug_followers' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value="Issue_Followers" title={__('Issue Followers', 'bitform')} subTitle={__('Add followers to issue pushed to Zoho Projects', 'bitform')} />
             {projectsConf?.projectId && ['severity', 'classification', 'module', 'priority']
-              .map(act => <TableCheckBox key={act} onChange={() => setActionMdl({ show: act })} checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={act} title={sprintf(__('Issue %s', 'bitform'), act)} subTitle={sprintf(__('Add %s to issue pushed to Zoho Projects', 'bitform'), act)} />)}
+              .map(act => (
+                <TableCheckBox
+                  key={act}
+                  onChange={() => setActionMdl({ show: act })}
+                  checked={(act === 'priority' ? 'reproducible_id' : `${act}_id`) in projectsConf.actions[event]}
+                  className="wdt-200 mt-4 mr-2 btcd-ttc"
+                  value={act}
+                  title={sprintf(__('Issue %s', 'bitform'), act)}
+                  subTitle={sprintf(__('Add %s to issue pushed to Zoho Projects', 'bitform'), act)}
+                />
+              ))}
           </>
         )}
         {(event === 'task' || event === 'subtask' || event === 'issue') && (
           <>
             <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in projectsConf.actions[event]} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_attachments`} title={sprintf(__('%s Attachments', 'bitform'), event)} subTitle={sprintf('Add attachments to %s pushed to Zoho Projects.', event)} />
-            <TableCheckBox onChange={() => setActionMdl({ show: 'timelog' })} checked={'timelog' in projectsConf.actions[event] && 'date' in projectsConf.actions[event]?.timelog} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_timelog`} title={sprintf(__('%s Time Log', 'bitform'), event)} subTitle={sprintf(__('Add time log to %s pushed to Zoho Projects.', 'bitform'), event)} />
+            <TableCheckBox
+              onChange={() => setActionMdl({ show: 'timelog' })}
+              checked={(projectsConf.actions[event]?.timelog?.date || projectsConf.actions[event]?.timelog?.date_fld) || false}
+              className="wdt-200 mt-4 mr-2 btcd-ttc"
+              value={`${event}_timelog`}
+              title={sprintf(__('%s Time Log', 'bitform'), event)}
+              subTitle={sprintf(__('Add time log to %s pushed to Zoho Projects.', 'bitform'), event)}
+            />
           </>
         )}
         {event === 'task' && (
@@ -282,7 +313,14 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
             subTitle={sprintf(__('Add reminder to %s pushed to Zoho Projects.', 'bitform'), event)}
           />
         )}
-        <TableCheckBox onChange={() => setActionMdl({ show: 'tags' })} checked={'tags' in projectsConf.actions[event] || projectsConf?.actions?.[event]?.customTags} className="wdt-200 mt-4 mr-2 btcd-ttc" value={`${event}_tags`} title={sprintf(__('%s Tags', 'bitform'), event)} subTitle={sprintf(__('Add tags to %s pushed to Zoho Projects.', 'bitform'), event)} />
+        <TableCheckBox
+          onChange={() => setActionMdl({ show: 'tags' })}
+          checked={(projectsConf.actions[event].tags || projectsConf?.actions?.[event]?.customTags) || false}
+          className="wdt-200 mt-4 mr-2 btcd-ttc"
+          value={`${event}_tags`}
+          title={sprintf(__('%s Tags', 'bitform'), event)}
+          subTitle={sprintf(__('Add tags to %s pushed to Zoho Projects.', 'bitform'), event)}
+        />
       </div>
       {/* Modals */}
       {event !== 'tasklist' && (
@@ -665,7 +703,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
               <option value="monthly">{__('Monthly', 'bitform')}</option>
               <option value="yearly">{__('Yearly', 'bitform')}</option>
             </select>
-            <div className="mt-2 mb-1">{__('Once Every', 'bitform')}</div>
+            <div className="mt-2 mb-1">{__(`Once Every ${getRecurrenceFrequency(projectsConf.actions[event]?.recurrence_string?.recurring_frequency)}`, 'bitform')}</div>
             <div className="flx">
               <input type="number" className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'time_span')} min="1" max="15" value={projectsConf.actions[event]?.recurrence_string?.time_span || ''} />
               <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'time_span_fld')} value={projectsConf.actions[event]?.recurrence_string?.time_span_fld || ''}>
@@ -673,7 +711,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                 {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={`\${${f.key}}`}>{f.name}</option>)}
               </select>
             </div>
-            <div className="mt-2 mb-1">{__('End After', 'bitform')}</div>
+            <div className="mt-2 mb-1">{__(`End After ${getRecurrenceFrequency(projectsConf.actions[event]?.recurrence_string?.recurring_frequency)}`, 'bitform')}</div>
             <div className="flx mb-2">
               <input type="number" className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'number_of_occurrences')} min="2" max="30" value={projectsConf.actions[event]?.recurrence_string?.number_of_occurrences || ''} />
               <select className="btcd-paper-inp" onChange={(e) => handleRecurrence(e.target.value, 'number_of_occurrences_fld')} value={projectsConf.actions[event]?.recurrence_string?.number_of_occurrences_fld || ''}>
@@ -735,7 +773,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                   show={actionMdl.show === act}
                   close={clsActionMdl}
                   action={clsActionMdl}
-                  title={sprintf(__('Issue %', 'bitform'), act)}
+                  title={sprintf(__('Issue %s', 'bitform'), act)}
                 >
                   <div className="btcd-hr mt-2" />
                   <div className="flx flx-between mt-2">
