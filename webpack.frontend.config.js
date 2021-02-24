@@ -11,7 +11,7 @@ const safePostCssParser = require('postcss-safe-parser');
 const svgToMiniDataURI = require('mini-svg-data-uri')
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
@@ -87,7 +87,7 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      // new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin(),
       // new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
