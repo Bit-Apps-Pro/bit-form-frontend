@@ -20,6 +20,7 @@ import zohoTransmail from '../resource/img/integ/transmail.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
 import cpt from '../resource/img/integ/cpt.svg';
 import googleSheet from '../resource/img/integ/googleSheets.svg'
+import mailChimp from '../resource/img/integ/mailchimp.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -54,6 +55,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
+    { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     // { type: 'Zoho Transmail', logo: zohoTransmail, disable: true, pro: !isPro },
     // { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     // { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
