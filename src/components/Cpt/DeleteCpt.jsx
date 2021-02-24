@@ -53,7 +53,7 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
         title={__('Confirmation', 'bitform')}
       >
         <div className="txt-center mt-5 mb-4">
-          {__('Are you sure to delete post type', 'bitform')}
+          {__('Are you sure to delete post type?', 'bitform')}
         </div>
         {isLoading && (
           <Loader style={{
