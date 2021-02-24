@@ -116,12 +116,13 @@ export const dateTimeFormatter = (date, format) => {
   // Day
   const d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
   const j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
+  const date = newDate.getDate()
   let S = ''
-  if (S % 10 === 1 && S !== 11) {
+  if (date % 10 === 1 && date !== 11) {
     S = 'st'
-  } else if (S % 10 === 2 && S !== 12) {
+  } else if (date % 10 === 2 && date !== 12) {
     S = 'nd'
-  } else if (S % 10 === 3 && S !== 13) {
+  } else if (date % 10 === 3 && date !== 13) {
     S = 'rd'
   } else {
     S = 'th'
