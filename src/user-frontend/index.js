@@ -10,7 +10,11 @@ import Bitforms from './Bitforms'
   require('babel-polyfill')
 } */
 
-export default function BitformsRenderer(params) {
+export default function BitformsRenderer(formID) {
+  console.log('test', formID, window.bitforms_1, window[`bitforms_${formID}`]);
+  window.bitFormsFront = window[`bitforms_${formID}`]
+  bitFormsFront.appID = `bitforms_${formID}`
+  const params = bitFormsFront
   const renderApp = () => {
     const ajaxURL = new URL(bitFormsFront.ajaxURL)
     if (ajaxURL.protocol !== window.location.protocol) {
