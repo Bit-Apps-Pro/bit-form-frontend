@@ -11,7 +11,7 @@ const safePostCssParser = require('postcss-safe-parser');
 const svgToMiniDataURI = require('mini-svg-data-uri')
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
@@ -36,12 +36,14 @@ module.exports = (env, argv) => {
       filename: '[name].js',
       path: path.resolve(__dirname, '../assets/js/'),
       chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
-      library: '_bitforms',
+      library: '_bitforms_front',
+      libraryExport: 'default',
       libraryTarget: 'umd',
-      // publicPath: path.resolve(__dirname, '../assets/js/'),
+      devtoolNamespace: 'bpf',
     },
     optimization: {
-      splitChunks: {
+      runtimeChunk: false,
+      /* splitChunks: {
         cacheGroups: {
           frontend: {
             test: /[\\/]node_modules[\\/]/,
@@ -49,7 +51,7 @@ module.exports = (env, argv) => {
             chunks: chunk => chunk.name === 'bitformsFrontend',
           },
         },
-      },
+      }, */
       minimize: production,
       minimizer: [
         new TerserPlugin({
@@ -87,7 +89,7 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
       // new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
