@@ -44,7 +44,7 @@ function EditMailChimp({ formFields, setIntegration, integrations, allIntegURL }
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, sheetConf, history, id, 1)}
-        disabled={sheetConf.listId === '' || sheetConf.listName === '' || sheetConf.field_map.length < 1}
+        disabled={sheetConf.listId === '' || sheetConf.field_map.length < 1}
       />
       <br />
     </div>
