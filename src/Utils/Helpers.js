@@ -223,3 +223,10 @@ export function spreadIn4Value(value) {
   if (valArr.length === 3) return [valArr[0], valArr[1], valArr[2], valArr[1]].join(' ')
   return value
 }
+
+export const checkValidEmail = email => {
+  if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true
+  }
+  return false
+}
