@@ -95,7 +95,8 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       styleUrl.protocol = window.location.protocol
     }
     console.log('styleUrl', styleUrl)
-    fetch(`${styleUrl}/bitform-${formID}.css`, { cache: 'no-store', headers })
+    const latestTimefetch = new Date().getTime()
+    fetch(`${styleUrl}/bitform-${formID}.css?ver=${latestTimefetch}`, { cache: 'no-store', headers })
       .then(response => {
         if (response.ok) {
           return response.text()
