@@ -42,6 +42,9 @@ function Integrations({ integrations, setIntegration, formFields }) {
 
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
+    { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
+    { type: 'CPT', logo: cpt, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -54,12 +57,9 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
-    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
-    { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     // { type: 'Zoho Transmail', logo: zohoTransmail, disable: true, pro: !isPro },
     // { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
     // { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
-    { type: 'CPT', logo: cpt, pro: !isPro },
   ]
 
   const removeInteg = i => {
@@ -171,7 +171,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                     <span className="btcd-icn icn-trash-2" />
                   </button>
                   {inte.type !== 'CPT' && (
-                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
+                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <span className="btcd-icn icn-information-outline" />
                     </Link>
                   )}
