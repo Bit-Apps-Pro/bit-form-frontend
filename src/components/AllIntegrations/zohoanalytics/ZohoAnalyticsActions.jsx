@@ -11,32 +11,26 @@ import TitleModal from '../../TitleModal'
 export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
-  const [permissions, setPermissions] = useState({})
-
-  useEffect(() => {
-    const permissionsObj = {
-      read: [
-        { apiName: 'ZOHO_READ', displayLabel: 'Read Access' },
-        { apiName: 'ZOHO_EXPORT', displayLabel: 'Export Data' },
-      ],
-      write: [
-        { apiName: 'ZOHO_ADDROW', displayLabel: 'Add Row' },
-        { apiName: 'ZOHO_UPDATEROW', displayLabel: 'Modify Row' },
-        { apiName: 'ZOHO_DELETEROW', displayLabel: 'Delete Row' },
-        { apiName: 'ZOHO_DELETEALLROWS', displayLabel: 'Delete All' },
-      ],
-      import: [
-        { apiName: 'ZOHO_IMPORT_APPEND', displayLabel: 'Only Append Rows' },
-        { apiName: 'ZOHO_IMPORT_ADDORUPDATE', displayLabel: 'Add or Update Rows' },
-        { apiName: 'ZOHO_IMPORT_DELETEALLADD', displayLabel: 'Delete All Rows and Add New Rows' },
-      ],
-      share: [
-        { apiName: 'ZOHO_SHARE', displayLabel: 'Share View / Child Reports' },
-      ],
-    }
-
-    setPermissions(permissionsObj)
-  }, [])
+  const permissions = {
+    read: [
+      { apiName: 'ZOHO_READ', displayLabel: 'Read Access' },
+      { apiName: 'ZOHO_EXPORT', displayLabel: 'Export Data' },
+    ],
+    write: [
+      { apiName: 'ZOHO_ADDROW', displayLabel: 'Add Row' },
+      { apiName: 'ZOHO_UPDATEROW', displayLabel: 'Modify Row' },
+      { apiName: 'ZOHO_DELETEROW', displayLabel: 'Delete Row' },
+      { apiName: 'ZOHO_DELETEALLROWS', displayLabel: 'Delete All' },
+    ],
+    import: [
+      { apiName: 'ZOHO_IMPORT_APPEND', displayLabel: 'Only Append Rows' },
+      { apiName: 'ZOHO_IMPORT_ADDORUPDATE', displayLabel: 'Add or Update Rows' },
+      { apiName: 'ZOHO_IMPORT_DELETEALLADD', displayLabel: 'Delete All Rows and Add New Rows' },
+    ],
+    share: [
+      { apiName: 'ZOHO_SHARE', displayLabel: 'Share View / Child Reports' },
+    ],
+  }
 
   const actionHandler = (val, typ) => {
     const newConf = { ...analyticsConf }
