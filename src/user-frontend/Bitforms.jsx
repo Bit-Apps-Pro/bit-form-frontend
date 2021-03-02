@@ -339,14 +339,23 @@ export default function Bitforms(props) {
         }
       }
       if (responsedRedirectPage) {
+        triggerIntegration(hitCron, responsedRedirectPage)
         const timer = setTimeout(() => {
           window.location = decodeURI(responsedRedirectPage)
           if (timer) {
             clearTimeout(timer)
           }
         }, 1000);
+      } else {
+        triggerIntegration(hitCron)
       }
-      if (hitCron) {
+
+      setbuttonDisabled(false)
+    })
+  }
+
+  const triggerIntegration = (hitCron, responsedRedirectPage = null) => {
+    if (hitCron) {
         if (typeof hitCron === 'string' && !responsedRedirectPage || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
           const uri = new URL(hitCron)
           if (uri.protocol !== window.location.protocol) {
@@ -368,10 +377,7 @@ export default function Bitforms(props) {
             .then(response => response.json())
         }
       }
-      setbuttonDisabled(false)
-    })
   }
-
   const handleReset = () => {
     setresetFieldValue(true)
     if (props.gRecaptchaSiteKey) {
