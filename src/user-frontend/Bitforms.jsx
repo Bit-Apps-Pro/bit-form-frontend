@@ -339,7 +339,7 @@ export default function Bitforms(props) {
         }
       }
       if (responsedRedirectPage) {
-        triggerIntegration(hitCron, responsedRedirectPage)
+        triggerIntegration(hitCron)
         const timer = setTimeout(() => {
           window.location = decodeURI(responsedRedirectPage)
           if (timer) {
@@ -354,9 +354,9 @@ export default function Bitforms(props) {
     })
   }
 
-  const triggerIntegration = (hitCron, responsedRedirectPage = null) => {
+  const triggerIntegration = (hitCron) => {
     if (hitCron) {
-        if (typeof hitCron === 'string' && !responsedRedirectPage || (responsedRedirectPage && decodeURI(responsedRedirectPage).indexOf(window.location.origin) === -1)) {
+        if (typeof hitCron === 'string') {
           const uri = new URL(hitCron)
           if (uri.protocol !== window.location.protocol) {
             uri.protocol = window.location.protocol
