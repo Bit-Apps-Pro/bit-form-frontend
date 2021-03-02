@@ -444,21 +444,21 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     } else if (typ === 'to') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.to = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.to = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'cc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.cc = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.cc = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'bcc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.bcc = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.bcc = e ? e.split(',') : []
           break
         }
       }
@@ -789,10 +789,10 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           )}
         </Fragment>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack" />
-          {__('Empty', 'bitform')}
-        </div>
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
+            {__('Empty', 'bitform')}
+          </div>
         )}
     </div>
   )
