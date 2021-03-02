@@ -244,9 +244,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box', 'bitform'),
-        info: {
-          lbl: __('Decision Box', 'bitform'),
-        },
+        lbl: __('Decision Box', 'bitform'),
         msg: {
           checked: 'Accepted',
           unchecked: 'Not Accepted',

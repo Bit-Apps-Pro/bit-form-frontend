@@ -44,7 +44,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
           <span
             className="tinymce-content"
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: attr.info.lbl }}
+            dangerouslySetInnerHTML={{ __html: attr.lbl }}
           />
           <input type="hidden" value={value} {...'name' in attr && { name: attr.name }} />
           <input

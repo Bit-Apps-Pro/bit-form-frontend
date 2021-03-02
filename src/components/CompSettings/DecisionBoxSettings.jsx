@@ -42,7 +42,7 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
   }
 
   const setLbl = val => {
-    elmData.info.lbl = val
+    elmData.lbl = val
 
     updateData({ id: elmId, data: elmData })
   }
@@ -67,7 +67,7 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={elmData.valid.req} className="mt-3" />
       <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={elmData.valid.checked} className="mt-3" />
       <TinyMCE
-        value={elmData.info.lbl}
+        value={elmData.lbl}
         onChangeHandler={setLbl}
       />
       <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={elmData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} />
