@@ -462,6 +462,13 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           break
         }
       }
+    } else if (typ === 'replyto') {
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.replyto = e ? e.split(',') : []
+          break
+        }
+      }
     }
     setworkFlows([...workFlows])
   }
@@ -725,6 +732,16 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             titleClassName="w-7 mt-2"
                             addable
                             options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('replyto', val, lgcGrpInd)}
+                            placeholder={__('Reply To', 'bitform')}
+                            value={getValueFromArr('mailNotify', 'replyto', lgcGrpInd)}
+                            title={<span className="f-m">{__('Reply To', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('mailNotify', 'replyto', lgcGrpInd))}
                           />
                         </>
                       )}
