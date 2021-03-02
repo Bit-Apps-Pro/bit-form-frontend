@@ -1,14 +1,46 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import MtInput from '../../ElmSettings/Childs/MtInput'
-import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsConf, setAnalyticsConf }) {
+  const addFieldMap = (indx) => {
+    const newConf = { ...analyticsConf }
+    newConf.field_map.splice(indx, 0, {})
+
+    setAnalyticsConf(newConf)
+  }
+
+  const delFieldMap = (indx) => {
+    const newConf = { ...analyticsConf }
+    if (newConf.field_map.length > 1) {
+      newConf.field_map.splice(indx, 1)
+    }
+
+    setAnalyticsConf(newConf)
+  }
+
+  const handleFieldMapping = (event, indx) => {
+    const newConf = { ...analyticsConf }
+    newConf.field_map[indx][event.target.name] = event.target.value
+
+    if (event.target.value === 'custom') {
+      newConf.field_map[indx].customValue = ''
+    }
+
+    setAnalyticsConf(newConf)
+  }
+
+  const handleCustomValue = (event, indx) => {
+    const newConf = { ...analyticsConf }
+    newConf.field_map[indx].customValue = event.target.value
+    setAnalyticsConf(newConf)
+  }
+
   return (
     <div
       className="flx flx-around mt-2 mr-1"
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, analyticsConf, setAnalyticsConf)}>
+      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>
         {
           formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
@@ -16,9 +48,9 @@ export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsC
         <option value="custom">{__('Custom...', 'bitform')}</option>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, analyticsConf, setAnalyticsConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i, analyticsConf, setAnalyticsConf)}>
+      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>
         {
           Object.values(analyticsConf.default.tables.headers[analyticsConf.table]).map(header => (
@@ -29,13 +61,13 @@ export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsC
         }
       </select>
       <button
-        onClick={() => addFieldMap(i, analyticsConf, setAnalyticsConf)}
-        className="icn-btn sh-sm ml-2 mr-8"
+        onClick={() => addFieldMap(i)}
+        className="icn-btn sh-sm ml-2"
         type="button"
       >
         +
       </button>
-      <button onClick={() => delFieldMap(i, analyticsConf, setAnalyticsConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+      <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
         <span className="btcd-icn icn-trash-2" />
       </button>
     </div>

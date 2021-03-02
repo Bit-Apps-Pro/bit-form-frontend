@@ -1,33 +1,25 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
-import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout'
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import Steps from '../../ElmSettings/Childs/Steps';
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import ZohoAnalyticsAuthorization from './ZohoAnalyticsAuthorization';
+import { handleInput, setGrantTokenResponse } from './ZohoAnalyticsCommonFunc';
+import ZohoAnalyticsIntegLayout from './ZohoAnalyticsIntegLayout';
 
-function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
+export default function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
-  const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
+  const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
   const [analyticsConf, setAnalyticsConf] = useState({
     name: 'Zoho Analytics API',
     type: 'Zoho Analytics',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.BWH0YC45BQ9PQMTZGKW5J3VUKUO18N' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'a01e54cfa1bb3de6283fbbb4d0d5ccee7404b29847' : '',
-    workspace: '',
-    table: '',
-    ownerEmail: process.env.NODE_ENV === 'development' ? 'mdshakhawathosen122@gmail.com' : '',
     field_map: [
       { formField: '', zohoFormField: '' },
     ],
@@ -35,35 +27,13 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse('zohoAnalytics')
+    window.opener && setGrantTokenResponse()
   }, [])
 
-  const checkValidEmail = email => {
-    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return true
+  const nextPage = () => {
+    if (analyticsConf.workspace !== '' && analyticsConf.table !== '' && analyticsConf.field_map.length > 0) {
+      setStep(3)
     }
-    return false
-  }
-
-  const nextPage = val => {
-    if (val === 3) {
-      if (analyticsConf.workspace !== '' && analyticsConf.table !== '' && analyticsConf.field_map.length > 0) {
-        setstep(val)
-      }
-    } else {
-      if (!checkValidEmail(analyticsConf.ownerEmail)) {
-        setError({
-          ownerEmail: !checkValidEmail(analyticsConf.ownerEmail) ? __('Email is invalid', 'bitform') : '',
-        })
-        return
-      }
-      setstep(val)
-      if (val === 2 && !analyticsConf.workspace) {
-        refreshWorkspaces(formID, analyticsConf, setAnalyticsConf, setisLoading, setSnackbar)
-      }
-    }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('analyticsConf', analyticsConf);
@@ -71,28 +41,24 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center w-9 mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoAnalyticsAuthorization
+        formID={formID}
+        analyticsConf={analyticsConf}
+        setAnalyticsConf={setAnalyticsConf}
         step={step}
-        confTmp={analyticsConf}
-        handleInput={(e) => handleInput(e, analyticsConf, setAnalyticsConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoAnalytics', 'zanalytics', scopes, analyticsConf, setAnalyticsConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setStep={setStep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
-      >
-        <div className="mt-3"><b>{__('Zoho Analytics Owner Email:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={e => handleInput(e, analyticsConf, setAnalyticsConf, formID, setisLoading, setSnackbar, true, error, setError)} name="ownerEmail" value={analyticsConf.ownerEmail} type="email" placeholder={__('Owner Email', 'bitform')} />
-        <div style={{ color: 'red' }}>{error.ownerEmail}</div>
-      </IntegrationStepOne>
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
+      />
 
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
-
         <ZohoAnalyticsIntegLayout
           formID={formID}
           formFields={formFields}
@@ -105,17 +71,14 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
         />
 
         <button
-          onClick={() => nextPage(3)}
+          onClick={nextPage}
           disabled={analyticsConf.workspace === '' || analyticsConf.table === '' || analyticsConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
-
       </div>
 
       {/* STEP 3 */}
@@ -126,5 +89,3 @@ function ZohoAnalytics({ formFields, setIntegration, integrations, allIntegURL }
     </div>
   )
 }
-
-export default ZohoAnalytics

@@ -99,7 +99,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
         {__('Back', 'bitfrom')}
       </NavLink>
 
-      <button onClick={save} className="btn blue f-right" type="button">{__('Save', 'bitform')}</button>
+      <button onClick={save} className="btn blue f-right" type="button">{__('Save Template', 'bitform')}</button>
 
       <div className="mt-3 flx">
         <b style={{ width: 103 }}>

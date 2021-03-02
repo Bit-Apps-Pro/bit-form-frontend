@@ -444,21 +444,28 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     } else if (typ === 'to') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.to = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.to = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'cc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.cc = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.cc = e ? e.split(',') : []
           break
         }
       }
     } else if (typ === 'bcc') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
-          workFlows[lgcGrpInd].successAction[i].details.bcc = e.split(',')
+          workFlows[lgcGrpInd].successAction[i].details.bcc = e ? e.split(',') : []
+          break
+        }
+      }
+    } else if (typ === 'replyto') {
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.replyto = e ? e.split(',') : []
           break
         }
       }
@@ -726,6 +733,16 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             addable
                             options={mailOptions(getValueFromArr('mailNotify', 'bcc', lgcGrpInd))}
                           />
+                          <DropDown
+                            action={val => setEmailSetting('replyto', val, lgcGrpInd)}
+                            placeholder={__('Reply To', 'bitform')}
+                            value={getValueFromArr('mailNotify', 'replyto', lgcGrpInd)}
+                            title={<span className="f-m">{__('Reply To', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('mailNotify', 'replyto', lgcGrpInd))}
+                          />
                         </>
                       )}
                     </div>
@@ -789,10 +806,10 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           )}
         </Fragment>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack" />
-          {__('Empty', 'bitform')}
-        </div>
+          <div className="txt-center btcd-empty">
+            <span className="btcd-icn icn-stack" />
+            {__('Empty', 'bitform')}
+          </div>
         )}
     </div>
   )

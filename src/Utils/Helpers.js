@@ -116,13 +116,12 @@ export const dateTimeFormatter = (dateStr, format) => {
   // Day
   const d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
   const j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
-  const date = newDate.getDate()
-  let S = ''
-  if (date % 10 === 1 && date !== 11) {
+  let S = Number(j)
+  if (S % 10 === 1 && S !== 11) {
     S = 'st'
-  } else if (date % 10 === 2 && date !== 12) {
+  } else if (S % 10 === 2 && S !== 12) {
     S = 'nd'
-  } else if (date % 10 === 3 && date !== 13) {
+  } else if (S % 10 === 3 && S !== 13) {
     S = 'rd'
   } else {
     S = 'th'
@@ -223,4 +222,11 @@ export function spreadIn4Value(value) {
   if (valArr.length === 2) return [valArr[0], valArr[1], valArr[0], valArr[1]].join(' ')
   if (valArr.length === 3) return [valArr[0], valArr[1], valArr[2], valArr[1]].join(' ')
   return value
+}
+
+export const checkValidEmail = email => {
+  if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true
+  }
+  return false
 }
