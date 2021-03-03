@@ -40,7 +40,10 @@
     "fpd": "webpack --progress --color --config webpack.frontend.config.js --mode=production",
     "pda": "npm run pd & npm run fpd",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
-    "i18n": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x"
+    "i18n": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x",
+    "stat:a": "webpack --profile --json > coverage/a.stats.json",
+    "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
+    "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json"
   },
   "eslintConfig": {
     "extends": "react-app"
