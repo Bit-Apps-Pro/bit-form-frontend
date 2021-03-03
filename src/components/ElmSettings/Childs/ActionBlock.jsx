@@ -58,6 +58,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         label="Form Fields"
         value={action.field}
         onChange={e => changeAtnField(e.target.value)}
+        style={{ width: 720 }}
       >
         <option value="">{__('Select One', 'bitform')}</option>
         {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
@@ -71,6 +72,8 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         label="Action"
         onChange={e => changeAction(e.target.value)}
         value={action.action}
+        style={{ width: 400 }}
+        className="w-4"
       >
         <option value="">{__('Select One', 'bitform')}</option>
         <option value="value">{__('Value', 'bitform')}</option>
@@ -89,8 +92,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
           {type === 'select' || type === 'check' || type === 'radio'
             ? (
               <MultiSelect
-                width="100%"
-                className="msl-wrp-options btcd-paper-drpdwn"
+                className="msl-wrp-options btcd-paper-drpdwn w-10"
                 defaultValue={action.val}
                 onChange={changeAtnVal}
                 options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}
@@ -98,7 +100,10 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
                 // eslint-disable-next-line no-nested-ternary
                 singleSelect={type === 'select' ? !fields?.[fieldKey]?.mul : type === 'check' ? false : type === 'radio' && true}
               />
-            ) : (<MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val} />)}
+            )
+            : (
+              <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val} />
+            )}
         </>
       )}
 
