@@ -35,6 +35,7 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
         analyticsConf={analyticsConf}
         setAnalyticsConf={setAnalyticsConf}
         isLoading={isLoading}
+        step={2}
         setisLoading={setisLoading}
         setSnackbar={setSnackbar}
       />

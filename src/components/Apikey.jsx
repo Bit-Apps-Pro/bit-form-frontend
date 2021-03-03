@@ -40,7 +40,7 @@ export default function Apikey() {
   useEffect(() => {
     bitsFetch({}, 'bitforms_api_key').then((res) => {
       if (res !== undefined && res.success) {
-          setKey(res.data)
+        setKey(res.data)
       }
     })
   }, [])
@@ -49,11 +49,15 @@ export default function Apikey() {
     <div className="btcd-captcha w-5">
       <SnackMsg snack={snack} setSnackbar={setsnack} />
       <h2>{__('API Integration', 'bitform')}</h2>
-      <br />
-      <br />
       <div className="btcd-hr" />
 
       <div className="mt-2">
+        <label htmlFor="captcha-key">
+          {__('Domain URL', 'bitform')}
+          <CopyText value={window.location.origin} name="domainURL" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
+        </label>
+      </div>
+      <div className="mt-3">
         <label htmlFor="captcha-key">
           {__('API Key', 'bitform')}
           <CopyText value={key} name="siteKey" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />

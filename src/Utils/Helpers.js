@@ -106,8 +106,8 @@ export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
   return 0
 })
 
-export const dateTimeFormatter = (date, format) => {
-  const newDate = new Date(date);
+export const dateTimeFormatter = (dateStr, format) => {
+  const newDate = new Date(dateStr);
 
   if (newDate.toString() === 'Invalid Date') {
     return 'Invalid Date'
@@ -116,15 +116,15 @@ export const dateTimeFormatter = (date, format) => {
   // Day
   const d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
   const j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
-  let S = newDate.getDate()
+  let S = Number(j)
   if (S % 10 === 1 && S !== 11) {
-    S += 'st'
+    S = 'st'
   } else if (S % 10 === 2 && S !== 12) {
-    S += 'nd'
+    S = 'nd'
   } else if (S % 10 === 3 && S !== 13) {
-    S += 'rd'
+    S = 'rd'
   } else {
-    S += 'th'
+    S = 'th'
   }
   // Weekday
   const l = newDate.toLocaleDateString('en-US', { weekday: 'long' })
@@ -222,4 +222,11 @@ export function spreadIn4Value(value) {
   if (valArr.length === 2) return [valArr[0], valArr[1], valArr[0], valArr[1]].join(' ')
   if (valArr.length === 3) return [valArr[0], valArr[1], valArr[2], valArr[1]].join(' ')
   return value
+}
+
+export const checkValidEmail = email => {
+  if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true
+  }
+  return false
 }

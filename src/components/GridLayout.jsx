@@ -447,7 +447,7 @@ function GridLayout(props) {
                 onLayoutChange={onLayoutChange}
                 droppingItem={props.draggedElm[1]}
                 cols={cols}
-                breakpoints={{ lg: 750, md: 500, sm: 300 }}
+                breakpoints={{ lg: 700, md: 480, sm: 300 }}
                 rowHeight={rowHeight}
                 margin={gridContentMargin}
                 containerPadding={[1, 1]}

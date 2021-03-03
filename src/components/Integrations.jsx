@@ -5,21 +5,20 @@ import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react
 import zohoAnalytics from '../resource/img/integ/analytics.svg';
 import zohoBigin from '../resource/img/integ/bigin.svg';
 import zohoCamp from '../resource/img/integ/campaigns.svg';
-import zohoCliq from '../resource/img/integ/cliq.svg';
 import zohoCreator from '../resource/img/integ/creator.svg';
 import zohoCRM from '../resource/img/integ/crm.svg';
 import zohoDesk from '../resource/img/integ/desk.svg';
 import zohoHub from '../resource/img/integ/hub.svg';
 import zohoMail from '../resource/img/integ/mail.svg';
-import zohoPeople from '../resource/img/integ/people.svg';
 import zohoProjects from '../resource/img/integ/projects.svg';
 import zohoRecruit from '../resource/img/integ/recruit.svg';
 import zohoSheet from '../resource/img/integ/sheet.svg';
 import zohoSign from '../resource/img/integ/sign.svg';
-import zohoTransmail from '../resource/img/integ/transmail.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
 import cpt from '../resource/img/integ/cpt.svg';
 import googleSheet from '../resource/img/integ/googleSheets.svg'
+import mailChimp from '../resource/img/integ/mailchimp.svg'
+// import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -41,6 +40,10 @@ function Integrations({ integrations, setIntegration, formFields }) {
 
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Google Sheets', logo: googleSheet, pro: !isPro },
+    { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
+    { type: 'CPT', logo: cpt, pro: !isPro },
+    // { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -53,11 +56,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
-    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
-    // { type: 'Zoho Transmail', logo: zohoTransmail, disable: true, pro: !isPro },
-    // { type: 'Zoho Cliq', logo: zohoCliq, pro: !isPro, disable: true },
-    // { type: 'Zoho People', logo: zohoPeople, pro: !isPro, disable: true },
-    { type: 'CPT', logo: cpt, pro: !isPro },
   ]
 
   const removeInteg = i => {
@@ -168,11 +166,11 @@ function Integrations({ integrations, setIntegration, formFields }) {
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  {inte.type !== 'CPT' && (
-                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Info', 'bitform') }'` }} type="button">
+                  {/* {inte.type !== 'CPT' && (
+                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <span className="btcd-icn icn-information-outline" />
                     </Link>
-                  )}
+                  )} */}
                 </div>
                 <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>
