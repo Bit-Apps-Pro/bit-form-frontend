@@ -66,10 +66,15 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={elmData.adminLbl || ''} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={elmData.valid.req} className="mt-3" />
       <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={elmData.valid.checked} className="mt-3" />
-      <TinyMCE
-        value={elmData.lbl}
-        onChangeHandler={setLbl}
-      />
+      <div className="mt-3">
+        <b>Label: </b>
+        <br />
+        <TinyMCE
+          value={elmData.lbl || elmData.info.lbl}
+          onChangeHandler={setLbl}
+        />
+      </div>
+
       <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={elmData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} />
       <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={elmData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} />
     </div>
