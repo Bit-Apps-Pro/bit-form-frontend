@@ -17,6 +17,7 @@ import EditZohoWorkDrive from './ZohoWorkDrive/EditZohoWorkDrive'
 import EditGoogleSheet from './GoogleSheet/EditGoogleSheet'
 import EditMailChimp from './MailChimp/EditMailChimp'
 import EditCpt from './Cpt/EditCpt'
+import EditMailPoet from './MailPoet/EditMailPoet'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -52,8 +53,10 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditGoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Chimp':
         return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        case 'CPT':
-          return <EditCpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'CPT':
+        return <EditCpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Mail Poet':
+        return <EditMailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
