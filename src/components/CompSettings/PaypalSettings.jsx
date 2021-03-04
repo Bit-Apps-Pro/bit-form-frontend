@@ -111,7 +111,7 @@ export default function PaypalSettings({ elm, fields, updateData, setElementSett
   }))
 
   const getPaypalConfigs = () => {
-    const paypalConfigs = payments.filter(pay => pay.type === 'paypal')
+    const paypalConfigs = payments.filter(pay => pay.type === 'PayPal')
     return paypalConfigs.map(paypal => (
       <option key={paypal.id} value={paypal.id}>{paypal.name}</option>
     ))
@@ -134,110 +134,114 @@ export default function PaypalSettings({ elm, fields, updateData, setElementSett
           {getPaypalConfigs()}
         </select>
       </div>
-      {/* <SingleInput inpType="text" title={__('Client Id', 'bitform')} value={elm.data.clientId || ''} action={e => handleInput('clientId', e.target.value)} /> */}
-      <div className="mt-2">
-        <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
-        {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={elm.data.planId || ''} action={e => handleInput('planId', e.target.value)} />}
-      </div>
 
-      {!isSubscription && (
+      {elm.data.payIntegID && (
         <>
           <div className="mt-2">
-            <b>{__('Language', 'bitform')}</b>
-            <MultiSelect
-              className="w-10 btcd-paper-drpdwn mt-1"
-              options={localeCodeOptions()}
-              onChange={val => handleInput('locale', val)}
-              largeData
-              singleSelect
-            />
+            <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
+            {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={elm.data.planId || ''} action={e => handleInput('planId', e.target.value)} />}
           </div>
-          <div className="mt-2">
-            <b>{__('Disable Card', 'bitform')}</b>
-            <MultiSelect
-              className="w-10 btcd-paper-drpdwn mt-1 btcd-ttc"
-              options={fundOptions()}
-              onChange={val => handleInput('disableFunding', val)}
-            />
-          </div>
-          <div className="mt-2">
-            <b>{__('Amount Type', 'bitform')}</b>
-            <br />
-            <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
-            <CheckBox onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
-          </div>
-          {!isDynamicAmount && <SingleInput inpType="number" title={__('Amount', 'bitform')} value={elm.data.amount || ''} action={e => handleInput('amount', e.target.value)} />}
-          {isDynamicAmount && (
-            <div className="mt-3">
-              <b>{__('Select Amount Field', 'bitform')}</b>
-              <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1">
-                <option value="">{__('Select Field', 'bitform')}</option>
-                {getAmountFields()}
-              </select>
-            </div>
-          )}
-          <div className="mt-2">
-            <b>{__('Shipping Amount', 'bitform')}</b>
-            <br />
-            <CheckBox onChange={setShippingType} radio checked={!isDynamicShipping} title={__('Fixed', 'bitform')} />
-            <CheckBox onChange={setShippingType} radio checked={isDynamicShipping} title={__('Dynamic', 'bitform')} value="dynamic" />
-          </div>
-          {!isDynamicShipping && <SingleInput inpType="number" title={__('Shipping Cost', 'bitform')} value={elm.data.shipping || ''} action={e => handleInput('shipping', e.target.value)} />}
-          {isDynamicShipping && (
-            <div className="mt-3">
-              <b>{__('Select Shipping Amount Field', 'bitform')}</b>
-              <select onChange={e => handleInput(e.target.name, e.target.value)} name="shippingFld" className="btcd-paper-inp mt-1">
-                <option value="">{__('Select Field', 'bitform')}</option>
-                {getAmountFields()}
-              </select>
-            </div>
-          )}
-          <div className="mt-2">
-            <b>{__('Tax Amount Type', 'bitform')}</b>
-            <br />
-            <CheckBox onChange={setTaxType} radio checked={!isDynamicTax} title={__('Fixed', 'bitform')} />
-            <CheckBox onChange={setTaxType} radio checked={isDynamicTax} title={__('Dynamic', 'bitform')} value="dynamic" />
-          </div>
-          {!isDynamicTax && <SingleInput inpType="number" title={__('Tax (%)', 'bitform')} value={elm.data.tax || ''} action={e => handleInput('tax', e.target.value)} />}
-          {isDynamicTax && (
-            <div className="mt-3">
-              <b>{__('Select Amount Field', 'bitform')}</b>
-              <select onChange={e => handleInput(e.target.name, e.target.value)} name="taxFld" className="btcd-paper-inp mt-1">
-                <option value="">{__('Select Field', 'bitform')}</option>
-                {getAmountFields()}
-              </select>
-            </div>
-          )}
-          <div className="mt-2">
-            <label htmlFor="recap-thm">
-              <b>{__('Currency', 'bitform')}</b>
-              <select onChange={e => handleInput(e.target.name, e.target.value)} name="currency" value={elm.data.currency} className="btcd-paper-inp mt-1">
-                {currencyCodes.map(itm => (
-                  <option key={itm.currency} value={itm.code}>
-                    {`${itm.currency} - ${itm.code}`}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className="mt-2">
-            <b>{__('Description', 'bitform')}</b>
-            <br />
-            <CheckBox onChange={setDescType} radio checked={!isDynamicDesc} title={__('Static', 'bitform')} />
-            <CheckBox onChange={setDescType} radio checked={isDynamicDesc} title={__('Dynamic', 'bitform')} value="dynamic" />
-          </div>
-          {!isDynamicDesc && <textarea className="mt-1 btcd-paper-inp" placeholder="Order Description" name="description" rows="5" onChange={e => handleInput(e.target.name, e.target.value)} />}
-          {isDynamicDesc && (
-            <div className="mt-1">
-              <b>{__('Select Description Field', 'bitform')}</b>
-              <select onChange={handleInput} name="amountFld" className="btcd-paper-inp mt-1">
-                <option value="">{__('Select Field', 'bitform')}</option>
-                {getDescFields()}
-              </select>
-            </div>
+          {!isSubscription && (
+            <>
+              <div className="mt-2">
+                <b>{__('Language', 'bitform')}</b>
+                <MultiSelect
+                  className="w-10 btcd-paper-drpdwn mt-1"
+                  options={localeCodeOptions()}
+                  onChange={val => handleInput('locale', val)}
+                  largeData
+                  singleSelect
+                />
+              </div>
+              <div className="mt-2">
+                <b>{__('Disable Card', 'bitform')}</b>
+                <MultiSelect
+                  className="w-10 btcd-paper-drpdwn mt-1 btcd-ttc"
+                  options={fundOptions()}
+                  onChange={val => handleInput('disableFunding', val)}
+                />
+              </div>
+              <div className="mt-2">
+                <b>{__('Amount Type', 'bitform')}</b>
+                <br />
+                <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
+                <CheckBox onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
+              </div>
+              {!isDynamicAmount && <SingleInput inpType="number" title={__('Amount', 'bitform')} value={elm.data.amount || ''} action={e => handleInput('amount', e.target.value)} />}
+              {isDynamicAmount && (
+                <div className="mt-3">
+                  <b>{__('Select Amount Field', 'bitform')}</b>
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1">
+                    <option value="">{__('Select Field', 'bitform')}</option>
+                    {getAmountFields()}
+                  </select>
+                </div>
+              )}
+              <div className="mt-2">
+                <b>{__('Shipping Amount', 'bitform')}</b>
+                <br />
+                <CheckBox onChange={setShippingType} radio checked={!isDynamicShipping} title={__('Fixed', 'bitform')} />
+                <CheckBox onChange={setShippingType} radio checked={isDynamicShipping} title={__('Dynamic', 'bitform')} value="dynamic" />
+              </div>
+              {!isDynamicShipping && <SingleInput inpType="number" title={__('Shipping Cost', 'bitform')} value={elm.data.shipping || ''} action={e => handleInput('shipping', e.target.value)} />}
+              {isDynamicShipping && (
+                <div className="mt-3">
+                  <b>{__('Select Shipping Amount Field', 'bitform')}</b>
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="shippingFld" className="btcd-paper-inp mt-1">
+                    <option value="">{__('Select Field', 'bitform')}</option>
+                    {getAmountFields()}
+                  </select>
+                </div>
+              )}
+              <div className="mt-2">
+                <b>{__('Tax Amount Type', 'bitform')}</b>
+                <br />
+                <CheckBox onChange={setTaxType} radio checked={!isDynamicTax} title={__('Fixed', 'bitform')} />
+                <CheckBox onChange={setTaxType} radio checked={isDynamicTax} title={__('Dynamic', 'bitform')} value="dynamic" />
+              </div>
+              {!isDynamicTax && <SingleInput inpType="number" title={__('Tax (%)', 'bitform')} value={elm.data.tax || ''} action={e => handleInput('tax', e.target.value)} />}
+              {isDynamicTax && (
+                <div className="mt-3">
+                  <b>{__('Select Amount Field', 'bitform')}</b>
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="taxFld" className="btcd-paper-inp mt-1">
+                    <option value="">{__('Select Field', 'bitform')}</option>
+                    {getAmountFields()}
+                  </select>
+                </div>
+              )}
+              <div className="mt-2">
+                <label htmlFor="recap-thm">
+                  <b>{__('Currency', 'bitform')}</b>
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="currency" value={elm.data.currency} className="btcd-paper-inp mt-1">
+                    {currencyCodes.map(itm => (
+                      <option key={itm.currency} value={itm.code}>
+                        {`${itm.currency} - ${itm.code}`}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="mt-2">
+                <b>{__('Description', 'bitform')}</b>
+                <br />
+                <CheckBox onChange={setDescType} radio checked={!isDynamicDesc} title={__('Static', 'bitform')} />
+                <CheckBox onChange={setDescType} radio checked={isDynamicDesc} title={__('Dynamic', 'bitform')} value="dynamic" />
+              </div>
+              {!isDynamicDesc && <textarea className="mt-1 btcd-paper-inp" placeholder="Order Description" name="description" rows="5" onChange={e => handleInput(e.target.name, e.target.value)} />}
+              {isDynamicDesc && (
+                <div className="mt-1">
+                  <b>{__('Select Description Field', 'bitform')}</b>
+                  <select onChange={handleInput} name="amountFld" className="btcd-paper-inp mt-1">
+                    <option value="">{__('Select Field', 'bitform')}</option>
+                    {getDescFields()}
+                  </select>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
+
     </div>
   )
 }

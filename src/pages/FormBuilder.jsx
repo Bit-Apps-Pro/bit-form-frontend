@@ -94,7 +94,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     if (styleUrl.protocol !== window.location.protocol) {
       styleUrl.protocol = window.location.protocol
     }
-    console.log('styleUrl', styleUrl)
+
     const latestTimefetch = new Date().getTime()
     fetch(`${styleUrl}/bitform-${formID}.css?ver=${latestTimefetch}`, { cache: 'no-store', headers })
       .then(response => {
@@ -179,9 +179,9 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     const resizer = conRef.current.getResizer()
     const leftBarWidth = 165
     const rightBarWidth = 307
-    const mobileSize = 320
-    const tabletSize = 510
-      if (view === 'lg') {
+    const mobileSize = 400
+    const tabletSize = 590
+    if (view === 'lg') {
       setbrkPoint('lg')
       resizer.resizeSection(0, { toSize: leftBarWidth })
       resizer.resizeSection(2, { toSize: rightBarWidth })
@@ -203,13 +203,32 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     conRef.current.applyResizer(resizer)
   }, [conRef])
 
-  const setGrWidth = useCallback((gw) => {
-    setGridWidth(gw)
-    if (gw < 765 && gw > 525 && brkPoint !== 'md') {
-      setbrkPoint('md')
-    } else if (gw < 525 && brkPoint !== 'sm') {
+  // TODO fix width and redundent function in gridlayout.jsx
+  const propertyValueSumX = (propertyValue = '') => {
+    let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
+    if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
+    if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
+    if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
+    arr = [arr[1], arr[3]]
+    const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
+    return summ || 0
+  }
+
+  const setGrWidth = useCallback((paneWidth) => {
+    setGridWidth(paneWidth)
+    let w = 0
+    if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
+    if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
+    if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
+    if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
+    if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
+    if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
+    const gw = Math.round(paneWidth - 33 - w) // inner left-right padding
+    if (gw <= 510) {
       setbrkPoint('sm')
-    } else if (gw > 765 && brkPoint !== 'lg') {
+    } else if (gw > 420 && gw <= 700) {
+      setbrkPoint('md')
+    } else if (gw > 700) {
       setbrkPoint('lg')
     }
   }, [brkPoint])

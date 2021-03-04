@@ -3,6 +3,7 @@
 import { __ } from '@wordpress/i18n'
 import { useState, useEffect } from 'react'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+import { Scrollbars } from 'react-custom-scrollbars'
 import bitsFetch from '../../Utils/bitsFetch'
 import ConfigForm from './ConfigForm'
 import MailSendTest from './MailSendTest'
@@ -25,12 +26,10 @@ export default function SMTP({ setsnack }) {
   }, [])
 
   return (
-    <div className="btcd-captcha w-5" style={{ overflow: 'scroll', padding: 10 }}>
-      {/* <h2>{__('SMTP Configuration', 'bitform')}</h2>
-      <br />
-      <div className="btcd-hr" /> */}
-      <div className="pos-rel">
-        {!isPro && (
+    <Scrollbars>
+      <div className="btcd-captcha w-5" style={{ padding: 10 }}>
+        <div className="pos-rel">
+          {!isPro && (
           <div className="pro-blur flx" style={{ height: '111%', left: -15, width: '104%' }}>
             <div className="pro">
               {__('Available On', 'bitform')}
@@ -43,35 +42,36 @@ export default function SMTP({ setsnack }) {
             </div>
           </div>
         )}
-        <Tabs>
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'mail_config' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
-              {__('Configuration', 'bitform')}
-            </button>
-          </Tab>
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'test_mail' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
-              {__('Mail Test', 'bitform')}
-            </button>
-          </Tab>
-          <Panel>
-            <ConfigForm
-              settab={settab}
-              mail={mail}
-              setMail={setMail}
-              status={status}
-              smtpStatus={setStatus}
-              setsnack={setsnack}
-            />
-          </Panel>
-          <Panel>
-            <MailSendTest
-              settab={settab}
-              setsnack={setsnack}
-            />
-          </Panel>
-        </Tabs>
+          <Tabs>
+            <Tab>
+              <button className={`btcd-s-tab-link ${tab === 'mail_config' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+                {__('Configuration', 'bitform')}
+              </button>
+            </Tab>
+            <Tab>
+              <button className={`btcd-s-tab-link ${tab === 'test_mail' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+                {__('Mail Test', 'bitform')}
+              </button>
+            </Tab>
+            <Panel>
+              <ConfigForm
+                settab={settab}
+                mail={mail}
+                setMail={setMail}
+                status={status}
+                smtpStatus={setStatus}
+                setsnack={setsnack}
+              />
+            </Panel>
+            <Panel>
+              <MailSendTest
+                settab={settab}
+                setsnack={setsnack}
+              />
+            </Panel>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </Scrollbars>
   )
 }

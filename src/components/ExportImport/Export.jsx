@@ -154,8 +154,6 @@ export default function Export({ showExportMdl, close, cols, formID }) {
           )}
           <div>
             <button type="button" onClick={e => getEntry(e)} className="btn btn-md blue btcd-mdl-btn">Export</button>
-            {' '}
-            <button type="button" className="btn btn-md blue btcd-mdl-btn">Cancel</button>
           </div>
         </div>
       </Modal>
