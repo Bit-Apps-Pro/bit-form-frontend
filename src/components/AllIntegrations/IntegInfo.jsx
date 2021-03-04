@@ -19,6 +19,7 @@ import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
 import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
 import GoogleSheetAuthorization from './GoogleSheet/GoogleSheetAuthorization'
 import MailChimpAuthorization from './MailChimp/MailChimpAuthorization'
+import MailPoetAuthorization from './MailPoet/MailPoetAuthorization'
 
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
@@ -33,17 +34,21 @@ export default function IntegInfo({ allIntegURL, integrations }) {
   const toReplaceInd = location.indexOf('/info')
   location = window.encodeURI(`${location.slice(0, toReplaceInd)}/new/${integrations[id].type}`)
 
-  let activeStatus = 0
-  if (integrations[id].type === 'Google Sheet') {
-    activeStatus = 1
-  } else if (integrations[id].type === 'Mail Chimp') {
-    activeStatus = 1
-  }
+  // let activeStatus = 0
+  // if (integrations[id].type === 'Google Sheet') {
+  //   activeStatus = 1
+  // } else if (integrations[id].type === 'Mail Chimp') {
+  //   activeStatus = 1
+  // }
 
   const showIntegInfo = () => {
     switch (integ.type) {
       case 'Zoho Analytics':
         return <ZohoAnalyticsAuthorization analyticsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Campaigns':
+        return <ZohoCampaignsAuthorization campaignsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Bigin':
+        return <ZohoBiginAuthorization biginConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }
