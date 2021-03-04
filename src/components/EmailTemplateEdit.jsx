@@ -29,6 +29,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
         branding: false,
         resize: 'verticle',
         min_width: 300,
+        convert_urls: false,
         toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | toogleCode | addFormField ',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {

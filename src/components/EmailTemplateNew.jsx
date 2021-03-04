@@ -39,6 +39,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
         resize: 'verticle',
         min_width: 300,
         toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | toogleCode | addFormField',
+        convert_urls: false,
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
             handleBody(editor.getContent())
