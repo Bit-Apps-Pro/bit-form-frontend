@@ -101,7 +101,7 @@ export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, 
           <div className="mt-2">
             <label htmlFor="re_email_address">
               {__('Reply-To Email Address', 'bitform')}
-              <input id="re_email_address" onChange={(e) => handleInput(e.target.name, e.target.value)} value={mail.re_email_address} name="re_email_address" className="btcd-paper-inp mt-1" placeholder="Reply-To Email Address" type="email" required />
+              <input id="re_email_address" onChange={(e) => handleInput(e.target.name, e.target.value)} value={mail.re_email_address} name="re_email_address" className="btcd-paper-inp mt-1" placeholder="Reply-To Email Address" type="email" />
             </label>
           </div>
           <div className="mt-2">
