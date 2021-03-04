@@ -17,6 +17,7 @@ import zohoSign from '../resource/img/integ/sign.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
 import cpt from '../resource/img/integ/cpt.svg';
 import googleSheet from '../resource/img/integ/googleSheets.svg'
+import mailPoet from '../resource/img/integ/mailpoet.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 // import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import bitsFetch from '../Utils/bitsFetch';
@@ -44,6 +45,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
     // { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
+    { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -166,11 +168,11 @@ function Integrations({ integrations, setIntegration, formFields }) {
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  {/* {inte.type !== 'CPT' && (
+                  {(inte.type !== 'CPT' || inte.type !== 'Mail Poet') && (
                     <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <span className="btcd-icn icn-information-outline" />
                     </Link>
-                  )} */}
+                  )}
                 </div>
                 <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>
