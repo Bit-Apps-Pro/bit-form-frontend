@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
       components: [
         path.resolve(__dirname, 'src/resource/sass/components.scss'),
         path.resolve(__dirname, 'node_modules/react-multiple-select-dropdown-lite/dist/index.css'),
-        // path.resolve(__dirname, 'src/resource/css/slimselect.min.css'),
+        path.resolve(__dirname, 'src/resource/css/tinymce.css'),
       ],
     },
     output: {

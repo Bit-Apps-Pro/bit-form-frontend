@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useReducer } from 'react';
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 import Modal from './Modal'
+import '../resource/css/tinymce.css'
 
 const mailTemReducer = (state, { name, value }) => {
   const tmp = { ...state }
@@ -37,7 +38,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
         branding: false,
         resize: 'verticle',
         min_width: 300,
-        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
+        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | toogleCode | addFormField',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
             handleBody(editor.getContent())
@@ -49,6 +50,29 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
             type: 'menubutton',
             icon: false,
             menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+          })
+
+          editor.addButton('toogleCode', {
+            text: '</>',
+            tooltip: __('Toggle preview', 'bitform'),
+            icon: false,
+            onclick(e) {
+              // eslint-disable-next-line no-undef
+              const $ = tinymce.dom.DomQuery
+              const myTextarea = $('textarea')
+              const myIframe = $(editor.iframeElement)
+              myTextarea.value = editor.getContent({
+                source_view: true,
+              });
+              myIframe.toggleClass('hidden')
+              myTextarea.toggleClass('visible')
+              if ($('iframe.hidden').length > 0) {
+                myTextarea.prependTo('.mce-edit-area')
+              } else {
+                myIframe.value = myTextarea.value
+                myTextarea.appendTo('body')
+              }
+            },
           })
         },
       })

@@ -16,9 +16,9 @@ import zohoSheet from '../resource/img/integ/sheet.svg';
 import zohoSign from '../resource/img/integ/sign.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
 import cpt from '../resource/img/integ/cpt.svg';
-import googleSheet from '../resource/img/integ/googlesheets.svg'
+import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
-import wooCommerce from '../resource/img/integ/woocommerce.svg'
+// import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
