@@ -194,8 +194,12 @@ function FieldList({ fields, setElementSetting }) {
   const arr = []
   for (const fld in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fld)) {
+      let lbl = fields[fld].lbl || fields[fld].adminLbl
+      if (fields[fld].typ === 'decision-box') {
+        lbl = fields[fld].adminLbl
+      }
       arr.push(
-        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={fields[fld].lbl} sub={fld} action={() => setElementSetting({ id: fld, data: fields[fld] })} />,
+        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl} sub={fld} action={() => setElementSetting({ id: fld, data: fields[fld] })} />,
       )
     }
   }

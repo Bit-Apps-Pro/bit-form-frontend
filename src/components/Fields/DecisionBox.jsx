@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 
 export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, formID }) {
+  console.log('decision', attr)
   let { checked } = attr.valid
   const checkBoxRef = useRef(null)
   const defaultValue = checked ? attr.msg.checked : attr.msg.unchecked
@@ -44,7 +45,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
           <span
             className="tinymce-content"
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: attr.lbl }}
+            dangerouslySetInnerHTML={{ __html: attr.lbl || attr?.info?.lbl }}
           />
           <input type="hidden" value={value} {...'name' in attr && { name: attr.name }} />
           <input
