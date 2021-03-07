@@ -10,10 +10,12 @@ import Bitforms from './Bitforms'
   require('babel-polyfill')
 } */
 
-export default function BitformsRenderer(formID) {
+export default function BitformsRenderer(contentID) {
+  const formID = contentID.split('_')[1]
   console.log('test', formID, window.bitforms_1, window[`bitforms_${formID}`]);
   window.bitFormsFront = window[`bitforms_${formID}`]
   bitFormsFront.appID = `bitforms_${formID}`
+  bitFormsFront.contentID = contentID
   const params = bitFormsFront
   const renderApp = () => {
     const ajaxURL = new URL(bitFormsFront.ajaxURL)
