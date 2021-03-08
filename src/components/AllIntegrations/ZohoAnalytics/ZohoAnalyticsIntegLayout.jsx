@@ -1,10 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
-import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZohoAnalyticsActions from './ZohoAnalyticsActions'
 import { refreshTableHeaders, refreshTables, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
-import ZohoAnalyticsFieldMap from './ZohoAnalyticsFieldMap'
+import ZohoAnalyticsFieldMap, { addFieldMap } from './ZohoAnalyticsFieldMap'
 
 export default function ZohoAnalyticsIntegLayout({ formID, formFields, handleInput, analyticsConf, setAnalyticsConf, isLoading, setisLoading, setSnackbar }) {
   return (
