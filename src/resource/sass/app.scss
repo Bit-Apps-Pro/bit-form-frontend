@@ -526,7 +526,7 @@ input[type="checkbox"].disabled:checked:before {
   font-size: 17px;
   -ms-user-select: none;
   -webkit-user-select: none;
-  height: 25px;
+  // height: 25px;
   margin: 8px;
   width: auto;
 }
@@ -1029,6 +1029,8 @@ input[type="checkbox"].disabled:checked:before {
 }
 .fld-lbl {
   cursor: default;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .blk {
@@ -2313,7 +2315,7 @@ nav.top-nav {
   height: 97%;
 }
 .custom-conf-mdl {
-  display: block;
+  display: block !important;
   text-align: left;
 }
 
@@ -4261,4 +4263,8 @@ _:-ms-fullscreen,
 }
 .col-2 {
   columns: 2;
+}
+
+.w-a {
+  width: auto !important;
 }

@@ -2,14 +2,14 @@
 import { __ } from '@wordpress/i18n'
 import MtInput from '../../ElmSettings/Childs/MtInput'
 
+export const addFieldMap = (indx, analyticsConf, setAnalyticsConf) => {
+  const newConf = { ...analyticsConf }
+  newConf.field_map.splice(indx, 0, {})
+
+  setAnalyticsConf(newConf)
+}
+
 export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsConf, setAnalyticsConf }) {
-  const addFieldMap = (indx) => {
-    const newConf = { ...analyticsConf }
-    newConf.field_map.splice(indx, 0, {})
-
-    setAnalyticsConf(newConf)
-  }
-
   const delFieldMap = (indx) => {
     const newConf = { ...analyticsConf }
     if (newConf.field_map.length > 1) {
@@ -61,7 +61,7 @@ export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsC
         }
       </select>
       <button
-        onClick={() => addFieldMap(i)}
+        onClick={() => addFieldMap(i, analyticsConf, setAnalyticsConf)}
         className="icn-btn sh-sm ml-2"
         type="button"
       >

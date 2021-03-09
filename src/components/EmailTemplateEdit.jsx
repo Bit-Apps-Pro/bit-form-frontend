@@ -30,7 +30,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
         resize: 'verticle',
         min_width: 300,
         convert_urls: false,
-        toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | toogleCode | addFormField ',
+        toolbar: 'formatselect bold italic |  alignleft aligncenter alignright | outdent indent | link | undo redo | hr | toogleCode | addFormField | toggleCode',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
             handleBody(editor.getContent(), editor.targetElm.getAttribute('data-idx'))
