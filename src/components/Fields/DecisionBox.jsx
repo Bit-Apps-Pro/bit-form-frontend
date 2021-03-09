@@ -6,7 +6,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
   console.log('decision', attr)
   let { checked } = attr.valid
   const checkBoxRef = useRef(null)
-  const defaultValue = checked ? attr.msg.checked : attr.msg.unchecked
+  const defaultValue = attr.val || (checked ? attr.msg.checked : attr.msg.unchecked)
   const [value, setvalue] = useState(defaultValue)
   if (value === attr.msg.unchecked) {
     checked = false
