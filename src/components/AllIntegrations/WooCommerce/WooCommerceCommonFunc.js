@@ -49,7 +49,6 @@ export const refreshFields = (wcConf, setWcConf, setisLoading, setSnackbar) => {
           }
           newConf.default.fields[module] = result.data
           newConf = generateMappedFields(newConf)
-          console.log('newConf', newConf)
           setWcConf(newConf)
           setSnackbar({ show: true, msg: __('Fields refreshed', 'bitform') })
         }
@@ -63,13 +62,11 @@ export const refreshFields = (wcConf, setWcConf, setisLoading, setSnackbar) => {
 
 const generateMappedFields = wcConf => {
   const newConf = { ...wcConf }
-  if (newConf.module === 'customer') {
-    newConf.default.fields.customer.required.forEach(reqFld => {
-      if (!newConf.field_map.find(fld => fld.wcField === reqFld)) {
-        newConf.field_map.push({ formField: '', wcField: reqFld, required: true })
-      }
-    })
-  }
+  newConf.default.fields[newConf.module].required.forEach(reqFld => {
+    if (!newConf.field_map.find(fld => fld.wcField === reqFld)) {
+      newConf.field_map.unshift({ formField: '', wcField: reqFld, required: true })
+    }
+  })
   if (!newConf.field_map.length) newConf.field_map = [{ formField: '', wcField: '' }]
   return newConf
 }

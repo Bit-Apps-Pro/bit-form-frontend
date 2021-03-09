@@ -19,7 +19,7 @@ import cpt from '../resource/img/integ/cpt.svg';
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
-// import wooCommerce from '../resource/img/integ/woocommerce.svg'
+import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -45,7 +45,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
-    // { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
+    { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },

@@ -47,9 +47,9 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
 
   return (
     <div
-      className="flx flx-around mt-2 mr-1"
+      className="flx mt-2 mr-1"
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+      <select className="btcd-paper-inp integ-fld-select mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>
         {
           uploadFields
@@ -61,7 +61,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
 
       {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-      <select className="btcd-paper-inp" name="wcField" value={field.wcField || ''} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+      <select className="btcd-paper-inp integ-fld-select" name="wcField" value={field.wcField || ''} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
         <option value="">{__('Select Field', 'bitform')}</option>
         {
           Object.values(wcConf.default.fields[wcConf.module][uploadFields ? 'uploadFields' : 'fields']).map(fld => {
