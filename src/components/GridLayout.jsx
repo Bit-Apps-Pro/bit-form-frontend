@@ -200,7 +200,7 @@ function GridLayout(props) {
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
-    const newBlk = { i: `b${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
+    const newBlk = { i: `bf${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
     tmpLayouts.lg.push(newBlk)
@@ -218,7 +218,7 @@ function GridLayout(props) {
     }
     setLayouts({ ...tmpLayouts })
     const tmpField = deepCopy(newData[0])
-    setFields({ ...fields, [`b${formID}-${newCounter + 1}`]: tmpField })
+    setFields({ ...fields, [`bf${formID}-${newCounter + 1}`]: tmpField })
     setNewCounter(newCounter + 1)
     sessionStorage.setItem('btcd-lc', '-')
   }
@@ -284,7 +284,7 @@ function GridLayout(props) {
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `b${formID}-${newCounter + 1}`
+    const newBlk = `bf${formID}-${newCounter + 1}`
 
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
