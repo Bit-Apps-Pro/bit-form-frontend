@@ -41,7 +41,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
 
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
-    { type: 'Google Sheets', logo: googleSheet, pro: !isPro },
+    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
