@@ -47,7 +47,7 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
       <small className="d-blk mt-5">
         {__('To get Client ID and SECRET , Please Visit', 'bitform')}
         {' '}
-        <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">{__('Zoho API Console', 'bitform')}</a>
+        <a className="btcd-link" href={`https://api-console.zoho.${deskConf?.dataCenter || 'com'}/`} target="_blank" rel="noreferrer">{__('Zoho API Console', 'bitform')}</a>
       </small>
 
       <div className="mt-3"><b>{__('Client id:', 'bitform')}</b></div>
