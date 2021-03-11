@@ -18,6 +18,7 @@ import EditGoogleSheet from './GoogleSheet/EditGoogleSheet'
 import EditMailChimp from './MailChimp/EditMailChimp'
 import EditCpt from './Cpt/EditCpt'
 import EditMailPoet from './MailPoet/EditMailPoet'
+import EditSendinBlue from './SendinBlue/EditSendinBlue'
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -57,6 +58,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditCpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Poet':
         return <EditMailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Sendinblue':
+        return <EditSendinBlue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
