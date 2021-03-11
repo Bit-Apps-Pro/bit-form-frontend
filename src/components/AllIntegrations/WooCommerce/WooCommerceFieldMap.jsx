@@ -49,45 +49,47 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
     <div
       className="flx mt-2 mr-1"
     >
-      <select className="btcd-paper-inp integ-fld-select mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-        <option value="">{__('Select Field', 'bitform')}</option>
-        {
-          uploadFields
-            ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
-            : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
-        }
-        {!uploadFields && <option value="custom">{__('Custom...', 'bitform')}</option>}
-      </select>
+      <div className="flx integ-fld-wrp">
+        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            uploadFields
+              ? formFields.map(f => f.type === 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+              : formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+          }
+          {!uploadFields && <option value="custom">{__('Custom...', 'bitform')}</option>}
+        </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-      <select className="btcd-paper-inp integ-fld-select" name="wcField" value={field.wcField || ''} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
-        <option value="">{__('Select Field', 'bitform')}</option>
-        {
-          Object.values(wcConf.default.fields[wcConf.module][uploadFields ? 'uploadFields' : 'fields']).map(fld => {
-            if (isRequired) {
-              if (fld.required && fld.fieldKey === field.wcField) {
+        <select className="btcd-paper-inp" name="wcField" value={field.wcField || ''} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            Object.values(wcConf.default.fields[wcConf.module][uploadFields ? 'uploadFields' : 'fields']).map(fld => {
+              if (isRequired) {
+                if (fld.required && fld.fieldKey === field.wcField) {
+                  return (
+                    <option key={`${fld.fieldKey}-1`} value={fld.fieldKey}>
+                      {fld.fieldName}
+                    </option>
+                  )
+                }
+              } else if (!fld.required) {
                 return (
                   <option key={`${fld.fieldKey}-1`} value={fld.fieldKey}>
                     {fld.fieldName}
                   </option>
                 )
               }
-            } else if (!fld.required) {
-              return (
-                <option key={`${fld.fieldKey}-1`} value={fld.fieldKey}>
-                  {fld.fieldName}
-                </option>
-              )
-            }
-          })
-        }
-      </select>
+            })
+          }
+        </select>
+      </div>
       {!isRequired && (
         <>
           <button
             onClick={() => addFieldMap(i)}
-            className="icn-btn sh-sm ml-2"
+            className="icn-btn sh-sm ml-2 mr-1"
             type="button"
           >
             +
