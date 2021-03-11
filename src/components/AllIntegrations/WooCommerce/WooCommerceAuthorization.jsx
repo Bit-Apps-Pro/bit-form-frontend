@@ -14,7 +14,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
       .then(result => {
         if (result?.success) {
           setisAuthorized(true)
-          setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
+          setSnackbar({ show: true, msg: __('Connected with WooCommerce Successfully', 'bitform') })
         }
         setisLoading(false)
         setShowAuthMsg(true)
@@ -58,7 +58,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
 
       {!isAuthorized && (
         <button onClick={authorizeHandler} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button">
-          {__('Authorize', 'bitform')}
+          {__('Connect', 'bitform')}
         </button>
       )}
 
