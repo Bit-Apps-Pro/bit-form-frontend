@@ -526,7 +526,7 @@ input[type="checkbox"].disabled:checked:before {
   font-size: 17px;
   -ms-user-select: none;
   -webkit-user-select: none;
-  // height: 25px;
+  min-height: 25px;
   margin: 8px;
   width: auto;
 }
@@ -1231,6 +1231,9 @@ input[type="checkbox"].disabled:checked:before {
 
 .pl-6 {
   padding-left: 30px;
+}
+.pb-3 {
+  padding-bottom: 30px;
 }
 .pb-6 {
   padding-bottom: 30px;
@@ -2738,9 +2741,12 @@ nav.top-nav {
     background-color: #eee !important;
   }
 }
-.btcd-paper-inp.integ-fld-select {
-  width: 389px;
+
+.integ-fld-wrp {
+  min-width: 800px;
+  max-width: 800px;
 }
+
 .btcd-paper-drpdwn {
   --menu-max-height: 300px;
   --font-size: 15px;
