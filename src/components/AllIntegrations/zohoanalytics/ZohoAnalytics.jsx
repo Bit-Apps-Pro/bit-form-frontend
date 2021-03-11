@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
 import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import Steps from '../../ElmSettings/Childs/Steps';

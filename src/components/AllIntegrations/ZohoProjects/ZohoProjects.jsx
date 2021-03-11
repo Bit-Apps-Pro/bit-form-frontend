@@ -1,26 +1,24 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkAllRequired, handleInput, refreshPortals } from './ZohoProjectsCommonFunc'
-import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import Steps from '../../ElmSettings/Childs/Steps';
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import ZohoProjectsAuthorization from './ZohoProjectsAuthorization';
+import { checkAllRequired, handleInput, refreshPortals } from './ZohoProjectsCommonFunc';
+import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout';
 
 function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   // eslint-disable-next-line max-len
-  const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
+  
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
     type: 'Zoho Projects',
@@ -38,13 +36,11 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
 
   const nextPage = val => {
     if (val === 3) {
-      if (!checkAllRequired(projectsConf, setSnackbar)) return
-      setstep(val)
-    } else {
-      setstep(val)
-      if (val === 2 && !projectsConf.event) {
-        refreshPortals(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)
+      if (!checkAllRequired(projectsConf, setSnackbar)) {
+        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+        return
       }
+      setstep(3)
     }
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
@@ -57,7 +53,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      {/* <IntegrationStepOne
         step={step}
         confTmp={projectsConf}
         handleInput={(e) => handleInput(e, projectsConf, setProjectsConf, formID, setisLoading, setSnackbar, true, error, setError)}
@@ -67,6 +63,16 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
         isLoading={isLoading}
         isAuthorized={isAuthorized}
         nextPage={nextPage}
+      /> */}
+      <ZohoProjectsAuthorization
+        formID={formID}
+        projectsConf={projectsConf}
+        setProjectsConf={setProjectsConf}
+        step={step}
+        setstep={setstep}
+        isLoading={isLoading}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Steps from '../../ElmSettings/Childs/Steps'
-import { handleGoogleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/GoogleIntegrationHelpers'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/GoogleIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshSpreadsheets } from './GoogleSheetCommonFunc'
 import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
 import GoogleSheetAuthorization from './GoogleSheetAuthorization'
+import { handleInput } from './GoogleSheetCommonFunc';
 
 function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) {
+  console.log('google sheet')
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'https://www.googleapis.com/auth/drive'
   const [sheetConf, setSheetConf] = useState({
     name: 'Google Sheet API',
     type: 'Google Sheet',
@@ -35,26 +33,32 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
     actions: {},
   })
 
-  // console.log('sheetConf', sheetConf)
+  console.log('sheetConf', sheetConf)
 
   useEffect(() => {
     window.opener && setGrantTokenResponse('googleSheet')
   }, [])
 
-  const nextPage = val => {
-    if (val === 3) {
-      if (sheetConf.spreadsheetId !== '' && sheetConf.worksheetName !== '' && sheetConf.field_map.length > 0) {
-        setstep(val)
-      }
-    } else {
-      setstep(val)
-      if (val === 2 && !sheetConf.spreadsheetId) {
-        refreshSpreadsheets(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
-      }
-    }
+  // const nextPage = val => {
+  //   if (val === 3) {
+  //     if (sheetConf.spreadsheetId !== '' && sheetConf.worksheetName !== '' && sheetConf.field_map.length > 0) {
+  //       setstep(val)
+  //     }
+  //   } else {
+  //     setstep(val)
+  //     if (val === 2 && !sheetConf.spreadsheetId) {
+  //       refreshSpreadsheets(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
+  //     }
+  //   }
 
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
+  //   document.querySelector('.btcd-s-wrp').scrollTop = 0
+  // }
+  const nextPage = () => {
+    if (sheetConf.spreadsheetId !== '' && sheetConf.worksheetName !== '' && sheetConf.field_map.length > 0) {
+      setstep(3)
+    }
   }
+  document.querySelector('.btcd-s-wrp').scrollTop = 0
 
   return (
     <div>
@@ -63,15 +67,14 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
 
       {/* STEP 1 */}
       <GoogleSheetAuthorization
+        formID={formID}
+        sheetConf={sheetConf}
+        setSheetConf={setSheetConf}
         step={step}
-        confTmp={sheetConf}
-        handleInput={(e) => handleInput(e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
+        setstep={setstep}
         setSnackbar={setSnackbar}
-        handleAuthorize={() => handleGoogleAuthorize('googleSheet', 'gsheet', scopes, sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
       />
 
       {/* STEP 2 */}
