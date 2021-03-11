@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import CopyText from '../ElmSettings/Childs/CopyText'
+import SnackMsg from '../ElmSettings/Childs/SnackMsg'
 import Loader from '../Loaders/Loader'
 
 export default function FormEntryTimeline({ formID, entryID, allLabels, settab, integrations }) {
@@ -13,6 +14,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
   const [integLogs, setIntegLogs] = useState([])
   const [logShowMore, setLogShowMore] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [snack, setSnackbar] = useState({ show: false, msg: '' })
   useEffect(() => {
     settab('timeline')
     setIsLoading(true)
@@ -102,7 +104,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
                 <p className="mr-2">
                   {`${apiType.type_name} ${apiType.type} ${integ.response_type}`}
                 </p>
-                <CopyText value={`${integ.response_obj}`} className="field-key-cpy w-0 ml-0" readOnly />
+                <CopyText value={integ.response_obj} className="field-key-cpy w-0 ml-0" setSnackbar={setSnackbar} readOnly />
               </div>
             )
           })
@@ -141,6 +143,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
 
   return (
     <>
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {
         isLoading
           ? (
