@@ -38,14 +38,13 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const { formID } = useParams()
   /* eslint-disable-next-line no-undef */
   const isPro = typeof bits !== 'undefined' && bits.isPro
-
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
-    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
+    { type: 'Google Sheets', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
-    { type: 'CPT', logo: cpt, pro: !isPro },
-    { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
-    { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
+    { type: 'CPT', logo: cpt, pro: !isPro, info: false },
+    { type: 'Mail Poet', logo: mailPoet, pro: !isPro, info: false },
+    { type: 'WooCommerce', logo: wooCommerce, pro: !isPro, info: false },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -59,6 +58,8 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
   ]
+
+  const [availableIntegs, setAvailableIntegs] = useState(integs)
 
   const removeInteg = i => {
     const tempIntegration = { ...integrations[i] }
@@ -100,13 +101,24 @@ function Integrations({ integrations, setIntegration, formFields }) {
   }
 
   const setNewInteg = (type) => {
-    setShowMdl(false)
+    closeIntegModal()
     history.push(`${allIntegURL}/new/${type}`)
+  }
+
+  const closeIntegModal = () => {
+    setShowMdl(false)
+    setTimeout(() => setAvailableIntegs(integs), 500)
   }
 
   const closeConfMdl = () => {
     confMdl.show = false
     setconfMdl({ ...confMdl })
+  }
+
+  const searchInteg = e => {
+    const { value } = e.target
+    const filtered = integs.filter(integ => integ.type.toLowerCase().includes(value.toLowerCase()))
+    setAvailableIntegs(filtered)
   }
 
   return (
@@ -127,30 +139,33 @@ function Integrations({ integrations, setIntegration, formFields }) {
             <Modal
               title={__('Available Integrations', 'bitform')}
               show={showMdl}
-              setModal={setShowMdl}
+              setModal={closeIntegModal}
               style={{ width: 1000 }}
             >
-              <div className="flx flx-wrp btcd-inte-wrp">
-                {integs.map((inte, i) => (
-                  <div
-                    key={`inte-sm-${i + 2}`}
-                    onClick={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
-                    onKeyPress={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
-                    role="button"
-                    tabIndex="0"
-                    className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
-                  >
-                    {inte.pro && (
-                      <div className="pro-filter">
-                        <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
+              <div className=" btcd-inte-wrp txt-center">
+                <input type="search" className="btcd-paper-inp w-5 mt-3" onChange={searchInteg} placeholder="Search Integrations..." style={{ height: 37 }} />
+                <div className="flx flx-center flx-wrp pb-3">
+                  {availableIntegs.map((inte, i) => (
+                    <div
+                      key={`inte-sm-${i + 2}`}
+                      onClick={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
+                      onKeyPress={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
+                      role="button"
+                      tabIndex="0"
+                      className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
+                    >
+                      {inte.pro && (
+                        <div className="pro-filter">
+                          <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
+                        </div>
+                      )}
+                      <img src={inte.logo} alt="" />
+                      <div className="txt-center">
+                        {inte.type}
                       </div>
-                    )}
-                    <img src={inte.logo} alt="" />
-                    <div className="txt-center">
-                      {inte.type}
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </Modal>
 
@@ -168,7 +183,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
                   </button>
-                  {(inte.type !== 'CPT' || inte.type !== 'Mail Poet') && (
+                  {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
                     <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <span className="btcd-icn icn-information-outline" />
                     </Link>
