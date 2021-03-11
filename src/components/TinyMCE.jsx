@@ -1,16 +1,18 @@
+/* eslint-disable no-undef */
 import { __ } from '@wordpress/i18n'
 import { useEffect } from 'react'
 
-export default function TinyMCE({ formFields, value, onChangeHandler, toolbarMnu }) {
+export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu }) {
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     window.tinymce && tinymce.remove()
-  }, [])
+    return () => window.tinymce && tinymce.remove()
+  }, [id])
 
   useEffect(() => {
+    window.tinymce && tinymce.remove()
     timyMceInit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields])
+  }, [formFields, id])
 
   const timyMceInit = () => {
     if (typeof tinymce !== 'undefined' && (!formFields || formFields?.length > 0)) {
