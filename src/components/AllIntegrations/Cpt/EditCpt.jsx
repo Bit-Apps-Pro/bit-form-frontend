@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import CptFieldMap from './CptFieldMap'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { addFieldMap, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 
 function EditCpt({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -38,6 +38,7 @@ function EditCpt({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
       <div className="mt-3"><b>{__('Post Type', 'bitform')}</b></div>
       <select name="post_type" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_type} className="btcd-paper-inp w-9 mt-1">
@@ -62,7 +63,8 @@ function EditCpt({ formFields, setIntegration, integrations, allIntegURL }) {
         <option value="closed">Closed</option>
       </select>
       <div>
-        <h2>field Mapping</h2>
+        <div className="mt-3 mb-1"><b>Field Mapping</b></div>
+        <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
           <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
           <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>
@@ -79,6 +81,7 @@ function EditCpt({ formFields, setIntegration, integrations, allIntegURL }) {
           setDataConf={setData}
         />
       ))}
+      <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(data.field_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
 
       <button
         // disabled={biginConf.module === '' || biginConf.field_map.length < 1}
