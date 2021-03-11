@@ -19,8 +19,7 @@ import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
 import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
 import GoogleSheetAuthorization from './GoogleSheet/GoogleSheetAuthorization'
 import MailChimpAuthorization from './MailChimp/MailChimpAuthorization'
-import MailPoetAuthorization from './MailPoet/MailPoetAuthorization'
-
+import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
@@ -49,6 +48,30 @@ export default function IntegInfo({ allIntegURL, integrations }) {
         return <ZohoCampaignsAuthorization campaignsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Zoho Bigin':
         return <ZohoBiginAuthorization biginConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Marketing Hub':
+        return <ZohoMarketingHubAuthorization marketingHubConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Sheet':
+        return <ZohoSheetAuthorization sheetConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Mail':
+        return <ZohoMailAuthorization mailConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Sign':
+        return <ZohoSignAuthorization signConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Desk':
+        return <ZohoDeskAuthorization deskConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Mail Chimp':
+        return <MailChimpAuthorization sheetConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho WorkDrive':
+        return <ZohoWorkDriveAuthorization workDriveConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho CRM':
+        return <ZohoCRMAuthorization crmConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Recruit':
+        return <ZohoRecruitAuthorization recruitConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Projects':
+        return <ZohoProjectsAuthorization projectsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Google Sheet':
+        return <GoogleSheetAuthorization sheetConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'Sendinblue':
+        return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

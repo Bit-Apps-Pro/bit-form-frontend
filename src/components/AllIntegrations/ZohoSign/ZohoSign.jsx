@@ -5,26 +5,23 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshTemplates } from './ZohoSignCommonFunc'
+import { refreshTemplates, setGrantTokenResponse } from './ZohoSignCommonFunc'
 import ZohoSignIntegLayout from './ZohoSignIntegLayout'
+import ZohoSignAuthorization from './ZohoSignAuthorization'
 
 function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoSign.templates.CREATE,ZohoSign.templates.READ,ZohoSign.templates.UPDATE'
   const [signConf, setSignConf] = useState({
     name: 'Zoho Sign API',
     type: 'Zoho Sign',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.01ZB6YV7B8BEIXGPX6821NIK29K0HZ' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '79d6d0bf4b8104aea4c167a2e2e10d78a916af7c6b' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.3NJI1INPTI67F97ZTP6HXSBWAKJ8MG' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '6c358da44a5c32f9c1ec7a1d2fa4439ba4f0c89832' : '',
   })
 
   useEffect(() => {
@@ -49,16 +46,24 @@ function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoSignAuthorization
+        formID={formID}
+        signConf={signConf}
+        setSignConf={setSignConf}
         step={step}
-        confTmp={signConf}
-        handleInput={(e) => handleInput(e, signConf, setSignConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoSign', 'zsign', scopes, signConf, setSignConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
+      // step={step}
+      // confTmp={signConf}
+      // handleInput={(e) => handleInput(e, signConf, setSignConf, formID, setisLoading, setSnackbar, true, error, setError)}
+      // error={error}
+      // setSnackbar={setSnackbar}
+      // handleAuthorize={() => handleAuthorize('zohoSign', 'zsign', scopes, signConf, setSignConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+      // isLoading={isLoading}
+      // isAuthorized={isAuthorized}
+      // nextPage={nextPage}
       />
 
       {/* STEP 2 */}

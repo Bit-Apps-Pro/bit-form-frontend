@@ -23,13 +23,6 @@ export default function ZohoMailActions({ formFields, mailConf, setMailConf }) {
 
   return (
     <div className="pos-rel">
-      {/* Coming soon */}
-      {/* <div className="pro-blur flx w-10" style={{ top: -25, height: '150%' }}>
-        <div className="pro">
-          Coming soon!
-        </div>
-      </div> */}
-
       <div className="d-flx flx-wrp">
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in mailConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachments', 'bitform')} subTitle={__('Add attachments from BitForm to mail pushed to Zoho Mail.', 'bitform')} />
       </div>

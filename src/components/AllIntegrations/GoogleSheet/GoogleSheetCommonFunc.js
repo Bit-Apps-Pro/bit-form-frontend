@@ -179,3 +179,63 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
     })
     .catch(() => setisLoading(false))
 }
+
+export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
+  if (!confTmp.clientId || !confTmp.clientSecret) {
+    setError({
+      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
+      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
+    })
+    return
+  }
+  setisLoading(true)
+  const scopes = 'https://www.googleapis.com/auth/drive'
+  const apiEndpoint = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.googleRedirectURL)}&client_id=${confTmp.clientId}`
+  const authWindow = window.open(apiEndpoint, 'googleSheet', 'width=400,height=609,toolbar=off')
+  const popupURLCheckTimer = setInterval(() => {
+    if (authWindow.closed) {
+      clearInterval(popupURLCheckTimer)
+      let grantTokenResponse = {}
+      let isauthRedirectLocation = false
+      const bitsGoogleSheet = localStorage.getItem('__bitforms_googleSheet')
+      if (bitsGoogleSheet) {
+        isauthRedirectLocation = true
+        grantTokenResponse = JSON.parse(bitsGoogleSheet)
+        localStorage.removeItem('__bitforms_googleSheet')
+      }
+      if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
+        const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
+        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
+        setisLoading(false)
+      } else {
+        const newConf = { ...confTmp }
+        newConf.accountServer = grantTokenResponse['accounts-server']
+        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setisLoading, setSnackbar)
+      }
+    }
+  }, 500)
+}
+
+const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading, setSnackbar) => {
+  const tokenRequestParams = { ...grantToken }
+  tokenRequestParams.clientId = confTmp.clientId
+  tokenRequestParams.clientSecret = confTmp.clientSecret
+  tokenRequestParams.redirectURI = bits.googleRedirectURL
+
+  bitsFetch(tokenRequestParams, 'bitforms_gsheet_generate_token')
+    .then(result => result)
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...confTmp }
+        newConf.tokenDetails = result.data
+        setConf(newConf)
+        setisAuthorized(true)
+        setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+      } else {
+        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bitform') })
+      }
+      setisLoading(false)
+    })
+}

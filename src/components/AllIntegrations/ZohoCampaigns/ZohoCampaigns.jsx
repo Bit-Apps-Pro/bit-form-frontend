@@ -1,25 +1,22 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput, refreshLists } from './ZohoCampaignsCommonFunc'
-import ZohoCampaignsIntegLayout from './ZohoCampaignsIntegLayout'
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import Steps from '../../ElmSettings/Childs/Steps';
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import ZohoCampaignsAuthorization from './ZohoCampaignsAuthorization';
+import { checkMappedFields, handleInput } from './ZohoCampaignsCommonFunc';
+import ZohoCampaignsIntegLayout from './ZohoCampaignsIntegLayout';
 
 function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoCampaigns.contact.READ,ZohoCampaigns.contact.CREATE,ZohoCampaigns.contact.UPDATE'
   const [campaignsConf, setCampaignsConf] = useState({
     name: 'Zoho Campaigns API',
     type: 'Zoho Campaigns',
@@ -35,21 +32,14 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
     window.opener && setGrantTokenResponse('zohoCampaigns')
   }, [])
 
-  const nextPage = val => {
-    if (val === 3) {
-      if (!checkMappedFields(campaignsConf)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
-        return
-      }
+  const nextPage = () => {
+    if (!checkMappedFields(campaignsConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      return
+    }
 
-      if (campaignsConf.list !== '' && campaignsConf.table !== '' && campaignsConf.field_map.length > 0) {
-        setstep(val)
-      }
-    } else {
-      setstep(val)
-      if (val === 2 && !campaignsConf.list) {
-        refreshLists(formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar)
-      }
+    if (campaignsConf.list !== '' && campaignsConf.table !== '' && campaignsConf.field_map.length > 0) {
+      setstep(3)
     }
 
     document.querySelector('.btcd-s-wrp').scrollTop = 0
@@ -63,16 +53,15 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoCampaignsAuthorization
+        formID={formID}
+        campaignsConf={campaignsConf}
+        setCampaignsConf={setCampaignsConf}
         step={step}
-        confTmp={campaignsConf}
-        handleInput={(e) => handleInput(e, formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoCampaigns', 'zcampaigns', scopes, campaignsConf, setCampaignsConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

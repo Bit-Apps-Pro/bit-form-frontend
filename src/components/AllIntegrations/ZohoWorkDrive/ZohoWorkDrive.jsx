@@ -1,25 +1,21 @@
-import { useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshTeams } from './ZohoWorkDriveCommonFunc'
-import ZohoWorkDriveIntegLayout from './ZohoWorkDriveIntegLayout'
+import { __ } from '@wordpress/i18n';
+import { useEffect, useState } from 'react';
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import Steps from '../../ElmSettings/Childs/Steps';
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import ZohoWorkDriveAuthorization from './ZohoWorkDriveAuthorization';
+import ZohoWorkDriveIntegLayout from './ZohoWorkDriveIntegLayout';
 
 function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'WorkDrive.team.READ,WorkDrive.workspace.READ,WorkDrive.workspace.CREATE,WorkDrive.workspace.UPDATE,WorkDrive.files.READ,WorkDrive.files.CREATE'
   const [workDriveConf, setWorkDriveConf] = useState({
     name: 'Zoho WorkDrive API',
     type: 'Zoho WorkDrive',
@@ -35,16 +31,9 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
     window.opener && setGrantTokenResponse('zohoWorkDrive')
   }, [])
 
-  const nextPage = val => {
-    if (val === 3) {
-      if (workDriveConf.team !== '' && workDriveConf.folder !== '') {
-        setstep(val)
-      }
-    } else {
-      setstep(val)
-      if (val === 2 && !workDriveConf.team) {
-        refreshTeams(formID, workDriveConf, setWorkDriveConf, setisLoading, setSnackbar)
-      }
+  const nextPage = () => {
+    if (workDriveConf.team !== '' && workDriveConf.folder !== '') {
+      setstep(3)
     }
 
     document.querySelector('.btcd-s-wrp').scrollTop = 0
@@ -58,16 +47,15 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoWorkDriveAuthorization
+        formID={formID}
+        workDriveConf={workDriveConf}
+        setWorkDriveConf={setWorkDriveConf}
         step={step}
-        confTmp={workDriveConf}
-        handleInput={(e) => handleInput(e, workDriveConf, setWorkDriveConf, formID, setisLoading, setSnackbar, null, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoWorkDrive', 'zworkdrive', scopes, workDriveConf, setWorkDriveConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}
