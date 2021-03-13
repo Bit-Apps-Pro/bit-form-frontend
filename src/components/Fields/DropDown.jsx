@@ -42,7 +42,6 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
   }, [resetFieldValue])
 
   useEffect(() => {
-    console.log('object', attr.hasWorkflow, JSON.stringify(defaultValue) === JSON.stringify(value), !attr.userinput)
     if (attr.hasWorkflow && JSON.stringify(defaultValue) === JSON.stringify(value) && onBlurHandler && !attr.userinput) {
       const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value, type: 'dropdown', multiple: 'mul' in attr && attr.mul }
       onBlurHandler(eventLikeData)

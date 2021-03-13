@@ -33,8 +33,8 @@
 .fld-lbl {
   display: block;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /* white-space: nowrap;
+  text-overflow: ellipsis; */
   margin: 0;
   font-weight: 500;
 }
@@ -42,7 +42,7 @@
   --input-width: 100%;
 
 }
-/* 
+/*
 .fld-wrp .msl-vars {
   --border-radius: 6px;
   --input-width:100%;
@@ -140,7 +140,7 @@ textarea.fld {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  height: 19px;
+  // height: 19px;
   margin: 8px;
   width: auto;
 }

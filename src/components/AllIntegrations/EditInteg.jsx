@@ -19,6 +19,7 @@ import EditMailChimp from './MailChimp/EditMailChimp'
 import EditCpt from './Cpt/EditCpt'
 import EditMailPoet from './MailPoet/EditMailPoet'
 import EditSendinBlue from './SendinBlue/EditSendinBlue'
+import EditWooCommerce from './WooCommerce/EditWooCommerce';
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -60,6 +61,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditMailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Sendinblue':
         return <EditSendinBlue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'WooCommerce':
+        return <EditWooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

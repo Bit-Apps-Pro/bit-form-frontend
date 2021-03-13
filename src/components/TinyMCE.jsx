@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n'
 import { useEffect } from 'react'
 
 export default function TinyMCE({ formFields, value, onChangeHandler, toolbarMnu }) {
@@ -26,7 +27,7 @@ export default function TinyMCE({ formFields, value, onChangeHandler, toolbarMnu
         branding: false,
         resize: 'verticle',
         min_width: 300,
-        toolbar: toolbarMnu || 'formatselect fontsizeselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField ',
+        toolbar: toolbarMnu || 'formatselect fontsizeselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField | toogleCode',
         default_link_target: '_blank',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
@@ -39,6 +40,29 @@ export default function TinyMCE({ formFields, value, onChangeHandler, toolbarMnu
             type: 'menubutton',
             icon: false,
             menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+          })
+
+          editor.addButton('toogleCode', {
+            text: '</>',
+            tooltip: __('Toggle preview', 'bitform'),
+            icon: false,
+            onclick(e) {
+              // eslint-disable-next-line no-undef
+              const $ = tinymce.dom.DomQuery
+              const myTextarea = $('textarea')
+              const myIframe = $(editor.iframeElement)
+              myTextarea.value = editor.getContent({
+                source_view: true,
+              });
+              myIframe.toggleClass('hidden')
+              myTextarea.toggleClass('visible')
+              if ($('iframe.hidden').length > 0) {
+                myTextarea.prependTo('.mce-edit-area')
+              } else {
+                myIframe.value = myTextarea.value
+                myTextarea.appendTo('body')
+              }
+            },
           })
         },
       })

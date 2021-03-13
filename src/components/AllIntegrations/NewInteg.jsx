@@ -19,6 +19,7 @@ import MailChimp from './MailChimp/MailChimp'
 import Cpt from './Cpt/Cpt'
 import MailPoet from './MailPoet/MailPoet'
 import Sendinblue from './SendinBlue/SendinBlue'
+import WooCommerce from './WooCommerce/WooCommerce'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -61,7 +62,9 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <MailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Sendinblue':
       return <Sendinblue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        default:
+      case 'WooCommerce':
+        return <WooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      default:
         break;
     }
     return ''
