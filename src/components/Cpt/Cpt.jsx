@@ -23,7 +23,7 @@ export default function Cpt() {
   }, [])
 
   return (
-    <Scrollbars>
+    <Scrollbars style={{ width: '100%', height: 525 }}>
       <div className="p-2 w-6">
         <div className="pos-rel">
           {!isPro && (
@@ -32,7 +32,7 @@ export default function Cpt() {
                 {__('Available On', 'bitform')}
                 <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
-                    {' '}
+                    &nbsp;
                     {__('Premium', 'bitform')}
                   </span>
                 </a>
