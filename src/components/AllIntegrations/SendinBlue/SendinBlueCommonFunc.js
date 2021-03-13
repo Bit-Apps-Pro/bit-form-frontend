@@ -2,6 +2,11 @@
 import { sprintf, __ } from '@wordpress/i18n'
 import bitsFetch from '../../../Utils/bitsFetch'
 
+export const handleInput = (e, sendinBlueConf, setSendinBlueConf) => {
+  const newConf = { ...sendinBlueConf }
+  newConf.name = e.target.value
+  setSendinBlueConf({ ...newConf })
+}
 export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   console.log('audience config', sendinBlueConf)

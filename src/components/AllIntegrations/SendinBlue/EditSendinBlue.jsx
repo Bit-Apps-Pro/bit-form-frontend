@@ -31,7 +31,6 @@ function EditSendinBlue({ formFields, setIntegration, integrations, allIntegURL 
       <SendinBlueIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, sendinBlueConf, setSendinBlueConf, formID, setisLoading, setSnackbar)}
         sendinBlueConf={sendinBlueConf}
         setSendinBlueConf={setSendinBlueConf}
         isLoading={isLoading}
