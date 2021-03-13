@@ -23,6 +23,7 @@ function AllFroms({ newFormId }) {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
 
   const [modal, setModal] = useState(false)
+  const [impModal, setImpModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const { allFormsData } = useContext(AllFormContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
@@ -79,7 +80,7 @@ function AllFroms({ newFormId }) {
 
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action')
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} /> })
+    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> })
     setCols([...ncols])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newFormId])
@@ -156,6 +157,29 @@ function AllFroms({ newFormId }) {
     })
   }
 
+  const handleExport = (formID) => {
+    const uri = new URL(bits.ajaxURL)
+  uri.searchParams.append('action', 'bitforms_export_aform')
+  uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
+  uri.searchParams.append('id', formID)
+  fetch(uri)
+  .then(response => {
+      if (response.ok) {
+        response.blob().then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `bitform_${formID}_export.json`
+          document.body.appendChild(a)
+          a.click()
+          a.remove()
+      })
+      } else {
+        response.json().then(error => { console.log('error', error); error.data && setSnackbar({ show: true, msg: error.data }) })
+      }
+    })
+  }
+
   const setTableCols = useCallback(newCols => {
     setCols(newCols)
   }, [])
@@ -185,6 +209,16 @@ function AllFroms({ newFormId }) {
     setconfMdl({ ...confMdl })
   }
 
+  const showExportMdl = (formID) => {
+    confMdl.action = () => { handleExport(formID); closeConfMdl() }
+    confMdl.btnTxt = __('Export', 'bitform')
+    confMdl.btn2Txt = null
+    confMdl.btnClass = 'blue'
+    confMdl.body = __('Are you sure to export this form ?', 'bitform')
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
+  }
+
   return (
     <div id="all-forms">
       {/* <Editor /> */}
@@ -205,7 +239,7 @@ function AllFroms({ newFormId }) {
         title={__('Create Form', 'bitform')}
         subTitle=""
       >
-        <FormTemplates />
+        <FormTemplates setTempModal={setModal} />
       </Modal>
 
       {allForms.length > 0 ? (

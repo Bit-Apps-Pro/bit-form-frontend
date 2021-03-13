@@ -278,7 +278,6 @@ export default function Bitforms(props) {
               method: 'POST',
               body: formData,
             })
-            .then(response => response.json())
         })
       })
     } else {
@@ -289,9 +288,10 @@ export default function Bitforms(props) {
           method: 'POST',
           body: formData,
         })
-        .then(response => response.json())
     }
-    submitResponse.then(result => {
+    const respPromise = submitResponse.then(response => new Promise(async (resolve, reject) => { if (response.status > 400) { response.status === 500 ? reject(new Error('Maybe Internal Server Error')) : reject(await response.json()) } else resolve(await response.json()) }))
+    respPromise.then(result => {
+      console.log(result)
       let responsedRedirectPage = null
       let hitCron = null
       if (result !== undefined && result.success) {
@@ -317,23 +317,19 @@ export default function Bitforms(props) {
         setMessage(result.data)
         sethasError(true)
         setSnack(true)
-      } else if (result.data && result.data.data && typeof result.data.data === 'string') {
-        setMessage(result.data.data)
-        sethasError(true)
-        setSnack(true)
-      } else if (result.data && result.data.data) {
-        if (result.data.data.$form !== undefined) {
-          setMessage(deepCopy(result.data.data.$form))
+      } else if (result.data) {
+        if (result.data.$form !== undefined) {
+          setMessage(deepCopy(result.data.$form))
           sethasError(true)
           setSnack(true)
           // eslint-disable-next-line no-param-reassign
-          delete result.data.data.$form
+          delete result.data.$form
         }
-        if (Object.keys(result.data.data).length > 0) {
+        if (Object.keys(result.data).length > 0) {
           const newData = fieldData !== undefined && deepCopy(fieldData)
           // eslint-disable-next-line array-callback-return
-          Object.keys(result.data.data).map(element => {
-            newData[props.fieldsKey[element]].error = result.data.data[element]
+          Object.keys(result.data).map(element => {
+            newData[props.fieldsKey[element]].error = result.data[element]
           });
           dispatchFieldData(newData)
         }
@@ -350,6 +346,14 @@ export default function Bitforms(props) {
         triggerIntegration(hitCron)
       }
 
+      setbuttonDisabled(false)
+    })
+    .catch(error => {
+      console.log('error', typeof error, error)
+      const err = error?.message ? error.message : 'Unknown Error'
+      setMessage(err)
+      sethasError(true)
+      setSnack(true)
       setbuttonDisabled(false)
     })
   }
