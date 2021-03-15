@@ -25,7 +25,7 @@ const IndeterminateCheckbox = forwardRef(
   },
 )
 
-function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols,formID }) {
+function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols, formID, report }) {
   const [delay, setDelay] = useState(null)
   const handleSearch = e => {
     delay && clearTimeout(delay)
@@ -49,7 +49,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
           placeholder={__('Search', 'bitform')}
         />
       </label>
-      {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} />}
+      {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} report={report} />}
     </div>
   )
 }
@@ -338,6 +338,7 @@ function Table(props) {
           data={props.data}
           cols={props.columns}
           formID={props.formID}
+          report={report}
 
         />
         <div className="mt-2">

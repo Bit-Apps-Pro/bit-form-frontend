@@ -64,6 +64,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
     } else if (allLabels.length > 0) {
       tableHeaderHandler(allLabels)
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -499,7 +500,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
-          report={report}
+          report={reports}
         />
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
