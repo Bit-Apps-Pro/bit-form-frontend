@@ -1,7 +1,7 @@
 import { useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import { __ } from '../Utils/i18nwrap'
 import zohoAnalytics from '../resource/img/integ/analytics.svg';
 import zohoBigin from '../resource/img/integ/bigin.svg';
 import zohoCamp from '../resource/img/integ/campaigns.svg';

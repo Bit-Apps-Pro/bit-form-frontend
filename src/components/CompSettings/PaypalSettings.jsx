@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useContext } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { __ } from '../../Utils/i18nwrap'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
 import CheckBox from '../ElmSettings/Childs/CheckBox'

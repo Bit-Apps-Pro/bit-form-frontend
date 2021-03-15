@@ -1,12 +1,12 @@
 import { memo, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { __ } from '../Utils/i18nwrap'
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import ConfirmModal from './ConfirmModal'
 import bitsFetch from '../Utils/bitsFetch'
 import SnackMsg from './ElmSettings/Childs/SnackMsg'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -116,8 +116,9 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
     bitsFetch({ hookDetails: formSettings.confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
         setSnackbar({ show: true, msg: `${response.data}` })
-      } else if (response && response.data && response.data.data) {
-        setSnackbar({ show: true, msg: `${response.data.data}. ${__('please try again', 'bitform')}` })
+      } else if (response && response.data) {
+        const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
+        setSnackbar({ show: true, msg: `${msg}. ${__('please try again', 'bitform')}` })
       } else {
         setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
       }

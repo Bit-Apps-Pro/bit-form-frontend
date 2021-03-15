@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { Link } from 'react-router-dom';
+import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from '../components/ConfirmModal';
 import CopyText from '../components/ElmSettings/Childs/CopyText';
 import MenuBtn from '../components/ElmSettings/Childs/MenuBtn';
@@ -23,7 +23,6 @@ function AllFroms({ newFormId }) {
   console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
 
   const [modal, setModal] = useState(false)
-  const [impModal, setImpModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const { allFormsData } = useContext(AllFormContext)
   const { allForms, allFormsDispatchHandler } = allFormsData
@@ -199,7 +198,7 @@ function AllFroms({ newFormId }) {
     setconfMdl({ ...confMdl })
   }
 
-  const showDupMdl = (formID, newId) => {
+  const showDupMdl = (formID) => {
     confMdl.action = () => { handleDuplicate(formID); closeConfMdl() }
     confMdl.btnTxt = __('Duplicate', 'bitform')
     confMdl.btn2Txt = null
@@ -239,7 +238,7 @@ function AllFroms({ newFormId }) {
         title={__('Create Form', 'bitform')}
         subTitle=""
       >
-        <FormTemplates setTempModal={setModal} />
+        <FormTemplates setTempModal={setModal} newFormId={newFormId} setSnackbar={setSnackbar} />
       </Modal>
 
       {allForms.length > 0 ? (

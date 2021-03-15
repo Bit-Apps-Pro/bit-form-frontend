@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
 import { useContext, useState } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import { __ } from '../Utils/i18nwrap';
 // import Cpt from '../components/Cpt/Cpt'
 import Apikey from '../components/Apikey';
 import Captcha from '../components/Captcha';

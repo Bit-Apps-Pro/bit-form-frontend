@@ -2,12 +2,12 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import BrushIcn from '../Icons/BrushIcn'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'

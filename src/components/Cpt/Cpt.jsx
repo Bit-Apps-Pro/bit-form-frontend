@@ -1,8 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { useState, useEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars'
+import { __ } from '../../Utils/i18nwrap'
 import CptTypeAdd from './CptTypeAdd'
 import EditCpt from './EditCpt'
 import bitsFetch from '../../Utils/bitsFetch'

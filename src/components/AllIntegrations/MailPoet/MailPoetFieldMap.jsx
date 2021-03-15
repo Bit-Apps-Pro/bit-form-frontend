@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../../Utils/i18nwrap';
 import MtInput from '../../ElmSettings/Childs/MtInput';
 
 export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, setMailPoetConf }) {
@@ -39,7 +39,7 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
 
   return (
     <div
-      className={isRequired ? "mt-2 mr-1" : "flx flx-around mt-2 mr-1"}
+      className={isRequired ? 'mt-2 mr-1' : 'flx flx-around mt-2 mr-1'}
     >
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>

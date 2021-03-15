@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+import { __ } from '../Utils/i18nwrap';
 import { lazy, Suspense, useState } from 'react';
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'

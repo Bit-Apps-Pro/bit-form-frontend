@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
 import { Link } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap';
 import Modal from './Modal';
 import FormImporter from './FormImporter'
 // import bitsFetch from '../Utils/bitsFetch'
 
-export default function FormTemplates({ setTempModal }) {
+export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) {
   console.log('%c $render FormTemplates', 'background:purple;padding:3px;border-radius:5px;color:white')
 
   const [modal, setModal] = useState(false)
@@ -47,7 +47,7 @@ export default function FormTemplates({ setTempModal }) {
         title={__('Import Form', 'bitform')}
         subTitle=""
       >
-        <FormImporter setModal={setModal} setTempModal={setTempModal} />
+        <FormImporter setModal={setModal} setTempModal={setTempModal} newFormId={newFormId} setSnackbar={setSnackbar} />
       </Modal>
     </div>
   )

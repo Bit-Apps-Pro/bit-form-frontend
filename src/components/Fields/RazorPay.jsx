@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import { useContext, useEffect, useState } from 'react';
 import { AppSettings } from '../../Utils/AppSettingsContext';
 import bitsFetch from '../../Utils/bitsFetch';
@@ -32,7 +31,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js', 'razorpaysrc')
       if (!res) {
         // eslint-disable-next-line no-console
-        console.warn(__('Is your internet working properly to load razorpay script?', 'bitform'))
+        console.warn('Is your internet working properly to load razorpay script?')
         loadRazorpayScript()
       }
     }

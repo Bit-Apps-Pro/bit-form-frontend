@@ -1,6 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
 import { useContext, useState } from 'react';
+import { __ } from '../../Utils/i18nwrap';
 import { AppSettings } from '../../Utils/AppSettingsContext';
 import { sortArrOfObj } from '../../Utils/Helpers';
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData';
@@ -153,7 +153,6 @@ export default function RazorpaySettings({ elm, fields, updateData, setElementSe
         {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={elm.data.planId || ''} action={e => handleInput('planId', e.target.value)} />}
       </div> */}
 
-
       {elm.data?.options?.payIntegID && (
         <>
           {!isSubscription && (
@@ -277,10 +276,6 @@ export default function RazorpaySettings({ elm, fields, updateData, setElementSe
           </StyleAccordion>
         </>
       )}
-
-
-
-
 
     </div>
   )

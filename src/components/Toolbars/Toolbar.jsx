@@ -2,10 +2,9 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
 import { useMemo } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { __ } from '../../Utils/i18nwrap';
 import CheckBoxIcn from '../../Icons/CheckBoxIcn';
 import DateIcn from '../../Icons/DateIcn';
 import DateTimeIcn from '../../Icons/DateTimeIcn';

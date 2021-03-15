@@ -3,7 +3,6 @@ export default function GCLID() {
 
   }
 
-
   return (
     <div className="btcd-captcha w-5">
       <h2>GCLID</h2>

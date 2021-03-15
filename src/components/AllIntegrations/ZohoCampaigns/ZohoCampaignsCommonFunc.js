@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, formID, campaignsConf, setCampaignsConf, setisLoading, setSnackbar, isNew, error, setError) => {

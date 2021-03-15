@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const refreshNewsLetter = (formID, mailPoetConf, setMailPoetConf, setisLoading, setSnackbar) => {
@@ -33,7 +33,7 @@ export const refreshMailpoetHeader = (mailPoetConf, setMailPoetConf, setisLoadin
         const newConf = { ...mailPoetConf }
         if (result.data.mailPoetFields) {
             newConf.default.fields = result.data.mailPoetFields
-            const fields = newConf.default.fields
+            const { fields } = newConf.default
             newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', mailPoetField: f.id, required: true }))
           setSnackbar({ show: true, msg: __('Mailpoet fields refreshed', 'bitform') })
         } else {

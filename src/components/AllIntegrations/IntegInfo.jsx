@@ -1,7 +1,6 @@
 import { useState } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { Link, useParams } from 'react-router-dom'
+import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../ElmSettings/Childs/CopyText'
 import SnackMsg from '../ElmSettings/Childs/SnackMsg'
 import ZohoAnalyticsAuthorization from './ZohoAnalytics/ZohoAnalyticsAuthorization'

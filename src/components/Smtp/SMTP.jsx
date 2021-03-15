@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useState, useEffect } from 'react'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { Scrollbars } from 'react-custom-scrollbars'
+import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import ConfigForm from './ConfigForm'
 import MailSendTest from './MailSendTest'

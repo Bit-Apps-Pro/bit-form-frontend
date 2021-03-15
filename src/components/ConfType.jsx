@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../Utils/i18nwrap';
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'

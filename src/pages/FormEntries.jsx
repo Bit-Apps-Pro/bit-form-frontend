@@ -1,9 +1,8 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from '../components/ConfirmModal'
 import Drawer from '../components/Drawer'
 import EditEntryData from '../components/EditEntryData'

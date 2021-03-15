@@ -1,7 +1,6 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
+import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'
 import FormEntryPayments from './FormEntryPayments'
 import FormEntryTimeline from './FormEntryTimeline'
@@ -65,6 +64,6 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
         </Panel>
       </Tabs>
 
-    </Modal >
+    </Modal>
   )
 }

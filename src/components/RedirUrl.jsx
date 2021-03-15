@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../Utils/i18nwrap';
 import Accordions from './ElmSettings/Childs/Accordions'
 import Button from './ElmSettings/Childs/Button'
 import bitsFetch from '../Utils/bitsFetch'

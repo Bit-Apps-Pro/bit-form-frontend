@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __, sprintf } from '@wordpress/i18n'
+
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 
@@ -34,7 +34,7 @@ export const listChange = (sheetConf, formID, setSheetConf, setisLoading, setSna
 
 export const refreshAudience = (formID, sheetConf, setSheetConf, setisLoading, setSnackbar) => {
   setisLoading(true)
-  console.log( 'audience config', sheetConf)
+  console.log('audience config', sheetConf)
   const refreshModulesRequestParams = {
     formID,
     clientId: sheetConf.clientId,

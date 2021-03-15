@@ -1,7 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useState, useEffect } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../Utils/i18nwrap'
 import bitsFetch from '../Utils/bitsFetch'
 import LoaderSm from './Loaders/LoaderSm'
 import SnackMsg from './ElmSettings/Childs/SnackMsg'
@@ -28,6 +26,8 @@ export default function Apikey() {
       if (res !== undefined && res.success) {
         setKey(res.data)
         setsnack({ ...{ show: true, msg: __('api key save successfully', 'bitform') } })
+      } else if (res?.data) {
+        setsnack({ ...{ show: true, msg: res.data } })
       }
       setisLoading(false)
     })
@@ -41,6 +41,8 @@ export default function Apikey() {
     bitsFetch({}, 'bitforms_api_key').then((res) => {
       if (res !== undefined && res.success) {
         setKey(res.data)
+      } else if (res?.data) {
+        setsnack({ ...{ show: true, msg: res.data } })
       }
     })
   }, [])

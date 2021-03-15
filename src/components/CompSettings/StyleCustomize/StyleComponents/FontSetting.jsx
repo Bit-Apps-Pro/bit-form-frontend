@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../../../Utils/i18nwrap';
 import StyleAccordion from '../ChildComp/StyleAccordion';
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
@@ -47,7 +47,11 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
           <span className="f-5">Line height</span>
           <Range
             info={[
-              { icn: <span><b>T</b><HeightIcn h="12" /></span>, lbl: 'Text line height' },
+              { icn: <span>
+                <b>T</b>
+                <HeightIcn h="12" />
+              </span>,
+lbl: 'Text line height' },
             ]}
             className="btc-range"
             master={false}

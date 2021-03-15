@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import CptFieldMap from './CptFieldMap'

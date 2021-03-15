@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
 import { useState, useEffect, useReducer } from 'react';
 import { NavLink, useParams, useHistory } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap';
 import Modal from './Modal'
 import '../resource/css/tinymce.css'
 

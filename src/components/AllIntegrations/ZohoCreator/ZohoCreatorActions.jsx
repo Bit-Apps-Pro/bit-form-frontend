@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useEffect, useState } from 'react'
+import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../ElmSettings/Childs/CheckBox'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 import Modal from '../../Modal'

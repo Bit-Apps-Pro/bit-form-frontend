@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import React, { useEffect, useState, useRef } from 'react'
+import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import SnackMsg from '../ElmSettings/Childs/SnackMsg'
 import LoaderSm from '../Loaders/LoaderSm'

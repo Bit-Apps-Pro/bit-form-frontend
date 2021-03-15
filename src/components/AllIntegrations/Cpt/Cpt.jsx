@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { addFieldMap, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import CptFieldMap from './CptFieldMap'

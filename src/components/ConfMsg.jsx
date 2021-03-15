@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { memo, useEffect, useState } from 'react'
+import { __ } from '../Utils/i18nwrap'
 import { deepCopy } from '../Utils/Helpers'
 import ConfirmModal from './ConfirmModal'
 import Accordions from './ElmSettings/Childs/Accordions'

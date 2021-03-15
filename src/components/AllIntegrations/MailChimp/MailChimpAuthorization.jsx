@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 
@@ -11,7 +11,7 @@ export default function MailChimpAuthorization({ step, confTmp, handleInput, err
 
       <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
       <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" />
-      
+
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
       <CopyText value={`${window.location.href}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" />
 

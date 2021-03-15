@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { deepCopy } from '../../../Utils/Helpers'
 import ZohoMailActions from './ZohoMailActions'

@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import { __ } from '../../../../Utils/i18nwrap'
 import Range from '../ChildComp/Range'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'

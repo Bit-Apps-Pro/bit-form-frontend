@@ -3,8 +3,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../Utils/i18nwrap';
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -806,10 +806,10 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           )}
         </Fragment>
       )) : (
-          <div className="txt-center btcd-empty">
-            <span className="btcd-icn icn-stack" />
-            {__('Empty', 'bitform')}
-          </div>
+        <div className="txt-center btcd-empty">
+          <span className="btcd-icn icn-stack" />
+          {__('Empty', 'bitform')}
+        </div>
         )}
     </div>
   )

@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
 import { useEffect } from 'react';
 import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap';
 
 function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')

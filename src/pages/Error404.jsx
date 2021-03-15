@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { Link, useHistory } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import space from '../resource/img/space.svg'
 
 export default function Error404() {

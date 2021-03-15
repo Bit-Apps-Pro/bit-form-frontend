@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from './Utils/i18nwrap'
 import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'

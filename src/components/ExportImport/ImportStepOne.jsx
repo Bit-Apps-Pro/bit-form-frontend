@@ -21,7 +21,7 @@ export default function ImportStepOne() {
           // eslint-disable-next-line no-undef
           const roa = XLSX.utils.sheet_to_json(ws, { header: 1 })
           const head = []
-          //const headers = roa[0]
+          // const headers = roa[0]
           for (let i = 0; i < roa[0].length; i += 1) {
             head[i] = `${roa[0][i].replace(' ', '')}${i}`
           }
