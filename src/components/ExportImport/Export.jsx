@@ -1,123 +1,124 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import Modal from '../Modal'
 import bitsFetch from '../../Utils/bitsFetch'
-import ExportAdvance from './ExportAdvance'
-import CheckBox from '../ElmSettings/Childs/CheckBox'
+import LoaderSm from '../Loaders/LoaderSm'
+import SnackMsg from '../ElmSettings/Childs/SnackMsg'
 
-export default function Export({ showExportMdl, close, cols, formID }) {
-  const [advanceOption, setAdvanceOption] = useState(false)
-  const [custom, setCustom] = useState(false)
-  const [customRowInput, setcustomRowInput] = useState(null)
-  const [sortType, setsortType] = useState('ASC')
-  const [sortTypeField, setsortTypeField] = useState('bitforms_form_entry_id')
-  const [filterField, setfilterField] = useState(1)
-  const [selectedFields, setselectedFields] = useState([])
-  const [exportType, setExportType] = useState('csv')
+export default function Export({ showExportMdl, close, cols, formID, report }) {
+  const [snack, setSnackbar] = useState({ show: false })
+  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState({
+    fileFormate: 'csv',
+    sort: 'ASC',
+    sortField: 'bitforms_form_entry_id',
+    limit: null,
+    custom: 'all',
+    formId: formID,
+    selectedField: '',
+  })
 
+  const order = report ? report[report.length - 1]?.details?.order : ['bf3-1-']
+  const unhidecolumn = report ? report[report.length - 1]?.details?.hiddenColumns : []
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
-  const showAdvanceOption = (e) => {
-    e.target.checked ? setAdvanceOption(true) : setAdvanceOption(false)
-  }
+
+  let colHeadeing = []
+  let fieldKey = []
+  columns.map((col, index) => {
+    if (order?.includes(col.accessor)) {
+      colHeadeing[index] = {
+        key: col.accessor,
+        val: col.Header,
+      }
+      fieldKey[index] = col.accessor
+    }
+  })
+
+  fieldKey = fieldKey.filter((col) => !unhidecolumn.includes(col))
+  colHeadeing = colHeadeing.filter((col) => !unhidecolumn.includes(col.key))
+  data.selectedField = JSON.stringify(fieldKey)
+
   const getEntry = (e) => {
     e.preventDefault()
-    bitsFetch({ formId: formID, limit: custom ? customRowInput : null, sortBy: sortType, sortField: sortTypeField, fileds: [] },
+     setIsLoading(true)
+    bitsFetch({ data },
       'bitforms_filter_export_data').then((res) => {
         if (res !== undefined && res.success) {
-          const colHeadeing = []
-          columns.map((col, index) => {
-            colHeadeing[index] = col.Header
-          })
-          const heading = [colHeadeing]
-          // eslint-disable-next-line no-undef
-          const ws = XLSX.utils.json_to_sheet(res.data)
-          /* add to workbook */
-          const wb = XLSX.utils.book_new()
-          XLSX.utils.sheet_add_aoa(ws, heading)
-          XLSX.utils.book_append_sheet(wb, ws)
-          /* generate an XLSX file */
-          XLSX.writeFile(wb, `bitform ${formID}.${exportType}`)
+            if (res.data?.count !== 0) {
+               const header = []
+              colHeadeing.map((col, index) => {
+                header[index] = col.val
+              })
+              // eslint-disable-next-line no-undef
+              const ws = XLSX.utils.json_to_sheet(res.data)
+              /* add to workbook */
+              const wb = XLSX.utils.book_new()
+              XLSX.utils.sheet_add_aoa(ws, [header])
+              XLSX.utils.book_append_sheet(wb, ws)
+              /* generate an XLSX file */
+              XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
+            } else {
+              setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
+            }
         }
+         setIsLoading(false)
       })
   }
-  const checkSelected = (e) => {
-    e.target.checked = true
-  }
 
-  const customRow = (e) => {
-    if (e.target.value === 'custom') {
-      return setCustom(true)
-    }
-    return setCustom(false)
-  }
-
-  const setRowNumber = (e) => {
-    setcustomRowInput(e.target.value)
-  }
-
-  const filterFieldHandle = (e) => {
-    setfilterField(Number(e.target.value))
-  }
-
-  const selectedFiledHandler = (event) => {
-    console.log(selectedFields)
-    if (event.target.checked) {
-      setselectedFields([...selectedFields, event.target.value])
+  const handleInput = (typ, val) => {
+    const tmpData = { ...data }
+    if (typeof val === 'number') {
+      tmpData[typ] = Number(val)
     } else {
-      setselectedFields(selectedFields.splice(selectedFields.indexOf(event.target.value), 1))
+      tmpData[typ] = val
     }
+    setData(tmpData)
   }
-  const exportTypeHandle = (type) => {
-    setExportType(type)
-  }
-
-  const shortFieldHandle = (e) => {
-    setsortTypeField(e.target.value)
-  }
-
-  const sortTypeHandle = (e) => {
-    setsortType(e.target.value)
-  }
-
   return (
     <div>
+
+      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <Modal md show={showExportMdl} setModal={close} title="Export Data" style={{ overflowX: 'scroll', overflowY: 'scroll' }}>
         <div>
-
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>How many rows export: </b>
-            <select className="btcd-paper-inp ml-2" style={{ width: 250 }} onChange={(e) => customRow(e)}>
+            <b style={{ width: 200 }}>{__('How many rows export', 'bitform')}</b>
+            <select className="btcd-paper-inp ml-2" name="custom" style={{ width: 250 }} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               <option selected disabled>Choose your option</option>
               <option value="all">All</option>
               <option value="custom">Custom input number</option>
             </select>
           </div>
+
+          {data.custom === 'custom' && (
           <div
             className="mt-3 flx"
-            style={{ display: custom ? 'block' : 'none' }}
           >
-            <b style={{ width: 200 }}>Enter your row number </b>
-            <input type="text" style={{ width: 250 }} name="title" onChange={(e) => setRowNumber(e)} className="btcd-paper-inp mt-2" placeholder="Enter Your Export Row Number" />
+            <b style={{ width: 200 }}>{__('Enter your row number', 'bitform')}</b>
+            <input type="text" style={{ width: 250 }} name="limit" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-2" placeholder="Enter Your Export Row Number" />
           </div>
+          )}
+
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>Sort By </b>
-            <select className="btcd-paper-inp ml-2" style={{ width: 250 }} onChange={(e) => sortTypeHandle(e)}>
+            <b style={{ width: 200 }}>{__('Sort By', 'bitform')}</b>
+            <select className="btcd-paper-inp ml-2" name="sort" style={{ width: 250 }} defaultValue={data?.sort} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               {/* <option selected disabled>Choose your sort type</option> */}
-              <option value="ASC">ASC</option>
-              <option value="DESC">DESC</option>
+              <option value="ASC">Ascending</option>
+              <option value="DESC">Descending</option>
             </select>
           </div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>Selects the sort field</b>
-            <select className="btcd-paper-inp ml-2" onChange={(e) => shortFieldHandle(e)} style={{ width: 250 }}>
+            <b style={{ width: 200 }}>{__('Select the sort field', 'bitform')}</b>
+            <select className="btcd-paper-inp ml-2" name="sortField" defaultValue={data?.sortField} onChange={(e) => handleInput(e.target.name, e.target.value)} style={{ width: 250 }}>
               <option value="bitforms_form_entry_id">id</option>
-              {columns.map((col) => (
-                <option value={col.accessor}>{col.Header}</option>
+              {colHeadeing.map((col) => (
+                <option key={col.key} value={col.key}>{col.val}</option>
               ))}
             </select>
           </div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>Export File Format : </b>
-            <select className="btcd-paper-inp ml-2" style={{ width: 250 }} onChange={e => exportTypeHandle(e.target.value)}>
+            <b style={{ width: 200 }}>{__('Export File Format', 'bitform')}</b>
+            <select className="btcd-paper-inp ml-2" name="fileFormate" defaultValue={data?.fileFormate} style={{ width: 250 }} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               {/* <option selected disabled>Choose Type</option> */}
               <option value="csv">CSV</option>
               <option value="xlsx">Xlsx</option>
@@ -130,30 +131,11 @@ export default function Export({ showExportMdl, close, cols, formID }) {
               <option value="eth">Eth</option>
             </select>
           </div>
-
-          <div className="mt-3 flx">
-            <b style={{ width: 200 }}>Exported all field ?</b>
-            <CheckBox radio onChange={e => filterFieldHandle(e)} checked={filterField === 1} title={<small className="txt-dp">Yes</small>} value="1" />
-            <CheckBox radio onChange={e => filterFieldHandle(e)} checked={filterField === 2} title={<small className="txt-dp">No</small>} value="2" />
-          </div>
-          <div className="mt-3 flx">
-            <b style={{ width: 200 }}> </b>
-            {filterField === 2 && (
-              columns.map((col) => (
-                <CheckBox CheckBox onChange={e => selectedFiledHandler(e)} style={{ display: 'block' }} title={<small className="txt-dp">{col.Header}</small>} value={col.accessor} />
-              ))
-            )}
-          </div>
-
-          <div className="mt-4">
-            <CheckBox CheckBox onChange={e => showAdvanceOption(e)} title={<small className="txt-dp">Advanced  Options</small>} checked={advanceOption} value="1" />
-            {/* <a className="wdt-100" style={{ cursor: 'pointer' }} onClick={(e) => showAdvanceOption(e)}></a> */}
-          </div>
-          {advanceOption && (
-            <ExportAdvance />
-          )}
           <div>
-            <button type="button" onClick={e => getEntry(e)} className="btn btn-md blue btcd-mdl-btn">Export</button>
+            <button type="button" onClick={e => getEntry(e)} className="btn btn-md blue btcd-mdl-btn" disabled={isLoading}>
+              {__('Export', 'bitform')}
+              {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+            </button>
           </div>
         </div>
       </Modal>
