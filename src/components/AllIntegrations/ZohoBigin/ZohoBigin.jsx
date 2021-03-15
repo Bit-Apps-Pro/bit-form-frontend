@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react';
-
+import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput, refreshModules } from './ZohoBiginCommonFunc'
+import { handleInput } from './ZohoBiginCommonFunc'
 import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
+import ZohoBiginAuthorization from './ZohoBiginAuthorization'
 
 function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
-  const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL'
+  // const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL'
   const [biginConf, setBiginConf] = useState({
     name: 'Zoho Bigin API',
     type: 'Zoho Bigin',
@@ -38,24 +35,12 @@ function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
     window.opener && setGrantTokenResponse('zohoBigin')
   }, [])
 
-  const nextPage = val => {
-    if (val === 3) {
-      // if (!checkMappedFields(biginConf)) {
-      //   setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
-      //   return
-      // }
-      // if (biginConf.module !== '' && biginConf.field_map.length > 0) {
-      // }
-      setstep(val)
-    } else {
-      setstep(val)
-      if (val === 2 && !biginConf.module) {
-        refreshModules(formID, biginConf, setBiginConf, setisLoading, setSnackbar)
-      }
+  const nextPage = () => {
+    if (biginConf.module !== '' && biginConf.field_map.length > 0) {
+      setstep(3)
     }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
+  document.querySelector('.btcd-s-wrp').scrollTop = 0
 
   console.log('biginConf', biginConf);
 
@@ -65,16 +50,15 @@ function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoBiginAuthorization
+        formID={formID}
+        biginConf={biginConf}
+        setBiginConf={setBiginConf}
         step={step}
-        confTmp={biginConf}
-        handleInput={(e) => handleInput(e, tab, biginConf, setBiginConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoBigin', 'zbigin', scopes, biginConf, setBiginConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

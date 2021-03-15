@@ -56,49 +56,51 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
 
   return (
     <div
-      className={`flx flx-around mt-2 ${isNotRequired && 'mr-1'}`}
+      className="flx mt-2 mr-1"
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, projectsConf, setProjectsConf)}>
-        <option value="">{__('Select Field', 'bitform')}</option>
-        {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
-        <option value="custom">{__('Custom...', 'bitform')}</option>
-      </select>
+      <div className="flx integ-fld-wrp">
+        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, projectsConf, setProjectsConf)}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+          <option value="custom">{__('Custom...', 'bitform')}</option>
+        </select>
 
-      {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={ev => handleCustomValue(ev, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-      <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i)}>
-        <option value="">{__('Select Field', 'bitform')}</option>
-        {
-          projectsConf?.projectId
-            ? projectsConf.default?.fields?.[portalId]?.[projectsConf.projectId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][projectsConf.projectId][event].fields).map(pfield => (
-              !isNotRequired ? pfield?.required && (
-                <option key={pfield.displayLabel} value={pfield.apiName}>
-                  {pfield.displayLabel}
-                </option>
-              ) : !pfield?.required && (
-                <option key={pfield.displayLabel} value={pfield.apiName}>
-                  {pfield.displayLabel}
-                </option>
-              )
-            ))
-            : projectsConf.default?.fields?.[portalId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][event].fields).map(pfield => (
-              !isNotRequired ? pfield?.required && (
-                <option key={pfield.displayLabel} value={pfield.apiName}>
-                  {pfield.displayLabel}
-                </option>
-              ) : !pfield?.required && (
-                <option key={pfield.displayLabel} value={pfield.apiName}>
-                  {pfield.displayLabel}
-                </option>
-              )
-            ))
-        }
-      </select>
+        <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            projectsConf?.projectId
+              ? projectsConf.default?.fields?.[portalId]?.[projectsConf.projectId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][projectsConf.projectId][event].fields).map(pfield => (
+                !isNotRequired ? pfield?.required && (
+                  <option key={pfield.displayLabel} value={pfield.apiName}>
+                    {pfield.displayLabel}
+                  </option>
+                ) : !pfield?.required && (
+                  <option key={pfield.displayLabel} value={pfield.apiName}>
+                    {pfield.displayLabel}
+                  </option>
+                )
+              ))
+              : projectsConf.default?.fields?.[portalId]?.[event]?.fields && Object.values(projectsConf.default.fields[portalId][event].fields).map(pfield => (
+                !isNotRequired ? pfield?.required && (
+                  <option key={pfield.displayLabel} value={pfield.apiName}>
+                    {pfield.displayLabel}
+                  </option>
+                ) : !pfield?.required && (
+                  <option key={pfield.displayLabel} value={pfield.apiName}>
+                    {pfield.displayLabel}
+                  </option>
+                )
+              ))
+          }
+        </select>
+      </div>
 
       {!allFieldsMapped && (
         <button
           onClick={() => addFieldMap(i, projectsConf, setProjectsConf, event)}
-          className={`icn-btn sh-sm ml-2 ${!isNotRequired && 'mr-8'}`}
+          className="icn-btn sh-sm ml-2 mr-1"
           type="button"
         >
           +

@@ -1,10 +1,40 @@
 
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../ElmSettings/Childs/MtInput'
-import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
+
+export const addFieldMap = (indx, campaignsConf, setCampaignsConf) => {
+  const newConf = { ...campaignsConf }
+  newConf.field_map.splice(indx, 0, {})
+  setCampaignsConf(newConf)
+}
 
 export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsConf, setCampaignsConf }) {
   const isNotRequired = field.zohoFormField === '' || campaignsConf.default.fields[campaignsConf.list].required?.indexOf(field.zohoFormField) === -1
+  const delFieldMap = (indx) => {
+    const newConf = { ...campaignsConf }
+    if (newConf.field_map.length > 1) {
+      newConf.field_map.splice(indx, 1)
+    }
+
+    setCampaignsConf(newConf)
+  }
+
+  const handleFieldMapping = (event, indx) => {
+    const newConf = { ...campaignsConf }
+    newConf.field_map[indx][event.target.name] = event.target.value
+
+    if (event.target.value === 'custom') {
+      newConf.field_map[indx].customValue = ''
+    }
+
+    setCampaignsConf(newConf)
+  }
+
+  const handleCustomValue = (event, indx) => {
+    const newConf = { ...campaignsConf }
+    newConf.field_map[indx].customValue = event.target.value
+    setCampaignsConf(newConf)
+  }
 
   return (
     <div
@@ -18,7 +48,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
         <option value="custom">{__('Custom...', 'bitform')}</option>
       </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, campaignsConf, setCampaignsConf)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
       <select className="btcd-paper-inp" name="zohoFormField" value={field.zohoFormField || ''} disabled={!isNotRequired} onChange={(ev) => handleFieldMapping(ev, i, campaignsConf, setCampaignsConf)}>
         <option value="">{__('Select Field', 'bitform')}</option>
@@ -46,7 +76,7 @@ export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsC
       </button>
       {
         isNotRequired && (
-          <button onClick={() => delFieldMap(i, campaignsConf, setCampaignsConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+          <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
             <span className="btcd-icn icn-trash-2" />
           </button>
         )

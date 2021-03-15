@@ -5,19 +5,17 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Steps from '../../ElmSettings/Childs/Steps'
-import { handleMailChimpAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
+import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshAudience } from './MailChimpCommonFunc'
+import { handleInput, setGrantTokenResponse } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 import MailChimpAuthorization from './MailChimpAuthorization'
 
 function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [sheetConf, setSheetConf] = useState({
     name: 'Mail Chimp API',
@@ -37,20 +35,12 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   useEffect(() => {
     window.opener && setGrantTokenResponse('mailChimp')
   }, [])
-
-  const nextPage = val => {
-    if (val === 3) {
-      if (sheetConf.listId !== '') {
-        setstep(val)
-      }
-    } else {
-      setstep(val)
-      if (val === 2 && !sheetConf.listId) {
-        refreshAudience(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
-      }
+  const nextPage = () => {
+    if (sheetConf.listId !== '') {
+      setstep(3)
     }
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
+  document.querySelector('.btcd-s-wrp').scrollTop = 0
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -58,15 +48,14 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
 
       {/* STEP 1 */}
       <MailChimpAuthorization
+        formID={formID}
+        sheetConf={sheetConf}
+        setSheetConf={setSheetConf}
         step={step}
-        confTmp={sheetConf}
-        handleInput={(e) => handleInput(e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleMailChimpAuthorize('mailChimp', 'mChimp', sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

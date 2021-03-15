@@ -1,9 +1,8 @@
 
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshContactFields, refreshLists } from './ZohoCampaignsCommonFunc'
-import ZohoCampaignsFieldMap from './ZohoCampaignsFieldMap'
+import ZohoCampaignsFieldMap, { addFieldMap } from './ZohoCampaignsFieldMap'
 
 export default function ZohoCampaignsIntegLayout({ formID, formFields, handleInput, campaignsConf, setCampaignsConf, isLoading, setisLoading, setSnackbar }) {
   return (

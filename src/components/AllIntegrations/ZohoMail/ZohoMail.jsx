@@ -5,26 +5,22 @@ import 'react-multiple-select-dropdown-lite/dist/index.css';
 import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import Steps from '../../ElmSettings/Childs/Steps';
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne';
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import handleInput from './ZohoMailCommonFunc';
 import ZohoMailIntegLayout from './ZohoMailIntegLayout';
+import ZohoMailAuthorization from './ZohoMailAuthorization'
 
 function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoMail.accounts.Read,ZohoMail.messages.CREATE,ZohoMail.messages.UPDATE,ZohoMail.Attachments.CREATE,ZohoMail.Attachments.READ,ZohoMail.Attachments.UPDATE'
   const [mailConf, setMailConf] = useState({
     name: 'Zoho Mail API',
     type: 'Zoho Mail',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.01ZB6YV7B8BEIXGPX6821NIK29K0HZ' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '79d6d0bf4b8104aea4c167a2e2e10d78a916af7c6b' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.3NJI1INPTI67F97ZTP6HXSBWAKJ8MG' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '6c358da44a5c32f9c1ec7a1d2fa4439ba4f0c89832' : '',
     actions: {},
     to: '',
     cc: '',
@@ -38,11 +34,6 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
   }, [])
 
   const nextPage = val => {
-    // if (val === 3) {
-
-    // } else {
-    //   setstep(val)
-    // }
     setstep(val)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
@@ -55,27 +46,24 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoMailAuthorization
+        formID={formID}
+        mailConf={mailConf}
+        setMailConf={setMailConf}
         step={step}
-        confTmp={mailConf}
-        handleInput={(e) => handleInput(e, mailConf, setMailConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoMail', 'zmail', scopes, mailConf, setMailConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>
-
         <ZohoMailIntegLayout
           formFields={formFields}
           mailConf={mailConf}
           setMailConf={setMailConf}
         />
-
         <button
           onClick={() => nextPage(3)}
           // disabled={mailConf.workspace === '' || mailConf.table === '' || mailConf.field_map.length < 1}
@@ -84,7 +72,7 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
         >
           {__('Next', 'bitform')}
           {' '}
-&nbsp;
+        &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
 

@@ -3,7 +3,6 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import MailPoetActions from './MailPoetActions'
 import { refreshMailpoetHeader } from './MailPoetCommonFunc'
 import MailPoetFieldMap from './MailPoetFieldMap'
 

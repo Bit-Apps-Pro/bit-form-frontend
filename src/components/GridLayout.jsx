@@ -349,7 +349,7 @@ function GridLayout(props) {
   }
 
   const compByTheme = compData => {
-    if (compData.typ === 'recaptcha') {
+    if (compData && compData.typ === 'recaptcha') {
       // eslint-disable-next-line no-param-reassign
       compData.siteKey = reCaptchaV2.siteKey
     }

@@ -86,7 +86,7 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
             </div>
           </>
         )}
-
+      {/* 
       <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
 
@@ -94,7 +94,7 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
         wcConf={wcConf}
         setWcConf={setWcConf}
         formFields={formFields}
-      />
+      /> */}
     </>
   )
 }

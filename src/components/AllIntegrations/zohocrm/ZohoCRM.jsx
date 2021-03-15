@@ -5,23 +5,19 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams, useHistory } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, setGrantTokenResponse, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
+import { setGrantTokenResponse, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoCRMAuthorization from './ZohoCRMAuthorization';
 import { checkMappedFields, handleInput, refreshModules } from './ZohoCRMCommonFunc'
 import ZohoCRMIntegLayout from './ZohoCRMIntegLayout'
 
 function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
-
-  const scopes = 'ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE'
 
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM API',
@@ -43,21 +39,15 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
   console.log('crmConf', crmConf)
 
-  const nextPage = val => {
-    if (val === 3) {
-      if (!checkMappedFields(crmConf)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
-        return
-      }
-
-      crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(val)
-    } else {
-      setstep(val)
-      !crmConf.module && refreshModules(formID, crmConf, setCrmConf, setisLoading, setSnackbar)
+  const nextPage = () => {
+    if (!checkMappedFields(crmConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      return
     }
 
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
+    crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(val)
   }
+  document.querySelector('.btcd-s-wrp').scrollTop = 0
 
   return (
     <div>
@@ -65,16 +55,15 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoCRMAuthorization
+        formID={formID}
+        crmConf={crmConf}
+        setCrmConf={setCrmConf}
         step={step}
-        confTmp={crmConf}
-        handleInput={(e) => handleInput(e, tab, crmConf, setCrmConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoCRM', 'zcrm', scopes, crmConf, setCrmConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

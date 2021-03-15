@@ -1,26 +1,23 @@
 
 import { __ } from '../../../Utils/i18nwrap';
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useHistory, useParams } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc'
-import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+import { useHistory, useParams } from 'react-router-dom';
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import Steps from '../../ElmSettings/Childs/Steps';
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
+import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc';
+import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout';
+import ZohoRecruitAuthorization from './ZohoRecruitAuthorization'
 
 function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
-  const scopes = 'ZohoRecruit.users.ALL,ZohoRecruit.modules.all'
   const [recruitConf, setRecruitConf] = useState({
     name: 'Zoho Recruit API',
     type: 'Zoho Recruit',
@@ -38,23 +35,14 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
     window.opener && setGrantTokenResponse('zohoRecruit')
   }, [])
 
-  const nextPage = val => {
-    if (val === 3) {
-      if (!checkMappedFields(recruitConf)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
-        return
-      }
-      if (recruitConf.module !== '' && recruitConf.field_map.length > 0) {
-        setstep(val)
-      }
-    } else {
-      setstep(val)
-      if (val === 2 && !recruitConf.module) {
-        refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)
-      }
+  const nextPage = () => {
+    if (!checkMappedFields(recruitConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      return
     }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
+    if (recruitConf.module !== '' && recruitConf.field_map.length > 0) {
+      setstep(3)
+    }
   }
 
   console.log('recruitConf', recruitConf);
@@ -65,16 +53,15 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoRecruitAuthorization
+        formID={formID}
+        recruitConf={recruitConf}
+        setRecruitConf={setRecruitConf}
         step={step}
-        confTmp={recruitConf}
-        handleInput={(e) => handleInput(e, tab, recruitConf, setRecruitConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoRecruit', 'zrecruit', scopes, recruitConf, setRecruitConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

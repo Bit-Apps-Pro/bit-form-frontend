@@ -6,7 +6,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
   console.log('decision', attr)
   let { checked } = attr.valid
   const checkBoxRef = useRef(null)
-  const defaultValue = checked ? attr.msg.checked : attr.msg.unchecked
+  const defaultValue = attr.val || (checked ? attr.msg.checked : attr.msg.unchecked)
   const [value, setvalue] = useState(defaultValue)
   if (value === attr.msg.unchecked) {
     checked = false
@@ -43,7 +43,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         <label className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
           <span
-            className="tinymce-content"
+            className="decision-content"
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: attr.lbl || attr?.info?.lbl }}
           />

@@ -8,6 +8,7 @@ import Steps from '../../ElmSettings/Childs/Steps'
 import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoCreatorAuthorization from './ZohoCreatorAuthorization'
 import { checkMappedFields, handleInput, refreshApplications } from './ZohoCreatorCommonFunc'
 import ZohoCreatorIntegLayout from './ZohoCreatorIntegLayout'
 
@@ -16,10 +17,9 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
   const { formID } = useParams()
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
-  const [step, setstep] = useState(1)
+  const [step, setStep] = useState(1)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', accountOwner: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE,ZohoCreator.report.UPDATE'
   const [creatorConf, setCreatorConf] = useState({
     name: 'Zoho Creator API',
     type: 'Zoho Creator',
@@ -36,26 +36,13 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
     window.opener && setGrantTokenResponse('zohoCreator')
   }, [])
 
-  const nextPage = val => {
-    if (val === 3) {
-      if (!checkMappedFields(creatorConf)) {
-        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
-        return
-      }
-
-      setstep(val)
-    } else {
-      if (!creatorConf.accountOwner) {
-        setError({
-          accountOwner: __('Account Owner Name is mandatory!', 'bitform'),
-        })
-        return
-      }
-      setstep(val)
-      if (val === 2 && !creatorConf.department) {
-        refreshApplications(formID, creatorConf, setCreatorConf, setisLoading, setSnackbar)
-      }
+  const nextPage = () => {
+    if (!checkMappedFields(creatorConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
+      return
     }
+
+    setStep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
@@ -67,21 +54,16 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoCreatorAuthorization
+        formID={formID}
+        creatorConf={creatorConf}
+        setCreatorConf={setCreatorConf}
         step={step}
-        confTmp={creatorConf}
-        handleInput={(e) => handleInput(e, creatorConf, setCreatorConf, formID, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoCreator', 'zcreator', scopes, creatorConf, setCreatorConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setStep={setStep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
-      >
-        <div className="mt-3"><b>{__('Owner Name (Your Zoho Creator screen name):', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e, creatorConf, setCreatorConf)} name="accountOwner" value={creatorConf.accountOwner} type="text" placeholder={__('Your Zoho Creator screen name...', 'bitform')} />
-        <div style={{ color: 'red' }}>{error.accountOwner}</div>
-      </IntegrationStepOne>
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
+      />
 
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && `${100}%` }}>

@@ -5,26 +5,23 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
 import Steps from '../../ElmSettings/Childs/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput, refreshLists } from './ZohoMarketingHubCommonFunc'
+import { checkMappedFields, handleInput, refreshLists, setGrantTokenResponse } from './ZohoMarketingHubCommonFunc'
 import ZohoMarketingHubIntegLayout from './ZohoMarketingHubIntegLayout'
+import ZohoMarketingHubAuthorization from './ZohoMarketingHubAuthorization'
 
 function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const [snack, setSnackbar] = useState({ show: false })
-  const scopes = 'ZohoMarketingHub.lead.READ,ZohoMarketingHub.lead.CREATE,ZohoMarketingHub.lead.UPDATE'
   const [marketingHubConf, setMarketingHubConf] = useState({
     name: 'Zoho Marketing Hub API',
     type: 'Zoho Marketing Hub',
-    clientId: process.env.NODE_ENV === 'development' ? '1000.YN34H0SNYOASNVTOYPKPO158PD8VTD' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '04e7b570f25f7702d93a84a3ab8121880788782464' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '1000.3NJI1INPTI67F97ZTP6HXSBWAKJ8MG' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '6c358da44a5c32f9c1ec7a1d2fa4439ba4f0c89832' : '',
     list: '',
     field_map: [
       { formField: '', zohoFormField: '' },
@@ -32,7 +29,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse('zohoMarketingHub')
+    window.opener && setGrantTokenResponse()
   }, [])
 
   const nextPage = val => {
@@ -63,16 +60,15 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
       <div className="txt-center w-9 mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <IntegrationStepOne
+      <ZohoMarketingHubAuthorization
+        formID={formID}
+        marketingHubConf={marketingHubConf}
+        setMarketingHubConf={setMarketingHubConf}
         step={step}
-        confTmp={marketingHubConf}
-        handleInput={(e) => handleInput(e, formID, marketingHubConf, setMarketingHubConf, setisLoading, setSnackbar, true, error, setError)}
-        error={error}
-        setSnackbar={setSnackbar}
-        handleAuthorize={() => handleAuthorize('zohoMarketingHub', 'zmarketingHub', scopes, marketingHubConf, setMarketingHubConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+        setstep={setstep}
         isLoading={isLoading}
-        isAuthorized={isAuthorized}
-        nextPage={nextPage}
+        setisLoading={setisLoading}
+        setSnackbar={setSnackbar}
       />
 
       {/* STEP 2 */}

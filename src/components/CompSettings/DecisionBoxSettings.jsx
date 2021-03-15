@@ -69,7 +69,8 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
         <b>Label: </b>
         <br />
         <TinyMCE
-          value={elmData.lbl || elmData.info.lbl}
+          id={elmId}
+          value={elmData.lbl || elmData?.info?.lbl}
           onChangeHandler={setLbl}
         />
       </div>
