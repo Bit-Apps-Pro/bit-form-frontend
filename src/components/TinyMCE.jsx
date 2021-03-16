@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { __ } from '@wordpress/i18n'
 import { useEffect } from 'react'
+import { __ } from '../Utils/i18nwrap'
 
 export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu }) {
   useEffect(() => {

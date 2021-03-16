@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'

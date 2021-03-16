@@ -1,5 +1,5 @@
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
+import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshModules } from './ZohoBiginCommonFunc'

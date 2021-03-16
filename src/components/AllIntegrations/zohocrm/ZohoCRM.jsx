@@ -39,13 +39,13 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
   console.log('crmConf', crmConf)
 
-  const nextPage = () => {
+  const nextPage = (pageNo) => {
     if (!checkMappedFields(crmConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
 
-    crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(val)
+    crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(pageNo)
   }
   document.querySelector('.btcd-s-wrp').scrollTop = 0
 
