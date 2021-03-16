@@ -17,7 +17,8 @@ import ZohoRecruitAuthorization from './ZohoRecruit/ZohoRecruitAuthorization'
 import ZohoSheetAuthorization from './ZohoSheet/ZohoSheetAuthorization'
 import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
 import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
-// import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
+import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
+
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
