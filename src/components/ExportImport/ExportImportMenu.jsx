@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Export from './Export'
 
-export default function ExportImportMenu({ formID, cols, data }) {
+export default function ExportImportMenu({ formID, cols, report }) {
   const [showImportMdl, setshowImportMdl] = useState(false)
   const [showExportMdl, setshowExportMdl] = useState(false)
   const importShow = () => {
@@ -23,6 +23,7 @@ export default function ExportImportMenu({ formID, cols, data }) {
         close={setshowExportMdl}
         formID={formID}
         cols={cols}
+        report={report}
       />
       <div className="btcd-menu">
         {/* <button onClick={() => importShow()} className="" type="button">Import Data</button>
