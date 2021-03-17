@@ -20,7 +20,7 @@ import EditCpt from './Cpt/EditCpt'
 import EditMailPoet from './MailPoet/EditMailPoet'
 import EditSendinBlue from './SendinBlue/EditSendinBlue'
 import EditWooCommerce from './WooCommerce/EditWooCommerce';
-
+import EditActiveCampaign from './ActiveCampaign/EditActiveCampaign'
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
   const IntegType = () => {
@@ -63,6 +63,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditSendinBlue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'WooCommerce':
         return <EditWooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'ActiveCampaign':
+        return <EditActiveCampaign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

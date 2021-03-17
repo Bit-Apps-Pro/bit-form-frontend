@@ -21,6 +21,7 @@ import mailPoet from '../resource/img/integ/mailpoet.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import sendinblue from '../resource/img/integ/sendinblue.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
+import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -48,6 +49,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
+    { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -60,6 +62,8 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
+    { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
+
   ]
 
   const removeInteg = i => {

@@ -20,6 +20,8 @@ import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorizati
 import GoogleSheetAuthorization from './GoogleSheet/GoogleSheetAuthorization'
 import MailChimpAuthorization from './MailChimp/MailChimpAuthorization'
 import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
+import ActiveCampaignAuthorization from './ActiveCampaign/ActiveCampaignAuthorization'
+
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
@@ -72,6 +74,8 @@ export default function IntegInfo({ allIntegURL, integrations }) {
         return <GoogleSheetAuthorization sheetConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Sendinblue':
         return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
+      case 'ActiveCampaign':
+        return <ActiveCampaignAuthorization activeCampaingConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }
