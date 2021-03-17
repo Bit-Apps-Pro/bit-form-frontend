@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
 
 export default function SendinBlueActions({ sendinBlueConf, setSendinBlueConf }) {

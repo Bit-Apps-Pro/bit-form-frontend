@@ -34,6 +34,11 @@ export default function MenuBtn(props) {
           {'  '}
           Duplicate
         </button>
+        <button type="button" aria-label="actions" onClick={props.export}>
+          <span className="btcd-icn icn-file_download" />
+          {'  '}
+          Export
+        </button>
         <button type="button" aria-label="actions" onClick={props.del}>
           <span className="btcd-icn icn-trash-2" />
           {'  '}

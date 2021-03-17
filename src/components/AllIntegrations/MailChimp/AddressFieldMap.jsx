@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import { __ } from '../../../Utils/i18nwrap'
 
 import { delAddressFieldMap, handleAddress } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
@@ -18,19 +18,17 @@ export default function AddressFieldMap({ i, formFields, field, sheetConf, setSh
       </select>
       <select className="btcd-paper-inp" name="mailChimpAddressField" value={field.mailChimpAddressField || ''} onChange={(ev) => handleAddress(ev, i, sheetConf, setSheetConf, addressField)} disabled={isRequired}>
         <option value="">{__('Select Field', 'bitform')}</option>
-        {isRequired ?
-          Object.values(addressField).map((listField, indx) => (
+        {isRequired
+          ? Object.values(addressField).map((listField, indx) => (
             <option key={indx} value={listField.tag}>
               {listField.name}
             </option>
           ))
-          :
-          Object.values(address).map((listField, indx) => (
+          : Object.values(address).map((listField, indx) => (
             <option key={indx} value={listField.tag}>
               {listField.name}
             </option>
-          ))
-        }
+          ))}
       </select>
       {!isRequired && (
         <button onClick={() => delAddressFieldMap(i, sheetConf, setSheetConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">

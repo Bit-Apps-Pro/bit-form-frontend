@@ -1,6 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import React, { useState } from 'react'
+import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import ConfirmModal from '../ConfirmModal'
 import Loader from '../Loaders/Loader'

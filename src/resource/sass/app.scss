@@ -135,6 +135,7 @@ button.check {
   & input,
   textarea,
   select {
+    height: auto I !important;
     border-radius: 8px !important;
     border-color: lightgray !important;
     &:hover {
@@ -526,7 +527,7 @@ input[type="checkbox"].disabled:checked:before {
   font-size: 17px;
   -ms-user-select: none;
   -webkit-user-select: none;
-  // height: 25px;
+  min-height: 25px;
   margin: 8px;
   width: auto;
 }
@@ -1231,6 +1232,9 @@ input[type="checkbox"].disabled:checked:before {
 
 .pl-6 {
   padding-left: 30px;
+}
+.pb-3 {
+  padding-bottom: 30px;
 }
 .pb-6 {
   padding-bottom: 30px;
@@ -2203,7 +2207,7 @@ nav.top-nav {
   background: #fff;
   left: -90px;
   width: 110px;
-  height: 114px;
+  height: 152px;
   border-radius: 8px;
 }
 
@@ -2738,9 +2742,12 @@ nav.top-nav {
     background-color: #eee !important;
   }
 }
-.btcd-paper-inp.integ-fld-select {
-  width: 389px;
+
+.integ-fld-wrp {
+  min-width: 800px;
+  max-width: 800px;
 }
+
 .btcd-paper-drpdwn {
   --menu-max-height: 300px;
   --font-size: 15px;
@@ -2777,6 +2784,7 @@ select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
   color: $dp-bg !important;
   box-shadow: none;
+  height: auto !important;
   padding: 10px 24px 10px 10px !important;
   appearance: none;
   transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s !important;
@@ -2820,6 +2828,7 @@ select.btcd-paper-inp {
     padding: 0 22px 0 5px;
     min-width: 0;
     min-height: 0;
+    height: auto I !important;
     border-radius: 5px;
     border-color: #ececec;
     line-height: 1;

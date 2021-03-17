@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export default function handleInput(e, mailConf, setMailConf, formID, setisLoading, setSnackbar, isNew, error, setError) {
@@ -31,7 +31,7 @@ export const setGrantTokenResponse = (integ) => {
 }
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
-  console.log('zoho mail')  
+  console.log('zoho mail')
   if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
     setError({
       dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',

@@ -2,10 +2,9 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
 import { useMemo } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { __ } from '../../Utils/i18nwrap';
 import CheckBoxIcn from '../../Icons/CheckBoxIcn';
 import DateIcn from '../../Icons/DateIcn';
 import DateTimeIcn from '../../Icons/DateTimeIcn';
@@ -244,7 +243,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box', 'bitform'),
-        lbl: __('Decision Box', 'bitform'),
+        lbl: `<p><span style="font-size: 12pt;">${__('Decision Box', 'bitform')}</span></p>`,
         msg: {
           checked: 'Accepted',
           unchecked: 'Not Accepted',

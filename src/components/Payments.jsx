@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useContext, useState } from 'react'
 import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
 import { AppSettings } from '../Utils/AppSettingsContext'

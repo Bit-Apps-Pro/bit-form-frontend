@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { addFieldMap, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import CptFieldMap from './CptFieldMap'
@@ -11,9 +11,9 @@ function Cpt({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const history = useHistory()
   const [data, setData] = useState({
-    name: 'Custom Post Type',
+    name: 'Custom Post Type Integration',
     type: 'CPT',
-    field_map: [],
+    field_map: [{}],
   })
 
   const handleInput = (typ, val, isNumber) => {
@@ -35,8 +35,9 @@ function Cpt({ formFields, setIntegration, integrations, allIntegURL }) {
   }, [])
 
   return (
-    <div>
+    <div style={{ width: 900 }}>
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
       <div className="mt-3"><b>{__('Post Type', 'bitform')}</b></div>
       <select name="post_type" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-9 mt-1">
@@ -64,7 +65,8 @@ function Cpt({ formFields, setIntegration, integrations, allIntegURL }) {
         <option value="closed">Closed</option>
       </select>
       <div>
-        <h2>field Mapping</h2>
+        <div className="mt-3 mb-1"><b>Field Mapping</b></div>
+        <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
           <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
           <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>

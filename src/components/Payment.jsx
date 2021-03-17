@@ -1,6 +1,6 @@
-import { __ } from '@wordpress/i18n'
 import { useContext, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'

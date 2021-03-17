@@ -1,5 +1,5 @@
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 
@@ -14,7 +14,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
       .then(result => {
         if (result?.success) {
           setisAuthorized(true)
-          setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitform') })
+          setSnackbar({ show: true, msg: __('Connected with WooCommerce Successfully', 'bitform') })
         }
         setisLoading(false)
         setShowAuthMsg(true)
@@ -58,7 +58,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
 
       {!isAuthorized && (
         <button onClick={authorizeHandler} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button">
-          {__('Authorize', 'bitform')}
+          {__('Connect', 'bitform')}
         </button>
       )}
 

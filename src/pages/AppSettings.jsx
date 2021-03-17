@@ -1,21 +1,21 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
 import { useContext, useState } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import { __ } from '../Utils/i18nwrap';
 // import Cpt from '../components/Cpt/Cpt'
 import Apikey from '../components/Apikey';
 import Captcha from '../components/Captcha';
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
 // import Cpt from '../components/Cpt/Cpt';
 import Payments from '../components/Payments';
-// import GCLID from '../components/GCLID'
+ import GCLID from '../components/GCLID'
 import SMTP from '../components/Smtp/SMTP'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import Cpt from '../components/Cpt/Cpt'
-import CPTIcn from '../Icons/CPTIcn';
-import APIIcon from '../Icons/APIIcon';
-import PaymentsIcn from '../Icons/PaymentsIcn';
+import CPTIcn from '../Icons/CPTIcn'
+import APIIcon from '../Icons/APIIcon'
+import GoogleAds from '../Icons/GoogleAds'
+import PaymentsIcn from '../Icons/PaymentsIcn'
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
@@ -41,10 +41,10 @@ function AppSettingsPage() {
           <span className="btcd-icn icn-loop" />
           {__('reCAPTCHA', 'bitform')}
         </NavLink>
-        {/* <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
-          <span className="btcd-icn icn-loop" />
-          GCLID
-        </NavLink> */}
+        <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
+          <span className="mr-1"><GoogleAds size={21} /></span>
+          {__('Google Ads (Beta)', 'bitform')}
+        </NavLink>
         <NavLink to="/app-settings/smtp" activeClassName="btcd-app-s-a">
           <span className="btcd-icn icn-envelope-open-o" />
           {__('SMTP', 'bitform')}
@@ -67,9 +67,9 @@ function AppSettingsPage() {
         <Route path="/app-settings/recaptcha">
           <Captcha saveCaptcha={saveCaptcha} />
         </Route>
-        {/* <Route path="/app-settings/gclid">
-          <GCLID saveCaptcha={saveCaptcha} />
-        </Route> */}
+        <Route path="/app-settings/gclid">
+          <GCLID />
+        </Route>
         <Route path="/app-settings/smtp">
           <SMTP setsnack={setsnack} />
         </Route>

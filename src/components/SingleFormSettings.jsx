@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import DatePicker from 'react-date-picker';
 import TimePicker from 'react-time-picker'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../Utils/i18nwrap';
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
 import Accordions from './ElmSettings/Childs/Accordions'
 import CheckBox from './ElmSettings/Childs/CheckBox'

@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../../Utils/i18nwrap';
 import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import { useHistory, useParams } from 'react-router-dom';
@@ -29,7 +29,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
   const nextPage = (val) => {
     if (val === 3) {
       if (!checkMappedFields(mailPoetConf)) {
-        setSnackbar({ show: true, msg: 'Please map all required fields to continue.'})
+        setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
       }
       if (mailPoetConf.name !== '' && mailPoetConf.field_map.length > 0) {

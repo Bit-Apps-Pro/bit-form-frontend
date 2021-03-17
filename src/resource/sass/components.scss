@@ -140,7 +140,7 @@ textarea.fld {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  // height: 19px;
+  min-height: 19px;
   margin: 8px;
   width: auto;
 }
@@ -463,8 +463,8 @@ textarea.fld {
   padding: 50px !important;
 }
 
-.tinymce-content.frntend {
-  * {
-    margin-bottom: 0 !important;
-  }
+.decision-content * {
+  padding: 0;
+  margin: 0;
+  line-height: 1.3;
 }

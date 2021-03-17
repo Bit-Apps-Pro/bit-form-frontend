@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
+import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'

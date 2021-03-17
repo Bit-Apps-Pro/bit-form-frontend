@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import CopyText from '../../ElmSettings/Childs/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -47,7 +47,7 @@ export default function ZohoSingAuthorization({ formID, signConf, setSignConf, s
       <small className="d-blk mt-5">
         {__('To get Client ID and SECRET , Please Visit', 'bitform')}
         {' '}
-        <a className="btcd-link" href="https://api-console.zoho.com/" target="_blank" rel="noreferrer">{__('Zoho API Console', 'bitform')}</a>
+        <a className="btcd-link" href={`https://api-console.zoho.${signConf?.dataCenter || 'com'}/`} target="_blank" rel="noreferrer">{__('Zoho API Console', 'bitform')}</a>
       </small>
 
       <div className="mt-3"><b>{__('Client id:', 'bitform')}</b></div>

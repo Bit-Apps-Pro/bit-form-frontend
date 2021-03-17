@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useState, useEffect } from 'react'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { Scrollbars } from 'react-custom-scrollbars'
+import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import ConfigForm from './ConfigForm'
 import MailSendTest from './MailSendTest'
@@ -26,22 +25,22 @@ export default function SMTP({ setsnack }) {
   }, [])
 
   return (
-    <Scrollbars>
+    <Scrollbars style={{ width: '100%', height: 525 }}>
       <div className="btcd-captcha w-5" style={{ padding: 10 }}>
         <div className="pos-rel">
           {!isPro && (
-          <div className="pro-blur flx" style={{ height: '111%', left: -15, width: '104%' }}>
-            <div className="pro">
-              {__('Available On', 'bitform')}
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
-                <span className="txt-pro">
-                  {' '}
-                  {__('Premium', 'bitform')}
-                </span>
-              </a>
+            <div className="pro-blur flx" style={{ height: '111%', left: -15, width: '104%' }}>
+              <div className="pro">
+                {__('Available On', 'bitform')}
+                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                  <span className="txt-pro">
+                    {' '}
+                    {__('Premium', 'bitform')}
+                  </span>
+                </a>
+              </div>
             </div>
-          </div>
-        )}
+          )}
           <Tabs>
             <Tab>
               <button className={`btcd-s-tab-link ${tab === 'mail_config' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">

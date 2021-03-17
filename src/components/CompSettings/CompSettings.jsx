@@ -1,8 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import { __ } from '../../Utils/i18nwrap'
 import BrushIcn from '../../Icons/BrushIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'

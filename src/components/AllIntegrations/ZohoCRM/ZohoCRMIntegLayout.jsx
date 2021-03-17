@@ -1,6 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+import { __ } from '../../../Utils/i18nwrap'
 import ZohoCRMNewRecord from './ZohoCRMNewRecord'
 import ZohoCRMRelatedRecord from './ZohoCRMRelatedRecord'
 import { refreshModules } from './ZohoCRMCommonFunc'

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { __ } from '@wordpress/i18n'
 import { Link, useHistory } from 'react-router-dom';
+import { __ } from '../../../Utils/i18nwrap'
 import Background from './StyleComponents/Background'
 import Borders from './StyleComponents/Borders'
 import Padding from './StyleComponents/Padding'

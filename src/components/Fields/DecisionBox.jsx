@@ -43,7 +43,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         <label className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
           <span
-            className="tinymce-content"
+            className="decision-content"
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: attr.lbl || attr?.info?.lbl }}
           />

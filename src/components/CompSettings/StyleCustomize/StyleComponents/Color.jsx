@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../../../Utils/i18nwrap';
 import StyleAccordion from '../ChildComp/StyleAccordion';
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'

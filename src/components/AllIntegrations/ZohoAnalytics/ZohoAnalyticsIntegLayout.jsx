@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
+import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import ZohoAnalyticsActions from './ZohoAnalyticsActions'
 import { refreshTableHeaders, refreshTables, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'

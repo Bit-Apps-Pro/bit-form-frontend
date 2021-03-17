@@ -2,12 +2,12 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import BrushIcn from '../Icons/BrushIcn'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
@@ -200,7 +200,7 @@ function GridLayout(props) {
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
-    const newBlk = { i: `b${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
+    const newBlk = { i: `bf${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
     tmpLayouts.lg.push(newBlk)
@@ -218,7 +218,7 @@ function GridLayout(props) {
     }
     setLayouts({ ...tmpLayouts })
     const tmpField = deepCopy(newData[0])
-    setFields({ ...fields, [`b${formID}-${newCounter + 1}`]: tmpField })
+    setFields({ ...fields, [`bf${formID}-${newCounter + 1}`]: tmpField })
     setNewCounter(newCounter + 1)
     sessionStorage.setItem('btcd-lc', '-')
   }
@@ -284,7 +284,7 @@ function GridLayout(props) {
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `b${formID}-${newCounter + 1}`
+    const newBlk = `bf${formID}-${newCounter + 1}`
 
     const tmpLayouts = layouts
     tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
@@ -349,7 +349,7 @@ function GridLayout(props) {
   }
 
   const compByTheme = compData => {
-    if (compData.typ === 'recaptcha') {
+    if (compData && compData.typ === 'recaptcha') {
       // eslint-disable-next-line no-param-reassign
       compData.siteKey = reCaptchaV2.siteKey
     }

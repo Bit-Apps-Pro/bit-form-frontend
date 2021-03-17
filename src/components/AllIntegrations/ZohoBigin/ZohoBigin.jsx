@@ -1,14 +1,13 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
-import Steps from '../../ElmSettings/Childs/Steps';
-import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import { handleInput, refreshModules } from './ZohoBiginCommonFunc';
-import ZohoBiginIntegLayout from './ZohoBiginIntegLayout';
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
+import Steps from '../../ElmSettings/Childs/Steps'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { handleInput } from './ZohoBiginCommonFunc'
+import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
 import ZohoBiginAuthorization from './ZohoBiginAuthorization'
 
 function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {

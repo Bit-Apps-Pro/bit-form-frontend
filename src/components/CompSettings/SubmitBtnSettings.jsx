@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../Utils/i18nwrap';
 import SingleInput from '../ElmSettings/Childs/SingleInput';
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
 import SelectBox2 from '../ElmSettings/Childs/SelectBox2'

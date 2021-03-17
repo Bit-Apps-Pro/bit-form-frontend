@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../ElmSettings/Childs/CopyText'
 import SingleInput from '../ElmSettings/Childs/SingleInput'
 import SingleToggle from '../ElmSettings/Childs/SingleToggle'
@@ -70,7 +69,8 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
         <b>Label: </b>
         <br />
         <TinyMCE
-          value={elmData.lbl || elmData.info.lbl}
+          id={elmId}
+          value={elmData.lbl || elmData?.info?.lbl}
           onChangeHandler={setLbl}
         />
       </div>

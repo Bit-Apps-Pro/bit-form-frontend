@@ -1,8 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { useState, useEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars'
+import { __ } from '../../Utils/i18nwrap'
 import CptTypeAdd from './CptTypeAdd'
 import EditCpt from './EditCpt'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -23,7 +22,7 @@ export default function Cpt() {
   }, [])
 
   return (
-    <Scrollbars>
+    <Scrollbars style={{ width: '100%', height: 525 }}>
       <div className="p-2 w-6">
         <div className="pos-rel">
           {!isPro && (
@@ -32,7 +31,7 @@ export default function Cpt() {
                 {__('Available On', 'bitform')}
                 <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
-                    {' '}
+                    &nbsp;
                     {__('Premium', 'bitform')}
                   </span>
                 </a>

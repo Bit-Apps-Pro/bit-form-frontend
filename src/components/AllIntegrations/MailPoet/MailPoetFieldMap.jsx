@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../../Utils/i18nwrap';
 import MtInput from '../../ElmSettings/Childs/MtInput';
 
 export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, setMailPoetConf }) {
@@ -39,45 +39,47 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
 
   return (
     <div
-      className={isRequired ? "mt-2 mr-1" : "flx flx-around mt-2 mr-1"}
+      className="flx mt-2 mr-1"
     >
-      <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
-        <option value="">{__('Select Field', 'bitform')}</option>
-        {
-          formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
-        }
-        <option value="custom">{__('Custom...', 'bitform')}</option>
-      </select>
+      <div className="flx integ-fld-wrp">
+        <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {
+            formFields.map(f => f.type !== 'file-up' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)
+          }
+          <option value="custom">{__('Custom...', 'bitform')}</option>
+        </select>
 
-      {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
+        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bitform')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bitform')} />}
 
-      <select className="btcd-paper-inp" name="mailPoetField" value={field.mailPoetField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
-        <option value="">{__('Select Field', 'bitform')}</option>
-        {isRequired ? mailPoetConf?.default?.fields && Object.values(mailPoetConf.default.fields).map(fld => (
-          <option key={`${fld.id}-1`} value={fld.id}>
-            {fld.name}
-          </option>
-        )) : notResquiredField && notResquiredField.map(fld => (
-          <option key={`${fld.id}-1`} value={fld.id}>
-            {fld.name}
-          </option>
-        ))}
-      </select>
+        <select className="btcd-paper-inp" name="mailPoetField" value={field.mailPoetField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+          <option value="">{__('Select Field', 'bitform')}</option>
+          {isRequired ? mailPoetConf?.default?.fields && Object.values(mailPoetConf.default.fields).map(fld => (
+            <option key={`${fld.id}-1`} value={fld.id}>
+              {fld.name}
+            </option>
+          )) : notResquiredField && notResquiredField.map(fld => (
+            <option key={`${fld.id}-1`} value={fld.id}>
+              {fld.name}
+            </option>
+          ))}
+        </select>
+      </div>
       {!isRequired
         && (
-        <>
-          <button
-            onClick={() => addFieldMap(i)}
-            className="icn-btn sh-sm ml-2"
-            type="button"
-          >
-            +
-          </button>
-          <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
-            <span className="btcd-icn icn-trash-2" />
-          </button>
-        </>
-      )}
+          <>
+            <button
+              onClick={() => addFieldMap(i)}
+              className="icn-btn sh-sm ml-2 mr-1"
+              type="button"
+            >
+              +
+            </button>
+            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+              <span className="btcd-icn icn-trash-2" />
+            </button>
+          </>
+        )}
     </div>
   )
 }

@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../../../Utils/i18nwrap';
 import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams, useHistory } from 'react-router-dom'
@@ -39,13 +39,13 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
   console.log('crmConf', crmConf)
 
-  const nextPage = () => {
+  const nextPage = (pageNo) => {
     if (!checkMappedFields(crmConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
 
-    crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(val)
+    crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(pageNo)
   }
   document.querySelector('.btcd-s-wrp').scrollTop = 0
 

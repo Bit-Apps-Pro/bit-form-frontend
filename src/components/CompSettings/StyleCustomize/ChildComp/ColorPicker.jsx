@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import { ColorPicker as Picker } from 'react-color-gradient-picker';
 import { CSSTransition } from 'react-transition-group';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+import { __ } from '../../../../Utils/i18nwrap';
 import hexToRGBA from '../../../../Utils/hex2RGBA';
 import useComponentVisible from './useComponentVisible';
 import 'react-color-gradient-picker/dist/index.css';

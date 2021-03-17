@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
 import BrushIcn from '../../../Icons/BrushIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 

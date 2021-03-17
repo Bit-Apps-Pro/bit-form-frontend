@@ -1,11 +1,11 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
+import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'
 import FormEntryPayments from './FormEntryPayments'
 import FormEntryTimeline from './FormEntryTimeline'
 import Modal from '../Modal'
+import GoogleAdInfo from './GoogleAdInfo'
 
 export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, setSnackbar, integrations, close }) {
   const [tab, settab] = useState('')
@@ -31,6 +31,13 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
             {__('Notes', 'bitform')}
           </button>
         </Tab>
+        {rowDtl?.GCLID ? (
+          <Tab>
+            <button className={`btcd-s-tab-link ${tab === 'google_ad' && 's-t-l-active'}`} type="button">
+              {__('Google Ads Information', 'bitform')}
+            </button>
+          </Tab>
+        ) : ''}
 
         {paymentFields?.length ? (
           <Panel>
@@ -63,8 +70,16 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
             settab={settab}
           />
         </Panel>
+        {rowDtl?.GCLID ? (
+          <Panel>
+            <GoogleAdInfo
+              rowDtl={rowDtl}
+              settab={settab}
+            />
+          </Panel>
+        ) : ''}
       </Tabs>
 
-    </Modal >
+    </Modal>
   )
 }

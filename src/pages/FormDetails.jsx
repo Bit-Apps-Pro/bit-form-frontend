@@ -1,7 +1,6 @@
 import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'

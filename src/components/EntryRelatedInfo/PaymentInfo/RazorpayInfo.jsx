@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import noData from '../../../resource/img/nodata.svg'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
 

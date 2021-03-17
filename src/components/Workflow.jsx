@@ -3,8 +3,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+
+import { __ } from '../Utils/i18nwrap';
 import Button from './ElmSettings/Childs/Button'
 import LogicChip from './ElmSettings/Childs/LogicChip'
 import LogicBlock from './ElmSettings/Childs/LogicBlock'
@@ -529,7 +529,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
       />
       <h2>{__('Conditional Logics', 'bitform')}</h2>
 
-      {isPro && (
+      {((!isPro && !workFlows.length) || isPro) && (
         <Button className="blue" onClick={addLogicGrp}>
           <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
           {__('Add Conditional Logic', 'bitform')}
@@ -797,19 +797,20 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           {!isPro && (
             <div className="txt-center bg-pro p-5 mt-2">
               {__('For', 'bitform')}
+              &nbsp;
               <span className="txt-pro">{__('UNLIMITED', 'bitform')}</span>
-              {' '}
+              &nbsp;
               {__('Conditional Logics', 'bitform')}
-              ,
+              ,&nbsp;
               <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">{__('Buy Premium', 'bitform')}</b></a>
             </div>
           )}
         </Fragment>
       )) : (
-          <div className="txt-center btcd-empty">
-            <span className="btcd-icn icn-stack" />
-            {__('Empty', 'bitform')}
-          </div>
+        <div className="txt-center btcd-empty">
+          <span className="btcd-icn icn-stack" />
+          {__('Empty', 'bitform')}
+        </div>
         )}
     </div>
   )

@@ -2,8 +2,7 @@
 import { createRef, useState, useCallback, useReducer, useEffect } from 'react';
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
+import { __ } from '../Utils/i18nwrap';
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
