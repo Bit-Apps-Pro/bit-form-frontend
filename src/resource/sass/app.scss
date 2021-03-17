@@ -135,6 +135,7 @@ button.check {
   & input,
   textarea,
   select {
+    height: auto I !important;
     border-radius: 8px !important;
     border-color: lightgray !important;
     &:hover {
@@ -2783,6 +2784,7 @@ select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
   color: $dp-bg !important;
   box-shadow: none;
+  height: auto !important;
   padding: 10px 24px 10px 10px !important;
   appearance: none;
   transition: background-position-y 0.2s, border 0.2s, box-shadow 0.2s !important;
@@ -2826,6 +2828,7 @@ select.btcd-paper-inp {
     padding: 0 22px 0 5px;
     min-width: 0;
     min-height: 0;
+    height: auto I !important;
     border-radius: 5px;
     border-color: #ececec;
     line-height: 1;
