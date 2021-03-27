@@ -144,13 +144,16 @@ textarea.fld {
   margin: 8px;
   width: auto;
 }
+.fld > .btcd-ck-wrp >span {
+  line-height: 1.3;
+}
 
 .fld .btcd-ck-wrp input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 0;
+  height: 5px;
+  width: 5px;
 }
 
 .fld .btcd-ck-con {
