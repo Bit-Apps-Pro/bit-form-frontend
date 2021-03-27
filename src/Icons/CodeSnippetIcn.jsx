@@ -1,6 +1,6 @@
 export default function CodeSnippetIcn({ size }) {
   return (
-    <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 150 100">
+    <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="-25 -10 150 100">
       <path
         fill="currentColor"
         stroke="currentColor"
