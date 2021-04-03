@@ -71,9 +71,9 @@ function App() {
                 <NavLink
                   to="/app-settings/recaptcha"
                   activeClassName="app-link-active"
-                  isActive={(m, l) => l.pathname.match(/app-settings\/recaptcha|app-settings\/smtp/g)}
+                  isActive={(m, l) => l.pathname.match(/app-settings|recaptcha|gclid|cpt|api|smtp|payments/g)}
                 >
-                  {__('Settings', 'bitform')}
+                  {__('App Settings', 'bitform')}
                 </NavLink>
               </nav>
             </div>

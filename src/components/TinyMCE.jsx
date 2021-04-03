@@ -2,11 +2,11 @@
 import { useEffect } from 'react'
 import { __ } from '../Utils/i18nwrap'
 
-export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu }) {
+export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, height, width }) {
   useEffect(() => {
     window.tinymce && tinymce.remove()
     return () => window.tinymce && tinymce.remove()
-  }, [id])
+  }, [])
 
   useEffect(() => {
     window.tinymce && tinymce.remove()
@@ -22,14 +22,16 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
       }
       // eslint-disable-next-line no-undef
       tinymce.init({
-        selector: '#body-content',
-        plugins: 'link hr lists wpview wpemoji',
-        theme: 'modern',
-        menubar: false,
+        selector: `textarea#${id}-settings`,
+        height: height || 150,
+        width: width || 300,
         branding: false,
         resize: 'verticle',
-        min_width: 300,
-        toolbar: toolbarMnu || 'formatselect fontsizeselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField | toogleCode',
+        convert_urls: false,
+        theme: 'modern',
+        plugins: 'directionality fullscreen image link media charmap hr lists textcolor colorpicker wordpress',
+        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code| addFormField',
+        image_advtab: true,
         default_link_target: '_blank',
         setup(editor) {
           editor.on('Paste Change input Undo Redo', () => {
@@ -49,9 +51,8 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
             tooltip: __('Toggle preview', 'bitform'),
             icon: false,
             onclick(e) {
-              // eslint-disable-next-line no-undef
-              const $ = tinymce.dom.DomQuery
-              const myTextarea = $('textarea')
+              const { $ } = e.control
+              const myTextarea = $(`#${id}-settings`)
               const myIframe = $(editor.iframeElement)
               myTextarea.value = editor.getContent({
                 source_view: true,
@@ -61,8 +62,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
               if ($('iframe.hidden').length > 0) {
                 myTextarea.prependTo('.mce-edit-area')
               } else {
-                myIframe.value = myTextarea.value
-                myTextarea.appendTo('body')
+                editor.setContent(document.getElementById(`${id}-settings`).value)
               }
             },
           })
@@ -73,11 +73,12 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
 
   return (
     <textarea
-      id="body-content"
+      id={`${id}-settings`}
       className="btcd-paper-inp mt-1"
       rows="5"
       value={value}
-      onChange={onChangeHandler}
+      onChange={(ev) => onChangeHandler(ev.target.value)}
+      style={{ width: '95.5%', height: 'auto' }}
     />
   )
 }

@@ -513,9 +513,7 @@ function Toast(props) {
     float: !props.editMode && 'right',
   }
   if (props.index && props.index > 0) {
-    if (props.editMode) {
       toatStyles.bottom += props.index * 2 * 45
-    }
   }
   useEffect(() => {
     if (!snack && props.canClose && props.show) {

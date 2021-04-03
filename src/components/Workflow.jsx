@@ -469,6 +469,13 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           break
         }
       }
+    } else if (typ === 'attachment') {
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.attachment = e ? e.split(',') : []
+          break
+        }
+      }
     }
     setworkFlows([...workFlows])
   }
@@ -515,6 +522,15 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
       }
     }
     return false
+  }
+  const fileInFormField = () => {
+    const file = []
+    for (const field of formFields) {
+      if (field.type === 'file-up') {
+        file.push({ label: field.name, value: field.key })
+      }
+    }
+    return file
   }
 
   return (
@@ -742,6 +758,15 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             titleClassName="w-7 mt-2"
                             addable
                             options={mailOptions(getValueFromArr('mailNotify', 'replyto', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('attachment', val, lgcGrpInd)}
+                            placeholder={__('Attachment', 'bitform')}
+                            value={getValueFromArr('mailNotify', 'attachment', lgcGrpInd)}
+                            title={<span className="f-m">{__('Attachment', 'bitform')}</span>}
+                            isMultiple
+                            titleClassName="w-7 mt-2"
+                            options={fileInFormField()}
                           />
                         </>
                       )}
