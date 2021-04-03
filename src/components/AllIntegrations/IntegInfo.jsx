@@ -19,6 +19,12 @@ import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
 import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
 import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
 import ActiveCampaignAuthorization from './ActiveCampaign/ActiveCampaignAuthorization'
+import WebHooksLayouts from './WebHooks/WebHooksLayouts'
+import ZapierLayouts from './Zapier/ZapierLayouts'
+import IntegromatLayouts from './Integromat/IntegromatLayouts'
+import ZohoFlowLayouts from './ZohoFlow/ZohoFlowLayouts'
+import IntegratelyLayouts from './Integrately/IntegratelyLayouts'
+import PabblyLayouts from './Pabbly/PabblyLayouts'
 
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
@@ -67,6 +73,18 @@ export default function IntegInfo({ allIntegURL, integrations }) {
         return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'ActiveCampaign':
         return <ActiveCampaignAuthorization activeCampaingConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Web Hooks':
+        return <WebHooksLayouts webHooks={integ} setSnackbar={setSnackbar} isInfo />
+      case 'Zapier':
+        return <ZapierLayouts zapier={integ} setSnackbar={setSnackbar} isInfo />
+      case 'Integromat':
+        return <IntegromatLayouts integromat={integ} setSnackbar={setSnackbar} isInfo />
+      case 'Integrately':
+        return <IntegratelyLayouts integrately={integ} setSnackbar={setSnackbar} isInfo />
+      case 'Pabbly':
+        return <PabblyLayouts pabbly={integ} setSnackbar={setSnackbar} isInfo />
+      case 'Zoho Flow':
+        return <ZohoFlowLayouts zohoFlow={integ} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

@@ -21,6 +21,12 @@ import MailPoet from './MailPoet/MailPoet'
 import Sendinblue from './SendinBlue/SendinBlue'
 import WooCommerce from './WooCommerce/WooCommerce'
 import ActiveCampaign from './ActiveCampaign/ActiveCampaign'
+import WebHooks from './WebHooks/WebHooks'
+import Zapier from './Zapier/Zapier'
+import Integromat from './Integromat/Integromat'
+import ZohoFlow from './ZohoFlow/ZohoFlow'
+import Integrately from './Integrately/Integrately'
+import Pabbly from './Pabbly/Pabbly'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -67,6 +73,18 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <WooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ActiveCampaign':
         return <ActiveCampaign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Web Hooks':
+        return <WebHooks allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zapier':
+        return <Zapier allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Integromat':
+        return <Integromat allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Integrately':
+        return <Integrately allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Pabbly':
+        return <Pabbly allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Flow':
+        return <ZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
