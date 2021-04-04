@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
-import IntegromatLayouts from './IntegromatLayouts';
 
 function EditIntegromat({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -21,11 +21,11 @@ function EditIntegromat({ formFields, setIntegration, integrations, allIntegURL 
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3">
-        <IntegromatLayouts
+        <WebHooksIntegration
           formID={formID}
           formFields={formFields}
-          integromat={integromat}
-          setIntegromat={setIntegromat}
+          webHooks={integromat}
+          setWebHooks={setIntegromat}
           setSnackbar={setSnackbar}
         />
       </div>

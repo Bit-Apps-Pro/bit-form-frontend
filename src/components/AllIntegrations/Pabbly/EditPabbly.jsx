@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
-import PabblyLayouts from './PabblyLayouts';
 
 function EditPabbly({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -21,11 +21,11 @@ function EditPabbly({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3">
-        <PabblyLayouts
+        <WebHooksIntegration
           formID={formID}
           formFields={formFields}
-          pabbly={pabbly}
-          setPabbly={setPabbly}
+          webHooks={pabbly}
+          setWebHooks={setPabbly}
           setSnackbar={setSnackbar}
         />
       </div>

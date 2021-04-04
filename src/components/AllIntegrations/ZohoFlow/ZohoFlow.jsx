@@ -5,8 +5,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import Steps from '../../ElmSettings/Childs/Steps';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
-import ZohoFlowLayouts from './ZohoFlowLayouts';
 
 function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -27,11 +27,11 @@ function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
 
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-        <ZohoFlowLayouts
+        <WebHooksLayouts
           formID={formID}
           formFields={formFields}
-          zohoFlow={zohoFlow}
-          setZohoFlow={setZohoFlow}
+          webHooks={zohoFlow}
+          setWebHooks={setZohoFlow}
           step={step}
           setstep={setstep}
           setSnackbar={setSnackbar}

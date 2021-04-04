@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
-import ZohoFlowLayouts from './ZohoFlowLayouts';
 
 function EditZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -21,11 +21,11 @@ function EditZohoFlow({ formFields, setIntegration, integrations, allIntegURL })
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3">
-        <ZohoFlowLayouts
+        <WebHooksIntegration
           formID={formID}
           formFields={formFields}
-          zohoFlow={zohoFlow}
-          setZohoFlow={setZohoFlow}
+          webHooks={zohoFlow}
+          setWebHooks={setZohoFlow}
           setSnackbar={setSnackbar}
         />
       </div>

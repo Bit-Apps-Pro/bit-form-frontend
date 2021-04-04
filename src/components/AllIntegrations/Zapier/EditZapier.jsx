@@ -4,15 +4,14 @@ import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
+import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
-import ZapierLayouts from './ZapierLayouts';
 
 function EditZapier({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { id, formID } = useParams()
 
   const [zapier, setZapier] = useState({ ...integrations[id] })
-  const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
   console.log('user zapier', zapier)
@@ -22,11 +21,11 @@ function EditZapier({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3">
-        <ZapierLayouts
+        <WebHooksLayouts
           formID={formID}
           formFields={formFields}
-          zapier={zapier}
-          setZapier={setZapier}
+          webHooks={zapier}
+          setWebHooks={setZapier}
           setSnackbar={setSnackbar}
         />
       </div>

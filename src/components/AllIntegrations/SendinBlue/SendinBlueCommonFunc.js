@@ -33,6 +33,31 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
     .catch(() => setIsLoading(false))
 }
 
+export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) => {
+  // setIsLoading(true)
+  const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
+  bitsFetch(refreshListsRequestParams, 'bitforms_sblue_refresh_template')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...sendinBlueConf }
+        if (!newConf.default) {
+          newConf.default = {}
+        }
+        if (result.data.sblueTemplates) {
+          newConf.default.sblueTemplates = result.data.sblueTemplates
+        }
+        setSnackbar({ show: true, msg: __('Templates refreshed', 'bitform') })
+        setSendinBlueConf({ ...newConf })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: sprintf(__('Templates refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
+      } else {
+        setSnackbar({ show: true, msg: __('Templates failed. please try again', 'bitform') })
+      }
+      // setIsLoading(false)
+    })
+    // .catch(() => setIsLoading(false))
+}
+
 export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar) => {
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'bitforms_sblue_headers')
@@ -59,8 +84,7 @@ export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setis
 
 export const checkMappedFields = sendinBlueConf => {
   const mappedFields = sendinBlueConf?.field_map ? sendinBlueConf.field_map.filter(mappedField => (!mappedField.formField && mappedField.sendinBlueField && mappedField.required)) : []
-  if (mappedFields.length > 0) {
-    return false
-  }
+  if (sendinBlueConf.lists && sendinBlueConf.lists?.length === undefined) return false
+  if (mappedFields.length > 0) return false
   return true
 }

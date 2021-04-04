@@ -2,8 +2,11 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../ElmSettings/Childs/SnackMsg'
+import ActiveCampaignAuthorization from './ActiveCampaign/ActiveCampaignAuthorization'
 import GoogleSheetAuthorization from './GoogleSheet/GoogleSheetAuthorization'
+import WebHooksIntegration from './IntegrationHelpers/WebHooksIntegration'
 import MailChimpAuthorization from './MailChimp/MailChimpAuthorization'
+import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
 import ZohoAnalyticsAuthorization from './ZohoAnalytics/ZohoAnalyticsAuthorization'
 import ZohoBiginAuthorization from './ZohoBigin/ZohoBiginAuthorization'
 import ZohoCampaignsAuthorization from './ZohoCampaigns/ZohoCampaignsAuthorization'
@@ -17,14 +20,6 @@ import ZohoRecruitAuthorization from './ZohoRecruit/ZohoRecruitAuthorization'
 import ZohoSheetAuthorization from './ZohoSheet/ZohoSheetAuthorization'
 import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
 import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
-import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
-import ActiveCampaignAuthorization from './ActiveCampaign/ActiveCampaignAuthorization'
-import WebHooksLayouts from './WebHooks/WebHooksLayouts'
-import ZapierLayouts from './Zapier/ZapierLayouts'
-import IntegromatLayouts from './Integromat/IntegromatLayouts'
-import ZohoFlowLayouts from './ZohoFlow/ZohoFlowLayouts'
-import IntegratelyLayouts from './Integrately/IntegratelyLayouts'
-import PabblyLayouts from './Pabbly/PabblyLayouts'
 
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
@@ -74,17 +69,17 @@ export default function IntegInfo({ allIntegURL, integrations }) {
       case 'ActiveCampaign':
         return <ActiveCampaignAuthorization activeCampaingConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       case 'Web Hooks':
-        return <WebHooksLayouts webHooks={integ} setSnackbar={setSnackbar} isInfo />
+        return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Zapier':
-        return <ZapierLayouts zapier={integ} setSnackbar={setSnackbar} isInfo />
+        return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Integromat':
-        return <IntegromatLayouts integromat={integ} setSnackbar={setSnackbar} isInfo />
+        return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Integrately':
-        return <IntegratelyLayouts integrately={integ} setSnackbar={setSnackbar} isInfo />
+        return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Pabbly':
-        return <PabblyLayouts pabbly={integ} setSnackbar={setSnackbar} isInfo />
+        return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Zoho Flow':
-        return <ZohoFlowLayouts zohoFlow={integ} setSnackbar={setSnackbar} isInfo />
+        return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

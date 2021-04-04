@@ -17,6 +17,7 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const [error, setError] = useState({ templateId: '', RedirectionUrl: '' })
   const [sendinBlueConf, setSendinBlueConf] = useState({
     name: 'Sendinblue API',
     type: 'Sendinblue',
@@ -30,6 +31,13 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
   console.log('sendinBlueConf', sendinBlueConf)
   const nextPage = (val) => {
     if (val === 3) {
+      if (sendinBlueConf.templateId === '' || sendinBlueConf.redirectionUrl === '') {
+        setError({
+          templateId: !sendinBlueConf.templateId ? __('Template name cann\'t be empty', 'bitform') : '',
+          redirectionUrl: !sendinBlueConf.redirectionUrl ? __('Redirection url name cann\'t be empty', 'bitform') : '',
+        })
+        return
+      }
       if (!checkMappedFields(sendinBlueConf)) {
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
@@ -67,6 +75,8 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
           isLoading={isLoading}
           setisLoading={setisLoading}
           setSnackbar={setSnackbar}
+          error={error}
+          setError={setError}
         />
         <button
           onClick={() => nextPage(3)}

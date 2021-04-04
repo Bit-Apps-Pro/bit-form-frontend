@@ -1,14 +1,74 @@
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import Button from '../../ElmSettings/Childs/Button'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { testWebHook, handleInput, setFromField, addParam, delParam, handleParam } from '../IntegrationHelpers/WebHooksHelpers'
 
 export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
   const getUrlParams = url => url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
   const [isLoading, setIsLoading] = useState(false)
   const method = ['GET', 'POST', 'PUT', 'PATCH', 'OPTION', 'DELETE', 'TRACE', 'CONNECT']
+
+  const testWebHook = (webHooksDetaila) => {
+    setIsLoading(true)
+    bitsFetch({ hookDetails: webHooksDetaila }, 'bitforms_test_webhook').then(response => {
+      if (response && response.success) {
+        setSnackbar({ show: true, msg: `${response.data}` })
+        setIsLoading(false)
+      } else if (response && response.data) {
+        const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
+        setSnackbar({ show: true, msg: `${msg}. ${__('please try again', 'bitform')}` })
+        setIsLoading(false)
+      } else {
+        setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
+        setIsLoading(false)
+      }
+    })
+  }
+  const handleParam = (typ, val, pram) => {
+    const tmpConf = { ...webHooks }
+    if (val !== '') {
+      if (typ === 'key') {
+        tmpConf.url = tmpConf.url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
+      } else {
+        tmpConf.url = tmpConf.url.replace(pram, `${pram.split('=')[0]}=${val}`)
+      }
+    } else if (pram.match(/\?/g) === null) {
+      tmpConf.url = tmpConf.url.replace(pram, '')
+    } else {
+      tmpConf.url = tmpConf.url.replace(`${pram}&`, '?')
+    }
+    setWebHooks(tmpConf)
+  }
+
+  const handleInput = (e) => {
+    const tmpConfConf = { ...webHooks }
+    tmpConfConf[e.target.name] = e.target.value
+    setWebHooks({ ...tmpConfConf })
+  }
+
+  const setFromField = (val, param) => {
+    const tmpConf = { ...webHooks }
+    const a = param.split('=')
+    a[1] = val
+    tmpConf.url = tmpConf.url.replace(param, a.join('='))
+    setWebHooks(tmpConf)
+  }
+  const addParam = () => {
+    const tmpConf = { ...webHooks }
+    if (tmpConf.url.match(/\?/g) !== null) {
+      tmpConf.url += '&key=value'
+    } else {
+      tmpConf.url += '?key=value'
+    }
+    setWebHooks(tmpConf)
+  }
+  const delParam = (param) => {
+    const tmpConf = { ...webHooks }
+    tmpConf.url = tmpConf.url.replace(param, '')
+    setWebHooks(tmpConf)
+  }
   const nextPage = () => {
     setstep(2)
   }
@@ -17,7 +77,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
       <div style={{ ...{ width: isInfo && 900 } }}>
         <div className="flx ">
           <div className="w-7 mr-2 mb-4">
-            <div className="f-m">{__('Web Hook name:', 'bitform')}</div>
+            <div className="f-m">{__('Integration name', 'bitform')}</div>
             <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
           </div>
         </div>
