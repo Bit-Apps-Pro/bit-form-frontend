@@ -3,6 +3,7 @@ import TextField from './Fields/TextField'
 import TextArea from './Fields/TextArea'
 import CheckBox from './Fields/CheckBox'
 import DecisionBox from './Fields/DecisionBox'
+import Html from './Fields/Html'
 import RadioBox from './Fields/RadioBox'
 import DropDown from './Fields/DropDown'
 import FileUp from './Fields/FileUp'
@@ -55,6 +56,8 @@ function CompGen(props) {
       return <ReCaptcha formID={props.formID} attr={props.atts} />
     case 'decision-box':
       return <DecisionBox formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+    case 'html':
+      return <Html formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'paypal':
       return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'razorpay':

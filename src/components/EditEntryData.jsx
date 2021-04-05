@@ -81,11 +81,13 @@ export default function EditEntryData(props) {
             }
           }
           setAllResp(tmp)
-        } else if (response.data && response.data.data) {
-          setError(response.data.data)
+        } else if (response.data) {
+          setError(response.data)
         }
-        props.close(false)
-        setisLoading(false)
+        setTimeout(() => {
+          props.close(false)
+          setisLoading(false)
+        }, 3000);
       })
   }
 

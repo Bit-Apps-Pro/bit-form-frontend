@@ -8,6 +8,7 @@ import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import DateIcn from '../../Icons/DateIcn'
 import DateTimeIcn from '../../Icons/DateTimeIcn'
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
+import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FieldIcn from '../../Icons/FieldIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
@@ -28,6 +29,7 @@ import TimeIcn from '../../Icons/TimeIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import WeekIcn from '../../Icons/WeekIcn'
 import DecisionBoxSettings from './DecisionBoxSettings'
+import HtmlFieldSettings from './HtmlFieldSettings'
 import FileUpSettings from './FileUpSettings'
 import PaypalSettings from './PaypalSettings'
 import RadioCheckSettings from './RadioCheckSettings'
@@ -178,6 +180,8 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
         return <ReCaptchaSettigns setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'decision-box':
         return <DecisionBoxSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'html':
+        return <HtmlFieldSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'paypal':
         return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'razorpay':
@@ -243,6 +247,8 @@ const renderFieldIcn = icn => {
       return <ReCaptchaIcn size="23" />
     case 'decision-box':
       return <DecisionBoxIcn size="23" />
+    case 'html':
+      return <CodeSnippetIcn size="23" />
     case 'paypal':
       return <PaypalIcn w="23" />
     case 'razorpay':

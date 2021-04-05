@@ -25,6 +25,7 @@ import Tools from './Tools';
 import ColorPickerIcn from '../../Icons/ColorPickerIcn';
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn';
+import CodeSnippetIcn from '../../Icons/CodeSnippetIcn';
 import RazorPayIcn from '../../Icons/RazorPayIcn';
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
@@ -248,6 +249,17 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           checked: 'Accepted',
           unchecked: 'Not Accepted',
         },
+        valid: {},
+      },
+    },
+    {
+      name: 'HTML',
+      icn: <CodeSnippetIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      elm: {
+        typ: 'html',
+        lbl: 'HTML Content',
+        content: '<b>Html Field</b><p><span style="font-size: 12pt;">Add html content on editor</span></p>',
         valid: {},
       },
     },

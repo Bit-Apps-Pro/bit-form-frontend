@@ -20,6 +20,7 @@ import Cpt from './Cpt/Cpt'
 import MailPoet from './MailPoet/MailPoet'
 import Sendinblue from './SendinBlue/SendinBlue'
 import WooCommerce from './WooCommerce/WooCommerce'
+import ActiveCampaign from './ActiveCampaign/ActiveCampaign'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -61,9 +62,11 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
       case 'Mail Poet':
         return <MailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Sendinblue':
-      return <Sendinblue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        return <Sendinblue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'WooCommerce':
         return <WooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'ActiveCampaign':
+        return <ActiveCampaign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

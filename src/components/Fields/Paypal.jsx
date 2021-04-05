@@ -30,6 +30,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       }
     }
     setClientID(key)
+    obsrvPymntAttr()
   }, [attr.payIntegID])
 
   useEffect(() => {
@@ -41,7 +42,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }
   }, [resetFieldValue])
 
-  const amountFld = document.getElementsByName(attr?.amountFld)[0]
+/*   const amountFld = document.getElementsByName(attr?.amountFld)[0]
   amountFld?.addEventListener('change', e => setAmount(e.target.value))
 
   const shippingFld = document.getElementsByName(attr?.shippingFld)[0]
@@ -51,7 +52,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   taxFld?.addEventListener('change', e => setTax(e.target.value))
 
   const descFld = document.getElementsByName(attr?.descFld)[0]
-  descFld?.addEventListener('change', e => setDescription(e.target.value))
+  descFld?.addEventListener('change', e => setDescription(e.target.value)) */
 
   useEffect(() => {
     setrender(false)
@@ -63,6 +64,38 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   const createSubscriptionHandler = (data, actions) => actions.subscription.create({
     plan_id: attr?.planId,
   })
+
+  const obsrvPymntAttr = () => {
+    const fields = {}
+    if (attr?.amountFld) {
+      fields[attr?.amountFld] = { elm: document.getElementsByName(attr?.amountFld)[0], func: setAmount }
+    }
+
+    if (attr?.shippingFld) {
+      fields[attr?.shippingFld] = { elm: document.getElementsByName(attr?.shippingFld)[0], func: setShipping }
+    }
+
+    if (attr?.taxFld) {
+      fields[attr?.taxFld] = { elm: document.getElementsByName(attr?.taxFld)[0], func: setTax }
+    }
+
+    if (attr?.descFld) {
+      fields[attr?.descFld] = { elm: document.getElementsByName(attr?.descFld)[0], func: setDescription }
+    }
+    const payAttrObserver = new MutationObserver((data) => {
+      console.log('data', data.length, data[0].target.name, data[0].target.value)
+      const obsrvdFld = fields[data[0].target.name]
+      if (obsrvdFld) {
+        obsrvdFld.func(data[0].target.value)
+      }
+      // setAmount(data[0].target.value)
+    })
+    console.log('fields', fields, fields.length)
+    Object.keys(fields).map(elm => {
+      console.log('elm', fields[elm].elm)
+      payAttrObserver.observe(fields[elm].elm, { attributes: true, attributeFilter: ['value'] })
+    })
+  }
 
   const createOrderHandler = (data, actions) => {
     const orderAmount = Number(attr.amount || amount)
@@ -111,7 +144,10 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       }
     })
   }
-  console.log('==================', attr.valid)
+  // console.clear()
+  console.log('==================')
+  console.log('amount', amount)
+  console.log('==================')
   return (
     <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''} ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
       <div
