@@ -12,6 +12,14 @@ export default function AppSettingsProvider({ children }) {
         secretKey: '',
       },
   )
+  const [reCaptchaV3, setreCaptchaV3] = useState(
+    // eslint-disable-next-line no-undef
+    bits?.allFormSettings?.gReCaptchaV3 ? bits.allFormSettings.gReCaptchaV3
+      : {
+        siteKey: '',
+        secretKey: '',
+      },
+  )
 
   const paymentsState = () => {
     if (bits?.allFormSettings?.payments) {
@@ -24,7 +32,7 @@ export default function AppSettingsProvider({ children }) {
 
   const [payments, setPayments] = useState(paymentsState())
   return (
-    <AppSettings.Provider value={{ reCaptchaV2, setreCaptchaV2, payments, setPayments }}>
+    <AppSettings.Provider value={{ reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3, payments, setPayments }}>
       {children}
     </AppSettings.Provider>
   )

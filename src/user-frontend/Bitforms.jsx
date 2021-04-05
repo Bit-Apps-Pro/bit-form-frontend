@@ -15,7 +15,6 @@ export default function Bitforms(props) {
   const [hasError, sethasError] = useState(false)
   const [resetFieldValue, setresetFieldValue] = useState(false)
   let maxRowIndex = 0
-
   const blk = (field) => {
     const dataToPass = fieldData !== undefined && deepCopy(fieldData)
     // eslint-disable-next-line no-useless-escape
@@ -266,125 +265,132 @@ export default function Bitforms(props) {
     snack && setSnack(false)
     const formData = new FormData(event.target)
 
-    let submitResponse
-    if (props.gRecaptchaVersion && props.gRecaptchaVersion !== null && props.gRecaptchaVersion === 'v3') {
+    if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
       grecaptcha.ready(() => {
-        grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'homepage' }).then((token) => {
+        grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'submit' }).then((token) => {
           formData.append('g-recaptcha-response', token)
           const uri = new URL(bitFormsFront.ajaxURL)
           uri.searchParams.append('action', 'bitforms_submit_form')
-          submitResponse = fetch(uri,
+          const submitResp = fetch(uri,
             {
               method: 'POST',
               body: formData,
             })
+          submitResponse(submitResp)
         })
       })
     } else {
       const uri = new URL(bitFormsFront.ajaxURL)
       uri.searchParams.append('action', 'bitforms_submit_form')
-      submitResponse = fetch(uri,
+      const submitResp = fetch(uri,
         {
           method: 'POST',
           body: formData,
         })
+      submitResponse(submitResp)
     }
-    const respPromise = submitResponse.then(response => new Promise(async (resolve, reject) => { if (response.status > 400) { response.status === 500 ? reject(new Error('Maybe Internal Server Error')) : reject(await response.json()) } else resolve(await response.json()) }))
-    respPromise.then(result => {
-      console.log(result)
-      let responsedRedirectPage = null
-      let hitCron = null
-      if (result !== undefined && result.success) {
-        handleReset()
-        if (typeof result.data === 'object') {
-          responsedRedirectPage = result.data.redirectPage
-          if (result.data.cron) {
-            hitCron = result.data.cron
+  }
+
+  const submitResponse = resp => {
+    resp.then(response => new Promise((resolve, reject) => {
+      if (response.status > 400) {
+        response.status === 500 ? reject(new Error('Maybe Internal Server Error')) : reject(response.json())
+      } else resolve(response.json())
+    }))
+      .then(result => {
+        let responsedRedirectPage = null
+        let hitCron = null
+        if (result !== undefined && result.success) {
+          handleReset()
+          if (typeof result.data === 'object') {
+            responsedRedirectPage = result.data.redirectPage
+            if (result.data.cron) {
+              hitCron = result.data.cron
+            }
+            if (result.data.cronNotOk) {
+              hitCron = result.data.cronNotOk
+            }
+            setMessage(result.data.message)
+            setSnack(true)
+            if (hasError) {
+              sethasError(false)
+            }
+          } else {
+            setMessage(result.data)
+            setSnack(true)
           }
-          if (result.data.cronNotOk) {
-            hitCron = result.data.cronNotOk
-          }
-          setMessage(result.data.message)
-          setSnack(true)
-          if (hasError) {
-            sethasError(false)
-          }
-        } else {
+        } else if (result.data && typeof result.data === 'string') {
           setMessage(result.data)
-          setSnack(true)
-        }
-      } else if (result.data && typeof result.data === 'string') {
-        setMessage(result.data)
-        sethasError(true)
-        setSnack(true)
-      } else if (result.data) {
-        if (result.data.$form !== undefined) {
-          setMessage(deepCopy(result.data.$form))
           sethasError(true)
           setSnack(true)
-          // eslint-disable-next-line no-param-reassign
-          delete result.data.$form
-        }
-        if (Object.keys(result.data).length > 0) {
-          const newData = fieldData !== undefined && deepCopy(fieldData)
-          // eslint-disable-next-line array-callback-return
-          Object.keys(result.data).map(element => {
-            newData[props.fieldsKey[element]].error = result.data[element]
-          });
-          dispatchFieldData(newData)
-        }
-      }
-      if (responsedRedirectPage) {
-        triggerIntegration(hitCron)
-        const timer = setTimeout(() => {
-          window.location = decodeURI(responsedRedirectPage)
-          if (timer) {
-            clearTimeout(timer)
+        } else if (result.data) {
+          if (result.data.$form !== undefined) {
+            setMessage(deepCopy(result.data.$form))
+            sethasError(true)
+            setSnack(true)
+            // eslint-disable-next-line no-param-reassign
+            delete result.data.$form
           }
-        }, 1000);
-      } else {
-        triggerIntegration(hitCron)
-      }
+          if (Object.keys(result.data).length > 0) {
+            const newData = fieldData !== undefined && deepCopy(fieldData)
+            // eslint-disable-next-line array-callback-return
+            Object.keys(result.data).map(element => {
+              newData[props.fieldsKey[element]].error = result.data[element]
+            });
+            dispatchFieldData(newData)
+          }
+        }
+        if (responsedRedirectPage) {
+          triggerIntegration(hitCron)
+          const timer = setTimeout(() => {
+            window.location = decodeURI(responsedRedirectPage)
+            if (timer) {
+              clearTimeout(timer)
+            }
+          }, 1000);
+        } else {
+          triggerIntegration(hitCron)
+        }
 
-      setbuttonDisabled(false)
-    })
-    .catch(error => {
-      console.log('error', typeof error, error)
-      const err = error?.message ? error.message : 'Unknown Error'
-      setMessage(err)
-      sethasError(true)
-      setSnack(true)
-      setbuttonDisabled(false)
-    })
+        setbuttonDisabled(false)
+      })
+      .catch(error => {
+        console.log('error', typeof error, error)
+        const err = error?.message ? error.message : 'Unknown Error'
+        setMessage(err)
+        sethasError(true)
+        setSnack(true)
+        setbuttonDisabled(false)
+      })
   }
 
   const triggerIntegration = (hitCron) => {
     if (hitCron) {
-        if (typeof hitCron === 'string') {
-          const uri = new URL(hitCron)
-          if (uri.protocol !== window.location.protocol) {
-            uri.protocol = window.location.protocol
-          }
-          fetch(uri)
-        } else {
-          const uri = new URL(bitFormsFront.ajaxURL)
-          uri.searchParams.append('action', 'bitforms_trigger_workflow')
-          const data = { cronNotOk: hitCron, token: props.nonce, id: props.appID }
-          fetch(uri,
-            {
-              method: 'POST',
-              body: JSON.stringify(data),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            })
-            .then(response => response.json())
+      if (typeof hitCron === 'string') {
+        const uri = new URL(hitCron)
+        if (uri.protocol !== window.location.protocol) {
+          uri.protocol = window.location.protocol
         }
+        fetch(uri)
+      } else {
+        const uri = new URL(bitFormsFront.ajaxURL)
+        uri.searchParams.append('action', 'bitforms_trigger_workflow')
+        const data = { cronNotOk: hitCron, token: props.nonce, id: props.appID }
+        fetch(uri,
+          {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then(response => response.json())
       }
+    }
   }
   const handleReset = () => {
     setresetFieldValue(true)
-    if (props.gRecaptchaSiteKey) {
+    if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
       resetCaptcha()
     }
   }
@@ -495,6 +501,7 @@ function Toast(props) {
     paddingRight: 40,
     boxShadow: '1px 5px 11px -3px #0000004d',
     transition: 'right 0.5s',
+    zIndex: 9999,
   }
   const closeButtonStyle = {
     position: 'absolute',
@@ -511,11 +518,10 @@ function Toast(props) {
     marginLeft: '7px',
     cursor: 'pointer',
     float: !props.editMode && 'right',
+    zIndex: 9999,
   }
   if (props.index && props.index > 0) {
-    if (props.editMode) {
-      toatStyles.bottom += props.index * 2 * 45
-    }
+    toatStyles.bottom += props.index * 2 * 45
   }
   useEffect(() => {
     if (!snack && props.canClose && props.show) {

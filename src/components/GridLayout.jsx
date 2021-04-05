@@ -20,7 +20,7 @@ function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const { reCaptchaV2 } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout } = props
+  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -197,6 +197,7 @@ function GridLayout(props) {
   const margeNewData = () => {
     setNewData(null)
     if (!checkPaymentFields(newData[0])) return;
+    if (!checkCaptchaField()) return;
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
@@ -248,7 +249,11 @@ function GridLayout(props) {
     sessionStorage.setItem('btcd-lc', '-')
   }
 
-  const clsAlertMdl = () => setAlertMdl({ show: false, msg: '' })
+  const clsAlertMdl = () => {
+    const tmpAlert = { ...alertMdl }
+    tmpAlert.show = false
+    setAlertMdl(tmpAlert)
+  }
 
   const checkPaymentFields = elm => {
     const payPattern = /paypal|razorpay/
@@ -277,9 +282,37 @@ function GridLayout(props) {
     return true;
   }
 
+  const checkCaptchaField = () => {
+    let msg;
+    if (formSettings?.additional?.enabled?.recaptchav3) {
+      msg = __(
+        <p>
+          You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV2 disable the ReCaptchaV3 from the form settings.
+        </p>, 'bitform',
+      )
+    } else {
+      const capchaFlds = fields ? Object.values(fields).filter(field => field.typ === 'recaptcha') : []
+      if (capchaFlds.length) {
+        msg = __(
+          <p>
+            You cannot add more than one reCaptcha field in same form.
+          </p>, 'bitform',
+        )
+      }
+    }
+
+    if (msg) {
+      setAlertMdl({ show: true, msg })
+      return false;
+    }
+
+    return true
+  }
+
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
     if (!checkPaymentFields(draggedElm[0])) return;
+    if (!checkCaptchaField()) return;
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms

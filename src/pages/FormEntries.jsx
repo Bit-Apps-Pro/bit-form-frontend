@@ -399,7 +399,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
       )
     }
-    return allResp[rowDtl.idx][entry.accessor]
+    return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
   return (
