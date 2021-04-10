@@ -6,8 +6,7 @@ import { AppSettings } from '../Utils/AppSettingsContext'
 import CopyText from './ElmSettings/Childs/CopyText';
 
 export default function Captcha({ saveCaptcha, setsnack }) {
-  const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
-  const { reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
+  const { reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
 
   const onInput = (e, version) => {
     if (version === 'v2') {
