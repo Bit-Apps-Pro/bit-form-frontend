@@ -3,8 +3,9 @@ import { useContext } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../Utils/i18nwrap'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import CopyText from './ElmSettings/Childs/CopyText';
 
-export default function Captcha({ saveCaptcha }) {
+export default function Captcha({ saveCaptcha, setsnack }) {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
   const { reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
 
@@ -45,6 +46,8 @@ export default function Captcha({ saveCaptcha }) {
           </small>
           <br />
 
+          <div className="mt-3">{__('Domain URL:', 'bitform')}</div>
+          <CopyText value={window.location.host} setSnackbar={setsnack} className="field-key-cpy ml-0" />
           <div className="mt-2">
             <label htmlFor="captcha-key">
               {__('Site Key', 'bitform')}
@@ -77,6 +80,8 @@ export default function Captcha({ saveCaptcha }) {
           </small>
           <br />
 
+          <div className="mt-3">{__('Domain URL:', 'bitform')}</div>
+          <CopyText value={window.location.host} setSnackbar={setsnack} className="field-key-cpy ml-0" />
           <div className="mt-2">
             <label htmlFor="captcha-key">
               {__('Site Key', 'bitform')}
