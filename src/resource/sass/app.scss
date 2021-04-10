@@ -2784,6 +2784,7 @@ select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
   color: $dp-bg !important;
   box-shadow: none;
+  max-width: initial !important;
   height: auto !important;
   padding: 10px 24px 10px 10px !important;
   appearance: none;

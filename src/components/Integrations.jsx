@@ -22,6 +22,12 @@ import mailChimp from '../resource/img/integ/mailchimp.svg'
 import sendinblue from '../resource/img/integ/sendinblue.svg'
 import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
+import webhooks from '../resource/img/integ/webhooks.svg'
+import zapier from '../resource/img/integ/zapier.svg'
+import integromat from '../resource/img/integ/integromat.svg'
+import integrately from '../resource/img/integ/integrately.svg'
+import pabbly from '../resource/img/integ/pabbly.svg'
+import zohoflow from '../resource/img/integ/zohoflow.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -42,13 +48,19 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
-    { type: 'Google Sheets', logo: googleSheet, pro: !isPro },
+    { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
+    { type: 'Web Hooks', logo: webhooks },
+    { type: 'Zapier', logo: zapier },
+    { type: 'Integromat', logo: integromat },
+    { type: 'Integrately', logo: integrately },
+    { type: 'Pabbly', logo: pabbly },
+    { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -60,7 +72,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Sign', logo: zohoSign, pro: !isPro },
     { type: 'Zoho Marketing Hub', logo: zohoHub, pro: !isPro },
     { type: 'Zoho Creator', logo: zohoCreator, pro: !isPro },
-    { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
     { type: 'Zoho Bigin', logo: zohoBigin, pro: !isPro },
 
   ]

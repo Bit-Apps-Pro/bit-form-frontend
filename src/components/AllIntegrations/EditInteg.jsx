@@ -20,6 +20,13 @@ import EditMailPoet from './MailPoet/EditMailPoet'
 import EditSendinBlue from './SendinBlue/EditSendinBlue'
 import EditWooCommerce from './WooCommerce/EditWooCommerce';
 import EditActiveCampaign from './ActiveCampaign/EditActiveCampaign'
+import EditWebHooks from './WebHooks/EditWebHooks'
+import EditZapier from './Zapier/EditZapier'
+import EditIntegromat from './Integromat/EditIntegromat'
+import EditZohoFlow from './ZohoFlow/EditZohoFlow'
+import EditIntegrately from './Integrately/EditIntegrately'
+import EditPabbly from './Pabbly/EditPabbly';
+
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
   const IntegType = () => {
@@ -64,6 +71,18 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditWooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ActiveCampaign':
         return <EditActiveCampaign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Web Hooks':
+        return <EditWebHooks allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zapier':
+        return <EditZapier allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Integromat':
+        return <EditIntegromat allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Integrately':
+        return <EditIntegrately allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Pabbly':
+        return <EditPabbly allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Flow':
+        return <EditZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

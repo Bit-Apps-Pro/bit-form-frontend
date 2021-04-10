@@ -15,11 +15,10 @@ function EditSendinBlue({ formFields, setIntegration, integrations, allIntegURL 
   const [sendinBlueConf, setSendinBlueConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-
+  const [error, setError] = useState({ templateId: '', RedirectionUrl: '' })
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-
       <div className="flx mt-3">
         <b className="wdt-150 d-in-b">{__('Integration Name:', 'bitform')}</b>
         <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, sendinBlueConf, setSendinBlueConf)} name="name" value={sendinBlueConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
@@ -35,9 +34,11 @@ function EditSendinBlue({ formFields, setIntegration, integrations, allIntegURL 
         isLoading={isLoading}
         setisLoading={setisLoading}
         setSnackbar={setSnackbar}
+        error={error}
+        setError={setError}
       />
 
-      {console.log('sheet info', sendinBlueConf)}
+      {console.log('sendinblue info', sendinBlueConf)}
 
       <IntegrationStepThree
         edit
