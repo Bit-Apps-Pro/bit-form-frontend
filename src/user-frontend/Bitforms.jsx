@@ -45,6 +45,8 @@ export default function Bitforms(props) {
           resetFieldValue={resetFieldValue}
           contentID={props.contentID}
           fieldData={fieldData}
+          buttonDisabled={dataToPass[field.i].typ === 'button' && dataToPass[field.i].btnTyp === 'submit' && buttonDisabled}
+          handleReset={dataToPass[field.i].typ === 'button' && dataToPass[field.i].btnTyp === 'reset' && handleReset}
         />
       </div>
     )

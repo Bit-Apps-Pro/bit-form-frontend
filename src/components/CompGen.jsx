@@ -60,7 +60,7 @@ function CompGen(props) {
     case 'html':
       return <Html formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'button':
-      return <Button formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} data={props} />
+      return <Button formID={props.formID} attr={props.atts} fieldData={props.fieldData} buttonDisabled={props.buttonDisabled} handleReset={props.handleReset} />
     case 'paypal':
       return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'razorpay':
