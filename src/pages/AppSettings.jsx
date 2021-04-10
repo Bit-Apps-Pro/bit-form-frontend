@@ -19,14 +19,20 @@ import PaymentsIcn from '../Icons/PaymentsIcn'
 
 function AppSettingsPage() {
   const { reCaptchaV2, setreCaptchaV2 } = useContext(AppSettings)
+  const { reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
   const [snack, setsnack] = useState({ show: false })
 
-  const saveCaptcha = () => {
-    bitsFetch({ reCaptchaV2 }, 'bitforms_save_grecaptcha')
+  const saveCaptcha = version => {
+    const reCaptcha = version === 'v2' ? reCaptchaV2 : reCaptchaV3
+    bitsFetch({ version, reCaptcha }, 'bitforms_save_grecaptcha')
       .then(res => {
         if (res !== undefined && res.success) {
           if (res.data && res.data.id) {
-            setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
+            if (version === 'v2') {
+              setreCaptchaV2({ ...reCaptchaV2, id: res.data.id })
+            } else if (version === 'v3') {
+              setreCaptchaV3({ ...reCaptchaV3, id: res.data.id })
+            }
           }
           setsnack({ ...{ show: true, msg: __('Captcha Settings Updated', 'bitform') } })
         }

@@ -1,17 +1,26 @@
 /* eslint-disable no-param-reassign */
+import { useState } from 'react';
 import DatePicker from 'react-date-picker';
-import TimePicker from 'react-time-picker'
-
+import { Link } from 'react-router-dom';
+import TimePicker from 'react-time-picker';
 import { __ } from '../Utils/i18nwrap';
-import SingleToggle2 from './ElmSettings/Childs/SingleToggle2'
-import Accordions from './ElmSettings/Childs/Accordions'
-import CheckBox from './ElmSettings/Childs/CheckBox'
+import ConfirmModal from './ConfirmModal';
+import Accordions from './ElmSettings/Childs/Accordions';
+import CheckBox from './ElmSettings/Childs/CheckBox';
+import SingleToggle2 from './ElmSettings/Childs/SingleToggle2';
 
-export default function SingleFormSettings({ additional, setadditional }) {
+export default function SingleFormSettings({ fields, additional, setadditional }) {
   console.log('..render singlefromsettings')
-
+  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
+  const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
+
+  const clsAlertMdl = () => {
+    const tmpAlert = { ...alertMdl }
+    tmpAlert.show = false
+    setAlertMdl(tmpAlert)
+  }
 
   const addMoreBlockIp = () => {
     if ('blocked_ip' in additional.settings) {
@@ -58,6 +67,50 @@ export default function SingleFormSettings({ additional, setadditional }) {
     }
     setadditional({ ...additional })
   }
+
+  const enableReCaptchav3 = e => {
+    if (e.target.checked) {
+      let msg;
+      // eslint-disable-next-line no-undef
+      const reCaptchaV3Settings = bits.allFormSettings.gReCaptchaV3
+      if (!reCaptchaV3Settings || !reCaptchaV3Settings?.siteKey || !reCaptchaV3Settings?.secretKey) {
+        msg = __(
+          <p>
+            to use ReCaptchaV3, you must set site key and secret from
+            &nbsp;
+            <Link to="/app-settings/recaptcha">app settings</Link>
+          </p>, 'bitform',
+        )
+        setAlertMdl({ show: true, msg })
+        return false
+      }
+
+      const captchaFlds = fields ? Object.values(fields).find(fld => fld.typ === 'recaptcha') : undefined
+
+      if (captchaFlds) {
+        msg = __(
+          <p>
+            You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV3 remove the ReCaptchaV2 from the form builder.
+          </p>, 'bitform',
+        )
+        setAlertMdl({ show: true, msg })
+        return false
+      }
+
+      additional.enabled.recaptchav3 = true
+      if (!additional.settings.recaptchav3) {
+        additional.settings.recaptchav3 = {
+          score: '0.6',
+          message: __('ReCaptcha validation failed.', 'bitform'),
+        }
+      }
+    } else {
+      delete additional.enabled.recaptchav3
+      delete additional.settings.recaptchav3
+    }
+    setadditional({ ...additional })
+  }
+
   const toggleCaptureGCLID = e => {
     if (e.target.checked) {
       additional.enabled.captureGCLID = true
@@ -72,6 +125,40 @@ export default function SingleFormSettings({ additional, setadditional }) {
       additional.enabled.entry_limit = true
     } else {
       delete additional.enabled.entry_limit
+    }
+    setadditional({ ...additional })
+  }
+
+  const hideReCaptchaBadge = e => {
+    if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
+    if (e.target.checked) {
+      additional.settings.recaptchav3.hideReCaptcha = true
+    } else {
+      delete additional.settings.recaptchav3.hideReCaptcha
+    }
+    setadditional({ ...additional })
+  }
+
+  const setReCaptchaScore = e => {
+    const { value } = e.target
+    if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
+    if (value) {
+      if (Number(value) < 0) additional.settings.recaptchav3.score = 0
+      else if (Number(value) > 1) additional.settings.recaptchav3.score = 1
+      else additional.settings.recaptchav3.score = value
+    } else {
+      delete additional.settings.recaptchav3.score
+    }
+    setadditional({ ...additional })
+  }
+
+  const setReCaptchaLowScoreMessage = e => {
+    const { value } = e.target
+    if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
+    if (value) {
+      additional.settings.recaptchav3.message = value
+    } else {
+      delete additional.settings.recaptchav3.message
     }
     setadditional({ ...additional })
   }
@@ -259,6 +346,25 @@ export default function SingleFormSettings({ additional, setadditional }) {
     return false
   }
 
+  const showToleranceLabel = score => {
+    if (score) {
+      if (score < 0.45) {
+        return 'Low'
+      }
+      if (score < 0.75) {
+        return 'Medium'
+      }
+      if (score >= 0.75) {
+        return 'High'
+      }
+    }
+    return 'Medium'
+  }
+
+  const toggleCaptchaAdvanced = () => setShowCaptchaAdvanced(show => !show)
+
+  console.log('additional', additional)
+
   return (
     <div>
       <h2>{__('Settings', 'bitform')}</h2>
@@ -279,8 +385,64 @@ export default function SingleFormSettings({ additional, setadditional }) {
         customTitle={(
           <b>
             <span className="btcd-icn icn-one mr-2" />
-            {__('Capture GCLID', 'bitform')}
-            {' '}
+            {__('Enable ReCaptcha V3', 'bitform')}
+          </b>
+        )}
+        cls={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}
+      >
+        <div className="flx mb-2 ml-2">
+          <SingleToggle2 action={enableReCaptchav3} checked={'recaptchav3' in additional.enabled} className="flx" />
+          {__('Enable / Disable', 'bitform')}
+        </div>
+        {additional.enabled.recaptchav3 && (
+          <>
+            <div className="flx mb-4 ml-2">
+              <SingleToggle2 action={hideReCaptchaBadge} checked={additional.settings?.recaptchav3?.hideReCaptcha} className="flx" />
+              {__('Hide ReCaptcha Badge', 'bitform')}
+            </div>
+            <span
+              className="btcd-link cp mb-4 ml-2"
+              onClick={toggleCaptchaAdvanced}
+              onKeyDown={toggleCaptchaAdvanced}
+              role="button"
+              tabIndex="0"
+              style={{ outline: 'none' }}
+            >
+              {__(`${!showCaptchaAdvanced ? 'Show' : 'Hide'} Advanced Settings`, 'bitform')}
+            </span>
+            {showCaptchaAdvanced && (
+              <>
+                <div className="mt-3 mb-4 ml-2">
+                  <b>Tolerance Level</b>
+                  <br />
+                  <div className="flx mt-1">
+                    <div className="mt-1">
+                      <input type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                      <p className="m-0">
+                        <b>{showToleranceLabel(additional.settings?.recaptchav3?.score)}</b>
+                      </p>
+                    </div>
+                    <input className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                  </div>
+
+                </div>
+                <div className="mb-2 ml-2">
+                  <b>Low Score Message</b>
+                  <br />
+                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additional.settings?.recaptchav3?.message} />
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </Accordions>
+
+      <Accordions
+        customTitle={(
+          <b>
+            <span className="btcd-icn icn-one mr-2" />
+            {__('Capture Google Ads (Click ID)', 'bitform')}
+            {!isPro}
           </b>
         )}
         cls={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}
@@ -457,6 +619,21 @@ export default function SingleFormSettings({ additional, setadditional }) {
         </div>
       </Accordions>
       <div className="mb-4 mt-4"><br /></div>
-    </div>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Close"
+        show={alertMdl.show}
+        close={clsAlertMdl}
+        action={clsAlertMdl}
+        title="Sorry"
+      >
+        <div className="txt-center">
+          {alertMdl.msg}
+        </div>
+      </ConfirmModal>
+    </div >
   )
 }

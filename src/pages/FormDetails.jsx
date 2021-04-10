@@ -442,6 +442,7 @@ function FormDetails(props) {
                   setFormName={setFormName}
                   formID={formType === 'new' ? newFormId : formID}
                   formType={formType}
+                  formSettings={fSettings}
                 />
               </Suspense>
             </Route>

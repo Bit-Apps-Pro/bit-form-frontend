@@ -1,12 +1,13 @@
-import { memo, useState } from 'react';
 
-import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../Utils/i18nwrap'
-import Accordions from './ElmSettings/Childs/Accordions'
-import Button from './ElmSettings/Childs/Button'
-import ConfirmModal from './ConfirmModal'
-import bitsFetch from '../Utils/bitsFetch'
-import SnackMsg from './ElmSettings/Childs/SnackMsg'
+import { memo, useState } from 'react';
+import MultiSelect from 'react-multiple-select-dropdown-lite';
+import bitsFetch from '../Utils/bitsFetch';
+import { deepCopy } from '../Utils/Helpers';
+import { __ } from '../Utils/i18nwrap';
+import ConfirmModal from './ConfirmModal';
+import Accordions from './ElmSettings/Childs/Accordions';
+import Button from './ElmSettings/Childs/Button';
+import SnackMsg from './ElmSettings/Childs/SnackMsg';
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -17,9 +18,22 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
     setFormSettings(tmp)
   }
 
+  const splitParamsFromUrl = url => {
+    const matchedParams = url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
+    const allparams = []
+    if (matchedParams) {
+      for (let j = 0; j < matchedParams.length; j += 1) {
+        const param = matchedParams[j].split('=')
+        allparams.push({ key: param[0].substring(1), value: param[1] })
+      }
+    }
+    return allparams
+  }
+
   const handleLink = (val, i) => {
     const tmp = { ...formSettings }
     tmp.confirmation.type.webHooks[i].url = val
+    tmp.confirmation.type.webHooks[i].params = splitParamsFromUrl(val)
     setFormSettings(tmp)
   }
 
@@ -29,37 +43,28 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
     setFormSettings(tmp)
   }
 
-  const getUrlParams = url => url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
-
-  const handleParam = (typ, val, pram, i) => {
+  const handleParam = (typ, val, hookIndx, paramIndx) => {
     const tmp = { ...formSettings }
-    if (val !== '') {
-      if (typ === 'key') {
-        tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(pram, `${pram.charAt(0)}${val}=${pram.split('=')[1]}`)
-      } else {
-        tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(pram, `${pram.split('=')[0]}=${val}`)
-      }
-    } else if (pram.match(/\?/g) === null) {
-      tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(pram, '')
-    } else {
-      tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(`${pram}&`, '?')
-    }
+    tmp.confirmation.type.webHooks[hookIndx].params[paramIndx][typ] = val
+    tmp.confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
     setFormSettings(tmp)
   }
 
-  const delParam = (i, param) => {
+  const delParam = (hookIndx, paramIndx) => {
     const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(param, '')
+    tmp.confirmation.type.webHooks[hookIndx].params.splice(paramIndx, 1)
+    tmp.confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
     setFormSettings(tmp)
   }
 
-  const addParam = i => {
+  const addParam = hookIndx => {
     const tmp = { ...formSettings }
-    if (tmp.confirmation.type.webHooks[i].url.match(/\?/g) !== null) {
-      tmp.confirmation.type.webHooks[i].url += '&key=value'
-    } else {
-      tmp.confirmation.type.webHooks[i].url += '?key=value'
+    if (!tmp.confirmation.type.webHooks[hookIndx]?.params) {
+      const { url } = tmp.confirmation.type.webHooks[hookIndx]
+      tmp.confirmation.type.webHooks[hookIndx].params = splitParamsFromUrl(url)
     }
+    tmp.confirmation.type.webHooks[hookIndx].params.push({ key: 'key', value: 'value' })
+    tmp.confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
     setFormSettings(tmp)
   }
 
@@ -104,14 +109,6 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
     setConfMdl({ ...confMdl })
   }
 
-  const setFromField = (val, i, param) => {
-    const tmp = { ...formSettings }
-    const a = param.split('=')
-    a[1] = val
-    tmp.confirmation.type.webHooks[i].url = tmp.confirmation.type.webHooks[i].url.replace(param, a.join('='))
-    setFormSettings(tmp)
-  }
-
   const testWebhook = webHookId => {
     bitsFetch({ hookDetails: formSettings.confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
@@ -123,6 +120,24 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
         setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
       }
     })
+  }
+
+  const getUrlWithParams = hookIndx => {
+    const tmp = deepCopy(formSettings)
+    let { url } = tmp.confirmation.type.webHooks[hookIndx]
+    const { params } = tmp.confirmation.type.webHooks[hookIndx]
+    url = url.replaceAll(/\?.*/gi, '')
+    if (params) {
+      const lngth = params.length
+      for (let j = 0; j < lngth; j += 1) {
+        if (j === 0 && url.match(/\?/g) === null) {
+          url += `?${params[j].key}=${params[j].value}`
+        } else {
+          url += `&${params[j].key}=${params[j].value}`
+        }
+      }
+    }
+    return url
   }
 
   return (
@@ -145,7 +160,6 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
               cls="mt-2 mr-2 w-9"
               onTitleChange={e => handleHookTitle(e, i)}
             >
-
               <br />
               <div className="flx">
                 <div className="w-7 mr-2">
@@ -177,20 +191,24 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                     <div className="td">{__('Key', 'bitform')}</div>
                     <div className="td">{__('Value', 'bitform')}</div>
                   </div>
-                  {getUrlParams(itm.url) !== null && getUrlParams(itm.url).map((item, childIdx) => (
+                  {itm?.params && itm.params.map(({ key, value }, childIdx) => (
                     <div key={`url-p-${childIdx + 11}`} className="tr">
-                      <div className="td"><input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, item, i)} type="text" value={item.split('=')[0].substr(1)} /></div>
                       <div className="td">
-                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, item, i)} type="text" value={item.split('=')[1]} />
+                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, i, childIdx)} type="text" value={key} />
+                      </div>
+                      <div className="td">
+                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('value', e.target.value, i, childIdx)} type="text" value={value} />
                       </div>
                       <div className="flx p-atn">
-                        <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+                        <Button onClick={() => delParam(i, childIdx)} icn>
+                          <span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} />
+                        </Button>
                         <MultiSelect
                           options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                           className="btcd-paper-drpdwn wdt-200 ml-2"
                           singleSelect
-                          onChange={val => setFromField(val, i, item)}
-                          defaultValue={item.split('=')[1]}
+                          onChange={val => handleParam('value', val, i, childIdx)}
+                          defaultValue={value}
                         />
                       </div>
                     </div>

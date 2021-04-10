@@ -54,10 +54,16 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
     const logShow = logShowMore.find(log => log === data.id)
     const integInfo = {}
     integLogs.map(integ => {
-      const integName = integrations.find(integration => integration.id === integ.integration_id)?.name
+      let integName = integrations.find(integration => integration.id === integ.integration_id)?.name
       if (integName) {
         if (!integInfo[integName]) integInfo[integName] = []
         if (data.id === integ.log_id) integInfo[integName].push(integ)
+      } else if (Number(integ.integration_id) && data.id === integ.log_id) {
+        const apiType = JSON.parse(integ.api_type)
+        integName = `${apiType.type_name} ${apiType.type}`
+        if (integName === 'ReCaptcha v3') {
+          integInfo[integName] = [integ]
+        }
       }
     })
 
@@ -81,12 +87,16 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
 
     return (
       <div>
+        {showLogs()}
         {
-          showLogs()
+          Object.keys(integInfo)?.length ? (
+            <>
+              {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
+              {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}
+              {logShow && data.integration && renderIntegLog(integInfo)}
+            </>
+          ) : ''
         }
-        {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
-        {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}
-        {logShow && data.integration && renderIntegLog(integInfo)}
       </div>
     )
   }

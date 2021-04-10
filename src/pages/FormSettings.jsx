@@ -50,7 +50,7 @@ export default function FormSettings({ additional, setadditional, formFields, fo
         <Switch>
           <Route path={`${path}form-settings`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <SingleFormSettings additional={additional} setadditional={setadditional} />
+              <SingleFormSettings fields={fields} additional={additional} setadditional={setadditional} />
             </Suspense>
           </Route>
           <Route path={`${path}confirmations`}>
