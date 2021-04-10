@@ -264,6 +264,21 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       },
     },
     {
+      name: 'Button',
+      icn: '',
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2, maxH: 2 },
+      elm: {
+        typ: 'button',
+        btnTyp: 'button',
+        txt: __('Submit'),
+        icn: {
+          pos: '',
+          url: '',
+        },
+        valid: {},
+      },
+    },
+    {
       name: __('Paypal', 'bitform'),
       icn: <PaypalIcn w="23" />,
       pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },

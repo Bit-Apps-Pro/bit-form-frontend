@@ -90,10 +90,10 @@ export const checkLogic = (logics, fields) => {
         return targetFieldValue !== logicsVal
 
       case 'null':
-        return targetFieldValue.length === 0
+        return targetFieldValue && targetFieldValue.length === 0
 
       case 'not_null':
-        return targetFieldValue.length > 0
+        return targetFieldValue && targetFieldValue.length > 0
 
       case 'contain': {
         if (!targetFieldValue) {

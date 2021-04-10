@@ -30,6 +30,7 @@ import UrlIcn from '../../Icons/UrlIcn'
 import WeekIcn from '../../Icons/WeekIcn'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
+import ButtonSettings from './ButtonSettings'
 import FileUpSettings from './FileUpSettings'
 import PaypalSettings from './PaypalSettings'
 import RadioCheckSettings from './RadioCheckSettings'
@@ -128,6 +129,12 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
                 <FieldOptionBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
               </Link>
+              { elm?.data?.typ === 'button'
+                && (
+                <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
+                  <FieldOptionBtn icn={<DropDownIcn w="20" />} title="Button Style" />
+                </Link>
+              )}
             </Route>
             <Route path={`${path}/style/fl/fld`}>
               <StyleEditor editorLabel={__('Field Style', 'bitform')} title={__('Label Style', 'bitform')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
@@ -141,6 +148,9 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
                 editorLabel="Dropdown Style"
                 {...{ style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }}
               />
+            </Route>
+            <Route path={`${path}/style/fl/btn`}>
+              <StyleEditor title={`${elm.data.btnTyp === 'submit' ? 'Submit ' : 'Reset '}${__('Button Style', 'bitform')}`} noBack compStyle={style} cls={elm.data.btnTyp === 'submit' ? '.btcd-sub' : '.btcd-rst'} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
           </Switch>
           <div className="mb-50" />
@@ -182,6 +192,8 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
         return <DecisionBoxSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'html':
         return <HtmlFieldSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'button':
+        return <ButtonSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'paypal':
         return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'razorpay':
@@ -247,6 +259,8 @@ const renderFieldIcn = icn => {
       return <ReCaptchaIcn size="23" />
     case 'decision-box':
       return <DecisionBoxIcn size="23" />
+    case 'button':
+      return ''
     case 'html':
       return <CodeSnippetIcn size="23" />
     case 'paypal':

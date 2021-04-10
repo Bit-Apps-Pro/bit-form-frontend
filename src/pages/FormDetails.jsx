@@ -132,6 +132,24 @@ function FormDetails(props) {
     if (formType === 'new') {
       const formTitle = formID
       if (formTitle === 'Blank') {
+        const btnData = {
+          typ: 'button',
+          btnSiz: 'md',
+          btnTyp: 'submit',
+          txt: 'Submit',
+          align: 'right',
+        }
+        const btnFld = []
+        btnFld[`bf${newFormId}-1`] = btnData
+        const btnLay = { lg: [], md: [], sm: [] }
+        const subBtnLay = { h: 2, i: `bf${newFormId}-1`, minH: 2, w: 6, x: 0, y: Infinity }
+        btnLay.lg.push(subBtnLay)
+        btnLay.md.push(subBtnLay)
+        btnLay.sm.push(subBtnLay)
+        setLay(btnLay)
+        setFields(btnFld)
+        setNewCounter(2)
+        console.log('BTN', btnLay, btnFld)
         setisLoading(false)
       } else {
         bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
@@ -203,6 +221,14 @@ function FormDetails(props) {
   }
 
   const saveForm = () => {
+    if (!checkSubmitBtn()) {
+      modal.show = true
+      modal.title = __('Sorry', 'bitform')
+      modal.btnTxt = __('Close', 'bitform')
+      modal.msg = __('Please add a submit button', 'bitform')
+      setModal({ ...modal })
+      return
+    }
     let formStyle = sessionStorage.getItem('btcd-fs')
     if (formStyle) {
       formStyle = bitDecipher(formStyle)
@@ -311,6 +337,10 @@ function FormDetails(props) {
     setModal({ ...modal })
   }
 
+  const checkSubmitBtn = () => {
+    const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
+    return btns.length >= 1
+  }
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
       integrations.pop()
@@ -403,8 +433,8 @@ function FormDetails(props) {
                   isLoading={isLoading}
                   fields={fields}
                   setFields={setFields}
-                  subBtn={subBtn}
-                  setSubBtn={updateSubBtn}
+                  // subBtn={subBtn}
+                  // setSubBtn={updateSubBtn}
                   lay={lay}
                   setLay={setLay}
                   setNewCounter={setNewCounter}

@@ -9,6 +9,7 @@ import DropDown from './Fields/DropDown'
 import FileUp from './Fields/FileUp'
 import HiddenField from './Fields/HiddenField'
 import SubmitBtn from './Fields/SubmitBtn'
+import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
 /*
@@ -58,6 +59,8 @@ function CompGen(props) {
       return <DecisionBox formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'html':
       return <Html formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+    case 'button':
+      return <Button formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} data={props} />
     case 'paypal':
       return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
     case 'razorpay':

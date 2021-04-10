@@ -237,6 +237,10 @@ function GridLayout(props) {
   }
 
   const onRemoveItem = i => {
+    if (fields[i]?.typ === 'button' && fields[i]?.btnTyp === 'submit') {
+      setAlertMdl({ show: true, msg: __('Submit button cannot be removed') })
+      return
+    }
     const nwLay = {}
     nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
     nwLay.md = genFilterLay(layouts.md, cols.md, i)
@@ -461,9 +465,9 @@ function GridLayout(props) {
                 {layouts[breakpoint].map(itm => blkGen(itm))}
               </ResponsiveReactGridLayout>
 
-              <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
+              {/* <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
                 {compByTheme(props.subBtn)}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

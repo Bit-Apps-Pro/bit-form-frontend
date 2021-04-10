@@ -39,7 +39,7 @@ export default function BitformsRenderer(contentID) {
       appID={params.appID}
       nonce={params.nonce}
       formID={params.formId}
-      GCLID={params.GCLID}
+      GCLID={params.GCLID && getGclid}
     />, document.getElementById(params.contentID))
   }
 
@@ -96,6 +96,7 @@ export default function BitformsRenderer(contentID) {
   if (params.GCLID) {
     document.addEventListener('DOMContentLoaded', (event) => {
       const bitGclid = getGclid()
+      console.log('bitGclid', bitGclid)
       if (typeof bitGclid === 'string' && bitGclid.length > 0) {
         const gclidElms = document.getElementsByName('GCLID')
         gclidElms.forEach(element => {

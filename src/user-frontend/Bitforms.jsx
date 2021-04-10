@@ -265,6 +265,9 @@ export default function Bitforms(props) {
     setbuttonDisabled(true)
     snack && setSnack(false)
     const formData = new FormData(event.target)
+    if (props.GCLID) {
+      formData.set('GCLID', props.GCLID())
+    }
 
     let submitResponse
     if (props.gRecaptchaVersion && props.gRecaptchaVersion !== null && props.gRecaptchaVersion === 'v3') {
