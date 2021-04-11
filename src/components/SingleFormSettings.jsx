@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DatePicker from 'react-date-picker';
 import { Link } from 'react-router-dom';
 import TimePicker from 'react-time-picker';
@@ -8,11 +8,13 @@ import ConfirmModal from './ConfirmModal';
 import Accordions from './ElmSettings/Childs/Accordions';
 import CheckBox from './ElmSettings/Childs/CheckBox';
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2';
+import { AppSettings } from '../Utils/AppSettingsContext'
 
 export default function SingleFormSettings({ fields, additional, setadditional }) {
   console.log('..render singlefromsettings')
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
+  const { reCaptchaV3 } = useContext(AppSettings)
   // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
 
@@ -71,9 +73,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   const enableReCaptchav3 = e => {
     if (e.target.checked) {
       let msg;
-      // eslint-disable-next-line no-undef
-      const reCaptchaV3Settings = bits.allFormSettings.gReCaptchaV3
-      if (!reCaptchaV3Settings || !reCaptchaV3Settings?.siteKey || !reCaptchaV3Settings?.secretKey) {
+      if (!reCaptchaV3 || !reCaptchaV3?.siteKey || !reCaptchaV3?.secretKey) {
         msg = __(
           <p>
             to use ReCaptchaV3, you must set site key and secret from

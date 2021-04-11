@@ -7,7 +7,7 @@ import Captcha from '../components/Captcha';
 import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
 // import Cpt from '../components/Cpt/Cpt';
 import Payments from '../components/Payments';
- import GCLID from '../components/GCLID'
+import GCLID from '../components/GCLID'
 import SMTP from '../components/Smtp/SMTP'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
@@ -71,7 +71,7 @@ function AppSettingsPage() {
 
       <Switch>
         <Route path="/app-settings/recaptcha">
-          <Captcha saveCaptcha={saveCaptcha} />
+          <Captcha saveCaptcha={saveCaptcha} setsnack={setsnack} />
         </Route>
         <Route path="/app-settings/gclid">
           <GCLID />
