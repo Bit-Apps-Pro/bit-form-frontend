@@ -197,7 +197,7 @@ function GridLayout(props) {
   const margeNewData = () => {
     setNewData(null)
     if (!checkPaymentFields(newData[0])) return;
-    if (!checkCaptchaField()) return;
+    if (newData[0].typ === 'recaptcha' && !checkCaptchaField()) return;
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
@@ -312,7 +312,7 @@ function GridLayout(props) {
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
     if (!checkPaymentFields(draggedElm[0])) return;
-    if (!checkCaptchaField()) return;
+    if (draggedElm[0].typ === 'recaptcha' && !checkCaptchaField()) return;
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
