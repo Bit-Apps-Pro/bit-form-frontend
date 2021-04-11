@@ -252,7 +252,12 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
     matchedFields.map(field => {
       const fieldName = field.substring(2, field.length - 1)
       if (fieldValues[fieldName]) {
-        mutatedString = mutatedString.replace(field, fieldValues[fieldName].value)
+        let val2Rplc = fieldValues[fieldName].value
+        if (Array.isArray(fieldValues[fieldName].value) && !isNaN(fieldValues[fieldName].value[0])) {
+          val2Rplc = 0
+          fieldValues[fieldName].value.map(sV => { val2Rplc += Number(sV) })
+        }
+        mutatedString = mutatedString.replace(field, val2Rplc)
       }
     })
   }
