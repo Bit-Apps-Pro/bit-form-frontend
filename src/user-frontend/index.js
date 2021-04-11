@@ -51,7 +51,8 @@ export default function BitformsRenderer(contentID) {
         // eslint-disable-next-line prefer-destructuring
         gID = idExists[1]
       }
-    } else if (window.location.search) {
+    }
+    if (gID === '' && window.location.search) {
       const idExists = RegExp('[?&]gclid=([^&]*)').exec(window.location.search);
       if (idExists) {
         // eslint-disable-next-line prefer-destructuring
@@ -96,7 +97,6 @@ export default function BitformsRenderer(contentID) {
   if (params.GCLID) {
     document.addEventListener('DOMContentLoaded', (event) => {
       const bitGclid = getGclid()
-      console.log('bitGclid', bitGclid)
       if (typeof bitGclid === 'string' && bitGclid.length > 0) {
         const gclidElms = document.getElementsByName('GCLID')
         gclidElms.forEach(element => {
