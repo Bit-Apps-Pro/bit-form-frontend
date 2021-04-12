@@ -1,11 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-export default function SingleToggle2(props) {
+export default function SingleToggle2({ className, title, action, disabled, checked }) {
+  const onChange = (e) => {
+    if (!disabled) {
+      action(e)
+    }
+  }
   return (
-    <div className={`${props.className}`}>
-      <span>{props.title}</span>
+    <div className={`${className}`}>
+      <span>{title}</span>
       <label className="btcd-label">
         <div className="btcd-toggle">
-          <input onChange={props.action} className="btcd-toggle-state" type="checkbox" name="check" value="check" checked={props.checked} />
+          <input aria-label={title} onChange={onChange} className="btcd-toggle-state" type="checkbox" name="check" value="check" checked={checked} />
           <div className="btcd-toggle-inner">
             <div className="btcd-indicator" />
           </div>
