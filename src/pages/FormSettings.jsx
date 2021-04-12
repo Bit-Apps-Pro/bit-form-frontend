@@ -1,6 +1,6 @@
-import { __ } from '../Utils/i18nwrap';
 import { lazy, Suspense, useState } from 'react';
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
+import { __ } from '../Utils/i18nwrap';
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 
