@@ -9,9 +9,9 @@ import Accordions from './ElmSettings/Childs/Accordions';
 import CheckBox from './ElmSettings/Childs/CheckBox';
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2';
 import { AppSettings } from '../Utils/AppSettingsContext'
+import GoogleAds from '../Icons/GoogleAds';
 
 export default function SingleFormSettings({ fields, additional, setadditional }) {
-  console.log('..render singlefromsettings')
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
@@ -363,8 +363,6 @@ export default function SingleFormSettings({ fields, additional, setadditional }
 
   const toggleCaptchaAdvanced = () => setShowCaptchaAdvanced(show => !show)
 
-  console.log('additional', additional)
-
   return (
     <div>
       <h2>{__('Settings', 'bitform')}</h2>
@@ -388,7 +386,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             {__('Enable ReCaptcha V3', 'bitform')}
           </b>
         )}
-        cls={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}
+        cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 action={enableReCaptchav3} checked={'recaptchav3' in additional.enabled} className="flx" />
@@ -417,12 +415,12 @@ export default function SingleFormSettings({ fields, additional, setadditional }
                   <br />
                   <div className="flx mt-1">
                     <div className="mt-1">
-                      <input type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
                       <p className="m-0">
                         <b>{showToleranceLabel(additional.settings?.recaptchav3?.score)}</b>
                       </p>
                     </div>
-                    <input className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
                   </div>
 
                 </div>
@@ -437,21 +435,29 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         )}
       </Accordions>
 
-      <Accordions
+      {/*  <Accordions
         customTitle={(
           <b>
             <span className="btcd-icn icn-one mr-2" />
-            {__('Capture Google Ads (Click ID)', 'bitform')}
             {!isPro}
           </b>
         )}
         cls={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}
       >
         <div className="flx mb-2 ml-2">
-          <SingleToggle2 action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
           {__('Enable / Disable', 'bitform')}
         </div>
-      </Accordions>
+      </Accordions> */}
+
+      <div className="w-6 mt-3">
+        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
+          <div className="flx">
+            <GoogleAds size={18} />
+            <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
+          </div>
+          <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
+        </div>
+      </div>
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
