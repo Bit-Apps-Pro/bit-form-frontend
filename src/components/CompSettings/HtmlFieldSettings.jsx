@@ -1,6 +1,5 @@
 import TinyMCE from '../TinyMCE'
 import Back2FldList from './Back2FldList'
-import { __ } from '../../Utils/i18nwrap'
 
 export default function HtmlFieldSettings({ setElementSetting, elm, fields, updateData }) {
   const elmId = elm.id
