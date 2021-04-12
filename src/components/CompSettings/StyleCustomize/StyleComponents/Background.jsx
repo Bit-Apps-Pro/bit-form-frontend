@@ -42,7 +42,6 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
     setbgSrcTyp(srcTyp)
   }, [cls, style])
 
-  console.log('btn-style', style)
   const setBG = colr => {
     let property = 'background-color'
     const value = styleConfig.important ? `${colr.style}!important` : colr.style
