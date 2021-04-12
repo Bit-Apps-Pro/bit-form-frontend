@@ -271,7 +271,8 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'button',
         btnTyp: 'button',
-        txt: __('Submit'),
+        btnSiz: 'md',
+        txt: __('Button'),
         icn: {
           pos: '',
           url: '',
