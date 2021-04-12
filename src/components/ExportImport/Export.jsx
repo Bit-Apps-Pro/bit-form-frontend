@@ -47,8 +47,9 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
         if (res !== undefined && res.success) {
             if (res.data?.count !== 0) {
                const header = []
+               header[0] = 'Entry ID'
               colHeadeing.map((col, index) => {
-                header[index] = col.val
+                header[index + 1] = col.val
               })
               // eslint-disable-next-line no-undef
               const ws = XLSX.utils.json_to_sheet(res.data)
