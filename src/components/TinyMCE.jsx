@@ -24,7 +24,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
       tinymce.init({
         selector: `textarea#${id}-settings`,
         height: height || 150,
-        width: width || 300,
+        width: width || '100%',
         branding: false,
         resize: 'verticle',
         convert_urls: false,

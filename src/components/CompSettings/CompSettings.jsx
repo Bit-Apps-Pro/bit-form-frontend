@@ -43,6 +43,7 @@ import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import TextFieldSettings from './TextFieldSettings'
+import BtnIcn from '../../Icons/BtnIcn'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
   const { path } = useRouteMatch()
@@ -129,12 +130,12 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
                 <FieldOptionBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
               </Link>
-              { elm?.data?.typ === 'button'
+              {elm?.data?.typ === 'button'
                 && (
-                <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
-                  <FieldOptionBtn icn={<DropDownIcn w="20" />} title="Button Style" />
-                </Link>
-              )}
+                  <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
+                    <FieldOptionBtn icn={<DropDownIcn w="20" />} title="Button Style" />
+                  </Link>
+                )}
             </Route>
             <Route path={`${path}/style/fl/fld`}>
               <StyleEditor editorLabel={__('Field Style', 'bitform')} title={__('Label Style', 'bitform')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
@@ -150,7 +151,17 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               />
             </Route>
             <Route path={`${path}/style/fl/btn`}>
-              <StyleEditor title={`${elm.data.btnTyp === 'submit' ? 'Submit ' : 'Reset '}${__('Button Style', 'bitform')}`} noBack compStyle={style} cls={elm.data.btnTyp === 'submit' ? '.btcd-sub' : '.btcd-rst'} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
+              <StyleEditor
+                title={`${elm.data.btnTyp === 'submit' ? 'Submit ' : 'Reset '}${__('Button Style', 'bitform')}`}
+                noBack
+                compStyle={style}
+                cls={elm.data.btnTyp === 'submit' ? '.btcd-sub' : '.btcd-rst'}
+                styleDispatch={styleDispatch}
+                brkPoint={brkPoint}
+                setResponsiveView={setResponsiveView}
+                styleConfig={styleEditorConfig.button}
+                formID={formID}
+              />
             </Route>
           </Switch>
           <div className="mb-50" />
@@ -209,12 +220,13 @@ function FieldList({ fields, setElementSetting }) {
   const arr = []
   for (const fld in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fld)) {
-      let lbl = fields[fld].lbl || fields[fld].adminLbl
+      // eslint-disable-next-line prefer-const
+      let { typ, lbl, adminLbl } = fields[fld]
       if (fields[fld].typ === 'decision-box') {
         lbl = fields[fld].adminLbl
       }
       arr.push(
-        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl} sub={fld} action={() => setElementSetting({ id: fld, data: fields[fld] })} />,
+        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl || adminLbl || typ} sub={fld} action={() => setElementSetting({ id: fld, data: fields[fld] })} />,
       )
     }
   }
@@ -260,7 +272,7 @@ const renderFieldIcn = icn => {
     case 'decision-box':
       return <DecisionBoxIcn size="23" />
     case 'button':
-      return ''
+      return <BtnIcn size="26" />
     case 'html':
       return <CodeSnippetIcn size="23" />
     case 'paypal':
@@ -285,12 +297,12 @@ function FieldOptionBtn({ icn, title, sub, action }) {
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div className="btc-s-l mt-2" {...extraProps}>
       <div className="flx flx-between ">
-        <div className="flx">
+        <div className="flx w-9">
           <span className="lft-icn mr-2 btcd-icn-lg flx br-50">
             {typeof icn === 'string' ? renderFieldIcn(icn) : icn}
           </span>
-          <div>
-            <div>{title}</div>
+          <div className="w-nwrp o-h">
+            <div className="txt-o o-h mb-1">{title}</div>
             {sub && (
               <small>
                 {__('Key:', 'bitform')}

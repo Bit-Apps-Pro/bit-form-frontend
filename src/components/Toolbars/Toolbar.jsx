@@ -2,31 +2,32 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import { useMemo } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { __ } from '../../Utils/i18nwrap';
-import CheckBoxIcn from '../../Icons/CheckBoxIcn';
-import DateIcn from '../../Icons/DateIcn';
-import DateTimeIcn from '../../Icons/DateTimeIcn';
-import DropDownIcn from '../../Icons/DropDownIcn';
-import FileUploadIcn from '../../Icons/FileUploadIcn';
-import MailIcn from '../../Icons/MailIcn';
-import MonthIcn from '../../Icons/MonthIcn';
-import NumberIcn from '../../Icons/NumberIcn';
-import PasswordIcn from '../../Icons/PasswordIcn';
-import PaypalIcn from '../../Icons/PaypalIcn';
-import RadioIcn from '../../Icons/RadioIcn';
-import TextareaIcn from '../../Icons/TextareaIcn';
-import TextIcn from '../../Icons/TextIcn';
-import WeekIcn from '../../Icons/WeekIcn';
-import TimeIcn from '../../Icons/TimeIcn';
-import UrlIcn from '../../Icons/UrlIcn';
-import Tools from './Tools';
-import ColorPickerIcn from '../../Icons/ColorPickerIcn';
-import ReCaptchaIcn from '../../Icons/ReCaptchaIcn';
-import DecisionBoxIcn from '../../Icons/DecisionBoxIcn';
-import CodeSnippetIcn from '../../Icons/CodeSnippetIcn';
-import RazorPayIcn from '../../Icons/RazorPayIcn';
+import { useMemo } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
+import { __ } from '../../Utils/i18nwrap'
+import CheckBoxIcn from '../../Icons/CheckBoxIcn'
+import DateIcn from '../../Icons/DateIcn'
+import DateTimeIcn from '../../Icons/DateTimeIcn'
+import DropDownIcn from '../../Icons/DropDownIcn'
+import FileUploadIcn from '../../Icons/FileUploadIcn'
+import MailIcn from '../../Icons/MailIcn'
+import MonthIcn from '../../Icons/MonthIcn'
+import NumberIcn from '../../Icons/NumberIcn'
+import PasswordIcn from '../../Icons/PasswordIcn'
+import PaypalIcn from '../../Icons/PaypalIcn'
+import RadioIcn from '../../Icons/RadioIcn'
+import TextareaIcn from '../../Icons/TextareaIcn'
+import TextIcn from '../../Icons/TextIcn'
+import WeekIcn from '../../Icons/WeekIcn'
+import TimeIcn from '../../Icons/TimeIcn'
+import UrlIcn from '../../Icons/UrlIcn'
+import Tools from './Tools'
+import ColorPickerIcn from '../../Icons/ColorPickerIcn'
+import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
+import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
+import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
+import RazorPayIcn from '../../Icons/RazorPayIcn'
+import BtnIcn from '../../Icons/BtnIcn'
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   const tools = [
@@ -244,7 +245,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box', 'bitform'),
-        lbl: `<p><span style="font-size: 12pt;">${__('Decision Box', 'bitform')}</span></p>`,
+        lbl: `<p><span style="font-size: 12pt">${__('Decision Box', 'bitform')}</span></p>`,
         msg: {
           checked: 'Accepted',
           unchecked: 'Not Accepted',
@@ -254,18 +255,18 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: 'HTML',
-      icn: <CodeSnippetIcn size="23" />,
+      icn: <CodeSnippetIcn size="26" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
       elm: {
         typ: 'html',
         lbl: 'HTML Content',
-        content: '<b>Html Field</b><p><span style="font-size: 12pt;">Add html content on editor</span></p>',
+        content: '<b>Html Field</b><p><span style="font-size: 12pt">Add html content on editor</span></p>',
         valid: {},
       },
     },
     {
       name: 'Button',
-      icn: '',
+      icn: <BtnIcn size="26" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2, maxH: 2 },
       elm: {
         typ: 'button',
