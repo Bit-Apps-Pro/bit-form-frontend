@@ -194,7 +194,7 @@ function FormDetails(props) {
             else reportsDispatch({ type: 'set', reports: [] })
             setisLoading(false)
           } else {
-            if (!res.data.success && res.data.data === 'Token expired') {
+            if (!res.success && res.data === 'Token expired') {
               window.location.reload()
             }
             setisLoading(false)
@@ -321,11 +321,11 @@ function FormDetails(props) {
             sessionStorage.removeItem('btcd-lc')
             sessionStorage.removeItem('btcd-fs')
             sessionStorage.removeItem('btcd-rh')
-          } else if (!response?.data?.success && response?.data?.data === 'Token expired') {
+          } else if (!response?.success && response?.data === 'Token expired') {
             sessionStorage.setItem('bitformData', bitCipher(JSON.stringify(formData)))
             window.location.reload()
-          } else if (!response?.data?.success) {
-            setSnackbar({ show: true, msg: response?.data?.data?.message })
+          } else if (!response?.success) {
+            setSnackbar({ show: true, msg: response?.data?.message })
             setTimeout(() => { window.location.reload() }, 2000)
           }
         })
