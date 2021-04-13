@@ -41,28 +41,28 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
 
   const getEntry = (e) => {
     e.preventDefault()
-     setIsLoading(true)
+    setIsLoading(true)
     bitsFetch({ data },
       'bitforms_filter_export_data').then((res) => {
         if (res !== undefined && res.success) {
-            if (res.data?.count !== 0) {
-               const header = []
-              colHeadeing.map((col, index) => {
-                header[index] = col.val
-              })
-              // eslint-disable-next-line no-undef
-              const ws = XLSX.utils.json_to_sheet(res.data)
-              /* add to workbook */
-              const wb = XLSX.utils.book_new()
-              XLSX.utils.sheet_add_aoa(ws, [header])
-              XLSX.utils.book_append_sheet(wb, ws)
-              /* generate an XLSX file */
-              XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
-            } else {
-              setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
-            }
+          if (res.data?.count !== 0) {
+            const header = []
+            colHeadeing.map((col, index) => {
+              header[index] = col.val
+            })
+            // eslint-disable-next-line no-undef
+            const ws = XLSX.utils.json_to_sheet(res.data)
+            /* add to workbook */
+            const wb = XLSX.utils.book_new()
+            XLSX.utils.sheet_add_aoa(ws, [header])
+            XLSX.utils.book_append_sheet(wb, ws)
+            /* generate an XLSX file */
+            XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
+          } else {
+            setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
+          }
         }
-         setIsLoading(false)
+        setIsLoading(false)
       })
   }
 
@@ -79,28 +79,28 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
     <div>
 
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <Modal md show={showExportMdl} setModal={close} title="Export Data" style={{ overflowX: 'scroll', overflowY: 'scroll' }}>
+      <Modal md show={showExportMdl} setModal={close} title="Export Data" style={{ overflow: 'auto' }}>
         <div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('How many rows export', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('How many rows to export', 'bitform')}</b>
             <select className="btcd-paper-inp ml-2" name="custom" style={{ width: 250 }} onChange={(e) => handleInput(e.target.name, e.target.value)}>
-              <option selected disabled>Choose your option</option>
+              <option selected disabled>Choose option</option>
               <option value="all">All</option>
-              <option value="custom">Custom input number</option>
+              <option value="custom">Custom</option>
             </select>
           </div>
 
           {data.custom === 'custom' && (
-          <div
-            className="mt-3 flx"
-          >
-            <b style={{ width: 200 }}>{__('Enter your row number', 'bitform')}</b>
-            <input type="text" style={{ width: 250 }} name="limit" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-2" placeholder="Enter Your Export Row Number" />
-          </div>
+            <div
+              className="mt-3 flx"
+            >
+              <b style={{ width: 200 }}>{__('Enter row number', 'bitform')}</b>
+              <input type="text" style={{ width: 250 }} name="limit" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-2" placeholder="Export Row Number" />
+            </div>
           )}
 
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('Sort By', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('Sort Order', 'bitform')}</b>
             <select className="btcd-paper-inp ml-2" name="sort" style={{ width: 250 }} defaultValue={data?.sort} onChange={(e) => handleInput(e.target.name, e.target.value)}>
               {/* <option selected disabled>Choose your sort type</option> */}
               <option value="ASC">Ascending</option>
@@ -108,9 +108,9 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
             </select>
           </div>
           <div className="mt-3 flx">
-            <b style={{ width: 200 }}>{__('Select the sort field', 'bitform')}</b>
+            <b style={{ width: 200 }}>{__('Sort by', 'bitform')}</b>
             <select className="btcd-paper-inp ml-2" name="sortField" defaultValue={data?.sortField} onChange={(e) => handleInput(e.target.name, e.target.value)} style={{ width: 250 }}>
-              <option value="bitforms_form_entry_id">id</option>
+              <option value="bitforms_form_entry_id">ID</option>
               {colHeadeing.map((col) => (
                 <option key={col.key} value={col.key}>{col.val}</option>
               ))}
