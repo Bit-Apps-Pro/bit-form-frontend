@@ -12,7 +12,6 @@ const svgToMiniDataURI = require('mini-svg-data-uri')
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-console.log('${__dirname}/public/wp_index.html', path.resolve(`${__dirname}/public/wp_index.html`))
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
