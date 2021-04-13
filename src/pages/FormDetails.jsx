@@ -61,13 +61,12 @@ function FormDetails(props) {
       setFields(formData.fields)
       setNewCounter(getNewId(formData.fields))
       setFormName(formData.form_name)
-      setSubBtn(formData.formSettings.submitBtn)
       setFormSettings(formData.formSettings)
       setworkFlows(formData.workFlows)
       setadditional(formData.additional)
       setIntegration(formData.formSettings.integrations)
       setMailTem(formData.formSettings.mailTem)
-      if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
+      // if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
       sessionStorage.removeItem('bitformData')
       setSnackbar({ show: true, msg: __('Please try again. Token was expired', 'bitform') })
       if (isLoading) {
@@ -115,7 +114,7 @@ function FormDetails(props) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    submitBtn: subBtn,
+    // submitBtn: subBtn,
     confirmation: {
       type: {
         successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
@@ -182,13 +181,12 @@ function FormDetails(props) {
             setFields(responseData.form_content.fields)
             setNewCounter(getNewId(responseData.form_content.fields))
             setFormName(responseData.form_content.form_name)
-            setSubBtn(responseData.formSettings.submitBtn)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)
             setadditional(responseData.additional)
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
-            if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
+            // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setallLabels(responseData.Labels)
             if ('reports' in responseData) reportsDispatch({ type: 'set', reports: responseData.reports })
             else reportsDispatch({ type: 'set', reports: [] })
@@ -213,7 +211,7 @@ function FormDetails(props) {
   const fSettings = {
     formName,
     theme: 'default',
-    submitBtn: subBtn,
+    // submitBtn: subBtn,
     confirmation: { ...formSettings.confirmation },
     mailTem,
     integrations,
