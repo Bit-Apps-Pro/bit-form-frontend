@@ -1,7 +1,7 @@
 export default function Progressbar({ value }) {
   return (
     <div className="flx" style={{ width: '100%' }}>
-      <span style={{ width: 40 }}>
+      <span style={{ minWidth: 68 }}>
         {value}
         %
       </span>
