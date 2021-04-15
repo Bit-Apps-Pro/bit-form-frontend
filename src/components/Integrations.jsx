@@ -28,6 +28,7 @@ import integromat from '../resource/img/integ/integromat.svg'
 import integrately from '../resource/img/integ/integrately.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
+import telegram from '../resource/img/integ/telegram.svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -55,6 +56,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
+    { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks },
     { type: 'Zapier', logo: zapier },
     { type: 'Integromat', logo: integromat },

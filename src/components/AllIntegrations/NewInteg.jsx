@@ -27,6 +27,7 @@ import Integromat from './Integromat/Integromat'
 import ZohoFlow from './ZohoFlow/ZohoFlow'
 import Integrately from './Integrately/Integrately'
 import Pabbly from './Pabbly/Pabbly'
+import Telegram from './Telegram/Telegram'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -85,6 +86,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <Pabbly allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Flow':
         return <ZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Telegram':
+        return <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

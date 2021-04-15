@@ -26,6 +26,7 @@ import EditIntegromat from './Integromat/EditIntegromat'
 import EditZohoFlow from './ZohoFlow/EditZohoFlow'
 import EditIntegrately from './Integrately/EditIntegrately'
 import EditPabbly from './Pabbly/EditPabbly';
+import EditTelegram from './Telegram/EditTelegram';
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -83,6 +84,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditPabbly allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Zoho Flow':
         return <EditZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Telegram':
+        return <EditTelegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
