@@ -20,8 +20,6 @@ import { dateTimeFormatter } from '../Utils/Helpers';
 const Welcome = lazy(() => import('./Welcome'))
 
 function AllFroms({ newFormId }) {
-  console.log('%c $render AllFroms', 'background:yellow;padding:3px;border-radius:5px;')
-
   const [modal, setModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const { allFormsData } = useContext(AllFormContext)
@@ -79,6 +77,7 @@ function AllFroms({ newFormId }) {
 
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action')
+    // eslint-disable-next-line max-len
     ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> })
     setCols([...ncols])
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,30 +157,29 @@ function AllFroms({ newFormId }) {
 
   const handleExport = (formID) => {
     const uri = new URL(bits.ajaxURL)
-  uri.searchParams.append('action', 'bitforms_export_aform')
-  uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
-  uri.searchParams.append('id', formID)
-  fetch(uri)
-  .then(response => {
-      if (response.ok) {
-        response.blob().then(blob => {
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `bitform_${formID}_export.json`
-          document.body.appendChild(a)
-          a.click()
-          a.remove()
+    uri.searchParams.append('action', 'bitforms_export_aform')
+    uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
+    uri.searchParams.append('id', formID)
+    fetch(uri)
+      .then(response => {
+        if (response.ok) {
+          response.blob().then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `bitform_${formID}_export.json`
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+          })
+        } else {
+          response.json()
+            .then(error => { error.data && setSnackbar({ show: true, msg: error.data }) })
+        }
       })
-      } else {
-        response.json().then(error => { console.log('error', error); error.data && setSnackbar({ show: true, msg: error.data }) })
-      }
-    })
   }
 
-  const setTableCols = useCallback(newCols => {
-    setCols(newCols)
-  }, [])
+  const setTableCols = useCallback(newCols => { setCols(newCols) }, [])
 
   const closeConfMdl = () => {
     confMdl.show = false

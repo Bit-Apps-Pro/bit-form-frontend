@@ -435,20 +435,6 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         )}
       </Accordions>
 
-      {/*  <Accordions
-        customTitle={(
-          <b>
-            <span className="btcd-icn icn-one mr-2" />
-            {!isPro}
-          </b>
-        )}
-        cls={`w-6 mt-3 ${!isPro && 'btcd-inte-pro'}`}
-      >
-        <div className="flx mb-2 ml-2">
-          {__('Enable / Disable', 'bitform')}
-        </div>
-      </Accordions> */}
-
       <div className="w-6 mt-3">
         <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
           <div className="flx">

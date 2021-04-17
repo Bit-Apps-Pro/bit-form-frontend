@@ -54,7 +54,7 @@ function GridLayout(props) {
 
     if (style[`._frm-g-${formID}`]?.gap) {
       const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
-      setgridContentMargin([Number(gaps[0]), Number(gaps[1])])
+      setgridContentMargin([Number(gaps[1]), Number(gaps[0])])
     }
 
     if (style[`.fld-lbl-${formID}`]?.['font-size']) {
