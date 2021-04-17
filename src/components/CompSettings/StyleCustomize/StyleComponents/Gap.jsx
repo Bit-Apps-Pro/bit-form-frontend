@@ -26,8 +26,8 @@ export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, 
 
       <Range
         info={[
-          { icn: <b>C</b>, lbl: __('Column Gap', 'bitform') },
           { icn: <b>R</b>, lbl: __('Row Gap', 'bitform') },
+          { icn: <b>C</b>, lbl: __('Column Gap', 'bitform') },
           { icn: <XYordinateIcn />, lbl: __('Both Side Gap', 'bitform') },
         ]}
         className="btc-range"
