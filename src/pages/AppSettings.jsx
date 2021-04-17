@@ -14,7 +14,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import Cpt from '../components/Cpt/Cpt'
 import CPTIcn from '../Icons/CPTIcn'
 import APIIcon from '../Icons/APIIcon'
-import GoogleAds from '../Icons/GoogleAds'
+import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import PaymentsIcn from '../Icons/PaymentsIcn'
 
 function AppSettingsPage() {
@@ -48,7 +48,7 @@ function AppSettingsPage() {
           {__('reCAPTCHA', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
-          <span className="mr-1"><GoogleAds size={21} /></span>
+          <span className="mr-1"><GoogleAdIcn size={21} /></span>
           {__('Google Ads (Beta)', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/smtp" activeClassName="btcd-app-s-a">
