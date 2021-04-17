@@ -38,13 +38,13 @@ a {
 
 a:active,
 a:hover {
-  box-shadow: none;
   color: #005ca7;
+  box-shadow: none;
 }
 
 #btcd-app {
-  direction: ltr !important;
   color: $dp-blue;
+  direction: ltr !important;
   font-family: "Montserrat", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -460,9 +460,9 @@ input[type="checkbox"].disabled:checked:before {
 
 .tools {
   display: flex;
-  font-weight: 500;
   background: white;
   color: $dp-blue;
+  font-weight: 500;
   font-size: 15px;
   white-space: nowrap;
   word-break: keep-all;
@@ -1080,7 +1080,7 @@ input[type="checkbox"].disabled:checked:before {
   position: relative;
   cursor: pointer;
   width: 160px;
-  height: 200px;
+  height: 203px;
   text-decoration: none;
   overflow: hidden;
   border-radius: 15px;
@@ -1106,9 +1106,6 @@ input[type="checkbox"].disabled:checked:before {
   }
   & > .body {
     background: #fff;
-    width: 100%;
-    padding-top: 3px;
-    padding-bottom: 3px;
     & > div {
       width: 85%;
       font-size: 14px;
@@ -1135,7 +1132,7 @@ input[type="checkbox"].disabled:checked:before {
       color: #b7c1ec;
     }
   }
-  &:hover {
+  &:hover:not(.btcd-inte-dis,.btcd-inte-pro,.pro-filter) {
     transform: scale(1.02);
     box-shadow: 2px 2px 7px #cdd4e7;
     & > .btcd-inte-atn {
@@ -1174,8 +1171,9 @@ input[type="checkbox"].disabled:checked:before {
     font-size: 100px;
     width: 100%;
     height: 100%;
+    z-index: 9;
   }
-  &:hover:not(.btcd-inte-dis .btcd-inte-pro) {
+  &:hover:not(.btcd-inte-dis,.btcd-inte-pro,.pro-filter) {
     &:before {
       content: "+";
     }
@@ -1220,6 +1218,7 @@ input[type="checkbox"].disabled:checked:before {
     flex-direction: column;
     height: 100%;
     width: 100%;
+    z-index: 9;
     & div {
       background: #ffffff78;
       color: #000000;
@@ -1901,8 +1900,8 @@ nav.top-nav {
   }
 
   & input {
-    height: 39px;
     background: white;
+    height: 39px;
     outline: none;
     width: 82%;
     padding: 10px;
@@ -1914,13 +1913,13 @@ nav.top-nav {
     background-color: #eee;
   }
   & button {
+    color: $dp-blue;
     position: relative;
     cursor: pointer;
     height: 39px;
     padding: 11px;
     border: 1px solid #e4e4e4;
     border-left: none;
-    color: $dp-blue;
     border-radius: 0 8px 8px 0;
     &:hover {
       background: $light-blue-bg;
@@ -2230,6 +2229,8 @@ nav.top-nav {
 }
 
 .btcd-builder-wrp {
+  background: linear-gradient(90deg, #ffffff 12px, transparent 1%) center,
+    linear-gradient(#ffffff 12px, transparent 1%) center, #000000;
   // background: white !important;
   position: fixed !important;
   top: 80px !important;
@@ -2240,8 +2241,6 @@ nav.top-nav {
   border-radius: 20px !important;
   overflow: hidden !important;
   box-shadow: 0px 0px 7px 0px rgba(132, 178, 176, 0.45);
-  background: linear-gradient(90deg, #ffffff 12px, transparent 1%) center,
-    linear-gradient(#ffffff 12px, transparent 1%) center, #000000;
   background-size: 13px 13px;
   // transition: left 0.5s, right 0.5s, top 0.5s, margin-bottom 0.5s, border-radius 0.5s 0.5s !important;
 }
@@ -3174,18 +3173,18 @@ select.btcd-paper-inp {
   //box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   & .lft-icn {
+    background: #f5f5f5;
     color: $dp-blue;
     min-width: 40px;
     min-height: 40px;
-    background: #f5f5f5;
     border-radius: 30;
     justify-content: center;
   }
   &:hover {
     color: $blue;
     & .lft-icn {
-      color: $blue;
       background: $light-blue-bg;
+      color: $blue;
       & .line-icn {
         stroke: $blue;
       }
@@ -3230,8 +3229,8 @@ select.btcd-paper-inp {
 }
 
 .btcd-mt-inp {
-  color: $dp-bg !important;
   display: inline-block;
+  color: $dp-bg !important;
   position: relative;
   line-height: 1;
   border-radius: 8px;
@@ -3446,8 +3445,8 @@ select.btcd-paper-inp {
   & select {
     display: block;
     background: url($select-arrow) no-repeat right #fff;
-    box-shadow: none;
     color: $dp-bg !important;
+    box-shadow: none;
     height: auto;
     line-height: 1;
     border-radius: 8px;
@@ -3891,20 +3890,20 @@ _:-ms-fullscreen,
 }
 
 .coming-feature {
-  pointer-events: none;
   display: flex;
+  background: #07316f38;
+  pointer-events: none;
   justify-content: center;
   align-items: center;
   padding: 5px;
-  background: #07316f38;
   -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
   border-radius: 8px;
   &::before {
-    content: "Coming Soon";
+    background: white;
     position: absolute;
     top: 60%;
-    background: white;
+    content: "Coming Soon";
     padding: 5px 7px;
     font-size: 15px;
     border-radius: 10px;
@@ -3919,9 +3918,9 @@ _:-ms-fullscreen,
 
 // paypal
 .btcd-code {
+  color: #212121;
   padding: 3px;
   border-radius: 5px;
-  color: #212121;
 }
 
 .btcd-ttl-ellipsis {
@@ -4098,6 +4097,10 @@ _:-ms-fullscreen,
 
 .pl-6 {
   padding-left: 30px;
+}
+.py-1{
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .br-10 {
   border-radius: 10px !important;
