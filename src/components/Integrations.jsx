@@ -48,6 +48,12 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Web Hooks', logo: webhooks },
+    { type: 'Zapier', logo: zapier },
+    { type: 'Integromat', logo: integromat },
+    { type: 'Integrately', logo: integrately },
+    { type: 'Pabbly', logo: pabbly },
+    { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
@@ -55,12 +61,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
-    { type: 'Web Hooks', logo: webhooks },
-    { type: 'Zapier', logo: zapier },
-    { type: 'Integromat', logo: integromat },
-    { type: 'Integrately', logo: integrately },
-    { type: 'Pabbly', logo: pabbly },
-    { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -206,7 +206,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                     </Link>
                   )}
                 </div>
-                <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
+                <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>
                   <small className="txt-dp">{inte.type}</small>
                 </div>
