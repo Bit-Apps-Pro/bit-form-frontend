@@ -34,9 +34,9 @@ export default function TelegramActions({ formFields, telegramConf, setTelegramC
         title={__('Select Attachment', 'bitform')}
       >
         <div className="btcd-hr mt-2" />
-        <div className="mt-2">{__('Select file upload fields', 'bitform')}</div>
-        <select onChange={(e) => actionHandler(e)} name="attachments" value={telegramConf.action?.attachments} className="btcd-paper-inp w-10 mt-2">
-          <option value="">{__('Select Chat List', 'bitform')}</option>
+        <div className="mt-2">{__('Please select file upload fields', 'bitform')}</div>
+        <select onChange={(e) => actionHandler(e)} name="attachments" value={telegramConf.actions?.attachments} className="btcd-paper-inp w-10 mt-2">
+          <option value="">{__('Select file upload field', 'bitform')}</option>
           {
             formFields.filter(itm => (itm.type === 'file-up')).map(itm => (
               <option key={itm.key + 1} value={itm.key}>
