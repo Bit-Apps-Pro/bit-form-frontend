@@ -28,6 +28,7 @@ import ZohoFlow from './ZohoFlow/ZohoFlow'
 import Integrately from './Integrately/Integrately'
 import Pabbly from './Pabbly/Pabbly'
 import Telegram from './Telegram/Telegram'
+import FluentCrm from './FluentCRM/FluentCrm'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -88,6 +89,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <ZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Telegram':
         return <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Fluent CRM':
+        return <FluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
