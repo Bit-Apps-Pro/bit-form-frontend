@@ -16,6 +16,7 @@ import zohoSheet from '../resource/img/integ/sheet.svg';
 import zohoSign from '../resource/img/integ/sign.svg';
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
 import cpt from '../resource/img/integ/cpt.svg';
+import pods from '../resource/img/integ/pods.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
@@ -53,6 +54,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
+    { type: 'Pods', logo: pods, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
