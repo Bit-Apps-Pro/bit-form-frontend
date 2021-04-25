@@ -14,6 +14,7 @@ import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import CompGen from './CompGen'
 import ConfirmModal from './ConfirmModal'
+import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 
 function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -28,6 +29,34 @@ function GridLayout(props) {
   const [rowHeight, setRowHeight] = useState(43)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const history = useHistory()
+
+  useEffect(() => {
+    checkAllLayoutSame()
+  }, [])
+
+  // check all layout by breakpoint is same otherwise push missing layout item
+  function checkAllLayoutSame() {
+    let notSame = false
+    layouts.lg.map(item => {
+      if (!layouts.md.find(itm => itm.i === item.i)) {
+        const tmpItem = { ...item }
+        if (tmpItem.w >= cols.md) {
+          tmpItem.w = cols.md
+        }
+        layouts.md.push(tmpItem)
+        notSame = true
+      } else if (!layouts.sm.find(itm => itm.i === item.i)) {
+        const tmpItem = { ...item }
+        if (tmpItem.w >= cols.sm) {
+          tmpItem.w = cols.sm
+        }
+        layouts.sm.push(tmpItem)
+        notSame = true
+      }
+    })
+    if (notSame) { setLayouts(layouts) }
+  }
+
   useEffect(() => {
     setLayouts(deepCopy(layout))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,20 +114,6 @@ function GridLayout(props) {
   }, [style, gridWidth, formID])
 
   const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
-
-  const sortLay = arr => {
-    const newArr = arr
-    for (let i = 1; i < newArr.length; i += 1) {
-      let j = i - 1
-      const tmp = newArr[i]
-      while (j >= 0 && newArr[j].y > tmp.y) {
-        newArr[j + 1] = newArr[j]
-        j -= 1
-      }
-      newArr[j + 1] = tmp
-    }
-    return newArr
-  }
 
   const propertyValueSumX = (propertyValue = '') => {
     let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
@@ -163,7 +178,7 @@ function GridLayout(props) {
   }
 
   const genLay = (lay, col) => {
-    const sortedLay = sortLay(lay)
+    const sortedLay = sortLayoutByXY(lay)
     const nlay = []
     const nvgrid = Array(Array(col).fill(0));
     for (let i = 0; i < sortedLay.length; i += 1) {
@@ -202,10 +217,10 @@ function GridLayout(props) {
     const y = Infinity
     const newBlk = { i: `bf${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
-    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
     tmpLayouts.lg.push(newBlk)
     tmpLayouts.md.push(newBlk)
     tmpLayouts.sm.push(newBlk)
+    tmpLayouts[breakpoint] = sortLayoutByXY(tmpLayouts[breakpoint])
     if (breakpoint === 'lg') {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
       tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
@@ -232,9 +247,7 @@ function GridLayout(props) {
     }
   }
 
-  const onBreakpointChange = bp => {
-    setBreakpoint(bp)
-  }
+  const onBreakpointChange = bp => setBreakpoint(bp)
 
   const onRemoveItem = i => {
     if (fields[i]?.typ === 'button' && fields[i]?.btnTyp === 'submit') {
@@ -290,7 +303,7 @@ function GridLayout(props) {
     if (formSettings?.additional?.enabled?.recaptchav3) {
       msg = __(
         <p>
-          You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV2 disable the ReCaptchaV3 from the form settings.
+          You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV2 disable the ReCaptchaV3 from the Form Settings.
         </p>, 'bitform',
       )
     } else {
@@ -321,12 +334,12 @@ function GridLayout(props) {
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
     const newBlk = `bf${formID}-${newCounter + 1}`
-
+    const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
-    tmpLayouts[breakpoint] = sortLay(tmpLayouts[breakpoint])
-    tmpLayouts.lg.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-    tmpLayouts.md.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
-    tmpLayouts.sm.push({ i: newBlk, x, y, w, h, minH, maxH, minW })
+    tmpLayouts.lg.push(newLayoutItem)
+    tmpLayouts.md.push(newLayoutItem)
+    tmpLayouts.sm.push(newLayoutItem)
+    tmpLayouts[breakpoint] = sortLayoutByXY(tmpLayouts[breakpoint])
     if (breakpoint === 'lg') {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
       tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
@@ -470,6 +483,7 @@ function GridLayout(props) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      <button onClick={() => console.table(layouts.lg)}>ok</button>
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={isToolDragging ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
@@ -518,7 +532,7 @@ function GridLayout(props) {
           {alertMdl.msg}
         </div>
       </ConfirmModal>
-    </div>
+    </div >
   )
 }
 
