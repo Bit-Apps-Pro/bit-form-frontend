@@ -45,7 +45,6 @@ function App() {
     return max + 1
   }
 
-  console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
   return (
     <Suspense fallback={(<Loader style={loaderStyle} />)}>
       <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
