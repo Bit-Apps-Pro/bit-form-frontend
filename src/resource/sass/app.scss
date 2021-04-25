@@ -257,6 +257,7 @@ input[type="checkbox"].disabled:checked:before {
   -ms-user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
+  user-select: none;
   // user-drag: none;
   pointer-events: none;
 }
@@ -522,6 +523,7 @@ input[type="checkbox"].disabled:checked:before {
   font-size: 17px;
   -ms-user-select: none;
   -webkit-user-select: none;
+  user-select: none;
   min-height: 25px;
   margin: 8px;
   width: auto;
@@ -1012,6 +1014,7 @@ input[type="checkbox"].disabled:checked:before {
   -moz--ms-user-select: none;
   -o--ms-user-select: none;
   -ms-user-select: none;
+  user-select: none;
   transform: scale(0);
   z-index: 999;
   transition: all 0.3s;
@@ -1184,6 +1187,7 @@ input[type="checkbox"].disabled:checked:before {
   pointer-events: none;
   -ms-user-select: none;
   -webkit-user-select: none;
+  user-select: none;
   & > img {
     -webkit-filter: grayscale(1) !important;
     filter: grayscale(1) !important;
@@ -1208,6 +1212,7 @@ input[type="checkbox"].disabled:checked:before {
   pointer-events: none;
   -ms-user-select: none;
   -webkit-user-select: none;
+  user-select: none;
   & .pro-filter {
     display: flex;
     background: #4e5a9447;
