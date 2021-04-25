@@ -1,21 +1,21 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
-import zohoAnalytics from '../resource/img/integ/analytics.svg';
-import zohoBigin from '../resource/img/integ/bigin.svg';
-import zohoCamp from '../resource/img/integ/campaigns.svg';
-import zohoCreator from '../resource/img/integ/creator.svg';
-import zohoCRM from '../resource/img/integ/crm.svg';
-import zohoDesk from '../resource/img/integ/desk.svg';
-import zohoHub from '../resource/img/integ/hub.svg';
-import zohoMail from '../resource/img/integ/mail.svg';
-import zohoProjects from '../resource/img/integ/projects.svg';
-import zohoRecruit from '../resource/img/integ/recruit.svg';
-import zohoSheet from '../resource/img/integ/sheet.svg';
-import zohoSign from '../resource/img/integ/sign.svg';
-import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
-import cpt from '../resource/img/integ/cpt.svg';
+import zohoAnalytics from '../resource/img/integ/analytics.svg'
+import zohoBigin from '../resource/img/integ/bigin.svg'
+import zohoCamp from '../resource/img/integ/campaigns.svg'
+import zohoCreator from '../resource/img/integ/creator.svg'
+import zohoCRM from '../resource/img/integ/crm.svg'
+import zohoDesk from '../resource/img/integ/desk.svg'
+import zohoHub from '../resource/img/integ/hub.svg'
+import zohoMail from '../resource/img/integ/mail.svg'
+import zohoProjects from '../resource/img/integ/projects.svg'
+import zohoRecruit from '../resource/img/integ/recruit.svg'
+import zohoSheet from '../resource/img/integ/sheet.svg'
+import zohoSign from '../resource/img/integ/sign.svg'
+import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
+import cpt from '../resource/img/integ/cpt.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
@@ -28,13 +28,13 @@ import integromat from '../resource/img/integ/integromat.svg'
 import integrately from '../resource/img/integ/integrately.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import bitsFetch from '../Utils/bitsFetch';
-import EditInteg from './AllIntegrations/EditInteg';
-import IntegInfo from './AllIntegrations/IntegInfo';
-import NewInteg from './AllIntegrations/NewInteg';
-import ConfirmModal from './ConfirmModal';
-import SnackMsg from './ElmSettings/Childs/SnackMsg';
-import Modal from './Modal';
+import bitsFetch from '../Utils/bitsFetch'
+import EditInteg from './AllIntegrations/EditInteg'
+import IntegInfo from './AllIntegrations/IntegInfo'
+import NewInteg from './AllIntegrations/NewInteg'
+import ConfirmModal from './ConfirmModal'
+import SnackMsg from './ElmSettings/Childs/SnackMsg'
+import Modal from './Modal'
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
@@ -111,7 +111,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const getLogo = type => {
     for (let i = 0; i < integs.length; i += 1) {
       if (integs[i].type === type) {
-        return <img src={integs[i].logo} alt={type} />
+        return <img loading="lazy" src={integs[i].logo} alt={type} />
       }
     }
     return null
@@ -176,7 +176,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                           <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
-                      <img src={inte.logo} alt="" />
+                      <img loading="lazy" src={inte.logo} alt="" />
                       <div className="txt-center">
                         {inte.type}
                       </div>
