@@ -3935,6 +3935,11 @@ _:-ms-fullscreen,
   overflow: hidden;
   white-space: nowrap;
 }
+.g-c{
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
 
 .d-flx {
   display: flex;
