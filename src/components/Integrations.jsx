@@ -28,13 +28,14 @@ import integromat from '../resource/img/integ/integromat.svg'
 import integrately from '../resource/img/integ/integrately.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
-import bitsFetch from '../Utils/bitsFetch'
-import EditInteg from './AllIntegrations/EditInteg'
-import IntegInfo from './AllIntegrations/IntegInfo'
-import NewInteg from './AllIntegrations/NewInteg'
-import ConfirmModal from './ConfirmModal'
-import SnackMsg from './ElmSettings/Childs/SnackMsg'
-import Modal from './Modal'
+import telegram from '../resource/img/integ/telegram.svg'
+import bitsFetch from '../Utils/bitsFetch';
+import EditInteg from './AllIntegrations/EditInteg';
+import IntegInfo from './AllIntegrations/IntegInfo';
+import NewInteg from './AllIntegrations/NewInteg';
+import ConfirmModal from './ConfirmModal';
+import SnackMsg from './ElmSettings/Childs/SnackMsg';
+import Modal from './Modal';
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
@@ -61,6 +62,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
+    { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },

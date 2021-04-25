@@ -7,6 +7,7 @@ import GoogleSheetAuthorization from './GoogleSheet/GoogleSheetAuthorization'
 import WebHooksIntegration from './IntegrationHelpers/WebHooksIntegration'
 import MailChimpAuthorization from './MailChimp/MailChimpAuthorization'
 import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
+import TelegramAuthorization from './Telegram/TelegramAuthorization'
 import ZohoAnalyticsAuthorization from './ZohoAnalytics/ZohoAnalyticsAuthorization'
 import ZohoBiginAuthorization from './ZohoBigin/ZohoBiginAuthorization'
 import ZohoCampaignsAuthorization from './ZohoCampaigns/ZohoCampaignsAuthorization'
@@ -80,6 +81,8 @@ export default function IntegInfo({ allIntegURL, integrations }) {
         return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Zoho Flow':
         return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
+      case 'Telegram':
+        return <TelegramAuthorization telegramConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }
