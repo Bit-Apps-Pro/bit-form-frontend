@@ -216,9 +216,9 @@ function Integrations({ integrations, setIntegration, formFields }) {
             ))}
           </div>
         </Route>
-        <Route path={`${path}/new/:type`}>
-          <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        </Route>
+
+        <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+
         {integrations && integrations.length > 0
           && (
             <Route exact path={`${path}/edit/:id`}>
