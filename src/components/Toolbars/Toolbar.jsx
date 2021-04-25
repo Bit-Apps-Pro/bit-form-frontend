@@ -256,7 +256,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     {
       name: 'HTML',
       icn: <CodeSnippetIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'n_blk' },
       elm: {
         typ: 'html',
         lbl: 'HTML Content',
