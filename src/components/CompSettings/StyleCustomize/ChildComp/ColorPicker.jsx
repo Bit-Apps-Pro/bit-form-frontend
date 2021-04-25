@@ -49,6 +49,7 @@ export default function ColorPicker({ value, onChange, alwGradient }) {
     color.degree = Number(str[0].replace(/\D/g, ''))
     picrVal = color
   }
+
   return (
     <div ref={ref} className="pos-rel">
       <div
