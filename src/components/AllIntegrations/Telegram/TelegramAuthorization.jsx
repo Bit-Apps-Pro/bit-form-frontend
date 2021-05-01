@@ -58,7 +58,7 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={telegramConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.name}</div>
-        <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
+        <div className="mt-3"><b>{__('Bot API Key:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="bot_api_key" value={telegramConf.bot_api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.bot_api_key}</div>
         {isLoading === 'auth' && (

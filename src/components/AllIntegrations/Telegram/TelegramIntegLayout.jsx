@@ -44,7 +44,7 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
             ))
           }
         </select>
-        <button onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailPoet List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshGetUpdates(telegramConf, setTelegramConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Telegram List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {isLoading && (
         <Loader style={{

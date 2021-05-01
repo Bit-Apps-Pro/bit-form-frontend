@@ -27,7 +27,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
     <>
       <br />
       <div className="flx">
-        <b className="wdt-150 d-in-b">{__('Fluent CRM:', 'bitform')}</b>
+        <b className="wdt-150 d-in-b">{__('Fluent CRM List:', 'bitform')}</b>
         <select onChange={(e) => inputHendler(e)} name="list_id" value={fluentCrmConf.list_id} className="btcd-paper-inp w-5">
           <option value="">{__('Select Fluent CRM list', 'bitform')}</option>
           {
