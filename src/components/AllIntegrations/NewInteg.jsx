@@ -31,6 +31,8 @@ const ZohoFlow = lazy(() => import('./ZohoFlow/ZohoFlow'))
 const Integrately = lazy(() => import('./Integrately/Integrately'))
 const Pabbly = lazy(() => import('./Pabbly/Pabbly'))
 const Telegram = lazy(() => import('./Telegram/Telegram'))
+const Encharge = lazy(() => import('./Encharge/Encharge'))
+
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -144,6 +146,10 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
     {
       urlName: 'Telegram',
       component: <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
+    },
+    {
+      urlName: 'Encharge',
+      component: <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
     },
   ]
 

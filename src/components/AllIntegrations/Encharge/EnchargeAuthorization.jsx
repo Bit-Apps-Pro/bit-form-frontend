@@ -2,53 +2,49 @@ import { useState } from 'react'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { refreshGetUpdates } from './TelegramCommonFunc'
+import { refreshEnchargeHeader } from './EnchargeCommonFunc'
 
-export default function TelegramAuthorization({ formID, telegramConf, setTelegramConf, step, setstep, setSnackbar, isInfo }) {
+export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
-  const [error, setError] = useState({ name: '', bot_api_key: '', apiError: '' })
+  const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAuthorize = () => {
-    const newConf = { ...telegramConf };
-    console.log('telegramConf', telegramConf)
-    if (!newConf.name || !newConf.bot_api_key) {
+    const newConf = { ...enchargeConf };
+    console.log('enchargeConf', enchargeConf)
+    if (!newConf.name || !newConf.api_key) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
-        bot_api_key: !newConf.bot_api_key ? __('API Key cann\'t be empty', 'bitform') : '',
+        api_key: !newConf.api_key ? __('API Key cann\'t be empty', 'bitform') : '',
       })
       return
     }
     setIsLoading('auth')
-    const requestParams = { bot_api_key: newConf.bot_api_key }
-    bitsFetch(requestParams, 'bitforms_telegram_authorize')
+    const data = { api_key: newConf.api_key }
+    bitsFetch(data, 'bitforms_encharge_authorize')
       .then(result => {
         if (result?.success) {
           setisAuthorized(true)
           setSnackbar({ show: true, msg: __('Authorized Successfully', 'bitfrom') })
-        } else {
-          setisAuthorized(false)
-          setError({ apiError: result?.data.description })
-          setSnackbar({ show: true, msg: __('Authorized Filled', 'bitfrom') })
         }
         setShowAuthMsg(true)
         setIsLoading(false)
       })
   }
   const handleInput = e => {
-    const newConf = { ...telegramConf }
+    const newConf = { ...enchargeConf }
     const rmError = { ...error }
     rmError[e.target.name] = ''
     newConf[e.target.name] = e.target.value
     setError(rmError)
-    setTelegramConf(newConf)
-    console.log('set name', telegramConf)
+    setEnchargeConf(newConf)
+    console.log('set name', enchargeConf)
   }
 
   const nextPage = () => {
-    refreshGetUpdates(telegramConf, setTelegramConf, setIsLoading, setSnackbar)
     setstep(2)
+    refreshEnchargeHeader(enchargeConf, setEnchargeConf, setIsLoading, setSnackbar)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
@@ -56,11 +52,16 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
     <>
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={telegramConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
-        <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.name}</div>
-        <div className="mt-3"><b>{__('Bot API Key:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="bot_api_key" value={telegramConf.bot_api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
-        <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.bot_api_key}</div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
+        <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={enchargeConf.api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
+        <small className="d-blk mt-5">
+          {__('To get API , Please Visit', 'bitform')}
+          {' '}
+          <a className="btcd-link" href="https://app.encharge.io/account/info" target="_blank" rel="noreferrer">{__('Encharge API Console', 'bitform')}</a>
+        </small>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
             <LoaderSm size="25" clr="#022217" className="mr-2" />
@@ -73,7 +74,7 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
             <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
               &times;
             </span>
-            {error.apiError}
+            Sorry, API key is invalid
           </div>
         )}
         {!isInfo && (
