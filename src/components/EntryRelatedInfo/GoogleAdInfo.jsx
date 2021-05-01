@@ -60,6 +60,10 @@ export default function GoogleAdInfo({ settab, rowDtl }) {
                   </tr>
                   <tr className="txt-dp">
                     <td className="td">Keyword</td>
+                    <td className="td">{row['@attributes']?.CriteriaParameters}</td>
+                  </tr>
+                  <tr className="txt-dp">
+                    <td className="td">Match type</td>
                     <td className="td">{row['@attributes']?.KeywordMatchType}</td>
                   </tr>
                   <tr className="txt-dp">
