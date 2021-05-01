@@ -67,6 +67,122 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const closeConfMdl = useCallback(() => {
+    confMdl.show = false
+    setconfMdl({ ...confMdl })
+  }, [confMdl])
+
+  const bulkDuplicateData = useCallback((rows, tmpData, action) => {
+    const rowID = []
+    const entries = []
+    if (typeof rows[0] === 'object') {
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID[rows[i].original.entry_id] = rows[i].id
+        entries.push(rows[i].original.entry_id)
+      }
+    } else {
+      rowID[rows.original.entry_id] = rows.id
+      entries.push(rows.original.entry_id)
+    }
+    const newData = deepCopy(tmpData)
+
+    const ajaxData = { formID, entries }
+    bitsFetch(ajaxData, 'bitforms_duplicate_form_entries').then((res) => {
+      if (res.success && res.data.message !== 'undefined') {
+        if (action && action.fetchData && action.data) {
+          action.fetchData(action.data)
+        } else {
+          let duplicatedEntry
+          // let duplicatedEntryCount = 0
+          Object.entries(res?.data?.details || {})?.forEach(
+            ([resEntryId, duplicatedId]) => {
+              duplicatedEntryCount += 1
+              duplicatedEntry = JSON.parse(
+                JSON.stringify(newData[rowID[resEntryId]]),
+              )
+              // duplicatedEntry = [...newData.slice(rowID[resEntryId], parseInt(rowID[resEntryId], 10) + 1)]
+              duplicatedEntry.entry_id = duplicatedId
+              newData[rowID[resEntryId]].entry_id = resEntryId
+              newData.unshift(duplicatedEntry)
+              newData.pop()
+            },
+          )
+          setAllResp(newData)
+        }
+        setSnackbar({ show: true, msg: res.data.message })
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const dupConfMdl = useCallback(
+    (row, data, pCount) => {
+      confMdl.btnTxt = __('Duplicate', 'bitform')
+      confMdl.btnClass = 'blue'
+      confMdl.body = __('Are you sure to duplicate this entry?', 'bitform')
+      confMdl.action = () => {
+        bulkDuplicateData(row, data, pCount)
+        closeConfMdl()
+      }
+      confMdl.show = true
+      setconfMdl({ ...confMdl })
+    },
+    [bulkDuplicateData, closeConfMdl, confMdl],
+  )
+
+  const closeRowDetail = useCallback(() => {
+    rowDtl.show = false
+    setRowDtl({ ...rowDtl })
+  }, [rowDtl])
+
+  const setBulkDelete = useCallback((rows, action) => {
+    const rowID = []
+    const entries = []
+    if (typeof rows[0] === 'object') {
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID.push(rows[i].id)
+        entries.push(rows[i].original.entry_id)
+      }
+    } else {
+      rowID.push(rows.id)
+      entries.push(rows.original.entry_id)
+    }
+    const ajaxData = { formID, entries }
+
+    bitsFetch(ajaxData, 'bitforms_bulk_delete_form_entries').then((res) => {
+      if (res.success) {
+        if (action && action.fetchData && action.data) {
+          action.fetchData(action.data)
+        }
+        setSnackbar({ show: true, msg: res.data.message })
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const delConfMdl = useCallback(
+    (row, data) => {
+      if (row.idx !== undefined) {
+        // eslint-disable-next-line no-param-reassign
+        row.id = row.idx
+        // eslint-disable-next-line no-param-reassign
+        row.original = row.data[0].row.original
+      }
+      confMdl.btnTxt = 'Delete'
+      confMdl.body = 'Are you sure to delete this entry'
+      confMdl.btnClass = ''
+
+      confMdl.action = () => {
+        setBulkDelete(row, data)
+        closeConfMdl()
+        closeRowDetail()
+      }
+      confMdl.show = true
+      setconfMdl({ ...confMdl })
+    },
+    [closeConfMdl, closeRowDetail, confMdl, setBulkDelete],
+  )
+
   const tableHeaderHandler = (labels) => {
     const cols = labels.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
@@ -158,6 +274,28 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
     setEntryLabels(cols)
   }
 
+  const editData = useCallback((row) => {
+    if (row.idx !== undefined) {
+      // eslint-disable-next-line no-param-reassign
+      row.id = row.idx
+      // eslint-disable-next-line no-param-reassign
+      row.original = row.data[0].row.original
+    }
+    setEntryID(row.original.entry_id)
+    setShowEditMdl(true)
+  }, [])
+
+  const relatedinfo = row => {
+    if (row.idx !== undefined) {
+      // eslint-disable-next-line no-param-reassign
+      row.id = row.idx
+      // eslint-disable-next-line no-param-reassign
+      row.original = row.data[0].row.original
+    }
+    setEntryID(row.original.entry_id)
+    setshowRelatedInfoMdl(true)
+  }
+
   const fetchData = useCallback(
     ({ pageSize, pageIndex, sortBy, filters, globalFilter }) => {
       // eslint-disable-next-line no-plusplus
@@ -203,101 +341,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
     }, [delConfMdl, dupConfMdl, editData, formID, refreshResp],
   )
 
-  const setBulkDelete = useCallback((rows, action) => {
-    const rowID = []
-    const entries = []
-    if (typeof rows[0] === 'object') {
-      for (let i = 0; i < rows.length; i += 1) {
-        rowID.push(rows[i].id)
-        entries.push(rows[i].original.entry_id)
-      }
-    } else {
-      rowID.push(rows.id)
-      entries.push(rows.original.entry_id)
-    }
-    const ajaxData = { formID, entries }
-
-    bitsFetch(ajaxData, 'bitforms_bulk_delete_form_entries').then((res) => {
-      if (res.success) {
-        if (action && action.fetchData && action.data) {
-          action.fetchData(action.data)
-        }
-        setSnackbar({ show: true, msg: res.data.message })
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const bulkDuplicateData = useCallback((rows, tmpData, action) => {
-    const rowID = []
-    const entries = []
-    if (typeof rows[0] === 'object') {
-      for (let i = 0; i < rows.length; i += 1) {
-        rowID[rows[i].original.entry_id] = rows[i].id
-        entries.push(rows[i].original.entry_id)
-      }
-    } else {
-      rowID[rows.original.entry_id] = rows.id
-      entries.push(rows.original.entry_id)
-    }
-    const newData = deepCopy(tmpData)
-
-    const ajaxData = { formID, entries }
-    bitsFetch(ajaxData, 'bitforms_duplicate_form_entries').then((res) => {
-      if (res.success && res.data.message !== 'undefined') {
-        if (action && action.fetchData && action.data) {
-          action.fetchData(action.data)
-        } else {
-          let duplicatedEntry
-          // let duplicatedEntryCount = 0
-          Object.entries(res?.data?.details || {})?.forEach(
-            ([resEntryId, duplicatedId]) => {
-              duplicatedEntryCount += 1
-              duplicatedEntry = JSON.parse(
-                JSON.stringify(newData[rowID[resEntryId]]),
-              )
-              // duplicatedEntry = [...newData.slice(rowID[resEntryId], parseInt(rowID[resEntryId], 10) + 1)]
-              duplicatedEntry.entry_id = duplicatedId
-              newData[rowID[resEntryId]].entry_id = resEntryId
-              newData.unshift(duplicatedEntry)
-              newData.pop()
-            },
-          )
-          setAllResp(newData)
-        }
-        setSnackbar({ show: true, msg: res.data.message })
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const editData = useCallback((row) => {
-    if (row.idx !== undefined) {
-      // eslint-disable-next-line no-param-reassign
-      row.id = row.idx
-      // eslint-disable-next-line no-param-reassign
-      row.original = row.data[0].row.original
-    }
-    setEntryID(row.original.entry_id)
-    setShowEditMdl(true)
-  }, [])
-
-  const relatedinfo = row => {
-    if (row.idx !== undefined) {
-      // eslint-disable-next-line no-param-reassign
-      row.id = row.idx
-      // eslint-disable-next-line no-param-reassign
-      row.original = row.data[0].row.original
-    }
-    setEntryID(row.original.entry_id)
-    setshowRelatedInfoMdl(true)
-  }
-
-  const closeRowDetail = useCallback(() => {
-    rowDtl.show = false
-    setRowDtl({ ...rowDtl })
-  }, [rowDtl])
-
   const onRowClick = useCallback(
     (e, row, idx, rowFetchData) => {
       if (!e.target.classList.contains('prevent-drawer')) {
@@ -314,49 +357,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
       }
     },
     [rowDtl],
-  )
-
-  const closeConfMdl = useCallback(() => {
-    confMdl.show = false
-    setconfMdl({ ...confMdl })
-  }, [confMdl])
-
-  const delConfMdl = useCallback(
-    (row, data) => {
-      if (row.idx !== undefined) {
-        // eslint-disable-next-line no-param-reassign
-        row.id = row.idx
-        // eslint-disable-next-line no-param-reassign
-        row.original = row.data[0].row.original
-      }
-      confMdl.btnTxt = 'Delete'
-      confMdl.body = 'Are you sure to delete this entry'
-      confMdl.btnClass = ''
-
-      confMdl.action = () => {
-        setBulkDelete(row, data)
-        closeConfMdl()
-        closeRowDetail()
-      }
-      confMdl.show = true
-      setconfMdl({ ...confMdl })
-    },
-    [closeConfMdl, closeRowDetail, confMdl, setBulkDelete],
-  )
-
-  const dupConfMdl = useCallback(
-    (row, data, pCount) => {
-      confMdl.btnTxt = __('Duplicate', 'bitform')
-      confMdl.btnClass = 'blue'
-      confMdl.body = __('Are you sure to duplicate this entry?', 'bitform')
-      confMdl.action = () => {
-        bulkDuplicateData(row, data, pCount)
-        closeConfMdl()
-      }
-      confMdl.show = true
-      setconfMdl({ ...confMdl })
-    },
-    [bulkDuplicateData, closeConfMdl, confMdl],
   )
 
   const filterEntryLabels = () => entryLabels.slice(1).slice(0, -1)

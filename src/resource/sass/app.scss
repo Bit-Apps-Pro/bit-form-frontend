@@ -4,6 +4,9 @@
   --tt-width: auto;
   --tt-wrap: nowrap;
 }
+::-webkit-datetime-edit{
+  line-height: 1;
+}
 
 //$blue: #0a8dff;
 //$blue: #0083f3;
@@ -857,7 +860,10 @@ input[type="checkbox"].disabled:checked:before {
   background: $bg;
   &:hover {
     width: 8px;
-    border-left: 1px solid #8a8a8a;
+    & > div {
+      border-left: 3px solid $blue;
+      width: 12px;
+    }
   }
 }
 

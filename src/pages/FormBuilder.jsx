@@ -37,7 +37,8 @@ const styleReducer = (style, action) => {
 }
 
 function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType, formSettings }) {
-  const [tolbarSiz, setTolbarSiz] = useState(false)
+  const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
+  const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
   const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
@@ -134,9 +135,11 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     if (res.getSectionSize(0) >= 160) {
       res.resizeSection(0, { toSize: 50 })
       setTolbarSiz(true)
+      localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: true }))
     } else {
       res.resizeSection(0, { toSize: 160 })
       setTolbarSiz(false)
+      localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: false }))
     }
     conRef.current.applyResizer(res)
   }, [conRef])
@@ -176,7 +179,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const setResponsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = 165
+    const leftBarWidth = toolbarOff ? 50 : 165
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
@@ -243,7 +246,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
       <style>{styleSheet}</style>
       <Section
         className="tool-sec"
-        defaultSize={165}
+        defaultSize={toolbarOff ? 50 : 165}
         minSize={notIE && 58}
       >
         <ToolBar
