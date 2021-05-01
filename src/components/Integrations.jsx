@@ -1,21 +1,21 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
+import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
-import zohoAnalytics from '../resource/img/integ/analytics.svg';
-import zohoBigin from '../resource/img/integ/bigin.svg';
-import zohoCamp from '../resource/img/integ/campaigns.svg';
-import zohoCreator from '../resource/img/integ/creator.svg';
-import zohoCRM from '../resource/img/integ/crm.svg';
-import zohoDesk from '../resource/img/integ/desk.svg';
-import zohoHub from '../resource/img/integ/hub.svg';
-import zohoMail from '../resource/img/integ/mail.svg';
-import zohoProjects from '../resource/img/integ/projects.svg';
-import zohoRecruit from '../resource/img/integ/recruit.svg';
-import zohoSheet from '../resource/img/integ/sheet.svg';
-import zohoSign from '../resource/img/integ/sign.svg';
-import zohoWorkdrive from '../resource/img/integ/workdrive.svg';
-import cpt from '../resource/img/integ/cpt.svg';
+import zohoAnalytics from '../resource/img/integ/analytics.svg'
+import zohoBigin from '../resource/img/integ/bigin.svg'
+import zohoCamp from '../resource/img/integ/campaigns.svg'
+import zohoCreator from '../resource/img/integ/creator.svg'
+import zohoCRM from '../resource/img/integ/crm.svg'
+import zohoDesk from '../resource/img/integ/desk.svg'
+import zohoHub from '../resource/img/integ/hub.svg'
+import zohoMail from '../resource/img/integ/mail.svg'
+import zohoProjects from '../resource/img/integ/projects.svg'
+import zohoRecruit from '../resource/img/integ/recruit.svg'
+import zohoSheet from '../resource/img/integ/sheet.svg'
+import zohoSign from '../resource/img/integ/sign.svg'
+import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
+import cpt from '../resource/img/integ/cpt.svg'
 import pods from '../resource/img/integ/pods.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
@@ -51,6 +51,12 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Web Hooks', logo: webhooks },
+    { type: 'Zapier', logo: zapier },
+    { type: 'Integromat', logo: integromat },
+    { type: 'Integrately', logo: integrately },
+    { type: 'Pabbly', logo: pabbly },
+    { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
@@ -117,7 +123,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const getLogo = type => {
     for (let i = 0; i < integs.length; i += 1) {
       if (integs[i].type === type) {
-        return <img src={integs[i].logo} alt={type} />
+        return <img loading="lazy" src={integs[i].logo} alt={type} />
       }
     }
     return null
@@ -182,7 +188,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                           <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
-                      <img src={inte.logo} alt="" />
+                      <img loading="lazy" src={inte.logo} alt="" />
                       <div className="txt-center">
                         {inte.type}
                       </div>
@@ -212,7 +218,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                     </Link>
                   )}
                 </div>
-                <div className="txt-center body" title={`${inte.name} | ${inte.type}`}>
+                <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
                   <div>{inte.name}</div>
                   <small className="txt-dp">{inte.type}</small>
                 </div>
@@ -220,9 +226,9 @@ function Integrations({ integrations, setIntegration, formFields }) {
             ))}
           </div>
         </Route>
-        <Route path={`${path}/new/:type`}>
-          <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-        </Route>
+
+        <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+
         {integrations && integrations.length > 0
           && (
             <Route exact path={`${path}/edit/:id`}>

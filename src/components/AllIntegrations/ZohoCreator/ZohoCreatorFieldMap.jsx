@@ -1,4 +1,3 @@
-
 import { __ } from '../../../Utils/i18nwrap';
 import MtInput from '../../ElmSettings/Childs/MtInput';
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers';

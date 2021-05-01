@@ -1,5 +1,4 @@
 function Drawer(props) {
-  console.log('%c $render Drawer', 'background:tomato;padding:3px;border-radius:5px')
   return (
     <div className="btcd-drawer" style={{ right: props.show ? 0 : -420 }}>
       <div className="flx flx-between">

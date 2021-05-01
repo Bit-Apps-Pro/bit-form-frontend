@@ -255,8 +255,8 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: 'HTML',
-      icn: <CodeSnippetIcn size="26" />,
-      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      icn: <CodeSnippetIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk' },
       elm: {
         typ: 'html',
         lbl: 'HTML Content',
@@ -266,7 +266,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     },
     {
       name: 'Button',
-      icn: <BtnIcn size="26" />,
+      icn: <BtnIcn size="23" />,
       pos: { h: 2, w: 6, i: 'n_blk', minH: 2, maxH: 2 },
       elm: {
         typ: 'button',
