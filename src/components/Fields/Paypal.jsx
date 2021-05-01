@@ -42,17 +42,17 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }
   }, [resetFieldValue])
 
-/*   const amountFld = document.getElementsByName(attr?.amountFld)[0]
-  amountFld?.addEventListener('change', e => setAmount(e.target.value))
-
-  const shippingFld = document.getElementsByName(attr?.shippingFld)[0]
-  shippingFld?.addEventListener('change', e => setShipping(e.target.value))
-
-  const taxFld = document.getElementsByName(attr?.taxFld)[0]
-  taxFld?.addEventListener('change', e => setTax(e.target.value))
-
-  const descFld = document.getElementsByName(attr?.descFld)[0]
-  descFld?.addEventListener('change', e => setDescription(e.target.value)) */
+  /*   const amountFld = document.getElementsByName(attr?.amountFld)[0]
+    amountFld?.addEventListener('change', e => setAmount(e.target.value))
+  
+    const shippingFld = document.getElementsByName(attr?.shippingFld)[0]
+    shippingFld?.addEventListener('change', e => setShipping(e.target.value))
+  
+    const taxFld = document.getElementsByName(attr?.taxFld)[0]
+    taxFld?.addEventListener('change', e => setTax(e.target.value))
+  
+    const descFld = document.getElementsByName(attr?.descFld)[0]
+    descFld?.addEventListener('change', e => setDescription(e.target.value)) */
 
   useEffect(() => {
     setrender(false)
@@ -83,16 +83,13 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       fields[attr?.descFld] = { elm: document.getElementsByName(attr?.descFld)[0], func: setDescription }
     }
     const payAttrObserver = new MutationObserver((data) => {
-      console.log('data', data.length, data[0].target.name, data[0].target.value)
       const obsrvdFld = fields[data[0].target.name]
       if (obsrvdFld) {
         obsrvdFld.func(data[0].target.value)
       }
       // setAmount(data[0].target.value)
     })
-    console.log('fields', fields, fields.length)
     Object.keys(fields).map(elm => {
-      console.log('elm', fields[elm].elm)
       payAttrObserver.observe(fields[elm].elm, { attributes: true, attributeFilter: ['value'] })
     })
   }
