@@ -430,7 +430,7 @@ export default function Bitforms(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.error])
 
-  useEffect(() => {
+  useEffect(() => { 
     if (document.querySelector('.slim') != null) {
       const allSel = document.querySelectorAll('select.slim')
       for (let i = 0; i < allSel.length; i += 1) {
