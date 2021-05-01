@@ -29,6 +29,7 @@ import Integrately from './Integrately/Integrately'
 import Pabbly from './Pabbly/Pabbly'
 import Telegram from './Telegram/Telegram'
 import FluentCrm from './FluentCRM/FluentCrm'
+import Encharge from './Encharge/Encharge'
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -91,6 +92,8 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Fluent CRM':
         return <FluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Encharge':
+        return <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }
