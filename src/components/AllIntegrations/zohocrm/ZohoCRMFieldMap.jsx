@@ -1,6 +1,5 @@
-
 import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../ElmSettings/Childs/MtInput'
+import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, crmConf, setCrmConf, tab }) {

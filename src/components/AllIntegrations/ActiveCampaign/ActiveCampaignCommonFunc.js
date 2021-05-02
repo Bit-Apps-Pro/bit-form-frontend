@@ -21,7 +21,7 @@ export const refreshActiveCampaingHeader = (activeCampaingConf, setActiveCampain
             newConf.default = {}
           }
             newConf.default.fields = result.data.activeCampaignField
-            const fields = newConf.default.fields
+            const { fields } = newConf.default
             newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', activeCampaignField: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('ActiveCampaign fields refreshed', 'bitform') })
         } else {

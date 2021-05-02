@@ -5,17 +5,18 @@
 import { Fragment, useState } from 'react';
 
 import { __ } from '../Utils/i18nwrap';
-import Button from './ElmSettings/Childs/Button'
-import LogicChip from './ElmSettings/Childs/LogicChip'
-import LogicBlock from './ElmSettings/Childs/LogicBlock'
-import ActionBlock from './ElmSettings/Childs/ActionBlock'
-import Accordions from './ElmSettings/Childs/Accordions'
-import CheckBox from './ElmSettings/Childs/CheckBox'
-import MtSelect from './ElmSettings/Childs/MtSelect'
-import DropDown from './ElmSettings/Childs/DropDown'
-import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
+import Button from './Utilities/Button'
+import LogicChip from './Utilities/LogicChip'
+import LogicBlock from './Utilities/LogicBlock'
+import ActionBlock from './Utilities/ActionBlock'
+import Accordions from './Utilities/Accordions'
+import CheckBox from './Utilities/CheckBox'
+import MtSelect from './Utilities/MtSelect'
+import DropDown from './Utilities/DropDown'
+import TableCheckBox from './Utilities/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from './Utilities/ConfirmModal'
+import CloseIcn from '../Icons/CloseIcn';
 
 function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -554,7 +555,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
       {((!isPro && !workFlows.length) || isPro) && (
         <Button className="blue" onClick={addLogicGrp}>
-          <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
+          <CloseIcn size="10" className="icn-rotate-45 mr-1" />
           {__('Add Conditional Logic', 'bitform')}
         </Button>
       )}
@@ -634,7 +635,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                                   ))}
                                   <div className=" btcd-workFlows-btns">
                                     <div className="flx">
-                                      <Button icn className="blue"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                                      <Button icn className="blue"><CloseIcn size="14" className="icn-rotate-45" /></Button>
                                       <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
                                       <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
                                     </div>
@@ -645,7 +646,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                           ))}
                           <div className=" btcd-workFlows-btns">
                             <div className="flx">
-                              <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                              <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
                               <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
                               <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
                               <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
@@ -661,7 +662,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 {lgcGrp.action_behaviour === 'cond' && (
                   <div className="btcd-workFlows-btns">
                     <div className="flx">
-                      <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                      <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
                       <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
                       <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
                       <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
@@ -822,7 +823,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                       </span>
                     ))}
                     <br />
-                    <Button onClick={() => addAction(lgcGrpInd)} icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                    <Button onClick={() => addAction(lgcGrpInd)} icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
                   </div>
                 )}
               </div>
@@ -852,7 +853,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           <span className="btcd-icn icn-stack" />
           {__('Empty', 'bitform')}
         </div>
-        )}
+      )}
     </div>
   )
 }

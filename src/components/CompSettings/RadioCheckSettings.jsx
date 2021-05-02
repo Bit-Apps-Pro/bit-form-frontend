@@ -2,10 +2,11 @@
 /* eslint-disable no-param-reassign */
 import { memo } from 'react';
 import { __ } from '../../Utils/i18nwrap'
-import SingleInput from '../ElmSettings/Childs/SingleInput'
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
-import CopyText from '../ElmSettings/Childs/CopyText'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
+import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
+import CloseIcn from '../../Icons/CloseIcn';
 
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -124,7 +125,7 @@ function RadioCheckSettings(props) {
                 <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                 <span className="btcd-mrk ck br-50 " />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><span className="btcd-icn icn-clear" /></button>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><CloseIcn size="12" className="icn-rotate-45" /></button>
             </div>
           </div>
         ))}

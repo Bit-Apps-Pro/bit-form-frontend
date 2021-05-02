@@ -22,7 +22,7 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
       return
     }
     setIsLoading('auth')
-    const data = { 
+    const data = {
       api_key: newConf.api_key,
       api_url: newConf.api_url,
     }

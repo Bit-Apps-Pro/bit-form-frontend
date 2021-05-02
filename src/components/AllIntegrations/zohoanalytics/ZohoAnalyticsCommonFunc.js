@@ -1,4 +1,3 @@
-
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { checkValidEmail } from '../../../Utils/Helpers'

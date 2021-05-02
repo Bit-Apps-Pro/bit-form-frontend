@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { memo } from 'react';
 import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../ElmSettings/Childs/SingleInput'
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
-import CopyText from '../ElmSettings/Childs/CopyText'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
+import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
 
 function TextFieldSettings(props) {

@@ -1,4 +1,4 @@
-import TinyMCE from '../TinyMCE'
+import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 
 export default function HtmlFieldSettings({ setElementSetting, elm, fields, updateData }) {

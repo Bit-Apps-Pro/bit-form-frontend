@@ -1,6 +1,6 @@
-import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
-import CopyText from '../../ElmSettings/Childs/CopyText'
+import { __ } from '../../../Utils/i18nwrap'
+import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshModules } from './ZohoRecruitCommonFunc'
 

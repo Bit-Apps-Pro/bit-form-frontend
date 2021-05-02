@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import Modal from '../../Modal'
-import TitleModal from '../../TitleModal'
+import CheckBox from '../../Utilities/CheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
+import Modal from '../../Utilities/Modal'
+import TitleModal from '../../Utilities/TitleModal'
 
 export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)

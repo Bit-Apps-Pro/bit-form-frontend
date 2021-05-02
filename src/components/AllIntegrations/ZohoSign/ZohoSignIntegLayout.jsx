@@ -1,10 +1,9 @@
-
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { deepCopy } from '../../../Utils/Helpers'
-import ConfirmModal from '../../ConfirmModal'
+import ConfirmModal from '../../Utilities/ConfirmModal'
 import Loader from '../../Loaders/Loader'
 import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSignCommonFunc'
 

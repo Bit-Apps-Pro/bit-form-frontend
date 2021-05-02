@@ -3,9 +3,9 @@ import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 import { sprintf, __ } from '../../../Utils/i18nwrap'
-import ConfirmModal from '../../ConfirmModal'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
+import CheckBox from '../../Utilities/CheckBox'
 import Loader from '../../Loaders/Loader'
 import { refreshUsers, refreshTaskLays, refreshTags, refreshGroups } from './ZohoProjectsCommonFunc'
 

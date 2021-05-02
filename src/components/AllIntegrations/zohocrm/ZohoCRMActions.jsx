@@ -4,12 +4,12 @@ import { useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
 import { __ } from '../../../Utils/i18nwrap';
-import ConfirmModal from '../../ConfirmModal'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import CheckBox from '../../Utilities/CheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
-import Modal from '../../Modal'
-import TitleModal from '../../TitleModal'
+import Modal from '../../Utilities/Modal'
+import TitleModal from '../../Utilities/TitleModal'
 import { refreshAssigmentRules, refreshOwners, refreshTags } from './ZohoCRMCommonFunc'
 
 export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, formID, setSnackbar }) {

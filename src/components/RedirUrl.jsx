@@ -1,11 +1,12 @@
 import { memo, useEffect, useState } from 'react';
 
 import { __ } from '../Utils/i18nwrap';
-import Accordions from './ElmSettings/Childs/Accordions'
-import Button from './ElmSettings/Childs/Button'
+import Accordions from './Utilities/Accordions'
+import Button from './Utilities/Button'
 import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from './Utilities/ConfirmModal'
 import { deepCopy } from '../Utils/Helpers'
+import CloseIcn from '../Icons/CloseIcn';
 
 function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -170,7 +171,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, item)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
-                        <span className="tooltip" style={{ '--tooltip-txt': `'${ __('set Form Field', 'bitform') }'`, position: 'relative' }}>
+                        <span className="tooltip" style={{ '--tooltip-txt': `'${__('set Form Field', 'bitform')}'`, position: 'relative' }}>
                           <select className="btcd-paper-inp p-i-sm mt-1" onChange={e => setFromField(e.target.value, i, item)} defaultValue={item.split('=')[1]}>
                             <option value="">{__('Select Form Field', 'bitform')}</option>
                             {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha)$/) && <option key={f.key} value={`\${${f.key}}`}>{f.name}</option>)}
@@ -179,7 +180,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
                       </div>
                     </div>
                   ))}
-                  <Button onClick={() => addParam(i)} className="add-pram" icn><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                  <Button onClick={() => addParam(i)} className="add-pram" icn><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button>
                 </div>
               </div>
             </Accordions>
@@ -191,7 +192,7 @@ function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration
             {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${ __('Add More Alternative URl', 'bitform') }'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreUrl} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Alternative URl', 'bitform')}'` }}><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button></div>
     </div>
   )
 }

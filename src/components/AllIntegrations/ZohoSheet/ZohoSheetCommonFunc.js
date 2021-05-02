@@ -1,4 +1,3 @@
-
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
@@ -196,7 +195,7 @@ export const setGrantTokenResponse = (integ) => {
 }
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
-  console.log('zoho sheet')  
+  console.log('zoho sheet')
   if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
     setError({
       dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',

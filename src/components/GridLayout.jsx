@@ -13,8 +13,9 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import CompGen from './CompGen'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from './Utilities/ConfirmModal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import CloseIcn from '../Icons/CloseIcn'
 
 function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -433,7 +434,7 @@ function GridLayout(props) {
         tabIndex="0"
         title={__('Remove', 'bitform')}
       >
-        <span className="btcd-icn icn-clear" />
+        <CloseIcn size="13" />
       </div>
       <div
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
@@ -531,7 +532,7 @@ function GridLayout(props) {
           {alertMdl.msg}
         </div>
       </ConfirmModal>
-    </div >
+    </div>
   )
 }
 

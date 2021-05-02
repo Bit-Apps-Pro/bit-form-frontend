@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react'
 
 import Scrollbars from 'react-custom-scrollbars'
 import { __ } from '../Utils/i18nwrap'
-import Modal from './Modal'
+import Modal from './Utilities/Modal'
 import bitsFetch from '../Utils/bitsFetch'
 import Bitforms from '../user-frontend/Bitforms'
 import LoaderSm from './Loaders/LoaderSm';

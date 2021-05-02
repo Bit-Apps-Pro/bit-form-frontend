@@ -1,8 +1,8 @@
 import { __ } from '../../Utils/i18nwrap'
-import CopyText from '../ElmSettings/Childs/CopyText'
-import SingleInput from '../ElmSettings/Childs/SingleInput'
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
-import TinyMCE from '../TinyMCE'
+import CopyText from '../Utilities/CopyText'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
+import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 
 export default function DecisionBoxSettings({ setElementSetting, elm, fields, updateData }) {

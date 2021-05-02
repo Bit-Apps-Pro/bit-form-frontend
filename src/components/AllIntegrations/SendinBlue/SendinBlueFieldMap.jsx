@@ -1,5 +1,5 @@
 import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../ElmSettings/Childs/MtInput';
+import MtInput from '../../Utilities/MtInput';
 
 export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueConf, setSendinBlueConf }) {
   const isRequired = field.required;
@@ -38,7 +38,7 @@ export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueCon
 
   return (
     <div
-      className={isRequired ? "mt-2 mr-1 flx w-9" : "flx flx-around mt-2 mr-1"}
+      className={isRequired ? 'mt-2 mr-1 flx w-9' : 'flx flx-around mt-2 mr-1'}
     >
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>

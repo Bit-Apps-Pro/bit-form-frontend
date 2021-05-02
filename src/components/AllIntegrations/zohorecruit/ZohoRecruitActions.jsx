@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { __ } from '../../../Utils/i18nwrap';
-import ConfirmModal from '../../ConfirmModal'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
 import { refreshNoteTypes } from './ZohoRecruitCommonFunc'
 

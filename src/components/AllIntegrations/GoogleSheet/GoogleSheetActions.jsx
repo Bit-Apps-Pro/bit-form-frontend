@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import CheckBox from '../../Utility/CheckBox'
+import TableCheckBox from '../../Utility/TableCheckBox'
 import Modal from '../../Modal'
 import TitleModal from '../../TitleModal'
 

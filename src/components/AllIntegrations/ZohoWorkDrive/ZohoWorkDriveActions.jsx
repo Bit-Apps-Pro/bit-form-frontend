@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../../Utils/i18nwrap';
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import Loader from '../../Loaders/Loader';
-import Modal from '../../Modal'
-import TitleModal from '../../TitleModal'
+import { __ } from '../../../Utils/i18nwrap'
+import TableCheckBox from '../../Utilities/TableCheckBox'
+import Loader from '../../Loaders/Loader'
+import Modal from '../../Utilities/Modal'
+import TitleModal from '../../Utilities/TitleModal'
 import { refreshUsers } from './ZohoWorkDriveCommonFunc'
 
 export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, formFields, formID, setSnackbar }) {

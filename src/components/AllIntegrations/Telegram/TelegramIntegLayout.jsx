@@ -1,8 +1,8 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
+import CheckBox from '../../Utilities/CheckBox'
 import Loader from '../../Loaders/Loader'
-import TinyMCE from '../../TinyMCE'
+import TinyMCE from '../../Utilities/TinyMCE'
 import TelegramActions from './TelegramActions'
 import { refreshGetUpdates } from './TelegramCommonFunc'
 
@@ -11,8 +11,8 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
     const newConf = { ...telegramConf }
     newConf[e.target.name] = e.target.value
     setTelegramConf(newConf)
-    console.log('set name', telegramConf)
   }
+
   const setFromField = (val) => {
     const newConf = { ...telegramConf }
     newConf.body = `${newConf.body} ${val} `
@@ -25,10 +25,9 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
       newConf.body = ''
     }
     newConf.parse_mode = e.target.value
-    console.log(e.target.value)
     setTelegramConf(newConf)
   }
-  console.log(formFields)
+
   return (
     <>
       <br />
@@ -66,17 +65,17 @@ export default function TelegramIntegLayout({ formID, formFields, telegramConf, 
             </div>
             <div className="flx mt-4">
               <b className="wdt-150 d-in-b">{__('Messages: ', 'bitform')}</b>
-              {telegramConf?.parse_mode === "HTML" ? (
+              {telegramConf?.parse_mode === 'HTML' ? (
                 <TinyMCE
                   formFields={formFields}
                   value={telegramConf.body}
                   onChangeHandler={setFromField}
-                  width={'100%'}
-                  toolbarMnu={'bold italic underline strikethrough | link | code | addFormField'}
+                  width="100%"
+                  toolbarMnu="bold italic underline strikethrough | link | code | addFormField"
                 />
               ) : (
                 <>
-                  <textarea className="w-7" onChange={handleInput} name="body" rows="5" value={telegramConf.body}></textarea>
+                  <textarea className="w-7" onChange={handleInput} name="body" rows="5" value={telegramConf.body} />
                   <MultiSelect
                     options={formFields.filter(f => (f.type !== 'file-up')).map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                     className="btcd-paper-drpdwn wdt-200 ml-2"

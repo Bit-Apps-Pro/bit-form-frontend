@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState } from 'react'
 import { __ } from '../../Utils/i18nwrap'
-import Modal from '../Modal'
+import Modal from '../Utilities/Modal'
 import bitsFetch from '../../Utils/bitsFetch'
 import LoaderSm from '../Loaders/LoaderSm'
-import SnackMsg from '../ElmSettings/Childs/SnackMsg'
+import SnackMsg from '../Utilities/SnackMsg'
 
 export default function Export({ showExportMdl, close, cols, formID, report }) {
   const [snack, setSnackbar] = useState({ show: false })

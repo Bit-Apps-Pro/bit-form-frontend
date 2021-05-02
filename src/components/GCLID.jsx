@@ -4,8 +4,8 @@ import { __ } from '../Utils/i18nwrap';
 import bitsFetch from '../Utils/bitsFetch'
 import { setGrantTokenResponse } from './AllIntegrations/IntegrationHelpers/IntegrationHelpers'
 import LoaderSm from './Loaders/LoaderSm'
-import SnackMsg from './ElmSettings/Childs/SnackMsg'
-import CopyText from './ElmSettings/Childs/CopyText'
+import SnackMsg from './Utilities/SnackMsg'
+import CopyText from './Utilities/CopyText'
 
 export default function GCLID() {
   const isPro = typeof bits !== 'undefined' && bits.isPro

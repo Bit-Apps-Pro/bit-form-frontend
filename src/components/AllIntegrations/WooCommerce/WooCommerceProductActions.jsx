@@ -1,11 +1,8 @@
-
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-import ConfirmModal from '../../ConfirmModal'
-import DropDown from '../../ElmSettings/Childs/DropDown'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import Modal from '../../Modal'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import DropDown from '../../Utilities/DropDown'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function WooCommerceProductActions({ wcConf, setWcConf, formFields }) {
   const [actionMdl, setActionMdl] = useState({ show: false })

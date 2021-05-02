@@ -1,4 +1,3 @@
-
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
@@ -86,7 +85,7 @@ export default function WooCommerceIntegLayout({ formFields, handleInput, wcConf
             </div>
           </>
         )}
-      {/* 
+      {/*
       <div className="mt-4"><b className="wdt-100">{__('Actions', 'bitform')}</b></div>
       <div className="btcd-hr mt-1" />
 

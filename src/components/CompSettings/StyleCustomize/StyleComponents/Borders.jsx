@@ -1,4 +1,3 @@
-
 import { __ } from '../../../../Utils/i18nwrap'
 import Range from '../ChildComp/Range'
 import StyleAccordion from '../ChildComp/StyleAccordion'

@@ -44,13 +44,13 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
 
   /*   const amountFld = document.getElementsByName(attr?.amountFld)[0]
     amountFld?.addEventListener('change', e => setAmount(e.target.value))
-  
+
     const shippingFld = document.getElementsByName(attr?.shippingFld)[0]
     shippingFld?.addEventListener('change', e => setShipping(e.target.value))
-  
+
     const taxFld = document.getElementsByName(attr?.taxFld)[0]
     taxFld?.addEventListener('change', e => setTax(e.target.value))
-  
+
     const descFld = document.getElementsByName(attr?.descFld)[0]
     descFld?.addEventListener('change', e => setDescription(e.target.value)) */
 

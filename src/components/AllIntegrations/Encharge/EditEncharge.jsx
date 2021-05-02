@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { __ } from '../../../Utils/i18nwrap';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import SnackMsg from '../../Utilities/SnackMsg';
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
 import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers';
 import { handleInput } from './EnchargeCommonFunc';

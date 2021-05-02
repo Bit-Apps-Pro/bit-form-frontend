@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import { __ } from '../Utils/i18nwrap'
 import bitsFetch from '../Utils/bitsFetch'
 import LoaderSm from './Loaders/LoaderSm'
-import SnackMsg from './ElmSettings/Childs/SnackMsg'
-import CopyText from './ElmSettings/Childs/CopyText'
+import SnackMsg from './Utilities/SnackMsg'
+import CopyText from './Utilities/CopyText'
 
 const randomKey = length => {
   let result = ''
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   const charactersLength = characters.length
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength))
   }
   return result
