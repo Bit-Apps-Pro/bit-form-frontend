@@ -1,5 +1,4 @@
-
-import { __ } from '../../../Utils/i18nwrap';
+import { __ } from '../../Utils/i18nwrap';
 
 export default function CopyText({ value, setSnackbar, className, readOnly }) {
   const copyText = e => {

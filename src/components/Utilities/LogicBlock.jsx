@@ -1,9 +1,10 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../../Utils/i18nwrap';
+import { __ } from '../../Utils/i18nwrap';
 import MtSelect from './MtSelect'
 import MtInput from './MtInput'
 import Button from './Button'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import CloseIcn from '../../Icons/CloseIcn';
 
 function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   let type = ''
@@ -108,11 +109,11 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
           <span className="btcd-icn icn-trash-2" />
         </Button>
         <Button onClick={() => addInlineLogic('and', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white mr-2 sh-sm">
-          <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
+          <CloseIcn size="14" className="icn-rotate-45 mr-1" />
           AND
         </Button>
         <Button onClick={() => addInlineLogic('or', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white sh-sm">
-          <span className="btcd-icn icn-clear icn-rotate-45 mr-1" />
+          <CloseIcn size="14" className="icn-rotate-45 mr-1" />
           OR
         </Button>
       </div>

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 
-import { __ } from '../../../Utils/i18nwrap'
+import { __ } from '../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'
