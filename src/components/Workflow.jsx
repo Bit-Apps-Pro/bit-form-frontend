@@ -31,7 +31,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     }
     if (emailInFormField()) {
       const flds = []
-      // eslint-disable-next-line array-callback-return
+      
       formFields.map(fld => {
         if (fld.type === 'email') {
           flds.push({ label: fld.name, value: `\${${fld.key}}` })
@@ -360,7 +360,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
   const changeActionType = (typ, lgcGrpInd) => {
     if (typ === 'onsubmit') {
-      // eslint-disable-next-line array-callback-return
+      
       workFlows[lgcGrpInd].actions.map(itm => { itm.action = 'value' })
     } else if (typ === 'onvalidate') {
       workFlows[lgcGrpInd].action_behaviour = 'cond'

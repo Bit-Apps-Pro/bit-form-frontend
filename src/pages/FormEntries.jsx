@@ -44,7 +44,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   useEffect(() => {
     if (reports.length > 0) {
       const allLabelObj = {}
-      // eslint-disable-next-line array-callback-return
+      
       allLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })

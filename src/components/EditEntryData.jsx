@@ -42,14 +42,12 @@ export default function EditEntryData(props) {
     event.preventDefault()
     setisLoading(true)
     const formData = new FormData(ref.current)
-    console.log('ref.current', ref.current)
     const queryParam = { formID, entryID: props.entryID }
     bitsFetch(formData, 'bitforms_update_form_entry', undefined, queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
           if (response.data.cron || response.data.cronNotOk) {
             const hitCron = response.data.cron || response.data.cronNotOk
-            console.log('hitCron', hitCron)
             if (typeof hitCron === 'string') {
               const uri = new URL(hitCron)
               if (uri.protocol !== window.location.protocol) {
@@ -57,6 +55,7 @@ export default function EditEntryData(props) {
               }
               fetch(uri)
             } else {
+              // eslint-disable-next-line no-undef
               const uri = new URL(bits.ajaxURL)
               uri.searchParams.append('action', 'bitforms_trigger_workflow')
               const triggerData = { cronNotOk: hitCron, id: `bitforms_${formID}` }

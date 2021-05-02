@@ -12,7 +12,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
   let type = '';
 
   if (formFields !== null) {
-    // eslint-disable-next-line array-callback-return
+    
     formFields.map(itm => {
       if (itm.key === action.field) {
         type = itm.type

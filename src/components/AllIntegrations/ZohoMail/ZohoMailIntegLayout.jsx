@@ -16,7 +16,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
       mail.push(...bits.userMail)
     }
     const flds = []
-    // eslint-disable-next-line array-callback-return
+    
     formFields.map(fld => {
       if (fld.type === 'email') {
         flds.push({ label: fld.name, value: `\${${fld.key}}` })

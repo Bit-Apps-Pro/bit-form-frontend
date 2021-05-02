@@ -1,4 +1,4 @@
-import { Link, Route, useParams, useRouteMatch } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { lazy, Suspense } from 'react'
 import { __ } from '../../Utils/i18nwrap'

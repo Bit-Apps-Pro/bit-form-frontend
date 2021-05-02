@@ -36,7 +36,7 @@ registerBlockType('bitforms/form-shortcode', {
   },
   edit: props => {
     const AllForms = [{ value: 0, label: __('Select a Form', 'bitform'), disabled: true }]
-    // eslint-disable-next-line array-callback-return
+    
     bitformsBlock.forms.map(form => {
       AllForms.push({ label: form.form_name, value: form.id })
     })

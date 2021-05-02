@@ -11,7 +11,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
   let fldType = ''
   let fieldKey = ''
   if (formFields !== null) {
-    // eslint-disable-next-line array-callback-return
+    
     formFields.map(itm => {
       if (itm.key === fieldVal) {
         if (itm.type.match(/^(check|radio)$/)) {

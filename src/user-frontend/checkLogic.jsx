@@ -248,7 +248,7 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
   }
   const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
   if (matchedFields) {
-    // eslint-disable-next-line array-callback-return
+    
     matchedFields.map(field => {
       const fieldName = field.substring(2, field.length - 1)
       if (fieldValues[fieldName]) {

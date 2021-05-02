@@ -37,8 +37,6 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
     setDeskConf({ ...newConf })
   }
 
-  console.log('deskConf', deskConf)
-
   const openRecOwnerModal = () => {
     if (!deskConf.default?.owners?.[deskConf.orgId]) {
       refreshOwners(formID, deskConf, setDeskConf, setisLoading, setSnackbar)

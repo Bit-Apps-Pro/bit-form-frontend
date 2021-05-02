@@ -338,7 +338,7 @@ export default function Bitforms(props) {
           }
           if (Object.keys(result.data).length > 0) {
             const newData = fieldData !== undefined && deepCopy(fieldData)
-            // eslint-disable-next-line array-callback-return
+            
             Object.keys(result.data).map(element => {
               newData[props.fieldsKey[element]].error = result.data[element]
             });
@@ -420,7 +420,7 @@ export default function Bitforms(props) {
       }
       if (Object.keys(props.error).length > 0) {
         const newData = fieldData !== undefined && deepCopy(fieldData)
-        // eslint-disable-next-line array-callback-return
+        
         Object.keys(props.error).map(element => {
           newData[props.fieldsKey[element]].error = props.error[element]
         })

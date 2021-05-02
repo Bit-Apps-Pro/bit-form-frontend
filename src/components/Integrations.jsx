@@ -48,6 +48,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const allIntegURL = url
   const history = useHistory()
   const { formID } = useParams()
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
@@ -118,7 +119,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const getLogo = type => {
     for (let i = 0; i < integs.length; i += 1) {
       if (integs[i].type === type) {
-        return <img loading="lazy" src={integs[i].logo} alt={type} />
+        return <img alt={type} loading="lazy" src={integs[i].logo} />
       }
     }
     return null

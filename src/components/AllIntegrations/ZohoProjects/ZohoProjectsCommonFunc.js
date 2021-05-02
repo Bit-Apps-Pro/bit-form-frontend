@@ -1,5 +1,3 @@
-/* eslint-disable array-callback-return */
-
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
@@ -7,7 +5,7 @@ const clearLowerEvents = (projectsConf, name) => {
   const newConf = { ...projectsConf }
   const eventIdSeq = ['projectId', 'milestoneId', 'tasklistFlag', 'tasklistId', 'taskId']
   eventIdSeq.splice(eventIdSeq.indexOf(name) + 1)
-    // eslint-disable-next-line array-callback-return
+    
     .map(event => {
       if (newConf?.[event]) { newConf[event] = '' }
       newConf.actions[event.split('Id')[0]] = {}

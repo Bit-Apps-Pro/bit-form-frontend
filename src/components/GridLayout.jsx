@@ -33,11 +33,13 @@ function GridLayout(props) {
 
   useEffect(() => {
     checkAllLayoutSame()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check all layout by breakpoint is same otherwise push missing layout item
   function checkAllLayoutSame() {
     let notSame = false
+    
     layouts.lg.map(item => {
       if (!layouts.md.find(itm => itm.i === item.i)) {
         const tmpItem = { ...item }
@@ -394,9 +396,9 @@ function GridLayout(props) {
     }
   }
 
-  const editSubmit = () => {
+  /* const editSubmit = () => {
     props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
-  }
+  } */
 
   const compByTheme = compData => {
     if (compData && compData.typ === 'recaptcha') {
