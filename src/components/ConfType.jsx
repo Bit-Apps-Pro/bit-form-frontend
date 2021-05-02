@@ -8,7 +8,6 @@ import WebHooks from './WebHooks'
 import bitsFetch from '../Utils/bitsFetch'
 
 export default function ConfType(props) {
-  console.log('%c $render ConfType', 'background:lightgreen;padding:3px;border-radius:5px;')
 
   const { formSettings, setFormSettings, formFields } = props
   const [pos, setPos] = useState(0)

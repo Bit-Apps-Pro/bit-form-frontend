@@ -17,7 +17,12 @@ import BlurIcn from '../../../../Icons/BlurIcn'
 
 export default function Background({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
-  const bgClr = style?.[pcls]?.['background-color'] || style?.[cls]?.['background-color']
+  let bgClr = style?.[pcls]?.['background-color'] || style?.[cls]?.['background-color']
+  if (style?.[pcls]?.['background-image'] && style?.[pcls]?.['background-image'].indexOf('gradient')) {
+    bgClr = style?.[pcls]?.['background-image']
+  } else if (style?.[cls]?.['background-image'] && style?.[cls]?.['background-image'].indexOf('gradient')) {
+    bgClr = style?.[cls]?.['background-image']
+  }
   const bgTyp = bgClr ? 'Color' : 'None'
   const blendMode = style?.[pcls]?.['background-blend-mode'] || style?.[cls]?.['background-blend-mode']
   const bgRepeat = style?.[pcls]?.['background-repeat'] || style?.[cls]?.['background-repeat']
@@ -41,7 +46,6 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
     }
     setbgSrcTyp(srcTyp)
   }, [cls, style])
-
   const setBG = colr => {
     let property = 'background-color'
     const value = styleConfig.important ? `${colr.style}!important` : colr.style

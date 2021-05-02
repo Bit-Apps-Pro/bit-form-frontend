@@ -36,7 +36,7 @@ export default function FormTemplates({ setModal, setTempModal, newFormId, setSn
         || tempProp.indexOf('mailTem') < 0
         || tempProp.indexOf('integrations') < 0
         || tempProp.indexOf('reports') < 0
-        ) {
+      ) {
         delete tempProp[tempProp.indexOf('all')]
       }
       console.log(tempProp)
@@ -50,7 +50,7 @@ export default function FormTemplates({ setModal, setTempModal, newFormId, setSn
       } else {
         const reader = new FileReader();
         reader.readAsText(ev.target.files[0])
-        reader.onload = function () {
+        reader.onload = () => {
           checkFile(reader.result, ev.target);
         }
       }

@@ -23,7 +23,7 @@ const FormEntries = lazy(() => import('./pages/FormEntries'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
-  const loaderStyle = { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }
+  const loaderStyle = { height: '90vh' }
   const [newFormId, setnewFormId] = useState(null)
   const { allFormsData } = useContext(AllFormContext)
   const { allForms } = allFormsData
@@ -45,9 +45,8 @@ function App() {
     return max + 1
   }
 
-  console.log('%c $render App', 'background:gray;padding:3px;border-radius:5px;color:white')
   return (
-    <Suspense fallback={(<Loader style={loaderStyle} />)}>
+    <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
       <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
         <div className="Btcd-App">
 
@@ -87,7 +86,7 @@ function App() {
                 </Suspense>
               </Route>
               <Route path="/form/:page/:formType/:formID?/:option?">
-                <Suspense fallback={<Loader style={loaderStyle} />}>
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FormDetails newFormId={newFormId} />
                 </Suspense>
               </Route>

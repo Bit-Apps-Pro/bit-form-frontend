@@ -13,6 +13,7 @@ import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj 
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Modal'
+import { sortLayoutByXY } from '../Utils/FormBuilderHelper';
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
@@ -21,8 +22,6 @@ export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
 
 function FormDetails(props) {
-  console.log('%c $render Form Details', 'background:purple;padding:3px;border-radius:5px;color:white')
-
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
@@ -148,7 +147,6 @@ function FormDetails(props) {
         setLay(btnLay)
         setFields(btnFld)
         setNewCounter(2)
-        console.log('BTN', btnLay, btnFld)
         setisLoading(false)
       } else {
         bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
@@ -228,6 +226,9 @@ function FormDetails(props) {
       return
     }
     let formStyle = sessionStorage.getItem('btcd-fs')
+    const sortLayoutLG = lay
+    sortLayoutLG.lg = sortLayoutByXY(lay.lg)
+
     if (formStyle) {
       formStyle = bitDecipher(formStyle)
     }
@@ -241,7 +242,7 @@ function FormDetails(props) {
       setbuttonDisabled(true)
       let formData = {
         form_id: newFormId,
-        layout: lay,
+        layout: sortLayoutLG,
         fields,
         form_name: formName,
         formSettings: fSettings,
@@ -258,7 +259,7 @@ function FormDetails(props) {
         setFormSettings({ ...formSettings, integrations })
         formData = {
           id: savedFormId,
-          layout: lay,
+          layout: sortLayoutLG,
           fields,
           form_name: formName,
           formSettings: fSettings,

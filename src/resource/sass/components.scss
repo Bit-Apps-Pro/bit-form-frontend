@@ -1,5 +1,5 @@
 ._frm-bg {
-  overflow: visible !important;
+  overflow: visible;
 }
 
 .btcd-fld-itm {
@@ -17,13 +17,13 @@
 
 .fld-wrp {
   min-height: inherit;
-  font-family: sans-serif !important;
-  box-sizing: border-box !important;
+  font-family: sans-serif ;
+  box-sizing: border-box ;
   width: 100%;
   cursor: default;
   height: 100%;
-  box-sizing: border-box !important;
-  text-align: start !important;
+  box-sizing: border-box ;
+  text-align: start;
 }
 
 .fld-wrp > * {
@@ -75,11 +75,11 @@
 
 input.fld,
 textarea.fld {
-  direction: inherit !important;
   display: inline-block !important;
+  direction: inherit !important;
   min-height: 40px !important;
   max-width: 100% !important;
-  font-family: sans-serif !important;
+  font-family: sans-serif ;
   width: 100% !important;
   outline: none !important;
   line-height: 1;
@@ -107,13 +107,13 @@ textarea.fld {
   resize: vertical;
 }
 .textarea {
-  height: calc(100% - 30px) !important;
+  height: calc(100% - 30px) ;
   resize: vertical;
 }
 
 .fld {
   & .btcd-mrk {
-    border: 1.5px solid #505050 !important;
+    border: 1.5px solid #505050;
   }
 }
 
@@ -222,10 +222,8 @@ textarea.fld {
 }
 
 .btcd-frm-sub {
-  display: flex !important;
-  // background: white !important;
-  height: 60px !important;
-  align-items: center !important;
+  display: flex ;
+  align-items: center;
 }
 
 .btcd-sub-btn {
@@ -297,8 +295,8 @@ textarea.fld {
  */
 .btcd-f-wrp {
   position: relative;
-  cursor: pointer !important;
-  margin-top: 6px !important;
+  cursor: pointer ;
+  margin-top: 6px;
   width: 100%;
 }
 
@@ -319,7 +317,7 @@ textarea.fld {
 }
 
 .btcd-f-wrp .btcd-f-title {
-  font-size: 14px !important;
+  font-size: 14px;
 }
 
 .btcd-f-wrp .f-max {
@@ -329,9 +327,9 @@ textarea.fld {
 }
 
 .btcd-f-wrp .btcd-inpBtn {
-  color: white;
   display: inline-flex;
   background: #0083f3;
+  color: white;
   cursor: pointer;
   padding: 5px 11px;
   align-items: center;

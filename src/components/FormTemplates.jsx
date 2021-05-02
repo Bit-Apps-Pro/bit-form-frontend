@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap';
 import Modal from './Modal';
 import FormImporter from './FormImporter'
+import DownloadIcon from '../Icons/DownloadIcon';
 // import bitsFetch from '../Utils/bitsFetch'
 
 export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) {
@@ -26,12 +27,6 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
 
   return (
     <div className="btcd-tem-lay flx">
-      <div className="btcd-tem flx">
-        <span className="btcd-icn icn-clear icn-rotate-45 mr-1" style={{ fontSize: 60 }} />
-        <div className="btcd-hid-btn">
-          <button onClick={() => setModal(true)} className="btn btn-white sh-sm" type="button">{__('Import', 'bitform')}</button>
-        </div>
-      </div>
       {staticTem.map(tem => (
         <div key={tem.lbl} className="btcd-tem flx">
           <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
@@ -41,6 +36,12 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
           </div>
         </div>
       ))}
+      <div className="btcd-tem flx">
+        <DownloadIcon size="60" />
+        <div className="btcd-hid-btn">
+          <button onClick={() => setModal(true)} className="btn btn-white sh-sm" type="button">{__('Import', 'bitform')}</button>
+        </div>
+      </div>
       <Modal
         show={modal}
         setModal={setModal}

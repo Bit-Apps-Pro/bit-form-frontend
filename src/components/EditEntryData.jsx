@@ -8,7 +8,6 @@ import Bitforms from '../user-frontend/Bitforms'
 import LoaderSm from './Loaders/LoaderSm';
 
 export default function EditEntryData(props) {
-  console.log('%c $render EditEntryData', 'background:#ff8686;padding:3px;border-radius:5px')
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
 
   const [showEdit, setshowEdit] = useState(false)

@@ -9,7 +9,7 @@ import Accordions from './ElmSettings/Childs/Accordions';
 import CheckBox from './ElmSettings/Childs/CheckBox';
 import SingleToggle2 from './ElmSettings/Childs/SingleToggle2';
 import { AppSettings } from '../Utils/AppSettingsContext'
-import GoogleAds from '../Icons/GoogleAds';
+import GoogleAdIcn from '../Icons/GoogleAdIcn';
 
 export default function SingleFormSettings({ fields, additional, setadditional }) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
@@ -438,7 +438,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
       <div className="w-6 mt-3">
         <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
           <div className="flx">
-            <GoogleAds size={18} />
+            <GoogleAdIcn size={18} />
             <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
           </div>
           <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
