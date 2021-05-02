@@ -1,5 +1,5 @@
+/* eslint-disable-next-line no-undef */
 import { useState } from 'react'
-
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
@@ -32,13 +32,13 @@ import zohoflow from '../resource/img/integ/zohoflow.svg'
 import telegram from '../resource/img/integ/telegram.svg'
 import fluentcrm from '../resource/img/integ/fluentcrm.svg'
 import encharge from '../resource/img/integ/encharge .svg'
-import bitsFetch from '../Utils/bitsFetch';
-import EditInteg from './AllIntegrations/EditInteg';
-import IntegInfo from './AllIntegrations/IntegInfo';
-import NewInteg from './AllIntegrations/NewInteg';
-import ConfirmModal from './ConfirmModal';
-import SnackMsg from './ElmSettings/Childs/SnackMsg';
-import Modal from './Modal';
+import bitsFetch from '../Utils/bitsFetch'
+import EditInteg from './AllIntegrations/EditInteg'
+import IntegInfo from './AllIntegrations/IntegInfo'
+import NewInteg from './AllIntegrations/NewInteg'
+import ConfirmModal from './Utilities/ConfirmModal'
+import SnackMsg from './Utilities/SnackMsg'
+import Modal from './Utilities/Modal'
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
@@ -48,7 +48,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const allIntegURL = url
   const history = useHistory()
   const { formID } = useParams()
-  /* eslint-disable-next-line no-undef */
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
@@ -69,12 +68,6 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Telegram', logo: telegram, pro: !isPro },
     { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
     { type: 'Encharge', logo: encharge, pro: !isPro },
-    { type: 'Web Hooks', logo: webhooks },
-    { type: 'Zapier', logo: zapier },
-    { type: 'Integromat', logo: integromat },
-    { type: 'Integrately', logo: integrately },
-    { type: 'Pabbly', logo: pabbly },
-    { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
@@ -229,9 +222,11 @@ function Integrations({ integrations, setIntegration, formFields }) {
           </div>
         </Route>
 
-        <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        <Route exact path={`${path}/new/:integUrlName`}>
+          <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+        </Route>
 
-        {integrations && integrations.length > 0
+        {integrations?.length
           && (
             <Route exact path={`${path}/edit/:id`}>
               <EditInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />

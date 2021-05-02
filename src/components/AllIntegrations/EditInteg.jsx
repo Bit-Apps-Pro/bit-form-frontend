@@ -1,37 +1,40 @@
+import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { __ } from '../../Utils/i18nwrap';
-import EditZohoAnalytics from './ZohoAnalytics/EditZohoAnalytics'
-import EditZohoBigin from './ZohoBigin/EditZohoBigin'
-import EditZohoCampaigns from './ZohoCampaigns/EditZohoCampaigns'
-import EditZohoCreator from './ZohoCreator/EditZohoCreator'
-import EditZohoCRM from './ZohoCRM/EditZohoCRM'
-import EditZohoDesk from './ZohoDesk/EditZohoDesk'
-import EditZohoMail from './ZohoMail/EditZohoMail'
-import EditZohoMarketingHub from './ZohoMarketingHub/EditZohoMarketingHub'
-import EditZohoProjects from './ZohoProjects/EditZohoProjects'
-import EditZohoRecruit from './ZohoRecruit/EditZohoRecruit'
-import EditZohoSheet from './ZohoSheet/EditZohoSheet'
-import EditZohoSign from './ZohoSign/EditZohoSign'
-import EditZohoWorkDrive from './ZohoWorkDrive/EditZohoWorkDrive'
-import EditGoogleSheet from './GoogleSheet/EditGoogleSheet'
-import EditMailChimp from './MailChimp/EditMailChimp'
-import EditCpt from './Cpt/EditCpt'
-import EditPod from './Pods/EditPod'
-import EditMailPoet from './MailPoet/EditMailPoet'
-import EditSendinBlue from './SendinBlue/EditSendinBlue'
-import EditWooCommerce from './WooCommerce/EditWooCommerce';
-import EditActiveCampaign from './ActiveCampaign/EditActiveCampaign'
-import EditWebHooks from './WebHooks/EditWebHooks'
-import EditZapier from './Zapier/EditZapier'
-import EditIntegromat from './Integromat/EditIntegromat'
-import EditZohoFlow from './ZohoFlow/EditZohoFlow'
-import EditIntegrately from './Integrately/EditIntegrately'
-import EditPabbly from './Pabbly/EditPabbly';
-import EditTelegram from './Telegram/EditTelegram';
-import EditFluentCrm from './FluentCRM/EditFluentCrm'
-import EditEncharge from './Encharge/EditEncharge';
+import { __ } from '../../Utils/i18nwrap'
+import Loader from '../Loaders/Loader'
 
-function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
+const EditZohoAnalytics = lazy(() => import('./ZohoAnalytics/EditZohoAnalytics'))
+const EditZohoBigin = lazy(() => import('./ZohoBigin/EditZohoBigin'))
+const EditZohoCampaigns = lazy(() => import('./ZohoCampaigns/EditZohoCampaigns'))
+const EditZohoCreator = lazy(() => import('./ZohoCreator/EditZohoCreator'))
+const EditZohoCRM = lazy(() => import('./ZohoCRM/EditZohoCRM'))
+const EditZohoDesk = lazy(() => import('./ZohoDesk/EditZohoDesk'))
+const EditZohoMail = lazy(() => import('./ZohoMail/EditZohoMail'))
+const EditZohoMarketingHub = lazy(() => import('./ZohoMarketingHub/EditZohoMarketingHub'))
+const EditZohoProjects = lazy(() => import('./ZohoProjects/EditZohoProjects'))
+const EditZohoRecruit = lazy(() => import('./ZohoRecruit/EditZohoRecruit'))
+const EditZohoSheet = lazy(() => import('./ZohoSheet/EditZohoSheet'))
+const EditZohoSign = lazy(() => import('./ZohoSign/EditZohoSign'))
+const EditZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/EditZohoWorkDrive'))
+const EditGoogleSheet = lazy(() => import('./GoogleSheet/EditGoogleSheet'))
+const EditMailChimp = lazy(() => import('./MailChimp/EditMailChimp'))
+const EditCpt = lazy(() => import('./Cpt/EditCpt'))
+const EditPod = lazy(() => import('./Pods/EditPod'))
+const EditMailPoet = lazy(() => import('./MailPoet/EditMailPoet'))
+const EditSendinBlue = lazy(() => import('./SendinBlue/EditSendinBlue'))
+const EditWooCommerce = lazy(() => import('./WooCommerce/EditWooCommerce'))
+const EditActiveCampaign = lazy(() => import('./ActiveCampaign/EditActiveCampaign'))
+const EditWebHooks = lazy(() => import('./WebHooks/EditWebHooks'))
+const EditZapier = lazy(() => import('./Zapier/EditZapier'))
+const EditIntegromat = lazy(() => import('./Integromat/EditIntegromat'))
+const EditZohoFlow = lazy(() => import('./ZohoFlow/EditZohoFlow'))
+const EditIntegrately = lazy(() => import('./Integrately/EditIntegrately'))
+const EditPabbly = lazy(() => import('./Pabbly/EditPabbly'))
+const EditTelegram = lazy(() => import('./Telegram/EditTelegram'))
+const EditFluentCrm = lazy(() => import('./FluentCRM/EditFluentCrm'))
+const EditEncharge = lazy(() => import('./Encharge/EditEncharge'))
+
+export default function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
   const IntegType = () => {
     switch (integrations[id].type) {
@@ -113,9 +116,9 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
           <div>{__('Integration Settings', 'bitform')}</div>
         </div>
       </div>
-      <IntegType />
+      <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
+        <IntegType />
+      </Suspense>
     </div>
   )
 }
-
-export default EditInteg
