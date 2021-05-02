@@ -1,6 +1,5 @@
-import { Link, Route, useParams, useRouteMatch } from 'react-router-dom'
-
 import { lazy, Suspense } from 'react'
+import { Link, Route, useParams, useRouteMatch } from 'react-router-dom'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 
@@ -31,8 +30,9 @@ const ZohoFlow = lazy(() => import('./ZohoFlow/ZohoFlow'))
 const Integrately = lazy(() => import('./Integrately/Integrately'))
 const Pabbly = lazy(() => import('./Pabbly/Pabbly'))
 const Telegram = lazy(() => import('./Telegram/Telegram'))
+const FluentCrm = lazy(() => import('./FluentCRM/FluentCrm'))
 const Encharge = lazy(() => import('./Encharge/Encharge'))
-
+const Pods = lazy(() => import('./Pods/Pods'))
 
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
@@ -148,9 +148,18 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
       component: <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
     },
     {
+      urlName: 'Fluent CRM',
+      component: <FluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
+    },
+    {
       urlName: 'Encharge',
       component: <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
     },
+    {
+      urlName: 'Pods',
+      component: <Pods allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
+    },
+
   ]
 
   return (
