@@ -16,6 +16,7 @@ import EditZohoWorkDrive from './ZohoWorkDrive/EditZohoWorkDrive'
 import EditGoogleSheet from './GoogleSheet/EditGoogleSheet'
 import EditMailChimp from './MailChimp/EditMailChimp'
 import EditCpt from './Cpt/EditCpt'
+import EditPod from './Pods/EditPod'
 import EditMailPoet from './MailPoet/EditMailPoet'
 import EditSendinBlue from './SendinBlue/EditSendinBlue'
 import EditWooCommerce from './WooCommerce/EditWooCommerce';
@@ -27,6 +28,8 @@ import EditZohoFlow from './ZohoFlow/EditZohoFlow'
 import EditIntegrately from './Integrately/EditIntegrately'
 import EditPabbly from './Pabbly/EditPabbly';
 import EditTelegram from './Telegram/EditTelegram';
+import EditFluentCrm from './FluentCRM/EditFluentCrm'
+import EditEncharge from './Encharge/EditEncharge';
 
 function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { id } = useParams()
@@ -64,6 +67,8 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'CPT':
         return <EditCpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Pods':
+        return <EditPod allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Poet':
         return <EditMailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Sendinblue':
@@ -86,6 +91,10 @@ function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
         return <EditZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Telegram':
         return <EditTelegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Fluent CRM':
+        return <EditFluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Encharge':
+        return <EditEncharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break;
     }

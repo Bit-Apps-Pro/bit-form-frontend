@@ -21,6 +21,7 @@ import ZohoRecruitAuthorization from './ZohoRecruit/ZohoRecruitAuthorization'
 import ZohoSheetAuthorization from './ZohoSheet/ZohoSheetAuthorization'
 import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
 import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
+import EnchargeAuthorization from './Encharge/EnchargeAuthorization'
 
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
@@ -83,6 +84,8 @@ export default function IntegInfo({ allIntegURL, integrations }) {
         return <WebHooksIntegration webHooks={integ} setSnackbar={setSnackbar} isInfo />
       case 'Telegram':
         return <TelegramAuthorization telegramConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
+      case 'Encharge':
+        return <EnchargeAuthorization enchargeConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
       default:
         return ''
     }

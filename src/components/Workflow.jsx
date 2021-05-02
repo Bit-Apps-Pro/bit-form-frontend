@@ -441,6 +441,13 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
           break
         }
       }
+    } else if (typ === 'from') {
+      for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
+        if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
+          workFlows[lgcGrpInd].successAction[i].details.from = e
+          break
+        }
+      }
     } else if (typ === 'to') {
       for (let i = 0; i < workFlows[lgcGrpInd].successAction.length; i += 1) {
         if (workFlows[lgcGrpInd].successAction[i].type === 'mailNotify') {
@@ -728,6 +735,15 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             titleClassName="w-7 mt-2"
                             addable
                             options={mailOptions(getValueFromArr('mailNotify', 'to', lgcGrpInd))}
+                          />
+                          <DropDown
+                            action={val => setEmailSetting('from', val, lgcGrpInd)}
+                            placeholder={__('Add mail from address', 'bitform')}
+                            value={getValueFromArr('mailNotify', 'from', lgcGrpInd)}
+                            title={<span className="f-m">{__('From', 'bitform')}</span>}
+                            titleClassName="w-7 mt-2"
+                            addable
+                            options={mailOptions(getValueFromArr('mailNotify', 'from', lgcGrpInd))}
                           />
                           <DropDown
                             action={val => setEmailSetting('cc', val, lgcGrpInd)}

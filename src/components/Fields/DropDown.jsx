@@ -86,6 +86,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
         onChange={onChangeHandler}
         defaultValue={value}
       />
+      {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
     </div>
   )
 }

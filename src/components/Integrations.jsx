@@ -16,6 +16,7 @@ import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoSign from '../resource/img/integ/sign.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import cpt from '../resource/img/integ/cpt.svg'
+import pods from '../resource/img/integ/pods.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
@@ -29,6 +30,8 @@ import integrately from '../resource/img/integ/integrately.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
 import telegram from '../resource/img/integ/telegram.svg'
+import fluentcrm from '../resource/img/integ/fluentcrm.svg'
+import encharge from '../resource/img/integ/encharge .svg'
 import bitsFetch from '../Utils/bitsFetch';
 import EditInteg from './AllIntegrations/EditInteg';
 import IntegInfo from './AllIntegrations/IntegInfo';
@@ -58,11 +61,20 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'CPT', logo: cpt, pro: !isPro },
+    { type: 'Pods', logo: pods, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
     { type: 'WooCommerce', logo: wooCommerce, pro: !isPro },
     { type: 'ActiveCampaign', logo: activeCampaign, pro: !isPro },
     { type: 'Telegram', logo: telegram, pro: !isPro },
+    { type: 'Fluent CRM', logo: fluentcrm, pro: !isPro },
+    { type: 'Encharge', logo: encharge, pro: !isPro },
+    { type: 'Web Hooks', logo: webhooks },
+    { type: 'Zapier', logo: zapier },
+    { type: 'Integromat', logo: integromat },
+    { type: 'Integrately', logo: integrately },
+    { type: 'Pabbly', logo: pabbly },
+    { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Zoho Recruit', logo: zohoRecruit, pro: !isPro },
     { type: 'Zoho Analytics', logo: zohoAnalytics, pro: !isPro },
     { type: 'Zoho Campaigns', logo: zohoCamp, pro: !isPro },
