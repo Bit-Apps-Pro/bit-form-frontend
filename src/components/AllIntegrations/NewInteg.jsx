@@ -34,6 +34,7 @@ const FluentCrm = lazy(() => import('./FluentCRM/FluentCrm'))
 const Encharge = lazy(() => import('./Encharge/Encharge'))
 const Pods = lazy(() => import('./Pods/Pods'))
 
+
 function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
   const { type } = useParams()
   const { path } = useRouteMatch()
@@ -159,7 +160,6 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
       urlName: 'Pods',
       component: <Pods allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
     },
-
   ]
 
   return (
