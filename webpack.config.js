@@ -50,7 +50,7 @@ module.exports = (env, argv) => {
       // publicPath: path.resolve(__dirname, '../assets/'),
       // public: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
 
-      /* 
+      /*
       proxy: [
         {
           path: path.resolve(__dirname, '../assets/'),
@@ -189,6 +189,7 @@ module.exports = (env, argv) => {
                     // browsers: ['Chrome >= 60', 'Safari >= 10.1', 'iOS >= 10.3', 'Firefox >= 54', 'Edge >= 15'],
                     browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
                   },
+                  loose: true,
                 },
               ],
               ['@babel/preset-react', { runtime: 'automatic' }],
