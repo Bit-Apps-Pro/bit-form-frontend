@@ -29,7 +29,7 @@ module.exports = {
     'template-curly-spacing': 'off',
     indent: 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-    semi: 0,
+    semi: ['error', 'never'],
     'react/destructuring-assignment': 0,
     'arrow-parens': 0,
     'react/prop-types': 0,
@@ -39,6 +39,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    allowImplicit: false
+    allowImplicit: 0,
+    camelcase: 'error',
   },
-};
+}
