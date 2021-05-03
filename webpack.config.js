@@ -158,12 +158,13 @@ module.exports = (env, argv) => {
           },
         ],
       }),
-      new WorkboxPlugin.GenerateSW({
-        clientsClaim: production,
-        skipWaiting: production,
-        dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /view-root.php/],
-      }),
+      ...(!production ? [] : [
+        new WorkboxPlugin.GenerateSW({
+          clientsClaim: production,
+          skipWaiting: production,
+          dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
+          exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /view-root.php/],
+        })]),
     ],
 
     resolve: {
@@ -262,7 +263,7 @@ module.exports = (env, argv) => {
             {
               loader: 'url-loader',
               options: {
-                limit: 10000,
+                limit: 3000,
                 name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
                 outputPath: '../img',
               },
@@ -279,5 +280,5 @@ module.exports = (env, argv) => {
         root: ['wp', 'i18n'],
       },
     },
-  };
-};
+  }
+}
