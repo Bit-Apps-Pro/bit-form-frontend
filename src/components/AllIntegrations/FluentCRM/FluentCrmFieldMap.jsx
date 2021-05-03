@@ -1,5 +1,5 @@
 import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../ElmSettings/Childs/MtInput';
+import MtInput from '../../Utilities/MtInput';
 
 export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf, setFluentCrmConf }) {
   const isRequired = field.required;

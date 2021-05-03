@@ -4,9 +4,10 @@
 import { memo, useEffect, useState } from 'react'
 import { __ } from '../Utils/i18nwrap'
 import { deepCopy } from '../Utils/Helpers'
-import ConfirmModal from './ConfirmModal'
-import Accordions from './ElmSettings/Childs/Accordions'
-import Button from './ElmSettings/Childs/Button'
+import ConfirmModal from './Utilities/ConfirmModal'
+import Accordions from './Utilities/Accordions'
+import Button from './Utilities/Button'
+import CloseIcn from '../Icons/CloseIcn'
 
 function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -178,7 +179,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
             {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Alternative Success Message', 'bitform')}'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center"><Button onClick={addMoreMsg} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Alternative Success Message', 'bitform')}'` }}><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button></div>
     </div>
   )
 }

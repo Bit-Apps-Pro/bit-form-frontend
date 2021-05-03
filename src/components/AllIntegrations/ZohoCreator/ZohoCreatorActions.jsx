@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../ElmSettings/Childs/CheckBox'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
-import Modal from '../../Modal'
-import TitleModal from '../../TitleModal'
+import CheckBox from '../../Utilities/CheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
+import Modal from '../../Utilities/Modal'
+import TitleModal from '../../Utilities/TitleModal'
 
 export default function ZohoCreatorActions({ creatorConf, setCreatorConf }) {
   const [updateMdl, setUpdateMdl] = useState(false)

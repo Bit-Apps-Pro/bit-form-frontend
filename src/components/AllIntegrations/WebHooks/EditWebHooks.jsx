@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import SnackMsg from '../../Utilities/SnackMsg';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
 import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
@@ -12,8 +12,6 @@ function EditWebHooks({ formFields, setIntegration, integrations, allIntegURL })
   const { id, formID } = useParams()
   const [webHooks, setWebHooks] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
-
-  console.log(webHooks)
 
   return (
     <div style={{ width: 900 }}>
@@ -28,7 +26,6 @@ function EditWebHooks({ formFields, setIntegration, integrations, allIntegURL })
           setSnackbar={setSnackbar}
         />
       </div>
-      {console.log('WebHooks', webHooks)}
 
       <WebHooksStepTwo
         edit

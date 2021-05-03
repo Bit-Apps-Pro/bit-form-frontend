@@ -66,7 +66,7 @@ export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setis
         const newConf = { ...sendinBlueConf }
         if (result.data.sendinBlueField) {
             newConf.default.fields = result.data.sendinBlueField
-            const fields = newConf.default.fields
+            const { fields } = newConf.default
             newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', sendinBlueField: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('Sendinblue fields refreshed', 'bitform') })
         } else {

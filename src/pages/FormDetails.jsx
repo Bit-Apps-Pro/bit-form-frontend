@@ -5,15 +5,16 @@ import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
+import SnackMsg from '../components/Utilities/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
-import ConfirmModal from '../components/ConfirmModal'
+import ConfirmModal from '../components/Utilities/ConfirmModal'
 import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
-import Modal from '../components/Modal'
+import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper';
+import CloseIcn from '../Icons/CloseIcn';
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
@@ -419,7 +420,7 @@ function FormDetails(props) {
                 {buttonDisabled && <LoaderSm size={20} clr="white" className="ml-1" />}
               </button>
               <NavLink to="/" className="btn btcd-btn-close">
-                <span className="btcd-icn icn-clear" />
+                <CloseIcn size="14" />
               </NavLink>
             </div>
           </nav>

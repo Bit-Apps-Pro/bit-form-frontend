@@ -6,13 +6,13 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
-import { __ } from '../Utils/i18nwrap';
-import { AllFormContext } from '../Utils/AllFormContext'
+import { __ } from '../../Utils/i18nwrap';
+import { AllFormContext } from '../../Utils/AllFormContext'
 import ConfirmModal from './ConfirmModal'
-import Menu from './ElmSettings/Childs/Menu'
-import TableCheckBox from './ElmSettings/Childs/TableCheckBox'
-import TableLoader2 from './Loaders/TableLoader2'
-import ExportImportMenu from './ExportImport/ExportImportMenu'
+import Menu from './Menu'
+import TableCheckBox from './TableCheckBox'
+import TableLoader2 from '../Loaders/TableLoader2'
+import ExportImportMenu from '../ExportImport/ExportImportMenu'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {

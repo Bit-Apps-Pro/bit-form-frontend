@@ -1,20 +1,20 @@
 /* eslint-disable no-undef */
-import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react';
+import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
-import ConfirmModal from '../components/ConfirmModal';
-import CopyText from '../components/ElmSettings/Childs/CopyText';
-import MenuBtn from '../components/ElmSettings/Childs/MenuBtn';
-import Progressbar from '../components/ElmSettings/Childs/Progressbar';
-import SingleToggle2 from '../components/ElmSettings/Childs/SingleToggle2';
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
-import FormTemplates from '../components/FormTemplates';
-import Modal from '../components/Modal';
-import Table from '../components/Table';
-import { AllFormContext } from '../Utils/AllFormContext';
-import bitsFetch from '../Utils/bitsFetch';
-import { dateTimeFormatter } from '../Utils/Helpers';
+import ConfirmModal from '../components/Utilities/ConfirmModal'
+import CopyText from '../components/Utilities/CopyText'
+import MenuBtn from '../components/Utilities/MenuBtn'
+import Progressbar from '../components/Utilities/Progressbar'
+import SingleToggle2 from '../components/Utilities/SingleToggle2'
+import SnackMsg from '../components/Utilities/SnackMsg'
+import FormTemplates from '../components/FormTemplates'
+import Modal from '../components/Utilities/Modal'
+import Table from '../components/Utilities/Table'
+import { AllFormContext } from '../Utils/AllFormContext'
+import bitsFetch from '../Utils/bitsFetch'
+import { dateTimeFormatter } from '../Utils/Helpers'
 // import Editor from '../Editor'
 
 const Welcome = lazy(() => import('./Welcome'))

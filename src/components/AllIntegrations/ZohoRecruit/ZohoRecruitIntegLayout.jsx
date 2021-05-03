@@ -4,6 +4,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import ZohoRecruitNewRecord from './ZohoRecruitNewRecord'
 import ZohoRecruitRelatedRecord from './ZohoRecruitRelatedRecord'
 import { refreshModules } from './ZohoRecruitCommonFunc'
+import CloseIcn from '../../../Icons/CloseIcn'
 
 export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields, handleInput, recruitConf, setRecruitConf, isLoading, setisLoading, setSnackbar }) {
   const addNewRelatedTab = () => {
@@ -62,7 +63,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
                   {indx + 1}
                 </button>
               </Tab>
-              <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><span className="btcd-icn icn-clear" /></button>
+              <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><CloseIcn size="14" /></button>
             </>
           ))}
           {recruitConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>}

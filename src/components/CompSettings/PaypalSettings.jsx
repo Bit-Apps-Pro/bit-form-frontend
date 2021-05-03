@@ -3,9 +3,9 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../Utils/i18nwrap'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
-import CheckBox from '../ElmSettings/Childs/CheckBox'
-import SingleInput from '../ElmSettings/Childs/SingleInput'
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
+import CheckBox from '../Utilities/CheckBox'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 
 export default function PaypalSettings({ elm, fields, updateData, setElementSetting }) {

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../Utils/i18nwrap'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import CopyText from './ElmSettings/Childs/CopyText';
+import CopyText from './Utilities/CopyText';
 
 export default function Captcha({ saveCaptcha, setsnack }) {
   const { reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)

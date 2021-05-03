@@ -16,18 +16,6 @@ module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
     devtool: production ? false : 'source-map',
-    node: {
-      // module: 'empty',
-      // dgram: 'empty',
-      // dns: 'mock',
-      // fs: 'empty',
-      // http2: 'empty',
-      // net: 'empty',
-      // tls: 'empty',
-      // child_process: 'empty',
-      // Buffer: false,
-      // process: false,
-    },
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
       'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
@@ -45,7 +33,31 @@ module.exports = (env, argv) => {
       chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
       library: '_bitforms',
       libraryTarget: 'umd',
-      // publicPath: path.resolve(__dirname, '../assets/js/'),
+      // publicPath: ,
+    },
+    devServer: {
+      open: true,
+      writeToDisk: true,
+      // path: path.resolve(__dirname, '../assets/'),
+      // inline: true,
+      // host: 'bitcode.io',
+      /*  overlay: {
+         warnings: true,
+         errors: true,
+       }, */
+      // contentBase: path.resolve(__dirname, '../assets/js'),
+      // path: path.resolve(__dirname, '../assets/js/'),
+      // publicPath: path.resolve(__dirname, '../assets/'),
+      // public: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
+
+      /* 
+      proxy: [
+        {
+          path: path.resolve(__dirname, '../assets/'),
+          // path: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
+          target: 'http://bitcode.io/',
+        },
+      ], */
     },
     optimization: {
       runtimeChunk: 'single',
@@ -80,18 +92,13 @@ module.exports = (env, argv) => {
           extractComments: {
             condition: true,
             filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
-            banner: (commentsFile) => `Bitcode license information ${commentsFile}`,
+            banner: (commentsFile) => `BitPress license information ${commentsFile}`,
           },
         }),
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             parser: safePostCssParser,
-            map: !production
-              ? {
-                inline: false,
-                annotation: true,
-              }
-              : false,
+            map: production ? false : { inline: false, annotation: true },
           },
           cssProcessorPluginOptions: {
             preset: ['default', { minifyFontValues: { removeQuotes: false } }],
@@ -178,17 +185,20 @@ module.exports = (env, argv) => {
                   // useBuiltIns: 'entry',
                   // corejs: 3,
                   targets: {
-                    browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
+                    // browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
+                    // browsers: ['Chrome >= 60', 'Safari >= 10.1', 'iOS >= 10.3', 'Firefox >= 54', 'Edge >= 15'],
+                    browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
                   },
                 },
               ],
               ['@babel/preset-react', { runtime: 'automatic' }],
             ],
             plugins: [
-              ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               '@babel/plugin-transform-runtime',
-              // "@babel/plugin-transform-regenerator",
+              ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
+              // "@babel/plugin-transform-regenerator",
             ],
           },
         },

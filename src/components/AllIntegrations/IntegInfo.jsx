@@ -1,27 +1,29 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { __ } from '../../Utils/i18nwrap'
-import SnackMsg from '../ElmSettings/Childs/SnackMsg'
-import ActiveCampaignAuthorization from './ActiveCampaign/ActiveCampaignAuthorization'
-import GoogleSheetAuthorization from './GoogleSheet/GoogleSheetAuthorization'
-import WebHooksIntegration from './IntegrationHelpers/WebHooksIntegration'
-import MailChimpAuthorization from './MailChimp/MailChimpAuthorization'
-import SendinBlueAuthorization from './SendinBlue/SendinBlueAuthorization'
-import TelegramAuthorization from './Telegram/TelegramAuthorization'
-import ZohoAnalyticsAuthorization from './ZohoAnalytics/ZohoAnalyticsAuthorization'
-import ZohoBiginAuthorization from './ZohoBigin/ZohoBiginAuthorization'
-import ZohoCampaignsAuthorization from './ZohoCampaigns/ZohoCampaignsAuthorization'
-import ZohoCreatorAuthorization from './ZohoCreator/ZohoCreatorAuthorization'
-import ZohoCRMAuthorization from './ZohoCRM/ZohoCRMAuthorization'
-import ZohoDeskAuthorization from './ZohoDesk/ZohoDeskAuthorization'
-import ZohoMailAuthorization from './ZohoMail/ZohoMailAuthorization'
-import ZohoMarketingHubAuthorization from './ZohoMarketingHub/ZohoMarketingHubAuthorization'
-import ZohoProjectsAuthorization from './ZohoProjects/ZohoProjectsAuthorization'
-import ZohoRecruitAuthorization from './ZohoRecruit/ZohoRecruitAuthorization'
-import ZohoSheetAuthorization from './ZohoSheet/ZohoSheetAuthorization'
-import ZohoSignAuthorization from './ZohoSign/ZohoSignAuthorization'
-import ZohoWorkDriveAuthorization from './ZohoWorkDrive/ZohoWorkDriveAuthorization'
-import EnchargeAuthorization from './Encharge/EnchargeAuthorization'
+import SnackMsg from '../Utilities/SnackMsg'
+
+const ActiveCampaignAuthorization = lazy(() => import('./ActiveCampaign/ActiveCampaignAuthorization'))
+const GoogleSheetAuthorization = lazy(() => import('./GoogleSheet/GoogleSheetAuthorization'))
+const WebHooksIntegration = lazy(() => import('./IntegrationHelpers/WebHooksIntegration'))
+const MailChimpAuthorization = lazy(() => import('./MailChimp/MailChimpAuthorization'))
+const SendinBlueAuthorization = lazy(() => import('./SendinBlue/SendinBlueAuthorization'))
+const TelegramAuthorization = lazy(() => import('./Telegram/TelegramAuthorization'))
+const ZohoAnalyticsAuthorization = lazy(() => import('./ZohoAnalytics/ZohoAnalyticsAuthorization'))
+const ZohoBiginAuthorization = lazy(() => import('./ZohoBigin/ZohoBiginAuthorization'))
+const ZohoCampaignsAuthorization = lazy(() => import('./ZohoCampaigns/ZohoCampaignsAuthorization'))
+const ZohoCreatorAuthorization = lazy(() => import('./ZohoCreator/ZohoCreatorAuthorization'))
+const ZohoCRMAuthorization = lazy(() => import('./ZohoCRM/ZohoCRMAuthorization'))
+const ZohoDeskAuthorization = lazy(() => import('./ZohoDesk/ZohoDeskAuthorization'))
+const ZohoMailAuthorization = lazy(() => import('./ZohoMail/ZohoMailAuthorization'))
+const ZohoMarketingHubAuthorization = lazy(() => import('./ZohoMarketingHub/ZohoMarketingHubAuthorization'))
+const ZohoProjectsAuthorization = lazy(() => import('./ZohoProjects/ZohoProjectsAuthorization'))
+const ZohoRecruitAuthorization = lazy(() => import('./ZohoRecruit/ZohoRecruitAuthorization'))
+const ZohoSheetAuthorization = lazy(() => import('./ZohoSheet/ZohoSheetAuthorization'))
+const ZohoSignAuthorization = lazy(() => import('./ZohoSign/ZohoSignAuthorization'))
+const ZohoWorkDriveAuthorization = lazy(() => import('./ZohoWorkDrive/ZohoWorkDriveAuthorization'))
+const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorization'))
+const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
@@ -34,7 +36,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
   const toReplaceInd = location.indexOf('/info')
   location = window.encodeURI(`${location.slice(0, toReplaceInd)}/new/${integrations[id].type}`)
 
-  const showIntegInfo = () => {
+  const IntegInfoComponents = () => {
     switch (integ.type) {
       case 'Zoho Analytics':
         return <ZohoAnalyticsAuthorization analyticsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
@@ -65,6 +67,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
       case 'Zoho Projects':
         return <ZohoProjectsAuthorization projectsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Google Sheet':
+        // eslint-disable-next-line no-undef
         return <GoogleSheetAuthorization sheetConf={integ} step={1} redirectLocation={bits.googleRedirectURL} setSnackbar={setSnackbar} isInfo />
       case 'Sendinblue':
         return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
@@ -104,7 +107,10 @@ export default function IntegInfo({ allIntegURL, integrations }) {
           <div>{__('Integration Info', 'bitform')}</div>
         </div>
       </div>
-      {showIntegInfo()}
+
+      <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
+        <IntegInfoComponents />
+      </Suspense>
     </>
   )
 }

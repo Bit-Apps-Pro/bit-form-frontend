@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import CloseIcn from '../../../Icons/CloseIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
-import Button from '../../ElmSettings/Childs/Button'
+import Button from '../../Utilities/Button'
 import LoaderSm from '../../Loaders/LoaderSm'
 
 export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
-  const getUrlParams = url => url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
+  const getUrlParams = url => url?.match(/(\?|&)([^=]+)=([^&]+|)/gi)
   const [isLoading, setIsLoading] = useState(false)
   const method = ['GET', 'POST', 'PUT', 'PATCH', 'OPTION', 'DELETE', 'TRACE', 'CONNECT']
 
@@ -109,8 +110,8 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
               <div className="td">{__('Key', 'bitform')}</div>
               <div className="td">{__('Value', 'bitform')}</div>
             </div>
-            {getUrlParams(webHooks.url) !== null && getUrlParams(webHooks.url).map((itm, childindx) => (
-              <div className="tr" key={`fu-1${childindx}`}>
+            {getUrlParams(webHooks.url) !== null && getUrlParams(webHooks.url)?.map((itm, childindx) => (
+              <div className="tr" key={`fu-1${childindx * 3}`}>
                 <div className="td">
                   <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[0].substr(1)} disabled={isInfo} />
                 </div>
@@ -132,7 +133,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
               </div>
             ))}
             {!isInfo && (
-              <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+              <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><CloseIcn size="14" className="icn-rotate-45" /></Button>
             )}
           </div>
         </div>

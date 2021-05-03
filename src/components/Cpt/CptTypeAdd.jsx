@@ -2,9 +2,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
-import SnackMsg from '../ElmSettings/Childs/SnackMsg'
+import SnackMsg from '../Utilities/SnackMsg'
 import LoaderSm from '../Loaders/LoaderSm'
-import TableCheckBox from '../ElmSettings/Childs/TableCheckBox'
+import TableCheckBox from '../Utilities/TableCheckBox'
 
 export default function Cpt({ settab, types }) {
   const [snack, setsnack] = useState({ show: false })

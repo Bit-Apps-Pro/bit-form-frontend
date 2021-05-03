@@ -29,137 +29,78 @@ const Integromat = lazy(() => import('./Integromat/Integromat'))
 const ZohoFlow = lazy(() => import('./ZohoFlow/ZohoFlow'))
 const Integrately = lazy(() => import('./Integrately/Integrately'))
 const Pabbly = lazy(() => import('./Pabbly/Pabbly'))
+const Pods = lazy(() => import('./Pods/Pods'))
 const Telegram = lazy(() => import('./Telegram/Telegram'))
 const FluentCrm = lazy(() => import('./FluentCRM/FluentCrm'))
 const Encharge = lazy(() => import('./Encharge/Encharge'))
-const Pods = lazy(() => import('./Pods/Pods'))
+export default function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
+  const { integUrlName } = useParams()
 
-function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
-  const { type } = useParams()
-  const { path } = useRouteMatch()
-
-  const integs = [
-    {
-      urlName: 'Zoho CRM',
-      component: <ZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Recruit',
-      component: <ZohoRecruit allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Analytics',
-      component: <ZohoAnalytics allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Campaigns',
-      component: <ZohoCampaigns allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Desk',
-      component: <ZohoDesk allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho WorkDrive',
-      component: <ZohoWorkDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Mail',
-      component: <ZohoMail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Sheet',
-      component: <ZohoSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Projects',
-      component: <ZohoProjects allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Sign',
-      component: <ZohoSign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Marketing Hub',
-      component: <ZohoMarketingHub allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Creator',
-      component: <ZohoCreator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Bigin',
-      component: <ZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Google Sheet',
-      component: <GoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Mail Chimp',
-      component: <MailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'CPT',
-      component: <Cpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Mail Poet',
-      component: <MailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Sendinblue',
-      component: <Sendinblue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'WooCommerce',
-      component: <WooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'ActiveCampaign',
-      component: <ActiveCampaign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Web Hooks',
-      component: <WebHooks allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zapier',
-      component: <Zapier allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Integromat',
-      component: <Integromat allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Integrately',
-      component: <Integrately allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Pabbly',
-      component: <Pabbly allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Zoho Flow',
-      component: <ZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Telegram',
-      component: <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Fluent CRM',
-      component: <FluentCrm allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Encharge',
-      component: <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-    {
-      urlName: 'Pods',
-      component: <Pods allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />,
-    },
-  ]
+  const NewIntegs = () => {
+    switch (integUrlName) {
+      case 'Zoho CRM':
+        return <ZohoCRM allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Recruit':
+        return <ZohoRecruit allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Analytics':
+        return <ZohoAnalytics allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Campaigns':
+        return <ZohoCampaigns allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Desk':
+        return <ZohoDesk allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho WorkDrive':
+        return <ZohoWorkDrive allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Mail':
+        return <ZohoMail allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Sheet':
+        return <ZohoSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Projects':
+        return <ZohoProjects allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Sign':
+        return <ZohoSign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Marketing Hub':
+        return <ZohoMarketingHub allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Creator':
+        return <ZohoCreator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Bigin':
+        return <ZohoBigin allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Google Sheet':
+        return <GoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Mail Chimp':
+        return <MailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'CPT':
+        return <Cpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Mail Poet':
+        return <MailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Sendinblue':
+        return <Sendinblue allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'WooCommerce':
+        return <WooCommerce allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'ActiveCampaign':
+        return <ActiveCampaign allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Web Hooks':
+        return <WebHooks allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zapier':
+        return <Zapier allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Integromat':
+        return <Integromat allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Integrately':
+        return <Integrately allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Pabbly':
+        return <Pabbly allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Pods':
+        return <Pods allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Zoho Flow':
+        return <ZohoFlow allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Telegram':
+        return <Telegram allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Encharge':
+        return <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      default:
+        break;
+    }
+    return <></>
+  }
 
   return (
     <div>
@@ -169,22 +110,14 @@ function NewInteg({ allIntegURL, formFields, setIntegration, integrations }) {
           &nbsp;Back
         </Link>
         <div className="w-8 txt-center">
-          <b className="f-lg">{type}</b>
+          <div className="mb-1"><b className="f-lg">{integUrlName}</b></div>
           <div>{__('Integration Settings', 'bitform')}</div>
         </div>
       </div>
 
-      {
-        integs.map(iteg => (
-          <Route key={iteg.urlName} path={`${path}/new/${iteg.urlName}`}>
-            <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
-              {iteg.component}
-            </Suspense>
-          </Route>
-        ))
-      }
+      <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
+        <NewIntegs />
+      </Suspense>
     </div>
   )
 }
-
-export default NewInteg

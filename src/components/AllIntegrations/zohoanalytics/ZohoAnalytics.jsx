@@ -1,9 +1,8 @@
-
-import { __ } from '../../../Utils/i18nwrap';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
-import Steps from '../../ElmSettings/Childs/Steps';
+import { __ } from '../../../Utils/i18nwrap';
+import SnackMsg from '../../Utilities/SnackMsg';
+import Steps from '../../Utilities/Steps';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
 import ZohoAnalyticsAuthorization from './ZohoAnalyticsAuthorization';

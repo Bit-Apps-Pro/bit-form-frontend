@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../ElmSettings/Childs/CopyText'
+import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
 
@@ -56,7 +56,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
           {__('Next', 'bitform')}
           {' '}
 &nbsp;
-        <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </>
       )}

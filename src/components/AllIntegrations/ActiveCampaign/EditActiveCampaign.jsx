@@ -3,7 +3,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import SnackMsg from '../../Utilities/SnackMsg';
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
 import { handleInput } from './ActiveCampaignCommonFunc';
@@ -43,7 +43,7 @@ function EditActiveCampaign({ formFields, setIntegration, integrations, allInteg
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, activeCampaingConf, history, id, 1)}
-        disabled={ activeCampaingConf.field_map.length < 1}
+        disabled={activeCampaingConf.field_map.length < 1}
       />
       <br />
     </div>

@@ -1,8 +1,7 @@
-
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
-import ConfirmModal from '../ConfirmModal'
+import ConfirmModal from '../Utilities/ConfirmModal'
 import Loader from '../Loaders/Loader'
 
 import LoaderSm from '../Loaders/LoaderSm'

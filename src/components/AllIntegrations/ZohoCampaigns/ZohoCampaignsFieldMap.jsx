@@ -1,6 +1,5 @@
-
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../ElmSettings/Childs/MtInput'
+import MtInput from '../../Utilities/MtInput'
 
 export const addFieldMap = (indx, campaignsConf, setCampaignsConf) => {
   const newConf = { ...campaignsConf }

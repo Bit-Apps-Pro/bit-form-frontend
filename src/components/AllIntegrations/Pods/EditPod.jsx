@@ -6,7 +6,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { addFieldMap, checkMappedPostFields, checkMappedPodFields } from './PodHelperFunction'
 import PodsFieldMap from './FieldMap'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
+import SnackMsg from '../../Utilities/SnackMsg'
 import { postFields } from '../../../Utils/StaticData/postField'
 
 function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {

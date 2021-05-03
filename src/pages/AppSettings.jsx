@@ -4,7 +4,7 @@ import { __ } from '../Utils/i18nwrap';
 // import Cpt from '../components/Cpt/Cpt'
 import Apikey from '../components/Apikey';
 import Captcha from '../components/Captcha';
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg';
+import SnackMsg from '../components/Utilities/SnackMsg';
 // import Cpt from '../components/Cpt/Cpt';
 import Payments from '../components/Payments';
 import GCLID from '../components/GCLID'

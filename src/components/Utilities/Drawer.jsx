@@ -1,3 +1,5 @@
+import CloseIcn from '../../Icons/CloseIcn'
+
 function Drawer(props) {
   return (
     <div className="btcd-drawer" style={{ right: props.show ? 0 : -420 }}>
@@ -13,7 +15,7 @@ function Drawer(props) {
           <button onClick={props.delConfMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
             <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
           </button>
-          <button onClick={() => props.close(false)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Close"' }} aria-label="modal-close" type="button"><span className="btcd-icn icn-clear" /></button>
+          <button onClick={() => props.close(false)} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Close"' }} aria-label="modal-close" type="button"><CloseIcn size="14" stroke="3" /></button>
         </div>
       </div>
       <small className="btcd-mdl-subtitle">{props.subTitle}</small>

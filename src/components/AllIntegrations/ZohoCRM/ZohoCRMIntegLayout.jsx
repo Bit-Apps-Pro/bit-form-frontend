@@ -1,9 +1,9 @@
-
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { __ } from '../../../Utils/i18nwrap'
 import ZohoCRMNewRecord from './ZohoCRMNewRecord'
 import ZohoCRMRelatedRecord from './ZohoCRMRelatedRecord'
 import { refreshModules } from './ZohoCRMCommonFunc'
+import CloseIcn from '../../../Icons/CloseIcn'
 
 export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, handleInput, crmConf, setCrmConf, isLoading, setisLoading, setSnackbar }) {
   const addNewRelatedTab = () => {
@@ -63,7 +63,7 @@ export default function ZohoCRMIntegLayout({ tab, settab, formID, formFields, ha
                     {indx + 1}
                   </button>
                 </Tab>
-                <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><span className="btcd-icn icn-clear" /></button>
+                <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><CloseIcn size="14" /></button>
               </>
             ))}
             {crmConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Add More Related List', 'bitform')}'` }} type="button">+</button>}

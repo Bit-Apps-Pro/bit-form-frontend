@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import LoaderSm from '../Loaders/LoaderSm'
-import CheckBox from '../ElmSettings/Childs/CheckBox'
+import CheckBox from '../Utilities/CheckBox'
 
 export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, setsnack }) {
   const [isLoading, setIsLoading] = useState(false)

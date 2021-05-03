@@ -19,7 +19,7 @@ export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoadin
         }
         if (result.data.enChargeFields) {
             newConf.default.fields = result.data.enChargeFields
-            const fields = newConf.default.fields
+            const { fields } = newConf.default
             newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', enChargeFields: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('Encharge fields refreshed', 'bitform') })
         } else {

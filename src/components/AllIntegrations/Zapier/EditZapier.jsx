@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
+import SnackMsg from '../../Utilities/SnackMsg';
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
 import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration';
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';

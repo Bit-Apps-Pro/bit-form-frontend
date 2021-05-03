@@ -1,19 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../ElmSettings/Childs/SingleInput';
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
-import CopyText from '../ElmSettings/Childs/CopyText'
+import SingleInput from '../Utilities/SingleInput';
+import SingleToggle from '../Utilities/SingleToggle'
+import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
+import CloseIcn from '../../Icons/CloseIcn';
 
 export default function SelectSettings(props) {
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...elmData.opt]
   const fldKey = elmId
-
-  console.log('%c $render SelectSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-
   const isRequired = elmData.valid.req !== undefined
   const isMultiple = elmData.mul
   const allowCustomOpt = elmData.customOpt !== undefined
@@ -151,11 +149,11 @@ export default function SelectSettings(props) {
           <div key={`opt-${i + 8}`} className="flx flx-between">
             <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${ __('Check by Default', 'bitform') }'` }}>
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
                 <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><span className="btcd-icn icn-clear" /></button>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><CloseIcn size="14" className="icn-rotate-45" /></button>
             </div>
           </div>
         ))}

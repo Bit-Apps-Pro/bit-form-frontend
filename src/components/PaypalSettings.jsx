@@ -1,4 +1,3 @@
-
 import { __ } from '../Utils/i18nwrap'
 
 export default function PaypalSettings({ paySetting, handleInput }) {

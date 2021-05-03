@@ -2,13 +2,12 @@
 
 import { useState } from 'react';
 import { __ } from '../../../Utils/i18nwrap';
-import ConfirmModal from '../../ConfirmModal';
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox';
+import ConfirmModal from '../../Utilities/ConfirmModal';
+import TableCheckBox from '../../Utilities/TableCheckBox';
 
 export default function TelegramActions({ formFields, telegramConf, setTelegramConf }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
   const actionHandler = (e) => {
-    console.log(e)
     const newConf = { ...telegramConf }
       if (e.target.value !== '') {
         newConf.actions.attachments = e.target.value

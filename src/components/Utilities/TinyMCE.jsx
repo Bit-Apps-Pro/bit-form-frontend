@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react'
-import { __ } from '../Utils/i18nwrap'
+import { __ } from '../../Utils/i18nwrap'
 
 export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, height, width }) {
   useEffect(() => {

@@ -2,14 +2,12 @@ import { useState } from 'react';
 
 import { NavLink, useRouteMatch, Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
-import Table from './Table'
-import Button from './ElmSettings/Childs/Button'
+import Table from './Utilities/Table'
+import Button from './Utilities/Button'
 import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from './Utilities/ConfirmModal'
 
 export default function EmailTemplate({ mailTem, setMailTem, formID }) {
-  console.log('%c $render EmailTemplate', 'background:green;padding:3px;border-radius:5px;color:white')
-
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const { url } = useRouteMatch()
@@ -72,13 +70,13 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
       accessor: 'action',
       Cell: row => (
         <>
-          <Button onClick={() => temDupConf(row.row.index)} className="icn-btn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Duplicate', 'bitform') }'` }}>
+          <Button onClick={() => temDupConf(row.row.index)} className="icn-btn mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Duplicate', 'bitform')}'` }}>
             <span className="btcd-icn icn-file_copy" />
           </Button>
-          <NavLink to={`${url}/${row.row.index}`} className="icn-btn mr-2 flx flx-center tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Edit', 'bitform') }'` }}>
+          <NavLink to={`${url}/${row.row.index}`} className="icn-btn mr-2 flx flx-center tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }}>
             <span className="btcd-icn icn-document-edit" />
           </NavLink>
-          <Button onClick={() => temDelConf(row.row.index, row.row)} className="icn-btn tooltip pos-rel" style={{ '--tooltip-txt': `'${ __('Delete', 'bitform') }'` }}>
+          <Button onClick={() => temDelConf(row.row.index, row.row)} className="icn-btn tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }}>
             <span className="btcd-icn icn-trash-fill" />
           </Button>
         </>

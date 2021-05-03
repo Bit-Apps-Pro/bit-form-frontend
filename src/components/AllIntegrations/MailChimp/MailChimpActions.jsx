@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { __ } from '../../../Utils/i18nwrap'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function MailChimpActions({ sheetConf, setSheetConf, formFields, address }) {
   const actionHandler = (e, type) => {

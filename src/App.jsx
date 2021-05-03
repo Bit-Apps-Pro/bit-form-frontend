@@ -35,7 +35,6 @@ function App() {
 
   const getNewFormId = () => {
     let max = 0
-    // eslint-disable-next-line array-callback-return
     allForms.map(frm => {
       const fid = Number(frm.formID)
       if (fid > max) {

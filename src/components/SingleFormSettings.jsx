@@ -4,10 +4,10 @@ import DatePicker from 'react-date-picker';
 import { Link } from 'react-router-dom';
 import TimePicker from 'react-time-picker';
 import { __ } from '../Utils/i18nwrap';
-import ConfirmModal from './ConfirmModal';
-import Accordions from './ElmSettings/Childs/Accordions';
-import CheckBox from './ElmSettings/Childs/CheckBox';
-import SingleToggle2 from './ElmSettings/Childs/SingleToggle2';
+import ConfirmModal from './Utilities/ConfirmModal';
+import Accordions from './Utilities/Accordions';
+import CheckBox from './Utilities/CheckBox';
+import SingleToggle2 from './Utilities/SingleToggle2';
 import { AppSettings } from '../Utils/AppSettingsContext'
 import GoogleAdIcn from '../Icons/GoogleAdIcn';
 
@@ -626,6 +626,6 @@ export default function SingleFormSettings({ fields, additional, setadditional }
           {alertMdl.msg}
         </div>
       </ConfirmModal>
-    </div >
+    </div>
   )
 }
