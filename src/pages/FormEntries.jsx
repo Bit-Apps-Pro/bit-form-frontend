@@ -3,14 +3,14 @@
 import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
-import ConfirmModal from '../components/ConfirmModal'
-import Drawer from '../components/Drawer'
+import ConfirmModal from '../components/Utilities/ConfirmModal'
+import Drawer from '../components/Utilities/Drawer'
 import EditEntryData from '../components/EditEntryData'
-import SnackMsg from '../components/ElmSettings/Childs/SnackMsg'
-import TableAction from '../components/ElmSettings/Childs/TableAction'
-import TableFileLink from '../components/ElmSettings/Childs/TableFileLink'
+import SnackMsg from '../components/Utilities/SnackMsg'
+import TableAction from '../components/Utilities/TableAction'
+import TableFileLink from '../components/Utilities/TableFileLink'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
-import Table from '../components/Table'
+import Table from '../components/Utilities/Table'
 import noData from '../resource/img/nodata.svg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
@@ -44,7 +44,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   useEffect(() => {
     if (reports.length > 0) {
       const allLabelObj = {}
-      // eslint-disable-next-line array-callback-return
+      
       allLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })

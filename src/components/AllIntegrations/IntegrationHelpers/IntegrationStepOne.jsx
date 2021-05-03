@@ -1,6 +1,5 @@
-
 import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../ElmSettings/Childs/CopyText'
+import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 
 export default function IntegrationStepOne({ step, confTmp, handleInput, error, setSnackbar, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {

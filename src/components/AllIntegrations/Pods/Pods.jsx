@@ -6,7 +6,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { addFieldMap, checkMappedPostFields, checkMappedPodFields } from './PodHelperFunction'
 import PodsFieldMap from './FieldMap'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
+import SnackMsg from '../../Utilities/SnackMsg'
 import { postFields } from '../../../Utils/StaticData/postField'
 
 function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -42,9 +42,9 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
           tmpData.pod_map = Object.values(res.data).filter(fld => fld.required).map(fl => ({ formField: '', podFormField: fl.key, required: fl.required }))
           if (tmpData?.pod_map?.length < 1) {
             tmpData.pod_map = [{}]
-           }
+          }
         }
-         setData(tmpData)
+        setData(tmpData)
       }
     })
   }
@@ -140,19 +140,19 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
           </div>
         </div>
         {
-                data.pod_map.map((itm, i) => (
-                  <PodsFieldMap
-                    key={`analytics-m-${i + 9}`}
-                    i={i}
-                    type="pod"
-                    field={itm}
-                    formFields={formFields}
-                    dataConf={data}
-                    setDataConf={setData}
-                    podFields={pods}
-                  />
-                  ))
-             }
+          data.pod_map.map((itm, i) => (
+            <PodsFieldMap
+              key={`analytics-m-${i + 9}`}
+              i={i}
+              type="pod"
+              field={itm}
+              formFields={formFields}
+              dataConf={data}
+              setDataConf={setData}
+              podFields={pods}
+            />
+          ))
+        }
         <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
 
         <div>
@@ -164,19 +164,19 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
           </div>
         </div>
         {
-            data.post_map.map((itm, i) => (
-              <PodsFieldMap
-                key={`analytics-m-${i + 9}`}
-                i={i}
-                type="post"
-                field={itm}
-                formFields={formFields}
-                dataConf={data}
-                setDataConf={setData}
-                podFields={postFields}
-              />
-            ))
-          }
+          data.post_map.map((itm, i) => (
+            <PodsFieldMap
+              key={`analytics-m-${i + 9}`}
+              i={i}
+              type="post"
+              field={itm}
+              formFields={formFields}
+              dataConf={data}
+              setDataConf={setData}
+              podFields={postFields}
+            />
+          ))
+        }
 
         <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
       </div>
@@ -184,7 +184,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       <button
         className="btn f-left btcd-btn-lg green sh-sm flx"
         type="button"
-            // onClick={() => saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)}
+        // onClick={() => saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)}
         onClick={() => saveConfig()}
       >
         {__('Save', 'bitform')}

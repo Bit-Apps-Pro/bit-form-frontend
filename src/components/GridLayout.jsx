@@ -13,8 +13,9 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import CompGen from './CompGen'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from './Utilities/ConfirmModal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import CloseIcn from '../Icons/CloseIcn'
 
 function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -32,11 +33,13 @@ function GridLayout(props) {
 
   useEffect(() => {
     checkAllLayoutSame()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check all layout by breakpoint is same otherwise push missing layout item
   function checkAllLayoutSame() {
     let notSame = false
+    
     layouts.lg.map(item => {
       if (!layouts.md.find(itm => itm.i === item.i)) {
         const tmpItem = { ...item }
@@ -393,9 +396,9 @@ function GridLayout(props) {
     }
   }
 
-  const editSubmit = () => {
+  /* const editSubmit = () => {
     props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
-  }
+  } */
 
   const compByTheme = compData => {
     if (compData && compData.typ === 'recaptcha') {
@@ -433,7 +436,7 @@ function GridLayout(props) {
         tabIndex="0"
         title={__('Remove', 'bitform')}
       >
-        <span className="btcd-icn icn-clear" />
+        <CloseIcn size="13" />
       </div>
       <div
         style={{ right: 27, cursor: 'move', fontSize: 15 }}
@@ -531,7 +534,7 @@ function GridLayout(props) {
           {alertMdl.msg}
         </div>
       </ConfirmModal>
-    </div >
+    </div>
   )
 }
 

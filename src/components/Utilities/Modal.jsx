@@ -1,4 +1,5 @@
 import { CSSTransition } from 'react-transition-group';
+import CloseIcn from '../../Icons/CloseIcn';
 
 export default function Modal({ show, setModal, sm, lg, style, className, title, warning, hdrActn, children, subTitle }) {
   const handleClickOutside = e => {
@@ -27,7 +28,7 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
         >
           <div className="btcd-modal-content">
             {hdrActn}
-            <button onClick={() => setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><span className="btcd-icn icn-clear" /></button>
+            <button onClick={() => setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><CloseIcn size={16} stroke={3} /></button>
             <h2 className="btcd-mdl-title flx" style={{ color: warning ? 'red' : '' }}>{title}</h2>
             <small className="btcd-mdl-subtitle">{subTitle}</small>
             {!sm && <div className="btcd-mdl-div" />}

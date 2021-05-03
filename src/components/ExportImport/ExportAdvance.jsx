@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import CheckBox from '../ElmSettings/Childs/CheckBox'
-import Button from '../ElmSettings/Childs/Button'
+import CheckBox from '../Utility/CheckBox'
+import Button from '../Utility/Button'
 
 export default function ExportAdvance() {
     return (
@@ -9,7 +9,7 @@ export default function ExportAdvance() {
         {/* <div className="flx">
           <div className=" btcd-workFlows-btns">
             <div className="flx">
-              <Button icn className="blue sh-sm"><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+              <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
               <Button className="blue ml-2"> AND </Button>
               <Button className="blue ml-2"> OR </Button>
               <Button className="blue ml-2"> OR Group</Button>

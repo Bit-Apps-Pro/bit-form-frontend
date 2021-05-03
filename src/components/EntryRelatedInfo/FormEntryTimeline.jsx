@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
-import CopyText from '../ElmSettings/Childs/CopyText'
-import SnackMsg from '../ElmSettings/Childs/SnackMsg'
+import CopyText from '../Utilities/CopyText'
+import SnackMsg from '../Utilities/SnackMsg'
 import Loader from '../Loaders/Loader'
 
 export default function FormEntryTimeline({ formID, entryID, allLabels, settab, integrations }) {

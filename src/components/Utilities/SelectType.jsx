@@ -1,4 +1,3 @@
-
 import { __ } from '../../../Utils/i18nwrapn';
 
 export default function SelectType(props) {

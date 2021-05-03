@@ -1,4 +1,3 @@
-
 import { useContext, useState } from 'react'
 import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
@@ -6,9 +5,9 @@ import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './ConfirmModal'
-import SnackMsg from './ElmSettings/Childs/SnackMsg'
-import Modal from './Modal'
+import ConfirmModal from './Utilities/ConfirmModal'
+import SnackMsg from './Utilities/SnackMsg'
+import Modal from './Utilities/Modal'
 import Payment from './Payment'
 
 export default function Payments() {

@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 
 import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../ElmSettings/Childs/SingleInput';
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
-import SelectBox2 from '../ElmSettings/Childs/SelectBox2'
+import SingleInput from '../Utilities/SingleInput';
+import SingleToggle from '../Utilities/SingleToggle'
+import SelectBox2 from '../Utilities/SelectBox2'
 import Back2FldList from './Back2FldList'
 
 export default function SubmitBtnSettings(props) {

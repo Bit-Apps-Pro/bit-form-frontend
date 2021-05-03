@@ -1,10 +1,9 @@
-
 import { __ } from '../../../Utils/i18nwrap';
 import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg';
-import Steps from '../../ElmSettings/Childs/Steps';
+import SnackMsg from '../../Utilities/SnackMsg';
+import Steps from '../../Utilities/Steps';
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
 import ZohoProjectsAuthorization from './ZohoProjectsAuthorization';
@@ -18,7 +17,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   // eslint-disable-next-line max-len
-  
+
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
     type: 'Zoho Projects',

@@ -1,4 +1,3 @@
-
 import { __ } from '../../../Utils/i18nwrap'
 
 export default function IntegrationStepThree({ step, saveConfig, edit, disabled }) {

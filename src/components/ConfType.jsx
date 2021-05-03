@@ -8,7 +8,6 @@ import WebHooks from './WebHooks'
 import bitsFetch from '../Utils/bitsFetch'
 
 export default function ConfType(props) {
-
   const { formSettings, setFormSettings, formFields } = props
   const [pos, setPos] = useState(0)
 

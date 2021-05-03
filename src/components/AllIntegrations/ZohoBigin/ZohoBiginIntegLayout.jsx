@@ -62,7 +62,7 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
                   {indx + 1}
                 </button>
               </Tab>
-              <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><span className="btcd-icn icn-clear" /></button>
+              <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><CloseIcn size="14" /></button>
             </>
           ))}
           {biginConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>} */}

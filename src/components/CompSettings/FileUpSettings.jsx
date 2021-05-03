@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../ElmSettings/Childs/SingleInput';
-import SingleToggle from '../ElmSettings/Childs/SingleToggle'
-import DropDown from '../ElmSettings/Childs/DropDown'
-import CopyText from '../ElmSettings/Childs/CopyText'
+import SingleInput from '../Utilities/SingleInput';
+import SingleToggle from '../Utilities/SingleToggle'
+import DropDown from '../Utilities/DropDown'
+import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
 
 export default function FileUpSettings(props) {

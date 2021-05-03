@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState, useRef } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
-import TableCheckBox from '../ElmSettings/Childs/TableCheckBox'
-import SnackMsg from '../ElmSettings/Childs/SnackMsg'
+import TableCheckBox from '../Utilities/TableCheckBox'
+import SnackMsg from '../Utilities/SnackMsg'
 import LoaderSm from '../Loaders/LoaderSm'
 import DeleteCpt from './DeleteCpt'
 

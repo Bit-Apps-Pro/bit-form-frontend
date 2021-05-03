@@ -1,6 +1,5 @@
-
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../ElmSettings/Childs/MtInput'
+import MtInput from '../../Utility/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoSignFieldMap({ i, formFields, field, signConf, setSignConf }) {

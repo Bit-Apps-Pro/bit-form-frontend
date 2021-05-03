@@ -1,4 +1,3 @@
-
 import { __ } from '../../../../Utils/i18nwrap'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'

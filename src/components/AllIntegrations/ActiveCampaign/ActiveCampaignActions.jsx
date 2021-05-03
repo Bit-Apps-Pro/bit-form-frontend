@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function ActiveCampaignActions({ activeCampaingConf, setActiveCampaingConf }) {
   const actionHandler = (e, type) => {

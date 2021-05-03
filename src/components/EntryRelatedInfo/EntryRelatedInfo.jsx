@@ -4,7 +4,7 @@ import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'
 import FormEntryPayments from './FormEntryPayments'
 import FormEntryTimeline from './FormEntryTimeline'
-import Modal from '../Modal'
+import Modal from '../Utilities/Modal'
 import GoogleAdInfo from './GoogleAdInfo'
 
 export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, setSnackbar, integrations, close }) {

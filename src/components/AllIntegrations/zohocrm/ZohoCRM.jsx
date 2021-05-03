@@ -1,10 +1,9 @@
-
 import { __ } from '../../../Utils/i18nwrap';
 import { useEffect, useState } from 'react';
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams, useHistory } from 'react-router-dom'
-import SnackMsg from '../../ElmSettings/Childs/SnackMsg'
-import Steps from '../../ElmSettings/Childs/Steps'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
 import { setGrantTokenResponse, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoCRMAuthorization from './ZohoCRMAuthorization';

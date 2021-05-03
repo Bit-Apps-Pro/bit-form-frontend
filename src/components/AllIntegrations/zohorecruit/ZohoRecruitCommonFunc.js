@@ -1,4 +1,3 @@
-
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 

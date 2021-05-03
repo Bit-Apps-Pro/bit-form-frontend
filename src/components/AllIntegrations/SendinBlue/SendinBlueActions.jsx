@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import TableCheckBox from '../../ElmSettings/Childs/TableCheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 import { refreshTemplate } from './SendinBlueCommonFunc'
 
 export default function SendinBlueActions({ sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar }) {

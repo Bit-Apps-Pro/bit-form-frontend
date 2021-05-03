@@ -3,7 +3,7 @@
 import { useState, useEffect, useReducer } from 'react';
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap';
-import Modal from './Modal'
+import Modal from './Utilities/Modal'
 import '../resource/css/tinymce.css'
 
 const mailTemReducer = (state, { name, value }) => {

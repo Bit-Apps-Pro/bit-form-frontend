@@ -1,7 +1,6 @@
-
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../ElmSettings/Childs/CopyText'
+import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshAudience, handleMailChimpAuthorize } from './MailChimpCommonFunc'
 
@@ -32,7 +31,7 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
       <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-      <CopyText value={ redirectLocation || `${window.location.href}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+      <CopyText value={redirectLocation || `${window.location.href}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
       <small className="d-blk mt-5">
         {__('To get Client ID and SECRET , Please Visit', 'bitform')}
@@ -58,7 +57,7 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
             {__('Next', 'bitform')}
             {' '}
           &nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         </>
       )}

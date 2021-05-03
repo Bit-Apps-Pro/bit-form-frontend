@@ -1,13 +1,13 @@
-
 import { memo, useState } from 'react';
 import MultiSelect from 'react-multiple-select-dropdown-lite';
+import CloseIcn from '../Icons/CloseIcn';
 import bitsFetch from '../Utils/bitsFetch';
 import { deepCopy } from '../Utils/Helpers';
 import { __ } from '../Utils/i18nwrap';
-import ConfirmModal from './ConfirmModal';
-import Accordions from './ElmSettings/Childs/Accordions';
-import Button from './ElmSettings/Childs/Button';
-import SnackMsg from './ElmSettings/Childs/SnackMsg';
+import ConfirmModal from './Utilities/ConfirmModal';
+import Accordions from './Utilities/Accordions';
+import Button from './Utilities/Button';
+import SnackMsg from './Utilities/SnackMsg';
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -213,7 +213,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                       </div>
                     </div>
                   ))}
-                  <Button onClick={() => addParam(i)} className="add-pram" icn><span className="btcd-icn icn-clear icn-rotate-45" /></Button>
+                  <Button onClick={() => addParam(i)} className="add-pram" icn><CloseIcn size="14" stroke="3" className="icn-rotate-45" /></Button>
                 </div>
               </div>
             </Accordions>
@@ -225,7 +225,11 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
             {__('Empty', 'bitform')}
           </div>
         )}
-      <div className="txt-center"><Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Hook', 'bitform')}'` }}><span className="btcd-icn icn-clear icn-rotate-45" /></Button></div>
+      <div className="txt-center">
+        <Button onClick={addMoreHook} icn className="sh-sm blue tooltip mt-2" style={{ '--tooltip-txt': `'${__('Add More Hook', 'bitform')}'` }}>
+          <CloseIcn size="14" stroke="3" className="icn-rotate-45" />
+        </Button>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,5 @@
-
 import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../ElmSettings/Childs/MtInput';
+import MtInput from '../../Utilities/MtInput';
 
 export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, setMailPoetConf }) {
   const isRequired = field.required;

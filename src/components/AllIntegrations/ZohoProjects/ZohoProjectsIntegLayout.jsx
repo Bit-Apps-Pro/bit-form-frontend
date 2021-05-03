@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 /* eslint-disable no-nested-ternary */
 
 import { __ } from '../../../Utils/i18nwrap';

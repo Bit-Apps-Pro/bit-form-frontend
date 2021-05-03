@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import { checkValidEmail } from '../../../Utils/Helpers'
-import CopyText from '../../ElmSettings/Childs/CopyText'
+import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 

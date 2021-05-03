@@ -1,4 +1,3 @@
-
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
@@ -263,5 +262,3 @@ export const checkMappedFields = creatorConf => {
   }
   return true
 }
-
-
