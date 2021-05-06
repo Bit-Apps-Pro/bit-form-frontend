@@ -23,6 +23,7 @@ export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
 
 function FormDetails(props) {
+  let componentMounted = true
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
@@ -80,30 +81,33 @@ function FormDetails(props) {
   }
 
   const onUnmount = () => {
-    showWpMenu()
     setFulScn(false)
+    showWpMenu()
   }
 
   useEffect(() => {
     onMount()
-    return () => onUnmount()
+    return () => {
+      componentMounted = false
+      onUnmount()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [subBtn, setSubBtn] = useState({
+  /* const [subBtn, setSubBtn] = useState({
     typ: 'submit',
     btnSiz: 'md',
     fulW: false,
     align: 'right',
     subBtnTxt: 'Submit',
-  })
+  }) */
 
-  const updateSubBtn = val => {
-    setSubBtn(val)
-    formSettings.submitBtn = val
-    setFormSettings(formSettings)
-  }
-
+  /*  const updateSubBtn = val => {
+     setSubBtn(val)
+     formSettings.submitBtn = val
+     setFormSettings(formSettings)
+   }
+  */
   const [mailTem, setMailTem] = useState([])
 
   const [integrations, setIntegration] = useState([])
@@ -152,7 +156,7 @@ function FormDetails(props) {
       } else {
         bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
           .then(res => {
-            if (res !== undefined && res.success) {
+            if (res?.success && componentMounted) {
               let responseData = JSON.parse(res.data)
               if (typeof data !== 'object') {
                 responseData = JSON.parse(res.data)
@@ -174,7 +178,7 @@ function FormDetails(props) {
     } else if (formType === 'edit') {
       bitsFetch({ id: formID }, 'bitforms_get_a_form')
         .then(res => {
-          if (res !== undefined && res.success) {
+          if (res?.success && componentMounted) {
             const responseData = res.data
             responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
@@ -276,7 +280,7 @@ function FormDetails(props) {
 
       bitsFetch(formData, action)
         .then(response => {
-          if (response !== undefined && response.success) {
+          if (response?.success && componentMounted) {
             let { data } = response
             if (typeof data !== 'object') {
               data = JSON.parse(data)
