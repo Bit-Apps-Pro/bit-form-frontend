@@ -70,7 +70,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
 
   return (
     <div className="elm-settings">
-      <div className="flx" style={{ ...scrollTopShadow && { boxShadow: '0 0px 16px 2px #b0b7d8' } }}>
+      <div className="elm-settings-title pos-rel flx" style={{ ...scrollTopShadow && { boxShadow: '0 0px 16px 2px #b0b7d8' } }}>
         <TabLink title={__('Field', 'bitform')} sub={__('Settings', 'bitform')} icn="settings" link="fs" />
         <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
       </div>
@@ -192,6 +192,8 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
       case 'radio':
         return <RadioCheckSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'select':
+        return <SelectSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+      case 'dropdown':
         return <SelectSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'file-up':
         return <FileUpSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
