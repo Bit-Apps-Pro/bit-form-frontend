@@ -2,8 +2,10 @@ import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import BrushIcn from '../Icons/BrushIcn'
 import CloseIcn from '../Icons/CloseIcn'
+import EditIcn from '../Icons/EditIcn'
 import MoveIcn from '../Icons/MoveIcn'
 import SettingsIcn from '../Icons/SettingsIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { __ } from '../Utils/i18nwrap'
 import MapComponents from './MapComponents'
@@ -40,7 +42,7 @@ export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem
           style={{ cursor: 'move' }}
           title={__('Move', 'bitform')}
         >
-          <MoveIcn size="16" stroke="2.5" />
+          <MoveIcn size="17" stroke="2" />
         </button>
         <button
           type="button"
@@ -57,7 +59,7 @@ export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem
           onClick={navigateToFieldSettings}
 
         >
-          <SettingsIcn size="18" stroke="2.2" />
+          <EditIcn size="17" />
         </button>
         <button
           data-close
@@ -69,7 +71,7 @@ export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem
           onClick={() => onRemoveItem(layoutItem.i)}
           title={__('Remove', 'bitform')}
         >
-          <CloseIcn size="13" />
+          <TrashIcn size="16" />
         </button>
       </div>
       <ComponentsByTheme />
