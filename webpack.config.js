@@ -1,21 +1,23 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const safePostCssParser = require('postcss-safe-parser');
+const path = require('path')
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const safePostCssParser = require('postcss-safe-parser')
 const svgToMiniDataURI = require('mini-svg-data-uri')
+// const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const autoprefixer = require('autoprefixer');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
-    devtool: production ? false : 'source-map',
+    // devtool: production ? false : 'source-map',
+    devtool: production ? false : 'eval',
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
       'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
@@ -29,13 +31,14 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: '[name].js',
+      ...production && { pathInfo: false },
       path: path.resolve(__dirname, '../assets/js/'),
       chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
       library: '_bitforms',
       libraryTarget: 'umd',
-      // publicPath: ,
+      // publicPath: 'http://localhost:8080',
     },
-    devServer: {
+    /* devServer: {
       open: true,
       writeToDisk: true,
       // path: path.resolve(__dirname, '../assets/'),
@@ -45,20 +48,54 @@ module.exports = (env, argv) => {
          warnings: true,
          errors: true,
        }, */
-      // contentBase: path.resolve(__dirname, '../assets/js'),
-      // path: path.resolve(__dirname, '../assets/js/'),
-      // publicPath: path.resolve(__dirname, '../assets/'),
-      // public: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
+    // contentBase: path.resolve(__dirname, '../assets/js'),
+    // path: path.resolve(__dirname, '../assets/js/'),
+    // publicPath: path.resolve(__dirname, '../assets/'),
+    // public: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
 
-      /* 
-      proxy: [
-        {
-          path: path.resolve(__dirname, '../assets/'),
-          // path: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
-          target: 'http://bitcode.io/',
+    /*
+    proxy: [
+      {
+        path: path.resolve(__dirname, '../assets/'),
+        // path: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
+        target: 'http://bitcode.io/',
+      },
+    ],
+  }, */
+    devServer: {
+      // open: true,
+      // hotOnly: true,
+      hot: true,
+      // host: 'blank-site-php.io',
+      // port: 80,
+      // writeToDisk: true,
+      contentBase: path.resolve(__dirname, '../assets/'),
+      // contentBasePublicPath: '/js',
+      // publicPath: 'http://blank-site-php.io/',
+      // allowedHosts: ["blank-site-php.io"],
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      // disableHostCheck: true,
+      /* proxy: {
+        '/': {
+          target: 'http://blank-site-php.io:80',
+          // publicPath: '/wp-content/plugins/BitForm/assets/js',
+          secure: false,
+          changeOrigin: true,
+          autoRewrite: true,
+          headers: {
+            'X-ProxiedBy-Webpack': true,
+          },
         },
-      ], */
+      }, */
+      // publicPath: path.resolve(__dirname, '../assets/js/'),
     },
+    /*  performance: {
+       hints: 'error',
+       maxAssetSize: 100 * 1024, // 100 KiB
+       maxEntrypointSize: 100 * 1024, // 100 KiB
+     }, */
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {
@@ -77,46 +114,40 @@ module.exports = (env, argv) => {
       },
       minimize: production,
       minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            parse: { ecma: 8 },
-            compress: {
-              drop_console: production,
-              ecma: 5,
-              warnings: false,
-              comparisons: false,
-              inline: 2,
+        ...(!production ? [] : [
+          new TerserPlugin({
+            terserOptions: {
+              parse: { ecma: 8 },
+              compress: {
+                drop_console: production,
+                ecma: 5,
+                warnings: false,
+                comparisons: false,
+                inline: 2,
+              },
+              mangle: { safari10: true },
             },
-            mangle: { safari10: true },
-          },
-          extractComments: {
-            condition: true,
-            filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
-            banner: (commentsFile) => `BitPress license information ${commentsFile}`,
-          },
-        }),
-        new OptimizeCSSAssetsPlugin({
-          cssProcessorOptions: {
-            parser: safePostCssParser,
-            map: production ? false : { inline: false, annotation: true },
-          },
-          cssProcessorPluginOptions: {
-            preset: ['default', { minifyFontValues: { removeQuotes: false } }],
-          },
-        }),
+            extractComments: {
+              condition: true,
+              filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
+              banner: (commentsFile) => `BitPress license information ${commentsFile}`,
+            },
+          }),
+          new OptimizeCSSAssetsPlugin({
+            cssProcessorOptions: {
+              parser: safePostCssParser,
+              map: production ? false : { inline: false, annotation: true },
+            },
+            cssProcessorPluginOptions: {
+              preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+            },
+          }),
+        ]),
       ],
     },
     plugins: [
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
-      /* new HtmlWebpackPlugin({
-        cache: production,
-        filename: '../../views/view-root.php',
-        path: path.resolve('../views/'),
-        template: path.resolve(__dirname, 'public/wp_index.html'),
-        chunks: ['webpackAssets'],
-        chunksSortMode: 'auto',
-      }), */
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
@@ -158,6 +189,27 @@ module.exports = (env, argv) => {
           },
         ],
       }),
+      // new BrowserSyncPlugin({
+      //   // browse to http://localhost:3000/ during development,
+      //   // ./public directory is being served
+      //   host: 'localhost',
+      //   port: 3000,
+      //   // files: ['.php'],
+      //   // server: { baseDir: [path.resolve(__dirname, '../assets/')] },
+      //   proxy: 'http://bitcode.io',
+      //   files: [{
+      //     match: [
+      //       '.php',
+      //       // '**/*.php'
+      //     ],
+      //     fn(event, file) {
+      //       if (event === 'change') {
+      //         const bs = require('browser-sync').get('bs-webpack-plugin')
+      //         bs.reload()
+      //       }
+      //     },
+      //   }],
+      // }, { reload: false }),
       ...(!production ? [] : [
         new WorkboxPlugin.GenerateSW({
           clientsClaim: production,
@@ -178,6 +230,7 @@ module.exports = (env, argv) => {
           test: /\.(jsx?)$/,
           exclude: /node_modules/,
           loader: 'babel-loader',
+          // include: path.resolve(__dirname, 'src'),
           options: {
             presets: [
               [
@@ -187,7 +240,6 @@ module.exports = (env, argv) => {
                   // corejs: 3,
                   targets: {
                     // browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
-                    // browsers: ['Chrome >= 60', 'Safari >= 10.1', 'iOS >= 10.3', 'Firefox >= 54', 'Edge >= 15'],
                     browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
                   },
                 },
