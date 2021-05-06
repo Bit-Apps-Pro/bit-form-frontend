@@ -116,16 +116,16 @@ function RadioCheckSettings(props) {
             <div className="flx mt-1">
               {elmData.typ === 'check'
                 && (
-                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${ __('Required', 'bitform') }'` }}>
+                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
                     <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
                     <span className="btcd-mrk ck br-50 " />
                   </label>
                 )}
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${ __('Check by Default', 'bitform') }'` }}>
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
                 <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                 <span className="btcd-mrk ck br-50 " />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><CloseIcn size="12" className="icn-rotate-45" /></button>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><CloseIcn size="12" /></button>
             </div>
           </div>
         ))}

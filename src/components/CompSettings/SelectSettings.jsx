@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../Utilities/SingleInput';
+import { __ } from '../../Utils/i18nwrap'
+import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
-import CloseIcn from '../../Icons/CloseIcn';
+import CloseIcn from '../../Icons/CloseIcn'
 
 export default function SelectSettings(props) {
   const elmId = props.elm.id
@@ -153,7 +153,7 @@ export default function SelectSettings(props) {
                 <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><CloseIcn size="14" className="icn-rotate-45" /></button>
+              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><CloseIcn size="14" /></button>
             </div>
           </div>
         ))}
