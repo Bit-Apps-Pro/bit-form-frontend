@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { useEffect, useReducer, useState } from 'react';
-import CompGen from '../components/CompGen';
+import MapComponents from '../components/MapComponents';
 import { resetCaptcha } from '../components/Fields/Recaptcha';
 import { deepCopy } from '../Utils/Helpers';
 import { checkLogic, replaceWithField } from './checkLogic';
@@ -35,7 +35,7 @@ export default function Bitforms(props) {
       // btcd-id={field.i}
       // data-grid={field}
       >
-        <CompGen
+        <MapComponents
           editMode
           fieldKey={field.i}
           atts={dataToPass[field.i]}
@@ -338,7 +338,7 @@ export default function Bitforms(props) {
           }
           if (Object.keys(result.data).length > 0) {
             const newData = fieldData !== undefined && deepCopy(fieldData)
-            
+
             Object.keys(result.data).map(element => {
               newData[props.fieldsKey[element]].error = result.data[element]
             });
@@ -420,7 +420,7 @@ export default function Bitforms(props) {
       }
       if (Object.keys(props.error).length > 0) {
         const newData = fieldData !== undefined && deepCopy(fieldData)
-        
+
         Object.keys(props.error).map(element => {
           newData[props.fieldsKey[element]].error = props.error[element]
         })
@@ -468,7 +468,7 @@ export default function Bitforms(props) {
           </div>
           {!props.editMode && props.buttons
             && (
-              <CompGen
+              <MapComponents
                 atts={props.buttons}
                 entryID={props.entryID}
                 buttonDisabled={buttonDisabled}

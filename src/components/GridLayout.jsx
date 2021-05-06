@@ -5,21 +5,16 @@
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useHistory } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
-import BrushIcn from '../Icons/BrushIcn'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
-import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
-import CompGen from './CompGen'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
-import CloseIcn from '../Icons/CloseIcn'
+import FieldBlockWrapper from './FieldBlockWrapper'
 
 function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
-  const { reCaptchaV2 } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
   const [layouts, setLayouts] = useState(layout)
@@ -29,17 +24,16 @@ function GridLayout(props) {
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
-  const history = useHistory()
 
   useEffect(() => {
     checkAllLayoutSame()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check all layout by breakpoint is same otherwise push missing layout item
   function checkAllLayoutSame() {
     let notSame = false
-    
+
     layouts.lg.map(item => {
       if (!layouts.md.find(itm => itm.i === item.i)) {
         const tmpItem = { ...item }
@@ -145,19 +139,19 @@ function GridLayout(props) {
       for (let j = 0; j < vgrid[i].length; j += 1) {
         if (!vgrid[i][j]) {
           if (h > i) {
-            vgrid.push(Array(col).fill(0));
+            vgrid.push(Array(col).fill(0))
           }
           if (col - j >= w) {
             // chek height
-            let clr = true;
+            let clr = true
             for (let k = i; k < i + h; k += 1) {
               // check clr right by w
               if (k > vgrid.length - 1) {
-                vgrid.push(Array(col).fill(0));
+                vgrid.push(Array(col).fill(0))
               }
               for (let m = j; m < w + j - 1; m += 1) {
                 if (vgrid[k][m]) {
-                  clr = false;
+                  clr = false
                 }
               }
             }
@@ -171,10 +165,10 @@ function GridLayout(props) {
               return { x: j, y: i, vgrid, w }
             }
           } else {
-            break;
+            break
           }
         } else {
-          vgrid.push(Array(col).fill(0));
+          vgrid.push(Array(col).fill(0))
         }
       }
     }
@@ -183,38 +177,38 @@ function GridLayout(props) {
   const genLay = (lay, col) => {
     const sortedLay = sortLayoutByXY(lay)
     const nlay = []
-    const nvgrid = Array(Array(col).fill(0));
+    const nvgrid = Array(Array(col).fill(0))
     for (let i = 0; i < sortedLay.length; i += 1) {
       const o = { ...sortedLay[i] }
-      const { x, y, w } = getPos(nvgrid, o.w, o.h, col);
-      o.x = x;
-      o.y = y;
-      o.w = w;
+      const { x, y, w } = getPos(nvgrid, o.w, o.h, col)
+      o.x = x
+      o.y = y
+      o.w = w
       nlay.push(o)
     }
-    return nlay;
+    return nlay
   }
 
   const genFilterLay = (lay, col, idx) => {
     const nlay = []
-    const nvgrid = Array(Array(col).fill(0));
+    const nvgrid = Array(Array(col).fill(0))
     for (let i = 0; i < lay.length; i += 1) {
       const o = { ...lay[i] }
       if (o.i !== idx) {
-        const { x, y, w } = getPos(nvgrid, o.w, o.h, col);
-        o.x = x;
-        o.y = y;
-        o.w = w;
+        const { x, y, w } = getPos(nvgrid, o.w, o.h, col)
+        o.x = x
+        o.y = y
+        o.w = w
         nlay.push(o)
       }
     }
-    return nlay;
+    return nlay
   }
 
   const margeNewData = () => {
     setNewData(null)
-    if (!checkPaymentFields(newData[0])) return;
-    if (newData[0].typ === 'recaptcha' && !checkCaptchaField()) return;
+    if (!checkPaymentFields(newData[0])) return
+    if (newData[0].typ === 'recaptcha' && !checkCaptchaField()) return
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
@@ -279,7 +273,7 @@ function GridLayout(props) {
     const fld = elm.typ.match(payPattern)
     if (fld) {
       const payFields = fields ? Object.values(fields).filter(field => field.typ === fld[0]) : []
-      let msg;
+      let msg
       if (!isPro) {
         msg = __(`${fld[0]} is in Pro Version!`, 'bitform')
         setProModal({ show: true, msg })
@@ -295,14 +289,14 @@ function GridLayout(props) {
         setAlertMdl({ show: true, msg })
       }
       if (msg) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
   const checkCaptchaField = () => {
-    let msg;
+    let msg
     if (formSettings?.additional?.enabled?.recaptchav3) {
       msg = __(
         <p>
@@ -322,7 +316,7 @@ function GridLayout(props) {
 
     if (msg) {
       setAlertMdl({ show: true, msg })
-      return false;
+      return false
     }
 
     return true
@@ -330,8 +324,8 @@ function GridLayout(props) {
 
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
-    if (!checkPaymentFields(draggedElm[0])) return;
-    if (draggedElm[0].typ === 'recaptcha' && !checkCaptchaField()) return;
+    if (!checkPaymentFields(draggedElm[0])) return
+    if (draggedElm[0].typ === 'recaptcha' && !checkCaptchaField()) return
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
@@ -400,20 +394,21 @@ function GridLayout(props) {
     props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
   } */
 
-  const compByTheme = compData => {
+  /* const compByTheme = compData => {
+    // TODO move this code with recaptcha component after remove react frontend
     if (compData && compData.typ === 'recaptcha') {
       // eslint-disable-next-line no-param-reassign
       compData.siteKey = reCaptchaV2.siteKey
     }
     switch (props.theme) {
       case 'default':
-        return <CompGen isBuilder formID={formID} atts={compData} />
+        return <MapComponents isBuilder formID={formID} atts={compData} />
       default:
         return null
     }
-  }
+  } */
 
-  const blkGen = item => (
+  /* const blkGen = item => (
     <div
       key={item.i}
       className="blk"
@@ -472,17 +467,17 @@ function GridLayout(props) {
       </div>
       {compByTheme(fields[item.i])}
     </div>
-  )
+  ) */
 
-  const navigateToFieldSettings = () => {
+ /*  const navigateToFieldSettings = () => {
     history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
-  }
+  } */
 
-  const navigateToStyle = typ => {
+  /* const navigateToStyle = typ => {
     if (typ === 'paypal') history.replace(history.location.pathname.replace(/fs|style\/.+|style/g, 'style/fl/ppl'))
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
     else history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
-  }
+  } */
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
@@ -510,7 +505,29 @@ function GridLayout(props) {
                 onDragStop={() => sessionStorage.setItem('btcd-lc', '-')}
                 onResizeStop={() => sessionStorage.setItem('btcd-lc', '-')}
               >
-                {layouts[breakpoint].map(itm => blkGen(itm))}
+                {/* {layouts[breakpoint].map(itm => blkGen(itm))} */}
+                {layouts[breakpoint].map(layoutItem => (
+                  <div
+                    key={layoutItem.i}
+                    className="blk"
+                    btcd-id={layoutItem.i}
+                    data-grid={layoutItem}
+                    onClick={getElmProp}
+                    onKeyPress={getElmProp}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <FieldBlockWrapper
+                      {...{
+                        layoutItem,
+                        getElmProp,
+                        onRemoveItem,
+                        fields,
+                        formID,
+                      }}
+                    />
+                  </div>
+                ))}
               </ResponsiveReactGridLayout>
 
               {/* <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
