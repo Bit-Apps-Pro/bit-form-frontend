@@ -15,6 +15,7 @@ const svgToMiniDataURI = require('mini-svg-data-uri')
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
+
   return {
     // devtool: production ? false : 'source-map',
     devtool: production ? false : 'eval',
@@ -146,6 +147,11 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
+      new webpack.DllReferencePlugin({
+        name: '_bitforms',
+        context: '/',
+        manifest: path.resolve(__dirname, 'dll-plugin-manifest.json'),
+      }),
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
@@ -283,7 +289,8 @@ module.exports = (env, argv) => {
               loader: 'sass-loader',
               options: {
                 sassOptions: {
-                  outputStyle: 'compressed',
+                  ...production && { outputStyle: 'compressed' },
+                  ...!production && { sourceMap: false },
                 },
               },
             },
