@@ -5,6 +5,7 @@
   "dependencies": {
     "@bumaga/tabs": "^0.2.0",
     "@paypal/react-paypal-js": "^3.0.2",
+    "@popperjs/core": "^2.9.2",
     "core-js": "^3.11.1",
     "create-file-list": "^1.0.1",
     "deepmerge-alt": "^0.3.0",
@@ -17,6 +18,7 @@
     "react-google-recaptcha": "^2.0.1",
     "react-grid-layout": "^1.2.4",
     "react-multiple-select-dropdown-lite": "^2.0.4",
+    "react-popper": "^2.2.5",
     "react-router-dom": "^5.1.2",
     "react-simple-resizer": "^2.1.0",
     "react-sortablejs": "^6.0.0",
