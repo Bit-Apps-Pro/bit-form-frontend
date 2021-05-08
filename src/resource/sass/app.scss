@@ -2891,6 +2891,9 @@ select.btcd-paper-inp {
   width: 100% !important;
   padding: 10px;
   border-bottom: 1px solid #eaeaf1;
+   .sortable-chosen{
+    background:red !important;
+  }
   &:hover {
     background: rgb(231, 234, 243);
     .btcd-pane-drg {
@@ -2899,6 +2902,16 @@ select.btcd-paper-inp {
   }
   & > div {
     display: inline-block;
+  }
+  & .btcd-label-cbx{
+    width: 85%;
+    overflow:hidden;
+    &>span{
+      display:inline-block;
+      width:85%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
 }
 .btcd-pane-drg {
@@ -4147,4 +4160,79 @@ _:-ms-fullscreen,
   stroke:currentColor;
   stroke-linecap:round;
   stroke-linejoin:round;
+}
+
+.popper {
+  display: inline-block;
+  background: #fff;
+  color: $dp-blue;
+  font-size: 13px;
+  border-radius: 8px;
+  z-index: 9;
+  overflow: hidden;
+   height:0;
+   border-radius: 100%;
+   padding:0;
+   opacity: 0;
+   transform: scaleX(0);
+  transition: 
+  opacity 200ms 400ms, 
+  height 150ms 400ms, 
+  border-radius 200ms 400ms, 
+  padding 150ms 400ms;
+  box-shadow:
+  0 0px 3.2px rgba(0, 0, 0, 0.11),
+  0 0px 7.6px rgba(0, 0, 0, 0.079),
+  0 0px 14.4px rgba(0, 0, 0, 0.066),
+  0 0px 25.7px rgba(0, 0, 0, 0.055),
+  0 0px 48px rgba(0, 0, 0, 0.044),
+  0 0px 115px rgba(0, 0, 0, 0.031);
+}
+
+.popper[data-popper-placement^='top'] > .arrw {
+margin-top: -2px;
+}
+
+.popper[data-popper-placement^='bottom'] > .arrw {
+  top: -6px;
+  &::before{
+    transform: rotate(-135deg);
+  }
+}
+
+.popper[data-popper-placement^='left'] > .arrow {
+  right: -4px;
+}
+
+.popper[data-popper-placement^='right'] > .arrow {
+  left: -4px;
+}
+.arrw{
+height:12px;
+width: 12px;
+}
+.arrw::before{
+  background:#fff; 
+  position: absolute;
+  content: "";
+  height:12px;
+  width: 12px;
+  // transform:scaleX(1);
+  transform:rotate(45deg);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0%);
+}
+.showTip{
+  border-radius: 8px;
+  height:163px;
+  padding:5px 10px;
+  animation: showOverflow ;
+  animation-duration: 0;
+  opacity: 1;
+  animation-delay: 0ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes showOverflow {
+  0%{overflow:hidden;}
+  100%{overflow:visible;}
 }
