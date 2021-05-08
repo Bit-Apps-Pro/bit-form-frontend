@@ -11,6 +11,7 @@ import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign, bitCipher } from '../Utils/Helpers'
+import { propertyValueSumX } from '../Utils/FormBuilderHelper';
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -204,17 +205,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     }
     conRef.current.applyResizer(resizer)
   }, [conRef])
-
-  // TODO fix width and redundent function in gridlayout.jsx
-  const propertyValueSumX = (propertyValue = '') => {
-    let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
-    if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
-    if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
-    if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
-    arr = [arr[1], arr[3]]
-    const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
-    return summ || 0
-  }
 
   const setGrWidth = useCallback((paneWidth) => {
     setGridWidth(paneWidth)
