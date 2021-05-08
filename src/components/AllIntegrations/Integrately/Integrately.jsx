@@ -18,6 +18,7 @@ function Integrately({ formFields, setIntegration, integrations, allIntegURL }) 
     type: 'Integrately',
     method: 'POST',
     url: process.env.NODE_ENV === 'development' ? 'https://hooks..com/hooks/catch/8430229/o7gwcin/' : '',
+    apiConsole: 'https://app.integrately.com/',
   })
   console.log('integrately', integrately)
   return (

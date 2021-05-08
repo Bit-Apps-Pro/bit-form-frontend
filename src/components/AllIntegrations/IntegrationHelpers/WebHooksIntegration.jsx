@@ -86,6 +86,13 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           <div className="w-7 mr-2">
             <div className="f-m">{__('Link:', 'bitform')}</div>
             <input name="url" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.url} disabled={isInfo} />
+            {webHooks?.apiConsole && (
+            <small className="d-blk mt-2">
+              {__('To got Webhook , Please Visit', 'bitform')}
+              {' '}
+              <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`, 'bitform')}</a>
+            </small>
+            )}
           </div>
 
           <div className="w-3">

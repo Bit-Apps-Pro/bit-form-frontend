@@ -18,6 +18,7 @@ function Zapier({ formFields, setIntegration, integrations, allIntegURL }) {
     type: 'Zapier',
     method: 'POST',
     url: process.env.NODE_ENV === 'development' ? 'https://hooks.zapier.com/hooks/catch/8430229/o7gwcin/' : '',
+    apiConsole: 'https://zapier.com/app/dashboard',
   })
   console.log('zapier', zapier)
   return (
