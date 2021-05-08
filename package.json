@@ -5,6 +5,7 @@
   "dependencies": {
     "@bumaga/tabs": "^0.2.0",
     "@paypal/react-paypal-js": "^3.0.2",
+    "@popperjs/core": "^2.9.2",
     "core-js": "^3.11.1",
     "create-file-list": "^1.0.1",
     "deepmerge-alt": "^0.3.0",
@@ -17,6 +18,7 @@
     "react-google-recaptcha": "^2.0.1",
     "react-grid-layout": "^1.2.4",
     "react-multiple-select-dropdown-lite": "^2.0.4",
+    "react-popper": "^2.2.5",
     "react-router-dom": "^5.1.2",
     "react-simple-resizer": "^2.1.0",
     "react-sortablejs": "^6.0.0",
@@ -46,7 +48,8 @@
     "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bitform",
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
-    "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json"
+    "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
+    "clean": "rimraf node_modules"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -114,11 +117,11 @@
     "postcss-safe-parser": "^5.0.2",
     "prettier": "^2.2.1",
     "react-scripts": "^4.0.3",
+    "rimraf": "^3.0.2",
     "sass": "^1.32.12",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.36.1",
     "webpack-bundle-analyzer": "^4.4.1",

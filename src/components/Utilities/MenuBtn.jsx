@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import EditIcn from '../../Icons/EditIcn'
 
 export default function MenuBtn(props) {
   const handleMenuClose = (e) => {
@@ -24,24 +25,24 @@ export default function MenuBtn(props) {
     <div className="btcd-menu">
       <button className="btcd-menu-btn btcd-mnu sh-sm" onClick={hadleClick} onBlur={handleMenuClose} aria-label="toggle menu" type="button" />
       <div className="btcd-menu-list">
-        <Link to={`/form/builder/edit/${props.formID}/fs`} type="button" aria-label="actions">
-          <span className="btcd-icn icn-edit" />
-          {'  '}
+        <Link to={`/form/builder/edit/${props.formID}/fs`} type="button" className="flx" aria-label="actions">
+          <EditIcn size="15" />
+          &nbsp;
           Edit
         </Link>
-        <button type="button" aria-label="actions" onClick={props.dup}>
+        <button type="button" aria-label="actions" className="flx" onClick={props.dup}>
           <span className="btcd-icn icn-copy" />
-          {'  '}
+          &nbsp;
           Duplicate
         </button>
-        <button type="button" aria-label="actions" onClick={props.export}>
+        <button type="button" aria-label="actions" className="flx" onClick={props.export}>
           <span className="btcd-icn icn-file_download" />
-          {'  '}
+          &nbsp;
           Export
         </button>
-        <button type="button" aria-label="actions" onClick={props.del}>
+        <button type="button" aria-label="actions" className="flx" onClick={props.del}>
           <span className="btcd-icn icn-trash-2" />
-          {'  '}
+          &nbsp;
           Delete
         </button>
       </div>

@@ -238,8 +238,7 @@ function AllFroms({ newFormId }) {
       >
         <FormTemplates setTempModal={setModal} newFormId={newFormId} setSnackbar={setSnackbar} />
       </Modal>
-
-      {allForms.length > 0 ? (
+      {allForms.length ? (
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Forms', 'bitform')}</h2>
