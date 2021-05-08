@@ -223,7 +223,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
           </div>
         </Route>
 
-        <Route exact path={`${path}/new/:integUrlName`}>
+        <Route path={`${path}/new/:integUrlName`}>
           <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
         </Route>
 

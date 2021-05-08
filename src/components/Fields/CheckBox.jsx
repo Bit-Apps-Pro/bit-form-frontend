@@ -65,6 +65,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
               type="checkbox"
               ref={checkBoxRef}
               disabled={attr?.valid?.disabled}
+              readonly={attr?.valid?.readonly}
               // {...itm.check && { defaultChecked: true }}
               // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
               {...'lbl' in itm && { defaultValue: itm.lbl }}

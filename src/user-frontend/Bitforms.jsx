@@ -187,6 +187,10 @@ export default function Bitforms(props) {
                   if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = true; maybeReset = true }
                   break;
 
+                case 'readonly':
+                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.readonly = true; maybeReset = true }
+                  break;
+
                 case 'enable':
                   if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = false; maybeReset = true }
                   break;
@@ -227,6 +231,12 @@ export default function Bitforms(props) {
                 case 'disable':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
+                  }
+                  break;
+
+                case 'readonly':
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.readonly = props.data[props.fieldsKey[actionDetail.field]].valid.readonly
                   }
                   break;
 
@@ -338,7 +348,7 @@ export default function Bitforms(props) {
           }
           if (Object.keys(result.data).length > 0) {
             const newData = fieldData !== undefined && deepCopy(fieldData)
-            
+
             Object.keys(result.data).map(element => {
               newData[props.fieldsKey[element]].error = result.data[element]
             });
@@ -420,7 +430,7 @@ export default function Bitforms(props) {
       }
       if (Object.keys(props.error).length > 0) {
         const newData = fieldData !== undefined && deepCopy(fieldData)
-        
+
         Object.keys(props.error).map(element => {
           newData[props.fieldsKey[element]].error = props.error[element]
         })
