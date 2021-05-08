@@ -50,7 +50,7 @@ export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem
           title={__('Style', 'bitform')}
           onClick={() => navigateToStyle(fields[layoutItem.i].typ)}
         >
-          <BrushIcn style={{ height: 14, width: 14 }} />
+          <BrushIcn height="16" width="14" />
         </button>
         <button
           type="button"

@@ -72,7 +72,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
     <div className="elm-settings">
       <div className="elm-settings-title pos-rel flx" style={{ ...scrollTopShadow && { boxShadow: '0 0px 16px 2px #b0b7d8' } }}>
         <TabLink title={__('Field', 'bitform')} sub={__('Settings', 'bitform')} icn="settings" link="fs" />
-        <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<BrushIcn style={{ height: 20, width: 20, marginRight: 8 }} />} link="style" />
+        <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<i className="mr-2"><BrushIcn height="22" width="22" /></i>} link="style" />
       </div>
       <div className="btcd-hr" />
       <div className="settings">
