@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
       chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
       library: '_bitforms',
       libraryTarget: 'umd',
-      // publicPath: 'http://localhost:8080',
+      // publicPath: '/',
     },
     /* devServer: {
       open: true,
@@ -147,11 +147,13 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      new webpack.DllReferencePlugin({
-        name: '_bitforms',
-        context: '/',
-        manifest: path.resolve(__dirname, 'dll-plugin-manifest.json'),
-      }),
+      ...(production ? [] : [
+        new webpack.DllReferencePlugin({
+          name: '_bitforms',
+          context: '/',
+          manifest: path.resolve(__dirname, 'dll-plugin-manifest.json'),
+        }),
+      ]),
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
@@ -257,6 +259,7 @@ module.exports = (env, argv) => {
               '@babel/plugin-transform-runtime',
               ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
               ['@babel/plugin-proposal-class-properties', { loose: true }],
+              ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
             ],
