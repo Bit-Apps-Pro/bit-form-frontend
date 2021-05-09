@@ -9,6 +9,7 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import SnackMsg from './Utilities/SnackMsg'
 import Modal from './Utilities/Modal'
 import Payment from './Payment'
+import EditIcn from '../Icons/EditIcn'
 
 export default function Payments() {
   /* eslint-disable-next-line no-undef */
@@ -115,12 +116,12 @@ export default function Payments() {
                 <div className="d-flx flx-wrp btcd-inte-wrp">
                   {pays.map((pay, i) => (
                     <div
-                      key={`inte-sm-${i + 2}`}
+                      key={`-${i + 2}`}
                       onClick={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
                       onKeyPress={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
                       role="button"
                       tabIndex="0"
-                      className={`btcd-inte-card inte-sm mr-4 mt-3 ${pay.disable && !pay.pro && 'btcd-inte-dis'} ${pay.pro && 'btcd-inte-pro'}`}
+                      className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && 'btcd-inte-dis'} ${pay.pro && 'btcd-inte-pro'}`}
                     >
                       {pay.pro && (
                         <div className="pro-filter">
@@ -136,22 +137,22 @@ export default function Payments() {
                 </div>
               </Modal>
 
-              <div role="button" className="btcd-inte-card inte-sm flx flx-center add-inte mr-4 mt-3" tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
+              <div role="button" className="btcd-inte-card  flx flx-center add-inte mr-4 mt-3" tabIndex="0" onClick={() => setShowMdl(true)} onKeyPress={() => setShowMdl(true)}>
                 <div>+</div>
               </div>
 
               {payments?.map((pay, i) => (
-                <div role="button" className="btcd-inte-card inte-sm mr-4 mt-3" key={`inte-${i + 3}`}>
+                <div role="button" className="btcd-inte-card  mr-4 mt-3 inte-edit" key={`inte-${i + 3}`}>
                   {getLogo(pay.type)}
                   <div className="btcd-inte-atn txt-center">
                     <Link to={`${allIntegURL}/${pay.type}/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
-                      <span className="btcd-icn icn-edit" />
+                      <EditIcn size="15" />
                     </Link>
                     <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => payDelConf(i)} type="button">
                       <span className="btcd-icn icn-trash-2" />
                     </button>
                   </div>
-                  <div className="txt-center body" title={`${pay.name} | ${pay.type}`} style={{ marginTop: -15 }}>
+                  <div className="txt-center body py-1" title={`${pay.name} | ${pay.type}`}>
                     <div>{pay.name}</div>
                     <small>{pay.type}</small>
                   </div>

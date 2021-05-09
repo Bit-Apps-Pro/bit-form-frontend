@@ -62,6 +62,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
               {...itm.req && { required: true }}
               {...'name' in attr && { name: attr.name }}
               {...{ checked: value === itm.lbl }}
+              {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
               onChange={onChangeHandler}
             />
             <span className="btcd-mrk rdo" />

@@ -39,6 +39,7 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import SnackMsg from './Utilities/SnackMsg'
 import Modal from './Utilities/Modal'
+import EditIcn from '../Icons/EditIcn'
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
@@ -203,7 +204,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
                   <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
-                    <span className="btcd-icn icn-edit" />
+                    <EditIcn size="15   " />
                   </Link>
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <span className="btcd-icn icn-trash-2" />
@@ -223,7 +224,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
           </div>
         </Route>
 
-        <Route exact path={`${path}/new/:integUrlName`}>
+        <Route path={`${path}/new/:integUrlName`}>
           <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
         </Route>
 

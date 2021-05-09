@@ -46,7 +46,8 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
         className={`fld fld-${formID}`}
         type={type}
         {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+        {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+        {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
         {...'ph' in attr && { placeholder: attr.ph }}
         {...'mn' in attr && { min: attr.mn }}
         {...'mx' in attr && { max: attr.mx }}
