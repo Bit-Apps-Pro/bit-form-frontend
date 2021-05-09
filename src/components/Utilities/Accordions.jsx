@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, memo } from 'react';
 import { CSSTransition } from 'react-transition-group'
+import EditIcn from '../../Icons/EditIcn';
 import Button from './Button'
 
 function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse }) {
@@ -41,7 +42,7 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
           <div>
             {customTitle}
             {title !== undefined && <input title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />}
-            {titleEditable && <div className="edit-icn" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span className="btcd-icn icn-edit" style={{ color: tgl ? 'white' : 'gray' }} /></div>}
+            {titleEditable && <div className="edit-icn" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span style={{ color: tgl ? 'white' : 'gray' }}><EditIcn /></span></div>}
             {!tgl && header}
           </div>
           {subtitle !== undefined && <small>{subtitle}</small>}

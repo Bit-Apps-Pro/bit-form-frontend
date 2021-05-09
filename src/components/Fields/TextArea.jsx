@@ -41,7 +41,8 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
         {...{ value }}
         {...'ac' in attr && { autoComplete: attr.ac }}
         {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+        {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
+        {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
         {...'name' in attr && { name: attr.name }}
         {...onBlurHandler && { onBlur: onBlurHandler }}
         onChange={onChangeHandler}

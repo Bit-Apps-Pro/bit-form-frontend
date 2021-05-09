@@ -1,23 +1,24 @@
-function Tools(props) {
+function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, title }) {
   console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')
   return (
     <div
       tabIndex={0}
+      title={title}
       type="button"
       role="button"
       className="tools"
       draggable
       unselectable="on"
-      onClick={() => props.setNewData(props.value)}
-      onKeyPress={() => props.setNewData(props.value)}
+      onClick={() => setNewData(value)}
+      onKeyPress={() => setNewData(value)}
       onDragStart={(e) => {
         e.dataTransfer.setData('text/plain', '')
-        props.setDrgElm(props.value)
-        props.setisToolDragging(true)
+        setDrgElm(value)
+        setisToolDragging(true)
       }}
-      onDragEnd={() => props.setisToolDragging(false)}
+      onDragEnd={() => setisToolDragging(false)}
     >
-      {props.children}
+      {children}
     </div>
   )
 }

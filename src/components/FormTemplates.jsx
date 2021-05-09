@@ -36,6 +36,7 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
       ))}
       <div className="btcd-tem flx">
         <DownloadIcon size="60" />
+        <div>Form Import</div>
         <div className="btcd-hid-btn">
           <button onClick={() => setModal(true)} className="btn btn-white sh-sm" type="button">{__('Import', 'bitform')}</button>
         </div>

@@ -12,7 +12,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
   let type = '';
 
   if (formFields !== null) {
-    
+
     formFields.map(itm => {
       if (itm.key === action.field) {
         type = itm.type
@@ -78,6 +78,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         <option value="">{__('Select One', 'bitform')}</option>
         <option value="value">{__('Value', 'bitform')}</option>
         {actionType !== 'onsubmit' && <option value="disable">{__('Disable', 'bitform')}</option>}
+        {actionType !== 'onsubmit' && <option value="readonly">{__('Readonly', 'bitform')}</option>}
         {actionType !== 'onsubmit' && <option value="enable">{__('Enable', 'bitform')}</option>}
         {actionType !== 'onsubmit' && <option value="hide">{__('Hide', 'bitform')}</option>}
         {actionType !== 'onsubmit' && <option value="show">{__('Show', 'bitform')}</option>}
