@@ -468,3 +468,18 @@ textarea.fld {
   margin: 0;
   line-height: 1.3;
 }
+
+// Validation
+.error-fld {
+  border-color: red !important;
+}
+
+.error-wrapper {
+  height: 0;
+  overflow: hidden;
+  transition: all .3s;
+}
+
+.error-txt {
+  color: red;
+}
