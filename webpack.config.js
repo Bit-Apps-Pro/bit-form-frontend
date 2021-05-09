@@ -32,7 +32,7 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: '[name].js',
-      ...production && { pathInfo: false },
+      ...production && { pathinfo: false },
       path: path.resolve(__dirname, '../assets/js/'),
       chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
       library: '_bitforms',
