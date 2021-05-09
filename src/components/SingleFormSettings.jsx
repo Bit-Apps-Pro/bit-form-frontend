@@ -120,6 +120,15 @@ export default function SingleFormSettings({ fields, additional, setadditional }
     setadditional({ ...additional })
   }
 
+  const tolggleHoneypot = e => {
+    if (e.target.checked) {
+      additional.enabled.honeypot = true
+    } else {
+      delete additional.enabled.honeypot
+    }
+    setadditional({ ...additional })
+  }
+
   const handleEntryLimit = e => {
     if (e.target.checked) {
       additional.enabled.entry_limit = true
@@ -361,6 +370,15 @@ export default function SingleFormSettings({ fields, additional, setadditional }
     return 'Medium'
   }
 
+  const handleDisableStoreEntry = e => {
+    if (e.target.checked) {
+      additional.enabled.disableStoreEntry = true
+    } else {
+      delete additional.enabled.disableStoreEntry
+    }
+    setadditional({ ...additional })
+  }
+
   const toggleCaptchaAdvanced = () => setShowCaptchaAdvanced(show => !show)
 
   return (
@@ -442,6 +460,24 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
           </div>
           <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
+        </div>
+      </div>
+
+      <div className="w-6 mt-3">
+        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt  ${!isPro && 'btcd-inte-pro'}`}>
+          <div className="">
+            <b>
+              <span className="btcd-icn icn-block mr-2" />
+              {__('Enable honeypot trap for Bot', 'bitform')}
+            </b>
+            {''}
+            {''}
+            <br/>
+            {`** this feature requires js to work properly`}
+          </div>
+          <div className="flx">
+            <SingleToggle2 disabled={!isPro} action={tolggleHoneypot} checked={'honeypot' in additional.enabled} className="flx" />
+          </div>
         </div>
       </div>
 
@@ -610,6 +646,63 @@ export default function SingleFormSettings({ fields, additional, setadditional }
           <button onClick={addMorePrivateIp} className="icn-btn sh-sm mt-1" type="button">+</button>
         </div>
       </Accordions>
+
+     {/*  <Accordions
+        customTitle={(
+          <b>
+            <span className="btcd-icn icn-one mr-2" />
+            {__('Disable storing form entries', 'bitform')}
+          </b>
+        )}
+        cls="w-6 mt-3"
+      >
+        <div className="flx mb-2 ml-2">
+          <SingleToggle2 action={handleDisableStoreEntry} checked={'disableStoreEntry' in additional.enabled} className="flx" />
+          {__('Enable / Disable', 'bitform')}
+        </div>
+        {additional.enabled.disableStoreEntry && (
+          <>
+            <div className="flx mb-4 ml-2">
+              <SingleToggle2 action={hideReCaptchaBadge} checked={additional.settings?.recaptchav3?.hideReCaptcha} className="flx" />
+              {__('Hide ReCaptcha Badge', 'bitform')}
+            </div>
+            <span
+              className="btcd-link cp mb-4 ml-2"
+              onClick={toggleCaptchaAdvanced}
+              onKeyDown={toggleCaptchaAdvanced}
+              role="button"
+              tabIndex="0"
+              style={{ outline: 'none' }}
+            >
+              {__(`${!showCaptchaAdvanced ? 'Show' : 'Hide'} Advanced Settings`, 'bitform')}
+            </span>
+            {showCaptchaAdvanced && (
+              <>
+                <div className="mt-3 mb-4 ml-2">
+                  <b>Tolerance Level</b>
+                  <br />
+                  <div className="flx mt-1">
+                    <div className="mt-1">
+                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                      <p className="m-0">
+                        <b>{showToleranceLabel(additional.settings?.recaptchav3?.score)}</b>
+                      </p>
+                    </div>
+                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                  </div>
+
+                </div>
+                <div className="mb-2 ml-2">
+                  <b>Low Score Message</b>
+                  <br />
+                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additional.settings?.recaptchav3?.message} />
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </Accordions>
+ */}
       <div className="mb-4 mt-4"><br /></div>
 
       <ConfirmModal

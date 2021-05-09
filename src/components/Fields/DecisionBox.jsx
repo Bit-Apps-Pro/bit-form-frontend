@@ -56,6 +56,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
             type="checkbox"
             ref={checkBoxRef}
             disabled={attr?.valid?.disabled}
+            readOnly={attr?.valid?.readonly}
             {...attr.valid.req && { required: true }}
             {...{ checked }}
             onChange={onChangeHandler}

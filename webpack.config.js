@@ -250,6 +250,7 @@ module.exports = (env, argv) => {
                     // browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
                     browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
                   },
+                  loose: true,
                 },
               ],
               ['@babel/preset-react', { runtime: 'automatic' }],

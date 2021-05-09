@@ -12,7 +12,7 @@ import SubmitBtn from './Fields/SubmitBtn'
 import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
-import NewDropDown from './Fields/NewDropDown'
+// import NewDropDown from './Fields/NewDropDown'
 /*
 typ: input type
 lbl: label
@@ -48,8 +48,8 @@ export default function MapComponents(props) {
       return <RadioBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'select':
       return <DropDown isBuilder={props.isBuilder} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
-    case 'dropdown':
-      return <NewDropDown isBuilder={props.isBuilder} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+    // case 'dropdown':
+    //   return <NewDropDown isBuilder={props.isBuilder} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
     case 'file-up':
       return <FileUp formID={props.formID} attr={props.atts} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
     case 'submit':
