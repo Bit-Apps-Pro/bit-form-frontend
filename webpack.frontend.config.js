@@ -17,18 +17,6 @@ module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
     devtool: production ? false : 'source-map',
-    node: {
-      // module: 'empty',
-      // dgram: 'empty',
-      // dns: 'mock',
-      // fs: 'empty',
-      // http2: 'empty',
-      // net: 'empty',
-      // tls: 'empty',
-      // child_process: 'empty',
-      // Buffer: false,
-      // process: false,
-    },
     entry: {
       bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
     },
@@ -54,38 +42,40 @@ module.exports = (env, argv) => {
       }, */
       minimize: production,
       minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            parse: { ecma: 8 },
-            compress: {
-              drop_console: production,
-              ecma: 5,
-              warnings: false,
-              comparisons: false,
-              inline: 2,
+        ...(!production ? [] : [
+          new TerserPlugin({
+            terserOptions: {
+              parse: { ecma: 8 },
+              compress: {
+                drop_console: production,
+                ecma: 5,
+                warnings: false,
+                comparisons: false,
+                inline: 2,
+              },
+              mangle: { safari10: true },
             },
-            mangle: { safari10: true },
-          },
-          extractComments: {
-            condition: true,
-            filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
-            banner: (commentsFile) => `Bitcode license information ${commentsFile}`,
-          },
-        }),
-        new OptimizeCSSAssetsPlugin({
-          cssProcessorOptions: {
-            parser: safePostCssParser,
-            map: !production
-              ? {
-                inline: false,
-                annotation: true,
-              }
-              : false,
-          },
-          cssProcessorPluginOptions: {
-            preset: ['default', { minifyFontValues: { removeQuotes: false } }],
-          },
-        }),
+            extractComments: {
+              condition: true,
+              filename: (fileData) => `${fileData.filename}.LICENSE.txt${fileData.query}`,
+              banner: (commentsFile) => `Bitcode license information ${commentsFile}`,
+            },
+          }),
+          new OptimizeCSSAssetsPlugin({
+            cssProcessorOptions: {
+              parser: safePostCssParser,
+              map: !production
+                ? {
+                  inline: false,
+                  annotation: true,
+                }
+                : false,
+            },
+            cssProcessorPluginOptions: {
+              preset: ['default', { minifyFontValues: { removeQuotes: false } }],
+            },
+          }),
+        ]),
       ],
     },
     plugins: [
@@ -121,7 +111,8 @@ module.exports = (env, argv) => {
                   // useBuiltIns: 'entry',
                   // corejs: 3,
                   targets: {
-                    browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
+                    browsers: !production ? ['Chrome >= 88'] : ['>0.2%', 'ie >= 11'],
+                    // browsers: ['>0.2%', 'ie >= 9', 'not dead', 'not op_mini all'],
                   },
                 },
               ],
@@ -202,5 +193,5 @@ module.exports = (env, argv) => {
         },
       ],
     },
-  };
-};
+  }
+}
