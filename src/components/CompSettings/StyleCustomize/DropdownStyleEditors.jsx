@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import BorderIcn from '../../../Icons/BorderIcn';
-import HeightIcn from '../../../Icons/HeightIcn';
-import ColorPicker from './ChildComp/ColorPicker';
-import Range from './ChildComp/Range';
-import StyleAccordion from './ChildComp/StyleAccordion';
-import StyleEditor from './StyleEditor';
+import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import BorderIcn from '../../../Icons/BorderIcn'
+import HeightIcn from '../../../Icons/HeightIcn'
+import ColorPicker from './ChildComp/ColorPicker'
+import Range from './ChildComp/Range'
+import StyleAccordion from './ChildComp/StyleAccordion'
+import StyleEditor from './StyleEditor'
 
 export default function DropdownStyleEditors({ editorLabel, style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }) {
   const history = useHistory()

@@ -99,7 +99,7 @@ export default function EditInteg({ allIntegURL, formFields, setIntegration, int
       case 'Encharge':
         return <EditEncharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
-        break;
+        break
     }
     return ''
   }

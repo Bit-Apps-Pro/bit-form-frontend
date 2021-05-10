@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration';
-import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
+import { useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration'
+import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
 
 function EditPabbly({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

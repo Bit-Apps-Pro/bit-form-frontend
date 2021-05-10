@@ -10,9 +10,9 @@ export const handleInput = (e, wcConf, setWcConf, setisLoading, setSnackbar) => 
   switch (name) {
     case 'module':
       newConf = moduleChange(newConf, setWcConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setWcConf(newConf)
 }

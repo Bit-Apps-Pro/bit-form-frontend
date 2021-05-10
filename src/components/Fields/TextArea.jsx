@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react'
 
 export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val)

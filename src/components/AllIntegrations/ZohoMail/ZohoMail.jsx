@@ -1,12 +1,12 @@
-import { __ } from '../../../Utils/i18nwrap';
-import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import ZohoMailIntegLayout from './ZohoMailIntegLayout';
+import { __ } from '../../../Utils/i18nwrap'
+import { useEffect, useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoMailIntegLayout from './ZohoMailIntegLayout'
 import ZohoMailAuthorization from './ZohoMailAuthorization'
 
 function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -37,7 +37,7 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('mailConf', mailConf);
+  console.log('mailConf', mailConf)
 
   return (
     <div>

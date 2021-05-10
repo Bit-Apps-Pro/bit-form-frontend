@@ -13,9 +13,9 @@ export const handleInput = (e, signConf, setSignConf, formID, setisLoading, setS
   switch (e.target.name) {
     case 'template':
       newConf = templateChange(newConf, formID, setSignConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setSignConf({ ...newConf })
 }

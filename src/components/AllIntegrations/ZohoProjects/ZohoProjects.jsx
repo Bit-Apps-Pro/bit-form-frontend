@@ -1,14 +1,14 @@
-import { __ } from '../../../Utils/i18nwrap';
-import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import ZohoProjectsAuthorization from './ZohoProjectsAuthorization';
-import { checkAllRequired, handleInput, refreshPortals } from './ZohoProjectsCommonFunc';
-import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout';
+import { __ } from '../../../Utils/i18nwrap'
+import { useEffect, useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoProjectsAuthorization from './ZohoProjectsAuthorization'
+import { checkAllRequired, handleInput, refreshPortals } from './ZohoProjectsCommonFunc'
+import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
 
 function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -44,7 +44,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('projectsConf', projectsConf);
+  console.log('projectsConf', projectsConf)
 
   return (
     <div>

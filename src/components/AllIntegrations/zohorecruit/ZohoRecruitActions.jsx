@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react';
-import { __ } from '../../../Utils/i18nwrap';
+import { useState } from 'react'
+import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'

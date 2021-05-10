@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
-import { useContext, useState } from 'react';
-import DatePicker from 'react-date-picker';
-import { Link } from 'react-router-dom';
-import TimePicker from 'react-time-picker';
-import { __ } from '../Utils/i18nwrap';
-import ConfirmModal from './Utilities/ConfirmModal';
-import Accordions from './Utilities/Accordions';
-import CheckBox from './Utilities/CheckBox';
-import SingleToggle2 from './Utilities/SingleToggle2';
+import { useContext, useState } from 'react'
+import DatePicker from 'react-date-picker'
+import { Link } from 'react-router-dom'
+import TimePicker from 'react-time-picker'
+import { __ } from '../Utils/i18nwrap'
+import ConfirmModal from './Utilities/ConfirmModal'
+import Accordions from './Utilities/Accordions'
+import CheckBox from './Utilities/CheckBox'
+import SingleToggle2 from './Utilities/SingleToggle2'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import GoogleAdIcn from '../Icons/GoogleAdIcn';
+import GoogleAdIcn from '../Icons/GoogleAdIcn'
 
 export default function SingleFormSettings({ fields, additional, setadditional }) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
@@ -72,7 +72,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
 
   const enableReCaptchav3 = e => {
     if (e.target.checked) {
-      let msg;
+      let msg
       if (!reCaptchaV3 || !reCaptchaV3?.siteKey || !reCaptchaV3?.secretKey) {
         msg = __(
           <p>
@@ -472,8 +472,8 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             </b>
             {''}
             {''}
-            <br/>
-            {`** this feature requires js to work properly`}
+            <br />
+            ** this feature requires js to work properly
           </div>
           <div className="flx">
             <SingleToggle2 disabled={!isPro} action={tolggleHoneypot} checked={'honeypot' in additional.enabled} className="flx" />
@@ -647,7 +647,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         </div>
       </Accordions>
 
-     {/*  <Accordions
+      {/*  <Accordions
         customTitle={(
           <b>
             <span className="btcd-icn icn-one mr-2" />

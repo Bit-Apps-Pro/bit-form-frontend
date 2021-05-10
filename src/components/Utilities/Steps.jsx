@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 
 function Steps({ step, active, className }) {
   return (
@@ -19,7 +19,7 @@ function Steps({ step, active, className }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export default Steps

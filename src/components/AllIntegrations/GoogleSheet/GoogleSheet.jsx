@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -8,7 +8,7 @@ import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/Go
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
 import GoogleSheetAuthorization from './GoogleSheetAuthorization'
-import { handleInput } from './GoogleSheetCommonFunc';
+import { handleInput } from './GoogleSheetCommonFunc'
 
 function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) {
   console.log('google sheet')

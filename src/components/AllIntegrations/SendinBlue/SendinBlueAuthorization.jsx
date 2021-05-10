@@ -11,7 +11,7 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAuthorize = () => {
-    const newConf = { ...sendinBlueConf };
+    const newConf = { ...sendinBlueConf }
     console.log('sendauthorizi', sendinBlueConf)
     if (!newConf.name || !newConf.api_key) {
       setError({

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
-import { __ } from '../../../../Utils/i18nwrap';
+import { __ } from '../../../../Utils/i18nwrap'
 import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
@@ -97,9 +97,9 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
           type: 'image',
         },
         multiple: false,
-      });
+      })
       imgSelectionFrame.on('select', () => {
-        const attachment = imgSelectionFrame.state().get('selection').first().toJSON();
+        const attachment = imgSelectionFrame.state().get('selection').first().toJSON()
         const imageUrlStr = `url('${attachment.url}')`
         if (attachment.filesizeInBytes > 512000) {
           setImgWarn('⚠ Larger size image might slow down this form load time')
@@ -107,7 +107,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
         styleDispatch({ apply: [{ cls, property: 'background-image', delProp: false, value: imageUrlStr }], brkPoint })
       })
 
-      imgSelectionFrame.open();
+      imgSelectionFrame.open()
     }
   }
 

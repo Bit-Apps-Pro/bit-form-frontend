@@ -1,11 +1,11 @@
-import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../Utilities/MtInput';
-import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers';
+import { __ } from '../../../Utils/i18nwrap'
+import MtInput from '../../Utilities/MtInput'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field, recruitConf, setRecruitConf, tab }) {
   const module = tab === 0 ? recruitConf.module : recruitConf.relatedlists?.[tab - 1]?.module
 
-  let isNotRequired;
+  let isNotRequired
 
   if (uploadFields) {
     isNotRequired = field.zohoFormField === '' || recruitConf.default.moduleData?.[module]?.requiredFileUploadFields?.indexOf(field.zohoFormField) === -1

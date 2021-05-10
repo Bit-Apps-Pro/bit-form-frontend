@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 
-import { __ } from '../../../Utils/i18nwrap';
-import Loader from '../../Loaders/Loader';
+import { __ } from '../../../Utils/i18nwrap'
+import Loader from '../../Loaders/Loader'
 import CreateNew from './CreateNew'
 import { refreshPortals, refreshProjects, refreshMilestones, refreshTasklists, refreshTasks, regenerateMappedField } from './ZohoProjectsCommonFunc'
 

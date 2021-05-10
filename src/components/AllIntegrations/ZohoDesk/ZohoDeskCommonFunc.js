@@ -13,12 +13,12 @@ export const handleInput = (e, deskConf, setDeskConf, formID, setisLoading, setS
   switch (e.target.name) {
     case 'orgId':
       newConf = portalChange(newConf, formID, setDeskConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'department':
       newConf = departmentChange(newConf, formID, setDeskConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setDeskConf({ ...newConf })
 }

@@ -7,9 +7,9 @@ const fName = null
 let mxSiz = null
 
 function getFileSize(size) {
-  const unt = ['Bytes', 'KB', 'MB', 'GB'];
-  let i = 0; while (size > 900) { size /= 1024; i += 1; }
-  return `${Math.round(size * 100) / 100} ${unt[i]}`;
+  const unt = ['Bytes', 'KB', 'MB', 'GB']
+  let i = 0; while (size > 900) { size /= 1024; i += 1 }
+  return `${Math.round(size * 100) / 100} ${unt[i]}`
 }
 
 export function delItem(el) {
@@ -30,30 +30,30 @@ export function delItem(el) {
 }
 
 function fade(element) {
-  let op = 1; // initial opacity
+  let op = 1 // initial opacity
   const timer = setInterval(() => {
     if (op <= 0.1) {
-      clearInterval(timer);
-      element.style.display = 'none';
+      clearInterval(timer)
+      element.style.display = 'none'
     }
-    element.style.opacity = op;
-    element.style.filter = `alpha(opacity=${op * 100})`;
-    op -= op * 0.1;
-  }, 50);
+    element.style.opacity = op
+    element.style.filter = `alpha(opacity=${op * 100})`
+    op -= op * 0.1
+  }, 50)
 }
 
 function unfade(element) {
-  let op = 0.01; // initial opacity
-  element.style.opacity = op;
-  element.style.display = 'flex';
+  let op = 0.01 // initial opacity
+  element.style.opacity = op
+  element.style.display = 'flex'
   const timer = setInterval(() => {
     if (op >= 1) {
-      clearInterval(timer);
+      clearInterval(timer)
     }
-    element.style.opacity = op;
-    element.style.filter = `alpha(opacity=${op * 100})`;
-    op += op * 0.1;
-  }, 13);
+    element.style.opacity = op
+    element.style.filter = `alpha(opacity=${op * 100})`
+    op += op * 0.1
+  }, 13)
 }
 
 /* function get_browser() {
@@ -88,7 +88,7 @@ export function setPrevData(e) {
 
 export function handleFile(e) {
   let err = []
-  const fLen = e.target.files.length;
+  const fLen = e.target.files.length
   mxSiz = e.target.parentNode.querySelector('.f-max')
   mxSiz = mxSiz != null && (Number(mxSiz.innerHTML.replace(/\D/g, '')) * 1024 ** 2)
   if (e.target.hasAttribute('multiple')) {
@@ -170,8 +170,8 @@ export function handleFile(e) {
 
     for (let i = 0; i < errNods.length; i += 1) {
       unfade(errNods[i])
-      setTimeout(() => { fade(errNods[i]) }, 3000);
-      setTimeout(() => { errNods[i].remove() }, 4000);
+      setTimeout(() => { fade(errNods[i]) }, 3000)
+      setTimeout(() => { errNods[i].remove() }, 4000)
     }
     err = []
   }

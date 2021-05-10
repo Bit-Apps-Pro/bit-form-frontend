@@ -11,7 +11,7 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAuthorize = () => {
-    const newConf = { ...enchargeConf };
+    const newConf = { ...enchargeConf }
     console.log('enchargeConf', enchargeConf)
     if (!newConf.name || !newConf.api_key) {
       setError({

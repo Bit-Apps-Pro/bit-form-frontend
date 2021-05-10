@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
-import { __ } from '../../../../Utils/i18nwrap';
-import StyleAccordion from '../ChildComp/StyleAccordion';
+import { __ } from '../../../../Utils/i18nwrap'
+import StyleAccordion from '../ChildComp/StyleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import usePseudo from '../ChildComp/usePseudo'

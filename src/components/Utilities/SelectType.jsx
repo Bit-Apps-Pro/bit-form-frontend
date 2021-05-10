@@ -1,4 +1,4 @@
-import { __ } from '../../../Utils/i18nwrapn';
+import { __ } from '../../../Utils/i18nwrapn'
 
 export default function SelectType(props) {
   return (

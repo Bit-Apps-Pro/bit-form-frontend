@@ -1,5 +1,5 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { __ } from '../../Utils/i18nwrap'
 import CptTypeAdd from './CptTypeAdd'

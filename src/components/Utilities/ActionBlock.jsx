@@ -9,10 +9,9 @@ import MtSelect from './MtSelect'
 
 function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
   let fieldKey = ''
-  let type = '';
+  let type = ''
 
   if (formFields !== null) {
-
     formFields.map(itm => {
       if (itm.key === action.field) {
         type = itm.type

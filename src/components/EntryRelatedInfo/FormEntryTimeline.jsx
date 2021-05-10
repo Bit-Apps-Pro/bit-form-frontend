@@ -20,7 +20,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
 
     bitsFetch({ formID, entryID }, 'bitforms_form_log_history').then((res) => {
       if (res !== undefined && res.success) {
-        setLog(res.data);
+        setLog(res.data)
         setIntegLogs(res.integrations)
       }
       setIsLoading(false)
