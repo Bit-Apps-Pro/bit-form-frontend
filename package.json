@@ -53,13 +53,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint"
     }
   },
   "lint-staged": {
     "**/*.js?(x)": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
+      // "git add"
     ]
   },
   "browserslist": {
