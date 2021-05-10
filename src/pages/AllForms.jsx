@@ -18,7 +18,6 @@ import { dateTimeFormatter } from '../Utils/Helpers'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-
 function AllFroms({ newFormId }) {
   const [modal, setModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
