@@ -15,7 +15,6 @@ import Table from '../components/Utilities/Table'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
-// import Editor from '../Editor'
 
 const Welcome = lazy(() => import('./Welcome'))
 
