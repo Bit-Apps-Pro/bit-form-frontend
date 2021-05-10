@@ -4,36 +4,26 @@ module.exports = {
     es6: true,
     commonjs: true,
   },
-  extends: [
-    'airbnb',
-    'react-app',
-  ],
+  extends: ['airbnb', 'react-app'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
+    ecmaFeatures: { jsx: true },
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    'jsx-a11y',
-  ],
+  plugins: ['react', 'react-hooks', 'jsx-a11y'],
   rules: {
     'template-curly-spacing': 'off',
-    indent: 'off',
+    indent: ['error', 2],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     semi: ['error', 'never'],
     'react/destructuring-assignment': 0,
     'arrow-parens': 0,
     'react/prop-types': 0,
-    'object-curly-newline': 0,
     'max-len': ['error', { code: 350 }],
     'linebreak-style': ['error', 'unix'],
     'react-hooks/exhaustive-deps': 'warn',
@@ -41,5 +31,16 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     allowImplicit: 0,
     camelcase: 'error',
+    'object-curly-newline': [
+      'error',
+      {
+        ImportDeclaration: 'never',
+        ExportDeclaration: 'never',
+        ObjectPattern: { multiline: false },
+        // consistent: true,
+        // minProperties: 5,
+        ObjectExpression: { multiline: true },
+      },
+    ],
   },
 }

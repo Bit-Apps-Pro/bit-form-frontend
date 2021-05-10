@@ -49,7 +49,7 @@
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
-    "clean": "rimraf node_modules"
+    "clean": "rimraf node_modules yarn.lock package-lock.json"
   },
   "husky": {
     "hooks": {
@@ -99,15 +99,11 @@
     "compression-webpack-plugin": "^7.1.2",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
-    "eslint": "^7.25.0",
+    "eslint": "^7.26.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-node": "^4.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.0.8",
@@ -124,7 +120,6 @@
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss-loader": "^5.2.0",
     "postcss-safe-parser": "^5.0.2",
-    "prettier": "^2.2.1",
     "react-scripts": "^4.0.3",
     "rimraf": "^3.0.2",
     "sass": "^1.32.12",
