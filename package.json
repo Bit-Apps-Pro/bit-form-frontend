@@ -51,6 +51,17 @@
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
     "clean": "rimraf node_modules"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.js?(x)": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -105,8 +116,6 @@
     "extract-loader": "^5.0.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
-    "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
     "mini-css-extract-plugin": "^1.5.1",
     "mini-svg-data-uri": "^1.2.3",
     "module-to-cdn": "^3.1.5",
