@@ -1,10 +1,10 @@
-import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../Utilities/MtInput';
+import { __ } from '../../../Utils/i18nwrap'
+import MtInput from '../../Utilities/MtInput'
 
 export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueConf, setSendinBlueConf }) {
-  const isRequired = field.required;
+  const isRequired = field.required
   console.log(isRequired)
-  const notResquiredField = sendinBlueConf?.default?.fields && Object.values(sendinBlueConf?.default?.fields).filter((f => !f.required));
+  const notResquiredField = sendinBlueConf?.default?.fields && Object.values(sendinBlueConf?.default?.fields).filter((f => !f.required))
   console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...sendinBlueConf }

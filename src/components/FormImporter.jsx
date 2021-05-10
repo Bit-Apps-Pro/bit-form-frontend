@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react'
 
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
-import { deepCopy } from '../Utils/Helpers';
+import { deepCopy } from '../Utils/Helpers'
 
 export default function FormTemplates({ setModal, setTempModal, newFormId, setSnackbar }) {
   const { allFormsData } = useContext(AllFormContext)
@@ -48,16 +48,16 @@ export default function FormTemplates({ setModal, setTempModal, newFormId, setSn
         setError({ ...error, formDetail: 'Please select an exported json file' })
         ev.target.value = ''
       } else {
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.readAsText(ev.target.files[0])
         reader.onload = () => {
-          checkFile(reader.result, ev.target);
+          checkFile(reader.result, ev.target)
         }
       }
     }
   }
   const checkFile = (data, file) => {
-    let formDetail = {};
+    let formDetail = {}
     try {
       formDetail = JSON.parse(data)
     } catch (err) {

@@ -18,7 +18,6 @@ import { dateTimeFormatter } from '../Utils/Helpers'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-
 function AllFroms({ newFormId }) {
   const [modal, setModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
@@ -164,9 +163,9 @@ function AllFroms({ newFormId }) {
       .then(response => {
         if (response.ok) {
           response.blob().then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
             a.download = `bitform_${formID}_export.json`
             document.body.appendChild(a)
             a.click()

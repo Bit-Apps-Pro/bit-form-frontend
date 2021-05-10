@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import ActiveCampaignAuthorization from './ActiveCampaignAuthorization';
-import { checkMappedFields } from './ActiveCampaignCommonFunc';
-import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout';
+import { __ } from '@wordpress/i18n'
+import { useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ActiveCampaignAuthorization from './ActiveCampaignAuthorization'
+import { checkMappedFields } from './ActiveCampaignCommonFunc'
+import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
 
 function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

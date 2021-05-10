@@ -9,13 +9,13 @@ export default function ImportStepOne() {
         //   alert(fileTypeError)
         //   file.value = null
         // }
-        const fileReader = new FileReader();
+        const fileReader = new FileReader()
         fileReader.onload = function (e) {
           const data = e.target.result
           // eslint-disable-next-line no-undef
           const workbook = XLSX.read(data, {
             type: 'binary',
-          });
+          })
           const wsname = workbook.SheetNames[0]
           const ws = workbook.Sheets[wsname]
           // eslint-disable-next-line no-undef
@@ -63,9 +63,9 @@ export default function ImportStepOne() {
               return false
           }
           for (i = 0; i < keycount; i += 1) {
-            result[keys[i]] = values[i];
+            result[keys[i]] = values[i]
           }
-          return result;
+          return result
        }
 
     return (

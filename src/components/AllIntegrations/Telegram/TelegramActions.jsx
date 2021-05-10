@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react';
-import { __ } from '../../../Utils/i18nwrap';
-import ConfirmModal from '../../Utilities/ConfirmModal';
-import TableCheckBox from '../../Utilities/TableCheckBox';
+import { useState } from 'react'
+import { __ } from '../../../Utils/i18nwrap'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function TelegramActions({ formFields, telegramConf, setTelegramConf }) {
   const [actionMdl, setActionMdl] = useState({ show: false })

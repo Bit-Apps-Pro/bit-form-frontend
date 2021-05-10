@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react';
-import MultiSelect from 'react-multiple-select-dropdown-lite';
-import { __ } from '../../../Utils/i18nwrap';
-import ConfirmModal from '../../Utilities/ConfirmModal';
-import TableCheckBox from '../../Utilities/TableCheckBox';
-import Loader from '../../Loaders/Loader';
-import { refreshTags, refreshUsers } from './ZohoBiginCommonFunc';
+import { useState } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { __ } from '../../../Utils/i18nwrap'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
+import Loader from '../../Loaders/Loader'
+import { refreshTags, refreshUsers } from './ZohoBiginCommonFunc'
 
 export default function ZohoBiginActions({ tab, formID, formFields, biginConf, setBiginConf, setSnackbar }) {
   const [recOwnerMdl, setrecOwnerMdl] = useState(false)

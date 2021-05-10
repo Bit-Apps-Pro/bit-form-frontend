@@ -1,14 +1,14 @@
-import { __ } from '../../../Utils/i18nwrap';
-import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import ZohoCampaignsAuthorization from './ZohoCampaignsAuthorization';
-import { checkMappedFields, handleInput } from './ZohoCampaignsCommonFunc';
-import ZohoCampaignsIntegLayout from './ZohoCampaignsIntegLayout';
+import { __ } from '../../../Utils/i18nwrap'
+import { useEffect, useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoCampaignsAuthorization from './ZohoCampaignsAuthorization'
+import { checkMappedFields, handleInput } from './ZohoCampaignsCommonFunc'
+import ZohoCampaignsIntegLayout from './ZohoCampaignsIntegLayout'
 
 function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -44,7 +44,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('campaignsConf', campaignsConf);
+  console.log('campaignsConf', campaignsConf)
 
   return (
     <div>

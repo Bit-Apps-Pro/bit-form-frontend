@@ -13,9 +13,9 @@ export const handleInput = (e, formID, marketingHubConf, setMarketingHubConf, se
   switch (e.target.name) {
     case 'list':
       newConf = listChange(newConf, formID, setMarketingHubConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setMarketingHubConf({ ...newConf })
 }

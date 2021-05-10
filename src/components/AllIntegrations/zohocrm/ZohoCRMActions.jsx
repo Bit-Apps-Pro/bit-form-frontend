@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react';
+import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
-import { __ } from '../../../Utils/i18nwrap';
+import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import CheckBox from '../../Utilities/CheckBox'
 import TableCheckBox from '../../Utilities/TableCheckBox'

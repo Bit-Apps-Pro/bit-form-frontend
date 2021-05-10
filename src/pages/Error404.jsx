@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import space from '../resource/img/space.svg'
@@ -12,7 +12,7 @@ export default function Error404() {
         history.push('/')
       }
       setsec(sec - 1)
-    }, 1000);
+    }, 1000)
   }, [history, sec])
 
   return (

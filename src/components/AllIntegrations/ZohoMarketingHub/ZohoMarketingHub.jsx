@@ -51,7 +51,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('marketingHubConf', marketingHubConf);
+  console.log('marketingHubConf', marketingHubConf)
 
   return (
     <div>

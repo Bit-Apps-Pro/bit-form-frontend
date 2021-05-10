@@ -107,7 +107,7 @@ export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
 })
 
 export const dateTimeFormatter = (dateStr, format) => {
-  const newDate = new Date(dateStr);
+  const newDate = new Date(dateStr)
 
   if (newDate.toString() === 'Invalid Date') {
     return 'Invalid Date'
@@ -186,29 +186,29 @@ export const loadScript = (src, type) => new Promise((resolve) => {
 })
 
 const cipher = salt => {
-  const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-  const byteHex = n => (`0${Number(n).toString(16)}`).substr(-2);
+  const textToChars = text => text.split('').map(c => c.charCodeAt(0))
+  const byteHex = n => (`0${Number(n).toString(16)}`).substr(-2)
   // eslint-disable-next-line no-bitwise
-  const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+  const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code)
 
   return text => text
     .split('')
     .map(textToChars)
     .map(applySaltToChar)
     .map(byteHex)
-    .join('');
-};
+    .join('')
+}
 
 const decipher = salt => {
-  const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+  const textToChars = text => text.split('').map(c => c.charCodeAt(0))
   // eslint-disable-next-line no-bitwise
-  const applySaltToChar = code => textToChars(salt).reduce((a, b) => (a ^ b), code);
+  const applySaltToChar = code => textToChars(salt).reduce((a, b) => (a ^ b), code)
   return encoded => encoded
     .match(/.{1,2}/g)
     .map(hex => parseInt(hex, 16))
     .map(applySaltToChar)
     .map(charCode => String.fromCharCode(charCode))
-    .join('');
+    .join('')
 }
 
 export const bitCipher = cipher('btcd')

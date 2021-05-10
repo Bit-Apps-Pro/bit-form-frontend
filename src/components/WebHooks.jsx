@@ -1,13 +1,13 @@
-import { memo, useState } from 'react';
-import MultiSelect from 'react-multiple-select-dropdown-lite';
-import CloseIcn from '../Icons/CloseIcn';
-import bitsFetch from '../Utils/bitsFetch';
-import { deepCopy } from '../Utils/Helpers';
-import { __ } from '../Utils/i18nwrap';
-import ConfirmModal from './Utilities/ConfirmModal';
-import Accordions from './Utilities/Accordions';
-import Button from './Utilities/Button';
-import SnackMsg from './Utilities/SnackMsg';
+import { memo, useState } from 'react'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import CloseIcn from '../Icons/CloseIcn'
+import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
+import { __ } from '../Utils/i18nwrap'
+import ConfirmModal from './Utilities/ConfirmModal'
+import Accordions from './Utilities/Accordions'
+import Button from './Utilities/Button'
+import SnackMsg from './Utilities/SnackMsg'
 
 function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })

@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo } from 'react';
+import { memo } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
-import CloseIcn from '../../Icons/CloseIcn';
+import CloseIcn from '../../Icons/CloseIcn'
 
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')

@@ -83,7 +83,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     const pattern = /\${\w[^ ${}]*}/g
     const keys = str.match(pattern)
     const uniqueKeys = keys?.filter?.((key, index) => keys.indexOf(key) === index) || []
-    let replacedStr = str;
+    let replacedStr = str
 
     for (let i = 0; i < uniqueKeys.length; i += 1) {
       const uniqueKey = uniqueKeys[i].slice(2, -1)

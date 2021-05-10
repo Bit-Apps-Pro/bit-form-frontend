@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -43,7 +43,7 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('sheetConf', sheetConf);
+  console.log('sheetConf', sheetConf)
 
   return (
     <div>

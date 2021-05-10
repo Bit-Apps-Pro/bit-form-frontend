@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, memo } from 'react';
+import { useState, useRef, memo } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import EditIcn from '../../Icons/EditIcn';
+import EditIcn from '../../Icons/EditIcn'
 import Button from './Button'
 
 function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse }) {

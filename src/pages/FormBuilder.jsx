@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { createRef, useState, useCallback, useReducer, useEffect } from 'react';
+import { createRef, useState, useCallback, useReducer, useEffect } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
@@ -11,7 +11,7 @@ import ToolBar from '../components/Toolbars/Toolbar'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign, bitCipher } from '../Utils/Helpers'
-import { propertyValueSumX } from '../Utils/FormBuilderHelper';
+import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -91,7 +91,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
     headers.append('pragma', 'no-cache')
     headers.append('cache-control', 'no-cache')
     // eslint-disable-next-line no-undef
-    const styleUrl = new URL(bits.styleURL);
+    const styleUrl = new URL(bits.styleURL)
     if (styleUrl.protocol !== window.location.protocol) {
       styleUrl.protocol = window.location.protocol
     }
@@ -166,7 +166,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
 
   const onResize = useCallback(resizer => {
     if (resizer.isBarActivated(1)) {
-      resizer.resizeSection(0, { toSize: resizer.getSectionSize(2) - 135 });
+      resizer.resizeSection(0, { toSize: resizer.getSectionSize(2) - 135 })
     }
   }, [])
 

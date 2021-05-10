@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { __ } from '../../../Utils/i18nwrap';
-import SnackMsg from '../../Utilities/SnackMsg';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import handleInput from './ZohoMailCommonFunc';
-import ZohoMailIntegLayout from './ZohoMailIntegLayout';
+import { useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import handleInput from './ZohoMailCommonFunc'
+import ZohoMailIntegLayout from './ZohoMailIntegLayout'
 
 function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

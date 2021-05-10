@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import { __ } from '../../../Utils/i18nwrap';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import EnchargeAutorization from './EnchargeAuthorization';
-import { checkMappedFields } from './EnchargeCommonFunc';
-import EnchargeIntegLayout from './EnchargeIntegLayout';
+import { useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import EnchargeAutorization from './EnchargeAuthorization'
+import { checkMappedFields } from './EnchargeCommonFunc'
+import EnchargeIntegLayout from './EnchargeIntegLayout'
 
 function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

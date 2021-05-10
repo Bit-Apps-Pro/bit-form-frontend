@@ -99,7 +99,7 @@ export default function NewInteg({ allIntegURL, formFields, setIntegration, inte
       case 'Encharge':
         return <Encharge allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
-        break;
+        break
     }
     return <></>
   }

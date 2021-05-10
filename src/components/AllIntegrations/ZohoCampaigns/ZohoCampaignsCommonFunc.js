@@ -86,9 +86,9 @@ export const handleInput = (e, formID, campaignsConf, setCampaignsConf, setisLoa
   switch (e.target.name) {
     case 'list':
       newConf = listChange(newConf, formID, setCampaignsConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setCampaignsConf({ ...newConf })
 }

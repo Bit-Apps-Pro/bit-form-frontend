@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import { __ } from '../../../Utils/i18nwrap';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import TelegramAuthorization from './TelegramAuthorization';
-import TelegramIntegLayout from './TelegramIntegLayout';
+import { useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import TelegramAuthorization from './TelegramAuthorization'
+import TelegramIntegLayout from './TelegramIntegLayout'
 
 export default function Telegram({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -34,7 +34,7 @@ export default function Telegram({ formFields, setIntegration, integrations, all
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('telegramConf', telegramConf);
+  console.log('telegramConf', telegramConf)
 
   return (
     <div>

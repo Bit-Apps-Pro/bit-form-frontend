@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
-import { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react'
 
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 import Button from './Utilities/Button'
 import LogicChip from './Utilities/LogicChip'
 import LogicBlock from './Utilities/LogicBlock'
@@ -16,7 +16,7 @@ import DropDown from './Utilities/DropDown'
 import TableCheckBox from './Utilities/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './Utilities/ConfirmModal'
-import CloseIcn from '../Icons/CloseIcn';
+import CloseIcn from '../Icons/CloseIcn'
 
 function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -31,7 +31,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     }
     if (emailInFormField()) {
       const flds = []
-      
+
       formFields.map(fld => {
         if (fld.type === 'email') {
           flds.push({ label: fld.name, value: `\${${fld.key}}` })
@@ -360,7 +360,6 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
   const changeActionType = (typ, lgcGrpInd) => {
     if (typ === 'onsubmit') {
-      
       workFlows[lgcGrpInd].actions.map(itm => { itm.action = 'value' })
     } else if (typ === 'onvalidate') {
       workFlows[lgcGrpInd].action_behaviour = 'cond'

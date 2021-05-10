@@ -185,7 +185,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
       allUsers = projectsConf.default.users[projectsConf.portalId][projectsConf.projectId]
     } else if (event !== 'project' && projectsConf?.subEvent.includes('project')) {
       if (projectsConf?.default?.users?.[projectsConf.portalId].length > 0) {
-        let owner = '';
+        let owner = ''
         let users = ''
         if (projectsConf.actions.project.owner) owner = projectsConf.default.users[projectsConf.portalId].filter(user => user.userId === projectsConf.actions.project.owner)
 

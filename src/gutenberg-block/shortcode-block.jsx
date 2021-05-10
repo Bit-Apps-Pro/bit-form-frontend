@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
-const { __ } = wp.i18n; // Import __() from wp.i18n
-const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { SelectControl, Icon, PanelBody } = wp.components; // Import SelectControl() from wp.components
-const { InspectorControls } = wp.blockEditor || wp.editor;
+const { __ } = wp.i18n // Import __() from wp.i18n
+const { registerBlockType } = wp.blocks // Import registerBlockType() from wp.blocks
+const { SelectControl, Icon, PanelBody } = wp.components // Import SelectControl() from wp.components
+const { InspectorControls } = wp.blockEditor || wp.editor
 
 const bitformsIcon = () => (
   <Icon icon={(
@@ -36,13 +36,13 @@ registerBlockType('bitforms/form-shortcode', {
   },
   edit: props => {
     const AllForms = [{ value: 0, label: __('Select a Form', 'bitform'), disabled: true }]
-    
+
     bitformsBlock.forms.map(form => {
       AllForms.push({ label: form.form_name, value: form.id })
     })
-    const { attributes, setAttributes, className } = props;
+    const { attributes, setAttributes, className } = props
     const onChangeContent = formID => {
-      setAttributes({ formID });
+      setAttributes({ formID })
     }
 
     const blockStyle = {
@@ -81,10 +81,10 @@ registerBlockType('bitforms/form-shortcode', {
           </PanelBody>
         </InspectorControls>,
       ]
-    );
+    )
   },
   save: props => {
     const formID = parseInt(props.attributes.formID, 10)
-    return `[bitform id='${formID}']`;
+    return `[bitform id='${formID}']`
   },
 })

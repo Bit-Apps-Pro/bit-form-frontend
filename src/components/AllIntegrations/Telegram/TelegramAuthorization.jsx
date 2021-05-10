@@ -11,7 +11,7 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAuthorize = () => {
-    const newConf = { ...telegramConf };
+    const newConf = { ...telegramConf }
     console.log('telegramConf', telegramConf)
     if (!newConf.name || !newConf.bot_api_key) {
       setError({

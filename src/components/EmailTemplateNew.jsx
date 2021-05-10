@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer } from 'react'
 import { NavLink, useParams, useHistory } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import '../resource/css/tinymce.css'
 
@@ -64,7 +64,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
               const myIframe = $(editor.iframeElement)
               myTextarea.value = editor.getContent({
                 source_view: true,
-              });
+              })
               myIframe.toggleClass('hidden')
               myTextarea.toggleClass('visible')
               if ($('iframe.hidden').length > 0) {

@@ -1,17 +1,16 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../Utils/i18nwrap';
+import { __ } from '../../Utils/i18nwrap'
 import MtSelect from './MtSelect'
 import MtInput from './MtInput'
 import Button from './Button'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import CloseIcn from '../../Icons/CloseIcn';
+import CloseIcn from '../../Icons/CloseIcn'
 
 function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   let type = ''
   let fldType = ''
   let fieldKey = ''
   if (formFields !== null) {
-    
     formFields.map(itm => {
       if (itm.key === fieldVal) {
         if (itm.type.match(/^(check|radio)$/)) {
