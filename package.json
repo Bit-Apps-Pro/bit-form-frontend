@@ -51,9 +51,6 @@
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
     "clean": "rimraf node_modules"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
