@@ -71,5 +71,6 @@ module.exports = {
     ],
     'array-callback-return': 'off',
     'consistent-return': 'off',
+    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
   },
 }
