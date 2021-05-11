@@ -46,26 +46,26 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
     setIsLoading(true)
     bitsFetch({ data },
       'bitforms_filter_export_data').then((res) => {
-        if (res !== undefined && res.success) {
-          if (res.data?.count !== 0) {
-            const header = []
-            header[0] = 'Entry ID'
-            colHeadeing.map((col, index) => {
-              header[index + 1] = col.val
-            })
-            const ws = XLSX.utils.json_to_sheet(res.data)
-            /* add to workbook */
-            const wb = XLSX.utils.book_new()
-            XLSX.utils.sheet_add_aoa(ws, [header])
-            XLSX.utils.book_append_sheet(wb, ws)
-            /* generate an XLSX file */
-            XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
-          } else {
-            setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
-          }
+      if (res !== undefined && res.success) {
+        if (res.data?.count !== 0) {
+          const header = []
+          header[0] = 'Entry ID'
+          colHeadeing.map((col, index) => {
+            header[index + 1] = col.val
+          })
+          const ws = XLSX.utils.json_to_sheet(res.data)
+          /* add to workbook */
+          const wb = XLSX.utils.book_new()
+          XLSX.utils.sheet_add_aoa(ws, [header])
+          XLSX.utils.book_append_sheet(wb, ws)
+          /* generate an XLSX file */
+          XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
+        } else {
+          setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
         }
-        setIsLoading(false)
-      })
+      }
+      setIsLoading(false)
+    })
   }
 
   const handleInput = (typ, val) => {

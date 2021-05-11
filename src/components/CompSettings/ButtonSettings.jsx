@@ -16,11 +16,11 @@ export default function ButtonSettings({ updateData, elm, setElementSetting, fie
     { name: __('Center', 'bitform'), value: 'center' },
     { name: __('Right', 'bitform'), value: 'right' },
   ]
- const type = [
-   { name: 'Submit', value: 'submit' },
-   { name: 'Reset', value: 'reset' },
-   { name: 'Button', value: 'button' },
- ]
+  const type = [
+    { name: 'Submit', value: 'submit' },
+    { name: 'Reset', value: 'reset' },
+    { name: 'Button', value: 'button' },
+  ]
   function setSubBtnTxt(e) {
     elmData.txt = e.target.value
 

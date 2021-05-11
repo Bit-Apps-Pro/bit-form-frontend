@@ -52,22 +52,22 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
               </button>
             </>
           )
-        : (
-          <>
-            <button
-              onClick={() => addFieldMap(propName, i, dataConf, setDataConf)}
-              className="icn-btn sh-sm ml-2 mr-1"
-              type="button"
-            >
-              +
-            </button>
-            <button onClick={() => delFieldMap(propName, i, dataConf, setDataConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-              <span className="btcd-icn icn-trash-2" />
-            </button>
-          </>
-        )
+          : (
+            <>
+              <button
+                onClick={() => addFieldMap(propName, i, dataConf, setDataConf)}
+                className="icn-btn sh-sm ml-2 mr-1"
+                type="button"
+              >
+                +
+              </button>
+              <button onClick={() => delFieldMap(propName, i, dataConf, setDataConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+                <span className="btcd-icn icn-trash-2" />
+              </button>
+            </>
+          )
       }
 
     </div>
   )
-  }
+}

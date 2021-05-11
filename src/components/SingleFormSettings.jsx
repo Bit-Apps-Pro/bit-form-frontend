@@ -470,8 +470,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
               <span className="btcd-icn icn-block mr-2" />
               {__('Enable honeypot trap for Bot', 'bitform')}
             </b>
-            {''}
-            {''}
+
             <br />
             ** this feature requires js to work properly
           </div>

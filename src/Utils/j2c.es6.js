@@ -82,8 +82,8 @@ function declarations(o, buf, prefix, vendors, local, ns, /* var */ k, v, kk) {
       for (k = 0; k < o.length; k += 1) declarations(o[k], buf, prefix, vendors, local, ns)
       break
     case OBJECT:
-      // prefix is falsy iif it is the empty string, which means we're at the root
-      // of the declarations list.
+    // prefix is falsy iif it is the empty string, which means we're at the root
+    // of the declarations list.
       prefix = (prefix && `${prefix}-`)
       for (k in o) {
         if (own.call(o, k)) {
@@ -97,11 +97,11 @@ function declarations(o, buf, prefix, vendors, local, ns, /* var */ k, v, kk) {
       }
       break
     default:
-      // prefix is falsy when it is "", which means that we're
-      // at the top level.
-      // `o` is then treated as a `property:value` pair.
-      // otherwise, `prefix` is the property name, and
-      // `o` is the value.
+    // prefix is falsy when it is "", which means that we're
+    // at the top level.
+    // `o` is then treated as a `property:value` pair.
+    // otherwise, `prefix` is the property name, and
+    // `o` is the value.
       k = prefix.replace(/_/g, '-').replace(/[A-Z]/g, decamelize)
 
       if (local && (k === 'animation-name' || k === 'animation')) {
@@ -227,7 +227,7 @@ function sheet(statements, buf, prefix, rawPrefix, vendors, local, ns) {
       break
 
     case OBJECT:
-      // eslint-disable-next-line guard-for-in
+    // eslint-disable-next-line guard-for-in
       for (k in statements) {
         v = statements[k]
         if (prefix && /^[-\w$]+$/.test(k)) {
@@ -237,17 +237,17 @@ function sheet(statements, buf, prefix, rawPrefix, vendors, local, ns) {
           }
           declarations(v, buf, k, vendors, local, ns)
         } else if (/^@/.test(k)) {
-          // Handle At-rules
+        // Handle At-rules
           inDeclaration = (inDeclaration && buf.push('}') && 0)
 
           at(k, v, buf, prefix, rawPrefix, vendors, local, ns)
         } else {
-          // selector or nested sub-selectors
+        // selector or nested sub-selectors
 
           inDeclaration = (inDeclaration && buf.push('}') && 0)
 
           sheet(v, buf,
-            // eslint-disable-next-line no-cond-assign
+          // eslint-disable-next-line no-cond-assign
             (kk = /,/.test(prefix) || prefix && /,/.test(k))
               ? cartesian(prefix.split(','), (local
                 ? k.replace(

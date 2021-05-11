@@ -65,9 +65,9 @@ export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setis
       if (result && result.success) {
         const newConf = { ...sendinBlueConf }
         if (result.data.sendinBlueField) {
-            newConf.default.fields = result.data.sendinBlueField
-            const { fields } = newConf.default
-            newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', sendinBlueField: f.fieldId, required: true }))
+          newConf.default.fields = result.data.sendinBlueField
+          const { fields } = newConf.default
+          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', sendinBlueField: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('Sendinblue fields refreshed', 'bitform') })
         } else {
           setSnackbar({ show: true, msg: __('No Sendinblue fields found. Try changing the header row number or try again', 'bitform') })
@@ -79,7 +79,7 @@ export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setis
       }
       setisLoading(false)
     })
-  .catch(() => setisLoading(false))
+    .catch(() => setisLoading(false))
 }
 
 export const checkMappedFields = sendinBlueConf => {

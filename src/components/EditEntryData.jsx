@@ -63,9 +63,7 @@ export default function EditEntryData(props) {
                 {
                   method: 'POST',
                   body: JSON.stringify(triggerData),
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
+                  headers: { 'Content-Type': 'application/json' },
                 })
                 .then(res => res.json())
             }

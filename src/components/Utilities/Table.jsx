@@ -77,8 +77,7 @@ function Table(props) {
   const { columns, data, fetchData, report } = props
   const { reportsData } = useContext(AllFormContext)
   const { reportsDispatch, reports } = reportsData
-  const {
-    getTableProps,
+  const { getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
@@ -98,8 +97,7 @@ function Table(props) {
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder,
-    setHiddenColumns,
-  } = useTable(
+    setHiddenColumns } = useTable(
     {
       debug: true,
       fetchData,

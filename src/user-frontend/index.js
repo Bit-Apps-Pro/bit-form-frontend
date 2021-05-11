@@ -20,8 +20,8 @@ export default function BitformsRenderer(contentID) {
   const renderApp = () => {
     const ajaxURL = new URL(bitFormsFront.ajaxURL)
     if (ajaxURL.protocol !== window.location.protocol) {
-        ajaxURL.protocol = window.location.protocol
-        bitFormsFront.ajaxURL = ajaxURL
+      ajaxURL.protocol = window.location.protocol
+      bitFormsFront.ajaxURL = ajaxURL
     }
     // eslint-disable-next-line react/jsx-filename-extension
     ReactDOM.hydrate(<Bitforms

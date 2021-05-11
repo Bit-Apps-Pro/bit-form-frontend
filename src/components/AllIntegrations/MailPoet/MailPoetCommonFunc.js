@@ -31,9 +31,9 @@ export const refreshMailpoetHeader = (mailPoetConf, setMailPoetConf, setisLoadin
       if (result && result.success) {
         const newConf = { ...mailPoetConf }
         if (result.data.mailPoetFields) {
-            newConf.default.fields = result.data.mailPoetFields
-            const { fields } = newConf.default
-            newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', mailPoetField: f.id, required: true }))
+          newConf.default.fields = result.data.mailPoetFields
+          const { fields } = newConf.default
+          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', mailPoetField: f.id, required: true }))
           setSnackbar({ show: true, msg: __('Mailpoet fields refreshed', 'bitform') })
         } else {
           setSnackbar({ show: true, msg: __('No Mailpoet fields found. Try changing the header row number or try again', 'bitform') })
@@ -48,7 +48,7 @@ export const refreshMailpoetHeader = (mailPoetConf, setMailPoetConf, setisLoadin
       }
       setisLoading(false)
     })
-  .catch(() => setisLoading(false))
+    .catch(() => setisLoading(false))
 }
 
 export const handleInput = (e, mailPoetConf, setMailPoetConf) => {

@@ -22,7 +22,7 @@ export const setGrantTokenResponse = (integ) => {
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
   const queryParams = authWindowLocation.replace(`${window.opener.location.href}/redirect`, '').split('&')
-    // console.log(queryParams)
+  // console.log(queryParams)
   if (queryParams) {
     queryParams.forEach(element => {
       const gtKeyValue = element.split('=')

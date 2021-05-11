@@ -67,7 +67,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
       case 'Zoho Projects':
         return <ZohoProjectsAuthorization projectsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Google Sheet':
-        // eslint-disable-next-line no-undef
+      // eslint-disable-next-line no-undef
         return <GoogleSheetAuthorization sheetConf={integ} step={1} redirectLocation={bits.googleRedirectURL} setSnackbar={setSnackbar} isInfo />
       case 'Sendinblue':
         return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />

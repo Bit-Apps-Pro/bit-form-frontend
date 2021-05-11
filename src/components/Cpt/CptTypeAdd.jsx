@@ -25,12 +25,12 @@ export default function Cpt({ settab, types }) {
     e.preventDefault()
     bitsFetch(formData,
       'bitforms_add_post_type').then((res) => {
-        if (res !== undefined && res.success) {
-          setsnack({ ...{ show: true, msg: __('cpt added successfully, refresh your window', 'bitform') } })
-          document.getElementById('form').reset()
-        }
-        setLoading(false)
-      })
+      if (res !== undefined && res.success) {
+        setsnack({ ...{ show: true, msg: __('cpt added successfully, refresh your window', 'bitform') } })
+        document.getElementById('form').reset()
+      }
+      setLoading(false)
+    })
   }
 
   const handleAction = (e, type) => {

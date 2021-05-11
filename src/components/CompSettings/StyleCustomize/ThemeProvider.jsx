@@ -9,9 +9,7 @@ export const defaultTheme = (formId) => ({
     margin: '0px 0px 0px 0px',
     padding: '15px 15px 15px 15px',
   },
-  [`.fld-wrp-${formId}`]: {
-    padding: '10px 10px 10px 10px',
-  },
+  [`.fld-wrp-${formId}`]: { padding: '10px 10px 10px 10px' },
   [`.fld-lbl-${formId}`]: {
     'font-size': '16px',
     color: 'rgba(42, 49, 99, 1)!important',
@@ -33,31 +31,15 @@ export const defaultTheme = (formId) => ({
     'box-shadow': '0px 0px 0px 3px rgba(151, 203, 252, 0.38) !important',
     'border-color': 'rgba(29, 158, 249, 1)!important',
   },
-  [`.fld-${formId}>.btcd-ck-wrp span:first-child`]: {
-    color: 'rgba(0, 0, 0, 1) !important',
-  },
-  [`input.fld-${formId}::placeholder,textarea.fld-${formId}::placeholder`]: {
-    color: 'rgba(213, 212, 221, 1)!important',
-  },
-  [`input.fld-${formId}::-webkit-input-placeholder,textarea.fld-${formId}::-webkit-input-placeholder`]: {
-    color: 'rgba(213, 212, 221, 1)!important',
-  },
-  [`input.fld-${formId}::-ms-input-placeholder,textarea.fld-${formId}::-ms-input-placeholder`]: {
-    color: 'rgba(213, 212, 221, 1)!important',
-  },
-  [`input.fld-${formId}:-ms-input-placeholder,textarea.fld-${formId}:-ms-input-placeholder`]: {
-    color: 'rgba(213, 212, 221, 1)!important',
-  },
-  [`input.fld-${formId}:hover,textarea.fld-${formId}:hover`]: {
-    'border-color': 'rgba(29, 158, 249, 1)!important',
-  },
+  [`.fld-${formId}>.btcd-ck-wrp span:first-child`]: { color: 'rgba(0, 0, 0, 1) !important' },
+  [`input.fld-${formId}::placeholder,textarea.fld-${formId}::placeholder`]: { color: 'rgba(213, 212, 221, 1)!important' },
+  [`input.fld-${formId}::-webkit-input-placeholder,textarea.fld-${formId}::-webkit-input-placeholder`]: { color: 'rgba(213, 212, 221, 1)!important' },
+  [`input.fld-${formId}::-ms-input-placeholder,textarea.fld-${formId}::-ms-input-placeholder`]: { color: 'rgba(213, 212, 221, 1)!important' },
+  [`input.fld-${formId}:-ms-input-placeholder,textarea.fld-${formId}:-ms-input-placeholder`]: { color: 'rgba(213, 212, 221, 1)!important' },
+  [`input.fld-${formId}:hover,textarea.fld-${formId}:hover`]: { 'border-color': 'rgba(29, 158, 249, 1)!important' },
   // dropdown style start
-  [`.fld-${formId}.dpd`]: {
-    '--border-radius': '8px',
-  },
-  [`.fld-${formId}.dpd .msl`]: {
-    'border-color': 'rgba(199, 212, 221, 1)!important',
-  },
+  [`.fld-${formId}.dpd`]: { '--border-radius': '8px' },
+  [`.fld-${formId}.dpd .msl`]: { 'border-color': 'rgba(199, 212, 221, 1)!important' },
   // dropdown style end
   // media queries
   '@media only screen and (max-width:600px)': {},

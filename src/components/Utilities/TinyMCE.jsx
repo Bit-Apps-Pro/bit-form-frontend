@@ -54,9 +54,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
               const { $ } = e.control
               const myTextarea = $(`#${id}-settings`)
               const myIframe = $(editor.iframeElement)
-              myTextarea.value = editor.getContent({
-                source_view: true,
-              })
+              myTextarea.value = editor.getContent({ source_view: true })
               myIframe.toggleClass('hidden')
               myTextarea.toggleClass('visible')
               if ($('iframe.hidden').length > 0) {

@@ -34,9 +34,9 @@ export const refreshfluentCrmHeader = (fluentCrmConf, setFluentCrmConf, setisLoa
       if (result && result.success) {
         const newConf = { ...fluentCrmConf }
         if (result.data.fluentCrmFlelds) {
-            newConf.default.fields = result.data.fluentCrmFlelds
-            const { fields } = newConf.default
-            newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', fluentCRMField: f.key, required: true }))
+          newConf.default.fields = result.data.fluentCrmFlelds
+          const { fields } = newConf.default
+          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', fluentCRMField: f.key, required: true }))
           setSnackbar({ show: true, msg: __('Fluent CRM fields refreshed', 'bitform') })
         } else {
           setSnackbar({ show: true, msg: __('No Fluent CRM fields found. Try changing the header row number or try again', 'bitform') })
@@ -47,7 +47,7 @@ export const refreshfluentCrmHeader = (fluentCrmConf, setFluentCrmConf, setisLoa
       }
       setisLoading(false)
     })
-  .catch(() => setisLoading(false))
+    .catch(() => setisLoading(false))
 }
 
 export const handleInput = (e, fluentCrmConf, setFluentCrmConf) => {
