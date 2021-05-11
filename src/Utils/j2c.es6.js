@@ -11,13 +11,13 @@
 /* eslint-disable func-names */
 /* eslint-disable no-param-reassign */
 
-const emptyObject = {};
-const emptyArray = [];
-const type = emptyObject.toString;
-const own = emptyObject.hasOwnProperty;
-const OBJECT = type.call(emptyObject);
-const ARRAY = type.call(emptyArray);
-const STRING = type.call('');
+const emptyObject = {}
+const emptyArray = []
+const type = emptyObject.toString
+const own = emptyObject.hasOwnProperty
+const OBJECT = type.call(emptyObject)
+const ARRAY = type.call(emptyArray)
+const STRING = type.call('')
 
 /* /-inline-/ */
 // function cartesian(a, b, res, i, j) {
@@ -307,7 +307,7 @@ function j2c(res) {
     }
     const
       // suffix = scope_root + counter++,
-      locals = {};
+      locals = {}
     let k; let
       buf = []
     // pick only non-numeric keys since `(NaN != NaN) === true`
@@ -397,4 +397,4 @@ j2c.at = function at(rule, params, block) {
 j2c(j2c)
 delete j2c.use
 
-export default j2c;
+export default j2c

@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 
-import { __ } from '../../../../Utils/i18nwrap';
-import StyleAccordion from '../ChildComp/StyleAccordion';
+import { __ } from '../../../../Utils/i18nwrap'
+import StyleAccordion from '../ChildComp/StyleAccordion'
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
-import HeightIcn from '../../../../Icons/HeightIcn';
+import HeightIcn from '../../../../Icons/HeightIcn'
 
 export default function FontSetting({ style, cls, styleConfig, styleDispatch, brkPoint }) {
   const [, pcls] = usePseudo(cls)

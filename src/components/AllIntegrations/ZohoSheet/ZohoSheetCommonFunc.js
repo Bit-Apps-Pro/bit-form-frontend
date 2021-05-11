@@ -13,12 +13,12 @@ export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, se
   switch (e.target.name) {
     case 'workbook':
       newConf = workbookChange(newConf, formID, setSheetConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'worksheet':
       newConf = worksheetChange(newConf, formID, setSheetConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setSheetConf({ ...newConf })
 }

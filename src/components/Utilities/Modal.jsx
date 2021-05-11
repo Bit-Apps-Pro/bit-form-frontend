@@ -1,5 +1,5 @@
-import { CSSTransition } from 'react-transition-group';
-import CloseIcn from '../../Icons/CloseIcn';
+import { CSSTransition } from 'react-transition-group'
+import CloseIcn from '../../Icons/CloseIcn'
 
 export default function Modal({ show, setModal, sm, lg, style, className, title, warning, hdrActn, children, subTitle }) {
   const handleClickOutside = e => {

@@ -3,7 +3,7 @@ import { deepCopy } from '../Utils/Helpers'
 // eslint-disable-next-line consistent-return
 export const checkLogic = (logics, fields) => {
   if (Array.isArray(logics)) {
-    let conditionSatus = false;
+    let conditionSatus = false
     for (let sskey = 0; sskey < logics.length; sskey += 1) {
       const ssvalue = logics[sskey]
       if (typeof ssvalue !== 'string') {
@@ -77,9 +77,9 @@ export const checkLogic = (logics, fields) => {
             : JSON.parse(targetFieldValue)
           const valueToCheck = logicsVal.split(',')
           if (fieldValue.length !== valueToCheck.length) {
-            return true;
+            return true
           }
-          let checker = 0;
+          let checker = 0
           valueToCheck.forEach(chkValue => {
             if (fieldValue.length > 0 && fieldValue.indexOf(chkValue) === -1) {
               checker += 1
@@ -248,7 +248,6 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
   }
   const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
   if (matchedFields) {
-    
     matchedFields.map(field => {
       const fieldName = field.substring(2, field.length - 1)
       if (fieldValues[fieldName]) {

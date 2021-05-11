@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react'
 
 export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   let defaultValue
@@ -65,7 +65,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
               type="checkbox"
               ref={checkBoxRef}
               disabled={attr?.valid?.disabled}
-              readonly={attr?.valid?.readonly}
+              readOnly={attr?.valid?.readonly}
               // {...itm.check && { defaultChecked: true }}
               // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
               {...'lbl' in itm && { defaultValue: itm.lbl }}

@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
-import { AppSettings } from '../../Utils/AppSettingsContext';
-import bitsFetch from '../../Utils/bitsFetch';
-import { loadScript } from '../../Utils/Helpers';
+import { useContext, useEffect, useState } from 'react'
+import { AppSettings } from '../../Utils/AppSettingsContext'
+import bitsFetch from '../../Utils/bitsFetch'
+import { loadScript } from '../../Utils/Helpers'
 
 export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend }) {
   const appSettingsContext = useContext(AppSettings)
@@ -108,8 +108,8 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       handler: async response => paymentHandler(response),
     }
 
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
+    const paymentObject = new window.Razorpay(options)
+    paymentObject.open()
   }
   console.log('======== razor', attr.valid)
   return (

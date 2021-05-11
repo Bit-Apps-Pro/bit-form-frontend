@@ -18,9 +18,9 @@ export const handleInput = (e, recordTab, biginConf, setBiginConf, formID, setis
   switch (e.target.name) {
     case 'module':
       newConf = moduleChange(recordTab, newConf, formID, setBiginConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setBiginConf({ ...newConf })
 }

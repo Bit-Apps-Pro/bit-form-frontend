@@ -1,13 +1,13 @@
-import { __ } from '../../../Utils/i18nwrap';
-import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import MailPoetAuthorization from './MailPoetAuthorization';
-import MailPoetIntegLayout from './MailPoetIntegLayout';
+import { __ } from '../../../Utils/i18nwrap'
+import { useEffect, useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import MailPoetAuthorization from './MailPoetAuthorization'
+import MailPoetIntegLayout from './MailPoetIntegLayout'
 import { checkMappedFields, refreshNewsLetter } from './MailPoetCommonFunc'
 
 export default function MailPoet({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -44,7 +44,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('mailPoetConf', mailPoetConf);
+  console.log('mailPoetConf', mailPoetConf)
 
   return (
     <div>

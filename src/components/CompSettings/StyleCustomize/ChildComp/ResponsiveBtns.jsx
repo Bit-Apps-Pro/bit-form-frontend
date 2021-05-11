@@ -1,4 +1,4 @@
-import { __ } from '../../../../Utils/i18nwrap';
+import { __ } from '../../../../Utils/i18nwrap'
 
 export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
   return (

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react'
 
 export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const type = attr.typ === 'url' ? 'text' : attr.typ

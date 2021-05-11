@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 
 function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -55,7 +55,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
               const myIframe = $(editor.iframeElement)
               myTextarea.value = editor.getContent({
                 source_view: true,
-              });
+              })
               myIframe.toggleClass('hidden')
               myTextarea.toggleClass('visible')
               if ($('iframe.hidden').length > 0) {

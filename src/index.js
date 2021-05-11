@@ -4,7 +4,7 @@
 // import 'react-app-polyfill/ie11'
 // import 'react-app-polyfill/stable'
 
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
@@ -28,10 +28,10 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(`${__webpack_public_path__}service-worker.js`).then(registration => {
       // eslint-disable-next-line no-console
-      console.log('SW registered: ', registration);
+      console.log('SW registered: ', registration)
     }).catch(registrationError => {
       // eslint-disable-next-line no-console
-      console.log('SW registration failed: ', registrationError);
+      console.log('SW registration failed: ', registrationError)
     })
   })
 } else {

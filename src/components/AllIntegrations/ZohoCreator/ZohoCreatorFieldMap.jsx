@@ -1,10 +1,10 @@
-import { __ } from '../../../Utils/i18nwrap';
-import MtInput from '../../Utilities/MtInput';
-import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers';
+import { __ } from '../../../Utils/i18nwrap'
+import MtInput from '../../Utilities/MtInput'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoCreatorFieldMap({ i, formFields, uploadFields, field, creatorConf, setCreatorConf }) {
   const { applicationId, formId } = creatorConf
-  let isNotRequired;
+  let isNotRequired
 
   if (uploadFields) isNotRequired = field.zohoFormField === '' || creatorConf.default?.fields?.[applicationId]?.[formId]?.requiredFileUploadFields?.indexOf(field.zohoFormField) === -1
   else isNotRequired = field.zohoFormField === '' || creatorConf.default?.fields?.[applicationId]?.[formId]?.required?.indexOf(field.zohoFormField) === -1

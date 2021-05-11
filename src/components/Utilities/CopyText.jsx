@@ -1,4 +1,4 @@
-import { __ } from '../../Utils/i18nwrap';
+import { __ } from '../../Utils/i18nwrap'
 
 export default function CopyText({ value, setSnackbar, className, readOnly }) {
   const copyText = e => {
@@ -6,9 +6,9 @@ export default function CopyText({ value, setSnackbar, className, readOnly }) {
     cpyBtn.setAttribute('style', '--tooltip-txt: "Copied"')
     setSnackbar({ show: true, msg: __('Copied on Clipboard.', 'bitform') })
     const text = e.target.parentNode.children[0]
-    text.select();
-    text.setSelectionRange(0, 99999);
-    document.execCommand('copy');
+    text.select()
+    text.setSelectionRange(0, 99999)
+    document.execCommand('copy')
     setTimeout(() => { cpyBtn.setAttribute('style', '--tooltip-txt: "Copy"') }, 2000)
   }
 

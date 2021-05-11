@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { memo } from 'react';
-import { __ } from '../../Utils/i18nwrap';
+import { memo } from 'react'
+import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import CopyText from '../Utilities/CopyText'

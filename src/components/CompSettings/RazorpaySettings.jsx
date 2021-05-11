@@ -1,14 +1,14 @@
-import { useContext, useState } from 'react';
-import { __ } from '../../Utils/i18nwrap';
-import { AppSettings } from '../../Utils/AppSettingsContext';
-import { sortArrOfObj } from '../../Utils/Helpers';
-import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData';
-import CheckBox from '../Utilities/CheckBox';
-import SelectBox2 from '../Utilities/SelectBox2';
-import SingleInput from '../Utilities/SingleInput';
-import SingleToggle from '../Utilities/SingleToggle';
-import Back2FldList from './Back2FldList';
-import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion';
+import { useContext, useState } from 'react'
+import { __ } from '../../Utils/i18nwrap'
+import { AppSettings } from '../../Utils/AppSettingsContext'
+import { sortArrOfObj } from '../../Utils/Helpers'
+import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData'
+import CheckBox from '../Utilities/CheckBox'
+import SelectBox2 from '../Utilities/SelectBox2'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
+import Back2FldList from './Back2FldList'
+import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
 
 export default function RazorpaySettings({ elm, fields, updateData, setElementSetting }) {
   const { payments } = useContext(AppSettings)

@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react'
 
 export default function Menu(props) {
-  const [isComponentVisible, setIsComponentVisible] = useState(false);
-  const ref = useRef(null);
+  const [isComponentVisible, setIsComponentVisible] = useState(false)
+  const ref = useRef(null)
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -13,9 +13,9 @@ export default function Menu(props) {
   }
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener('click', handleClickOutside, true)
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener('click', handleClickOutside, true)
     }
   })
 

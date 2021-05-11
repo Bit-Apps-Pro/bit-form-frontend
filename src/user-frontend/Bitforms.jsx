@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import { useEffect, useReducer, useState } from 'react';
-import MapComponents from '../components/MapComponents';
-import { resetCaptcha } from '../components/Fields/Recaptcha';
-import { deepCopy } from '../Utils/Helpers';
-import { checkLogic, replaceWithField } from './checkLogic';
+import { useEffect, useReducer, useState } from 'react'
+import MapComponents from '../components/MapComponents'
+import { resetCaptcha } from '../components/Fields/Recaptcha'
+import { deepCopy } from '../Utils/Helpers'
+import { checkLogic, replaceWithField } from './checkLogic'
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
@@ -120,7 +120,7 @@ export default function Bitforms(props) {
                 fieldDetails.forEach(option => { option.checked && option.value && checkedValue.push(option.value) })
                 value = checkedValue
                 multiple = true
-                break;
+                break
 
               case 'select-multiple':
                 // eslint-disable-next-line no-case-declarations
@@ -132,18 +132,18 @@ export default function Bitforms(props) {
                 }
                 value = selectedValue
                 multiple = true
-                break;
+                break
 
               case 'select-one':
                 value = fieldDetails[0].value
-                break;
+                break
 
               case 'radio':
                 fieldDetails.forEach(option => { if (option.checked && option.value) value = option.value })
-                break;
+                break
 
               default:
-                break;
+                break
             }
           } else if (fieldDetails[0].type === 'hidden' && fieldDetails[0].value && fieldDetails[0].nextElementSibling && fieldDetails[0].nextElementSibling.hasAttribute('data-msl')) {
             value = fieldDetails[0].value.split(',')
@@ -158,7 +158,7 @@ export default function Bitforms(props) {
             multiple,
           }
         }
-      });
+      })
       props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
         const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldValues)
         if (logicStatus) {
@@ -181,25 +181,25 @@ export default function Bitforms(props) {
 
                 case 'hide':
                   if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = true; maybeReset = true }
-                  break;
+                  break
 
                 case 'disable':
                   if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = true; maybeReset = true }
-                  break;
+                  break
 
                 case 'readonly':
                   if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.readonly = true; maybeReset = true }
-                  break;
+                  break
 
                 case 'enable':
                   if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.disabled = false; maybeReset = true }
-                  break;
+                  break
 
                 case 'show':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
-                    newData[props.fieldsKey[actionDetail.field]].valid.hide = false;
+                    newData[props.fieldsKey[actionDetail.field]].valid.hide = false
                     if (newData[props.fieldsKey[actionDetail.field]].typ === 'hidden') {
-                      newData[props.fieldsKey[actionDetail.field]].typ = 'text';
+                      newData[props.fieldsKey[actionDetail.field]].typ = 'text'
                     }
                     maybeReset = true
                   }
@@ -226,25 +226,25 @@ export default function Bitforms(props) {
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.hide = props.data[props.fieldsKey[actionDetail.field]].valid.hide
                   }
-                  break;
+                  break
 
                 case 'disable':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
                   }
-                  break;
+                  break
 
                 case 'readonly':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.readonly = props.data[props.fieldsKey[actionDetail.field]].valid.readonly
                   }
-                  break;
+                  break
 
                 case 'enable':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
                     newData[props.fieldsKey[actionDetail.field]].valid.disabled = props.data[props.fieldsKey[actionDetail.field]].valid.disabled
                   }
-                  break;
+                  break
 
                 case 'show':
                   if (newData[props.fieldsKey[actionDetail.field]]) {
@@ -351,7 +351,7 @@ export default function Bitforms(props) {
 
             Object.keys(result.data).map(element => {
               newData[props.fieldsKey[element]].error = result.data[element]
-            });
+            })
             dispatchFieldData(newData)
           }
         }
@@ -362,7 +362,7 @@ export default function Bitforms(props) {
             if (timer) {
               clearTimeout(timer)
             }
-          }, 1000);
+          }, 1000)
         } else {
           triggerIntegration(hitCron)
         }
@@ -553,10 +553,10 @@ function Toast(props) {
         // !props.index && props.canClose === undefined && props.setSnack(false)
         props.setSnack(false)
       }
-    }, resetTime);
-    return () => clearTimeout(timer);
+    }, resetTime)
+    return () => clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
   return snack && (
     <div style={toatStyles}>
       <button onClick={() => setSnack(false)} style={closeButtonStyle} type="button">&times;</button>

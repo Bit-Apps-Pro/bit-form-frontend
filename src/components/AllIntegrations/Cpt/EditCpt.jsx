@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { __ } from '../../../Utils/i18nwrap';
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import CptFieldMap from './CptFieldMap'

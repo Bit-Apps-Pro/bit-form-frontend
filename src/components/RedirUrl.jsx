@@ -1,12 +1,12 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react'
 
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { deepCopy } from '../Utils/Helpers'
-import CloseIcn from '../Icons/CloseIcn';
+import CloseIcn from '../Icons/CloseIcn'
 
 function RedirUrl({ formSettings, setFormSettings, formFields, removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })

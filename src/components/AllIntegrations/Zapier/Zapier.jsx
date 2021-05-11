@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration';
-import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo';
+import { useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration'
+import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
 
 function Zapier({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

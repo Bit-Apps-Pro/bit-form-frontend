@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { useEffect, useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 let captcha
 
 export const resetCaptcha = () => {
-  captcha.reset();
+  captcha.reset()
 }
 
 export default function ReCaptcha({ attr }) {
@@ -14,7 +14,7 @@ export default function ReCaptcha({ attr }) {
     setrender(false)
     setTimeout(() => {
       setrender(true)
-    }, 1);
+    }, 1)
   }, [attr.theme])
 
   return (

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import StyleAccordion from '../ChildComp/StyleAccordion';
+import StyleAccordion from '../ChildComp/StyleAccordion'
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
 

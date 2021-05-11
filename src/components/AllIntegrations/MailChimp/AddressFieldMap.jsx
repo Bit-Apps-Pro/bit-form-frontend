@@ -4,7 +4,7 @@ import { delAddressFieldMap, handleAddress } from '../IntegrationHelpers/MailChi
 
 export default function AddressFieldMap({ i, formFields, field, sheetConf, setSheetConf, addressField }) {
   const isRequired = field.required
-  const address = addressField.filter((addr => !addr.required));
+  const address = addressField.filter((addr => !addr.required))
   return (
     <div
       className="flx flx-around mt-2 mr-1"
