@@ -70,5 +70,6 @@ module.exports = {
       },
     ],
     'array-callback-return': 'off',
+    'consistent-return': 'off',
   },
 }

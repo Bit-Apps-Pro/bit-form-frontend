@@ -111,7 +111,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
     const paymentObject = new window.Razorpay(options)
     paymentObject.open()
   }
-  console.log('======== razor', attr.valid)
+
   return (
     <div className={`drag fld-wrp fld-wrp-${formID} ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
       <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>

@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react'
-import Modal from '../Modal'
+import Modal from '../Utilities/Modal'
 import ImportStepOne from './ImportStepOne'
 import ImportStepTwo from './ImportStepTwo'
 
 export default function Import({ cols, formID, close, showImportMdl }) {
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
+  // eslint-disable-next-line no-undef
   const formName = bits?.allForms?.find(form => form.id === formID)?.form_name
   const formRef = useRef(null)
   const [fileResponses, setResponses] = useState([])
@@ -12,7 +13,6 @@ export default function Import({ cols, formID, close, showImportMdl }) {
   const [step, setStep] = useState(1)
   const handleSubmit = (event) => {
     event.preventDefault()
-    const formData = new FormData(formRef.current)
     const file = document.getElementById('file').files
     if (file.length === 0) {
       alert('Please select a file')
@@ -21,10 +21,8 @@ export default function Import({ cols, formID, close, showImportMdl }) {
     // eslint-disable-next-line default-case
     switch (step) {
       case 1:
-        const filedata = sessionStorage.getItem('file_data')
-        setResponses(filedata)
-        const headers = sessionStorage.getItem('file_header')
-        setFilieColumns(headers?.split(','))
+        setResponses(sessionStorage.getItem('file_data'))
+        setFilieColumns(sessionStorage.getItem('file_header')?.split(','))
         setStep(2)
     }
   }

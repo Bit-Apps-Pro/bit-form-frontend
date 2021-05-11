@@ -103,10 +103,11 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
         <StyleAccordion title="Line Height" className="style-acc w-9">
           <Range
             info={[{
-              icn: <span>
-                <b>T</b>
-                <HeightIcn h="12" />
-              </span>,
+              icn: (
+                <span>
+                  <b>T</b>
+                  <HeightIcn h="12" />
+                </span>),
               lbl: 'Text Line Height',
             }]}
             className="btc-range"

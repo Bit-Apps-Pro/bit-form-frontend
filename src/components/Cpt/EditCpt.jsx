@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react'
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import { useEffect, useState, useRef } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import TableCheckBox from '../Utilities/TableCheckBox'
@@ -25,13 +26,13 @@ export default function AllCpt({ settab, posts, types }) {
     const formData = new FormData(formRef.current)
     setLoading(true)
     e.preventDefault()
-    bitsFetch(formData,
-      'bitforms_update_post_type').then((res) => {
-      if (res !== undefined && res.success) {
-        setsnack({ ...{ show: true, msg: __('cpt type update successfully, refresh your window', 'bitform') } })
-      }
-      setLoading(false)
-    })
+    bitsFetch(formData, 'bitforms_update_post_type')
+      .then((res) => {
+        if (res !== undefined && res.success) {
+          setsnack({ ...{ show: true, msg: __('cpt type update successfully, refresh your window', 'bitform') } })
+        }
+        setLoading(false)
+      })
   }
 
   const handleInput = (e, typ) => {
@@ -60,15 +61,15 @@ export default function AllCpt({ settab, posts, types }) {
         ref={formRef}
         onKeyDown={e => {
           e.key === 'Enter'
-        && e.target.tagName !== 'TEXTAREA'
-        && e.preventDefault()
+            && e.target.tagName !== 'TEXTAREA'
+            && e.preventDefault()
         }}
       >
         <div className="mt-2"><b>{__('Post Type', 'bitform')}</b></div>
         <select name="post_type" className="btcd-paper-inp mt-1" onChange={(e) => searchPostHandle(e.target.value)}>
           <option disabled selected>{__('Select Type *', 'bitform')}</option>
-          { Object.values(types).map((type, key) => (
-            <option key={key} value={type}>{type}</option>
+          {Object.values(types).map((type, key) => (
+            <option key={`k${key * 43}`} value={type}>{type}</option>
           ))}
         </select>
         {chekcType && (

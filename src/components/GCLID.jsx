@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
 import { __ } from '../Utils/i18nwrap'
 import bitsFetch from '../Utils/bitsFetch'
@@ -26,7 +26,7 @@ export default function GCLID() {
   }, [])
 
   useEffect(() => {
-    bitsFetch({ }, 'bitform_google_adword_config').then((res) => {
+    bitsFetch({}, 'bitform_google_adword_config').then((res) => {
       if (res !== undefined && res.success) {
         if (res.data?.[0]?.integration_details) {
           setGclidConf(JSON.parse(res.data[0].integration_details))
