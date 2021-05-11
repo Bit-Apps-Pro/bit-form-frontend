@@ -4,18 +4,45 @@ module.exports = {
     es6: true,
     commonjs: true,
   },
-  extends: ['airbnb', 'react-app'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
+    requireConfigFile: false,
     ecmaFeatures: { jsx: true },
-    ecmaVersion: 2020,
+    ecmaVersion: 8,
     sourceType: 'module',
+    babelOptions: {
+      presets: [
+        [
+          '@babel/preset-env',
+          {
+            targets: { browsers: ['Chrome >= 88'] },
+            loose: true,
+          },
+        ],
+        ['@babel/preset-react', { runtime: 'automatic' }],
+      ],
+      plugins: [
+        '@babel/plugin-transform-runtime',
+        ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        // "@babel/plugin-transform-regenerator",
+      ],
+    },
   },
-  plugins: ['react', 'react-hooks', 'jsx-a11y'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:import/errors',
+    'plugin:jsx-a11y/recommended',
+    'airbnb',
+    'react-app',
+  ],
+  plugins: ['babel', 'react', 'react-hooks', 'jsx-a11y', 'import', 'standard', 'promise', 'node'],
   rules: {
     'template-curly-spacing': 'off',
     indent: ['error', 2],
@@ -42,5 +69,6 @@ module.exports = {
         ObjectExpression: { multiline: true },
       },
     ],
+    'array-callback-return': 'off',
   },
 }
