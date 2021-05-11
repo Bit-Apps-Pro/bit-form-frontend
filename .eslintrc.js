@@ -35,7 +35,7 @@ module.exports = {
     },
   },
   extends: [
-    // 'eslint:recommended',
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:import/errors',
     'plugin:jsx-a11y/recommended',
