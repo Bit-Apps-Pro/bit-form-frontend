@@ -10,6 +10,7 @@ import CheckBox from './Utilities/CheckBox'
 import SingleToggle2 from './Utilities/SingleToggle2'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
+import Cooltip from './Utilities/Cooltip'
 
 export default function SingleFormSettings({ fields, additional, setadditional }) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
@@ -454,25 +455,22 @@ export default function SingleFormSettings({ fields, additional, setadditional }
       </Accordions>
 
       <div className="w-6 mt-3">
-        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
-          <div className="flx">
-            <GoogleAdIcn size={18} />
-            <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
-          </div>
-          <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
-        </div>
-      </div>
-
-      <div className="w-6 mt-3">
         <div className={`flx flx-between sh-sm br-10 btcd-setting-opt  ${!isPro && 'btcd-inte-pro'}`}>
           <div className="">
-            <b>
+            <div className="flx">
               <span className="btcd-icn icn-block mr-2" />
-              {__('Enable honeypot trap for Bot', 'bitform')}
-            </b>
-
-            <br />
-            ** this feature requires js to work properly
+              <span className="flx">
+                <b>{__('Honeypot trap for bot', 'bitform')}</b>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">
+                    Honeypot protection provides security mechanisms to protect your
+                    site from form submission by spam bots. If spam bot activity is detected, form submission is blocked.
+                    <br />
+                    <a className="mt-1 cooltip-link" target="_blank" href="https://en.wikipedia.org/wiki/Honeypot_(computing)">Learn More</a>
+                  </div>
+                </Cooltip>
+              </span>
+            </div>
           </div>
           <div className="flx">
             <SingleToggle2 disabled={!isPro} action={tolggleHoneypot} checked={'honeypot' in additional.enabled} className="flx" />
@@ -645,6 +643,16 @@ export default function SingleFormSettings({ fields, additional, setadditional }
           <button onClick={addMorePrivateIp} className="icn-btn sh-sm mt-1" type="button">+</button>
         </div>
       </Accordions>
+
+      <div className="w-6 mt-3">
+        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
+          <div className="flx">
+            <GoogleAdIcn size={18} />
+            <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
+          </div>
+          <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
+        </div>
+      </div>
 
       {/*  <Accordions
         customTitle={(
