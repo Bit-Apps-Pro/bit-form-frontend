@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../Utilities/SingleInput';
+import { __ } from '../../Utils/i18nwrap'
+import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import SelectBox2 from '../Utilities/SelectBox2'
 import Back2FldList from './Back2FldList'

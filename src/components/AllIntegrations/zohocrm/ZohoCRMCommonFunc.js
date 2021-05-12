@@ -20,12 +20,12 @@ export const handleInput = (e, recordTab, crmConf, setCrmConf, formID, setisLoad
   switch (e.target.name) {
     case 'module':
       newConf = moduleChange(recordTab, formID, newConf, setCrmConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'layout':
       newConf = layoutChange(recordTab, formID, newConf, setCrmConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setCrmConf({ ...newConf })
 }

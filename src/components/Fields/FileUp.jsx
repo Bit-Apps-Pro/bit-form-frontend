@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useEffect, createRef } from 'react';
+import { useState, useEffect, createRef } from 'react'
 import { setPrevData, handleFile, delItem } from '../../resource/js/file-upload'
 
 export default function FileUp({ attr, formID, entryID, resetFieldValue }) {

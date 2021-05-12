@@ -1,4 +1,4 @@
-import { __ } from '../../../Utils/i18nwrap';
+import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
@@ -6,7 +6,7 @@ export default function ZohoCRMFieldMap({ i, formFields, uploadFields, field, cr
   const module = tab === 0 ? crmConf.module : crmConf.relatedlists?.[tab - 1]?.module
   const layout = tab === 0 ? crmConf.layout : crmConf.relatedlists?.[tab - 1]?.layout
 
-  let isNotRequired;
+  let isNotRequired
 
   if (uploadFields) {
     isNotRequired = field.zohoFormField === '' || crmConf.default.layouts?.[module]?.[layout]?.requiredFileUploadFields?.indexOf(field.zohoFormField) === -1

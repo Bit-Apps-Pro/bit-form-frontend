@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react'
 
 const AllFormsDispatchHandler = (allForms, action) => {
   switch (action.type) {
@@ -8,7 +8,7 @@ const AllFormsDispatchHandler = (allForms, action) => {
       return [...allForms, action.data]
     case 'remove': {
       allForms.splice(action.data, 1)
-      return [...allForms];
+      return [...allForms]
     }
     case 'update': {
       allForms.map(form => {
@@ -36,7 +36,7 @@ const reportsReducer = (reports, action) => {
       return [...reports, action.report]
     case 'remove': {
       reports.splice(action.rport, 1)
-      return [...reports];
+      return [...reports]
     }
     case 'update': {
       const oldReports = [...reports]

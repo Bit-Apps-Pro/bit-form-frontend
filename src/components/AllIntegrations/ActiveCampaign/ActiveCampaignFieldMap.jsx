@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
-import MtInput from '../../Utilities/MtInput';
+import { __ } from '@wordpress/i18n'
+import MtInput from '../../Utilities/MtInput'
 
 export default function ActiveCampaignFieldMap({ i, formFields, field, activeCampaingConf, setActiveCampaingConf }) {
-  const isRequired = field.required;
+  const isRequired = field.required
   console.log(isRequired)
-  const notResquiredField = activeCampaingConf?.default?.fields && Object.values(activeCampaingConf?.default?.fields).filter((f => !f.required));
+  const notResquiredField = activeCampaingConf?.default?.fields && Object.values(activeCampaingConf?.default?.fields).filter((f => !f.required))
   console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...activeCampaingConf }

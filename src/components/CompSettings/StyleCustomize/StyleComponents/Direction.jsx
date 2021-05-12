@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
-import { __ } from '../../../../Utils/i18nwrap';
-import StyleAccordion from '../ChildComp/StyleAccordion';
+import { __ } from '../../../../Utils/i18nwrap'
+import StyleAccordion from '../ChildComp/StyleAccordion'
 
 export default function Direction({ style, cls, styleConfig, styleDispatch, brkPoint }) {
   const dir = style?.[cls]?.direction || 'ltr'

@@ -5,7 +5,7 @@ const clearLowerEvents = (projectsConf, name) => {
   const newConf = { ...projectsConf }
   const eventIdSeq = ['projectId', 'milestoneId', 'tasklistFlag', 'tasklistId', 'taskId']
   eventIdSeq.splice(eventIdSeq.indexOf(name) + 1)
-    
+
     .map(event => {
       if (newConf?.[event]) { newConf[event] = '' }
       newConf.actions[event.split('Id')[0]] = {}
@@ -38,14 +38,14 @@ export const handleInput = (e, projectsConf, setProjectsConf, formID, setisLoadi
   switch (inputName) {
     case 'portalId':
       newConf = portalChange(newConf, formID, setProjectsConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'event':
       newConf.subEvent = [inputValue]
       newConf.field_map = {}
       newConf.actions[inputValue] = {}
       newConf = eventChange(clearLowerEvents(newConf), formID, setProjectsConf, setisLoading, setSnackbar)
 
-      break;
+      break
     case 'projectId':
     case 'milestoneId':
     case 'tasklistId':
@@ -66,16 +66,16 @@ export const handleInput = (e, projectsConf, setProjectsConf, formID, setisLoadi
       }
       newConf = regenerateMappedField(formID, newConf, setProjectsConf, setisLoading, setSnackbar)
     }
-      break;
+      break
     case 'tasklistFlag':
       newConf.tasklistId = ''
       if (inputValue && newConf.subEvent.includes('tasklist')) newConf.subEvent.splice(newConf.subEvent.indexOf('tasklist'), 1)
       if (inputValue && ['task', 'subtask'].includes(newConf.event) && !projectsConf?.default?.milestones?.[newConf.portalId]?.[inputValue]) {
         refreshTasklists(formID, newConf, setProjectsConf, setisLoading, setSnackbar)
       }
-      break;
+      break
     default:
-      break;
+      break
   }
 
   setProjectsConf({ ...newConf })
@@ -566,20 +566,20 @@ export const checkRequiredActions = projectsConf => {
 export const checkAllRequired = (projectsConf, setSnackbar) => {
   if (!checkMappedFields(projectsConf)) {
     setSnackbar({ show: true, msg: __('please map mandatory fields', 'bitform') })
-    return false;
+    return false
   }
   if (!checkRequiredActions(projectsConf)) {
     setSnackbar({ show: true, msg: __('please fill up the required actions', 'bitform') })
-    return false;
+    return false
   }
   if (projectsConf?.event === 'subtask' && !(projectsConf?.taskId || projectsConf.subEvent.includes('task'))) {
     setSnackbar({ show: true, msg: __('to create a subtask you must select a task or create a new task', 'bitform') })
-    return false;
+    return false
   }
   if (['task', 'subtask'].includes(projectsConf?.event)) {
     if ((projectsConf?.milestoneId || projectsConf.subEvent.includes('milestone')) && !(projectsConf?.tasklistId || projectsConf.subEvent.includes('tasklist'))) {
       setSnackbar({ show: true, msg: sprintf(__('to create a %s under milestone you must select a tasklist or create a new tasklist', 'bitform'), projectsConf.event) })
-      return false;
+      return false
     }
   }
   return true

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import Background from './StyleComponents/Background'
 import Borders from './StyleComponents/Borders'
@@ -10,7 +10,7 @@ import Color from './StyleComponents/Color'
 import FontSetting from './StyleComponents/FontSetting'
 import Direction from './StyleComponents/Direction'
 import Gap from './StyleComponents/Gap'
-import Height from './StyleComponents/Height';
+import Height from './StyleComponents/Height'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()

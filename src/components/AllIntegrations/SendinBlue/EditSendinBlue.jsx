@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { __ } from '../../../Utils/i18nwrap';
-import SnackMsg from '../../Utilities/SnackMsg';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers';
-import { handleInput } from './SendinBlueCommonFunc';
-import SendinBlueIntegLayout from './SendinBlueIntegLayout';
+import { useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
+import { handleInput } from './SendinBlueCommonFunc'
+import SendinBlueIntegLayout from './SendinBlueIntegLayout'
 
 function EditSendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

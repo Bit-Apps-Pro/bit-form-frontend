@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
-import { __ } from '../../Utils/i18nwrap';
+import { __ } from '../../Utils/i18nwrap'
 import { AllFormContext } from '../../Utils/AllFormContext'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
@@ -453,7 +453,7 @@ function Table(props) {
               className="btcd-paper-inp"
               value={pageSize}
               onChange={e => {
-                setPageSize(Number(e.target.value));
+                setPageSize(Number(e.target.value))
                 if (props.getPageSize) {
                   props.getPageSize(e.target.value, pageIndex)
                 }
@@ -472,7 +472,7 @@ function Table(props) {
       </div>
 
     </>
-  );
+  )
 }
 
 export default memo(Table)

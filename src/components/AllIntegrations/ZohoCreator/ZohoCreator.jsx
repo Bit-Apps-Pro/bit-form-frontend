@@ -45,7 +45,7 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('creatorConf', creatorConf);
+  console.log('creatorConf', creatorConf)
 
   return (
     <div>

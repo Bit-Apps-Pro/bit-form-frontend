@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 import { Link } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap';
-import Modal from './Utilities/Modal';
+import { __ } from '../Utils/i18nwrap'
+import Modal from './Utilities/Modal'
 import FormImporter from './FormImporter'
-import DownloadIcon from '../Icons/DownloadIcon';
+import DownloadIcon from '../Icons/DownloadIcon'
 // import bitsFetch from '../Utils/bitsFetch'
 
 export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) {

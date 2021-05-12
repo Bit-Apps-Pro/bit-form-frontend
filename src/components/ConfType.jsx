@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { __ } from '../Utils/i18nwrap';
+import { __ } from '../Utils/i18nwrap'
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
@@ -61,5 +61,5 @@ export default function ConfType(props) {
       {pos === 1 && <RedirUrl formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
       {pos === 2 && <WebHooks formFields={formFields} formSettings={formSettings} setFormSettings={setFormSettings} removeIntegration={removeIntegration} />}
     </div>
-  );
+  )
 }

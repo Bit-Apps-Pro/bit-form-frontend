@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-import { useContext, useEffect, useState } from 'react';
-import { AppSettings } from '../../Utils/AppSettingsContext';
-import bitsFetch from '../../Utils/bitsFetch';
+import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { useContext, useEffect, useState } from 'react'
+import { AppSettings } from '../../Utils/AppSettingsContext'
+import bitsFetch from '../../Utils/bitsFetch'
 
 function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
   const appSettingsContext = useContext(AppSettings)
@@ -58,7 +58,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     setrender(false)
     setTimeout(() => {
       setrender(true)
-    }, 1);
+    }, 1)
   }, [clientID, attr.currency, attr.payType, attr.locale, attr.disableFunding])
 
   const createSubscriptionHandler = (data, actions) => actions.subscription.create({

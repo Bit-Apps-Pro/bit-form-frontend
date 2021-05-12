@@ -13,7 +13,7 @@
  * @param {string} input
  */
 module.exports = function css2json(input) {
-  let css = input;
+  let css = input
   /**
    * @type {number}
    */
@@ -30,33 +30,33 @@ module.exports = function css2json(input) {
   // }
 
   // Initialize the return value _json_.
-  const json = {};
+  const json = {}
 
   // Each rule gets parsed and then removed from _css_ until all rules have been
   // parsed.
   while (css.length > 0) {
     // Save the index of the first left bracket
-    const lbracket = css.indexOf('{');
+    const lbracket = css.indexOf('{')
 
     // find the matching right bracket
     // bracketCount increases whenever we visit a left bracket
     // decreases whenever  we visit a right bracket
     // so when bracketCount is 0 that means we've found a match
-    let bracketCount = 0;
+    let bracketCount = 0
     // maxBracketCount is used further down
-    let maxBracketCount = bracketCount;
-    let rbracket = lbracket;
+    let maxBracketCount = bracketCount
+    let rbracket = lbracket
 
     while (rbracket < css.length) {
       if (css[rbracket] === '{') {
-        bracketCount += 1;
-        maxBracketCount = Math.max(bracketCount, maxBracketCount);
+        bracketCount += 1
+        maxBracketCount = Math.max(bracketCount, maxBracketCount)
       }
 
       if (css[rbracket] === '}') {
-        bracketCount -= 1;
+        bracketCount -= 1
         if (bracketCount === 0) {
-          break;
+          break
         }
       }
 
@@ -81,23 +81,23 @@ module.exports = function css2json(input) {
     // selectors.forEach((selector) => {
     // Initialize the json-object representing the declaration block of
     // _selector_.
-    if (!json[selector]) json[selector] = {};
+    if (!json[selector]) json[selector] = {}
     // Save the declarations to the right selector
 
     const declarations = maxBracketCount > 1
       ? css2json(css.slice(lbracket + 1, rbracket))
-      : getDeclarations(css, lbracket, rbracket);
+      : getDeclarations(css, lbracket, rbracket)
 
     Object.keys(declarations).forEach((key) => {
-      json[selector][key] = declarations[key];
-    });
+      json[selector][key] = declarations[key]
+    })
     // });
 
     // Continue to next instance
     css = css.slice(rbracket + 1).trim()
   }
   // return the json data
-  return json;
+  return json
 }
 
 /**
@@ -106,14 +106,14 @@ module.exports = function css2json(input) {
  * @param {string[]} array
  */
 function toObject(array) {
-  const ret = {};
+  const ret = {}
   array.forEach((elm) => {
-    const index = elm.indexOf(':');
-    const property = elm.substring(0, index).trim();
-    const value = elm.substring(index + 1).trim();
-    ret[property] = value;
-  });
-  return ret;
+    const index = elm.indexOf(':')
+    const property = elm.substring(0, index).trim()
+    const value = elm.substring(index + 1).trim()
+    ret[property] = value
+  })
+  return ret
 }
 
 /**
@@ -134,9 +134,9 @@ function getDeclarations(css, lbracket, rbracket) {
   const declarationList = css.substring(lbracket + 1, rbracket)
     .split(';')
     .map((declaration) => declaration.trim())
-    .filter((declaration) => declaration.length > 0); // Remove any empty ("") values from the array
+    .filter((declaration) => declaration.length > 0) // Remove any empty ("") values from the array
 
   // _declaration_ is now an array reado to be transformed into an object.
-  const declarations = toObject(declarationList);
-  return declarations;
+  const declarations = toObject(declarationList)
+  return declarations
 }

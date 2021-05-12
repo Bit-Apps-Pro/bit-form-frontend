@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { useState } from 'react';
+import { useState } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'

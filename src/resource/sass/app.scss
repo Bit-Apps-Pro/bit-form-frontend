@@ -1002,7 +1002,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .blk-icn-wrp{
   background: rgba(255, 255, 255, 0.658);
-  right:5px;
+  right:0;
   height:0;
   width: 0;
   & > button{
@@ -1017,6 +1017,7 @@ input[type="checkbox"].disabled:checked:before {
   }
   & > button:hover{
     background: rgb(241, 241, 241);
+    color:black;
   }
 }
 
@@ -4167,19 +4168,17 @@ _:-ms-fullscreen,
   background: #fff;
   color: $dp-blue;
   font-size: 13px;
-  border-radius: 8px;
   z-index: 9;
   overflow: hidden;
    height:0;
-   border-radius: 100%;
+   border-radius: 100% 100% 15px 15px;
    padding:0;
    opacity: 0;
-   transform: scaleX(0);
   transition: 
-  opacity 200ms 400ms, 
-  height 150ms 400ms, 
-  border-radius 200ms 400ms, 
-  padding 150ms 400ms;
+  opacity 150ms 300ms, 
+  height 100ms 300ms, 
+  border-radius 150ms 300ms, 
+  padding 100ms 300ms;
   box-shadow:
   0 0px 3.2px rgba(0, 0, 0, 0.11),
   0 0px 7.6px rgba(0, 0, 0, 0.079),
@@ -4188,7 +4187,9 @@ _:-ms-fullscreen,
   0 0px 48px rgba(0, 0, 0, 0.044),
   0 0px 115px rgba(0, 0, 0, 0.031);
 }
-
+.popper > div{
+display: inline-block;
+}
 .popper[data-popper-placement^='top'] > .arrw {
 margin-top: -2px;
 }
@@ -4222,17 +4223,23 @@ width: 12px;
   clip-path: polygon(0 100%, 100% 100%, 100% 0%);
 }
 .showTip{
-  border-radius: 8px;
-  height:163px;
+  border-radius: 10px;
+  // height:163px;
   padding:5px 10px;
   animation: showOverflow ;
   animation-duration: 0;
   opacity: 1;
-  animation-delay: 0ms;
+  animation-delay: 450ms;
   animation-fill-mode: forwards;
 }
 
 @keyframes showOverflow {
   0%{overflow:hidden;}
   100%{overflow:visible;}
+}
+.popper-icn{
+  opacity:.5;
+}
+.popper-icn:hover{
+  opacity: 1;
 }

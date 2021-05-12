@@ -91,12 +91,12 @@ export const handleInput = (e, creatorConf, setCreatorConf, formID, setisLoading
   switch (e.target.name) {
     case 'applicationId':
       newConf = applicationChange(newConf, formID, setCreatorConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'formId':
       newConf = formChange(newConf, formID, setCreatorConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setCreatorConf({ ...newConf })
 }

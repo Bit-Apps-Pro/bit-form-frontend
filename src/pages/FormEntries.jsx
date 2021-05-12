@@ -44,7 +44,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   useEffect(() => {
     if (reports.length > 0) {
       const allLabelObj = {}
-      
+
       allLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })

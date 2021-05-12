@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -42,7 +42,7 @@ function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
   }
   document.querySelector('.btcd-s-wrp').scrollTop = 0
 
-  console.log('biginConf', biginConf);
+  console.log('biginConf', biginConf)
 
   return (
     <div>

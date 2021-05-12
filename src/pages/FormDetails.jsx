@@ -1,4 +1,4 @@
-import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react';
+import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import FormSettings from './FormSettings'
@@ -13,8 +13,8 @@ import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj 
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
-import { sortLayoutByXY } from '../Utils/FormBuilderHelper';
-import CloseIcn from '../Icons/CloseIcn';
+import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import CloseIcn from '../Icons/CloseIcn'
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))

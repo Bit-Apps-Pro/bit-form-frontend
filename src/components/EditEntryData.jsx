@@ -5,7 +5,7 @@ import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import bitsFetch from '../Utils/bitsFetch'
 import Bitforms from '../user-frontend/Bitforms'
-import LoaderSm from './Loaders/LoaderSm';
+import LoaderSm from './Loaders/LoaderSm'
 
 export default function EditEntryData(props) {
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
@@ -85,7 +85,7 @@ export default function EditEntryData(props) {
         setTimeout(() => {
           props.close(false)
           setisLoading(false)
-        }, 3000);
+        }, 3000)
       })
   }
 

@@ -11,7 +11,7 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAuthorize = () => {
-    const newConf = { ...activeCampaingConf };
+    const newConf = { ...activeCampaingConf }
     console.log('activeCampaingConf', activeCampaingConf)
     if (!newConf.name || !newConf.api_key || !newConf.api_url) {
       setError({

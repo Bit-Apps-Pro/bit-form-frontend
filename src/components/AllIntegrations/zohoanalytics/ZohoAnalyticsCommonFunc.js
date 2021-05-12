@@ -94,12 +94,12 @@ export const handleInput = (e, analyticsConf, setAnalyticsConf, formID, setisLoa
   switch (name) {
     case 'workspace':
       newConf = workspaceChange(newConf, formID, setAnalyticsConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'table':
       newConf = tableChange(newConf, formID, setAnalyticsConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setAnalyticsConf({ ...newConf })
 }

@@ -26,7 +26,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
 
   let colHeadeing = []
   let fieldKey = []
-  
+
   columns.map((col, index) => {
     if (order?.includes(col.accessor)) {
       colHeadeing[index] = {

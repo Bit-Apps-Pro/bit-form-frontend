@@ -14,13 +14,13 @@ export const handleInput = (e, workDriveConf, setWorkDriveConf, formID, setisLoa
   switch (e.target.name) {
     case 'team':
       newConf = teamChange(newConf, formID, setWorkDriveConf, setisLoading, setSnackbar)
-      break;
+      break
     case 'folder':
       newConf.folderMap = newConf.folderMap.slice(0, ind)
       newConf = folderChange(newConf, formID, setWorkDriveConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setWorkDriveConf({ ...newConf })
 }

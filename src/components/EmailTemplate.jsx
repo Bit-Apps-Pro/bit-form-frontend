@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 import { NavLink, useRouteMatch, Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'

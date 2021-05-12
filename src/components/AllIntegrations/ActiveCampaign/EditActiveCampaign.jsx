@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers';
-import { handleInput } from './ActiveCampaignCommonFunc';
-import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout';
+import { __ } from '@wordpress/i18n'
+import { useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { handleInput } from './ActiveCampaignCommonFunc'
+import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
 
 function EditActiveCampaign({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

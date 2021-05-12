@@ -1,13 +1,13 @@
-import { __ } from '../../../Utils/i18nwrap';
-import { useEffect, useState } from 'react';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
-import { useHistory, useParams } from 'react-router-dom';
-import SnackMsg from '../../Utilities/SnackMsg';
-import Steps from '../../Utilities/Steps';
-import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers';
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree';
-import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc';
-import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout';
+import { __ } from '../../../Utils/i18nwrap'
+import { useEffect, useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import SnackMsg from '../../Utilities/SnackMsg'
+import Steps from '../../Utilities/Steps'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc'
+import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
 import ZohoRecruitAuthorization from './ZohoRecruitAuthorization'
 
 function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -44,7 +44,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
     }
   }
 
-  console.log('recruitConf', recruitConf);
+  console.log('recruitConf', recruitConf)
 
   return (
     <div>

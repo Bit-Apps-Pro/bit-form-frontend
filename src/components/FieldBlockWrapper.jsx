@@ -35,7 +35,7 @@ export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem
 
   return (
     <>
-      <div className="blk-icn-wrp pos-abs flx">
+      <div className="blk-icn-wrp pos-abs flx o-h">
         <button
           type="button"
           className="drag g-c us-n"

@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react';
+import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../../Utils/i18nwrap';
+import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'

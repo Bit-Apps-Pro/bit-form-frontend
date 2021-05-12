@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { __ } from '../../Utils/i18nwrap';
-import SingleInput from '../Utilities/SingleInput';
+import { __ } from '../../Utils/i18nwrap'
+import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import DropDown from '../Utilities/DropDown'
 import CopyText from '../Utilities/CopyText'

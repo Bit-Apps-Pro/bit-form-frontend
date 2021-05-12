@@ -18,9 +18,9 @@ export const handleInput = (e, recordTab, recruitConf, setRecruitConf, formID, s
   switch (e.target.name) {
     case 'module':
       newConf = moduleChange(recordTab, newConf, formID, setRecruitConf, setisLoading, setSnackbar)
-      break;
+      break
     default:
-      break;
+      break
   }
   setRecruitConf({ ...newConf })
 }

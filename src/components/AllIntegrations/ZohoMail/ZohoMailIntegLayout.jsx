@@ -16,7 +16,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
       mail.push(...bits.userMail)
     }
     const flds = []
-    
+
     formFields.map(fld => {
       if (fld.type === 'email') {
         flds.push({ label: fld.name, value: `\${${fld.key}}` })
@@ -66,7 +66,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
               const myIframe = $(editor.iframeElement)
               myTextarea.value = editor.getContent({
                 source_view: true,
-              });
+              })
               myIframe.toggleClass('hidden')
               myTextarea.toggleClass('visible')
               if ($('iframe.hidden').length > 0) {

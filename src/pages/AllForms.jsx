@@ -15,7 +15,6 @@ import Table from '../components/Utilities/Table'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
-// import Editor from '../Editor'
 
 const Welcome = lazy(() => import('./Welcome'))
 
@@ -164,9 +163,9 @@ function AllFroms({ newFormId }) {
       .then(response => {
         if (response.ok) {
           response.blob().then(blob => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
             a.download = `bitform_${formID}_export.json`
             document.body.appendChild(a)
             a.click()

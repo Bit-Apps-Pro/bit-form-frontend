@@ -14,9 +14,9 @@ export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, se
     case 'listId':
       newConf = listChange(newConf, formID, setSheetConf, setisLoading, setSnackbar)
       console.log('new config', newConf)
-      break;
+      break
     default:
-      break;
+      break
   }
   setSheetConf({ ...newConf })
 }
