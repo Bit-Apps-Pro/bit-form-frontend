@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
@@ -217,7 +217,6 @@ function AllFroms({ newFormId }) {
 
   return (
     <div id="all-forms">
-      {/* <Editor /> */}
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <ConfirmModal
         show={confMdl.show}
