@@ -74,9 +74,7 @@ module.exports = (env, argv) => {
       // contentBasePublicPath: '/js',
       // publicPath: 'http://blank-site-php.io/',
       // allowedHosts: ["blank-site-php.io"],
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: { 'Access-Control-Allow-Origin': '*' },
       // disableHostCheck: true,
       /* proxy: {
         '/': {
@@ -139,28 +137,22 @@ module.exports = (env, argv) => {
               parser: safePostCssParser,
               map: production ? false : { inline: false, annotation: true },
             },
-            cssProcessorPluginOptions: {
-              preset: ['default', { minifyFontValues: { removeQuotes: false } }],
-            },
+            cssProcessorPluginOptions: { preset: ['default', { minifyFontValues: { removeQuotes: false } }] },
           }),
         ]),
       ],
     },
     plugins: [
-      ...(production ? [] : [
+      /* ...(production ? [] : [
         new webpack.DllReferencePlugin({
           name: '_bitforms',
           context: '/',
           manifest: path.resolve(__dirname, 'dll-plugin-manifest.json'),
         }),
-      ]),
+      ]), */
       // new BundleAnalyzerPlugin(),
       new CleanWebpackPlugin(),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
-        },
-      }),
+      new webpack.DefinePlugin({ 'process.env': { NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development') } }),
       new MiniCssExtractPlugin({
         filename: '../css/[name].css?v=[contenthash:6]',
         ignoreOrder: true,
@@ -227,9 +219,7 @@ module.exports = (env, argv) => {
         })]),
     ],
 
-    resolve: {
-      extensions: ['.js', '.jsx', '.json', '.css'],
-    },
+    resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
 
     module: {
       strictExportPresence: true,
@@ -272,13 +262,9 @@ module.exports = (env, argv) => {
             // 'style-loader',
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: '',
-              },
+              options: { publicPath: '' },
             },
-            {
-              loader: 'css-loader',
-            },
+            { loader: 'css-loader' },
             {
               loader: 'postcss-loader',
               options: {
@@ -311,9 +297,7 @@ module.exports = (env, argv) => {
             {
               loader: 'url-loader',
               options: {
-                options: {
-                  generator: (content) => svgToMiniDataURI(content.toString()),
-                },
+                options: { generator: (content) => svgToMiniDataURI(content.toString()) },
                 name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
                 outputPath: '../img',
               },
