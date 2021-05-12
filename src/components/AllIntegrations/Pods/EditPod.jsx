@@ -21,8 +21,8 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
   useEffect(() => {
     bitsFetch({}, 'bitforms_get_pod_type').then((res) => {
       if (res?.success && res !== undefined) {
-       setTypes(Object.values(res.data?.post_types))
-       setUsers(res.data?.users)
+        setTypes(Object.values(res.data?.post_types))
+        setUsers(res.data?.users)
       }
     })
 
@@ -47,17 +47,17 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
     const tmpData = { ...data }
     tmpData[typ] = val
     bitsFetch({ pod_type: val }, 'bitforms_get_pod_field').then((res) => {
-        if (res?.success && res !== undefined) {
-          setPods(Object.values(res?.data))
-          if (res?.data) {
-            tmpData.pod_map = Object.values(res.data).filter(fld => fld.required).map(fl => ({ formField: '', podFormField: fl.key, required: fl.required }))
-            if (tmpData?.pod_map?.length < 1) {
-              tmpData.pod_map = [{}]
-             }
+      if (res?.success && res !== undefined) {
+        setPods(Object.values(res?.data))
+        if (res?.data) {
+          tmpData.pod_map = Object.values(res.data).filter(fld => fld.required).map(fl => ({ formField: '', podFormField: fl.key, required: fl.required }))
+          if (tmpData?.pod_map?.length < 1) {
+            tmpData.pod_map = [{}]
           }
-          setData(tmpData)
         }
-      })
+        setData(tmpData)
+      }
+    })
   }
 
   const saveConfig = () => {
@@ -123,18 +123,18 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         </div>
       </div>
       {
-          data.pod_map.map((itm, i) => (
-            <PodsFieldMap
-              key={`analytics-m-${i + 9}`}
-              i={i}
-              type="pod"
-              field={itm}
-              formFields={formFields}
-              dataConf={data}
-              setDataConf={setData}
-              podFields={pods}
-            />
-              ))
+        data.pod_map.map((itm, i) => (
+          <PodsFieldMap
+            key={`analytics-m-${i + 9}`}
+            i={i}
+            type="pod"
+            field={itm}
+            formFields={formFields}
+            dataConf={data}
+            setDataConf={setData}
+            podFields={pods}
+          />
+        ))
       }
       <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
 
@@ -159,7 +159,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
             setDataConf={setData}
             podFields={postFields}
           />
-          ))
+        ))
       }
 
       <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>

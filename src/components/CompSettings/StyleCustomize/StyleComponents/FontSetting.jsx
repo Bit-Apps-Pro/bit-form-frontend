@@ -47,11 +47,13 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
           <span className="f-5">Line height</span>
           <Range
             info={[
-              { icn: <span>
-                <b>T</b>
-                <HeightIcn h="12" />
-              </span>,
-lbl: 'Text line height' },
+              {
+                icn: <span>
+                  <b>T</b>
+                  <HeightIcn h="12" />
+                </span>,
+                lbl: 'Text line height',
+              },
             ]}
             className="btc-range"
             master={false}

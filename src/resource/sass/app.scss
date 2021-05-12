@@ -192,6 +192,9 @@ input[type="checkbox"].disabled:checked:before {
 .font-w-m {
   font-weight: 600 !important;
 }
+.txt-white{
+  color: white;
+}
 .txt-gray {
   color: $gray;
 }
@@ -3964,6 +3967,12 @@ _:-ms-fullscreen,
   display: grid;
   place-content: center;
 }
+.ig-c{
+  display: -ms-inline-grid;
+  display: inline-grid;
+  place-content: center;
+}
+
 
 .d-flx {
   display: flex;
@@ -4162,84 +4171,25 @@ _:-ms-fullscreen,
   stroke-linecap:round;
   stroke-linejoin:round;
 }
-
-.popper {
-  display: inline-block;
-  background: #fff;
-  color: $dp-blue;
-  font-size: 13px;
-  z-index: 9;
-  overflow: hidden;
-   height:0;
-   border-radius: 100% 100% 15px 15px;
-   padding:0;
-   opacity: 0;
-  transition: 
-  opacity 150ms 300ms, 
-  height 100ms 300ms, 
-  border-radius 150ms 300ms, 
-  padding 100ms 300ms;
-  box-shadow:
-  0 0px 3.2px rgba(0, 0, 0, 0.11),
-  0 0px 7.6px rgba(0, 0, 0, 0.079),
-  0 0px 14.4px rgba(0, 0, 0, 0.066),
-  0 0px 25.7px rgba(0, 0, 0, 0.055),
-  0 0px 48px rgba(0, 0, 0, 0.044),
-  0 0px 115px rgba(0, 0, 0, 0.031);
-}
-.popper > div{
-display: inline-block;
-}
-.popper[data-popper-placement^='top'] > .arrw {
-margin-top: -2px;
+.tippy-box{
+  border-radius: 8px !important;
 }
 
-.popper[data-popper-placement^='bottom'] > .arrw {
-  top: -6px;
-  &::before{
-    transform: rotate(-135deg);
-  }
-}
-
-.popper[data-popper-placement^='left'] > .arrow {
-  right: -4px;
-}
-
-.popper[data-popper-placement^='right'] > .arrow {
-  left: -4px;
-}
-.arrw{
-height:12px;
-width: 12px;
-}
-.arrw::before{
-  background:#fff; 
-  position: absolute;
-  content: "";
-  height:12px;
-  width: 12px;
-  // transform:scaleX(1);
-  transform:rotate(45deg);
-  clip-path: polygon(0 100%, 100% 100%, 100% 0%);
-}
-.showTip{
-  border-radius: 10px;
-  // height:163px;
-  padding:5px 10px;
-  animation: showOverflow ;
-  animation-duration: 0;
-  opacity: 1;
-  animation-delay: 450ms;
-  animation-fill-mode: forwards;
-}
-
-@keyframes showOverflow {
-  0%{overflow:hidden;}
-  100%{overflow:visible;}
-}
 .popper-icn{
-  opacity:.5;
+  color:$dp-bg;
+  opacity: 0.3;
 }
 .popper-icn:hover{
   opacity: 1;
+}
+.txt-body{
+  line-height: 1.2;
+  font-weight:100;
+  font-family: 'Titillium Web', sans-serif;
+}
+.cooltip-link{
+  color:#2ad4ff;
+}
+.cooltip-link:hover{
+  color:#00bdec;
 }

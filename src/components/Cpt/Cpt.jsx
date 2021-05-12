@@ -10,6 +10,7 @@ export default function Cpt() {
   const [tab, settab] = useState('add_type')
   const [posts, setPosts] = useState([])
   const [types, setTypes] = useState([])
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
 
   useEffect(() => {

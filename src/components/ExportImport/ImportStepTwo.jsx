@@ -10,19 +10,19 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
   const fieldMaping = e => {
     const field = e.target.options[e.target.options.selectedIndex].text
     const filedmappError = `${field} has already been mapped with ${field} from file`
-   if (mappingColumn.includes(e.target.value)) {
-     // confirm(filedmappError)
-     const mapOver = confirm(filedmappError)
+    if (mappingColumn.includes(e.target.value)) {
+      // confirm(filedmappError)
+      const mapOver = confirm(filedmappError)
       if (mapOver === true) {
         setMappingColumn(mappingColumn.splice(mappingColumn.indexOf(e.target.value), 1))
         setMappingColumn([...mappingColumn, e.target.value])
       } else {
         e.target.options.selectedIndex = 0
       }
-   } else {
-    setMappingCount(mappingCount + 1)
-    setMappingColumn([...mappingColumn, e.target.value])
-   }
+    } else {
+      setMappingCount(mappingCount + 1)
+      setMappingColumn([...mappingColumn, e.target.value])
+    }
   }
   const resetMapping = () => {
     const selections = document.querySelectorAll('.btcd-paper-inp')
@@ -66,7 +66,7 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
                   <option selected>Select Field</option>
                   {fileColumns.map((value) => (
                     <option value={value} selected={false}>{value}</option>
-                        ))}
+                  ))}
                 </select>
               </td>
               <td style={{ textAlign: 'center' }} key={index}>
@@ -74,11 +74,11 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
                   <option selected>Select Field</option>
                   {tableColumns.map((col) => (
                     <option value={col.accessor} selected={false}>{col.Header}</option>
-                        ))}
+                  ))}
                 </select>
               </td>
             </tr>
-                  ))}
+          ))}
         </tbody>
       </table>
       <div className="mt-4">
@@ -90,13 +90,13 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
         <tr className="tr">
           {fileColumns.map((value, index) => (
             <th className="th" key={index}>{value}</th>
-                ))}
+          ))}
         </tr>
         {JSON.parse(fileResponses).map((response, key) => (
           <tr key={key}>
             {/* <td style={{ textAlign: 'center' }}>{response.}</td> */}
           </tr>
-              ))}
+        ))}
       </table>
       <div>
         <button type="submit" className="btn btn-md blue btcd-mdl-btn">Import Data</button>
@@ -104,5 +104,5 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
         <button type="button" className="btn btn-md white btcd-mdl-btn">Cancel</button>
       </div>
     </div>
-    )
-  }
+  )
+}

@@ -7,7 +7,7 @@ import Loader from '../Loaders/Loader'
 import LoaderSm from '../Loaders/LoaderSm'
 
 export default function DeleteCpt({ slug, snack, setsnack, posts }) {
-    const [confMdl, setConfMdl] = useState({ show: false })
+  const [confMdl, setConfMdl] = useState({ show: false })
 
   const [isLoading, setLoading] = useState(false)
   const closeConfMdl = () => {
@@ -28,11 +28,11 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
     e.preventDefault()
     bitsFetch({ postData: postFilter },
       'bitforms_delete_post_type').then((res) => {
-        if (res !== undefined && res.success) {
-          setsnack({ ...{ show: true, msg: __('Delete successfully, refresh your window', 'bitform') } })
-        }
-       setLoading(false)
-      })
+      if (res !== undefined && res.success) {
+        setsnack({ ...{ show: true, msg: __('Delete successfully, refresh your window', 'bitform') } })
+      }
+      setLoading(false)
+    })
   }
   return (
     <div>

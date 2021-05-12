@@ -90,12 +90,8 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
     if (typeof wp !== 'undefined' && wp.media) {
       const imgSelectionFrame = wp.media({
         title: 'Media',
-        button: {
-          text: 'Select picture',
-        },
-        library: {
-          type: 'image',
-        },
+        button: { text: 'Select picture' },
+        library: { type: 'image' },
         multiple: false,
       })
       imgSelectionFrame.on('select', () => {

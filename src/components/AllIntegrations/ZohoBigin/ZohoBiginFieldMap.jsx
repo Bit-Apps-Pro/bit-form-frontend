@@ -33,9 +33,9 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
                   </option>
                 ) : (
                   <option key={fieldApiName.api_name} value={fieldApiName.api_name}>
-                    {fieldApiName.display_label}
-                  </option>
-                )
+                  {fieldApiName.display_label}
+                </option>
+              )
             ))
           }
         </select>

@@ -50,7 +50,7 @@ export const handleInput = (e, projectsConf, setProjectsConf, formID, setisLoadi
     case 'milestoneId':
     case 'tasklistId':
     case 'taskId': {
-      // clear lower event value
+    // clear lower event value
       newConf = clearLowerEvents(newConf, inputName)
       // close create new event
       const subEvent = inputName.split('Id')[0]

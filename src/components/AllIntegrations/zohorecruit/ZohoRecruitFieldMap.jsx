@@ -40,9 +40,9 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
                     </option>
                   ) : (
                     <option key={fieldApiName} value={fieldApiName}>
-                      {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
-                    </option>
-                  )
+                    {recruitConf.default.moduleData[module].fileUploadFields[fieldApiName].display_label}
+                  </option>
+                )
               ))
               : recruitConf.default.moduleData?.[module]?.fields && Object.keys(recruitConf.default.moduleData[module].fields).map(fieldApiName => (
                 isNotRequired ? recruitConf.default.moduleData[module].fields[fieldApiName].required === 'false'
@@ -52,9 +52,9 @@ export default function ZohoRecruitFieldMap({ i, uploadFields, formFields, field
                     </option>
                   ) : (
                     <option key={fieldApiName} value={fieldApiName}>
-                      {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
-                    </option>
-                  )
+                    {recruitConf.default.moduleData[module].fields[fieldApiName].display_label}
+                  </option>
+                )
               ))
           }
         </select>

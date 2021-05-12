@@ -29,9 +29,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     return
   }
   if (!checkValidEmail(confTmp.ownerEmail)) {
-    setError({
-      ownerEmail: !checkValidEmail(confTmp.ownerEmail) ? __('Email is invalid', 'bitform') : '',
-    })
+    setError({ ownerEmail: !checkValidEmail(confTmp.ownerEmail) ? __('Email is invalid', 'bitform') : '' })
     return
   }
   setisLoading(true)

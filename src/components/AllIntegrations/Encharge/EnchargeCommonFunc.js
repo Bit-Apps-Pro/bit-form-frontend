@@ -9,18 +9,18 @@ export const handleInput = (e, enchargeConf, setEnchargeConf) => {
 }
 
 export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoading, setSnackbar) => {
-  const refreshEnchargeHeader = { api_key: enchargeConf.api_key }
+  const refreshEnchargeHeaderData = { api_key: enchargeConf.api_key }
   const newConf = { ...enchargeConf }
-  bitsFetch(refreshEnchargeHeader, 'bitforms_encharge_headers')
+  bitsFetch(refreshEnchargeHeaderData, 'bitforms_encharge_headers')
     .then(result => {
       if (result && result.success) {
         if (!newConf.default) {
           newConf.default = {}
         }
         if (result.data.enChargeFields) {
-            newConf.default.fields = result.data.enChargeFields
-            const { fields } = newConf.default
-            newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', enChargeFields: f.fieldId, required: true }))
+          newConf.default.fields = result.data.enChargeFields
+          const { fields } = newConf.default
+          newConf.field_map = Object.values(fields).filter(f => f.required).map(f => ({ formField: '', enChargeFields: f.fieldId, required: true }))
           setSnackbar({ show: true, msg: __('Encharge fields refreshed', 'bitform') })
         } else {
           setSnackbar({ show: true, msg: __('No Encharge fields found. Try changing the header row number or try again', 'bitform') })
@@ -32,7 +32,7 @@ export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoadin
       }
       setIsLoading(false)
     })
-  .catch(() => setIsLoading(false))
+    .catch(() => setIsLoading(false))
 }
 
 export const checkMappedFields = enChargeFields => {

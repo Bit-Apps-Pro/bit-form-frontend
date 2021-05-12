@@ -51,7 +51,7 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
   }
 
   const renderLog = data => {
-    const logShow = logShowMore.find(log => log === data.id)
+    const logShow = logShowMore.find(logs => logs === data.id)
     const integInfo = {}
     integLogs.map(integ => {
       let integName = integrations.find(integration => integration.id === integ.integration_id)?.name

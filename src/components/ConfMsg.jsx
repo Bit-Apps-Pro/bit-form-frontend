@@ -60,9 +60,7 @@ function ConfMsg({ formSettings, setFormSettings, formFields, removeIntegration 
               const $ = tinymce.dom.DomQuery
               const myTextarea = $('textarea')
               const myIframe = $(editor.iframeElement)
-              myTextarea.value = editor.getContent({
-                source_view: true,
-              })
+              myTextarea.value = editor.getContent({ source_view: true })
               myIframe.toggleClass('hidden')
               myTextarea.toggleClass('visible')
               if ($('iframe.hidden').length > 0) {
