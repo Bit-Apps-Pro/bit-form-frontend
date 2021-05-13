@@ -61,9 +61,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }, 1)
   }, [clientID, attr.currency, attr.payType, attr.locale, attr.disableFunding])
 
-  const createSubscriptionHandler = (data, actions) => actions.subscription.create({
-    plan_id: attr?.planId,
-  })
+  const createSubscriptionHandler = (data, actions) => actions.subscription.create({ plan_id: attr?.planId })
 
   const obsrvPymntAttr = () => {
     const fields = {}

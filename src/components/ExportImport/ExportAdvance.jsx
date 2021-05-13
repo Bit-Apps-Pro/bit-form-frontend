@@ -3,10 +3,10 @@ import CheckBox from '../Utility/CheckBox'
 import Button from '../Utility/Button'
 
 export default function ExportAdvance() {
-    return (
-      <div>
-        <h3>coming soon</h3>
-        {/* <div className="flx">
+  return (
+    <div>
+      <h3>coming soon</h3>
+      {/* <div className="flx">
           <div className=" btcd-workFlows-btns">
             <div className="flx">
               <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
@@ -17,6 +17,6 @@ export default function ExportAdvance() {
             </div>
           </div>
         </div> */}
-      </div>
-    )
+    </div>
+  )
 }

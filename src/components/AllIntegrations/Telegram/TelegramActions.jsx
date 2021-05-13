@@ -9,11 +9,11 @@ export default function TelegramActions({ formFields, telegramConf, setTelegramC
   const [actionMdl, setActionMdl] = useState({ show: false })
   const actionHandler = (e) => {
     const newConf = { ...telegramConf }
-      if (e.target.value !== '') {
-        newConf.actions.attachments = e.target.value
-      } else {
-        delete newConf.actions.attachments
-      }
+    if (e.target.value !== '') {
+      newConf.actions.attachments = e.target.value
+    } else {
+      delete newConf.actions.attachments
+    }
     setTelegramConf({ ...newConf })
   }
   return (

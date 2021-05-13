@@ -459,7 +459,7 @@ function GridLayout(props) {
     </div>
   ) */
 
- /*  const navigateToFieldSettings = () => {
+  /*  const navigateToFieldSettings = () => {
     history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
   } */
 

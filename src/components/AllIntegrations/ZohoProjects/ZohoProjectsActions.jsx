@@ -839,14 +839,14 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                   <option value="">Color</option>
                   {['0dd3d3', 'e2b910', '7f78e0', 'f28840', 'd359aa', '83b727', 'b58a61', 'ffac14', '48b7b4', 'f56b62', '728099', '609100', '0d6fb7', '0995ba', '15a8e2', 'ff5acd', '898985', '3b92ff', 'ac57f2', '895a59'].map(tagColor => (
                     <option key={tagColor} value={`bg${tagColor}`} style={{ backgroundColor: `#${tagColor}` }} aria-label="color" />
-                    ))}
+                  ))}
                 </select>
                 <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2" aria-label="delete" type="button"><span className="btcd-icn icn-trash-2" /></button>
               </div>
-              ))}
+            ))}
             <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': `'${__('Add Custom Tag', 'nitform')}'` }} type="button">+</button>
           </>
-          )}
+        )}
       </ConfirmModal>
 
     </div>

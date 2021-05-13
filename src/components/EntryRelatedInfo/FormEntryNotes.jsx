@@ -153,9 +153,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
         {showForm
           ? (
             <NoteForm
-              {...{
-                formID, entryID, allLabels, showForm, setShowForm, setSnackbar, setFetchData, data, setData,
-              }}
+              {...{ formID, entryID, allLabels, showForm, setShowForm, setSnackbar, setFetchData, data, setData }}
             />
           )
           : <button type="button" className="btn" onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}

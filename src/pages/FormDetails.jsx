@@ -301,9 +301,7 @@ function FormDetails(props) {
               }
               allFormsDispatchHandler({
                 type: 'add',
-                data: {
-                  formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at,
-                },
+                data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },
               })
             } else if (action === 'bitforms_update_form') {
               setSnackbar({ show: true, msg: data.message })
@@ -516,9 +514,7 @@ const defaultWorkflow = {
   successAction: [
     {
       type: 'successMsg',
-      details: {
-        id: '{"index":0}',
-      },
+      details: { id: '{"index":0}' },
     },
   ],
 }

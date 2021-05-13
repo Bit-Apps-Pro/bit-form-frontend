@@ -7,9 +7,7 @@ import hexToRGBA from '../../../../Utils/hex2RGBA'
 import useComponentVisible from './useComponentVisible'
 import 'react-color-gradient-picker/dist/index.css'
 
-ColorPicker.defaultProps = {
-  alwGradient: true,
-}
+ColorPicker.defaultProps = { alwGradient: true }
 
 export default function ColorPicker({ value, onChange, alwGradient }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)

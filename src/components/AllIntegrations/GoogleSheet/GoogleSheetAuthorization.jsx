@@ -46,19 +46,19 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="clientSecret" value={sheetConf.clientSecret} type="text" placeholder={__('Client secret...', 'bitform')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
       {!isInfo && (
-      <>
-        <button onClick={() => handleAuthorize(sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
-          {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
-          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
-        </button>
-        <br />
-        <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
-          {__('Next', 'bitform')}
-          {' '}
+        <>
+          <button onClick={() => handleAuthorize(sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+            {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
+            {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+          </button>
+          <br />
+          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+            {__('Next', 'bitform')}
+            {' '}
 &nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button>
-      </>
+            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          </button>
+        </>
       )}
     </div>
   )

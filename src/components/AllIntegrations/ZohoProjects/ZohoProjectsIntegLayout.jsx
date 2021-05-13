@@ -61,7 +61,7 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
             <option value="subtask">{__('Create Sub Task', 'bitform')}</option>
             <option value="issue">{__('Create Issue', 'bitform')}</option>
           </>
-          )}
+        )}
       </select>
       <br />
       <br />
@@ -130,10 +130,10 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
               <select onChange={handleInput} name="tasklistFlag" value={projectsConf.tasklistFlag} className="btcd-paper-inp w-7">
                 <option value="">{__('Select Tasklist Flag', 'bitform')}</option>
                 {!projectsConf?.subEvent.includes('milestone') && (
-                <>
-                  <option value="internal">{__('Internal', 'bitform')}</option>
-                  <option value="external">{__('External', 'bitform')}</option>
-                </>
+                  <>
+                    <option value="internal">{__('Internal', 'bitform')}</option>
+                    <option value="external">{__('External', 'bitform')}</option>
+                  </>
                 )}
               </select>
               <br />
@@ -209,9 +209,9 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
                      ))
                     : projectsConf?.default?.tasks?.[projectsConf.portalId] && Object.values(projectsConf.default.tasks[projectsConf.portalId]).map((task, i) => task.taskId && (
                     // eslint-disable-next-line react/no-array-index-key
-                    <option key={`${task.taskId}_${i}`} value={task.taskId}>
-                      {task.taskName}
-                    </option>
+                      <option key={`${task.taskId}_${i}`} value={task.taskId}>
+                        {task.taskName}
+                      </option>
                     ))}
               </select>
               <button onClick={() => refreshTasks(formID, projectsConf, setProjectsConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Tasks"' }} type="button" disabled={isLoading}>&#x21BB;</button>

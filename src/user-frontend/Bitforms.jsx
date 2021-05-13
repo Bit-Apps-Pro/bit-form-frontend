@@ -115,7 +115,7 @@ export default function Bitforms(props) {
           } else if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
             switch (type) {
               case 'checkbox':
-                // eslint-disable-next-line no-case-declarations
+              // eslint-disable-next-line no-case-declarations
                 const checkedValue = []
                 fieldDetails.forEach(option => { option.checked && option.value && checkedValue.push(option.value) })
                 value = checkedValue
@@ -123,7 +123,7 @@ export default function Bitforms(props) {
                 break
 
               case 'select-multiple':
-                // eslint-disable-next-line no-case-declarations
+              // eslint-disable-next-line no-case-declarations
                 const selectedValue = []
                 if (fieldDetails[0].slim) {
                   fieldDetails[0].slim.data.data.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
@@ -395,9 +395,7 @@ export default function Bitforms(props) {
           {
             method: 'POST',
             body: JSON.stringify(data),
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
           })
           .then(response => response.json())
       }

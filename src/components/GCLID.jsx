@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
 import { __ } from '../Utils/i18nwrap'
 import bitsFetch from '../Utils/bitsFetch'
@@ -26,7 +26,7 @@ export default function GCLID() {
   }, [])
 
   useEffect(() => {
-    bitsFetch({ }, 'bitform_google_adword_config').then((res) => {
+    bitsFetch({}, 'bitform_google_adword_config').then((res) => {
       if (res !== undefined && res.success) {
         if (res.data?.[0]?.integration_details) {
           setGclidConf(JSON.parse(res.data[0].integration_details))
@@ -37,21 +37,15 @@ export default function GCLID() {
 
   const handleAuthorize = () => {
     if (!gclidConf.clientId) {
-      setError({
-        clientId: !gclidConf.clientId ? __('Client ID cann\'t be empty', 'bitform') : '',
-      })
+      setError({ clientId: !gclidConf.clientId ? __('Client ID cann\'t be empty', 'bitform') : '' })
       return
     }
     if (!gclidConf.clientSecret) {
-      setError({
-       clientSecret: !gclidConf.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '',
-      })
+      setError({ clientSecret: !gclidConf.clientSecret ? __('Secret key cann\'t be empty', 'bitform') : '' })
       return
     }
     if (!gclidConf.clientCustomerId) {
-      setError({
-        clientCustomerId: !gclidConf.clientCustomerId ? __('Customer ID key cann\'t be empty', 'bitform') : '',
-      })
+      setError({ clientCustomerId: !gclidConf.clientCustomerId ? __('Customer ID key cann\'t be empty', 'bitform') : '' })
       return
     }
     setisLoading(true)
@@ -106,21 +100,21 @@ export default function GCLID() {
   }
   const saveGoogleConfig = e => {
     bitsFetch(gclidConf, 'bitforms_save_google_refresh_token')
-    .then(result => result)
-    .then(result => {
-      if (result && result.success) {
-        setSnackbar({ show: true, msg: __('save Successfully', 'bitform') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('save failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
-      } else {
-        setSnackbar({ show: true, msg: __('save failed. please try again', 'bitform') })
-      }
-      setisLoading(false)
-    })
+      .then(result => result)
+      .then(result => {
+        if (result && result.success) {
+          setSnackbar({ show: true, msg: __('save Successfully', 'bitform') })
+        } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+          setSnackbar({ show: true, msg: `${__('save failed Cause:', 'bitform')}${result.data.data || result.data}. ${__('please try again', 'bitform')}` })
+        } else {
+          setSnackbar({ show: true, msg: __('save failed. please try again', 'bitform') })
+        }
+        setisLoading(false)
+      })
   }
   const handleInput = (typ, val) => {
     const tmpData = { ...gclidConf }
-      tmpData[typ] = val
+    tmpData[typ] = val
     setGclidConf(tmpData)
   }
 
@@ -128,17 +122,17 @@ export default function GCLID() {
     <div className="btcd-captcha w-5">
       <div className="pos-rel">
         {!isPro && (
-        <div className="pro-blur flx" style={{ height: '99%', left: -15, width: '104%' }}>
-          <div className="pro">
-            {__('Available On', 'bitform')}
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
-              <span className="txt-pro">
-                {' '}
-                {__('Premium', 'bitform')}
-              </span>
-            </a>
+          <div className="pro-blur flx" style={{ height: '99%', left: -15, width: '104%' }}>
+            <div className="pro">
+              {__('Available On', 'bitform')}
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
+            </div>
           </div>
-        </div>
         )}
         <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
@@ -194,10 +188,10 @@ export default function GCLID() {
         </button>
         <br />
         {isAuthorized && (
-        <button onClick={e => saveGoogleConfig(e)} className="btn f-right btcd-btn-lg blue sh-sm flx" type="button" disabled={!isAuthorized}>
-          Save
-        </button>
-      )}
+          <button onClick={e => saveGoogleConfig(e)} className="btn f-right btcd-btn-lg blue sh-sm flx" type="button" disabled={!isAuthorized}>
+            Save
+          </button>
+        )}
 
       </div>
     </div>

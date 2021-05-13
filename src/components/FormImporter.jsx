@@ -1,13 +1,12 @@
-import { useState, useEffect, useContext } from 'react'
-
-import { __ } from '../Utils/i18nwrap'
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useState, useContext } from 'react'
 import bitsFetch from '../Utils/bitsFetch'
 import { AllFormContext } from '../Utils/AllFormContext'
 import { deepCopy } from '../Utils/Helpers'
 
-export default function FormTemplates({ setModal, setTempModal, newFormId, setSnackbar }) {
+export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
   const { allFormsData } = useContext(AllFormContext)
-  const { allForms, allFormsDispatchHandler } = allFormsData
+  const { allFormsDispatchHandler } = allFormsData
   const [importProp, setImportProp] = useState({ prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
   const [error, setError] = useState({ formDetail: '', prop: '' })
   const handleChange = (ev) => {
@@ -16,7 +15,6 @@ export default function FormTemplates({ setModal, setTempModal, newFormId, setSn
     }
     if (ev.target.type === 'checkbox') {
       const tempProp = importProp.prop
-      console.log('ev.target.type', ev.target.checked, ev.target.value, tempProp.indexOf(ev.target.value))
       if (ev.target.checked && tempProp.indexOf(ev.target.value) < 0) {
         if (ev.target.value === 'all') {
           setImportProp({ ...importProp, prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
@@ -39,10 +37,8 @@ export default function FormTemplates({ setModal, setTempModal, newFormId, setSn
       ) {
         delete tempProp[tempProp.indexOf('all')]
       }
-      console.log(tempProp)
       setImportProp({ ...importProp, prop: tempProp })
     } else {
-      console.log('ev.target.files[0]', ev.target.files[0])
       const file = ev.target.files[0]
       if (!file || file.type !== 'application/json') {
         setError({ ...error, formDetail: 'Please select an exported json file' })
@@ -71,9 +67,7 @@ export default function FormTemplates({ setModal, setTempModal, newFormId, setSn
       file.value = ''
     }
   }
-  console.log('allForms', allForms)
   const handleImport = () => {
-    console.log('newFormId', newFormId)
     if (!importProp.formDetail?.layout || !importProp.formDetail?.fields) {
       setError({ ...error, formDetail: 'Please select an exported json file' })
       return

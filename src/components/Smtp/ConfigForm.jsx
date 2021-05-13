@@ -6,13 +6,13 @@ import CheckBox from '../Utilities/CheckBox'
 
 export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, setsnack }) {
   const [isLoading, setIsLoading] = useState(false)
-   const [isShowing, setIsShowing] = useState(true)
-   const [isAuthentic, setIsAuthentic] = useState(true)
+  const [isShowing, setIsShowing] = useState(true)
+  const [isAuthentic, setIsAuthentic] = useState(true)
 
   useEffect(() => {
     setIsShowing(Number(status) === 1)
     setIsAuthentic(Number(mail.smtp_auth) === 1)
-   }, [status, mail.smtp_auth])
+  }, [status, mail.smtp_auth])
 
   const formRef = useRef(null)
   const handleSubmit = (e) => {
@@ -21,11 +21,11 @@ export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, 
     setIsLoading(true)
     bitsFetch(formmail,
       'bitforms_mail_config').then((res) => {
-        if (res !== undefined && res.success) {
-          setsnack({ ...{ show: true, msg: __('smtp Config save successfully', 'bitform') } })
-          setIsLoading(false)
-        }
-      })
+      if (res !== undefined && res.success) {
+        setsnack({ ...{ show: true, msg: __('smtp Config save successfully', 'bitform') } })
+        setIsLoading(false)
+      }
+    })
   }
   const handleInput = (typ, val, isNumber) => {
     const tmpMail = { ...mail }

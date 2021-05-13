@@ -10,9 +10,7 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const nextPage = () => {
     if (!checkValidEmail(analyticsConf.ownerEmail)) {
-      setError({
-        ownerEmail: !checkValidEmail(analyticsConf.ownerEmail) ? __('Email is invalid', 'bitform') : '',
-      })
+      setError({ ownerEmail: !checkValidEmail(analyticsConf.ownerEmail) ? __('Email is invalid', 'bitform') : '' })
       return
     }
     setStep(2)

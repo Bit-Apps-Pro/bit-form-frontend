@@ -9,9 +9,7 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
   const nextPage = () => {
     if (!creatorConf.accountOwner) {
-      setError({
-        accountOwner: __('Account Owner Name is mandatory!', 'bitform'),
-      })
+      setError({ accountOwner: __('Account Owner Name is mandatory!', 'bitform') })
       return
     }
     setStep(2)

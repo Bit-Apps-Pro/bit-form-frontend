@@ -371,7 +371,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
             fname={it}
             width="100"
             link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id
-              }&fileID=${it}`}
+            }&fileID=${it}`}
           />
         ))
       )

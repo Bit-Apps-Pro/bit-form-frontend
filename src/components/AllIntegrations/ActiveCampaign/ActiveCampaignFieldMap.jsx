@@ -65,19 +65,19 @@ export default function ActiveCampaignFieldMap({ i, formFields, field, activeCam
       </select>
       {!isRequired
         && (
-        <>
-          <button
-            onClick={() => addFieldMap(i)}
-            className="icn-btn sh-sm ml-2"
-            type="button"
-          >
-            +
-          </button>
-          <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
-            <span className="btcd-icn icn-trash-2" />
-          </button>
-        </>
-      )}
+          <>
+            <button
+              onClick={() => addFieldMap(i)}
+              className="icn-btn sh-sm ml-2"
+              type="button"
+            >
+              +
+            </button>
+            <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
+              <span className="btcd-icn icn-trash-2" />
+            </button>
+          </>
+        )}
     </div>
   )
 }
