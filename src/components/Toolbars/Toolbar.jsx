@@ -28,6 +28,8 @@ import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import BtnIcn from '../../Icons/BtnIcn'
+import countries from '../../Utils/StaticData/countries.json'
+import FlagIcn from '../../Icons/FlagIcn'
 
 function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
   const tools = [
@@ -116,6 +118,18 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           { label: 'Option 2', value: 'Option 2' },
           { label: 'Option 3', value: 'Option 3' },
         ],
+        valid: {},
+      },
+    },
+    {
+      name: __('Country', 'bitform'),
+      icn: <FlagIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      elm: {
+        typ: 'select',
+        lbl: __('Select Country', 'bitform'),
+        mul: false,
+        opt: countries,
         valid: {},
       },
     },
