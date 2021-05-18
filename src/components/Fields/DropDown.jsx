@@ -63,6 +63,43 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
     }
   }
 
+  const getOptions = () => {
+    const opt = []
+    attr.opt.map(option => {
+      if (option.lbl) {
+        opt.push({ label: option.lbl, value: option.lbl })
+        if (option.prefix_img) {
+          opt.push({
+            ...option,
+            label: (
+              <div>
+                <img src="http://bitcode.io/wp-content/plugins/BitForm/static/countries/af.png" alt="" />
+                {option.label || option.lbl}
+              </div>),
+          })
+        }
+      } else if (option.prefix_img) {
+        let assetsURL = ''
+        if (typeof bits === 'undefined' && typeof bitFormsFront !== 'undefined') {
+          assetsURL = bitFormsFront.assetUrl
+        } else {
+          assetsURL = bits.assetsURL
+        }
+        opt.push({
+          ...option,
+          label: (
+            <div className="btcd-flx">
+              <img className="dpd-prefix" src={`${assetsURL}${option.prefix_img}`} alt={option.label} />
+              {option.label || option.lbl}
+            </div>),
+        })
+      } else {
+        opt.push(option)
+      }
+    })
+    return opt
+  }
+
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="select">
       {'lbl' in attr && (
@@ -82,7 +119,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
         // {...'val' in attr && attr.val.length > 0 && { defaultValue: typeof attr.val === 'string' && attr.val.length > 0 && attr.val[0] === '[' ? JSON.parse(attr.val) : attr.val !== undefined && attr.val.split(',') }}
         singleSelect={!attr.mul}
         customValue={attr.customOpt}
-        options={attr.opt.map(option => (option.lbl ? { value: option.lbl, label: option.lbl } : option))}
+        options={() => getOptions()}
         onChange={onChangeHandler}
         defaultValue={value}
       />
