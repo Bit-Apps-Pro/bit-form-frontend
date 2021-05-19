@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo } from 'react'
-import { __ } from '../../Utils/i18nwrap'
-import SingleInput from '../Utilities/SingleInput'
-import SingleToggle from '../Utilities/SingleToggle'
-import CopyText from '../Utilities/CopyText'
-import Back2FldList from './Back2FldList'
-import CloseIcn from '../../Icons/CloseIcn'
+import { memo } from 'react';
+import CloseIcn from '../../Icons/CloseIcn';
+import { __ } from '../../Utils/i18nwrap';
+import CopyText from '../Utilities/CopyText';
+import SingleInput from '../Utilities/SingleInput';
+import SingleToggle from '../Utilities/SingleToggle';
+import Back2FldList from './Back2FldList';
+import ErrorMessageSettings from './ErrorMessageSettings';
 
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -17,6 +18,8 @@ function RadioCheckSettings(props) {
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
   const isRound = elmData.round !== undefined
+  const isRadioRequired = elmData.valid.req !== undefined
+  const isOptionRequired = elmData.opt.find(opt => opt.req)
 
   function setLabel(e) {
     if (e.target.value === '') {
@@ -84,6 +87,23 @@ function RadioCheckSettings(props) {
       delete options[i].req
     }
     elmData.opt = options
+    const reqOpts = options.filter(opt => opt.req).map(op => op.lbl).join(', ')
+    if (!elmData.err) elmData.err = {}
+    if (!elmData.err.req) elmData.err.req = {}
+    elmData.err.req.dflt = reqOpts ? `${reqOpts} is required` : 'This field is required'
+
+    props.updateData({ id: elmId, data: elmData })
+  }
+
+  const setRadioRequired = e => {
+    if (e.target.checked) {
+      elmData.valid.req = true
+      if (!elmData.err) elmData.err = {}
+      if (!elmData.err.req) elmData.err.req = {}
+      elmData.err.req.dflt = 'This field is required'
+    } else {
+      delete elmData.valid.req
+    }
     props.updateData({ id: elmId, data: elmData })
   }
 
@@ -103,25 +123,28 @@ function RadioCheckSettings(props) {
         <span className="font-w-m">Field Type : </span>
         {elmData.typ === 'check' ? 'Check Box' : 'Radio'}
       </div>
-      <span className="font-w-m">{__('Field Key', 'bitform')}</span>
-      <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <div className="flx">
+        <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
+        <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0" />
+      </div>
       <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
       <div className="opt">
         <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {options.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
-            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={120} className="mt-0" />
+            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-1">
               {elmData.typ === 'check'
                 && (
-                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
-                    <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} />
+                  <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
+                    <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
                     <span className="btcd-mrk ck br-50 " />
                   </label>
                 )}
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
+              <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
                 <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                 <span className="btcd-mrk ck br-50 " />
               </label>
@@ -131,6 +154,15 @@ function RadioCheckSettings(props) {
         ))}
         <button onClick={addOpt} className="btn blue" type="button">{__('Add More +', 'bitform')}</button>
       </div>
+      {(isRadioRequired || isOptionRequired) && (
+        <ErrorMessageSettings
+          elmId={elmId}
+          elmData={elmData}
+          type="req"
+          title="Error Message"
+          updateAction={() => props.updateData({ id: elmId, data: elmData })}
+        />
+      )}
     </div>
   )
 }

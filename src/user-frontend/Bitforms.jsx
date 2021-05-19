@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
-import { useEffect, useReducer, useState } from 'react'
-import MapComponents from '../components/MapComponents'
-import { resetCaptcha } from '../components/Fields/Recaptcha'
-import { deepCopy } from '../Utils/Helpers'
-import { checkLogic, replaceWithField } from './checkLogic'
+import { useEffect, useReducer, useState } from 'react';
+import MapComponents from '../components/MapComponents';
+import { resetCaptcha } from '../components/Fields/Recaptcha';
+import { deepCopy } from '../Utils/Helpers';
+import { checkLogic, replaceWithField } from './checkLogic';
+import validateForm from './validation';
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
@@ -71,7 +72,7 @@ export default function Bitforms(props) {
       }
       form = document.getElementById(`form-${props.contentID}`)
     }
-    const newData = fieldData !== undefined && deepCopy(fieldData)
+    const newData = fieldData !== undefined && JSON.parse(JSON.stringify(fieldData))
     if (resetFieldValue) {
       setresetFieldValue(false)
     }
@@ -115,7 +116,7 @@ export default function Bitforms(props) {
           } else if (type === 'checkbox' || type === 'select-multiple' || type === 'select-one' || type === 'radio') {
             switch (type) {
               case 'checkbox':
-              // eslint-disable-next-line no-case-declarations
+                // eslint-disable-next-line no-case-declarations
                 const checkedValue = []
                 fieldDetails.forEach(option => { option.checked && option.value && checkedValue.push(option.value) })
                 value = checkedValue
@@ -123,7 +124,7 @@ export default function Bitforms(props) {
                 break
 
               case 'select-multiple':
-              // eslint-disable-next-line no-case-declarations
+                // eslint-disable-next-line no-case-declarations
                 const selectedValue = []
                 if (fieldDetails[0].slim) {
                   fieldDetails[0].slim.data.data.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
@@ -273,6 +274,13 @@ export default function Bitforms(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+
+    validateForm(event)
+    return
+
+
+
     setbuttonDisabled(true)
     snack && setSnack(false)
     const formData = new FormData(event.target)
@@ -455,6 +463,7 @@ export default function Bitforms(props) {
     <div id={`f-${props.formId}`}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <form
+        noValidate
         id={`form-${props.contentID}`}
         className={`_frm-bg-${props.formID}`}
         ref={props.refer}
