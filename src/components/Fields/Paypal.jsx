@@ -3,6 +3,7 @@ import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-payp
 import { useContext, useEffect, useState } from 'react'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetch from '../../Utils/bitsFetch'
+import { observeElement, select } from '../../Utils/globalHelpers'
 
 function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
   const appSettingsContext = useContext(AppSettings)
@@ -15,6 +16,26 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   const { currency } = attr
   const isSubscription = attr.payType === 'subscription'
   const isStandalone = attr.style.layout === 'standalone'
+
+  const setDefaultValues = () => {
+    const dynamicFlds = [
+      ['amountFld', setAmount],
+      ['shippingFld', setShipping],
+      ['taxFld', setTax],
+      ['descFld', setDescription],
+    ]
+
+    dynamicFlds.map(dynFld => {
+      if (attr?.[dynFld[0]]) {
+        const fld = document.getElementsByName(attr[dynFld[0]])[0]
+        if (fld) {
+          const { value } = fld
+          dynFld[1](value)
+        }
+      }
+    })
+  }
+
   useEffect(() => {
     let key = ''
     const payFld = document.getElementById(`paypal-client-${fieldKey}`)
@@ -31,6 +52,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }
     setClientID(key)
     obsrvPymntAttr()
+    setDefaultValues()
   }, [attr.payIntegID])
 
   useEffect(() => {
@@ -64,39 +86,40 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   const createSubscriptionHandler = (data, actions) => actions.subscription.create({ plan_id: attr?.planId })
 
   const obsrvPymntAttr = () => {
-    const fields = {}
     if (attr?.amountFld) {
-      fields[attr?.amountFld] = { elm: document.getElementsByName(attr?.amountFld)[0], func: setAmount }
+      const amntField = select(`[name="${attr.amountFld}"]`)
+      if (amntField) {
+        observeElement(amntField, 'value', (oldVal, newVal) => setAmount(newVal))
+      }
     }
 
     if (attr?.shippingFld) {
-      fields[attr?.shippingFld] = { elm: document.getElementsByName(attr?.shippingFld)[0], func: setShipping }
+      const spngField = select(`[name="${attr.shippingFld}"]`)
+      if (spngField) {
+        observeElement(spngField, 'value', (oldVal, newVal) => setShipping(newVal))
+      }
     }
 
     if (attr?.taxFld) {
-      fields[attr?.taxFld] = { elm: document.getElementsByName(attr?.taxFld)[0], func: setTax }
+      const taxField = select(`[name="${attr.taxFld}"]`)
+      if (taxField) {
+        observeElement(taxField, 'value', (oldVal, newVal) => setTax(newVal))
+      }
     }
 
     if (attr?.descFld) {
-      fields[attr?.descFld] = { elm: document.getElementsByName(attr?.descFld)[0], func: setDescription }
-    }
-    const payAttrObserver = new MutationObserver((data) => {
-      const obsrvdFld = fields[data[0].target.name]
-      if (obsrvdFld) {
-        obsrvdFld.func(data[0].target.value)
+      const descField = select(`[name="${attr.descFld}"]`)
+      if (descField) {
+        observeElement(descField, 'value', (oldVal, newVal) => setDescription(newVal))
       }
-      // setAmount(data[0].target.value)
-    })
-    Object.keys(fields).map(elm => {
-      payAttrObserver.observe(fields[elm].elm, { attributes: true, attributeFilter: ['value'] })
-    })
+    }
   }
 
   const createOrderHandler = (data, actions) => {
     const orderAmount = Number(attr.amount || amount)
     const shippingAmount = Number(attr.shipping || shipping)
     const taxAmount = (Number(attr.tax || tax) * orderAmount) / 100
-    const totalAmount = orderAmount + shippingAmount + taxAmount
+    const totalAmount = (orderAmount + shippingAmount + taxAmount).toFixed(2)
     return actions.order.create({
       purchase_units: [{
         description: attr.description || description,

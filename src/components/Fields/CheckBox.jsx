@@ -16,7 +16,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     }
   } else {
     // defaultValue = attr.opt.map(checkBoxElement => checkBoxElement.check && checkBoxElement.lbl)
-    defaultValue = attr.opt.filter(checkBoxElement => checkBoxElement.check).map(checkBoxElement => checkBoxElement.lbl)
+    defaultValue = attr.opt.filter(checkBoxElement => checkBoxElement.check).map(checkBoxElement => checkBoxElement.val || checkBoxElement.lbl)
   }
   const [value, setvalue] = useState(defaultValue || [])
   const checkBoxRef = useRef(null)
@@ -68,10 +68,10 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
               readOnly={attr?.valid?.readonly}
               // {...itm.check && { defaultChecked: true }}
               // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-              {...'lbl' in itm && { defaultValue: itm.lbl }}
+              defaultValue={itm.val || itm.lbl}
               {...itm.req && { required: true }}
               {...'name' in attr && { name: `${attr.name}[]` }}
-              {...{ checked: Array.isArray(value) && value.indexOf(itm.lbl) >= 0 }}
+              {...{ checked: Array.isArray(value) && value.indexOf(itm.val || itm.lbl) >= 0 }}
               onChange={onChangeHandler}
             />
             <span className="btcd-mrk ck" />

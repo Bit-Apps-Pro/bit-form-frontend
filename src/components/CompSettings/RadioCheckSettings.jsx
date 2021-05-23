@@ -1,16 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo } from 'react';
-import CloseIcn from '../../Icons/CloseIcn';
-import { __ } from '../../Utils/i18nwrap';
-import CopyText from '../Utilities/CopyText';
-import SingleInput from '../Utilities/SingleInput';
-import SingleToggle from '../Utilities/SingleToggle';
-import Back2FldList from './Back2FldList';
+import { memo, useState } from 'react'
+import CloseIcn from '../../Icons/CloseIcn'
+import DownloadIcon from '../../Icons/DownloadIcon'
+import { __ } from '../../Utils/i18nwrap'
+import CopyText from '../Utilities/CopyText'
+import Modal from '../Utilities/Modal'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
+import Back2FldList from './Back2FldList'
+import ImportOptions from './ImportOptions'
 import ErrorMessageSettings from './ErrorMessageSettings';
+
 
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...props.fields[elmId].opt]
@@ -20,6 +25,7 @@ function RadioCheckSettings(props) {
   const isRound = elmData.round !== undefined
   const isRadioRequired = elmData.valid.req !== undefined
   const isOptionRequired = elmData.opt.find(opt => opt.req)
+  const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   function setLabel(e) {
     if (e.target.value === '') {
@@ -115,10 +121,19 @@ function RadioCheckSettings(props) {
     props.updateData({ id: elmId, data: elmData })
   }
 
+  const openImportModal = () => {
+    importOpts.show = true
+    setImportOpts({ ...importOpts })
+  }
+
+  const closeImportModal = () => {
+    delete importOpts.show
+    setImportOpts({ ...importOpts })
+  }
+
   return (
     <div className="mr-4 ml-2">
       <Back2FldList setElementSetting={props.setElementSetting} />
-
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {elmData.typ === 'check' ? 'Check Box' : 'Radio'}
@@ -131,6 +146,11 @@ function RadioCheckSettings(props) {
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
+      <button onClick={openImportModal} className="btn" type="button">
+        <DownloadIcon size="16" />
+        &nbsp;
+        {__('Import Options', 'bitform')}
+      </button>
       <div className="opt">
         <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {options.map((itm, i) => (
@@ -152,7 +172,9 @@ function RadioCheckSettings(props) {
             </div>
           </div>
         ))}
-        <button onClick={addOpt} className="btn blue" type="button">{__('Add More +', 'bitform')}</button>
+        <button onClick={addOpt} className="btn blue" type="button">
+          {__('Add More +', 'bitform')}
+        </button>
       </div>
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
@@ -163,7 +185,40 @@ function RadioCheckSettings(props) {
           updateAction={() => props.updateData({ id: elmId, data: elmData })}
         />
       )}
+      <Modal
+        md
+        autoHeight
+        show={importOpts.show}
+        setModal={closeImportModal}
+        title={__('Import Options', 'bitform')}
+      >
+        <div className="pos-rel">
+          {!isPro && (
+            <div className="pro-blur flx" style={{ top: -7 }}>
+              <div className="pro">
+                {__('Available On', 'bitform')}
+                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                  <span className="txt-pro">
+                    &nbsp;
+                    {__('Premium', 'bitform')}
+                  </span>
+                </a>
+              </div>
+            </div>
+          )}
+          <ImportOptions
+            importOpts={importOpts}
+            setImportOpts={setImportOpts}
+            elmId={elmId}
+            elmData={elmData}
+            updateData={props.updateData}
+            lblKey="lbl"
+            valKey="val"
+          />
+        </div>
+      </Modal>
     </div>
   )
 }
+
 export default memo(RadioCheckSettings)

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetch from '../../Utils/bitsFetch'
-import { loadScript } from '../../Utils/Helpers'
+import { loadScript, observeElement, select } from '../../Utils/globalHelpers'
 
 export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend }) {
   const appSettingsContext = useContext(AppSettings)
@@ -15,7 +15,11 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
     setAmount(attr.options.amount)
   }, [attr.options.amount])
 
-  useEffect(() => loadRazorpayScript(), [])
+  useEffect(() => {
+    loadRazorpayScript()
+    setDefaultValues()
+    obsrvPymntAttr()
+  }, [])
 
   useEffect(() => {
     if (resetFieldValue) {
@@ -35,19 +39,56 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
         loadRazorpayScript()
       }
     }
+
   }
 
-  const amountFld = document.getElementsByName(attr.options.amountFld)[0]
-  amountFld?.addEventListener('change', e => setAmount(e.target.value))
+  const setDefaultValues = () => {
+    const dynamicFlds = [
+      ['amountFld', setAmount],
+      ['prefillNameFld', setPrefillName, 'prefill'],
+      ['prefillEmailFld', setPrefillEmail, 'prefill'],
+      ['prefillContactFld', setPrefillContact, 'prefill'],
+    ]
 
-  const prefillNameFld = document.getElementsByName(attr.options.prefill.prefillNameFld)[0]
-  prefillNameFld?.addEventListener('change', e => setPrefillName(e.target.value))
+    dynamicFlds.map(dynFld => {
+      const fldName = dynFld[2] ? attr.options[dynFld[2]][dynFld[0]] : attr.options[dynFld[0]]
+      if (fldName) {
+        const fld = select(`[name="${fldName}"]`)
+        if (fld) {
+          const { value } = fld
+          console.log({ value })
+          if (value) dynFld[1](value)
+        }
+      }
+    })
+  }
 
-  const prefillEmailFld = document.getElementsByName(attr.options.prefill.prefillEmailFld)[0]
-  prefillEmailFld?.addEventListener('change', e => setPrefillEmail(e.target.value))
-
-  const prefillContactFld = document.getElementsByName(attr.options.prefill.prefillContactFld)[0]
-  prefillContactFld?.addEventListener('change', e => setPrefillContact(e.target.value))
+  const obsrvPymntAttr = () => {
+    if (attr.options.amountFld) {
+      const amntField = select(`[name="${attr.options.amountFld}"]`)
+      if (amntField) {
+        observeElement(amntField, 'value', (oldVal, newVal) => setAmount(newVal))
+      }
+    }
+    if (attr.options.prefill.prefillNameFld) {
+      const nameField = select(`[name="${attr.options.prefill.prefillNameFld}"]`)
+      if (nameField) {
+        observeElement(nameField, 'value', (oldVal, newVal) => setPrefillName(newVal))
+      }
+    }
+    if (attr.options.prefill.prefillEmailFld) {
+      const emailField = select(`[name="${attr.options.prefill.prefillEmailFld}"]`)
+      if (emailField) {
+        observeElement(emailField, 'value', (oldVal, newVal) => setPrefillEmail(newVal))
+      }
+    }
+    if (attr.options.prefill.prefillContactFld) {
+      const contactField = select(`[name="${attr.options.prefill.prefillContactFld}"]`)
+      if (contactField) {
+        observeElement(contactField, 'value', (oldVal, newVal) => setPrefillContact(newVal))
+      }
+    }
+  }
 
   const paymentHandler = response => {
     const form = document.getElementById(`form-${contentID}`)
@@ -89,7 +130,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
 
     const options = {
       key,
-      amount: amount * 100,
+      amount: Number(amount) * 100,
       currency,
       name,
       description,
