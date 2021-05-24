@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
+import { observeElement, select } from '../../Utils/globalHelpers'
 
 export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const type = attr.typ === 'url' ? 'text' : attr.typ
@@ -33,6 +34,13 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
     setvalue(val)
   }
 
+  useEffect(() => {
+    const textFld = select(`#${fieldKey}`)
+    if (textFld) {
+      observeElement(textFld, 'value', (oldVal, newVal) => setvalue(attr.typ === 'email' ? newVal.toLowerCase() : newVal))
+    }
+  }, [])
+
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="text-fld">
       {'lbl' in attr && (
@@ -51,10 +59,10 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
         {...'ph' in attr && { placeholder: attr.ph }}
         {...'mn' in attr && { min: attr.mn }}
         {...'mx' in attr && { max: attr.mx }}
-        {...{ value }}
         {...'ac' in attr && { autoComplete: attr.ac }}
         {...'name' in attr && { name: attr.name }}
         {...onBlurHandler && { onBlur: onBlurHandler }}
+        {...{ value }}
         {...{ onChange: onChangeHandler }}
         ref={textFieldRef}
       />
