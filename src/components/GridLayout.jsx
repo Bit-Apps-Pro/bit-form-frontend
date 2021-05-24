@@ -368,7 +368,7 @@ function GridLayout(props) {
 
       id = node.getAttribute('btcd-id')
 
-      if (fields[id].typ === 'select') {
+      if (fields[id]?.typ === 'select') {
         const allSel = document.querySelectorAll('select')
         for (let i = 0; i < allSel.length; i += 1) {
           allSel[i].parentNode.parentNode.classList.remove('z-9')

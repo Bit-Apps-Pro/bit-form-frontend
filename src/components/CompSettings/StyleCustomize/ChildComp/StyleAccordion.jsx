@@ -23,7 +23,7 @@ export default function StyleAccordion({ className, title, children, open, onOpe
   return (
     <div className={`${className} ${tgl && 'active'}`}>
       <div
-        className="tgl"
+        className="btgl"
         tabIndex="0"
         role="button"
         onClick={() => toggleAccordion(!tgl)}

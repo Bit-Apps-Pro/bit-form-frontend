@@ -6,8 +6,13 @@ import SingleToggle from '../Utilities/SingleToggle'
 import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
 import CloseIcn from '../../Icons/CloseIcn'
+import ImportOptions from './ImportOptions'
+import Modal from '../Utilities/Modal'
+import { useState } from 'react'
+import DownloadIcon from '../../Icons/DownloadIcon'
 
 export default function SelectSettings(props) {
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const elmId = props.elm.id
   const elmData = { ...props.fields[elmId] }
   const options = [...elmData.opt]
@@ -18,6 +23,7 @@ export default function SelectSettings(props) {
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
   const placeholder = elmData.ph === undefined ? '' : elmData.ph
+  const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   // set defaults
   if (isMultiple) {
@@ -128,6 +134,17 @@ export default function SelectSettings(props) {
     elmData.opt[i] = tmp
     props.updateData({ id: elmId, data: elmData })
   }
+
+  const openImportModal = () => {
+    importOpts.show = true
+    setImportOpts({ ...importOpts })
+  }
+
+  const closeImportModal = () => {
+    delete importOpts.show
+    setImportOpts({ ...importOpts })
+  }
+
   return (
     <div className="ml-2 mr-4">
       <Back2FldList setElementSetting={props.setElementSetting} />
@@ -143,6 +160,11 @@ export default function SelectSettings(props) {
       <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3" />
       {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
+      <button onClick={openImportModal} className="btn" type="button">
+        <DownloadIcon size="16" />
+        &nbsp;
+        {__('Import Options', 'bitform')}
+      </button>
       <div className="opt">
         <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {elmData.opt.map((itm, i) => (
@@ -159,6 +181,38 @@ export default function SelectSettings(props) {
         ))}
         <button onClick={addOpt} className="btn blue" type="button">{__('Add More +', 'bitform')}</button>
       </div>
+      <Modal
+        md
+        autoHeight
+        show={importOpts.show}
+        setModal={closeImportModal}
+        title={__('Import Options', 'bitform')}
+      >
+        <div className="pos-rel">
+          {!isPro && (
+            <div className="pro-blur flx" style={{ top: -7 }}>
+              <div className="pro">
+                {__('Available On', 'bitform')}
+                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                  <span className="txt-pro">
+                    &nbsp;
+                    {__('Premium', 'bitform')}
+                  </span>
+                </a>
+              </div>
+            </div>
+          )}
+          <ImportOptions
+            importOpts={importOpts}
+            setImportOpts={setImportOpts}
+            elmId={elmId}
+            elmData={elmData}
+            updateData={props.updateData}
+            lblKey="label"
+            valKey="value"
+          />
+        </div>
+      </Modal>
     </div>
   )
 }
