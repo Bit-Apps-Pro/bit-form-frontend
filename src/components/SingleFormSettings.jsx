@@ -11,6 +11,7 @@ import SingleToggle2 from './Utilities/SingleToggle2'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import Cooltip from './Utilities/Cooltip'
+import HoneypotIcn from '../Icons/HoneypotIcn'
 
 export default function SingleFormSettings({ fields, additional, setadditional }) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
@@ -458,8 +459,8 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         <div className={`flx flx-between sh-sm br-10 btcd-setting-opt  ${!isPro && 'btcd-inte-pro'}`}>
           <div className="">
             <div className="flx">
-              <span className="btcd-icn icn-block mr-2" />
-              <span className="flx">
+              <HoneypotIcn w="20" h="19" />
+              <span className="flx ml-2">
                 <b>{__('Honeypot trap for bot', 'bitform')}</b>
                 <Cooltip width={250} icnSize={17} className="ml-2">
                   <div className="txt-body">

@@ -877,7 +877,7 @@ input[type="checkbox"].disabled:checked:before {
 .style-acc {
   overflow: hidden;
   margin: auto;
-  & .tgl {
+  & .btgl {
     cursor: pointer;
     padding: 10px;
     font-size: 16 px;
@@ -4204,6 +4204,9 @@ _:-ms-fullscreen,
 .tippy-box{
   border-radius: 8px !important;
 }
+.tippy-backdrop{
+  background:$dp-bg !important;
+}
 
 .popper-icn{
   color:$dp-bg;
@@ -4211,6 +4214,7 @@ _:-ms-fullscreen,
 }
 .popper-icn:hover{
   opacity: 1;
+  cursor: help;
 }
 .txt-body{
   line-height: 1.2;
