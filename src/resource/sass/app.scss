@@ -2141,6 +2141,7 @@ nav.top-nav {
 .btcd-m-sm {
   width: 400px !important;
   height: auto !important;
+  min-height: 10% !important;
   & .content {
     height: 100%;
   }
