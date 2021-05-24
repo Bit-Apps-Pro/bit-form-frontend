@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
-export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
+function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
@@ -71,6 +71,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
         if (option.prefix_img) {
           opt.push({
             ...option,
+            title: (option.label || option.lbl),
             label: (
               <div>
                 <img src="http://bitcode.io/wp-content/plugins/BitForm/static/countries/af.png" alt="" />
@@ -87,6 +88,7 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
         }
         opt.push({
           ...option,
+          title: (option.label || option.lbl),
           label: (
             <div className="btcd-flx">
               <img className="dpd-prefix" src={`${assetsURL}${option.prefix_img}`} alt={option.label} />
@@ -127,3 +129,5 @@ export default function DropDown({ attr, onBlurHandler, resetFieldValue, formID,
     </div>
   )
 }
+
+export default memo(DropDown)
