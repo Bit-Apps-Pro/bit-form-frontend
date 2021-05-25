@@ -113,10 +113,12 @@ export const dateTimeFormatter = (dateStr, format) => {
     return 'Invalid Date'
   }
 
+  const allFormatObj = {}
+
   // Day
-  const d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
-  const j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
-  let S = Number(j)
+  allFormatObj.d = newDate.toLocaleDateString('en-US', { day: '2-digit' })
+  allFormatObj.j = newDate.toLocaleDateString('en-US', { day: 'numeric' })
+  let S = Number(allFormatObj.j)
   if (S % 10 === 1 && S !== 11) {
     S = 'st'
   } else if (S % 10 === 2 && S !== 12) {
@@ -126,36 +128,36 @@ export const dateTimeFormatter = (dateStr, format) => {
   } else {
     S = 'th'
   }
+  allFormatObj.S = S
   // Weekday
-  const l = newDate.toLocaleDateString('en-US', { weekday: 'long' })
-  const D = newDate.toLocaleDateString('en-US', { weekday: 'short' })
+  allFormatObj.l = newDate.toLocaleDateString('en-US', { weekday: 'long' })
+  allFormatObj.D = newDate.toLocaleDateString('en-US', { weekday: 'short' })
   // Month
-  const m = newDate.toLocaleDateString('en-US', { month: '2-digit' })
-  const n = newDate.toLocaleDateString('en-US', { month: 'numeric' })
-  const F = newDate.toLocaleDateString('en-US', { month: 'long' })
-  const M = newDate.toLocaleDateString('en-US', { month: 'short' })
+  allFormatObj.m = newDate.toLocaleDateString('en-US', { month: '2-digit' })
+  allFormatObj.n = newDate.toLocaleDateString('en-US', { month: 'numeric' })
+  allFormatObj.F = newDate.toLocaleDateString('en-US', { month: 'long' })
+  allFormatObj.M = newDate.toLocaleDateString('en-US', { month: 'short' })
   // Year
-  const Y = newDate.toLocaleDateString('en-US', { year: 'numeric' })
-  const y = newDate.toLocaleDateString('en-US', { year: '2-digit' })
+  allFormatObj.Y = newDate.toLocaleDateString('en-US', { year: 'numeric' })
+  allFormatObj.y = newDate.toLocaleDateString('en-US', { year: '2-digit' })
   // Time
-  const a = newDate.toLocaleTimeString('en-US', { hour12: true }).split(' ')[1].toLowerCase()
-  const A = newDate.toLocaleTimeString('en-US', { hour12: true }).split(' ')[1]
+  allFormatObj.a = newDate.toLocaleTimeString('en-US', { hour12: true }).split(' ')[1].toLowerCase()
+  allFormatObj.A = newDate.toLocaleTimeString('en-US', { hour12: true }).split(' ')[1]
   // Hour
-  const g = newDate.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric' }).split(' ')[0]
-  const h = newDate.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit' }).split(' ')[0]
-  const G = newDate.toLocaleTimeString('en-US', { hour12: false, hour: 'numeric' })
-  const H = newDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit' })
+  allFormatObj.g = newDate.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric' }).split(' ')[0]
+  allFormatObj.h = newDate.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit' }).split(' ')[0]
+  allFormatObj.G = newDate.toLocaleTimeString('en-US', { hour12: false, hour: 'numeric' })
+  allFormatObj.H = newDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit' })
   // Minute
-  const i = newDate.toLocaleTimeString('en-US', { minute: '2-digit' })
+  allFormatObj.i = newDate.toLocaleTimeString('en-US', { minute: '2-digit' })
   // Second
-  const s = newDate.toLocaleTimeString('en-US', { second: '2-digit' })
+  allFormatObj.s = newDate.toLocaleTimeString('en-US', { second: '2-digit' })
   // Additional
-  const T = newDate.toLocaleTimeString('en-US', { timeZoneName: 'short' }).split(' ')[2]
-  const c = newDate.toISOString()
-  const r = newDate.toUTCString()
-  const U = newDate.valueOf()
+  allFormatObj.T = newDate.toLocaleTimeString('en-US', { timeZoneName: 'short' }).split(' ')[2]
+  allFormatObj.c = newDate.toISOString()
+  allFormatObj.r = newDate.toUTCString()
+  allFormatObj.U = newDate.valueOf()
   let formattedDate = ''
-  const allFormatObj = { a, A, c, d, D, F, g, G, h, H, i, j, l, m, M, n, r, s, S, T, U, y, Y }
 
   const allFormatkeys = Object.keys(allFormatObj)
 
@@ -171,19 +173,6 @@ export const dateTimeFormatter = (dateStr, format) => {
 
   return formattedDate
 }
-
-export const loadScript = (src, type) => new Promise((resolve) => {
-  const script = document.createElement('script')
-  script.src = src
-  script.onload = () => {
-    resolve(true)
-  }
-  script.onerror = () => {
-    resolve(false)
-  }
-  script.id = type
-  document.body.appendChild(script)
-})
 
 const cipher = salt => {
   const textToChars = text => text.split('').map(c => c.charCodeAt(0))
@@ -242,3 +231,21 @@ export const makeFieldsArrByLabel = labels => {
   }
   return sortArrOfObj(tmpLabels, 'name')
 }
+
+export const getFileExts = filename => filename.split('.').pop()
+
+export const csvToJson = (string, delimiter = ',') => {
+  const regex = new RegExp(`\\s*(")?(.*?)\\1\\s*(?:${delimiter}|$)`, 'gs')
+  const match = str => [...str.matchAll(regex)].map(matc => matc[2])
+    .filter((_, i, a) => i < a.length - 1)
+
+  const lines = string.split('\n')
+  const heads = match(lines.splice(0, 1)[0])
+
+  return lines.map(line => match(line).reduce((acc, cur, i) => ({
+    ...acc,
+    [heads[i] || `extra_${i}`]: ((cur.length > 0) ? (Number(cur) || cur) : '').trim(),
+  }), {}))
+}
+
+export const isType = (type, val) => !!(val?.constructor && val.constructor.name.toLowerCase() === type.toLowerCase())

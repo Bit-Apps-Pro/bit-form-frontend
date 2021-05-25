@@ -1,7 +1,7 @@
 import { CSSTransition } from 'react-transition-group'
 import CloseIcn from '../../Icons/CloseIcn'
 
-export default function Modal({ show, setModal, sm, lg, style, className, title, warning, hdrActn, children, subTitle }) {
+export default function Modal({ show, setModal, sm, lg, style, className, title, warning, hdrActn, children, subTitle, autoHeight }) {
   const handleClickOutside = e => {
     if (e.target.classList.contains('btcd-modal-wrp')) {
       setModal(false)
@@ -20,10 +20,10 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
         tabIndex={0}
         onKeyPress={handleClickOutside}
         onClick={handleClickOutside}
-        className="btcd-modal-wrp flx"
+        className="btcd-modal-wrp"
       >
         <div
-          className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className}`}
+          className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className} ${autoHeight ? 'auto-height' : ''}`}
           style={style}
         >
           <div className="btcd-modal-content">
