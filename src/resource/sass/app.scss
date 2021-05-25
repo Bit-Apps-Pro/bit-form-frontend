@@ -827,9 +827,9 @@ input[type="checkbox"].disabled:checked:before {
 .bar {
   background: #f3f3f3;
   width: 8px;
-  cursor: col-resize !important;
+  cursor: ew-resize !important;
   & > div {
-    cursor: col-resize !important;
+    cursor: ew-resize !important;
   }
 
   &::before {
