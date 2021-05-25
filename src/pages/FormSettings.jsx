@@ -3,6 +3,8 @@ import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-d
 import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
+import { useRecoilValue } from 'recoil'
+import { _fieldsArr } from '../GlobalStates'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const EmailTemplateEdit = lazy(() => import('../components/EmailTemplateEdit'))
@@ -12,8 +14,9 @@ const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
-export default function FormSettings({ additional, setadditional, formFields, formSettings, setFormSettings, mailTem, setMailTem, setProModal, saveForm, fields, workFlows, setworkFlows, integrations, setIntegration }) {
+export default function FormSettings({ additional, setadditional, formSettings, setFormSettings, mailTem, setMailTem, setProModal, saveForm, fields, workFlows, setworkFlows, integrations, setIntegration }) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
+  const formFields = useRecoilValue(_fieldsArr)
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   const [newTemplate, setNewTemplate] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })

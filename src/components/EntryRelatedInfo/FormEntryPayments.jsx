@@ -1,12 +1,16 @@
 /* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'
 import RazorpayInfo from './PaymentInfo/RazorpayInfo'
+import { _fieldLabels } from '../../GlobalStates'
 
-export default function FormEntryPayments({ formID, allLabels, rowDtl, settab }) {
+export default function FormEntryPayments({ formID, rowDtl, settab }) {
+  const allLabels = useRecoilValue(_fieldLabels)
+
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [paymentInfo, setPaymentInfo] = useState([])
   const [isLoading, setIsLoading] = useState(false)

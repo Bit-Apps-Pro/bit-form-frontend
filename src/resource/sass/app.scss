@@ -502,6 +502,9 @@ input[type="checkbox"].disabled:checked:before {
       color: $blue;
     }
   }
+  &:active{
+    border:2px solid $blue;
+  }
 }
 
 .tool-img {

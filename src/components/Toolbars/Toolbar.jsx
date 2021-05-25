@@ -2,7 +2,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -356,4 +356,4 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
     </div>
   )
 }
-export default (Toolbar)
+export default memo(Toolbar)

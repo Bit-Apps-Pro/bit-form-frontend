@@ -7,6 +7,7 @@ import MoveIcn from '../Icons/MoveIcn'
 import SettingsIcn from '../Icons/SettingsIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import MapComponents from './MapComponents'
 
@@ -25,7 +26,7 @@ export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem
   }
 
   const ComponentsByTheme = () => {
-    const componentProps = fields[layoutItem.i]
+    const componentProps = deepCopy(fields[layoutItem.i])
     // TODO move this code with recaptcha component after remove react frontend
     if (componentProps && componentProps.typ === 'recaptcha') {
       componentProps.siteKey = reCaptchaV2.siteKey

@@ -230,3 +230,15 @@ export const checkValidEmail = email => {
   }
   return false
 }
+export const makeFieldsArrByLabel = labels => {
+  const tmpLabels = []
+  let i = 0
+  while (i < labels.length) {
+    tmpLabels.push({
+      ...labels[i],
+      name: labels[i].adminLbl || labels[i].name || labels[i].key,
+    })
+    i += 1
+  }
+  return sortArrOfObj(tmpLabels, 'name')
+}

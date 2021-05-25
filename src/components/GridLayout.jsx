@@ -16,6 +16,7 @@ import FieldBlockWrapper from './FieldBlockWrapper'
 import { _fields } from '../GlobalStates'
 
 function GridLayout(props) {
+  console.log('render gridlay')
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const setProModal = useContext(ShowProModalContext)
   const { newData, setNewData, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props

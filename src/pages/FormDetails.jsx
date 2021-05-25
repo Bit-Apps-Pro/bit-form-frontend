@@ -1,6 +1,6 @@
 import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
@@ -10,13 +10,13 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher, sortArrOfObj } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
-import { _fieldCounter, _fields } from '../GlobalStates'
+import { _fieldLabels, _fields, _fieldsArr, _uniqueFieldKey } from '../GlobalStates'
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
@@ -34,8 +34,7 @@ function FormDetails(props) {
   const [isLoading, setisLoading] = useState(true)
   const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
   const [fields, setFields] = useRecoilState(_fields)
-  const [allLabels, setallLabels] = useState([])
-  const [formFields, setFormFields] = useState([])
+  const setFieldLabels = useSetRecoilState(_fieldLabels)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Untitled Form')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
@@ -47,16 +46,20 @@ function FormDetails(props) {
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const { history, newFormId } = props
+  const resetState1 = useResetRecoilState(_fieldLabels)
+  const resetState2 = useResetRecoilState(_fields)
 
-  useEffect(() => {
-    const tmpLabels = [...allLabels]
-    let i = 0
-    while (i < tmpLabels.length) {
-      tmpLabels[i].name = tmpLabels[i].adminLbl || tmpLabels[i].name || tmpLabels[i].key
-      i += 1
-    }
-    setFormFields(sortArrOfObj(tmpLabels, 'name'))
-  }, [allLabels])
+  // const uniq = useRecoilValue(_uniqueFieldKey)
+  // console.log({ uniq, newCounter })
+  // useEffect(() => {
+  //   const tmpLabels = [...allLabels]
+  //   let i = 0
+  //   while (i < tmpLabels.length) {
+  //     tmpLabels[i].name = tmpLabels[i].adminLbl || tmpLabels[i].name || tmpLabels[i].key
+  //     i += 1
+  //   }
+  //   setFormFields(sortArrOfObj(tmpLabels, 'name'))
+  // }, [allLabels])
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
@@ -86,6 +89,8 @@ function FormDetails(props) {
   const onUnmount = () => {
     setFulScn(false)
     showWpMenu()
+    resetState1()
+    resetState2()
   }
 
   useEffect(() => {
@@ -97,20 +102,6 @@ function FormDetails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  /* const [subBtn, setSubBtn] = useState({
-    typ: 'submit',
-    btnSiz: 'md',
-    fulW: false,
-    align: 'right',
-    subBtnTxt: 'Submit',
-  }) */
-
-  /*  const updateSubBtn = val => {
-     setSubBtn(val)
-     formSettings.submitBtn = val
-     setFormSettings(formSettings)
-   }
-  */
   const [mailTem, setMailTem] = useState([])
 
   const [integrations, setIntegration] = useState([])
@@ -193,7 +184,7 @@ function FormDetails(props) {
             setIntegration(responseData.formSettings.integrations)
             setMailTem(responseData.formSettings.mailTem)
             // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
-            setallLabels(responseData.Labels)
+            setFieldLabels(responseData.Labels)
             if ('reports' in responseData) reportsDispatch({ type: 'set', reports: responseData.reports })
             else reportsDispatch({ type: 'set', reports: [] })
             setisLoading(false)
@@ -208,10 +199,6 @@ function FormDetails(props) {
           setisLoading(false)
         })
     }
-  }
-
-  const handleFormName = e => {
-    setFormName(e.target.value)
   }
 
   const fSettings = {
@@ -298,7 +285,7 @@ function FormDetails(props) {
                 if ('workFlows' in data) setworkFlows(data.workFlows)
                 if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
                 if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
-                setallLabels(data.Labels)
+                setFieldLabels(data.Labels)
                 if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
                 else reportsDispatch({ type: 'set', reports: [] })
               }
@@ -314,7 +301,7 @@ function FormDetails(props) {
                 setIntegration(data.formSettings.integrations)
               }
               if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
-              setallLabels(data.Labels)
+              setFieldLabels(data.Labels)
               if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
               else reportsDispatch({ type: 'set', reports: [] })
               allFormsDispatchHandler({
@@ -414,7 +401,7 @@ function FormDetails(props) {
             <div className="btcd-bld-title">
               <input
                 className="btcd-bld-title-inp br-50"
-                onChange={handleFormName}
+                onChange={({ target: { value } }) => setFormName(value)}
                 value={formName}
               />
             </div>
@@ -440,7 +427,6 @@ function FormDetails(props) {
                   setLay={setLay}
                   setNewCounter={setNewCounter}
                   theme={fSettings.theme}
-                  setFormName={setFormName}
                   formID={formType === 'new' ? newFormId : formID}
                   formType={formType}
                   formSettings={fSettings}
@@ -452,7 +438,6 @@ function FormDetails(props) {
                 <FormEntries
                   allResp={allResponse}
                   setAllResp={setAllResponse}
-                  allLabels={allLabels}
                   integrations={integrations}
                 />
               ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
@@ -461,8 +446,6 @@ function FormDetails(props) {
               <FormSettings
                 saveForm={saveForm}
                 formName={formName}
-                setFormName={setFormName}
-                formFields={formFields}
                 fields={fields}
                 formSettings={fSettings}
                 setFormSettings={setFormSettings}
