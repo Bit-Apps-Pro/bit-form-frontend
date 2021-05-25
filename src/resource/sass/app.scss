@@ -880,7 +880,7 @@ input[type="checkbox"].disabled:checked:before {
   & .btgl {
     cursor: pointer;
     padding: 10px;
-    font-size: 16 px;
+    font-size: 16px;
     outline: none;
     font-weight: 600;
     & .btcd-icn {
@@ -1006,6 +1006,7 @@ input[type="checkbox"].disabled:checked:before {
 .blk-icn-wrp{
   background: rgba(255, 255, 255, 0.658);
   right:0;
+  z-index: 9;
   height:0;
   width: 0;
   & > button{

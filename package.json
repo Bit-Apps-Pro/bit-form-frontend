@@ -27,6 +27,7 @@
     "react-tabs": "^3.2.1",
     "react-time-picker": "^4.2.1",
     "react-transition-group": "^4.4.1",
+    "recoil": "^0.3.1",
     "regenerator-runtime": "^0.13.7",
     "sortablejs": "^1.12.0",
     "swr": "^0.5.5",
@@ -50,7 +51,9 @@
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
-    "clean": "rimraf node_modules yarn.lock package-lock.json"
+    "clean": "rimraf node_modules yarn.lock package-lock.json",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "husky": {
     "hooks": {
@@ -89,6 +92,12 @@
     "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/node-logger": "^6.2.9",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.9",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.6",

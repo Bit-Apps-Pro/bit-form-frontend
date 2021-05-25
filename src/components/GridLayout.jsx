@@ -5,6 +5,7 @@
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { useRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
@@ -12,11 +13,13 @@ import { deepCopy } from '../Utils/Helpers'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import FieldBlockWrapper from './FieldBlockWrapper'
+import { _fields } from '../GlobalStates'
 
 function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const setProModal = useContext(ShowProModalContext)
-  const { newData, setNewData, fields, setFields, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
+  const { newData, setNewData, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
+  const [fields, setFields] = useRecoilState(_fields)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -242,12 +245,13 @@ function GridLayout(props) {
       return
     }
     const nwLay = {}
+    const tmpFields = { ...fields }
     nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
     nwLay.md = genFilterLay(layouts.md, cols.md, i)
     nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
-    delete fields[i]
+    delete tmpFields[i]
     setLayouts(nwLay)
-    setFields({ ...fields })
+    setFields(tmpFields)
     props.setElmSetting({ id: null, data: { typ: '' } })
     sessionStorage.setItem('btcd-lc', '-')
   }

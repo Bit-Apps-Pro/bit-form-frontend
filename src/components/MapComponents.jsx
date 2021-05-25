@@ -12,6 +12,7 @@ import SubmitBtn from './Fields/SubmitBtn'
 import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
+import { memo } from 'react'
 // import NewDropDown from './Fields/NewDropDown'
 /*
 typ: input type
@@ -26,8 +27,8 @@ req: required
 mul: multiple
 */
 
-export default function MapComponents(props) {
-  switch (props.atts.typ) {
+function MapComponents(props) {
+  switch (props?.atts?.typ) {
     case 'text':
     case 'number':
     case 'password':
@@ -73,6 +74,7 @@ export default function MapComponents(props) {
     default:
       break
   }
-
   return <div>None</div>
 }
+
+export default memo(MapComponents)
