@@ -1,5 +1,6 @@
 import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
@@ -15,6 +16,7 @@ import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
+import { _fieldCounter, _fields } from '../GlobalStates'
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
@@ -27,10 +29,11 @@ function FormDetails(props) {
   const { formType, formID } = useParams()
   const [fulScn, setFulScn] = useState(true)
   const [newCounter, setNewCounter] = useState(0)
+  // const [uniqueFieldKey,  ] = useRecoilState(_fieldCounter)
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
   const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
-  const [fields, setFields] = useState(null)
+  const [fields, setFields] = useRecoilState(_fields)
   const [allLabels, setallLabels] = useState([])
   const [formFields, setFormFields] = useState([])
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
@@ -433,10 +436,6 @@ function FormDetails(props) {
                 <FormBuilder
                   newCounter={newCounter}
                   isLoading={isLoading}
-                  fields={fields}
-                  setFields={setFields}
-                  // subBtn={subBtn}
-                  // setSubBtn={updateSubBtn}
                   lay={lay}
                   setLay={setLay}
                   setNewCounter={setNewCounter}
