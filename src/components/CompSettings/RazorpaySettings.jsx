@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { sortArrOfObj } from '../../Utils/Helpers'
@@ -9,10 +10,12 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
+import { _fields } from '../../GlobalStates'
 
-export default function RazorpaySettings({ elm, fields, updateData, setElementSetting }) {
-  const { payments } = useContext(AppSettings)
+export default function RazorpaySettings({ elm, updateData, setElementSetting }) {
+  const fields = useRecoilValue(_fields)
   const formFields = Object.entries(fields)
+  const { payments } = useContext(AppSettings)
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = elm.data?.payType === 'subscription'
   const isDynamicAmount = elm.data.options.amountType === 'dynamic'
