@@ -30,6 +30,7 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
             importOpts.data = data
             importOpts.presetNames = Object.keys(data)
             localStorage.setItem('bf-options-presets', JSON.stringify(res))
+            setImportOpts({ ...importOpts })
           }
           setLoading(false)
         })
@@ -37,9 +38,8 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
       const { data } = oldPresets
       importOpts.data = data
       importOpts.presetNames = Object.keys(data)
+      setImportOpts({ ...importOpts })
     }
-
-    setImportOpts({ ...importOpts })
   }, [])
 
   const setPresetName = val => {
