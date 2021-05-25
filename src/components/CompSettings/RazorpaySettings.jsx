@@ -259,7 +259,7 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
                 <div className="w-10"><b>{__('Value :', 'bitform')}</b></div>
               </div>
               {payNotes.map((notes, indx) => (
-                <div className="flx" key={indx}>
+                <div className="flx" key={`rp${indx * 2}`}>
                   <div>
                     <input className="btcd-paper-inp mt-1" type="text" value={notes.key} onChange={e => handleNotes('edit', indx, 'key', e.target.value)} />
                   </div>

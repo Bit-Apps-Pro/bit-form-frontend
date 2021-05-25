@@ -1,9 +1,9 @@
 import { lazy, Suspense, useState } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
-import { useRecoilValue } from 'recoil'
 import { _fieldsArr } from '../GlobalStates'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))

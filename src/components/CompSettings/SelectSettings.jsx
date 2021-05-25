@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
+import { useState } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -8,7 +9,6 @@ import Back2FldList from './Back2FldList'
 import CloseIcn from '../../Icons/CloseIcn'
 import ImportOptions from './ImportOptions'
 import Modal from '../Utilities/Modal'
-import { useState } from 'react'
 import DownloadIcon from '../../Icons/DownloadIcon'
 
 export default function SelectSettings(props) {

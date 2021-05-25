@@ -6,10 +6,10 @@
 
 import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
+import { RecoilRoot } from 'recoil'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
-import { RecoilRoot } from 'recoil'
 // import 'core-js/stable'
 // import 'regenerator-runtime/runtime';
 

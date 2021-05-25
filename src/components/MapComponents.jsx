@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import ReCaptcha from './Fields/Recaptcha'
 import TextField from './Fields/TextField'
 import TextArea from './Fields/TextArea'
@@ -12,7 +13,6 @@ import SubmitBtn from './Fields/SubmitBtn'
 import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
-import { memo } from 'react'
 // import NewDropDown from './Fields/NewDropDown'
 /*
 typ: input type

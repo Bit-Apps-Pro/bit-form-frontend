@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import LoaderSm from "../../Loaders/LoaderSm"
+import LoaderSm from '../../Loaders/LoaderSm'
 
 export const generateNewPresetsOptions = (importOpts, lblKey, valKey) => {
   const { data, preset, lbl, vlu } = importOpts

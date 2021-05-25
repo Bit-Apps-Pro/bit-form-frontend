@@ -1,8 +1,8 @@
-import DownloadIcon from "../../Icons/DownloadIcon";
-import { __ } from "../../Utils/i18nwrap";
-import CheckBox from "../Utilities/CheckBox";
-import FileUploadImportOptions, { generateNewFileUploadedOptions } from "./ImportOptionsComps/FileUploadImportOptions";
-import PresetsImportOptions, { generateNewPresetsOptions } from "./ImportOptionsComps/PresetsImportOptions";
+import DownloadIcon from '../../Icons/DownloadIcon'
+import { __ } from '../../Utils/i18nwrap'
+import CheckBox from '../Utilities/CheckBox'
+import FileUploadImportOptions, { generateNewFileUploadedOptions } from './ImportOptionsComps/FileUploadImportOptions'
+import PresetsImportOptions, { generateNewPresetsOptions } from './ImportOptionsComps/PresetsImportOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, elmId, elmData, updateData, lblKey, valKey }) {
   const generateNewOptions = () => {
@@ -42,7 +42,7 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
     <div className="mt-2">
       <div>
         <b>Data Source</b>
-        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc} >
+        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc}>
           <option value="fileupload">File Upload</option>
           <option value="presets">Presets</option>
         </select>

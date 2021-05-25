@@ -39,7 +39,6 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
         loadRazorpayScript()
       }
     }
-
   }
 
   const setDefaultValues = () => {

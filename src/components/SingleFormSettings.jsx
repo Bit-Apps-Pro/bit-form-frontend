@@ -467,7 +467,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
                     Honeypot protection provides security mechanisms to protect your
                     site from form submission by spam bots. If spam bot activity is detected, form submission is blocked.
                     <br />
-                    <a className="mt-1 cooltip-link" target="_blank" href="https://en.wikipedia.org/wiki/Honeypot_(computing)">Learn More</a>
+                    <a className="mt-1 cooltip-link" target="_blank" href="https://en.wikipedia.org/wiki/Honeypot_(computing)" rel="noreferrer">Learn More</a>
                   </div>
                 </Cooltip>
               </span>
