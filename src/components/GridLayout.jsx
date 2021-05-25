@@ -9,13 +9,15 @@ import { useRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
-import { deepCopy } from '../Utils/Helpers'
+import { deepCopy, isType } from '../Utils/Helpers'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import { _fields } from '../GlobalStates'
+import { AppSettings } from '../Utils/AppSettingsContext'
 
 function GridLayout(props) {
+  const { payments } = useContext(AppSettings)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const setProModal = useContext(ShowProModalContext)
   const { newData, setNewData, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
@@ -200,7 +202,14 @@ function GridLayout(props) {
 
   const margeNewData = () => {
     setNewData(null)
-    if (!checkPaymentFields(newData[0])) return
+    const checkPayments = checkPaymentFields(newData[0])
+    if (checkPayments && isType('array', checkPayments)) {
+      if (newData[0].typ === 'razorpay') {
+        newData[0].options.payIntegID = checkPayments[0].id
+      } else {
+        newData[0].payIntegID = checkPayments[0].id
+      }
+    } else if (!checkPayments) return
     if (newData[0].typ === 'recaptcha' && !checkCaptchaField()) return
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
@@ -285,6 +294,11 @@ function GridLayout(props) {
       if (msg) {
         return false
       }
+
+      const payConf = payments.filter(pay => pay.type.toLowerCase() === fld[0])
+      if (payConf.length === 1) {
+        return payConf
+      }
     }
     return true
   }
@@ -318,7 +332,15 @@ function GridLayout(props) {
 
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
-    if (!checkPaymentFields(draggedElm[0])) return
+    const checkPayments = checkPaymentFields(draggedElm[0])
+    if (checkPayments && isType('array', checkPayments)) {
+      if (draggedElm[0].typ === 'razorpay') {
+        draggedElm[0].options.payIntegID = checkPayments[0].id
+      } else {
+        draggedElm[0].payIntegID = checkPayments[0].id
+      }
+    } else if (!checkPayments) return
+
     if (draggedElm[0].typ === 'recaptcha' && !checkCaptchaField()) return
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
