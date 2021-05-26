@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import SelectBox2 from '../Utilities/SelectBox2'
 import Back2FldList from './Back2FldList'
+import { _fields } from '../../GlobalStates'
 
-export default function ButtonSettings({ updateData, elm, setElementSetting, fields }) {
+export default function ButtonSettings({ updateData, elm, setElementSetting }) {
+  const fields = useRecoilValue(_fields)
   const [error, seterror] = useState({})
   const elmId = elm.id
   const elmData = { ...fields[elmId] }
@@ -73,7 +76,7 @@ export default function ButtonSettings({ updateData, elm, setElementSetting, fie
       <SingleInput inpType="text" title={__('Submit Button Text:', 'bitform')} value={txt} action={setSubBtnTxt} />
       <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={align} action={setButtonAlign} />
       <SelectBox2 title={__('Button Type:', 'bitform')} options={type} value={btnTyp} action={setBtnTyp} />
-      { error.btnTyp && <span style={{ color: 'red' }}>{ error.btnTyp }</span>}
+      { error.btnTyp && <span style={{ color: 'red' }}>{error.btnTyp}</span>}
       <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} className="mt-5" />
       <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} className="mt-5" />
     </div>

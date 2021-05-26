@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { sortArrOfObj } from '../../Utils/Helpers'
@@ -9,10 +10,12 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
+import { _fields } from '../../GlobalStates'
 
-export default function RazorpaySettings({ elm, fields, updateData, setElementSetting }) {
-  const { payments } = useContext(AppSettings)
+export default function RazorpaySettings({ elm, updateData, setElementSetting }) {
+  const fields = useRecoilValue(_fields)
   const formFields = Object.entries(fields)
+  const { payments } = useContext(AppSettings)
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = elm.data?.payType === 'subscription'
   const isDynamicAmount = elm.data.options.amountType === 'dynamic'
@@ -256,7 +259,7 @@ export default function RazorpaySettings({ elm, fields, updateData, setElementSe
                 <div className="w-10"><b>{__('Value :', 'bitform')}</b></div>
               </div>
               {payNotes.map((notes, indx) => (
-                <div className="flx" key={indx}>
+                <div className="flx" key={`rp${indx * 2}`}>
                   <div>
                     <input className="btcd-paper-inp mt-1" type="text" value={notes.key} onChange={e => handleNotes('edit', indx, 'key', e.target.value)} />
                   </div>

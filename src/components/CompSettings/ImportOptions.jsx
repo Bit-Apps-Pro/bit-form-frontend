@@ -1,13 +1,18 @@
-import DownloadIcon from "../../Icons/DownloadIcon";
-import { __ } from "../../Utils/i18nwrap";
-import CheckBox from "../Utilities/CheckBox";
-import FileUploadImportOptions, { generateNewFileUploadedOptions } from "./ImportOptionsComps/FileUploadImportOptions";
-import PresetsImportOptions from "./ImportOptionsComps/PresetsImportOptions";
+import DownloadIcon from '../../Icons/DownloadIcon'
+import { __ } from '../../Utils/i18nwrap'
+import CheckBox from '../Utilities/CheckBox'
+import FileUploadImportOptions, { generateNewFileUploadedOptions } from './ImportOptionsComps/FileUploadImportOptions'
+import PresetsImportOptions, { generateNewPresetsOptions } from './ImportOptionsComps/PresetsImportOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, elmId, elmData, updateData, lblKey, valKey }) {
   const generateNewOptions = () => {
-    if (importOpts.dataSrc === 'fileupload') {
+    const { dataSrc } = importOpts
+    if (dataSrc === 'fileupload') {
       return generateNewFileUploadedOptions(importOpts, lblKey, valKey)
+    }
+
+    if (dataSrc === 'presets') {
+      return generateNewPresetsOptions(importOpts, lblKey, valKey)
     }
 
     return []
@@ -15,10 +20,12 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
 
   const handleInput = e => {
     const { name, value } = e.target
+    if (name === 'dataSrc') {
+      importOpts = { show: true }
+    }
     importOpts[name] = value
     setImportOpts({ ...importOpts })
   }
-
 
   const handleImport = () => {
     const opts = generateNewOptions()
@@ -35,9 +42,9 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
     <div className="mt-2">
       <div>
         <b>Data Source</b>
-        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc} >
+        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc}>
           <option value="fileupload">File Upload</option>
-          {/* <option value="presets">Presets</option> */}
+          <option value="presets">Presets</option>
         </select>
       </div>
 
@@ -53,16 +60,10 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
           setImportOpts={setImportOpts}
         />
       )}
-      {/* {Array(100).fill(0).map(_ => <br />)} */}
-      <div className="mt-1">
-        <CheckBox name="type" onChange={handleInput} radio title={__('Replace Previous Options', 'bitform')} value="replace" checked={importOpts.type !== 'merge'} />
-        <br />
-        <CheckBox name="type" onChange={handleInput} radio title={__('Merge with Previous Options', 'bitform')} value="merge" checked={importOpts.type === 'merge'} />
-      </div>
       {!!newOptions.length && (
         <div className="mt-2">
           <b>Preview:</b>
-          <table border="1" className="btcd-table wdt-300 txt-center mt-2">
+          <table border="1" className="btcd-table txt-center mt-2">
             <thead className="thead">
               <tr className="tr">
                 <th className="th">Label</th>
@@ -70,8 +71,8 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
               </tr>
             </thead>
             <tbody className="tbody">
-              {newOptions.slice(0, 5).map(opt => (
-                <tr key={opt.val} className="tr">
+              {newOptions.slice(0, 5).map((opt, indx) => (
+                <tr key={indx} className="tr">
                   <td className="td">{opt[lblKey]}</td>
                   <td className="td">{opt[valKey]}</td>
                 </tr>
@@ -89,6 +90,11 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
           </table>
         </div>
       )}
+      <div className="mt-1">
+        <CheckBox name="type" onChange={handleInput} radio title={__('Replace Previous Options', 'bitform')} value="replace" checked={importOpts.type !== 'merge'} />
+        <br />
+        <CheckBox name="type" onChange={handleInput} radio title={__('Merge with Previous Options', 'bitform')} value="merge" checked={importOpts.type === 'merge'} />
+      </div>
       <button onClick={handleImport} className="btn blue" type="button" disabled={!newOptions.length || false}>
         <DownloadIcon size="15" />
         &nbsp;
