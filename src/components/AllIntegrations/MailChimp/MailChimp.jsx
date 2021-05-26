@@ -7,7 +7,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, setGrantTokenResponse } from './MailChimpCommonFunc'
+import { handleInput, setGrantTokenResponse, checkAddressFieldMapRequired } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 import MailChimpAuthorization from './MailChimpAuthorization'
 
@@ -37,6 +37,10 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
     window.opener && setGrantTokenResponse('mailChimp')
   }, [])
   const nextPage = () => {
+    if (sheetConf.actions?.address && !checkAddressFieldMapRequired(sheetConf)) {
+      setSnackbar({ show: true, msg: 'Please map address required fields to continue.' })
+      return
+    }
     if (sheetConf.listId !== '') {
       setstep(3)
     }

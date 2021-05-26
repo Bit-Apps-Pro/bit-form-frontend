@@ -3,7 +3,7 @@ import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
 export default function MailChimpFieldMap({ i, formFields, field, sheetConf, setSheetConf }) {
-  const newConf = { ...sheetConf }
+
   return (
     <div
       className="flx mt-2 mr-1"

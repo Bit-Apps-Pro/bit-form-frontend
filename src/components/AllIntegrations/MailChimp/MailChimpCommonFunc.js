@@ -21,6 +21,14 @@ export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, se
   setSheetConf({ ...newConf })
 }
 
+export const checkAddressFieldMapRequired = sheetConf => {
+  const requiredFleld = sheetConf?.address_field ? sheetConf.address_field.filter(field => !field.formField && field.mailChimpAddressField && field.required) : []
+  if (requiredFleld.length > 0) {
+    return false
+  }
+  return true
+}
+
 export const listChange = (sheetConf, formID, setSheetConf, setisLoading, setSnackbar) => {
   const newConf = deepCopy(sheetConf)
   newConf.field_map = [{ formField: '', mailChimpField: '' }]

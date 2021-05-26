@@ -10,7 +10,7 @@ import MailChimpFieldMap from './MailChimpFieldMap'
 export default function MailChimpIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar, a }) {
   const address = [
     { tag: 'addr1', name: 'Address 1', required: true },
-    { tag: 'addr1', name: 'Address 2', required: false },
+    { tag: 'addr2', name: 'Address 2', required: false },
     { tag: 'city', name: 'City', required: true },
     { tag: 'zip', name: 'Zip', required: true },
     { tag: 'state', name: 'State', required: true },
