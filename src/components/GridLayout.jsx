@@ -212,6 +212,8 @@ function GridLayout(props) {
       }
     } else if (!checkPayments) return
     if (newData[0].typ === 'recaptcha' && !checkCaptchaField()) return
+    if (newData[0].lbl === 'Select Country' && !checkCountryField()) return
+    console.log({ newData })
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
@@ -331,6 +333,24 @@ function GridLayout(props) {
     return true
   }
 
+  const checkCountryField = () => {
+    let msg
+    if (!isPro) {
+      msg = __(
+        <p>
+          Country field is in Pro Version!
+        </p>, 'bitform',
+      )
+    }
+
+    if (msg) {
+      setProModal({ show: true, msg })
+      return false
+    }
+
+    return true
+  }
+
   const onDrop = (lay, elmPrms) => {
     const { draggedElm } = props
     const checkPayments = checkPaymentFields(draggedElm[0])
@@ -343,6 +363,7 @@ function GridLayout(props) {
     } else if (!checkPayments) return
 
     if (draggedElm[0].typ === 'recaptcha' && !checkCaptchaField()) return
+    if (draggedElm[0].lbl === 'Select Country' && !checkCountryField()) return
     const { w, h, minH, maxH, minW } = draggedElm[1]
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
