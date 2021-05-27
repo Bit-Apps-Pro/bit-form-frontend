@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import ReCaptcha from './Fields/Recaptcha'
 import TextField from './Fields/TextField'
 import TextArea from './Fields/TextArea'
@@ -26,8 +27,8 @@ req: required
 mul: multiple
 */
 
-export default function MapComponents(props) {
-  switch (props.atts.typ) {
+function MapComponents(props) {
+  switch (props?.atts?.typ) {
     case 'text':
     case 'number':
     case 'password':
@@ -73,6 +74,7 @@ export default function MapComponents(props) {
     default:
       break
   }
-
   return <div>None</div>
 }
+
+export default memo(MapComponents)

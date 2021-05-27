@@ -11,8 +11,8 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
   return (
     <CSSTransition
       in={show}
-      timeout={500}
-      classNames={`btc-mdl-trn`}
+      timeout={210}
+      classNames="btc-mdl-trn"
       unmountOnExit
     >
       <div

@@ -1,5 +1,5 @@
-import { csvToJson, getFileExts, isType } from "../../../Utils/Helpers"
-import { __ } from "../../../Utils/i18nwrap"
+import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
 
 const isPro = typeof bits !== 'undefined' && bits.isPro
 
@@ -16,7 +16,7 @@ export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
     const keyIndx = (lbl === 'value') ? 1 : 0
     const valIndx = (vlu === 'key') ? 0 : 1
     opts = data.split(pattern).filter(opt => opt.trim().length > 0).map(op => {
-      const opt = hasColonKeyVlu ? op.split(":") : op.split()
+      const opt = hasColonKeyVlu ? op.split(':') : op.split()
       const lbl = opt[keyIndx].trim()
       const val = (opt?.[valIndx] || lbl).trim()
       return { [lblKey]: lbl, [valKey]: val }
@@ -48,7 +48,7 @@ export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
   return opts
 }
 
-const generateSeparatorPattern = separator => separator === 'comma' ? ',' : (separator === 'space' ? /(\s+)/ : /(\n)/)
+const generateSeparatorPattern = separator => (separator === 'comma' ? ',' : (separator === 'space' ? /(\s+)/ : /(\n)/))
 
 const checkIfHasColonLblVlu = (separator, importOpts) => {
   let hasColonKeyVlu = 1
@@ -71,11 +71,11 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
   const handleImportFile = e => {
     if (!isPro) return []
     const file = e.target.files[0]
-    if (!file?.name) { console.warn('file missing'); return; }
+    if (!file?.name) { console.warn('file missing'); return }
     importOpts = { show: true, dataSrc: 'fileupload' }
     const ext = getFileExts(file.name)
     const reader = new FileReader()
-    if (ext === 'txt' || ext === "json" || ext === 'csv' || ext === 'tsv') {
+    if (ext === 'txt' || ext === 'json' || ext === 'csv' || ext === 'tsv') {
       reader.readAsText(file)
     } else if (ext === 'xlsx' || ext === 'xls') {
       reader.readAsArrayBuffer(file)
@@ -105,7 +105,7 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
           importOpts = setDefaultLblVlu(importOpts.headers[0], importOpts)
         }
       } else if (ext === 'xlsx' || ext === 'xls') {
-        if (!XLSX) { console.warn('sheet.js not loaded!'); return; }
+        if (!XLSX) { console.warn('sheet.js not loaded!'); return }
         const dataArr = new Uint8Array(data)
         const workbook = XLSX.read(dataArr, { type: 'array' })
         importOpts.dataTyp = ext
@@ -132,7 +132,7 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
       return {
         headers,
         lbl: headers[0] || '',
-        vlu: headers[0] || ''
+        vlu: headers[0] || '',
       }
     }
     if (isType('object', data) || (isType('array', data) && data.length === 1 && isType('object', data[0]))) {
@@ -164,9 +164,7 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
     setImportOpts({ ...importOpts })
   }
 
-  const getHeaderNames = obj => isType('object', obj) ? Object.keys(obj) : []
-
-
+  const getHeaderNames = obj => (isType('object', obj) ? Object.keys(obj) : [])
 
   return (
     <div className="mt-2">

@@ -6,6 +6,7 @@
 
 import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
+import { RecoilRoot } from 'recoil'
 import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
@@ -40,22 +41,24 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 }
 
 ReactDOM.render(
-  <AllFormContextProvider>
-    <AppSettingsProvider>
-      <Suspense fallback={(
-        <Loader style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '90vh',
-        }}
-        />
-      )}
-      >
-        <App />
-      </Suspense>
-    </AppSettingsProvider>
-  </AllFormContextProvider>, document.getElementById('btcd-app'),
+  <RecoilRoot>
+    <AllFormContextProvider>
+      <AppSettingsProvider>
+        <Suspense fallback={(
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '90vh',
+          }}
+          />
+        )}
+        >
+          <App />
+        </Suspense>
+      </AppSettingsProvider>
+    </AllFormContextProvider>
+  </RecoilRoot>, document.getElementById('btcd-app'),
 )
 
 // serviceWorker.register();

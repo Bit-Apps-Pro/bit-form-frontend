@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
@@ -15,13 +16,14 @@ import noData from '../resource/img/nodata.svg'
 import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
+import { _fieldLabels } from '../GlobalStates'
 
-function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
+function FormEntries({ allResp, setAllResp, integrations }) {
   console.log(
     '%c $render FormEntries',
     'background:skybluepadding:3pxborder-radius:5px',
   )
-
+  const allLabels = useRecoilValue(_fieldLabels)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(false)
   const { formID } = useParams()
@@ -37,7 +39,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
   const { allFormsData } = useContext(AllFormContext)
   const { reports } = reportsData
   const { allFormsDispatchHandler } = allFormsData
-  const [report] = useState(0)
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
 
@@ -370,8 +371,7 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
             key={`file-n-${i + 1.1}`}
             fname={it}
             width="100"
-            link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id
-            }&fileID=${it}`}
+            link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}`}
           />
         ))
       )
@@ -446,7 +446,6 @@ function FormEntries({ allResp, setAllResp, allLabels, integrations }) {
             formID={formID}
             entryID={entryID}
             setSnackbar={setSnackbar}
-            allLabels={allLabels}
             rowDtl={allResp[rowDtl.idx]}
             integrations={integrations}
           />

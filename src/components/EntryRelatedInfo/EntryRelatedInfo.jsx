@@ -1,13 +1,16 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-import { useState } from 'react'
+import { memo, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'
 import FormEntryPayments from './FormEntryPayments'
 import FormEntryTimeline from './FormEntryTimeline'
 import Modal from '../Utilities/Modal'
 import GoogleAdInfo from './GoogleAdInfo'
+import { _fieldLabels } from '../../GlobalStates'
 
-export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, setSnackbar, integrations, close }) {
+function EntryRelatedInfo({ formID, entryID, rowDtl, setSnackbar, integrations, close }) {
+  const allLabels = useRecoilValue(_fieldLabels)
   const [tab, settab] = useState('')
   const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
@@ -43,7 +46,6 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
           <Panel>
             <FormEntryPayments
               formID={formID}
-              allLabels={allLabels}
               rowDtl={rowDtl}
               settab={settab}
             />
@@ -54,7 +56,6 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
           <FormEntryTimeline
             formID={formID}
             entryID={entryID}
-            allLabels={allLabels}
             settab={settab}
             integrations={integrations}
           />
@@ -83,3 +84,4 @@ export default function EntryRelatedInfo({ formID, entryID, allLabels, rowDtl, s
     </Modal>
   )
 }
+export default memo(EntryRelatedInfo)

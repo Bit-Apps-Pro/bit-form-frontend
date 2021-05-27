@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import CopyText from '../Utilities/CopyText'
 import SnackMsg from '../Utilities/SnackMsg'
 import Loader from '../Loaders/Loader'
+import { _fieldLabels } from '../../GlobalStates'
 
-export default function FormEntryTimeline({ formID, entryID, allLabels, settab, integrations }) {
+function FormEntryTimeline({ formID, entryID, settab, integrations }) {
   // eslint-disable-next-line no-undef
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
+  const allLabels = useRecoilValue(_fieldLabels)
+
   const [log, setLog] = useState([])
   const [integLogs, setIntegLogs] = useState([])
   const [logShowMore, setLogShowMore] = useState([])
@@ -89,13 +93,13 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
       <div>
         {showLogs()}
         {
-          Object.keys(integInfo)?.length ? (
+          Object.keys(integInfo)?.length && (
             <>
               {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
               {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}
               {logShow && data.integration && renderIntegLog(integInfo)}
             </>
-          ) : ''
+          )
         }
       </div>
     )
@@ -180,3 +184,5 @@ export default function FormEntryTimeline({ formID, entryID, allLabels, settab, 
     </>
   )
 }
+
+export default memo(FormEntryTimeline)

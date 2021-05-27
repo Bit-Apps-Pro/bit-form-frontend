@@ -64,18 +64,6 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }
   }, [resetFieldValue])
 
-  /*   const amountFld = document.getElementsByName(attr?.amountFld)[0]
-    amountFld?.addEventListener('change', e => setAmount(e.target.value))
-
-    const shippingFld = document.getElementsByName(attr?.shippingFld)[0]
-    shippingFld?.addEventListener('change', e => setShipping(e.target.value))
-
-    const taxFld = document.getElementsByName(attr?.taxFld)[0]
-    taxFld?.addEventListener('change', e => setTax(e.target.value))
-
-    const descFld = document.getElementsByName(attr?.descFld)[0]
-    descFld?.addEventListener('change', e => setDescription(e.target.value)) */
-
   useEffect(() => {
     setrender(false)
     setTimeout(() => {
@@ -162,10 +150,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       }
     })
   }
-  // console.clear()
-  console.log('==================')
-  console.log('amount', amount)
-  console.log('==================')
+
   return (
     <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''} ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
       <div
@@ -177,7 +162,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           marginRight: 'auto',
         }}
       >
-        {(render && clientID) && (
+        {(render && clientID) ? (
           <PayPalScriptProvider
             options={{
               'client-id': clientID,
@@ -203,7 +188,9 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
               forceReRender={{ amount, lay: attr.style }}
             />
           </PayPalScriptProvider>
-        )}
+        ) : (!attr.payIntegID ? (
+          <p>Select a config from field settings to render the PayPal.</p>
+        ) : '')}
       </div>
     </div>
   )

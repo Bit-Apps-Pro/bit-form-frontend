@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import BrushIcn from '../../Icons/BrushIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -44,6 +45,7 @@ import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import TextFieldSettings from './TextFieldSettings'
 import BtnIcn from '../../Icons/BtnIcn'
+import { _fields } from '../../GlobalStates'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
   const { path } = useRouteMatch()
@@ -204,21 +206,22 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
       case 'decision-box':
         return <DecisionBoxSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'html':
-        return <HtmlFieldSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <HtmlFieldSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'button':
-        return <ButtonSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <ButtonSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'paypal':
-        return <PaypalSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <PaypalSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'razorpay':
-        return <RazorpaySettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <RazorpaySettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       default:
-        return <FieldList fields={fields} setElementSetting={setElementSetting} />
+        return <FieldList setElementSetting={setElementSetting} />
     }
   }
-  return <FieldList fields={fields} setElementSetting={setElementSetting} />
+  return <FieldList setElementSetting={setElementSetting} />
 }
 
-function FieldList({ fields, setElementSetting }) {
+function FieldList({ setElementSetting }) {
+  const fields = useRecoilValue(_fields)
   const arr = []
   for (const fld in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fld)) {

@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { createRef, useState, useCallback, useReducer, useEffect } from 'react'
+import { createRef, useState, useCallback, useReducer, useEffect, memo } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
+import { useRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
@@ -12,6 +13,7 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign, bitCipher } from '../Utils/Helpers'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { _fields } from '../GlobalStates'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -37,8 +39,9 @@ const styleReducer = (style, action) => {
   return style
 }
 
-function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, subBtn, setSubBtn, lay, setLay, theme, setFormName, formID, formType, formSettings }) {
+function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, lay, setLay, theme, formID, formType, formSettings }) {
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
+  const [fields, setFields] = useRecoilState(_fields)
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
@@ -51,7 +54,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   const [isToolDragging, setisToolDragging] = useState(false)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
-
+  console.log('render formbuilder')
   useEffect(() => {
     if (formType === 'new') {
       sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
@@ -271,14 +274,11 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
               gridWidth={gridWidth}
               draggedElm={drgElm}
               setElmSetting={setElementSetting}
-              fields={fields}
               newData={newData}
               setNewData={setNewData}
               formType={formType}
               formID={formID}
               setLay={setLay}
-              setFields={setFields}
-              setFormName={setFormName}
               subBtn={subBtn}
               newCounter={newCounter}
               setNewCounter={setNewCounter}
@@ -312,4 +312,4 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, fields, setFields, 
   )
 }
 
-export default FormBuilder
+export default memo(FormBuilder)

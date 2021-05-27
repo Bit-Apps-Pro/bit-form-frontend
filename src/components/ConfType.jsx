@@ -7,8 +7,7 @@ import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
 import bitsFetch from '../Utils/bitsFetch'
 
-export default function ConfType(props) {
-  const { formSettings, setFormSettings, formFields } = props
+export default function ConfType({ formID, formSettings, setFormSettings, formFields }) {
   const [pos, setPos] = useState(0)
 
   const removeIntegration = async (id, type = null) => {
@@ -16,7 +15,7 @@ export default function ConfType(props) {
     if (type && type === 'msg') {
       action = 'bitforms_delete_success_messsage'
     }
-    let status = await bitsFetch({ formID: props.formID, id }, action)
+    let status = await bitsFetch({ formID, id }, action)
     if (status !== undefined) {
       status = status.success
     } else if (status.data && status.data.data) {

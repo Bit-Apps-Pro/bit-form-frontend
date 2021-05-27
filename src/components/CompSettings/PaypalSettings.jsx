@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
@@ -7,10 +8,12 @@ import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
+import { _fields } from '../../GlobalStates'
 
-export default function PaypalSettings({ elm, fields, updateData, setElementSetting }) {
-  const { payments } = useContext(AppSettings)
+export default function PaypalSettings({ elm, updateData, setElementSetting }) {
+  const fields = useRecoilValue(_fields)
   const formFields = Object.entries(fields)
+  const { payments } = useContext(AppSettings)
   const isSubscription = elm.data?.payType === 'subscription'
   const isDynamicDesc = elm.data?.descType === 'dynamic'
   const isDynamicAmount = elm.data?.amountType === 'dynamic'
