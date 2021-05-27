@@ -1,6 +1,6 @@
-import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
+import { sprintf, __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...sheetConf }
@@ -21,11 +21,20 @@ export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, se
   setSheetConf({ ...newConf })
 }
 
+export const checkAddressFieldMapRequired = sheetConf => {
+  const requiredFleld = sheetConf?.address_field ? sheetConf.address_field.filter(field => !field.formField && field.mailChimpAddressField && field.required) : []
+  if (requiredFleld.length > 0) {
+    return false
+  }
+  return true
+}
+
 export const listChange = (sheetConf, formID, setSheetConf, setisLoading, setSnackbar) => {
   const newConf = deepCopy(sheetConf)
   newConf.field_map = [{ formField: '', mailChimpField: '' }]
 
   if (!newConf?.default?.fields?.[sheetConf.listId]) {
+    refreshTags(formID, newConf, setSheetConf, setisLoading, setSnackbar)
     refreshFields(formID, newConf, setSheetConf, setisLoading, setSnackbar)
   }
   return newConf
@@ -59,6 +68,35 @@ export const refreshAudience = (formID, sheetConf, setSheetConf, setisLoading, s
         setSnackbar({ show: true, msg: sprintf(__('Audience list refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Audience list failed. please try again', 'bitform') })
+      }
+      setisLoading(false)
+    })
+    .catch(() => setisLoading(false))
+}
+
+export const refreshTags = (formID, sheetConf, setSheetConf, setisLoading, setSnackbar) => {
+  setisLoading(true)
+  console.log('audience tags', sheetConf)
+  const refreshModulesRequestParams = {
+    formID,
+    clientId: sheetConf.clientId,
+    clientSecret: sheetConf.clientSecret,
+    tokenDetails: sheetConf.tokenDetails,
+    listId: sheetConf.listId,
+  }
+  bitsFetch(refreshModulesRequestParams, 'bitforms_mChimp_refresh_tags')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...sheetConf }
+        if (result.data.audienceTags) {
+          newConf.default.audienceTags = result.data.audienceTags
+        }
+        setSnackbar({ show: true, msg: __('Audience tags refreshed', 'bitform') })
+        setSheetConf({ ...newConf })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: sprintf(__('Audience tags refresh failed Cause: %s. please try again', 'bitform'), result.data.data || result.data) })
+      } else {
+        setSnackbar({ show: true, msg: __('Audience tags failed. please try again', 'bitform') })
       }
       setisLoading(false)
     })

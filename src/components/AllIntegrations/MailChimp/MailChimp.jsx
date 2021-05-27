@@ -7,7 +7,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, setGrantTokenResponse } from './MailChimpCommonFunc'
+import { handleInput, setGrantTokenResponse, checkAddressFieldMapRequired } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 import MailChimpAuthorization from './MailChimpAuthorization'
 
@@ -20,10 +20,11 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const [sheetConf, setSheetConf] = useState({
     name: 'Mail Chimp API',
     type: 'Mail Chimp',
-    clientId: process.env.NODE_ENV === 'development' ? '157302588119' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '9290588c73ca930093a977efbf961f578fe54858fdba29804b' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '125452420804' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '471dd71ee208e3cdc60e4bb91b4c29bb791832ab49946d396c' : '',
     listId: '',
     listName: '',
+    tags: '',
     field_map: [
       { formField: '', mailChimpField: '' },
     ],
@@ -36,6 +37,10 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
     window.opener && setGrantTokenResponse('mailChimp')
   }, [])
   const nextPage = () => {
+    if (sheetConf.actions?.address && !checkAddressFieldMapRequired(sheetConf)) {
+      setSnackbar({ show: true, msg: 'Please map address required fields to continue.' })
+      return
+    }
     if (sheetConf.listId !== '') {
       setstep(3)
     }

@@ -54,8 +54,9 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
+
         <div className="mt-3"><b>{__('API Key:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={enchargeConf.api_key} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={enchargeConf.api_key} type="text" placeholder={__('API key', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         <small className="d-blk mt-5">
           {__('To get API , Please Visit', 'bitform')}
