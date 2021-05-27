@@ -41,22 +41,33 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
 
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>{attr.lbl}</label>}
-      <textarea
-        id={fieldKey}
-        className={`fld fld-${formID} no-drg textarea`}
-        style={{ height: 'calc(100% - 30px)' }}
-        ref={textAreaRef}
-        {...'ph' in attr && { placeholder: attr.ph }}
-        {...'ac' in attr && { autoComplete: attr.ac }}
-        {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'disabled' in attr.valid && { disabled: attr.valid.disabled }}
-        {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
-        {...'name' in attr && { name: attr.name }}
-        {...onBlurHandler && { onBlur: onBlurHandler }}
-        {...{ value }}
-        onChange={onChangeHandler}
-      />
+      {'lbl' in attr && (
+        <label className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
+          {attr.lbl}
+          {attr.valid?.req && ' *'}
+        </label>
+      )}
+      <div>
+        <textarea
+          id={fieldKey}
+          className={`fld fld-${formID} no-drg textarea`}
+          style={{ height: 'calc(100% - 30px)' }}
+          ref={textAreaRef}
+          {...'ph' in attr && { placeholder: attr.ph }}
+          {...'ac' in attr && { autoComplete: attr.ac }}
+          {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+          {...'name' in attr && { name: attr.name }}
+          {...onBlurHandler && { onBlur: onBlurHandler }}
+          {...{ value }}
+          onChange={onChangeHandler}
+        />
+      </div>
+      <div className="error-wrapper">
+        <div id={`${fieldKey}-error`} className="error-txt">
+          {attr?.err?.msg}
+        </div>
+      </div>
     </div>
   )
 }
