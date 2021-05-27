@@ -498,7 +498,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
-          report={reports}
+          report={0} //index - 0 setted as default report
         />
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
