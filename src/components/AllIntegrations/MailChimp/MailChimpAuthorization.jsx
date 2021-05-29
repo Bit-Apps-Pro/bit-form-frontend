@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { refreshAudience, handleMailChimpAuthorize } from './MailChimpCommonFunc'
+import CopyText from '../../Utilities/CopyText'
+import { handleMailChimpAuthorize, refreshAudience } from './MailChimpCommonFunc'
 
 export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)

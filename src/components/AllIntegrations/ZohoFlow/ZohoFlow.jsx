@@ -18,6 +18,7 @@ function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
     type: 'Zoho Flow',
     method: 'POST',
     url: process.env.NODE_ENV === 'development' ? 'https://hooks..com/hooks/catch/8430229/o7gwcin/' : '',
+    apiConsole: 'https://flow.zoho.com/#/workspace/default/flows/create',
   })
   console.log('zohoFlow', zohoFlow)
   return (

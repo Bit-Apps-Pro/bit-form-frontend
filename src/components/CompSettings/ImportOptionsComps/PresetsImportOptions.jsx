@@ -10,11 +10,13 @@ export const generateNewPresetsOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const [loading, setLoading] = useState(false)
   const presetVersion = 1.0
   const presetURL = 'https://static.bitapps.pro/bitform/options-presets.json'
 
   useEffect(() => {
+    if (!isPro) return
     let oldPresets = localStorage.getItem('bf-options-presets')
     if (oldPresets) {
       oldPresets = JSON.parse(oldPresets)

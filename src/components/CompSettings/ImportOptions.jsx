@@ -5,7 +5,9 @@ import FileUploadImportOptions, { generateNewFileUploadedOptions } from './Impor
 import PresetsImportOptions, { generateNewPresetsOptions } from './ImportOptionsComps/PresetsImportOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, elmId, elmData, updateData, lblKey, valKey }) {
+  const isPro = typeof bits !== 'undefined' && bits.isPro
   const generateNewOptions = () => {
+    if (!isPro) return []
     const { dataSrc } = importOpts
     if (dataSrc === 'fileupload') {
       return generateNewFileUploadedOptions(importOpts, lblKey, valKey)

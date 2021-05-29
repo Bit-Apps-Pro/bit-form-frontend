@@ -1,20 +1,30 @@
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addAddressFieldMap, addFieldMap } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
-import { refreshAudience } from './MailChimpCommonFunc'
-import MailChimpFieldMap from './MailChimpFieldMap'
 import AddressFieldMap from './AddressFieldMap'
 import MailChimpActions from './MailChimpActions'
+import { refreshAudience, refreshTags } from './MailChimpCommonFunc'
+import MailChimpFieldMap from './MailChimpFieldMap'
 
 export default function MailChimpIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setisLoading, setSnackbar, a }) {
   const address = [
     { tag: 'addr1', name: 'Address 1', required: true },
-    { tag: 'addr1', name: 'Address 2', required: false },
+    { tag: 'addr2', name: 'Address 2', required: false },
     { tag: 'city', name: 'City', required: true },
     { tag: 'zip', name: 'Zip', required: true },
     { tag: 'state', name: 'State', required: true },
     { tag: 'country', name: 'Country', required: false },
   ]
+  const setTags = (val) => {
+    const newConf = { ...sheetConf }
+    if (val) {
+      newConf.tags = val ? val.split(',') : []
+    } else {
+      delete newConf.tags
+    }
+    setSheetConf({ ...newConf })
+  }
 
   return (
     <>
@@ -33,6 +43,16 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
       <button onClick={() => refreshAudience(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Audience list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
+      <div className="d-flx">
+        <b style={{ marginTop: '15px' }} className="wdt-150 d-in-b">{__('Tags: ', 'bitform')}</b>
+        <MultiSelect
+          defaultValue={sheetConf?.tags}
+          className="btcd-paper-drpdwn w-7"
+          options={sheetConf?.default?.audienceTags && Object.keys(sheetConf.default.audienceTags).map(tag => ({ label: sheetConf.default.audienceTags[tag].tagName, value: sheetConf.default.audienceTags[tag].tagName }))}
+          onChange={val => setTags(val)}
+        />
+        <button onClick={() => refreshTags(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      </div>
       {isLoading && (
         <Loader style={{
           display: 'flex',
