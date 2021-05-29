@@ -7,7 +7,6 @@
 import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { RecoilRoot } from 'recoil'
-import { AllFormContextProvider } from './Utils/AllFormContext'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
 // import 'core-js/stable'
@@ -42,22 +41,11 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 
 ReactDOM.render(
   <RecoilRoot>
-    <AllFormContextProvider>
-      <AppSettingsProvider>
-        <Suspense fallback={(
-          <Loader style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '90vh',
-          }}
-          />
-        )}
-        >
-          <App />
-        </Suspense>
-      </AppSettingsProvider>
-    </AllFormContextProvider>
+    <AppSettingsProvider>
+      <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
+        <App />
+      </Suspense>
+    </AppSettingsProvider>
   </RecoilRoot>, document.getElementById('btcd-app'),
 )
 

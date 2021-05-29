@@ -2,7 +2,7 @@
 import { createRef, useState, useCallback, useReducer, useEffect, memo } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
@@ -13,7 +13,8 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign, bitCipher } from '../Utils/Helpers'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { _fields } from '../GlobalStates'
+import { $fields, $newFormId } from '../GlobalStates'
+import { useParams } from 'react-router'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -39,9 +40,12 @@ const styleReducer = (style, action) => {
   return style
 }
 
-function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, lay, setLay, theme, formID, formType, formSettings }) {
+function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, lay, setLay, theme, formSettings }) {
+  const newFormId = useRecoilValue($newFormId)
+  const { formType, formID: pramsFormId } = useParams()
+  const formID = formType === 'new' ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
-  const [fields, setFields] = useRecoilState(_fields)
+  const [fields, setFields] = useRecoilState($fields)
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])

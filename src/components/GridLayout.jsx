@@ -13,7 +13,7 @@ import { deepCopy, isType } from '../Utils/Helpers'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import FieldBlockWrapper from './FieldBlockWrapper'
-import { _fields } from '../GlobalStates'
+import { $fields } from '../GlobalStates'
 import { AppSettings } from '../Utils/AppSettingsContext'
 
 function GridLayout(props) {
@@ -22,7 +22,7 @@ function GridLayout(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const setProModal = useContext(ShowProModalContext)
   const { newData, setNewData, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
-  const [fields, setFields] = useRecoilState(_fields)
+  const [fields, setFields] = useRecoilState($fields)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)

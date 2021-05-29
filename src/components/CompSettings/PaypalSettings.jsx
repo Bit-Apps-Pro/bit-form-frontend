@@ -8,10 +8,10 @@ import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
-import { _fields } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates'
 
 export default function PaypalSettings({ elm, updateData, setElementSetting }) {
-  const fields = useRecoilValue(_fields)
+  const fields = useRecoilValue($fields)
   const formFields = Object.entries(fields)
   const { payments } = useContext(AppSettings)
   const isSubscription = elm.data?.payType === 'subscription'

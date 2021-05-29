@@ -45,7 +45,7 @@ import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import SubmitBtnSettings from './SubmitBtnSettings'
 import TextFieldSettings from './TextFieldSettings'
 import BtnIcn from '../../Icons/BtnIcn'
-import { _fields } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
   const { path } = useRouteMatch()
@@ -221,7 +221,7 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
 }
 
 function FieldList({ setElementSetting }) {
-  const fields = useRecoilValue(_fields)
+  const fields = useRecoilValue($fields)
   const arr = []
   for (const fld in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fld)) {

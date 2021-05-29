@@ -1,17 +1,19 @@
-/* eslint-disable no-underscore-dangle */
 import { atom, selector } from 'recoil'
-import { getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
+import { getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
 
 // atoms
-export const _fields = atom({ key: '_fields', default: [], dangerouslyAllowMutability: true })
-export const _fieldLabels = atom({ key: '_fieldLabels', default: [], dangerouslyAllowMutability: true })
+export const $forms = atom({ key: '$forms', default: getFormsByPhpVar(), dangerouslyAllowMutability: true })
+export const $reports = atom({ key: '$reports', default: [], dangerouslyAllowMutability: true })
+export const $fields = atom({ key: '$fields', default: [], dangerouslyAllowMutability: true })
+export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerouslyAllowMutability: true })
 
 // selectors
-export const _fieldsArr = selector({ key: '_fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get(_fieldLabels)), dangerouslyAllowMutability: true })
-export const _uniqueFieldKey = selector({
-  key: '_uniqueFieldKey',
+export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fieldLabels)), dangerouslyAllowMutability: true })
+export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
+export const $uniqueFieldKey = selector({
+  key: '$uniqueFieldKey',
   get: ({ get }) => {
-    const newId = getNewId(get(_fields))
+    const newId = getNewId(get($fields))
     return newId
   },
 })

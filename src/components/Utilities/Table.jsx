@@ -1,18 +1,20 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import { memo, useContext, useEffect, useState, useRef, forwardRef } from 'react'
+import { memo, useEffect, useState, useRef, forwardRef } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
+import { useRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
-import { AllFormContext } from '../../Utils/AllFormContext'
+import { reportsReducer } from '../../Utils/Reducers'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
 import TableLoader2 from '../Loaders/TableLoader2'
 import ExportImportMenu from '../ExportImport/ExportImportMenu'
+import { $reports } from '../../GlobalStates'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -75,8 +77,8 @@ function Table(props) {
   console.log('%c $render Table', 'background:blue;padding:3px;border-radius:5px;color:white')
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const { columns, data, fetchData, report } = props
-  const { reportsData } = useContext(AllFormContext)
-  const { reportsDispatch, reports } = reportsData
+  const [reports, setReports] = useRecoilState($reports)
+
   const { getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -97,54 +99,52 @@ function Table(props) {
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder,
-    setHiddenColumns } = useTable(
-    {
-      debug: true,
-      fetchData,
-      columns,
-      data,
-      manualPagination: typeof props.pageCount !== 'undefined',
-      pageCount: props.pageCount,
-      initialState: {
-        pageIndex: 0,
-        hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
-        pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
-        sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
-        filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'filters' in reports[report].details) ? reports[report].details.filters : [],
-        globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
-        columnOrder: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'order' in reports[report].details) ? reports[report].details.order : [],
-      },
-      autoResetPage: false,
-      autoResetHiddenColumns: false,
-      autoResetSortBy: false,
-      autoResetFilters: false,
-      autoResetGlobalFilter: false,
+    setHiddenColumns } = useTable({
+    debug: true,
+    fetchData,
+    columns,
+    data,
+    manualPagination: typeof props.pageCount !== 'undefined',
+    pageCount: props.pageCount,
+    initialState: {
+      pageIndex: 0,
+      hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
+      pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
+      sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
+      filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'filters' in reports[report].details) ? reports[report].details.filters : [],
+      globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
+      columnOrder: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'order' in reports[report].details) ? reports[report].details.order : [],
     },
-    useFilters,
-    useGlobalFilter,
-    useSortBy,
-    usePagination,
-    useSticky,
-    useColumnOrder,
-    // useBlockLayout,
-    useFlexLayout,
-    props.resizable ? useResizeColumns : '', // resize
-    props.rowSeletable ? useRowSelect : '', // row select
-    props.rowSeletable ? (hooks => {
-      hooks.allColumns.push(cols => [
-        {
-          id: 'selection',
-          width: 50,
-          maxWidth: 50,
-          minWidth: 67,
-          sticky: 'left',
-          Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
-          Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
-        },
-        ...cols,
-      ])
-    }) : '',
-  )
+    autoResetPage: false,
+    autoResetHiddenColumns: false,
+    autoResetSortBy: false,
+    autoResetFilters: false,
+    autoResetGlobalFilter: false,
+  },
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  usePagination,
+  useSticky,
+  useColumnOrder,
+  // useBlockLayout,
+  useFlexLayout,
+  props.resizable ? useResizeColumns : '', // resize
+  props.rowSeletable ? useRowSelect : '', // row select
+  props.rowSeletable ? (hooks => {
+    hooks.allColumns.push(cols => [
+      {
+        id: 'selection',
+        width: 50,
+        maxWidth: 50,
+        minWidth: 67,
+        sticky: 'left',
+        Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+        Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+      },
+      ...cols,
+    ])
+  }) : '')
   const [reportID, setreportID] = useState(parseInt(report, 10))
   const [stateSavable, setstateSavable] = useState(false)
   const [search, setSearch] = useState(globalFilter)
@@ -174,7 +174,7 @@ function Table(props) {
       } else {
         details = { hiddenColumns, pageSize, sortBy, filters, globalFilter }
       }
-      reportsDispatch({ type: 'update', report: { ...reports[reportID], details, type: 'table' }, reportID })
+      setReports(reprts => reportsReducer(reprts, { type: 'update', report: { ...reports[reportID], details, type: 'table' }, reportID }))
       setstateSavable(false)
     } else if (stateSavable) {
       setstateSavable(false)
@@ -228,7 +228,7 @@ function Table(props) {
             setColumnOrder(reports[reportID].details.order)
           } else {
             setColumnOrder(details.order)
-            reportsDispatch({ type: 'update', report: newReport, reportID })
+            setReports(reprts => reportsReducer(reprts, { type: 'update', report: newReport, reportID }))
           }
         } else if (!stateSavable && typeof reports[reportID].details === 'object' && reports[reportID].details && 'order' in reports[reportID].details) {
           // const actionColumn = columns[columns.length - 1] // table action column
@@ -241,7 +241,7 @@ function Table(props) {
       } else if (typeof props.pageCount !== 'undefined' && (isNaN(reportID) || reports.length === 0)) {
         const details = { hiddenColumns: state.hiddenColumns, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], pageSize, sortBy: state.sortBy, filters: state.filters, globalFilter: state.globalFilter }
         setreportID(reports.length)
-        reportsDispatch({ type: 'add', report: { details, type: 'table' } })
+        setReports(reprts => reportsReducer(reprts, { type: 'add', report: { details, type: 'table' } }))
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

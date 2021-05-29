@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
@@ -13,17 +13,18 @@ import TableFileLink from '../components/Utilities/TableFileLink'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import Table from '../components/Utilities/Table'
 import noData from '../resource/img/nodata.svg'
-import { AllFormContext } from '../Utils/AllFormContext'
+import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
-import { _fieldLabels } from '../GlobalStates'
+import { $fieldLabels, $forms, $reports } from '../GlobalStates'
 
 function FormEntries({ allResp, setAllResp, integrations }) {
   console.log(
     '%c $render FormEntries',
     'background:skybluepadding:3pxborder-radius:5px',
   )
-  const allLabels = useRecoilValue(_fieldLabels)
+  const allLabels = useRecoilValue($fieldLabels)
+  const reports = useRecoilValue($reports)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(false)
   const { formID } = useParams()
@@ -35,10 +36,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
   const [entryLabels, setEntryLabels] = useState([])
-  const { reportsData } = useContext(AllFormContext)
-  const { allFormsData } = useContext(AllFormContext)
-  const { reports } = reportsData
-  const { allFormsDispatchHandler } = allFormsData
+  const setForms = useSetRecoilState($forms)
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
 
@@ -330,10 +328,10 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             setAllResp(res.data.entries)
           }
 
-          allFormsDispatchHandler({
+          setForms(allforms => formsReducer(allforms, {
             type: 'update',
             data: { formID, entries: res.data.count },
-          })
+          }))
 
           setisloading(false)
         })

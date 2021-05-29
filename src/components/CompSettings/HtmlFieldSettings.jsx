@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil'
-import { _fields } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates'
 import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 
 export default function HtmlFieldSettings({ setElementSetting, elm, updateData }) {
   const elmId = elm.id
-  const fields = useRecoilValue(_fields)
+  const fields = useRecoilValue($fields)
   const elmData = { ...fields[elmId] }
 
   const setContent = val => {

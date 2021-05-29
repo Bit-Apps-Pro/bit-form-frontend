@@ -2,6 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -12,30 +13,32 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import FormTemplates from '../components/FormTemplates'
 import Modal from '../components/Utilities/Modal'
 import Table from '../components/Utilities/Table'
-import { AllFormContext } from '../Utils/AllFormContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
+import { $forms } from '../GlobalStates'
+import { formsReducer } from '../Utils/Reducers'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-function AllFroms({ newFormId }) {
+function AllFroms() {
   const [modal, setModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-  const { allFormsData } = useContext(AllFormContext)
-  const { allForms, allFormsDispatchHandler } = allFormsData
+  const [allForms, setAllForms] = useRecoilState($forms)
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
+  const newFormId = useRecoilValue($newFormId)
+
   const handleStatus = (e, id) => {
     const status = e.target.checked
     const data = { id, status }
-    allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
+    setAllForms(allforms => formsReducer(allforms, { type: 'update', data: { formID: id, status: data.status } }))
     bitsFetch(data, 'bitforms_change_status')
       .then(res => {
         if ('success' in res && !res.success) {
-          allFormsDispatchHandler({ type: 'update', data: { formID: id, status: data.status } })
+          setAllForms(allforms => formsReducer(allforms, { type: 'update', data: { formID: id, status: data.status } }))
           setSnackbar({ ...{ show: true, msg: __('Failed to change Form Status', 'bitform') } })
         }
       }).catch(() => {
-        allFormsDispatchHandler({ type: 'update', data: { formID: id, status: !status } })
+        setAllForms(allforms => formsReducer(allforms, { type: 'update', data: { formID: id, status: !status } }))
         setSnackbar({ ...{ show: true, msg: __('Failed to change Form Status', 'bitform') } })
       })
   }
@@ -67,7 +70,7 @@ function AllFroms({ newFormId }) {
         .then(res => {
           if (res?.success) {
             const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
-            allFormsDispatchHandler({ data: dbForms, type: 'set' })
+            setAllForms(allforms => formsReducer(allforms, { data: dbForms, type: 'set' }))
           }
         })
     }
@@ -95,13 +98,13 @@ function AllFroms({ newFormId }) {
     for (let i = 0; i < rowID.length; i += 1) {
       newData[rowID[i]].status = status
     }
-    allFormsDispatchHandler({ data: newData, type: 'set' })
+    setAllForms(allforms => formsReducer(allforms, { data: newData, type: 'set' }))
     const ajaxData = { formID, status }
 
     bitsFetch(ajaxData, 'bitforms_bulk_status_change')
       .then(res => {
         if (res !== undefined && !res.success) {
-          allFormsDispatchHandler({ data: tmp, type: 'set' })
+          setAllForms(allforms => formsReducer(allforms, { data: tmp, type: 'set' }))
         } else if (res.success) {
           setSnackbar({ show: true, msg: res.data })
         }
@@ -121,13 +124,13 @@ function AllFroms({ newFormId }) {
     for (let i = rowID.length - 1; i >= 0; i -= 1) {
       newData.splice(Number(rowID[i]), 1)
     }
-    allFormsDispatchHandler({ data: newData, type: 'set' })
+    setAllForms(allforms => formsReducer(allforms, { data: newData, type: 'set' }))
     const ajaxData = { formID }
 
     bitsFetch(ajaxData, 'bitforms_bulk_delete_form')
       .then(res => {
         if (res === undefined || !res.success) {
-          allFormsDispatchHandler({ data: tmp, type: 'set' })
+          setAllForms(allforms => formsReducer(allforms, { data: tmp, type: 'set' }))
         } else if (res.success) {
           setSnackbar({ show: true, msg: res.data })
         }
@@ -138,8 +141,8 @@ function AllFroms({ newFormId }) {
   const handleDelete = (formID, index) => {
     bitsFetch({ id: formID }, 'bitforms_delete_aform').then(response => {
       if (response.success) {
-        allFormsDispatchHandler({ type: 'remove', data: index })
-        setSnackbar({ show: true, msg: __('Form Deleted !', 'bitform') })
+        setAllForms(allforms => formsReducer(allforms, { type: 'remove', data: index }))
+        setSnackbar({ show: true, msg: __('Form Deleted Successfully', 'bitform') })
       }
     })
   }
@@ -148,7 +151,7 @@ function AllFroms({ newFormId }) {
     bitsFetch({ id: formID, newFormId }, 'bitforms_duplicate_aform').then(response => {
       if (response.success) {
         const { data } = response
-        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } })
+        setAllForms(allforms => formsReducer(allforms, { type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } }))
         setSnackbar({ show: true, msg: __('Form Duplicated Successfully.', 'bitform') })
       }
     })
