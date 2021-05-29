@@ -4,7 +4,7 @@
   "version": "1.22.5",
   "dependencies": {
     "@bumaga/tabs": "^0.2.0",
-    "@paypal/react-paypal-js": "^3.0.2",
+    "@paypal/react-paypal-js": "^6.0.1",
     "@popperjs/core": "^2.9.2",
     "@tippyjs/react": "^4.2.5",
     "core-js": "^3.13.0",
@@ -129,6 +129,7 @@
     "module-to-cdn": "^3.1.5",
     "node-sass": "^6.0.0",
     "optimize-css-assets-webpack-plugin": "^6.0.0",
+    "postcss": "^8.3.0",
     "postcss-loader": "^5.3.0",
     "postcss-safe-parser": "^5.0.2",
     "react-scripts": "^4.0.3",
