@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetch from '../../Utils/bitsFetch'
-import { loadScript, observeElement, select } from '../../Utils/globalHelpers'
+import { loadScript, select } from '../../Utils/globalHelpers'
 
 export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend }) {
   const appSettingsContext = useContext(AppSettings)
-  const [amount, setAmount] = useState(attr.options.amount)
+  const [amount, setAmount] = useState(attr.options.amount || 1)
   const [prefillName, setPrefillName] = useState('')
   const [prefillEmail, setPrefillEmail] = useState('')
   const [prefillContact, setPrefillContact] = useState('')
@@ -17,8 +17,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
 
   useEffect(() => {
     loadRazorpayScript()
-    setDefaultValues()
-    obsrvPymntAttr()
+    setDefaultValues(1)
   }, [])
 
   useEffect(() => {
@@ -41,52 +40,29 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
     }
   }
 
-  const setDefaultValues = () => {
-    const dynamicFlds = [
-      ['amountFld', setAmount],
-      ['prefillNameFld', setPrefillName, 'prefill'],
-      ['prefillEmailFld', setPrefillEmail, 'prefill'],
-      ['prefillContactFld', setPrefillContact, 'prefill'],
-    ]
+  const setDefaultValues = (isInitial) => {
+    const dynamicFlds = {
+      amountFld: [setAmount],
+      prefillNameFld: [setPrefillName, 'prefill'],
+      prefillEmailFld: [setPrefillEmail, 'prefill'],
+      prefillContactFld: [setPrefillContact, 'prefill']
+    }
 
-    dynamicFlds.map(dynFld => {
-      const fldName = dynFld[2] ? attr.options[dynFld[2]][dynFld[0]] : attr.options[dynFld[0]]
+    Object.entries(dynamicFlds).map(dynFld => {
+      const fldName = dynFld[1][1] ? attr.options[dynFld[1][1]][dynFld[0]] : attr.options[dynFld[0]]
       if (fldName) {
         const fld = select(`[name="${fldName}"]`)
         if (fld) {
           const { value } = fld
           console.log({ value })
-          if (value) dynFld[1](value)
+          if (isInitial) {
+            dynFld[1][0](value)
+          }
+          dynFld[1][2] = value
         }
       }
     })
-  }
-
-  const obsrvPymntAttr = () => {
-    if (attr.options.amountFld) {
-      const amntField = select(`[name="${attr.options.amountFld}"]`)
-      if (amntField) {
-        observeElement(amntField, 'value', (oldVal, newVal) => setAmount(newVal))
-      }
-    }
-    if (attr.options.prefill.prefillNameFld) {
-      const nameField = select(`[name="${attr.options.prefill.prefillNameFld}"]`)
-      if (nameField) {
-        observeElement(nameField, 'value', (oldVal, newVal) => setPrefillName(newVal))
-      }
-    }
-    if (attr.options.prefill.prefillEmailFld) {
-      const emailField = select(`[name="${attr.options.prefill.prefillEmailFld}"]`)
-      if (emailField) {
-        observeElement(emailField, 'value', (oldVal, newVal) => setPrefillEmail(newVal))
-      }
-    }
-    if (attr.options.prefill.prefillContactFld) {
-      const contactField = select(`[name="${attr.options.prefill.prefillContactFld}"]`)
-      if (contactField) {
-        observeElement(contactField, 'value', (oldVal, newVal) => setPrefillContact(newVal))
-      }
-    }
+    return dynamicFlds
   }
 
   const paymentHandler = response => {
@@ -122,14 +98,14 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       if (!payInteg) return false
       key = payInteg.apiKey
     }
-
+    const dynValues = setDefaultValues()
     const { currency, name, description, theme, modal, notes } = attr.options
     // eslint-disable-next-line camelcase
     const { confirm_close } = modal
 
     const options = {
       key,
-      amount: Number(amount) * 100,
+      amount: Number(dynValues.amountFld[2] || amount) * 100,
       currency,
       name,
       description,
@@ -141,9 +117,9 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
         confirm_close,
       },
       prefill: {
-        name: prefillName,
-        email: prefillEmail,
-        contact: prefillContact,
+        name: dynValues.prefillNameFld[2] || prefillName,
+        email: dynValues.prefillEmailFld[2] || prefillEmail,
+        contact: dynValues.prefillContactFld[2] || prefillContact,
       },
       handler: async response => paymentHandler(response),
     }

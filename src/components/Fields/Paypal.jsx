@@ -3,7 +3,7 @@ import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-payp
 import { useContext, useEffect, useState } from 'react'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetch from '../../Utils/bitsFetch'
-import { observeElement, select } from '../../Utils/globalHelpers'
+import { select } from '../../Utils/globalHelpers'
 
 function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
   const appSettingsContext = useContext(AppSettings)
@@ -17,23 +17,28 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   const isSubscription = attr.payType === 'subscription'
   const isStandalone = attr.style.layout === 'standalone'
 
-  const setDefaultValues = () => {
-    const dynamicFlds = [
-      ['amountFld', setAmount],
-      ['shippingFld', setShipping],
-      ['taxFld', setTax],
-      ['descFld', setDescription],
-    ]
+  const setDefaultValues = (isInitial) => {
+    const dynamicFlds = {
+      amountFld: [setAmount],
+      shippingFld: [setShipping],
+      taxFld: [setTax],
+      descFld: [setDescription]
+    }
 
-    dynamicFlds.map(dynFld => {
+    Object.entries(dynamicFlds).map(dynFld => {
       if (attr?.[dynFld[0]]) {
-        const fld = document.getElementsByName(attr[dynFld[0]])[0]
+        console.log(attr?.[dynFld[0]])
+        const fld = select(`[name="${attr[dynFld[0]]}"]`)
         if (fld) {
           const { value } = fld
-          dynFld[1](value)
+          if (isInitial) {
+            dynFld[1][0](value)
+          }
+          dynFld[1][1] = value
         }
       }
     })
+    return dynamicFlds
   }
 
   useEffect(() => {
@@ -51,8 +56,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       }
     }
     setClientID(key)
-    obsrvPymntAttr()
-    setDefaultValues()
+    setDefaultValues(1)
   }, [attr.payIntegID])
 
   useEffect(() => {
@@ -73,44 +77,15 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
 
   const createSubscriptionHandler = (data, actions) => actions.subscription.create({ plan_id: attr?.planId })
 
-  const obsrvPymntAttr = () => {
-    if (attr?.amountFld) {
-      const amntField = select(`[name="${attr.amountFld}"]`)
-      if (amntField) {
-        observeElement(amntField, 'value', (oldVal, newVal) => setAmount(newVal))
-      }
-    }
-
-    if (attr?.shippingFld) {
-      const spngField = select(`[name="${attr.shippingFld}"]`)
-      if (spngField) {
-        observeElement(spngField, 'value', (oldVal, newVal) => setShipping(newVal))
-      }
-    }
-
-    if (attr?.taxFld) {
-      const taxField = select(`[name="${attr.taxFld}"]`)
-      if (taxField) {
-        observeElement(taxField, 'value', (oldVal, newVal) => setTax(newVal))
-      }
-    }
-
-    if (attr?.descFld) {
-      const descField = select(`[name="${attr.descFld}"]`)
-      if (descField) {
-        observeElement(descField, 'value', (oldVal, newVal) => setDescription(newVal))
-      }
-    }
-  }
-
   const createOrderHandler = (data, actions) => {
-    const orderAmount = Number(attr.amount || amount)
-    const shippingAmount = Number(attr.shipping || shipping)
-    const taxAmount = (Number(attr.tax || tax) * orderAmount) / 100
+    const dynValues = setDefaultValues()
+    const orderAmount = Number(dynValues.amountFld[1] || amount)
+    const shippingAmount = Number(dynValues.shippingFld[1] || shipping)
+    const taxAmount = (Number(dynValues.taxFld[1] || tax) * orderAmount) / 100
     const totalAmount = (orderAmount + shippingAmount + taxAmount).toFixed(2)
     return actions.order.create({
       purchase_units: [{
-        description: attr.description || description,
+        description: dynValues.descFld[1] || description,
         amount:
         {
           currency_code: attr.currency,
