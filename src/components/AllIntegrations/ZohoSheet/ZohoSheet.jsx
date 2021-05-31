@@ -10,6 +10,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput, refreshWorkbooks } from './ZohoSheetCommonFunc'
 import ZohoSheetIntegLayout from './ZohoSheetIntegLayout'
 import ZohoSheetAuthorization from './ZohoSheetAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -82,9 +83,7 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

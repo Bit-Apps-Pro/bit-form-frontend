@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, handleInput, refreshOrganizations } from './ZohoDeskCommonFunc'
 import ZohoDeskIntegLayout from './ZohoDeskIntegLayout'
 import ZohoDeskAuthorization from './ZohoDeskAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -96,9 +97,7 @@ function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

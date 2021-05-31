@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoCRMAuthorization from './ZohoCRMAuthorization'
 import { checkMappedFields, handleInput, refreshModules } from './ZohoCRMCommonFunc'
 import ZohoCRMIntegLayout from './ZohoCRMIntegLayout'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -88,9 +89,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>
 

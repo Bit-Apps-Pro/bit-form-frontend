@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, handleInput, refreshLists, setGrantTokenResponse } from './ZohoMarketingHubCommonFunc'
 import ZohoMarketingHubIntegLayout from './ZohoMarketingHubIntegLayout'
 import ZohoMarketingHubAuthorization from './ZohoMarketingHubAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -51,8 +52,6 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('marketingHubConf', marketingHubConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -90,9 +89,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

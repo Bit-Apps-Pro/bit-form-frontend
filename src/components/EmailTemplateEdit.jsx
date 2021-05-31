@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
+import BackIcn from '../Icons/BackIcn'
 import { __ } from '../Utils/i18nwrap'
 
 function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
@@ -111,8 +112,7 @@ function EmailTemplateEdit({ mailTem, setMailTem, formFields, saveForm }) {
     mailTem.length < 1 ? <Redirect to={`/form/settings/edit/${formID}/email-templates`} /> : (
       <div style={{ width: 900 }}>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className="btn btcd-btn-o-gray">
-          <span className="btcd-icn icn-arrow_back" />
-          &nbsp;
+          <BackIcn className="mr-1" />
           {__('Back', 'bitform')}
         </NavLink>
 

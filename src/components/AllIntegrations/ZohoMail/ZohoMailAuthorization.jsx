@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './ZohoMailCommonFunc'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -66,7 +67,7 @@ export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, s
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bitform')}
-            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+            <BackIcn className="ml-1 rev-icn" />
           </button>
         </>
       )}

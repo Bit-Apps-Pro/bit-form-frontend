@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -77,7 +78,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
           {__('Next', 'bitform')}
           {' '}
 &nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

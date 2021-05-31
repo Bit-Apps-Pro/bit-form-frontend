@@ -1,5 +1,5 @@
 import { __ } from '../../../Utils/i18nwrap'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import MailPoetAuthorization from './MailPoetAuthorization'
 import MailPoetIntegLayout from './MailPoetIntegLayout'
 import { checkMappedFields, refreshNewsLetter } from './MailPoetCommonFunc'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function MailPoet({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -84,7 +85,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
           type="button"
         >
           {__('Next', 'bitform')}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>
 

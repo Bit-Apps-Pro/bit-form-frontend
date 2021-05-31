@@ -46,6 +46,7 @@ import SubmitBtnSettings from './SubmitBtnSettings'
 import TextFieldSettings from './TextFieldSettings'
 import BtnIcn from '../../Icons/BtnIcn'
 import { $fields } from '../../GlobalStates'
+import BackIcn from '../../Icons/BackIcn'
 
 function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
   const { path } = useRouteMatch()
@@ -116,7 +117,9 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             <Route exact path={`${path}/style/fl`}>
               <Link to={`/form/builder/${formType}/${formID}/style`}>
                 <h4 className="w-9 mt-2 m-a flx txt-dp">
-                  <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
+                  <button className="icn-btn" type="button" aria-label="back btn">
+                    <BackIcn />
+                  </button>
                   <div className="flx w-10">
                     <span>{__('Back', 'bitform')}</span>
                     <div className="txt-center w-10 f-5">{__('Field Customize', 'bitform')}</div>

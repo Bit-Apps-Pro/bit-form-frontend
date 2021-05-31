@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
 import BorderIcn from '../../../Icons/BorderIcn'
 import HeightIcn from '../../../Icons/HeightIcn'
 import ColorPicker from './ChildComp/ColorPicker'
@@ -33,7 +34,7 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
     <div className="mt-2">
       <Link to={`${goBackUrl()}`}>
         <h4 className="w-9 m-a flx txt-dp">
-          <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
+          <button className="icn-btn" type="button" aria-label="back btn"><BackIcn /></button>
           <div className="flx w-10">
             <span>Back</span>
             <div className="txt-center w-10 f-5">{editorLabel}</div>

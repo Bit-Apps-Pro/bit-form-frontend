@@ -10,6 +10,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { refreshTemplates, setGrantTokenResponse } from './ZohoSignCommonFunc'
 import ZohoSignIntegLayout from './ZohoSignIntegLayout'
 import ZohoSignAuthorization from './ZohoSignAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -85,9 +86,7 @@ function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

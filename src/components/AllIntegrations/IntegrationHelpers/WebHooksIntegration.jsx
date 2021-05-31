@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import CloseIcn from '../../../Icons/CloseIcn'
+import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import Button from '../../Utilities/Button'
@@ -147,7 +148,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
         {create && (
           <button onClick={() => nextPage()} className="btn btcd-btn-lg green sh-sm flx" type="button">
             {__('Next', 'bitform')}
-            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+            <BackIcn className="ml-1 rev-icn" />
           </button>
         )}
       </div>

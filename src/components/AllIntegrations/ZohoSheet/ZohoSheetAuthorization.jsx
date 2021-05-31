@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshWorkbooks } from './ZohoSheetCommonFunc'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -12,7 +13,7 @@ export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf
     refreshWorkbooks(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-  console.log(sheetConf)
+
   const handleInput = e => {
     const newConf = { ...sheetConf }
     const rmError = { ...error }
@@ -67,7 +68,7 @@ export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bitform')}
-            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+            <BackIcn className="ml-1 rev-icn" />
           </button>
         </>
       )}

@@ -5,6 +5,7 @@ import { NavLink, useParams, useHistory } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import '../resource/css/tinymce.css'
+import BackIcn from '../Icons/BackIcn'
 
 const mailTemReducer = (state, { name, value }) => {
   const tmp = { ...state }
@@ -117,8 +118,7 @@ function EmailTemplateNew({ tem: templtMainState, setTem: setTemplateMainState, 
       </Modal>
 
       <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className="btn btcd-btn-o-gray">
-        <span className="btcd-icn icn-arrow_back" />
-        &nbsp;
+        <BackIcn className="mr-1" />
         {__('Back', 'bitfrom')}
       </NavLink>
 

@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshLists } from './ZohoMarketingHubCommonFunc'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function ZohoMarketingAuthorization({ formID, marketingHubConf, setMarketingHubConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -12,7 +13,7 @@ export default function ZohoMarketingAuthorization({ formID, marketingHubConf, s
     refreshLists(formID, marketingHubConf, setMarketingHubConf, setisLoading, setSnackbar)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-  console.log(marketingHubConf)
+
   const handleInput = e => {
     const newConf = { ...marketingHubConf }
     const rmError = { ...error }
@@ -67,7 +68,7 @@ export default function ZohoMarketingAuthorization({ formID, marketingHubConf, s
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bitform')}
-            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+            <BackIcn className="ml-1 rev-icn" />
           </button>
         </>
       )}

@@ -17,6 +17,7 @@ import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
 import { $fieldLabels, $fields, $fieldsArr, $forms, $newFormId, $reports, $uniqueFieldKey } from '../GlobalStates'
+import BackIcn from '../Icons/BackIcn'
 // import useSWR from 'swr'
 
 const FormBuilder = lazy(() => import('./FormBuilder'))
@@ -371,8 +372,7 @@ function FormDetails({ history }) {
           <nav className="btcd-bld-nav">
             <div className="btcd-bld-lnk">
               <NavLink exact to="/">
-                <span className="btcd-icn icn-arrow_back" />
-                {' '}
+                <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
                 {__('Home', 'bitform')}
               </NavLink>
               <NavLink

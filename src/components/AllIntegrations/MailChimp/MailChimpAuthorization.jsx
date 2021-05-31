@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
@@ -12,7 +13,7 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
     refreshAudience(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-  console.log(sheetConf)
+
   const handleInput = e => {
     const newConf = { ...sheetConf }
     const rmError = { ...error }
@@ -55,9 +56,7 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
           <br />
           <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bitform')}
-            {' '}
-          &nbsp;
-            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+            <BackIcn className="ml-1 rev-icn" />
           </button>
         </>
       )}

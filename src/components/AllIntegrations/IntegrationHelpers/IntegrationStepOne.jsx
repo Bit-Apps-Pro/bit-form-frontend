@@ -1,6 +1,7 @@
 import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function IntegrationStepOne({ step, confTmp, handleInput, error, setSnackbar, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
   return (
@@ -48,9 +49,7 @@ export default function IntegrationStepOne({ step, confTmp, handleInput, error, 
       <br />
       <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
         {__('Next', 'bitform')}
-        {' '}
-&nbsp;
-        <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+        <BackIcn className="ml-1 rev-icn" />
       </button>
     </div>
   )
