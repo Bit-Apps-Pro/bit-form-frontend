@@ -14,7 +14,6 @@ import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemePro
 import { multiAssign, bitCipher } from '../Utils/Helpers'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { $fields, $newFormId } from '../GlobalStates'
-import { useParams } from 'react-router'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -40,12 +39,16 @@ const styleReducer = (style, action) => {
   return style
 }
 
-function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, lay, setLay, theme, formSettings }) {
+// function FormBuilder({ isLoading, formSettings }) {
+function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading }) {
+  // const formSettings = {}
+  // const { formType, formID: pramsFormId } = {}
+  // const { formType, formID pramsFormId } = { formType: 'edit', formID: 2 }
+  // const isLoading = false
   const newFormId = useRecoilValue($newFormId)
-  const { formType, formID: pramsFormId } = useParams()
+  const [fields, setFields] = useRecoilState($fields)
   const formID = formType === 'new' ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
-  const [fields, setFields] = useRecoilState($fields)
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
@@ -56,6 +59,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, 
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
   const [isToolDragging, setisToolDragging] = useState(false)
+  const [debounce, setDebounce] = useState(null)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   console.log('render formbuilder')
@@ -166,11 +170,6 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, 
     setNewData(ndata)
   }, [])
 
-  const setSubmitConfig = useCallback(data => {
-    setSubBtn({ ...data })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subBtn])
-
   const onResize = useCallback(resizer => {
     if (resizer.isBarActivated(1)) {
       resizer.resizeSection(0, { toSize: resizer.getSectionSize(2) - 135 })
@@ -213,24 +212,27 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, 
     conRef.current.applyResizer(resizer)
   }, [conRef])
 
-  const setGrWidth = useCallback((paneWidth) => {
-    setGridWidth(paneWidth)
-    let w = 0
-    if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
-    if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
-    if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
-    if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
-    if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
-    if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
-    const gw = Math.round(paneWidth - 33 - w) // inner left-right padding
-    if (gw <= 510) {
-      setbrkPoint('sm')
-    } else if (gw > 420 && gw <= 700) {
-      setbrkPoint('md')
-    } else if (gw > 700) {
-      setbrkPoint('lg')
-    }
-  }, [brkPoint])
+  const setGrWidth = (paneWidth) => {
+    clearTimeout(debounce)
+    setDebounce(setTimeout(() => {
+      setGridWidth(paneWidth)
+      let w = 0
+      if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
+      if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
+      if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
+      if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
+      if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
+      if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
+      const gw = Math.round(paneWidth - 33 - w) // inner left-right padding
+      if (gw <= 510) {
+        setbrkPoint('sm')
+      } else if (gw > 420 && gw <= 700) {
+        setbrkPoint('md')
+      } else if (gw > 700) {
+        setbrkPoint('lg')
+      }
+    }, 100))
+  }
 
   return (
     <Container
@@ -273,7 +275,7 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, 
                 .map(itm => <button key={itm.icn} onClick={() => setResponsiveView(itm.lbl)} className={`flx pos-rel tooltip phone ${brkPoint === itm.lbl && 'active'}`} style={{ '--tooltip-txt': `"${itm.tip}"` }} aria-label="responsive butoon" type="button"><span className={`btcd-icn icn-${itm.icn}`} /></button>)}
             </div>
             <GridLayout
-              theme={theme}
+              // theme={theme}
               style={styleProvider()}
               gridWidth={gridWidth}
               draggedElm={drgElm}
@@ -282,11 +284,11 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, 
               setNewData={setNewData}
               formType={formType}
               formID={formID}
-              setLay={setLay}
-              subBtn={subBtn}
-              newCounter={newCounter}
-              setNewCounter={setNewCounter}
-              layout={lay}
+              // subBtn={subBtn}
+              // newCounter={newCounter}
+              // setNewCounter={setNewCounter}
+              // setLay={setLay}
+              // layout={lay}
               isToolDragging={isToolDragging}
               formSettings={formSettings}
             />
@@ -306,10 +308,10 @@ function FormBuilder({ isLoading, newCounter, setNewCounter, subBtn, setSubBtn, 
           elm={elmSetting}
           setElementSetting={setElementSetting}
           updateData={updateFields}
-          setSubmitConfig={setSubmitConfig}
+          // setSubmitConfig={setSubmitConfig}
           formID={formID}
-          lay={lay}
-          setLay={setLay}
+        // lay={lay}
+        // setLay={setLay}
         />
       </Section>
     </Container>

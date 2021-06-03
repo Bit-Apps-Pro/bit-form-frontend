@@ -2,15 +2,19 @@
 
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import BrushIcn from '../../../Icons/BrushIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import BackIcn from '../../../Icons/BackIcn'
+import { $fields, $layouts } from '../../../GlobalStates'
 
-export default function PaypalStyleEditor({ elm, setElementSetting, updateData, lay, setLay, fields }) {
+export default function PaypalStyleEditor({ elm, setElementSetting, updateData }) {
   const { formID, formType } = useParams()
+  const [lay, setLay] = useResetRecoilState($layouts)
+  const fields = useRecoilValue($fields)
   const [customHeight, setCustomHeight] = useState(elm.data?.style?.height || '')
-  const [customWidth, setCustomWidth] = useState(elm.data?.style?.width || '')
+  const [, setCustomWidth] = useState(elm.data?.style?.width || '')
 
   const checkPaypalExist = (flds) => {
     const formFields = Object.entries(flds)

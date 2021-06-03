@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import BrushIcn from '../../Icons/BrushIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -42,15 +42,14 @@ import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
 import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
-import SubmitBtnSettings from './SubmitBtnSettings'
 import TextFieldSettings from './TextFieldSettings'
 import BtnIcn from '../../Icons/BtnIcn'
 import { $fields } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 
-function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitConfig, style, styleDispatch, brkPoint, setResponsiveView, formID, lay, setLay }) {
+function CompSettings({ elm, updateData, setElementSetting, style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
-  const { formType } = useParams()
+  const { formType, formID } = useParams()
   const [scrollTopShadow, setScrollTopShadow] = useState(false)
 
   const TabLink = ({ title, sub, icn, link }) => (
@@ -84,11 +83,10 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
             <Route path={`${path}/fs`}>
               <RenderSettings
                 type={elm.data.typ}
-                fields={fields}
                 elm={elm}
                 updateData={updateData}
                 setElementSetting={setElementSetting}
-                setSubmitConfig={setSubmitConfig}
+              // setSubmitConfig={setSubmitConfig}
               />
             </Route>
             <Route exact path={`${path}/style`}>
@@ -147,7 +145,7 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
               <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
             <Route path={`${path}/style/fl/ppl`}>
-              <PaypalStyleEditor elm={elm} setElementSetting={setElementSetting} updateData={updateData} lay={lay} setLay={setLay} fields={fields} />
+              <PaypalStyleEditor elm={elm} setElementSetting={setElementSetting} updateData={updateData} />
             </Route>
             <Route path={`${path}/style/fl/dpd`}>
               <DropdownStyleEditors
@@ -177,8 +175,9 @@ function CompSettings({ fields, elm, updateData, setElementSetting, setSubmitCon
 }
 export default CompSettings
 
-const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setSubmitConfig }) => {
-  if ((fields !== null && fields[elm.id] !== undefined) || type === 'submit') {
+const RenderSettings = ({ type, elm, updateData, setElementSetting }) => {
+  const fields = useRecoilValue($fields)
+  if ((fields !== null && fields[elm.id] !== undefined)) {
     switch (type) {
       case 'text':
       case 'number':
@@ -192,22 +191,19 @@ const RenderSettings = ({ type, fields, elm, updateData, setElementSetting, setS
       case 'month':
       case 'week':
       case 'color':
-        return <TextFieldSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <TextFieldSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'check':
       case 'radio':
-        return <RadioCheckSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <RadioCheckSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'select':
-        return <SelectSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
       case 'dropdown':
-        return <SelectSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <SelectSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'file-up':
-        return <FileUpSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
-      case 'submit':
-        return <SubmitBtnSettings setElementSetting={setElementSetting} fields={fields} elm={elm} setSubmitConfig={setSubmitConfig} />
+        return <FileUpSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'recaptcha':
-        return <ReCaptchaSettigns setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <ReCaptchaSettigns setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'decision-box':
-        return <DecisionBoxSettings setElementSetting={setElementSetting} fields={fields} elm={elm} updateData={updateData} />
+        return <DecisionBoxSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'html':
         return <HtmlFieldSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
       case 'button':

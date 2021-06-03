@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { lazy, memo, useCallback, useContext, useEffect, useState } from 'react'
+import { lazy, memo, useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
@@ -15,7 +15,7 @@ import Modal from '../components/Utilities/Modal'
 import Table from '../components/Utilities/Table'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
-import { $forms } from '../GlobalStates'
+import { $forms, $newFormId } from '../GlobalStates'
 import { formsReducer } from '../Utils/Reducers'
 
 const Welcome = lazy(() => import('./Welcome'))
@@ -69,14 +69,13 @@ function AllFroms() {
       bitsFetch(null, 'bitforms_get_all_form')
         .then(res => {
           if (res?.success) {
-            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, conversion: ((form.entries / (form.views === '0' ? 1 : form.views)) * 100).toPrecision(3), created_at: form.created_at }))
+            const dbForms = res.data.map(form => ({ formID: form.id, status: form.status !== '0', formName: form.form_name, shortcode: `bitform id='${form.id}'`, entries: form.entries, views: form.views, created_at: form.created_at }))
             setAllForms(allforms => formsReducer(allforms, { data: dbForms, type: 'set' }))
           }
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action')
     // eslint-disable-next-line max-len

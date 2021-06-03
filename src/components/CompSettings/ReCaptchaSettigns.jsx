@@ -1,10 +1,11 @@
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Back2FldList from './Back2FldList'
 
 export default function ReCaptchaSettigns({ elm, updateData, setElementSetting }) {
-  const onInput = e => {
-    const tmp = { ...elm }
-    tmp.data[e.target.name] = e.target.value
+  const onInput = ({ target: { name, value } }) => {
+    const tmp = deepCopy(elm)
+    tmp.data[name] = value
     updateData(tmp)
   }
 

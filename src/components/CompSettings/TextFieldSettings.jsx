@@ -1,14 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { memo } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
+import { deepCopy } from '../../Utils/Helpers'
+import { $fields } from '../../GlobalStates'
 
 function TextFieldSettings(props) {
   const elmId = props.elm.id
-  const elmData = { ...props.fields[elmId] }
+  const fields = useRecoilValue($fields)
+  const elmData = deepCopy(fields[elmId])
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const isRequired = elmData.valid.req !== undefined
   const isAutoComplete = elmData.ac === 'on'

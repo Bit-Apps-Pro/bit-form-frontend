@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { memo, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../Utilities/CopyText'
 import Modal from '../Utilities/Modal'
@@ -15,8 +18,9 @@ function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const elmId = props.elm.id
-  const elmData = { ...props.fields[elmId] }
-  const options = [...props.fields[elmId].opt]
+  const fields = useRecoilValue($fields)
+  const elmData = deepCopy(fields[elmId])
+  const options = deepCopy(fields[elmId].opt)
   const fldKey = elmId
   const label = elmData.lbl === undefined ? '' : elmData.lbl
   const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl

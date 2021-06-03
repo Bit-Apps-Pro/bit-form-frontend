@@ -1,4 +1,4 @@
-import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
+import { useState, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
@@ -10,17 +10,19 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, bitDecipher, bitCipher } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
-import { $fieldLabels, $fields, $fieldsArr, $forms, $newFormId, $reports, $uniqueFieldKey } from '../GlobalStates'
+import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
+// import Ok from './Ok'
+// import FormBuilderHOC from './FormBuilderHOC'
 // import useSWR from 'swr'
 
-const FormBuilder = lazy(() => import('./FormBuilder'))
+const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
 
 export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
@@ -30,15 +32,13 @@ function FormDetails({ history }) {
   const { formType, formID } = useParams()
   const setAllForms = useSetRecoilState($forms)
   const [reports, setReports] = useRecoilState($reports)
-  const [fulScn, setFulScn] = useState(true)
-  const [newCounter, setNewCounter] = useState(0)
+  const [lay, setLay] = useRecoilState($layouts)
   const newFormId = useRecoilValue($newFormId)
-  // const [uniqueFieldKey,  ] = useRecoilState(_fieldCounter)
-  const [allResponse, setAllResponse] = useState([])
-  const [isLoading, setisLoading] = useState(true)
-  const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
   const [fields, setFields] = useRecoilState($fields)
   const setFieldLabels = useSetRecoilState($fieldLabels)
+  const [fulScn, setFulScn] = useState(true)
+  const [allResponse, setAllResponse] = useState([])
+  const [isLoading, setisLoading] = useState(true)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Untitled Form')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
@@ -49,24 +49,11 @@ function FormDetails({ history }) {
   const resetState1 = useResetRecoilState($fieldLabels)
   const resetState2 = useResetRecoilState($fields)
 
-  const uniq = useRecoilValue($uniqueFieldKey)
-  console.log({ uniq, newCounter })
-  // useEffect(() => {
-  //   const tmpLabels = [...allLabels]
-  //   let i = 0
-  //   while (i < tmpLabels.length) {
-  //     tmpLabels[i].name = tmpLabels[i].adminLbl || tmpLabels[i].name || tmpLabels[i].key
-  //     i += 1
-  //   }
-  //   setFormFields(sortArrOfObj(tmpLabels, 'name'))
-  // }, [allLabels])
-
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
       const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
       formData.layout !== undefined && setLay(formData.layout)
       setFields(formData.fields)
-      setNewCounter(getNewId(formData.fields))
       setFormName(formData.form_name)
       setFormSettings(formData.formSettings)
       setworkFlows(formData.workFlows)
@@ -76,12 +63,8 @@ function FormDetails({ history }) {
       // if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
       sessionStorage.removeItem('bitformData')
       setSnackbar({ show: true, msg: __('Please try again. Token was expired', 'bitform') })
-      if (isLoading) {
-        setisLoading(!isLoading)
-      }
-    } else {
-      fetchTemplate()
-    }
+      if (isLoading) { setisLoading(!isLoading) }
+    } else { fetchTemplate() }
     window.scrollTo(0, 0)
     hideWpMenu()
   }
@@ -112,7 +95,6 @@ function FormDetails({ history }) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    // submitBtn: subBtn,
     confirmation: {
       type: {
         successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
@@ -145,7 +127,6 @@ function FormDetails({ history }) {
         btnLay.sm.push(subBtnLay)
         setLay(btnLay)
         setFields(btnFld)
-        setNewCounter(2)
         setisLoading(false)
       } else {
         bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
@@ -157,7 +138,6 @@ function FormDetails({ history }) {
               }
               responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
               setFields(responseData.form_content.fields)
-              setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
               sessionStorage.setItem('btcd-lc', '-')
@@ -165,9 +145,7 @@ function FormDetails({ history }) {
               setisLoading(false)
             }
           })
-          .catch(() => {
-            setisLoading(false)
-          })
+          .catch(() => { setisLoading(false) })
       }
     } else if (formType === 'edit') {
       bitsFetch({ id: formID }, 'bitforms_get_a_form')
@@ -176,7 +154,6 @@ function FormDetails({ history }) {
             const responseData = res.data
             responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
-            setNewCounter(getNewId(responseData.form_content.fields))
             setFormName(responseData.form_content.form_name)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)
@@ -195,9 +172,7 @@ function FormDetails({ history }) {
             setisLoading(false)
           }
         })
-        .catch(() => {
-          setisLoading(false)
-        })
+        .catch(() => { setisLoading(false) })
     }
   }
 
@@ -419,13 +394,11 @@ function FormDetails({ history }) {
           <Switch>
             <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
               <Suspense fallback={<BuilderLoader />}>
-                <FormBuilder
-                  newCounter={newCounter}
-                  setNewCounter={setNewCounter}
+                <FormBuilderHOC
                   isLoading={isLoading}
-                  lay={lay}
-                  setLay={setLay}
-                  theme={fSettings.theme}
+                  // lay={lay}
+                  // setLay={setLay}
+                  // theme={fSettings.theme}
                   formSettings={fSettings}
                 />
               </Suspense>

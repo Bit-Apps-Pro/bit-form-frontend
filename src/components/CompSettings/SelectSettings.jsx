@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -10,12 +11,15 @@ import CloseIcn from '../../Icons/CloseIcn'
 import ImportOptions from './ImportOptions'
 import Modal from '../Utilities/Modal'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import { $fields } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 
 export default function SelectSettings(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const elmId = props.elm.id
-  const elmData = { ...props.fields[elmId] }
-  const options = [...elmData.opt]
+  const fields = useRecoilValue($fields)
+  const elmData = deepCopy(fields[elmId])
+  const options = elmData.opt
   const fldKey = elmId
   const isRequired = elmData.valid.req !== undefined
   const isMultiple = elmData.mul
