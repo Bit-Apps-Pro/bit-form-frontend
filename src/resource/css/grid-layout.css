@@ -57,23 +57,23 @@
 
 .react-grid-item > .react-resizable-handle {
   position: absolute;
+  right: 0;
+  bottom: 0;
   width: 20px;
   height: 20px;
-  bottom: 0;
-  right: 0;
   cursor: se-resize;
   transform: scale(0);
 }
 
 .react-grid-item > .react-resizable-handle::after {
-  content: "";
   position: absolute;
   right: 3px;
   bottom: 3px;
+  content: "";
   width: 5px;
   height: 5px;
-  border-right: 2px solid rgba(0, 0, 0, 0.4);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  /* border-right: 2px solid rgba(0, 0, 0, 0.4); */
+  /* border-bottom: 2px solid rgba(0, 0, 0, 0.4); */
 }
 
 .react-resizable-hide > .react-resizable-handle {
@@ -94,19 +94,23 @@
   background-repeat: no-repeat;
   background-origin: content-box;
   box-sizing: border-box;
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+');
   background-position: bottom right;
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 9L9 1" class="s" /><path d="M7 9L9 7" class="s"/><style>.s{stroke:black;stroke-width:1.5;stroke-linecap:round;}</style></svg>');
   padding: 0 3px 3px 0;
 }
+
 .react-resizable-handle-sw {
   bottom: 0;
   left: 0;
   cursor: sw-resize;
   transform: rotate(90deg);
 }
+/* .react-resizable-handle-e {
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 9L9 1" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M7 9L9 7" stroke="black" stroke-width="1.5" stroke-linecap="round"/></svg>');
+} */
 .react-resizable-handle-se {
-  bottom: 0;
   right: 0;
+  bottom: 0;
   cursor: se-resize;
 }
 .react-resizable-handle-nw {
