@@ -173,7 +173,7 @@ export default function PaypalSettings({ elm, updateData, setElementSetting }) {
               {isDynamicAmount && (
                 <div className="mt-3">
                   <b>{__('Select Amount Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1">
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1" value={elm.data.amountFld}>
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getAmountFields()}
                   </select>
@@ -189,7 +189,7 @@ export default function PaypalSettings({ elm, updateData, setElementSetting }) {
               {isDynamicShipping && (
                 <div className="mt-3">
                   <b>{__('Select Shipping Amount Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="shippingFld" className="btcd-paper-inp mt-1">
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="shippingFld" className="btcd-paper-inp mt-1" value={elm.data.shippingFld}>
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getAmountFields()}
                   </select>
@@ -205,7 +205,7 @@ export default function PaypalSettings({ elm, updateData, setElementSetting }) {
               {isDynamicTax && (
                 <div className="mt-3">
                   <b>{__('Select Amount Field', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="taxFld" className="btcd-paper-inp mt-1">
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="taxFld" className="btcd-paper-inp mt-1" value={elm.data.taxFld}>
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getAmountFields()}
                   </select>
@@ -233,7 +233,7 @@ export default function PaypalSettings({ elm, updateData, setElementSetting }) {
               {isDynamicDesc && (
                 <div className="mt-1">
                   <b>{__('Select Description Field', 'bitform')}</b>
-                  <select onChange={handleInput} name="amountFld" className="btcd-paper-inp mt-1">
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="descFld" className="btcd-paper-inp mt-1" value={elm.data.descFld}>
                     <option value="">{__('Select Field', 'bitform')}</option>
                     {getDescFields()}
                   </select>
