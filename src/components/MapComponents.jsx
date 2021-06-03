@@ -74,7 +74,7 @@ function MapComponents(props) {
     default:
       break
   }
-  return <div>None</div>
+  return <div>Loading</div>
 }
 
 export default memo(MapComponents)
