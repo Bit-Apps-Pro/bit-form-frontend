@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import { lazy, Suspense, useState, useEffect } from 'react'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
