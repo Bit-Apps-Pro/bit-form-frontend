@@ -2,34 +2,39 @@
 import { useEffect } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 
-export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, height, width }) {
-  useEffect(() => {
-    window.tinymce && tinymce.remove()
-    return () => window.tinymce && tinymce.remove()
-  }, [])
+export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins }) {
 
   useEffect(() => {
-    window.tinymce && tinymce.remove()
-    timyMceInit()
+    tinymce.remove(`textarea#${id}-settings`)
+
+    if (disabled) document.getElementById(`${id}-settings`).value = value || ''
+    else {
+      timyMceInit()
+      tinymce.get(`${id}-settings`).setContent(value || '')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields, id])
+  }, [formFields, id, disabled])
 
   const timyMceInit = () => {
+    console.log('init')
     if (typeof tinymce !== 'undefined' && (!formFields || formFields?.length > 0)) {
-      const s = document.querySelectorAll('.form-fields-em')
-      for (let i = 0; i < s.length; i += 1) {
-        s[i].style.display = 'none'
-      }
+      // if (formFields) {
+      //   const s = document.querySelectorAll('.form-fields-em')
+      //   for (let i = 0; i < s.length; i += 1) {
+      //     s[i].style.display = 'none'
+      //   }
+      // }
       // eslint-disable-next-line no-undef
       tinymce.init({
         selector: `textarea#${id}-settings`,
+        menubar,
         height: height || 150,
         width: width || '100%',
         branding: false,
         resize: 'verticle',
         convert_urls: false,
         theme: 'modern',
-        plugins: 'directionality fullscreen image link media charmap hr lists textcolor colorpicker wordpress',
+        plugins: plugins || 'directionality fullscreen image link media charmap hr lists textcolor colorpicker wordpress',
         toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code| addFormField',
         image_advtab: true,
         default_link_target: '_blank',
@@ -69,14 +74,17 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
     }
   }
 
+  console.log({ value })
+
   return (
     <textarea
       id={`${id}-settings`}
-      className="btcd-paper-inp mt-1"
+      className="btcd-paper-inp mt-1 w-10"
       rows="5"
       value={value}
       onChange={(ev) => onChangeHandler(ev.target.value)}
       style={{ width: '95.5%', height: 'auto' }}
+      disabled={disabled}
     />
   )
 }
