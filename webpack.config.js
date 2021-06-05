@@ -24,6 +24,7 @@ module.exports = (env, argv) => {
       'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
       bitforms: path.resolve(__dirname, 'src/resource/sass/app.scss'),
       'bitforms-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
+      validation: path.resolve(__dirname, 'src/user-frontend/validation'),
       components: [
         path.resolve(__dirname, 'src/resource/sass/components.scss'),
         path.resolve(__dirname, 'node_modules/react-multiple-select-dropdown-lite/dist/index.css'),
