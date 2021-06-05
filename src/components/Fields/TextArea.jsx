@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
+import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
 
 export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
@@ -39,6 +40,10 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
     }
   }, [])
 
+  const handleBlur = e => {
+    validateForm({ input: e.target })
+  }
+
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
       {'lbl' in attr && (
@@ -58,7 +63,8 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
           {...'req' in attr.valid && { required: attr.valid.req }}
           {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
           {...'name' in attr && { name: attr.name }}
-          {...onBlurHandler && { onBlur: onBlurHandler }}
+          {...onBlurHandler && { onInput: onBlurHandler }}
+          onBlur={handleBlur}
           {...{ value }}
           onChange={onChangeHandler}
         />

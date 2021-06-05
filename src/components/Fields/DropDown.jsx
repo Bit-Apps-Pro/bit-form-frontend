@@ -126,6 +126,11 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
         defaultValue={value}
       />
       {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
+      <div className="error-wrapper">
+        <div id={`${attr.name}-error`} className="error-txt">
+          {attr?.err?.msg}
+        </div>
+      </div>
     </div>
   )
 }

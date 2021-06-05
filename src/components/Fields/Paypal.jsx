@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { useContext, useEffect, useState } from 'react'
+import validateForm from '../../user-frontend/validation'
 import { AppSettings } from '../../Utils/AppSettingsContext'
-import bitsFetch from '../../Utils/bitsFetch'
-import { observeElement, select } from '../../Utils/globalHelpers'
+import bitsFetchFront from '../../Utils/bitsFetchFront'
+import { select } from '../../Utils/globalHelpers'
 
 function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
   const appSettingsContext = useContext(AppSettings)
@@ -17,23 +18,27 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   const isSubscription = attr.payType === 'subscription'
   const isStandalone = attr.style.layout === 'standalone'
 
-  const setDefaultValues = () => {
-    const dynamicFlds = [
-      ['amountFld', setAmount],
-      ['shippingFld', setShipping],
-      ['taxFld', setTax],
-      ['descFld', setDescription],
-    ]
+  const setDefaultValues = (isInitial) => {
+    const dynamicFlds = {
+      amountFld: [setAmount],
+      shippingFld: [setShipping],
+      taxFld: [setTax],
+      descFld: [setDescription],
+    }
 
-    dynamicFlds.map(dynFld => {
+    Object.entries(dynamicFlds).map(dynFld => {
       if (attr?.[dynFld[0]]) {
-        const fld = document.getElementsByName(attr[dynFld[0]])[0]
+        const fld = select(`[name="${attr[dynFld[0]]}"]`)
         if (fld) {
           const { value } = fld
-          dynFld[1](value)
+          if (isInitial) {
+            dynFld[1][0](value)
+          }
+          dynamicFlds[dynFld[0]][1] = value
         }
       }
     })
+    return dynamicFlds
   }
 
   useEffect(() => {
@@ -51,8 +56,8 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       }
     }
     setClientID(key)
-    obsrvPymntAttr()
-    setDefaultValues()
+    setDefaultValues(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attr.payIntegID])
 
   useEffect(() => {
@@ -71,46 +76,24 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }, 1)
   }, [clientID, attr.currency, attr.payType, attr.locale, attr.disableFunding])
 
-  const createSubscriptionHandler = (data, actions) => actions.subscription.create({ plan_id: attr?.planId })
-
-  const obsrvPymntAttr = () => {
-    if (attr?.amountFld) {
-      const amntField = select(`[name="${attr.amountFld}"]`)
-      if (amntField) {
-        observeElement(amntField, 'value', (oldVal, newVal) => setAmount(newVal))
-      }
-    }
-
-    if (attr?.shippingFld) {
-      const spngField = select(`[name="${attr.shippingFld}"]`)
-      if (spngField) {
-        observeElement(spngField, 'value', (oldVal, newVal) => setShipping(newVal))
-      }
-    }
-
-    if (attr?.taxFld) {
-      const taxField = select(`[name="${attr.taxFld}"]`)
-      if (taxField) {
-        observeElement(taxField, 'value', (oldVal, newVal) => setTax(newVal))
-      }
-    }
-
-    if (attr?.descFld) {
-      const descField = select(`[name="${attr.descFld}"]`)
-      if (descField) {
-        observeElement(descField, 'value', (oldVal, newVal) => setDescription(newVal))
-      }
-    }
+  const createSubscriptionHandler = (data, actions) => {
+    const form = document.getElementById(`form-${contentID}`)
+    if (!validateForm({ form })) throw new Error('form validation is failed!')
+    return actions.subscription.create({ plan_id: attr?.planId })
   }
 
   const createOrderHandler = (data, actions) => {
-    const orderAmount = Number(attr.amount || amount)
-    const shippingAmount = Number(attr.shipping || shipping)
-    const taxAmount = (Number(attr.tax || tax) * orderAmount) / 100
+    const form = document.getElementById(`form-${contentID}`)
+    if (!validateForm({ form })) throw new Error('form validation is failed!')
+
+    const dynValues = setDefaultValues()
+    const orderAmount = Number(dynValues.amountFld[1] || amount)
+    const shippingAmount = Number(dynValues.shippingFld[1] || shipping)
+    const taxAmount = (Number(dynValues.taxFld[1] || tax) * orderAmount) / 100
     const totalAmount = (orderAmount + shippingAmount + taxAmount).toFixed(2)
     return actions.order.create({
       purchase_units: [{
-        description: attr.description || description,
+        description: dynValues.descFld[1] || description,
         amount:
         {
           currency_code: attr.currency,
@@ -126,7 +109,9 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     })
   }
 
-  const onApproveHanlder = (data, actions) => {
+  const onApproveHanlder = (_, actions) => {
+    const formParent = document.getElementById(`${contentID}`)
+    formParent.classList.add('pos-rel', 'form-loading')
     const order = isSubscription ? actions.subscription.get() : actions.order.capture()
     order.then(result => {
       const form = document.getElementById(`form-${contentID}`)
@@ -137,7 +122,13 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
         input.setAttribute('id', 'paypalfield')
         input.setAttribute('value', result.id)
         form.appendChild(input)
-        const submitBtn = form.querySelector('button[type="submit"]')
+        let submitBtn = form.querySelector('button[type="submit"]')
+        if (!submitBtn) {
+          submitBtn = document.createElement('input')
+          submitBtn.setAttribute('type', 'submit')
+          submitBtn.style.display = 'none'
+          form.appendChild(submitBtn)
+        }
         submitBtn.click()
         const paymentParams = {
           formID,
@@ -146,9 +137,35 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           payment_type: isSubscription ? 'subscription' : 'order',
           payment_response: result,
         }
-        bitsFetch(paymentParams, 'bitforms_payment_insert')
+        bitsFetchFront(paymentParams, 'bitforms_payment_insert')
+          .then(__ => formParent.classList.remove('pos-rel', 'form-loading'))
       }
     })
+  }
+
+  const getOptions = () => {
+    const options = { 'client-id': clientID }
+    if (!isSubscription) options.currency = currency
+    if (isSubscription) {
+      options.vault = true
+      options.intent = 'subscription'
+    }
+    if (attr.locale) options.locale = attr.locale
+    if (attr.disableFunding) options['disable-funding'] = attr.disableFunding
+
+    return options
+  }
+
+  const getStyles = () => {
+    const style = {
+      color: attr.style.color,
+      shape: attr.style.shape,
+      label: isSubscription ? 'subscribe' : attr.style.label,
+    }
+    if (!isStandalone) style.layout = attr.style.layout
+    if (attr.style?.height) style.height = Number(attr.style.height)
+
+    return style
   }
 
   return (
@@ -162,35 +179,24 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           marginRight: 'auto',
         }}
       >
-        {(render && clientID) ? (
+        {(render && clientID) && (
           <PayPalScriptProvider
-            options={{
-              'client-id': clientID,
-              ...!isSubscription && { currency },
-              ...isSubscription && { vault: true, intent: 'subscription' },
-              ...attr?.locale && { locale: attr.locale },
-              ...attr?.disableFunding && { 'disable-funding': attr.disableFunding },
-            }}
+            options={getOptions()}
           >
             <PayPalButtons
-              style={{
-                color: attr.style.color,
-                shape: attr.style.shape,
-                label: isSubscription ? 'subscribe' : attr.style.label,
-                ...!isStandalone && { layout: attr.style.layout },
-                ...attr.style?.height && { height: Number(attr.style.height) },
-              }}
-              {...isStandalone && { fundingSource: FUNDING[attr.style.payBtn] }}
-              {...isSubscription
-                ? { createSubscription: (data, actions) => createSubscriptionHandler(data, actions) }
-                : { createOrder: (data, actions) => createOrderHandler(data, actions) }}
+              style={getStyles()}
+              fundingSource={isStandalone ? FUNDING[attr.style.payBtn] : undefined}
+              createSubscription={isSubscription ? (data, actions) => createSubscriptionHandler(data, actions) : undefined}
+              createOrder={!isSubscription ? (data, actions) => createOrderHandler(data, actions) : undefined}
               onApprove={(data, actions) => onApproveHanlder(data, actions)}
-              forceReRender={{ amount, lay: attr.style }}
+              forceReRender={[amount, attr.style]}
+              onError={() => { }}
             />
           </PayPalScriptProvider>
-        ) : (!attr.payIntegID ? (
+        )}
+        {!attr.payIntegID && (
           <p>Select a config from field settings to render the PayPal.</p>
-        ) : '')}
+        )}
       </div>
     </div>
   )

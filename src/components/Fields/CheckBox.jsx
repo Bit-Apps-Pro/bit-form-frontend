@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
+import validateForm from '../../user-frontend/validation'
 
 export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   let defaultValue
@@ -54,13 +55,25 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
       onBlurHandler(event)
     }
   }
+
+  const handleBlur = e => {
+    const { name } = e.target
+    validateForm({ input: { name, value: value.length ? value : '' } })
+  }
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+      {'lbl' in attr && (
+        <label className={`fld-lbl fld-lbl-${formID}`}>
+          {attr.lbl}
+          {attr.valid.req && ' *'}
+        </label>
+      )}
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         {attr.opt.map((itm, i) => (
           <label key={`opt-${i + 24}`} className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
-            <span>{itm.lbl}</span>
+            <span>
+              {itm.lbl}
+            </span>
             <input
               type="checkbox"
               ref={checkBoxRef}
@@ -73,10 +86,16 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
               {...'name' in attr && { name: `${attr.name}[]` }}
               {...{ checked: Array.isArray(value) && value.indexOf(itm.val || itm.lbl) >= 0 }}
               onChange={onChangeHandler}
+              onBlur={handleBlur}
             />
             <span className="btcd-mrk ck" />
           </label>
         ))}
+      </div>
+      <div className="error-wrapper">
+        <div id={`${attr.name}-error`} className="error-txt">
+          {attr?.err?.msg}
+        </div>
       </div>
     </div>
   )

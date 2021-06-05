@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
+import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
 
 export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
@@ -39,7 +40,12 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
     if (textFld) {
       observeElement(textFld, 'value', (oldVal, newVal) => setvalue(attr.typ === 'email' ? newVal.toLowerCase() : newVal))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const handleBlur = e => {
+    validateForm({ input: e.target })
+  }
 
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="text-fld">
@@ -61,12 +67,18 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
         {...'mx' in attr && { max: attr.mx }}
         {...'ac' in attr && { autoComplete: attr.ac }}
         {...'name' in attr && { name: attr.name }}
-        {...onBlurHandler && { onBlur: onBlurHandler }}
+        {...onBlurHandler && { onInput: onBlurHandler }}
+        onBlur={handleBlur}
         {...{ value }}
         {...{ onChange: onChangeHandler }}
         ref={textFieldRef}
       />
       {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
+      <div className="error-wrapper">
+        <div id={`${fieldKey}-error`} className="error-txt">
+          {attr?.err?.msg}
+        </div>
+      </div>
     </div>
   )
 }

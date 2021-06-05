@@ -36,7 +36,12 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
 
   return (
     <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
-      {'lbl' in attr && <label className={`fld-lbl fld-lbl-${formID}`}>{attr.lbl}</label>}
+      {'lbl' in attr && (
+        <label className={`fld-lbl fld-lbl-${formID}`}>
+          {attr.lbl}
+          {attr.valid.req && ' *'}
+        </label>
+      )}
       <div className="btcd-f-input">
         <div className="btcd-f-wrp">
           <div className="btn-wrp">
@@ -45,7 +50,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
               <span>{` ${attr.upBtnTxt}`}</span>
             </button>
             <div className="btcd-f-title">No File Chosen</div>
-            <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} MB)`}</small>
+            <small className="f-max">{'mxUp' in attr && ` (Max ${attr.mxUp} ${attr.unit || 'MB'})`}</small>
           </div>
           <input
             {...'req' in attr.valid && { required: attr.valid.req }}
@@ -79,10 +84,14 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
                   <button onClick={() => rmvFile(i)} type="button" className="icn-btn">&times;</button>
                 </div>
               ))}
-
             </div>
           )}
           <div ref={delBtnRef} className="btcd-files" />
+        </div>
+      </div>
+      <div className="error-wrapper">
+        <div id={`${attr.name}-error`} className="error-txt">
+          {attr?.err?.msg}
         </div>
       </div>
     </div>
