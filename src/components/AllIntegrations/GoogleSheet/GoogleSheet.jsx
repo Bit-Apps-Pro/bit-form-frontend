@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
 import GoogleSheetAuthorization from './GoogleSheetAuthorization'
 import { handleInput } from './GoogleSheetCommonFunc'
+import BackIcn from '../../../Icons/BackIcn'
 
 function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) {
   console.log('google sheet')
@@ -97,9 +98,7 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

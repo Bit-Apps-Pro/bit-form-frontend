@@ -11,6 +11,7 @@ import FontSetting from './StyleComponents/FontSetting'
 import Direction from './StyleComponents/Direction'
 import Gap from './StyleComponents/Gap'
 import Height from './StyleComponents/Height'
+import BackIcn from '../../../Icons/BackIcn'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()
@@ -24,7 +25,7 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
       {!noBack && (
         <Link to={`${goBackUrl()}`}>
           <h4 className="w-9 m-a flx txt-dp">
-            <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
+            <button className="icn-btn" type="button" aria-label="back btn"><BackIcn /></button>
             <div className="flx w-10">
               <span>{__('Back', 'bitform')}</span>
               <div className="txt-center w-10 f-5">{editorLabel}</div>

@@ -1,72 +1,59 @@
-import { useState, useContext, memo, useEffect, lazy, Suspense, createContext } from 'react'
+import { useState, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
 import bitsFetch from '../Utils/bitsFetch'
-import { AllFormContext } from '../Utils/AllFormContext'
+import { formsReducer, reportsReducer } from '../Utils/Reducers'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import '../resource/sass/components.scss'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
-import { hideWpMenu, showWpMenu, getNewId, bitDecipher, bitCipher } from '../Utils/Helpers'
+import { hideWpMenu, showWpMenu, bitDecipher, bitCipher } from '../Utils/Helpers'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
-import { _fieldLabels, _fields, _fieldsArr, _uniqueFieldKey } from '../GlobalStates'
+import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts } from '../GlobalStates'
+import BackIcn from '../Icons/BackIcn'
+// import Ok from './Ok'
+// import FormBuilderHOC from './FormBuilderHOC'
 // import useSWR from 'swr'
 
-const FormBuilder = lazy(() => import('./FormBuilder'))
+const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
 
 export const FormSaveContext = createContext(null)
 export const ShowProModalContext = createContext(null)
 
-function FormDetails(props) {
+function FormDetails({ history }) {
   let componentMounted = true
   const { formType, formID } = useParams()
+  const setAllForms = useSetRecoilState($forms)
+  const [reports, setReports] = useRecoilState($reports)
+  const [lay, setLay] = useRecoilState($layouts)
+  const newFormId = useRecoilValue($newFormId)
+  const [fields, setFields] = useRecoilState($fields)
+  const setFieldLabels = useSetRecoilState($fieldLabels)
   const [fulScn, setFulScn] = useState(true)
-  const [newCounter, setNewCounter] = useState(0)
-  // const [uniqueFieldKey,  ] = useRecoilState(_fieldCounter)
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
-  const [lay, setLay] = useState({ lg: [], md: [], sm: [] })
-  const [fields, setFields] = useRecoilState(_fields)
-  const setFieldLabels = useSetRecoilState(_fieldLabels)
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const [formName, setFormName] = useState('Untitled Form')
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [buttonDisabled, setbuttonDisabled] = useState(false)
-  const { allFormsData, reportsData } = useContext(AllFormContext)
   const [snack, setSnackbar] = useState({ show: false })
-  const { allFormsDispatchHandler } = allFormsData
-  const { reports, reportsDispatch } = reportsData
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const { history, newFormId } = props
-  const resetState1 = useResetRecoilState(_fieldLabels)
-  const resetState2 = useResetRecoilState(_fields)
-
-  // const uniq = useRecoilValue(_uniqueFieldKey)
-  // console.log({ uniq, newCounter })
-  // useEffect(() => {
-  //   const tmpLabels = [...allLabels]
-  //   let i = 0
-  //   while (i < tmpLabels.length) {
-  //     tmpLabels[i].name = tmpLabels[i].adminLbl || tmpLabels[i].name || tmpLabels[i].key
-  //     i += 1
-  //   }
-  //   setFormFields(sortArrOfObj(tmpLabels, 'name'))
-  // }, [allLabels])
+  const resetState1 = useResetRecoilState($fieldLabels)
+  const resetState2 = useResetRecoilState($fields)
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
       const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
       formData.layout !== undefined && setLay(formData.layout)
       setFields(formData.fields)
-      setNewCounter(getNewId(formData.fields))
       setFormName(formData.form_name)
       setFormSettings(formData.formSettings)
       setworkFlows(formData.workFlows)
@@ -76,12 +63,8 @@ function FormDetails(props) {
       // if ('formSettings' in formData && 'submitBtn' in formSettings) setSubBtn(formData.formSettings.submitBtn)
       sessionStorage.removeItem('bitformData')
       setSnackbar({ show: true, msg: __('Please try again. Token was expired', 'bitform') })
-      if (isLoading) {
-        setisLoading(!isLoading)
-      }
-    } else {
-      fetchTemplate()
-    }
+      if (isLoading) { setisLoading(!isLoading) }
+    } else { fetchTemplate() }
     window.scrollTo(0, 0)
     hideWpMenu()
   }
@@ -112,7 +95,6 @@ function FormDetails(props) {
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
-    // submitBtn: subBtn,
     confirmation: {
       type: {
         successMsg: [{ title: 'Untitled Message 1', msg: __('Successfully Submitted.', 'bitform') }],
@@ -145,7 +127,6 @@ function FormDetails(props) {
         btnLay.sm.push(subBtnLay)
         setLay(btnLay)
         setFields(btnFld)
-        setNewCounter(2)
         setisLoading(false)
       } else {
         bitsFetch({ template: formTitle, newFormId }, 'bitforms_get_template')
@@ -157,7 +138,6 @@ function FormDetails(props) {
               }
               responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
               setFields(responseData.form_content.fields)
-              setNewCounter(getNewId(responseData.form_content.fields))
               setFormName(responseData.form_content.form_name)
               setisLoading(false)
               sessionStorage.setItem('btcd-lc', '-')
@@ -165,9 +145,7 @@ function FormDetails(props) {
               setisLoading(false)
             }
           })
-          .catch(() => {
-            setisLoading(false)
-          })
+          .catch(() => { setisLoading(false) })
       }
     } else if (formType === 'edit') {
       bitsFetch({ id: formID }, 'bitforms_get_a_form')
@@ -176,7 +154,6 @@ function FormDetails(props) {
             const responseData = res.data
             responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             setFields(responseData.form_content.fields)
-            setNewCounter(getNewId(responseData.form_content.fields))
             setFormName(responseData.form_content.form_name)
             setFormSettings(responseData.formSettings)
             setworkFlows(responseData.workFlows)
@@ -185,8 +162,8 @@ function FormDetails(props) {
             setMailTem(responseData.formSettings.mailTem)
             // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setFieldLabels(responseData.Labels)
-            if ('reports' in responseData) reportsDispatch({ type: 'set', reports: responseData.reports })
-            else reportsDispatch({ type: 'set', reports: [] })
+            if ('reports' in responseData) setReports(reprts => reportsReducer(reprts, { type: 'set', reports: responseData.reports }))
+            else setReports(reprts => reportsReducer(reprts, { type: 'set', reports: [] }))
             setisLoading(false)
           } else {
             if (!res.success && res.data === 'Token expired') {
@@ -195,9 +172,7 @@ function FormDetails(props) {
             setisLoading(false)
           }
         })
-        .catch(() => {
-          setisLoading(false)
-        })
+        .catch(() => { setisLoading(false) })
     }
   }
 
@@ -286,13 +261,13 @@ function FormDetails(props) {
                 if ('formSettings' in data && 'integrations' in formSettings) setIntegration(data.formSettings.integrations)
                 if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
                 setFieldLabels(data.Labels)
-                if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
-                else reportsDispatch({ type: 'set', reports: [] })
+                if ('reports' in data) setReports(reprts => reportsReducer(reprts, { type: 'set', reports: data.reports }))
+                else setReports(reprts => reportsReducer(reprts, { type: 'set', reports: [] }))
               }
-              allFormsDispatchHandler({
+              setAllForms(allforms => formsReducer(allforms, {
                 type: 'add',
                 data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },
-              })
+              }))
             } else if (action === 'bitforms_update_form') {
               setSnackbar({ show: true, msg: data.message })
               if ('formSettings' in data) setFormSettings(data.formSettings)
@@ -302,12 +277,12 @@ function FormDetails(props) {
               }
               if ('formSettings' in data && 'mailTem' in formSettings) setMailTem(data.formSettings.mailTem)
               setFieldLabels(data.Labels)
-              if ('reports' in data) reportsDispatch({ type: 'set', reports: data.reports })
-              else reportsDispatch({ type: 'set', reports: [] })
-              allFormsDispatchHandler({
+              if ('reports' in data) setReports(reprts => reportsReducer(reprts, { type: 'set', reports: data.reports }))
+              else setReports(reprts => reportsReducer(reprts, { type: 'set', reports: [] }))
+              setAllForms(allforms => formsReducer(allforms, {
                 type: 'update',
                 data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },
-              })
+              }))
             }
             setbuttonDisabled(false)
             sessionStorage.removeItem('btcd-lc')
@@ -373,8 +348,7 @@ function FormDetails(props) {
           <nav className="btcd-bld-nav">
             <div className="btcd-bld-lnk">
               <NavLink exact to="/">
-                <span className="btcd-icn icn-arrow_back" />
-                {' '}
+                <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
                 {__('Home', 'bitform')}
               </NavLink>
               <NavLink
@@ -421,15 +395,11 @@ function FormDetails(props) {
           <Switch>
             <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
               <Suspense fallback={<BuilderLoader />}>
-                <FormBuilder
-                  newCounter={newCounter}
+                <FormBuilderHOC
                   isLoading={isLoading}
-                  lay={lay}
-                  setLay={setLay}
-                  setNewCounter={setNewCounter}
-                  theme={fSettings.theme}
-                  formID={formType === 'new' ? newFormId : formID}
-                  formType={formType}
+                  // lay={lay}
+                  // setLay={setLay}
+                  // theme={fSettings.theme}
                   formSettings={fSettings}
                 />
               </Suspense>

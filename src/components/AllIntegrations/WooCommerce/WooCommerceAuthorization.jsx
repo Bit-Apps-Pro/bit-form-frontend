@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -66,7 +67,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         <>
           <button onClick={() => setStep(2)} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
             {__('Next', 'bitform')}
-            <div className="btcd-icn icn-arrow_back rev-icn d-in-b ml-2" />
+            <BackIcn className="ml-1 rev-icn" />
           </button>
         </>
       )}

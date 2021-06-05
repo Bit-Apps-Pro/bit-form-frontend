@@ -6,10 +6,10 @@ import bitsFetch from '../../Utils/bitsFetch'
 import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'
 import RazorpayInfo from './PaymentInfo/RazorpayInfo'
-import { _fieldLabels } from '../../GlobalStates'
+import { $fieldLabels } from '../../GlobalStates'
 
 export default function FormEntryPayments({ formID, rowDtl, settab }) {
-  const allLabels = useRecoilValue(_fieldLabels)
+  const allLabels = useRecoilValue($fieldLabels)
 
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [paymentInfo, setPaymentInfo] = useState([])

@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc'
 import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
 import ZohoRecruitAuthorization from './ZohoRecruitAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -43,8 +44,6 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
       setstep(3)
     }
   }
-
-  console.log('recruitConf', recruitConf)
 
   return (
     <div>
@@ -86,9 +85,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

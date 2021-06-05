@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './ZohoBiginCommonFunc'
 import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
 import ZohoBiginAuthorization from './ZohoBiginAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -41,8 +42,6 @@ function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }
   document.querySelector('.btcd-s-wrp').scrollTop = 0
-
-  console.log('biginConf', biginConf)
 
   return (
     <div>
@@ -84,9 +83,7 @@ function ZohoBigin({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -87,7 +88,7 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
             <br />
             <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
               {__('Next', 'bitform')}
-              <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+              <BackIcn className="ml-1 rev-icn" />
             </button>
           </>
         )}

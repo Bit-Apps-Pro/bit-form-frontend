@@ -1,3 +1,6 @@
+import { useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../Utilities/CopyText'
 import SingleInput from '../Utilities/SingleInput'
@@ -6,10 +9,10 @@ import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 
-export default function DecisionBoxSettings({ setElementSetting, elm, fields, updateData }) {
+export default function DecisionBoxSettings({ setElementSetting, elm, updateData }) {
   const elmId = elm.id
-  const elmData = { ...fields[elmId] }
-
+  const fields = useRecoilValue($fields)
+  const elmData = deepCopy(fields[elmId])
   function setAdminLabel(e) {
     if (e.target.value === '') {
       delete elmData.adminLbl

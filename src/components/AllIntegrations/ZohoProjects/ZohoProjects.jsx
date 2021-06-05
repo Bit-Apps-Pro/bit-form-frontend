@@ -7,8 +7,9 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoProjectsAuthorization from './ZohoProjectsAuthorization'
-import { checkAllRequired, handleInput, refreshPortals } from './ZohoProjectsCommonFunc'
+import { checkAllRequired, handleInput } from './ZohoProjectsCommonFunc'
 import ZohoProjectsIntegLayout from './ZohoProjectsIntegLayout'
+import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -16,7 +17,6 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  // eslint-disable-next-line max-len
 
   const [projectsConf, setProjectsConf] = useState({
     name: 'Zoho Projects API',
@@ -94,9 +94,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>

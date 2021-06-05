@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
+import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
@@ -91,7 +92,7 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
             <br />
             <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
               {__('Next', 'bitform')}
-              <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+              <BackIcn className="ml-1 rev-icn" />
             </button>
           </>
         )}

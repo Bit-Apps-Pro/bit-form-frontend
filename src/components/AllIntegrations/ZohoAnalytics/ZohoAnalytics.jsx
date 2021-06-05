@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -75,7 +76,7 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
           type="button"
         >
           {__('Next', 'bitform')}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>
 

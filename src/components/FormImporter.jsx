@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState, useContext } from 'react'
+import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import bitsFetch from '../Utils/bitsFetch'
-import { AllFormContext } from '../Utils/AllFormContext'
 import { deepCopy } from '../Utils/Helpers'
+import { $forms } from '../GlobalStates'
+import { formsReducer } from '../Utils/Reducers'
 
 export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
-  const { allFormsData } = useContext(AllFormContext)
-  const { allFormsDispatchHandler } = allFormsData
+  const setForms = useSetRecoilState($forms)
   const [importProp, setImportProp] = useState({ prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
   const [error, setError] = useState({ formDetail: '', prop: '' })
   const handleChange = (ev) => {
@@ -89,7 +90,7 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
       if (response.success) {
         const { data } = response
-        allFormsDispatchHandler({ type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } })
+        setForms(allforms => formsReducer(allforms, { type: 'add', data: { formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at } }))
         setSnackbar({ show: true, msg: data.message })
         setTempModal(false)
         setModal(false)

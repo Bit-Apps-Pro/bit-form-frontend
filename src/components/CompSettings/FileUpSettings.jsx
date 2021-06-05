@@ -1,25 +1,28 @@
 /* eslint-disable no-param-reassign */
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import DropDown from '../Utilities/DropDown'
 import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
-import CheckBox from '../Utilities/CheckBox';
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import { deepCopy } from '../../Utils/Helpers'
+import { $fields } from '../../GlobalStates'
 
 export default function FileUpSettings({ elm, updateData, setElementSetting }) {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-  const elmId = elm.id
-  const elmData = { ...elm.data }
-  const isRequired = elm.data.valid.req !== undefined
-  const isMultiple = elm.data.mul !== undefined
-  const label = elm.data.lbl === undefined ? '' : elm.data.lbl
-  const adminLabel = elm.data.adminLbl === undefined ? '' : elm.data.adminLbl
-  const { upBtnTxt } = elm.data
-  const mxUp = elm.data.mxUp === undefined ? '' : elm.data.mxUp
-  const exts = elm.data.exts === undefined ? [] : elm.data.exts.split(',._RF_,')
-  const fldKey = elm.id
+  const elmId = props.elm.id
+  const fields = useRecoilValue($fields)
+  const elmData = deepCopy(fields[elmId])
+  const isRequired = elmData.valid.req !== undefined
+  const isMultiple = elmData.mul !== undefined
+  const label = elmData.lbl === undefined ? '' : elmData.lbl
+  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
+  const { upBtnTxt } = elmData
+  const mxUp = elmData.mxUp === undefined ? '' : elmData.mxUp
+  const exts = elmData.exts === undefined ? [] : elmData.exts.split(',._RF_,')
+  const fldKey = elmId
   const options = [
     { label: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
     { label: 'Audios', value: '.opus,.flac,.webm,.weba,.wav,.ogg,.m4a,.mp3,.oga,.mid,.amr,.aiff,.wma,.au,.acc,.wpl' },
@@ -30,60 +33,60 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
     { label: 'Spreadsheet', value: '.ods,.xlr,.xls,.xlsx' },
     { label: 'Databases', value: '.csv,.dat,.db,.dbf,.log,.mdb,.sav,.sql,.tar,.sql,.sqlite,.xml' },
   ]
-  const isIndividual = elm.data.mxUpTyp === 'individual'
+  const isIndividual = elmData.mxUpTyp === 'individual'
 
   function setRequired(e) {
     if (e.target.checked) {
-      elm.data.valid.req = true
+      elmData.valid.req = true
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.req) elmData.err.req = {}
       elmData.err.req.dflt = '<p>This field is required</p>'
       elmData.err.req.show = true
     } else {
-      delete elm.data.valid.req
+      delete elmData.valid.req
     }
     updateData(elm)
   }
 
   function setMultiple(e) {
     if (e.target.checked) {
-      elm.data.mul = true
+      elmData.mul = true
     } else {
-      delete elm.data.mul
+      delete elmData.mul
     }
     updateData(elm)
   }
 
   function setLabel(e) {
     if (e.target.value === '') {
-      delete elm.data.lbl
+      delete elmData.lbl
     } else {
-      elm.data.lbl = e.target.value
+      elmData.lbl = e.target.value
     }
     updateData(elm)
   }
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
-      delete elm.data.adminLbl
+      delete elmData.adminLbl
     } else {
-      elm.data.adminLbl = e.target.value
+      elmData.adminLbl = e.target.value
     }
     updateData(elm)
   }
 
   function setUpBtnTxt(e) {
-    elm.data.upBtnTxt = e.target.value
+    elmData.upBtnTxt = e.target.value
     updateData(elm)
   }
 
   function setMxUp(e) {
     if (e.target.value === '') {
-      delete elm.data.mxUp
-      delete elm.data.unit
+      delete elmData.mxUp
+      delete elmData.unit
     } else {
-      elm.data.mxUp = e.target.value
-      elm.data.unit = 'MB'
+      elmData.mxUp = e.target.value
+      elmData.unit = 'MB'
     }
     updateData(elm)
   }
@@ -91,22 +94,22 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
   function setFileFilter(value) {
     const val = value.map(itm => itm.value)
     if (val.join(',') === '') {
-      delete elm.data.exts
+      delete elmData.exts
     } else {
-      elm.data.exts = val.join(',._RF_,')
+      elmData.exts = val.join(',._RF_,')
     }
     updateData(elm)
   }
 
   const setMaxUpTyp = e => {
-    if (e.target.value) elm.data.mxUpTyp = e.target.value
-    else delete elm.data.mxUpTyp
+    if (e.target.value) elmData.mxUpTyp = e.target.value
+    else delete elmData.mxUpTyp
 
     updateData(elm)
   }
 
   const setUnit = e => {
-    elm.data.unit = e.target.value
+    elmData.unit = e.target.value
     updateData(elm)
   }
 
@@ -146,7 +149,7 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
         )} */}
         <div className={`flx ${!isMultiple && 'mt-1'}`}>
           <input type="number" className="btcd-paper-inp" value={mxUp} action={setMxUp} placeholder="Any Size" />
-          {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={elm.data.unit}>
+          {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={elmData.unit}>
             <option value="">Unit</option>
             <option value="KB">KB</option>
             <option value="MB">MB</option>

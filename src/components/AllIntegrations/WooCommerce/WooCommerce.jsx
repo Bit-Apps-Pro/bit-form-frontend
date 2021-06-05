@@ -9,6 +9,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import WooCommerceAuthorization from './WooCommerceAuthorization'
 import { handleInput } from './WooCommerceCommonFunc'
 import WooCommerceIntegLayout from './WooCommerceIntegLayout'
+import BackIcn from '../../../Icons/BackIcn'
 
 export default function WooCommerce({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -69,7 +70,7 @@ export default function WooCommerce({ formFields, setIntegration, integrations, 
           type="button"
         >
           {__('Next', 'bitform')}
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
       </div>
 

@@ -5,7 +5,7 @@
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
@@ -13,7 +13,7 @@ import { deepCopy, isType } from '../Utils/Helpers'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import FieldBlockWrapper from './FieldBlockWrapper'
-import { _fields } from '../GlobalStates'
+import { $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
 import { AppSettings } from '../Utils/AppSettingsContext'
 
 function GridLayout(props) {
@@ -21,8 +21,10 @@ function GridLayout(props) {
   const { payments } = useContext(AppSettings)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const setProModal = useContext(ShowProModalContext)
-  const { newData, setNewData, newCounter, setNewCounter, style, gridWidth, formID, isToolDragging, layout, formSettings } = props
-  const [fields, setFields] = useRecoilState(_fields)
+  const { newData, setNewData, style, gridWidth, formID, isToolDragging, formSettings } = props
+  const [fields, setFields] = useRecoilState($fields)
+  const [layout, setLay] = useRecoilState($layouts)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -30,6 +32,7 @@ function GridLayout(props) {
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
+  const uniqueFieldId = useRecoilValue($uniqueFieldId)
 
   useEffect(() => {
     checkAllLayoutSame()
@@ -217,7 +220,7 @@ function GridLayout(props) {
     const { w, h, minH, maxH, minW } = newData[1]
     const x = 0
     const y = Infinity
-    const newBlk = { i: `bf${formID}-${newCounter + 1}`, x, y, w, h, minH, maxH, minW }
+    const newBlk = { i: `bf${formID}-${uniqueFieldId}`, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts.lg.push(newBlk)
     tmpLayouts.md.push(newBlk)
@@ -235,8 +238,7 @@ function GridLayout(props) {
     }
     setLayouts({ ...tmpLayouts })
     const tmpField = deepCopy(newData[0])
-    setFields({ ...fields, [`bf${formID}-${newCounter + 1}`]: tmpField })
-    setNewCounter(newCounter + 1)
+    setFields({ ...fields, [`bf${formID}-${uniqueFieldId}`]: tmpField })
     sessionStorage.setItem('btcd-lc', '-')
   }
 
@@ -245,7 +247,7 @@ function GridLayout(props) {
       && newLays.md.length === layouts.md.length
       && newLays.sm.length === layouts.sm.length) {
       setLayouts({ ...newLays })
-      props.setLay({ ...newLays })
+      setLay({ ...newLays })
     }
   }
 
@@ -371,7 +373,7 @@ function GridLayout(props) {
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
-    const newBlk = `bf${formID}-${newCounter + 1}`
+    const newBlk = `bf${formID}-${uniqueFieldId}`
     const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
     const tmpLayouts = layouts
     tmpLayouts.lg.push(newLayoutItem)
@@ -391,7 +393,6 @@ function GridLayout(props) {
     setLayouts({ ...tmpLayouts })
     const tmpField = deepCopy(draggedElm[0])
     setFields({ ...fields, [newBlk]: tmpField })
-    setNewCounter(newCounter + 1)
     sessionStorage.setItem('btcd-lc', '-')
   }
 
@@ -427,98 +428,10 @@ function GridLayout(props) {
         node.classList.add('z-9')
       }
 
+      setSelectedFieldId(id)
       props.setElmSetting({ id, data: fields[id] })
     }
   }
-
-  /* const editSubmit = () => {
-    props.setElmSetting({ id: '', type: 'submit', data: props.subBtn })
-  } */
-
-  /* const compByTheme = compData => {
-    // TODO move this code with recaptcha component after remove react frontend
-    if (compData && compData.typ === 'recaptcha') {
-      // eslint-disable-next-line no-param-reassign
-      compData.siteKey = reCaptchaV2.siteKey
-    }
-    switch (props.theme) {
-      case 'default':
-        return <MapComponents isBuilder formID={formID} atts={compData} />
-      default:
-        return null
-    }
-  } */
-
-  /* const blkGen = item => (
-    <div
-      key={item.i}
-      className="blk"
-      btcd-id={item.i}
-      data-grid={item}
-      onClick={getElmProp}
-      onKeyPress={getElmProp}
-      role="button"
-      tabIndex={0}
-    >
-      <div
-        data-close
-        style={{ right: 8, fontSize: 20 }}
-        unselectable="on"
-        draggable="false"
-        className="bit-blk-icn"
-        onClick={() => onRemoveItem(item.i)}
-        onKeyPress={() => onRemoveItem(item.i)}
-        role="button"
-        tabIndex="0"
-        title={__('Remove', 'bitform')}
-      >
-        <CloseIcn size="13" />
-      </div>
-      <div
-        style={{ right: 27, cursor: 'move', fontSize: 15 }}
-        className="bit-blk-icn drag "
-        aria-label="Move"
-        title={__('Move', 'bitform')}
-      >
-        <span className="btcd-icn icn-move1" />
-      </div>
-      <div
-        style={{ right: 47, fontSize: 15, cursor: 'pointer' }}
-        className="bit-blk-icn drag "
-        aria-label="Settings"
-        title={__('Settings', 'bitform')}
-        onClick={navigateToFieldSettings}
-        onKeyPress={navigateToFieldSettings}
-        role="button"
-        tabIndex="0"
-      >
-        <span className="btcd-icn icn-settings" />
-      </div>
-      <div
-        style={{ right: 67, fontSize: 15, cursor: 'pointer' }}
-        className="bit-blk-icn drag "
-        aria-label="Style"
-        title={__('Style', 'bitform')}
-        onClick={() => navigateToStyle(fields[item.i].typ)}
-        onKeyPress={() => navigateToStyle(fields[item.i].typ)}
-        role="button"
-        tabIndex="0"
-      >
-        <BrushIcn style={{ height: 15, width: 15 }} />
-      </div>
-      {compByTheme(fields[item.i])}
-    </div>
-  ) */
-
-  /*  const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
-  } */
-
-  /* const navigateToStyle = typ => {
-    if (typ === 'paypal') history.replace(history.location.pathname.replace(/fs|style\/.+|style/g, 'style/fl/ppl'))
-    // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    else history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
-  } */
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
@@ -552,7 +465,6 @@ function GridLayout(props) {
                     key={layoutItem.i}
                     className="blk"
                     btcd-id={layoutItem.i}
-                    data-grid={layoutItem}
                     onClick={getElmProp}
                     onKeyPress={getElmProp}
                     role="button"
@@ -570,10 +482,6 @@ function GridLayout(props) {
                   </div>
                 ))}
               </ResponsiveReactGridLayout>
-
-              {/* <div onClick={editSubmit} onKeyPress={editSubmit} role="button" tabIndex={0}>
-                {compByTheme(props.subBtn)}
-              </div> */}
             </div>
           </div>
         </div>

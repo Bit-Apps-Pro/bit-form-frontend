@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
-import { lazy, Suspense, useState, useEffect, useContext } from 'react'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -13,7 +13,6 @@ import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
 import AppSettings from './pages/AppSettings'
-import { AllFormContext } from './Utils/AllFormContext'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const FormDetails = lazy(() => import('./pages/FormDetails'))
@@ -22,25 +21,6 @@ const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
   const loaderStyle = { height: '90vh' }
-  const [newFormId, setnewFormId] = useState(null)
-  const { allFormsData } = useContext(AllFormContext)
-  const { allForms } = allFormsData
-
-  useEffect(() => {
-    setnewFormId(getNewFormId())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allForms])
-
-  const getNewFormId = () => {
-    let max = 0
-    allForms.map(frm => {
-      const fid = Number(frm.formID)
-      if (fid > max) {
-        max = fid
-      }
-    })
-    return max + 1
-  }
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
@@ -79,12 +59,12 @@ function App() {
             <Switch>
               <Route exact path="/">
                 <Suspense fallback={<TableLoader />}>
-                  <AllForms newFormId={newFormId} />
+                  <AllForms />
                 </Suspense>
               </Route>
               <Route path="/form/:page/:formType/:formID?/:option?">
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <FormDetails newFormId={newFormId} />
+                  <FormDetails />
                 </Suspense>
               </Route>
               <Route path="/formEntries/:formID">

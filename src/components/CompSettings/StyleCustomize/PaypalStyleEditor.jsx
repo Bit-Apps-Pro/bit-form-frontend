@@ -2,14 +2,19 @@
 
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useRecoilValue, useResetRecoilState } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import BrushIcn from '../../../Icons/BrushIcn'
 import { deepCopy } from '../../../Utils/Helpers'
+import BackIcn from '../../../Icons/BackIcn'
+import { $fields, $layouts } from '../../../GlobalStates'
 
-export default function PaypalStyleEditor({ elm, setElementSetting, updateData, lay, setLay, fields }) {
+export default function PaypalStyleEditor({ elm, setElementSetting, updateData }) {
   const { formID, formType } = useParams()
+  const [lay, setLay] = useResetRecoilState($layouts)
+  const fields = useRecoilValue($fields)
   const [customHeight, setCustomHeight] = useState(elm.data?.style?.height || '')
-  const [customWidth, setCustomWidth] = useState(elm.data?.style?.width || '')
+  const [, setCustomWidth] = useState(elm.data?.style?.width || '')
 
   const checkPaypalExist = (flds) => {
     const formFields = Object.entries(flds)
@@ -176,7 +181,7 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData, 
     <div className="mt-2">
       <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
         <h4 className="w-9 m-a flx txt-dp">
-          <button className="icn-btn" type="button" aria-label="back btn"><span className="btcd-icn icn-arrow_back" /></button>
+          <button className="icn-btn" type="button" aria-label="back btn"><BackIcn /></button>
           <div className="flx w-10">
             <span>{__('Back', 'bitform')}</span>
             <div className="txt-center w-10 f-5">{__('Paypal Style', 'bitform')}</div>

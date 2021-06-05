@@ -16,7 +16,7 @@
   <link rel="manifest" href="/wp-content/plugins/bitapps/manifest.json" />
 
   <link rel="preload" as="font" crossorigin="anonymous"
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap">
 
   <!--  <link rel="stylesheet" href="https://i.icomoon.io/public/temp/4243e4e24b/FormIcons1/style.css"> -->
 
@@ -27,7 +27,10 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <script>
     const bits = {
-      ajaxURL: 'http://bitcode.io/wp-admin/admin-ajax.php',
+      dateFormat: 'd/m/Y',
+      timeFormat: 'g:i A',
+      allForms: [],
+      ajaxURL: 'http://bitcode.dev/wp-admin/admin-ajax.php',
       baseDLURL: `${window.location.origin}/wp-content/uploads/bitforms`,
       styleURL: `${window.location.origin}/wp-content/uploads/bitforms/form-styles`
     }
@@ -40,6 +43,7 @@
       <p>Modern Form builder and database management system for Wordpress</p>
     </div>
   </div>
+  <script type="module" src="/dist/index.js"></script>
 </body>
 
 </html>

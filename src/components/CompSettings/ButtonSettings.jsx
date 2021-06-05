@@ -5,10 +5,10 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import SelectBox2 from '../Utilities/SelectBox2'
 import Back2FldList from './Back2FldList'
-import { _fields } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates'
 
 export default function ButtonSettings({ updateData, elm, setElementSetting }) {
-  const fields = useRecoilValue(_fields)
+  const fields = useRecoilValue($fields)
   const [error, seterror] = useState({})
   const elmId = elm.id
   const elmData = { ...fields[elmId] }

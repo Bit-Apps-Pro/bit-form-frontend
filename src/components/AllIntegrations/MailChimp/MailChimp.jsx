@@ -10,6 +10,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput, setGrantTokenResponse, checkAddressFieldMapRequired } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 import MailChimpAuthorization from './MailChimpAuthorization'
+import BackIcn from '../../../Icons/BackIcn'
 
 function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -83,9 +84,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
           type="button"
         >
           {__('Next', 'bitform')}
-          {' '}
-&nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+          <BackIcn className="ml-1 rev-icn" />
         </button>
 
       </div>
