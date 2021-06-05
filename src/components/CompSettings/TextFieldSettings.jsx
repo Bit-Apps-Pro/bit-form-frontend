@@ -108,19 +108,22 @@ function TextFieldSettings(props) {
   }
 
   const setRegexr = e => {
-    if (e.target.value === '') {
+    const { value } = e.target
+    if (value === '') {
       delete fieldData.valid.regexr
     } else {
-      fieldData.valid.regexr = escapeBackslashPattern(e.target.value)
+      const val = escapeBackslashPattern(value)
+      fieldData.valid.regexr = val
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.regexr) fieldData.err.regexr = {}
-      fieldData.err.regexr.dflt = '<p>Pattern not matched</p>'
+      const ifPredefined = predefinedPatterns.find(opt => opt.val === val)
+      fieldData.err.regexr.dflt = `<p>${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
       fieldData.err.regexr.show = true
       if (fieldData.typ === 'password') {
         delete fieldData.valid.validations
       }
     }
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
   }
 
   const setFlags = e => {
@@ -129,7 +132,7 @@ function TextFieldSettings(props) {
     } else {
       fieldData.valid.flags = e.target.value
     }
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
   }
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
@@ -177,7 +180,7 @@ function TextFieldSettings(props) {
       delete fieldData.err.regexr.show
     }
 
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
   }
 
   const setPasswordLimit = e => {
@@ -193,8 +196,18 @@ function TextFieldSettings(props) {
 
     fieldData.err.regexr.dflt = generatePasswordErrMsg(validations)
 
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
   }
+
+  const predefinedPatterns = [
+    { lbl: 'Only Characters', val: '^[a-zA-Z]+$', msg: 'Only characters allowed' },
+    { lbl: 'Only Digits', val: '^[0-9]+$', msg: 'Only digits allowed' },
+    { lbl: 'Name', val: '^[a-zA-Z .]+$', msg: "Name cann't contain any number or special characters" },
+    { lbl: 'Username', val: '^[a-z0-9_.]+$', msg: "Username cann't contain any space or special characters" },
+    { lbl: 'Character Limit', val: '^.{0,100}$', msg: 'Maximum 100 characters allowed' },
+    { lbl: 'Word Limit', val: '^(?:$_bf_$b$_bf_$w+$_bf_$b[$_bf_$s$_bf_$r$_bf_$n]*){1,30}$', msg: 'Maximum 30 words allowed' },
+    { lbl: 'Only Gmail', val: '^[a-z0-9]($_bf_$.?[a-z0-9]){0,}@(gmail)$_bf_$.com$', msg: 'Only Gmail is allowed' },
+  ]
 
   console.log('fieldData', fieldData)
 
@@ -219,7 +232,8 @@ function TextFieldSettings(props) {
             fieldData={fieldData}
             type="req"
             title="Error Message"
-            updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+            tipTitle="By enabling this feature, user will see the error message when input is empty"
+            updateAction={() => setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))}
           />
         )
       }
@@ -228,24 +242,26 @@ function TextFieldSettings(props) {
       {
         fieldData.typ === 'number' && (
           <>
-            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} width={100} className="mr-4" />
-            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} width={100} />
+            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} className="w-10" />
             {fieldData.mn && (
               <ErrorMessageSettings
                 elmId={elmId}
                 fieldData={fieldData}
                 type="mn"
                 title="Min Error Message"
-                updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+                tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
+                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))}
               />
             )}
+            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} className="w-10" />
             {fieldData.mx && (
               <ErrorMessageSettings
                 elmId={elmId}
                 fieldData={fieldData}
                 type="mx"
                 title="Max Error Message"
-                updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+                tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
+                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))}
               />
             )}
           </>
@@ -258,11 +274,11 @@ function TextFieldSettings(props) {
             fieldData={fieldData}
             type="invalid"
             title="Invalid Error Message"
-            updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+            tipTitle={`By enabling this feature, user will see the error message when input value is not any ${fieldData.typ}`}
+            updateAction={() => setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))}
           />
         )
       }
-
       {
         fieldData.typ === 'password' && (
           <div>
@@ -281,19 +297,13 @@ function TextFieldSettings(props) {
           </div>
         )
       }
-
       {
         fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && (
           <>
             <div>
               <SingleInput inpType="text" title={__('Pattern:', 'bitform')} value={generateBackslashPattern(regexr)} action={setRegexr} className="mr-2 w-7" placeholder="e.g. ([A-Z])\w+" list="patterns" />
               <datalist id="patterns">
-                <option value="^[a-zA-Z]+$">Only Characters</option>
-                <option value="^[a-z0-9_.]+$">Username</option>
-                <option value="^[a-zA-Z .]+$">Name</option>
-                <option value="^[0-9]+$">Only Digits</option>
-                <option value="^[a-z0-9](\.?[a-z0-9]){0,}@(gmail)\.com$">Only Gmail</option>
-                <option value="^.{0,35}$">Character Length</option>
+                {predefinedPatterns.map(opt => <option value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
               </datalist>
               <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" />
             </div>
@@ -303,13 +313,14 @@ function TextFieldSettings(props) {
                 fieldData={fieldData}
                 type="regexr"
                 title="Error Message"
-                updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+                tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
+                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))}
               />
             )}
           </>
         )
       }
-    </div >
+    </div>
   )
 }
 
