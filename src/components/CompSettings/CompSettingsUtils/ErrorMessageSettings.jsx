@@ -6,13 +6,13 @@ import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle from '../../Utilities/SingleToggle'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function ErrorMessageSettings({ elmId, elmData, type, title, updateAction }) {
+export default function ErrorMessageSettings({ elmId, fieldData, type, title, tipTitle, updateAction }) {
   const [errorModal, setErrorModal] = useState(false)
-  const errMsg = elmData?.err?.[type]?.custom ? elmData?.err?.[type]?.msg : elmData?.err?.[type]?.dflt
+  const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
 
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
-    const tmpErr = { ...elmData }
+    const tmpErr = { ...fieldData }
     if (!tmpErr.err) tmpErr.err = {}
     if (!tmpErr.err[name]) tmpErr.err[name] = {}
     if (checked) {
@@ -26,7 +26,7 @@ export default function ErrorMessageSettings({ elmId, elmData, type, title, upda
 
   const setShowErrMsg = e => {
     const { name, checked } = e.target
-    const tmpErr = { ...elmData }
+    const tmpErr = { ...fieldData }
     if (!tmpErr.err) tmpErr.err = {}
     if (!tmpErr.err[name]) tmpErr.err[name] = {}
     if (checked) {
@@ -38,7 +38,7 @@ export default function ErrorMessageSettings({ elmId, elmData, type, title, upda
   }
 
   const openErrorModal = () => {
-    const tmpErr = { ...elmData }
+    const tmpErr = { ...fieldData }
     if (!tmpErr.err) tmpErr.err = {}
     if (!tmpErr.err[type]) tmpErr.err[type] = {}
     tmpErr.err[type].custom = true
@@ -53,23 +53,19 @@ export default function ErrorMessageSettings({ elmId, elmData, type, title, upda
         <h4 className="mt-2 mb-2 flx">
           {__(title, 'bitform')}
           <Cooltip width={250} icnSize={17} className="ml-2">
-            <div className="txt-body">
-              Check the box to show error message on the frontend
-              <br />
-              <span>if you uncheck the box, the error message won&apos;t show</span>
-            </div>
+            <div className="txt-body">{__(tipTitle, 'bitform')}</div>
           </Cooltip>
         </h4>
-        <SingleToggle name={type} action={setShowErrMsg} isChecked={elmData?.err?.[type]?.show} />
+        <SingleToggle name={type} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.show} />
       </div>
       <div className="flx flx-between mt-1 mb-1 mr-2">
         <div className="flx">
-          <CheckBoxMini className=" mr-2" name={type} checked={elmData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
+          <CheckBoxMini className=" mr-2" name={type} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
           <Cooltip width={250} icnSize={17} className="mr-2">
             <div className="txt-body">
               Check the box to enable the custom error message.
               <br />
-              you can edit the message by clicking on edit icon.
+              Note: You can edit the message by clicking on edit icon.
             </div>
           </Cooltip>
         </div>
@@ -94,7 +90,7 @@ export default function ErrorMessageSettings({ elmId, elmData, type, title, upda
         setErrorModal={setErrorModal}
         type={type}
         elmId={elmId}
-        elmData={elmData}
+        fieldData={fieldData}
         updateAction={updateAction}
       />
     </div>

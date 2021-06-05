@@ -175,6 +175,7 @@ export default function SelectSettings(props) {
           elmData={elmData}
           type="req"
           title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message if select box is empty"
           updateAction={() => props.updateData({ id: elmId, data: elmData })}
         />
       )}

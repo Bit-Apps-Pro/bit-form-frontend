@@ -157,6 +157,7 @@ function RadioCheckSettings(props) {
           elmData={elmData}
           type="req"
           title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message if required option is not checked"
           updateAction={() => props.updateData({ id: elmId, data: elmData })}
         />
       )}
