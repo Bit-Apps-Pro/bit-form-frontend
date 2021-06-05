@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import BrushIcn from '../../Icons/BrushIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -47,7 +47,7 @@ import BtnIcn from '../../Icons/BtnIcn'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 
-function CompSettings({ elm, updateData, setElementSetting, style, styleDispatch, brkPoint, setResponsiveView }) {
+function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   const [scrollTopShadow, setScrollTopShadow] = useState(false)
@@ -85,8 +85,6 @@ function CompSettings({ elm, updateData, setElementSetting, style, styleDispatch
                 type={elm.data.typ}
                 elm={elm}
                 updateData={updateData}
-                setElementSetting={setElementSetting}
-              // setSubmitConfig={setSubmitConfig}
               />
             </Route>
             <Route exact path={`${path}/style`}>
@@ -145,7 +143,7 @@ function CompSettings({ elm, updateData, setElementSetting, style, styleDispatch
               <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
             <Route path={`${path}/style/fl/ppl`}>
-              <PaypalStyleEditor elm={elm} setElementSetting={setElementSetting} updateData={updateData} />
+              <PaypalStyleEditor elm={elm} updateData={updateData} />
             </Route>
             <Route path={`${path}/style/fl/dpd`}>
               <DropdownStyleEditors
@@ -175,53 +173,53 @@ function CompSettings({ elm, updateData, setElementSetting, style, styleDispatch
 }
 export default CompSettings
 
-const RenderSettings = ({ type, elm, updateData, setElementSetting }) => {
+const RenderSettings = ({ elm, updateData }) => {
   const fields = useRecoilValue($fields)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  if (fields?.[selectedFieldId]) {
-    switch (type) {
-      case 'text':
-      case 'number':
-      case 'password':
-      case 'email':
-      case 'url':
-      case 'textarea':
-      case 'date':
-      case 'datetime-local':
-      case 'time':
-      case 'month':
-      case 'week':
-      case 'color':
-        return <TextFieldSettings setElementSetting={setElementSetting} />
-      case 'check':
-      case 'radio':
-        return <RadioCheckSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'select':
-      case 'dropdown':
-        return <SelectSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'file-up':
-        return <FileUpSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'recaptcha':
-        return <ReCaptchaSettigns setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'decision-box':
-        return <DecisionBoxSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'html':
-        return <HtmlFieldSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'button':
-        return <ButtonSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'paypal':
-        return <PaypalSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      case 'razorpay':
-        return <RazorpaySettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
-      default:
-        return <FieldList setElementSetting={setElementSetting} />
-    }
+  const seletedFieldType = fields?.[selectedFieldId]?.typ
+  switch (seletedFieldType) {
+    case 'text':
+    case 'number':
+    case 'password':
+    case 'email':
+    case 'url':
+    case 'textarea':
+    case 'date':
+    case 'datetime-local':
+    case 'time':
+    case 'month':
+    case 'week':
+    case 'color':
+      return <TextFieldSettings />
+    case 'check':
+    case 'radio':
+      return <RadioCheckSettings elm={elm} updateData={updateData} />
+    case 'select':
+    case 'dropdown':
+      return <SelectSettings elm={elm} updateData={updateData} />
+    case 'file-up':
+      return <FileUpSettings elm={elm} updateData={updateData} />
+    case 'recaptcha':
+      return <ReCaptchaSettigns elm={elm} updateData={updateData} />
+    case 'decision-box':
+      return <DecisionBoxSettings elm={elm} updateData={updateData} />
+    case 'html':
+      return <HtmlFieldSettings elm={elm} updateData={updateData} />
+    case 'button':
+      return <ButtonSettings elm={elm} updateData={updateData} />
+    case 'paypal':
+      return <PaypalSettings elm={elm} updateData={updateData} />
+    case 'razorpay':
+      return <RazorpaySettings elm={elm} updateData={updateData} />
+    default:
+      return <FieldList />
   }
-  return <FieldList setElementSetting={setElementSetting} />
+  return <FieldList />
 }
 
-function FieldList({ setElementSetting }) {
+function FieldList() {
   const fields = useRecoilValue($fields)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const arr = []
   for (const fld in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fld)) {
@@ -231,7 +229,7 @@ function FieldList({ setElementSetting }) {
         lbl = fields[fld].adminLbl
       }
       arr.push(
-        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl || adminLbl || typ} sub={fld} action={() => setElementSetting({ id: fld, data: fields[fld] })} />,
+        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl || adminLbl || typ} sub={fld} action={() => setSelectedFieldId(null)} />,
       )
     }
   }

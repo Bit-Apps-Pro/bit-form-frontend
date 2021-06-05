@@ -103,7 +103,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="select">
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="select">
       {'lbl' in attr && (
         <label className={`fld-lbl fld-lbl-${formID}`}>
           {attr.lbl}

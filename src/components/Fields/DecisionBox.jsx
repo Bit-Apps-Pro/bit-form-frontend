@@ -43,7 +43,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
     validateForm({ input: { name: attr.name, value: e.target.checked ? attr.msg.checked : attr.msg.unchecked } })
   }
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="decisionbox">
+    <div className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="decisionbox">
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         <label className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
           <span

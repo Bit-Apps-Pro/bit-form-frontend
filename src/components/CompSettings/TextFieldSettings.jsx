@@ -11,11 +11,11 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import { deepCopy } from '../../Utils/Helpers'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 
-function TextFieldSettings(props) {
+function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-  const elmId = useRecoilValue($selectedFieldId)
+  const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
-  const fieldData = deepCopy(fields[elmId])
+  const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
   const isAutoComplete = fieldData.ac === 'on'
   const label = fieldData.lbl || ''
@@ -23,7 +23,6 @@ function TextFieldSettings(props) {
   const placeholder = fieldData.ph || ''
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
-  const fldKey = elmId
   const regexr = fieldData.valid.regexr === undefined ? '' : fieldData.valid.regexr
   const flags = fieldData.valid.flags === undefined ? '' : fieldData.valid.flags
 
@@ -42,7 +41,7 @@ function TextFieldSettings(props) {
     } else {
       delete fieldData.valid.req
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setAutoComplete(e) {
@@ -51,7 +50,7 @@ function TextFieldSettings(props) {
     } else {
       delete fieldData.ac
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setLabel(e) {
@@ -60,7 +59,7 @@ function TextFieldSettings(props) {
     } else {
       fieldData.lbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setAdminLabel(e) {
@@ -69,7 +68,7 @@ function TextFieldSettings(props) {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setPlaceholder(e) {
@@ -78,7 +77,7 @@ function TextFieldSettings(props) {
     } else {
       fieldData.ph = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setMin(e) {
@@ -91,7 +90,7 @@ function TextFieldSettings(props) {
       fieldData.err.mn.dflt = `<p>Minimum number is ${e.target.value}<p>`
       fieldData.err.mn.show = true
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setMax(e) {
@@ -104,7 +103,7 @@ function TextFieldSettings(props) {
       fieldData.err.mx.dflt = `<p>Maximum number is ${e.target.value}</p>`
       fieldData.err.mx.show = true
     }
-    setFields(allFields => ({ ...allFields, ...{ [elmId]: fieldData } }))
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setRegexr = e => {
@@ -120,7 +119,7 @@ function TextFieldSettings(props) {
         delete fieldData.valid.validations
       }
     }
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setFlags = e => {
@@ -129,7 +128,7 @@ function TextFieldSettings(props) {
     } else {
       fieldData.valid.flags = e.target.value
     }
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
@@ -177,7 +176,7 @@ function TextFieldSettings(props) {
       delete fieldData.err.regexr.show
     }
 
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setPasswordLimit = e => {
@@ -193,14 +192,14 @@ function TextFieldSettings(props) {
 
     fieldData.err.regexr.dflt = generatePasswordErrMsg(validations)
 
-    props.updateData({ id: elmId, data: fieldData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   console.log('fieldData', fieldData)
 
   return (
     <div className="mr-4 ml-2">
-      <Back2FldList setElementSetting={props.setElementSetting} />
+      <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
@@ -215,11 +214,11 @@ function TextFieldSettings(props) {
       {
         fieldData?.valid?.req && (
           <ErrorMessageSettings
-            elmId={elmId}
+            fldKey={fldKey}
             fieldData={fieldData}
             type="req"
             title="Error Message"
-            updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+            updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
           />
         )
       }
@@ -232,20 +231,20 @@ function TextFieldSettings(props) {
             <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} width={100} />
             {fieldData.mn && (
               <ErrorMessageSettings
-                elmId={elmId}
+                fldKey={fldKey}
                 fieldData={fieldData}
                 type="mn"
                 title="Min Error Message"
-                updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
             {fieldData.mx && (
               <ErrorMessageSettings
-                elmId={elmId}
+                fldKey={fldKey}
                 fieldData={fieldData}
                 type="mx"
                 title="Max Error Message"
-                updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
           </>
@@ -254,11 +253,11 @@ function TextFieldSettings(props) {
       {
         fieldData.typ.match(/^(url|number|email|)$/) && (
           <ErrorMessageSettings
-            elmId={elmId}
+            fldKey={fldKey}
             fieldData={fieldData}
             type="invalid"
             title="Invalid Error Message"
-            updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+            updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
           />
         )
       }
@@ -299,11 +298,11 @@ function TextFieldSettings(props) {
             </div>
             {regexr && (
               <ErrorMessageSettings
-                elmId={elmId}
+                fldKey={fldKey}
                 fieldData={fieldData}
                 type="regexr"
                 title="Error Message"
-                updateAction={() => props.updateData({ id: elmId, data: fieldData })}
+                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
           </>

@@ -48,7 +48,7 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="text-fld">
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="text-fld">
       {'lbl' in attr && (
         <label title={attr.lbl} className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
           {attr.lbl}

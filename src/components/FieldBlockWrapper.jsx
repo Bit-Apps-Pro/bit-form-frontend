@@ -11,7 +11,7 @@ import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import MapComponents from './MapComponents'
 
-export default function FieldBlockWrapper({ layoutItem, getElmProp, onRemoveItem, fields, formID }) {
+export default function FieldBlockWrapper({ layoutItem, onRemoveItem, fields, formID }) {
   const history = useHistory()
   const { reCaptchaV2 } = useContext(AppSettings)
 

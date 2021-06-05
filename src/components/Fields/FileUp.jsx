@@ -35,7 +35,7 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`}>
       {'lbl' in attr && (
         <label className={`fld-lbl fld-lbl-${formID}`}>
           {attr.lbl}

@@ -16,7 +16,7 @@ export default function HtmlFieldSettings({ setElementSetting, elm, updateData }
 
   return (
     <div className="mr-4 ml-2">
-      <Back2FldList setElementSetting={setElementSetting} />
+      <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {' '}

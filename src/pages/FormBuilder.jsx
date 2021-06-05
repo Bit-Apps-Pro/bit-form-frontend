@@ -162,10 +162,6 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
     setFields(tmp)
   }, [fields, setFields])
 
-  const setElementSetting = useCallback(elm => {
-    setElmSetting(elm)
-  }, [])
-
   const addNewData = useCallback(ndata => {
     setNewData(ndata)
   }, [])
@@ -279,7 +275,6 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
               style={styleProvider()}
               gridWidth={gridWidth}
               draggedElm={drgElm}
-              setElmSetting={setElementSetting}
               newData={newData}
               setNewData={setNewData}
               formType={formType}
@@ -306,7 +301,6 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
           styleDispatch={styleDispatch}
           fields={fields}
           elm={elmSetting}
-          setElementSetting={setElementSetting}
           updateData={updateFields}
           // setSubmitConfig={setSubmitConfig}
           formID={formID}

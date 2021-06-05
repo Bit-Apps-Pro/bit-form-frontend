@@ -68,7 +68,7 @@ export default function ButtonSettings({ updateData, elm, setElementSetting }) {
 
   return (
     <div className="ml-2 mr-4">
-      <Back2FldList setElementSetting={setElementSetting} />
+      <Back2FldList />
       <div>
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Button', 'bitform')}

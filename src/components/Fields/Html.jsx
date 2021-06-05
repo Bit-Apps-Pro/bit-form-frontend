@@ -4,7 +4,7 @@
 export default function HtmlField({ attr, onBlurHandler, resetFieldValue, formID }) {
   return (
     <div
-      className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'btcd-hidden' : ''}`}
+      className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'vis-n' : ''}`}
       btcd-fld="html"
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: attr.content || attr?.info?.content }}

@@ -45,7 +45,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'btcd-hidden' : ''}`} btcd-fld="textarea">
+    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="textarea">
       {'lbl' in attr && (
         <label className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
           {attr.lbl}

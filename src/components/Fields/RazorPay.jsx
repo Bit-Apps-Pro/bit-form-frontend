@@ -141,7 +141,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
   }
 
   return (
-    <div className={`drag fld-wrp fld-wrp-${formID} ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
+    <div className={`drag fld-wrp fld-wrp-${formID} ${attr.valid.hide ? 'vis-n' : ''}`}>
       <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
         <button
           className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}

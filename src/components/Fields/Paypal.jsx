@@ -169,7 +169,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   }
 
   return (
-    <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''} ${attr.valid.hide ? 'btcd-hidden' : ''}`}>
+    <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''} ${attr.valid.hide ? 'vis-n' : ''}`}>
       <div
         style={{
           width: 'auto',

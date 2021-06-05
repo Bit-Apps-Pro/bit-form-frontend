@@ -2,16 +2,17 @@
 
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilValue, useResetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import BrushIcn from '../../../Icons/BrushIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import BackIcn from '../../../Icons/BackIcn'
-import { $fields, $layouts } from '../../../GlobalStates'
+import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates'
 
-export default function PaypalStyleEditor({ elm, setElementSetting, updateData }) {
+export default function PaypalStyleEditor({ elm, updateData }) {
   const { formID, formType } = useParams()
-  const [lay, setLay] = useResetRecoilState($layouts)
+  const [lay, setLay] = useRecoilState($layouts)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const fields = useRecoilValue($fields)
   const [customHeight, setCustomHeight] = useState(elm.data?.style?.height || '')
   const [, setCustomWidth] = useState(elm.data?.style?.width || '')
@@ -25,13 +26,7 @@ export default function PaypalStyleEditor({ elm, setElementSetting, updateData }
   if (fields && checkPaypalExist(fields) && elm.id === null) {
     const formFields = Object.entries(fields)
     const paypalFields = formFields.filter(field => field[1].typ === 'paypal')
-    if (paypalFields.length === 1) {
-      const newElm = {
-        id: paypalFields[0][0],
-        data: paypalFields[0][1],
-      }
-      setElementSetting(newElm)
-    }
+    paypalFields.length && setSelectedFieldId(paypalFields[0][0])
   }
 
   const handleInput = (name, value) => {

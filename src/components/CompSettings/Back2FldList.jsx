@@ -1,9 +1,12 @@
+import { useSetRecoilState } from 'recoil'
+import { $selectedFieldId } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import { __ } from '../../Utils/i18nwrap'
 
-export default function Back2FldList({ setElementSetting }) {
+export default function Back2FldList() {
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   return (
-    <div className="flx cp" onClick={() => setElementSetting({ id: null, data: { typ: '' } })} type="button" role="button" tabIndex="0" onKeyPress={() => setElementSetting({ id: null, data: { typ: '' } })}>
+    <div className="flx cp" onClick={() => setSelectedFieldId(null)} type="button" role="button" tabIndex="0" onKeyPress={() => setElementSetting({ id: null, data: { typ: '' } })}>
       <button className="icn-btn" type="button" aria-label="back to field list">
         <BackIcn />
       </button>

@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { memo, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
@@ -18,59 +18,58 @@ import ImportOptions from './ImportOptions'
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
   const isPro = typeof bits !== 'undefined' && bits.isPro
-  const elmId = props.elm.id
-  const fields = useRecoilValue($fields)
-  const elmData = deepCopy(fields[elmId])
-  const options = deepCopy(fields[elmId].opt)
-  const fldKey = elmId
-  const label = elmData.lbl === undefined ? '' : elmData.lbl
-  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
-  const isRound = elmData.round !== undefined
-  const isRadioRequired = elmData.valid.req !== undefined
-  const isOptionRequired = elmData.opt.find(opt => opt.req)
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
+  const options = deepCopy(fields[fldKey].opt)
+  const label = fieldData.lbl || ''
+  const adminLabel = fieldData.adminLbl || ''
+  const isRound = fieldData.round || false
+  const isRadioRequired = fieldData.valid.req || false
+  const isOptionRequired = fieldData.opt.find(opt => opt.req)
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   function setLabel(e) {
     if (e.target.value === '') {
-      delete elmData.lbl
+      delete fieldData.lbl
     } else {
-      elmData.lbl = e.target.value
+      fieldData.lbl = e.target.value
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
-      delete elmData.adminLbl
+      delete fieldData.adminLbl
     } else {
-      elmData.adminLbl = e.target.value
+      fieldData.adminLbl = e.target.value
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setRound(e) {
     if (e.target.checked) {
-      elmData.round = true
+      fieldData.round = true
     } else {
-      delete elmData.round
+      delete fieldData.round
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function rmvOpt(ind) {
     options.splice(ind, 1)
-    elmData.opt = options
-    props.updateData({ id: elmId, data: elmData })
+    fieldData.opt = options
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function addOpt() {
     options.push({ lbl: `Option ${options.length + 1}` })
-    elmData.opt = options
-    props.updateData({ id: elmId, data: elmData })
+    fieldData.opt = options
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setCheck(e, i) {
-    if (elmData.typ === 'radio') {
+    if (fieldData.typ === 'radio') {
       for (let ind = 0; ind < options.length; ind += 1) {
         delete options[ind].check
       }
@@ -83,8 +82,8 @@ function RadioCheckSettings(props) {
     } else {
       delete options[i].check
     }
-    elmData.opt = options
-    props.updateData({ id: elmId, data: elmData })
+    fieldData.opt = options
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setReq(e, i) {
@@ -95,36 +94,36 @@ function RadioCheckSettings(props) {
     } else {
       delete options[i].req
     }
-    elmData.opt = options
+    fieldData.opt = options
     const reqOpts = options.filter(opt => opt.req).map(op => op.lbl).join(', ')
-    if (!elmData.err) elmData.err = {}
-    if (!elmData.err.req) elmData.err.req = {}
-    elmData.err.req.dflt = reqOpts ? `<p>${reqOpts} is required</p>` : '<p>This field is required</p>'
-    elmData.err.req.show = true
+    if (!fieldData.err) fieldData.err = {}
+    if (!fieldData.err.req) fieldData.err.req = {}
+    fieldData.err.req.dflt = reqOpts ? `<p>${reqOpts} is required</p>` : '<p>This field is required</p>'
+    fieldData.err.req.show = true
 
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
-  console.log({ elmData })
+  console.log({ fieldData })
 
   const setRadioRequired = e => {
     if (e.target.checked) {
-      elmData.valid.req = true
-      if (!elmData.err) elmData.err = {}
-      if (!elmData.err.req) elmData.err.req = {}
-      elmData.err.req.dflt = '<p>This field is required</p>'
-      elmData.err.req.show = true
+      fieldData.valid.req = true
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.req) fieldData.err.req = {}
+      fieldData.err.req.dflt = '<p>This field is required</p>'
+      fieldData.err.req.show = true
     } else {
-      delete elmData.valid.req
+      delete fieldData.valid.req
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setOptLbl(e, i) {
     const tmp = { ...options[i] }
     tmp.lbl = e.target.value
     options[i] = tmp
-    elmData.opt = options
-    props.updateData({ id: elmId, data: elmData })
+    fieldData.opt = options
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const openImportModal = () => {
@@ -139,10 +138,10 @@ function RadioCheckSettings(props) {
 
   return (
     <div className="mr-4 ml-2">
-      <Back2FldList setElementSetting={props.setElementSetting} />
+      <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
-        {elmData.typ === 'check' ? 'Check Box' : 'Radio'}
+        {fieldData.typ === 'check' ? 'Check Box' : 'Radio'}
       </div>
       <div className="flx">
         <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
@@ -153,11 +152,11 @@ function RadioCheckSettings(props) {
       <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
-          elmId={elmId}
-          elmData={elmData}
+          fldKey={fldKey}
+          fieldData={fieldData}
           type="req"
           title="Error Message"
-          updateAction={() => props.updateData({ id: elmId, data: elmData })}
+          updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
         />
       )}
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
@@ -172,7 +171,7 @@ function RadioCheckSettings(props) {
           <div key={`opt-${i + 8}`} className="flx flx-between">
             <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-1">
-              {elmData.typ === 'check'
+              {fieldData.typ === 'check'
                 && (
                   <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
                     <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
@@ -215,8 +214,8 @@ function RadioCheckSettings(props) {
           <ImportOptions
             importOpts={importOpts}
             setImportOpts={setImportOpts}
-            elmId={elmId}
-            elmData={elmData}
+            fldKey={fldKey}
+            fieldData={fieldData}
             updateData={props.updateData}
             lblKey="lbl"
             valKey="val"

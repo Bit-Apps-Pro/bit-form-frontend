@@ -135,7 +135,7 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
 
   return (
     <div className="ml-2 mr-4">
-      <Back2FldList setElementSetting={setElementSetting} />
+      <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Razor Pay', 'bitform')}

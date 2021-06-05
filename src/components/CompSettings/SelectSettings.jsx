@@ -156,7 +156,7 @@ export default function SelectSettings(props) {
 
   return (
     <div className="ml-2 mr-4">
-      <Back2FldList setElementSetting={props.setElementSetting} />
+      <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
