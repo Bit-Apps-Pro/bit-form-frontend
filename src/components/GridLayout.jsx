@@ -253,8 +253,11 @@ function GridLayout(props) {
 
   const onRemoveItem = i => {
     if (fields[i]?.typ === 'button' && fields[i]?.btnTyp === 'submit') {
-      setAlertMdl({ show: true, msg: __('Submit button cannot be removed') })
-      return
+      const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+      if (!payFields.length) {
+        setAlertMdl({ show: true, msg: __('Submit button cannot be removed') })
+        return
+      }
     }
     const nwLay = {}
     const tmpFields = { ...fields }

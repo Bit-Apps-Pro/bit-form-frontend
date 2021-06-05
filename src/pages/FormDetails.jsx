@@ -331,7 +331,8 @@ function FormDetails(props) {
 
   const checkSubmitBtn = () => {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
-    return btns.length >= 1
+    const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+    return (payFields.length > 0 || btns.length > 0)
   }
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
