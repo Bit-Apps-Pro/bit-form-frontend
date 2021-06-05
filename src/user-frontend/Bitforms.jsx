@@ -5,6 +5,7 @@ import { resetCaptcha } from '../components/Fields/Recaptcha';
 import { deepCopy } from '../Utils/Helpers';
 import { checkLogic, replaceWithField } from './checkLogic';
 import validateForm from './validation';
+import { select } from '../Utils/globalHelpers';
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
@@ -264,8 +265,9 @@ export default function Bitforms(props) {
         }
       })
     }
+
     if (maybeReset) {
-      if (dataToSet[props.fieldsKey[targetFieldName]] && dataToSet[props.fieldsKey[targetFieldName]].userinput && fieldValues[targetFieldName]) {
+      if (props.fieldToCheck[targetFieldName] !== undefined && dataToSet[props.fieldsKey[targetFieldName]] && dataToSet[props.fieldsKey[targetFieldName]].userinput && fieldValues[targetFieldName]) {
         dataToSet[props.fieldsKey[targetFieldName]].val = fieldValues[targetFieldName].value
       }
       dispatchFieldData(dataToSet)
@@ -275,11 +277,8 @@ export default function Bitforms(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-
-    validateForm(event)
-    return
-
-
+    const form = select(`#form-${props.contentID}`)
+    if (!validateForm({ form })) return
 
     setbuttonDisabled(true)
     snack && setSnack(false)
