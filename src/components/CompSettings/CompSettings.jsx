@@ -44,7 +44,7 @@ import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import TextFieldSettings from './TextFieldSettings'
 import BtnIcn from '../../Icons/BtnIcn'
-import { $fields } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 
 function CompSettings({ elm, updateData, setElementSetting, style, styleDispatch, brkPoint, setResponsiveView }) {
@@ -177,7 +177,8 @@ export default CompSettings
 
 const RenderSettings = ({ type, elm, updateData, setElementSetting }) => {
   const fields = useRecoilValue($fields)
-  if ((fields !== null && fields[elm.id] !== undefined)) {
+  const selectedFieldId = useRecoilValue($selectedFieldId)
+  if (fields?.[selectedFieldId]) {
     switch (type) {
       case 'text':
       case 'number':
@@ -191,7 +192,7 @@ const RenderSettings = ({ type, elm, updateData, setElementSetting }) => {
       case 'month':
       case 'week':
       case 'color':
-        return <TextFieldSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />
+        return <TextFieldSettings setElementSetting={setElementSetting} />
       case 'check':
       case 'radio':
         return <RadioCheckSettings setElementSetting={setElementSetting} elm={elm} updateData={updateData} />

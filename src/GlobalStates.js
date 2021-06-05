@@ -7,6 +7,7 @@ export const $reports = atom({ key: '$reports', default: [], dangerouslyAllowMut
 export const $fields = atom({ key: '$fields', default: [], dangerouslyAllowMutability: true })
 export const $layouts = atom({ key: '$layouts', default: { lg: [], md: [], sm: [] }, dangerouslyAllowMutability: true })
 export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerouslyAllowMutability: true })
+export const $selectedFieldId = atom({ key: '$selectedFieldId', default: null })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fieldLabels)), dangerouslyAllowMutability: true })

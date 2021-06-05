@@ -5,7 +5,7 @@
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
@@ -13,7 +13,7 @@ import { deepCopy, isType } from '../Utils/Helpers'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import FieldBlockWrapper from './FieldBlockWrapper'
-import { $fields, $layouts, $uniqueFieldId } from '../GlobalStates'
+import { $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
 import { AppSettings } from '../Utils/AppSettingsContext'
 
 function GridLayout(props) {
@@ -24,6 +24,7 @@ function GridLayout(props) {
   const { newData, setNewData, style, gridWidth, formID, isToolDragging, formSettings } = props
   const [fields, setFields] = useRecoilState($fields)
   const [layout, setLay] = useRecoilState($layouts)
+  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -424,6 +425,7 @@ function GridLayout(props) {
         node.classList.add('z-9')
       }
 
+      setSelectedFieldId(id)
       props.setElmSetting({ id, data: fields[id] })
     }
   }
