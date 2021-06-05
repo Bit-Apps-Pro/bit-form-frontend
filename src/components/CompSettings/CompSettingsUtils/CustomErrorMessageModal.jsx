@@ -3,12 +3,12 @@ import { __ } from '../../../Utils/i18nwrap'
 import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
 
-export default function CustomErrorMessageModal({ errorModal, setErrorModal, type, elmId, elmData, updateAction }) {
-  const errMsg = elmData?.err?.[type]?.custom ? elmData?.err?.[type]?.msg : elmData?.err?.[type]?.dflt
+export default function CustomErrorMessageModal({ errorModal, setErrorModal, type, elmId, fieldData, updateAction }) {
+  const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const [value] = useState(errMsg)
 
   const setErrMsg = (name, val) => {
-    const tmpErr = { ...elmData }
+    const tmpErr = { ...fieldData }
     if (!tmpErr.err) tmpErr.err = {}
     if (!tmpErr.err[name]) tmpErr.err[name] = {}
     tmpErr.err[name].msg = val
@@ -16,7 +16,7 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   }
 
   const cancelModal = () => {
-    const tmpErr = { ...elmData }
+    const tmpErr = { ...fieldData }
     tmpErr.err[type].msg = value
     updateAction()
     setErrorModal(false)

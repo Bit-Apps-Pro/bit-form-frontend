@@ -12,7 +12,7 @@ import { $fields } from '../../GlobalStates'
 
 export default function FileUpSettings({ elm, updateData, setElementSetting }) {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-  const elmId = props.elm.id
+  const elmId = elm.id
   const fields = useRecoilValue($fields)
   const elmData = deepCopy(fields[elmId])
   const isRequired = elmData.valid.req !== undefined
@@ -33,11 +33,12 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
     { label: 'Spreadsheet', value: '.ods,.xlr,.xls,.xlsx' },
     { label: 'Databases', value: '.csv,.dat,.db,.dbf,.log,.mdb,.sav,.sql,.tar,.sql,.sqlite,.xml' },
   ]
-  const isIndividual = elmData.mxUpTyp === 'individual'
 
   function setRequired(e) {
     if (e.target.checked) {
-      elmData.valid.req = true
+      const tmp = { ...elmData.valid }
+      tmp.req = true
+      elmData.valid = tmp
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.req) elmData.err.req = {}
       elmData.err.req.dflt = '<p>This field is required</p>'
@@ -134,6 +135,7 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
           elmData={elmData}
           type="req"
           title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message if any file is not uploaded"
           updateAction={() => updateData(elm)}
         />
       )}
@@ -168,7 +170,7 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
         />
       )}
       <DropDown className="mt-2 w-10" titleClassName="mt-3 setting-inp" title={__('Allowed File Type:', 'bitform')} isMultiple addable options={options} placeholder={__('Select File Type', 'bitform')} jsonValue action={setFileFilter} value={exts} />
-      {exts.length !== 0 && (
+      {/* {exts.length !== 0 && (
         <ErrorMessageSettings
           elmId={elmId}
           elmData={elmData}
@@ -176,7 +178,7 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
           title="Error Message"
           updateAction={() => updateData(elm)}
         />
-      )}
+      )} */}
     </div>
   )
 }

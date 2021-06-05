@@ -4290,8 +4290,8 @@ _:-ms-fullscreen,
 .form-check-input[type="checkbox"] {
   background: #0069ff;
   position: relative;
-  width: 1.125rem !important;
-  height: 1.125rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
   border: none;
   border-radius: 4px;
   transition: 0.3s;
@@ -4333,6 +4333,7 @@ _:-ms-fullscreen,
   margin-left: 0.625rem;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 13px;
 }
 @keyframes scale-in {
   from {

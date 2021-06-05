@@ -89,6 +89,7 @@ export default function DecisionBoxSettings({ setElementSetting, elm, updateData
           elmData={elmData}
           type="req"
           title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message if decision box is not checked"
           updateAction={() => updateData({ id: elmId, data: elmData })}
         />
       )}

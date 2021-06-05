@@ -107,13 +107,16 @@ function TextFieldSettings() {
   }
 
   const setRegexr = e => {
-    if (e.target.value === '') {
+    const { value } = e.target
+    if (value === '') {
       delete fieldData.valid.regexr
     } else {
-      fieldData.valid.regexr = escapeBackslashPattern(e.target.value)
+      const val = escapeBackslashPattern(value)
+      fieldData.valid.regexr = val
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.regexr) fieldData.err.regexr = {}
-      fieldData.err.regexr.dflt = '<p>Pattern not matched</p>'
+      const ifPredefined = predefinedPatterns.find(opt => opt.val === val)
+      fieldData.err.regexr.dflt = `<p>${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
       fieldData.err.regexr.show = true
       if (fieldData.typ === 'password') {
         delete fieldData.valid.validations
@@ -195,6 +198,16 @@ function TextFieldSettings() {
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
+  const predefinedPatterns = [
+    { lbl: 'Only Characters', val: '^[a-zA-Z]+$', msg: 'Only characters allowed' },
+    { lbl: 'Only Digits', val: '^[0-9]+$', msg: 'Only digits allowed' },
+    { lbl: 'Name', val: '^[a-zA-Z .]+$', msg: "Name cann't contain any number or special characters" },
+    { lbl: 'Username', val: '^[a-z0-9_.]+$', msg: "Username cann't contain any space or special characters" },
+    { lbl: 'Character Limit', val: '^.{0,100}$', msg: 'Maximum 100 characters allowed' },
+    { lbl: 'Word Limit', val: '^(?:$_bf_$b$_bf_$w+$_bf_$b[$_bf_$s$_bf_$r$_bf_$n]*){1,30}$', msg: 'Maximum 30 words allowed' },
+    { lbl: 'Only Gmail', val: '^[a-z0-9]($_bf_$.?[a-z0-9]){0,}@(gmail)$_bf_$.com$', msg: 'Only Gmail is allowed' },
+  ]
+
   console.log('fieldData', fieldData)
 
   return (
@@ -227,8 +240,7 @@ function TextFieldSettings() {
       {
         fieldData.typ === 'number' && (
           <>
-            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} width={100} className="mr-4" />
-            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} width={100} />
+            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} className="w-10" />
             {fieldData.mn && (
               <ErrorMessageSettings
                 fldKey={fldKey}
@@ -238,6 +250,7 @@ function TextFieldSettings() {
                 updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
+            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} className="w-10" />
             {fieldData.mx && (
               <ErrorMessageSettings
                 fldKey={fldKey}
@@ -261,7 +274,6 @@ function TextFieldSettings() {
           />
         )
       }
-
       {
         fieldData.typ === 'password' && (
           <div>
@@ -280,19 +292,13 @@ function TextFieldSettings() {
           </div>
         )
       }
-
       {
         fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && (
           <>
             <div>
               <SingleInput inpType="text" title={__('Pattern:', 'bitform')} value={generateBackslashPattern(regexr)} action={setRegexr} className="mr-2 w-7" placeholder="e.g. ([A-Z])\w+" list="patterns" />
               <datalist id="patterns">
-                <option value="^[a-zA-Z]+$">Only Characters</option>
-                <option value="^[a-z0-9_.]+$">Username</option>
-                <option value="^[a-zA-Z .]+$">Name</option>
-                <option value="^[0-9]+$">Only Digits</option>
-                <option value="^[a-z0-9](\.?[a-z0-9]){0,}@(gmail)\.com$">Only Gmail</option>
-                <option value="^.{0,35}$">Character Length</option>
+                {predefinedPatterns.map(opt => <option value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
               </datalist>
               <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" />
             </div>
@@ -308,7 +314,7 @@ function TextFieldSettings() {
           </>
         )
       }
-    </div >
+    </div>
   )
 }
 
