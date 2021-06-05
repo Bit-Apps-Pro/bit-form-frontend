@@ -231,6 +231,7 @@ function TextFieldSettings() {
             fieldData={fieldData}
             type="req"
             title="Error Message"
+            tipTitle="By enabling this feature, user will see the error message when input is empty"
             updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
           />
         )
@@ -247,6 +248,7 @@ function TextFieldSettings() {
                 fieldData={fieldData}
                 type="mn"
                 title="Min Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
                 updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
@@ -257,6 +259,7 @@ function TextFieldSettings() {
                 fieldData={fieldData}
                 type="mx"
                 title="Max Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
                 updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
@@ -270,6 +273,7 @@ function TextFieldSettings() {
             fieldData={fieldData}
             type="invalid"
             title="Invalid Error Message"
+            tipTitle={`By enabling this feature, user will see the error message when input value is not any ${fieldData.typ}`}
             updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
           />
         )
@@ -308,6 +312,7 @@ function TextFieldSettings() {
                 fieldData={fieldData}
                 type="regexr"
                 title="Error Message"
+                tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
                 updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}

@@ -156,6 +156,7 @@ function RadioCheckSettings(props) {
           fieldData={fieldData}
           type="req"
           title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message when required option is not checked"
           updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
         />
       )}
