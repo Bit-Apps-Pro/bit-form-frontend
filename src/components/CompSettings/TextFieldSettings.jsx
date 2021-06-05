@@ -6,7 +6,7 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldList from './Back2FldList'
-import ErrorMessageSettings from './ErrorMessageSettings'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 
 function TextFieldSettings(props) {
   const elmId = props.elm.id
@@ -23,6 +23,9 @@ function TextFieldSettings(props) {
   const regexr = elmData.valid.regexr === undefined ? '' : elmData.valid.regexr
   const flags = elmData.valid.flags === undefined ? '' : elmData.valid.flags
 
+  const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
+  const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
+
   function setRequired(e) {
     if (e.target.checked) {
       const tmp = { ...elmData.valid }
@@ -30,7 +33,7 @@ function TextFieldSettings(props) {
       elmData.valid = tmp
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.req) elmData.err.req = {}
-      elmData.err.req.dflt = 'This field is required'
+      elmData.err.req.dflt = '<p>This field is required</p>'
       elmData.err.req.show = true
     } else {
       delete elmData.valid.req
@@ -81,7 +84,7 @@ function TextFieldSettings(props) {
       elmData.mn = e.target.value
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.mn) elmData.err.mn = {}
-      elmData.err.mn.dflt = `Minimum number is ${e.target.value}`
+      elmData.err.mn.dflt = `<p>Minimum number is ${e.target.value}<p>`
       elmData.err.mn.show = true
     }
     props.updateData({ id: elmId, data: elmData })
@@ -94,20 +97,20 @@ function TextFieldSettings(props) {
       elmData.mx = e.target.value
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.mx) elmData.err.mx = {}
-      elmData.err.mx.dflt = `Maximum number is ${e.target.value}`
+      elmData.err.mx.dflt = `<p>Maximum number is ${e.target.value}</p>`
       elmData.err.mx.show = true
     }
     props.updateData({ id: elmId, data: elmData })
   }
 
-  function setRegexr(e) {
+  const setRegexr = e => {
     if (e.target.value === '') {
       delete elmData.valid.regexr
     } else {
-      elmData.valid.regexr = e.target.value
+      elmData.valid.regexr = escapeBackslashPattern(e.target.value)
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.regexr) elmData.err.regexr = {}
-      elmData.err.regexr.dflt = 'Pattern not matched'
+      elmData.err.regexr.dflt = '<p>Pattern not matched</p>'
       elmData.err.regexr.show = true
       if (elmData.typ === 'password') {
         delete elmData.valid.validations
@@ -116,7 +119,7 @@ function TextFieldSettings(props) {
     props.updateData({ id: elmId, data: elmData })
   }
 
-  function setFlags(e) {
+  const setFlags = e => {
     if (e.target.value === '') {
       delete elmData.valid.flags
     } else {
@@ -127,7 +130,7 @@ function TextFieldSettings(props) {
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
 
-  const generatePasswordErrMsg = validations => `Password must consist at least ${Object.keys(validations).map(vld => {
+  const generatePasswordErrMsg = validations => `<p>Password must consist at least ${Object.keys(validations).map(vld => {
     if (vld === 'digit') {
       return 'one number'
     } if (vld === 'lower') {
@@ -139,7 +142,7 @@ function TextFieldSettings(props) {
     } if (vld === 'limit') {
       return `${validations.limit.mn}${validations.limit.mx ? ` to ${validations.limit.mx}` : ''} characters`
     }
-  }).join(', ').replace(/, ([^,]*)$/, ' and $1')}`
+  }).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>`
 
   const setPasswordValidation = e => {
     const { checked, name, value } = e.target
@@ -165,7 +168,7 @@ function TextFieldSettings(props) {
       elmData.err.regexr.dflt = generatePasswordErrMsg(validations)
       elmData.err.regexr.show = true
     } else {
-      elmData.err.regexr.dflt = 'Pattern not matched'
+      elmData.err.regexr.dflt = '<p>Pattern not matched</p>'
       delete elmData.valid.regexr
       delete elmData.err.regexr.show
     }
@@ -188,8 +191,6 @@ function TextFieldSettings(props) {
 
     props.updateData({ id: elmId, data: elmData })
   }
-
-  const specialCharsVal = '(?=.*[~!@#$%^&*(){}[\\\\]<>+\\\\-_=\\/|;:,.])'
 
   console.log('elmData', elmData)
 
@@ -247,7 +248,7 @@ function TextFieldSettings(props) {
           elmId={elmId}
           elmData={elmData}
           type="invalid"
-          title="Invalid Value Error Message"
+          title="Invalid Error Message"
           updateAction={() => props.updateData({ id: elmId, data: elmData })}
         />
       )}
@@ -258,7 +259,7 @@ function TextFieldSettings(props) {
           <TableCheckBox className="w-10" name="digit" checked={elmData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} />
           <TableCheckBox className="w-10 mt-2" name="lower" checked={elmData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} />
           <TableCheckBox className="w-10 mt-2" name="upper" checked={elmData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} />
-          <TableCheckBox className="w-10 mt-2" name="special" checked={elmData.valid?.validations?.special || false} value={specialCharsVal} title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')} onChange={setPasswordValidation} />
+          <TableCheckBox className="w-10 mt-2" name="special" checked={elmData.valid?.validations?.special || false} value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])" title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')} onChange={setPasswordValidation} />
           <TableCheckBox className="w-10 mt-2" name="limit" checked={elmData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} />
           {elmData.valid?.validations?.limit && (
             <div>
@@ -272,8 +273,16 @@ function TextFieldSettings(props) {
       {elmData.typ.match(/^(text|url|textarea|password|number|email|)$/) && (
         <>
           <div>
-            <SingleInput inpType="text" title={__('Pattern:', 'bitform')} value={regexr} action={setRegexr} className="mr-2 w-7" placeholder="([A-Z])\w+" />
-            <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="g" className="w-2" />
+            <SingleInput inpType="text" title={__('Pattern:', 'bitform')} value={generateBackslashPattern(regexr)} action={setRegexr} className="mr-2 w-7" placeholder="e.g. ([A-Z])\w+" list="patterns" />
+            <datalist id="patterns">
+              <option value="^[a-zA-Z]+$">Only Characters</option>
+              <option value="^[a-z0-9_.]+$">Username</option>
+              <option value="^[a-zA-Z .]+$">Name</option>
+              <option value="^[0-9]+$">Only Digits</option>
+              <option value="^[a-z0-9](\.?[a-z0-9]){0,}@(gmail)\.com$">Only Gmail</option>
+              <option value="^.{0,35}$">Character Length</option>
+            </datalist>
+            <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" />
           </div>
           {regexr && (
             <ErrorMessageSettings

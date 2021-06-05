@@ -9,9 +9,8 @@ import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import ImportOptions from './ImportOptions'
-import ErrorMessageSettings from './ErrorMessageSettings';
-
 
 function RadioCheckSettings(props) {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -96,17 +95,20 @@ function RadioCheckSettings(props) {
     const reqOpts = options.filter(opt => opt.req).map(op => op.lbl).join(', ')
     if (!elmData.err) elmData.err = {}
     if (!elmData.err.req) elmData.err.req = {}
-    elmData.err.req.dflt = reqOpts ? `${reqOpts} is required` : 'This field is required'
+    elmData.err.req.dflt = reqOpts ? `<p>${reqOpts} is required</p>` : '<p>This field is required</p>'
+    elmData.err.req.show = true
 
     props.updateData({ id: elmId, data: elmData })
   }
+  console.log({ elmData })
 
   const setRadioRequired = e => {
     if (e.target.checked) {
       elmData.valid.req = true
       if (!elmData.err) elmData.err = {}
       if (!elmData.err.req) elmData.err.req = {}
-      elmData.err.req.dflt = 'This field is required'
+      elmData.err.req.dflt = '<p>This field is required</p>'
+      elmData.err.req.show = true
     } else {
       delete elmData.valid.req
     }
@@ -145,6 +147,15 @@ function RadioCheckSettings(props) {
       <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
+      {(isRadioRequired || isOptionRequired) && (
+        <ErrorMessageSettings
+          elmId={elmId}
+          elmData={elmData}
+          type="req"
+          title="Error Message"
+          updateAction={() => props.updateData({ id: elmId, data: elmData })}
+        />
+      )}
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
@@ -176,15 +187,6 @@ function RadioCheckSettings(props) {
           {__('Add More +', 'bitform')}
         </button>
       </div>
-      {(isRadioRequired || isOptionRequired) && (
-        <ErrorMessageSettings
-          elmId={elmId}
-          elmData={elmData}
-          type="req"
-          title="Error Message"
-          updateAction={() => props.updateData({ id: elmId, data: elmData })}
-        />
-      )}
       <Modal
         md
         autoHeight

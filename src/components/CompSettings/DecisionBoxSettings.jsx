@@ -4,6 +4,7 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 
 export default function DecisionBoxSettings({ setElementSetting, elm, fields, updateData }) {
   const elmId = elm.id
@@ -23,6 +24,10 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
       const tmp = { ...elmData.valid }
       tmp.req = true
       elmData.valid = tmp
+      if (!elmData.err) elmData.err = {}
+      if (!elmData.err.req) elmData.err.req = {}
+      elmData.err.req.dflt = '<p>This field is required</p>'
+      elmData.err.req.show = true
     } else {
       delete elmData.valid.req
     }
@@ -60,11 +65,10 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
         {' '}
         {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
       </div>
-      <span className="font-w-m">{__('Field Key', 'bitform')}</span>
-      <CopyText value={elmId} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={elmData.adminLbl || ''} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={elmData.valid.req} className="mt-3" />
-      <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={elmData.valid.checked} className="mt-3" />
+      <div className="flx">
+        <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
+        <CopyText value={elmId} setSnackbar={() => { }} className="field-key-cpy m-0" />
+      </div>
       <div className="mt-3">
         <b>Label: </b>
         <br />
@@ -74,9 +78,20 @@ export default function DecisionBoxSettings({ setElementSetting, elm, fields, up
           onChangeHandler={setLbl}
         />
       </div>
-
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={elmData.adminLbl || ''} action={setAdminLabel} />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={elmData.valid.req} className="mt-3" />
+      {elmData?.valid?.req && (
+        <ErrorMessageSettings
+          elmId={elmId}
+          elmData={elmData}
+          type="req"
+          title="Error Message"
+          updateAction={() => updateData({ id: elmId, data: elmData })}
+        />
+      )}
       <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={elmData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} />
       <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={elmData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} />
+      <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={elmData.valid.checked} className="mt-3" />
     </div>
   )
 }

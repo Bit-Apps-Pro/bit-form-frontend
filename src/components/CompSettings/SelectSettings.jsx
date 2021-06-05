@@ -10,6 +10,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import ImportOptions from './ImportOptions'
 import Modal from '../Utilities/Modal'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 
 export default function SelectSettings(props) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -41,6 +42,10 @@ export default function SelectSettings(props) {
       const tmp = { ...elmData.valid }
       tmp.req = true
       elmData.valid = tmp
+      if (!elmData.err) elmData.err = {}
+      if (!elmData.err.req) elmData.err.req = {}
+      elmData.err.req.dflt = '<p>This field is required</p>'
+      elmData.err.req.show = true
     } else {
       delete elmData.valid.req
     }
@@ -152,14 +157,25 @@ export default function SelectSettings(props) {
         <span className="font-w-m">Field Type : </span>
         {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
       </div>
-      <span className="font-w-m">{__('Field Key', 'bitform')}</span>
-      <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy" />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} />
-      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
+      <div className="flx">
+        <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
+        <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0 w-7" />
+      </div>
       <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
-      <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
-      <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3" />
+      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
+      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
+      {elmData?.valid?.req && (
+        <ErrorMessageSettings
+          elmId={elmId}
+          elmData={elmData}
+          type="req"
+          title="Error Message"
+          updateAction={() => props.updateData({ id: elmId, data: elmData })}
+        />
+      )}
+      <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
+      <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" />
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
         &nbsp;
