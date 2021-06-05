@@ -138,20 +138,20 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
       <div className="mt-3">
         <b>{__('Max Upload Size:', 'bitform')}</b>
         <br />
-        {isMultiple && (
+        {/* {isMultiple && (
           <>
             <CheckBox radio title={__('Combined', 'bitform')} onChange={setMaxUpTyp} checked={!isIndividual} />
             <CheckBox radio title={__('Individual', 'bitform')} value="individual" onChange={setMaxUpTyp} checked={isIndividual} />
           </>
-        )}
+        )} */}
         <div className={`flx ${!isMultiple && 'mt-1'}`}>
           <input type="number" className="btcd-paper-inp" value={mxUp} action={setMxUp} placeholder="Any Size" />
-          <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={elm.data.unit}>
+          {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={elm.data.unit}>
             <option value="">Unit</option>
             <option value="KB">KB</option>
             <option value="MB">MB</option>
             <option value="GB">GB</option>
-          </select>
+          </select> */}
         </div>
       </div>
 
