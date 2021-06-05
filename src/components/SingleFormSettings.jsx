@@ -383,6 +383,15 @@ export default function SingleFormSettings({ fields, additional, setadditional }
 
   const toggleCaptchaAdvanced = () => setShowCaptchaAdvanced(show => !show)
 
+  const setValidateFocusLost = e => {
+    if (e.target.checked) {
+      additional.enabled.validateFocusLost = true
+    } else {
+      delete additional.enabled.validateFocusLost
+    }
+    setadditional({ ...additional })
+  }
+
   return (
     <div>
       <h2>{__('Settings', 'bitform')}</h2>
@@ -396,6 +405,18 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />
+        </div>
+      </div>
+
+      <div className="w-6 mt-3">
+        <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
+          <div>
+            <b>
+              <span className="btcd-icn icn-one mr-2" />
+              {__('Validate Form Input on Focus Lost', 'bitform')}
+            </b>
+          </div>
+          <SingleToggle2 action={setValidateFocusLost} checked={'validateFocusLost' in additional.enabled} className="flx" />
         </div>
       </div>
 
