@@ -166,7 +166,7 @@ export function handleFile(e) {
                   <span>${err[i]}</span>
               </div>`)
     }
-    const errNods = e.target.parentNode.parentNode.querySelec
+    const errNods = e.target.parentNode.parentNode.querySelectorAll('.btcd-files>.btcd-f-err')
 
     for (let i = 0; i < errNods.length; i += 1) {
       unfade(errNods[i])
