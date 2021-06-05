@@ -269,7 +269,7 @@ function GridLayout(props) {
     delete tmpFields[i]
     setLayouts(nwLay)
     setFields(tmpFields)
-    props.setElmSetting({ id: null, data: { typ: '' } })
+    setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
   }
 
@@ -396,43 +396,6 @@ function GridLayout(props) {
     sessionStorage.setItem('btcd-lc', '-')
   }
 
-  const getElmProp = e => {
-    if (!e.target.hasAttribute('data-close')) {
-      let id = null
-      let node = null
-      if (e.target.hasAttribute('btcd-id')) {
-        node = e.target
-      } else if (e.target.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode
-      } else if (e.target.parentNode.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode.parentNode
-      } else if (e.target.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode.parentNode.parentNode
-      } else if (e.target.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode.parentNode.parentNode.parentNode
-      } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode
-      } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-      } else if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.hasAttribute('btcd-id')) {
-        node = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-      }
-
-      id = node.getAttribute('btcd-id')
-
-      if (fields[id]?.typ === 'select') {
-        const allSel = document.querySelectorAll('select')
-        for (let i = 0; i < allSel.length; i += 1) {
-          allSel[i].parentNode.parentNode.classList.remove('z-9')
-        }
-        node.classList.add('z-9')
-      }
-
-      setSelectedFieldId(id)
-      props.setElmSetting({ id, data: fields[id] })
-    }
-  }
-
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
@@ -464,16 +427,14 @@ function GridLayout(props) {
                   <div
                     key={layoutItem.i}
                     className="blk"
-                    btcd-id={layoutItem.i}
-                    onClick={getElmProp}
-                    onKeyPress={getElmProp}
+                    onClick={() => setSelectedFieldId(layoutItem.i)}
+                    onKeyPress={() => setSelectedFieldId(layoutItem.i)}
                     role="button"
                     tabIndex={0}
                   >
                     <FieldBlockWrapper
                       {...{
                         layoutItem,
-                        getElmProp,
                         onRemoveItem,
                         fields,
                         formID,
