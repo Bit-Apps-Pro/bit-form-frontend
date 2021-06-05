@@ -48,7 +48,7 @@ export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
   return opts
 }
 
-const generateSeparatorPattern = separator => (separator === 'comma' ? ',' : (separator === 'space' ? /(\s+)/ : /(\n)/))
+const generateSeparatorPattern = separator => (separator === 'comma' ? ',' : (separator === 'space' ? /[ ]+/ : /\r?\n/))
 
 const checkIfHasColonLblVlu = (separator, importOpts) => {
   let hasColonKeyVlu = 1
