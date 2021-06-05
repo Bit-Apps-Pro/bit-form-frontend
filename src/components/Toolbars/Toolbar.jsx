@@ -42,6 +42,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         lbl: __('Text Field', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -53,6 +54,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         lbl: __('Multi-Line Text', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     /* {
@@ -76,6 +78,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
+        err: {},
       },
     },
     {
@@ -92,6 +95,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
+        err: {},
       },
     },
     {
@@ -103,6 +107,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         lbl: __('Number Field', 'bitform'),
         ph: __('Number Input', 'bitform'),
         valid: {},
+        err: { invalid: { dflt: 'Number is invalid', show: true } },
       },
     },
     {
@@ -119,6 +124,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           { label: 'Option 3', value: 'Option 3' },
         ],
         valid: {},
+        err: {},
       },
     },
     {
@@ -142,6 +148,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         lbl: __('Password Field', 'bitform'),
         ph: __('Placeholder...', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -152,7 +159,9 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'email',
         lbl: __('Email Field', 'bitform'),
         ph: __('example@mail.com', 'bitform'),
+        pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{2,3})+$',
         valid: {},
+        err: { invalid: { dflt: 'Email is invalid', show: true } },
       },
     },
     {
@@ -163,11 +172,12 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'url',
         attr: {
           title: 'https://www.example.com  or  www.example.com',
-          pattern: '(https:\/\/www.*.*)|(http:\/\/www.*.*)|(http:\/\/*.*)|(https:\/\/*.*|www.*.*)',
+          pattern: '^(?:(?:https?|ftp):$_bf_$/$_bf_$/)?(?:(?!(?:10|127)(?:$_bf_$.$_bf_$d{1,3}){3})(?!(?:169$_bf_$.254|192$_bf_$.168)(?:$_bf_$.$_bf_$d{1,3}){2})(?!172$_bf_$.(?:1[6-9]|2$_bf_$d|3[0-1])(?:$_bf_$.$_bf_$d{1,3}){2})(?:[1-9]$_bf_$d?|1$_bf_$d$_bf_$d|2[01]$_bf_$d|22[0-3])(?:$_bf_$.(?:1?$_bf_$d{1,2}|2[0-4]$_bf_$d|25[0-5])){2}(?:$_bf_$.(?:[1-9]$_bf_$d?|1$_bf_$d$_bf_$d|2[0-4]$_bf_$d|25[0-4]))|(?:(?:[a-z$_bf_$u00a1-$_bf_$uffff0-9]-*)*[a-z$_bf_$u00a1-$_bf_$uffff0-9]+)(?:$_bf_$.(?:[a-z$_bf_$u00a1-$_bf_$uffff0-9]-*)*[a-z$_bf_$u00a1-$_bf_$uffff0-9]+)*(?:$_bf_$.(?:[a-z$_bf_$u00a1-$_bf_$uffff]{2,})))(?::$_bf_$d{2,5})?(?:$_bf_$/$_bf_$S*)?$',
         },
         lbl: __('URL Field', 'bitform'),
         ph: __('https://www.example.com', 'bitform'),
         valid: {},
+        err: { invalid: { dflt: 'URL is invalid', show: true } },
       },
     },
     {
@@ -179,6 +189,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         lbl: __('File Upload', 'bitform'),
         upBtnTxt: 'Attach File',
         valid: {},
+        err: {},
       },
     },
     {
@@ -189,6 +200,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'date',
         lbl: __('Date Input', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -199,6 +211,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'time',
         lbl: __('Time Input', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -209,6 +222,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'datetime-local',
         lbl: __('Date-Time Input', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -219,6 +233,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'month',
         lbl: __('Month Input', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -229,6 +244,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'week',
         lbl: __('Week Input', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -239,6 +255,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'color',
         lbl: __('Color Picker', 'bitform'),
         valid: {},
+        err: {},
       },
     },
     {
@@ -265,6 +282,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           unchecked: 'Not Accepted',
         },
         valid: {},
+        err: {},
       },
     },
     {
