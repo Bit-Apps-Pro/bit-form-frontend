@@ -1,17 +1,18 @@
-export default function SingleToggle(props) {
+export default function SingleToggle({ className, title, isChecked, name, action, disabled }) {
   return (
-    <div className={`flx flx-between ${props.className}`}>
-      <span className="font-w-m">{props.title}</span>
-      <label htmlFor={`s-ck-${props.title}-${props.isChecked}`} className="btcd-label">
+    <div className={`flx flx-between ${className}`}>
+      <span className="font-w-m">{title}</span>
+      <label htmlFor={`s-ck-${title || name}-${isChecked}`} className="btcd-label">
         <div className="btcd-toggle">
           <input
-            id={`s-ck-${props.title}-${props.isChecked}`}
-            onChange={props.action}
+            id={`s-ck-${title || name}-${isChecked}`}
+            onChange={action}
             className="btcd-toggle-state"
             type="checkbox"
-            name="check"
+            name={name || "check"}
             value="check"
-            checked={props.isChecked}
+            checked={isChecked}
+            disabled={disabled}
           />
           <div className="btcd-toggle-inner">
             <div className="btcd-indicator" />

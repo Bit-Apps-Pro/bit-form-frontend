@@ -113,7 +113,6 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       <br />
       <div className="fld-wrp">
         <div className="fld-lbl">Please select property you want to import with form</div>
-        {' '}
         <div className="no-drg fld btcd-ck-con btcd-round">
           <label className="btcd-ck-wrp">
             <span>All</span>
