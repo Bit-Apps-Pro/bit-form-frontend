@@ -4288,8 +4288,8 @@ _:-ms-fullscreen,
   align-items: center;
 }
 .form-check-input[type="checkbox"] {
-  width: 1.125rem !important;
-  height: 1.125rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
   position: relative;
   background: #0069ff;
   border: none;
@@ -4333,6 +4333,7 @@ _:-ms-fullscreen,
   margin-left: 0.625rem;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 13px;
 }
 @keyframes scale-in {
   from {
