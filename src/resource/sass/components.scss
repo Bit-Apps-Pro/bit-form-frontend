@@ -1,6 +1,42 @@
 ._frm-bg {
   overflow: visible;
 }
+.pos-rel {
+  position: relative;
+}
+
+.form-loading {
+
+  &::after,
+  &::before{
+    position: absolute;
+    border-radius: 5px;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.2);
+
+  }
+
+  &::after {
+    content: 'loading...';
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    font-size: 20px;
+    color: #fff;
+    background-color: #222;
+    padding: 5px 15px;
+  }
+}
 
 .btcd-fld-itm {
   height: 100%;
@@ -16,6 +52,9 @@
   align-items: center;
 }
 
+.fld-wrp p{
+  margin: 0;
+}
 .fld-wrp {
   min-height: inherit;
   font-family: sans-serif ;
@@ -482,11 +521,17 @@ textarea.fld {
 }
 
 .error-wrapper {
+  margin-top: 5px;
   height: 0;
   overflow: hidden;
   transition: all .3s;
 }
 
 .error-txt {
-  color: red;
+  background: #ff00001f;
+  color: #860000;
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 13px;
 }
+
