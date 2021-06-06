@@ -103,7 +103,6 @@ function RadioCheckSettings() {
 
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
-  console.log({ fieldData })
 
   const setRadioRequired = e => {
     if (e.target.checked) {

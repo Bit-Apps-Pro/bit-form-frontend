@@ -279,11 +279,6 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
               setNewData={setNewData}
               formType={formType}
               formID={formID}
-              // subBtn={subBtn}
-              // newCounter={newCounter}
-              // setNewCounter={setNewCounter}
-              // setLay={setLay}
-              // layout={lay}
               isToolDragging={isToolDragging}
               formSettings={formSettings}
             />
@@ -299,11 +294,11 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
           style={styleProvider()}
           setResponsiveView={setResponsiveView}
           styleDispatch={styleDispatch}
-          fields={fields}
-          elm={elmSetting}
-          updateData={updateFields}
-          // setSubmitConfig={setSubmitConfig}
           formID={formID}
+        // fields={fields}
+        // elm={elmSetting}
+        // updateData={updateFields}
+        // setSubmitConfig={setSubmitConfig}
         // lay={lay}
         // setLay={setLay}
         />

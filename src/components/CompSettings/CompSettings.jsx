@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import BrushIcn from '../../Icons/BrushIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -47,7 +47,7 @@ import BtnIcn from '../../Icons/BtnIcn'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 
-function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResponsiveView }) {
+function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   const [scrollTopShadow, setScrollTopShadow] = useState(false)
@@ -63,11 +63,7 @@ function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResp
   )
 
   const onSettingScroll = ({ target: { scrollTop } }) => {
-    if (scrollTop > 20) {
-      setScrollTopShadow(true)
-    } else {
-      setScrollTopShadow(false)
-    }
+    scrollTop > 20 ? setScrollTopShadow(true) : setScrollTopShadow(false)
   }
 
   return (
@@ -80,13 +76,8 @@ function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResp
       <div className="settings">
         <Scrollbars onScroll={onSettingScroll} autoHide>
           <Switch>
-            <Route path={`${path}/fs`}>
-              <RenderSettings
-                type={elm.data.typ}
-                elm={elm}
-                updateData={updateData}
-              />
-            </Route>
+            <Route path={`${path}/fs`}><RenderSettings /></Route>
+
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
                 <FieldOptionBtn icn={<ImageIcn w="20" />} title={__('Background Customize', 'bitform')} />
@@ -131,19 +122,16 @@ function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResp
               <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
                 <FieldOptionBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
               </Link>
-              {elm?.data?.typ === 'button'
-                && (
-                  <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
-                    <FieldOptionBtn icn={<DropDownIcn w="20" />} title="Button Style" />
-                  </Link>
-                )}
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
+                <FieldOptionBtn icn={<BtnIcn size="24" />} title="Button Style" />
+              </Link>
             </Route>
             <Route path={`${path}/style/fl/fld`}>
               <StyleEditor editorLabel={__('Field Style', 'bitform')} title={__('Label Style', 'bitform')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
               <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
             <Route path={`${path}/style/fl/ppl`}>
-              <PaypalStyleEditor elm={elm} updateData={updateData} />
+              <PaypalStyleEditor />
             </Route>
             <Route path={`${path}/style/fl/dpd`}>
               <DropdownStyleEditors
@@ -153,10 +141,10 @@ function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResp
             </Route>
             <Route path={`${path}/style/fl/btn`}>
               <StyleEditor
-                title={`${elm.data.btnTyp === 'submit' ? 'Submit ' : 'Reset '}${__('Button Style', 'bitform')}`}
+                title={`${__('Button Style', 'bitform')}`}
                 noBack
                 compStyle={style}
-                cls={elm.data.btnTyp === 'submit' ? '.btcd-sub' : '.btcd-rst'}
+                cls=".btcd-sub-btn"
                 styleDispatch={styleDispatch}
                 brkPoint={brkPoint}
                 setResponsiveView={setResponsiveView}
@@ -173,7 +161,7 @@ function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResp
 }
 export default CompSettings
 
-const RenderSettings = ({ elm, updateData }) => {
+const RenderSettings = () => {
   const fields = useRecoilValue($fields)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const seletedFieldType = fields?.[selectedFieldId]?.typ
@@ -214,7 +202,6 @@ const RenderSettings = ({ elm, updateData }) => {
     default:
       return <FieldList />
   }
-  return <FieldList />
 }
 
 function FieldList() {
@@ -229,14 +216,14 @@ function FieldList() {
         lbl = fields[fld].adminLbl
       }
       arr.push(
-        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl || adminLbl || typ} sub={fld} action={() => setSelectedFieldId(null)} />,
+        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl || adminLbl || typ} sub={fld} action={() => setSelectedFieldId(fld)} />,
       )
     }
   }
   return arr
 }
 
-const renderFieldIcn = icn => {
+const FieldIcon = icn => {
   switch (icn) {
     case 'text':
       return <TextIcn size="23" />
@@ -302,7 +289,7 @@ function FieldOptionBtn({ icn, title, sub, action }) {
       <div className="flx flx-between ">
         <div className="flx w-9">
           <span className="lft-icn mr-2 btcd-icn-lg flx br-50">
-            {typeof icn === 'string' ? renderFieldIcn(icn) : icn}
+            {typeof icn === 'string' ? FieldIcon(icn) : icn}
           </span>
           <div className="w-nwrp o-h">
             <div className="txt-o o-h mb-1">{title}</div>
