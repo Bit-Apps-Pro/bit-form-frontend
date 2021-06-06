@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
 
 export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val)
@@ -38,6 +39,7 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
     if (textFld) {
       observeElement(textFld, 'value', (oldVal, newVal) => setvalue(newVal))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleBlur = e => {
@@ -45,35 +47,27 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="textarea">
-      {'lbl' in attr && (
-        <label className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
-          {attr.lbl}
-          {attr.valid?.req && ' *'}
-        </label>
-      )}
-      <div>
-        <textarea
-          id={fieldKey}
-          className={`fld fld-${formID} no-drg textarea`}
-          style={{ height: 'calc(100% - 30px)' }}
-          ref={textAreaRef}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'ac' in attr && { autoComplete: attr.ac }}
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
-          {...'name' in attr && { name: attr.name }}
-          {...onBlurHandler && { onInput: onBlurHandler }}
-          onBlur={handleBlur}
-          {...{ value }}
-          onChange={onChangeHandler}
-        />
-      </div>
-      <div className="error-wrapper">
-        <div id={`${fieldKey}-error`} className="error-txt">
-          {attr?.err?.msg}
-        </div>
-      </div>
-    </div>
+    <InputWrapper
+      formID={formID}
+      fieldKey={fieldKey}
+      fieldData={attr}
+    >
+      <textarea
+        id={fieldKey}
+        className={`fld fld-${formID} no-drg textarea`}
+        style={{ height: 'calc(100% - 30px)' }}
+        ref={textAreaRef}
+        {...'ph' in attr && { placeholder: attr.ph }}
+        {...'ac' in attr && { autoComplete: attr.ac }}
+        {...'req' in attr.valid && { required: attr.valid.req }}
+        {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+        {...'name' in attr && { name: attr.name }}
+        {...onBlurHandler && { onInput: onBlurHandler }}
+        onBlur={handleBlur}
+        {...{ value }}
+        onChange={onChangeHandler}
+      />
+
+    </InputWrapper>
   )
 }

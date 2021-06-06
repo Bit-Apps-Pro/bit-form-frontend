@@ -5,6 +5,7 @@ import validateForm from '../../user-frontend/validation'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { select } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
 
 function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
   const appSettingsContext = useContext(AppSettings)
@@ -49,7 +50,8 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
       if (payClient) {
         key = atob(payClient)
       }
-    } else {
+    }
+    if (!key) {
       const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
       if (payInteg) {
         key = payInteg.clientID
@@ -76,13 +78,13 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }, 1)
   }, [clientID, attr.currency, attr.payType, attr.locale, attr.disableFunding])
 
-  const createSubscriptionHandler = (data, actions) => {
+  const createSubscriptionHandler = (_, actions) => {
     const form = document.getElementById(`form-${contentID}`)
     if (!validateForm({ form })) throw new Error('form validation is failed!')
     return actions.subscription.create({ plan_id: attr?.planId })
   }
 
-  const createOrderHandler = (data, actions) => {
+  const createOrderHandler = (_, actions) => {
     const form = document.getElementById(`form-${contentID}`)
     if (!validateForm({ form })) throw new Error('form validation is failed!')
 
@@ -138,7 +140,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           payment_response: result,
         }
         bitsFetchFront(paymentParams, 'bitforms_payment_insert')
-          .then(__ => formParent.classList.remove('pos-rel', 'form-loading'))
+          .then(() => formParent.classList.remove('pos-rel', 'form-loading'))
       }
     })
   }
@@ -169,7 +171,12 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   }
 
   return (
-    <div className={`drag fld-wrp fld-wrp-${formID} ${isBuilder ? 'o-h' : ''} ${attr.valid.hide ? 'vis-n' : ''}`}>
+    <InputWrapper
+      formID={formID}
+      fieldData={attr}
+      noLabel
+      isBuilder={isBuilder}
+    >
       <div
         style={{
           width: 'auto',
@@ -178,6 +185,8 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           marginLeft: 'auto',
           marginRight: 'auto',
         }}
+        id={`paypal-client-${fieldKey}`}
+        paypal-client-key={clientID}
       >
         {(render && clientID) && (
           <PayPalScriptProvider
@@ -198,7 +207,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           <p>Select a config from field settings to render the PayPal.</p>
         )}
       </div>
-    </div>
+    </InputWrapper>
   )
 }
 

@@ -3,6 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useEffect, createRef } from 'react'
 import { setPrevData, handleFile, delItem } from '../../resource/js/file-upload'
+import InputWrapper from '../InputWrapper'
 
 export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
   const delBtnRef = createRef()
@@ -35,13 +36,11 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`}>
-      {'lbl' in attr && (
-        <label className={`fld-lbl fld-lbl-${formID}`}>
-          {attr.lbl}
-          {attr.valid.req && ' *'}
-        </label>
-      )}
+    <InputWrapper
+      formID={formID}
+      fieldKey={attr.name}
+      fieldData={attr}
+    >
       <div className="btcd-f-input">
         <div className="btcd-f-wrp">
           <div className="btn-wrp">
@@ -89,11 +88,6 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
           <div ref={delBtnRef} className="btcd-files" />
         </div>
       </div>
-      <div className="error-wrapper">
-        <div id={`${attr.name}-error`} className="error-txt">
-          {attr?.err?.msg}
-        </div>
-      </div>
-    </div>
+    </InputWrapper>
   )
 }
