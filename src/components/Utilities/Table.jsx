@@ -212,8 +212,8 @@ function Table(props) {
   }, [reports[report]])
 
   useEffect(() => {
-    if (columns.length > 0 && allColumns.length >= columns.length) {
-      if (!isNaN(reportID) && reports.length > 0 && reports[reportID] && 'details' in reports[reportID]) {
+    if (columns.length && allColumns.length >= columns.length) {
+      if (!isNaN(reportID) && reports.length && reports[reportID] && 'details' in reports[reportID]) {
         if (stateSavable && reports[reportID].details) {
           let details
           if (typeof reports[reportID].details === 'object' && 'order' in reports[reportID].details) {
