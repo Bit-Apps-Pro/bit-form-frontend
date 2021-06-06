@@ -15,7 +15,7 @@ import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import ImportOptions from './ImportOptions'
 
-function RadioCheckSettings(props) {
+function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const fldKey = useRecoilValue($selectedFieldId)
@@ -152,12 +152,9 @@ function RadioCheckSettings(props) {
       <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
-          fldKey={fldKey}
-          fieldData={fieldData}
           type="req"
           title="Error Message"
           tipTitle="By enabling this feature, user will see the error message when required option is not checked"
-          updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
         />
       )}
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
@@ -215,9 +212,6 @@ function RadioCheckSettings(props) {
           <ImportOptions
             importOpts={importOpts}
             setImportOpts={setImportOpts}
-            fldKey={fldKey}
-            fieldData={fieldData}
-            updateData={props.updateData}
             lblKey="lbl"
             valKey="val"
           />

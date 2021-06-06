@@ -1,11 +1,17 @@
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
 import FileUploadImportOptions, { generateNewFileUploadedOptions } from './ImportOptionsComps/FileUploadImportOptions'
 import PresetsImportOptions, { generateNewPresetsOptions } from './ImportOptionsComps/PresetsImportOptions'
 
-export default function ImportOptions({ importOpts, setImportOpts, elmId, elmData, updateData, lblKey, valKey }) {
+export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
   const generateNewOptions = () => {
     if (!isPro) return []
     const { dataSrc } = importOpts
@@ -31,10 +37,10 @@ export default function ImportOptions({ importOpts, setImportOpts, elmId, elmDat
 
   const handleImport = () => {
     const opts = generateNewOptions()
-    if (importOpts.type === 'merge') elmData.opt = elmData.opt.concat(opts)
-    else elmData.opt = opts
+    if (importOpts.type === 'merge') fieldData.opt = fieldData.opt.concat(opts)
+    else fieldData.opt = opts
 
-    updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
     setImportOpts({ dataSrc: 'fileupload' })
   }
 

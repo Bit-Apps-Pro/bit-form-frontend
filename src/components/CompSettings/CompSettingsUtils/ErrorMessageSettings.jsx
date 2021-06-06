@@ -1,13 +1,19 @@
 import { useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import SingleToggle from '../../Utilities/SingleToggle'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function ErrorMessageSettings({ elmId, fieldData, type, title, tipTitle, updateAction }) {
+export default function ErrorMessageSettings({ type, title, tipTitle }) {
   const [errorModal, setErrorModal] = useState(false)
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
 
   const setCustomErrMsg = e => {
@@ -21,7 +27,7 @@ export default function ErrorMessageSettings({ elmId, fieldData, type, title, ti
     } else {
       delete tmpErr.err[name].custom
     }
-    updateAction()
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setShowErrMsg = e => {
@@ -34,7 +40,7 @@ export default function ErrorMessageSettings({ elmId, fieldData, type, title, ti
     } else {
       delete tmpErr.err[name].show
     }
-    updateAction()
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const openErrorModal = () => {
@@ -43,7 +49,7 @@ export default function ErrorMessageSettings({ elmId, fieldData, type, title, ti
     if (!tmpErr.err[type]) tmpErr.err[type] = {}
     tmpErr.err[type].custom = true
     if (!tmpErr.err[type].msg) tmpErr.err[type].msg = tmpErr.err[type].dflt
-    updateAction()
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
     setErrorModal(true)
   }
 
@@ -89,9 +95,6 @@ export default function ErrorMessageSettings({ elmId, fieldData, type, title, ti
         errorModal={errorModal}
         setErrorModal={setErrorModal}
         type={type}
-        elmId={elmId}
-        fieldData={fieldData}
-        updateAction={updateAction}
       />
     </div>
   )

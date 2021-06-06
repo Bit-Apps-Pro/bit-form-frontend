@@ -227,12 +227,9 @@ function TextFieldSettings() {
       {
         fieldData?.valid?.req && (
           <ErrorMessageSettings
-            fldKey={fldKey}
-            fieldData={fieldData}
             type="req"
             title="Error Message"
             tipTitle="By enabling this feature, user will see the error message when input is empty"
-            updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
           />
         )
       }
@@ -244,23 +241,17 @@ function TextFieldSettings() {
             <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} className="w-10" />
             {fieldData.mn && (
               <ErrorMessageSettings
-                fldKey={fldKey}
-                fieldData={fieldData}
                 type="mn"
                 title="Min Error Message"
                 tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
-                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
             <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} className="w-10" />
             {fieldData.mx && (
               <ErrorMessageSettings
-                fldKey={fldKey}
-                fieldData={fieldData}
                 type="mx"
                 title="Max Error Message"
                 tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
-                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
           </>
@@ -269,12 +260,9 @@ function TextFieldSettings() {
       {
         fieldData.typ.match(/^(url|number|email|)$/) && (
           <ErrorMessageSettings
-            fldKey={fldKey}
-            fieldData={fieldData}
             type="invalid"
             title="Invalid Error Message"
             tipTitle={`By enabling this feature, user will see the error message when input value is not any ${fieldData.typ}`}
-            updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
           />
         )
       }
@@ -308,12 +296,9 @@ function TextFieldSettings() {
             </div>
             {regexr && (
               <ErrorMessageSettings
-                fldKey={fldKey}
-                fieldData={fieldData}
                 type="regexr"
                 title="Error Message"
                 tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
-                updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
               />
             )}
           </>

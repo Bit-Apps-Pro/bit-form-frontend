@@ -193,24 +193,24 @@ const RenderSettings = ({ elm, updateData }) => {
       return <TextFieldSettings />
     case 'check':
     case 'radio':
-      return <RadioCheckSettings elm={elm} updateData={updateData} />
+      return <RadioCheckSettings />
     case 'select':
     case 'dropdown':
-      return <SelectSettings elm={elm} updateData={updateData} />
+      return <SelectSettings />
     case 'file-up':
-      return <FileUpSettings elm={elm} updateData={updateData} />
+      return <FileUpSettings />
     case 'recaptcha':
-      return <ReCaptchaSettigns elm={elm} updateData={updateData} />
+      return <ReCaptchaSettigns />
     case 'decision-box':
-      return <DecisionBoxSettings elm={elm} updateData={updateData} />
+      return <DecisionBoxSettings />
     case 'html':
-      return <HtmlFieldSettings elm={elm} updateData={updateData} />
+      return <HtmlFieldSettings />
     case 'button':
-      return <ButtonSettings elm={elm} updateData={updateData} />
+      return <ButtonSettings />
     case 'paypal':
-      return <PaypalSettings elm={elm} updateData={updateData} />
+      return <PaypalSettings />
     case 'razorpay':
-      return <RazorpaySettings elm={elm} updateData={updateData} />
+      return <RazorpaySettings />
     default:
       return <FieldList />
   }

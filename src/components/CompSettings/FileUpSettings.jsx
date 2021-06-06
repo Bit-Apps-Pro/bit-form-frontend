@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -8,21 +8,20 @@ import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import { deepCopy } from '../../Utils/Helpers'
-import { $fields } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 
-export default function FileUpSettings({ elm, updateData, setElementSetting }) {
+export default function FileUpSettings() {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-  const elmId = elm.id
-  const fields = useRecoilValue($fields)
-  const elmData = deepCopy(fields[elmId])
-  const isRequired = elmData.valid.req !== undefined
-  const isMultiple = elmData.mul !== undefined
-  const label = elmData.lbl === undefined ? '' : elmData.lbl
-  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
-  const { upBtnTxt } = elmData
-  const mxUp = elmData.mxUp === undefined ? '' : elmData.mxUp
-  const exts = elmData.exts === undefined ? [] : elmData.exts.split(',._RF_,')
-  const fldKey = elmId
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
+  const isRequired = fieldData.valid.req !== undefined
+  const isMultiple = fieldData.mul !== undefined
+  const label = fieldData.lbl === undefined ? '' : fieldData.lbl
+  const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
+  const { upBtnTxt } = fieldData
+  const mxUp = fieldData.mxUp === undefined ? '' : fieldData.mxUp
+  const exts = fieldData.exts === undefined ? [] : fieldData.exts.split(',._RF_,')
   const options = [
     { label: 'Images', value: '.xbm,.tif,.pjp,.pjpeg,.svgz,.jpg,.jpeg,.ico,.tiff,.gif,.svg,.bmp,.png,.jfif,.webp,.tif' },
     { label: 'Audios', value: '.opus,.flac,.webm,.weba,.wav,.ogg,.m4a,.mp3,.oga,.mid,.amr,.aiff,.wma,.au,.acc,.wpl' },
@@ -36,82 +35,82 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
 
   function setRequired(e) {
     if (e.target.checked) {
-      const tmp = { ...elmData.valid }
+      const tmp = { ...fieldData.valid }
       tmp.req = true
-      elmData.valid = tmp
-      if (!elmData.err) elmData.err = {}
-      if (!elmData.err.req) elmData.err.req = {}
-      elmData.err.req.dflt = '<p>This field is required</p>'
-      elmData.err.req.show = true
+      fieldData.valid = tmp
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.req) fieldData.err.req = {}
+      fieldData.err.req.dflt = '<p>This field is required</p>'
+      fieldData.err.req.show = true
     } else {
-      delete elmData.valid.req
+      delete fieldData.valid.req
     }
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setMultiple(e) {
     if (e.target.checked) {
-      elmData.mul = true
+      fieldData.mul = true
     } else {
-      delete elmData.mul
+      delete fieldData.mul
     }
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setLabel(e) {
     if (e.target.value === '') {
-      delete elmData.lbl
+      delete fieldData.lbl
     } else {
-      elmData.lbl = e.target.value
+      fieldData.lbl = e.target.value
     }
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
-      delete elmData.adminLbl
+      delete fieldData.adminLbl
     } else {
-      elmData.adminLbl = e.target.value
+      fieldData.adminLbl = e.target.value
     }
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setUpBtnTxt(e) {
-    elmData.upBtnTxt = e.target.value
-    updateData(elm)
+    fieldData.upBtnTxt = e.target.value
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setMxUp(e) {
     if (e.target.value === '') {
-      delete elmData.mxUp
-      delete elmData.unit
+      delete fieldData.mxUp
+      delete fieldData.unit
     } else {
-      elmData.mxUp = e.target.value
-      elmData.unit = 'MB'
+      fieldData.mxUp = e.target.value
+      fieldData.unit = 'MB'
     }
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setFileFilter(value) {
     const val = value.map(itm => itm.value)
     if (val.join(',') === '') {
-      delete elmData.exts
+      delete fieldData.exts
     } else {
-      elmData.exts = val.join(',._RF_,')
+      fieldData.exts = val.join(',._RF_,')
     }
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setMaxUpTyp = e => {
-    if (e.target.value) elmData.mxUpTyp = e.target.value
-    else delete elmData.mxUpTyp
+    if (e.target.value) fieldData.mxUpTyp = e.target.value
+    else delete fieldData.mxUpTyp
 
-    updateData(elm)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setUnit = e => {
-    elmData.unit = e.target.value
-    updateData(elm)
+    fieldData.unit = e.target.value
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   return (
@@ -131,12 +130,9 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-2" />
       {isRequired && (
         <ErrorMessageSettings
-          elmId={elmId}
-          elmData={elmData}
           type="req"
           title="Error Message"
           tipTitle="By enabling this feature, user will see the error message if any file is not uploaded"
-          updateAction={() => updateData(elm)}
         />
       )}
       <SingleToggle title={__('Allow Multiple:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
@@ -151,7 +147,7 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
         )} */}
         <div className={`flx ${!isMultiple && 'mt-1'}`}>
           <input type="number" className="btcd-paper-inp" value={mxUp} action={setMxUp} placeholder="Any Size" />
-          {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={elmData.unit}>
+          {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={fieldData.unit}>
             <option value="">Unit</option>
             <option value="KB">KB</option>
             <option value="MB">MB</option>
@@ -160,23 +156,20 @@ export default function FileUpSettings({ elm, updateData, setElementSetting }) {
         </div>
       </div>
 
-      {mxUp && (
+      {/* {mxUp && (
         <ErrorMessageSettings
-          elmId={elmId}
-          elmData={elmData}
           type="maxUp"
           title="Error Message"
-          updateAction={() => updateData(elm)}
         />
-      )}
+      )} */}
       <DropDown className="mt-2 w-10" titleClassName="mt-3 setting-inp" title={__('Allowed File Type:', 'bitform')} isMultiple addable options={options} placeholder={__('Select File Type', 'bitform')} jsonValue action={setFileFilter} value={exts} />
       {/* {exts.length !== 0 && (
         <ErrorMessageSettings
-          elmId={elmId}
-          elmData={elmData}
+          fldKey={fldKey}
+          fieldData={fieldData}
           type="exts"
           title="Error Message"
-          updateAction={() => updateData(elm)}
+          updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
         />
       )} */}
     </div>

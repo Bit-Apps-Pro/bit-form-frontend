@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { AppSettings } from '../../Utils/AppSettingsContext'
-import { sortArrOfObj } from '../../Utils/Helpers'
+import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData'
 import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
@@ -10,15 +10,17 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
-import { $fields } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 
-export default function RazorpaySettings({ elm, updateData, setElementSetting }) {
-  const fields = useRecoilValue($fields)
+export default function RazorpaySettings() {
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
   const { payments } = useContext(AppSettings)
   const [payNotes, setPayNotes] = useState([{}])
-  const isSubscription = elm.data?.payType === 'subscription'
-  const isDynamicAmount = elm.data.options.amountType === 'dynamic'
+  const isSubscription = fieldData?.payType === 'subscription'
+  const isDynamicAmount = fieldData.options.amountType === 'dynamic'
 
   const pos = [
     { name: __('Left', 'bitform'), value: 'left' },
@@ -27,52 +29,47 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
   ]
 
   const handleInput = (name, value, type) => {
-    const tmp = { ...elm }
     if (type) {
       if (value) {
-        tmp.data.options[type][name] = value
+        fieldData.options[type][name] = value
       } else {
-        delete tmp.data.options[type][name]
+        delete fieldData.options[type][name]
       }
     } else if (value) {
-      tmp.data.options[name] = value
+      fieldData.options[name] = value
     } else {
-      delete tmp.data.options[name]
+      delete fieldData.options[name]
     }
 
-    updateData(tmp)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setAmountType = e => {
-    const tmp = { ...elm }
-    if (e.target.value) tmp.data.options.amountType = e.target.value
-    else delete tmp.data.options.amountType
-    delete tmp.data.options.amount
-    delete tmp.data.options.amountFld
+    if (e.target.value) fieldData.options.amountType = e.target.value
+    else delete fieldData.options.amountType
+    delete fieldData.options.amount
+    delete fieldData.options.amountFld
 
-    updateData(tmp)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const handleBtnStyle = e => {
-    const tmp = { ...elm }
-    tmp.data[e.target.name] = e.target.value
-    updateData(tmp)
+    fieldData[e.target.name] = e.target.value
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setFulW = e => {
-    const tmp = { ...elm }
-    tmp.data.fulW = e.target.checked
-    updateData(tmp)
+    fieldData.fulW = e.target.checked
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setBtnSiz = e => {
-    const tmp = { ...elm }
     if (e.target.checked) {
-      tmp.data.btnSiz = 'sm'
+      fieldData.btnSiz = 'sm'
     } else {
-      tmp.data.btnSiz = 'md'
+      fieldData.btnSiz = 'md'
     }
-    updateData(tmp)
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const handleNotes = (action, i, type, val) => {
@@ -95,7 +92,6 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
   }
 
   const mapNotesToElmData = notes => {
-    const tmp = { ...elm }
     const noteObj = {}
 
     let i = -1
@@ -107,8 +103,8 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
       }
     }
 
-    tmp.data.options.notes = noteObj
-    updateData(tmp)
+    fieldData.options.notes = noteObj
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const getSpecifiedFields = type => {
@@ -144,7 +140,7 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
       <div className="mt-3">
         <b>{__('Select Config', 'bitform')}</b>
         <br />
-        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={elm.data.options.payIntegID}>
+        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={fieldData.options.payIntegID}>
           <option value="">Select Config</option>
           {getRazorpayConfigs()}
         </select>
@@ -152,10 +148,10 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
 
       {/* <div className="mt-2">
         <SingleToggle title={__('Subscription:', 'bitform')} action={setSubscription} isChecked={isSubscription} className="mt-3" />
-        {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={elm.data.planId || ''} action={e => handleInput('planId', e.target.value)} />}
+        {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={fieldData.planId || ''} action={e => handleInput('planId', e.target.value)} />}
       </div> */}
 
-      {elm.data?.options?.payIntegID && (
+      {fieldData?.options?.payIntegID && (
         <>
           {!isSubscription && (
             <>
@@ -166,11 +162,11 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
                   <CheckBox onChange={setAmountType} radio checked={!isDynamicAmount} title={__('Fixed', 'bitform')} />
                   <CheckBox onChange={setAmountType} radio checked={isDynamicAmount} title={__('Dynamic', 'bitform')} value="dynamic" />
                 </div>
-                {!isDynamicAmount && <SingleInput inpType="number" title={__('Amount', 'bitform')} value={elm.data.options.amount || ''} action={e => handleInput('amount', e.target.value)} />}
+                {!isDynamicAmount && <SingleInput inpType="number" title={__('Amount', 'bitform')} value={fieldData.options.amount || ''} action={e => handleInput('amount', e.target.value)} />}
                 {isDynamicAmount && (
                   <div className="mt-3">
                     <b>{__('Select Amount Field', 'bitform')}</b>
-                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1" value={elm.data.options.amountFld}>
+                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="amountFld" className="btcd-paper-inp mt-1" value={fieldData.options.amountFld}>
                       <option value="">{__('Select Field', 'bitform')}</option>
                       {getSpecifiedFields('amount')}
                     </select>
@@ -180,7 +176,7 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
               <div className="mt-2">
                 <label htmlFor="recap-thm">
                   <b>{__('Currency', 'bitform')}</b>
-                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="currency" value={elm.data.options.currency} className="btcd-paper-inp mt-1">
+                  <select onChange={e => handleInput(e.target.name, e.target.value)} name="currency" value={fieldData.options.currency} className="btcd-paper-inp mt-1">
                     {sortArrOfObj(razorpayCurrencyCodes, 'currency').map(itm => (
                       <option key={itm.currency} value={itm.code}>
                         {`${itm.currency} - ${itm.code}`}
@@ -192,60 +188,60 @@ export default function RazorpaySettings({ elm, updateData, setElementSetting })
               <div className="mt-2">
                 <b>{__('Account Name', 'bitform')}</b>
                 <br />
-                <input type="text" className="mt-1 btcd-paper-inp" placeholder="Account Name" name="name" value={elm.data.options.name || ''} onChange={e => handleInput(e.target.name, e.target.value)} />
+                <input type="text" className="mt-1 btcd-paper-inp" placeholder="Account Name" name="name" value={fieldData.options.name || ''} onChange={e => handleInput(e.target.name, e.target.value)} />
               </div>
               <div className="mt-2">
                 <b>{__('Description', 'bitform')}</b>
                 <br />
-                <textarea className="mt-1 btcd-paper-inp" placeholder="Order Description" name="description" rows="5" value={elm.data.options.description || ''} onChange={e => handleInput(e.target.name, e.target.value)} />
+                <textarea className="mt-1 btcd-paper-inp" placeholder="Order Description" name="description" rows="5" value={fieldData.options.description || ''} onChange={e => handleInput(e.target.name, e.target.value)} />
               </div>
             </>
           )}
 
           <StyleAccordion title="Additional Settings" className="style-acc">
             <StyleAccordion title="Button" className="style-acc">
-              <SingleInput inpType="text" title={__('Button Text', 'bitform')} value={elm.data.btnTxt || ''} name="btnTxt" action={handleBtnStyle} className="mt-0" />
-              <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={elm.data.align} action={handleBtnStyle} name="align" />
-              <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={elm.data.fulW} className="mt-5" />
-              <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={elm.data.btnSiz === 'sm'} className="mt-5" />
+              <SingleInput inpType="text" title={__('Button Text', 'bitform')} value={fieldData.btnTxt || ''} name="btnTxt" action={handleBtnStyle} className="mt-0" />
+              <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={fieldData.align} action={handleBtnStyle} name="align" />
+              <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fieldData.fulW} className="mt-5" />
+              <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={fieldData.btnSiz === 'sm'} className="mt-5" />
             </StyleAccordion>
             <div className="btcd-hr" />
 
             <StyleAccordion title="Theme" className="style-acc">
               <div>
                 <b>{__('Theme Color:', 'bitform')}</b>
-                <input className="ml-2" type="color" value={elm.data.options.theme.color} onChange={e => handleInput('color', e.target.value, 'theme')} />
+                <input className="ml-2" type="color" value={fieldData.options.theme.color} onChange={e => handleInput('color', e.target.value, 'theme')} />
               </div>
               <div className="mt-2">
                 <b>{__('Background Color:', 'bitform')}</b>
-                <input className="ml-2" type="color" value={elm.data.options.theme.backdrop_color} onChange={e => handleInput('backdrop_color', e.target.value, 'theme')} />
+                <input className="ml-2" type="color" value={fieldData.options.theme.backdrop_color} onChange={e => handleInput('backdrop_color', e.target.value, 'theme')} />
               </div>
             </StyleAccordion>
             <div className="btcd-hr" />
 
             <StyleAccordion title="Modal" className="style-acc">
-              <SingleToggle title={__('Confirm on Close:', 'bitform')} action={e => handleInput('confirm_close', e.target.checked, 'modal')} isChecked={elm.data.options.modal.confirm_close} />
+              <SingleToggle title={__('Confirm on Close:', 'bitform')} action={e => handleInput('confirm_close', e.target.checked, 'modal')} isChecked={fieldData.options.modal.confirm_close} />
             </StyleAccordion>
             <div className="btcd-hr" />
 
             <StyleAccordion title="Prefill" className="style-acc">
               <div className="mt-2">
                 <b>{__('Name :', 'bitform')}</b>
-                <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillNameFld" className="btcd-paper-inp mt-1" value={elm.data.options.prefill.prefillNameFld}>
+                <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillNameFld" className="btcd-paper-inp mt-1" value={fieldData.options.prefill.prefillNameFld}>
                   <option value="">{__('Select Field', 'bitform')}</option>
                   {getSpecifiedFields('desc')}
                 </select>
               </div>
               <div className="mt-2">
                 <b>{__('Email :', 'bitform')}</b>
-                <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillEmailFld" className="btcd-paper-inp mt-1" value={elm.data.options.prefill.prefillEmailFld}>
+                <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillEmailFld" className="btcd-paper-inp mt-1" value={fieldData.options.prefill.prefillEmailFld}>
                   <option value="">{__('Select Field', 'bitform')}</option>
                   {getSpecifiedFields('email')}
                 </select>
               </div>
               <div className="mt-2">
                 <b>{__('Contact :', 'bitform')}</b>
-                <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillContactFld" className="btcd-paper-inp mt-1" value={elm.data.options.prefill.prefillContactFld}>
+                <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillContactFld" className="btcd-paper-inp mt-1" value={fieldData.options.prefill.prefillContactFld}>
                   <option value="">{__('Select Field', 'bitform')}</option>
                   {getSpecifiedFields('number')}
                 </select>

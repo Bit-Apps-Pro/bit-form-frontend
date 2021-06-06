@@ -1,24 +1,28 @@
 import { useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
 
-export default function CustomErrorMessageModal({ errorModal, setErrorModal, type, elmId, fieldData, updateAction }) {
+export default function CustomErrorMessageModal({ errorModal, setErrorModal, type }) {
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const [value] = useState(errMsg)
 
   const setErrMsg = (name, val) => {
-    const tmpErr = { ...fieldData }
-    if (!tmpErr.err) tmpErr.err = {}
-    if (!tmpErr.err[name]) tmpErr.err[name] = {}
-    tmpErr.err[name].msg = val
-    updateAction()
+    if (!fieldData.err) fieldData.err = {}
+    if (!fieldData.err[name]) fieldData.err[name] = {}
+    fieldData.err[name].msg = val
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const cancelModal = () => {
-    const tmpErr = { ...fieldData }
-    tmpErr.err[type].msg = value
-    updateAction()
+    fieldData.err[type].msg = value
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
     setErrorModal(false)
   }
 
@@ -30,14 +34,14 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
       title={__('Edit Custom Error Message', 'bitform')}
     >
       <TinyMCE
-        id={`${elmId}-${type}`}
+        id={`${fldKey}-${type}`}
         menubar={false}
         value={errMsg}
         onChangeHandler={val => setErrMsg(type, val)}
       />
       <div className="mt-2 f-right">
-        <button type="button" className="btn mr-2" onClick={cancelModal}>cancel</button>
-        <button type="button" className="btn blue" onClick={() => setErrorModal(false)}>save</button>
+        <button type="button" className="btn mr-2" onClick={cancelModal}>Cancel</button>
+        <button type="button" className="btn blue" onClick={() => setErrorModal(false)}>Save</button>
       </div>
     </Modal>
   )

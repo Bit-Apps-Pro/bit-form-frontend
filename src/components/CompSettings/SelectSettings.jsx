@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -12,127 +12,126 @@ import ImportOptions from './ImportOptions'
 import Modal from '../Utilities/Modal'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import { $fields } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 
-export default function SelectSettings(props) {
+export default function SelectSettings() {
   const isPro = typeof bits !== 'undefined' && bits.isPro
-  const elmId = props.elm.id
-  const fields = useRecoilValue($fields)
-  const elmData = deepCopy(fields[elmId])
-  const options = elmData.opt
-  const fldKey = elmId
-  const isRequired = elmData.valid.req !== undefined
-  const isMultiple = elmData.mul
-  const allowCustomOpt = elmData.customOpt !== undefined
-  const label = elmData.lbl === undefined ? '' : elmData.lbl
-  const adminLabel = elmData.adminLbl === undefined ? '' : elmData.adminLbl
-  const placeholder = elmData.ph === undefined ? '' : elmData.ph
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
+  const options = fieldData.opt
+  const isRequired = fieldData.valid.req !== undefined
+  const isMultiple = fieldData.mul
+  const allowCustomOpt = fieldData.customOpt !== undefined
+  const label = fieldData.lbl === undefined ? '' : fieldData.lbl
+  const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
+  const placeholder = fieldData.ph === undefined ? '' : fieldData.ph
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   // set defaults
   if (isMultiple) {
-    if ('val' in elmData) {
-      if (!Array.isArray(elmData.val)) {
-        elmData.val = [elmData.val]
+    if ('val' in fieldData) {
+      if (!Array.isArray(fieldData.val)) {
+        fieldData.val = [fieldData.val]
       }
     } else {
-      elmData.val = []
+      fieldData.val = []
     }
   }
 
   function setRequired(e) {
     if (e.target.checked) {
-      const tmp = { ...elmData.valid }
+      const tmp = { ...fieldData.valid }
       tmp.req = true
-      elmData.valid = tmp
-      if (!elmData.err) elmData.err = {}
-      if (!elmData.err.req) elmData.err.req = {}
-      elmData.err.req.dflt = '<p>This field is required</p>'
-      elmData.err.req.show = true
+      fieldData.valid = tmp
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.req) fieldData.err.req = {}
+      fieldData.err.req.dflt = '<p>This field is required</p>'
+      fieldData.err.req.show = true
     } else {
-      delete elmData.valid.req
+      delete fieldData.valid.req
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setLabel(e) {
     if (e.target.value === '') {
-      delete elmData.lbl
+      delete fieldData.lbl
     } else {
-      elmData.lbl = e.target.value
+      fieldData.lbl = e.target.value
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
-      delete elmData.adminLbl
+      delete fieldData.adminLbl
     } else {
-      elmData.adminLbl = e.target.value
+      fieldData.adminLbl = e.target.value
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setPlaceholder(e) {
     if (e.target.value === '') {
-      delete elmData.ph
+      delete fieldData.ph
     } else {
-      elmData.ph = e.target.value
+      fieldData.ph = e.target.value
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setMultiple(e) {
     if (e.target.checked) {
-      elmData.mul = true
+      fieldData.mul = true
     } else {
-      delete elmData.mul
+      delete fieldData.mul
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setAllowCustomOption(e) {
     if (e.target.checked) {
-      elmData.customOpt = true
+      fieldData.customOpt = true
     } else {
-      delete elmData.customOpt
+      delete fieldData.customOpt
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function rmvOpt(ind) {
     options.splice(ind, 1)
-    elmData.opt = options
-    props.updateData({ id: elmId, data: elmData })
+    fieldData.opt = options
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function addOpt() {
-    options.push({ label: `Option ${elmData.opt.length + 1}`, value: `Option ${elmData.opt.length + 1}` })
-    elmData.opt = options
-    props.updateData({ id: elmId, data: elmData })
+    options.push({ label: `Option ${fieldData.opt.length + 1}`, value: `Option ${fieldData.opt.length + 1}` })
+    fieldData.opt = options
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setCheck(e) {
     if (e.target.checked) {
       if (isMultiple) {
-        if (!Array.isArray(elmData.val)) {
-          elmData.val = []
+        if (!Array.isArray(fieldData.val)) {
+          fieldData.val = []
         }
-        // elmData.val.push(e.target.getAttribute('data-value'))
-        elmData.val = [...elmData.val, e.target.getAttribute('data-value')]
+        // fieldData.val.push(e.target.getAttribute('data-value'))
+        fieldData.val = [...fieldData.val, e.target.getAttribute('data-value')]
       } else {
-        elmData.val = e.target.getAttribute('data-value')
+        fieldData.val = e.target.getAttribute('data-value')
       }
     } else {
       // eslint-disable-next-line no-lonely-if
       if (isMultiple) {
-        elmData.val = [...elmData.val.filter(itm => itm !== e.target.getAttribute('data-value'))]
+        fieldData.val = [...fieldData.val.filter(itm => itm !== e.target.getAttribute('data-value'))]
       } else {
-        delete elmData.val
+        delete fieldData.val
       }
     }
-    props.updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setOptLbl(e, i) {
@@ -140,8 +139,8 @@ export default function SelectSettings(props) {
     const tmp = { ...options[i] }
     tmp.label = updateVal
     tmp.value = updateVal.replace(',', '_')
-    elmData.opt[i] = tmp
-    props.updateData({ id: elmId, data: elmData })
+    fieldData.opt[i] = tmp
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const openImportModal = () => {
@@ -159,7 +158,7 @@ export default function SelectSettings(props) {
       <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
-        {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
+        {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
       </div>
       <div className="flx">
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
@@ -167,16 +166,13 @@ export default function SelectSettings(props) {
       </div>
       <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      {elmData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
+      {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
-      {elmData?.valid?.req && (
+      {fieldData?.valid?.req && (
         <ErrorMessageSettings
-          elmId={elmId}
-          elmData={elmData}
           type="req"
           title="Error Message"
           tipTitle="By enabling this feature, user will see the error message if select box is empty"
-          updateAction={() => props.updateData({ id: elmId, data: elmData })}
         />
       )}
       <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
@@ -188,12 +184,12 @@ export default function SelectSettings(props) {
       </button>
       <div className="opt">
         <span className="font-w-m">{__('Options:', 'bitform')}</span>
-        {elmData.opt.map((itm, i) => (
+        {fieldData.opt.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
             <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
               <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
-                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof elmData.val === 'string' ? elmData.val === itm.value : elmData?.val?.some(d => d === itm.value)} />
+                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
               <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><CloseIcn size="14" /></button>
@@ -226,9 +222,6 @@ export default function SelectSettings(props) {
           <ImportOptions
             importOpts={importOpts}
             setImportOpts={setImportOpts}
-            elmId={elmId}
-            elmData={elmData}
-            updateData={props.updateData}
             lblKey="label"
             valKey="value"
           />

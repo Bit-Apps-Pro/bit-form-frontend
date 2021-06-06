@@ -1,18 +1,19 @@
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import SelectBox2 from '../Utilities/SelectBox2'
 import Back2FldList from './Back2FldList'
-import { $fields } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 
-export default function ButtonSettings({ updateData, elm, setElementSetting }) {
-  const fields = useRecoilValue($fields)
+export default function ButtonSettings() {
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
   const [error, seterror] = useState({})
-  const elmId = elm.id
-  const elmData = { ...fields[elmId] }
-  const { txt, align, fulW, btnSiz, btnTyp } = elmData
+  const { txt, align, fulW, btnSiz, btnTyp } = fieldData
 
   const pos = [
     { name: __('Left', 'bitform'), value: 'left' },
@@ -25,14 +26,14 @@ export default function ButtonSettings({ updateData, elm, setElementSetting }) {
     { name: 'Button', value: 'button' },
   ]
   function setSubBtnTxt(e) {
-    elmData.txt = e.target.value
+    fieldData.txt = e.target.value
 
-    updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setBtnTyp(e) {
-    elmData.btnTyp = e.target.value
-    if (elmData.btnTyp === 'submit' && checkSubmitBtn()) {
+    fieldData.btnTyp = e.target.value
+    if (fieldData.btnTyp === 'submit' && checkSubmitBtn()) {
       seterror({ btnTyp: __('Already have a submit button') })
       return
     }
@@ -40,12 +41,12 @@ export default function ButtonSettings({ updateData, elm, setElementSetting }) {
     if (error.btnTyp) {
       seterror({ btnTyp: '' })
     }
-    updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setButtonAlign(e) {
-    elmData.align = e.target.value
-    updateData({ id: elmId, data: elmData })
+    fieldData.align = e.target.value
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const checkSubmitBtn = () => {
@@ -53,17 +54,17 @@ export default function ButtonSettings({ updateData, elm, setElementSetting }) {
     return btns.length >= 1
   }
   function setFulW(e) {
-    elmData.fulW = e.target.checked
-    updateData({ id: elmId, data: elmData })
+    fieldData.fulW = e.target.checked
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   function setBtnSiz(e) {
     if (e.target.checked) {
-      elmData.btnSiz = 'sm'
+      fieldData.btnSiz = 'sm'
     } else {
-      elmData.btnSiz = 'md'
+      fieldData.btnSiz = 'md'
     }
-    updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   return (

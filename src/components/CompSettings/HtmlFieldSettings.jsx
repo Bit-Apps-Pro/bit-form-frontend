@@ -1,17 +1,18 @@
-import { useRecoilValue } from 'recoil'
-import { $fields } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 
-export default function HtmlFieldSettings({ setElementSetting, elm, updateData }) {
-  const elmId = elm.id
-  const fields = useRecoilValue($fields)
-  const elmData = { ...fields[elmId] }
+export default function HtmlFieldSettings() {
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
 
   const setContent = val => {
-    elmData.content = val
+    fieldData.content = val
 
-    updateData({ id: elmId, data: elmData })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   return (
@@ -20,15 +21,15 @@ export default function HtmlFieldSettings({ setElementSetting, elm, updateData }
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {' '}
-        {elmData.typ.charAt(0).toUpperCase() + elmData.typ.slice(1)}
+        {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
       </div>
       <div className="mt-3">
         <b>Content: </b>
         <br />
         <br />
         <TinyMCE
-          id={elmId}
-          value={elmData.content || elmData?.info?.content}
+          id={fldKey}
+          value={fieldData.content || fieldData?.info?.content}
           onChangeHandler={setContent}
         />
       </div>

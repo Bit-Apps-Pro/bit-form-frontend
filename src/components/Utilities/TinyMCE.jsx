@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { __ } from '../../Utils/i18nwrap'
 
 export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins }) {
-
   useEffect(() => {
     tinymce.remove(`textarea#${id}-settings`)
 
@@ -13,7 +12,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
       tinymce.get(`${id}-settings`).setContent(value || '')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields, id, disabled])
+  }, [formFields, id, disabled, value])
 
   const timyMceInit = () => {
     console.log('init')
