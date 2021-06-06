@@ -3,6 +3,7 @@ import validateForm from '../../user-frontend/validation'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { loadScript, select } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
 
 export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend }) {
   const appSettingsContext = useContext(AppSettings)
@@ -141,7 +142,11 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
   }
 
   return (
-    <div className={`drag fld-wrp fld-wrp-${formID} ${attr.valid.hide ? 'vis-n' : ''}`}>
+    <InputWrapper
+      formID={formID}
+      fieldData={attr}
+      noLabel
+    >
       <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
         <button
           className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
@@ -152,6 +157,6 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
           {attr.btnTxt}
         </button>
       </div>
-    </div>
+    </InputWrapper>
   )
 }

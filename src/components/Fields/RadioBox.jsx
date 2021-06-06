@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
+import InputWrapper from '../InputWrapper'
 
 export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val || '')
@@ -53,13 +54,11 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="textarea">
-      {'lbl' in attr && (
-        <label className={`fld-lbl fld-lbl-${formID}`}>
-          {attr.lbl}
-          {attr.valid?.req && ' *'}
-        </label>
-      )}
+    <InputWrapper
+      formID={formID}
+      fieldKey={attr.name}
+      fieldData={attr}
+    >
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         {attr.opt.map((itm, i) => (
           <label key={`opr-${i + 22}`} className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
@@ -81,11 +80,6 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
           </label>
         ))}
       </div>
-      <div className="error-wrapper">
-        <div id={`${attr.name}-error`} className="error-txt">
-          {attr?.err?.msg}
-        </div>
-      </div>
-    </div>
+    </InputWrapper>
   )
 }

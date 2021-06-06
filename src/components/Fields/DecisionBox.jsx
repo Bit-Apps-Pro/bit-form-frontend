@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
+import InputWrapper from '../InputWrapper'
 
 export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   let { checked } = attr.valid
@@ -17,6 +18,7 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
     if (resetFieldValue) {
       setvalue(defaultValue)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetFieldValue])
   useEffect(() => {
     if (attr.hasWorkflow && onBlurHandler && !attr.userinput) {
@@ -43,7 +45,12 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
     validateForm({ input: { name: attr.name, value: e.target.checked ? attr.msg.checked : attr.msg.unchecked } })
   }
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="decisionbox">
+    <InputWrapper
+      formID={formID}
+      fieldKey={attr.name}
+      fieldData={attr}
+      noLabel
+    >
       <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
         <label className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
           <span
@@ -70,11 +77,6 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
           <span className="btcd-mrk ck" />
         </label>
       </div>
-      <div className="error-wrapper">
-        <div id={`${attr.name}-error`} className="error-txt">
-          {attr?.err?.msg}
-        </div>
-      </div>
-    </div>
+    </InputWrapper>
   )
 }

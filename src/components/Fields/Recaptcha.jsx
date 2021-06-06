@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
+import InputWrapper from '../InputWrapper'
 
 let captcha
 
@@ -7,7 +8,7 @@ export const resetCaptcha = () => {
   captcha.reset()
 }
 
-export default function ReCaptcha({ attr }) {
+export default function ReCaptcha({ formID, attr }) {
   const [render, setrender] = useState(true)
 
   useEffect(() => {
@@ -18,15 +19,21 @@ export default function ReCaptcha({ attr }) {
   }, [attr.theme])
 
   return (
-    <div className="drag btcd-flx j-c-c" style={{ minHeight: 'inherit' }}>
-      {render && (
-        <ReCAPTCHA
-          // eslint-disable-next-line no-return-assign
-          ref={r => captcha = r}
-          theme={attr.theme}
-          sitekey={attr.siteKey || 'non'}
-        />
-      )}
-    </div>
+    <InputWrapper
+      formID={formID}
+      fieldData={attr}
+      noLabel
+    >
+      <div className="drag btcd-flx j-c-c" style={{ minHeight: 'inherit' }}>
+        {render && (
+          <ReCAPTCHA
+            // eslint-disable-next-line no-return-assign
+            ref={r => captcha = r}
+            theme={attr.theme}
+            sitekey={attr.siteKey || 'non'}
+          />
+        )}
+      </div>
+    </InputWrapper>
   )
 }

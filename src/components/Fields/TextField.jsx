@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
+import InputWrapper from '../InputWrapper'
 
 export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
   const type = attr.typ === 'url' ? 'text' : attr.typ
@@ -48,13 +49,11 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="text-fld">
-      {'lbl' in attr && (
-        <label title={attr.lbl} className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
-          {attr.lbl}
-          {attr.valid?.req && ' *'}
-        </label>
-      )}
+    <InputWrapper
+      formID={formID}
+      fieldKey={fieldKey}
+      fieldData={attr}
+    >
       <input
         id={fieldKey}
         className={`fld fld-${formID}`}
@@ -73,12 +72,6 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
         {...{ onChange: onChangeHandler }}
         ref={textFieldRef}
       />
-      {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
-      <div className="error-wrapper">
-        <div id={`${fieldKey}-error`} className="error-txt">
-          {attr?.err?.msg}
-        </div>
-      </div>
-    </div>
+    </InputWrapper>
   )
 }

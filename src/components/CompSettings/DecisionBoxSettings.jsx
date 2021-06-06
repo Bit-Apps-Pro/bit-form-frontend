@@ -50,7 +50,6 @@ export default function DecisionBoxSettings() {
   }
 
   const setLbl = val => {
-    console.log(fieldData, val)
     fieldData.lbl = val
 
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))

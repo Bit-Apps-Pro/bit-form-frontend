@@ -93,7 +93,7 @@ function FormEntryTimeline({ formID, entryID, settab, integrations }) {
       <div>
         {showLogs()}
         {
-          Object.keys(integInfo)?.length && (
+          !!Object.keys(integInfo)?.length && (
             <>
               {!logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showMore(data.id)} onKeyDown={() => showMore(data.id)}>{__('Show Integration Logs', 'bitform')}</small>}
               {logShow && data.integration && <small role="button" tabIndex="0" className="btcd-link cp" onClick={() => showLess(data.id)} onKeyDown={() => showLess(data.id)}>{__('Hide Integration Logs', 'bitform')}</small>}

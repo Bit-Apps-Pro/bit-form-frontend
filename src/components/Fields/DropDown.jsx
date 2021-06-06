@@ -3,6 +3,7 @@
 import { useState, useEffect, memo } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import InputWrapper from '../InputWrapper'
 
 function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   let defaultValue
@@ -103,15 +104,11 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   }
 
   return (
-    <div className={`fld-wrp fld-wrp-${formID} drag  ${attr.valid.hide ? 'vis-n' : ''}`} btcd-fld="select">
-      {'lbl' in attr && (
-        <label className={`fld-lbl fld-lbl-${formID}`}>
-          {attr.lbl}
-          {' '}
-          {attr.valid.req && ' *'}
-        </label>
-      )}
-
+    <InputWrapper
+      formID={formID}
+      fieldKey={attr.name}
+      fieldData={attr}
+    >
       <MultiSelect
         className={`fld fld-${formID} dpd no-drg`}
         {...'req' in attr.valid && { required: attr.valid.req }}
@@ -125,13 +122,7 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
         onChange={onChangeHandler}
         defaultValue={value}
       />
-      {attr.error && <span style={{ color: 'red' }}>{attr.error}</span>}
-      <div className="error-wrapper">
-        <div id={`${attr.name}-error`} className="error-txt">
-          {attr?.err?.msg}
-        </div>
-      </div>
-    </div>
+    </InputWrapper>
   )
 }
 
