@@ -64,7 +64,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [allLabels])
 
   const closeConfMdl = useCallback(() => {
     confMdl.show = false
