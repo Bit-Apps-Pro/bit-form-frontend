@@ -143,7 +143,7 @@ function CompSettings({ elm, updateData, style, styleDispatch, brkPoint, setResp
               <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
             </Route>
             <Route path={`${path}/style/fl/ppl`}>
-              <PaypalStyleEditor elm={elm} updateData={updateData} />
+              <PaypalStyleEditor />
             </Route>
             <Route path={`${path}/style/fl/dpd`}>
               <DropdownStyleEditors

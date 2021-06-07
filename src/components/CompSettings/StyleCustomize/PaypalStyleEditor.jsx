@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -9,13 +8,15 @@ import { deepCopy } from '../../../Utils/Helpers'
 import BackIcn from '../../../Icons/BackIcn'
 import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates'
 
-export default function PaypalStyleEditor({ elm, updateData }) {
+export default function PaypalStyleEditor() {
   const { formID, formType } = useParams()
   const [lay, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const fields = useRecoilValue($fields)
-  const [customHeight, setCustomHeight] = useState(elm.data?.style?.height || '')
-  const [, setCustomWidth] = useState(elm.data?.style?.width || '')
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
+  const [customHeight, setCustomHeight] = useState(fieldData?.style?.height || '')
+  const [, setCustomWidth] = useState(fieldData?.style?.width || '')
 
   const checkPaypalExist = (flds) => {
     const formFields = Object.entries(flds)
@@ -23,25 +24,24 @@ export default function PaypalStyleEditor({ elm, updateData }) {
     return paypalFields.length
   }
 
-  if (fields && checkPaypalExist(fields) && elm.id === null) {
+  if (fields && checkPaypalExist(fields) && fldKey === null) {
     const formFields = Object.entries(fields)
     const paypalFields = formFields.filter(field => field[1].typ === 'paypal')
     paypalFields.length && setSelectedFieldId(paypalFields[0][0])
   }
 
   const handleInput = (name, value) => {
-    const tmp = { ...elm }
     if (value) {
-      tmp.data.style[name] = value
+      fieldData.style[name] = value
     } else {
-      delete tmp.data.style[name]
+      delete fieldData.style[name]
     }
 
     if (name === 'layout') {
       const tmpLay = deepCopy(lay)
-      const lgIndx = tmpLay.lg.findIndex(layout => layout.i === elm.id)
-      const mdIndx = tmpLay.md.findIndex(layout => layout.i === elm.id)
-      const smIndx = tmpLay.sm.findIndex(layout => layout.i === elm.id)
+      const lgIndx = tmpLay.lg.findIndex(layout => layout.i === fldKey)
+      const mdIndx = tmpLay.md.findIndex(layout => layout.i === fldKey)
+      const smIndx = tmpLay.sm.findIndex(layout => layout.i === fldKey)
       const lgLayout = tmpLay.lg[lgIndx]
       const mdLayout = tmpLay.md[mdIndx]
       const smLayout = tmpLay.sm[smIndx]
@@ -116,60 +116,56 @@ export default function PaypalStyleEditor({ elm, updateData }) {
     }
 
     if (name === 'layout' && value === 'standalone') {
-      tmp.data.style.payBtn = 'PAYPAL'
+      fieldData.style.payBtn = 'PAYPAL'
     }
     if (name === 'payBtn' && value === 'CARD') {
-      tmp.data.style.color = 'white'
+      fieldData.style.color = 'white'
     }
-    updateData({ ...tmp })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setHeight = val => {
     if (val >= 25 && val <= 55) {
-      const tmp = { ...elm }
-      tmp.data.style.height = val
-      updateData({ ...tmp })
+      fieldData.style.height = val
+      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
     }
     setCustomHeight(val)
   }
 
   const setHeightOnBlur = val => {
-    const tmp = { ...elm }
     if (val >= 25 && val <= 55) {
-      tmp.data.style.height = val
+      fieldData.style.height = val
       setCustomHeight(val)
     } else if (val < 25) {
-      tmp.data.style.height = 25
+      fieldData.style.height = 25
       setCustomHeight(25)
     } else {
-      tmp.data.style.height = 55
+      fieldData.style.height = 55
       setCustomHeight(55)
     }
-    updateData({ ...tmp })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setWidth = val => {
     if (val >= 150 && val <= 750) {
-      const tmp = { ...elm }
-      tmp.data.style.width = val
-      updateData({ ...tmp })
+      fieldData.style.width = val
+      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
     }
     setCustomWidth(val)
   }
 
   const setWidthOnBlur = val => {
-    const tmp = { ...elm }
     if (val >= 150 && val <= 750) {
-      tmp.data.style.width = val
+      fieldData.style.width = val
       setCustomWidth(val)
     } else if (val < 150) {
-      tmp.data.style.width = 150
+      fieldData.style.width = 150
       setCustomWidth(150)
     } else {
-      tmp.data.style.width = 750
+      fieldData.style.width = 750
       setCustomWidth(750)
     }
-    updateData({ ...tmp })
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   return (
@@ -188,12 +184,12 @@ export default function PaypalStyleEditor({ elm, updateData }) {
           ? (
             <div className="mt-2">{__('There is no paypal field in your form.', 'bitform')}</div>
           )
-          : elm.id === null && checkPaypalExist(fields) > 1
+          : fldKey === null && checkPaypalExist(fields) > 1
             ? (
               <div className="mt-2" style={{ fontSize: 16, lineHeight: 1.5 }}>
                 {__('There is more than one paypal field in your form. please select the style icon', 'bitform')}
                 <BrushIcn style={{ height: 15, width: 20 }} />
-                {' '}
+                &nbsp;
                 {__('in paypal field to customize the style.', 'bitform')}
               </div>
             )
@@ -202,7 +198,7 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
                     <b>{__('Layout', 'bitform')}</b>
-                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="layout" value={elm.data?.style?.layout} className="btcd-paper-inp mt-1">
+                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="layout" value={fieldData?.style?.layout} className="btcd-paper-inp mt-1">
                       <option value="vertical">{__('Vertical', 'bitform')}</option>
                       <option value="horizontal">{__('Horizontal', 'bitform')}</option>
                       <option value="standalone">{__('Standalone', 'bitform')}</option>
@@ -210,11 +206,11 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                   </label>
                 </div>
                 {
-                  elm.data?.style?.layout === 'standalone' && (
+                  fieldData?.style?.layout === 'standalone' && (
                     <div className="mt-2">
                       <label htmlFor="recap-thm">
                         <b>{__('Pay Button', 'bitform')}</b>
-                        <select onChange={e => handleInput(e.target.name, e.target.value)} name="payBtn" value={elm.data.payBtn} className="btcd-paper-inp mt-1">
+                        <select onChange={e => handleInput(e.target.name, e.target.value)} name="payBtn" value={fieldData.payBtn} className="btcd-paper-inp mt-1">
                           <option value="PAYPAL">{__('PAYPAL', 'bitform')}</option>
                           <option value="PAYLATER">{__('PAYLATER', 'bitform')}</option>
                           <option value="CARD">{__('CARD', 'bitform')}</option>
@@ -226,8 +222,8 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
                     <b>{__('Color', 'bitform')}</b>
-                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="color" value={elm.data?.style?.color} className="btcd-paper-inp mt-1">
-                      {elm.data?.style?.payBtn !== 'CARD' && (
+                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="color" value={fieldData?.style?.color} className="btcd-paper-inp mt-1">
+                      {fieldData?.style?.payBtn !== 'CARD' && (
                         <>
                           <option value="gold">{__('Gold', 'bitform')}</option>
                           <option value="blue">{__('Blue', 'bitform')}</option>
@@ -246,7 +242,7 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
                     <b>{__('Shape', 'bitform')}</b>
-                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="shape" value={elm.data?.style?.shape} className="btcd-paper-inp mt-1">
+                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="shape" value={fieldData?.style?.shape} className="btcd-paper-inp mt-1">
                       <option value="rect">{__('Rectangle', 'bitform')}</option>
                       <option value="pill">{__('Pill', 'bitform')}</option>
                     </select>
@@ -255,7 +251,7 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                 <div className="mt-2">
                   <label htmlFor="recap-thm">
                     <b>{__('Paypal Button Text', 'bitform')}</b>
-                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="label" value={elm.data?.style?.label} className="btcd-paper-inp mt-1">
+                    <select onChange={e => handleInput(e.target.name, e.target.value)} name="label" value={fieldData?.style?.label} className="btcd-paper-inp mt-1">
                       <option value="paypal">{__('Paypal', 'bitform')}</option>
                       <option value="checkout">{__('Paypal Checkout', 'bitform')}</option>
                       <option value="buynow">{__('Paypal Buy Now', 'bitform')}</option>
@@ -273,7 +269,7 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                       min="25"
                       max="55"
                       onChange={e => setHeight(e.target.value)}
-                      value={elm.data?.style?.height || ''}
+                      value={fieldData?.style?.height || ''}
                     />
                     <input
                       className="ml-1 btcd-paper-inp"
@@ -297,7 +293,7 @@ export default function PaypalStyleEditor({ elm, updateData }) {
                     min="150"
                     max="750"
                     onChange={e => setWidth(e.target.value)}
-                    value={elm.data?.style?.width || ''}
+                    value={fieldData?.style?.width || ''}
                   />
                   <input
                     className="ml-1 btcd-paper-inp"
