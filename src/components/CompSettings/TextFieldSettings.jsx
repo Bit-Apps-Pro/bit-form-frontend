@@ -10,6 +10,7 @@ import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import { deepCopy } from '../../Utils/Helpers'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -18,7 +19,6 @@ function TextFieldSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
   const isAutoComplete = fieldData.ac === 'on'
-  const label = fieldData.lbl || ''
   const adminLabel = fieldData.adminLbl || ''
   const placeholder = fieldData.ph || ''
   const min = fieldData.mn || ''
@@ -49,15 +49,6 @@ function TextFieldSettings() {
       fieldData.ac = 'on'
     } else {
       delete fieldData.ac
-    }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
-
-  function setLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.lbl
-    } else {
-      fieldData.lbl = e.target.value
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -221,7 +212,7 @@ function TextFieldSettings() {
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0 w-7" />
       </div>
-      <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
       {
