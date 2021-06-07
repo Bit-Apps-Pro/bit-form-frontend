@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -11,7 +11,11 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
-  const [value] = useState(errMsg)
+  const [value, setValue] = useState(errMsg)
+
+  useEffect(() => {
+    if (errorModal) setValue(errMsg)
+  }, [errorModal])
 
   const setErrMsg = (name, val) => {
     if (!fieldData.err) fieldData.err = {}
