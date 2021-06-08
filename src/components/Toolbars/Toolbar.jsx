@@ -281,7 +281,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           checked: 'Accepted',
           unchecked: 'Not Accepted',
         },
-        valid: {},
+        valid: { req: true },
         err: {},
       },
     },
