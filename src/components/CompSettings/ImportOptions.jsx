@@ -9,6 +9,7 @@ import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './Imp
 import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
