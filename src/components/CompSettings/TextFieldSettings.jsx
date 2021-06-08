@@ -23,8 +23,8 @@ function TextFieldSettings() {
   const placeholder = fieldData.ph || ''
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
-  const regexr = fieldData.valid.regexr === undefined ? '' : fieldData.valid.regexr
-  const flags = fieldData.valid.flags === undefined ? '' : fieldData.valid.flags
+  const regexr = fieldData.valid.regexr || ''
+  const flags = fieldData.valid.flags || ''
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -290,7 +290,7 @@ function TextFieldSettings() {
             <div>
               <SingleInput inpType="text" title={__('Pattern:', 'bitform')} value={generateBackslashPattern(regexr)} action={setRegexr} className="mr-2 w-7" placeholder="e.g. ([A-Z])\w+" list="patterns" />
               <datalist id="patterns">
-                {predefinedPatterns.map(opt => <option value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
+                {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
               </datalist>
               <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" />
             </div>
