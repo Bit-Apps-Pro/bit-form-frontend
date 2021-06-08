@@ -609,7 +609,6 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">{__('Condition', 'bitform')}</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
               </div>
 
-              {lgcGrp.action_behaviour === 'cond' && <h3 className="m-0 mb-1 txt-gray">IF</h3>}
               <div>
                 {
                   lgcGrp.action_behaviour === 'cond' && lgcGrp.logics.map((logic, ind) => (
