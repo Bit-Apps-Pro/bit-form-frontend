@@ -52,31 +52,3 @@ export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs 
     })
   }
 }
-export const checkPaymentFields = (elm, fields) => {
-  const fld = elm.typ.match(/paypal|razorpay/)
-  if (fld) {
-    const payFields = fields ? Object.values(fields).filter(field => field.typ === fld[0]) : []
-    let msg
-    if (!isPro) {
-      msg = __(`${fld[0]} is in Pro Version!`, 'bitform')
-      setProModal({ show: true, msg })
-    } else if (payFields.length) {
-      msg = __(
-        <p>
-          You cannot add more than one &nbsp;
-          {fld[0]}
-          &nbsp;
-          field in same form.
-        </p>, 'bitform',
-      )
-      setAlertMdl({ show: true, msg })
-    }
-    if (msg) return false
-
-    const payConf = payments.filter(pay => pay.type.toLowerCase() === fld[0])
-    if (payConf.length === 1) {
-      return payConf
-    }
-  }
-  return true
-}
