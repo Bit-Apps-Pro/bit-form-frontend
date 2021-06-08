@@ -38,6 +38,7 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
+      <span className="btcd-logic-chip mr-2">IF</span>
       <MtSelect
         label="Form Fields"
         value={fieldVal !== undefined && fieldVal}
@@ -55,9 +56,8 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
       <MtSelect
         label="Logic"
         value={logicValue}
-        style={{ width: 400 }}
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-        className="w-4"
+        className="w-5"
       >
         <option value="">{__('Select One', 'bitform')}</option>
         <option value="equal">{__('Equal', 'bitform')}</option>
@@ -108,11 +108,11 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
           <span className="btcd-icn icn-trash-2" />
         </Button>
         <Button onClick={() => addInlineLogic('and', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white mr-2 sh-sm">
-          <CloseIcn size="14" className="icn-rotate-45 mr-1" />
+          <CloseIcn size="12" className="icn-rotate-45 mr-1" />
           AND
         </Button>
         <Button onClick={() => addInlineLogic('or', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white sh-sm">
-          <CloseIcn size="14" className="icn-rotate-45 mr-1" />
+          <CloseIcn size="12" className="icn-rotate-45 mr-1" />
           OR
         </Button>
       </div>
