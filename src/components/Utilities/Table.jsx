@@ -78,7 +78,7 @@ function Table(props) {
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const { columns, data, fetchData, report } = props
   const [reports, setReports] = useRecoilState($reports)
-
+  console.log('cols', props.columns)
   const { getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -100,51 +100,51 @@ function Table(props) {
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder,
     setHiddenColumns } = useTable({
-    debug: true,
-    fetchData,
-    columns,
-    data,
-    manualPagination: typeof props.pageCount !== 'undefined',
-    pageCount: props.pageCount,
-    initialState: {
-      pageIndex: 0,
-      hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
-      pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
-      sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
-      filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'filters' in reports[report].details) ? reports[report].details.filters : [],
-      globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
-      columnOrder: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'order' in reports[report].details) ? reports[report].details.order : [],
-    },
-    autoResetPage: false,
-    autoResetHiddenColumns: false,
-    autoResetSortBy: false,
-    autoResetFilters: false,
-    autoResetGlobalFilter: false,
-  },
-  useFilters,
-  useGlobalFilter,
-  useSortBy,
-  usePagination,
-  useSticky,
-  useColumnOrder,
-  // useBlockLayout,
-  useFlexLayout,
-  props.resizable ? useResizeColumns : '', // resize
-  props.rowSeletable ? useRowSelect : '', // row select
-  props.rowSeletable ? (hooks => {
-    hooks.allColumns.push(cols => [
-      {
-        id: 'selection',
-        width: 50,
-        maxWidth: 50,
-        minWidth: 67,
-        sticky: 'left',
-        Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
-        Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+      debug: true,
+      fetchData,
+      columns,
+      data,
+      manualPagination: typeof props.pageCount !== 'undefined',
+      pageCount: props.pageCount,
+      initialState: {
+        pageIndex: 0,
+        hiddenColumns: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'hiddenColumns' in reports[report].details) ? reports[report].details.hiddenColumns : [],
+        pageSize: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'pageSize' in reports[report].details) ? reports[report].details.pageSize : 10,
+        sortBy: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'sortBy' in reports[report].details) ? reports[report].details.sortBy : [],
+        filters: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'filters' in reports[report].details) ? reports[report].details.filters : [],
+        globalFilter: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'globalFilter' in reports[report].details) ? reports[report].details.globalFilter : '',
+        columnOrder: (!isNaN(report) && reports.length > 0 && 'details' in reports[report] && typeof reports[report].details === 'object' && 'order' in reports[report].details) ? reports[report].details.order : [],
       },
-      ...cols,
-    ])
-  }) : '')
+      autoResetPage: false,
+      autoResetHiddenColumns: false,
+      autoResetSortBy: false,
+      autoResetFilters: false,
+      autoResetGlobalFilter: false,
+    },
+      useFilters,
+      useGlobalFilter,
+      useSortBy,
+      usePagination,
+      useSticky,
+      useColumnOrder,
+      // useBlockLayout,
+      useFlexLayout,
+      props.resizable ? useResizeColumns : '', // resize
+      props.rowSeletable ? useRowSelect : '', // row select
+      props.rowSeletable ? (hooks => {
+        hooks.allColumns.push(cols => [
+          {
+            id: 'selection',
+            width: 50,
+            maxWidth: 50,
+            minWidth: 67,
+            sticky: 'left',
+            Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+            Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+          },
+          ...cols,
+        ])
+      }) : '')
   const [reportID, setreportID] = useState(parseInt(report, 10))
   const [stateSavable, setstateSavable] = useState(false)
   const [search, setSearch] = useState(globalFilter)
@@ -158,7 +158,7 @@ function Table(props) {
       setColumnOrder(reports[reportID].details.order)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [reports[reportID]])
 
   useEffect(() => {
     if (pageIndex > pageCount) {
