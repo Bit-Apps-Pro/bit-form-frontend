@@ -9,20 +9,24 @@ import TinyMCE from '../../Utilities/TinyMCE'
 export default function CustomErrorMessageModal({ errorModal, setErrorModal, type }) {
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
-  const fieldData = deepCopy(fields[fldKey])
+  const fld = fields[fldKey]
+  // const fieldData = deepCopy(fld)
+  const fieldData = JSON.parse(JSON.stringify(fld))
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const [value] = useState(errMsg)
 
   const setErrMsg = (name, val) => {
-    if (!fieldData.err) fieldData.err = {}
-    if (!fieldData.err[name]) fieldData.err[name] = {}
-    fieldData.err[name].msg = val
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    const fdata = deepCopy(fieldData)
+    if (!fdata.err) fdata.err = {}
+    if (!fdata.err[name]) fdata.err[name] = {}
+    fdata.err[name].msg = val
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
   }
 
   const cancelModal = () => {
-    fieldData.err[type].msg = value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    const fdata = deepCopy(fieldData)
+    fdata.err[type].msg = value
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
     setErrorModal(false)
   }
 
