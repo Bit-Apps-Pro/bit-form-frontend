@@ -19,7 +19,7 @@ export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
     const pattern = generateSeparatorPattern(separator)
     const keyIndx = (lbl === 'value') ? 1 : 0
     const valIndx = (vlu === 'key') ? 0 : 1
-    opts = data.split(pattern).filter(opt => trim(opt).length > 0).map(op => {
+    opts = data.split(pattern).filter(opt => trim(opt).length).map(op => {
       const opt = hasColonKeyVlu ? op.split(':') : op.split()
       const label = trim(opt[keyIndx])
       const value = trim(opt?.[valIndx] || label)
