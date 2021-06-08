@@ -12,7 +12,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
       tinymce.get(`${id}-settings`).setContent(value || '')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields, id, disabled, value])
+  }, [formFields, id, disabled])
 
   const timyMceInit = () => {
     console.log('init')

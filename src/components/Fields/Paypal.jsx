@@ -44,14 +44,12 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
 
   useEffect(() => {
     let key = ''
-    const payFld = document.getElementById(`paypal-client-${fieldKey}`)
-    if (payFld) {
-      const payClient = payFld?.getAttribute('paypal-client-key')
-      if (payClient) {
-        key = atob(payClient)
-      }
+    if (typeof bitFormsFront !== 'undefined') {
+      // eslint-disable-next-line no-undef
+      key = atob(bitFormsFront?.paymentKeys?.paypalKey || '')
     }
-    if (!key) {
+
+    if (!key && typeof bits !== 'undefined') {
       const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
       if (payInteg) {
         key = payInteg.clientID
@@ -185,8 +183,6 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           marginLeft: 'auto',
           marginRight: 'auto',
         }}
-        id={`paypal-client-${fieldKey}`}
-        paypal-client-key={clientID}
       >
         {(render && clientID) && (
           <PayPalScriptProvider

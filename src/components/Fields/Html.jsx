@@ -8,6 +8,7 @@ export default function HtmlField({ attr, formID }) {
     <InputWrapper
       formID={formID}
       fieldData={attr}
+      noLabel
     >
       <div
         // eslint-disable-next-line react/no-danger

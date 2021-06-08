@@ -14,6 +14,7 @@ import DownloadIcon from '../../Icons/DownloadIcon'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
+import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 
 export default function SelectSettings() {
   const isPro = typeof bits !== 'undefined' && bits.isPro
@@ -24,7 +25,6 @@ export default function SelectSettings() {
   const isRequired = fieldData.valid.req !== undefined
   const isMultiple = fieldData.mul
   const allowCustomOpt = fieldData.customOpt !== undefined
-  const label = fieldData.lbl === undefined ? '' : fieldData.lbl
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
   const placeholder = fieldData.ph === undefined ? '' : fieldData.ph
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
@@ -51,15 +51,6 @@ export default function SelectSettings() {
       fieldData.err.req.show = true
     } else {
       delete fieldData.valid.req
-    }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
-
-  function setLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.lbl
-    } else {
-      fieldData.lbl = e.target.value
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -164,7 +155,7 @@ export default function SelectSettings() {
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0 w-7" />
       </div>
-      <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />

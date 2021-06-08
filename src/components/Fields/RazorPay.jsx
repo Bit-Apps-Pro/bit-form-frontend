@@ -7,6 +7,7 @@ import InputWrapper from '../InputWrapper'
 
 export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend }) {
   const appSettingsContext = useContext(AppSettings)
+  const [clientID, setClientID] = useState('')
   const [amount, setAmount] = useState(attr.options.amount || 1)
   const [prefillName, setPrefillName] = useState('')
   const [prefillEmail, setPrefillEmail] = useState('')
@@ -20,7 +21,22 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
   useEffect(() => {
     loadRazorpayScript()
     setDefaultValues(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    let key = ''
+    if (typeof bitFormsFront !== 'undefined') {
+      // eslint-disable-next-line no-undef
+      key = atob(bitFormsFront?.paymentKeys?.razorpayKey || '')
+    } else if (typeof bits !== 'undefined') {
+      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.options.payIntegID && Number(pay.id) === Number(attr.options.payIntegID))
+      if (!payInteg) return false
+      key = payInteg.apiKey
+    }
+    setClientID(key)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attr.options.payIntegID])
 
   useEffect(() => {
     if (resetFieldValue) {
@@ -100,24 +116,13 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
     const form = document.getElementById(`form-${contentID}`)
     if (!validateForm({ form })) return
 
-    let key = ''
-    const razorpayFld = document.getElementById(`razorpay-client-${fieldKey}`)
-    if (razorpayFld) {
-      const razorpayClient = razorpayFld?.getAttribute('razorpay-client-key')
-      if (!razorpayClient) return false
-      key = atob(razorpayClient)
-    } else {
-      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.options.payIntegID && Number(pay.id) === Number(attr.options.payIntegID))
-      if (!payInteg) return false
-      key = payInteg.apiKey
-    }
     const dynValues = setDefaultValues()
     const { currency, name, description, theme, modal, notes } = attr.options
     // eslint-disable-next-line camelcase
     const { confirm_close } = modal
 
     const options = {
-      key,
+      key: clientID,
       amount: Number(dynValues.amountFld[2] || amount) * 100,
       currency,
       name,
@@ -147,16 +152,21 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       fieldData={attr}
       noLabel
     >
-      <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
-        <button
-          className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
-          disabled={buttonDisabled}
-          type="button"
-          onClick={displayRazorpay}
-        >
-          {attr.btnTxt}
-        </button>
-      </div>
+      {clientID && (
+        <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
+          <button
+            className={`btcd-sub-btn btcd-sub ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
+            disabled={buttonDisabled}
+            type="button"
+            onClick={displayRazorpay}
+          >
+            {attr.btnTxt}
+          </button>
+        </div>
+      )}
+      {!attr.options.payIntegID && (
+        <p>Select a config from field settings to render the Razorpay.</p>
+      )}
     </InputWrapper>
   )
 }

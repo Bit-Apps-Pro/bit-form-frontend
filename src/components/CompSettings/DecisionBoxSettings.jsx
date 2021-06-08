@@ -1,18 +1,23 @@
+import { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import EditIcn from '../../Icons/EditIcn'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../Utilities/CopyText'
+import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
+import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 
 export default function DecisionBoxSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
+  const [labelModal, setLabelModal] = useState(false)
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
@@ -49,12 +54,6 @@ export default function DecisionBoxSettings() {
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
-  const setLbl = val => {
-    fieldData.lbl = val
-
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
-
   const setMsg = (val, typ) => {
     fieldData.msg[typ] = val
 
@@ -74,26 +73,40 @@ export default function DecisionBoxSettings() {
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0" />
       </div>
       <div className="mt-3">
-        <b>Label: </b>
-        <br />
-        <TinyMCE
-          id={fldKey}
-          value={fieldData.lbl || fieldData?.info?.lbl}
-          onChangeHandler={setLbl}
+        <div className="flx">
+          <b>Label: </b>
+          <span
+            role="button"
+            tabIndex="-1"
+            className="ml-2 cp"
+            onClick={() => setLabelModal(true)}
+            onKeyPress={() => setLabelModal(true)}
+          >
+            <EditIcn size={19} />
+          </span>
+        </div>
+        <div
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: fieldData.lbl || fieldData?.info?.lbl }}
+          className="err-msg-box mt-2"
         />
       </div>
+      <DecisionBoxLabelModal labelModal={labelModal} setLabelModal={setLabelModal} />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={fieldData.adminLbl || ''} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={fieldData.valid.req} className="mt-3" />
-      {fieldData?.valid?.req && (
-        <ErrorMessageSettings
-          type="req"
-          title="Error Message"
-          tipTitle="By enabling this feature, user will see the error message if decision box is not checked"
-        />
-      )}
+      {
+        fieldData?.valid?.req && (
+          <ErrorMessageSettings
+            type="req"
+            title="Error Message"
+            tipTitle="By enabling this feature, user will see the error message if decision box is not checked"
+          />
+        )
+      }
       <SingleInput inpType="text" title={__('Checked Value:', 'bitform')} value={fieldData.msg.checked || ''} action={e => setMsg(e.target.value, 'checked')} />
       <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={fieldData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} />
       <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={fieldData.valid.checked} className="mt-3" />
-    </div>
+
+    </div >
   )
 }

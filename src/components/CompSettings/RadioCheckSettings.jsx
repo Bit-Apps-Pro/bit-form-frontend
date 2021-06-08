@@ -13,6 +13,7 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import ImportOptions from './ImportOptions'
 
 function RadioCheckSettings() {
@@ -22,21 +23,11 @@ function RadioCheckSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const options = deepCopy(fields[fldKey].opt)
-  const label = fieldData.lbl || ''
   const adminLabel = fieldData.adminLbl || ''
   const isRound = fieldData.round || false
   const isRadioRequired = fieldData.valid.req || false
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
-
-  function setLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.lbl
-    } else {
-      fieldData.lbl = e.target.value
-    }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
@@ -146,7 +137,7 @@ function RadioCheckSettings() {
         <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0" />
       </div>
-      <SingleInput inpType="text" title={__('Field Label:', 'bitform')} value={label} action={setLabel} />
+      <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (

@@ -91,7 +91,7 @@ export const deepCopy = (target, map = new WeakMap()) => {
       cloneTarget[index] = deepCopy(value, map)
     })
   } else {
-    forEach(Object.keys(target), (key, index) => {
+    forEach(Object.keys(target), key => {
       cloneTarget[key] = deepCopy(target[key], map)
     })
   }

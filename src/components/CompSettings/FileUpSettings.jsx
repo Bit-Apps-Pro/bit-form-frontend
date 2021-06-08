@@ -9,6 +9,7 @@ import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import { deepCopy } from '../../Utils/Helpers'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 
 export default function FileUpSettings() {
   console.log('%c $render FileUpSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -17,7 +18,6 @@ export default function FileUpSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req !== undefined
   const isMultiple = fieldData.mul !== undefined
-  const label = fieldData.lbl === undefined ? '' : fieldData.lbl
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
   const { upBtnTxt } = fieldData
   const mxUp = fieldData.mxUp === undefined ? '' : fieldData.mxUp
@@ -53,15 +53,6 @@ export default function FileUpSettings() {
       fieldData.mul = true
     } else {
       delete fieldData.mul
-    }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
-
-  function setLabel(e) {
-    if (e.target.value === '') {
-      delete fieldData.lbl
-    } else {
-      fieldData.lbl = e.target.value
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -124,7 +115,7 @@ export default function FileUpSettings() {
         <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0" />
       </div>
-      <SingleInput inpType="text" title={__('Label:', 'bitform')} value={label} action={setLabel} />
+      <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleInput inpType="text" title={__('Upload Button Text:', 'bitform')} value={upBtnTxt} action={setUpBtnTxt} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-2" />
