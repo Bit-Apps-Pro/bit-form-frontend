@@ -4,8 +4,9 @@ import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
-import FileUploadImportOptions, { generateNewFileUploadedOptions } from './ImportOptionsComps/FileUploadImportOptions'
-import PresetsImportOptions, { generateNewPresetsOptions } from './ImportOptionsComps/PresetsImportOptions'
+import FileUploadImportOptions from './ImportOptionsComps/FileUploadImportOptions'
+import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
+import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro

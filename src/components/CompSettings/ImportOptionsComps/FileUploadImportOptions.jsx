@@ -1,74 +1,10 @@
 import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
-import { __ } from '../../../Utils/i18nwrap'
-
-const isPro = typeof bits !== 'undefined' && bits.isPro
-
-export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
-  if (!isPro) return []
-  const { data, dataTyp, separator, lbl, vlu } = importOpts
-  let opts = []
-
-  if (dataTyp === 'txt') {
-    const hasColonKeyVlu = checkIfHasColonLblVlu(separator, importOpts)
-    if (!separator || (hasColonKeyVlu && (!lbl || !vlu))) return []
-
-    const pattern = generateSeparatorPattern(separator)
-    const keyIndx = (lbl === 'value') ? 1 : 0
-    const valIndx = (vlu === 'key') ? 0 : 1
-    opts = data.split(pattern).filter(opt => opt.trim().length > 0).map(op => {
-      const opt = hasColonKeyVlu ? op.split(':') : op.split()
-      const label = opt[keyIndx].trim()
-      const value = (opt?.[valIndx] || lbl).trim()
-      return { [lblKey]: label, [valKey]: value }
-    })
-  }
-
-  if (dataTyp === 'json') {
-    if (isType('object', data) || (isType('array', data) && data.length === 1 && isType('object', data[0]))) {
-      if (!lbl || !vlu) return []
-      const data2 = isType('array', data) ? data[0] : data
-      const keyIndx = (lbl === 'value') ? 1 : 0
-      const valIndx = (vlu === 'key') ? 0 : 1
-      opts = Object.entries(data2).map(op => ({ [lblKey]: (op[keyIndx]).trim(), [valKey]: (op[valIndx]).trim() }))
-    } else if (isType('array', data)) {
-      if (data.length > 1 && isType('object', data[0])) {
-        if (!lbl || !vlu) return []
-        opts = data.map(op => ({ [lblKey]: (op[lbl]).trim(), [valKey]: (op[vlu]).trim() }))
-      } else {
-        opts = data.filter(opt => opt.trim().length > 0).map(op => ({ [lblKey]: op.trim(), [valKey]: op.trim() }))
-      }
-    }
-  }
-
-  if (dataTyp === 'xlsx' || dataTyp === 'xls' || dataTyp === 'csv' || dataTyp === 'tsv') {
-    if (!lbl || !vlu) return []
-    opts = data.map(opt => ({ [lblKey]: (opt[lbl]).trim(), [valKey]: (opt[vlu]).trim() }))
-  }
-
-  return opts
-}
-
-const generateSeparatorPattern = separator => (separator === 'comma' ? ',' : (separator === 'space' ? /[ ]+/ : /\r?\n/))
-
-const checkIfHasColonLblVlu = (separator, importOpts) => {
-  let hasColonKeyVlu = 1
-  const pattern = generateSeparatorPattern(separator)
-  const data = importOpts?.data?.split(pattern) || []
-  const { length } = data
-  if (length) {
-    for (let i = 0; i < (length <= 10 ? length : 10); i++) {
-      if (data[i]?.trim() && data[i].split(':').length <= 1) {
-        hasColonKeyVlu = 0
-        break
-      }
-    }
-  }
-
-  return hasColonKeyVlu
-}
+import { checkIfHasColonLblVlu } from './importOptionsHelpers'
 
 export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
   const handleImportFile = e => {
+    // eslint-disable-next-line no-undef
+    const isPro = typeof bits !== 'undefined' && bits.isPro
     if (!isPro) return []
     const file = e.target.files[0]
     if (!file?.name) { console.warn('file missing'); return }
@@ -124,7 +60,7 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
     }
   }
 
-  const setDefaultLblVlu = (header, importOpts) => ({ ...importOpts, lbl: header, vlu: header })
+  const setDefaultLblVlu = (header, importState) => ({ ...importState, lbl: header, vlu: header })
 
   const extractJSONheaders = data => {
     const headers = getHeaderNames(data[0])

@@ -2,13 +2,6 @@ import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import LoaderSm from '../../Loaders/LoaderSm'
 
-export const generateNewPresetsOptions = (importOpts, lblKey, valKey) => {
-  const { data, preset, lbl, vlu } = importOpts
-  if (!preset || !lbl || !vlu) return []
-  const presets = data[preset]
-  return presets.map(op => ({ [lblKey]: (op[lbl]).trim(), [valKey]: (op[vlu]).trim() }))
-}
-
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [loading, setLoading] = useState(false)
