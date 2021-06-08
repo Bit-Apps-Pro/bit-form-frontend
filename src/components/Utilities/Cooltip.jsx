@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Tippy from '@tippyjs/react'
 import { animateFill } from 'tippy.js'
 import QuestionIcn from '../../Icons/QuestionIcn'
