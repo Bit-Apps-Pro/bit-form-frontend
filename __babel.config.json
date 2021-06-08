@@ -3,7 +3,10 @@
     [
       "@babel/preset-env",
       {
+        "bugfixes": true,
+        "modules": false,
         "targets": {
+          "esmodules": true,
           "browsers": [
             "Chrome >= 88"
           ]
@@ -34,9 +37,9 @@
     ],
     [
       "@babel/plugin-proposal-private-methods",
-      { "loose": true
+      {
+        "loose": true
       }
     ]
-    
   ]
 }
