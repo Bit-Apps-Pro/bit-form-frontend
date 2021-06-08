@@ -11,12 +11,12 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   const [fields, setFields] = useRecoilState($fields)
   const fld = fields[fldKey]
   const fieldData = deepCopy(fld)
-  // const fieldData = JSON.parse(JSON.stringify(fld))
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const [value, setValue] = useState(errMsg)
 
   useEffect(() => {
     if (errorModal) setValue(errMsg)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorModal])
 
   const setErrMsg = (name, val) => {
