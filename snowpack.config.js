@@ -9,6 +9,7 @@ module.exports = {
   ],
   plugins: [
     '@snowpack/plugin-sass',
+    '@snowpack/plugin-babel',
     /* [
       "snowpack-plugin-swc",
       {
@@ -19,7 +20,7 @@ module.exports = {
       }
     ] */
   ],
-  knownEntrypoints: ["react/jsx-runtime"]
+  knownEntrypoints: ['react/jsx-runtime']
   /* routes: {
     port: 3000,
     src: 'src',
