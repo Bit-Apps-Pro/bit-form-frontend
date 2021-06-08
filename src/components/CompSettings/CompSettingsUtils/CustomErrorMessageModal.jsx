@@ -10,8 +10,8 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fld = fields[fldKey]
-  // const fieldData = deepCopy(fld)
-  const fieldData = JSON.parse(JSON.stringify(fld))
+  const fieldData = deepCopy(fld)
+  // const fieldData = JSON.parse(JSON.stringify(fld))
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const [value, setValue] = useState(errMsg)
 
@@ -28,10 +28,11 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   }
 
   const cancelModal = () => {
-    const fdata = deepCopy(fieldData)
-    fdata.err[type].msg = value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
-    setErrorModal(false)
+    fieldData.err[type].msg = value
+    setTimeout(() => {
+      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+      setErrorModal(false)
+    })
   }
 
   return (
