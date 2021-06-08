@@ -17,9 +17,9 @@ export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
     const valIndx = (vlu === 'key') ? 0 : 1
     opts = data.split(pattern).filter(opt => opt.trim().length > 0).map(op => {
       const opt = hasColonKeyVlu ? op.split(':') : op.split()
-      const lbl = opt[keyIndx].trim()
-      const val = (opt?.[valIndx] || lbl).trim()
-      return { [lblKey]: lbl, [valKey]: val }
+      const label = opt[keyIndx].trim()
+      const value = (opt?.[valIndx] || lbl).trim()
+      return { [lblKey]: label, [valKey]: value }
     })
   }
 
@@ -57,7 +57,7 @@ const checkIfHasColonLblVlu = (separator, importOpts) => {
   const { length } = data
   if (length) {
     for (let i = 0; i < (length <= 10 ? length : 10); i++) {
-      if (data[i].split(':').length <= 1) {
+      if (data[i]?.trim() && data[i].split(':').length <= 1) {
         hasColonKeyVlu = 0
         break
       }
