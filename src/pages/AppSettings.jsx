@@ -49,7 +49,7 @@ function AppSettingsPage() {
         </NavLink>
         <NavLink to="/app-settings/gclid" activeClassName="btcd-app-s-a">
           <span className="mr-1"><GoogleAdIcn size={21} /></span>
-          {__('Google Ads (Beta)', 'bitform')}
+          {__('Google Ads', 'bitform')}
         </NavLink>
         <NavLink to="/app-settings/smtp" activeClassName="btcd-app-s-a">
           <span className="btcd-icn icn-envelope-open-o" />
