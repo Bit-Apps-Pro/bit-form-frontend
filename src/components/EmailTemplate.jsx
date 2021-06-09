@@ -95,6 +95,17 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
         action={confMdl.action}
       />
       <h2>{__('Email Templates', 'bitform')}</h2>
+      <h5>
+        How to setup Email Templates & Send Email Notification:
+        &nbsp;
+        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" style={{ color: 'red' }}>
+          YouTube
+        </a>
+        {/* &nbsp;
+        <a href="https://bitpress.pro" target="_blank" rel="noreferrer" style={{ color: '#0575f1' }}>
+          Documentation
+        </a> */}
+      </h5>
       <div className="">
         <Link to={`${url}/new`} className="btn blue">
           <span className="btcd-icn icn-layout" />
