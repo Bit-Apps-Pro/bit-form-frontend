@@ -29,7 +29,6 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
     ],
     actions: {},
   })
-  console.log('sendinBlueConf', sendinBlueConf)
   const nextPage = (val) => {
     if (val === 3) {
       if (sendinBlueConf.templateId === '' || sendinBlueConf.redirectionUrl === '') {

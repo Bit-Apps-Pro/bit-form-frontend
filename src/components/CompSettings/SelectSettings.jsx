@@ -17,6 +17,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 
 export default function SelectSettings() {
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)

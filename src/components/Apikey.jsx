@@ -63,7 +63,15 @@ export default function Apikey() {
         <label htmlFor="captcha-key">
           {__('API Key', 'bitform')}
           <CopyText value={key} name="siteKey" setSnackbar={setsnack} className="field-key-cpy w-12 ml-0" readOnly />
-          <a className="btcd-link" onClick={changeKey}>{__('Genarate new API key', 'bitform')}</a>
+          <span
+            className="btcd-link"
+            role="button"
+            tabIndex="-1"
+            onClick={changeKey}
+            onKeyPress={changeKey}
+          >
+            {__('Genarate new API key', 'bitform')}
+          </span>
         </label>
       </div>
       <button type="button" onClick={(e) => handleSubmit(e)} className="btn btn-md f-right blue" disabled={isLoading}>

@@ -28,6 +28,7 @@ export default function FormEntryPayments({ formID, rowDtl, settab }) {
           setIsLoading(false)
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const showPaymentInfo = () => {

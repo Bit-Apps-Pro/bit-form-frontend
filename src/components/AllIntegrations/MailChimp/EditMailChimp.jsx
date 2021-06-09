@@ -39,8 +39,6 @@ function EditMailChimp({ formFields, setIntegration, integrations, allIntegURL }
         setSnackbar={setSnackbar}
       />
 
-      {console.log('sheet info', sheetConf)}
-
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, sheetConf, history, id, 1)}

@@ -48,7 +48,7 @@ export const checkMappedAcfFields = data => {
 //         if (res?.data?.post_types) {
 //           setPostTypes(Object.values(res?.data?.post_types))
 //           setSnackbar({ show: true, msg: __('Post Types refreshed', 'bitform') })
-//         } 
+//         }
 //       } else {
 //         setSnackbar({ show: true, msg: __('Fluent CRM fields refresh failed. please try again', 'bitform') })
 //       }

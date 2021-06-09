@@ -29,7 +29,6 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
     newConf[e.target.name] = e.target.value
     setError(rmError)
     setMailPoetConf(newConf)
-    console.log('set name', mailPoetConf)
   }
 
   return (

@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../Utility/CheckBox'
-import TableCheckBox from '../../Utility/TableCheckBox'
-import Modal from '../../Modal'
-import TitleModal from '../../TitleModal'
+import CheckBox from '../../Utilities/CheckBox'
+import Modal from '../../Utilities/Modal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
+import TitleModal from '../../Utilities/TitleModal'
 
 export default function GoogleSheetActions({ sheetConf, setSheetConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)

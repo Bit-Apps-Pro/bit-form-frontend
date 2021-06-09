@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default function BrushIcn({ stroke = 2, height = 17, width = 13 }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 145 205" height={height} width={width}>

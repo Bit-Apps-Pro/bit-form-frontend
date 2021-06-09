@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 
 import { useEffect, useState } from 'react'
@@ -132,6 +133,7 @@ export default function ZohoWorkDriveActions({ workDriveConf, setWorkDriveConf, 
     usersOption[1].childs = formFields.map(itm => ({ label: itm.name, value: `\${${itm.key}}` }))
 
     setUsers(usersOption)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workDriveConf.team, workDriveConf.default?.users?.[workDriveConf.team]])
 
   return (

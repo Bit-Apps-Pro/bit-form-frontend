@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
-import { useEffect, useReducer, useState } from 'react';
-import MapComponents from '../components/MapComponents';
-import { resetCaptcha } from '../components/Fields/Recaptcha';
-import { deepCopy } from '../Utils/Helpers';
-import { checkLogic, replaceWithField } from './checkLogic';
-import validateForm from './validation';
-import { select } from '../Utils/globalHelpers';
+import { useEffect, useReducer, useState } from 'react'
+import MapComponents from '../components/MapComponents'
+import { resetCaptcha } from '../components/Fields/Recaptcha'
+import { deepCopy } from '../Utils/Helpers'
+import { checkLogic, replaceWithField } from './checkLogic'
+import validateForm from './validation'
+import { select } from '../Utils/globalHelpers'
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {

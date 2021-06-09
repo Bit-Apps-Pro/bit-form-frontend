@@ -1,7 +1,7 @@
-import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
 
@@ -13,7 +13,6 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
 
   const handleAuthorize = () => {
     const newConf = { ...activeCampaingConf }
-    console.log('activeCampaingConf', activeCampaingConf)
     if (!newConf.name || !newConf.api_key || !newConf.api_url) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
@@ -44,14 +43,12 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
     newConf[e.target.name] = e.target.value
     setError(rmError)
     setActiveCampaingConf(newConf)
-    console.log('set name', activeCampaingConf)
   }
 
   const nextPage = () => {
     refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     setstep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
-    console.log('newpage')
   }
 
   return (

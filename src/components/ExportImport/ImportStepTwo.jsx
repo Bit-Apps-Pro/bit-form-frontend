@@ -64,12 +64,12 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
               <td style={{ textAlign: 'center' }}>
                 <select className="btcd-paper-inp ml-2" onChange={e => fileValue(e)}>
                   <option selected>Select Field</option>
-                  {fileColumns.map((value) => (
-                    <option value={value} selected={false}>{value}</option>
+                  {fileColumns.map((val) => (
+                    <option value={val} selected={false}>{val}</option>
                   ))}
                 </select>
               </td>
-              <td style={{ textAlign: 'center' }} key={index}>
+              <td style={{ textAlign: 'center' }} key={`imp-${index * 2}`}>
                 <select className="btcd-paper-inp ml-2" onChange={e => fieldMaping(e)}>
                   <option selected>Select Field</option>
                   {tableColumns.map((col) => (
@@ -82,18 +82,27 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
         </tbody>
       </table>
       <div className="mt-4">
-        <a className="wdt-100" style={{ cursor: 'pointer' }} onClick={() => resetMapping()}>Reset Field Mapping</a>
+        <span
+          className="wdt-100"
+          role="button"
+          tabIndex="-1"
+          style={{ cursor: 'pointer' }}
+          onClick={() => resetMapping()}
+          onKeyPress={() => resetMapping()}
+        >
+          Reset Field Mapping
+        </span>
       </div>
       <h5>Preview Data </h5>
       {' '}
       <table className="f-table" style={{ overflowX: 'scroll', overflowY: 'scroll' }}>
         <tr className="tr">
           {fileColumns.map((value, index) => (
-            <th className="th" key={index}>{value}</th>
+            <th className="th" key={`imp-${index * 2}`}>{value}</th>
           ))}
         </tr>
         {JSON.parse(fileResponses).map((response, key) => (
-          <tr key={key}>
+          <tr key={`imp-${key * 2}`}>
             {/* <td style={{ textAlign: 'center' }}>{response.}</td> */}
           </tr>
         ))}

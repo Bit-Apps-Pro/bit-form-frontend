@@ -3,9 +3,7 @@ import MtInput from '../../Utilities/MtInput'
 
 export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, setEnchargeConf }) {
   const isRequired = field.required
-  console.log(isRequired)
   const notResquiredField = enchargeConf?.default?.fields && Object.values(enchargeConf?.default?.fields).filter((f => !f.required))
-  console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...enchargeConf }
     newConf.field_map.splice(indx, 0, {})

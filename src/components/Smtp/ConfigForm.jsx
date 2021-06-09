@@ -20,12 +20,13 @@ export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, 
     e.preventDefault()
     setIsLoading(true)
     bitsFetch(formmail,
-      'bitforms_mail_config').then((res) => {
-      if (res !== undefined && res.success) {
-        setsnack({ ...{ show: true, msg: __('smtp Config save successfully', 'bitform') } })
-        setIsLoading(false)
-      }
-    })
+      'bitforms_mail_config')
+      .then((res) => {
+        if (res !== undefined && res.success) {
+          setsnack({ ...{ show: true, msg: __('smtp Config save successfully', 'bitform') } })
+          setIsLoading(false)
+        }
+      })
   }
   const handleInput = (typ, val, isNumber) => {
     const tmpMail = { ...mail }
@@ -51,8 +52,9 @@ export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, 
   }
 
   const handleStatus = (e) => {
-    smtpStatus(Number(e.target.value))
-    if (e.target.value == 1) {
+    const val = Number(e.target.value)
+    smtpStatus(val)
+    if (val === 1) {
       setIsShowing(true)
     } else {
       setIsShowing(false)
@@ -61,6 +63,7 @@ export default function ConfigForm({ mail, settab, setMail, status, smtpStatus, 
 
   useEffect(() => {
     settab('mail_config')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

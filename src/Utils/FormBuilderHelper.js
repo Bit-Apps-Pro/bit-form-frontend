@@ -18,6 +18,7 @@ export const propertyValueSumX = (propertyValue = '') => {
 }
 
 export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs = [], setProModal, setModal, formSettings) => {
+  // eslint-disable-next-line no-undef
   if (extraFieldsAttr[field.typ]?.pro && !bits.isPro) {
     setProModal({ show: true, msg: __(`${field.typ} field is available in Pro Version!`, 'bitform') })
     return { validationMsg: 'pro' }
@@ -45,6 +46,7 @@ export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs 
   }
 
   // TODO country field with type  and list it in extraFieldsAttr
+  // eslint-disable-next-line no-undef
   if (field.lbl === 'Select Country' && !bits.isPro) {
     setModal({
       show: true,

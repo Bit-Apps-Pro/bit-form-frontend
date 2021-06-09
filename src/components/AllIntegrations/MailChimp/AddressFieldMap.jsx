@@ -19,12 +19,12 @@ export default function AddressFieldMap({ i, formFields, field, sheetConf, setSh
         <option value="">{__('Select Field', 'bitform')}</option>
         {isRequired
           ? Object.values(addressField).map((listField, indx) => (
-            <option key={indx} value={listField.tag}>
+            <option key={`add-${indx * 2}`} value={listField.tag}>
               {listField.name}
             </option>
           ))
           : Object.values(address).map((listField, indx) => (
-            <option key={indx} value={listField.tag}>
+            <option key={`add-${indx * 2}`} value={listField.tag}>
               {listField.name}
             </option>
           ))}

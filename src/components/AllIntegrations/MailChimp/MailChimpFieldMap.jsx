@@ -3,7 +3,6 @@ import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
 export default function MailChimpFieldMap({ i, formFields, field, sheetConf, setSheetConf }) {
-
   return (
     <div
       className="flx mt-2 mr-1"
@@ -23,7 +22,7 @@ export default function MailChimpFieldMap({ i, formFields, field, sheetConf, set
           <option value="">{__('Select Field', 'bitform')}</option>
           {
             sheetConf.default?.fields?.[sheetConf.listId] && Object.values(sheetConf.default.fields[sheetConf.listId]).map((listField, indx) => (
-              <option key={indx} value={listField.tag}>
+              <option key={`mchimp-${indx * 2}`} value={listField.tag}>
                 {listField.name}
               </option>
             ))

@@ -28,6 +28,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     settab('note')
     isPro && setIsLoading('allNotes')
     setFirstLoad(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

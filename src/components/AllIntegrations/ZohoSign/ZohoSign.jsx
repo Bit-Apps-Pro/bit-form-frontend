@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
-
-import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoSignAuthorization from './ZohoSignAuthorization'
 import { refreshTemplates, setGrantTokenResponse } from './ZohoSignCommonFunc'
 import ZohoSignIntegLayout from './ZohoSignIntegLayout'
-import ZohoSignAuthorization from './ZohoSignAuthorization'
-import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

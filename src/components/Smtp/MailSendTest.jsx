@@ -12,21 +12,23 @@ export default function MailSendTest({ setsnack, settab }) {
     e.preventDefault()
     setisTestLoading(true)
     bitsFetch(testEmailData,
-      'bitforms_test_email').then((res) => {
-      if (res !== undefined && res.success) {
-        if (res.data) {
-          setsnack({ ...{ show: true, msg: __('mail send successfully', 'bitform') } })
+      'bitforms_test_email')
+      .then((res) => {
+        if (res !== undefined && res.success) {
+          if (res.data) {
+            setsnack({ ...{ show: true, msg: __('mail send successfully', 'bitform') } })
+          } else {
+            setsnack({ ...{ show: true, msg: __(`${res?.data?.errors?.[0]}`, 'bitform') } })
+          }
         } else {
           setsnack({ ...{ show: true, msg: __(`${res?.data?.errors?.[0]}`, 'bitform') } })
         }
-      } else {
-        setsnack({ ...{ show: true, msg: __(`${res?.data?.errors?.[0]}`, 'bitform') } })
-      }
-      setisTestLoading(false)
-    })
+        setisTestLoading(false)
+      })
   }
   useEffect(() => {
     settab('test_mail')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -42,8 +44,8 @@ export default function MailSendTest({ setsnack, settab }) {
           ref={formRef}
           onKeyDown={e => {
             e.key === 'Enter'
-                && e.target.tagName !== 'TEXTAREA'
-                && e.preventDefault()
+              && e.target.tagName !== 'TEXTAREA'
+              && e.preventDefault()
           }}
         >
           <div className="mt-2">

@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
-
-import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, setGrantTokenResponse, checkAddressFieldMapRequired } from './MailChimpCommonFunc'
-import MailChimpIntegLayout from './MailChimpIntegLayout'
+import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import MailChimpAuthorization from './MailChimpAuthorization'
-import BackIcn from '../../../Icons/BackIcn'
+import { checkAddressFieldMapRequired, handleInput, setGrantTokenResponse } from './MailChimpCommonFunc'
+import MailChimpIntegLayout from './MailChimpIntegLayout'
 
 function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -32,7 +31,6 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
     address_field: [],
     actions: {},
   })
-  console.log('sheetConf', sheetConf)
 
   useEffect(() => {
     window.opener && setGrantTokenResponse('mailChimp')

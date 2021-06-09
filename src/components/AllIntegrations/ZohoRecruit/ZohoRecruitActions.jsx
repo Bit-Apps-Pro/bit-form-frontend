@@ -97,7 +97,7 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
           && (
             <>
               <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in recruitConf.actions : 'workflow' in recruitConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Workflow" title={__('Workflow', 'bitform')} subTitle={__('Trigger workflows in Zoho Recruit.', 'bitform')} />
-              <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in recruitConf.actions : 'approval' in recruitConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Approval" title={__('Approval', 'bitform')} subTitle={__('Send entries to approval list in Zoho Recruit.', 'bitform')} />
+              <TableCheckBox onChange={(e) => actionHandler(e, 'approval')} checked={tab === 0 ? 'approval' in recruitConf.actions : 'approval' in recruitConf.relatedlists?.[tab - 1]?.actions} className="wdt-200 mt-4 mr-2" value="Approval" title={__('Approval', 'bitform')} subTitle={__('Send entries to approval list in Zoho Recruit', 'bitform')} />
               {(tab === 0 && !['Calls', 'Events', 'Tasks'].includes(recruitConf.module)) && (
                 <>
                   <TableCheckBox onChange={(e) => actionHandler(e, 'upsert')} checked={'upsert' in recruitConf.actions} className="wdt-200 mt-4 mr-2" value="Upsert_Record" title={__('Upsert Record', 'bitform')} subTitle={__('A record gets updated if the email already exists, else a new record will be created.', 'bitform')} />

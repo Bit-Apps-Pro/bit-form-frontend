@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
-
-import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput, refreshWorkbooks } from './ZohoSheetCommonFunc'
-import ZohoSheetIntegLayout from './ZohoSheetIntegLayout'
 import ZohoSheetAuthorization from './ZohoSheetAuthorization'
-import BackIcn from '../../../Icons/BackIcn'
+import { handleInput } from './ZohoSheetCommonFunc'
+import ZohoSheetIntegLayout from './ZohoSheetIntegLayout'
 
 function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

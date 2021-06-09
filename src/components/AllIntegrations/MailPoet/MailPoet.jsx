@@ -1,15 +1,14 @@
-import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
-import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import MailPoetAuthorization from './MailPoetAuthorization'
-import MailPoetIntegLayout from './MailPoetIntegLayout'
 import { checkMappedFields, refreshNewsLetter } from './MailPoetCommonFunc'
-import BackIcn from '../../../Icons/BackIcn'
+import MailPoetIntegLayout from './MailPoetIntegLayout'
 
 export default function MailPoet({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -44,8 +43,6 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
 
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
-
-  console.log('mailPoetConf', mailPoetConf)
 
   return (
     <div>

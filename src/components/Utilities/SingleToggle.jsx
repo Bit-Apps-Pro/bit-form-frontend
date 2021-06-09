@@ -9,7 +9,7 @@ export default function SingleToggle({ className, title, isChecked, name, action
             onChange={action}
             className="btcd-toggle-state"
             type="checkbox"
-            name={name || "check"}
+            name={name || 'check'}
             value="check"
             checked={isChecked}
             disabled={disabled}

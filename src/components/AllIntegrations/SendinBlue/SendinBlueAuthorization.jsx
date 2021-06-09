@@ -13,7 +13,6 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
 
   const handleAuthorize = () => {
     const newConf = { ...sendinBlueConf }
-    console.log('sendauthorizi', sendinBlueConf)
     if (!newConf.name || !newConf.api_key) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
@@ -40,7 +39,6 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
     newConf[e.target.name] = e.target.value
     setError(rmError)
     setSendinBlueConf(newConf)
-    console.log('set name', sendinBlueConf)
   }
 
   const nextPage = () => {

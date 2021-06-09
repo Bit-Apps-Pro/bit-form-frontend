@@ -46,6 +46,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
         }
         setLoading(false)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleImportInput = e => {

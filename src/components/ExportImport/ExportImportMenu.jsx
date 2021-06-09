@@ -2,11 +2,11 @@ import { useState } from 'react'
 import Export from './Export'
 
 export default function ExportImportMenu({ formID, cols, report }) {
-  const [showImportMdl, setshowImportMdl] = useState(false)
+  // const [showImportMdl, setshowImportMdl] = useState(false)
   const [showExportMdl, setshowExportMdl] = useState(false)
-  const importShow = () => {
-    setshowImportMdl(true)
-  }
+  // const importShow = () => {
+  //   setshowImportMdl(true)
+  // }
   const exportShow = () => {
     setshowExportMdl(true)
   }

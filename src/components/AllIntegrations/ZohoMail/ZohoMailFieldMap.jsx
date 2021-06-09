@@ -1,5 +1,5 @@
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utility/MtInput'
+import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function ZohoMailFieldMap({ i, formFields, field, mailConf, setMailConf }) {

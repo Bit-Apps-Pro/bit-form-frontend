@@ -11,7 +11,7 @@ import WooCommerceIntegLayout from './WooCommerceIntegLayout'
 
 function EditWooCommerce({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
-  const { id, formID } = useParams()
+  const { id } = useParams()
 
   const [wcConf, setWcConf] = useState({ ...integrations[id] })
   const [isLoading, setisLoading] = useState(false)

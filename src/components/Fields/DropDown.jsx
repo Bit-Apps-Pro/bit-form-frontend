@@ -83,8 +83,10 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
       } else if (option.prefix_img) {
         let assetsURL = ''
         if (typeof bits === 'undefined' && typeof bitFormsFront !== 'undefined') {
+          // eslint-disable-next-line no-undef
           assetsURL = bitFormsFront.assetUrl
         } else {
+          // eslint-disable-next-line no-undef
           assetsURL = bits.assetsURL
         }
         opt.push({

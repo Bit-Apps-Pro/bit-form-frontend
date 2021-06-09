@@ -6,30 +6,6 @@ import ZohoBiginRelatedRecord from './ZohoBiginRelatedRecord'
 import { refreshModules } from './ZohoBiginCommonFunc'
 
 export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, handleInput, biginConf, setBiginConf, isLoading, setisLoading, setSnackbar }) {
-  const addNewRelatedTab = () => {
-    const newConf = { ...biginConf }
-
-    if (newConf.relatedlists.length < 3) {
-      newConf.relatedlists.push({
-        actions: {},
-        field_map: [{ formField: '', zohoFormField: '' }],
-        module: '',
-        upload_field_map: [{ formField: '', zohoFormField: '' }],
-      })
-    }
-
-    setBiginConf({ ...newConf })
-  }
-
-  const removeRelatedTab = indx => {
-    const newConf = { ...biginConf }
-
-    newConf.relatedlists.splice(indx, 1)
-
-    if (!newConf.relatedlists.length) settab(0)
-
-    setBiginConf({ ...newConf })
-  }
   return (
     <>
       <br />

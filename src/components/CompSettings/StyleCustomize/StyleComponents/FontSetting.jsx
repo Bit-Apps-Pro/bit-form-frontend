@@ -48,10 +48,12 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
           <Range
             info={[
               {
-                icn: <span>
-                  <b>T</b>
-                  <HeightIcn h="12" />
-                </span>,
+                icn: (
+                  <span>
+                    <b>T</b>
+                    <HeightIcn h="12" />
+                  </span>
+                ),
                 lbl: 'Text line height',
               },
             ]}

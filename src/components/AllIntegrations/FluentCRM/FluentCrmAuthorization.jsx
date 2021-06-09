@@ -9,15 +9,9 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
   const [error, setError] = useState({ integrationName: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
-  let isMounted = true
-  useEffect(() => {
-    console.log('mounted')
-
-    return () => {
-      isMounted = false
-      console.log('unmounted')
-    }
+  const [isMounted, setIsMounted] = useState(true)
+  useEffect(() => () => {
+    setIsMounted(false)
   }, [])
 
   const handleAuthorize = () => {
@@ -41,7 +35,6 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
     newConf[e.target.name] = e.target.value
     setError(rmError)
     setFluentCrmConf(newConf)
-    console.log('set name', fluentCrmConf)
   }
 
   return (

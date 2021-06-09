@@ -29,6 +29,7 @@ function FormEntryTimeline({ formID, entryID, settab, integrations }) {
       }
       setIsLoading(false)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const replaceFieldWithLabel = str => {

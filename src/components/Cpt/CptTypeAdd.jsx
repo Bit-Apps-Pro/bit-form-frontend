@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useEffect, useState, useRef } from 'react'
-import { __ } from '../../Utils/i18nwrap'
+import { useEffect, useRef, useState } from 'react'
 import bitsFetch from '../../Utils/bitsFetch'
-import SnackMsg from '../Utilities/SnackMsg'
+import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
+import SnackMsg from '../Utilities/SnackMsg'
 import TableCheckBox from '../Utilities/TableCheckBox'
 
 export default function Cpt({ settab, types }) {
@@ -24,13 +25,14 @@ export default function Cpt({ settab, types }) {
     setLoading(true)
     e.preventDefault()
     bitsFetch(formData,
-      'bitforms_add_post_type').then((res) => {
-      if (res !== undefined && res.success) {
-        setsnack({ ...{ show: true, msg: __('cpt added successfully, refresh your window', 'bitform') } })
-        document.getElementById('form').reset()
-      }
-      setLoading(false)
-    })
+      'bitforms_add_post_type')
+      .then((res) => {
+        if (res !== undefined && res.success) {
+          setsnack({ ...{ show: true, msg: __('cpt added successfully, refresh your window', 'bitform') } })
+          document.getElementById('form').reset()
+        }
+        setLoading(false)
+      })
   }
 
   const handleAction = (e, type) => {
@@ -48,6 +50,7 @@ export default function Cpt({ settab, types }) {
 
   useEffect(() => {
     settab('add_type')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const existPostType = val => {

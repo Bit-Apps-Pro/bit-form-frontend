@@ -1,6 +1,3 @@
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-
 export const saveIntegConfig = (allintegs, setIntegration, allIntegURL, confTmp, history, id, edit) => {
   const integs = [...allintegs]
   if (edit) {

@@ -63,7 +63,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       amountFld: [setAmount],
       prefillNameFld: [setPrefillName, 'prefill'],
       prefillEmailFld: [setPrefillEmail, 'prefill'],
-      prefillContactFld: [setPrefillContact, 'prefill']
+      prefillContactFld: [setPrefillContact, 'prefill'],
     }
 
     Object.entries(dynamicFlds).map(dynFld => {

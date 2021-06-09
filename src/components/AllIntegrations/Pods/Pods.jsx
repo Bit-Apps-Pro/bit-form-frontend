@@ -60,6 +60,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
     const newConf = { ...data }
     newConf.post_map = postFields.filter(fld => fld.required).map(fl => ({ formField: '', postFormField: fl.key, required: fl.required }))
     setData(newConf)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const saveConfig = () => {
@@ -97,7 +98,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Select Type</option>
         {types.map((type, key) => (
-          <option key={key} value={type.name}>{type.label}</option>
+          <option key={`pod-${key * 2}`} value={type.name}>{type.label}</option>
         ))}
       </select>
 
@@ -127,7 +128,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Logged In User</option>
         {users.map((user, key) => (
-          <option key={key} value={user.ID}>{user.display_name}</option>
+          <option key={`pod-${key * 2}`} value={user.ID}>{user.display_name}</option>
         ))}
       </select>
       <div>

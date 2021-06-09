@@ -4,6 +4,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import LoaderSm from '../../Loaders/LoaderSm'
 
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [loading, setLoading] = useState(false)
   const presetVersion = 1.0
@@ -37,6 +38,7 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
       tmpOpts.presetNames = Object.keys(data)
       setImportOpts({ ...tmpOpts })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setPresetName = val => {

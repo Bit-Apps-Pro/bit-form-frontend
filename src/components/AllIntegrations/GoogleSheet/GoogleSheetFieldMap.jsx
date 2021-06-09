@@ -22,7 +22,7 @@ export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, s
           <option value="">{__('Select Field', 'bitform')}</option>
           {
             sheetConf.default?.headers?.[sheetConf.spreadsheetId]?.[sheetConf.worksheetName]?.[sheetConf.headerRow] && Object.values(sheetConf.default.headers[sheetConf.spreadsheetId][sheetConf.worksheetName][sheetConf.headerRow]).map((header, indx) => (
-              <option key={indx} value={header}>
+              <option key={`gsheet-${indx * 2}`} value={header}>
                 {header}
               </option>
             ))

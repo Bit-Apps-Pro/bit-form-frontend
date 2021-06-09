@@ -33,6 +33,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         setAcfFields(res?.data?.acfFields)
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleInput = (typ, val, isNumber) => {
@@ -85,7 +86,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} value={data.post_type} className="btcd-paper-inp w-5 mt-1">
           <option disabled selected>Select Post Type</option>
           {postTypes.map((postType, key) => (
-            <option key={key} value={postType?.name}>{postType?.label}</option>
+            <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
         {/* <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Type List', 'bitform')}'` }} type="button" >&#x21BB;</button> */}
@@ -113,7 +114,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_author} className="btcd-paper-inp w-5 mt-2">
           <option disabled selected>{__('Select Author', 'bitform')}</option>
           {users.map((user, key) => (
-            <option key={key} value={user.ID}>{user.display_name}</option>
+            <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
           ))}
         </select>
         <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Author List', 'bitform')}'` }} type="button">&#x21BB;</button>

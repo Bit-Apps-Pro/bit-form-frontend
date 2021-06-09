@@ -3,9 +3,7 @@ import MtInput from '../../Utilities/MtInput'
 
 export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf, setFluentCrmConf }) {
   const isRequired = field.required
-  console.log(isRequired)
   const notResquiredField = fluentCrmConf?.default?.fields && Object.values(fluentCrmConf?.default?.fields).filter((f => !f.required))
-  console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...fluentCrmConf }
     newConf.field_map.splice(indx, 0, {})

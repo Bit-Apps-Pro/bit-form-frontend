@@ -20,7 +20,6 @@ function Integromat({ formFields, setIntegration, integrations, allIntegURL }) {
     url: process.env.NODE_ENV === 'development' ? 'https://hook.integromat.com/6uopree96tiv94js0lty85l1yp4f92xf' : '',
     apiConsole: 'https://www.integromat.com/',
   })
-  console.log('integromat', integromat)
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

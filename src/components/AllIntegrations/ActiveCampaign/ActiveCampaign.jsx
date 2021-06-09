@@ -28,7 +28,6 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
     ],
     actions: {},
   })
-  console.log('activeCampaingConf', activeCampaingConf)
   const nextPage = (val) => {
     if (val === 3) {
       if (!checkMappedFields(activeCampaingConf)) {

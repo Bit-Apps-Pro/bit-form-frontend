@@ -3,9 +3,7 @@ import MtInput from '../../Utilities/MtInput'
 
 export default function SendinBlueFieldMap({ i, formFields, field, sendinBlueConf, setSendinBlueConf }) {
   const isRequired = field.required
-  console.log(isRequired)
   const notResquiredField = sendinBlueConf?.default?.fields && Object.values(sendinBlueConf?.default?.fields).filter((f => !f.required))
-  console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...sendinBlueConf }
     newConf.field_map.splice(indx, 0, {})

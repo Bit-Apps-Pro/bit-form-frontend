@@ -53,6 +53,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
         }
         setLoading(false)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleTaxonomyField = e => {
@@ -99,7 +100,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
               <b>Filter by Taxonomy</b>
               <select name="taxanomy" onChange={handleImportInput} value={importOpts.taxanomy || ''} className="btcd-paper-inp mt-1">
                 {importOpts?.taxonomies?.map((taxonomy, key) => (
-                  <option key={key} value={taxonomy?.name}>{`${taxonomy?.singular_name}-${taxonomy?.name}`}</option>
+                  <option key={`imp-${key * 2}`} value={taxonomy?.name}>{`${taxonomy?.singular_name}-${taxonomy?.name}`}</option>
                 ))}
               </select>
             </div>

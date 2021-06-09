@@ -38,8 +38,6 @@ function EditSendinBlue({ formFields, setIntegration, integrations, allIntegURL 
         setError={setError}
       />
 
-      {console.log('sendinblue info', sendinBlueConf)}
-
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, sendinBlueConf, history, id, 1)}

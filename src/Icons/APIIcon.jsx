@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default function APIIcon({ size }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 368 368" height={size} width={size}>

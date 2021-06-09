@@ -28,7 +28,6 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
     ],
     actions: {},
   })
-  console.log('enchargeConf', enchargeConf)
   const nextPage = (val) => {
     if (val === 3) {
       if (!checkMappedFields(enchargeConf)) {

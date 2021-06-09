@@ -45,6 +45,7 @@ export const handleGoogleAuthorize = (integ, ajaxInteg, scopes, confTmp, setConf
     return
   }
   setisLoading(true)
+  // eslint-disable-next-line no-undef
   const apiEndpoint = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.googleRedirectURL)}&client_id=${confTmp.clientId}`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
@@ -75,6 +76,7 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
+  // eslint-disable-next-line no-undef
   tokenRequestParams.redirectURI = bits.googleRedirectURL
 
   bitsFetch(tokenRequestParams, `bitforms_${ajaxInteg}_generate_token`)

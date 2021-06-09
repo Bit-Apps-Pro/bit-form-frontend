@@ -52,6 +52,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
         }
         setLoading(false)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleImportInput = e => {
@@ -91,7 +92,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
                 <b>Filter by Post Type</b>
                 <select name="postType" onChange={handleImportInput} value={importOpts.postType || ''} className="btcd-paper-inp mt-1">
                   {importOpts?.postTypes?.map((type, key) => (
-                    <option key={key} value={type.name}>{type.label}</option>
+                    <option key={`imp-${key * 2}`} value={type.name}>{type.label}</option>
                   ))}
                 </select>
               </div>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
-import { __ } from '../../../Utils/i18nwrap'
+import { useHistory } from 'react-router-dom'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { addFieldMap, checkMappedPostFields, checkMappedAcfFields } from './AcfHelperFunction'
-import FieldMap from './FieldMap'
+import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import SnackMsg from '../../Utilities/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { addFieldMap, checkMappedAcfFields, checkMappedPostFields } from './AcfHelperFunction'
+import FieldMap from './FieldMap'
 
 function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
   const [postTypes, setPostTypes] = useState([])
@@ -41,7 +41,6 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
     bitsFetch({ post_type: val }, 'bitforms_get_custom_field').then((res) => {
       if (res?.success && res !== undefined) {
         setAcfFields(res?.data?.acfFields)
-        console.log(acfFields)
         if (res?.data?.acfFields) {
           tmpData.acf_map = res?.data?.acfFields.filter(fld => fld.required).map(fl => ({ formField: '', acfField: fl.key, required: fl.required }))
           if (tmpData?.acf_map?.length < 1) {
@@ -64,10 +63,10 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
     const newConf = { ...data }
     newConf.post_map = postFields.filter(fld => fld.required).map(fl => ({ formField: '', postField: fl.key, required: fl.required }))
     setData(newConf)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const saveConfig = () => {
-    console.log('data', data)
     if (!data.post_type) {
       setSnackbar({ show: true, msg: __('Post Type cann\'t be empty', 'bitform') })
       return
@@ -106,7 +105,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-1">
           <option disabled selected>Select Post Type</option>
           {postTypes.map((postType, key) => (
-            <option key={key} value={postType?.name}>{postType?.label}</option>
+            <option key={`acf-${key * 2}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
       </div>
@@ -142,7 +141,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
         <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp w-5 mt-2">
           <option disabled selected>{__('Select Author', 'bitform')}</option>
           {users.map((user, key) => (
-            <option key={key} value={user.ID}>{user.display_name}</option>
+            <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
           ))}
         </select>
       </div>

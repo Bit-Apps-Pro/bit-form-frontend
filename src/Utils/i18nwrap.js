@@ -23,7 +23,5 @@ const sprintf = (text, ...vars) => {
   return i18nsprintf(text, vars)
 }
 
-export {
-  __,
-  sprintf
-}
+export { __,
+  sprintf }

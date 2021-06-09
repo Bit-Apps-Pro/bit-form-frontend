@@ -45,11 +45,12 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
   const handleInput = e => {
     const { name, value } = e.target
     console.log(fieldData)
+    let tmpOpts = { ...importOpts }
     if (name === 'dataSrc') {
-      importOpts = { show: true }
+      tmpOpts = { show: true }
     }
-    importOpts[name] = value
-    setImportOpts({ ...importOpts })
+    tmpOpts[name] = value
+    setImportOpts({ ...tmpOpts })
   }
 
   const handleImport = () => {
@@ -132,7 +133,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
             </thead>
             <tbody className="tbody">
               {newOptions.slice(0, 5).map((opt, indx) => (
-                <tr key={indx} className="tr">
+                <tr key={`imp-${indx * 2}`} className="tr">
                   <td className="td">{opt[lblKey]}</td>
                   <td className="td">{opt[valKey]}</td>
                 </tr>

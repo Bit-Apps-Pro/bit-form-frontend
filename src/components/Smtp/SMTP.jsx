@@ -8,6 +8,7 @@ import ConfigForm from './ConfigForm'
 import MailSendTest from './MailSendTest'
 
 export default function SMTP({ setsnack }) {
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [tab, settab] = useState('mail_config')
   const [mail, setMail] = useState({})

@@ -18,6 +18,7 @@ import ImportOptions from './ImportOptions'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
+  // eslint-disable-next-line no-undef
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)

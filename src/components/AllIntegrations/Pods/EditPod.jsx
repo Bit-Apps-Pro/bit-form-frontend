@@ -31,6 +31,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         setPods(Object.values(res?.data))
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleInput = (typ, val, isNumber) => {
@@ -83,7 +84,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} value={data?.post_type} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Select Type</option>
         {types.map((type, key) => (
-          <option key={key} value={type.name}>{type.label}</option>
+          <option key={`pod-${key * 2}`} value={type.name}>{type.label}</option>
         ))}
       </select>
 
@@ -109,7 +110,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.post_author} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Logged In User</option>
         {users.map((user, key) => (
-          <option key={key} value={user.ID}>{user.display_name}</option>
+          <option key={`pod-${key * 2}`} value={user.ID}>{user.display_name}</option>
         ))}
         {/* <div style={{ color: 'red' }}>{error.clientSecret}</div> */}
       </select>

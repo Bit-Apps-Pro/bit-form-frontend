@@ -13,7 +13,6 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
 
   const handleAuthorize = () => {
     const newConf = { ...enchargeConf }
-    console.log('enchargeConf', enchargeConf)
     if (!newConf.name || !newConf.api_key) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
@@ -40,7 +39,6 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
     newConf[e.target.name] = e.target.value
     setError(rmError)
     setEnchargeConf(newConf)
-    console.log('set name', enchargeConf)
   }
 
   const nextPage = () => {

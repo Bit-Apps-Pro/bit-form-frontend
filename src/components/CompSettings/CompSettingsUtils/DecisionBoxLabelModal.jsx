@@ -15,6 +15,7 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
 
   useEffect(() => {
     if (labelModal) setValue(lbl)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [labelModal])
 
   const setLbl = val => {

@@ -31,8 +31,6 @@ function EditEncharge({ formFields, setIntegration, integrations, allIntegURL })
         setEnchargeConf={setEnchargeConf}
       />
 
-      {console.log('Encharge info', enchargeConf)}
-
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, enchargeConf, history, id, 1)}
