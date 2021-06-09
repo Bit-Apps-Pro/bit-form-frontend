@@ -29,7 +29,7 @@ export default function ZohoMarketingAuthorization({ formID, marketingHubConf, s
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={marketingHubConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 
       <div className="mt-3"><b>{__('Data Center:', 'bitform')}</b></div>
-      <select onChange={handleInput} name="dataCenter" value={marketingHubConf.dataCenter} className="btcd-paper-inp w-9 mt-1" disabled={isInfo}>
+      <select onChange={handleInput} name="dataCenter" value={marketingHubConf.dataCenter} className="btcd-paper-inp w-6 mt-1" disabled={isInfo}>
         <option value="">{__('--Select a data center--', 'bitform')}</option>
         <option value="com">zoho.com</option>
         <option value="eu">zoho.eu</option>

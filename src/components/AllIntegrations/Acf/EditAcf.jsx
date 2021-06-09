@@ -81,7 +81,15 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
-      <div className="mt-3"><b>{__('Post Type', 'bitform')}</b></div>
+      <div className="mt-3 flx">
+        <b>{__('Post Type', 'bitform')}</b>
+        <Cooltip width={250} icnSize={17} className="ml-2">
+          <div className="txt-body">
+            Select one of the defined WordPress post types Or custom post types for the post.
+            <br />
+          </div>
+        </Cooltip>
+      </div>
       <div>
         <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} value={data.post_type} className="btcd-paper-inp w-5 mt-1">
           <option disabled selected>Select Post Type</option>
@@ -92,7 +100,15 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
         {/* <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Type List', 'bitform')}'` }} type="button" >&#x21BB;</button> */}
       </div>
 
-      <div className="mt-3"><b>{__('Post Status', 'bitform')}</b></div>
+      <div className="mt-3">
+        <b>{__('Post Status', 'bitform')}</b>
+        <Cooltip width={250} icnSize={17} className="ml-2">
+          <div className="txt-body">
+            Select the status for the post. If published status is selected and the post date is in the future, it will automatically be changed to scheduled
+            <br />
+          </div>
+        </Cooltip>
+      </div>
       <select name="post_status" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_status} className="btcd-paper-inp w-5 mt-1">
         <option value="publish">Publish</option>
         <option value="draft">Draft</option>
@@ -117,7 +133,6 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
             <option key={`acf-${key * 2}`} value={user.ID}>{user.display_name}</option>
           ))}
         </select>
-        <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Author List', 'bitform')}'` }} type="button">&#x21BB;</button>
       </div>
 
       <div className="mt-3"><b>{__('Comment Status', 'bitform')}</b></div>
@@ -190,7 +205,6 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
             <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
             <div className="txt-dp">
               <b>{__('ACF Fields', 'bitform')}</b>
-              <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF Field List', 'bitform')}'` }} type="button">&#x21BB;</button>
             </div>
           </div>
         </div>

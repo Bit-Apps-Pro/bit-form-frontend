@@ -219,7 +219,6 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
             <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
             <div className="txt-dp">
               <b>{__('ACF Fields', 'bitform')}</b>
-              <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF Field List', 'bitform')}'` }} type="button">&#x21BB;</button>
             </div>
           </div>
         </div>
