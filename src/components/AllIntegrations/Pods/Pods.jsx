@@ -131,6 +131,13 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
         ))}
       </select>
       <div>
+        <p className="p-1 f-m">
+          <strong>Note</strong>
+          {' '}
+          : All your taxonomies will be mapped automatically from your form fields.
+        </p>
+      </div>
+      <div>
         <div>
           <div className="mt-3 mb-1"><b>Pod Fields Mapping</b></div>
           <div className="btcd-hr" />
