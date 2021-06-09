@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -11,6 +12,7 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
   useEffect(() => {
     if (!isPro) return
     let oldPresets = localStorage.getItem('bf-options-presets')
+    const tmpOpts = { ...importOpts }
     if (oldPresets) {
       oldPresets = JSON.parse(oldPresets)
     }
@@ -22,39 +24,41 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
         .then(res => {
           if (res.data) {
             const { data } = res
-            importOpts.data = data
-            importOpts.presetNames = Object.keys(data)
+            tmpOpts.data = data
+            tmpOpts.presetNames = Object.keys(data)
             localStorage.setItem('bf-options-presets', JSON.stringify(res))
-            setImportOpts({ ...importOpts })
+            setImportOpts({ ...tmpOpts })
           }
           setLoading(false)
         })
     } else {
       const { data } = oldPresets
-      importOpts.data = data
-      importOpts.presetNames = Object.keys(data)
-      setImportOpts({ ...importOpts })
+      tmpOpts.data = data
+      tmpOpts.presetNames = Object.keys(data)
+      setImportOpts({ ...tmpOpts })
     }
   }, [])
 
   const setPresetName = val => {
-    importOpts.preset = val
-    if (val && importOpts?.data?.[val]?.length) {
-      importOpts.headers = Object.keys(importOpts.data[val][0])
-      importOpts.lbl = importOpts.headers[0]
-      importOpts.vlu = importOpts.headers[0]
+    const tmpOpts = { ...importOpts }
+    tmpOpts.preset = val
+    if (val && tmpOpts?.data?.[val]?.length) {
+      tmpOpts.headers = Object.keys(tmpOpts.data[val][0])
+      tmpOpts.lbl = tmpOpts.headers[0]
+      tmpOpts.vlu = tmpOpts.headers[0]
     } else {
-      delete importOpts.headers
-      delete importOpts.lbl
-      delete importOpts.vlu
+      delete tmpOpts.headers
+      delete tmpOpts.lbl
+      delete tmpOpts.vlu
     }
-    setImportOpts({ ...importOpts })
+    setImportOpts({ ...tmpOpts })
   }
 
   const handleImportInput = e => {
+    const tmpOpts = { ...importOpts }
     const { name, value } = e.target
-    importOpts[name] = value
-    setImportOpts({ ...importOpts })
+    tmpOpts[name] = value
+    setImportOpts({ ...tmpOpts })
   }
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'hidden'
@@ -270,3 +271,12 @@ export const getNewFormId = (allForms) => {
   })
   return max + 1
 }
+
+export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
+  const x = a[fieldKey]
+  const y = b[fieldKey]
+  if (typ === 'ASC') {
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0))
+  }
+  return ((y < x) ? -1 : ((y > x) ? 1 : 0))
+})

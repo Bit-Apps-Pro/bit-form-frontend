@@ -18,7 +18,7 @@ const EditZohoSign = lazy(() => import('./ZohoSign/EditZohoSign'))
 const EditZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/EditZohoWorkDrive'))
 const EditGoogleSheet = lazy(() => import('./GoogleSheet/EditGoogleSheet'))
 const EditMailChimp = lazy(() => import('./MailChimp/EditMailChimp'))
-const EditCpt = lazy(() => import('./Cpt/EditCpt'))
+const EditAcf = lazy(() => import('./Acf/EditAcf'))
 const EditPod = lazy(() => import('./Pods/EditPod'))
 const EditMailPoet = lazy(() => import('./MailPoet/EditMailPoet'))
 const EditSendinBlue = lazy(() => import('./SendinBlue/EditSendinBlue'))
@@ -68,8 +68,8 @@ export default function EditInteg({ allIntegURL, formFields, setIntegration, int
         return <EditGoogleSheet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Chimp':
         return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
-      case 'CPT':
-        return <EditCpt allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'ACF':
+        return <EditAcf allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Pods':
         return <EditPod allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Poet':

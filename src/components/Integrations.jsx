@@ -15,7 +15,7 @@ import zohoRecruit from '../resource/img/integ/recruit.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoSign from '../resource/img/integ/sign.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
-import cpt from '../resource/img/integ/cpt.svg'
+import acf from '../resource/img/integ/ACF.svg'
 import pods from '../resource/img/integ/pods.svg'
 import googleSheet from '../resource/img/integ/googleSheets.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
@@ -61,7 +61,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
-    { type: 'CPT', logo: cpt, pro: !isPro },
+    { type: 'ACF', logo: acf, pro: !isPro },
     { type: 'Pods', logo: pods, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },
