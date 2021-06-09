@@ -24,11 +24,6 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const mailOptions = () => {
     const mail = []
-    // eslint-disable-next-line no-undef
-    if (typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail)) {
-      // eslint-disable-next-line no-undef
-      mail.push(...bits.userMail)
-    }
     if (emailInFormField()) {
       const flds = []
 
@@ -38,6 +33,12 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
         }
       })
       mail.push({ title: 'Form Fields', type: 'group', childs: flds })
+    }
+
+    // eslint-disable-next-line no-undef
+    if (typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail)) {
+      // eslint-disable-next-line no-undef
+      mail.push({ title: 'WP Emails', type: 'group', childs: bits.userMail })
     }
     return mail
   }
