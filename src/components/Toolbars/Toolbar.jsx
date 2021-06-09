@@ -282,7 +282,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
           unchecked: 'Not Accepted',
         },
         valid: { req: true },
-        err: {},
+        err: { req: { dflt: 'This field is required', show: true } },
       },
     },
     {
