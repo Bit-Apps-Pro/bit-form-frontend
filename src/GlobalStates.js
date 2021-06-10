@@ -9,7 +9,7 @@ export const $layouts = atom({ key: '$layouts', default: { lg: [], md: [], sm: [
 export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerouslyAllowMutability: true })
 export const $selectedFieldId = atom({ key: '$selectedFieldId', default: null })
 // eslint-disable-next-line no-undef
-export const $bits = atom({ key: '$bits', default: bits })
+export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fieldLabels)), dangerouslyAllowMutability: true })
