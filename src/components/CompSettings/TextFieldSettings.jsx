@@ -9,12 +9,13 @@ import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import { deepCopy } from '../../Utils/Helpers'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
+  const bits = useRecoilValue($bits)
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -99,6 +100,7 @@ function TextFieldSettings() {
   }
 
   const setRegexr = e => {
+    if (!bits.isPro) return
     const { value } = e.target
     if (value === '') {
       delete fieldData.valid.regexr
@@ -118,6 +120,7 @@ function TextFieldSettings() {
   }
 
   const setFlags = e => {
+    if (!bits.isPro) return
     if (e.target.value === '') {
       delete fieldData.valid.flags
     } else {
@@ -143,6 +146,7 @@ function TextFieldSettings() {
   }).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>`
 
   const setPasswordValidation = e => {
+    if (!bits.isPro) return
     const { checked, name, value } = e.target
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err.regexr) fieldData.err.regexr = {}
@@ -175,6 +179,7 @@ function TextFieldSettings() {
   }
 
   const setPasswordLimit = e => {
+    if (!bits.isPro) return
     const { name, value } = e.target
     const { validations } = fieldData.valid
     if (value) {
@@ -251,12 +256,15 @@ function TextFieldSettings() {
       {
         fieldData.typ === 'password' && (
           <div>
-            <h4>{__('Validations:', 'bitform')}</h4>
-            <TableCheckBox className="w-10" name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} />
-            <TableCheckBox className="w-10 mt-2" name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} />
-            <TableCheckBox className="w-10 mt-2" name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} />
-            <TableCheckBox className="w-10 mt-2" name="special" checked={fieldData.valid?.validations?.special || false} value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])" title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')} onChange={setPasswordValidation} />
-            <TableCheckBox className="w-10 mt-2" name="limit" checked={fieldData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} />
+            <div className="flx mt-2 mb-2">
+              <h4 className="m-0">{__('Validations:', 'bitform')}</h4>
+              <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>
+            </div>
+            <TableCheckBox className="w-10" name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+            <TableCheckBox className="w-10 mt-2" name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+            <TableCheckBox className="w-10 mt-2" name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+            <TableCheckBox className="w-10 mt-2" name="special" checked={fieldData.valid?.validations?.special || false} value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])" title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+            <TableCheckBox className="w-10 mt-2" name="limit" checked={fieldData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
             {fieldData.valid?.validations?.limit && (
               <div>
                 <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" />
@@ -269,12 +277,18 @@ function TextFieldSettings() {
       {
         fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && (
           <>
-            <div>
-              <SingleInput inpType="text" title={__('Pattern:', 'bitform')} value={generateBackslashPattern(regexr)} action={setRegexr} className="mr-2 w-7" placeholder="e.g. ([A-Z])\w+" list="patterns" />
-              <datalist id="patterns">
-                {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
-              </datalist>
-              <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" />
+            <div className="flx">
+              <div className="w-7 mr-2 mt-3">
+                <div className="flx">
+                  <h4 className="m-0">{__('Pattern:', 'bitform')}</h4>
+                  <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>
+                </div>
+                <input className="btcd-paper-inp mt-1" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
+                <datalist id="patterns">
+                  {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
+                </datalist>
+              </div>
+              <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" cls="mt-2" disabled={!bits.isPro} />
             </div>
             {regexr && (
               <ErrorMessageSettings

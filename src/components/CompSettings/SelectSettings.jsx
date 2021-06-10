@@ -2,23 +2,23 @@
 /* eslint-disable no-param-reassign */
 import { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
+import DownloadIcon from '../../Icons/DownloadIcon'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import CopyText from '../Utilities/CopyText'
+import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
-import CloseIcn from '../../Icons/CloseIcn'
-import ImportOptions from './ImportOptions'
-import Modal from '../Utilities/Modal'
-import DownloadIcon from '../../Icons/DownloadIcon'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
-import { deepCopy } from '../../Utils/Helpers'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import ImportOptions from './ImportOptions'
 
 export default function SelectSettings() {
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -199,7 +199,7 @@ export default function SelectSettings() {
       >
         <div className="pos-rel">
           {!isPro && (
-            <div className="pro-blur flx" style={{ top: -7 }}>
+            <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
                 {__('Available On', 'bitform')}
                 <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">

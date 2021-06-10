@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { memo, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
@@ -18,8 +18,8 @@ import ImportOptions from './ImportOptions'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -188,7 +188,7 @@ function RadioCheckSettings() {
       >
         <div className="pos-rel">
           {!isPro && (
-            <div className="pro-blur flx" style={{ top: -7 }}>
+            <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
                 {__('Available On', 'bitform')}
                 <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
