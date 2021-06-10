@@ -258,7 +258,7 @@ function TextFieldSettings() {
           <div>
             <div className="flx mt-2 mb-2">
               <h4 className="m-0">{__('Validations:', 'bitform')}</h4>
-              <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>
+              {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
             </div>
             <TableCheckBox className="w-10" name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
             <TableCheckBox className="w-10 mt-2" name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
@@ -281,7 +281,7 @@ function TextFieldSettings() {
               <div className="w-7 mr-2 mt-3">
                 <div className="flx">
                   <h4 className="m-0">{__('Pattern:', 'bitform')}</h4>
-                  <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>
+                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
                 </div>
                 <input className="btcd-paper-inp mt-1" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
                 <datalist id="patterns">
