@@ -1,6 +1,6 @@
-/* eslint-disable no-undef */
-/* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -17,16 +17,16 @@ export const generateTermsOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!isPro) return
     localStorage.removeItem('bf-options-taxanomy')
-    // eslint-disable-next-line no-undef
     const uri = new URL(bits.ajaxURL)
     uri.searchParams.append('action', 'bitforms_get_wp_taxonomy')
-    uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
+    uri.searchParams.append('_ajax_nonce', bits.nonce)
 
     setLoading(true)
     fetch(uri)
@@ -39,8 +39,9 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
           tmpOpts.data = allCategoreis?.filter(item => item.taxonomy === 'category')
           tmpOpts.taxonomies = Object.values(taxonomies)
           tmpOpts.headers = Object.keys(tmpOpts.data[0])
-          tmpOpts.lbl = tmpOpts.headers[1]
-          tmpOpts.vlu = tmpOpts.headers[0]
+          const [vlu, lbl] = tmpOpts.headers
+          tmpOpts.lbl = lbl
+          tmpOpts.vlu = vlu
           tmpOpts.fieldObject = {
             fieldType: 'taxanomy_field',
             filter: { orderBy: 'term_id', taxanomy: 'category', order: 'ASC' },
@@ -60,10 +61,11 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
     const tmpOpts = { ...importOpts }
     if (e.target.checked) {
       tmpOpts.fieldObject.isTaxonomy = true
-      tmpOpts.lbl = tmpOpts.headers[1]
+      const [vlu, lbl] = tmpOpts.headers
+      tmpOpts.lbl = lbl
 
-      if (tmpOpts?.fieldObject?.filter?.taxanomy === 'category') tmpOpts.vlu = tmpOpts.headers[0]
-      else tmpOpts.vlu = tmpOpts.headers[1]
+      if (tmpOpts?.fieldObject?.filter?.taxanomy === 'category') tmpOpts.vlu = vlu
+      else tmpOpts.vlu = lbl
     } else {
       tmpOpts.fieldObject.isTaxonomy = false
     }

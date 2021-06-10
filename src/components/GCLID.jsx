@@ -1,14 +1,16 @@
-/* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
-import { __ } from '../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
 import { setGrantTokenResponse } from './AllIntegrations/IntegrationHelpers/IntegrationHelpers'
 import LoaderSm from './Loaders/LoaderSm'
-import SnackMsg from './Utilities/SnackMsg'
 import CopyText from './Utilities/CopyText'
+import SnackMsg from './Utilities/SnackMsg'
 
 export default function GCLID() {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const [gclidConf, setGclidConf] = useState({
     name: 'Gclid',
     type: 'Google',

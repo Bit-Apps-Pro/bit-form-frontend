@@ -1,12 +1,12 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-shadow */
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
 import { checkIfHasColonLblVlu } from './importOptionsHelpers'
 
 export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const handleImportFile = e => {
-    // eslint-disable-next-line no-undef
-    const isPro = typeof bits !== 'undefined' && bits.isPro
     let tmpOpts = { ...importOpts }
     if (!isPro) return []
     const file = e.target.files[0]

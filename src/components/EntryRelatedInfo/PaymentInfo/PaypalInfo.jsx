@@ -1,9 +1,11 @@
-/* eslint-disable no-undef */
-import { __ } from '../../../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import noData from '../../../resource/img/nodata.svg'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
 
 export default function PaypalInfo({ paymentInfo }) {
+  const bits = useRecoilValue($bits)
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
 
   const renderPaypalInfo = payInfo => {

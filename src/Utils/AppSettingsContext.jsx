@@ -1,9 +1,11 @@
-/* eslint-disable no-undef */
 import { createContext, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
 
 export const AppSettings = createContext()
 
 export default function AppSettingsProvider({ children }) {
+  const bits = useRecoilValue($bits)
   const setReCaptchaState = ver => {
     let captcha
     if (ver === 'v2') captcha = bits?.allFormSettings?.gReCaptcha
@@ -20,9 +22,7 @@ export default function AppSettingsProvider({ children }) {
     }
   }
 
-  // eslint-disable-next-line no-undef
   const [reCaptchaV2, setreCaptchaV2] = useState(setReCaptchaState('v2'))
-  // eslint-disable-next-line no-undef
   const [reCaptchaV3, setreCaptchaV3] = useState(setReCaptchaState('v3'))
 
   const paymentsState = () => {

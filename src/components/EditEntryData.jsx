@@ -1,15 +1,16 @@
-import { useState, useEffect, useRef } from 'react'
-
+import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { __ } from '../Utils/i18nwrap'
-import Modal from './Utilities/Modal'
-import bitsFetch from '../Utils/bitsFetch'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
 import Bitforms from '../user-frontend/Bitforms'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
 import LoaderSm from './Loaders/LoaderSm'
+import Modal from './Utilities/Modal'
 
 export default function EditEntryData(props) {
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
-
+  const bits = useRecoilValue($bits)
   const [showEdit, setshowEdit] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [data, setData] = useState({ layout: null, fields: null })
@@ -25,7 +26,6 @@ export default function EditEntryData(props) {
       .then(response => response.text())
       .then(styleData => setFormStyle(styleData))
 
-    // eslint-disable-next-line no-undef
     fetch(`${bits.styleURL}/bitform-layout-${formID}.css`)
       .then(response => response.text())
       .then(styleData => setFormLayoutStyle(styleData))
@@ -55,7 +55,6 @@ export default function EditEntryData(props) {
               }
               fetch(uri)
             } else {
-              // eslint-disable-next-line no-undef
               const uri = new URL(bits.ajaxURL)
               uri.searchParams.append('action', 'bitforms_trigger_workflow')
               const triggerData = { cronNotOk: hitCron, id: `bitforms_${formID}` }

@@ -256,6 +256,15 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
+.pro-badge {
+    background: red;
+    padding: 6px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .unselectable {
   -moz--ms-user-select: none;
   -webkit-user-select: none;
@@ -4107,7 +4116,7 @@ _:-ms-fullscreen,
 }
 
 .mt-2 {
-  margin-top: 10px;
+  margin-top: 10px !important;
 }
 
 .mt-3 {

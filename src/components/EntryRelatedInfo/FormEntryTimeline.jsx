@@ -6,12 +6,12 @@ import { dateTimeFormatter } from '../../Utils/Helpers'
 import CopyText from '../Utilities/CopyText'
 import SnackMsg from '../Utilities/SnackMsg'
 import Loader from '../Loaders/Loader'
-import { $fieldLabels } from '../../GlobalStates'
+import { $bits, $fieldLabels } from '../../GlobalStates'
 
 function FormEntryTimeline({ formID, entryID, settab, integrations }) {
-  // eslint-disable-next-line no-undef
-  const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
+  const bits = useRecoilValue($bits)
   const allLabels = useRecoilValue($fieldLabels)
+  const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
 
   const [log, setLog] = useState([])
   const [integLogs, setIntegLogs] = useState([])

@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
@@ -7,13 +9,14 @@ import { handleTabChange, refreshLayouts, refreshRelatedList } from './ZohoCRMCo
 import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 
 export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar }) {
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
+
   useEffect(() => {
     handleTabChange(indx + 1, settab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
   return (
     <>
       {isLoading && (

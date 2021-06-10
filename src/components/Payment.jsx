@@ -1,17 +1,19 @@
 import { useContext, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
-import SnackMsg from './Utilities/SnackMsg'
+import { __ } from '../Utils/i18nwrap'
 import LoaderSm from './Loaders/LoaderSm'
 import PaypalSettings from './PaypalSettings'
 import RazorpaySettings from './RazorpaySettings'
+import SnackMsg from './Utilities/SnackMsg'
 
 export default function Payment({ allIntegURL }) {
-  /* eslint-disable-next-line no-undef */
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const { payments, setPayments } = useContext(AppSettings)
   const { type, indx } = useParams()
   const history = useHistory()

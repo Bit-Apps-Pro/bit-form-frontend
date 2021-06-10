@@ -1,8 +1,8 @@
-/* eslint-disable no-undef */
-/* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { sortByField } from '../../../Utils/Helpers'
+import { $bits } from '../../../GlobalStates'
 
 const getTrimmedString = str => (typeof str === 'string' ? str?.trim() : str?.toString())
 export const generateUserOptions = (importOpts, lblKey, valKey) => {
@@ -13,7 +13,8 @@ export const generateUserOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function UserImportOption({ importOpts, setImportOpts }) {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
 
     const uri = new URL(bits.ajaxURL)
     uri.searchParams.append('action', 'bitforms_get_wp_users')
-    uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
+    uri.searchParams.append('_ajax_nonce', bits.nonce)
 
     setLoading(true)
     fetch(uri)
@@ -33,8 +34,9 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
           tmpOpts.data = users
           localStorage.setItem('bf-options-users', JSON.stringify(users))
           tmpOpts.headers = Object.keys(tmpOpts.data[0])
-          tmpOpts.lbl = tmpOpts.headers[0]
-          tmpOpts.vlu = tmpOpts.headers[0]
+          const [lbl] = tmpOpts.headers
+          tmpOpts.lbl = lbl
+          tmpOpts.vlu = lbl
           tmpOpts.fieldObject = {
             fieldType: 'user_field',
             filter: { orderBy: 'ID', role: 'all', order: 'ASC' },

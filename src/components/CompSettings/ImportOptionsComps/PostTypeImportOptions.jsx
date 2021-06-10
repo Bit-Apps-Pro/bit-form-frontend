@@ -1,6 +1,7 @@
-/* eslint-disable no-undef */
 /* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import LoaderSm from '../../Loaders/LoaderSm'
 
@@ -12,6 +13,7 @@ export const generatePostOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
+  const bits = useRecoilValue($bits)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [loading, setLoading] = useState(false)
 
@@ -20,7 +22,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
 
     const uri = new URL(bits.ajaxURL)
     uri.searchParams.append('action', 'bitforms_get_wp_posts')
-    uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
+    uri.searchParams.append('_ajax_nonce', bits.nonce)
 
     setLoading(true)
     fetch(uri)

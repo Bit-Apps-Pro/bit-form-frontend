@@ -1,19 +1,19 @@
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
 import FileUploadImportOptions from './ImportOptionsComps/FileUploadImportOptions'
 import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
-import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import PostTypeImportOptions, { generatePostOptions } from './ImportOptionsComps/PostTypeImportOptions'
-import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
+import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
+import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
 
 export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])

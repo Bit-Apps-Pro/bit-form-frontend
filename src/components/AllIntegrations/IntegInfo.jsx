@@ -1,5 +1,7 @@
 import { lazy, Suspense, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
 
@@ -29,6 +31,7 @@ export default function IntegInfo({ allIntegURL, integrations }) {
   const { id } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
   const integ = integrations[id]
+  const bits = useRecoilValue($bits)
 
   // route is info/:id but for redirect uri need to make new/:type
   let location = window.location.toString()
@@ -67,7 +70,6 @@ export default function IntegInfo({ allIntegURL, integrations }) {
       case 'Zoho Projects':
         return <ZohoProjectsAuthorization projectsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
       case 'Google Sheet':
-      // eslint-disable-next-line no-undef
         return <GoogleSheetAuthorization sheetConf={integ} step={1} redirectLocation={bits.googleRedirectURL} setSnackbar={setSnackbar} isInfo />
       case 'Sendinblue':
         return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />

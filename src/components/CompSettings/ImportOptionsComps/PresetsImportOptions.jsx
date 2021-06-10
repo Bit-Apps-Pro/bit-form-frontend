@@ -1,11 +1,12 @@
-/* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import LoaderSm from '../../Loaders/LoaderSm'
 
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const [loading, setLoading] = useState(false)
   const presetVersion = 1.0
   const presetURL = 'https://static.bitapps.pro/bitform/options-presets.json'
@@ -46,8 +47,9 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
     tmpOpts.preset = val
     if (val && tmpOpts?.data?.[val]?.length) {
       tmpOpts.headers = Object.keys(tmpOpts.data[val][0])
-      tmpOpts.lbl = tmpOpts.headers[0]
-      tmpOpts.vlu = tmpOpts.headers[0]
+      const [lbl] = tmpOpts.headers
+      tmpOpts.lbl = lbl
+      tmpOpts.vlu = lbl
     } else {
       delete tmpOpts.headers
       delete tmpOpts.lbl
