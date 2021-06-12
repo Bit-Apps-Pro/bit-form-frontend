@@ -26,7 +26,6 @@ function App() {
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
       <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
         <div className="Btcd-App">
-
           <div className="nav-wrp">
             <div className="flx">
               <div className="logo flx" title={__('Bit Form', 'bitform')}>
