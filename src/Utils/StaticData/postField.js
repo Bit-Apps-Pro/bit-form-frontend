@@ -12,7 +12,6 @@ export const postFields = [
   {
     key: 'post_content',
     name: 'Post Content',
-    required: true,
   },
   {
     key: 'post_excerpt',

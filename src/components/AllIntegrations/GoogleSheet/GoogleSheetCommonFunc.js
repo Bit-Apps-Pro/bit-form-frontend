@@ -147,7 +147,6 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setisLo
     .then(result => {
       if (result && result.success) {
         const newConf = { ...sheetConf }
-        console.log('worksheed header', result.data.worksheet_headers.length)
         if (result.data.worksheet_headers?.length > 0) {
           if (!newConf.default.headers) {
             newConf.default.headers = {}
@@ -189,6 +188,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   }
   setisLoading(true)
   const scopes = 'https://www.googleapis.com/auth/drive'
+  // eslint-disable-next-line no-undef
   const apiEndpoint = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.googleRedirectURL)}&client_id=${confTmp.clientId}`
   const authWindow = window.open(apiEndpoint, 'googleSheet', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
@@ -219,6 +219,7 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
+  // eslint-disable-next-line no-undef
   tokenRequestParams.redirectURI = bits.googleRedirectURL
 
   bitsFetch(tokenRequestParams, 'bitforms_gsheet_generate_token')

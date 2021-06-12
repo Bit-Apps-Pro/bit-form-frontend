@@ -1,25 +1,29 @@
-/* eslint-disable no-undef */
 import { createContext, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
 
 export const AppSettings = createContext()
 
 export default function AppSettingsProvider({ children }) {
-  const [reCaptchaV2, setreCaptchaV2] = useState(
-    // eslint-disable-next-line no-undef
-    bits?.allFormSettings?.gReCaptcha ? bits.allFormSettings.gReCaptcha
-      : {
-        siteKey: '',
-        secretKey: '',
-      },
-  )
-  const [reCaptchaV3, setreCaptchaV3] = useState(
-    // eslint-disable-next-line no-undef
-    bits?.allFormSettings?.gReCaptchaV3 ? bits.allFormSettings.gReCaptchaV3
-      : {
-        siteKey: '',
-        secretKey: '',
-      },
-  )
+  const bits = useRecoilValue($bits)
+  const setReCaptchaState = ver => {
+    let captcha
+    if (ver === 'v2') captcha = bits?.allFormSettings?.gReCaptcha
+    else if (ver === 'v3') captcha = bits?.allFormSettings?.gReCaptchaV3
+    if (captcha) {
+      if (Array.isArray(captcha)) {
+        return captcha[0]
+      }
+      return captcha
+    }
+    return {
+      siteKey: '',
+      secretKey: '',
+    }
+  }
+
+  const [reCaptchaV2, setreCaptchaV2] = useState(setReCaptchaState('v2'))
+  const [reCaptchaV3, setreCaptchaV3] = useState(setReCaptchaState('v3'))
 
   const paymentsState = () => {
     if (bits?.allFormSettings?.payments) {

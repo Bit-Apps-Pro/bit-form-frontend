@@ -31,6 +31,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
         setPods(Object.values(res?.data))
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleInput = (typ, val, isNumber) => {
@@ -83,7 +84,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} value={data?.post_type} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Select Type</option>
         {types.map((type, key) => (
-          <option key={key} value={type.name}>{type.label}</option>
+          <option key={`pod-${key * 2}`} value={type.name}>{type.label}</option>
         ))}
       </select>
 
@@ -109,10 +110,17 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data?.post_author} className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>Logged In User</option>
         {users.map((user, key) => (
-          <option key={key} value={user.ID}>{user.display_name}</option>
+          <option key={`pod-${key * 2}`} value={user.ID}>{user.display_name}</option>
         ))}
         {/* <div style={{ color: 'red' }}>{error.clientSecret}</div> */}
       </select>
+      <div>
+        <p className="p-1 f-m">
+          <strong>Note</strong>
+          {' '}
+          : All your taxonomies will be mapped automatically from your form fields.
+        </p>
+      </div>
 
       <div>
         <div className="mt-3 mb-1"><b>Pod Fields Mapping</b></div>
@@ -139,11 +147,11 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('pod_map', data.pod_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
 
       <div>
-        <div className="mt-3 mb-1"><b>WP Object Fields Mapping</b></div>
+        <div className="mt-3 mb-1"><b>Post Fields Mapping</b></div>
         <div className="btcd-hr" />
         <div className="flx flx-around mt-2 mb-1">
           <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-          <div className="txt-dp"><b>{__('Pod Fields', 'bitform')}</b></div>
+          <div className="txt-dp"><b>{__('Post Fields', 'bitform')}</b></div>
         </div>
       </div>
 

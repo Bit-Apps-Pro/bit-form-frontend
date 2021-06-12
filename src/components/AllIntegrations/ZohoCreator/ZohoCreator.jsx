@@ -1,24 +1,21 @@
-import { __ } from '../../../Utils/i18nwrap'
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import { handleAuthorize, saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
-import IntegrationStepOne from '../IntegrationHelpers/IntegrationStepOne'
+import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoCreatorAuthorization from './ZohoCreatorAuthorization'
-import { checkMappedFields, handleInput, refreshApplications } from './ZohoCreatorCommonFunc'
+import { checkMappedFields, handleInput } from './ZohoCreatorCommonFunc'
 import ZohoCreatorIntegLayout from './ZohoCreatorIntegLayout'
-import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [step, setStep] = useState(1)
-  const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', accountOwner: '' })
   const [snack, setSnackbar] = useState({ show: false })
   const [creatorConf, setCreatorConf] = useState({
     name: 'Zoho Creator API',

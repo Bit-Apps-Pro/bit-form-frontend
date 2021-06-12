@@ -4,11 +4,10 @@ import { $fields, $selectedFieldId } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Cooltip from '../Utilities/Cooltip'
 import CopyText from '../Utilities/CopyText'
-import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
@@ -73,12 +72,17 @@ export default function DecisionBoxSettings() {
         <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0" />
       </div>
       <div className="mt-3">
-        <div className="flx">
-          <b>Label: </b>
+        <div className="flx flx-between">
+          <div className="flx">
+            <b>Label: </b>
+            <Cooltip width={250} icnSize={17} className="ml-2">
+              <div className="txt-body">{__('Edit your decision box label by clicking on edit icon', 'bitform')}</div>
+            </Cooltip>
+          </div>
           <span
             role="button"
             tabIndex="-1"
-            className="ml-2 cp"
+            className="mr-2 cp"
             onClick={() => setLabelModal(true)}
             onKeyPress={() => setLabelModal(true)}
           >
@@ -107,6 +111,6 @@ export default function DecisionBoxSettings() {
       <SingleInput inpType="text" title={__('Unchecked Value:', 'bitform')} value={fieldData.msg.unchecked || ''} action={e => setMsg(e.target.value, 'unchecked')} />
       <SingleToggle title={__('Checked by Default:', 'bitform')} action={setChecked} isChecked={fieldData.valid.checked} className="mt-3" />
 
-    </div >
+    </div>
   )
 }

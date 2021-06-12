@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import Loader from '../Loaders/Loader'
 
@@ -18,6 +17,7 @@ export default function GoogleAdInfo({ settab, rowDtl }) {
       }
       setIsLoading(false)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

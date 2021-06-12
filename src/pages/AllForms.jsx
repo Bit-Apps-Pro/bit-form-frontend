@@ -1,21 +1,20 @@
-/* eslint-disable no-undef */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { lazy, memo, useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../Utils/i18nwrap'
+import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
 import MenuBtn from '../components/Utilities/MenuBtn'
+import Modal from '../components/Utilities/Modal'
 import Progressbar from '../components/Utilities/Progressbar'
 import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
-import FormTemplates from '../components/FormTemplates'
-import Modal from '../components/Utilities/Modal'
 import Table from '../components/Utilities/Table'
+import { $bits, $forms, $newFormId } from '../GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
-import { $forms, $newFormId } from '../GlobalStates'
+import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
 const Welcome = lazy(() => import('./Welcome'))
@@ -26,6 +25,7 @@ function AllFroms() {
   const [allForms, setAllForms] = useRecoilState($forms)
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const newFormId = useRecoilValue($newFormId)
+  const bits = useRecoilValue($bits)
 
   const handleStatus = (e, id) => {
     const status = e.target.checked
@@ -159,7 +159,7 @@ function AllFroms() {
   const handleExport = (formID) => {
     const uri = new URL(bits.ajaxURL)
     uri.searchParams.append('action', 'bitforms_export_aform')
-    uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
+    uri.searchParams.append('_ajax_nonce', bits.nonce)
     uri.searchParams.append('id', formID)
     fetch(uri)
       .then(response => {

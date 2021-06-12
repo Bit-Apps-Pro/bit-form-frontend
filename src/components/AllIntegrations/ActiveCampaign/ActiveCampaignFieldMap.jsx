@@ -4,9 +4,7 @@ import MtInput from '../../Utilities/MtInput'
 
 export default function ActiveCampaignFieldMap({ i, formFields, field, activeCampaingConf, setActiveCampaingConf }) {
   const isRequired = field.required
-  console.log(isRequired)
   const notResquiredField = activeCampaingConf?.default?.fields && Object.values(activeCampaingConf?.default?.fields).filter((f => !f.required))
-  console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...activeCampaingConf }
     newConf.field_map.splice(indx, 0, {})

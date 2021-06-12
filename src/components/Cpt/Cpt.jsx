@@ -1,17 +1,19 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../GlobalStates'
+import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import CptTypeAdd from './CptTypeAdd'
 import EditCpt from './EditCpt'
-import bitsFetch from '../../Utils/bitsFetch'
 
 export default function Cpt() {
   const [tab, settab] = useState('add_type')
   const [posts, setPosts] = useState([])
   const [types, setTypes] = useState([])
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
 
   useEffect(() => {
     bitsFetch({}, 'bitforms_getAll_post_type').then((res) => {

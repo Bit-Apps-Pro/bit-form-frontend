@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../GlobalStates'
 import Modal from '../Utilities/Modal'
 import ImportStepOne from './ImportStepOne'
 import ImportStepTwo from './ImportStepTwo'
 
 export default function Import({ cols, formID, close, showImportMdl }) {
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
-  // eslint-disable-next-line no-undef
+  const bits = useRecoilValue($bits)
   const formName = bits?.allForms?.find(form => form.id === formID)?.form_name
   const formRef = useRef(null)
   const [fileResponses, setResponses] = useState([])

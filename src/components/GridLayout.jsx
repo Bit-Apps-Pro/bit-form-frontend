@@ -6,20 +6,21 @@ import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { __ } from '../Utils/i18nwrap'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
-import { deepCopy, isType } from '../Utils/Helpers'
-import ConfirmModal from './Utilities/ConfirmModal'
-import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
-import FieldBlockWrapper from './FieldBlockWrapper'
-import { $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { deepCopy, isType } from '../Utils/Helpers'
+import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
+import { __ } from '../Utils/i18nwrap'
+import FieldBlockWrapper from './FieldBlockWrapper'
+import ConfirmModal from './Utilities/ConfirmModal'
 
 function GridLayout(props) {
   console.log('render gridlay')
   const { payments } = useContext(AppSettings)
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const setProModal = useContext(ShowProModalContext)
   const { newData, setNewData, style, gridWidth, formID, formSettings } = props
   const [fields, setFields] = useRecoilState($fields)

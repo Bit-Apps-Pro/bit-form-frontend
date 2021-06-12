@@ -20,7 +20,6 @@ function Pabbly({ formFields, setIntegration, integrations, allIntegURL }) {
     url: process.env.NODE_ENV === 'development' ? 'https://hooks..com/hooks/catch/8430229/o7gwcin/' : '',
     apiConsole: 'https://connect.pabbly.com/dashboard',
   })
-  console.log('pabbly', pabbly)
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

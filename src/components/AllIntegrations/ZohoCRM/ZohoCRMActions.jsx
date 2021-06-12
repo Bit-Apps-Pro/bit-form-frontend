@@ -1,14 +1,17 @@
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
-import ConfirmModal from '../../Utilities/ConfirmModal'
-import CheckBox from '../../Utilities/CheckBox'
-import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
+import CheckBox from '../../Utilities/CheckBox'
+import ConfirmModal from '../../Utilities/ConfirmModal'
 import Modal from '../../Utilities/Modal'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 import TitleModal from '../../Utilities/TitleModal'
 import { refreshAssigmentRules, refreshOwners, refreshTags } from './ZohoCRMCommonFunc'
 
@@ -16,8 +19,8 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
-  /* eslint-disable-next-line no-undef */
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
 
   const actionHandler = (val, typ) => {
     const newConf = { ...crmConf }

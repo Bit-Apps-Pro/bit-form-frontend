@@ -38,8 +38,6 @@ function EditActiveCampaign({ formFields, setIntegration, integrations, allInteg
         setSnackbar={setSnackbar}
       />
 
-      {console.log('active campaign info', activeCampaingConf)}
-
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, activeCampaingConf, history, id, 1)}

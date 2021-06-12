@@ -54,10 +54,10 @@ export default function ImportStepOne() {
     const keycount = keys && keys.length
     let i = 0
     if (typeof keys !== 'object' || typeof values !== 'object' // Only accept arrays or array-like objects
-            || typeof keycount !== 'number' || typeof values.length !== 'number' || !keycount) { // Require arrays to have a count
+      || typeof keycount !== 'number' || typeof values.length !== 'number' || !keycount) { // Require arrays to have a count
       return false
     }
-    if (keycount != values.length) {
+    if (keycount !== values.length) {
       return false
     }
     for (i = 0; i < keycount; i += 1) {

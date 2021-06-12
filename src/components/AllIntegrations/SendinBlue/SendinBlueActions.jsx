@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import { refreshTemplate } from './SendinBlueCommonFunc'

@@ -35,8 +35,6 @@ export default function Telegram({ formFields, setIntegration, integrations, all
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
-  console.log('telegramConf', telegramConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

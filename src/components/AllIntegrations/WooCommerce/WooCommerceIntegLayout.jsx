@@ -1,7 +1,6 @@
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import WooCommerceProductActions from './WooCommerceProductActions'
 import { refreshFields } from './WooCommerceCommonFunc'
 import WooCommerceFieldMap from './WooCommerceFieldMap'
 

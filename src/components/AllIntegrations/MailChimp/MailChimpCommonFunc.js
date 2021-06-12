@@ -13,7 +13,6 @@ export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, se
   switch (e.target.name) {
     case 'listId':
       newConf = listChange(newConf, formID, setSheetConf, setisLoading, setSnackbar)
-      console.log('new config', newConf)
       break
     default:
       break
@@ -42,7 +41,6 @@ export const listChange = (sheetConf, formID, setSheetConf, setisLoading, setSna
 
 export const refreshAudience = (formID, sheetConf, setSheetConf, setisLoading, setSnackbar) => {
   setisLoading(true)
-  console.log('audience config', sheetConf)
   const refreshModulesRequestParams = {
     formID,
     clientId: sheetConf.clientId,
@@ -76,7 +74,6 @@ export const refreshAudience = (formID, sheetConf, setSheetConf, setisLoading, s
 
 export const refreshTags = (formID, sheetConf, setSheetConf, setisLoading, setSnackbar) => {
   setisLoading(true)
-  console.log('audience tags', sheetConf)
   const refreshModulesRequestParams = {
     formID,
     clientId: sheetConf.clientId,
@@ -105,7 +102,6 @@ export const refreshTags = (formID, sheetConf, setSheetConf, setisLoading, setSn
 
 export const refreshFields = (formID, sheetConf, setSheetConf, setisLoading, setSnackbar) => {
   const { listId } = sheetConf
-  console.log('mail chimp list id', listId)
   if (!listId) {
     return
   }
@@ -120,7 +116,6 @@ export const refreshFields = (formID, sheetConf, setSheetConf, setisLoading, set
   bitsFetch(refreshSpreadsheetsRequestParams, 'bitforms_mChimp_refresh_fields')
     .then(result => {
       if (result && result.success) {
-        console.log('audience field', result)
         const newConf = { ...sheetConf }
         if (result.data.audienceField) {
           if (!newConf.default.fields) {
@@ -146,7 +141,6 @@ export const setGrantTokenResponse = (integ) => {
   // console.log('this is setGrant')
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
-  console.log(authWindowLocation)
   const queryParams = authWindowLocation.replace(`${window.opener.location.href}`, '').split('&')
   if (queryParams) {
     queryParams.forEach(element => {
@@ -184,8 +178,8 @@ export const handleMailChimpAuthorize = (integ, ajaxInteg, confTmp, setConf, set
         grantTokenResponse = JSON.parse(bitsMailChimp)
         localStorage.removeItem(`__bitforms_${integ}`)
         if (grantTokenResponse.code.search('#')) {
-          const code = grantTokenResponse.code.split('#')
-          grantTokenResponse.code = code[0]
+          const [code] = grantTokenResponse.code.split('#')
+          grantTokenResponse.code = code
         }
       }
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {

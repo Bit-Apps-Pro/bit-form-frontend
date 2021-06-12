@@ -1,14 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState, useEffect } from 'react'
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
+import { useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { __ } from '../../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
+import { __ } from '../../Utils/i18nwrap'
 import ConfigForm from './ConfigForm'
 import MailSendTest from './MailSendTest'
 
 export default function SMTP({ setsnack }) {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const [tab, settab] = useState('mail_config')
   const [mail, setMail] = useState({})
   const [status, setStatus] = useState('')

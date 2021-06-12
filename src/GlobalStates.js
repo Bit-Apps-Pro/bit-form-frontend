@@ -48,6 +48,8 @@ export const $mailTemplates = atom({ key: '$mailTemplates', default: [], dangero
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: {}, settings: {} } })
 export const $saveForm = atom({ key: '$saveForm', default: () => { } })
 export const $workflows = atom({ key: '$workflows', default: defaultWorkflowValue, dangerouslyAllowMutability: true })
+// eslint-disable-next-line no-undef
+export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fieldLabels)), dangerouslyAllowMutability: true })

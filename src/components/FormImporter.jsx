@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react'
 import { useSetRecoilState } from 'recoil'

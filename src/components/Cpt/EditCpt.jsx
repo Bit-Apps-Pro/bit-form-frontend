@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useEffect, useState, useRef } from 'react'
 import { __ } from '../../Utils/i18nwrap'
@@ -50,6 +51,7 @@ export default function AllCpt({ settab, posts, types }) {
 
   useEffect(() => {
     settab('all_post')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

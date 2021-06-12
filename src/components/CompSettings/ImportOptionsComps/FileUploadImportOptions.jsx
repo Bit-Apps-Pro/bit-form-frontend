@@ -1,78 +1,17 @@
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
-import { __ } from '../../../Utils/i18nwrap'
-
-const isPro = typeof bits !== 'undefined' && bits.isPro
-
-export const generateNewFileUploadedOptions = (importOpts, lblKey, valKey) => {
-  if (!isPro) return []
-  const { data, dataTyp, separator, lbl, vlu } = importOpts
-  let opts = []
-
-  if (dataTyp === 'txt') {
-    const hasColonKeyVlu = checkIfHasColonLblVlu(separator, importOpts)
-    if (!separator || (hasColonKeyVlu && (!lbl || !vlu))) return []
-
-    const pattern = generateSeparatorPattern(separator)
-    const keyIndx = (lbl === 'value') ? 1 : 0
-    const valIndx = (vlu === 'key') ? 0 : 1
-    opts = data.split(pattern).filter(opt => opt.trim().length > 0).map(op => {
-      const opt = hasColonKeyVlu ? op.split(':') : op.split()
-      const lbl = opt[keyIndx].trim()
-      const val = (opt?.[valIndx] || lbl).trim()
-      return { [lblKey]: lbl, [valKey]: val }
-    })
-  }
-
-  if (dataTyp === 'json') {
-    if (isType('object', data) || (isType('array', data) && data.length === 1 && isType('object', data[0]))) {
-      if (!lbl || !vlu) return []
-      const data2 = isType('array', data) ? data[0] : data
-      const keyIndx = (lbl === 'value') ? 1 : 0
-      const valIndx = (vlu === 'key') ? 0 : 1
-      opts = Object.entries(data2).map(op => ({ [lblKey]: (op[keyIndx]).trim(), [valKey]: (op[valIndx]).trim() }))
-    } else if (isType('array', data)) {
-      if (data.length > 1 && isType('object', data[0])) {
-        if (!lbl || !vlu) return []
-        opts = data.map(op => ({ [lblKey]: (op[lbl]).trim(), [valKey]: (op[vlu]).trim() }))
-      } else {
-        opts = data.filter(opt => opt.trim().length > 0).map(op => ({ [lblKey]: op.trim(), [valKey]: op.trim() }))
-      }
-    }
-  }
-
-  if (dataTyp === 'xlsx' || dataTyp === 'xls' || dataTyp === 'csv' || dataTyp === 'tsv') {
-    if (!lbl || !vlu) return []
-    opts = data.map(opt => ({ [lblKey]: (opt[lbl]).trim(), [valKey]: (opt[vlu]).trim() }))
-  }
-
-  return opts
-}
-
-const generateSeparatorPattern = separator => (separator === 'comma' ? ',' : (separator === 'space' ? /[ ]+/ : /\r?\n/))
-
-const checkIfHasColonLblVlu = (separator, importOpts) => {
-  let hasColonKeyVlu = 1
-  const pattern = generateSeparatorPattern(separator)
-  const data = importOpts?.data?.split(pattern) || []
-  const { length } = data
-  if (length) {
-    for (let i = 0; i < (length <= 10 ? length : 10); i++) {
-      if (data[i].split(':').length <= 1) {
-        hasColonKeyVlu = 0
-        break
-      }
-    }
-  }
-
-  return hasColonKeyVlu
-}
+import { checkIfHasColonLblVlu } from './importOptionsHelpers'
 
 export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const handleImportFile = e => {
+    let tmpOpts = { ...importOpts }
     if (!isPro) return []
     const file = e.target.files[0]
     if (!file?.name) { console.warn('file missing'); return }
-    importOpts = { show: true, dataSrc: 'fileupload' }
+    tmpOpts = { show: true, dataSrc: 'fileupload' }
     const ext = getFileExts(file.name)
     const reader = new FileReader()
     if (ext === 'txt' || ext === 'json' || ext === 'csv' || ext === 'tsv') {
@@ -81,50 +20,50 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
       reader.readAsArrayBuffer(file)
     }
     reader.onload = () => {
-      importOpts.dataTyp = ext
+      tmpOpts.dataTyp = ext
       const data = reader.result
       if (ext === 'txt') {
-        importOpts.data = data
+        tmpOpts.data = data
       } else if (ext === 'json') {
         try {
-          importOpts.data = JSON.parse(data)
+          tmpOpts.data = JSON.parse(data)
         } catch (err) {
-          setImportOpts({ ...importOpts })
+          setImportOpts({ ...tmpOpts })
           console.warn(err)
           return
         }
 
-        const extracted = extractJSONheaders(importOpts.data)
-        if (extracted?.headers) importOpts.headers = extracted.headers
-        if (extracted?.lbl) importOpts.lbl = extracted.lbl
-        if (extracted?.vlu) importOpts.vlu = extracted.vlu
+        const extracted = extractJSONheaders(tmpOpts.data)
+        if (extracted?.headers) tmpOpts.headers = extracted.headers
+        if (extracted?.lbl) tmpOpts.lbl = extracted.lbl
+        if (extracted?.vlu) tmpOpts.vlu = extracted.vlu
       } else if (ext === 'csv' || ext === 'tsv') {
-        importOpts.data = csvToJson(data, ext === 'tsv' ? '\t' : ',')
-        importOpts.headers = getHeaderNames(importOpts.data[0])
-        if (importOpts.headers.length) {
-          importOpts = setDefaultLblVlu(importOpts.headers[0], importOpts)
+        tmpOpts.data = csvToJson(data, ext === 'tsv' ? '\t' : ',')
+        tmpOpts.headers = getHeaderNames(tmpOpts.data[0])
+        if (tmpOpts.headers.length) {
+          tmpOpts = setDefaultLblVlu(tmpOpts.headers[0], tmpOpts)
         }
       } else if (ext === 'xlsx' || ext === 'xls') {
         if (!XLSX) { console.warn('sheet.js not loaded!'); return }
         const dataArr = new Uint8Array(data)
         const workbook = XLSX.read(dataArr, { type: 'array' })
-        importOpts.dataTyp = ext
+        tmpOpts.dataTyp = ext
         const { length } = workbook.SheetNames
         if (length === 1) {
-          importOpts.data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
-          importOpts.headers = getHeaderNames(importOpts.data[0])
-          if (importOpts.headers.length) {
-            importOpts = setDefaultLblVlu(importOpts.headers[0], importOpts)
+          tmpOpts.data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]])
+          tmpOpts.headers = getHeaderNames(tmpOpts.data[0])
+          if (tmpOpts.headers.length) {
+            tmpOpts = setDefaultLblVlu(tmpOpts.headers[0], tmpOpts)
           }
         } else if (length > 1) {
-          importOpts.workbook = workbook
+          tmpOpts.workbook = workbook
         }
       }
-      setImportOpts({ ...importOpts })
+      setImportOpts({ ...tmpOpts })
     }
   }
 
-  const setDefaultLblVlu = (header, importOpts) => ({ ...importOpts, lbl: header, vlu: header })
+  const setDefaultLblVlu = (header, importState) => ({ ...importState, lbl: header, vlu: header })
 
   const extractJSONheaders = data => {
     const headers = getHeaderNames(data[0])
@@ -142,26 +81,27 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
 
   const handleImportInput = e => {
     const { name, value } = e.target
-    importOpts[name] = value
+    const tmpOpts = { ...importOpts }
+    tmpOpts[name] = value
     if (name === 'separator') {
-      const hasColonKeyVlu = checkIfHasColonLblVlu(value, importOpts)
+      const hasColonKeyVlu = checkIfHasColonLblVlu(value, tmpOpts)
       if (hasColonKeyVlu) {
-        importOpts.headers = ['key', 'value']
-        importOpts.lbl = 'key'
-        importOpts.vlu = 'value'
+        tmpOpts.headers = ['key', 'value']
+        tmpOpts.lbl = 'key'
+        tmpOpts.vlu = 'value'
       }
     } else if (name === 'sheetName') {
-      delete importOpts.lbl
-      delete importOpts.vlu
+      delete tmpOpts.lbl
+      delete tmpOpts.vlu
       if (value) {
-        importOpts.data = XLSX.utils.sheet_to_json(importOpts.workbook.Sheets[value])
-        importOpts.headers = getHeaderNames(importOpts.data[0])
+        tmpOpts.data = XLSX.utils.sheet_to_json(tmpOpts.workbook.Sheets[value])
+        tmpOpts.headers = getHeaderNames(tmpOpts.data[0])
       } else {
-        delete importOpts.headers
-        delete importOpts.data
+        delete tmpOpts.headers
+        delete tmpOpts.data
       }
     }
-    setImportOpts({ ...importOpts })
+    setImportOpts({ ...tmpOpts })
   }
 
   const getHeaderNames = obj => (isType('object', obj) ? Object.keys(obj) : [])

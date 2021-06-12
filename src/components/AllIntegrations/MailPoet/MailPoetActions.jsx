@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { __ } from '../../../Utils/i18nwrap'
-import TableCheckBox from '../../Utility/TableCheckBox'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function MailPoetActions({ mailPoetConf, setMailPoetConf, formFields }) {
   const actionHandler = (e, type) => {

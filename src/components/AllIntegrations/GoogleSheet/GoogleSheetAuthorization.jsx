@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
+import LoaderSm from '../../Loaders/LoaderSm'
+import CopyText from '../../Utilities/CopyText'
+import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
 
 export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
+  const bits = useRecoilValue($bits)
 
   const handleInput = e => {
     const newConf = { ...sheetConf }

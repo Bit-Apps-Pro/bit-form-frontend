@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ActiveCampaignActions from './ActiveCampaignActions'
 import ActiveCampaignFieldMap from './ActiveCampaignFieldMap'

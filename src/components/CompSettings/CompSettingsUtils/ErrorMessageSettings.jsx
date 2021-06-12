@@ -18,39 +18,38 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
 
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
-    const tmpErr = { ...fieldData }
-    if (!tmpErr.err) tmpErr.err = {}
-    if (!tmpErr.err[name]) tmpErr.err[name] = {}
+    if (!fieldData.err) fieldData.err = {}
+    if (!fieldData.err[name]) fieldData.err[name] = {}
     if (checked) {
-      tmpErr.err[name].custom = true
-      if (!tmpErr.err[name].msg) tmpErr.err[name].msg = tmpErr.err[name].dflt
+      fieldData.err[name].custom = true
+      if (!fieldData.err[name].msg) fieldData.err[name].msg = fieldData.err[name].dflt
     } else {
-      delete tmpErr.err[name].custom
+      delete fieldData.err[name].custom
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const setShowErrMsg = e => {
     const { name, checked } = e.target
-    const tmpErr = { ...fieldData }
-    if (!tmpErr.err) tmpErr.err = {}
-    if (!tmpErr.err[name]) tmpErr.err[name] = {}
+    if (!fieldData.err) fieldData.err = {}
+    if (!fieldData.err[name]) fieldData.err[name] = {}
     if (checked) {
-      tmpErr.err[name].show = true
+      fieldData.err[name].show = true
     } else {
-      delete tmpErr.err[name].show
+      delete fieldData.err[name].show
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   const openErrorModal = () => {
-    const tmpErr = { ...fieldData }
-    if (!tmpErr.err) tmpErr.err = {}
-    if (!tmpErr.err[type]) tmpErr.err[type] = {}
-    tmpErr.err[type].custom = true
-    if (!tmpErr.err[type].msg) tmpErr.err[type].msg = tmpErr.err[type].dflt
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-    setErrorModal(true)
+    if (!fieldData.err) fieldData.err = {}
+    if (!fieldData.err[type]) fieldData.err[type] = {}
+    fieldData.err[type].custom = true
+    if (!fieldData.err[type].msg) fieldData.err[type].msg = fieldData.err[type].dflt
+    setTimeout(() => {
+      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+      setErrorModal(true)
+    })
   }
 
   return (

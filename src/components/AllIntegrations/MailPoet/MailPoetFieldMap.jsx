@@ -3,9 +3,7 @@ import MtInput from '../../Utilities/MtInput'
 
 export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, setMailPoetConf }) {
   const isRequired = field.required
-  console.log(isRequired)
   const notResquiredField = mailPoetConf?.default?.fields && Object.values(mailPoetConf?.default?.fields).filter((f => f.required === ''))
-  console.log(notResquiredField)
   const addFieldMap = (indx) => {
     const newConf = { ...mailPoetConf }
     newConf.field_map.splice(indx, 0, {})

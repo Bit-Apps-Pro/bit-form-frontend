@@ -1,19 +1,21 @@
 import { useContext, useState } from 'react'
 import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
+import EditIcn from '../Icons/EditIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './Utilities/ConfirmModal'
-import SnackMsg from './Utilities/SnackMsg'
-import Modal from './Utilities/Modal'
+import { __ } from '../Utils/i18nwrap'
 import Payment from './Payment'
-import EditIcn from '../Icons/EditIcn'
+import ConfirmModal from './Utilities/ConfirmModal'
+import Modal from './Utilities/Modal'
+import SnackMsg from './Utilities/SnackMsg'
 
 export default function Payments() {
-  /* eslint-disable-next-line no-undef */
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const { payments, setPayments } = useContext(AppSettings)
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })

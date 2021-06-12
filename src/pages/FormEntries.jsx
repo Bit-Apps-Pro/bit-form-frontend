@@ -1,22 +1,21 @@
 /* eslint-disable no-use-before-define */
-/* eslint-disable no-undef */
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { __ } from '../Utils/i18nwrap'
+import EditEntryData from '../components/EditEntryData'
+import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
-import EditEntryData from '../components/EditEntryData'
 import SnackMsg from '../components/Utilities/SnackMsg'
+import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
-import Table from '../components/Utilities/Table'
+import { $bits, $fieldLabels, $forms, $reports } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
-import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
-import { $fieldLabels, $forms, $reports } from '../GlobalStates'
+import { __ } from '../Utils/i18nwrap'
+import { formsReducer } from '../Utils/Reducers'
 
 function FormEntries({ allResp, setAllResp, integrations }) {
   console.log(
@@ -39,6 +38,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const setForms = useSetRecoilState($forms)
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
+  const bits = useRecoilValue($bits)
+
   useEffect(() => {
     if (reports.length > 0) {
       const allLabelObj = {}
@@ -94,7 +95,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           // let duplicatedEntryCount = 0
           Object.entries(res?.data?.details || {})?.forEach(
             ([resEntryId, duplicatedId]) => {
-              duplicatedEntryCount += 1
+              // duplicatedEntryCount += 1
               duplicatedEntry = JSON.parse(
                 JSON.stringify(newData[rowID[resEntryId]]),
               )
@@ -495,7 +496,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           pageCount={pageCount}
           edit={editData}
           onRowClick={onRowClick}
-          report={0} //index - 0 setted as default report
+          report={0} // index - 0 setted as default report
         />
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">

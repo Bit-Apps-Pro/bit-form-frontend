@@ -20,7 +20,6 @@ function Integrately({ formFields, setIntegration, integrations, allIntegURL }) 
     url: process.env.NODE_ENV === 'development' ? 'https://hooks..com/hooks/catch/8430229/o7gwcin/' : '',
     apiConsole: 'https://app.integrately.com/',
   })
-  console.log('integrately', integrately)
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

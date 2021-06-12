@@ -1,7 +1,8 @@
-import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -9,7 +10,6 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import WooCommerceAuthorization from './WooCommerceAuthorization'
 import { handleInput } from './WooCommerceCommonFunc'
 import WooCommerceIntegLayout from './WooCommerceIntegLayout'
-import BackIcn from '../../../Icons/BackIcn'
 
 export default function WooCommerce({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

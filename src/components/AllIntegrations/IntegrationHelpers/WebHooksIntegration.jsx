@@ -88,18 +88,18 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
             <div className="f-m">{__('Link:', 'bitform')}</div>
             <input name="url" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.url} disabled={isInfo} />
             {webHooks?.apiConsole && (
-            <small className="d-blk mt-2">
-              {__('To got Webhook , Please Visit', 'bitform')}
-              {' '}
-              <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`, 'bitform')}</a>
-            </small>
+              <small className="d-blk mt-2">
+                {__('To got Webhook , Please Visit', 'bitform')}
+                {' '}
+                <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`, 'bitform')}</a>
+              </small>
             )}
           </div>
 
           <div className="w-3">
             <div className="f-m">{__('Method:', 'bitform')}</div>
             <select name="method" onChange={e => handleInput(e, webHooks, setWebHooks)} defaultValue={webHooks.method} className="btcd-paper-inp mt-1" disabled={isInfo}>
-              {method.map((itm, indx) => (<option key={`method-${indx}`} value={itm}>{itm}</option>))}
+              {method.map((itm, indx) => (<option key={`method-${indx * 2}`} value={itm}>{itm}</option>))}
             </select>
           </div>
         </div>

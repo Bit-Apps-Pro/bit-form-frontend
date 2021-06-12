@@ -1,7 +1,8 @@
-import { __ } from '../../../Utils/i18nwrap'
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
@@ -9,7 +10,6 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoCampaignsAuthorization from './ZohoCampaignsAuthorization'
 import { checkMappedFields, handleInput } from './ZohoCampaignsCommonFunc'
 import ZohoCampaignsIntegLayout from './ZohoCampaignsIntegLayout'
-import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

@@ -16,9 +16,7 @@ export default async function bitsFetch(data, action, contentType = null, queryP
 
   const response = await fetch(uri, {
     method: 'POST',
-    headers: {
-      //  'Content-Type': contentType === null ? 'application/x-www-form-urlencoded' : contentType,
-    },
+    headers: {},
     body: data instanceof FormData ? data : JSON.stringify(data),
   })
     .then(res => res.json())

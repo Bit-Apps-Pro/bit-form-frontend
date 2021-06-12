@@ -1,5 +1,3 @@
-import { __ } from '../../../Utils/i18nwrap'
-
 export const addFieldMap = (fldProp, i, confTmp, setConf) => {
   const newConf = { ...confTmp }
   newConf[fldProp].splice(i, 0, {})

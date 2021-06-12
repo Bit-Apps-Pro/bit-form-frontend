@@ -3,22 +3,21 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react'
-
 import { useRecoilState, useRecoilValue } from 'recoil'
+import CloseIcn from '../Icons/CloseIcn'
 import { __ } from '../Utils/i18nwrap'
-import Button from './Utilities/Button'
-import LogicChip from './Utilities/LogicChip'
-import LogicBlock from './Utilities/LogicBlock'
-import ActionBlock from './Utilities/ActionBlock'
 import Accordions from './Utilities/Accordions'
+import ActionBlock from './Utilities/ActionBlock'
+import Button from './Utilities/Button'
 import CheckBox from './Utilities/CheckBox'
-import MtSelect from './Utilities/MtSelect'
+import ConfirmModal from './Utilities/ConfirmModal'
 import DropDown from './Utilities/DropDown'
+import LogicBlock from './Utilities/LogicBlock'
+import LogicChip from './Utilities/LogicChip'
+import MtSelect from './Utilities/MtSelect'
 import TableCheckBox from './Utilities/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './Utilities/ConfirmModal'
-import CloseIcn from '../Icons/CloseIcn'
-import { $mailTemplates, $workflows } from '../GlobalStates'
+import { $mailTemplates, $workflows, $bits } from '../GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
 
 function Workflow({ formFields, fields, formSettings, formID }) {
@@ -26,15 +25,11 @@ function Workflow({ formFields, fields, formSettings, formID }) {
   const [allWorkFlows, setworkFlows] = useRecoilState($workflows)
   const mailTem = useRecoilValue($mailTemplates)
   /* eslint-disable-next-line no-undef */
-  const isPro = typeof bits !== 'undefined' && bits.isPro
   const workFlows = deepCopy(allWorkFlows)
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const mailOptions = () => {
     const mail = []
-    // eslint-disable-next-line no-undef
-    if (typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail)) {
-      // eslint-disable-next-line no-undef
-      mail.push(...bits.userMail)
-    }
     if (emailInFormField()) {
       const flds = []
 
@@ -44,6 +39,10 @@ function Workflow({ formFields, fields, formSettings, formID }) {
         }
       })
       mail.push({ title: 'Form Fields', type: 'group', childs: flds })
+    }
+
+    if (bits.userMail && Array.isArray(bits.userMail)) {
+      mail.push({ title: 'WP Emails', type: 'group', childs: bits.userMail })
     }
     return mail
   }

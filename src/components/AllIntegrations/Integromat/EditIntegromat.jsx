@@ -14,8 +14,6 @@ function EditIntegromat({ formFields, setIntegration, integrations, allIntegURL 
   const [integromat, setIntegromat] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('user integromat', integromat)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -29,7 +27,6 @@ function EditIntegromat({ formFields, setIntegration, integrations, allIntegURL 
           setSnackbar={setSnackbar}
         />
       </div>
-      {console.log('integromat', integromat)}
 
       <WebHooksStepTwo
         edit

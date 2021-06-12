@@ -1,15 +1,15 @@
-import { __ } from '../../../Utils/i18nwrap'
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoDeskAuthorization from './ZohoDeskAuthorization'
 import { checkMappedFields, handleInput, refreshOrganizations } from './ZohoDeskCommonFunc'
 import ZohoDeskIntegLayout from './ZohoDeskIntegLayout'
-import ZohoDeskAuthorization from './ZohoDeskAuthorization'
-import BackIcn from '../../../Icons/BackIcn'
 
 function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()

@@ -9,7 +9,6 @@ export const handleInput = (e, sendinBlueConf, setSendinBlueConf) => {
 }
 export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  console.log('audience config', sendinBlueConf)
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'bitforms_sblue_refresh_lists')
     .then(result => {
@@ -55,7 +54,7 @@ export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) 
       }
       // setIsLoading(false)
     })
-    // .catch(() => setIsLoading(false))
+  // .catch(() => setIsLoading(false))
 }
 
 export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setisLoading, setSnackbar) => {

@@ -12,7 +12,6 @@ import { handleInput } from './GoogleSheetCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
 
 function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) {
-  console.log('google sheet')
   const history = useHistory()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
@@ -33,26 +32,10 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
     actions: {},
   })
 
-  console.log('sheetConf', sheetConf)
-
   useEffect(() => {
     window.opener && setGrantTokenResponse('googleSheet')
   }, [])
 
-  // const nextPage = val => {
-  //   if (val === 3) {
-  //     if (sheetConf.spreadsheetId !== '' && sheetConf.worksheetName !== '' && sheetConf.field_map.length > 0) {
-  //       setstep(val)
-  //     }
-  //   } else {
-  //     setstep(val)
-  //     if (val === 2 && !sheetConf.spreadsheetId) {
-  //       refreshSpreadsheets(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
-  //     }
-  //   }
-
-  //   document.querySelector('.btcd-s-wrp').scrollTop = 0
-  // }
   const nextPage = () => {
     if (sheetConf.spreadsheetId !== '' && sheetConf.worksheetName !== '' && sheetConf.field_map.length > 0) {
       setstep(3)

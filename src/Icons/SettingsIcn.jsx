@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default function SettingsIcn({ size, stroke = 2 }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 30 30">

@@ -1,17 +1,18 @@
-/* eslint-disable no-undef */
-
 import { useEffect, useState } from 'react'
-import { __ } from '../../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../GlobalStates'
 import noData from '../../resource/img/nodata.svg'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
-import ConfirmModal from '../Utilities/ConfirmModal'
+import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import LoaderSm from '../Loaders/LoaderSm'
+import ConfirmModal from '../Utilities/ConfirmModal'
 import NoteForm from './NoteForm'
 
 export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, rowDtl, settab }) {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const [isLoading, setIsLoading] = useState(false)
   const [confMdl, setConfMdl] = useState({ show: false })
@@ -28,6 +29,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     settab('note')
     isPro && setIsLoading('allNotes')
     setFirstLoad(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

@@ -52,22 +52,23 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
       fieldKey={fieldKey}
       fieldData={attr}
     >
-      <textarea
-        id={fieldKey}
-        className={`fld fld-${formID} no-drg textarea`}
-        style={{ height: 'calc(100% - 30px)' }}
-        ref={textAreaRef}
-        {...'ph' in attr && { placeholder: attr.ph }}
-        {...'ac' in attr && { autoComplete: attr.ac }}
-        {...'req' in attr.valid && { required: attr.valid.req }}
-        {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
-        {...'name' in attr && { name: attr.name }}
-        {...onBlurHandler && { onInput: onBlurHandler }}
-        onBlur={handleBlur}
-        {...{ value }}
-        onChange={onChangeHandler}
-      />
-
+      <div>
+        <textarea
+          id={fieldKey}
+          className={`fld fld-${formID} no-drg textarea`}
+          style={{ height: 'calc(100% - 30px)' }}
+          ref={textAreaRef}
+          {...'ph' in attr && { placeholder: attr.ph }}
+          {...'ac' in attr && { autoComplete: attr.ac }}
+          {...'req' in attr.valid && { required: attr.valid.req }}
+          {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+          {...'name' in attr && { name: attr.name }}
+          {...onBlurHandler && { onInput: onBlurHandler }}
+          onBlur={handleBlur}
+          {...{ value }}
+          onChange={onChangeHandler}
+        />
+      </div>
     </InputWrapper>
   )
 }

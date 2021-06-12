@@ -1,14 +1,19 @@
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
-import FileUploadImportOptions, { generateNewFileUploadedOptions } from './ImportOptionsComps/FileUploadImportOptions'
-import PresetsImportOptions, { generateNewPresetsOptions } from './ImportOptionsComps/PresetsImportOptions'
+import FileUploadImportOptions from './ImportOptionsComps/FileUploadImportOptions'
+import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
+import PostTypeImportOptions, { generatePostOptions } from './ImportOptionsComps/PostTypeImportOptions'
+import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
+import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
+import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
 
 export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -23,22 +28,45 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
       return generateNewPresetsOptions(importOpts, lblKey, valKey)
     }
 
+    if (dataSrc === 'user') {
+      return generateUserOptions(importOpts, lblKey, valKey)
+    }
+
+    if (dataSrc === 'terms') {
+      return generateTermsOptions(importOpts, lblKey, valKey)
+    }
+    if (dataSrc === 'post') {
+      return generatePostOptions(importOpts, lblKey, valKey)
+    }
+
     return []
   }
 
   const handleInput = e => {
     const { name, value } = e.target
+    console.log(fieldData)
+    let tmpOpts = { ...importOpts }
     if (name === 'dataSrc') {
-      importOpts = { show: true }
+      tmpOpts = { show: true }
     }
-    importOpts[name] = value
-    setImportOpts({ ...importOpts })
+    tmpOpts[name] = value
+    setImportOpts({ ...tmpOpts })
   }
 
   const handleImport = () => {
     const opts = generateNewOptions()
-    if (importOpts.type === 'merge') fieldData.opt = fieldData.opt.concat(opts)
-    else fieldData.opt = opts
+
+    if (importOpts?.dataSrc === 'user') fieldData.customType = importOpts?.fieldObject
+    if (importOpts?.dataSrc === 'terms') fieldData.customType = importOpts?.fieldObject
+    if (importOpts?.dataSrc === 'post') fieldData.customType = importOpts?.fieldObject
+    console.log('elemtent', fieldData)
+    if (importOpts.type === 'merge') {
+      fieldData.custom_type.oldOpt = fieldData.opt
+      fieldData.opt = fieldData.opt.concat(opts)
+    } else {
+      fieldData.opt = opts
+    }
+    console.log(fieldData)
 
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
     setImportOpts({ dataSrc: 'fileupload' })
@@ -53,6 +81,9 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
         <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc}>
           <option value="fileupload">File Upload</option>
           <option value="presets">Presets</option>
+          <option value="post">Posts</option>
+          <option value="terms">Terms</option>
+          <option value="user">Users</option>
         </select>
       </div>
 
@@ -68,10 +99,32 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
           setImportOpts={setImportOpts}
         />
       )}
+
+      {importOpts.dataSrc === 'post' && (
+        <PostTypeImportOptions
+          importOpts={importOpts}
+          setImportOpts={setImportOpts}
+        />
+      )}
+
+      {importOpts.dataSrc === 'user' && (
+        <UserImportOption
+          importOpts={importOpts}
+          setImportOpts={setImportOpts}
+        />
+      )}
+
+      {importOpts.dataSrc === 'terms' && (
+        <TaxonomyImportOption
+          importOpts={importOpts}
+          setImportOpts={setImportOpts}
+        />
+      )}
+
       {!!newOptions.length && (
-        <div className="mt-2">
+        <div className="mt-3">
           <b>Preview:</b>
-          <table border="1" className="btcd-table txt-center mt-2">
+          <table border="1" className="btcd-table txt-center mt-3">
             <thead className="thead">
               <tr className="tr">
                 <th className="th">Label</th>
@@ -80,7 +133,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
             </thead>
             <tbody className="tbody">
               {newOptions.slice(0, 5).map((opt, indx) => (
-                <tr key={indx} className="tr">
+                <tr key={`imp-${indx * 2}`} className="tr">
                   <td className="td">{opt[lblKey]}</td>
                   <td className="td">{opt[valKey]}</td>
                 </tr>
@@ -98,11 +151,14 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
           </table>
         </div>
       )}
-      <div className="mt-1">
-        <CheckBox name="type" onChange={handleInput} radio title={__('Replace Previous Options', 'bitform')} value="replace" checked={importOpts.type !== 'merge'} />
-        <br />
-        <CheckBox name="type" onChange={handleInput} radio title={__('Merge with Previous Options', 'bitform')} value="merge" checked={importOpts.type === 'merge'} />
-      </div>
+      {(importOpts.dataSrc === 'presets' || importOpts.dataSrc === 'fileupload') && (
+        <div className="mt-1">
+          <CheckBox name="type" onChange={handleInput} radio title={__('Replace Previous Options', 'bitform')} value="replace" checked={importOpts.type !== 'merge'} />
+          <br />
+          <CheckBox name="type" onChange={handleInput} radio title={__('Merge with Previous Options', 'bitform')} value="merge" checked={importOpts.type === 'merge'} />
+        </div>
+
+      )}
       <button onClick={handleImport} className="btn blue" type="button" disabled={!newOptions.length || false}>
         <DownloadIcon size="15" />
         &nbsp;

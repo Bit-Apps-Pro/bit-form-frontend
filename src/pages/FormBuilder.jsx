@@ -1,19 +1,19 @@
 /* eslint-disable no-param-reassign */
-import { createRef, useState, useCallback, useReducer, useEffect, memo } from 'react'
-import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
 import { useRecoilValue } from 'recoil'
+import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
+import { Bar, Container, Section } from 'react-simple-resizer'
 import { __ } from '../Utils/i18nwrap'
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
 import GridLayout from '../components/GridLayout'
 import CompSettings from '../components/CompSettings/CompSettings'
-import ToolBar from '../components/Toolbars/Toolbar'
-import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
-import { multiAssign, bitCipher } from '../Utils/Helpers'
+import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
+import ToolBar from '../components/Toolbars/Toolbar'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { $newFormId } from '../GlobalStates'
+import { $newFormId, $bits } from '../GlobalStates'
+import { bitCipher, multiAssign } from '../Utils/Helpers'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -57,6 +57,7 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
   const [debounce, setDebounce] = useState(null)
+  const bits = useRecoilValue($bits)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   console.log('render formbuilder')
@@ -98,7 +99,6 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
     const headers = new Headers()
     headers.append('pragma', 'no-cache')
     headers.append('cache-control', 'no-cache')
-    // eslint-disable-next-line no-undef
     const styleUrl = new URL(bits.styleURL)
     if (styleUrl.protocol !== window.location.protocol) {
       styleUrl.protocol = window.location.protocol

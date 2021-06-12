@@ -4,17 +4,17 @@ import DatePicker from 'react-date-picker'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import GoogleAdIcn from '../Icons/GoogleAdIcn'
+import { $additionalSettings, $bits } from '../GlobalStates'
+import HoneypotIcn from '../Icons/HoneypotIcn'
+import { AppSettings } from '../Utils/AppSettingsContext'
 import { __ } from '../Utils/i18nwrap'
-import ConfirmModal from './Utilities/ConfirmModal'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
-import SingleToggle2 from './Utilities/SingleToggle2'
-import { AppSettings } from '../Utils/AppSettingsContext'
-import GoogleAdIcn from '../Icons/GoogleAdIcn'
+import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
-import HoneypotIcn from '../Icons/HoneypotIcn'
-import { $additionalSettings } from '../GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
+import SingleToggle2 from './Utilities/SingleToggle2'
 
 export default function SingleFormSettings({ fields }) {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -22,8 +22,8 @@ export default function SingleFormSettings({ fields }) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }

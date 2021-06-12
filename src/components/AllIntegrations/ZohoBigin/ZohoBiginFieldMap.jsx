@@ -26,16 +26,17 @@ export default function ZohoBiginFieldMap({ i, uploadFields, formFields, field, 
           <option value="">{__('Select Field', 'bitform')}</option>
           {
             biginConf.default.moduleData?.[module]?.fields && Object.values(biginConf.default.moduleData[module].fields).map(fieldApiName => (
-              isNotRequired ? !fieldApiName.required
-                && (
+              isNotRequired
+                ? (!fieldApiName.required && (
                   <option key={fieldApiName.api_name} value={fieldApiName.api_name}>
                     {fieldApiName.display_label}
                   </option>
-                ) : (
+                ))
+                : (
                   <option key={fieldApiName.api_name} value={fieldApiName.api_name}>
-                  {fieldApiName.display_label}
-                </option>
-              )
+                    {fieldApiName.display_label}
+                  </option>
+                )
             ))
           }
         </select>

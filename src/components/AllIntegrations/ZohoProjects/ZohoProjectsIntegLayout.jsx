@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 
 import { __ } from '../../../Utils/i18nwrap'
@@ -200,15 +201,15 @@ export default function ZohoProjectsIntegLayout({ formID, formFields, handleInpu
                       ))
                   : projectsConf?.tasklistId
                     ? projectsConf?.default?.tasks?.[projectsConf.portalId]?.[projectsConf.tasklistId]
-                   && Object.values(projectsConf.default.tasks[projectsConf.portalId][projectsConf.tasklistId])
-                     .map((task, i) => task.taskId && (
-                       // eslint-disable-next-line react/no-array-index-key
-                       <option key={`${task.taskId}_${i}`} value={task.taskId}>
-                         {task.taskName}
-                       </option>
-                     ))
+                    && Object.values(projectsConf.default.tasks[projectsConf.portalId][projectsConf.tasklistId])
+                      .map((task, i) => task.taskId && (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <option key={`${task.taskId}_${i}`} value={task.taskId}>
+                          {task.taskName}
+                        </option>
+                      ))
                     : projectsConf?.default?.tasks?.[projectsConf.portalId] && Object.values(projectsConf.default.tasks[projectsConf.portalId]).map((task, i) => task.taskId && (
-                    // eslint-disable-next-line react/no-array-index-key
+                      // eslint-disable-next-line react/no-array-index-key
                       <option key={`${task.taskId}_${i}`} value={task.taskId}>
                         {task.taskName}
                       </option>

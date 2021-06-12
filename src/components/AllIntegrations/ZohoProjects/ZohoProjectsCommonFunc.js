@@ -50,7 +50,7 @@ export const handleInput = (e, projectsConf, setProjectsConf, formID, setisLoadi
     case 'milestoneId':
     case 'tasklistId':
     case 'taskId': {
-    // clear lower event value
+      // clear lower event value
       newConf = clearLowerEvents(newConf, inputName)
       // close create new event
       const subEvent = inputName.split('Id')[0]
@@ -595,6 +595,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     return
   }
   setisLoading(true)
+  // eslint-disable-next-line max-len
   const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
   const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
   const authWindow = window.open(apiEndpoint, 'zohoProjects', 'width=400,height=609,toolbar=off')

@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
 import ZohoMailActions from './ZohoMailActions'
 
 export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
   const [mailBody, setMailBody] = useState('')
+  const bits = useRecoilValue($bits)
 
   const mailOptions = () => {
     const mail = []
-    // eslint-disable-next-line no-undef
-    if (typeof bits !== 'undefined' && bits.userMail && Array.isArray(bits.userMail)) {
-      // eslint-disable-next-line no-undef
+    if (bits.userMail && Array.isArray(bits.userMail)) {
       mail.push(...bits.userMail)
     }
     const flds = []

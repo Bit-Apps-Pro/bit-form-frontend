@@ -1,45 +1,47 @@
 /* eslint-disable-next-line no-undef */
 import { useState } from 'react'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../GlobalStates'
+import EditIcn from '../Icons/EditIcn'
+import acf from '../resource/img/integ/ACF.svg'
+import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
 import zohoCamp from '../resource/img/integ/campaigns.svg'
 import zohoCreator from '../resource/img/integ/creator.svg'
 import zohoCRM from '../resource/img/integ/crm.svg'
 import zohoDesk from '../resource/img/integ/desk.svg'
+import encharge from '../resource/img/integ/encharge .svg'
+import fluentcrm from '../resource/img/integ/fluentcrm.svg'
+import googleSheet from '../resource/img/integ/googleSheets.svg'
 import zohoHub from '../resource/img/integ/hub.svg'
+import integrately from '../resource/img/integ/integrately.svg'
+import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
+import mailChimp from '../resource/img/integ/mailchimp.svg'
+import mailPoet from '../resource/img/integ/mailpoet.svg'
+import pabbly from '../resource/img/integ/pabbly.svg'
+import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
 import zohoRecruit from '../resource/img/integ/recruit.svg'
+import sendinblue from '../resource/img/integ/sendinblue.svg'
 import zohoSheet from '../resource/img/integ/sheet.svg'
 import zohoSign from '../resource/img/integ/sign.svg'
-import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
-import cpt from '../resource/img/integ/cpt.svg'
-import pods from '../resource/img/integ/pods.svg'
-import googleSheet from '../resource/img/integ/googleSheets.svg'
-import mailPoet from '../resource/img/integ/mailpoet.svg'
-import mailChimp from '../resource/img/integ/mailchimp.svg'
-import sendinblue from '../resource/img/integ/sendinblue.svg'
-import wooCommerce from '../resource/img/integ/woocommerce.svg'
-import activeCampaign from '../resource/img/integ/activeCampaign.svg'
-import webhooks from '../resource/img/integ/webhooks.svg'
-import zapier from '../resource/img/integ/zapier.svg'
-import integromat from '../resource/img/integ/integromat.svg'
-import integrately from '../resource/img/integ/integrately.svg'
-import pabbly from '../resource/img/integ/pabbly.svg'
-import zohoflow from '../resource/img/integ/zohoflow.svg'
 import telegram from '../resource/img/integ/telegram.svg'
-import fluentcrm from '../resource/img/integ/fluentcrm.svg'
-import encharge from '../resource/img/integ/encharge .svg'
+import webhooks from '../resource/img/integ/webhooks.svg'
+import wooCommerce from '../resource/img/integ/woocommerce.svg'
+import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
+import zapier from '../resource/img/integ/zapier.svg'
+import zohoflow from '../resource/img/integ/zohoflow.svg'
 import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
 import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
-import SnackMsg from './Utilities/SnackMsg'
 import Modal from './Utilities/Modal'
-import EditIcn from '../Icons/EditIcn'
+import SnackMsg from './Utilities/SnackMsg'
 
 function Integrations({ integrations, setIntegration, formFields }) {
   const [showMdl, setShowMdl] = useState(false)
@@ -49,8 +51,8 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const allIntegURL = url
   const history = useHistory()
   const { formID } = useParams()
-  // eslint-disable-next-line no-undef
-  const isPro = typeof bits !== 'undefined' && bits.isPro
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM },
     { type: 'Web Hooks', logo: webhooks },
@@ -61,7 +63,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
     { type: 'Zoho Flow', logo: zohoflow },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
-    { type: 'CPT', logo: cpt, pro: !isPro },
+    { type: 'ACF', logo: acf, pro: !isPro },
     { type: 'Pods', logo: pods, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },

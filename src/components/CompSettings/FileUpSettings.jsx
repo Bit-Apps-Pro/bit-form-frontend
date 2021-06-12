@@ -92,17 +92,17 @@ export default function FileUpSettings() {
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
-  const setMaxUpTyp = e => {
-    if (e.target.value) fieldData.mxUpTyp = e.target.value
-    else delete fieldData.mxUpTyp
+  // const setMaxUpTyp = e => {
+  //   if (e.target.value) fieldData.mxUpTyp = e.target.value
+  //   else delete fieldData.mxUpTyp
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
+  //   setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  // }
 
-  const setUnit = e => {
-    fieldData.unit = e.target.value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-  }
+  // const setUnit = e => {
+  //   fieldData.unit = e.target.value
+  //   setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  // }
 
   return (
     <div className="ml-2 mr-4">

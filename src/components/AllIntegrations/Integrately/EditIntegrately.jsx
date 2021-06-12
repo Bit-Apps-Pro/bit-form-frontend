@@ -14,8 +14,6 @@ function EditIntegrately({ formFields, setIntegration, integrations, allIntegURL
   const [integrately, setIntegrately] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('user integrately', integrately)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -29,7 +27,6 @@ function EditIntegrately({ formFields, setIntegration, integrations, allIntegURL
           setSnackbar={setSnackbar}
         />
       </div>
-      {console.log('integrately', integrately)}
 
       <WebHooksStepTwo
         edit

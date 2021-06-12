@@ -14,8 +14,6 @@ function EditPabbly({ formFields, setIntegration, integrations, allIntegURL }) {
   const [pabbly, setPabbly] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('user pabbly', pabbly)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -29,7 +27,6 @@ function EditPabbly({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
       </div>
-      {console.log('pabbly', pabbly)}
 
       <WebHooksStepTwo
         edit
