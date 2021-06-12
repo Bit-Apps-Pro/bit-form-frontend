@@ -2,7 +2,7 @@
 import { createRef, useState, useCallback, useReducer, useEffect, memo } from 'react'
 import { Container, Section, Bar } from 'react-simple-resizer'
 import merge from 'deepmerge-alt'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import css2json from '../Utils/css2json'
 import j2c from '../Utils/j2c.es6'
@@ -13,7 +13,7 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import { multiAssign, bitCipher } from '../Utils/Helpers'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { $fields, $newFormId } from '../GlobalStates'
+import { $newFormId } from '../GlobalStates'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -46,19 +46,16 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
   // const { formType, formID pramsFormId } = { formType: 'edit', formID: 2 }
   // const isLoading = false
   const newFormId = useRecoilValue($newFormId)
-  const [fields, setFields] = useRecoilState($fields)
+  // const [fields, setFields] = useRecoilState($fields)
   const formID = formType === 'new' ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
-  const [drgElm, setDrgElm] = useState(['', { h: 1, w: 1, i: '' }])
-  const [elmSetting, setElmSetting] = useState({ id: null, data: { typ: '' } })
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useState('lg')
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
-  const [isToolDragging, setisToolDragging] = useState(false)
   const [debounce, setDebounce] = useState(null)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
@@ -156,11 +153,11 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
     conRef.current.applyResizer(res)
   }, [conRef])
 
-  const updateFields = useCallback(updatedElm => {
-    const tmp = { ...fields }
-    tmp[updatedElm.id] = updatedElm.data
-    setFields(tmp)
-  }, [fields, setFields])
+  // const updateFields = useCallback(updatedElm => {
+  //   const tmp = { ...fields }
+  //   tmp[updatedElm.id] = updatedElm.data
+  //   setFields(tmp)
+  // }, [fields, setFields])
 
   const addNewData = useCallback(ndata => {
     setNewData(ndata)
@@ -245,12 +242,10 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
         minSize={notIE && 58}
       >
         <ToolBar
-          setDrgElm={setDrgElm}
           setNewData={addNewData}
           className="tile"
           tolbarSiz={tolbarSiz}
           setTolbar={setTolbar}
-          setisToolDragging={setisToolDragging}
         />
       </Section>
       <Bar className="bar bar-l" />
@@ -274,12 +269,10 @@ function FormBuilder({ formSettings, formType, formID: pramsFormId, isLoading })
               // theme={theme}
               style={styleProvider()}
               gridWidth={gridWidth}
-              draggedElm={drgElm}
               newData={newData}
               setNewData={setNewData}
               formType={formType}
               formID={formID}
-              isToolDragging={isToolDragging}
               formSettings={formSettings}
             />
           </>

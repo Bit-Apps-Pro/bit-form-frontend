@@ -1,13 +1,18 @@
 import { useState } from 'react'
 
 import { NavLink, useRouteMatch, Link } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import toast from 'react-hot-toast'
 import { __ } from '../Utils/i18nwrap'
 import Table from './Utilities/Table'
 import Button from './Utilities/Button'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './Utilities/ConfirmModal'
+import { $mailTemplates } from '../GlobalStates'
+import { deepCopy } from '../Utils/Helpers'
 
-export default function EmailTemplate({ mailTem, setMailTem, formID }) {
+export default function EmailTemplate({ formID }) {
+  const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const { url } = useRouteMatch()
@@ -19,16 +24,23 @@ export default function EmailTemplate({ mailTem, setMailTem, formID }) {
 
   const delTem = (i, templateData) => {
     if (templateData.original.id) {
-      bitsFetch({ formID, id: templateData.original.id }, 'bitforms_delete_mailtemplate')
+      const deletePromise = bitsFetch({ formID, id: templateData.original.id }, 'bitforms_delete_mailtemplate')
         .then(res => {
           if (res !== undefined && res.success) {
-            mailTem.splice(i, 1)
-            setMailTem([...mailTem])
+            const mailTemp = deepCopy(mailTem)
+            mailTemp.splice(i, 1)
+            setMailTem(mailTemp)
           }
         })
+      toast.promise(deletePromise, {
+        loading: 'Deleting',
+        success: 'Successfully Deleted',
+        error: 'Error Occured',
+      })
     } else {
-      mailTem.splice(i, 1)
-      setMailTem([...mailTem])
+      const mailTemp = deepCopy(mailTem)
+      mailTemp.splice(i, 1)
+      setMailTem(mailTemp)
     }
   }
 

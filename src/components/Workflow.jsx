@@ -4,6 +4,7 @@
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react'
 
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import Button from './Utilities/Button'
 import LogicChip from './Utilities/LogicChip'
@@ -17,11 +18,16 @@ import TableCheckBox from './Utilities/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './Utilities/ConfirmModal'
 import CloseIcn from '../Icons/CloseIcn'
+import { $mailTemplates, $workflows } from '../GlobalStates'
+import { deepCopy } from '../Utils/Helpers'
 
-function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, formID }) {
+function Workflow({ formFields, fields, formSettings, formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
+  const [allWorkFlows, setworkFlows] = useRecoilState($workflows)
+  const mailTem = useRecoilValue($mailTemplates)
   /* eslint-disable-next-line no-undef */
   const isPro = typeof bits !== 'undefined' && bits.isPro
+  const workFlows = deepCopy(allWorkFlows)
   const mailOptions = () => {
     const mail = []
     // eslint-disable-next-line no-undef
@@ -722,7 +728,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
                               <option value="">{__('Select Email Template', 'bitform')}</option>
-                              {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                              {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
                           <DropDown

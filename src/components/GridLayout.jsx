@@ -13,7 +13,7 @@ import { deepCopy, isType } from '../Utils/Helpers'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import FieldBlockWrapper from './FieldBlockWrapper'
-import { $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
+import { $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
 import { AppSettings } from '../Utils/AppSettingsContext'
 
 function GridLayout(props) {
@@ -21,10 +21,11 @@ function GridLayout(props) {
   const { payments } = useContext(AppSettings)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const setProModal = useContext(ShowProModalContext)
-  const { newData, setNewData, style, gridWidth, formID, isToolDragging, formSettings } = props
+  const { newData, setNewData, style, gridWidth, formID, formSettings } = props
   const [fields, setFields] = useRecoilState($fields)
   const [layout, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
+  const draggingField = useRecoilValue($draggingField)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -206,21 +207,20 @@ function GridLayout(props) {
 
   const margeNewData = () => {
     setNewData(null)
-    const checkPayments = checkPaymentFields(newData[0])
+    const checkPayments = checkPaymentFields(newData.fieldData)
     if (checkPayments && isType('array', checkPayments)) {
-      if (newData[0].typ === 'razorpay') {
-        newData[0].options.payIntegID = checkPayments[0].id
+      if (newData.fieldData.typ === 'razorpay') {
+        newData.fieldData.options.payIntegID = checkPayments[0].id
       } else {
-        newData[0].payIntegID = checkPayments[0].id
+        newData.fieldData.payIntegID = checkPayments[0].id
       }
     } else if (!checkPayments) return
-    if (newData[0].typ === 'recaptcha' && !checkCaptchaField()) return
-    if (newData[0].lbl === 'Select Country' && !checkCountryField()) return
+    if (newData.fieldData.typ === 'recaptcha' && !checkCaptchaField()) return
+    if (newData.fieldData.lbl === 'Select Country' && !checkCountryField()) return
     console.log({ newData })
-    const { w, h, minH, maxH, minW } = newData[1]
-    const x = 0
-    const y = Infinity
-    const newBlk = { i: `bf${formID}-${uniqueFieldId}`, x, y, w, h, minH, maxH, minW }
+    const { w, h, minH, maxH, minW } = newData.fieldSize
+    const newBlk = { i: `bf${formID}-${uniqueFieldId}`, x: 0, y: Infinity, w, h, minH, maxH, minW }
+    console.log({ newBlk })
     const tmpLayouts = layouts
     tmpLayouts.lg.push(newBlk)
     tmpLayouts.md.push(newBlk)
@@ -237,17 +237,28 @@ function GridLayout(props) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const tmpField = deepCopy(newData[0])
+    const tmpField = deepCopy(newData.fieldData)
     setFields({ ...fields, [`bf${formID}-${uniqueFieldId}`]: tmpField })
     sessionStorage.setItem('btcd-lc', '-')
+  }
+  function extendLayout(lays) {
+    const newlayuts = { lg: [], md: [], sm: [] }
+    const layuts = deepCopy(lays)
+    layuts.lg.map(itm => { newlayuts.lg.push({ ...itm, w: itm.w * 20 }) })
+    layuts.md.map(itm => { newlayuts.md.push({ ...itm, w: itm.w * 20 }) })
+    layuts.sm.map(itm => { newlayuts.sm.push({ ...itm, w: itm.w * 20 }) })
+    console.log('lays', newlayuts)
+    return newlayuts
   }
 
   const onLayoutChange = (newLay, newLays) => {
     if (newLays.lg.length === layouts.lg.length
       && newLays.md.length === layouts.md.length
       && newLays.sm.length === layouts.sm.length) {
-      setLayouts({ ...newLays })
-      setLay({ ...newLays })
+      // setLayouts(extendLayout(newLays))
+      // setLay(extendLayout(newLays))
+      setLayouts(newLays)
+      setLay(newLays)
     }
   }
 
@@ -357,19 +368,18 @@ function GridLayout(props) {
   }
 
   const onDrop = (lay, elmPrms) => {
-    const { draggedElm } = props
-    const checkPayments = checkPaymentFields(draggedElm[0])
+    const checkPayments = checkPaymentFields(draggingField.fieldData)
     if (checkPayments && isType('array', checkPayments)) {
-      if (draggedElm[0].typ === 'razorpay') {
-        draggedElm[0].options.payIntegID = checkPayments[0].id
+      if (draggingField.fieldData.typ === 'razorpay') {
+        draggingField.fieldData.options.payIntegID = checkPayments[0].id
       } else {
-        draggedElm[0].payIntegID = checkPayments[0].id
+        draggingField.fieldData.payIntegID = checkPayments[0].id
       }
     } else if (!checkPayments) return
 
-    if (draggedElm[0].typ === 'recaptcha' && !checkCaptchaField()) return
-    if (draggedElm[0].lbl === 'Select Country' && !checkCountryField()) return
-    const { w, h, minH, maxH, minW } = draggedElm[1]
+    if (draggingField.fieldData.typ === 'recaptcha' && !checkCaptchaField()) return
+    if (draggingField.fieldData.lbl === 'Select Country' && !checkCountryField()) return
+    const { w, h, minH, maxH, minW } = draggingField.fieldSize
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
     if (y !== 0) { y -= 1 }
@@ -391,7 +401,7 @@ function GridLayout(props) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const tmpField = deepCopy(draggedElm[0])
+    const tmpField = deepCopy(draggingField.fieldData)
     setFields({ ...fields, [newBlk]: tmpField })
     sessionStorage.setItem('btcd-lc', '-')
   }
@@ -399,18 +409,20 @@ function GridLayout(props) {
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
-        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={isToolDragging ? 'isDragging' : ''}>
+        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
                 measureBeforeMount={false}
-                isDroppable={props.draggedElm[0] !== ''}
+                isDroppable={draggingField !== null}
                 className="layout"
                 onDrop={onDrop}
+                resizeHandles={['se', 'e']}
                 onLayoutChange={onLayoutChange}
-                droppingItem={props.draggedElm[1]}
+                droppingItem={draggingField?.fieldSize}
                 cols={cols}
+                // cols={{ lg: 120, md: 120, sm: 120 }}
                 breakpoints={{ lg: 700, md: 420, sm: 300 }}
                 rowHeight={rowHeight}
                 margin={gridContentMargin}
@@ -422,7 +434,6 @@ function GridLayout(props) {
                 onDragStop={() => sessionStorage.setItem('btcd-lc', '-')}
                 onResizeStop={() => sessionStorage.setItem('btcd-lc', '-')}
               >
-                {/* {layouts[breakpoint].map(itm => blkGen(itm))} */}
                 {layouts[breakpoint].map(layoutItem => (
                   <div
                     key={layoutItem.i}

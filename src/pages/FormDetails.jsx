@@ -1,6 +1,7 @@
 import { useState, memo, useEffect, lazy, Suspense, createContext } from 'react'
 import { Switch, Route, NavLink, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { Toaster } from 'react-hot-toast'
 import { __ } from '../Utils/i18nwrap'
 import FormSettings from './FormSettings'
 import FormEntries from './FormEntries'
@@ -16,7 +17,7 @@ import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
-import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts } from '../GlobalStates'
+import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts, $mailTemplates, $additionalSettings, $saveForm, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 // import Ok from './Ok'
 // import FormBuilderHOC from './FormBuilderHOC'
@@ -46,8 +47,12 @@ function FormDetails({ history }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const resetState1 = useResetRecoilState($fieldLabels)
-  const resetState2 = useResetRecoilState($fields)
+  const [mailTem, setMailTem] = useRecoilState($mailTemplates)
+  const setSaveForm = useSetRecoilState($saveForm)
+  const [workFlows, setworkFlows] = useRecoilState($workflows)
+  const [additional, setadditional] = useRecoilState($additionalSettings)
+  // const resetState1 = useResetRecoilState($fieldLabels)
+  // const resetState2 = useResetRecoilState($fields)
 
   const onMount = () => {
     if (sessionStorage.getItem('bitformData')) {
@@ -67,13 +72,14 @@ function FormDetails({ history }) {
     } else { fetchTemplate() }
     window.scrollTo(0, 0)
     hideWpMenu()
+    setSaveForm(() => saveForm)
   }
 
   const onUnmount = () => {
     setFulScn(false)
     showWpMenu()
-    resetState1()
-    resetState2()
+    // resetState1()
+    // resetState2()
   }
 
   useEffect(() => {
@@ -85,13 +91,9 @@ function FormDetails({ history }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [mailTem, setMailTem] = useState([])
-
   const [integrations, setIntegration] = useState([])
 
-  const [workFlows, setworkFlows] = useState([defaultWorkflow])
 
-  const [additional, setadditional] = useState({ enabled: {}, settings: {} })
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
@@ -102,9 +104,7 @@ function FormDetails({ history }) {
         webHooks: [{ title: 'Untitled Web-Hook 1', url: '', method: 'GET' }],
       },
     },
-    mailTem,
     integrations,
-    additional,
   })
 
   const fetchTemplate = () => {
@@ -179,14 +179,18 @@ function FormDetails({ history }) {
   const fSettings = {
     formName,
     theme: 'default',
-    // submitBtn: subBtn,
     confirmation: { ...formSettings.confirmation },
-    mailTem,
     integrations,
-    additional,
   }
 
-  const saveForm = () => {
+  const saveForm = (type, data) => {
+    let mailTemplates = [...mailTem]
+    let additionalSettings = additional
+    if (type === 'email-template') {
+      mailTemplates = data
+    } else if (type === 'additional') {
+      additionalSettings = data
+    }
     if (!checkSubmitBtn()) {
       modal.show = true
       modal.title = __('Sorry', 'bitform')
@@ -215,11 +219,16 @@ function FormDetails({ history }) {
         layout: sortLayoutLG,
         fields,
         form_name: formName,
-        formSettings: fSettings,
+        formSettings: {
+          formName,
+          theme: 'default',
+          confirmation: { ...formSettings.confirmation },
+          mailTem: mailTemplates,
+          integrations,
+          additional: additionalSettings,
+        },
         workFlows,
-        mailTem,
         integrations,
-        additional,
         formStyle,
         layoutChanged: sessionStorage.getItem('btcd-lc'),
         rowHeight: sessionStorage.getItem('btcd-rh'),
@@ -232,9 +241,15 @@ function FormDetails({ history }) {
           layout: sortLayoutLG,
           fields,
           form_name: formName,
-          formSettings: fSettings,
+          formSettings: {
+            formName,
+            theme: 'default',
+            confirmation: { ...formSettings.confirmation },
+            mailTem: mailTemplates,
+            integrations,
+            additional: additionalSettings,
+          },
           workFlows,
-          additional,
           reports,
           formStyle,
           layoutChanged: sessionStorage.getItem('btcd-lc'),
@@ -299,6 +314,10 @@ function FormDetails({ history }) {
     }
   }
 
+  // useEffect(() => {
+  //   setSaveForm((a, b) => (c, d) => saveForm(c, d))
+  // })
+
   const closeModal = () => {
     modal.show = false
     setModal({ ...modal })
@@ -320,6 +339,18 @@ function FormDetails({ history }) {
   return (
     <FormSaveContext.Provider value={saveForm}>
       <ShowProModalContext.Provider value={setProModal}>
+        <Toaster
+          position="bottom-right"
+          containerStyle={{ inset: '-25px 30px 20px -10px' }}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#333',
+              color: '#fff',
+              bottom: 40,
+            },
+          }}
+        />
         <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
           <SnackMsg snack={snack} setSnackbar={setSnackbar} />
           <Modal
@@ -420,14 +451,8 @@ function FormDetails({ history }) {
                 fields={fields}
                 formSettings={fSettings}
                 setFormSettings={setFormSettings}
-                mailTem={mailTem}
-                setMailTem={setMailTem}
                 integrations={integrations}
                 setIntegration={setIntegration}
-                workFlows={workFlows}
-                setworkFlows={setworkFlows}
-                additional={additional}
-                setadditional={setadditional}
                 setProModal={setProModal}
               />
             </Route>
@@ -440,34 +465,3 @@ function FormDetails({ history }) {
 
 export default memo(withRouter(FormDetails))
 
-const defaultWorkflow = {
-  title: __('Show Success Message', 'bitform'),
-  action_type: 'onsubmit',
-  action_run: 'create_edit',
-  action_behaviour: 'always',
-  logics: [
-    {
-      field: '',
-      logic: '',
-      val: '',
-    },
-    'or',
-    {
-      field: '',
-      logic: '',
-      val: '',
-    },
-  ],
-  actions: [
-    {
-      field: '',
-      action: 'value',
-    },
-  ],
-  successAction: [
-    {
-      type: 'successMsg',
-      details: { id: '{"index":0}' },
-    },
-  ],
-}

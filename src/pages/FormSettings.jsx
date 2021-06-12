@@ -14,12 +14,11 @@ const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
-export default function FormSettings({ additional, setadditional, formSettings, setFormSettings, mailTem, setMailTem, setProModal, saveForm, fields, workFlows, setworkFlows, integrations, setIntegration }) {
+export default function FormSettings({ formSettings, setFormSettings, setProModal, saveForm, fields, integrations, setIntegration }) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
   const formFields = useRecoilValue($fieldsArr)
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
-  const [newTemplate, setNewTemplate] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
 
   return (
     <div className="btcd-f-settings">
@@ -53,7 +52,7 @@ export default function FormSettings({ additional, setadditional, formSettings, 
         <Switch>
           <Route path={`${path}form-settings`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <SingleFormSettings fields={fields} additional={additional} setadditional={setadditional} />
+              <SingleFormSettings fields={fields} />
             </Suspense>
           </Route>
           <Route path={`${path}confirmations`}>
@@ -63,22 +62,22 @@ export default function FormSettings({ additional, setadditional, formSettings, 
           </Route>
           <Route exact path={`${path}email-templates`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplate mailTem={mailTem} setMailTem={setMailTem} formID={formID} />
+              <EmailTemplate formID={formID} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/new`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateNew tem={newTemplate} setTem={setNewTemplate} saveForm={saveForm} formFields={formFields} mailTem={mailTem} setMailTem={setMailTem} />
+              <EmailTemplateNew saveForm={saveForm} />
             </Suspense>
           </Route>
           <Route exact path={`${path}email-templates/:id`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateEdit saveForm={saveForm} formFields={formFields} mailTem={mailTem} setMailTem={setMailTem} />
+              <EmailTemplateEdit saveForm={saveForm} />
             </Suspense>
           </Route>
           <Route path={`${path}workflow`}>
             <Suspense fallback={<FSettingsLoader />}>
-              <Workflow formFields={formFields} fields={fields} setProModal={setProModal} formSettings={formSettings} workFlows={workFlows} setworkFlows={setworkFlows} formID={formID} />
+              <Workflow formFields={formFields} fields={fields} setProModal={setProModal} formSettings={formSettings} formID={formID} />
             </Suspense>
           </Route>
           <Route path={`${path}integrations`}>

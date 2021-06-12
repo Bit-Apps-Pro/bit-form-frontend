@@ -3,6 +3,7 @@ import { useContext, useState } from 'react'
 import DatePicker from 'react-date-picker'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Accordions from './Utilities/Accordions'
@@ -12,8 +13,12 @@ import { AppSettings } from '../Utils/AppSettingsContext'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import Cooltip from './Utilities/Cooltip'
 import HoneypotIcn from '../Icons/HoneypotIcn'
+import { $additionalSettings } from '../GlobalStates'
+import { deepCopy } from '../Utils/Helpers'
 
-export default function SingleFormSettings({ fields, additional, setadditional }) {
+export default function SingleFormSettings({ fields }) {
+  const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
+  // const saveForm = useRecoilValue($saveForm)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
@@ -27,16 +32,18 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const addMoreBlockIp = () => {
+    const additional = deepCopy(additionalSetting)
     if ('blocked_ip' in additional.settings) {
       additional.settings.blocked_ip.push({ ip: '', status: false })
     } else {
       additional.settings.blocked_ip = []
       additional.settings.blocked_ip.push({ ip: '', status: false })
     }
-    setadditional({ ...additional })
+    setadditional(additional)
   }
 
   const addMorePrivateIp = () => {
+    const additional = deepCopy(additionalSetting)
     if ('private_ip' in additional.settings) {
       additional.settings.private_ip.push({ ip: '', status: false })
     } else {
@@ -47,16 +54,19 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const delBlkIp = i => {
+    const additional = deepCopy(additionalSetting)
     additional.settings.blocked_ip.splice(i, 1)
     setadditional({ ...additional })
   }
 
   const delPrivateIp = i => {
+    const additional = deepCopy(additionalSetting)
     additional.settings.private_ip.splice(i, 1)
     setadditional({ ...additional })
   }
 
   const setEntryLimit = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.value > 0) {
       additional.settings.entry_limit = e.target.value
       setadditional({ ...additional })
@@ -64,15 +74,18 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const setOnePerIp = e => {
+    const additionalSettings = deepCopy(additionalSetting)
     if (e.target.checked) {
-      additional.enabled.onePerIp = true
+      additionalSettings.enabled.onePerIp = true
     } else {
-      delete additional.enabled.onePerIp
+      delete additionalSettings.enabled.onePerIp
     }
-    setadditional({ ...additional })
+    setadditional(additionalSettings)
+    // saveForm('addional', additionalSettings)
   }
 
   const enableReCaptchav3 = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       let msg
       if (!reCaptchaV3 || !reCaptchaV3?.siteKey || !reCaptchaV3?.secretKey) {
@@ -114,24 +127,29 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const toggleCaptureGCLID = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.captureGCLID = true
     } else {
       delete additional.enabled.captureGCLID
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const tolggleHoneypot = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.honeypot = true
     } else {
       delete additional.enabled.honeypot
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const handleEntryLimit = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.entry_limit = true
     } else {
@@ -141,16 +159,19 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const hideReCaptchaBadge = e => {
+    const additional = deepCopy(additionalSetting)
     if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
     if (e.target.checked) {
       additional.settings.recaptchav3.hideReCaptcha = true
     } else {
       delete additional.settings.recaptchav3.hideReCaptcha
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const setReCaptchaScore = e => {
+    const additional = deepCopy(additionalSetting)
     const { value } = e.target
     if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
     if (value) {
@@ -164,6 +185,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const setReCaptchaLowScoreMessage = e => {
+    const additional = deepCopy(additionalSetting)
     const { value } = e.target
     if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
     if (value) {
@@ -175,6 +197,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const handleIpStatus = (e, i, type) => {
+    const additional = deepCopy(additionalSetting)
     if (type === 'private') {
       additional.settings.private_ip[i].status = e.target.checked
       if (e.target.checked) {
@@ -198,6 +221,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const handleIp = (e, i, typ) => {
+    const additional = deepCopy(additionalSetting)
     if (typ === 'blocked') {
       additional.settings.blocked_ip[i].ip = e.target.value
     } else {
@@ -207,6 +231,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const toggleAllIpStatus = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.blocked_ip = true
       for (let i = 0; i < additional.settings.blocked_ip.length; i += 1) {
@@ -218,10 +243,12 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         additional.settings.blocked_ip[i].status = false
       }
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const toggleAllPvtIpStatus = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.private_ip = true
       for (let i = 0; i < additional.settings.private_ip.length; i += 1) {
@@ -233,10 +260,12 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         additional.settings.private_ip[i].status = false
       }
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const handleRestrictFrom = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       if (additional.settings.restrict_form === undefined
         || additional.settings.restrict_form.date === undefined
@@ -247,7 +276,8 @@ export default function SingleFormSettings({ fields, additional, setadditional }
     } else {
       delete additional.enabled.restrict_form
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const checkAllDayInArr = arr => {
@@ -269,6 +299,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const handleDate = (val, typ) => {
+    const additional = deepCopy(additionalSetting)
     const y = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(val)
     const m = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(val)
     const d = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(val)
@@ -281,6 +312,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const handleTime = (val, typ) => {
+    const additional = deepCopy(additionalSetting)
     if ('restrict_form' in additional.settings && 'time' in additional.settings.restrict_form) {
       if (typ === 'from') {
         additional.settings.restrict_form.time.from = val
@@ -292,6 +324,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const setRestrictForm = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       if ('restrict_form' in additional.settings && 'day' in additional.settings.restrict_form) {
         if (e.target.value === 'Everyday' || checkAllDayInArr(additional.settings.restrict_form.day)) {
@@ -342,6 +375,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const checkRestrictFromExist = val => {
+    const additional = deepCopy(additionalSetting)
     if ('restrict_form' in additional.settings
       && 'day' in additional.settings.restrict_form
       && additional.settings.restrict_form.day.some(itm => (itm === val))) {
@@ -373,23 +407,27 @@ export default function SingleFormSettings({ fields, additional, setadditional }
   }
 
   const handleDisableStoreEntry = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.disableStoreEntry = true
     } else {
       delete additional.enabled.disableStoreEntry
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   const toggleCaptchaAdvanced = () => setShowCaptchaAdvanced(show => !show)
 
   const setValidateFocusLost = e => {
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.validateFocusLost = true
     } else {
       delete additional.enabled.validateFocusLost
     }
-    setadditional({ ...additional })
+    setadditional(additional)
+    // saveForm('addional', additional)
   }
 
   return (
@@ -404,7 +442,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
               {__('Allow Single Entry for each IP address', 'bitform')}
             </b>
           </div>
-          <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additional.enabled} className="flx" />
+          <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
 
@@ -416,7 +454,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
               {__('Validate Form Input on Focus Lost', 'bitform')}
             </b>
           </div>
-          <SingleToggle2 action={setValidateFocusLost} checked={'validateFocusLost' in additional.enabled} className="flx" />
+          <SingleToggle2 action={setValidateFocusLost} checked={'validateFocusLost' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
 
@@ -430,13 +468,13 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
-          <SingleToggle2 action={enableReCaptchav3} checked={'recaptchav3' in additional.enabled} className="flx" />
+          <SingleToggle2 action={enableReCaptchav3} checked={'recaptchav3' in additionalSetting.enabled} className="flx" />
           {__('Enable / Disable', 'bitform')}
         </div>
-        {additional.enabled.recaptchav3 && (
+        {additionalSetting.enabled.recaptchav3 && (
           <>
             <div className="flx mb-4 ml-2">
-              <SingleToggle2 action={hideReCaptchaBadge} checked={additional.settings?.recaptchav3?.hideReCaptcha} className="flx" />
+              <SingleToggle2 action={hideReCaptchaBadge} checked={additionalSetting.settings?.recaptchav3?.hideReCaptcha} className="flx" />
               {__('Hide ReCaptcha Badge', 'bitform')}
             </div>
             <span
@@ -456,19 +494,19 @@ export default function SingleFormSettings({ fields, additional, setadditional }
                   <br />
                   <div className="flx mt-1">
                     <div className="mt-1">
-                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additionalSetting.settings?.recaptchav3?.score} />
                       <p className="m-0">
-                        <b>{showToleranceLabel(additional.settings?.recaptchav3?.score)}</b>
+                        <b>{showToleranceLabel(additionalSetting.settings?.recaptchav3?.score)}</b>
                       </p>
                     </div>
-                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additionalSetting.settings?.recaptchav3?.score} />
                   </div>
 
                 </div>
                 <div className="mb-2 ml-2">
                   <b>Low Score Message</b>
                   <br />
-                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additional.settings?.recaptchav3?.message} />
+                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additionalSetting.settings?.recaptchav3?.message} />
                 </div>
               </>
             )}
@@ -495,7 +533,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             </div>
           </div>
           <div className="flx">
-            <SingleToggle2 disabled={!isPro} action={tolggleHoneypot} checked={'honeypot' in additional.enabled} className="flx" />
+            <SingleToggle2 disabled={!isPro} action={tolggleHoneypot} checked={'honeypot' in additionalSetting.enabled} className="flx" />
           </div>
         </div>
       </div>
@@ -509,8 +547,8 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             </b>
           </div>
           <div className="flx">
-            <input onChange={setEntryLimit} value={additional.settings.entry_limit} disabled={!('entry_limit' in additional.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
-            <SingleToggle2 action={handleEntryLimit} checked={'entry_limit' in additional.enabled} className="flx" />
+            <input onChange={setEntryLimit} value={additionalSetting.settings.entry_limit} disabled={!('entry_limit' in additionalSetting.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
+            <SingleToggle2 action={handleEntryLimit} checked={'entry_limit' in additionalSetting.enabled} className="flx" />
           </div>
         </div>
       </div>
@@ -525,7 +563,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
-          <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additional.enabled} />
+          <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additionalSetting.enabled} />
           {__('Enable / Disable', 'bitform')}
         </div>
         <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Everyday')} value="Everyday" title={__('Every Day', 'bitform')} />
@@ -538,7 +576,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Thursday')} value="Thursday" title={__('Thursday', 'bitform')} />
         <br />
         <CheckBox onChange={setRestrictForm} checked={checkRestrictFromExist('Custom')} value="Custom" title={__('Custom Date', 'bitform')} />
-        {'restrict_form' in additional.settings && additional.settings.restrict_form.day.indexOf('Custom') > -1 && (
+        {'restrict_form' in additionalSetting.settings && additionalSetting.settings.restrict_form.day.indexOf('Custom') > -1 && (
 
           <div className="flx">
             <span className="mt-2 ml-2">Date:</span>
@@ -546,10 +584,10 @@ export default function SingleFormSettings({ fields, additional, setadditional }
               <div><small>{__('From', 'bitform')}</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'from')}
-                value={('restrict_form' in additional.settings
-                  && 'date' in additional.settings.restrict_form
-                  && 'from' in additional.settings.restrict_form.date
-                  && new Date(additional.settings.restrict_form.date.from)) || new Date()}
+                value={('restrict_form' in additionalSetting.settings
+                  && 'date' in additionalSetting.settings.restrict_form
+                  && 'from' in additionalSetting.settings.restrict_form.date
+                  && new Date(additionalSetting.settings.restrict_form.date.from)) || new Date()}
                 dayPlaceholder="dd"
                 monthPlaceholder="mm"
                 yearPlaceholder="year"
@@ -562,10 +600,10 @@ export default function SingleFormSettings({ fields, additional, setadditional }
               <DatePicker
                 onChange={val => handleDate(val, 'to')}
                 value={
-                  ('restrict_form' in additional.settings
-                    && 'date' in additional.settings.restrict_form
-                    && 'to' in additional.settings.restrict_form.date
-                    && new Date(additional.settings.restrict_form.date.to)) || new Date()
+                  ('restrict_form' in additionalSetting.settings
+                    && 'date' in additionalSetting.settings.restrict_form
+                    && 'to' in additionalSetting.settings.restrict_form.date
+                    && new Date(additionalSetting.settings.restrict_form.date.to)) || new Date()
                 }
                 dayPlaceholder="dd"
                 monthPlaceholder="mm"
@@ -583,18 +621,18 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             <div><small>{__('From', 'bitform')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'from')}
-              value={('restrict_form' in additional.settings
-                && 'time' in additional.settings.restrict_form
-                && additional.settings.restrict_form.time.from) || new Date()}
+              value={('restrict_form' in additionalSetting.settings
+                && 'time' in additionalSetting.settings.restrict_form
+                && additionalSetting.settings.restrict_form.time.from) || new Date()}
             />
           </div>
           <div>
             <div><small>{__('To', 'bitform')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'to')}
-              value={('restrict_form' in additional.settings
-                && 'time' in additional.settings.restrict_form
-                && additional.settings.restrict_form.time.to) || new Date()}
+              value={('restrict_form' in additionalSetting.settings
+                && 'time' in additionalSetting.settings.restrict_form
+                && additionalSetting.settings.restrict_form.time.to) || new Date()}
               className="btcd-date-pick"
             />
           </div>
@@ -610,14 +648,14 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         )}
         cls="w-6 mt-3"
       >
-        {'blocked_ip' in additional.settings && additional.settings.blocked_ip.length > 0 && (
+        {'blocked_ip' in additionalSetting.settings && additionalSetting.settings.blocked_ip.length > 0 && (
           <div className="flx mb-2">
-            <SingleToggle2 cls="flx" action={toggleAllIpStatus} checked={'blocked_ip' in additional.enabled} />
+            <SingleToggle2 cls="flx" action={toggleAllIpStatus} checked={'blocked_ip' in additionalSetting.enabled} />
             {__('Enable / Disable', 'bitform')}
           </div>
         )}
 
-        {'blocked_ip' in additional.settings && additional.settings.blocked_ip.map((itm, i) => (
+        {'blocked_ip' in additionalSetting.settings && additionalSetting.settings.blocked_ip.map((itm, i) => (
           <div className="flx mt-1" key={`blk-ip-${i + 11}`}>
             <SingleToggle2 action={(e) => handleIpStatus(e, i)} checked={itm.status} />
             <input type="text" onChange={(e) => handleIp(e, i, 'blocked')} className="btcd-paper-inp" value={itm.ip} placeholder="000.0.0.00" />
@@ -647,14 +685,14 @@ export default function SingleFormSettings({ fields, additional, setadditional }
           {__('By enabling this option only listed IP can submit this form.', 'bitform')}
         </div>
 
-        {'private_ip' in additional.settings && additional.settings.private_ip.length > 0 && (
+        {'private_ip' in additionalSetting.settings && additionalSetting.settings.private_ip.length > 0 && (
           <div className="flx mb-2 mt-3">
-            <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additional.enabled} />
+            <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additionalSetting.enabled} />
             {__('Enable / Disable', 'bitform')}
           </div>
         )}
 
-        {'private_ip' in additional.settings && additional.settings.private_ip.map((itm, i) => (
+        {'private_ip' in additionalSetting.settings && additionalSetting.settings.private_ip.map((itm, i) => (
           <div className="flx mt-1" key={`blk-ip-${i + 11}`}>
             <SingleToggle2 action={(e) => handleIpStatus(e, i, 'private')} checked={itm.status} />
             <input type="text" onChange={(e) => handleIp(e, i, 'private')} className="btcd-paper-inp" value={itm.ip} placeholder="000.0.0.00" />
@@ -672,7 +710,7 @@ export default function SingleFormSettings({ fields, additional, setadditional }
             <GoogleAdIcn size={18} />
             <b className="ml-2">{__('Capture Google Ads (Click ID)', 'bitform')}</b>
           </div>
-          <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additional.enabled} className="flx" />
+          <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
 
@@ -686,13 +724,13 @@ export default function SingleFormSettings({ fields, additional, setadditional }
         cls="w-6 mt-3"
       >
         <div className="flx mb-2 ml-2">
-          <SingleToggle2 action={handleDisableStoreEntry} checked={'disableStoreEntry' in additional.enabled} className="flx" />
+          <SingleToggle2 action={handleDisableStoreEntry} checked={'disableStoreEntry' in additionalSetting.enabled} className="flx" />
           {__('Enable / Disable', 'bitform')}
         </div>
-        {additional.enabled.disableStoreEntry && (
+        {additionalSetting.enabled.disableStoreEntry && (
           <>
             <div className="flx mb-4 ml-2">
-              <SingleToggle2 action={hideReCaptchaBadge} checked={additional.settings?.recaptchav3?.hideReCaptcha} className="flx" />
+              <SingleToggle2 action={hideReCaptchaBadge} checked={additionalSetting.settings?.recaptchav3?.hideReCaptcha} className="flx" />
               {__('Hide ReCaptcha Badge', 'bitform')}
             </div>
             <span
@@ -712,19 +750,19 @@ export default function SingleFormSettings({ fields, additional, setadditional }
                   <br />
                   <div className="flx mt-1">
                     <div className="mt-1">
-                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additionalSetting.settings?.recaptchav3?.score} />
                       <p className="m-0">
-                        <b>{showToleranceLabel(additional.settings?.recaptchav3?.score)}</b>
+                        <b>{showToleranceLabel(additionalSetting.settings?.recaptchav3?.score)}</b>
                       </p>
                     </div>
-                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additional.settings?.recaptchav3?.score} />
+                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additionalSetting.settings?.recaptchav3?.score} />
                   </div>
 
                 </div>
                 <div className="mb-2 ml-2">
                   <b>Low Score Message</b>
                   <br />
-                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additional.settings?.recaptchav3?.message} />
+                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additionalSetting.settings?.recaptchav3?.message} />
                 </div>
               </>
             )}
