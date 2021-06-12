@@ -9,13 +9,12 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
     if (disabled) document.getElementById(`${id}-settings`).value = value || ''
     else {
       timyMceInit()
-      tinymce.get(`${id}-settings`).setContent(value || '')
+      tinymce.get(`${id}-settings`)?.setContent(value || '')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formFields, id, disabled])
 
   const timyMceInit = () => {
-    console.log('init')
     if (typeof tinymce !== 'undefined' && (!formFields || formFields?.length > 0)) {
       // if (formFields) {
       //   const s = document.querySelectorAll('.form-fields-em')
