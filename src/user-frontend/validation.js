@@ -6,14 +6,14 @@ export default function validateForm({ form, input }) {
   else if (input) [, contentId] = input.form.id.split('form-')
   if (typeof window[contentId] === 'undefined') return false
   let formEntries = {}
+  fields = window[contentId].fields
   if (form) {
-    fields = window[form].fields
     formEntries = generateFormEntries(document.getElementById(`form-${form}`))
   } else if (input) {
     if (!window[contentId].validateFocusLost) return true
     const name = generateFieldKey(input.name)
     formEntries = { [name]: input.value }
-    fields = { [name]: window[contentId].fields[name] }
+    fields = { [name]: fields[name] }
   }
 
   console.log('entry', formEntries, fields)
@@ -39,6 +39,7 @@ export default function validateForm({ form, input }) {
       formCanBeSumbitted = false
       continue
     }
+    if (!fldValue) continue
 
     if (fldData?.valid?.regexr) {
       errKey = regexPatternValidation(fldValue, fldData)
