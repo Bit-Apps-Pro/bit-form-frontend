@@ -6,7 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { reportsReducer } from '../../Utils/Reducers'
 import ConfirmModal from './ConfirmModal'
@@ -29,6 +29,7 @@ const IndeterminateCheckbox = forwardRef(
 
 function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols, formID, report }) {
   const [delay, setDelay] = useState(null)
+  const reports = useRecoilValue($reports)
   const handleSearch = e => {
     delay && clearTimeout(delay)
     const { value } = e.target
@@ -51,7 +52,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
           placeholder={__('Search', 'bitform')}
         />
       </label>
-      {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} report={report} />}
+      {exportImportMenu && <ExportImportMenu data={data} cols={cols} formID={formID} report={reports} />}
     </div>
   )
 }
