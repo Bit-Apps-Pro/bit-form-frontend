@@ -58,8 +58,8 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
   }
 
   const handleBlur = e => {
-    const { name } = e.target
-    validateForm({ input: { name, value: value.length ? value : '' } })
+    const { name, form } = e.target
+    validateForm({ input: { name, form, value: value.length ? value : '' } })
   }
   return (
     <InputWrapper

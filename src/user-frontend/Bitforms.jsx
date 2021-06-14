@@ -275,8 +275,7 @@ export default function Bitforms(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const form = select(`#form-${props.contentID}`)
-    if (!validateForm({ form })) return
+    if (!validateForm({ form: props.contentID })) return
 
     setbuttonDisabled(true)
     snack && setSnack(false)

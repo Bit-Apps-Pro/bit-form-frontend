@@ -1,15 +1,19 @@
 /* eslint-disable no-continue */
-/* eslint-disable no-undef */
+let fields
+let contentId
 export default function validateForm({ form, input }) {
-  if (typeof bitFormsFront === 'undefined') return false
-  if (input && !bitFormsFront.validateFocusLost) return true
-  let { fields } = bitFormsFront
+  if (form) contentId = form
+  else if (input) [, contentId] = input.form.id.split('form-')
+  if (typeof window[contentId] === 'undefined') return false
   let formEntries = {}
-  if (form) formEntries = generateFormEntries(form)
-  else if (input) {
+  if (form) {
+    fields = window[form].fields
+    formEntries = generateFormEntries(document.getElementById(`form-${form}`))
+  } else if (input) {
+    if (!window[contentId].validateFocusLost) return true
     const name = generateFieldKey(input.name)
     formEntries = { [name]: input.value }
-    fields = { [name]: fields[name] }
+    fields = { [name]: window[contentId].fields[name] }
   }
 
   console.log('entry', formEntries, fields)
@@ -62,7 +66,6 @@ const generateFieldKey = fldKey => (fldKey.slice(-2) === '[]' ? fldKey.slice(0, 
 
 const generateFormEntries = form => {
   const formData = new FormData(form)
-  const { fields } = bitFormsFront
   const formEntries = {}
   for (const [key, value] of formData.entries()) {
     const fldKey = generateFieldKey(key)
