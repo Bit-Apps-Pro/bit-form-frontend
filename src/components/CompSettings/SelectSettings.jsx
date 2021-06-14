@@ -28,6 +28,8 @@ export default function SelectSettings() {
   const allowCustomOpt = fieldData.customOpt !== undefined
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
   const placeholder = fieldData.ph === undefined ? '' : fieldData.ph
+  const min = fieldData.mn || ''
+  const max = fieldData.mx || ''
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   // set defaults
@@ -52,6 +54,7 @@ export default function SelectSettings() {
       fieldData.err.req.show = true
     } else {
       delete fieldData.valid.req
+      delete fieldData.mn
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -79,6 +82,12 @@ export default function SelectSettings() {
       fieldData.mul = true
     } else {
       delete fieldData.mul
+      delete fieldData.mn
+      delete fieldData.mx
+      if (fieldData.err) {
+        delete fieldData.err.mn
+        delete fieldData.err.mx
+      }
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -145,6 +154,34 @@ export default function SelectSettings() {
     setImportOpts({ ...importOpts })
   }
 
+  function setMin(e) {
+    if (!Number(e.target.value)) {
+      delete fieldData.mn
+      setRequired({ target: { checked: false } })
+    } else {
+      fieldData.mn = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mn) fieldData.err.mn = {}
+      fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
+      fieldData.err.mn.show = true
+      setRequired({ target: { checked: true } })
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  function setMax(e) {
+    if (e.target.value === '') {
+      delete fieldData.mx
+    } else {
+      fieldData.mx = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mx) fieldData.err.mx = {}
+      fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
+      fieldData.err.mx.show = true
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
   return (
     <div className="ml-2 mr-4">
       <Back2FldList />
@@ -169,6 +206,28 @@ export default function SelectSettings() {
       )}
       <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" />
+      {
+        fieldData.mul && (
+          <>
+            <SingleInput inpType="number" title={__('Minimum:', 'bitform')} value={min} action={setMin} className="w-10" />
+            {fieldData.mn && (
+              <ErrorMessageSettings
+                type="mn"
+                title="Min Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
+              />
+            )}
+            <SingleInput inpType="number" title={__('Maximum:', 'bitform')} value={max} action={setMax} className="w-10" />
+            {fieldData.mx && (
+              <ErrorMessageSettings
+                type="mx"
+                title="Max Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
+              />
+            )}
+          </>
+        )
+      }
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
         &nbsp;

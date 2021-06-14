@@ -28,6 +28,8 @@ function RadioCheckSettings() {
   const isRound = fieldData.round || false
   const isRadioRequired = fieldData.valid.req || false
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
+  const min = fieldData.mn || ''
+  const max = fieldData.mx || ''
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   function setAdminLabel(e) {
@@ -105,6 +107,7 @@ function RadioCheckSettings() {
       fieldData.err.req.show = true
     } else {
       delete fieldData.valid.req
+      delete fieldData.mn
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -125,6 +128,34 @@ function RadioCheckSettings() {
   const closeImportModal = () => {
     delete importOpts.show
     setImportOpts({ ...importOpts })
+  }
+
+  function setMin(e) {
+    if (!Number(e.target.value)) {
+      delete fieldData.mn
+      setRadioRequired({ target: { checked: false } })
+    } else {
+      fieldData.mn = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mn) fieldData.err.mn = {}
+      fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
+      fieldData.err.mn.show = true
+      if (!isOptionRequired) setRadioRequired({ target: { checked: true } })
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  function setMax(e) {
+    if (e.target.value === '') {
+      delete fieldData.mx
+    } else {
+      fieldData.mx = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mx) fieldData.err.mx = {}
+      fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
+      fieldData.err.mx.show = true
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   return (
@@ -149,6 +180,28 @@ function RadioCheckSettings() {
         />
       )}
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
+      {
+        fieldData.typ === 'check' && (
+          <>
+            <SingleInput inpType="number" title={__('Minimum:', 'bitform')} value={min} action={setMin} className="w-10" />
+            {fieldData.mn && (
+              <ErrorMessageSettings
+                type="mn"
+                title="Min Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
+              />
+            )}
+            <SingleInput inpType="number" title={__('Maximum:', 'bitform')} value={max} action={setMax} className="w-10" />
+            {fieldData.mx && (
+              <ErrorMessageSettings
+                type="mx"
+                title="Max Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
+              />
+            )}
+          </>
+        )
+      }
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
         &nbsp;

@@ -8,7 +8,7 @@ export default function validateForm({ form, input }) {
   if (form) formEntries = generateFormEntries(form)
   else if (input) {
     const name = generateFieldKey(input.name)
-    formEntries[name] = input.value
+    formEntries = { [name]: input.value }
     fields = { [name]: fields[name] }
   }
 
@@ -28,16 +28,15 @@ export default function validateForm({ form, input }) {
 
     let errKey = ''
 
-    if (!fldValue) {
-      if (fldData?.valid?.req) {
-        errKey = 'req'
-        generateErrMsg(errKey, fldKey, fldData)
-        formCanBeSumbitted = false
-      }
+    if (!fldValue && fldData?.valid?.req) errKey = 'req'
+    if (!errKey && fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
+    if (errKey) {
+      generateErrMsg(errKey, fldKey, fldData)
+      formCanBeSumbitted = false
       continue
     }
 
-    if (fldType.match(/^(text|url|textarea|password|number|email)$/) && fldData.valid.regexr) {
+    if (fldData?.valid?.regexr) {
       errKey = regexPatternValidation(fldValue, fldData)
       if (errKey) {
         generateErrMsg(errKey, fldKey, fldData)
@@ -50,7 +49,7 @@ export default function validateForm({ form, input }) {
     else if (fldType === 'email') errKey = emailFldValidation(fldValue, fldData)
     else if (fldType === 'url') errKey = urlFldValidation(fldValue, fldData)
     else if (fldType === 'decision-box') errKey = dcsnbxFldValidation(fldValue, fldData)
-    else if (fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
+    else if (fldType === 'check' || fldType === 'select') errKey = checkMinMaxOptions(fldValue, fldData)
     else if (fldType === 'file-up') errKey = fileupFldValidation(fldValue, fldData)
 
     generateErrMsg(errKey, fldKey, fldData)
@@ -69,9 +68,7 @@ const generateFormEntries = form => {
     const fldKey = generateFieldKey(key)
     if (!(fldKey in fields)) continue
     if (formEntries[fldKey]) {
-      if (!Array.isArray(formEntries[fldKey])) {
-        formEntries[fldKey] = [formEntries[fldKey]]
-      }
+      if (!Array.isArray(formEntries[fldKey])) formEntries[fldKey] = [formEntries[fldKey]]
       formEntries[fldKey].push(value)
     } else formEntries[fldKey] = value
   }
@@ -107,3 +104,16 @@ const checkFldValidation = (fldValue, fldData) => (fldData.opt.filter(opt => opt
 const fileupFldValidation = (fldValue, fldData) => ((fldData.valid.req && !Array.isArray(fldValue) && !fldValue.name) ? 'req' : '')
 
 const regexPatternValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPattern(fldData.valid.regexr), fldData.valid.flags || '').test(fldValue) ? 'regexr' : '')
+
+const checkMinMaxOptions = (fldValue, fldData) => {
+  const val = fldData.typ === 'select' ? fldValue.split(',') : fldValue
+  if (Array.isArray(val)) {
+    if (val.length < fldData.mn) return 'mn'
+    if (val.length > fldData.mx) return 'mx'
+  } else if (val) {
+    if (fldData.mn !== 1) return 'mn'
+    if (fldData.mx !== 1) return 'mx'
+  }
+
+  return ''
+}
