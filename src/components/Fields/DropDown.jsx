@@ -51,16 +51,21 @@ function DropDown({ attr, onBlurHandler, resetFieldValue, formID, isBuilder }) {
   }, [value])
 
   const onChangeHandler = (event) => {
+    let val = []
     if (event && event.target && event.target.multiple && value) {
       const selectedValue = []
       event.target.childNodes.forEach((option => { option.selected && option.value && selectedValue.push(option.value) }))
-      setvalue([...selectedValue])
+      val = [...selectedValue]
     } else {
       if (onBlurHandler) {
         const eventLikeData = { name: 'mul' in attr ? `${attr.name}` : attr.name, value: event.split(','), type: 'dropdown', multiple: 'mul' in attr && attr.mul, userinput: true }
         onBlurHandler(eventLikeData)
       }
-      setvalue(event.split(','))
+      val = event.split(',')
+    }
+
+    if (!attr.valid.disableOnMax || (attr.valid.disableOnMax && val.length <= Number(attr.mx))) {
+      setvalue(val)
     }
   }
 

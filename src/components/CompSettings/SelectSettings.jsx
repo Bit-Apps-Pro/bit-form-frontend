@@ -7,6 +7,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Cooltip from '../Utilities/Cooltip'
 import CopyText from '../Utilities/CopyText'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -155,6 +156,7 @@ export default function SelectSettings() {
   }
 
   function setMin(e) {
+    if (!isPro) return
     if (!Number(e.target.value)) {
       delete fieldData.mn
       setRequired({ target: { checked: false } })
@@ -170,6 +172,7 @@ export default function SelectSettings() {
   }
 
   function setMax(e) {
+    if (!isPro) return
     if (e.target.value === '') {
       delete fieldData.mx
     } else {
@@ -179,6 +182,17 @@ export default function SelectSettings() {
       fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
       fieldData.err.mx.show = true
     }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  const setDisabledOnMax = e => {
+    if (!isPro) return
+    if (e.target.checked) {
+      fieldData.valid.disableOnMax = true
+    } else {
+      delete fieldData.valid.disableOnMax
+    }
+
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
@@ -209,21 +223,44 @@ export default function SelectSettings() {
       {
         fieldData.mul && (
           <>
-            <SingleInput inpType="number" title={__('Minimum:', 'bitform')} value={min} action={setMin} className="w-10" />
+            <div>
+              <div className="flx mt-2 mb-2">
+                <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">{__('Set minimum number to be selected for dropdown option', 'bitform')}</div>
+                </Cooltip>
+                {!isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
+            </div>
+
             {fieldData.mn && (
               <ErrorMessageSettings
                 type="mn"
                 title="Min Error Message"
-                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
+                tipTitle={`By enabling this feature, user will see the error message when selected options is less than ${fieldData.mn}`}
               />
             )}
-            <SingleInput inpType="number" title={__('Maximum:', 'bitform')} value={max} action={setMax} className="w-10" />
+
+            <div>
+              <div className="flx mt-2 mb-2">
+                <h4 className="m-0">{__('Maximum:', 'bitform')}</h4>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">{__('Set maximum number to be selected for dropdown option', 'bitform')}</div>
+                </Cooltip>
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <input className="btcd-paper-inp" type="number" value={max} onChange={setMax} disabled={!isPro} />
+            </div>
             {fieldData.mx && (
-              <ErrorMessageSettings
-                type="mx"
-                title="Max Error Message"
-                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
-              />
+              <>
+                <ErrorMessageSettings
+                  type="mx"
+                  title="Max Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
+                />
+                {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
+              </>
             )}
           </>
         )
