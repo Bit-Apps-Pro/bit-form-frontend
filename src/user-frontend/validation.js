@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
-let fields
 let contentId
+let fields
 export default function validateForm({ form, input }) {
   if (form) contentId = form
   else if (input) [, contentId] = input.form.id.split('form-')
@@ -8,7 +8,7 @@ export default function validateForm({ form, input }) {
   let formEntries = {}
   fields = window[contentId].fields
   if (form) {
-    formEntries = generateFormEntries(document.getElementById(`form-${form}`))
+    formEntries = generateFormEntries()
   } else if (input) {
     if (!window[contentId].validateFocusLost) return true
     const name = generateFieldKey(input.name)
@@ -23,8 +23,7 @@ export default function validateForm({ form, input }) {
   let { length } = flds
   // eslint-disable-next-line no-plusplus
   while (length--) {
-    const [fldKey] = flds[length]
-    const fldData = fields[fldKey]
+    const [fldKey, fldData] = flds[length]
     const fldType = fldData.typ
     const fldValue = typeof formEntries[fldKey] === 'string' ? formEntries[fldKey].trim() : formEntries[fldKey]
 
@@ -32,14 +31,13 @@ export default function validateForm({ form, input }) {
 
     let errKey = ''
 
-    if (!fldValue && fldData?.valid?.req) errKey = 'req'
-    if (!errKey && fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
-    if (errKey) {
+    if (!fldValue) {
+      if (fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
+      if (fldData?.valid?.req) errKey = 'req'
       generateErrMsg(errKey, fldKey, fldData)
-      formCanBeSumbitted = false
+      if (errKey) formCanBeSumbitted = false
       continue
     }
-    if (!fldValue) continue
 
     if (fldData?.valid?.regexr) {
       errKey = regexPatternValidation(fldValue, fldData)
@@ -65,8 +63,8 @@ export default function validateForm({ form, input }) {
 
 const generateFieldKey = fldKey => (fldKey.slice(-2) === '[]' ? fldKey.slice(0, fldKey.length - 2) : fldKey)
 
-const generateFormEntries = form => {
-  const formData = new FormData(form)
+const generateFormEntries = () => {
+  const formData = new FormData(document.getElementById(`form-${contentId}`))
   const formEntries = {}
   for (const [key, value] of formData.entries()) {
     const fldKey = generateFieldKey(key)
@@ -110,14 +108,10 @@ const fileupFldValidation = (fldValue, fldData) => ((fldData.valid.req && !Array
 const regexPatternValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPattern(fldData.valid.regexr), fldData.valid.flags || '').test(fldValue) ? 'regexr' : '')
 
 const checkMinMaxOptions = (fldValue, fldData) => {
-  const val = fldData.typ === 'select' ? fldValue.split(',') : fldValue
-  if (Array.isArray(val)) {
-    if (val.length < fldData.mn) return 'mn'
-    if (val.length > fldData.mx) return 'mx'
-  } else if (val) {
-    if (fldData.mn !== 1) return 'mn'
-    if (fldData.mx !== 1) return 'mx'
-  }
-
-  return ''
+  const val = Array.isArray(fldValue) ? fldValue : (fldValue || '').split(',')
+  const mn = Number(fldData.mn) || 0
+  const mx = Number(fldData.mx) || fldData.opt.length
+  if (val.length < mn) return 'mn'
+  if (val.length > mx) return 'mx'
+  return fldData.typ === 'check' ? checkFldValidation(fldValue, fldData) : ''
 }

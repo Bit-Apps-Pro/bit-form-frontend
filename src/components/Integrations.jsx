@@ -54,7 +54,7 @@ function Integrations({ integrations, setIntegration, formFields }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const integs = [
-    { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks },
     { type: 'Zapier', logo: zapier },
     { type: 'Integromat', logo: integromat },

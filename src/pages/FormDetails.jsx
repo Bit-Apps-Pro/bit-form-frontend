@@ -91,7 +91,7 @@ function FormDetails({ history }) {
 
   const [workFlows, setworkFlows] = useState([defaultWorkflow])
 
-  const [additional, setadditional] = useState({ enabled: {}, settings: {} })
+  const [additional, setadditional] = useState({ enabled: { validateFocusLost: true }, settings: {} })
   const [formSettings, setFormSettings] = useState({
     formName,
     theme: 'default',
