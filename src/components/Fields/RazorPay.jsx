@@ -113,8 +113,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
   }
 
   const displayRazorpay = () => {
-    const form = document.getElementById(`form-${contentID}`)
-    if (!validateForm({ form })) return
+    if (!validateForm({ form: contentID })) return
 
     const dynValues = setDefaultValues()
     const { currency, name, description, theme, modal, notes } = attr.options
