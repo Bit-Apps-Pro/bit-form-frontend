@@ -159,7 +159,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         typ: 'email',
         lbl: __('Email Field', 'bitform'),
         ph: __('example@mail.com', 'bitform'),
-        pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{2,3})+$',
+        pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{1,24})+$',
         valid: {},
         err: { invalid: { dflt: 'Email is invalid', show: true } },
       },
