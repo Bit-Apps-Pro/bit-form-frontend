@@ -15,14 +15,14 @@ import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
 function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [activeCampaingConf, setActiveCampaingConf] = useState({
     name: 'Active Campaign API',
     type: 'ActiveCampaign',
-    api_url: process.env.NODE_ENV === 'development' ? 'https://bitcodezoho1.api-us1.com' : '',
-    api_key: process.env.NODE_ENV === 'development' ? 'ed0548a99c3c48425f4747d93ab9f2fd48783740459a6402465d6a1991f4286a49ca703e' : '',
+    api_url: process.env.NODE_ENV === 'development' ? 'https://bitcode.api-us1.com' : '',
+    api_key: process.env.NODE_ENV === 'development' ? 'ff38f360de82ec99e1ac0fc5d83cbb5404ade1ab3a62c723ce089e2ad4da3f6cd362e779' : '',
     field_map: [
       { formField: '', activeCampaignField: '' },
     ],
@@ -53,7 +53,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         step={step}
         setstep={setstep}
         isLoading={isLoading}
-        setisLoading={setisLoading}
+        setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />
       {/* STEP 2 */}
@@ -65,7 +65,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
           activeCampaingConf={activeCampaingConf}
           setActiveCampaingConf={setActiveCampaingConf}
           isLoading={isLoading}
-          setisLoading={setisLoading}
+          setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
         />
         <button

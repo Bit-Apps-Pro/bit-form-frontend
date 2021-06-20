@@ -37,7 +37,7 @@ export default function ActiveCampaignFieldMap({ i, formFields, field, activeCam
 
   return (
     <div
-      className={isRequired ? 'mt-2 mr-1' : 'flx flx-around mt-2 mr-1'}
+      className={isRequired ? 'flx mt-2 mr-1' : 'flx flx-around mt-2 mr-1'}
     >
       <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
         <option value="">{__('Select Field', 'bitform')}</option>

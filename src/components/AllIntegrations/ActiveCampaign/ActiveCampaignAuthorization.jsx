@@ -3,13 +3,14 @@ import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import { refreshActiveCampaingList } from './ActiveCampaignCommonFunc'
 
-export default function ActiveCampaignAuthorization({ formID, activeCampaingConf, setActiveCampaingConf, step, setstep, setSnackbar, isInfo }) {
+export default function ActiveCampaignAuthorization({ formID, activeCampaingConf, setActiveCampaingConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
 
   const handleAuthorize = () => {
     const newConf = { ...activeCampaingConf }
@@ -46,13 +47,17 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
   }
 
   const nextPage = () => {
-    refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
+    refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     setstep(2)
     document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (
     <>
+       <SetupHelperLink
+        title={activeCampaingConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=CfKrN2yHDxw&t=185s'}
+      />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />

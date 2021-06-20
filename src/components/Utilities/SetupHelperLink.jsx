@@ -1,4 +1,4 @@
-export default function SetupHelperLink({ title, subtitle , youTubeLink, docLink, style  }) {
+export default function SetupHelperLink({ title, subtitle, youTubeLink, docLink, style }) {
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function SetupHelperLink({ title, subtitle , youTubeLink, docLink
           )}
 
           &nbsp;
-        
+
           {docLink && (
             <a href={docLink} target="_blank" rel="noreferrer" style={{ color: '#0575f1' }}>
               Documentation
