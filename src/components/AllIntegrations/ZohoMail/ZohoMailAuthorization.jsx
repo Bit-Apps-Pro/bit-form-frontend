@@ -4,6 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './ZohoMailCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -23,6 +24,11 @@ export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, s
   }
 
   return (
+    <>
+      <SetupHelperLink
+        title={mailConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=en6GWQ_8who&list=PL7c6CDwwm-ALJko8nEwetraIZAE2OoDdE'}
+      />
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
@@ -72,5 +78,6 @@ export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, s
         </>
       )}
     </div>
-  )
+  </>
+      )
 }

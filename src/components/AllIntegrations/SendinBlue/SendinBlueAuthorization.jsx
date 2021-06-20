@@ -4,6 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshLists } from './SendinBlueCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSendinBlueConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -49,6 +50,10 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
 
   return (
     <>
+      <SetupHelperLink
+        title={sendinBlueConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=DLWvKoPbbN8&t=5s'}
+      />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendinBlueConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
