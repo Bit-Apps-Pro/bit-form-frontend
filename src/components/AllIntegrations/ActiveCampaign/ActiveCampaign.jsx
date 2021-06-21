@@ -34,6 +34,10 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
       }
+      if (!activeCampaingConf?.listId ) {
+        setSnackbar({ show: true, msg: 'Please select list to continue.' })
+        return
+      }
       if (activeCampaingConf.name !== '' && activeCampaingConf.field_map.length > 0) {
         setstep(3)
       }
@@ -70,7 +74,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={activeCampaingConf.field_map.length < 1}
+          disabled={!activeCampaingConf?.listId || activeCampaingConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

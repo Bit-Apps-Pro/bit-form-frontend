@@ -42,8 +42,8 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
   return (
     <>
       <br />
-      <b className="wdt-150 d-in-b">{__('List:', 'bitform')}</b>
-      <select value={activeCampaingConf?.listId} name="listId" id="" className="btcd-paper-inp w-7" onChange={handleInput}>
+      <b className="wdt-200 d-in-b">{__('List:', 'bitform')}</b>
+      <select value={activeCampaingConf?.listId} name="listId" id="" className="btcd-paper-inp w-5" onChange={handleInput}>
         <option value="">{__('Select List', 'bitform')}</option>
         {
           activeCampaingConf?.default?.activeCampaignLists && Object.keys(activeCampaingConf.default.activeCampaignLists).map(listname => (
@@ -57,10 +57,10 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
       <br />
       <br />
       <div className="d-flx">
-        <b style={{ marginTop: '15px' }} className="wdt-150 d-in-b">{__('Tags: ', 'bitform')}</b>
+        <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Tags: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={activeCampaingConf?.tagIds}
-          className="btcd-paper-drpdwn w-7"
+          className="btcd-paper-drpdwn w-5"
           options={activeCampaingConf?.default?.activeCampaignTags && Object.keys(activeCampaingConf.default.activeCampaignTags).map(tag => ({ label: activeCampaingConf.default.activeCampaignTags[tag].tagName, value: activeCampaingConf.default.activeCampaignTags[tag].tagId }))}
           onChange={val => setTags(val)}
         />

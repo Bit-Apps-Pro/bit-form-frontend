@@ -59,15 +59,15 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
         youTubeLink={'https://www.youtube.com/watch?v=CfKrN2yHDxw&t=185s'}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
-        <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
+        <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
-        <div className="mt-3"><b>{__('Access API URL:', 'bitform')}</b></div>
+        <div className="mt-3 wdt-200"><b>{__('Access API URL:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={activeCampaingConf.api_url} type="text" placeholder={__('Access API URL...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
 
-        <div className="mt-3"><b>{__('Access API Key:', 'bitform')}</b></div>
+        <div className="mt-3 wdt-200"><b>{__('Access API Key:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={activeCampaingConf.api_key} type="text" placeholder={__('Access API Key...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         {isLoading === 'auth' && (
