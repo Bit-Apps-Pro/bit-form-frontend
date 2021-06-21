@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
-import { __ } from '../../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/GoogleIntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
 import GoogleSheetAuthorization from './GoogleSheetAuthorization'
-import { handleInput } from './GoogleSheetCommonFunc'
-import BackIcn from '../../../Icons/BackIcn'
+import { handleInput, checkMappedFields } from './GoogleSheetCommonFunc'
+import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
 
 function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -37,9 +37,14 @@ function GoogleSheet({ formFields, setIntegration, integrations, allIntegURL }) 
   }, [])
 
   const nextPage = () => {
+    if (!checkMappedFields(sheetConf)) {
+      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      return
+    }
     if (sheetConf.spreadsheetId !== '' && sheetConf.worksheetName !== '' && sheetConf.field_map.length > 0) {
       setstep(3)
     }
+    
   }
   document.querySelector('.btcd-s-wrp').scrollTop = 0
 
