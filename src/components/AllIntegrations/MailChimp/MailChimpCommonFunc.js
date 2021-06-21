@@ -218,3 +218,11 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
       setisLoading(false)
     })
 }
+
+export const checkMappedFields = (sheetconf) => {
+  const mappedFleld = sheetconf.field_map ? sheetconf.field_map.filter(mapped => (!mapped.formField && !mapped.mailChimpField)) : []
+  if (mappedFleld.length > 0) {
+    return false
+  }
+  return true
+}
