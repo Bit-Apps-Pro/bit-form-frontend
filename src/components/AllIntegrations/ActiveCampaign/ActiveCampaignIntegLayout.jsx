@@ -30,14 +30,14 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
     }
     refreshActiveCampaingHeader(newConf, setActiveCampaingConf, setIsLoading, setSnackbar)
   }
-  
+
   const activeCampaignLists = activeCampaingConf?.default?.activeCampaignLists
   const listId = activeCampaingConf?.listId
 
   useEffect(() => {
     activeCampaignLists && refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
   }, [activeCampaignLists])
-  
+
   console.log('layout', activeCampaingConf)
   return (
     <>
@@ -77,12 +77,14 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
         }}
         />
       )}
+
+      <div className="mt-4">
+        <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
+        <button onClick={() => refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaing Field', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      </div>
       {
-        activeCampaingConf?.listId && (
+        activeCampaingConf?.default?.fields && (
           <>
-            <div className="mt-4">
-              <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
-            </div>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
               <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
@@ -111,8 +113,6 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           </>
         )
       }
-
-
 
     </>
   )
