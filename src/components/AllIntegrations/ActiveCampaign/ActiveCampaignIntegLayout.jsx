@@ -53,7 +53,7 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           ))
         }
       </select>
-      <button onClick={() => refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Activecapmaing list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Activecapmaign list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
       <div className="d-flx">
@@ -64,7 +64,7 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           options={activeCampaingConf?.default?.activeCampaignTags && Object.keys(activeCampaingConf.default.activeCampaignTags).map(tag => ({ label: activeCampaingConf.default.activeCampaignTags[tag].tagName, value: activeCampaingConf.default.activeCampaignTags[tag].tagId }))}
           onChange={val => setTags(val)}
         />
-        <button onClick={() => refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaing Tags', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
       {isLoading && (
@@ -80,10 +80,10 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
 
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bitform')}</b>
-        <button onClick={() => refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaing Field', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Field', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {
-        activeCampaingConf?.default?.fields && (
+        (activeCampaingConf?.listId || activeCampaingConf?.default?.fields) && (
           <>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-1">
