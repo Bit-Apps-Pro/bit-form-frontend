@@ -77,14 +77,12 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
   }, [clientID, attr.currency, attr.payType, attr.locale, attr.disableFunding])
 
   const createSubscriptionHandler = (_, actions) => {
-    const form = document.getElementById(`form-${contentID}`)
-    if (!validateForm({ form })) throw new Error('form validation is failed!')
+    if (!validateForm({ form: contentID })) throw new Error('form validation is failed!')
     return actions.subscription.create({ plan_id: attr?.planId })
   }
 
   const createOrderHandler = (_, actions) => {
-    const form = document.getElementById(`form-${contentID}`)
-    if (!validateForm({ form })) throw new Error('form validation is failed!')
+    if (!validateForm({ form: contentID })) throw new Error('form validation is failed!')
 
     const dynValues = setDefaultValues()
     const orderAmount = Number(dynValues.amountFld[1] || amount)
