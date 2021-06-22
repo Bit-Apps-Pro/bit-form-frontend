@@ -23,7 +23,7 @@ function EditMailChimp({ formFields, setIntegration, integrations, allIntegURL }
 
       <div className="flx mt-3">
         <b className="wdt-150 d-in-b">{__('Integration Name:', 'bitform')}</b>
-        <input className="btcd-paper-inp w-7" onChange={e => handleInput(e, sheetConf, setSheetConf)} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
+        <input className="btcd-paper-inp w-6" onChange={e => handleInput(e, sheetConf, setSheetConf)} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
       </div>
       <br />
       <br />
