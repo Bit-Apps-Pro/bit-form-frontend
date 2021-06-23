@@ -69,13 +69,19 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
     Object.entries(dynamicFlds).map(dynFld => {
       const fldName = dynFld[1][1] ? attr.options[dynFld[1][1]][dynFld[0]] : attr.options[dynFld[0]]
       if (fldName) {
-        const fld = select(`[name="${fldName}"]`)
+        let fld = select(`[name="${fldName}"]`)
+        if (fld.type === 'radio') {
+          fld = select(`[name="${fldName}"]:checked`)
+        }
         if (fld) {
           const { value } = fld
           if (isInitial) {
             dynFld[1][0](value)
           }
-          dynamicFlds[dynFld[0]][2] = value
+          if (dynFld[1][2]) {
+            dynamicFlds[dynFld[0]][2] = value
+          }
+          dynamicFlds[dynFld[0]][1] = value
         }
       }
     })
@@ -122,7 +128,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
 
     const options = {
       key: clientID,
-      amount: Number(dynValues.amountFld[2] || amount) * 100,
+      amount: Number(dynValues.amountFld[1] || amount) * 100,
       currency,
       name,
       description,
