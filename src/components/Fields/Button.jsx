@@ -12,7 +12,7 @@ export default function Button({ attr, buttonDisabled, handleReset, formID, data
       <div className={`btcd-frm-sub ${attr.align === 'center' && 'j-c-c'} ${attr.align === 'right' && 'j-c-e'}`}>
         <button
           className={`btcd-sub-btn ${attr.btnTyp === 'reset' ? 'btcd-rst' : 'btcd-sub'} ${attr.btnSiz === 'md' && 'btcd-btn-md'} ${attr.fulW && 'ful-w'}`}
-          disabled={buttonDisabled}
+          disabled={buttonDisabled || attr?.valid?.disabled}
           // eslint-disable-next-line react/button-has-type
           type={attr.btnTyp}
           {...attr.btnTyp === 'reset' && { onClick: handleReset }}

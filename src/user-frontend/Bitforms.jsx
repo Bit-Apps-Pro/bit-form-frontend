@@ -164,6 +164,9 @@ export default function Bitforms(props) {
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              if (!newData[props.fieldsKey[actionDetail.field]].valid) {
+                newData[props.fieldsKey[actionDetail.field]].valid = {}
+              }
               switch (actionDetail.action) {
                 case 'value':
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
@@ -180,7 +183,10 @@ export default function Bitforms(props) {
                   break
 
                 case 'hide':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = true; maybeReset = true }
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.hide = true
+                    maybeReset = true
+                  }
                   break
 
                 case 'disable':
@@ -213,6 +219,10 @@ export default function Bitforms(props) {
         } else {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              if (!props.data[props.fieldsKey[actionDetail.field]].valid) {
+                const fldData = props.data[props.fieldsKey[actionDetail.field]]
+                fldData.valid = {}
+              }
               maybeReset = true
               switch (actionDetail.action) {
                 case 'value':
