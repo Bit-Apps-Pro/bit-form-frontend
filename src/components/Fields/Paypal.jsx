@@ -39,7 +39,7 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
           if (isInitial) {
             dynFld[1][0](value)
           }
-          dynamicFlds[dynFld[0]][1] = value
+          dynamicFlds[fldName][1] = value
         }
       }
     })
