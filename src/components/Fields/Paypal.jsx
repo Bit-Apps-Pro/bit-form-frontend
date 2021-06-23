@@ -28,8 +28,8 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     }
 
     Object.entries(dynamicFlds).map(dynFld => {
-      const fldName = attr[dynFld[0]]
       if (attr?.[dynFld[0]]) {
+        const fldName = attr[dynFld[0]]
         let fld = select(`[name="${fldName}"]`)
         if (fld?.type === 'radio') {
           fld = select(`[name="${fldName}"]:checked`)
