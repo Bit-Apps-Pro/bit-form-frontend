@@ -293,7 +293,16 @@ export default function Bitforms(props) {
     if (props.GCLID) {
       formData.set('GCLID', props.GCLID())
     }
+    const hidden = []
+    Object.entries(fieldData).map(fld => {
+      if (fld[1]?.valid?.hide) {
+        hidden.push(fld[0])
+      }
+    })
 
+    if (hidden.length) {
+      formData.append('hidden_fields', hidden)
+    }
     if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
       grecaptcha.ready(() => {
         grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'submit' }).then((token) => {
