@@ -1,5 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fieldsArr, $integrations } from '../../GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 
@@ -34,8 +36,11 @@ const EditTelegram = lazy(() => import('./Telegram/EditTelegram'))
 const EditFluentCrm = lazy(() => import('./FluentCRM/EditFluentCrm'))
 const EditEncharge = lazy(() => import('./Encharge/EditEncharge'))
 
-export default function EditInteg({ allIntegURL, formFields, setIntegration, integrations }) {
+export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
+  const [integrations, setIntegration] = useRecoilState($integrations)
+  const formFields = useRecoilValue($fieldsArr)
+
   const IntegType = () => {
     switch (integrations[id].type) {
       case 'Zoho CRM':

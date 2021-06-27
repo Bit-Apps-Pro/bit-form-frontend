@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './PodHelperFunction'
 
@@ -62,7 +63,7 @@ export default function PodsFieldMap({ i, type, formFields, field, dataConf, set
                 +
               </button>
               <button onClick={() => delFieldMap(propName, i, dataConf, setDataConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-                <span className="btcd-icn icn-trash-2" />
+                <TrashIcn />
               </button>
             </>
           )

@@ -11,7 +11,7 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { deepCopy, isType } from '../Utils/Helpers'
-import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId } from '../GlobalStates'
+import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $additionalSettings } from '../GlobalStates'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -22,7 +22,7 @@ function GridLayout(props) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const setProModal = useContext(ShowProModalContext)
-  const { newData, setNewData, style, gridWidth, formID, formSettings } = props
+  const { newData, setNewData, style, gridWidth, formID } = props
   const [fields, setFields] = useRecoilState($fields)
   const [layout, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
@@ -35,6 +35,7 @@ function GridLayout(props) {
   const [rowHeight, setRowHeight] = useState(43)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
+  const additional = useRecoilValue($additionalSettings)
 
   useEffect(() => {
     checkAllLayoutSame()
@@ -325,7 +326,7 @@ function GridLayout(props) {
 
   const checkCaptchaField = () => {
     let msg
-    if (formSettings?.additional?.enabled?.recaptchav3) {
+    if (additional?.enabled?.recaptchav3) {
       msg = __(
         <p>
           You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV2 disable the ReCaptchaV3 from the Form Settings.

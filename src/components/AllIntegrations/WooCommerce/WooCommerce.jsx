@@ -26,6 +26,9 @@ export default function WooCommerce({ formFields, setIntegration, integrations, 
   })
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (wcConf.workspace !== '' && wcConf.table !== '' && wcConf.field_map.length > 0) {
       setStep(3)
     }

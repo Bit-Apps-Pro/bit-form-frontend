@@ -14,12 +14,10 @@ export default async function bitsFetch(data, action, contentType = null, queryP
     }
   }
 
-  const response = await fetch(uri, {
+  return fetch(uri, {
     method: 'POST',
     headers: {},
     body: data instanceof FormData ? data : JSON.stringify(data),
   })
     .then(res => res.json())
-
-  return response
 }

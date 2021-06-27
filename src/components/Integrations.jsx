@@ -1,8 +1,9 @@
 /* eslint-disable-next-line no-undef */
 import { useState } from 'react'
+import { withQuicklink } from 'quicklink/dist/react/hoc'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
@@ -42,8 +43,10 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
+import TrashIcn from '../Icons/TrashIcn'
 
-function Integrations({ integrations, setIntegration, formFields }) {
+function Integrations() {
+  const [integrations, setIntegration] = useRecoilState($integrations)
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
@@ -206,10 +209,10 @@ function Integrations({ integrations, setIntegration, formFields }) {
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
                   <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
-                    <EditIcn size="15   " />
+                    <EditIcn size="15" />
                   </Link>
                   <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
-                    <span className="btcd-icn icn-trash-2" />
+                    <TrashIcn />
                   </button>
                   {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
                     <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
@@ -227,19 +230,19 @@ function Integrations({ integrations, setIntegration, formFields }) {
         </Route>
 
         <Route path={`${path}/new/:integUrlName`}>
-          <NewInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+          <NewInteg allIntegURL={allIntegURL} />
         </Route>
 
         {integrations?.length
           && (
             <Route exact path={`${path}/edit/:id`}>
-              <EditInteg allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+              <EditInteg allIntegURL={allIntegURL} />
             </Route>
           )}
         {integrations && integrations.length > 0
           && (
             <Route exact path={`${path}/info/:id`}>
-              <IntegInfo allIntegURL={allIntegURL} integrations={integrations} />
+              <IntegInfo allIntegURL={allIntegURL} />
             </Route>
           )}
       </Switch>
@@ -248,4 +251,4 @@ function Integrations({ integrations, setIntegration, formFields }) {
   )
 }
 
-export default Integrations
+export default withQuicklink(Integrations)

@@ -4,8 +4,8 @@ import DatePicker from 'react-date-picker'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $additionalSettings, $bits, $fields, $saveForm } from '../GlobalStates'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
-import { $additionalSettings, $bits } from '../GlobalStates'
 import HoneypotIcn from '../Icons/HoneypotIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { __ } from '../Utils/i18nwrap'
@@ -15,10 +15,12 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
 import { deepCopy } from '../Utils/Helpers'
 import SingleToggle2 from './Utilities/SingleToggle2'
+import TrashIcn from '../Icons/TrashIcn'
 
-export default function SingleFormSettings({ fields }) {
+export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
-  // const saveForm = useRecoilValue($saveForm)
+  const fields = useRecoilValue($fields)
+  const saveForm = useRecoilValue($saveForm)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
@@ -40,6 +42,7 @@ export default function SingleFormSettings({ fields }) {
       additional.settings.blocked_ip.push({ ip: '', status: false })
     }
     setadditional(additional)
+    // saveForm()
   }
 
   const addMorePrivateIp = () => {
@@ -659,7 +662,7 @@ export default function SingleFormSettings({ fields }) {
           <div className="flx mt-1" key={`blk-ip-${i + 11}`}>
             <SingleToggle2 action={(e) => handleIpStatus(e, i)} checked={itm.status} />
             <input type="text" onChange={(e) => handleIp(e, i, 'blocked')} className="btcd-paper-inp" value={itm.ip} placeholder="000.0.0.00" />
-            <button onClick={() => delBlkIp(i)} className="icn-btn ml-2" aria-label="delete" type="button"><span className="btcd-icn icn-trash-2" /></button>
+            <button onClick={() => delBlkIp(i)} className="icn-btn ml-2" aria-label="delete" type="button"><TrashIcn /></button>
           </div>
         ))}
         <div className="txt-center">
@@ -696,7 +699,7 @@ export default function SingleFormSettings({ fields }) {
           <div className="flx mt-1" key={`blk-ip-${i + 11}`}>
             <SingleToggle2 action={(e) => handleIpStatus(e, i, 'private')} checked={itm.status} />
             <input type="text" onChange={(e) => handleIp(e, i, 'private')} className="btcd-paper-inp" value={itm.ip} placeholder="000.0.0.00" />
-            <button onClick={() => delPrivateIp(i)} className="icn-btn ml-2" aria-label="delete" type="button"><span className="btcd-icn icn-trash-2" /></button>
+            <button onClick={() => delPrivateIp(i)} className="icn-btn ml-2" aria-label="delete" type="button"><TrashIcn /></button>
           </div>
         ))}
         <div className="txt-center">

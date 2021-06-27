@@ -35,7 +35,6 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
 
   const nextPage = val => {
     setstep(val)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('mailConf', mailConf)

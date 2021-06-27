@@ -44,7 +44,7 @@ function EmailTemplateEdit({ saveForm }) {
 
   const save = () => {
     history.push(`/form/settings/${formType}/${formID}/email-templates`)
-    saveForm('email-template', mailTemp)
+    saveForm({ type: 'email-template', updatedData: mailTemp })
   }
 
   return (

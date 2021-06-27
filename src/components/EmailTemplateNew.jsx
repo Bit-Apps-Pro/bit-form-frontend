@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 
-import { useState, useEffect, useReducer } from 'react'
+import { useState } from 'react'
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
@@ -13,12 +13,12 @@ import TinyMCE from './Utilities/TinyMCE'
 import { deepCopy } from '../Utils/Helpers'
 
 function EmailTemplateNew({ saveForm }) {
-  console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
+  console.log('%c $render EmailTemplate new', 'background:purple;padding:3px;border-radius:5px;color:white')
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const formFields = useRecoilValue($fieldsArr)
   const [showTemplateModal, setTemplateModal] = useState(false)
-  const { formType, formID, id } = useParams()
+  const { formType, formID } = useParams()
   const history = useHistory()
 
   const handleBody = value => {
@@ -34,7 +34,7 @@ function EmailTemplateNew({ saveForm }) {
     newMailTem.push(tem)
     setMailTem(newMailTem)
     history.push(`/form/settings/${formType}/${formID}/email-templates`)
-    saveForm('email-template', newMailTem)
+    saveForm({ type: 'email-template', updatedData: newMailTem })
   }
 
   const addFieldToSubject = e => {

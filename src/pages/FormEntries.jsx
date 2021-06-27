@@ -58,7 +58,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
         }
       })
-      tableHeaderHandler(labels.length || allLabels)
+      tableHeaderHandler(labels.length ? labels : allLabels)
+      // tableHeaderHandler(labels)
     } else if (allLabels.length) {
       tableHeaderHandler(allLabels)
     }
@@ -183,6 +184,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   )
 
   const tableHeaderHandler = (labels = []) => {
+    console.log('labels', labels)
     const cols = labels?.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
       accessor: val.key,

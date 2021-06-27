@@ -44,8 +44,9 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: rgb(37, 193, 255);
-  opacity: 0.3;
+  background: rgba(87, 165, 255, 0.233);
+  /* border: 2px solid rgb(28, 89, 255); */
+  opacity: .5;
   transition-duration: 100ms;
   z-index: 2;
   -webkit-user-select: none;
@@ -108,5 +109,5 @@
   height: 25px;
   margin-top: -10px;
   cursor: ew-resize;
-  background-image: url('data:image/svg+xml;utf8,<svg width="7" height="18" viewBox="0 0 29 72" fill="none" xmlns="http://www.w3.org/2000/svg"><style>.r{fill: black;width: 10px;height: 10px;rx: 5px;}</style><rect x="1" y="1" class="r" /><rect x="18" y="1" class="r" /><rect x="1" y="31" class="r" /><rect x="18" y="31" class="r" /><rect x="1" y="61" class="r" /><rect x="18" y="61" class="r" /></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg width="7" height="18" viewBox="0 0 29 72" fill="none" xmlns="http://www.w3.org/2000/svg"><style>.r{fill: black;width: 12px;height: 12px;rx: 10px;}</style><rect x="10" y="1" class="r" /><rect x="10" y="31" class="r" /><rect x="10" y="61" class="r" /></svg>');
 }

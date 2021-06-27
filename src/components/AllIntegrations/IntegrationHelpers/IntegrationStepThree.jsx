@@ -15,7 +15,7 @@ export default function IntegrationStepThree({ step, saveConfig, edit, disabled 
           <h2 className="ml-3">{__('Successfully Integrated', 'bitform')}</h2>
           <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm" type="button">
             {__('Finish & Save ', 'bitform')}
-            ✔
+            &nbsp;✔
           </button>
         </div>
       )

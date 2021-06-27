@@ -1,24 +1,29 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, memo, Suspense, useEffect } from 'react'
 import { Switch, Route, NavLink, useRouteMatch, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { withQuicklink } from 'quicklink/dist/react/hoc'
 import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
-import { $fieldsArr } from '../GlobalStates'
+import MailOpenIcn from '../Icons/MailOpenIcn'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
-const EmailTemplateEdit = lazy(() => import('../components/EmailTemplateEdit'))
-const EmailTemplateNew = lazy(() => import('../components/EmailTemplateNew'))
 const Integrations = lazy(() => import('../components/Integrations'))
 const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
-export default function FormSettings({ formSettings, setFormSettings, setProModal, saveForm, fields, integrations, setIntegration }) {
+function FormSettings({ setProModal, saveForm }) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
-  const formFields = useRecoilValue($fieldsArr)
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
+  useEffect(() => {
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.href = '/wp-content/plugins/BitForm/assets/js/src_components_SingleFormSettings_jsx.js'
+    link.as = 'script'
+    link.type = 'script'
+    document.head.appendChild(link)
+  }, [])
 
   return (
     <div className="btcd-f-settings">
@@ -39,7 +44,7 @@ export default function FormSettings({ formSettings, setFormSettings, setProModa
           {__('Conditional Logics', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">
-          <span className="btcd-icn icn-envelope-open-o" />
+          <span className="mr-1"><MailOpenIcn size="21" /></span>
           {__('Email Templates', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/integrations`} activeClassName="btcd-f-a em-tem">
@@ -48,46 +53,32 @@ export default function FormSettings({ formSettings, setFormSettings, setProModa
         </NavLink>
       </aside>
 
-      <div className="btcd-s-wrp">
+      <div id="btcd-settings-wrp" className="btcd-s-wrp">
         <Switch>
-          <Route path={`${path}form-settings`}>
-            <Suspense fallback={<FSettingsLoader />}>
-              <SingleFormSettings fields={fields} />
-            </Suspense>
-          </Route>
-          <Route path={`${path}confirmations`}>
-            <Suspense fallback={<FSettingsLoader />}>
-              <ConfType formFields={formFields} formID={formID} formSettings={formSettings} setFormSettings={setFormSettings} />
-            </Suspense>
-          </Route>
-          <Route exact path={`${path}email-templates`}>
-            <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplate formID={formID} />
-            </Suspense>
-          </Route>
-          <Route exact path={`${path}email-templates/new`}>
-            <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateNew saveForm={saveForm} />
-            </Suspense>
-          </Route>
-          <Route exact path={`${path}email-templates/:id`}>
-            <Suspense fallback={<FSettingsLoader />}>
-              <EmailTemplateEdit saveForm={saveForm} />
-            </Suspense>
-          </Route>
-          <Route path={`${path}workflow`}>
-            <Suspense fallback={<FSettingsLoader />}>
-              <Workflow formFields={formFields} fields={fields} setProModal={setProModal} formSettings={formSettings} formID={formID} />
-            </Suspense>
-          </Route>
-          <Route path={`${path}integrations`}>
-            <Suspense fallback={<IntegLoader />}>
-              <Integrations integrations={integrations} setProModal={setProModal} formFields={formFields} setIntegration={setIntegration} />
-            </Suspense>
-          </Route>
+          <Suspense fallback={<FSettingsLoader />}>
+            <Route path={`${path}form-settings`} component={withQuicklink(SingleFormSettings, { origins: [] })} />
+            <Route path={`${path}confirmations`}>
+              <ConfType formID={formID} />
+            </Route>
+            <Route path={`${path}email-templates`}>
+              <EmailTemplate formID={formID} saveForm={saveForm} />
+            </Route>
+            <Route path={`${path}workflow`}>
+              <Workflow setProModal={setProModal} formID={formID} />
+            </Route>
+          </Suspense>
+        </Switch>
+        <Switch>
+          <Suspense fallback={<IntegLoader />}>
+            <Route path={`${path}integrations`}>
+              <Integrations setProModal={setProModal} />
+            </Route>
+          </Suspense>
         </Switch>
         <div className="mb-50" />
       </div>
     </div>
   )
 }
+
+export default memo(FormSettings)

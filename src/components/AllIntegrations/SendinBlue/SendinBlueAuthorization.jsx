@@ -42,9 +42,11 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
   }
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     setstep(2)
     refreshLists(sendinBlueConf, setSendinBlueConf, setIsLoading, setSnackbar)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (

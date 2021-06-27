@@ -36,6 +36,9 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   }, [])
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (!checkMappedFields(recruitConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return

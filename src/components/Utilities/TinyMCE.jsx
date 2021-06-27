@@ -15,7 +15,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
   }, [formFields, id, disabled])
 
   const timyMceInit = () => {
-    if (typeof tinymce !== 'undefined' && (!formFields || formFields?.length > 0)) {
+    if (typeof tinymce !== 'undefined') {
       // if (formFields) {
       //   const s = document.querySelectorAll('.form-fields-em')
       //   for (let i = 0; i < s.length; i += 1) {
@@ -71,8 +71,6 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
       })
     }
   }
-
-  console.log({ value })
 
   return (
     <textarea

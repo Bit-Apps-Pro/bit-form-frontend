@@ -1,30 +1,34 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useRef, useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { __ } from '../../Utils/i18nwrap'
 import bitsFetch from '../../Utils/bitsFetch'
 import LoaderSm from '../Loaders/LoaderSm'
 
-export default function MailSendTest({ setsnack, settab }) {
+export default function MailSendTest({ settab }) {
   const [isTestLoading, setisTestLoading] = useState(false)
   const formRef = useRef(null)
   const handleSubmit = (e) => {
     const testEmailData = new FormData(formRef.current)
     e.preventDefault()
     setisTestLoading(true)
-    bitsFetch(testEmailData,
+    const prom = bitsFetch(testEmailData,
       'bitforms_test_email')
       .then((res) => {
+        setisTestLoading(false)
         if (res !== undefined && res.success) {
           if (res.data) {
-            setsnack({ ...{ show: true, msg: __('mail send successfully', 'bitform') } })
-          } else {
-            setsnack({ ...{ show: true, msg: __(`${res?.data?.errors?.[0]}`, 'bitform') } })
+            return __('Email sent successfully.', 'bitform')
           }
-        } else {
-          setsnack({ ...{ show: true, msg: __(`${res?.data?.errors?.[0]}`, 'bitform') } })
+          return __(`${res?.data?.errors?.[0]}`, 'bitform')
         }
-        setisTestLoading(false)
+        return __(`${res?.data?.errors?.[0]}`, 'bitform')
       })
+    toast.promise(prom, {
+      success: data => data,
+      loading: __('Sending...', 'bitform'),
+      error: data => data,
+    })
   }
   useEffect(() => {
     settab('test_mail')
@@ -35,7 +39,6 @@ export default function MailSendTest({ setsnack, settab }) {
     <div>
       <h2>
         {__('Email Test', 'bitform')}
-        {' '}
       </h2>
       <div>
         <form
@@ -48,26 +51,26 @@ export default function MailSendTest({ setsnack, settab }) {
               && e.preventDefault()
           }}
         >
-          <div className="mt-2">
-            <label htmlFor="form_email_address">
-              {__('To:', 'bitform')}
-              <input id="to" name="to" className="btcd-paper-inp mt-1" placeholder="Enter Your Email" type="email" required />
+          <div className="mt-2 flx">
+            <label htmlFor="form_email_address" className="mr-2 wdt-150">
+              <b>{__('To:', 'bitform')}</b>
             </label>
+            <input id="form_email_address" name="to" className="btcd-paper-inp" placeholder="Email" type="email" required />
           </div>
-          <div className="mt-2">
-            <label htmlFor="form_name">
-              {__('Subject:', 'bitform')}
-              <input id="subject" name="subject" className="btcd-paper-inp mt-1" placeholder="Enter Your Subject" type="text" required />
+          <div className="mt-2 flx">
+            <label htmlFor="subject" className="mr-2 wdt-150">
+              <b>{__('Subject:', 'bitform')}</b>
             </label>
+            <input id="subject" name="subject" className="btcd-paper-inp" placeholder="Subject" type="text" required />
           </div>
-          <div className="mt-2">
-            <label htmlFor="message">
-              {__('Message:', 'bitform')}
-              <input id="message" name="message" className="btcd-paper-inp mt-1" placeholder="Enter Your Message" type="text" required />
+          <div className="mt-2 flx">
+            <label htmlFor="message" className="mr-2 wdt-150">
+              <b>{__('Message:', 'bitform')}</b>
             </label>
+            <input id="message" name="message" className="btcd-paper-inp" placeholder="Message" type="text" required />
           </div>
           <button type="submit" className="btn f-left btcd-btn-lg blue sh-sm flx" disabled={isTestLoading}>
-            {__('Send Test', 'bitform')}
+            {__('Send Test Mail', 'bitform')}
             {isTestLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
           </button>
         </form>

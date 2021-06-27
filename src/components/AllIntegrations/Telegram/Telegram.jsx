@@ -27,12 +27,14 @@ export default function Telegram({ formFields, setIntegration, integrations, all
   })
 
   const nextPage = (val) => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (val === 3) {
       if (telegramConf.name !== '' && telegramConf.chat_id) {
         setStep(val)
       }
     }
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (

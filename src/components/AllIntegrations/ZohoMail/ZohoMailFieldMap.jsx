@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
@@ -35,7 +36,7 @@ export default function ZohoMailFieldMap({ i, formFields, field, mailConf, setMa
         +
       </button>
       <button onClick={() => delFieldMap(i, mailConf, setMailConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-        <span className="btcd-icn icn-trash-2" />
+        <TrashIcn />
       </button>
     </div>
   )

@@ -27,6 +27,9 @@ export default function FluentCrm({ formFields, setIntegration, integrations, al
   })
 
   const nextPage = (val) => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (val === 3) {
       if (!checkMappedFields(fluentCrmConf)) {
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
@@ -41,8 +44,6 @@ export default function FluentCrm({ formFields, setIntegration, integrations, al
         refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setisLoading, setSnackbar)
       }
     }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (

@@ -17,7 +17,6 @@ function FormEntryTimeline({ formID, entryID, settab, integrations }) {
   const [integLogs, setIntegLogs] = useState([])
   const [logShowMore, setLogShowMore] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [snack, setSnackbar] = useState({ show: false, msg: '' })
   useEffect(() => {
     settab('timeline')
     setIsLoading(true)
@@ -118,7 +117,7 @@ function FormEntryTimeline({ formID, entryID, settab, integrations }) {
                 <p className="mr-2">
                   {`${apiType.type_name} ${apiType.type} ${integ.response_type}`}
                 </p>
-                <CopyText value={integ.response_obj} className="field-key-cpy w-0 ml-0" setSnackbar={setSnackbar} readOnly />
+                <CopyText value={integ.response_obj} className="field-key-cpy w-0 ml-0" readOnly />
               </div>
             )
           })
@@ -157,7 +156,6 @@ function FormEntryTimeline({ formID, entryID, settab, integrations }) {
 
   return (
     <>
-      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {
         isLoading
           ? (

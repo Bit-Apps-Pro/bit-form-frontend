@@ -19,7 +19,6 @@ export default function ReCaptchaSettigns() {
       <div className="mb-2">
         <span className="font-w-m">
           {__('Field Type :', 'bitform')}
-          {' '}
         </span>
         {__('reCAPTCHA', 'bitform')}
       </div>
