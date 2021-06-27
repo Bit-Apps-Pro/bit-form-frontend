@@ -18,6 +18,7 @@ export default function EditEntryData(props) {
   const [formStyle, setFormStyle] = useState('')
   const [formLayoutStyle, setFormLayoutStyle] = useState('')
   const ref = useRef(null)
+  const [fields, setFields] = useState(null)
 
   useEffect(() => {
     setshowEdit(true)
@@ -33,7 +34,14 @@ export default function EditEntryData(props) {
     bitsFetch({ formID, entryID }, 'bitforms_edit_form_entry')
       .then(res => {
         if (res !== undefined && res.success) {
-          setData({ layout: res.data.layout, fields: res.data.fields, fieldToCheck: res.data.fieldToCheck, conditional: res.data.conditional, fieldsKey: res.data.fieldsKey })
+          const tmp = { layout: res.data.layout, fields: res.data.fields, fieldToCheck: res.data.fieldToCheck, conditional: res.data.conditional, fieldsKey: res.data.fieldsKey }
+          const submitBtnKey = Object.entries(tmp.fields).find(fld => fld[1].btnTyp === 'submit')[0]
+          if (submitBtnKey) {
+            tmp.layout.lg = tmp.layout.lg.filter(lay => lay.i !== submitBtnKey)
+            delete tmp.fields[submitBtnKey]
+          }
+          setData(tmp)
+          setFields(res.data.fields)
         }
       })
   }, [entryID, formID])
@@ -43,6 +51,15 @@ export default function EditEntryData(props) {
     setisLoading(true)
     const formData = new FormData(ref.current)
     const queryParam = { formID, entryID: props.entryID }
+    const hidden = []
+    Object.entries(fields).forEach(fld => {
+      if (fld[1]?.valid?.hide) {
+        hidden.push(fld[0])
+      }
+    })
+    if (hidden.length) {
+      formData.append('hidden_fields', hidden)
+    }
     bitsFetch(formData, 'bitforms_update_form_entry', undefined, queryParam)
       .then(response => {
         if (response !== undefined && response.success) {
@@ -76,14 +93,12 @@ export default function EditEntryData(props) {
             }
           }
           setAllResp(tmp)
+          props.close(false)
         } else if (response.data) {
           setError(response.data)
         }
-        setTimeout(() => {
-          props.close(false)
-          setisLoading(false)
-        }, 3000)
       })
+      .finally(() => setisLoading(false))
   }
 
   function SaveBtn() {
@@ -121,6 +136,7 @@ export default function EditEntryData(props) {
           <Bitforms
             refer={ref}
             editMode
+            setFields={setFields}
             layout={data.layout}
             data={data.fields}
             formID={formID}

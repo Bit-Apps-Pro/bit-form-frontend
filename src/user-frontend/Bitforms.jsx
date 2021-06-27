@@ -164,6 +164,9 @@ export default function Bitforms(props) {
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              if (!newData[props.fieldsKey[actionDetail.field]].valid) {
+                newData[props.fieldsKey[actionDetail.field]].valid = {}
+              }
               switch (actionDetail.action) {
                 case 'value':
                   if (actionDetail.val !== undefined && newData[props.fieldsKey[actionDetail.field]]) {
@@ -180,7 +183,10 @@ export default function Bitforms(props) {
                   break
 
                 case 'hide':
-                  if (newData[props.fieldsKey[actionDetail.field]]) { newData[props.fieldsKey[actionDetail.field]].valid.hide = true; maybeReset = true }
+                  if (newData[props.fieldsKey[actionDetail.field]]) {
+                    newData[props.fieldsKey[actionDetail.field]].valid.hide = true
+                    maybeReset = true
+                  }
                   break
 
                 case 'disable':
@@ -213,6 +219,10 @@ export default function Bitforms(props) {
         } else {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
+              if (!props.data[props.fieldsKey[actionDetail.field]].valid) {
+                const fldData = props.data[props.fieldsKey[actionDetail.field]]
+                fldData.valid = {}
+              }
               maybeReset = true
               switch (actionDetail.action) {
                 case 'value':
@@ -263,12 +273,12 @@ export default function Bitforms(props) {
         }
       })
     }
-
     if (maybeReset) {
       if (props.fieldToCheck[targetFieldName] !== undefined && dataToSet[props.fieldsKey[targetFieldName]] && dataToSet[props.fieldsKey[targetFieldName]].userinput && fieldValues[targetFieldName]) {
         dataToSet[props.fieldsKey[targetFieldName]].val = fieldValues[targetFieldName].value
       }
       dispatchFieldData(dataToSet)
+      if (props.editMode) props.setFields(dataToSet)
     }
   }
 
@@ -283,7 +293,16 @@ export default function Bitforms(props) {
     if (props.GCLID) {
       formData.set('GCLID', props.GCLID())
     }
+    const hidden = []
+    Object.entries(fieldData).forEach(fld => {
+      if (fld[1]?.valid?.hide) {
+        hidden.push(fld[0])
+      }
+    })
 
+    if (hidden.length) {
+      formData.append('hidden_fields', hidden)
+    }
     if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
       grecaptcha.ready(() => {
         grecaptcha.execute(props.gRecaptchaSiteKey, { action: 'submit' }).then((token) => {
@@ -415,9 +434,15 @@ export default function Bitforms(props) {
   useEffect(() => {
     if (resetFieldValue) {
       setresetFieldValue(false)
+      if (typeof window[props.contentID] !== 'undefined') {
+        dispatchFieldData(window[props.contentID].fields)
+      }
     }
     return () => {
       setresetFieldValue(false)
+      if (typeof window[props.contentID] !== 'undefined') {
+        dispatchFieldData(window[props.contentID].fields)
+      }
     }
   }, [resetFieldValue])
 

@@ -114,6 +114,7 @@ function FormDetails({ history }) {
         btnTyp: 'submit',
         txt: 'Submit',
         align: 'right',
+        valid: {},
       }
       const btnFld = []
       btnFld[`bf${newFormId}-1`] = btnData

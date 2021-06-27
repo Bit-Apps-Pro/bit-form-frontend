@@ -3,7 +3,7 @@ let contentId
 let fields
 export default function validateForm({ form, input }) {
   if (form) contentId = form
-  else if (input) [, contentId] = input.form.id.split('form-')
+  else if (input?.form?.id) [, contentId] = input.form.id.split('form-')
   if (typeof window[contentId] === 'undefined') return false
   let formEntries = {}
   fields = window[contentId].fields
@@ -28,6 +28,9 @@ export default function validateForm({ form, input }) {
     const fldValue = typeof formEntries[fldKey] === 'string' ? formEntries[fldKey].trim() : formEntries[fldKey]
 
     console.log('flddata', fldKey, fldValue, fldData)
+
+    const fldDiv = document.querySelector(`#form-${contentId} .${fldKey}`)
+    if (window.getComputedStyle(fldDiv).display === 'none') continue
 
     let errKey = ''
 

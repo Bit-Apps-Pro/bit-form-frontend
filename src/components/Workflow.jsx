@@ -870,7 +870,7 @@ function Workflow({ formID }) {
                 )}
 
                 {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
-                  <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
+                  <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-3 ml-2">
                     <option value="">{__('Select Message', 'bitform')}</option>
                     {confirmations?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                   </MtSelect>

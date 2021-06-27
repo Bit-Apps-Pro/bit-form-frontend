@@ -52,6 +52,13 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
     })
   }
 
+  const isNotFileUpField = fields[action.field]?.typ !== 'file-up'
+  const isNotButtonField = fields[action.field]?.typ !== 'button'
+  const isNotSubmitAction = actionType !== 'onsubmit'
+  const isNotValidateAction = actionType !== 'onvalidate'
+
+  const btnFields = Object.entries(fields).filter(fld => fld[1].typ === 'button').map(fl => ({ key: fl[0], name: fl[1].txt }))
+
   return (
     <div className="flx pos-rel btcd-logic-blk">
       <MtSelect
@@ -61,7 +68,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         style={{ width: 720 }}
       >
         <option value="">{__('Select One', 'bitform')}</option>
-        {formFields.map(itm => itm.type !== 'file-up' && <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+        {[...formFields, ...btnFields].map(itm => <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
       <svg height="35" width="100" className="mt-1">
@@ -76,12 +83,14 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
         className="w-4"
       >
         <option value="">{__('Select One', 'bitform')}</option>
-        <option value="value">{__('Value', 'bitform')}</option>
-        {actionType !== 'onsubmit' && <option value="disable">{__('Disable', 'bitform')}</option>}
-        {actionType !== 'onsubmit' && <option value="readonly">{__('Readonly', 'bitform')}</option>}
-        {actionType !== 'onsubmit' && <option value="enable">{__('Enable', 'bitform')}</option>}
-        {actionType !== 'onsubmit' && <option value="hide">{__('Hide', 'bitform')}</option>}
-        {actionType !== 'onsubmit' && <option value="show">{__('Show', 'bitform')}</option>}
+        {(isNotFileUpField && isNotValidateAction) && <option value="value">{__('Value', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="readonly">{__('Readonly', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide', 'bitform')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show', 'bitform')}</option>}
+        {actionType === 'onvalidate' && <option value="required">{__('Required', 'bitform')}</option>}
+        {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required', 'bitform')}</option>}
       </MtSelect>
 
       {action.action === 'value' && (
