@@ -213,7 +213,7 @@ export default function SelectSettings() {
       </div>
       <div className="flx">
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
-        <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0 w-7" />
+        <CopyText value={fldKey} className="field-key-cpy m-0 w-7" />
       </div>
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />

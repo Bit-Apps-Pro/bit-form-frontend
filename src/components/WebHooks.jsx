@@ -1,5 +1,6 @@
 import { memo, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import CloseIcn from '../Icons/CloseIcn'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -8,14 +9,19 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
 import SnackMsg from './Utilities/SnackMsg'
+import { $confirmations, $fieldsArr } from '../GlobalStates'
+import TrashIcn from '../Icons/TrashIcn'
 
-function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields }) {
+function WebHooks({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [snack, setSnackbar] = useState({ show: false })
+  const [allConf, setAllConf] = useRecoilState($confirmations)
+  const fieldsArr = useRecoilValue($fieldsArr)
+
   const handleHookTitle = (e, idx) => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks[idx].title = e.target.value
-    setFormSettings(tmp)
+    const confirmation = deepCopy(allConf)
+    confirmation.type.webHooks[idx].title = e.target.value
+    setAllConf(confirmation)
   }
 
   const splitParamsFromUrl = url => {
@@ -31,69 +37,69 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
   }
 
   const handleLink = (val, i) => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks[i].url = val
-    tmp.confirmation.type.webHooks[i].params = splitParamsFromUrl(val)
-    setFormSettings(tmp)
+    const confirmation = deepCopy(allConf)
+    setAllConf(confirmation)
+    confirmation.type.webHooks[i].url = val
+    confirmation.type.webHooks[i].params = splitParamsFromUrl(val)
   }
 
   const handleMethod = (val, i) => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks[i].method = val
-    setFormSettings(tmp)
+    const confirmation = deepCopy(allConf)
+    confirmation.type.webHooks[i].method = val
+    setAllConf(confirmation)
   }
 
   const handleParam = (typ, val, hookIndx, paramIndx) => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks[hookIndx].params[paramIndx][typ] = val
-    tmp.confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
-    setFormSettings(tmp)
+    const confirmation = deepCopy(allConf)
+    confirmation.type.webHooks[hookIndx].params[paramIndx][typ] = val
+    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
+    setAllConf(confirmation)
   }
 
   const delParam = (hookIndx, paramIndx) => {
-    const tmp = { ...formSettings }
-    tmp.confirmation.type.webHooks[hookIndx].params.splice(paramIndx, 1)
-    tmp.confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
-    setFormSettings(tmp)
+    const confirmation = deepCopy(allConf)
+    confirmation.type.webHooks[hookIndx].params.splice(paramIndx, 1)
+    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
+    setAllConf(confirmation)
   }
 
   const addParam = hookIndx => {
-    const tmp = { ...formSettings }
-    if (!tmp.confirmation.type.webHooks[hookIndx]?.params) {
-      const { url } = tmp.confirmation.type.webHooks[hookIndx]
-      tmp.confirmation.type.webHooks[hookIndx].params = splitParamsFromUrl(url)
+    const confirmation = deepCopy(allConf)
+    if (!confirmation.type.webHooks[hookIndx]?.params) {
+      confirmation.type.webHooks[hookIndx].params = []
+    } else if (confirmation.type.webHooks[hookIndx]?.params) {
+      const { url } = confirmation.type.webHooks[hookIndx]
+      confirmation.type.webHooks[hookIndx].params = splitParamsFromUrl(url)
     }
-    tmp.confirmation.type.webHooks[hookIndx].params.push({ key: 'key', value: 'value' })
-    tmp.confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
-    setFormSettings(tmp)
+    confirmation.type.webHooks[hookIndx].params.push({ key: 'key', value: 'value' })
+    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
+    setAllConf(confirmation)
   }
 
   const addMoreHook = () => {
-    if (!('confirmation' in formSettings)) {
-      // eslint-disable-next-line no-param-reassign
-      formSettings.confirmation = { type: { webHooks: [] } }
-      formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
-    } else if ('webHooks' in formSettings.confirmation.type) {
-      formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
+    const confirmation = deepCopy(allConf)
+    if (confirmation?.type?.webHooks) {
+      confirmation.type.webHooks.push({ title: `Web Hook ${confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     } else {
       // eslint-disable-next-line no-param-reassign
-      formSettings.confirmation.type = { webHooks: [], ...formSettings.confirmation.type }
-      formSettings.confirmation.type.webHooks.push({ title: `Web Hook ${formSettings.confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
+      confirmation.type = { webHooks: [], ...confirmation.type }
+      confirmation.type.webHooks.push({ title: `Web Hook ${confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     }
-    setFormSettings({ ...formSettings })
+    setAllConf(confirmation)
   }
 
   const rmvHook = async i => {
-    const tmpData = formSettings.confirmation.type.webHooks[i]
-    formSettings.confirmation.type.webHooks.splice(i, 1)
-    setFormSettings({ ...formSettings })
+    const confirmation = deepCopy(allConf)
+    const tmpData = confirmation.type.webHooks[i]
+    confirmation.type.webHooks.splice(i, 1)
+    setAllConf(confirmation)
     confMdl.show = false
     setConfMdl({ ...confMdl })
     if (tmpData.id !== undefined) {
       const status = await removeIntegration(tmpData.id, 'hook')
       if (!status) {
-        formSettings.confirmation.type.webHooks.splice(i, 0, tmpData)
-        setFormSettings({ ...formSettings })
+        confirmation.type.webHooks.splice(i, 0, tmpData)
+        setAllConf(confirmation)
       }
     }
   }
@@ -110,7 +116,8 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
   }
 
   const testWebhook = webHookId => {
-    bitsFetch({ hookDetails: formSettings.confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
+    const confirmation = deepCopy(allConf)
+    bitsFetch({ hookDetails: confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
         setSnackbar({ show: true, msg: `${response.data}` })
       } else if (response && response.data) {
@@ -123,9 +130,9 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
   }
 
   const getUrlWithParams = hookIndx => {
-    const tmp = deepCopy(formSettings)
-    let { url } = tmp.confirmation.type.webHooks[hookIndx]
-    const { params } = tmp.confirmation.type.webHooks[hookIndx]
+    const confirmation = deepCopy(allConf)
+    let { url } = confirmation.type.webHooks[hookIndx]
+    const { params } = confirmation.type.webHooks[hookIndx]
     url = url.replaceAll(/\?.*/gi, '')
     if (params) {
       const lngth = params.length
@@ -150,9 +157,8 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
         btnTxt={__('Delete', 'bitform')}
         close={closeMdl}
       />
-      {'confirmation' in formSettings
-        && formSettings.confirmation.type.webHooks !== undefined
-        ? formSettings.confirmation.type.webHooks.map((itm, i) => (
+      {allConf?.type?.webHooks
+        ? allConf.type.webHooks.map((itm, i) => (
           <div key={`f-u-${i + 1}`} className="flx">
             <Accordions
               title={itm.title}
@@ -201,10 +207,10 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                       </div>
                       <div className="flx p-atn">
                         <Button onClick={() => delParam(i, childIdx)} icn>
-                          <span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} />
+                          <TrashIcn size={16} />
                         </Button>
                         <MultiSelect
-                          options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
+                          options={fieldsArr.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                           className="btcd-paper-drpdwn wdt-200 ml-2"
                           singleSelect
                           onChange={val => handleParam('value', val, i, childIdx)}
@@ -217,7 +223,7 @@ function WebHooks({ formSettings, setFormSettings, removeIntegration, formFields
                 </div>
               </div>
             </Accordions>
-            <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+            <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><TrashIcn size={16} /></Button>
           </div>
         )) : (
           <div className="txt-center btcd-empty">

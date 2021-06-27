@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../GlobalStates'
+import { $bits, $integrations } from '../../GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
 
@@ -27,7 +27,9 @@ const ZohoWorkDriveAuthorization = lazy(() => import('./ZohoWorkDrive/ZohoWorkDr
 const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorization'))
 const Loader = lazy(() => import('../Loaders/Loader'))
 
-export default function IntegInfo({ allIntegURL, integrations }) {
+export default function IntegInfo({ allIntegURL }) {
+  const integrations = useRecoilValue($integrations)
+
   const { id } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
   const integ = integrations[id]

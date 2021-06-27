@@ -58,8 +58,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
         }
       })
-      tableHeaderHandler(labels)
-    } else if (allLabels.length > 0) {
+      tableHeaderHandler(labels.length ? labels : allLabels)
+      // tableHeaderHandler(labels)
+    } else if (allLabels.length) {
       tableHeaderHandler(allLabels)
     }
 
@@ -182,8 +183,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     [closeConfMdl, closeRowDetail, confMdl, setBulkDelete],
   )
 
-  const tableHeaderHandler = (labels) => {
-    const cols = labels.map((val) => ({
+  const tableHeaderHandler = (labels = []) => {
+    console.log('labels', labels)
+    const cols = labels?.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
       accessor: val.key,
       fieldType: val.type,

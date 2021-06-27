@@ -31,7 +31,7 @@ import BtnIcn from '../../Icons/BtnIcn'
 import countries from '../../Utils/StaticData/countries.json'
 import FlagIcn from '../../Icons/FlagIcn'
 
-function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDragging }) {
+function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const tools = [
     {
       name: __('Text', 'bitform'),
@@ -369,7 +369,7 @@ function Toolbar({ tolbarSiz, setDrgElm, setNewData, setTolbar, setisToolDraggin
         <Scrollbars autoHide style={{ maxWidth: 400 }}>
           <div className="toolBar">
             {tools.map(tool => (
-              <Tools key={tool.name} setisToolDragging={setisToolDragging} setDrgElm={setDrgElm} setNewData={setNewData} value={[tool.elm, tool.pos]}>
+              <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className="mr-1">{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>

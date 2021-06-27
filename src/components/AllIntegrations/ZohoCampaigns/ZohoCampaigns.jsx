@@ -33,6 +33,9 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
   }, [])
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (!checkMappedFields(campaignsConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
@@ -41,8 +44,6 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
     if (campaignsConf.list !== '' && campaignsConf.table !== '' && campaignsConf.field_map.length > 0) {
       setstep(3)
     }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('campaignsConf', campaignsConf)

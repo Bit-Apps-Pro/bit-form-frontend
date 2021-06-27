@@ -188,7 +188,7 @@ function RadioCheckSettings() {
       </div>
       <div className="flx">
         <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
-        <CopyText value={fldKey} setSnackbar={() => { }} className="field-key-cpy m-0" />
+        <CopyText value={fldKey} className="field-key-cpy m-0" />
       </div>
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />

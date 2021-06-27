@@ -9,9 +9,11 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     setstep(2)
     refreshAudience(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   const handleInput = e => {
@@ -29,10 +31,10 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
 
       <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
-      <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+      <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-      <CopyText value={redirectLocation || `${window.location.href}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
+      <CopyText value={redirectLocation || `${window.location.href}`} className="field-key-cpy w-6 ml-0" readOnly={isInfo} />
 
       <small className="d-blk mt-5">
         {__('To get Client ID and SECRET , Please Visit', 'bitform')}

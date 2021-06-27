@@ -8,6 +8,7 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import CheckBox from '../../Utilities/CheckBox'
 import Loader from '../../Loaders/Loader'
 import { refreshUsers, refreshTaskLays, refreshTags, refreshGroups } from './ZohoProjectsCommonFunc'
+import TrashIcn from '../../../Icons/TrashIcn'
 
 export default function ZohoProjectsActions({ event, projectsConf, setProjectsConf, formID, formFields, setSnackbar }) {
   const [isLoading, setisLoading] = useState(false)
@@ -841,7 +842,7 @@ export default function ZohoProjectsActions({ event, projectsConf, setProjectsCo
                     <option key={tagColor} value={`bg${tagColor}`} style={{ backgroundColor: `#${tagColor}` }} aria-label="color" />
                   ))}
                 </select>
-                <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2" aria-label="delete" type="button"><span className="btcd-icn icn-trash-2" /></button>
+                <button onClick={() => handleCustomTag('remove', i)} className="icn-btn ml-2" aria-label="delete" type="button"><TrashIcn /></button>
               </div>
             ))}
             <button onClick={() => handleCustomTag('add')} className="icn-btn ml-2 mr-2 sh-sm tooltip" style={{ '--tooltip-txt': `'${__('Add Custom Tag', 'nitform')}'` }} type="button">+</button>

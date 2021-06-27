@@ -3,10 +3,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import toast from 'react-hot-toast'
 import CloseIcn from '../Icons/CloseIcn'
-import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import ActionBlock from './Utilities/ActionBlock'
@@ -18,9 +17,21 @@ import LogicBlock from './Utilities/LogicBlock'
 import LogicChip from './Utilities/LogicChip'
 import MtSelect from './Utilities/MtSelect'
 import TableCheckBox from './Utilities/TableCheckBox'
+import bitsFetch from '../Utils/bitsFetch'
+import { $mailTemplates, $workflows, $bits, $integrations, $confirmations, $fields, $fieldsArr } from '../GlobalStates'
+import { deepCopy } from '../Utils/Helpers'
+import TrashIcn from '../Icons/TrashIcn'
 
-function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, formID }) {
+function Workflow({ formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
+  const [allWorkFlows, setworkFlows] = useRecoilState($workflows)
+  const fields = useRecoilValue($fields)
+  const mailTem = useRecoilValue($mailTemplates)
+  const integrations = useRecoilValue($integrations)
+  const confirmations = useRecoilValue($confirmations)
+  const fieldsArr = useRecoilValue($fieldsArr)
+  /* eslint-disable-next-line no-undef */
+  const workFlows = deepCopy(allWorkFlows)
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const mailOptions = () => {
@@ -28,7 +39,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
     if (emailInFormField()) {
       const flds = []
 
-      formFields.map(fld => {
+      fieldsArr.map(fld => {
         if (fld.type === 'email') {
           flds.push({ label: fld.name, value: `\${${fld.key}}` })
         }
@@ -84,13 +95,19 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
   const delLgcGrp = val => {
     if (workFlows[val].id) {
-      bitsFetch({ formID, id: workFlows[val].id }, 'bitforms_delete_workflow')
+      const prom = bitsFetch({ formID, id: workFlows[val].id }, 'bitforms_delete_workflow')
         .then(res => {
           if (res !== undefined && res.success) {
             workFlows.splice(val, 1)
             setworkFlows([...workFlows])
           }
         })
+
+      toast.promise(prom, {
+        success: 'Successfully Deleted.',
+        loading: 'Deleting...',
+        error: 'Error occured, Try again.',
+      })
     } else {
       workFlows.splice(val, 1)
       setworkFlows([...workFlows])
@@ -104,160 +121,182 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
   const addLogic = (typ, lgcGrpInd) => {
     if (typ === 'and') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics.push('and')
         prv[lgcGrpInd].logics.push({ field: '', logic: '', val: '' })
-        return [...prv]
+        return prv
       })
     } else if (typ === 'or') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics.push('or')
         prv[lgcGrpInd].logics.push({ field: '', logic: '', val: '' })
-        return [...prv]
+        return prv
       })
     } else if (typ === 'orGrp') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics.push('or')
         prv[lgcGrpInd].logics.push([{ field: '', logic: '', val: '' }, 'or', { field: '', logic: '', val: '' }])
-        return [...prv]
+        return prv
       })
     } else if (typ === 'andGrp') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics.push('and')
         prv[lgcGrpInd].logics.push([{ field: '', logic: '', val: '' }, 'and', { field: '', logic: '', val: '' }])
-        return [...prv]
+        return prv
       })
     }
   }
 
   const addSubLogic = (typ, lgcGrpInd, ind) => {
     if (typ === 'and') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[ind].push('and')
         prv[lgcGrpInd].logics[ind].push({ field: '', logic: '', val: '' })
-        return [...prv]
+        return prv
       })
     } else if (typ === 'or') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[ind].push('or')
         prv[lgcGrpInd].logics[ind].push({ field: '', logic: '', val: '' })
-        return [...prv]
+        return prv
       })
     } else if (typ === 'orGrp') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[ind].push('or')
         prv[lgcGrpInd].logics[ind].push([{ field: '', logic: '', val: '' }, 'or', { field: '', logic: '', val: '' }])
-        return [...prv]
+        return prv
       })
     } else if (typ === 'andGrp') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[ind].push('and')
         prv[lgcGrpInd].logics[ind].push([{ field: '', logic: '', val: '' }, 'and', { field: '', logic: '', val: '' }])
-        return [...prv]
+        return prv
       })
     }
   }
 
   const addSubSubLogic = (typ, lgcGrpInd, ind, subInd) => {
     if (typ === 'and') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[ind][subInd].push('and')
         prv[lgcGrpInd].logics[ind][subInd].push({ field: '', logic: '', val: '' })
-        return [...prv]
+        return prv
       })
     } else if (typ === 'or') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[ind][subInd].push('or')
         prv[lgcGrpInd].logics[ind][subInd].push({ field: '', logic: '', val: '' })
-        return [...prv]
+        return prv
       })
     }
   }
 
   const changeLogicChip = (e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd] = e
-        return [...prv]
+        return prv
       })
     } else if (subLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd][subLgcInd] = e
-        return [...prv]
+        return prv
       })
     } else {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd] = e
-        return [...prv]
+        return prv
       })
     }
   }
 
   const changeLogic = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         if (val === 'null') {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].val = ''
         }
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].logic = val
-        return [...prv]
+        return prv
       })
     } else if (subLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         if (val === 'null') {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd].val = ''
         }
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].logic = val
-        return [...prv]
+        return prv
       })
     } else {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         if (val === 'null') {
           prv[lgcGrpInd].logics[lgcInd].val = ''
         }
         prv[lgcGrpInd].logics[lgcInd].logic = val
-        return [...prv]
+        return prv
       })
     }
   }
 
   const changeValue = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].val = val
-        return [...prv]
+        return prv
       })
     } else if (subLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].val = val
-        return [...prv]
+        return prv
       })
     } else {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd].val = val
-        return [...prv]
+        return prv
       })
     }
   }
 
   const changeFormField = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (subSubLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].field = val
         prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd].val = ''
-        return [...prv]
+        return prv
       })
     } else if (subLgcInd !== undefined) {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].field = val
         prv[lgcGrpInd].logics[lgcInd][subLgcInd].val = ''
-        return [...prv]
+        return prv
       })
     } else {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         prv[lgcGrpInd].logics[lgcInd].field = val
         prv[lgcGrpInd].logics[lgcInd].val = ''
-        return [...prv]
+        return prv
       })
     }
   }
@@ -265,7 +304,8 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
   const delLogic = (lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (workFlows[lgcGrpInd].logics.length > 1) {
       if (subSubLgcInd !== undefined) {
-        setworkFlows(prv => {
+        setworkFlows(prvSt => {
+          const prv = deepCopy(prvSt)
           if (prv[lgcGrpInd].logics[lgcInd][subLgcInd].length === subSubLgcInd + 1) {
             if (prv[lgcGrpInd].logics[lgcInd][subLgcInd].length === 3) {
               const tmp = prv[lgcGrpInd].logics[lgcInd][subLgcInd][subSubLgcInd - 2]
@@ -284,10 +324,11 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
               prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd, 2)
             }
           }
-          return [...prv]
+          return prv
         })
       } else if (subLgcInd !== undefined) {
-        setworkFlows(prv => {
+        setworkFlows(prvSt => {
+          const prv = deepCopy(prvSt)
           if (prv[lgcGrpInd].logics[lgcInd].length === subLgcInd + 1) {
             if (prv[lgcGrpInd].logics[lgcInd].length === 3) {
               const tmp = prv[lgcGrpInd].logics[lgcInd][subLgcInd - 2]
@@ -306,35 +347,38 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
               prv[lgcGrpInd].logics[lgcInd].splice(subLgcInd, 2)
             }
           }
-          return [...prv]
+          return prv
         })
       } else {
-        setworkFlows(prv => {
+        setworkFlows(prvSt => {
+          const prv = deepCopy(prvSt)
           if (lgcInd !== 0) {
             prv[lgcGrpInd].logics.splice(lgcInd - 1, 2)
           } else {
             prv[lgcGrpInd].logics.splice(lgcInd, 2)
           }
-          return [...prv]
+          return prv
         })
       }
     }
   }
 
   const addAction = lgcGrpInd => {
-    setworkFlows(prv => {
+    setworkFlows(prvSt => {
+      const prv = deepCopy(prvSt)
       if (prv[lgcGrpInd].action_type === 'onsubmit') {
         prv[lgcGrpInd].actions.push({ field: '', action: 'value' })
       } else {
         prv[lgcGrpInd].actions.push({ field: '', action: 'disable' })
       }
-      return [...prv]
+      return prv
     })
   }
 
   const addInlineLogic = (typ, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
     if (typ === 'and') {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         if (subSubLgcInd !== undefined) {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
         } else if (subLgcInd !== undefined) {
@@ -342,10 +386,11 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
         } else {
           prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'and', { field: '', logic: '', val: '' })
         }
-        return [...prv]
+        return prv
       })
     } else {
-      setworkFlows(prv => {
+      setworkFlows(prvSt => {
+        const prv = deepCopy(prvSt)
         if (subSubLgcInd !== undefined) {
           prv[lgcGrpInd].logics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
         } else if (subLgcInd !== undefined) {
@@ -353,7 +398,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
         } else {
           prv[lgcGrpInd].logics.splice(lgcInd + 1, 0, 'or', { field: '', logic: '', val: '' })
         }
-        return [...prv]
+        return prv
       })
     }
   }
@@ -523,7 +568,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
   }
 
   const emailInFormField = () => {
-    for (const field of formFields) {
+    for (const field of fieldsArr) {
       if (field.type === 'email') {
         return true
       }
@@ -532,7 +577,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
   }
   const fileInFormField = () => {
     const file = []
-    for (const field of formFields) {
+    for (const field of fieldsArr) {
       if (field.type === 'file-up') {
         file.push({ label: field.name, value: field.key })
       }
@@ -613,29 +658,37 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 {
                   lgcGrp.action_behaviour === 'cond' && lgcGrp.logics.map((logic, ind) => (
                     <span key={`logic-${ind + 44}`}>
-                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
+                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={fieldsArr} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
                       {typeof logic === 'string' && <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind)} />}
                       {Array.isArray(logic) && (
                         <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                           {logic.map((subLogic, subInd) => (
                             <span key={`subLogic-${subInd * 7}`}>
-                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
+                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={fieldsArr} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
                               {typeof subLogic === 'string' && <LogicChip logic={subLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd)} />}
                               {Array.isArray(subLogic) && (
                                 <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                                   {subLogic.map((subSubLogic, subSubLgcInd) => (
                                     <span key={`subsubLogic-${subSubLgcInd + 90}`}>
-                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={formFields} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
+                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={fieldsArr} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
                                       {typeof subSubLogic === 'string' && <LogicChip logic={subSubLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd, subSubLgcInd)} />}
                                     </span>
                                   ))}
                                   <div className=" btcd-workFlows-btns">
                                     <div className="flx">
                                       <Button icn className="blue"><CloseIcn size="14" className="icn-rotate-45" /></Button>
-                                      <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2"> AND </Button>
-                                      <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2"> OR </Button>
+                                      <Button onClick={() => addSubSubLogic('and', lgcGrpInd, ind, subInd)} className="blue ml-2">
+                                        <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                                        AND
+                                        {' '}
+                                      </Button>
+                                      <Button onClick={() => addSubSubLogic('or', lgcGrpInd, ind, subInd)} className="blue ml-2">
+                                        <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                                        OR
+                                        {' '}
+                                      </Button>
                                     </div>
                                   </div>
                                 </div>
@@ -645,10 +698,22 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                           <div className=" btcd-workFlows-btns">
                             <div className="flx">
                               <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
-                              <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2"> AND </Button>
-                              <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2"> OR </Button>
-                              <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2"> OR Group</Button>
-                              <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue ml-2"> AND Group</Button>
+                              <Button onClick={() => addSubLogic('and', lgcGrpInd, ind)} className="blue ml-2">
+                                <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                                AND
+                              </Button>
+                              <Button onClick={() => addSubLogic('or', lgcGrpInd, ind)} className="blue ml-2">
+                                <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                                OR
+                              </Button>
+                              <Button onClick={() => addSubLogic('orGrp', lgcGrpInd, ind)} className="blue ml-2">
+                                <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                                OR Group
+                              </Button>
+                              <Button onClick={() => addSubLogic('andGrp', lgcGrpInd, ind)} className="blue ml-2">
+                                <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                                AND Group
+                              </Button>
                             </div>
                           </div>
                         </div>
@@ -660,17 +725,30 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 {lgcGrp.action_behaviour === 'cond' && (
                   <div className="btcd-workFlows-btns">
                     <div className="flx">
-                      <Button icn className="blue sh-sm"><CloseIcn size="14" className="icn-rotate-45" /></Button>
-                      <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2"> AND </Button>
-                      <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2"> OR </Button>
-                      <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2"> OR Group</Button>
-                      <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue ml-2"> AND Group</Button>
+                      <Button onClick={() => addLogic('and', lgcGrpInd)} className="blue ml-2">
+                        <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                        AND
+                      </Button>
+                      <Button onClick={() => addLogic('or', lgcGrpInd)} className="blue ml-2">
+                        <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                        OR
+                      </Button>
+                      <Button onClick={() => addLogic('orGrp', lgcGrpInd)} className="blue ml-2">
+                        <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                        OR Group
+                      </Button>
+                      <Button onClick={() => addLogic('andGrp', lgcGrpInd)} className="blue ml-2">
+                        <CloseIcn size="10" className="icn-rotate-45 mr-1" />
+                        AND Group
+                      </Button>
                     </div>
                   </div>
                 )}
 
-                <div className="txt-dp mt-2"><b>Action</b></div>
-                <div className="btcd-hr" />
+                <h3 className="txt-dp mt-3">
+                  {lgcGrp.action_behaviour === 'cond' ? 'Then ' : ''}
+                  Action
+                </h3>
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <div className="mb-2">
                     {lgcGrp.action_run !== 'delete' && <TableCheckBox onChange={e => enableAction(e.target.checked, 'successMsg', lgcGrpInd)} className="ml-2 mt-2" title={__('Success Message', 'bitform')} checked={checkKeyInArr('successMsg', lgcGrpInd)} />}
@@ -684,8 +762,8 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
 
                 {(lgcGrp.action_type === 'onsubmit' || lgcGrp.action_run === 'delete') && (
                   <>
-                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">{__('Web Hooks', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.confirmation?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
-                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">{__('Integrations', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={formSettings?.integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
+                    {checkKeyInArr('webHooks', lgcGrpInd) && <DropDown action={val => setWebHooks(val, lgcGrpInd)} jsonValue value={getValueFromArr('webHooks', 'id', lgcGrpInd)} title={<span className="f-m">{__('Web Hooks', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={confirmations?.type?.webHooks?.map((itm, i) => ({ label: itm.title, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Hooks to Call', 'bitform')} />}
+                    {checkKeyInArr('integ', lgcGrpInd) && <DropDown action={val => setInteg(val, lgcGrpInd)} jsonValue value={getValueFromArr('integ', 'id', lgcGrpInd)} title={<span className="f-m">{__('Integrations', 'bitform')}</span>} titleClassName="mt-2 w-7" isMultiple options={integrations?.map((itm, i) => ({ label: itm.name, value: itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i }) }))} placeholder={__('Select Integation', 'bitform')} />}
 
                     {lgcGrp.action_run !== 'delete' && (
                       <>
@@ -696,7 +774,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setSuccessMsg(e.target.value, lgcGrpInd)} value={getValueFromArr('successMsg', 'id', lgcGrpInd)}>
                               <option value="">{__('Select Message', 'bitform')}</option>
-                              {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                              {confirmations?.type?.successMsg?.map((itm, i) => <option key={`sm-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
                         )}
@@ -707,7 +785,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setRedirectPage(e.target.value, lgcGrpInd)} value={getValueFromArr('redirectPage', 'id', lgcGrpInd)}>
                               <option value="">{__('Select Page To Redirect', 'bitform')}</option>
-                              {formSettings?.confirmation?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                              {confirmations?.type?.redirectPage?.map((itm, i) => <option key={`sr-${i + 2.5}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
                         )}
@@ -722,7 +800,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                             <br />
                             <select className="btcd-paper-inp w-7" onChange={e => setEmailSetting('tem', e, lgcGrpInd)} value={getValueFromArr('mailNotify', 'id', lgcGrpInd)}>
                               <option value="">{__('Select Email Template', 'bitform')}</option>
-                              {formSettings.mailTem && formSettings.mailTem.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                              {mailTem?.map((itm, i) => <option key={`sem-${i + 2.3}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                             </select>
                           </label>
                           <DropDown
@@ -794,7 +872,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                 {(lgcGrp.action_type === 'onvalidate' && lgcGrp.action_run !== 'delete') && (
                   <MtSelect onChange={e => changeValidateMsg(e.target.value, lgcGrpInd)} value={lgcGrp.validateMsg} label="Error Message" className="w-7 mt-2">
                     <option value="">{__('Select Message', 'bitform')}</option>
-                    {formSettings?.confirmation?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
+                    {confirmations?.type?.successMsg?.map((itm, i) => <option key={`vm-${i + 2.7}`} value={itm.id ? JSON.stringify({ id: itm.id }) : JSON.stringify({ index: i })}>{itm.title}</option>)}
                   </MtSelect>
                 )}
 
@@ -802,7 +880,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
                   <div className="ml-2 mt-2">
                     {lgcGrp.actions.map((action, actionInd) => (
                       <span key={`atn-${actionInd + 22}`}>
-                        <ActionBlock formFields={formFields} fields={fields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
+                        <ActionBlock formFields={fieldsArr} fields={fields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
                         {lgcGrp.actions.length !== actionInd + 1 && (
                           <>
                             <div style={{ height: 5 }}>
@@ -829,7 +907,7 @@ function Workflow({ formFields, fields, formSettings, workFlows, setworkFlows, f
             {isPro && (
               <div className="mt-2">
                 <Button onClick={() => lgcGrpDelConf(lgcGrpInd)} icn className="ml-2 sh-sm btcd-menu-btn tooltip" style={{ '--tooltip-txt': '"Delete Action"' }}>
-                  <span className="btcd-icn icn-trash-2" />
+                  <TrashIcn size="16" />
                 </Button>
               </div>
             )}

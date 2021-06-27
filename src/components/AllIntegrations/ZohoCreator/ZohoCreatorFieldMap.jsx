@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
@@ -68,7 +69,7 @@ export default function ZohoCreatorFieldMap({ i, formFields, uploadFields, field
               +
             </button>
             <button onClick={() => delFieldMap(i, creatorConf, setCreatorConf, uploadFields)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-              <span className="btcd-icn icn-trash-2" />
+              <TrashIcn />
             </button>
           </>
         )

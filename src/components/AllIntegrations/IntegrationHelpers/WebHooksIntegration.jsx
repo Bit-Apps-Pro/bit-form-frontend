@@ -6,6 +6,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import Button from '../../Utilities/Button'
 import LoaderSm from '../../Loaders/LoaderSm'
+import TrashIcn from '../../../Icons/TrashIcn'
 
 export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
   const getUrlParams = url => url?.match(/(\?|&)([^=]+)=([^&]+|)/gi)
@@ -72,6 +73,10 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
     setWebHooks(tmpConf)
   }
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
+
     setstep(2)
   }
   return (
@@ -128,7 +133,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
                 </div>
                 {!isInfo && (
                   <div className="flx p-atn">
-                    <Button onClick={() => delParam(itm, webHooks, setWebHooks)} icn><span className="btcd-icn icn-trash-2" style={{ fontSize: 16 }} /></Button>
+                    <Button onClick={() => delParam(itm, webHooks, setWebHooks)} icn><TrashIcn size={16} /></Button>
                     <MultiSelect
                       options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                       className="btcd-paper-drpdwn wdt-200 ml-2"

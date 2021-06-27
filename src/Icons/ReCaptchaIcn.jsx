@@ -1,10 +1,12 @@
-export default function ReCaptchaIcn({ size }) {
+export default function ReCaptchaIcn({ size, className, stroke = 2.5 }) {
   return (
-    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 215 215">
-      <polygon className="cls-1" fill="currentColor" points="138.97 67.29 183.76 22.31 183.49 67.32 138.97 67.29" />
-      <polygon className="cls-1" fill="currentColor" points="88.87 62.66 43.88 17.87 88.89 18.14 88.87 62.66" />
-      <polygon className="cls-1" fill="currentColor" points="71.52 124.45 22.96 165.33 27.17 120.52 71.52 124.45" />
-      <circle className="cls-2" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="16" cx="109.12" cy="101.39" r="77.09" />
+    <svg className={className} width={size} height={size} viewBox="0 0 30 30">
+      <polyline className="svg-icn" strokeWidth={stroke} points="5.49 24.65 5.58 21.03 9.19 21.13" />
+      <polyline className="svg-icn" strokeWidth={stroke} points="8.3 4.27 11.67 5.54 10.41 8.93" />
+      <polyline className="svg-icn" strokeWidth={stroke} points="26 11.63 24.41 14.87 21.18 13.28" />
+      <path className="svg-icn" strokeWidth={stroke} d="M14.85,5.51A10.1,10.1,0,0,1,24,14" />
+      <path className="svg-icn" strokeWidth={stroke} d="M4.3,18.06A10,10,0,0,1,4,15.61a10.12,10.12,0,0,1,7.08-9.67" />
+      <path className="svg-icn" strokeWidth={stroke} d="M19,24.47A10,10,0,0,1,5.63,21.12" />
     </svg>
   )
 }

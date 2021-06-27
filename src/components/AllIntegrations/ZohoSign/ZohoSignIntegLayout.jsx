@@ -6,6 +6,7 @@ import { deepCopy } from '../../../Utils/Helpers'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import Loader from '../../Loaders/Loader'
 import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSignCommonFunc'
+import MailOpenIcn from '../../../Icons/MailOpenIcn'
 
 export default function ZohoSignIntegLayout({ formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
@@ -244,7 +245,7 @@ export default function ZohoSignIntegLayout({ formID, formFields, signConf, setS
               <div className="mb-1">{__('Role', 'bitform')}</div>
               <input type="text" value={action.action_type} readOnly className="btcd-paper-inp" />
             </div>
-            <button onClick={() => openPrivateMsgMdl(i)} className="icn-btn mr-1 mt-3 tooltip" style={{ '--tooltip-txt': `'${__('Private Note', 'bitform')}'` }} aria-label="Private Message" type="button"><span className={`btcd-icn icn-envelope-open-o ${action.private_notes && 'font-w-m'}`} /></button>
+            <button onClick={() => openPrivateMsgMdl(i)} className="icn-btn mr-1 mt-3 tooltip" style={{ '--tooltip-txt': `'${__('Private Note', 'bitform')}'` }} aria-label="Private Message" type="button"><MailOpenIcn size="21" /></button>
           </div>
         </div>
       ))}

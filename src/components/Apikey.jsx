@@ -6,6 +6,7 @@ import LoaderSm from './Loaders/LoaderSm'
 import { $bits } from '../GlobalStates'
 import SnackMsg from './Utilities/SnackMsg'
 import CopyText from './Utilities/CopyText'
+import toast from 'react-hot-toast'
 
 const randomKey = length => {
   let result = ''
@@ -26,14 +27,19 @@ export default function Apikey() {
 
   const handleSubmit = e => {
     setisLoading(true)
-    bitsFetch({ api_key: key }, 'bitforms_api_key').then((res) => {
-      if (res !== undefined && res.success) {
-        setKey(res.data)
-        setsnack({ ...{ show: true, msg: __('api key save successfully', 'bitform') } })
-      } else if (res?.data) {
-        setsnack({ ...{ show: true, msg: res.data } })
-      }
-      setisLoading(false)
+    const apiSaveProm = bitsFetch({ api_key: key }, 'bitforms_api_key')
+      .then((res) => {
+        setisLoading(false)
+        if (res?.success) {
+          setKey(res.data)
+          return __('API key saved successfully', 'bitform')
+        }
+        return res?.data || __('Error Occured', 'bitform')
+      })
+    toast.promise(apiSaveProm, {
+      success: data => data,
+      failed: data => data,
+      loading: __('Saving API key...'),
     })
   }
 
@@ -42,13 +48,17 @@ export default function Apikey() {
   }
 
   useEffect(() => {
-    bitsFetch({}, 'bitforms_api_key').then((res) => {
+    const loadApiKeyProm = bitsFetch({}, 'bitforms_api_key').then((res) => {
       if (res !== undefined && res.success) {
         if (isPro) setKey(res.data)
         else setKey('**********************************')
-      } else if (res?.data) {
-        setsnack({ ...{ show: true, msg: res.data } })
       }
+      return res?.data || 'Error'
+    })
+    toast.promise(loadApiKeyProm, {
+      success: data => data,
+      error: __('Error Occured', 'bitform'),
+      loading: __('Loading API key...'),
     })
   }, [])
 
@@ -61,7 +71,6 @@ export default function Apikey() {
               {__('Available On', 'bitform')}
               <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
-                  {' '}
                   {__('Premium', 'bitform')}
                 </span>
               </a>

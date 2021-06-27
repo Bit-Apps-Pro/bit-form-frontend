@@ -5,6 +5,7 @@ import MtInput from './MtInput'
 import Button from './Button'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import CloseIcn from '../../Icons/CloseIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 
 function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
   let type = ''
@@ -105,14 +106,14 @@ function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd,
 
       <div className="btcd-li-side-btn">
         <Button onClick={() => delLogic(lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} icn className="ml-2 white mr-2 sh-sm">
-          <span className="btcd-icn icn-trash-2" />
+          <TrashIcn size="16" />
         </Button>
         <Button onClick={() => addInlineLogic('and', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white mr-2 sh-sm">
-          <CloseIcn size="12" className="icn-rotate-45 mr-1" />
+          <CloseIcn size="10" className="icn-rotate-45 mr-1" />
           AND
         </Button>
         <Button onClick={() => addInlineLogic('or', lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)} className="white sh-sm">
-          <CloseIcn size="12" className="icn-rotate-45 mr-1" />
+          <CloseIcn size="10" className="icn-rotate-45 mr-1" />
           OR
         </Button>
       </div>

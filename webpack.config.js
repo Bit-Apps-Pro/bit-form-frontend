@@ -8,6 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 const svgToMiniDataURI = require('mini-svg-data-uri')
+const RouteManifest = require('webpack-route-manifest')
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const autoprefixer = require('autoprefixer');
@@ -67,11 +68,21 @@ module.exports = (env, argv) => {
     devServer: {
       // open: true,
       // hotOnly: true,
-      hot: true,
+      // hot: true,
+      hotOnly: true,
+      liveReload: false,
+      publicPath: '/',
+      port: 3000,
+      proxy: {
+        '/': {
+          target: 'http://bitcode.dev', // This is the url of your wordpress website.
+          changeOrigin: true,
+        },
+      },
       // host: 'blank-site-php.io',
       // port: 80,
       // writeToDisk: true,
-      contentBase: path.resolve(__dirname, '../assets/'),
+      // contentBase: path.resolve(__dirname, '../assets/'),
       // contentBasePublicPath: '/js',
       // publicPath: 'http://blank-site-php.io/',
       // allowedHosts: ["blank-site-php.io"],
@@ -218,6 +229,18 @@ module.exports = (env, argv) => {
           dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
           exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /view-root.php/],
         })]),
+      new RouteManifest({
+        routes(str) {
+          // filename: 'rmanifest.json',
+          // Assume all entries are '../../../pages/Home' format
+          console.log('str', str)
+          const out = str.replace('../components', '').toLowerCase()
+          // if (out === '/formEntries') return '/formEntries/:formID'
+          // if (out.includes('singleformsettings')) return '/wp-admin/admin.php?page=bitform#/form/settings/edit/5/form-settings'
+          if (out.includes('singleformsettings')) return '/wp-admin/admin.php?page=bitform#/form/settings/:formType/:formID/:form-settings'
+          return out
+        },
+      }),
     ],
 
     resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },

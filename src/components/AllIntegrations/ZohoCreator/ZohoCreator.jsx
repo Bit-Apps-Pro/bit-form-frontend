@@ -34,13 +34,15 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
   }, [])
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (!checkMappedFields(creatorConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })
       return
     }
 
     setStep(2)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('creatorConf', creatorConf)

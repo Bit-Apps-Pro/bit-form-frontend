@@ -41,7 +41,6 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
       }
       setstep(3)
     }
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('projectsConf', projectsConf)

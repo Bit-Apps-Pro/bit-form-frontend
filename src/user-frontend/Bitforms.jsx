@@ -442,19 +442,6 @@ export default function Bitforms(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.error])
 
-  useEffect(() => {
-    if (document.querySelector('.slim') != null) {
-      const allSel = document.querySelectorAll('select.slim')
-      for (let i = 0; i < allSel.length; i += 1) {
-        if (allSel[i].nextSibling != null) {
-          if (allSel[i].hasAttribute('data-max-show')) {
-            allSel[i].nextSibling.children[1].children[1].style.maxHeight = `${Number(allSel[i].getAttribute('data-max-show')) * 2}pc`
-          }
-        }
-      }
-    }
-  }, [])
-
   return (
     <div id={`f-${props.formId}`}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
@@ -554,15 +541,14 @@ function Toast(props) {
     const timer = setTimeout(() => {
       if (props.show) {
         // !props.index && props.canClose === undefined && props.setSnack(false)
-        props.setSnack(false)
+        // props.setSnack(false)
       }
     }, resetTime)
     return () => clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return snack && (
-    <div style={toatStyles}>
-      <button onClick={() => setSnack(false)} style={closeButtonStyle} type="button">&times;</button>
+    <div className="toast btcd-flx" id={`success-${props.formId}`}>
       {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
           ? (
@@ -573,6 +559,7 @@ function Toast(props) {
           )
           : props.msg
       }
+      <button id="toast-close-btn" className="btcd-flx" onClick={() => setSnack(false)} type="button">&times;</button>
     </div>
   )
 }

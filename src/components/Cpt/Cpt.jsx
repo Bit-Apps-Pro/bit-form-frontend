@@ -1,6 +1,5 @@
 import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { useEffect, useState } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -25,49 +24,47 @@ export default function Cpt() {
   }, [])
 
   return (
-    <Scrollbars style={{ width: '100%', height: 525 }}>
-      <div className="p-2 w-6">
-        <div className="pos-rel">
-          {!isPro && (
-            <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', marginTop: 15 }}>
-              <div className="pro">
-                {__('Available On', 'bitform')}
-                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
-                  <span className="txt-pro">
-                    &nbsp;
-                    {__('Premium', 'bitform')}
-                  </span>
-                </a>
-              </div>
+    <div className="p-2 w-6">
+      <div className="pos-rel">
+        {!isPro && (
+          <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', marginTop: 15 }}>
+            <div className="pro">
+              {__('Available On', 'bitform')}
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  &nbsp;
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
             </div>
-          )}
-          <Tabs>
-            <Tab>
-              <button className={`btcd-s-tab-link ${tab === 'add_type' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
-                {__('Add New Post Type', 'bitform')}
-              </button>
-            </Tab>
-            <Tab>
-              <button className={`btcd-s-tab-link ${tab === 'all_post' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
-                {__('Edit Post Types', 'bitform')}
-              </button>
-            </Tab>
-            <Panel>
-              <CptTypeAdd
-                settab={settab}
-                types={types}
-              />
-            </Panel>
-            <Panel>
-              <EditCpt
-                settab={settab}
-                posts={posts}
-                types={types}
-              />
-            </Panel>
-          </Tabs>
-        </div>
+          </div>
+        )}
+        <Tabs>
+          <Tab>
+            <button className={`btcd-s-tab-link ${tab === 'add_type' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+              <b>{__('Add New Post Type', 'bitform')}</b>
+            </button>
+          </Tab>
+          <Tab>
+            <button className={`btcd-s-tab-link ${tab === 'all_post' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+              <b>{__('Edit Post Types', 'bitform')}</b>
+            </button>
+          </Tab>
+          <Panel>
+            <CptTypeAdd
+              settab={settab}
+              types={types}
+            />
+          </Panel>
+          <Panel>
+            <EditCpt
+              settab={settab}
+              posts={posts}
+              types={types}
+            />
+          </Panel>
+        </Tabs>
       </div>
-    </Scrollbars>
+    </div>
   )
 }

@@ -46,9 +46,11 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
   }
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     setstep(2)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (
