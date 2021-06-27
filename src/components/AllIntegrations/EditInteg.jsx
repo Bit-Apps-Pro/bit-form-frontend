@@ -19,6 +19,7 @@ const EditZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/EditZohoWorkDrive')
 const EditGoogleSheet = lazy(() => import('./GoogleSheet/EditGoogleSheet'))
 const EditMailChimp = lazy(() => import('./MailChimp/EditMailChimp'))
 const EditAcf = lazy(() => import('./Acf/EditAcf'))
+const EditMetabox = lazy(() => import('./Metabox/EdtiMetabox'))
 const EditPod = lazy(() => import('./Pods/EditPod'))
 const EditMailPoet = lazy(() => import('./MailPoet/EditMailPoet'))
 const EditSendinBlue = lazy(() => import('./SendinBlue/EditSendinBlue'))
@@ -70,6 +71,8 @@ export default function EditInteg({ allIntegURL, formFields, setIntegration, int
         return <EditMailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ACF':
         return <EditAcf allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'MetaBox':
+        return <EditMetabox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Pods':
         return <EditPod allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Poet':
