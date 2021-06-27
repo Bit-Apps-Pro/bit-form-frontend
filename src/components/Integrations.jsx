@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
 import acf from '../resource/img/integ/ACF.svg'
+import metabox from '../resource/img/integ/metabox.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
@@ -67,6 +68,7 @@ function Integrations() {
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'ACF', logo: acf, pro: !isPro },
+    { type: 'MetaBox', logo: metabox, pro: !isPro },
     { type: 'Pods', logo: pods, pro: !isPro },
     { type: 'Mail Poet', logo: mailPoet, pro: !isPro },
     { type: 'Sendinblue', logo: sendinblue, pro: !isPro },

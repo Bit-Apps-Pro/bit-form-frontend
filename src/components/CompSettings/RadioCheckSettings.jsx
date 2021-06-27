@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo, useState } from 'react'
+import { memo, useState, useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -31,8 +31,15 @@ function RadioCheckSettings() {
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
-  const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
-
+  const dataSrc = fieldData?.customType?.type || 'fileupload'
+  let fieldObject = null
+  let disabled = false
+  if (fieldData?.customType?.type) {
+    disabled = true
+    fieldObject = fieldData?.customType
+  }
+  const [importOpts, setImportOpts] = useState({})
+  useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
   function setAdminLabel(e) {
     if (e.target.value === '') {
       delete fieldData.adminLbl
@@ -295,6 +302,7 @@ function RadioCheckSettings() {
             setImportOpts={setImportOpts}
             lblKey="lbl"
             valKey="val"
+            customType={fieldData}
           />
         </div>
       </Modal>

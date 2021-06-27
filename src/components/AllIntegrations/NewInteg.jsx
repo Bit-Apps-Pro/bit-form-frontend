@@ -21,6 +21,7 @@ const ZohoWorkDrive = lazy(() => import('./ZohoWorkDrive/ZohoWorkDrive'))
 const GoogleSheet = lazy(() => import('./GoogleSheet/GoogleSheet'))
 const MailChimp = lazy(() => import('./MailChimp/MailChimp'))
 const Acf = lazy(() => import('./Acf/Acf'))
+const Metabox = lazy(() => import('./Metabox/Metabox'))
 const MailPoet = lazy(() => import('./MailPoet/MailPoet'))
 const Sendinblue = lazy(() => import('./SendinBlue/SendinBlue'))
 const WooCommerce = lazy(() => import('./WooCommerce/WooCommerce'))
@@ -74,6 +75,8 @@ export default function NewInteg({ allIntegURL }) {
         return <MailChimp allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'ACF':
         return <Acf allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'MetaBox':
+        return <Metabox allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Mail Poet':
         return <MailPoet allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Sendinblue':

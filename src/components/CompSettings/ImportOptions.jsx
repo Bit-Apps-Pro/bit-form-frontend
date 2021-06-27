@@ -10,6 +10,7 @@ import PostTypeImportOptions, { generatePostOptions } from './ImportOptionsComps
 import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
 import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
+import AcfFieldOptions, { generateAcfOptions } from './ImportOptionsComps/AcfFieldOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
   const bits = useRecoilValue($bits)
@@ -20,6 +21,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
   const generateNewOptions = () => {
     if (!isPro) return []
     const { dataSrc } = importOpts
+
     if (dataSrc === 'fileupload') {
       return generateNewFileUploadedOptions(importOpts, lblKey, valKey)
     }
@@ -38,17 +40,22 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
     if (dataSrc === 'post') {
       return generatePostOptions(importOpts, lblKey, valKey)
     }
+    if (dataSrc === 'acf') {
+      return generateAcfOptions(importOpts, lblKey, valKey)
+    }
 
     return []
   }
 
   const handleInput = e => {
     const { name, value } = e.target
-    console.log(fieldData)
     let tmpOpts = { ...importOpts }
+    const { fieldObject, disabled } = { ...importOpts }
     if (name === 'dataSrc') {
       tmpOpts = { show: true }
     }
+    tmpOpts.fieldObject = fieldObject
+    tmpOpts.disabled = disabled
     tmpOpts[name] = value
     setImportOpts({ ...tmpOpts })
   }
@@ -59,17 +66,21 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
     if (importOpts?.dataSrc === 'user') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'terms') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'post') fieldData.customType = importOpts?.fieldObject
-    console.log('elemtent', fieldData)
     if (importOpts.type === 'merge') {
       fieldData.custom_type.oldOpt = fieldData.opt
       fieldData.opt = fieldData.opt.concat(opts)
     } else {
       fieldData.opt = opts
     }
-    console.log(fieldData)
-
+    const dataSrc = fieldData?.customType?.type || 'fileupload'
+    let fieldObject = null
+    let disabled = false
+    if (fieldData?.customType?.type) {
+      disabled = true
+      fieldObject = fieldData?.customType
+    }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
-    setImportOpts({ dataSrc: 'fileupload' })
+    setImportOpts({ dataSrc, fieldObject, disabled })
   }
 
   const newOptions = generateNewOptions()
@@ -78,12 +89,14 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
     <div className="mt-2">
       <div>
         <b>Data Source</b>
-        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc}>
+        <select name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc} disabled={importOpts?.disabled}>
           <option value="fileupload">File Upload</option>
           <option value="presets">Presets</option>
           <option value="post">Posts</option>
           <option value="terms">Terms</option>
           <option value="user">Users</option>
+          <option value="acf">ACF Field Option</option>
+          <option value="metabox">Metabox Field Option</option>
         </select>
       </div>
 
@@ -116,6 +129,13 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
 
       {importOpts.dataSrc === 'terms' && (
         <TaxonomyImportOption
+          importOpts={importOpts}
+          setImportOpts={setImportOpts}
+        />
+      )}
+
+      {importOpts.dataSrc === 'acf' && (
+        <AcfFieldOptions
           importOpts={importOpts}
           setImportOpts={setImportOpts}
         />
