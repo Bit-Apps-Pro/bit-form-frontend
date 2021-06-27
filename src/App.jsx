@@ -12,9 +12,10 @@ import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
-import AppSettings from './pages/AppSettings'
+import { Toaster } from 'react-hot-toast'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
+const AppSettings = lazy(() => import('./pages/AppSettings'))
 const FormDetails = lazy(() => import('./pages/FormDetails'))
 const FormEntries = lazy(() => import('./pages/FormEntries'))
 const Error404 = lazy(() => import('./pages/Error404'))
@@ -24,9 +25,22 @@ function App() {
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
+      <Toaster
+        position="bottom-right"
+        containerStyle={{ inset: '-25px 30px 20px -10px' }}
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            bottom: 40,
+            padding: '15px 18px',
+            boxShadow: '0 0px 7px rgb(0 0 0 / 30%), 0 3px 30px rgb(0 0 0 / 20%)',
+          },
+        }}
+      />
       <Router basename={typeof bits !== 'undefined' ? bits.baseURL : '/'}>
         <div className="Btcd-App">
-
           <div className="nav-wrp">
             <div className="flx">
               <div className="logo flx" title={__('Bit Form', 'bitform')}>
@@ -73,7 +87,9 @@ function App() {
                 </Suspense>
               </Route>
               <Route path="/app-settings">
-                <AppSettings />
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                  <AppSettings />
+                </Suspense>
               </Route>
               <Route path="*">
                 <Error404 />

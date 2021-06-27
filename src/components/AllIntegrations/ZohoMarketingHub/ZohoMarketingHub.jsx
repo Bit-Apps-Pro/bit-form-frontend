@@ -48,8 +48,6 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
         refreshLists(formID, marketingHubConf, setMarketingHubConf, setisLoading, setSnackbar)
       }
     }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (

@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 
@@ -73,7 +74,7 @@ export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, s
               +
             </button>
             <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-2" type="button" aria-label="btn">
-              <span className="btcd-icn icn-trash-2" />
+              <TrashIcn />
             </button>
           </>
         )}

@@ -1,12 +1,13 @@
+import produce from 'immer'
 import { __ } from './i18nwrap'
 
-export const sortLayoutByXY = (layoutArr) => layoutArr.sort((first, second) => {
+export const sortLayoutByXY = (layoutArr) => produce(layoutArr, draftLayoutArr => draftLayoutArr.sort((first, second) => {
   const n = first.y - second.y
   if (n !== 0) {
     return n
   }
   return first.x - second.x
-})
+}))
 export const propertyValueSumX = (propertyValue = '') => {
   let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
   if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
@@ -17,7 +18,7 @@ export const propertyValueSumX = (propertyValue = '') => {
   return summ || 0
 }
 
-export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs = [], setProModal, setModal, formSettings) => {
+export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs = [], setProModal, setModal, additionalSettings) => {
   // eslint-disable-next-line no-undef
   if (extraFieldsAttr[field.typ]?.pro && !bits.isPro) {
     setProModal({ show: true, msg: __(`${field.typ} field is available in Pro Version!`, 'bitform') })
@@ -37,7 +38,7 @@ export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs 
     if (payConf?.length === 1) return { validationMsg: 'extraAttrAvailable', data: payConf }
   }
   if (field.typ === 'recaptcha') {
-    if (formSettings?.additional?.enabled?.recaptchav3) {
+    if (additionalSettings?.enabled?.recaptchav3) {
       setModal({
         show: true,
         msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.', 'bitform'),

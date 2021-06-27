@@ -52,7 +52,7 @@ export default function Captcha() {
         <TabList className="flx m-0 mt-2">
           {['v3', 'v2'].map(ver => (
             <Tab className="btcd-s-tab-link">
-              {__(`reCaptcha ${ver}`, 'bitform')}
+              <b>{__(`reCaptcha ${ver}`, 'bitform')}</b>
             </Tab>
           ))}
         </TabList>
@@ -70,7 +70,7 @@ export default function Captcha() {
             <br />
 
             <div className="mt-3">{__('Domain URL:', 'bitform')}</div>
-            <CopyText value={window.location.host} setSnackbar={setsnack} className="field-key-cpy ml-0" />
+            <CopyText value={window.location.host} className="field-key-cpy ml-0" />
             <div className="mt-2">
               <label htmlFor="captcha-key">
                 {__('Site Key', 'bitform')}
@@ -86,7 +86,7 @@ export default function Captcha() {
             <div className="mt-2">
               <p>
                 {__('To get Site Key and SECRET , Please Visit', 'bitform')}
-              &nbsp;
+                &nbsp;
                 <a className="btcd-link" href="https://www.google.com/recaptcha/admin/" target="_blank" rel="noreferrer">{__('Google reCAPTCHA Admin', 'bitform')}</a>
               </p>
             </div>

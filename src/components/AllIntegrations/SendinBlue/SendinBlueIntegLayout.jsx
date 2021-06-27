@@ -39,10 +39,10 @@ export default function SendinBlueIntegLayout({ formID, formFields, sendinBlueCo
     <>
       <br />
       <div className="flx">
-        <b className="wdt-150 d-in-b">{__('List: ', 'bitform')}</b>
+        <b className="wdt-200 d-in-b">{__('List: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={sendinBlueConf?.lists}
-          className="btcd-paper-drpdwn w-5"
+          className="btcd-paper-drpdwn w-6"
           options={listOptions()}
           onChange={val => lists(val)}
         />

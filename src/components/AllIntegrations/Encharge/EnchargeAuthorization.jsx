@@ -43,9 +43,11 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
   }
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     setstep(2)
     refreshEnchargeHeader(enchargeConf, setEnchargeConf, setIsLoading, setSnackbar)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (

@@ -57,7 +57,7 @@ function AllFroms() {
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: __('Status', 'bitform'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
     { width: 250, minWidth: 80, Header: __('Form Name', 'bitform'), accessor: 'formName', Cell: v => <Link to={`/form/responses/edit/${v.row.original.formID}/`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
-    { width: 220, minWidth: 200, Header: __('Short Code', 'bitform'), accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} setSnackbar={setSnackbar} className="cpyTxt" /> },
+    { width: 220, minWidth: 200, Header: __('Short Code', 'bitform'), accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} className="cpyTxt" /> },
     { width: 80, minWidth: 60, Header: __('Views', 'bitform'), accessor: 'views' },
     { width: 170, minWidth: 130, Header: __('Completion Rate', 'bitform'), accessor: 'conversion', Cell: val => <Progressbar value={calculateProgress(val.row.values.entries, val.row.values.views)} /> },
     { width: 100, minWidth: 60, Header: __('Responses', 'bitform'), accessor: 'entries', Cell: value => <Link to={`form/responses/edit/${value.row.original.formID}`} className="btcd-tabl-lnk">{value.row.values.entries}</Link> },

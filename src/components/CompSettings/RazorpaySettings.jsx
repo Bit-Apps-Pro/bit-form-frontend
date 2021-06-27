@@ -11,6 +11,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import TrashIcn from '../../Icons/TrashIcn'
 
 export default function RazorpaySettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -263,7 +264,7 @@ export default function RazorpaySettings() {
                     <input className="btcd-paper-inp mt-1" type="text" value={notes.value} onChange={e => handleNotes('edit', indx, 'value', e.target.value)} />
                   </div>
                   <button className="icn-btn ml-1 mt-3" type="button" aria-label="btn" onClick={() => handleNotes('delete', indx)}>
-                    <span className="btcd-icn icn-trash-2" />
+                    <TrashIcn />
                   </button>
                 </div>
               ))}

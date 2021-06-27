@@ -3,6 +3,7 @@ import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -151,7 +152,7 @@ export default function Payments() {
                       <EditIcn size="15" />
                     </Link>
                     <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => payDelConf(i)} type="button">
-                      <span className="btcd-icn icn-trash-2" />
+                      <TrashIcn />
                     </button>
                   </div>
                   <div className="txt-center body py-1" title={`${pay.name} | ${pay.type}`}>

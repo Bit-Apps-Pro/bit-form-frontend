@@ -28,7 +28,7 @@ export default function ExportImportMenu({ formID, cols, report }) {
       <div className="btcd-menu">
         {/* <button onClick={() => importShow()} className="" type="button">Import Data</button>
         {' '} */}
-        <button onClick={() => exportShow()} className="btn btcd-btn-o-blue ml-2 mt-0 mb-0" type="button">Export Data</button>
+        <button onClick={() => exportShow()} className="btn ml-2 mt-0 mb-0" type="button">Export</button>
         {/* <button onClick={() => exportData('pdf')} className="" type="button">pdf</button>
         <button onClick={() => exportData('csv')} className="" type="button">csv</button>
         <button onClick={() => exportData('xlsx')} className="" type="button">xls</button>

@@ -3,7 +3,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 
-export default function IntegrationStepOne({ step, confTmp, handleInput, error, setSnackbar, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
+export default function IntegrationStepOne({ step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
@@ -21,10 +21,10 @@ export default function IntegrationStepOne({ step, confTmp, handleInput, error, 
       <div style={{ color: 'red' }}>{error.dataCenter}</div>
 
       <div className="mt-3"><b>{__('Homepage URL:', 'bitform')}</b></div>
-      <CopyText value={`${window.location.origin}`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" />
+      <CopyText value={`${window.location.origin}`} className="field-key-cpy w-6 ml-0" />
 
       <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-      <CopyText value={`${window.location.href}/redirect`} setSnackbar={setSnackbar} className="field-key-cpy w-6 ml-0" />
+      <CopyText value={`${window.location.href}/redirect`} className="field-key-cpy w-6 ml-0" />
 
       <small className="d-blk mt-5">
         {__('To get Client ID and SECRET , Please Visit', 'bitform')}

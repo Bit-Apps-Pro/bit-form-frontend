@@ -29,6 +29,9 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
     actions: {},
   })
   const nextPage = (val) => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (val === 3) {
       if (!checkMappedFields(activeCampaingConf)) {
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
@@ -42,7 +45,6 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         setstep(3)
       }
     }
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
   return (
     <div>

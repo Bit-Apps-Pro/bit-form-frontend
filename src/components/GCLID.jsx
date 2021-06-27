@@ -158,7 +158,7 @@ export default function GCLID() {
         </div>
 
         <div className="mt-3"><b>{__('Authorized Redirect URIs:', 'bitform')}</b></div>
-        <CopyText value={`${bits.googleRedirectURL}`} setSnackbar={setSnackbar} className="field-key-cpy w-12 ml-0" />
+        <CopyText value={`${bits.googleRedirectURL}`} className="field-key-cpy w-12 ml-0" />
 
         <div className="mt-2">
           <small className="d-blk mt-2">

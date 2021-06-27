@@ -47,7 +47,6 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
 
     crmConf.module && crmConf.layout && crmConf.field_map.length > 0 && setstep(pageNo)
   }
-  document.querySelector('.btcd-s-wrp').scrollTop = 0
 
   return (
     <div>

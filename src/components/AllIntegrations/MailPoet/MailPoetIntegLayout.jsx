@@ -20,10 +20,10 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
     <>
       <br />
       <div className="flx">
-        <b className="wdt-100 d-in-b">{__('List: ', 'bitform')}</b>
+        <b className="wdt-200 d-in-b">{__('List: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={mailPoetConf?.lists}
-          className="btcd-paper-drpdwn w-5"
+          className="btcd-paper-drpdwn w-6"
           options={mailPoetConf?.default?.newsletterList && Object.keys(mailPoetConf.default.newsletterList).map(newsletter => ({ label: mailPoetConf.default.newsletterList[newsletter].newsletterName, value: mailPoetConf.default.newsletterList[newsletter].newsletterId }))}
           onChange={val => lists(val)}
         />

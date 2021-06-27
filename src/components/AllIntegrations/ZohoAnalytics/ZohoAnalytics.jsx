@@ -30,6 +30,9 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
   }, [])
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (analyticsConf.workspace !== '' && analyticsConf.table !== '' && analyticsConf.field_map.length > 0) {
       setStep(3)
     }

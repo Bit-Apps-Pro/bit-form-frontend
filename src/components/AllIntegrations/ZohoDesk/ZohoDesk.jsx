@@ -55,7 +55,6 @@ function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
         refreshOrganizations(formID, deskConf, setDeskConf, setisLoading, setSnackbar)
       }
     }
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('deskConf', deskConf)

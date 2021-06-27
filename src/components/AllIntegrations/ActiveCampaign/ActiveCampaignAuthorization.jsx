@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import SetupHelperLink from '../../Utilities/SetupHelperLink'
-import { refreshActiveCampaingList } from './ActiveCampaignCommonFunc'
+import { refreshActiveCampaingHeader, refreshActiveCampaingList } from './ActiveCampaignCommonFunc'
 
 export default function ActiveCampaignAuthorization({ formID, activeCampaingConf, setActiveCampaingConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -47,16 +47,18 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
   }
 
   const nextPage = () => {
-    refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
+    refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     setstep(2)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   return (
     <>
-       <SetupHelperLink
+      <SetupHelperLink
         title={activeCampaingConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=CfKrN2yHDxw&t=185s'}
+        youTubeLink="https://www.youtube.com/watch?v=CfKrN2yHDxw&t=185s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bitform')}</b></div>

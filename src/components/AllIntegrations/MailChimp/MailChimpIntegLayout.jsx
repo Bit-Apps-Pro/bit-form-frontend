@@ -30,7 +30,7 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
     <>
       <br />
       <b className="wdt-150 d-in-b">{__('Audience List:', 'bitform')}</b>
-      <select onChange={handleInput} name="listId" value={sheetConf.listId} className="btcd-paper-inp w-7">
+      <select onChange={handleInput} name="listId" value={sheetConf.listId} className="btcd-paper-inp w-6">
         <option value="">{__('Select Audience List', 'bitform')}</option>
         {
           sheetConf?.default?.audiencelist && Object.keys(sheetConf.default.audiencelist).map(audiencelistName => (
@@ -47,7 +47,7 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
         <b style={{ marginTop: '15px' }} className="wdt-150 d-in-b">{__('Tags: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={sheetConf?.tags}
-          className="btcd-paper-drpdwn w-7"
+          className="btcd-paper-drpdwn w-6"
           options={sheetConf?.default?.audienceTags && Object.keys(sheetConf.default.audienceTags).map(tag => ({ label: sheetConf.default.audienceTags[tag].tagName, value: sheetConf.default.audienceTags[tag].tagName }))}
           onChange={val => setTags(val)}
         />

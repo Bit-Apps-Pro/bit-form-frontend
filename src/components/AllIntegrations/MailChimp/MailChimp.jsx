@@ -36,6 +36,9 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
     window.opener && setGrantTokenResponse('mailChimp')
   }, [])
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (sheetConf.actions?.address && !checkAddressFieldMapRequired(sheetConf)) {
       setSnackbar({ show: true, msg: 'Please map address required fields to continue.' })
       return
@@ -48,7 +51,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
       setstep(3)
     }
   }
-  document.querySelector('.btcd-s-wrp').scrollTop = 0
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

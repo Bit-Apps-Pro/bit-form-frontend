@@ -32,11 +32,12 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
   }, [])
 
   const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
     if (workDriveConf.team !== '' && workDriveConf.folder !== '') {
       setstep(3)
     }
-
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('workDriveConf', workDriveConf)

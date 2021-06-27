@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 
@@ -107,7 +108,7 @@ export default function ZohoProjectsFieldMap({ i, event, formFields, field, proj
       )}
       {isNotRequired && (
         <button onClick={() => delFieldMap(i)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-          <span className="btcd-icn icn-trash-2" />
+          <TrashIcn />
         </button>
       )}
     </div>

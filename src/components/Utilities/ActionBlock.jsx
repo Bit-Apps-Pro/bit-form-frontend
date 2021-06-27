@@ -6,6 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'
 import MtSelect from './MtSelect'
+import TrashIcn from '../../Icons/TrashIcn'
 
 function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
   let fieldKey = ''
@@ -118,7 +119,7 @@ function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setwork
 
       <div className="btcd-li-side-btn mt-2">
         <Button onClick={delAction} icn className="ml-2 sh-sm white">
-          <span className="btcd-icn icn-trash-2" />
+          <TrashIcn />
         </Button>
       </div>
     </div>

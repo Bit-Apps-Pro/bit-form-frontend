@@ -35,7 +35,6 @@ function ZohoSign({ formFields, setIntegration, integrations, allIntegURL }) {
       }
     }
     setstep(val)
-    document.querySelector('.btcd-s-wrp').scrollTop = 0
   }
 
   console.log('signConf', signConf)

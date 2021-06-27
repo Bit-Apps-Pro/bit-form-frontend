@@ -44,8 +44,9 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: rgb(37, 193, 255);
-  opacity: 0.3;
+  background: rgba(87, 165, 255, 0.233);
+  /* border: 2px solid rgb(28, 89, 255); */
+  opacity: .5;
   transition-duration: 100ms;
   z-index: 2;
   -webkit-user-select: none;
@@ -59,9 +60,6 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 20px;
-  height: 20px;
-  cursor: se-resize;
   transform: scale(0);
 }
 
@@ -89,67 +87,27 @@
 }
 .react-resizable-handle {
   position: absolute;
-  width: 20px;
-  height: 20px;
   background-repeat: no-repeat;
   background-origin: content-box;
   box-sizing: border-box;
   background-position: bottom right;
-  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 9L9 1" class="s" /><path d="M7 9L9 7" class="s"/><style>.s{stroke:black;stroke-width:1.5;stroke-linecap:round;}</style></svg>');
   padding: 0 1px 1px 0;
 }
 
-.react-resizable-handle-sw {
-  bottom: 0;
-  left: 0;
-  cursor: sw-resize;
-  transform: rotate(90deg);
-}
-/* .react-resizable-handle-e {
-  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 9L9 1" stroke="black" stroke-width="1.5" stroke-linecap="round"/><path d="M7 9L9 7" stroke="black" stroke-width="1.5" stroke-linecap="round"/></svg>');
-} */
 .react-resizable-handle-se {
   right: 0;
   bottom: 0;
+  width: 20px;
+  height: 20px;
   cursor: se-resize;
+  transform: rotate(90deg);
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewbox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 9L9 1" class="s" /><path d="M7 9L9 7" class="s"/><style>.s{stroke:black;stroke-width:1.5;stroke-linecap:round;}</style></svg>');
 }
-.react-resizable-handle-nw {
-  top: 0;
-  left: 0;
-  cursor: nw-resize;
-  transform: rotate(180deg);
-}
-.react-resizable-handle-ne {
-  top: 0;
-  right: 0;
-  cursor: ne-resize;
-  transform: rotate(270deg);
-}
-.react-resizable-handle-w,
 .react-resizable-handle-e {
-  top: 50%;
+  top: 43%;
+  width: 15px;
+  height: 25px;
   margin-top: -10px;
   cursor: ew-resize;
-}
-.react-resizable-handle-w {
-  left: 0;
-  transform: rotate(135deg);
-}
-.react-resizable-handle-e {
-  right: 0;
-  transform: rotate(315deg);
-}
-.react-resizable-handle-n,
-.react-resizable-handle-s {
-  left: 50%;
-  margin-left: -10px;
-  cursor: ns-resize;
-}
-.react-resizable-handle-n {
-  top: 0;
-  transform: rotate(225deg);
-}
-.react-resizable-handle-s {
-  bottom: 0;
-  transform: rotate(45deg);
+  background-image: url('data:image/svg+xml;utf8,<svg width="7" height="18" viewBox="0 0 29 72" fill="none" xmlns="http://www.w3.org/2000/svg"><style>.r{fill: black;width: 12px;height: 12px;rx: 10px;}</style><rect x="10" y="1" class="r" /><rect x="10" y="31" class="r" /><rect x="10" y="61" class="r" /></svg>');
 }
