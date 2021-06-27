@@ -37,12 +37,24 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
           const [lbl] = tmpOpts.headers
           tmpOpts.lbl = lbl
           tmpOpts.vlu = lbl
-          tmpOpts.fieldObject = {
-            fieldType: 'user_field',
-            filter: { orderBy: 'ID', role: 'all', order: 'ASC' },
-            lebel: tmpOpts.lbl,
-            value: tmpOpts.vlu,
-            oldOpt: [],
+          if (tmpOpts?.fieldObject === null) {
+            tmpOpts.fieldObject = {
+              fieldType: 'user_field',
+              filter: { orderBy: 'ID', role: 'all', order: 'ASC' },
+              lebel: tmpOpts.lbl,
+              value: tmpOpts.vlu,
+              hiddenValue: tmpOpts?.vlu,
+              oldOpt: [],
+              type: 'user',
+            }
+          } else {
+            const { fieldObject } = { ...tmpOpts }
+            const { orderBy, order, role } = { ...fieldObject?.filter }
+            const sortFieldData = sortByField(tmpOpts.data, orderBy, order)
+            if (role !== 'all') tmpOpts.data = sortFieldData?.filter(item => item.role[0] === role)
+            else tmpOpts.data = sortFieldData
+            tmpOpts.lbl = fieldObject?.lebel
+            tmpOpts.vlu = fieldObject?.hiddenValue
           }
           setImportOpts({ ...tmpOpts })
         }
@@ -54,7 +66,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
   const handleImportInput = e => {
     const { name, value } = e.target
     const tmpOpts = { ...importOpts }
-    tmpOpts[name] = value
+    if (name === 'lbl' || name === 'vlu') tmpOpts[name] = value
     const { fieldObject } = tmpOpts
     fieldObject.filter[name] = value
     const { orderBy, order, role } = fieldObject.filter
@@ -63,7 +75,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
     if (role !== 'all') tmpOpts.data = users?.filter(item => item.role[0] === role)
     else tmpOpts.data = users
     tmpOpts.fieldObject.lebel = tmpOpts?.lbl
-    tmpOpts.fieldObject.value = tmpOpts?.vlu
+    tmpOpts.fieldObject.hiddenValue = tmpOpts?.vlu
     setImportOpts({ ...tmpOpts })
   }
 
@@ -81,7 +93,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
           {!!importOpts?.data && (
             <div className="w-10 mr-2">
               <b>Filter by Role</b>
-              <select name="role" onChange={handleImportInput} value={importOpts.role || ''} className="btcd-paper-inp mt-1">
+              <select name="role" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.role || ''} className="btcd-paper-inp mt-1">
                 <option selected disabled>select role</option>
                 <option value="all">all</option>
                 <option value="administrator">Administrator</option>
@@ -98,33 +110,33 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
               <div className="flx mt-3 w-10">
                 <div className="w-5 mr-2">
                   <b>Order By</b>
-                  <select name="orderBy" onChange={handleImportInput} value={importOpts.orderBy || ''} className="btcd-paper-inp mt-1">
+                  <select name="orderBy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.orderBy || ''} className="btcd-paper-inp mt-1">
                     {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                   </select>
                 </div>
                 <div className="w-5 mr-2">
                   <b>Order</b>
-                  <select name="order" onChange={handleImportInput} value={importOpts.order || ''} className="btcd-paper-inp mt-1">
+                  <select name="order" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.order || ''} className="btcd-paper-inp mt-1">
                     <option value="ASC">Ascending</option>
                     <option value="DESC">Descending</option>
                   </select>
                 </div>
               </div>
 
-              {importOpts.headers && (
+              {importOpts?.headers && (
                 <div className="flx mt-3 w-10">
                   <div className="w-5 mr-2">
                     <b>Label</b>
-                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.lbl || ''}>
+                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
                       <option value="">Select Label</option>
-                      {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
+                      {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
                   </div>
                   <div className="w-5">
                     <b>Value</b>
-                    <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.vlu || ''}>
+                    <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.hiddenValue || ''}>
                       <option value="">Select Value</option>
-                      {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
+                      {importOpts?.headers?.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -31,8 +31,16 @@ export default function SelectSettings() {
   const placeholder = fieldData.ph === undefined ? '' : fieldData.ph
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
-  const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
+  const dataSrc = fieldData?.customType?.type || 'fileupload'
+  let fieldObject = null
+  let disabled = false
+  if (fieldData?.customType?.type) {
+    fieldObject = fieldData?.customType
+    disabled = true
+  }
+  const [importOpts, setImportOpts] = useState({})
 
+  useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
   // set defaults
   if (isMultiple) {
     if ('val' in fieldData) {
@@ -152,7 +160,7 @@ export default function SelectSettings() {
 
   const closeImportModal = () => {
     delete importOpts.show
-    setImportOpts({ ...importOpts })
+    setImportOpts({...importOpts})
   }
 
   function setMin(e) {
