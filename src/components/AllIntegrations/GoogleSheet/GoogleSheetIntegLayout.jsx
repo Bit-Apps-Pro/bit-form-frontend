@@ -10,7 +10,7 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
     <>
       <br />
       <b className="wdt-150 d-in-b">{__('Spreadsheets:', 'bitform')}</b>
-      <select onChange={handleInput} name="spreadsheetId" value={sheetConf.spreadsheetId} className="btcd-paper-inp w-7">
+      <select onChange={handleInput} name="spreadsheetId" value={sheetConf.spreadsheetId} className="btcd-paper-inp w-6">
         <option value="">{__('Select Spreadsheet', 'bitform')}</option>
         {
           sheetConf?.default?.spreadsheets && Object.keys(sheetConf.default.spreadsheets).map(spreadSheetApiName => (
@@ -24,7 +24,7 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
       <br />
       <br />
       <b className="wdt-150 d-in-b">Worksheet:</b>
-      <select onChange={handleInput} name="worksheetName" value={sheetConf.worksheetName} className="btcd-paper-inp w-7">
+      <select onChange={handleInput} name="worksheetName" value={sheetConf.worksheetName} className="btcd-paper-inp w-6">
         <option value="">{__('Select Worksheet', 'bitform')}</option>
         {
           sheetConf?.default?.worksheets?.[sheetConf.spreadsheetId] && sheetConf.default.worksheets[sheetConf.spreadsheetId].map(worksheet => (
@@ -45,7 +45,7 @@ export default function GoogleSheetIntegLayout({ formID, formFields, handleInput
       <br />
       <br />
       <b className="wdt-150 d-in-b">{__('Header Row:', 'bitform')}</b>
-      <input type="text" min="1" className="btcd-paper-inp w-4" placeholder="Header Row" onChange={handleInput} value={sheetConf.headerRow} name="headerRow" />
+      <input type="text" min="1" className="btcd-paper-inp w-6" placeholder="Header Row" onChange={handleInput} value={sheetConf.headerRow} name="headerRow" />
       <button onClick={() => refreshWorksheetHeaders(formID, sheetConf, setSheetConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Worksheet Headers"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <small className="mt-3 d-blk" style={{ marginLeft: 155, lineHeight: 1.8 }}>{__('By default, first row of the worksheet is considered as header row. This can be used if tabular data starts from any row other than the first row.', 'bitform')}</small>

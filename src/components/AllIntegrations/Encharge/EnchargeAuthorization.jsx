@@ -4,6 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshEnchargeHeader } from './EnchargeCommonFunc'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -51,6 +52,10 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
 
   return (
     <>
+      <SetupHelperLink
+        title={enchargeConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=0XM9KhOKWWw&t=127s'}
+      />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />

@@ -141,7 +141,7 @@ export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
               {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
             </select>
           </div>
-          <div className="w-5">
+          <div className="w-5 ">
             <b>Value</b>
             <select name="vlu" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts.vlu || ''}>
               <option value="">Select Value</option>

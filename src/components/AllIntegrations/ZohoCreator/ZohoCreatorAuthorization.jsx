@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
+import LoaderSm from '../../Loaders/LoaderSm'
+import CopyText from '../../Utilities/CopyText'
+import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -32,6 +33,11 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
   }
 
   return (
+    <>
+      <SetupHelperLink
+        title={creatorConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=muB8tE1-bVg&list=PL7c6CDwwm-AIQLjwPBmjmDlcU1dbBgkwz'}
+      />
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={creatorConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
@@ -84,5 +90,6 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
         </>
       )}
     </div>
-  )
+  </>
+      )
 }

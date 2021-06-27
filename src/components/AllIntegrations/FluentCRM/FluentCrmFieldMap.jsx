@@ -36,9 +36,7 @@ export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf,
   }
 
   return (
-    <div
-      className="flx mt-2 mr-1"
-    >
+    <div className="flx mt-2 mr-1" >
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
           <option value="">{__('Select Field', 'bitform')}</option>

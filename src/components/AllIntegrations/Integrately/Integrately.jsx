@@ -7,6 +7,7 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 function Integrately({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -24,7 +25,10 @@ function Integrately({ formFields, setIntegration, integrations, allIntegURL }) 
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
-
+      <SetupHelperLink
+        titile={integrately.type}
+        youTubeLink={'https://www.youtube.com/watch?v=2tj8MrDzfAA'}
+      />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <WebHooksIntegration

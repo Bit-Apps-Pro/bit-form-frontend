@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluentCrmConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -39,9 +40,13 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
 
   return (
     <>
+      <SetupHelperLink
+        title={fluentCrmConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=kJ2pCH2FQwU&t=95s'}
+      />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={fluentCrmConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="name" value={fluentCrmConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         {isLoading === 'auth' && (
           <div className="flx mt-5">
             <LoaderSm size="25" clr="#022217" className="mr-2" />

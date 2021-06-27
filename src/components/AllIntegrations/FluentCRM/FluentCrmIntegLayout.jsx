@@ -27,7 +27,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
     <>
       <br />
       <div className="flx">
-        <b className="wdt-150 d-in-b">{__('Fluent CRM List:', 'bitform')}</b>
+        <b className="wdt-200 d-in-b">{__('Fluent CRM List:', 'bitform')}</b>
         <select onChange={(e) => inputHendler(e)} name="list_id" value={fluentCrmConf.list_id} className="btcd-paper-inp w-5">
           <option value="">{__('Select Fluent CRM list', 'bitform')}</option>
           {
@@ -41,7 +41,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         <button onClick={() => refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Fluent CRM List', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <div className="flx mt-5">
-        <b className="wdt-150 d-in-b">{__('Fluent CRM Tags: ', 'bitform')}</b>
+        <b className="wdt-200 d-in-b">{__('Fluent CRM Tags: ', 'bitform')}</b>
         <MultiSelect
           defaultValue={fluentCrmConf?.tags}
           className="btcd-paper-drpdwn w-5"
@@ -59,7 +59,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         }}
         />
       )}
-      {fluentCrmConf?.tags
+      {fluentCrmConf?.list_id
         && (
           <>
             <div className="mt-4">

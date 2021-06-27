@@ -35,6 +35,10 @@ export default function FluentCrm({ formFields, setIntegration, integrations, al
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
       }
+      if (!fluentCrmConf.list_id) {
+        setSnackbar({ show: true, msg: 'Please select list to continue.' })
+        return
+      }
       if (fluentCrmConf.name !== '' && fluentCrmConf.field_map.length > 0) {
         setStep(val)
       }
@@ -80,7 +84,7 @@ export default function FluentCrm({ formFields, setIntegration, integrations, al
         <br />
         <button
           onClick={() => nextPage(3)}
-          disabled={fluentCrmConf.list_id === '' || fluentCrmConf.field_map.length < 1}
+          disabled={!fluentCrmConf.list_id || fluentCrmConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

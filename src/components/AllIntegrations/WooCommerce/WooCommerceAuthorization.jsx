@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -29,48 +30,54 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
   }
 
   return (
-    <div
-      className="btcd-stp-page"
-      style={{
-        width: step === 1 && 900,
-        height: step === 1 && `${100}%`,
-      }}
-    >
-      <div className="mt-3">
-        <b>{__('Integration Name:', 'bitform')}</b>
-      </div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={wcConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
-
-      {isLoading === 'auth' && (
-        <div className="flx mt-5">
-          <LoaderSm size="25" clr="#022217" className="mr-2" />
-          Checking if WooCommerce is active!!!
+    <>
+      <SetupHelperLink
+        title={wcConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=Jxn1110dzNc&t=261s'}
+      />
+      <div
+        className="btcd-stp-page"
+        style={{
+          width: step === 1 && 900,
+          height: step === 1 && `${100}%`,
+        }}
+      >
+        <div className="mt-3">
+          <b>{__('Integration Name:', 'bitform')}</b>
         </div>
-      )}
+        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={wcConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
-      {(showAuthMsg && !isAuthorized && !isLoading) && (
-        <div className="flx mt-5" style={{ color: 'red' }}>
-          <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-            &times;
-          </span>
-          WooCommerce plugin must be activated to integrate with Bit Form.
-        </div>
-      )}
+        {isLoading === 'auth' && (
+          <div className="flx mt-5">
+            <LoaderSm size="25" clr="#022217" className="mr-2" />
+            Checking if WooCommerce is active!!!
+          </div>
+        )}
 
-      {!isAuthorized && (
-        <button onClick={authorizeHandler} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button">
-          {__('Connect', 'bitform')}
-        </button>
-      )}
+        {(showAuthMsg && !isAuthorized && !isLoading) && (
+          <div className="flx mt-5" style={{ color: 'red' }}>
+            <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
+              &times;
+            </span>
+            WooCommerce plugin must be activated to integrate with Bit Form.
+          </div>
+        )}
 
-      {isAuthorized && (
-        <>
-          <button onClick={() => setStep(2)} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
-            {__('Next', 'bitform')}
-            <BackIcn className="ml-1 rev-icn" />
+        {!isAuthorized && (
+          <button onClick={authorizeHandler} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button">
+            {__('Connect', 'bitform')}
           </button>
-        </>
-      )}
-    </div>
+        )}
+
+        {isAuthorized && (
+          <>
+            <button onClick={() => setStep(2)} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
+              {__('Next', 'bitform')}
+              <BackIcn className="ml-1 rev-icn" />
+            </button>
+          </>
+        )}
+      </div>
+    </>
   )
 }

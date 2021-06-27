@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
+import SetupHelperLink from '../../Utilities/SetupHelperLink'
 
 export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoetConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -33,6 +34,10 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
 
   return (
     <>
+      <SetupHelperLink
+        titile={mailPoetConf.type}
+        youTubeLink={'https://www.youtube.com/watch?v=5hDcm4vVwcg&t=16s'}
+      />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
         <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailPoetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
