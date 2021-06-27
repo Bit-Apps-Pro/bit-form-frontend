@@ -273,12 +273,12 @@ export default function Bitforms(props) {
         }
       })
     }
-
     if (maybeReset) {
       if (props.fieldToCheck[targetFieldName] !== undefined && dataToSet[props.fieldsKey[targetFieldName]] && dataToSet[props.fieldsKey[targetFieldName]].userinput && fieldValues[targetFieldName]) {
         dataToSet[props.fieldsKey[targetFieldName]].val = fieldValues[targetFieldName].value
       }
       dispatchFieldData(dataToSet)
+      if (props.editMode) props.setFields(dataToSet)
     }
   }
 
@@ -294,7 +294,7 @@ export default function Bitforms(props) {
       formData.set('GCLID', props.GCLID())
     }
     const hidden = []
-    Object.entries(fieldData).map(fld => {
+    Object.entries(fieldData).forEach(fld => {
       if (fld[1]?.valid?.hide) {
         hidden.push(fld[0])
       }
@@ -434,9 +434,15 @@ export default function Bitforms(props) {
   useEffect(() => {
     if (resetFieldValue) {
       setresetFieldValue(false)
+      if (typeof window[props.contentID] !== 'undefined') {
+        dispatchFieldData(window[props.contentID].fields)
+      }
     }
     return () => {
       setresetFieldValue(false)
+      if (typeof window[props.contentID] !== 'undefined') {
+        dispatchFieldData(window[props.contentID].fields)
+      }
     }
   }, [resetFieldValue])
 
