@@ -7,6 +7,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Cooltip from '../Utilities/Cooltip'
 import CopyText from '../Utilities/CopyText'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -28,6 +29,8 @@ export default function SelectSettings() {
   const allowCustomOpt = fieldData.customOpt !== undefined
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
   const placeholder = fieldData.ph === undefined ? '' : fieldData.ph
+  const min = fieldData.mn || ''
+  const max = fieldData.mx || ''
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   // set defaults
@@ -52,6 +55,7 @@ export default function SelectSettings() {
       fieldData.err.req.show = true
     } else {
       delete fieldData.valid.req
+      delete fieldData.mn
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -79,6 +83,12 @@ export default function SelectSettings() {
       fieldData.mul = true
     } else {
       delete fieldData.mul
+      delete fieldData.mn
+      delete fieldData.mx
+      if (fieldData.err) {
+        delete fieldData.err.mn
+        delete fieldData.err.mx
+      }
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -145,6 +155,47 @@ export default function SelectSettings() {
     setImportOpts({ ...importOpts })
   }
 
+  function setMin(e) {
+    if (!isPro) return
+    if (!Number(e.target.value)) {
+      delete fieldData.mn
+      setRequired({ target: { checked: false } })
+    } else {
+      fieldData.mn = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mn) fieldData.err.mn = {}
+      fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
+      fieldData.err.mn.show = true
+      setRequired({ target: { checked: true } })
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  function setMax(e) {
+    if (!isPro) return
+    if (e.target.value === '') {
+      delete fieldData.mx
+    } else {
+      fieldData.mx = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mx) fieldData.err.mx = {}
+      fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
+      fieldData.err.mx.show = true
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  const setDisabledOnMax = e => {
+    if (!isPro) return
+    if (e.target.checked) {
+      fieldData.valid.disableOnMax = true
+    } else {
+      delete fieldData.valid.disableOnMax
+    }
+
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
   return (
     <div className="ml-2 mr-4">
       <Back2FldList />
@@ -169,6 +220,51 @@ export default function SelectSettings() {
       )}
       <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" />
+      {
+        fieldData.mul && (
+          <>
+            <div>
+              <div className="flx mt-2 mb-2">
+                <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">{__('Set minimum number to be selected for dropdown option', 'bitform')}</div>
+                </Cooltip>
+                {!isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
+            </div>
+
+            {fieldData.mn && (
+              <ErrorMessageSettings
+                type="mn"
+                title="Min Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when selected options is less than ${fieldData.mn}`}
+              />
+            )}
+
+            <div>
+              <div className="flx mt-2 mb-2">
+                <h4 className="m-0">{__('Maximum:', 'bitform')}</h4>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">{__('Set maximum number to be selected for dropdown option', 'bitform')}</div>
+                </Cooltip>
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <input className="btcd-paper-inp" type="number" value={max} onChange={setMax} disabled={!isPro} />
+            </div>
+            {fieldData.mx && (
+              <>
+                <ErrorMessageSettings
+                  type="mx"
+                  title="Max Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
+                />
+                {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
+              </>
+            )}
+          </>
+        )
+      }
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
         &nbsp;

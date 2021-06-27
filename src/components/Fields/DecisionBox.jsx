@@ -42,7 +42,8 @@ export default function DecisionBox({ attr, onBlurHandler, resetFieldValue, form
   }
 
   const handleBlur = e => {
-    validateForm({ input: { name: attr.name, value: e.target.checked ? attr.msg.checked : attr.msg.unchecked } })
+    const { form } = e.target
+    validateForm({ input: { name: attr.name, form, value: e.target.checked ? attr.msg.checked : attr.msg.unchecked } })
   }
   return (
     <InputWrapper

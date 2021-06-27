@@ -46,21 +46,27 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
     if (attr.valid.disabled) {
       return
     }
+    let val = []
     const index = value.indexOf(event.target.value)
     if (event.target.checked && index === -1) {
-      setvalue([...value, event.target.value])
+      val = [...value, event.target.value]
     } else if (!event.target.checked && index >= 0) {
-      setvalue(value.filter(v => v !== event.target.value))
+      val = value.filter(v => v !== event.target.value)
     }
+    if (!attr.valid.disableOnMax || (attr.valid.disableOnMax && val.length <= Number(attr.mx))) {
+      setvalue(val)
+    }
+
     if (onBlurHandler) {
       onBlurHandler(event)
     }
   }
 
   const handleBlur = e => {
-    const { name } = e.target
-    validateForm({ input: { name, value: value.length ? value : '' } })
+    const { name, form } = e.target
+    validateForm({ input: { name, form, value: value.length ? value : '' } })
   }
+
   return (
     <InputWrapper
       formID={formID}
@@ -76,7 +82,7 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
             <input
               type="checkbox"
               ref={checkBoxRef}
-              disabled={attr?.valid?.disabled}
+              disabled={attr.valid.disabled}
               readOnly={attr?.valid?.readonly}
               // {...itm.check && { defaultChecked: true }}
               // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}

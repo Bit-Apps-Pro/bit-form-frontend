@@ -1,14 +1,18 @@
 /* eslint-disable no-continue */
-/* eslint-disable no-undef */
+let contentId
+let fields
 export default function validateForm({ form, input }) {
-  if (typeof bitFormsFront === 'undefined') return false
-  if (input && !bitFormsFront.validateFocusLost) return true
-  let { fields } = bitFormsFront
+  if (form) contentId = form
+  else if (input) [, contentId] = input.form.id.split('form-')
+  if (typeof window[contentId] === 'undefined') return false
   let formEntries = {}
-  if (form) formEntries = generateFormEntries(form)
-  else if (input) {
+  fields = window[contentId].fields
+  if (form) {
+    formEntries = generateFormEntries()
+  } else if (input) {
+    if (!window[contentId].validateFocusLost) return true
     const name = generateFieldKey(input.name)
-    formEntries[name] = input.value
+    formEntries = { [name]: input.value }
     fields = { [name]: fields[name] }
   }
 
@@ -19,8 +23,7 @@ export default function validateForm({ form, input }) {
   let { length } = flds
   // eslint-disable-next-line no-plusplus
   while (length--) {
-    const [fldKey] = flds[length]
-    const fldData = fields[fldKey]
+    const [fldKey, fldData] = flds[length]
     const fldType = fldData.typ
     const fldValue = typeof formEntries[fldKey] === 'string' ? formEntries[fldKey].trim() : formEntries[fldKey]
 
@@ -29,15 +32,14 @@ export default function validateForm({ form, input }) {
     let errKey = ''
 
     if (!fldValue) {
-      if (fldData?.valid?.req) {
-        errKey = 'req'
-        generateErrMsg(errKey, fldKey, fldData)
-        formCanBeSumbitted = false
-      }
+      if (fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
+      if (fldData?.valid?.req) errKey = 'req'
+      generateErrMsg(errKey, fldKey, fldData)
+      if (errKey) formCanBeSumbitted = false
       continue
     }
 
-    if (fldType.match(/^(text|url|textarea|password|number|email)$/) && fldData.valid.regexr) {
+    if (fldData?.valid?.regexr) {
       errKey = regexPatternValidation(fldValue, fldData)
       if (errKey) {
         generateErrMsg(errKey, fldKey, fldData)
@@ -50,7 +52,7 @@ export default function validateForm({ form, input }) {
     else if (fldType === 'email') errKey = emailFldValidation(fldValue, fldData)
     else if (fldType === 'url') errKey = urlFldValidation(fldValue, fldData)
     else if (fldType === 'decision-box') errKey = dcsnbxFldValidation(fldValue, fldData)
-    else if (fldType === 'check') errKey = checkFldValidation(fldValue, fldData)
+    else if (fldType === 'check' || fldType === 'select') errKey = checkMinMaxOptions(fldValue, fldData)
     else if (fldType === 'file-up') errKey = fileupFldValidation(fldValue, fldData)
 
     generateErrMsg(errKey, fldKey, fldData)
@@ -61,17 +63,14 @@ export default function validateForm({ form, input }) {
 
 const generateFieldKey = fldKey => (fldKey.slice(-2) === '[]' ? fldKey.slice(0, fldKey.length - 2) : fldKey)
 
-const generateFormEntries = form => {
-  const formData = new FormData(form)
-  const { fields } = bitFormsFront
+const generateFormEntries = () => {
+  const formData = new FormData(document.getElementById(`form-${contentId}`))
   const formEntries = {}
   for (const [key, value] of formData.entries()) {
     const fldKey = generateFieldKey(key)
     if (!(fldKey in fields)) continue
     if (formEntries[fldKey]) {
-      if (!Array.isArray(formEntries[fldKey])) {
-        formEntries[fldKey] = [formEntries[fldKey]]
-      }
+      if (!Array.isArray(formEntries[fldKey])) formEntries[fldKey] = [formEntries[fldKey]]
       formEntries[fldKey].push(value)
     } else formEntries[fldKey] = value
   }
@@ -80,7 +79,7 @@ const generateFormEntries = form => {
 }
 
 const generateErrMsg = (errKey, fldKey, fldData) => {
-  const errFld = document.getElementById(`${fldKey}-error`)
+  const errFld = document.querySelector(`#form-${contentId} #${fldKey}-error`)
   if (errFld) {
     if (errKey && fldData.err[errKey].show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
@@ -107,3 +106,12 @@ const checkFldValidation = (fldValue, fldData) => (fldData.opt.filter(opt => opt
 const fileupFldValidation = (fldValue, fldData) => ((fldData.valid.req && !Array.isArray(fldValue) && !fldValue.name) ? 'req' : '')
 
 const regexPatternValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPattern(fldData.valid.regexr), fldData.valid.flags || '').test(fldValue) ? 'regexr' : '')
+
+const checkMinMaxOptions = (fldValue, fldData) => {
+  const val = Array.isArray(fldValue) ? fldValue : (fldValue || '').split(',')
+  const mn = Number(fldData.mn) || 0
+  const mx = Number(fldData.mx) || fldData.opt.length
+  if (val.length < mn) return 'mn'
+  if (val.length > mx) return 'mx'
+  return fldData.typ === 'check' ? checkFldValidation(fldValue, fldData) : ''
+}

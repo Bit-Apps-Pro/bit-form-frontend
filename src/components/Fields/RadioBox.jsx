@@ -49,8 +49,8 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
   const n = Math.random()
 
   const handleBlur = e => {
-    const { name } = e.target
-    validateForm({ input: { name, value } })
+    const { name, form } = e.target
+    validateForm({ input: { name, form, value } })
   }
 
   return (

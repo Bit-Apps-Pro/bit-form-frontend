@@ -7,6 +7,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import Cooltip from '../Utilities/Cooltip'
 import CopyText from '../Utilities/CopyText'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
@@ -28,6 +29,8 @@ function RadioCheckSettings() {
   const isRound = fieldData.round || false
   const isRadioRequired = fieldData.valid.req || false
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
+  const min = fieldData.mn || ''
+  const max = fieldData.mx || ''
   const [importOpts, setImportOpts] = useState({ dataSrc: 'fileupload' })
 
   function setAdminLabel(e) {
@@ -105,6 +108,7 @@ function RadioCheckSettings() {
       fieldData.err.req.show = true
     } else {
       delete fieldData.valid.req
+      delete fieldData.mn
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -125,6 +129,47 @@ function RadioCheckSettings() {
   const closeImportModal = () => {
     delete importOpts.show
     setImportOpts({ ...importOpts })
+  }
+
+  function setMin(e) {
+    if (!isPro) return
+    if (!Number(e.target.value)) {
+      delete fieldData.mn
+      setRadioRequired({ target: { checked: false } })
+    } else {
+      fieldData.mn = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mn) fieldData.err.mn = {}
+      fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
+      fieldData.err.mn.show = true
+      if (!isOptionRequired) setRadioRequired({ target: { checked: true } })
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  function setMax(e) {
+    if (!isPro) return
+    if (e.target.value === '') {
+      delete fieldData.mx
+    } else {
+      fieldData.mx = e.target.value
+      if (!fieldData.err) fieldData.err = {}
+      if (!fieldData.err.mx) fieldData.err.mx = {}
+      fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
+      fieldData.err.mx.show = true
+    }
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
+  const setDisabledOnMax = e => {
+    if (!isPro) return
+    if (e.target.checked) {
+      fieldData.valid.disableOnMax = true
+    } else {
+      delete fieldData.valid.disableOnMax
+    }
+
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
   return (
@@ -149,12 +194,57 @@ function RadioCheckSettings() {
         />
       )}
       <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
+      {
+        fieldData.typ === 'check' && (
+          <>
+            <div>
+              <div className="flx mt-2 mb-2">
+                <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">{__('Set minimum number to be selected for checkbox option', 'bitform')}</div>
+                </Cooltip>
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
+            </div>
+
+            {fieldData.mn && (
+              <ErrorMessageSettings
+                type="mn"
+                title="Min Error Message"
+                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
+              />
+            )}
+
+            <div>
+              <div className="flx mt-2 mb-2">
+                <h4 className="m-0">{__('Maximum:', 'bitform')}</h4>
+                <Cooltip width={250} icnSize={17} className="ml-2">
+                  <div className="txt-body">{__('Set maximum number to be selected for checkbox option', 'bitform')}</div>
+                </Cooltip>
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <input className="btcd-paper-inp" type="number" value={max} onChange={setMax} disabled={!isPro} />
+            </div>
+            {fieldData.mx && (
+              <>
+                <ErrorMessageSettings
+                  type="mx"
+                  title="Max Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
+                />
+                <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+              </>
+            )}
+          </>
+        )
+      }
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
       </button>
-      <div className="opt">
+      <div className="opt mt-1">
         <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {options.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
