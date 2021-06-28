@@ -1,11 +1,39 @@
 // eslint-disable-next-line no-unused-vars
+import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { deepCopy } from '../../../Utils/Helpers'
 
 export const addFieldMap = (fldProp, i, confTmp, setConf) => {
   const newConf = { ...confTmp }
   newConf[fldProp].splice(i, 0, {})
 
   setConf({ ...newConf })
+}
+
+export const refreshMetaboxFields = (metaboxeConf, metabox, setMetaboxFields, metaboxFile, setMetaboxFile) => {
+  const loadMetaboxFields = bitsFetch({ post_type: metaboxeConf?.post_type }, 'bitforms_get_metabox_fields').then((res) => {
+    if (res !== undefined && res.success) {
+      let tmp = { ...metabox }
+      let tmpFile = { ...metaboxFile }
+
+      if (res?.data?.metaboxFields) {
+        tmp = res?.data?.metaboxFields
+        setMetaboxFields(tmp)
+      }
+      if (res?.data?.metaboxFile) {
+        tmpFile = res?.data?.metaboxFields
+        setMetaboxFile(tmpFile)
+      }
+    }
+    if (res?.data?.metaboxFields.length !== 0) return 'Successfully refresh MetaBox Fields.'
+    return 'MetaBox Fields not found'
+  })
+  toast.promise(loadMetaboxFields, {
+    success: data => data,
+    error: __('Error Occured', 'bitform'),
+    loading: __('Loading MetaBox Fields...'),
+  })
 }
 
 export const delFieldMap = (fldProp, i, confTmp, setConf) => {
@@ -40,19 +68,23 @@ export const checkMappedAcfFields = data => {
   return true
 }
 
-// export const refreshPostTypes = (postTypes, setPostTypes, setisLoading, setSnackbar) => {
-//   bitsFetch({}, 'bitforms_get_post_type')
-//     .then(result => {
-//       if (result && result.success) {
-//         //const newConf = { ...postTypes }
-//         if (res?.data?.post_types) {
-//           setPostTypes(Object.values(res?.data?.post_types))
-//           setSnackbar({ show: true, msg: __('Post Types refreshed', 'bitform') })
-//         } 
-//       } else {
-//         setSnackbar({ show: true, msg: __('Fluent CRM fields refresh failed. please try again', 'bitform') })
-//       }
-//       setisLoading(false)
-//     })
-//     .catch(() => setisLoading(false))
-// }
+export const refreshPostTypes = (postTypes, setPostTypes) => {
+  const loadPostTypes = bitsFetch({}, 'bitforms_get_post_type')
+    .then(result => {
+      if (result && result.success) {
+        let tmp = { ...postTypes }
+        if (result?.data?.post_types) {
+          tmp = Object.values(result?.data?.post_types)
+          setPostTypes(tmp)
+        }
+        if (result?.data?.post_types.length !== 0) return 'Successfully refresh Post Types.'
+        return ' Post Types not found'
+      }
+    })
+
+  toast.promise(loadPostTypes, {
+    success: data => data,
+    error: __('Error Occured', 'bitform'),
+    loading: __('Loading Post Types...'),
+  })
+}
