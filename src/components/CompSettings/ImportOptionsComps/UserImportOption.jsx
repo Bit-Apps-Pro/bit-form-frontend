@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import LoaderSm from '../../Loaders/LoaderSm'
+import toast from 'react-hot-toast'
+import { __ } from '../../../Utils/i18nwrap'
 import { sortByField } from '../../../Utils/Helpers'
 import { $bits } from '../../../GlobalStates'
+import SnackMsg from '../../Utilities/SnackMsg'
 
 const getTrimmedString = str => (typeof str === 'string' ? str?.trim() : str?.toString())
 export const generateUserOptions = (importOpts, lblKey, valKey) => {
@@ -15,7 +17,7 @@ export const generateUserOptions = (importOpts, lblKey, valKey) => {
 export default function UserImportOption({ importOpts, setImportOpts }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  const [loading, setLoading] = useState(false)
+  const [snack, setsnack] = useState({ show: false })
 
   useEffect(() => {
     if (!isPro) return
@@ -24,8 +26,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
     uri.searchParams.append('action', 'bitforms_get_wp_users')
     uri.searchParams.append('_ajax_nonce', bits.nonce)
 
-    setLoading(true)
-    fetch(uri)
+    const getFetchUsers = fetch(uri)
       .then(resp => resp.json())
       .then(res => {
         if (res.data) {
@@ -57,9 +58,16 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
             tmpOpts.vlu = fieldObject?.hiddenValue
           }
           setImportOpts({ ...tmpOpts })
+          return 'Successfully fetched users data.'
         }
-        setLoading(false)
+        return 'users data not found'
       })
+
+    toast.promise(getFetchUsers, {
+      success: data => data,
+      failed: data => data,
+      loading: __('Loading Users...'),
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -82,12 +90,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
   return (
     <div className="mt-2">
       <div>
-        {loading && (
-          <div className="flx mb-2">
-            <LoaderSm size="20" clr="#022217" className="mr-1" />
-            <p className="m-0">Loading..</p>
-          </div>
-        )}
+        <SnackMsg snack={snack} setSnackbar={setsnack} />
 
         <div>
           {!!importOpts?.data && (

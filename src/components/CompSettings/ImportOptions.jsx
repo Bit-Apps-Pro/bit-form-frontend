@@ -66,6 +66,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
     if (importOpts?.dataSrc === 'user') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'terms') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'post') fieldData.customType = importOpts?.fieldObject
+    if (importOpts?.dataSrc === 'acf') fieldData.customType = importOpts?.fieldObject
     if (importOpts.type === 'merge') {
       fieldData.custom_type.oldOpt = fieldData.opt
       fieldData.opt = fieldData.opt.concat(opts)
@@ -96,7 +97,6 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
           <option value="terms">Terms</option>
           <option value="user">Users</option>
           <option value="acf">ACF Field Option</option>
-          <option value="metabox">Metabox Field Option</option>
         </select>
       </div>
 

@@ -1,9 +1,12 @@
 /* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import toast from 'react-hot-toast'
 import { $bits } from '../../../GlobalStates'
+import { __ } from '../../../Utils/i18nwrap'
 import { sortByField } from '../../../Utils/Helpers'
 import LoaderSm from '../../Loaders/LoaderSm'
+import SnackMsg from '../../Utilities/SnackMsg'
 
 export const generatePostOptions = (importOpts, lblKey, valKey) => {
   const { data, lbl, vlu } = importOpts
@@ -15,7 +18,7 @@ export const generatePostOptions = (importOpts, lblKey, valKey) => {
 export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
   const bits = useRecoilValue($bits)
   const isPro = typeof bits !== 'undefined' && bits.isPro
-  const [loading, setLoading] = useState(false)
+  const [snack, setsnack] = useState({ show: false })
 
   useEffect(() => {
     if (!isPro) return
@@ -24,8 +27,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
     uri.searchParams.append('action', 'bitforms_get_wp_posts')
     uri.searchParams.append('_ajax_nonce', bits.nonce)
 
-    setLoading(true)
-    fetch(uri)
+    const getWpPosts = fetch(uri)
       .then(resp => resp.json())
       .then(res => {
         if (res.data) {
@@ -67,9 +69,16 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
             tmpOpts.vlu = fieldObject?.hiddenValue
           }
           setImportOpts({ ...tmpOpts })
+          return 'Successfully fetched wordpress posts.'
         }
-        setLoading(false)
+        return 'posts not found'
       })
+
+    toast.promise(getWpPosts, {
+      success: data => data,
+      failed: data => data,
+      loading: __('Loading Posts...'),
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -95,12 +104,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
   return (
     <div className="mt-2">
       <div>
-        {loading && (
-          <div className="flx mb-2">
-            <LoaderSm size="20" clr="#022217" className="mr-1" />
-            <p className="m-0">Loading..</p>
-          </div>
-        )}
+        <SnackMsg snack={snack} setSnackbar={setsnack} />
 
         <div>
           {!!importOpts?.data && (

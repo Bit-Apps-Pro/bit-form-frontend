@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
+import toast from 'react-hot-toast'
 import { __ } from '../Utils/i18nwrap'
 import bitsFetch from '../Utils/bitsFetch'
 import LoaderSm from './Loaders/LoaderSm'
 import { $bits } from '../GlobalStates'
 import SnackMsg from './Utilities/SnackMsg'
 import CopyText from './Utilities/CopyText'
-import toast from 'react-hot-toast'
 
 const randomKey = length => {
   let result = ''
@@ -53,7 +53,8 @@ export default function Apikey() {
         if (isPro) setKey(res.data)
         else setKey('**********************************')
       }
-      return res?.data || 'Error'
+      if (res?.data) return 'Successfully fetched API key.'
+      return 'Error'
     })
     toast.promise(loadApiKeyProm, {
       success: data => data,
