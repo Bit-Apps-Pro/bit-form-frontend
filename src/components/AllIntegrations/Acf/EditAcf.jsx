@@ -5,7 +5,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import FieldMap from './FieldMap'
-import { addFieldMap, checkMappedPostFields, checkMappedAcfFields } from './AcfHelperFunction'
+import { addFieldMap, checkMappedPostFields, checkMappedAcfFields, refreshAcfFields } from './AcfHelperFunction'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
@@ -15,7 +15,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
   const { id } = useParams()
   const [postTypes, setPostTypes] = useState([])
   const [acfFields, setAcfFields] = useState([])
-  const [metaboxFields, setMetaboxFields] = useState([])
+  const [acfFileFields, setAcfFileFields] = useState([])
   const [users, setUsers] = useState([])
   const [data, setData] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
@@ -31,6 +31,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
     bitsFetch({ post_type: data?.post_type }, 'bitforms_get_custom_field').then((res) => {
       if (res?.success && res !== undefined) {
         setAcfFields(res?.data?.acfFields)
+        setAcfFileFields(res?.data?.acfFile)
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,10 +53,17 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
     bitsFetch({ post_type: val }, 'bitforms_get_custom_field').then((res) => {
       if (res?.success && res !== undefined) {
         setAcfFields(res?.data?.acfFields)
+        setAcfFileFields(res?.data?.acfFile)
         if (res?.data?.acfFields) {
           tmpData.acf_map = res?.data?.acfFields?.filter(fld => fld.required).map(fl => ({ formField: '', acfField: fl.key, required: fl.required }))
           if (tmpData?.acf_map?.length < 1) {
             tmpData.acf_map = [{}]
+          }
+        }
+        if (res?.data?.acfFile) {
+          tmpData.acf_file_map = res.data.acfFile.filter(fld => fld.required).map(fl => ({ formField: '', acfFileUpload: fl.key, required: fl.required }))
+          if (tmpData?.acf_file_map?.length < 1) {
+            tmpData.acf_file_map = [{}]
           }
         }
         setData(tmpData)
@@ -170,36 +178,13 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
           : All your taxonomies will be mapped automatically from your form fields.
         </p>
       </div>
+
       <div>
         <div>
-          <div className="mt-3 mb-1"><b>{__('Meta Fields Mapping', 'bitform')}</b></div>
-          <div className="btcd-hr" />
-          <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-            <div className="txt-dp"><b>{__('Meta Key', 'bitform')}</b></div>
+          <div className="mt-3 mb-1">
+            <b>{__('ACF fields Mapping', 'bitform')}</b>
+            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
-        </div>
-        {
-          data?.meta_map?.map((itm, i) => (
-            <FieldMap
-              key={`analytics-m-${i + 9}`}
-              i={i}
-              type="meta"
-              field={itm}
-              formFields={formFields}
-              dataConf={data}
-              setDataConf={setData}
-              customFields={metaboxFields}
-            />
-          ))
-        }
-
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('meta_map', data.meta_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
-      </div>
-
-      <div>
-        <div>
-          <div className="mt-3 mb-1"><b>{__('Advanced Custom Fields (ACF) Mapping', 'bitform')}</b></div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
             <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
@@ -209,7 +194,7 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
           </div>
         </div>
         {
-          data?.acf_map?.map((itm, i) => (
+          data.acf_map.map((itm, i) => (
             <FieldMap
               key={`analytics-m-${i + 9}`}
               i={i}
@@ -219,11 +204,45 @@ function EditAcf({ formFields, setIntegration, integrations, allIntegURL }) {
               dataConf={data}
               setDataConf={setData}
               customFields={acfFields}
+              fieldType="field"
             />
           ))
         }
 
         <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('acf_map', data.acf_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      </div>
+
+      <div>
+        <div>
+          <div className="mt-3 mb-1">
+            <b>{__('ACF File Upload Fields Map', 'bitform')}</b>
+            <button onClick={() => refreshAcfFields(data, setAcfFileFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields', 'bitform')}'` }} type="button">&#x21BB;</button>
+          </div>
+          <div className="btcd-hr" />
+          <div className="flx flx-around mt-2 mb-1">
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp">
+              <b>{__('ACF Fields', 'bitform')}</b>
+            </div>
+          </div>
+        </div>
+        {
+          data.acf_file_map.map((itm, i) => (
+            <FieldMap
+              key={`analytics-m-${i + 9}`}
+              i={i}
+              type="acfFile"
+              field={itm}
+              formFields={formFields}
+              dataConf={data}
+              setDataConf={setData}
+              customFields={acfFileFields}
+              fieldType="file"
+            />
+          ))
+        }
+
+        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('acf_file_map', data.acf_file_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
       </div>
 
       <button

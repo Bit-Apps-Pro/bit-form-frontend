@@ -115,7 +115,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
             <option key={key} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
-        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
+        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bitform')}'` }} type="button">&#x21BB;</button>
       </div>
 
       <div className="mt-3">
@@ -197,7 +197,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         <div>
           <div className="mt-3 mb-1">
             <b>{__('Metabox Fields Mapping', 'bitform')}</b>
-            <button onClick={() => refreshMetaboxFields(data, metaboxFields, setMetaboxFields, metaboxFileFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
+            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
@@ -230,7 +230,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         <div>
           <div className="mt-3 mb-1">
             <b>{__('Metabox File Upload Fields Map', 'bitform')}</b>
-            <button onClick={() => refreshMetaboxFields(data, metaboxFields, setMetaboxFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
+            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">

@@ -2,7 +2,6 @@
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { deepCopy } from '../../../Utils/Helpers'
 
 export const addFieldMap = (fldProp, i, confTmp, setConf) => {
   const newConf = { ...confTmp }
@@ -11,22 +10,17 @@ export const addFieldMap = (fldProp, i, confTmp, setConf) => {
   setConf({ ...newConf })
 }
 
-export const refreshMetaboxFields = (metaboxeConf, metabox, setMetaboxFields, metaboxFile, setMetaboxFile) => {
+export const refreshMetaboxFields = (metaboxeConf, setMetaboxFields, setMetaboxFile) => {
   const loadMetaboxFields = bitsFetch({ post_type: metaboxeConf?.post_type }, 'bitforms_get_metabox_fields').then((res) => {
     if (res !== undefined && res.success) {
-      let tmp = { ...metabox }
-      let tmpFile = { ...metaboxFile }
-
       if (res?.data?.metaboxFields) {
-        tmp = res?.data?.metaboxFields
-        setMetaboxFields(tmp)
+        setMetaboxFields(res.data.metaboxFields)
       }
       if (res?.data?.metaboxFile) {
-        tmpFile = res?.data?.metaboxFields
-        setMetaboxFile(tmpFile)
+        setMetaboxFile(res.data.metaboxFile)
       }
     }
-    if (res?.data?.metaboxFields.length !== 0) return 'Successfully refresh MetaBox Fields.'
+    if (res?.data?.metaboxFields.length !== 0 || res?.data?.metaboxFile.length !== 0) return 'Successfully refresh MetaBox Fields.'
     return 'MetaBox Fields not found'
   })
   toast.promise(loadMetaboxFields, {
