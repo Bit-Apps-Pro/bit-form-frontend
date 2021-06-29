@@ -229,18 +229,18 @@ module.exports = (env, argv) => {
           dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
           exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/, /view-root.php/],
         })]),
-      new RouteManifest({
-        routes(str) {
-          // filename: 'rmanifest.json',
-          // Assume all entries are '../../../pages/Home' format
-          console.log('str', str)
-          const out = str.replace('../components', '').toLowerCase()
-          // if (out === '/formEntries') return '/formEntries/:formID'
-          // if (out.includes('singleformsettings')) return '/wp-admin/admin.php?page=bitform#/form/settings/edit/5/form-settings'
-          if (out.includes('singleformsettings')) return '/wp-admin/admin.php?page=bitform#/form/settings/:formType/:formID/:form-settings'
-          return out
-        },
-      }),
+      // new RouteManifest({
+      //   routes(str) {
+      //     // filename: 'rmanifest.json',
+      //     // Assume all entries are '../../../pages/Home' format
+      //     console.log('str', str)
+      //     const out = str.replace('../components', '').toLowerCase()
+      //     // if (out === '/formEntries') return '/formEntries/:formID'
+      //     // if (out.includes('singleformsettings')) return '/wp-admin/admin.php?page=bitform#/form/settings/edit/5/form-settings'
+      //     if (out.includes('singleformsettings')) return '/wp-admin/admin.php?page=bitform#/form/settings/:formType/:formID/:form-settings'
+      //     return out
+      //   },
+      // }),
     ],
 
     resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
@@ -334,7 +334,7 @@ module.exports = (env, argv) => {
             {
               loader: 'url-loader',
               options: {
-                limit: 3000,
+                limit: production ? 3000 : 100,
                 name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
                 outputPath: '../img',
               },
