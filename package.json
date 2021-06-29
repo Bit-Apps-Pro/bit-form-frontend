@@ -56,6 +56,7 @@
     "stat:f": "webpack --profile --json > coverage/f.stats.json --config webpack.frontend.config.js",
     "analyze:f": "webpack-bundle-analyzer coverage/f.stats.json",
     "clean": "rimraf node_modules yarn.lock package-lock.json",
+    "clean-install-run": "yarn run clean && yarn install && yarn run wp",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
