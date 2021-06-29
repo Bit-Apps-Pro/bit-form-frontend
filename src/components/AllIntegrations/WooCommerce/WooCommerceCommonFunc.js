@@ -3,7 +3,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 
 export const handleInput = (e, wcConf, setWcConf, setisLoading, setSnackbar) => {
-  let newConf = { ...wcConf }
+  let newConf = deepCopy(wcConf)
   const { name, value } = e.target
   newConf[name] = value
 
@@ -18,7 +18,7 @@ export const handleInput = (e, wcConf, setWcConf, setisLoading, setSnackbar) => 
 }
 
 export const moduleChange = (wcConf, setWcConf, setisLoading, setSnackbar) => {
-  let newConf = { ...wcConf }
+  let newConf = deepCopy(wcConf)
   newConf.field_map = []
 
   if (!newConf?.default?.fields?.[wcConf.module]) {
@@ -60,7 +60,7 @@ export const refreshFields = (wcConf, setWcConf, setisLoading, setSnackbar) => {
 }
 
 const generateMappedFields = wcConf => {
-  const newConf = { ...wcConf }
+  const newConf = deepCopy(wcConf)
   newConf.default.fields[newConf.module].required.forEach(reqFld => {
     if (!newConf.field_map.find(fld => fld.wcField === reqFld)) {
       newConf.field_map.unshift({ formField: '', wcField: reqFld, required: true })

@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
@@ -69,8 +70,10 @@ export default function GCLID() {
           setSnackbar({ show: true, msg: `${__('Authorization failed', 'bitform')} ${errorCause}. ${__('please try again', 'bitform')}` })
           setisLoading(false)
         } else {
-          const newConf = { ...gclidConf }
-          newConf.accountServer = grantTokenResponse['accounts-server']
+          const newConf = produce(gclidConf, draft => {
+            // eslint-disable-next-line no-param-reassign
+            draft.accountServer = grantTokenResponse['accounts-server']
+          })
           tokenHelper('google', grantTokenResponse, newConf, setGclidConf)
         }
       }
@@ -186,7 +189,7 @@ export default function GCLID() {
 
         <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
           {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
-          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+          {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
         <br />
         {isAuthorized && (

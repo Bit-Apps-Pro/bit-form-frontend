@@ -4,6 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import { deepCopy } from '../../../Utils/Helpers'
 
 export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -24,7 +25,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
   }
 
   const handleInput = e => {
-    const newConf = { ...wcConf }
+    const newConf = deepCopy(wcConf)
     newConf[e.target.name] = e.target.value
     setWcConf(newConf)
   }
@@ -49,7 +50,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
 
         {isLoading === 'auth' && (
           <div className="flx mt-5">
-            <LoaderSm size="25" clr="#022217" className="mr-2" />
+            <LoaderSm size={25} clr="#022217" className="mr-2" />
             Checking if WooCommerce is active!!!
           </div>
         )}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import DropDown from '../../Utilities/DropDown'
@@ -8,7 +9,7 @@ export default function WooCommerceProductActions({ wcConf, setWcConf, formField
   const [actionMdl, setActionMdl] = useState({ show: false })
 
   const handleActionInput = (type, value) => {
-    const newConf = { ...wcConf }
+    const newConf = deepCopy(wcConf)
     if (!newConf.actions.product) newConf.actions.product = {}
     if (value) {
       newConf.actions.product[type] = value

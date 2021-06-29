@@ -1,4 +1,5 @@
 import TrashIcn from '../../../Icons/TrashIcn'
+import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 
@@ -6,6 +7,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
   const isRequired = field.required === true
 
   const addFieldMap = (indx) => {
+    // const newConf = deepCopy(wcConf)
     const newConf = { ...wcConf }
     uploadFields ? newConf.upload_field_map.splice(indx, 0, {}) : newConf.field_map.splice(indx, 0, {})
 
@@ -13,7 +15,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
   }
 
   const delFieldMap = (indx) => {
-    const newConf = { ...wcConf }
+    const newConf = deepCopy(wcConf)
     if (uploadFields) {
       if (newConf.upload_field_map.length > 1) {
         newConf.upload_field_map.splice(indx, 1)
@@ -26,7 +28,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
   }
 
   const handleFieldMapping = (event, indx) => {
-    const newConf = { ...wcConf }
+    const newConf = deepCopy(wcConf)
 
     if (uploadFields) newConf.upload_field_map[indx][event.target.name] = event.target.value
     else newConf.field_map[indx][event.target.name] = event.target.value
@@ -39,7 +41,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
   }
 
   const handleCustomValue = (event, indx) => {
-    const newConf = { ...wcConf }
+    const newConf = deepCopy(wcConf)
     if (uploadFields) newConf.upload_field_map[indx].customValue = event.target.value
     else newConf.field_map[indx].customValue = event.target.value
     setWcConf(newConf)
