@@ -45,9 +45,11 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
 import TrashIcn from '../Icons/TrashIcn'
+import { deepCopy } from '../Utils/Helpers'
 
 function Integrations() {
-  const [integrations, setIntegration] = useRecoilState($integrations)
+  const [integrs, setIntegration] = useRecoilState($integrations)
+  const integrations = deepCopy(integrs)
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
@@ -127,7 +129,7 @@ function Integrations() {
   const getLogo = type => {
     for (let i = 0; i < integs.length; i += 1) {
       if (integs[i].type === type) {
-        return <img alt={type} loading="lazy" src={integs[i].logo} />
+        return <img alt={type || 'bitform integration logo'} loading="lazy" src={integs[i].logo} />
       }
     }
     return null

@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 
@@ -38,7 +39,8 @@ const FluentCrm = lazy(() => import('./FluentCRM/FluentCrm'))
 const Encharge = lazy(() => import('./Encharge/Encharge'))
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
-  const [integrations, setIntegration] = useRecoilState($integrations)
+  const [integs, setIntegration] = useRecoilState($integrations)
+  const integrations = deepCopy(integs)
   const formFields = useRecoilValue($fieldsArr)
 
   const NewIntegs = () => {

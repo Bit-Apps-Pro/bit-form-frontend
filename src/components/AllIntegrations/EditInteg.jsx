@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 
@@ -39,7 +40,8 @@ const EditEncharge = lazy(() => import('./Encharge/EditEncharge'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
-  const [integrations, setIntegration] = useRecoilState($integrations)
+  const [integs, setIntegration] = useRecoilState($integrations)
+  const integrations = deepCopy(integs)
   const formFields = useRecoilValue($fieldsArr)
 
   const IntegType = () => {
