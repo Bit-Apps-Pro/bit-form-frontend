@@ -1,25 +1,33 @@
+import { useRef } from 'react'
 import toast from 'react-hot-toast'
 import CopyIcn from '../../Icons/CopyIcn'
 import { __ } from '../../Utils/i18nwrap'
 
 export default function CopyText({ value, className, readOnly }) {
-  const copyText = () => {
-    if (!navigator.clipboard?.writeText) {
-      toast.error(__('Failed to write clipboard from unsecure host.', 'bitfrom'))
-      return
+  const copyInput = useRef(null)
+
+  const copyToClipboard = () => {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(value)
     }
-    navigator.clipboard.writeText(value)
-      .then(() => {
-        toast(__('Copied on clipboard.', 'bitform'))
-      }, err => {
-        toast.error(__('Failed to Copy, Try Again.', 'bitform'))
-      })
+    copyInput.current.focus()
+    copyInput.current.select()
+    return new Promise((res, rej) => {
+      if (document.execCommand('copy')) res()
+      else rej()
+    })
+  }
+
+  const copyText = () => {
+    copyToClipboard()
+      .then(() => toast.success(__('Copied on clipboard.', 'bitform')))
+      .catch(() => toast.error(__('Failed to Copy, Try Again.', 'bitform')))
   }
 
   return (
     <div className={className}>
-      <label htmlFor={value} className="flx">
-        <input id={value} className={`w-10 ${readOnly && 'readonly'}`} value={value} readOnly />
+      <label htmlFor="copy-input-fld" className="flx">
+        <input id="copy-input-fld" ref={copyInput} className={`w-10 ${readOnly && 'readonly'}`} value={value} readOnly />
         <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button"><CopyIcn size="14" /></button>
       </label>
     </div>
