@@ -1,4 +1,4 @@
-  import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
@@ -93,7 +93,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
         <SnackMsg snack={snack} setSnackbar={setsnack} />
 
         <div>
-          {importOpts?.data && (
+          {!!importOpts?.data && (
             <div className="w-10 mr-2">
               <b>Filter by Role</b>
               <select name="role" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.role || ''} className="btcd-paper-inp mt-1">
@@ -108,7 +108,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
             </div>
           )}
 
-          {importOpts?.data?.length && (
+          {!!importOpts?.data?.length && (
             <div>
               <div className="flx mt-3 w-10">
                 <div className="w-5 mr-2">

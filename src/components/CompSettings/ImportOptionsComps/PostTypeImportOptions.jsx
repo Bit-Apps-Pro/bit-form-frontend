@@ -107,7 +107,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
         <SnackMsg snack={snack} setSnackbar={setsnack} />
 
         <div>
-          {importOpts?.data && (
+          {!!importOpts?.data && (
             <div className="flx mt-3 w-10">
               <div className="w-5 mr-2">
                 <b>Filter by Post Type</b>
@@ -135,7 +135,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
             </div>
           )}
 
-          {importOpts?.data?.length && (
+          {!!importOpts?.data?.length && (
             <div>
               <div className="flx mt-3 w-10">
                 <div className="w-5 mr-2">
