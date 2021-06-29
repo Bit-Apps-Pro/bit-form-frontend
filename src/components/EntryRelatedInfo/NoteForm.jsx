@@ -151,7 +151,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
           {editMode ? __('Edit', 'bitform') : __('Add', 'bitform')}
           {' '}
           {__('Note', 'bitform')}
-          {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+          {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>
       </form>
     </div>

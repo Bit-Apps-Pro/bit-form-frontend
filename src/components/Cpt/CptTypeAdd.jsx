@@ -115,7 +115,7 @@ export default function Cpt({ settab, types }) {
         </div>
         <button type="submit" className="btn btcd-btn-lg blue flx" disabled={isLoading}>
           {__('Add Post Type', 'bitform')}
-          {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+          {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>
 
       </form>

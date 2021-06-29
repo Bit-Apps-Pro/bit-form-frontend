@@ -119,7 +119,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
           </button>
           <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? 'btn' : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'`, fontSize: 16 }} disabled={isDeleting}>
             <span className="btcd-icn icn-trash-fill" />
-            {isDeleting && <LoaderSm size="20" clr="#000" className="ml-2" />}
+            {isDeleting && <LoaderSm size={20} clr="#000" className="ml-2" />}
           </button>
         </div>
         <div>

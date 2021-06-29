@@ -70,7 +70,7 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
         </small>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
-            <LoaderSm size="25" clr="#022217" className="mr-2" />
+            <LoaderSm size={25} clr="#022217" className="mr-2" />
             Checking API Key!!!
           </div>
         )}
@@ -87,7 +87,7 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
           <>
             <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
-              {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+              {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
             <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>

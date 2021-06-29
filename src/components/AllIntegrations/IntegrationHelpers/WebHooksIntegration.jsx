@@ -111,7 +111,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
         {!isInfo && (
           <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className="btn btcd-btn-o-blue">
             {__('Test Webhook', 'bitform')}
-            {isLoading && <LoaderSm size="14" clr="#022217" className="ml-2" />}
+            {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
           </Button>
         )}
         <br />

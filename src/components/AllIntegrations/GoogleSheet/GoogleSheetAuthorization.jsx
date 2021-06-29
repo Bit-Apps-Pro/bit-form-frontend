@@ -61,7 +61,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
           <>
             <button onClick={() => handleAuthorize(sheetConf, setSheetConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
-              {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+              {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
             <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>

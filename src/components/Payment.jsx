@@ -88,7 +88,7 @@ export default function Payment({ allIntegURL }) {
       }
       <button type="button" onClick={handleSubmit} className="btn btn-md f-right blue" disabled={isLoading}>
         {__('Save', 'bitform')}
-        {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+        {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
     </div>
   )

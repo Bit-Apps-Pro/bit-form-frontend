@@ -105,7 +105,7 @@ export default function EditEntryData(props) {
     return (
       <button onClick={updateData} disabled={isLoading} type="button" className="btn btn-md blue btcd-mdl-hdr-btn">
         Update
-        {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+        {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
     )
   }

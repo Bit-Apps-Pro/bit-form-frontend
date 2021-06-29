@@ -84,7 +84,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
       <div>
         {loading && (
           <div className="flx mb-2">
-            <LoaderSm size="20" clr="#022217" className="mr-1" />
+            <LoaderSm size={20} clr="#022217" className="mr-1" />
             <p className="m-0">Loading..</p>
           </div>
         )}

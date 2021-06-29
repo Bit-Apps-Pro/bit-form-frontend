@@ -92,7 +92,7 @@ export default function Captcha() {
             </div>
             <button onClick={() => saveCaptcha(ver)} type="button" className="btn btn-md f-right blue" disabled={loading}>
               {__('Save', 'bitform')}
-              {loading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+              {loading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
             </button>
           </TabPanel>
         ))}

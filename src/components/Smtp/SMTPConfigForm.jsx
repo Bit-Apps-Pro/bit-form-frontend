@@ -161,7 +161,7 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
       )}
       <button type="submit" className="btn btcd-btn-lg blue flx" disabled={isLoading}>
         {__('Save Changes', 'bitform')}
-        {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+        {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
     </form>
   )

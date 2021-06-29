@@ -119,7 +119,7 @@ export default function AllCpt({ settab, posts, types }) {
             <div className="d-flx flx-wrp">
               <button type="submit" className="btn f-left btcd-btn-lg blue sh-sm flx" disabled={isLoading}>
                 {__('Update Post Type', 'bitform')}
-                {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+                {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
               </button>
               {'  '}
               <DeleteCpt

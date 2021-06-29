@@ -38,7 +38,7 @@ export default function DeleteCpt({ slug, snack, setsnack, posts }) {
     <div>
       <button type="button" onClick={(e) => confDelete(e)} className="btn f-left btcd-btn-lg blue sh-sm flx ml-4" disabled={isLoading}>
         {__('Delete Post Type', 'bitform')}
-        {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+        {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>
 
       <ConfirmModal

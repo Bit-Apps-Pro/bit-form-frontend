@@ -69,7 +69,7 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
     <div className="mt-2">
       {loading && (
         <div className="flx mb-2">
-          <LoaderSm size="20" clr="#022217" className="mr-1" />
+          <LoaderSm size={20} clr="#022217" className="mr-1" />
           <p className="m-0">Presets are loading from server. This process is only for the first time.</p>
         </div>
       )}

@@ -135,7 +135,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
           <div>
             <button type="button" onClick={e => getEntry(e)} className="btn btn-md blue btcd-mdl-btn" disabled={isLoading}>
               {__('Export', 'bitform')}
-              {isLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+              {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
             </button>
           </div>
         </div>

@@ -71,7 +71,7 @@ export default function MailSendTest({ settab }) {
           </div>
           <button type="submit" className="btn f-left btcd-btn-lg blue sh-sm flx" disabled={isTestLoading}>
             {__('Send Test Mail', 'bitform')}
-            {isTestLoading && <LoaderSm size="20" clr="#fff" className="ml-2" />}
+            {isTestLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
           </button>
         </form>
       </div>
