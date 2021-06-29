@@ -104,7 +104,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
       <div>
         <SnackMsg snack={snack} setSnackbar={setsnack} />
         <div>
-          {!!importOpts?.data && (
+          {importOpts?.data && (
             <div className="w-10 mr-2">
               <b>Filter by Taxonomy</b>
               <select name="taxanomy" onChange={handleImportInput} value={importOpts?.fieldObject?.filter?.taxanomy || ''} className="btcd-paper-inp mt-1">
@@ -114,7 +114,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
               </select>
             </div>
           )}
-          {!!importOpts?.data?.length && (
+          {importOpts?.data?.length && (
             <div>
               <div className="w-5 flx">
                 <CheckBox onChange={handleTaxonomyField} title={__('Use Post Taxonomy Fields', 'bitform')} checked={importOpts?.fieldObject?.isTaxonomy === true} value={false} />

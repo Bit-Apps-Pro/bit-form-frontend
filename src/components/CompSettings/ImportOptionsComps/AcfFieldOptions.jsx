@@ -92,7 +92,7 @@ export default function AcfFieldOptions({ importOpts, setImportOpts }) {
       <SnackMsg snack={snack} setSnackbar={setsnack} />
       <div>
         <div>
-          {!!importOpts?.groups && (
+          {importOpts?.groups && (
             <div className="flx mt-3 w-10">
               <div className="w-10 mr-2">
                 <b>ACF Options Field</b>

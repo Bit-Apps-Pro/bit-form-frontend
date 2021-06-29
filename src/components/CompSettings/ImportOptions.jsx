@@ -141,7 +141,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
         />
       )}
 
-      {!!newOptions.length && (
+      {newOptions.length && (
         <div className="mt-3">
           <b>Preview:</b>
           <table border="1" className="btcd-table txt-center mt-3">
