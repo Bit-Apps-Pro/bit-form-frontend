@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import toast from 'react-hot-toast'
 import { $bits } from '../../../GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import LoaderSm from '../../Loaders/LoaderSm'
 import CheckBox from '../../Utilities/CheckBox'
 import Cooltip from '../../Utilities/Cooltip'
+import SnackMsg from '../../Utilities/SnackMsg'
 
 const getTrimmedString = str => (typeof str === 'string' ? str?.trim() : str?.toString())
 
@@ -19,7 +20,7 @@ export const generateTermsOptions = (importOpts, lblKey, valKey) => {
 export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  const [loading, setLoading] = useState(false)
+  const [snack, setsnack] = useState({ show: false })
 
   useEffect(() => {
     if (!isPro) return
@@ -28,8 +29,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
     uri.searchParams.append('action', 'bitforms_get_wp_taxonomy')
     uri.searchParams.append('_ajax_nonce', bits.nonce)
 
-    setLoading(true)
-    fetch(uri)
+    const getFetchTerms = fetch(uri)
       .then(resp => resp.json())
       .then(res => {
         if (res.data) {
@@ -64,9 +64,16 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
             tmpOpts.vlu = fieldObject?.hiddenValue
           }
           setImportOpts({ ...tmpOpts })
+          return 'Successfully fetched wordpress terms.'
         }
-        setLoading(false)
+        return 'terms data not found'
       })
+
+    toast.promise(getFetchTerms, {
+      success: data => data,
+      failed: data => data,
+      loading: __('Loading Terms...'),
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -95,12 +102,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
   return (
     <div className="mt-2">
       <div>
-        {loading && (
-          <div className="flx mb-2">
-            <LoaderSm size={20} clr="#022217" className="mr-1" />
-            <p className="m-0">Loading..</p>
-          </div>
-        )}
+        <SnackMsg snack={snack} setSnackbar={setsnack} />
         <div>
           {!!importOpts?.data && (
             <div className="w-10 mr-2">

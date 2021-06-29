@@ -4,6 +4,10 @@ import { __ } from '../../Utils/i18nwrap'
 
 export default function CopyText({ value, className, readOnly }) {
   const copyText = () => {
+    if (!navigator.clipboard?.writeText) {
+      toast.error(__('Failed to write clipboard from unsecure host.', 'bitfrom'))
+      return
+    }
     navigator.clipboard.writeText(value)
       .then(() => {
         toast(__('Copied on clipboard.', 'bitform'))

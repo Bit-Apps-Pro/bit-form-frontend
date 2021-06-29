@@ -5,7 +5,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import bitsFetch from '../../../Utils/bitsFetch'
 import FieldMap from './FieldMap'
-import { addFieldMap, checkMappedPostFields, checkMappedAcfFields } from './MetaboxHelperFunction'
+import { addFieldMap, checkMappedPostFields, checkMappedAcfFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
@@ -15,7 +15,7 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
   const { id } = useParams()
   const [postTypes, setPostTypes] = useState([])
   const [metaboxFields, setMetaboxFields] = useState([])
-  const [metaFields, setMetaFields] = useState([])
+  const [metaboxFileFields, setMetaboxFileFields] = useState([])
   const [users, setUsers] = useState([])
   const [data, setData] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
@@ -31,6 +31,7 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
     bitsFetch({ post_type: data?.post_type }, 'bitforms_get_metabox_fields').then((res) => {
       if (res?.success && res !== undefined) {
         setMetaboxFields(res?.data?.metaboxFields)
+        setMetaboxFileFields(res?.data?.metaboxFile)
       }
     })
   }, [])
@@ -51,10 +52,16 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
     bitsFetch({ post_type: val }, 'bitforms_get_metabox_fields').then((res) => {
       if (res?.success && res !== undefined) {
         setMetaboxFields(res?.data?.metaboxFields)
-        if (res?.data?.acfFields) {
+        if (res?.data?.metaboxFields) {
           tmpData.metabox_map = res?.data?.metaboxFields?.filter(fld => fld.required).map(fl => ({ formField: '', metaboxField: fl.key, required: fl.required }))
           if (tmpData?.metabox_map?.length < 1) {
             tmpData.acf_map = [{}]
+          }
+        }
+        if (res?.data?.metaboxFile) {
+          tmpData.metabox_file_map = res?.data?.metaboxFile.filter(fld => fld.required).map(fl => ({ formField: '', metaboxFileUpload: fl.key, required: fl.required }))
+          if (tmpData?.metabox_file_map?.length < 1) {
+            tmpData.metabox_file_map = [{}]
           }
         }
         setData(tmpData)
@@ -96,7 +103,7 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
             <option key={key} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
-        {/* <button className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Type List', 'bitform')}'` }} type="button" >&#x21BB;</button> */}
+        <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bitform')}'` }} type="button">&#x21BB;</button>
       </div>
 
       <div className="mt-3">
@@ -169,36 +176,13 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
           : All your taxonomies will be mapped automatically from your form fields.
         </p>
       </div>
+
       <div>
         <div>
-          <div className="mt-3 mb-1"><b>{__('Meta Fields Mapping', 'bitform')}</b></div>
-          <div className="btcd-hr" />
-          <div className="flx flx-around mt-2 mb-1">
-            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
-            <div className="txt-dp"><b>{__('Meta Key', 'bitform')}</b></div>
+          <div className="mt-3 mb-1">
+            <b>{__('MetaBox Fields Mapping', 'bitform')}</b>
+            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
           </div>
-        </div>
-        {
-          data?.meta_map?.map((itm, i) => (
-            <FieldMap
-              key={`analytics-m-${i + 9}`}
-              i={i}
-              type="meta"
-              field={itm}
-              formFields={formFields}
-              dataConf={data}
-              setDataConf={setData}
-              customFields={metaFields}
-            />
-          ))
-        }
-
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('meta_map', data.meta_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
-      </div>
-
-      <div>
-        <div>
-          <div className="mt-3 mb-1"><b>{__('MetaBox Fields Mapping', 'bitform')}</b></div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-1">
             <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
@@ -223,6 +207,38 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
         }
 
         <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('metabox_map', data.metabox_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
+      </div>
+      <div>
+        <div>
+          <div className="mt-3 mb-1">
+            <b>{__('Metabox File Upload Fields Map', 'bitform')}</b>
+            <button onClick={() => refreshMetaboxFields(data, setMetaboxFields, setMetaboxFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MetaBox List', 'bitform')}'` }} type="button">&#x21BB;</button>
+          </div>
+          <div className="btcd-hr" />
+          <div className="flx flx-around mt-2 mb-1">
+            <div className="txt-dp"><b>{__('Form Fields', 'bitform')}</b></div>
+            <div className="txt-dp">
+              <b>{__('Metaxbox Fields', 'bitform')}</b>
+            </div>
+          </div>
+        </div>
+        {
+          data?.metabox_file_map?.map((itm, i) => (
+            <FieldMap
+              key={`analytics-m-${i + 9}`}
+              i={i}
+              type="metaboxFile"
+              field={itm}
+              formFields={formFields}
+              dataConf={data}
+              setDataConf={setData}
+              customFields={metaboxFileFields}
+              fieldType="file"
+            />
+          ))
+        }
+
+        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('metabox_file_map', data.metabox_file_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
       </div>
 
       <button

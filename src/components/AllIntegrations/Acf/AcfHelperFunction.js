@@ -1,4 +1,6 @@
 // eslint-disable-next-line no-unused-vars
+import toast from 'react-hot-toast'
+import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 
 export const addFieldMap = (fldProp, i, confTmp, setConf) => {
@@ -39,20 +41,42 @@ export const checkMappedAcfFields = data => {
 
   return true
 }
+export const refreshAcfFields = (acfConf, setAcfFields, setAcfFile) => {
+  const loadAcfFields = bitsFetch({ post_type: acfConf?.post_type }, 'bitforms_get_custom_field').then((res) => {
+    if (res !== undefined && res.success) {
+      if (res?.data?.acfFields) {
+        setAcfFields(res.data.acfFields)
+      }
+      if (res?.data?.acfFile) {
+        setAcfFile(res.data.acfFile)
+      }
+    }
+    if (res?.data?.acfFields.length !== 0 || res?.data?.acfFile.length !== 0) return 'Successfully refresh ACF Fields.'
+    return 'ACF Fields not found'
+  })
+  toast.promise(loadAcfFields, {
+    success: data => data,
+    error: __('Error Occured', 'bitform'),
+    loading: __('Loading ACF Fields...'),
+  })
+}
+export const refreshPostTypes = (postTypes, setPostTypes) => {
+  const loadPostTypes = bitsFetch({}, 'bitforms_get_post_type')
+    .then(result => {
+      if (result && result.success) {
+        let tmp = { ...postTypes }
+        if (result?.data?.post_types) {
+          tmp = Object.values(result?.data?.post_types)
+          setPostTypes(tmp)
+        }
+        if (result?.data?.post_types.length !== 0) return 'Successfully refresh Post Types.'
+        return ' Post Types not found'
+      }
+    })
 
-// export const refreshPostTypes = (postTypes, setPostTypes, setisLoading, setSnackbar) => {
-//   bitsFetch({}, 'bitforms_get_post_type')
-//     .then(result => {
-//       if (result && result.success) {
-//         //const newConf = { ...postTypes }
-//         if (res?.data?.post_types) {
-//           setPostTypes(Object.values(res?.data?.post_types))
-//           setSnackbar({ show: true, msg: __('Post Types refreshed', 'bitform') })
-//         }
-//       } else {
-//         setSnackbar({ show: true, msg: __('Fluent CRM fields refresh failed. please try again', 'bitform') })
-//       }
-//       setisLoading(false)
-//     })
-//     .catch(() => setisLoading(false))
-// }
+  toast.promise(loadPostTypes, {
+    success: data => data,
+    error: __('Error Occured', 'bitform'),
+    loading: __('Loading Post Types...'),
+  })
+}
