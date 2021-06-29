@@ -1767,18 +1767,17 @@ nav.top-nav {
   font-size: 20px;
   border: 0;
   aspect-ratio: 1/1;
-  // width: 32px;
-  // height: 32px;
-  // min-width: 32px;
-  // min-height: 32px;
+  min-width: 30px;
+  min-height: 30px;
   border-radius: 50%;
   line-height: 1px;
   outline: none;
   &:hover {
     background: #f3f3f3;
   }
-  &:active {
+  &:active, &:focus {
     background: #dcdcdc;
+    border: 1px solid #d4d4d4;
   }
 }
 
