@@ -3796,7 +3796,7 @@ select.btcd-ud-inp {
   transition-delay: height 1s;
   transition: width 0.4s, height 0.4s;
 }
-.btcd-stp-page > div{ padding:10px;}
+.btcd-stp-page + div{ padding:10px;}
 
 .error-404 {
   position: relative;
