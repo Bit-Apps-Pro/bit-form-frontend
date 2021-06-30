@@ -30,7 +30,10 @@ export default function validateForm({ form, input }) {
     console.log('flddata', fldKey, fldValue, fldData)
 
     const fldDiv = document.querySelector(`#form-${contentId} .${fldKey}`)
-    if (window.getComputedStyle(fldDiv).display === 'none') continue
+    if (window.getComputedStyle(fldDiv).display === 'none') {
+      generateErrMsg('', fldKey)
+      continue
+    }
 
     let errKey = ''
 
