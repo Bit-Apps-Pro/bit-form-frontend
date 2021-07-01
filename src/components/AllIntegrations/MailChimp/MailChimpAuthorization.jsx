@@ -4,7 +4,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleMailChimpAuthorize, refreshAudience } from './MailChimpCommonFunc'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function MailChimpAuthorization({ formID, sheetConf, setSheetConf
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={sheetConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=ZjAVXYbh7LY'}
       />

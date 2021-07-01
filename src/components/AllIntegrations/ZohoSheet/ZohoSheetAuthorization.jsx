@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshWorkbooks } from './ZohoSheetCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={sheetConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=uIdOUW-7SYA&list=PL7c6CDwwm-AKN4gEgctrcyht7zOwCyWpz'}
       />

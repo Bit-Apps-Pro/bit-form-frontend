@@ -4,7 +4,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -34,7 +34,7 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={creatorConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=muB8tE1-bVg&list=PL7c6CDwwm-AIQLjwPBmjmDlcU1dbBgkwz'}
       />

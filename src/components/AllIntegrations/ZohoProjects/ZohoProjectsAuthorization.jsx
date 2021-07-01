@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshPortals } from './ZohoProjectsCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoProjectsAuthorization({ formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoProjectsAuthorization({ formID, projectsConf, setPro
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={projectsConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=CaxLekQ-xVY&list=PL7c6CDwwm-AJoFFks8-X5HhaM19_W9y3j'}
       />

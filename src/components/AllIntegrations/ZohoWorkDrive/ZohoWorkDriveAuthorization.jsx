@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshTeams } from './ZohoWorkDriveCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoWorkDriveAuthorization({ formID, workDriveConf, setWorkDriveConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoWorkDriveAuthorization({ formID, workDriveConf, setW
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={workDriveConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=27v1F-cZLgg&list=PL7c6CDwwm-AKkKEqcRQWfpsDkT1-sJ_rZ'}
       />

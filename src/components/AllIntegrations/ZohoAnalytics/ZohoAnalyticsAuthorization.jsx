@@ -4,7 +4,7 @@ import { checkValidEmail } from '../../../Utils/Helpers'
 import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 import BackIcn from '../../../Icons/BackIcn'
 
 export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
@@ -33,7 +33,7 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={analyticsConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=Eoxxu3U_3_s'}
       />

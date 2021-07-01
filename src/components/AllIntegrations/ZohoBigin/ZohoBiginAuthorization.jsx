@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshModules } from './ZohoBiginCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={biginConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=ixJXIzy8hOQ&list=PL7c6CDwwm-ALhsMoiWS1Bel1TtjIbtibB'}
       />

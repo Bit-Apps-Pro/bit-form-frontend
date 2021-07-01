@@ -2338,7 +2338,6 @@ nav.top-nav {
   display: flex;
   background: $dp-bg;
   height: 40px;
-  overflow: hidden;
   justify-content: space-between;
 }
 
@@ -4349,6 +4348,30 @@ _:-ms-fullscreen,
   transition: 0.3s;
   font-size: 11px;
 }
+.tutoriallink{
+  display:inline-flex;
+  background: #04ff0005;
+  color:green;
+  align-items: center;
+  border:1px solid #008228;
+  border-radius:8px;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.tutoriallink:hover{
+  text-decoration: wavy underline !important;
+}
+.tutoriallink a{
+  color:green;
+}
+.youtube{
+  background: #ff000005;
+  border:1px solid #FF3D00;
+}
+.youtube a{
+  color:black;
+}
+
 @keyframes scale-in {
   from {
     transform: scale(0);

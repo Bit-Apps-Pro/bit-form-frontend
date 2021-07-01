@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshModules } from './ZohoRecruitCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoRecruitAuthorization({ formID, recruitConf, setRecruitConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoRecruitAuthorization({ formID, recruitConf, setRecru
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={recruitConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=Bj-oMYQLDqI&list=PL7c6CDwwm-AJ2qnbOYW-UzZBQjWhRE0hg'}
       />

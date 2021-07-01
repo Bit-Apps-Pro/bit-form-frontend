@@ -3,7 +3,7 @@ import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { refreshActiveCampaingHeader, refreshActiveCampaingList } from './ActiveCampaignCommonFunc'
 
 export default function ActiveCampaignAuthorization({ formID, activeCampaingConf, setActiveCampaingConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
@@ -56,7 +56,7 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={activeCampaingConf.type}
         youTubeLink="https://www.youtube.com/watch?v=CfKrN2yHDxw&t=185s"
       />

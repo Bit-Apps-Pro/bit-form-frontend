@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshEnchargeHeader } from './EnchargeCommonFunc'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -52,7 +52,7 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={enchargeConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=0XM9KhOKWWw&t=127s'}
       />

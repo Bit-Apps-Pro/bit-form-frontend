@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshLists } from './ZohoCampaignsCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoCampaignsAuthorization({ formID, campaignsConf, setCampaignsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoCampaignsAuthorization({ formID, campaignsConf, setC
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={campaignsConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=uGzD8vLzdeQ&list=PL7c6CDwwm-AI2s42ooej4Gpn92v93-Qeg'}
       />

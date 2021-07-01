@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshGetUpdates } from './TelegramCommonFunc'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function TelegramAuthorization({ formID, telegramConf, setTelegramConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -58,7 +58,7 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={telegramConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=M0u1joqrRTA&t=2s'}
       />

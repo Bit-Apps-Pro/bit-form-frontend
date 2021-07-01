@@ -4,7 +4,8 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshModules } from './ZohoCRMCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function ZohoCRMAuthorization({ formID, crmConf, setCrmConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -27,9 +28,9 @@ export default function ZohoCRMAuthorization({ formID, crmConf, setCrmConf, step
 
   return (
     <>
-      <SetupHelperLink
-        title={crmConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=0fYVHhXqSJI&list=PL7c6CDwwm-ALDlpDo9vCBjdiJDJ33Xx0z'}
+      <TutorialLink
+        title={tutorialLinks.zohoCrm.title}
+        youTubeLink={tutorialLinks.zohoCrm.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

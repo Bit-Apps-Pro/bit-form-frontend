@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshOrganizations } from './ZohoDeskCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={deskConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=zDKRmhTsYEM&list=PL7c6CDwwm-ALqMHEVpkEtMFJrcXAlLeR_'}
       />

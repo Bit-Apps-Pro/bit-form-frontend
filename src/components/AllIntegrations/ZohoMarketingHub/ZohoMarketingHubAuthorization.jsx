@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshLists } from './ZohoMarketingHubCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoMarketingAuthorization({ formID, marketingHubConf, setMarketingHubConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoMarketingAuthorization({ formID, marketingHubConf, s
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={marketingHubConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=k_Es1XiSQrY'}
       />

@@ -3,7 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoetConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -34,7 +34,7 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         titile={mailPoetConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=5hDcm4vVwcg&t=16s'}
       />

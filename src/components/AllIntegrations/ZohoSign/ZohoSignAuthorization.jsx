@@ -4,7 +4,7 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshTemplates } from './ZohoSignCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoSingAuthorization({ formID, signConf, setSignConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,7 +28,7 @@ export default function ZohoSingAuthorization({ formID, signConf, setSignConf, s
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={signConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=3ClKsZ9CBYM'}
       />

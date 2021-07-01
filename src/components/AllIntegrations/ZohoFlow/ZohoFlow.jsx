@@ -7,7 +7,7 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -26,7 +26,7 @@ function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
-      <SetupHelperLink
+      <TutorialLink
         title={zohoFlow.type}
         youTubeLink={'https://www.youtube.com/watch?v=lbRiwN7J97Q'}
       />

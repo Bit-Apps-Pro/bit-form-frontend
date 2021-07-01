@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshLists } from './SendinBlueCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSendinBlueConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -52,7 +52,7 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={sendinBlueConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=DLWvKoPbbN8&t=5s'}
       />

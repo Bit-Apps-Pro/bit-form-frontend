@@ -3,7 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
-import SetupHelperLink from '../../Utilities/SetupHelperLink'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluentCrmConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -40,7 +40,7 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
 
   return (
     <>
-      <SetupHelperLink
+      <TutorialLink
         title={fluentCrmConf.type}
         youTubeLink={'https://www.youtube.com/watch?v=kJ2pCH2FQwU&t=95s'}
       />
