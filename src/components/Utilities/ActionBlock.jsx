@@ -1,14 +1,17 @@
 /* eslint-disable no-param-reassign */
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'
 import MtSelect from './MtSelect'
 import TrashIcn from '../../Icons/TrashIcn'
+import { $fields, $fieldsArr } from '../../GlobalStates'
 
-function ActionBlock({ formFields, fields, action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
+function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
+  const fields = useRecoilValue($fields)
+  const formFields = useRecoilValue($fieldsArr)
   let fieldKey = ''
   let type = ''
 

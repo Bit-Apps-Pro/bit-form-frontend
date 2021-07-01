@@ -1,4 +1,5 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import MtSelect from './MtSelect'
 import MtInput from './MtInput'
@@ -6,8 +7,12 @@ import Button from './Button'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
+import { $fields, $fieldsArr } from '../../GlobalStates'
 
-function LogicBlock({ fieldVal, formFields, fields, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
+function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd, value, addInlineLogic, changeLogic, logicValue, changeValue, changeFormField }) {
+  const fields = useRecoilValue($fields)
+  const formFields = useRecoilValue($fieldsArr)
+
   let type = ''
   let fldType = ''
   let fieldKey = ''

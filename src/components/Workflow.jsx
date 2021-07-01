@@ -18,14 +18,13 @@ import LogicChip from './Utilities/LogicChip'
 import MtSelect from './Utilities/MtSelect'
 import TableCheckBox from './Utilities/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
-import { $mailTemplates, $workflows, $bits, $integrations, $confirmations, $fields, $fieldsArr } from '../GlobalStates'
+import { $mailTemplates, $workflows, $bits, $integrations, $confirmations, $fieldsArr } from '../GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
 import TrashIcn from '../Icons/TrashIcn'
 
 function Workflow({ formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
   const [allWorkFlows, setworkFlows] = useRecoilState($workflows)
-  const fields = useRecoilValue($fields)
   const mailTem = useRecoilValue($mailTemplates)
   const integrations = useRecoilValue($integrations)
   const confirmations = useRecoilValue($confirmations)
@@ -658,21 +657,21 @@ function Workflow({ formID }) {
                 {
                   lgcGrp.action_behaviour === 'cond' && lgcGrp.logics.map((logic, ind) => (
                     <span key={`logic-${ind + 44}`}>
-                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} formFields={fieldsArr} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
+                      {typeof logic === 'object' && !Array.isArray(logic) && <LogicBlock fieldVal={logic.field} changeFormField={changeFormField} changeValue={changeValue} logicValue={logic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} value={logic.val} />}
                       {typeof logic === 'string' && <LogicChip logic={logic} onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind)} />}
                       {Array.isArray(logic) && (
                         <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                           {logic.map((subLogic, subInd) => (
                             <span key={`subLogic-${subInd * 7}`}>
-                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} formFields={fieldsArr} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
+                              {typeof subLogic === 'object' && !Array.isArray(subLogic) && <LogicBlock fieldVal={subLogic.field} changeFormField={changeFormField} changeValue={changeValue} logicValue={subLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} value={subLogic.val} />}
                               {typeof subLogic === 'string' && <LogicChip logic={subLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd)} />}
                               {Array.isArray(subLogic) && (
                                 <div className="p-2 pl-6 br-10 btcd-logic-grp">
 
                                   {subLogic.map((subSubLogic, subSubLgcInd) => (
                                     <span key={`subsubLogic-${subSubLgcInd + 90}`}>
-                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} formFields={fieldsArr} fields={fields} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
+                                      {typeof subSubLogic === 'object' && !Array.isArray(subSubLogic) && <LogicBlock fieldVal={subSubLogic.field} changeFormField={changeFormField} changeValue={changeValue} logicValue={subSubLogic.logic} changeLogic={changeLogic} addInlineLogic={addInlineLogic} delLogic={delLogic} lgcGrpInd={lgcGrpInd} lgcInd={ind} subLgcInd={subInd} subSubLgcInd={subSubLgcInd} value={subSubLogic.val} />}
                                       {typeof subSubLogic === 'string' && <LogicChip logic={subSubLogic} nested onChange={e => changeLogicChip(e.target.value, lgcGrpInd, ind, subInd, subSubLgcInd)} />}
                                     </span>
                                   ))}
@@ -880,7 +879,7 @@ function Workflow({ formID }) {
                   <div className="ml-2 mt-2">
                     {lgcGrp.actions.map((action, actionInd) => (
                       <span key={`atn-${actionInd + 22}`}>
-                        <ActionBlock formFields={fieldsArr} fields={fields} action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
+                        <ActionBlock action={action} setworkFlows={setworkFlows} lgcGrpInd={lgcGrpInd} actionInd={actionInd} actionType={lgcGrp.action_type} />
                         {lgcGrp.actions.length !== actionInd + 1 && (
                           <>
                             <div style={{ height: 5 }}>
