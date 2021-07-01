@@ -46,7 +46,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
             <option value="">{__('Select Field', 'bitform')}</option>
             {
               customFields?.map(header => (
-                <option key={`${Math.random()}-1`} value={header.id}>
+                <option key={`${Math.random()}-1`} value={header.key}>
                   {`${header.name}`}
                 </option>
               ))

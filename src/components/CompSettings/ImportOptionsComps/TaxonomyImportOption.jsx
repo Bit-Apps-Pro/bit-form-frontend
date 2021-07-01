@@ -36,7 +36,8 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
           const { allCategoreis, taxonomies } = res.data
           const tmpOpts = { ...importOpts }
           tmpOpts.data = allCategoreis
-          localStorage.setItem('bf-options-taxanomy', JSON.stringify(allCategoreis))
+          localStorage.setItem('bf-options-categories', JSON.stringify(allCategoreis))
+          localStorage.setItem('bf-options-taxanomy', JSON.stringify(taxonomies))
           tmpOpts.taxonomies = Object.values(taxonomies)
           tmpOpts.headers = Object.keys(tmpOpts.data[0])
           const [vlu, lbl] = tmpOpts.headers
@@ -52,6 +53,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
               hiddenValue: tmpOpts?.vlu,
               oldOpt: [],
               isTaxonomy: false,
+              isHierarchical: true,
               type: 'terms',
             }
           } else {
@@ -91,9 +93,11 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
     const { fieldObject } = tmpOpts
     fieldObject.filter[name] = value
     const { orderBy, taxanomy, order } = fieldObject.filter
-    let allCategories = localStorage.getItem('bf-options-taxanomy')
+    let allCategories = localStorage.getItem('bf-options-categories')
+    const taxanomies = JSON.parse(localStorage.getItem('bf-options-taxanomy'))
     allCategories = sortByField(JSON.parse(allCategories), orderBy, order)
     tmpOpts.data = allCategories?.filter(item => item.taxonomy === taxanomy)
+    tmpOpts.fieldObject.isHierarchical = taxanomies?.find(tax => tax.name === taxanomy)?.hierarchical
     tmpOpts.fieldObject.lebel = tmpOpts?.lbl
     tmpOpts.fieldObject.hiddenValue = tmpOpts?.vlu
     setImportOpts({ ...tmpOpts })
