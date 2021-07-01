@@ -77,10 +77,10 @@ function EmailTemplateNew({ saveForm }) {
       </div>
 
       <div className="mt-3">
-        <div className="flx flx-between">
-          <b>{__('Body:', 'bitform')}</b>
+        <b>{__('Body:', 'bitform')}</b>
+        {/* <div className="flx flx-between">
           <button className="btn" onClick={() => setTemplateModal(true)} type="button">{__('Choose Template', 'bitform')}</button>
-        </div>
+        </div> */}
         <label htmlFor={`mail-tem-${formID}`} className="mt-2 w-10">
           <TinyMCE
             id={`mail-tem-${formID}`}
