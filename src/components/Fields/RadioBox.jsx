@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, createRef } from 'react'
 import validateForm from '../../user-frontend/validation'
 import InputWrapper from '../InputWrapper'
 
 export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID }) {
   const [value, setvalue] = useState(attr.val || '')
-  const radioRef = useRef(null)
+  const radioRef = useRef([])
+  radioRef.current = attr.opt.map((_, i) => radioRef.current[i] ?? createRef())
   useEffect(() => {
     if (attr.val && !attr.userinput) {
       setvalue(attr.val)
@@ -31,8 +32,11 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
   }, [resetFieldValue])
   useEffect(() => {
     if (attr.hasWorkflow && attr.val === value && onBlurHandler && !attr.userinput) {
-      const { current } = radioRef
-      onBlurHandler(current)
+      const radioElm = radioRef.current.find(elm => elm.current.checked && elm.current.value === value)
+      if (radioElm) {
+        const { current } = radioElm
+        onBlurHandler(current)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
@@ -65,7 +69,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
             <span>{itm.lbl}</span>
             <input
               type="radio"
-              ref={radioRef}
+              ref={radioRef.current[i]}
               name={n}
               value={itm.lbl}
               {...itm.check && { checked: true }}
