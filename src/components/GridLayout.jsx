@@ -16,13 +16,12 @@ import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
 
-function GridLayout(props) {
+function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   console.log('render gridlay')
   const { payments } = useContext(AppSettings)
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const setProModal = useContext(ShowProModalContext)
-  const { newData, setNewData, style, gridWidth, formID } = props
   const [fields, setFields] = useRecoilState($fields)
   const [layout, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
@@ -260,13 +259,13 @@ function GridLayout(props) {
       // setLayouts(extendLayout(newLays))
       // setLay(extendLayout(newLays))
       setLayouts(newLays)
-      setLay(newLays)
+      setLay(deepCopy(newLays))
     }
   }
 
   const onBreakpointChange = bp => setBreakpoint(bp)
 
-  const onRemoveItem = i => {
+  const removeLayoutItem = i => {
     if (fields[i]?.typ === 'button' && fields[i]?.btnTyp === 'submit') {
       const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
       if (!payFields.length) {
@@ -448,7 +447,7 @@ function GridLayout(props) {
                     <FieldBlockWrapper
                       {...{
                         layoutItem,
-                        onRemoveItem,
+                        removeLayoutItem,
                         fields,
                         formID,
                       }}
