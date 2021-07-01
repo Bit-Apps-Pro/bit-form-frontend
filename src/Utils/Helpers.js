@@ -222,17 +222,22 @@ export const checkValidEmail = email => {
   }
   return false
 }
-export const makeFieldsArrByLabel = labels => {
-  const tmpLabels = []
-  let i = 0
-  while (i < labels.length) {
-    tmpLabels.push({
-      ...labels[i],
-      name: labels[i].adminLbl || labels[i].name || labels[i].key,
-    })
-    i += 1
-  }
-  return sortArrOfObj(tmpLabels, 'name')
+export const makeFieldsArrByLabel = (fields, labels) => {
+  const fldArrByLabel = Object.entries(fields).map(([fldKey, fld]) => {
+    const fldByLabel = labels.find(lbl => lbl.key === fldKey)
+    return {
+      ...fld,
+      type: fld.typ,
+      name: fldByLabel?.adminLbl
+        || fldByLabel?.name
+        || fld.lbl
+        || fld.adminLbl
+        || fld.txt // for submit button
+        || fldKey,
+    }
+  })
+
+  return sortArrOfObj(fldArrByLabel, 'name')
 }
 
 export const getFileExts = filename => filename.split('.').pop()
