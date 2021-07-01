@@ -19,6 +19,7 @@ import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
 import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts, $mailTemplates, $additionalSettings, $saveForm, $workflows, $integrations, $confirmations, $formName } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
+import { select } from '../Utils/globalHelpers'
 // import Ok from './Ok'
 // import FormBuilderHOC from './FormBuilderHOC'
 // import useSWR from 'swr'
@@ -161,6 +162,16 @@ function FormDetails({ history }) {
       setNewFormProps()
       fetchTemplate()
     }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
+        e.preventDefault()
+        if (!buttonDisabled) {
+          select('#update-btn').click()
+        }
+        return false
+      }
+    })
   }
 
   const onUnmount = () => {
@@ -415,7 +426,7 @@ function FormDetails({ history }) {
             </div>
 
             <div className="btcd-bld-btn">
-              <button className="btn blue" type="button" onClick={saveForm} disabled={buttonDisabled}>
+              <button id="update-btn" className="btn blue tooltip pos-rel" type="button" onClick={saveForm} disabled={buttonDisabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
                 {buttonText}
                 {buttonDisabled && <LoaderSm size={20} clr="white" className="ml-1" />}
               </button>
