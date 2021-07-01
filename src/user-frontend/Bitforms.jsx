@@ -165,7 +165,6 @@ export default function Bitforms(props) {
         conditionsStatus.push([LogicIndex, logicStatus ? 1 : 0])
       })
 
-      // as it will reset the form anyway, so we sort it to false conditions to reset it first, then set the new value
       conditionsStatus.sort((a, b) => a[1] - b[1]).forEach(([LogicIndex, logicStatus]) => {
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
