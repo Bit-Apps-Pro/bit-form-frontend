@@ -73,7 +73,7 @@ export default function AllEmailTemplates({ formID }) {
       accessor: 'title',
       Cell: row => (
         <NavLink to={`${url}/${row.row.index}`}>
-          {row.cell.value}
+          <b>{row.cell.value}</b>
         </NavLink>
       ),
     },
