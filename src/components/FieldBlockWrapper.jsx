@@ -9,7 +9,7 @@ import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import MapComponents from './MapComponents'
 
-export default function FieldBlockWrapper({ layoutItem, onRemoveItem, fields, formID }) {
+export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields, formID }) {
   const history = useHistory()
   const { reCaptchaV2 } = useContext(AppSettings)
 
@@ -67,7 +67,7 @@ export default function FieldBlockWrapper({ layoutItem, onRemoveItem, fields, fo
           unselectable="on"
           draggable="false"
           style={{ cursor: 'pointer' }}
-          onClick={() => onRemoveItem(layoutItem.i)}
+          onClick={() => removeLayoutItem(layoutItem.i)}
           title={__('Remove', 'bitform')}
         >
           <TrashIcn size="16" />
