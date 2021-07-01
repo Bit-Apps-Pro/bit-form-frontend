@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
 import { useEffect, useReducer, useState } from 'react'
-import MapComponents from '../components/MapComponents'
 import { resetCaptcha } from '../components/Fields/Recaptcha'
+import MapComponents from '../components/MapComponents'
 import { deepCopy } from '../Utils/Helpers'
 import { checkLogic, replaceWithField } from './checkLogic'
 import validateForm from './validation'
-import { select } from '../Utils/globalHelpers'
 
 const reduceFieldData = (state, action) => ({ ...state, ...action })
 export default function Bitforms(props) {
@@ -159,8 +158,15 @@ export default function Bitforms(props) {
           }
         }
       })
+
+      const conditionsStatus = []
       props.fieldToCheck[targetFieldName].forEach(LogicIndex => {
         const logicStatus = checkLogic(props.conditional[LogicIndex].logics, fieldValues)
+        conditionsStatus.push([LogicIndex, logicStatus ? 1 : 0])
+      })
+
+      // as it will reset the form anyway, so we sort it to false conditions to reset it first, then set the new value
+      conditionsStatus.sort((a, b) => a[1] - b[1]).forEach(([LogicIndex, logicStatus]) => {
         if (logicStatus) {
           props.conditional[LogicIndex].actions.forEach(actionDetail => {
             if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
