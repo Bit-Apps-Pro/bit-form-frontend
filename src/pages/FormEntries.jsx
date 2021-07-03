@@ -58,8 +58,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
           allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
         }
       })
-      tableHeaderHandler(labels.length ? labels : allLabels)
-      // tableHeaderHandler(labels)
+      // temporary tuen off report feature
+      // tableHeaderHandler(labels.length ? labels : allLabels)
+      tableHeaderHandler(allLabels)
     } else if (allLabels.length) {
       tableHeaderHandler(allLabels)
     }
@@ -407,9 +408,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       <div className="af-header flx">
         <h2>{__('Form Responses', 'bitform')}</h2>
         <button
-          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          className="icn-btn ml-2 mr-2 tooltip"
           onClick={() => setRefreshResp(1)}
-          style={{ '--tooltip-txt': `'${__('Refresh Form Responses', 'bitform')}'` }}
+          style={{ '--tooltip-txt': `'${__('Refresh', 'bitform')}'` }}
           type="button"
           disabled={isloading}
         >
