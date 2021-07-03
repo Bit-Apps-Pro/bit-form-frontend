@@ -5,6 +5,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshEnchargeHeader } from './EnchargeCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -53,8 +54,8 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
   return (
     <>
       <TutorialLink
-        title={enchargeConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=0XM9KhOKWWw&t=127s'}
+        title={tutorialLinks.encharge.title}
+        youTubeLink={tutorialLinks.encharge.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

@@ -2,9 +2,10 @@ import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { refreshGetUpdates } from './TelegramCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { refreshGetUpdates } from './TelegramCommonFunc'
 
 export default function TelegramAuthorization({ formID, telegramConf, setTelegramConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -59,8 +60,8 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
   return (
     <>
       <TutorialLink
-        title={telegramConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=M0u1joqrRTA&t=2s'}
+        title={tutorialLinks.telegram.title}
+        youTubeLink={tutorialLinks.telegram.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

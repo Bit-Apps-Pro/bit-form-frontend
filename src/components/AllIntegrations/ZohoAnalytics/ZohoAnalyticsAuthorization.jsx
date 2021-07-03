@@ -6,6 +6,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import BackIcn from '../../../Icons/BackIcn'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -34,8 +35,8 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
   return (
     <>
       <TutorialLink
-        title={analyticsConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=Eoxxu3U_3_s'}
+        title={tutorialLinks.zohoAnalytics.title}
+        youTubeLink={tutorialLinks.zohoAnalytics.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

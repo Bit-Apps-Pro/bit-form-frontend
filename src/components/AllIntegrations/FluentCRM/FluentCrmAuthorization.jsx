@@ -4,6 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluentCrmConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -41,8 +42,8 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
   return (
     <>
       <TutorialLink
-        title={fluentCrmConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=kJ2pCH2FQwU&t=95s'}
+        title={tutorialLinks.fluentCRM.title}
+        youTubeLink={tutorialLinks.fluentCRM.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

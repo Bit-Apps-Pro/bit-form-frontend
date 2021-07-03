@@ -8,6 +8,7 @@ import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function Integromat({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -26,8 +27,8 @@ function Integromat({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
       <TutorialLink
-        titile={integromat.type}
-        youTubeLink={'https://www.youtube.com/watch?v=myB_pia6bBM'}
+        title={tutorialLinks.integromat.title}
+        youTubeLink={tutorialLinks.integromat.link}
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

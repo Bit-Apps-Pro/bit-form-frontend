@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize, refreshWorkbooks } from './ZohoSheetCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
+import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { handleAuthorize, refreshWorkbooks } from './ZohoSheetCommonFunc'
 
 export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -29,8 +30,8 @@ export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf
   return (
     <>
       <TutorialLink
-        title={sheetConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=uIdOUW-7SYA&list=PL7c6CDwwm-AKN4gEgctrcyht7zOwCyWpz'}
+        title={tutorialLinks.zohoSheet.title}
+        youTubeLink={tutorialLinks.zohoSheet.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

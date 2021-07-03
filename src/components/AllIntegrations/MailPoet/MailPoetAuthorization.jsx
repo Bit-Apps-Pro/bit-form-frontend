@@ -4,6 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoetConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -35,8 +36,8 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
   return (
     <>
       <TutorialLink
-        titile={mailPoetConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=5hDcm4vVwcg&t=16s'}
+        title={tutorialLinks.mailPoet.title}
+        youTubeLink={tutorialLinks.mailPoet.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
-import TutorialLink from '../../Utilities/TutorialLink'
+import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -33,8 +34,8 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
   return (
     <>
       <TutorialLink
-        title={wcConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=Jxn1110dzNc&t=261s'}
+        title={tutorialLinks.wooCommerce.title}
+        youTubeLink={tutorialLinks.wooCommerce.link}
       />
       <div
         className="btcd-stp-page"

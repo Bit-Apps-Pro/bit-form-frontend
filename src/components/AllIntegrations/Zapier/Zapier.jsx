@@ -2,12 +2,13 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
-import TutorialLink from '../../Utilities/TutorialLink'
 
 function Zapier({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -26,9 +27,9 @@ function Zapier({ formFields, setIntegration, integrations, allIntegURL }) {
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
-      <TutorialLink 
-        titile={zapier.type}
-        youTubeLink={'https://www.youtube.com/watch?v=uORXmZANU3M'}
+      <TutorialLink
+        title={tutorialLinks.zapier.title}
+        youTubeLink={tutorialLinks.zapier.link}
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

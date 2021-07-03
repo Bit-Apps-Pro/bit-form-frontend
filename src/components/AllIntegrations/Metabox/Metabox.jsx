@@ -8,6 +8,8 @@ import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import SnackMsg from '../../Utilities/SnackMsg'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
   const [postTypes, setPostTypes] = useState([])
@@ -96,6 +98,10 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      {/* <TutorialLink
+        title={tutorialLinks.metaBox.title}
+        youTubeLink={tutorialLinks.metaBox.link}
+      /> */}
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
 
