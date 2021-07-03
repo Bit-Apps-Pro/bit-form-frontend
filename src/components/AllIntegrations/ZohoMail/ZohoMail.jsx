@@ -37,8 +37,6 @@ function ZohoMail({ formFields, setIntegration, integrations, allIntegURL }) {
     setstep(val)
   }
 
-  console.log('mailConf', mailConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

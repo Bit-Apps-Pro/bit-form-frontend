@@ -120,7 +120,6 @@ export const setGrantTokenResponse = (integ) => {
 }
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setisLoading, setSnackbar) => {
-  console.log('zoho sing')
   if (!confTmp.dataCenter || !confTmp.clientId || !confTmp.clientSecret) {
     setError({
       dataCenter: !confTmp.dataCenter ? __('Data center cann\'t be empty', 'bitform') : '',

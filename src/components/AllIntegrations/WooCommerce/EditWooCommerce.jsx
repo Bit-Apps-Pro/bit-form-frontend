@@ -17,8 +17,6 @@ function EditWooCommerce({ formFields, setIntegration, integrations, allIntegURL
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('wcConf', wcConf)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

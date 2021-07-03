@@ -17,8 +17,6 @@ function EditZohoBigin({ formFields, setIntegration, integrations, allIntegURL }
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
 
-  console.log('editBiginConf', biginConf)
-
   const saveConfig = () => {
     if (!checkMappedFields(biginConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })

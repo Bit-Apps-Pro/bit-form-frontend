@@ -46,8 +46,6 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
     }
   }
 
-  console.log('campaignsConf', campaignsConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

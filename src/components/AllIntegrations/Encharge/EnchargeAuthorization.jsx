@@ -54,7 +54,7 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
     <>
       <TutorialLink
         title={enchargeConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=0XM9KhOKWWw&t=127s'}
+        youTubeLink="https://www.youtube.com/watch?v=0XM9KhOKWWw&t=127s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

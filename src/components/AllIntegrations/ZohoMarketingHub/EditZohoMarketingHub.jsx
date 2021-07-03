@@ -17,8 +17,6 @@ function EditZohoMarketingHub({ formFields, setIntegration, integrations, allInt
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('marketingHubConf', marketingHubConf)
-
   const saveConfig = () => {
     if (!checkMappedFields(marketingHubConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })

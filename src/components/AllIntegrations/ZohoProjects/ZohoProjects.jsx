@@ -43,8 +43,6 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
     }
   }
 
-  console.log('projectsConf', projectsConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

@@ -11,7 +11,7 @@ export const refreshGetUpdates = (telegramConf, setTelegramConf, setIsLoading, s
         if (!newConf.default) {
           newConf.default = {}
         }
-        console.log(result)
+
         if (result.data.telegramChatLists) {
           newConf.default.telegramChatLists = result.data.telegramChatLists
         }

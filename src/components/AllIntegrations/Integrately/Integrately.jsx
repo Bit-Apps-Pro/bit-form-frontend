@@ -27,7 +27,7 @@ function Integrately({ formFields, setIntegration, integrations, allIntegURL }) 
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
       <TutorialLink
         titile={integrately.type}
-        youTubeLink={'https://www.youtube.com/watch?v=2tj8MrDzfAA'}
+        youTubeLink="https://www.youtube.com/watch?v=2tj8MrDzfAA"
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

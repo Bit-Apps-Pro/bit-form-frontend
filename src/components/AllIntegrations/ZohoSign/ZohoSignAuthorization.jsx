@@ -30,7 +30,7 @@ export default function ZohoSingAuthorization({ formID, signConf, setSignConf, s
     <>
       <TutorialLink
         title={signConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=3ClKsZ9CBYM'}
+        youTubeLink="https://www.youtube.com/watch?v=3ClKsZ9CBYM"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

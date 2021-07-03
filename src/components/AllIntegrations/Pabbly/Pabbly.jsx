@@ -27,7 +27,7 @@ function Pabbly({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
       <TutorialLink
         title={pabbly.type}
-        youTubeLink={'https://www.youtube.com/watch?v=SE_ncIRtv7Q'}
+        youTubeLink="https://www.youtube.com/watch?v=SE_ncIRtv7Q"
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

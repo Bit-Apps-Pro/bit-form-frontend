@@ -18,8 +18,6 @@ function EditZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) 
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
 
-  console.log('crmConf', crmConf)
-
   const saveConfig = () => {
     if (!checkMappedFields(crmConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })

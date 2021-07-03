@@ -36,7 +36,7 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
     <>
       <TutorialLink
         titile={mailPoetConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=5hDcm4vVwcg&t=16s'}
+        youTubeLink="https://www.youtube.com/watch?v=5hDcm4vVwcg&t=16s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

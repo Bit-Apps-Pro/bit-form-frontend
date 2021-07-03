@@ -30,7 +30,7 @@ export default function ZohoWorkDriveAuthorization({ formID, workDriveConf, setW
     <>
       <TutorialLink
         title={workDriveConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=27v1F-cZLgg&list=PL7c6CDwwm-AKkKEqcRQWfpsDkT1-sJ_rZ'}
+        youTubeLink="https://www.youtube.com/watch?v=27v1F-cZLgg&list=PL7c6CDwwm-AKkKEqcRQWfpsDkT1-sJ_rZ"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

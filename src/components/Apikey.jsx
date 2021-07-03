@@ -61,6 +61,7 @@ export default function Apikey() {
       error: __('Error Occured', 'bitform'),
       loading: __('Loading API key...'),
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

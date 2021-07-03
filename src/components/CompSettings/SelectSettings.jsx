@@ -160,7 +160,7 @@ export default function SelectSettings() {
 
   const closeImportModal = () => {
     delete importOpts.show
-    setImportOpts({...importOpts})
+    setImportOpts({ ...importOpts })
   }
 
   function setMin(e) {

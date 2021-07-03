@@ -54,7 +54,7 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
     <>
       <TutorialLink
         title={sendinBlueConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=DLWvKoPbbN8&t=5s'}
+        youTubeLink="https://www.youtube.com/watch?v=DLWvKoPbbN8&t=5s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

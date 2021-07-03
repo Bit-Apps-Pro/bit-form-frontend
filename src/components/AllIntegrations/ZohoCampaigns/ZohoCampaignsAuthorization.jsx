@@ -30,7 +30,7 @@ export default function ZohoCampaignsAuthorization({ formID, campaignsConf, setC
     <>
       <TutorialLink
         title={campaignsConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=uGzD8vLzdeQ&list=PL7c6CDwwm-AI2s42ooej4Gpn92v93-Qeg'}
+        youTubeLink="https://www.youtube.com/watch?v=uGzD8vLzdeQ&list=PL7c6CDwwm-AI2s42ooej4Gpn92v93-Qeg"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

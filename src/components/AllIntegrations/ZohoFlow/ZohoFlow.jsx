@@ -21,14 +21,14 @@ function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
     url: process.env.NODE_ENV === 'development' ? 'https://hooks..com/hooks/catch/8430229/o7gwcin/' : '',
     apiConsole: 'https://flow.zoho.com/#/workspace/default/flows/create',
   })
-  console.log('zohoFlow', zohoFlow)
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
       <TutorialLink
         title={zohoFlow.type}
-        youTubeLink={'https://www.youtube.com/watch?v=lbRiwN7J97Q'}
+        youTubeLink="https://www.youtube.com/watch?v=lbRiwN7J97Q"
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

@@ -44,8 +44,6 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }
 
-  console.log('sheetConf', sheetConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

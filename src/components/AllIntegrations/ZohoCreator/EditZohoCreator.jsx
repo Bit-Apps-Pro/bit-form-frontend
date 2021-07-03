@@ -16,8 +16,6 @@ function EditZohoCreator({ formFields, setIntegration, integrations, allIntegURL
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('creatorConf', creatorConf)
-
   const saveConfig = () => {
     if (!checkMappedFields(creatorConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })

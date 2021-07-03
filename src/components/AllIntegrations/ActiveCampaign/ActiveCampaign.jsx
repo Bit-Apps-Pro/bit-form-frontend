@@ -37,7 +37,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
       }
-      if (!activeCampaingConf?.listId ) {
+      if (!activeCampaingConf?.listId) {
         setSnackbar({ show: true, msg: 'Please select list to continue.' })
         return
       }

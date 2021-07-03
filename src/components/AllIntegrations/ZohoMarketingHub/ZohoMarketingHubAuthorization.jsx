@@ -30,7 +30,7 @@ export default function ZohoMarketingAuthorization({ formID, marketingHubConf, s
     <>
       <TutorialLink
         title={marketingHubConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=k_Es1XiSQrY'}
+        youTubeLink="https://www.youtube.com/watch?v=k_Es1XiSQrY"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

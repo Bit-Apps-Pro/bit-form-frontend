@@ -57,8 +57,6 @@ function ZohoDesk({ formFields, setIntegration, integrations, allIntegURL }) {
     }
   }
 
-  console.log('deskConf', deskConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

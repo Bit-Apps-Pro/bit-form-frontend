@@ -16,7 +16,7 @@ export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf
     setstep(2)
     refreshModules(formID, biginConf, setBiginConf, setisLoading, setSnackbar)
   }
-  console.log(biginConf)
+
   const handleInput = e => {
     const newConf = { ...biginConf }
     const rmError = { ...error }
@@ -30,7 +30,7 @@ export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf
     <>
       <TutorialLink
         title={biginConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=ixJXIzy8hOQ&list=PL7c6CDwwm-ALhsMoiWS1Bel1TtjIbtibB'}
+        youTubeLink="https://www.youtube.com/watch?v=ixJXIzy8hOQ&list=PL7c6CDwwm-ALhsMoiWS1Bel1TtjIbtibB"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

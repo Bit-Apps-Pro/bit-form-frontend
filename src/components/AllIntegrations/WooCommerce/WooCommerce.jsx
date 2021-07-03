@@ -34,8 +34,6 @@ export default function WooCommerce({ formFields, setIntegration, integrations, 
     }
   }
 
-  console.log('wcConf', wcConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

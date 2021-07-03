@@ -99,8 +99,8 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
       <div>
         <select name="post_type" onChange={(e) => getCustomFields(e.target.name, e.target.value)} value={data.post_type} className="btcd-paper-inp w-5 mt-1">
           <option disabled selected>Select Post Type</option>
-          {postTypes.map((postType, key) => (
-            <option key={key} value={postType?.name}>{postType?.label}</option>
+          {postTypes.map((postType, i) => (
+            <option key={`pos-t-${i * 9}`} value={postType?.name}>{postType?.label}</option>
           ))}
         </select>
         <button onClick={() => refreshPostTypes(postTypes, setPostTypes)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Post Types', 'bitform')}'` }} type="button">&#x21BB;</button>
@@ -135,8 +135,8 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
       <div>
         <select name="post_author" onChange={(e) => handleInput(e.target.name, e.target.value)} value={data.post_author} className="btcd-paper-inp w-5 mt-2">
           <option disabled selected>{__('Select Author', 'bitform')}</option>
-          {users.map((user, key) => (
-            <option key={key} value={user.ID}>{user.display_name}</option>
+          {users.map((user, i) => (
+            <option key={`pa-${i * 2}`} value={user.ID}>{user.display_name}</option>
           ))}
         </select>
       </div>

@@ -30,7 +30,7 @@ export default function ZohoProjectsAuthorization({ formID, projectsConf, setPro
     <>
       <TutorialLink
         title={projectsConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=CaxLekQ-xVY&list=PL7c6CDwwm-AJoFFks8-X5HhaM19_W9y3j'}
+        youTubeLink="https://www.youtube.com/watch?v=CaxLekQ-xVY&list=PL7c6CDwwm-AJoFFks8-X5HhaM19_W9y3j"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

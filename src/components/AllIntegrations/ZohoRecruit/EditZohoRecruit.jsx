@@ -17,8 +17,6 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
 
-  console.log('editRecruitConf', recruitConf)
-
   const saveConfig = () => {
     if (!checkMappedFields(recruitConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bitform') })

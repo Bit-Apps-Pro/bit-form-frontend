@@ -27,7 +27,7 @@ function Integromat({ formFields, setIntegration, integrations, allIntegURL }) {
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
       <TutorialLink
         titile={integromat.type}
-        youTubeLink={'https://www.youtube.com/watch?v=myB_pia6bBM'}
+        youTubeLink="https://www.youtube.com/watch?v=myB_pia6bBM"
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

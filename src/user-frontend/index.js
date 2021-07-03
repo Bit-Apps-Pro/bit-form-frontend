@@ -12,7 +12,6 @@ import Bitforms from './Bitforms'
 
 export default function BitformsRenderer(contentID) {
   const formID = contentID.split('_')[1]
-  console.log(contentID, formID)
   window.bitFormsFront = window[contentID]
   bitFormsFront.appID = `bitforms_${formID}`
   bitFormsFront.contentID = contentID

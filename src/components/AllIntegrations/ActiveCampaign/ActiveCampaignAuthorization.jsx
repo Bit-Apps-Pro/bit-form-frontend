@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
-import { refreshActiveCampaingHeader, refreshActiveCampaingList } from './ActiveCampaignCommonFunc'
+import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
 
 export default function ActiveCampaignAuthorization({ formID, activeCampaingConf, setActiveCampaingConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)

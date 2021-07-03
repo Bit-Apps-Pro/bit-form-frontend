@@ -45,8 +45,6 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
     setStep(2)
   }
 
-  console.log('creatorConf', creatorConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

@@ -9,7 +9,6 @@ import { refreshActiveCampaingHeader, refreshActiveCampaingList, refreshActiveCa
 import ActiveCampaignFieldMap from './ActiveCampaignFieldMap'
 
 export default function ActiveCampaignIntegLayout({ formID, formFields, activeCampaingConf, setActiveCampaingConf, isLoading, setIsLoading, setSnackbar }) {
-
   const setTags = (val) => {
     const newConf = { ...activeCampaingConf }
     if (val) {
@@ -32,13 +31,12 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
   }
 
   const activeCampaignLists = activeCampaingConf?.default?.activeCampaignLists
-  const listId = activeCampaingConf?.listId
 
   useEffect(() => {
     activeCampaignLists && refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCampaignLists])
 
-  console.log('layout', activeCampaingConf)
   return (
     <>
       <br />

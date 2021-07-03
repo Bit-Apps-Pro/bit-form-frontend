@@ -16,7 +16,7 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
     setstep(2)
     refreshOrganizations(formID, deskConf, setDeskConf, setisLoading, setSnackbar)
   }
-  console.log(deskConf)
+
   const handleInput = e => {
     const newConf = { ...deskConf }
     const rmError = { ...error }
@@ -30,7 +30,7 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
     <>
       <TutorialLink
         title={deskConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=zDKRmhTsYEM&list=PL7c6CDwwm-ALqMHEVpkEtMFJrcXAlLeR_'}
+        youTubeLink="https://www.youtube.com/watch?v=zDKRmhTsYEM&list=PL7c6CDwwm-ALqMHEVpkEtMFJrcXAlLeR_"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

@@ -19,12 +19,12 @@ function WebHooks({ formFields, setIntegration, integrations, allIntegURL }) {
     method: 'POST',
     url: process.env.NODE_ENV === 'development' ? 'https://hooks.zapier.com/hooks/catch/8430229/o7gwcin/' : '',
   })
-  console.log('webHooks', webHooks)
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
-      
+
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <WebHooksIntegration

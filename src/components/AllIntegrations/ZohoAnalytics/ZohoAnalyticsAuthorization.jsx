@@ -35,7 +35,7 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
     <>
       <TutorialLink
         title={analyticsConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=Eoxxu3U_3_s'}
+        youTubeLink="https://www.youtube.com/watch?v=Eoxxu3U_3_s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

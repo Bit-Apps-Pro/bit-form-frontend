@@ -32,7 +32,7 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
     <>
       <TutorialLink
         title={sheetConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=Vb4CE-hXbbo'}
+        youTubeLink="https://www.youtube.com/watch?v=Vb4CE-hXbbo"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

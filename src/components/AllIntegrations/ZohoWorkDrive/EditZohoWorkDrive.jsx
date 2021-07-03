@@ -17,8 +17,6 @@ function EditZohoRecruit({ formFields, setIntegration, integrations, allIntegURL
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('workDriveConf', workDriveConf)
-
   const saveConfig = () => {
     saveIntegConfig(integrations, setIntegration, allIntegURL, workDriveConf, history, id, 1)
   }

@@ -14,8 +14,6 @@ function EditZapier({ formFields, setIntegration, integrations, allIntegURL }) {
   const [zapier, setZapier] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('user zapier', zapier)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -29,7 +27,6 @@ function EditZapier({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
       </div>
-      {console.log('zapier', zapier)}
 
       <WebHooksStepTwo
         edit

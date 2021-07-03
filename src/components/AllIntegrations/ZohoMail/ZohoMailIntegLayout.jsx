@@ -8,7 +8,6 @@ import { __ } from '../../../Utils/i18nwrap'
 import ZohoMailActions from './ZohoMailActions'
 
 export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
-  const [mailBody, setMailBody] = useState('')
   const bits = useRecoilValue($bits)
 
   const mailOptions = () => {
@@ -100,8 +99,6 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
   }
 
   const handleMailBody = val => {
-    setMailBody(val)
-
     const tmp = deepCopy(mailConf)
     tmp.body = val
     setMailConf({ ...tmp })

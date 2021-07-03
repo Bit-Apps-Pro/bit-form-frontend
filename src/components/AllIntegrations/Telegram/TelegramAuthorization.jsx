@@ -14,7 +14,7 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
 
   const handleAuthorize = () => {
     const newConf = { ...telegramConf }
-    console.log('telegramConf', telegramConf)
+
     if (!newConf.name || !newConf.bot_api_key) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bitform') : '',
@@ -45,7 +45,6 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
     newConf[e.target.name] = e.target.value
     setError(rmError)
     setTelegramConf(newConf)
-    console.log('set name', telegramConf)
   }
 
   const nextPage = () => {
@@ -60,7 +59,7 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
     <>
       <TutorialLink
         title={telegramConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=M0u1joqrRTA&t=2s'}
+        youTubeLink="https://www.youtube.com/watch?v=M0u1joqrRTA&t=2s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

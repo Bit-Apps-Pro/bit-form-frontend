@@ -34,7 +34,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
     <>
       <TutorialLink
         title={wcConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=Jxn1110dzNc&t=261s'}
+        youTubeLink="https://www.youtube.com/watch?v=Jxn1110dzNc&t=261s"
       />
       <div
         className="btcd-stp-page"

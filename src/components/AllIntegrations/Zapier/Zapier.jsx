@@ -21,14 +21,14 @@ function Zapier({ formFields, setIntegration, integrations, allIntegURL }) {
     url: process.env.NODE_ENV === 'development' ? 'https://hooks.zapier.com/hooks/catch/8430229/o7gwcin/' : '',
     apiConsole: 'https://zapier.com/app/dashboard',
   })
-  console.log('zapier', zapier)
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
-      <TutorialLink 
+      <TutorialLink
         titile={zapier.type}
-        youTubeLink={'https://www.youtube.com/watch?v=uORXmZANU3M'}
+        youTubeLink="https://www.youtube.com/watch?v=uORXmZANU3M"
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

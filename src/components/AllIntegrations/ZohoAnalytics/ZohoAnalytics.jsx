@@ -38,8 +38,6 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
     }
   }
 
-  console.log('analyticsConf', analyticsConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

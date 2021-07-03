@@ -30,7 +30,7 @@ export default function ZohoSheetAuthorization({ formID, sheetConf, setSheetConf
     <>
       <TutorialLink
         title={sheetConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=uIdOUW-7SYA&list=PL7c6CDwwm-AKN4gEgctrcyht7zOwCyWpz'}
+        youTubeLink="https://www.youtube.com/watch?v=uIdOUW-7SYA&list=PL7c6CDwwm-AKN4gEgctrcyht7zOwCyWpz"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

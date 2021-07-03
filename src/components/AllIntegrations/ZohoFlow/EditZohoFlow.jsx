@@ -14,8 +14,6 @@ function EditZohoFlow({ formFields, setIntegration, integrations, allIntegURL })
   const [zohoFlow, setZohoFlow] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
 
-  console.log('user zohoFlow', zohoFlow)
-
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

@@ -1,6 +1,3 @@
-import merge from 'deepmerge-alt'
-import { deepCopy } from './Helpers'
-
 export const formsReducer = (allForms, action) => {
   const { type, data } = action
   switch (type) {

@@ -42,7 +42,7 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
     <>
       <TutorialLink
         title={fluentCrmConf.type}
-        youTubeLink={'https://www.youtube.com/watch?v=kJ2pCH2FQwU&t=95s'}
+        youTubeLink="https://www.youtube.com/watch?v=kJ2pCH2FQwU&t=95s"
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
