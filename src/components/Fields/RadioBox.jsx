@@ -71,11 +71,11 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
               type="radio"
               ref={radioRef.current[i]}
               name={n}
-              value={itm.lbl}
+              value={itm.val || itm.lbl}
               {...itm.check && { checked: true }}
               {...attr.valid.req && { required: true }}
               {...'name' in attr && { name: attr.name }}
-              {...{ checked: value === itm.lbl }}
+              {...{ checked: value === (itm.val || itm.lbl) }}
               {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
               onChange={onChangeHandler}
               onBlur={handleBlur}
