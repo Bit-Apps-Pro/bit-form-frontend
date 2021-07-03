@@ -227,6 +227,7 @@ export const makeFieldsArrByLabel = (fields, labels) => {
     const fldByLabel = labels.find(lbl => lbl.key === fldKey)
     return {
       ...fld,
+      key: fldKey,
       type: fld.typ,
       name: fldByLabel?.adminLbl
         || fldByLabel?.name

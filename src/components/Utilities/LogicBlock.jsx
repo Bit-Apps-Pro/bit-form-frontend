@@ -16,19 +16,19 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
   let type = ''
   let fldType = ''
   let fieldKey = ''
-  if (formFields !== null) {
-    formFields.map(itm => {
-      if (itm.key === fieldVal) {
-        if (itm.type.match(/^(check|radio)$/)) {
-          type = 'text'
-        } else {
-          type = itm.type
-        }
-        fldType = itm.type
-        fieldKey = itm.key
+  formFields?.find?.(itm => {
+    if (itm.key === fieldVal) {
+      if (itm.type.match(/^(check|radio)$/)) {
+        type = 'text'
+      } else {
+        type = itm.type
       }
-    })
-  }
+      fldType = itm.type
+      fieldKey = itm.key
+
+      return true
+    }
+  })
 
   const getOptions = () => {
     let options = []
