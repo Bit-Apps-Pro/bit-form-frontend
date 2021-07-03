@@ -5,6 +5,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize, refreshApplications } from './ZohoCreatorCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreatorConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -35,8 +36,8 @@ export default function ZohoCreatorAuthorization({ formID, creatorConf, setCreat
   return (
     <>
       <TutorialLink
-        title={creatorConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=muB8tE1-bVg&list=PL7c6CDwwm-AIQLjwPBmjmDlcU1dbBgkwz"
+        title={tutorialLinks.zohoCreator.title}
+        youTubeLink={tutorialLinks.zohoCreator.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

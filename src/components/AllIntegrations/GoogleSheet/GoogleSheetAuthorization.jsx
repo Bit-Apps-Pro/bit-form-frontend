@@ -3,10 +3,11 @@ import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
-import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
 
 export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -31,8 +32,8 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
   return (
     <>
       <TutorialLink
-        title={sheetConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=Vb4CE-hXbbo"
+        title={tutorialLinks.googelSheets.title}
+        youTubeLink={tutorialLinks.googelSheets.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

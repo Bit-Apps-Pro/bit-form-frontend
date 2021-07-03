@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { refreshLists } from './SendinBlueCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { refreshLists } from './SendinBlueCommonFunc'
 
 export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSendinBlueConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -53,8 +54,8 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
   return (
     <>
       <TutorialLink
-        title={sendinBlueConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=DLWvKoPbbN8&t=5s"
+        title={tutorialLinks.sendinblue.title}
+        youTubeLink={tutorialLinks.sendinblue.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

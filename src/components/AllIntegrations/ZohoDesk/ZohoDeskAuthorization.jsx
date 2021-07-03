@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize, refreshOrganizations } from './ZohoDeskCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
+import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { handleAuthorize, refreshOrganizations } from './ZohoDeskCommonFunc'
 
 export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -29,8 +30,8 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
   return (
     <>
       <TutorialLink
-        title={deskConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=zDKRmhTsYEM&list=PL7c6CDwwm-ALqMHEVpkEtMFJrcXAlLeR_"
+        title={tutorialLinks.zohoDesk.title}
+        youTubeLink={tutorialLinks.zohoDesk.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
