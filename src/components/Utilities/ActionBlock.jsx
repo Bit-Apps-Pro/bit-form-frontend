@@ -100,7 +100,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
                 className="msl-wrp-options btcd-paper-drpdwn w-10"
                 defaultValue={action.val}
                 onChange={changeAtnVal}
-                options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))}
+                options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))}
                 customValue={fields?.[fieldKey]?.customOpt}
                 // eslint-disable-next-line no-nested-ternary
                 singleSelect={type === 'select' ? !fields?.[fieldKey]?.mul : type === 'check' ? false : type === 'radio' && true}

@@ -36,7 +36,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
     if (fldType === 'select') {
       options = fields?.[fieldKey]?.opt
     } else {
-      options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: opt.lbl }))
+      options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
 
     return options
