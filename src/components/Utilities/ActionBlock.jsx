@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
+import produce from 'immer'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Button from './Button'
 import MtInput from './MtInput'
 import MtSelect from './MtSelect'
@@ -25,34 +25,26 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
   }
 
   const changeAction = val => {
-    setworkFlows(prv => {
-      prv[lgcGrpInd].actions[actionInd].action = val
-      return [...prv]
-    })
+    setworkFlows(prv => produce(prv, draft => { draft[lgcGrpInd].actions[actionInd].action = val }))
   }
 
   const changeAtnVal = val => {
-    setworkFlows(prv => {
-      prv[lgcGrpInd].actions[actionInd].val = val
-      return [...prv]
-    })
+    setworkFlows(prv => produce(prv, draft => { draft[lgcGrpInd].actions[actionInd].val = val }))
   }
 
   const changeAtnField = val => {
-    setworkFlows(prv => {
-      prv[lgcGrpInd].actions[actionInd].field = val
-      prv[lgcGrpInd].actions[actionInd].val = ''
-      return [...prv]
-    })
+    setworkFlows(prv => produce(prv, draft => {
+      draft[lgcGrpInd].actions[actionInd].field = val
+      draft[lgcGrpInd].actions[actionInd].val = ''
+    }))
   }
 
   const delAction = () => {
-    setworkFlows(prv => {
-      if (prv[lgcGrpInd].actions.length > 1) {
-        prv[lgcGrpInd].actions.splice(actionInd, 1)
+    setworkFlows(prv => produce(prv, draft => {
+      if (draft[lgcGrpInd].actions.length > 1) {
+        draft[lgcGrpInd].actions.splice(actionInd, 1)
       }
-      return [...prv]
-    })
+    }))
   }
 
   const isNotFileUpField = fields[action.field]?.typ !== 'file-up'
@@ -86,7 +78,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
         className="w-4"
       >
         <option value="">{__('Select One', 'bitform')}</option>
-        {(isNotFileUpField && isNotValidateAction) && <option value="value">{__('Value', 'bitform')}</option>}
+        {(isNotFileUpField && isNotButtonField && isNotValidateAction) && <option value="value">{__('Value', 'bitform')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable', 'bitform')}</option>}
         {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="readonly">{__('Readonly', 'bitform')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable', 'bitform')}</option>}

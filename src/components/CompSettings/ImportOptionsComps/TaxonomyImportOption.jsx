@@ -146,7 +146,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
                 <div className="flx mt-3 w-10">
                   <div className="w-5 mr-2">
                     <b>Label</b>
-                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.label || ''}>
+                    <select name="lbl" id="" className="btcd-paper-inp mt-1" onChange={handleImportInput} value={importOpts?.fieldObject?.lebel || ''}>
                       <option disabled>Select Label</option>
                       {importOpts.headers.map(op => (<option key={op} value={op}>{op}</option>))}
                     </select>
