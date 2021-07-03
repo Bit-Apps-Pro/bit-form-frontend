@@ -47,7 +47,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
       <span className="btcd-logic-chip mr-2">IF</span>
       <MtSelect
         label="Form Fields"
-        value={fieldVal !== undefined && fieldVal}
+        value={fieldVal || ''}
         style={{ width: 720 }}
         onChange={e => changeFormField(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
       >
@@ -61,7 +61,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
 
       <MtSelect
         label="Logic"
-        value={logicValue}
+        value={logicValue || ''}
         onChange={e => changeLogic(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-5"
       >
@@ -91,7 +91,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
             <>
               <MultiSelect
                 className="msl-wrp-options btcd-paper-drpdwn w-10"
-                defaultValue={value}
+                defaultValue={value || ''}
                 onChange={e => changeValue(e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
                 options={getOptions()}
                 customValue
@@ -104,7 +104,7 @@ function LogicBlock({ fieldVal, delLogic, lgcGrpInd, lgcInd, subLgcInd, subSubLg
               type={type}
               disabled={logicValue === 'null' || logicValue === 'not_null'}
               onChange={e => changeValue(e.target.value, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd)}
-              value={value}
+              value={value || ''}
             />
           )
       }

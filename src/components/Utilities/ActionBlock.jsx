@@ -58,7 +58,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
     <div className="flx pos-rel btcd-logic-blk">
       <MtSelect
         label="Form Fields"
-        value={action.field}
+        value={action.field || ''}
         onChange={e => changeAtnField(e.target.value)}
         style={{ width: 720 }}
       >
@@ -73,7 +73,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
       <MtSelect
         label="Action"
         onChange={e => changeAction(e.target.value)}
-        value={action.action}
+        value={action.action || ''}
         style={{ width: 400 }}
         className="w-4"
       >
@@ -98,7 +98,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
             ? (
               <MultiSelect
                 className="msl-wrp-options btcd-paper-drpdwn w-10"
-                defaultValue={action.val}
+                defaultValue={action.val || ''}
                 onChange={changeAtnVal}
                 options={type === 'select' ? fields?.[fieldKey]?.opt : (type === 'check' || type === 'radio') && fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))}
                 customValue={fields?.[fieldKey]?.customOpt}
@@ -107,7 +107,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
               />
             )
             : (
-              <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val} />
+              <MtInput onChange={e => changeAtnVal(e.target.value)} label="Value" value={action.val || ''} />
             )}
         </>
       )}
