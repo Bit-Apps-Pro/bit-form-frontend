@@ -87,9 +87,10 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <TutorialLink style={{ paddingLeft: '0' }}
+      <TutorialLink
+        style={{ paddingLeft: '0' }}
         title={data.type}
-        youTubeLink={'https://www.youtube.com/watch?v=SE_ncIRtv7Q'}
+        youTubeLink="https://www.youtube.com/watch?v=81Uu2Rbmm0Y"
       />
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />
