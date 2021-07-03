@@ -6,6 +6,7 @@ import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { createDraft, finishDraft } from 'immer'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -209,16 +210,16 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const margeNewData = () => {
     setNewData(null)
     const checkPayments = checkPaymentFields(newData.fieldData)
+    const draftField = createDraft(newData)
     if (checkPayments && isType('array', checkPayments)) {
       if (newData.fieldData.typ === 'razorpay') {
-        newData.fieldData.options.payIntegID = checkPayments[0].id
+        draftField.fieldData.options.payIntegID = checkPayments[0].id
       } else {
-        newData.fieldData.payIntegID = checkPayments[0].id
+        draftField.fieldData.payIntegID = checkPayments[0].id
       }
     } else if (!checkPayments) return
     if (newData.fieldData.typ === 'recaptcha' && !checkCaptchaField()) return
     if (newData.fieldData.lbl === 'Select Country' && !checkCountryField()) return
-    console.log({ newData })
     const { w, h, minH, maxH, minW } = newData.fieldSize
     const newBlk = { i: `bf${formID}-${uniqueFieldId}`, x: 0, y: Infinity, w, h, minH, maxH, minW }
     console.log({ newBlk })
@@ -238,8 +239,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const tmpField = deepCopy(newData.fieldData)
-    setFields({ ...fields, [`bf${formID}-${uniqueFieldId}`]: tmpField })
+    const updatedField = finishDraft(draftField)
+    setFields({ ...fields, [`bf${formID}-${uniqueFieldId}`]: updatedField.fieldData })
     sessionStorage.setItem('btcd-lc', '-')
   }
   function extendLayout(lays) {
@@ -370,11 +371,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const onDrop = (lay, elmPrms) => {
     const checkPayments = checkPaymentFields(draggingField.fieldData)
+    const draftField = createDraft(draggingField)
     if (checkPayments && isType('array', checkPayments)) {
       if (draggingField.fieldData.typ === 'razorpay') {
-        draggingField.fieldData.options.payIntegID = checkPayments[0].id
+        draftField.fieldData.options.payIntegID = checkPayments[0].id
       } else {
-        draggingField.fieldData.payIntegID = checkPayments[0].id
+        draftField.fieldData.payIntegID = checkPayments[0].id
       }
     } else if (!checkPayments) return
 
@@ -402,8 +404,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const tmpField = deepCopy(draggingField.fieldData)
-    setFields({ ...fields, [newBlk]: tmpField })
+    const updatedField = finishDraft(draftField)
+    setFields({ ...fields, [newBlk]: updatedField.fieldData })
     sessionStorage.setItem('btcd-lc', '-')
   }
 
