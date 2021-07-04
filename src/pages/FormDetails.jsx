@@ -17,11 +17,9 @@ import LoaderSm from '../components/Loaders/LoaderSm'
 import Modal from '../components/Utilities/Modal'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import CloseIcn from '../Icons/CloseIcn'
-import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts, $mailTemplates, $additionalSettings, $saveForm, $workflows, $integrations, $confirmations, $formName } from '../GlobalStates'
+import { $fieldLabels, $fields, $forms, $newFormId, $reports, $layouts, $mailTemplates, $additionalSettings, $workflows, $integrations, $confirmations, $formName } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import { select } from '../Utils/globalHelpers'
-// import Ok from './Ok'
-// import FormBuilderHOC from './FormBuilderHOC'
 // import useSWR from 'swr'
 
 const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
@@ -48,7 +46,6 @@ function FormDetails({ history }) {
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
-  const [savef, setSaveForm] = useRecoilState($saveForm)
   const [workFlows, setworkFlows] = useRecoilState($workflows)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [integrations, setIntegration] = useRecoilState($integrations)

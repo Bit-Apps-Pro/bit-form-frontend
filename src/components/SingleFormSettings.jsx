@@ -4,7 +4,7 @@ import DatePicker from 'react-date-picker'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $additionalSettings, $bits, $fields, $saveForm } from '../GlobalStates'
+import { $additionalSettings, $bits, $fields } from '../GlobalStates'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -20,7 +20,6 @@ import TrashIcn from '../Icons/TrashIcn'
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
   const fields = useRecoilValue($fields)
-  const saveForm = useRecoilValue($saveForm)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
