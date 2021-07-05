@@ -44,7 +44,7 @@ function EmailTemplateEdit({ saveForm }) {
 
   const save = () => {
     history.push(`/form/settings/${formType}/${formID}/email-templates`)
-    saveForm({ type: 'email-template', updatedData: mailTemp })
+    saveForm('email-template', mailTemp)
   }
 
   return (
@@ -55,7 +55,7 @@ function EmailTemplateEdit({ saveForm }) {
           {__('Back', 'bitform')}
         </NavLink>
 
-        <button onClick={save} className="btn blue f-right" type="button">{__('Update Template', 'bitform')}</button>
+        <button id="secondary-update-btn" onClick={save} className="btn blue f-right" type="button">{__('Update Template', 'bitform')}</button>
 
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>
