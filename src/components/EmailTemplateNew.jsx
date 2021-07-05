@@ -34,13 +34,12 @@ function EmailTemplateNew({ saveForm }) {
     newMailTem.push(tem)
     setMailTem(newMailTem)
     history.push(`/form/settings/${formType}/${formID}/email-templates`)
-    saveForm({ type: 'email-template', updatedData: newMailTem })
+    saveForm('email-template', newMailTem)
   }
 
-  const addFieldToSubject = e => {
-    tem.sub += e.target.value
-    setTem({ name: 'sub', value: tem.sub })
-    e.target.value = ''
+  const addFieldToSubject = ({ target: { value } }) => {
+    setTem(prv => ({ ...prv, sub: prv.sub + value }))
+    setTimeout(() => { value = '' }, 100)
   }
 
   return (
@@ -58,7 +57,7 @@ function EmailTemplateNew({ saveForm }) {
         {__('Back', 'bitfrom')}
       </NavLink>
 
-      <button onClick={save} className="btn blue f-right" type="button">{__('Save Template', 'bitform')}</button>
+      <button id="secondary-update-btn" onClick={save} className="btn blue f-right" type="button">{__('Save Template', 'bitform')}</button>
 
       <div className="mt-3 flx">
         <b style={{ width: 103 }}>

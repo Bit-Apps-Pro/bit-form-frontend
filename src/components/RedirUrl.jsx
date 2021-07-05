@@ -20,7 +20,7 @@ function RedirUrl({ removeIntegration }) {
   useEffect(() => {
     bitsFetch(null, 'bitforms_get_all_wp_pages')
       .then(res => {
-        if (res !== undefined && res.success && res.data !== undefined) {
+        if (res?.success && res?.data) {
           setredirectUrls(res.data)
         }
       })
