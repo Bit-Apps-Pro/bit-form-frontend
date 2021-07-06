@@ -13,7 +13,7 @@ export default function EmailTemplate({ formID, saveForm }) {
       <Route exact path={path}>
         <AllEmailTemplates formID={formID} />
       </Route>
-      <Route path={`${path}/:new`}>
+      <Route path={`${path}/new`}>
         <Suspense fallback={<FSettingsLoader />}>
           <EmailTemplateNew saveForm={saveForm} />
         </Suspense>
