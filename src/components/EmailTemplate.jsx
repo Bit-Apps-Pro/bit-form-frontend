@@ -11,7 +11,7 @@ export default function EmailTemplate({ formID, saveForm }) {
   return (
     <Switch>
       <Route exact path={path}>
-        <AllEmailTemplates formID={formID} />
+        <AllEmailTemplates formID={formID} saveForm={saveForm} />
       </Route>
       <Route path={`${path}/new`}>
         <Suspense fallback={<FSettingsLoader />}>
