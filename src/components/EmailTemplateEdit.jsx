@@ -19,13 +19,13 @@ function EmailTemplateEdit({ saveForm }) {
   const handleTitle = e => {
     const mailTem = deepCopy(mailTemp)
     mailTem[id].title = e.target.value
-    setMailTem([...mailTem])
+    setMailTem(mailTem)
   }
 
   const handleSubject = e => {
     const mailTem = deepCopy(mailTemp)
     mailTem[id].sub = e.target.value
-    setMailTem([...mailTem])
+    setMailTem(mailTem)
   }
 
   const handleBody = val => {
@@ -39,7 +39,7 @@ function EmailTemplateEdit({ saveForm }) {
   const addFieldToSubject = e => {
     const mailTem = deepCopy(mailTemp)
     mailTem[id].sub += e.target.value
-    setMailTem([...mailTem])
+    setMailTem(mailTem)
   }
 
   const save = () => {
@@ -60,7 +60,6 @@ function EmailTemplateEdit({ saveForm }) {
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>
             {__('Template Name:', 'bitform')}
-            {' '}
           </b>
           <input onChange={handleTitle} type="text" className="btcd-paper-inp w-9" placeholder="Name" value={mailTemp[id].title} />
         </div>
