@@ -78,7 +78,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
           if (isInitial) {
             dynFld[1][0](value)
           }
-          if (dynFld[1][2]) {
+          if (dynFld[1][1]) {
             dynamicFlds[dynFld[0]][2] = value
           } else {
             dynamicFlds[dynFld[0]][1] = value

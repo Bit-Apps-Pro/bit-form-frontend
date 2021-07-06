@@ -40,7 +40,7 @@ export default function AllEmailTemplates({ formID, saveForm }) {
       toast.promise(deletePromise, {
         loading: 'Deleting',
         success: 'Successfully Deleted',
-        error: 'Error Occured',
+        error: 'Error Occurred',
       })
     } else {
       const mailTemp = deepCopy(mailTem)
@@ -63,7 +63,7 @@ export default function AllEmailTemplates({ formID, saveForm }) {
   }
 
   const temDupConf = i => {
-    confMdl.btnTxt = __('Dulicate', 'bitform')
+    confMdl.btnTxt = __('Duplicate', 'bitform')
     confMdl.body = __('Are you sure to duplicate this template?', 'bitform')
     confMdl.btnClass = 'blue'
     confMdl.action = () => { duplicateTem(i); closeConfMdl() }
