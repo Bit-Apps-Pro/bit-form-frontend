@@ -299,6 +299,7 @@ export default function SelectSettings() {
         autoHeight
         show={importOpts.show}
         setModal={closeImportModal}
+        className="o-v"
         title={__('Import Options', 'bitform')}
       >
         <div className="pos-rel">
