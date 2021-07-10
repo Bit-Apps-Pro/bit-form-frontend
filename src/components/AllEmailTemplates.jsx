@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, useRouteMatch, Link } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import toast from 'react-hot-toast'
+import produce from 'immer'
 import { __ } from '../Utils/i18nwrap'
 import Table from './Utilities/Table'
 import Button from './Utilities/Button'
@@ -13,15 +14,17 @@ import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import CopyIcn from '../Icons/CopyIcn'
 
-export default function AllEmailTemplates({ formID }) {
+export default function AllEmailTemplates({ formID, saveForm }) {
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
 
   const { url } = useRouteMatch()
 
   const duplicateTem = i => {
-    mailTem.splice(i + 1, 0, { title: mailTem[i].title, sub: mailTem[i].sub, body: mailTem[i].body })
-    setMailTem([...mailTem])
+    const newMailTemObj = produce(mailTem, draft => {
+      draft.splice(i + 1, 0, { title: draft[i].title, sub: draft[i].sub, body: draft[i].body })
+    })
+    saveForm('email-template', newMailTemObj)
   }
 
   const delTem = (i, templateData) => {
@@ -37,7 +40,7 @@ export default function AllEmailTemplates({ formID }) {
       toast.promise(deletePromise, {
         loading: 'Deleting',
         success: 'Successfully Deleted',
-        error: 'Error Occured',
+        error: 'Error Occurred',
       })
     } else {
       const mailTemp = deepCopy(mailTem)
@@ -60,7 +63,7 @@ export default function AllEmailTemplates({ formID }) {
   }
 
   const temDupConf = i => {
-    confMdl.btnTxt = __('Dulicate', 'bitform')
+    confMdl.btnTxt = __('Duplicate', 'bitform')
     confMdl.body = __('Are you sure to duplicate this template?', 'bitform')
     confMdl.btnClass = 'blue'
     confMdl.action = () => { duplicateTem(i); closeConfMdl() }
