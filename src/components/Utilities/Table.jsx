@@ -8,7 +8,6 @@ import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePaginati
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
-import { reportsReducer } from '../../Utils/Reducers'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
 import TableCheckBox from './TableCheckBox'
@@ -27,7 +26,7 @@ const IndeterminateCheckbox = forwardRef(
   },
 )
 
-function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols, formID, report }) {
+function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMenu, data, cols, formID }) {
   const [delay, setDelay] = useState(null)
   const reports = useRecoilValue($reports)
   const handleSearch = e => {
@@ -99,8 +98,7 @@ function Table(props) {
     allColumns, // col hide
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
-    setColumnOrder,
-    setHiddenColumns } = useTable({
+    setColumnOrder } = useTable({
       debug: true,
       fetchData,
       columns,
@@ -188,7 +186,7 @@ function Table(props) {
             setColumnOrder(reportData.details.order)
           } else {
             setColumnOrder(details.order)
-            updateReportData({ details, type: 'table' })
+            updateReportData({...reportData, details })
           }
         } else if (!stateSavable && typeof reportData.details === 'object' && reportData.details && 'order' in reportData.details) {
           setColumnOrder(reportData.details.order)
