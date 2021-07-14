@@ -191,7 +191,7 @@ module.exports = (env, argv) => {
       //   },
       // }),
       // ...(!production && new webpack.HotModuleReplacementPlugin()),
-    ...(!production && [new ReactRefreshWebpackPlugin({
+    ...(production ? [] : [new ReactRefreshWebpackPlugin({
       overlay: {
         sockIntegration: 'wds',
         sockHost: 'localhost',
@@ -233,7 +233,7 @@ module.exports = (env, argv) => {
               ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
-              [!production && 'react-refresh/babel'].filter(Boolean),
+              ...(production? [] : ['react-refresh/babel']),
             ],
           },
         },
