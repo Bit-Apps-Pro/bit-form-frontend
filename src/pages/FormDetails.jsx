@@ -218,8 +218,9 @@ function FormDetails({ history }) {
             setMailTem(responseData.formSettings.mailTem)
             // if ('formSettings' in responseData && 'submitBtn' in formSettings) setSubBtn(responseData.formSettings.submitBtn)
             setFieldLabels(responseData.Labels)
-            if ('reports' in responseData) setReports(reprts => reportsReducer(reprts, { type: 'set', reports: responseData.reports }))
-            else setReports(reprts => reportsReducer(reprts, { type: 'set', reports: [] }))
+            setReports(responseData.reports || [])
+            /* if ('reports' in responseData) setReports(reprts => reportsReducer(reprts, { type: 'set', reports: responseData.reports }))
+            else setReports(reprts => reportsReducer(reprts, { type: 'set', reports: [] })) */
             setisLoading(false)
           } else {
             if (!res.success && res.data === 'Token expired') {

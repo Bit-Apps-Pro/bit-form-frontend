@@ -19,7 +19,7 @@ function FormSettings({ setProModal, saveForm }) {
   useEffect(() => {
     const link = document.createElement('link')
     link.rel = 'prefetch'
-    link.href = '/wp-content/plugins/BitForm/assets/js/src_components_SingleFormSettings_jsx.js'
+    link.href = '/wp-content/plugins/bit-form/assets/js/src_components_SingleFormSettings_jsx.js'
     link.as = 'script'
     link.type = 'script'
     document.head.appendChild(link)

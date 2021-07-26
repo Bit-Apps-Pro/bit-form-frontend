@@ -61,12 +61,12 @@ function Integrations() {
   const { isPro } = bits
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
-    { type: 'Web Hooks', logo: webhooks },
-    { type: 'Zapier', logo: zapier },
-    { type: 'Integromat', logo: integromat },
-    { type: 'Integrately', logo: integrately },
-    { type: 'Pabbly', logo: pabbly },
-    { type: 'Zoho Flow', logo: zohoflow },
+    { type: 'Web Hooks', logo: webhooks, pro: !isPro },
+    { type: 'Zapier', logo: zapier, pro: !isPro  },
+    { type: 'Integromat', logo: integromat, pro: !isPro   },
+    { type: 'Integrately', logo: integrately, pro: !isPro },
+    { type: 'Pabbly', logo: pabbly, pro: !isPro },
+    { type: 'Zoho Flow', logo: zohoflow, pro: !isPro },
     { type: 'Google Sheet', logo: googleSheet, pro: !isPro },
     { type: 'Mail Chimp', logo: mailChimp, pro: !isPro },
     { type: 'ACF', logo: acf, pro: !isPro },

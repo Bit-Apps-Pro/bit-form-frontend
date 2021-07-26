@@ -9,6 +9,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 const svgToMiniDataURI = require('mini-svg-data-uri')
 const RouteManifest = require('webpack-route-manifest')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const autoprefixer = require('autoprefixer');
@@ -41,66 +42,14 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd',
       // publicPath: '/',
     },
-    /* devServer: {
-      open: true,
-      writeToDisk: true,
-      // path: path.resolve(__dirname, '../assets/'),
-      // inline: true,
-      // host: 'bitcode.io',
-      /*  overlay: {
-         warnings: true,
-         errors: true,
-       }, */
-    // contentBase: path.resolve(__dirname, '../assets/js'),
-    // path: path.resolve(__dirname, '../assets/js/'),
-    // publicPath: path.resolve(__dirname, '../assets/'),
-    // public: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
-
-    /*
-    proxy: [
-      {
-        path: path.resolve(__dirname, '../assets/'),
-        // path: 'http://bitcode.io/wp-admin/admin.php?page=bitform#',
-        target: 'http://bitcode.io/',
-      },
-    ],
-  }, */
+    target: 'web',
     devServer: {
-      // open: true,
-      // hotOnly: true,
-      // hot: true,
-      hotOnly: true,
+      hot: true,
       liveReload: false,
-      publicPath: '/',
       port: 3000,
-      proxy: {
-        '/': {
-          target: 'http://bitcode.dev', // This is the url of your wordpress website.
-          changeOrigin: true,
-        },
-      },
-      // host: 'blank-site-php.io',
-      // port: 80,
-      // writeToDisk: true,
-      // contentBase: path.resolve(__dirname, '../assets/'),
-      // contentBasePublicPath: '/js',
-      // publicPath: 'http://blank-site-php.io/',
-      // allowedHosts: ["blank-site-php.io"],
+      writeToDisk: true,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      // disableHostCheck: true,
-      /* proxy: {
-        '/': {
-          target: 'http://blank-site-php.io:80',
-          // publicPath: '/wp-content/plugins/BitForm/assets/js',
-          secure: false,
-          changeOrigin: true,
-          autoRewrite: true,
-          headers: {
-            'X-ProxiedBy-Webpack': true,
-          },
-        },
-      }, */
-      // publicPath: path.resolve(__dirname, '../assets/js/'),
+      disableHostCheck: true,
     },
     /*  performance: {
        hints: 'error',
@@ -241,6 +190,14 @@ module.exports = (env, argv) => {
       //     return out
       //   },
       // }),
+      // ...(!production && new webpack.HotModuleReplacementPlugin()),
+    ...(production ? [] : [new ReactRefreshWebpackPlugin({
+      overlay: {
+        sockIntegration: 'wds',
+        sockHost: 'localhost',
+        sockPort: 3000,
+      },
+    })]),
     ],
 
     resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
@@ -276,6 +233,7 @@ module.exports = (env, argv) => {
               ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
+              ...(production? [] : ['react-refresh/babel']),
             ],
           },
         },

@@ -10,7 +10,7 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $bits, $fieldLabels, $forms, $reports } from '../GlobalStates'
+import { $bits, $fieldLabels, $forms } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -23,7 +23,6 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     'background:skybluepadding:3pxborder-radius:5px',
   )
   const allLabels = useRecoilValue($fieldLabels)
-  const reports = useRecoilValue($reports)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(false)
   const { formID } = useParams()
@@ -41,14 +40,15 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const bits = useRecoilValue($bits)
 
   useEffect(() => {
-    if (reports.length > 0) {
+/*     if (currentReport) {
       const allLabelObj = {}
-
+      
       allLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })
       const labels = []
-      reports?.[0]?.details?.order?.forEach((field) => {
+      console.log('currentReport', currentReport, allLabels, );
+      currentReport.details?.order?.forEach((field) => {
         if (
           field
           && field !== 'sl'
@@ -62,10 +62,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       // tableHeaderHandler(labels.length ? labels : allLabels)
       tableHeaderHandler(allLabels)
     } else if (allLabels.length) {
-      tableHeaderHandler(allLabels)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    } */
+    tableHeaderHandler(allLabels)
   }, [allLabels])
 
   const closeConfMdl = useCallback(() => {
