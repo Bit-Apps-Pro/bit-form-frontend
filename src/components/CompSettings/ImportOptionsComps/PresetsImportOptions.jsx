@@ -8,7 +8,7 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const [loading, setLoading] = useState(false)
-  const presetVersion = 1.0
+  const presetVersion = 1.1
   const presetURL = 'https://static.bitapps.pro/bitform/options-presets.json'
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
         .then(res => {
           if (res.data) {
             const { data } = res
-            tmpOpts.data = data
-            tmpOpts.presetNames = Object.keys(data)
+            tmpOpts.data = formatData(data)
+            tmpOpts.presetOpts = formatOpts(data)
             localStorage.setItem('bf-options-presets', JSON.stringify(res))
             setImportOpts({ ...tmpOpts })
           }
@@ -35,12 +35,15 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
         })
     } else {
       const { data } = oldPresets
-      tmpOpts.data = data
-      tmpOpts.presetNames = Object.keys(data)
+      tmpOpts.data = formatData(data)
+      tmpOpts.presetOpts = formatOpts(data)
       setImportOpts({ ...tmpOpts })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const formatData = data => data.reduce((newData, item) => ({ ...newData, ...item.childs }), {})
+  const formatOpts = data => data.map(item => ({ title: item.title, type: 'group', childs: Object.keys(item.childs).map(opt => ({ label: opt, value: opt })) }))
 
   const setPresetName = val => {
     const tmpOpts = { ...importOpts }
@@ -77,7 +80,7 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
         <b>Preset</b>
         <MultiSelect
           className="btcd-paper-drpdwn mt-1 w-10"
-          options={importOpts?.presetNames?.map(preset => ({ label: preset, value: preset }))}
+          options={importOpts.presetOpts}
           defaultValue={importOpts.preset}
           onChange={setPresetName}
           singleSelect

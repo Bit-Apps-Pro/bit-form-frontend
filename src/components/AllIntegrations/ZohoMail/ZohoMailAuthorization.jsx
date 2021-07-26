@@ -5,6 +5,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './ZohoMailCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -28,8 +29,8 @@ export default function ZohoMailAuthorization({ formID, mailConf, setMailConf, s
   return (
     <>
       <TutorialLink
-        title={mailConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=en6GWQ_8who&list=PL7c6CDwwm-ALJko8nEwetraIZAE2OoDdE"
+        title={tutorialLinks.zohoMail.title}
+        youTubeLink={tutorialLinks.zohoMail.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>

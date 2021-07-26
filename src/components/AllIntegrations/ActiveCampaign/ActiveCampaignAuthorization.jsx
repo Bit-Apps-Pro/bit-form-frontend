@@ -2,6 +2,7 @@ import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
@@ -57,8 +58,8 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
   return (
     <>
       <TutorialLink
-        title={activeCampaingConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=CfKrN2yHDxw&t=185s"
+        title={tutorialLinks.activeCampaign.title}
+        youTubeLink={tutorialLinks.activeCampaign.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bitform')}</b></div>

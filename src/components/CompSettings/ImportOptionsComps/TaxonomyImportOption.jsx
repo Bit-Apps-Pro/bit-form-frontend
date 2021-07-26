@@ -64,6 +64,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
             tmpOpts.data = sortFieldData
             tmpOpts.lbl = fieldObject?.lebel
             tmpOpts.vlu = fieldObject?.hiddenValue
+            tmpOpts.fieldObject.isHierarchical = fieldObject?.isHierarchical
           }
           setImportOpts({ ...tmpOpts })
           return 'Successfully fetched wordpress terms.'

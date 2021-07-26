@@ -9,6 +9,7 @@ import PodsFieldMap from './FieldMap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { postFields } from '../../../Utils/StaticData/postField'
 import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
   const [types, setTypes] = useState([])
@@ -88,9 +89,8 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <TutorialLink
-        style={{ paddingLeft: '0' }}
-        title={data.type}
-        youTubeLink="https://www.youtube.com/watch?v=SE_ncIRtv7Q"
+        title={tutorialLinks.pods.title}
+        youTubeLink={tutorialLinks.pods.link}
       />
       <div className="mt-3"><b>{__('Integration Name ', 'bitform')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bitform')} />

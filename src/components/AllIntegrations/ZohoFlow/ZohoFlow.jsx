@@ -2,12 +2,13 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
+import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
-import TutorialLink from '../../Utilities/TutorialLink'
 
 function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -27,8 +28,8 @@ function ZohoFlow({ formFields, setIntegration, integrations, allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center w-9 mt-2"><Steps step={2} active={step} /></div>
       <TutorialLink
-        title={zohoFlow.type}
-        youTubeLink="https://www.youtube.com/watch?v=lbRiwN7J97Q"
+        title={tutorialLinks.zohoFlow.title}
+        youTubeLink={tutorialLinks.zohoFlow.link}
       />
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>

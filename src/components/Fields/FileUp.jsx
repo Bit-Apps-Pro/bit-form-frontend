@@ -22,10 +22,12 @@ export default function FileUp({ attr, formID, entryID, resetFieldValue }) {
   const onFileChange = e => {
     handleFile(e)
     // set del action
-    for (let i = 0; i < delBtnRef.current.children.length; i += 1) {
-      delBtnRef.current.children[i].children[2].addEventListener('click', ev => {
-        delItem(ev.target)
-      })
+    if (e.target.files.length) {
+      for (let i = 0; i < delBtnRef.current.children.length; i += 1) {
+        delBtnRef.current.children[i].children[2].addEventListener('click', ev => {
+          delItem(ev.target)
+        })
+      }
     }
   }
 

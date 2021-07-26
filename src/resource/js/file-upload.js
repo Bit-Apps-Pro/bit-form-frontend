@@ -127,11 +127,16 @@ export function handleFile(e) {
     fileList.files = tmpf
   }
 
-  if (e.target.hasAttribute('multiple')) {
-    e.target.files = createFileList(...fileList.files)
+  if (!err.length) {
+    if (e.target.hasAttribute('multiple')) {
+      e.target.files = createFileList(...fileList.files)
+    } else {
+      e.target.files = createFileList(fileList.files[fileList.files.length - 1])
+      fileList = { files: [] }
+    }
   } else {
-    e.target.files = createFileList(fileList.files[fileList.files.length - 1])
     fileList = { files: [] }
+    e.target.files = createFileList([])
   }
 
   // set File list view

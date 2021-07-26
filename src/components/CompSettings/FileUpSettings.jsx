@@ -79,6 +79,7 @@ export default function FileUpSettings() {
       fieldData.mxUp = e.target.value
       fieldData.unit = 'MB'
     }
+    console.log('max', e.target.value, fieldData)
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
@@ -137,7 +138,7 @@ export default function FileUpSettings() {
           </>
         )} */}
         <div className={`flx ${!isMultiple && 'mt-1'}`}>
-          <input type="number" className="btcd-paper-inp" value={mxUp} action={setMxUp} placeholder="Any Size" />
+          <input type="number" className="btcd-paper-inp" value={mxUp} onChange={setMxUp} placeholder="Any Size" />
           {/* <select id="" className="btcd-paper-inp w-3 ml-2" onChange={setUnit} value={fieldData.unit}>
             <option value="">Unit</option>
             <option value="KB">KB</option>

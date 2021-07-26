@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize, refreshModules } from './ZohoBiginCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import { __ } from '../../../Utils/i18nwrap'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
+import CopyText from '../../Utilities/CopyText'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { handleAuthorize, refreshModules } from './ZohoBiginCommonFunc'
 
 export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -29,8 +30,8 @@ export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf
   return (
     <>
       <TutorialLink
-        title={biginConf.type}
-        youTubeLink="https://www.youtube.com/watch?v=ixJXIzy8hOQ&list=PL7c6CDwwm-ALhsMoiWS1Bel1TtjIbtibB"
+        title={tutorialLinks.zohoBigin.title}
+        youTubeLink={tutorialLinks.zohoBigin.link}
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
