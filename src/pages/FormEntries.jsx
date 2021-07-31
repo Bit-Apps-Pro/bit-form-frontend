@@ -40,29 +40,29 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const bits = useRecoilValue($bits)
 
   useEffect(() => {
-/*     if (currentReport) {
-      const allLabelObj = {}
-      
-      allLabels.map((itm) => {
-        allLabelObj[itm.key] = itm
-      })
-      const labels = []
-      console.log('currentReport', currentReport, allLabels, );
-      currentReport.details?.order?.forEach((field) => {
-        if (
-          field
-          && field !== 'sl'
-          && field !== 'selection'
-          && field !== 'table_ac'
-        ) {
-          allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
-        }
-      })
-      // temporary tuen off report feature
-      // tableHeaderHandler(labels.length ? labels : allLabels)
-      tableHeaderHandler(allLabels)
-    } else if (allLabels.length) {
-    } */
+    /*     if (currentReport) {
+          const allLabelObj = {}
+
+          allLabels.map((itm) => {
+            allLabelObj[itm.key] = itm
+          })
+          const labels = []
+          console.log('currentReport', currentReport, allLabels, );
+          currentReport.details?.order?.forEach((field) => {
+            if (
+              field
+              && field !== 'sl'
+              && field !== 'selection'
+              && field !== 'table_ac'
+            ) {
+              allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
+            }
+          })
+          // temporary tuen off report feature
+          // tableHeaderHandler(labels.length ? labels : allLabels)
+          tableHeaderHandler(allLabels)
+        } else if (allLabels.length) {
+        } */
     tableHeaderHandler(allLabels)
   }, [allLabels])
 
@@ -398,6 +398,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
       )
     }
+    if (entry.fieldType === 'password') return allResp[rowDtl.idx]?.[entry.accessor] ? '**** (encrypted)' : ''
+
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
