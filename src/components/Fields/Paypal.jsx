@@ -89,10 +89,10 @@ function Paypal({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder 
     if (!validateForm({ form: contentID })) throw new Error('form validation is failed!')
 
     const dynValues = setDefaultValues()
-    const orderAmount = Number(dynValues.amountFld[1] || amount)
-    const shippingAmount = Number(dynValues.shippingFld[1] || shipping)
-    const taxAmount = (Number(dynValues.taxFld[1] || tax) * orderAmount) / 100
-    const totalAmount = (orderAmount + shippingAmount + taxAmount).toFixed(2)
+    const orderAmount = (Number(dynValues.amountFld[1] || amount)).toFixed(2) * 1
+    const shippingAmount = (Number(dynValues.shippingFld[1] || shipping)).toFixed(2) * 1
+    const taxAmount = ((Number(dynValues.taxFld[1] || tax) * orderAmount) / 100).toFixed(2) * 1
+    const totalAmount = (orderAmount + shippingAmount + taxAmount).toFixed(2) * 1
     return actions.order.create({
       purchase_units: [{
         description: dynValues.descFld[1] || description,
