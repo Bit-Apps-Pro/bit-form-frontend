@@ -190,7 +190,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       fieldType: val.type,
       minWidth: 50,
       ...('type' in val
-        && val.type.match(/^(file-up|check|select)$/) && {
+        && val.type.match(/^(file-up|check|select|sys)$/) && {
         Cell: (row) => {
           if (
             row.cell.value !== null
@@ -215,6 +215,15 @@ function FormEntries({ allResp, setAllResp, integrations }) {
                 : row.cell.value !== undefined && row.cell.value.split(',')
               return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
             }
+            if (val.key === '__user_id') {
+              return (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>)
+            }
+            
+            if (val.key === '__user_ip'  && isFinite(row.cell.value)) {
+              
+              return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
+            }
+            return row.cell.value
           }
           return null
         },
