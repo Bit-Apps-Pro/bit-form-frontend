@@ -166,8 +166,6 @@ function Table(props) {
       } else {
         details = { hiddenColumns, pageSize, sortBy, filters, globalFilter }
       }
-      console.clear()
-      console.log(`filters`, details)
       updateReportData({ ...reportData, details, type: 'table' })
       setstateSavable(false)
     } else if (stateSavable) {

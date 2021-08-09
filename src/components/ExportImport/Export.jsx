@@ -21,15 +21,15 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
   })
 
   const order = report ? report[report.length - 1]?.details?.order : ['bf3-1-']
-  const unhidecolumn = report ? report[report.length - 1]?.details?.hiddenColumns : []
+  const hidden = report ? report[report.length - 1]?.details?.hiddenColumns : []
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
 
-  let colHeadeing = []
+  let colHeading = []
   let fieldKey = []
 
   columns.map((col, index) => {
-    if (order?.includes(col.accessor)) {
-      colHeadeing[index] = {
+    if (!hidden.includes(col.accessor)) {
+      colHeading[index] = {
         key: col.accessor,
         val: col.Header,
       }
@@ -37,8 +37,8 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
     }
   })
 
-  fieldKey = fieldKey.filter((col) => !unhidecolumn.includes(col))
-  colHeadeing = colHeadeing.filter((col) => !unhidecolumn.includes(col.key))
+  // fieldKey = fieldKey.filter((col) => !hidden.includes(col))
+  // colHeading = colHeading.filter((col) => !hidden.includes(col.key))
   data.selectedField = JSON.stringify(fieldKey)
 
   const getEntry = (e) => {
@@ -50,7 +50,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
         if (res.data?.count !== 0) {
           const header = []
           header[0] = 'Entry ID'
-          colHeadeing.map((col, index) => {
+          colHeading.map((col, index) => {
             header[index + 1] = col.val
           })
           const ws = XLSX.utils.json_to_sheet(res.data)
@@ -112,7 +112,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
             <b style={{ width: 200 }}>{__('Sort by', 'bitform')}</b>
             <select className="btcd-paper-inp ml-2" name="sortField" defaultValue={data?.sortField} onChange={(e) => handleInput(e.target.name, e.target.value)} style={{ width: 250 }}>
               <option value="bitforms_form_entry_id">ID</option>
-              {colHeadeing.map((col) => (
+              {colHeading.map((col) => (
                 <option key={col.key} value={col.key}>{col.val}</option>
               ))}
             </select>
