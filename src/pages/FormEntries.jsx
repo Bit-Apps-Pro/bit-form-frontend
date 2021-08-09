@@ -407,6 +407,15 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
       )
     }
+    if (entry.accessor === '__user_id') {
+      return (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>)
+    }
+    
+    if (entry.accessor === '__user_ip'  && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
+      
+      return [allResp[rowDtl.idx]?.[entry.accessor] >>> 24 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 16 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 8 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] & 0xFF].join('.')
+    }
+    console.log(`entry`, entry)
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 
