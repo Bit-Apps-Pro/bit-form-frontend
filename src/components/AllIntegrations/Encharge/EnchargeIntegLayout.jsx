@@ -1,12 +1,27 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '../../../Utils/i18nwrap'
+import Cooltip from '../../Utilities/Cooltip'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import EnchargeFieldMap from './EnchargeFieldMap'
 
 export default function EnchargeIntegLayout({ formID, formFields, enchargeConf, setEnchargeConf }) {
+  const handleInput = (e) => {
+    const newConf = { ...enchargeConf }
+    newConf[e.target.name] = e.target.value
+    setEnchargeConf(newConf)
+  }
   return (
     <>
       <br />
+      <div className="flx">
+        <b className="wdt-200 d-in-b">{__('Tags:', 'bitform')}</b>
+        <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="tags" value={enchargeConf.tags || ''} type="text" placeholder={__('tag-1, tag-2', 'bitform')} />
+        <Cooltip width={250} icnSize={17} className="ml-2">
+          <div className="txt-body">
+            Tags separate with comma
+          </div>
+        </Cooltip>
+      </div>
       {enchargeConf?.default?.fields !== 0
         && (
           <>
