@@ -30,9 +30,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
-  const cols = { lg: 6, md: 4, sm: 2 }
+  // const cols = { lg: 6, md: 4, sm: 2 }
+  const cols = { lg: 120, md: 80, sm: 40 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
-  const [rowHeight, setRowHeight] = useState(43)
+  const [rowHeight, setRowHeight] = useState(43 / 10)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
@@ -116,7 +117,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     //   h += topNbottomPadding - 39
     // }
     // h += 40 // default field height
-    setRowHeight(h / 2)
+    setRowHeight((h / 2) / 10)
 
     // set row height in local
     sessionStorage.setItem('btcd-rh', h / 2)
@@ -254,6 +255,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const onLayoutChange = (newLay, newLays) => {
+    console.log('newlay', newLays)
     if (newLays.lg.length === layouts.lg.length
       && newLays.md.length === layouts.md.length
       && newLays.sm.length === layouts.sm.length) {
