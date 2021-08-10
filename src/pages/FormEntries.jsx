@@ -40,29 +40,29 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const bits = useRecoilValue($bits)
 
   useEffect(() => {
-/*     if (currentReport) {
-      const allLabelObj = {}
-      
-      allLabels.map((itm) => {
-        allLabelObj[itm.key] = itm
-      })
-      const labels = []
-      console.log('currentReport', currentReport, allLabels, );
-      currentReport.details?.order?.forEach((field) => {
-        if (
-          field
-          && field !== 'sl'
-          && field !== 'selection'
-          && field !== 'table_ac'
-        ) {
-          allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
-        }
-      })
-      // temporary tuen off report feature
-      // tableHeaderHandler(labels.length ? labels : allLabels)
-      tableHeaderHandler(allLabels)
-    } else if (allLabels.length) {
-    } */
+    /*     if (currentReport) {
+          const allLabelObj = {}
+
+          allLabels.map((itm) => {
+            allLabelObj[itm.key] = itm
+          })
+          const labels = []
+          console.log('currentReport', currentReport, allLabels, );
+          currentReport.details?.order?.forEach((field) => {
+            if (
+              field
+              && field !== 'sl'
+              && field !== 'selection'
+              && field !== 'table_ac'
+            ) {
+              allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
+            }
+          })
+          // temporary tuen off report feature
+          // tableHeaderHandler(labels.length ? labels : allLabels)
+          tableHeaderHandler(allLabels)
+        } else if (allLabels.length) {
+        } */
     tableHeaderHandler(allLabels)
   }, [allLabels])
 
@@ -190,7 +190,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       fieldType: val.type,
       minWidth: 50,
       ...('type' in val
-        && val.type.match(/^(file-up|check|select)$/) && {
+        && val.type.match(/^(file-up|check|select|sys)$/) && {
         Cell: (row) => {
           if (
             row.cell.value !== null
@@ -215,6 +215,15 @@ function FormEntries({ allResp, setAllResp, integrations }) {
                 : row.cell.value !== undefined && row.cell.value.split(',')
               return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
             }
+            if (val.key === '__user_id') {
+              return (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>)
+            }
+            
+            if (val.key === '__user_ip'  && isFinite(row.cell.value)) {
+              
+              return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
+            }
+            return row.cell.value
           }
           return null
         },
@@ -398,6 +407,17 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
       )
     }
+    if (entry.fieldType === 'password') return allResp[rowDtl.idx]?.[entry.accessor] ? '**** (encrypted)' : ''
+
+    if (entry.accessor === '__user_id') {
+      return (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>)
+    }
+    
+    if (entry.accessor === '__user_ip'  && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
+      
+      return [allResp[rowDtl.idx]?.[entry.accessor] >>> 24 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 16 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 8 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] & 0xFF].join('.')
+    }
+    console.log(`entry`, entry)
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
 

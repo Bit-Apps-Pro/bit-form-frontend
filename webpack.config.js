@@ -17,7 +17,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
-
+  const hot = argv.hot
   return {
     // devtool: production ? false : 'source-map',
     devtool: production ? false : 'eval',
@@ -43,13 +43,15 @@ module.exports = (env, argv) => {
       // publicPath: '/',
     },
     target: 'web',
-    devServer: {
-      hot: true,
-      liveReload: false,
-      port: 3000,
-      writeToDisk: true,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      disableHostCheck: true,
+    ...hot && {
+      devServer: {
+        hot: true,
+        liveReload: false,
+        port: 3000,
+        writeToDisk: true,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        disableHostCheck: true,
+      }
     },
     /*  performance: {
        hints: 'error',
@@ -191,15 +193,13 @@ module.exports = (env, argv) => {
       //   },
       // }),
       // ...(!production && new webpack.HotModuleReplacementPlugin()),
-      ...(production ? [] : [
-        new ReactRefreshWebpackPlugin({
-          overlay: {
-            sockIntegration: 'wds',
-            sockHost: 'localhost',
-            sockPort: 3000,
-          },
-        }),
-      ]),
+      ...(!hot ? [] : [new ReactRefreshWebpackPlugin({
+        overlay: {
+          sockIntegration: 'wds',
+          sockHost: 'localhost',
+          sockPort: 3000,
+        },
+      })]),
     ],
 
     resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
@@ -235,7 +235,7 @@ module.exports = (env, argv) => {
               ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
-              ...(production ? [] : ['react-refresh/babel']),
+              ...(!hot ? [] : ['react-refresh/babel']),
             ],
           },
         },

@@ -346,7 +346,7 @@ function FormDetails({ history }) {
     toast.promise(fetchProm, {
       loading: __('Updating...', 'biform'),
       success: (res) => res?.data?.message || res?.data,
-      error: __('Error occured, Please try again.', 'bitform'),
+      error: __('Error occurred, Please try again.', 'bitform'),
     })
   }
 
