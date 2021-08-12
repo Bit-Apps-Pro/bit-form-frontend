@@ -1,3 +1,4 @@
+// TODO CSS vatiables
 :root {
   --tooltip-txt: "";
   --tt-left    : 50%;
@@ -67,7 +68,7 @@ a {
 
 a:active,
 a:hover {
-  color     : #005ca7;
+  color     : var(--blue);
   box-shadow: none;
 }
 
@@ -270,7 +271,8 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .bg-pro {
-  background   : lightgoldenrodyellow;
+  // background   : lightgoldenrodyellow;
+  background   : var(--white);
   padding      : 20px;
   border-radius: 8px;
 }
@@ -301,7 +303,8 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .pro-blur {
-  background             : #07316f38;
+  // background             : #07316f38;
+  background             : var(--blue);
   position               : absolute;
   top                    : -15px;
   left                   : -20px;
@@ -347,7 +350,8 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .drag-enter {
-  box-shadow: inset 0px 0 3px 1px #004eff;
+  // box-shadow: inset 0px 0 3px 1px #004eff;
+  box-shadow: inset 0px 0 3px 1px var(--blue);
 }
 
 //scroll bar style start
@@ -1315,6 +1319,7 @@ input[type="checkbox"].disabled:checked:before {
     max-height: 160px;
     max-width : 160px;
     transform : scale(0.8);
+    margin    : auto;
   }
 }
 
@@ -2730,7 +2735,7 @@ nav.top-nav {
   z-index   : 9;
   width     : 230px;
   box-shadow: -3px -6px 7px -1px rgb(0, 0, 0) inset;
-  // margin-top: 40px;
+  margin-top: 39px;
 
   &::before {
     position        : absolute;
@@ -4179,6 +4184,7 @@ select.btcd-ud-inp {
 .btcd-stp-page+div {
   padding: 10px;
 }
+
 
 .error-404 {
   position: relative;
