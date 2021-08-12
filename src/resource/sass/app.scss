@@ -3174,8 +3174,9 @@ select.btcd-paper-inp {
   border: none;
   outline: none;
   margin-top: 5px;
+  margin-bottom: 0;
   justify-content: center;
-  padding: 8px 10px 5px 8px;
+  padding: 8px 10px 10px 8px;
   border-radius: 8px 8px 0 0;
   & .btcd-icn {
     font-size: 20px;
@@ -4220,7 +4221,6 @@ _:-ms-fullscreen,
 .p-4 {
   padding: 20px;
 }
-
 .pl-6 {
   padding-left: 30px;
 }
