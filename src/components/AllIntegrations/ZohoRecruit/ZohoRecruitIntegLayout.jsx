@@ -1,5 +1,4 @@
-import { Panel, Tab, Tabs } from '@bumaga/tabs'
-
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../../../Utils/i18nwrap'
 import ZohoRecruitNewRecord from './ZohoRecruitNewRecord'
 import ZohoRecruitRelatedRecord from './ZohoRecruitRelatedRecord'
@@ -47,30 +46,26 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
       </select>
       {tab === 0 && <button onClick={() => refreshModules(formID, recruitConf, setRecruitConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Recruit Modules"' }} type="button" disabled={isLoading}>&#x21BB;</button>}
       <br />
-      <Tabs>
-        <div className="flx mt-2">
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">
-              {__('New Record', 'bitform')}
-            </button>
+      <Tabs
+        selectedTabClassName="s-t-l-active"
+      >
+        <TabList className="flx mt-2 mb-0">
+          <Tab className="btcd-s-tab-link">
+            {__('New Record', 'bitform')}
           </Tab>
-
-          {recruitConf?.relatedlists && recruitConf.relatedlists.map((relatelist, indx) => (
+          {recruitConf?.relatedlists && recruitConf.relatedlists.map((_, indx) => (
             <>
-              <Tab key={`rel-${indx + 64}`}>
-                <button className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`} type="button">
-                  {__('Related List #', 'bitform')}
-                  {indx + 1}
-                </button>
+              <Tab key={`rel-${indx + 64}`} className="btcd-s-tab-link">
+                {__('Related List #', 'bitform')}
+                {indx + 1}
               </Tab>
               <button onClick={() => removeRelatedTab(indx)} className="icn-btn" aria-label="delete-relatedlist" type="button"><CloseIcn size="14" /></button>
             </>
           ))}
           {recruitConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>}
-        </div>
+        </TabList>
         <div className="btcd-hr" />
-
-        <Panel>
+        <TabPanel>
           <ZohoRecruitNewRecord
             tab={tab}
             settab={settab}
@@ -81,10 +76,10 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
             isLoading={isLoading}
             setSnackbar={setSnackbar}
           />
-        </Panel>
+        </TabPanel>
         {
-          recruitConf?.relatedlists && recruitConf.relatedlists.map((relatelist, indx) => (
-            <Panel key={`rlt-${indx + 89}`}>
+          recruitConf?.relatedlists && recruitConf.relatedlists.map((_, indx) => (
+            <TabPanel key={`rlt-${indx + 89}`}>
               <ZohoRecruitRelatedRecord
                 indx={indx}
                 tab={tab}
@@ -98,7 +93,7 @@ export default function ZohoRecruitIntegLayout({ tab, settab, formID, formFields
                 setisLoading={setisLoading}
                 setSnackbar={setSnackbar}
               />
-            </Panel>
+            </TabPanel>
           ))
         }
       </Tabs>

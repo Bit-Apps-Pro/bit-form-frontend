@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { $bits } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
@@ -11,7 +11,6 @@ import MailSendTest from './MailSendTest'
 export default function SMTP({ setsnack }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  const [tab, settab] = useState('mail_config')
   const [mail, setMail] = useState({})
   const [status, setStatus] = useState('')
 
@@ -41,29 +40,28 @@ export default function SMTP({ setsnack }) {
             </div>
           </div>
         )}
-        <Tabs>
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'mail_config' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+        <Tabs
+          selectedTabClassName="s-t-l-active"
+        >
+          <TabList className="flx">
+            <Tab className="btcd-s-tab-link">
               <b>{__('Configuration', 'bitform')}</b>
-            </button>
-          </Tab>
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'test_mail' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+            </Tab>
+            <Tab className="btcd-s-tab-link">
               <b>{__('Mail Test', 'bitform')}</b>
-            </button>
-          </Tab>
-          <Panel>
+            </Tab>
+          </TabList>
+          <TabPanel>
             <SMTPConfigForm
-              settab={settab}
               mail={mail}
               setMail={setMail}
               status={status}
               smtpStatus={setStatus}
             />
-          </Panel>
-          <Panel>
-            <MailSendTest settab={settab} />
-          </Panel>
+          </TabPanel>
+          <TabPanel>
+            <MailSendTest />
+          </TabPanel>
         </Tabs>
       </div>
     </div>

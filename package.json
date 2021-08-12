@@ -3,7 +3,6 @@
   "private": true,
   "version": "1.22.5",
   "dependencies": {
-    "@bumaga/tabs": "^0.2.0",
     "@paypal/react-paypal-js": "^6.0.1",
     "@popperjs/core": "^2.9.2",
     "@tippyjs/react": "^4.2.5",

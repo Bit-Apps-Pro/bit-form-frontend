@@ -7,7 +7,7 @@ import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'
 import RazorpayInfo from './PaymentInfo/RazorpayInfo'
 
-export default function FormEntryPayments({ formID, rowDtl, settab }) {
+export default function FormEntryPayments({ formID, rowDtl }) {
   const allLabels = useRecoilValue($fieldLabels)
   const bits = useRecoilValue($bits)
   const { isPro } = bits
@@ -18,7 +18,6 @@ export default function FormEntryPayments({ formID, rowDtl, settab }) {
   const payFld = paymentFields.find(field => rowDtl[field.key])
 
   useEffect(() => {
-    settab('payment')
     if (isPro) {
       setIsLoading(true)
       const transactionID = rowDtl?.[payFld?.key]

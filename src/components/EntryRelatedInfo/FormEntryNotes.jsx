@@ -11,7 +11,7 @@ import LoaderSm from '../Loaders/LoaderSm'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import NoteForm from './NoteForm'
 
-export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl, settab }) {
+export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
@@ -27,7 +27,6 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl, set
   })
 
   useEffect(() => {
-    settab('note')
     isPro && setIsLoading('allNotes')
     setFirstLoad(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,6 +56,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl, set
     const noteDetails = allNotes.find(note => note.id === noteID)
     const { title, content } = JSON.parse(noteDetails.info_details)
     setData({ noteID, title, content })
+    setShowForm(true)
   }
 
   const confDeleteNote = noteID => {

@@ -1,6 +1,6 @@
-import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { $bits } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
@@ -8,7 +8,6 @@ import CptTypeAdd from './CptTypeAdd'
 import EditCpt from './EditCpt'
 
 export default function Cpt() {
-  const [tab, settab] = useState('add_type')
   const [posts, setPosts] = useState([])
   const [types, setTypes] = useState([])
   const bits = useRecoilValue($bits)
@@ -39,30 +38,28 @@ export default function Cpt() {
             </div>
           </div>
         )}
-        <Tabs>
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'add_type' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+        <Tabs
+          selectedTabClassName="s-t-l-active"
+        >
+          <TabList className="flx mt-0">
+            <Tab className="btcd-s-tab-link pb-2">
               <b>{__('Add New Post Type', 'bitform')}</b>
-            </button>
-          </Tab>
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'all_post' && 's-t-l-active'}`} style={{ padding: 9 }} type="button">
+            </Tab>
+            <Tab className="btcd-s-tab-link pb-2">
               <b>{__('Edit Post Types', 'bitform')}</b>
-            </button>
-          </Tab>
-          <Panel>
+            </Tab>
+          </TabList>
+          <TabPanel>
             <CptTypeAdd
-              settab={settab}
               types={types}
             />
-          </Panel>
-          <Panel>
+          </TabPanel>
+          <TabPanel>
             <EditCpt
-              settab={settab}
               posts={posts}
               types={types}
             />
-          </Panel>
+          </TabPanel>
         </Tabs>
       </div>
     </div>
