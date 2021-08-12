@@ -10,13 +10,13 @@ import RazorpayInfo from './PaymentInfo/RazorpayInfo'
 export default function FormEntryPayments({ formID, rowDtl, settab }) {
   const allLabels = useRecoilValue($fieldLabels)
   const bits = useRecoilValue($bits)
-
   const { isPro } = bits
   const [paymentInfo, setPaymentInfo] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   const payFld = paymentFields.find(field => rowDtl[field.key])
+
   useEffect(() => {
     settab('payment')
     if (isPro) {
@@ -28,6 +28,7 @@ export default function FormEntryPayments({ formID, rowDtl, settab }) {
           setIsLoading(false)
         })
     }
+    return () => setPaymentInfo([])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

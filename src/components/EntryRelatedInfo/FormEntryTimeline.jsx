@@ -1,22 +1,21 @@
 import { memo, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { __ } from '../../Utils/i18nwrap'
+import { $bits, $fieldLabels } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
-import CopyText from '../Utilities/CopyText'
-import SnackMsg from '../Utilities/SnackMsg'
+import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
-import { $bits, $fieldLabels } from '../../GlobalStates'
+import CopyText from '../Utilities/CopyText'
 
 function FormEntryTimeline({ formID, entryID, settab, integrations }) {
   const bits = useRecoilValue($bits)
   const allLabels = useRecoilValue($fieldLabels)
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
-
   const [log, setLog] = useState([])
   const [integLogs, setIntegLogs] = useState([])
   const [logShowMore, setLogShowMore] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     settab('timeline')
     setIsLoading(true)
@@ -28,6 +27,8 @@ function FormEntryTimeline({ formID, entryID, settab, integrations }) {
       }
       setIsLoading(false)
     })
+
+    return () => setLog([])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

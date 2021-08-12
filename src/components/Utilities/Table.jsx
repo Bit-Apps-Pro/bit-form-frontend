@@ -78,7 +78,6 @@ function Table(props) {
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const { columns, data, fetchData, report } = props
   const [reportData, updateReportData] = useRecoilState($reportSelector(report))
-  console.log('cols', props.columns, reportData)
   const { getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -161,7 +160,7 @@ function Table(props) {
   useEffect(() => {
     if (!isNaN(report)) {
       let details
-      if (reportData  && reportData.details && typeof reportData.details === 'object') {
+      if (reportData && reportData.details && typeof reportData.details === 'object') {
         details = { ...reportData.details, hiddenColumns, pageSize, sortBy, filters, globalFilter }
       } else {
         details = { hiddenColumns, pageSize, sortBy, filters, globalFilter }
@@ -184,7 +183,7 @@ function Table(props) {
             setColumnOrder(reportData.details.order)
           } else {
             setColumnOrder(details.order)
-            updateReportData({...reportData, details })
+            updateReportData({ ...reportData, details })
           }
         } else if (!stateSavable && typeof reportData.details === 'object' && reportData.details && 'order' in reportData.details) {
           setColumnOrder(reportData.details.order)

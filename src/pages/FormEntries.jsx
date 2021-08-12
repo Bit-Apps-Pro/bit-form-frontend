@@ -183,7 +183,6 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   )
 
   const tableHeaderHandler = (labels = []) => {
-    console.log('labels', labels)
     const cols = labels?.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
       accessor: val.key,
@@ -218,9 +217,8 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             if (val.key === '__user_id') {
               return (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>)
             }
-            
-            if (val.key === '__user_ip'  && isFinite(row.cell.value)) {
-              
+
+            if (val.key === '__user_ip' && isFinite(row.cell.value)) {
               return [row.cell.value >>> 24 & 0xFF, row.cell.value >>> 16 & 0xFF, row.cell.value >>> 8 & 0xFF, row.cell.value & 0xFF].join('.')
             }
             return row.cell.value
@@ -412,14 +410,30 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     if (entry.accessor === '__user_id') {
       return (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>)
     }
-    
-    if (entry.accessor === '__user_ip'  && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
-      
+
+    if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
       return [allResp[rowDtl.idx]?.[entry.accessor] >>> 24 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 16 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] >>> 8 & 0xFF, allResp[rowDtl.idx]?.[entry.accessor] & 0xFF].join('.')
     }
-    console.log(`entry`, entry)
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
+
+  // const formatRespData = (respData = []) => {
+  //   const passwordFields = allLabels.filter(label => label.type === 'password').map(lbl => lbl.key)
+  //   if (passwordFields.length) {
+  //     const newResp = [...respData]
+  //     newResp.forEach((resp, i) => {
+  //       passwordFields.forEach(passField => {
+  //         if (resp[passField]) {
+  //           newResp[i][passField] = '**** (encrypted)'
+  //         }
+  //       })
+  //     })
+
+  //     return newResp
+  //   }
+
+  //   return respData
+  // }
 
   return (
     <div id="form-res">
