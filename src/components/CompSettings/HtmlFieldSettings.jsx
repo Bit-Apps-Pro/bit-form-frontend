@@ -5,7 +5,6 @@ import EditIcn from '../../Icons/EditIcn'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
-import TinyMCE from '../Utilities/TinyMCE'
 import Back2FldList from './Back2FldList'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 
