@@ -4285,6 +4285,9 @@ _:-ms-fullscreen,
   font-weight: 100;
   font-family: "Roboto", sans-serif;
 }
+.cooltip-box:hover .cooltip-icn {
+  display: inline-block !important;
+}
 .cooltip-link {
   color: #2ad4ff;
 }
