@@ -28,14 +28,67 @@
   --gray-3    : hsl(var(--blue-h), 0%, 89%);
   --gray-4    : hsl(var(--db-h), 21%, 42%);
   --red       : hsl(0, 100%, 64%)
+
+
+  /* for blue and hue */
+  --blue-h-s: 215, 100%;
+  // --b-10: hsla(var(--blue-h-s), 10%, 100%);
+  // --b-20: hsla(var(--blue-h-s), 20%, 100%);
+  // --b-30: hsla(var(--blue-h-s), 30%, 100%);
+  // --b-40: hsla(var(--blue-h-s), 40%, 100%);
+  --b-50: hsla(var(--blue-h-s), 50%, 100%);
+  // --b-60: hsla(var(--blue-h-s), 60%, 100%);
+  // --b-70: hsla(var(--blue-h-s), 70%, 100%);
+  // --b-80: hsla(var(--blue-h-s), 80%, 100%);
+  // --b-90: hsla(var(--blue-h-s), 90%, 100%);
+  // --b-100: hsla(var(--blue-h-s), 100%, 100%);
+
+  /* for deep blue  */
+  --db-h-s: 221, 100%;
+  // --db-10: hsla(var(--db-h-s), 10%, 100%);
+  // --db-20: hsla(var(--db-h-s), 20%, 100%);
+  // --db-30: hsla(var(--db-h-s), 30%, 100%);
+  // --db-40: hsla(var(--db-h-s), 40%, 100%);
+  // --db-50: hsla(var(--db-h-s), 50%, 100%);
+  // --db-60: hsla(var(--db-h-s), 60%, 100%);
+  // --db-70: hsla(var(--db-h-s), 70%, 100%);
+  // --db-80: hsla(var(--db-h-s), 80%, 100%);
+  // --db-90: hsla(var(--db-h-s), 90%, 100%);
+  // --db-100: hsla(var(--db-h-s), 100%, 100%);
+
+  /* dbg for deep blue bg */
+  --dbg-h-s: 217, 100%;
+  // --dbg-10: hsla(var(--dbg-h-s), 10%, 100%);
+  // --dbg-20: hsla(var(--dbg-h-s), 20%, 100%);
+  // --dbg-30: hsla(var(--dbg-h-s), 30%, 100%);
+  // --dbg-40: hsla(var(--dbg-h-s), 40%, 100%);
+  // --dbg-50: hsla(var(--dbg-h-s), 50%, 100%);
+  // --dbg-60: hsla(var(--dbg-h-s), 60%, 100%);
+  // --dbg-70: hsla(var(--dbg-h-s), 70%, 100%);
+  // --dbg-80: hsla(var(--dbg-h-s), 80%, 100%);
+  // --dbg-90: hsla(var(--dbg-h-s), 90%, 100%);
+  // --dbg-100: hsla(var(--dbg-h-s), 100%, 100%);
+
+  /* w for white */
+  --white-h-s: 0, 0%;
+  // --white-10: hsla(var(--white-h-s), 10%, 100%);
+  // --white-20: hsla(var(--white-h-s), 20%, 100%);
+  // --white-30: hsla(var(--white-h-s), 30%, 100%);
+  // --white-40: hsla(var(--white-h-s), 40%, 100%);
+  // --white-50: hsla(var(--white-h-s), 50%, 100%);
+  // --white-60: hsla(var(--white-h-s), 60%, 100%);
+  // --white-70: hsla(var(--white-h-s), 70%, 100%);
+  // --white-80: hsla(var(--white-h-s), 80%, 100%);
+  // --white-90: hsla(var(--white-h-s), 90%, 100%);
+  // --white-100: hsla(var(--white-h-s), 100%, 100%);
 }
 
 ::-webkit-datetime-edit {
   line-height: 1;
 }
 
-// var(--blue): #0a8dff;
-// var(--blue): #0083f3;
+// var(--b-50): #0a8dff;
+// var(--b-50): #0083f3;
 // var(--dp-blue): #0b1655;
 // var(--white): #f2f3f7;
 // var(--white): #eaf0f7;
@@ -68,7 +121,7 @@ a {
 
 a:active,
 a:hover {
-  color     : var(--blue);
+  color     : var(--b-50);
   box-shadow: none;
 }
 
@@ -159,7 +212,7 @@ a:hover {
 }
 
 button.check {
-  background: var(--blue) !important;
+  background: var(--b-50) !important;
 }
 
 .media-modal {
@@ -168,14 +221,14 @@ button.check {
   }
 
   & a {
-    color: var(--blue) !important;
+    color: var(--b-50) !important;
   }
 
   & button {
     box-shadow: none !important;
 
     &:hover {
-      color: var(--blue) !important;
+      color: var(--b-50) !important;
     }
 
     &:focus {
@@ -195,8 +248,8 @@ button.check {
     }
 
     &:focus {
-      border-color: var(--blue) !important;
-      box-shadow  : 0 0 0 0px var(--blue), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
+      border-color: var(--b-50) !important;
+      box-shadow  : 0 0 0 0px var(--b-50), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
     }
   }
 }
@@ -208,7 +261,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .wp-core-ui .attachment.details,
 .attachment:focus {
-  box-shadow: 0 0 0 2px var(--blue) !important;
+  box-shadow: 0 0 0 2px var(--b-50) !important;
 }
 
 /* .setting input,
@@ -259,7 +312,7 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .txt-blue {
-  color: var(--blue);
+  color: var(--b-50);
 }
 
 .txt-pro {
@@ -304,7 +357,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .pro-blur {
   // background             : #07316f38;
-  background             : var(--blue);
+  background             : var(--b-50);
   position               : absolute;
   top                    : -15px;
   left                   : -20px;
@@ -351,7 +404,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .drag-enter {
   // box-shadow: inset 0px 0 3px 1px #004eff;
-  box-shadow: inset 0px 0 3px 1px var(--blue);
+  box-shadow: inset 0px 0 3px 1px var(--b-50);
 }
 
 //scroll bar style start
@@ -393,23 +446,23 @@ input[type="checkbox"].disabled:checked:before {
 // }
 
 .blue {
-  //background: var(--blue) !important;
-  background: linear-gradient(145deg, var(--blue), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 10%))) !important;
+  //background: var(--b-50) !important;
+  background: linear-gradient(145deg, var(--b-50), hsl(var(--blue-h-s),calc(var(--blue-l) + 10%))) !important;
   color     : var(--white) !important;
 
   &:hover {
     //background: #016fcf !important;
     background: linear-gradient(145deg,
-        hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 5%)),
-        hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 10%)),
+        hsl(var(--blue-h-s), calc(var(--blue-l) - 5%)),
+        hsl(var(--blue-h-s), calc(var(--blue-l) - 10%)),
       ) !important;
   }
 
   &:active {
     // background: #0062b8;
     background: linear-gradient(145deg,
-        hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 8%)),
-        hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 13%)),
+        hsl(var(--blue-h-s), calc(var(--blue-l) - 8%)),
+        hsl(var(--blue-h-s), calc(var(--blue-l) - 13%)),
       ) !important;
   }
 }
@@ -441,7 +494,7 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .icn-blue {
-  color: var(--blue);
+  color: var(--b-50);
 }
 
 .red {
@@ -466,10 +519,10 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 // .bg-blue-1 {
-//   background: transparentize(var(--blue), 0.9) !important;
+//   background: transparentize(var(--b-50), 0.9) !important;
 // }
 // .bg-blue-2 {
-//   background: transparentize(var(--blue), 0.7) !important;
+//   background: transparentize(var(--b-50), 0.7) !important;
 // }
 
 .blue-sh {
@@ -600,18 +653,18 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover,
   &:focus {
-    color     : var(--blue);
+    color     : var(--b-50);
     outline   : none;
     transform : scale(1.05);
     box-shadow: 0 1px 11px -4px #b1b1b1;
 
     &>span {
-      color: var(--blue);
+      color: var(--b-50);
     }
   }
 
   &:active {
-    border: 2px solid var(--blue);
+    border: 2px solid var(--b-50);
   }
 }
 
@@ -675,12 +728,12 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .btcd-ck-wrp:hover input~.btcd-mrk {
-  border-color: var(--blue) !important;
+  border-color: var(--b-50) !important;
 }
 
 .btcd-ck-wrp input:checked~.btcd-mrk {
-  background-color: var(--blue);
-  border-color    : var(--blue) !important;
+  background-color: var(--b-50);
+  border-color    : var(--b-50) !important;
 }
 
 .btc-range {
@@ -694,19 +747,19 @@ input[type="checkbox"].disabled:checked:before {
   & .inp-grp {
     &:hover {
       .icn {
-        color           : var(--blue);
+        color           : var(--b-50);
         background-color: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.92);
 
         & .line-icn {
-          stroke: var(--blue);
+          stroke: var(--b-50);
         }
 
         & .fill-icn {
-          fill: var(--blue);
+          fill: var(--b-50);
         }
 
         .border-icn {
-          border-color: var(--blue);
+          border-color: var(--b-50);
         }
       }
     }
@@ -972,7 +1025,7 @@ input[type="checkbox"].disabled:checked:before {
     width: 8px;
 
     &>div {
-      border-left: 3px solid var(--blue);
+      border-left: 3px solid var(--b-50);
       width      : 12px;
     }
   }
@@ -1097,9 +1150,9 @@ input[type="checkbox"].disabled:checked:before {
   }
 
   & button.active {
-    background  : var(--blue);
+    background  : var(--b-50);
     color       : var(--white);
-    border-color: var(--blue);
+    border-color: var(--b-50);
 
     & .line-icn {
       stroke: var(--white);
@@ -1473,12 +1526,12 @@ input[type="checkbox"].disabled:checked:before {
 
 .btcd-btn-o-blue {
   background: transparent;
-  color     : var(--blue) !important;
-  border    : 1px solid var(--blue);
+  color     : var(--b-50) !important;
+  border    : 1px solid var(--b-50);
   transition: background 0.2s !important;
 
   &:hover {
-    background: var(--blue);
+    background: var(--b-50);
     color     : var(--white) !important;
   }
 }
@@ -2063,7 +2116,7 @@ nav.top-nav {
 }
 
 .btcd-active-bg {
-  background: var(--blue);
+  background: var(--b-50);
   position  : absolute;
   top       : 0;
   left      : 0;
@@ -2167,7 +2220,7 @@ nav.top-nav {
 
     &:hover {
       background: hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 48%));
-      color     : var(--blue);
+      color     : var(--b-50);
     }
   }
 }
@@ -2244,7 +2297,7 @@ nav.top-nav {
 .btcd-prgrs {
   height          : inherit;
   border-radius   : inherit;
-  background-color: var(--blue);
+  background-color: var(--b-50);
 }
 
 .btcd-menu {
@@ -2301,7 +2354,7 @@ nav.top-nav {
 
 .btcd-menu-btn {
   background   : var(--white)fff;
-  color        : var(--blue);
+  color        : var(--b-50);
   position     : relative;
   margin-right : 10px;
   border       : none;
@@ -2318,7 +2371,7 @@ nav.top-nav {
   transition   : all 0.3s;
 
   &:hover {
-    background: var(--blue);
+    background: var(--b-50);
     color     : var(--white);
   }
 }
@@ -2328,7 +2381,7 @@ nav.top-nav {
 
   &:hover {
     background: #f0f4ff;
-    color     : var(--blue);
+    color     : var(--b-50);
   }
 
   &::after {
@@ -2336,7 +2389,7 @@ nav.top-nav {
   }
 
   &:focus {
-    background: var(--blue);
+    background: var(--b-50);
     color     : var(--white);
   }
 
@@ -2483,7 +2536,7 @@ nav.top-nav {
   }
 
   &:hover {
-    border    : 2px solid var(--blue);
+    border    : 2px solid var(--b-50);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.29);
   }
 
@@ -2502,7 +2555,7 @@ nav.top-nav {
 
 .btcd-hid-btn {
   display   : block;
-  background: var(--blue);
+  background: var(--b-50);
   position  : absolute;
   bottom    : -53px;
   left      : 0;
@@ -2521,12 +2574,12 @@ nav.top-nav {
 
   &:hover {
     background: #f1f1f1;
-    color     : var(--blue);
+    color     : var(--b-50);
   }
 
   &:active {
     background: #e4e4e4;
-    color     : var(--blue);
+    color     : var(--b-50);
   }
 }
 
@@ -2822,9 +2875,9 @@ nav.top-nav {
 }
 
 .btcd-f-c-t-o-a {
-  color       : var(--blue);
+  color       : var(--b-50);
   position    : relative;
-  border-color: var(--blue);
+  border-color: var(--b-50);
 
   &:after {
     position    : absolute;
@@ -2834,7 +2887,7 @@ nav.top-nav {
     margin-left : -10px;
     border-width: 8px;
     border-style: solid;
-    border-color: var(--blue) transparent transparent transparent;
+    border-color: var(--b-50) transparent transparent transparent;
   }
 }
 
@@ -2856,7 +2909,7 @@ nav.top-nav {
   border       : 2px solid #c6e5ff;
 
   &:focus {
-    border: 2px solid var(--blue);
+    border: 2px solid var(--b-50);
   }
 }
 
@@ -2892,8 +2945,8 @@ nav.top-nav {
   }
 
   &:focus {
-    border-color: var(--blue) !important;
-    box-shadow  : 0 0 0 0px var(--blue), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
+    border-color: var(--b-50) !important;
+    box-shadow  : 0 0 0 0px var(--b-50), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
   }
 
   &:disabled {
@@ -2972,8 +3025,8 @@ select.btcd-paper-inp {
   border       : 1px solid #e2e2e2 !important;
 
   &:focus {
-    border-color: var(--blue) !important;
-    box-shadow  : 0 0 0 0px var(--blue), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
+    border-color: var(--b-50) !important;
+    box-shadow  : 0 0 0 0px var(--b-50), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
   }
 
   &:hover:not(:disabled, :focus) {
@@ -3060,7 +3113,7 @@ select.btcd-paper-inp {
 }
 
 .btcd-tabl-lnk {
-  color          : var(--blue);
+  color          : var(--b-50);
   text-decoration: none;
 
   &:hover {
@@ -3086,11 +3139,11 @@ select.btcd-paper-inp {
     &:checked {
       + {
         .btcd-t-cbx {
-          border-color: var(--blue);
+          border-color: var(--b-50);
 
           svg {
             path {
-              fill: var(--blue);
+              fill: var(--b-50);
             }
 
             polyline {
@@ -3104,7 +3157,7 @@ select.btcd-paper-inp {
     &:indeterminate {
       + {
         .btcd-t-cbx {
-          border-color: var(--blue);
+          border-color: var(--b-50);
 
           svg {
             path {
@@ -3146,7 +3199,7 @@ select.btcd-paper-inp {
 
       path {
         fill             : none;
-        stroke           : var(--blue);
+        stroke           : var(--b-50);
         stroke-width     : 2;
         stroke-linecap   : round;
         stroke-linejoin  : round;
@@ -3167,7 +3220,7 @@ select.btcd-paper-inp {
       }
 
       line {
-        stroke        : var(--blue);
+        stroke        : var(--b-50);
         stroke-width  : 0;
         stroke-linecap: round;
       }
@@ -3325,7 +3378,7 @@ select.btcd-paper-inp {
       text-decoration: none;
 
       &:hover {
-        color: var(--blue);
+        color: var(--b-50);
       }
     }
   }
@@ -3527,7 +3580,7 @@ select.btcd-paper-inp {
 
   &:hover {
     background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.1) !important;
-    color     : var(--blue);
+    color     : var(--b-50);
   }
 
   &:focus {
@@ -3555,11 +3608,11 @@ select.btcd-paper-inp {
 }
 
 .s-t-l-active {
-  color   : var(--blue);
+  color   : var(--b-50);
   position: relative;
 
   &::before {
-    background   : var(--blue);
+    background   : var(--b-50);
     position     : absolute;
     top          : 94%;
     content      : "";
@@ -3592,18 +3645,18 @@ select.btcd-paper-inp {
   }
 
   &:hover {
-    color: var(--blue);
+    color: var(--b-50);
 
     & .lft-icn {
       background: hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 48%));
-      color     : var(--blue);
+      color     : var(--b-50);
 
       & .line-icn {
-        stroke: var(--blue);
+        stroke: var(--b-50);
       }
 
       & .fill-icn {
-        fill: var(--blue);
+        fill: var(--b-50);
       }
     }
   }
@@ -3682,7 +3735,7 @@ select.btcd-paper-inp {
   font-family     : inherit;
   font-size       : inherit;
   line-height     : inherit;
-  caret-color     : var(--blue);
+  caret-color     : var(--b-50);
   transition      : border 0.2s, box-shadow 0.2s;
 }
 
@@ -3779,23 +3832,23 @@ select.btcd-paper-inp {
 /* Focus */
 .btcd-mt-inp>input:focus,
 .btcd-mt-inp>textarea:focus {
-  border-color    : var(--blue);
+  border-color    : var(--b-50);
   border-top-color: transparent;
-  box-shadow      : inset 2px 0 var(--blue), inset -2px 0 var(--blue), inset 0 -2px var(--blue);
+  box-shadow      : inset 2px 0 var(--b-50), inset -2px 0 var(--b-50), inset 0 -2px var(--b-50);
   outline         : none;
 }
 
 .btcd-mt-inp>input:focus+span,
 .btcd-mt-inp>textarea:focus+span {
-  color: var(--blue);
+  color: var(--b-50);
 }
 
 .btcd-mt-inp>input:focus+span::before,
 .btcd-mt-inp>input:focus+span::after,
 .btcd-mt-inp>textarea:focus+span::before,
 .btcd-mt-inp>textarea:focus+span::after {
-  border-top-color: var(--blue) !important;
-  box-shadow      : inset 0 2px var(--blue);
+  border-top-color: var(--b-50) !important;
+  box-shadow      : inset 0 2px var(--b-50);
 }
 
 /* Disabled */
@@ -3883,12 +3936,12 @@ select.btcd-paper-inp {
     font-size    : 16px;
 
     &:focus {
-      border-color         : var(--blue);
+      border-color         : var(--b-50);
       background-position-y: 12px;
-      box-shadow           : 0 0 0 2px var(--blue) inset;
+      box-shadow           : 0 0 0 2px var(--b-50) inset;
 
       &~small {
-        color: var(--blue);
+        color: var(--b-50);
       }
     }
 
@@ -3919,7 +3972,7 @@ select.btcd-paper-inp {
 
   &:focus {
     border    : 0;
-    box-shadow: 0 0 0 3px var(--blue) inset !important;
+    box-shadow: 0 0 0 3px var(--b-50) inset !important;
   }
 }
 
@@ -3953,7 +4006,7 @@ select.btcd-ud-inp {
   border: 1px solid #b9c5ff;
 
   &:hover {
-    border-color: var(--blue);
+    border-color: var(--b-50);
   }
 }
 
@@ -4156,9 +4209,9 @@ select.btcd-ud-inp {
   border-radius      : 30px;
 
   &.stp-a {
-    background  : hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.9);
-    color       : var(--blue);
-    border-color: var(--blue);
+    background  : hsla(var(--blue-u-s), var(--blue-l), 0.9);
+    color       : var(--b-50);
+    border-color: var(--b-50);
   }
 }
 
@@ -4169,7 +4222,7 @@ select.btcd-ud-inp {
   height    : 3px;
 
   &.stp-line-a {
-    background: var(--blue);
+    background: var(--b-50);
   }
 }
 
@@ -4269,7 +4322,7 @@ select.btcd-ud-inp {
 
     &:focus {
       color     : var(--white);
-      box-shadow: 0 0 0 2px var(--blue);
+      box-shadow: 0 0 0 2px var(--b-50);
     }
   }
 
@@ -4296,10 +4349,10 @@ select.btcd-ud-inp {
 
   & button {
     background     : transparent;
-    color          : var(--blue);
+    color          : var(--b-50);
     border         : none;
     outline        : none;
-    border         : 1px solid var(--blue);
+    border         : 1px solid var(--b-50);
     width          : 22px;
     height         : 22px;
     padding        : 3px;
@@ -4771,7 +4824,7 @@ _:-ms-fullscreen,
 }
 
 .form-check-input[type="checkbox"] {
-  background   : var(--blue);
+  background   : var(--b-50);
   position     : relative;
   width        : 14px !important;
   height       : 14px !important;
