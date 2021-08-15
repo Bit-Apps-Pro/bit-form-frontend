@@ -1,9 +1,6 @@
-import { atom, selector, selectorFamily } from 'recoil'
-import { __ } from './Utils/i18nwrap'
-import { bitDecipher, getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
-import { sortLayoutByXY } from './Utils/FormBuilderHelper'
-import bitsFetch from './Utils/bitsFetch'
 import produce from 'immer'
+import { atom, selector, selectorFamily } from 'recoil'
+import { getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
 
 // atoms
 // eslint-disable-next-line no-undef
@@ -150,9 +147,9 @@ export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) =
 
 export const $reportSelector = selectorFamily({
     key: '$reportSelector',
-    get: (reportID) => ({get}) => get($reports)[reportID],
-    set: (reportID) => ({set}, newReport) => set($reports, oldReports => produce(oldReports,  draft => {
-        console.log('inGL', newReport);
+    get: (reportID) => ({ get }) => get($reports)[reportID],
+    set: (reportID) => ({ set }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+        console.log('inGL', newReport)
         draft[reportID] = newReport
-    }))
+    })),
 })

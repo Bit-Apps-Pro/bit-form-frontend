@@ -4,15 +4,15 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
+import Loader from './components/Loaders/Loader'
+import TableLoader from './components/Loaders/TableLoader'
+import './resource/icons/style.css'
+import logo from './resource/img/bit-form-logo.svg'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
-import TableLoader from './components/Loaders/TableLoader'
-import Loader from './components/Loaders/Loader'
-import './resource/icons/style.css'
-import logo from './resource/img/bit-form-logo.svg'
-import { Toaster } from 'react-hot-toast'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const AppSettings = lazy(() => import('./pages/AppSettings'))
