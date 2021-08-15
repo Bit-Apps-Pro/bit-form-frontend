@@ -9,7 +9,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 const svgToMiniDataURI = require('mini-svg-data-uri')
 const RouteManifest = require('webpack-route-manifest')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const autoprefixer = require('autoprefixer');
@@ -17,7 +17,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
-  const hot = argv.hot
+  const { hot } = argv
   return {
     // devtool: production ? false : 'source-map',
     devtool: production ? false : 'eval',
@@ -51,7 +51,7 @@ module.exports = (env, argv) => {
         writeToDisk: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         disableHostCheck: true,
-      }
+      },
     },
     /*  performance: {
        hints: 'error',
@@ -193,13 +193,15 @@ module.exports = (env, argv) => {
       //   },
       // }),
       // ...(!production && new webpack.HotModuleReplacementPlugin()),
-      ...(!hot ? [] : [new ReactRefreshWebpackPlugin({
-        overlay: {
-          sockIntegration: 'wds',
-          sockHost: 'localhost',
-          sockPort: 3000,
-        },
-      })]),
+      ...(production ? [] : [
+        new ReactRefreshWebpackPlugin({
+          overlay: {
+            sockIntegration: 'wds',
+            sockHost: 'localhost',
+            sockPort: 3000,
+          },
+        }),
+      ]),
     ],
 
     resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
@@ -235,7 +237,7 @@ module.exports = (env, argv) => {
               ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
-              ...(!hot ? [] : ['react-refresh/babel']),
+              ...(production ? [] : ['react-refresh/babel']),
             ],
           },
         },
