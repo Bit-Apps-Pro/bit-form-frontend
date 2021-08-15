@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
-import { useEffect } from 'react'
-import { NavLink, useParams, Redirect, useHistory } from 'react-router-dom'
+import produce from 'immer'
+import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fieldsArr, $mailTemplates } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
@@ -9,7 +9,7 @@ import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import TinyMCE from './Utilities/TinyMCE'
 
-function EmailTemplateEdit({ saveForm }) {
+function EmailTemplateEdit() {
   console.log('%c $render EmailTemplateEdit', 'background:purple;padding:3px;border-radius:5px;color:white')
   const { formType, formID, id } = useParams()
   const history = useHistory()
@@ -43,8 +43,11 @@ function EmailTemplateEdit({ saveForm }) {
   }
 
   const save = () => {
+    const newMailTem = produce(mailTemp, draft => {
+      draft.push({ updateTem: 1 })
+    })
+    setMailTem(newMailTem)
     history.push(`/form/settings/${formType}/${formID}/email-templates`)
-    saveForm('email-template', mailTemp)
   }
 
   return (
