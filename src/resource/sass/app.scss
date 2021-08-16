@@ -2350,6 +2350,10 @@ nav.top-nav {
   position: fixed;
   width: 100%;
   z-index: 999;
+
+  & + div {
+    margin-top: 40px;
+  }
 }
 
 .btcd-bld-lnk {
@@ -2472,7 +2476,6 @@ nav.top-nav {
   z-index: 9;
   width: 230px;
   box-shadow: -3px -6px 7px -1px rgb(0, 0, 0) inset;
-  margin-top: 40px;
   &::before {
     position: absolute;
     right: -15px;
