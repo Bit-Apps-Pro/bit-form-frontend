@@ -4,7 +4,12 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
         <label title={fieldData.lbl} className={`fld-lbl fld-lbl-${formID}`} htmlFor={fieldKey}>
           {fieldData.lbl}
-          {fieldData.valid?.req && ' *'}
+          {fieldData.valid?.req && (
+            <>
+              {' '}
+              <span className="fld-req-asterisk">*</span>
+            </>
+          )}
         </label>
       )}
       {children}
