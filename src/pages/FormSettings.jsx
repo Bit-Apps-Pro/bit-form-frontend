@@ -30,7 +30,6 @@ function FormSettings({ setProModal }) {
       <aside className="btcd-f-sidebar">
         <br />
         <br />
-        <br />
         <NavLink to={`/form/settings/${formType}/${formID}/form-settings`} activeClassName="btcd-f-a">
           <span className="btcd-icn icn-params" />
           {__('Form Settings', 'bitform')}
