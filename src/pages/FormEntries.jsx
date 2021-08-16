@@ -405,7 +405,6 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
       )
     }
-    if (entry.fieldType === 'password') return allResp[rowDtl.idx]?.[entry.accessor] ? '**** (encrypted)' : ''
 
     if (entry.accessor === '__user_id') {
       return (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>)
