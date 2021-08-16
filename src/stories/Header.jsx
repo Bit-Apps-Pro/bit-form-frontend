@@ -1,10 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Button } from './Button'
-import './header.css'
+import { Button } from './Button';
+import './header.css';
 
-// eslint-disable-next-line import/prefer-default-export
 export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => (
   <header>
     <div className="wrapper">
@@ -39,13 +38,15 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => (
       </div>
     </div>
   </header>
-)
+);
 
 Header.propTypes = {
   user: PropTypes.shape({}),
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onCreateAccount: PropTypes.func.isRequired,
-}
+};
 
-Header.defaultProps = { user: null }
+Header.defaultProps = {
+  user: null,
+};

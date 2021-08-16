@@ -1,11 +1,10 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+import React from 'react'
 import PropTypes from 'prop-types'
 import './button.css'
 
 /**
  * Primary UI component for user interaction
  */
-// eslint-disable-next-line import/prefer-default-export
 export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary'
   return (
@@ -13,7 +12,6 @@ export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
       style={backgroundColor && { backgroundColor }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
       {label}
