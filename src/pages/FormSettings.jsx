@@ -5,6 +5,7 @@ import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import MailOpenIcn from '../Icons/MailOpenIcn'
+import Settings2 from '../Icons/Settings2'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const Integrations = lazy(() => import('../components/Integrations'))
@@ -31,7 +32,7 @@ function FormSettings({ setProModal, saveForm }) {
         <br />
         <br />
         <NavLink to={`/form/settings/${formType}/${formID}/form-settings`} activeClassName="btcd-f-a">
-          <span className="btcd-icn icn-params" />
+          <span className="mr-1"><Settings2 size={21} /></span>
           {__('Form Settings', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/confirmations`} activeClassName="btcd-f-a">
