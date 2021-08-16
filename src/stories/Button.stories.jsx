@@ -1,13 +1,13 @@
+/* eslint-disable import/no-anonymous-default-export */
+
 import { Button } from './Button'
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   title: 'Example/Button',
   component: Button,
   argTypes: { backgroundColor: { control: 'color' } },
 }
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 const Template = (args) => <Button {...args} />
 
 export const Primary = Template.bind({})
