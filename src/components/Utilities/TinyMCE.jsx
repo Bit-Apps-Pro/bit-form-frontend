@@ -16,7 +16,7 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
         loadTinyMceScript()
       }
       setLoaded(1)
-    } else setLoaded(1)
+    }
   }
 
   useEffect(() => {
@@ -47,8 +47,8 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
         resize: 'verticle',
         convert_urls: false,
         theme: 'modern',
-        plugins: plugins || 'directionality fullscreen image link media charmap hr lists textcolor colorpicker wordpress',
-        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code| addFormField',
+        plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${!loaded ? 'wordpress' : ''}`,
+        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField',
         image_advtab: true,
         default_link_target: '_blank',
         setup(editor) {

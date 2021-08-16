@@ -7,7 +7,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           {fieldData.valid?.req && (
             <>
               {' '}
-              <span className="fld-req-asterisk">*</span>
+              <span className="fld-req-symbol">*</span>
             </>
           )}
         </label>
