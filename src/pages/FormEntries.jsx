@@ -217,7 +217,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
               return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
             }
             if (val.key === '__user_id') {
-              return (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>)
+              return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
 
             if (val.key === '__user_ip' && isFinite(row.cell.value)) {
@@ -409,7 +409,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     }
 
     if (entry.accessor === '__user_id') {
-      return (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>)
+      return  bits?.user[allResp[rowDtl.idx]?.[entry.accessor]]?.url ? (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>) : null
     }
 
     if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {
