@@ -1463,6 +1463,12 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
+.vis-disabled {
+  opacity: 0.7;
+  background: #45516f !important;
+  color: #fff !important;
+}
+
 .btcd-btn-o-blue {
   background: transparent;
   color     : var(--blue) !important;

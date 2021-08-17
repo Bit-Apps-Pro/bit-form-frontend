@@ -1,13 +1,13 @@
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { NavLink, Route, Switch, useParams, withRouter } from 'react-router-dom'
+import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $workflows } from '../GlobalStates'
+import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import '../resource/sass/components.scss'
@@ -25,6 +25,7 @@ export const ShowProModalContext = createContext(null)
 
 function FormDetails() {
   let componentMounted = true
+  const history = useHistory()
   const { formType, formID } = useParams()
   const setReports = useSetRecoilState($reports)
   const setLay = useSetRecoilState($layouts)
@@ -34,6 +35,7 @@ function FormDetails() {
   const [fulScn, setFulScn] = useState(true)
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
+  const updateBtn = useRecoilValue($updateBtn)
   const [formName, setFormName] = useRecoilState($formName)
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
@@ -51,6 +53,7 @@ function FormDetails() {
   const resetWorkflows = useResetRecoilState($workflows)
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
+  const resetUpdateBtn = useResetRecoilState($updateBtn)
 
   const setNewFormProps = () => {
     if (formType === 'new') {
@@ -129,6 +132,7 @@ function FormDetails() {
     resetWorkflows()
     resetIntegrations()
     resetConfirmations()
+    resetUpdateBtn()
   }
   const onMount = () => {
     window.scrollTo(0, 0)
@@ -232,6 +236,17 @@ function FormDetails() {
     setModal({ ...modal })
   }
 
+  const showUnsavedWarning = e => {
+    e.preventDefault()
+    setModal({
+      show: true,
+      title: 'Warning',
+      msg: 'Are you sure you want to leave the form? Unsaved data will be lost.',
+      btnTxt: 'Okay',
+      action: () => history.push('/'),
+    })
+  }
+
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -248,7 +263,6 @@ function FormDetails() {
           <div className="txt-center">
             <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
           </div>
-
         </Modal>
         <ConfirmModal
           title={modal.title}
@@ -260,7 +274,7 @@ function FormDetails() {
         />
         <nav className="btcd-bld-nav">
           <div className="btcd-bld-lnk">
-            <NavLink exact to="/">
+            <NavLink exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
               {__('Home', 'bitform')}
             </NavLink>
@@ -296,7 +310,7 @@ function FormDetails() {
 
           <div className="btcd-bld-btn">
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
-            <NavLink to="/" className="btn btcd-btn-close">
+            <NavLink to="/" className="btn btcd-btn-close" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />
             </NavLink>
           </div>

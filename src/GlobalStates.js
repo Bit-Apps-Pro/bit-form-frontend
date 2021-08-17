@@ -18,6 +18,7 @@ export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllo
 export const $confirmations = atom({ key: '$confirmations', default: {}, dangerouslyAllowMutability: true })
 export const $integrations = atom({ key: '$integrations', default: [], dangerouslyAllowMutability: true })
 export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
+export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
