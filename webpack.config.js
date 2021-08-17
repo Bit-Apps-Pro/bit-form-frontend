@@ -7,6 +7,8 @@ const WorkboxPlugin = require('workbox-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
+const svgToMiniDataURI = require('mini-svg-data-uri')
+const RouteManifest = require('webpack-route-manifest')
 // const svgToMiniDataURI = require('mini-svg-data-uri')
 // const RouteManifest = require('webpack-route-manifest')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
@@ -53,9 +55,6 @@ module.exports = (env, argv) => {
         // writeToDisk: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         disableHostCheck: true,
-        // proxy: {
-        //   '*': 'http://localhost:3000',
-        // },
       },
     },
     /*  performance: {
@@ -198,13 +197,15 @@ module.exports = (env, argv) => {
       //   },
       // }),
       // ...(!production && new webpack.HotModuleReplacementPlugin()),
-      ...(!hot ? [] : [new ReactRefreshWebpackPlugin({
-        overlay: {
-          sockIntegration: 'wds',
-          sockHost: 'localhost',
-          sockPort: 3000,
-        },
-      })]),
+      ...(production ? [] : [
+        new ReactRefreshWebpackPlugin({
+          overlay: {
+            sockIntegration: 'wds',
+            sockHost: 'localhost',
+            sockPort: 3000,
+          },
+        }),
+      ]),
     ],
 
     resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
@@ -240,7 +241,7 @@ module.exports = (env, argv) => {
               ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@wordpress/babel-plugin-makepot', { output: path.resolve(__dirname, 'locale.pot') }],
               // "@babel/plugin-transform-regenerator",
-              ...(!hot ? [] : ['react-refresh/babel']),
+              ...(production ? [] : ['react-refresh/babel']),
             ],
           },
         },

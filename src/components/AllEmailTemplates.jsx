@@ -1,20 +1,20 @@
-import { useState } from 'react'
-import { NavLink, useRouteMatch, Link } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import toast from 'react-hot-toast'
 import produce from 'immer'
-import { __ } from '../Utils/i18nwrap'
-import Table from './Utilities/Table'
-import Button from './Utilities/Button'
-import bitsFetch from '../Utils/bitsFetch'
-import ConfirmModal from './Utilities/ConfirmModal'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { Link, NavLink, useRouteMatch } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import { $mailTemplates } from '../GlobalStates'
-import { deepCopy } from '../Utils/Helpers'
+import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
-import CopyIcn from '../Icons/CopyIcn'
+import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
+import { __ } from '../Utils/i18nwrap'
+import Button from './Utilities/Button'
+import ConfirmModal from './Utilities/ConfirmModal'
+import Table from './Utilities/Table'
 
-export default function AllEmailTemplates({ formID, saveForm }) {
+export default function AllEmailTemplates({ formID }) {
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
 
@@ -23,8 +23,9 @@ export default function AllEmailTemplates({ formID, saveForm }) {
   const duplicateTem = i => {
     const newMailTemObj = produce(mailTem, draft => {
       draft.splice(i + 1, 0, { title: draft[i].title, sub: draft[i].sub, body: draft[i].body })
+      draft.push({ updateTem: 1 })
     })
-    saveForm('email-template', newMailTemObj)
+    setMailTem(newMailTemObj)
   }
 
   const delTem = (i, templateData) => {

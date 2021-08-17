@@ -1,18 +1,33 @@
 /* eslint-disable no-undef */
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { loadScript } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 
 export default function TinyMCE({ formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins }) {
-  useEffect(() => {
-    tinymce.remove(`textarea#${id}-settings`)
+  const [loaded, setLoaded] = useState(0)
+  useEffect(() => loadTinyMceScript(), [])
 
-    if (disabled) document.getElementById(`${id}-settings`).value = value || ''
+  const loadTinyMceScript = async () => {
+    if (typeof tinymce === 'undefined') {
+      const res = await loadScript('https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js', 'tinymceCDN')
+      if (!res) {
+        // eslint-disable-next-line no-console
+        console.warn('Is your internet working properly to load script?')
+        loadTinyMceScript()
+      }
+      setLoaded(1)
+    }
+  }
+
+  useEffect(() => {
+    if (typeof tinymce === 'undefined' || disabled) document.getElementById(`${id}-settings`).value = value || ''
     else {
+      tinymce.remove(`textarea#${id}-settings`)
       timyMceInit()
       tinymce.get(`${id}-settings`)?.setContent(value || '')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields, id, disabled])
+  }, [formFields, id, disabled, loaded])
 
   const timyMceInit = () => {
     if (typeof tinymce !== 'undefined') {
@@ -32,8 +47,8 @@ export default function TinyMCE({ formFields, id, value, onChangeHandler, toolba
         resize: 'verticle',
         convert_urls: false,
         theme: 'modern',
-        plugins: plugins || 'directionality fullscreen image link media charmap hr lists textcolor colorpicker wordpress',
-        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code| addFormField',
+        plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${!loaded ? 'wordpress' : ''}`,
+        toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField',
         image_advtab: true,
         default_link_target: '_blank',
         setup(editor) {

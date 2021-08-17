@@ -1,18 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 
+import produce from 'immer'
 import { useState } from 'react'
-import { NavLink, useParams, useHistory } from 'react-router-dom'
+import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../Utils/i18nwrap'
-import Modal from './Utilities/Modal'
+import { $fieldsArr, $mailTemplates } from '../GlobalStates'
 // import '../resource/css/tinymce.css'
 import BackIcn from '../Icons/BackIcn'
-import { $fieldsArr, $mailTemplates } from '../GlobalStates'
+import { __ } from '../Utils/i18nwrap'
+import Modal from './Utilities/Modal'
 import TinyMCE from './Utilities/TinyMCE'
-import { deepCopy } from '../Utils/Helpers'
 
-function EmailTemplateNew({ saveForm }) {
+function EmailTemplateNew() {
   console.log('%c $render EmailTemplate new', 'background:purple;padding:3px;border-radius:5px;color:white')
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
@@ -30,11 +30,12 @@ function EmailTemplateNew({ saveForm }) {
   }
 
   const save = () => {
-    const newMailTem = deepCopy(mailTem)
-    newMailTem.push(tem)
+    const newMailTem = produce(mailTem, draft => {
+      draft.push(tem)
+      draft.push({ updateTem: 1 })
+    })
     setMailTem(newMailTem)
     history.push(`/form/settings/${formType}/${formID}/email-templates`)
-    saveForm('email-template', newMailTem)
   }
 
   const addFieldToSubject = ({ target: { value } }) => {

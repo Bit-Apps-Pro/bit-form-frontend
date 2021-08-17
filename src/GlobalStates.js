@@ -1,10 +1,6 @@
-/* eslint-disable no-param-reassign */
-import { atom, selector, selectorFamily } from 'recoil'
 import produce from 'immer'
-import { __ } from './Utils/i18nwrap'
-import { bitDecipher, getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
-import { sortLayoutByXY } from './Utils/FormBuilderHelper'
-import bitsFetch from './Utils/bitsFetch'
+import { atom, selector, selectorFamily } from 'recoil'
+import { getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
 
 // atoms
 // eslint-disable-next-line no-undef
@@ -22,6 +18,7 @@ export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllo
 export const $confirmations = atom({ key: '$confirmations', default: {}, dangerouslyAllowMutability: true })
 export const $integrations = atom({ key: '$integrations', default: [], dangerouslyAllowMutability: true })
 export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
+export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
@@ -37,6 +34,7 @@ export const $reportSelector = selectorFamily({
   key: '$reportSelector',
   get: (reportID) => ({ get }) => get($reports)[reportID],
   set: (reportID) => ({ set }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+    // eslint-disable-next-line no-param-reassign
     draft[reportID] = newReport
   })),
 })

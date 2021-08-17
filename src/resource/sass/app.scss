@@ -1414,18 +1414,15 @@ input[type="checkbox"].disabled:checked:before {
       transform: scale(1);
     }
   }
-
   &:hover .blk-icn-wrp,
   :focus .blk-icn-wrp {
     height: auto;
     width : auto;
   }
-
   &:hover .blk-icn-wrp button,
   :focus .blk-icn-wrp button {
     transform: scale(1);
   }
-
   &:hover .react-resizable-handle,
   :focus .react-resizable-handle {
     transform: scale(1);
@@ -1707,6 +1704,12 @@ input[type="checkbox"].disabled:checked:before {
     opacity         : 0.7;
     cursor          : not-allowed;
   }
+}
+
+.vis-disabled {
+  opacity: 0.7;
+  background: #45516f !important;
+  color: #fff !important;
 }
 
 .btcd-btn-o-blue {
@@ -2247,7 +2250,6 @@ nav.top-nav {
     // background: #f3f3f3;
     background: var(--white-0-95)
   }
-
   &:active,
   &:focus {
     // background: #dcdcdc;
@@ -2896,6 +2898,10 @@ nav.top-nav {
   position: fixed;
   width: 100%;
   z-index: 999;
+
+  & + div {
+    margin-top: 40px;
+  }
 }
 
 .btcd-bld-lnk {
@@ -4541,7 +4547,6 @@ select.btcd-ud-inp {
   padding: 10px;
 }
 
-
 .error-404 {
   position: relative;
 
@@ -5041,7 +5046,6 @@ _:-ms-fullscreen,
 .p-4 {
   padding: 20px;
 }
-
 .pl-6 {
   padding-left: 30px;
 }
@@ -5120,7 +5124,6 @@ _:-ms-fullscreen,
   font-weight: 100;
   font-family: "Roboto", sans-serif;
 }
-
 .cooltip-link {
   // color: #2ad4ff; 
   color: var(--wave-blue-58); 

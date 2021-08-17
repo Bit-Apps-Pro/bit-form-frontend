@@ -1,6 +1,6 @@
 import { memo, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import CloseIcn from '../Icons/CloseIcn'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -9,7 +9,7 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
 import SnackMsg from './Utilities/SnackMsg'
-import { $confirmations, $fieldsArr } from '../GlobalStates'
+import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
 import TrashIcn from '../Icons/TrashIcn'
 
 function WebHooks({ removeIntegration }) {
@@ -17,63 +17,55 @@ function WebHooks({ removeIntegration }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const handleHookTitle = (e, idx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.webHooks[idx].title = e.target.value
     setAllConf(confirmation)
-  }
-
-  const splitParamsFromUrl = url => {
-    const matchedParams = url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
-    const allparams = []
-    if (matchedParams) {
-      for (let j = 0; j < matchedParams.length; j += 1) {
-        const param = matchedParams[j].split('=')
-        allparams.push({ key: param[0].substring(1), value: param[1] })
-      }
-    }
-    return allparams
+    setUpdateBtn({ unsaved: true })
   }
 
   const handleLink = (val, i) => {
     const confirmation = deepCopy(allConf)
-    setAllConf(confirmation)
     confirmation.type.webHooks[i].url = val
     confirmation.type.webHooks[i].params = splitParamsFromUrl(val)
+    setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const handleMethod = (val, i) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.webHooks[i].method = val
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const handleParam = (typ, val, hookIndx, paramIndx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.webHooks[hookIndx].params[paramIndx][typ] = val
-    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
+    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx, confirmation)
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const delParam = (hookIndx, paramIndx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.webHooks[hookIndx].params.splice(paramIndx, 1)
-    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
+    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx, confirmation)
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const addParam = hookIndx => {
     const confirmation = deepCopy(allConf)
     if (!confirmation.type.webHooks[hookIndx]?.params) {
       confirmation.type.webHooks[hookIndx].params = []
-    } else if (confirmation.type.webHooks[hookIndx]?.params) {
-      const { url } = confirmation.type.webHooks[hookIndx]
-      confirmation.type.webHooks[hookIndx].params = splitParamsFromUrl(url)
     }
     confirmation.type.webHooks[hookIndx].params.push({ key: 'key', value: 'value' })
-    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx)
+    confirmation.type.webHooks[hookIndx].url = getUrlWithParams(hookIndx, confirmation)
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const addMoreHook = () => {
@@ -86,6 +78,7 @@ function WebHooks({ removeIntegration }) {
       confirmation.type.webHooks.push({ title: `Web Hook ${confirmation.type.webHooks.length + 1}`, url: '', method: 'GET' })
     }
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const rmvHook = async i => {
@@ -129,22 +122,31 @@ function WebHooks({ removeIntegration }) {
     })
   }
 
-  const getUrlWithParams = hookIndx => {
-    const confirmation = deepCopy(allConf)
-    let { url } = confirmation.type.webHooks[hookIndx]
-    const { params } = confirmation.type.webHooks[hookIndx]
-    url = url.replaceAll(/\?.*/gi, '')
-    if (params) {
-      const lngth = params.length
-      for (let j = 0; j < lngth; j += 1) {
-        if (j === 0 && url.match(/\?/g) === null) {
-          url += `?${params[j].key}=${params[j].value}`
-        } else {
-          url += `&${params[j].key}=${params[j].value}`
-        }
+  const getUrlWithParams = (hookIndx, confirmation) => {
+    const { url, params } = confirmation.type.webHooks[hookIndx]
+    try {
+      const theUrl = new URL(url)
+      theUrl.search = ''
+      let newURL = theUrl.href
+      if (params.length) {
+        newURL += '?'
+        newURL += params.map(({ key, value }) => `${key}=${value}`).join('&')
       }
+      return newURL
+    } catch (e) {
+      return ''
     }
-    return url
+  }
+
+  const splitParamsFromUrl = url => {
+    try {
+      const urlParams = new URLSearchParams(new URL(url).search)
+      const allparams = []
+      for (const [key, value] of urlParams.entries()) allparams.push({ key, value })
+      return allparams
+    } catch (e) {
+      return []
+    }
   }
 
   return (
@@ -197,23 +199,23 @@ function WebHooks({ removeIntegration }) {
                     <div className="td">{__('Key', 'bitform')}</div>
                     <div className="td">{__('Value', 'bitform')}</div>
                   </div>
-                  {itm?.params && itm.params.map(({ key, value }, childIdx) => (
-                    <div key={`url-p-${childIdx + 11}`} className="tr">
+                  {itm?.params && itm.params.map(({ key, value }, paramIdx) => (
+                    <div key={`url-p-${paramIdx + 11}`} className="tr">
                       <div className="td">
-                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, i, childIdx)} type="text" value={key} />
+                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, i, paramIdx)} type="text" value={key} />
                       </div>
                       <div className="td">
-                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('value', e.target.value, i, childIdx)} type="text" value={value} />
+                        <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('value', e.target.value, i, paramIdx)} type="text" value={value} />
                       </div>
                       <div className="flx p-atn">
-                        <Button onClick={() => delParam(i, childIdx)} icn>
+                        <Button onClick={() => delParam(i, paramIdx)} icn>
                           <TrashIcn size={16} />
                         </Button>
                         <MultiSelect
                           options={fieldsArr.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
                           className="btcd-paper-drpdwn wdt-200 ml-2"
                           singleSelect
-                          onChange={val => handleParam('value', val, i, childIdx)}
+                          onChange={val => handleParam('value', val, i, paramIdx)}
                           defaultValue={value}
                         />
                       </div>

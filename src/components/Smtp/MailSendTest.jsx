@@ -30,10 +30,6 @@ export default function MailSendTest({ settab }) {
       error: data => data,
     })
   }
-  useEffect(() => {
-    settab('test_mail')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <div>

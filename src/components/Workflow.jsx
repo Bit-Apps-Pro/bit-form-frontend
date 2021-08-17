@@ -3,7 +3,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import toast from 'react-hot-toast'
 import CloseIcn from '../Icons/CloseIcn'
 import { __ } from '../Utils/i18nwrap'
@@ -18,7 +18,7 @@ import LogicChip from './Utilities/LogicChip'
 import MtSelect from './Utilities/MtSelect'
 import TableCheckBox from './Utilities/TableCheckBox'
 import bitsFetch from '../Utils/bitsFetch'
-import { $mailTemplates, $workflows, $bits, $integrations, $confirmations, $fieldsArr } from '../GlobalStates'
+import { $mailTemplates, $workflows, $bits, $integrations, $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
 import TrashIcn from '../Icons/TrashIcn'
 
@@ -29,6 +29,7 @@ function Workflow({ formID }) {
   const integrations = useRecoilValue($integrations)
   const confirmations = useRecoilValue($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   /* eslint-disable-next-line no-undef */
   const workFlows = deepCopy(allWorkFlows)
   const bits = useRecoilValue($bits)
@@ -90,6 +91,7 @@ function Workflow({ formID }) {
       successAction: [],
     })
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const delLgcGrp = val => {
@@ -116,6 +118,7 @@ function Workflow({ formID }) {
   const handleLgcTitle = (e, i) => {
     workFlows[i].title = e.target.value
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const addLogic = (typ, lgcGrpInd) => {
@@ -148,6 +151,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const addSubLogic = (typ, lgcGrpInd, ind) => {
@@ -180,6 +184,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const addSubSubLogic = (typ, lgcGrpInd, ind, subInd) => {
@@ -198,6 +203,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeLogicChip = (e, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -220,6 +226,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeLogic = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -251,6 +258,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeValue = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -273,6 +281,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeFormField = (val, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -298,6 +307,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const delLogic = (lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -360,6 +370,7 @@ function Workflow({ formID }) {
         })
       }
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const addAction = lgcGrpInd => {
@@ -372,6 +383,7 @@ function Workflow({ formID }) {
       }
       return prv
     })
+    setUpdateBtn({ unsaved: true })
   }
 
   const addInlineLogic = (typ, lgcGrpInd, lgcInd, subLgcInd, subSubLgcInd) => {
@@ -400,6 +412,7 @@ function Workflow({ formID }) {
         return prv
       })
     }
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeActionType = (typ, lgcGrpInd) => {
@@ -410,6 +423,7 @@ function Workflow({ formID }) {
     }
     workFlows[lgcGrpInd].action_type = typ
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeActionRun = (typ, lgcGrpInd) => {
@@ -420,16 +434,19 @@ function Workflow({ formID }) {
     }
     workFlows[lgcGrpInd].action_run = typ
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeActionBehave = (typ, lgcGrpInd) => {
     workFlows[lgcGrpInd].action_behaviour = typ
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeValidateMsg = (val, lgcGrpInd) => {
     workFlows[lgcGrpInd].validateMsg = val
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const setSuccessMsg = (val, lgcGrpInd) => {
@@ -440,6 +457,7 @@ function Workflow({ formID }) {
       }
     }
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const setRedirectPage = (val, lgcGrpInd) => {
@@ -450,6 +468,7 @@ function Workflow({ formID }) {
       }
     }
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const setWebHooks = (val, lgcGrpInd) => {
@@ -460,6 +479,7 @@ function Workflow({ formID }) {
       }
     }
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const setInteg = (val, lgcGrpInd) => {
@@ -470,11 +490,13 @@ function Workflow({ formID }) {
       }
     }
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const preventDelete = (val, lgcGrpInd) => {
     workFlows[lgcGrpInd].avoid_delete = val
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const setEmailSetting = (typ, e, lgcGrpInd) => {
@@ -529,6 +551,7 @@ function Workflow({ formID }) {
       }
     }
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const enableAction = (checked, typ, lgcGrpInd) => {
@@ -550,6 +573,7 @@ function Workflow({ formID }) {
       }
     }
     setworkFlows([...workFlows])
+    setUpdateBtn({ unsaved: true })
   }
 
   const closeConfMdl = () => {

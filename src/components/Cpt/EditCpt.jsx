@@ -8,7 +8,7 @@ import SnackMsg from '../Utilities/SnackMsg'
 import LoaderSm from '../Loaders/LoaderSm'
 import DeleteCpt from './DeleteCpt'
 
-export default function AllCpt({ settab, posts, types }) {
+export default function AllCpt({ posts, types }) {
   const [chekcType, setchekcType] = useState(false)
   const [slugName, setSlugName] = useState('')
   const [isLoading, setLoading] = useState(false)
@@ -49,11 +49,6 @@ export default function AllCpt({ settab, posts, types }) {
     setEditPost(tmpData)
   }
 
-  useEffect(() => {
-    settab('all_post')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setsnack} />
@@ -68,8 +63,8 @@ export default function AllCpt({ settab, posts, types }) {
         }}
       >
         <div className="mt-2"><b>{__('Post Type', 'bitform')}</b></div>
-        <select name="post_type" className="btcd-paper-inp mt-1" onChange={(e) => searchPostHandle(e.target.value)}>
-          <option disabled selected>{__('Select Type *', 'bitform')}</option>
+        <select name="post_type" className="btcd-paper-inp mt-1" onChange={(e) => searchPostHandle(e.target.value)} value="">
+          <option disabled value="">{__('Select Type *', 'bitform')}</option>
           {Object.values(types).map((type, key) => (
             <option key={`k${key * 43}`} value={type}>{type}</option>
           ))}

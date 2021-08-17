@@ -195,6 +195,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
 
       <button
+        id="secondary-update-btn"
         className="btn f-left btcd-btn-lg green sh-sm flx"
         type="button"
         // onClick={() => saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)}

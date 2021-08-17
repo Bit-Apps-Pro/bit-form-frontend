@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react'
 import bitsFetch from '../../Utils/bitsFetch'
 import Loader from '../Loaders/Loader'
 
-export default function GoogleAdInfo({ settab, rowDtl }) {
+export default function GoogleAdInfo({ rowDtl }) {
   const [row, setRow] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    settab('google_ad')
     setIsLoading(true)
     bitsFetch({ gclid: rowDtl?.GCLID }, 'bitforms_get_gclid_info').then((res) => {
       if (res !== undefined && res.success) {

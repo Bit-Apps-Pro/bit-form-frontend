@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { withQuicklink } from 'quicklink/dist/react/hoc'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import toast from 'react-hot-toast'
 import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
 import acf from '../resource/img/integ/ACF.svg'
@@ -62,8 +63,8 @@ function Integrations() {
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks, pro: !isPro },
-    { type: 'Zapier', logo: zapier, pro: !isPro  },
-    { type: 'Integromat', logo: integromat, pro: !isPro   },
+    { type: 'Zapier', logo: zapier, pro: !isPro },
+    { type: 'Integromat', logo: integromat, pro: !isPro },
     { type: 'Integrately', logo: integrately, pro: !isPro },
     { type: 'Pabbly', logo: pabbly, pro: !isPro },
     { type: 'Zoho Flow', logo: zohoflow, pro: !isPro },
@@ -104,15 +105,15 @@ function Integrations() {
     bitsFetch({ formID, id: tempIntegration.id }, 'bitforms_delete_integration')
       .then(response => {
         if (response && response.success) {
-          setSnackbar({ show: true, msg: `${response.data.message}` })
-        } else if (response && response.data && response.data.data) {
+          toast.success(response.data.message)
+        } else if (response?.data?.data) {
           newInteg.splice(i, 0, tempIntegration)
-          setIntegration([...newInteg])
-          setSnackbar({ show: true, msg: `${__('Integration deletion failed Cause', 'bitform')}:${response.data.data}. ${__('please try again', 'bitform')}` })
+          setIntegration(newInteg)
+          toast.error(`${__('Integration deletion failed Cause', 'bitform')}:${response.data.data}. ${__('please try again', 'bitform')}`)
         } else {
           newInteg.splice(i, 0, tempIntegration)
-          setIntegration([...newInteg])
-          setSnackbar({ show: true, msg: __('Integration deletion failed. please try again', 'bitform') })
+          setIntegration(newInteg)
+          toast.error(__('Integration deletion failed. please try again', 'bitform'))
         }
       })
   }

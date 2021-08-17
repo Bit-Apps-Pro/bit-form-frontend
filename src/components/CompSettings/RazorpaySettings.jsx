@@ -31,6 +31,7 @@ export default function RazorpaySettings() {
 
   const handleInput = (name, value, type) => {
     if (type) {
+      if (!fieldData.options[type]) fieldData.options[type] = {}
       if (value) {
         fieldData.options[type][name] = value
       } else {
@@ -40,6 +41,10 @@ export default function RazorpaySettings() {
       fieldData.options[name] = value
     } else {
       delete fieldData.options[name]
+    }
+
+    if (type === 'invoice' && name === 'generate') {
+      fieldData.options.invoice.itemName = 'Due Amount'
     }
 
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
@@ -271,7 +276,14 @@ export default function RazorpaySettings() {
               <div className="txt-center mt-2"><button className="icn-btn" type="button" onClick={() => handleNotes('add')}>+</button></div>
             </StyleAccordion>
             <div className="btcd-hr" />
-
+            {/* invoice */}
+            {/* <StyleAccordion title="Invoice" className="style-acc">
+              <SingleToggle title={__('Generate Invoice', 'bitform')} action={e => handleInput('generate', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.generate} />
+              <SingleInput inpType="text" title={__('Item Name', 'bitform')} value={fieldData.options?.invoice?.itemName || ''} name="btnTxt" action={e => handleInput('itemName', e.target.value, 'invoice')} className="mt-3" />
+              <SingleToggle title={__('Send SMS to customer', 'bitform')} action={e => handleInput('sendSMS', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendSMS} className="mt-3" />
+              <SingleToggle title={__('Send Email to customer', 'bitform')} action={e => handleInput('sendEmail', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendEmail} className="mt-3" />
+            </StyleAccordion>
+            <div className="btcd-hr" /> */}
           </StyleAccordion>
         </>
       )}

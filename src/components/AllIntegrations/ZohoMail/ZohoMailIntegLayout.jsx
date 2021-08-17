@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import TinyMCE from '../../Utilities/TinyMCE'
 import ZohoMailActions from './ZohoMailActions'
 
 export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
@@ -25,70 +25,6 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
     mail.push({ title: 'Form Fields', type: 'group', childs: flds })
     return mail
   }
-
-  const timyMceInit = () => {
-    if (typeof tinymce !== 'undefined' && formFields.length > 0) {
-      const s = document.querySelectorAll('.form-fields-em')
-      for (let i = 0; i < s.length; i += 1) {
-        s[i].style.display = 'none'
-      }
-      // eslint-disable-next-line no-undef
-      tinymce.init({
-        selector: '#body-content',
-        plugins: 'link hr lists wpview wpemoji',
-        theme: 'modern',
-        menubar: false,
-        branding: false,
-        resize: 'verticle',
-        min_width: 300,
-        toolbar: 'formatselect bold italic | alignleft aligncenter alignright | outdent indent | link | undo redo | hr | addFormField | toggleCode',
-        setup(editor) {
-          editor.on('Paste Change input Undo Redo', () => {
-            handleMailBody(editor.getContent())
-          })
-
-          editor.addButton('addFormField', {
-            text: 'Form Fields ',
-            tooltip: 'Add Form Field Value in Message',
-            type: 'menubutton',
-            icon: false,
-            menu: formFields.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
-          })
-
-          editor.addButton('toogleCode', {
-            text: '</>',
-            tooltip: __('Toggle preview', 'bitform'),
-            icon: false,
-            onclick(e) {
-              // eslint-disable-next-line no-undef
-              const $ = tinymce.dom.DomQuery
-              const myTextarea = $('textarea')
-              const myIframe = $(editor.iframeElement)
-              myTextarea.value = editor.getContent({ source_view: true })
-              myIframe.toggleClass('hidden')
-              myTextarea.toggleClass('visible')
-              if ($('iframe.hidden').length > 0) {
-                myTextarea.prependTo('.mce-edit-area')
-              } else {
-                myIframe.value = myTextarea.value
-                myTextarea.appendTo('body')
-              }
-            },
-          })
-        },
-      })
-    }
-  }
-
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    window.tinymce && tinymce.remove()
-  }, [])
-
-  useEffect(() => {
-    timyMceInit()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields])
 
   const handleInput = (val, typ) => {
     setMailConf(prevState => {
@@ -171,15 +107,11 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
         <div className="flx flx-between">
           <b>{__('Body:', 'bitform')}</b>
         </div>
-        <label htmlFor="body-content" className="mt-2 w-10">
-          <textarea
-            id="body-content"
-            className="btcd-paper-inp mt-1"
-            rows="5"
-            value={mailConf.body || ''}
-            onChange={(e) => handleInput(e.target.value, 'body')}
-          />
-        </label>
+        <TinyMCE
+          id="body-content"
+          value={mailConf.body || ''}
+          onChangeHandler={handleMailBody}
+        />
       </div>
       <br />
       <br />

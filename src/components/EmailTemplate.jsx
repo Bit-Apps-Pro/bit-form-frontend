@@ -5,22 +5,22 @@ import FSettingsLoader from './Loaders/FSettingsLoader'
 
 const EmailTemplateNew = lazy(() => import('./EmailTemplateNew'))
 const EmailTemplateEdit = lazy(() => import('./EmailTemplateEdit'))
-export default function EmailTemplate({ formID, saveForm }) {
+export default function EmailTemplate({ formID }) {
   const { path } = useRouteMatch()
 
   return (
     <Switch>
       <Route exact path={path}>
-        <AllEmailTemplates formID={formID} saveForm={saveForm} />
+        <AllEmailTemplates formID={formID} />
       </Route>
       <Route path={`${path}/new`}>
         <Suspense fallback={<FSettingsLoader />}>
-          <EmailTemplateNew saveForm={saveForm} />
+          <EmailTemplateNew />
         </Suspense>
       </Route>
       <Route path={`${path}/:id`}>
         <Suspense fallback={<FSettingsLoader />}>
-          <EmailTemplateEdit saveForm={saveForm} />
+          <EmailTemplateEdit />
         </Suspense>
       </Route>
     </Switch>
