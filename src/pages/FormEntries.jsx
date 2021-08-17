@@ -10,7 +10,7 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $bits, $fieldLabels, $forms } from '../GlobalStates'
+import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -38,17 +38,18 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
   const bits = useRecoilValue($bits)
+  const reportData = useRecoilValue($reportSelector(0))
 
   useEffect(() => {
-    /*     if (currentReport) {
+        if (reportData) {
           const allLabelObj = {}
 
           allLabels.map((itm) => {
             allLabelObj[itm.key] = itm
           })
           const labels = []
-          console.log('currentReport', currentReport, allLabels, );
-          currentReport.details?.order?.forEach((field) => {
+          console.log('reportData', reportData, allLabels, );
+          reportData.details?.order?.forEach((field) => {
             if (
               field
               && field !== 'sl'
@@ -59,11 +60,12 @@ function FormEntries({ allResp, setAllResp, integrations }) {
             }
           })
           // temporary tuen off report feature
-          // tableHeaderHandler(labels.length ? labels : allLabels)
-          tableHeaderHandler(allLabels)
+          tableHeaderHandler(labels.length ? labels : allLabels)
         } else if (allLabels.length) {
-        } */
-    tableHeaderHandler(allLabels)
+          tableHeaderHandler(allLabels)
+        }
+        // console.log(`reportData`, reportData)
+    // tableHeaderHandler(reportData?.details?.order || allLabels)
   }, [allLabels])
 
   const closeConfMdl = useCallback(() => {
@@ -215,7 +217,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
               return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
             }
             if (val.key === '__user_id') {
-              return (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>)
+              return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
             }
 
             if (val.key === '__user_ip' && isFinite(row.cell.value)) {
@@ -405,10 +407,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
       )
     }
-    if (entry.fieldType === 'password') return allResp[rowDtl.idx]?.[entry.accessor] ? '**** (encrypted)' : ''
 
     if (entry.accessor === '__user_id') {
-      return (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>)
+      return  bits?.user[allResp[rowDtl.idx]?.[entry.accessor]]?.url ? (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>) : null
     }
 
     if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {

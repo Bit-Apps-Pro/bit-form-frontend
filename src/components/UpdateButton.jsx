@@ -36,7 +36,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
         e.preventDefault()
         if (!buttonDisabled) {
-          saveOrSubmitForm()
+          saveOrUpdateForm()
         }
         return false
       }
@@ -77,14 +77,14 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [additional.updateForm])
 
-  const saveOrSubmitForm = () => {
-    const saveBtn = select('#btcd-save-btn')
+  const saveOrUpdateForm = btnTyp => {
+    const saveBtn = select('#secondary-update-btn')
     if (saveBtn) {
       saveBtn.click()
-    } else {
-      console.log('submit', select('#update-btn'))
-      select('#update-btn').click()
+    } else if (btnTyp === 'update-btn') {
       saveForm()
+    } else {
+      select('#update-btn').click()
     }
   }
 
@@ -198,7 +198,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   return (
-    <button id="update-btn" className="btn blue tooltip pos-rel" type="button" onClick={saveOrSubmitForm} disabled={buttonDisabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
+    <button id="update-btn" className="btn blue tooltip pos-rel" type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={buttonDisabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
       {buttonText}
       {buttonDisabled && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>
