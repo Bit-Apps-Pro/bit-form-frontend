@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import { Switch, Route, useRouteMatch, NavLink } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import { __ } from '../Utils/i18nwrap'
 import ConfMsg from './ConfMsg'
 import RedirUrl from './RedirUrl'
@@ -18,9 +19,11 @@ export default function ConfType({ formID }) {
     let status = await bitsFetch({ formID, id }, action)
     if (status !== undefined) {
       status = status.success
+      toast.success('Deleted Successfully')
     } else if (status.data && status.data.data) {
       // if internet connection error than status will undefined and set null
       status = status.data.data
+      toast.error(`Delete failed. Cause: ${status.data.data}`)
     } else {
       // if internet connection error than status will undefined and set null
       status = null

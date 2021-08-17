@@ -2,32 +2,35 @@
 /* eslint-disable no-undef */
 
 import { memo, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../Utils/i18nwrap'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
+import CloseIcn from '../Icons/CloseIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import { deepCopy } from '../Utils/Helpers'
-import ConfirmModal from './Utilities/ConfirmModal'
+import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
-import CloseIcn from '../Icons/CloseIcn'
-import { $confirmations, $fieldsArr } from '../GlobalStates'
+import ConfirmModal from './Utilities/ConfirmModal'
 import TinyMCE from './Utilities/TinyMCE'
-import TrashIcn from '../Icons/TrashIcn'
 
 function ConfMsg({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const handleMsg = (mg, idx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.successMsg[idx].msg = mg
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const handleMsgTitle = (e, idx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.successMsg[idx].title = e.target.value
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const addMoreMsg = () => {
@@ -39,6 +42,7 @@ function ConfMsg({ removeIntegration }) {
       confirmation.type.successMsg.push({ title: `Untitled Message ${confirmation.type.successMsg.length + 1}`, msg: __('Successfully Submitted.', 'bitform') })
     }
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const closeMdl = () => {

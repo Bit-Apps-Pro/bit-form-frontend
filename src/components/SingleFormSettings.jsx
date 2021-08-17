@@ -7,15 +7,15 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $additionalSettings, $bits, $fields } from '../GlobalStates'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
-import { deepCopy } from '../Utils/Helpers'
 import SingleToggle2 from './Utilities/SingleToggle2'
-import TrashIcn from '../Icons/TrashIcn'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
