@@ -2,8 +2,8 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $workflows } from '../GlobalStates'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
@@ -17,32 +17,20 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const { formType, formID } = useParams()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const [buttonDisabled, setbuttonDisabled] = useState(false)
   const lay = useRecoilValue($layouts)
   const fields = useRecoilValue($fields)
   const formName = useRecoilValue($formName)
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
   const setFieldLabels = useSetRecoilState($fieldLabels)
+  const resetUpdateBtn = useResetRecoilState($updateBtn)
   const [reports, setReports] = useRecoilState($reports)
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
+  const [updateBtn, setUpdateBtn] = useRecoilState($updateBtn)
   const [workFlows, setworkFlows] = useRecoilState($workflows)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [integrations, setIntegration] = useRecoilState($integrations)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
-
-  useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
-        e.preventDefault()
-        if (!buttonDisabled) {
-          saveOrUpdateForm()
-        }
-        return false
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -77,6 +65,32 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [additional.updateForm])
 
+  const updateBtnEvent = e => {
+    e.preventDefault()
+    if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
+      if (!updateBtn.disabled) {
+        saveOrUpdateForm()
+      }
+      return false
+    }
+  }
+
+  const closeTabOrBrowserEvent = e => {
+    e.preventDefault()
+    if (updateBtn.unsaved) {
+      e.returnValue = ''
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', updateBtnEvent)
+    window.addEventListener('beforeunload', closeTabOrBrowserEvent)
+    return () => {
+      document.removeEventListener('keydown', updateBtnEvent)
+      window.removeEventListener('beforeunload', closeTabOrBrowserEvent)
+    }
+  })
+
   const saveOrUpdateForm = btnTyp => {
     const saveBtn = select('#secondary-update-btn')
     if (saveBtn) {
@@ -95,7 +109,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   const saveForm = (type, updatedData) => {
-    console.log('hi')
     let mailTemplates = mailTem
     let additionalSettings = additional
     let allIntegrations = integrations
@@ -125,7 +138,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       return
     }
 
-    setbuttonDisabled(true)
+    setUpdateBtn({ disabled: true, loading: true })
 
     const sortLayoutLG = { lg: [], md: [], sm: [] }
     sortLayoutLG.lg = sortLayoutByXY(lay.lg)
@@ -177,7 +190,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
             data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },
           }))
-          setbuttonDisabled(false)
+          resetUpdateBtn()
           sessionStorage.removeItem('btcd-lc')
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')
@@ -198,9 +211,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   return (
-    <button id="update-btn" className="btn blue tooltip pos-rel" type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={buttonDisabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
+    <button id="update-btn" className={`btn tooltip pos-rel ${!updateBtn.unsaved ? 'vis-disabled' : 'blue'}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
       {buttonText}
-      {buttonDisabled && <LoaderSm size={20} clr="white" className="ml-1" />}
+      {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>
   )
 }
