@@ -16,7 +16,7 @@ const App = lazy(() => import('./App'))
 
 if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
   // eslint-disable-next-line camelcase
-  __webpack_public_path__ = `${bits.assetsURL}/js/`
+  // __webpack_public_path__ = `${bits.assetsURL}/js/`
 }
 if (typeof bits !== 'undefined' && bits.baseURL && `${window.location.pathname + window.location.search}#` !== bits.baseURL) {
   bits.baseURL = `${window.location.pathname + window.location.search}#`

@@ -9,6 +9,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 const svgToMiniDataURI = require('mini-svg-data-uri')
 const RouteManifest = require('webpack-route-manifest')
+// const svgToMiniDataURI = require('mini-svg-data-uri')
+// const RouteManifest = require('webpack-route-manifest')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -40,15 +42,17 @@ module.exports = (env, argv) => {
       chunkFilename: production ? '[name].js?v=[contenthash:6]' : '[name].js',
       library: '_bitforms',
       libraryTarget: 'umd',
-      // publicPath: '/',
+      assetModuleFilename: production ? '../img/[name][contenthash:4].[ext]' : '../img/[name].[ext]',
+      // publicPath: 'http://localhost:3000/',
     },
     target: 'web',
     ...hot && {
       devServer: {
+        // publicPath: 'http://localhost:3000',
         hot: true,
         liveReload: false,
         port: 3000,
-        writeToDisk: true,
+        // writeToDisk: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         disableHostCheck: true,
       },
@@ -117,7 +121,7 @@ module.exports = (env, argv) => {
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development') } }),
       new MiniCssExtractPlugin({
-        filename: '../css/[name].css?v=[contenthash:6]',
+        filename: hot ? '[name].css' : '../css/[name].css?v=[contenthash:6]',
         ignoreOrder: true,
       }),
       new CopyPlugin({
@@ -279,29 +283,31 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.svg$/i,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                options: { generator: (content) => svgToMiniDataURI(content.toString()) },
-                name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
-                outputPath: '../img',
-              },
-            },
-          ],
+          type: 'asset/inline',
+          // use: [
+          //   {
+          //     loader: 'url-loader',
+          //     options: {
+          //       options: { generator: (content) => svgToMiniDataURI(content.toString()) },
+          //       name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
+          //       outputPath: '../img',
+          //     },
+          //   },
+          // ],
         },
         {
           test: /\.(jpe?g|png|gif|ttf|woff|woff2|eot)$/i,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: production ? 3000 : 100,
-                name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
-                outputPath: '../img',
-              },
-            },
-          ],
+          type: 'asset/inline',
+          // use: [
+          //   {
+          //     loader: 'url-loader',
+          //     options: {
+          //       limit: production ? 3000 : 100,
+          //       name: production ? '[name][contenthash:4].[ext]' : '[name].[ext]',
+          //       outputPath: '../img',
+          //     },
+          //   },
+          // ],
         },
       ],
     },

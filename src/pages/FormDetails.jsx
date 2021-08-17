@@ -190,7 +190,19 @@ function FormDetails() {
         .then(res => {
           if (res?.success && componentMounted) {
             const responseData = res.data
-            responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
+            // responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
+            // exp start
+            if (responseData.form_content.layout !== undefined) {
+              const l = responseData.form_content.layout
+              const nl = { lg: [], md: [], sm: [] }
+              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              console.log('seted lay', l, nl)
+              setLay(nl)
+            }
+            // exp end
+
             setFields(responseData.form_content.fields)
             setFormName(responseData.form_content.form_name)
             setworkFlows(responseData.workFlows)

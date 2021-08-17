@@ -11,7 +11,6 @@ import TableLoader from './components/Loaders/TableLoader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
 import './resource/sass/app.scss'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from './Utils/i18nwrap'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
