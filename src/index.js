@@ -7,17 +7,25 @@
 import { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { RecoilRoot } from 'recoil'
+import { createRenderer } from 'fela'
+import { RendererProvider } from 'react-fela'
+import customProperty from 'fela-plugin-custom-property'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
-// import 'core-js/stable'
-// import 'regenerator-runtime/runtime';
+import customProperties from './styles/1.customProperties'
 
 const App = lazy(() => import('./App'))
 
-if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
-  // eslint-disable-next-line camelcase
-  // __webpack_public_path__ = `${bits.assetsURL}/js/`
-}
+const renderer = createRenderer({
+  plugins: [
+    customProperty(customProperties),
+  ],
+})
+
+// if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
+// eslint-disable-next-line camelcase
+// __webpack_public_path__ = `${bits.assetsURL}/js/`
+// }
 if (typeof bits !== 'undefined' && bits.baseURL && `${window.location.pathname + window.location.search}#` !== bits.baseURL) {
   bits.baseURL = `${window.location.pathname + window.location.search}#`
 }
@@ -43,7 +51,9 @@ ReactDOM.render(
   <RecoilRoot>
     <AppSettingsProvider>
       <Suspense fallback={<Loader className="g-c" style={{ height: '90vh' }} />}>
-        <App />
+        <RendererProvider renderer={renderer}>
+          <App />
+        </RendererProvider>
       </Suspense>
     </AppSettingsProvider>
   </RecoilRoot>, document.getElementById('btcd-app'),
