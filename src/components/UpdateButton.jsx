@@ -66,8 +66,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   // }, [additional.updateForm])
 
   const updateBtnEvent = e => {
-    e.preventDefault()
     if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
+      e.preventDefault()
       if (!updateBtn.disabled) {
         saveOrUpdateForm()
       }
@@ -76,8 +76,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   const closeTabOrBrowserEvent = e => {
-    e.preventDefault()
     if (updateBtn.unsaved) {
+      e.preventDefault()
       e.returnValue = ''
     }
   }
