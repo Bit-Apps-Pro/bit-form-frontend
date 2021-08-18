@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
@@ -8,7 +8,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './Utilities/ConfirmModal'
 import { deepCopy } from '../Utils/Helpers'
 import CloseIcn from '../Icons/CloseIcn'
-import { $confirmations, $fieldsArr } from '../GlobalStates'
+import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
 import TrashIcn from '../Icons/TrashIcn'
 
 function RedirUrl({ removeIntegration }) {
@@ -16,6 +16,7 @@ function RedirUrl({ removeIntegration }) {
   const [redirectUrls, setredirectUrls] = useState(null)
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   useEffect(() => {
     bitsFetch(null, 'bitforms_get_all_wp_pages')
@@ -30,18 +31,21 @@ function RedirUrl({ removeIntegration }) {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[idx].title = e.target.value
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const handlePage = (e, idx) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[idx].url = e.target.value
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const handleLink = (val, i) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[i].url = val
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const getUrlParams = url => url.match(/(\?|&)([^=]+)=([^&]+|)/gi)
@@ -60,12 +64,14 @@ function RedirUrl({ removeIntegration }) {
       confirmation.type.redirectPage[i].url = confirmation.type.redirectPage[i].url.replace(`${pram}&`, '?')
     }
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const delParam = (i, param) => {
     const confirmation = deepCopy(allConf)
     confirmation.type.redirectPage[i].url = confirmation.type.redirectPage[i].url.replace(param, '')
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const addParam = i => {
@@ -76,6 +82,7 @@ function RedirUrl({ removeIntegration }) {
       confirmation.type.redirectPage[i].url += '?key=value'
     }
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const setFromField = (val, i, param) => {
@@ -84,6 +91,7 @@ function RedirUrl({ removeIntegration }) {
     a[1] = val
     confirmation.type.redirectPage[i].url = confirmation.type.redirectPage[i].url.replace(param, a.join('='))
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const addMoreUrl = () => {
@@ -96,6 +104,7 @@ function RedirUrl({ removeIntegration }) {
       confirmation.type.redirectPage.push({ title: `Redirect Url ${confirmation.type.redirectPage.length + 1}`, url: '' })
     }
     setAllConf(confirmation)
+    setUpdateBtn({ unsaved: true })
   }
 
   const rmvUrl = async i => {

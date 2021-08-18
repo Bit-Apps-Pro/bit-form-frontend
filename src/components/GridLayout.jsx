@@ -12,7 +12,7 @@ import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { deepCopy, isType } from '../Utils/Helpers'
-import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $additionalSettings } from '../GlobalStates'
+import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $additionalSettings, $updateBtn } from '../GlobalStates'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -37,6 +37,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   useEffect(() => {
     checkAllLayoutSame()
@@ -243,6 +244,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const updatedField = finishDraft(draftField)
     setFields({ ...fields, [`bf${formID}-${uniqueFieldId}`]: updatedField.fieldData })
     sessionStorage.setItem('btcd-lc', '-')
+    setUpdateBtn({ unsaved: true })
   }
   function extendLayout(lays) {
     const newlayuts = { lg: [], md: [], sm: [] }
@@ -286,6 +288,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setFields(tmpFields)
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
+    setUpdateBtn({ unsaved: true })
   }
 
   const clsAlertMdl = () => {
@@ -409,6 +412,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const updatedField = finishDraft(draftField)
     setFields({ ...fields, [newBlk]: updatedField.fieldData })
     sessionStorage.setItem('btcd-lc', '-')
+    setUpdateBtn({ unsaved: true })
   }
 
   return (

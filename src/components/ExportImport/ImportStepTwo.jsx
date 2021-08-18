@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import { Tab, Tabs } from '@bumaga/tabs'
+import { Tab, TabList, Tabs } from 'react-tabs'
 
 export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns }) {
   const [mappingCount, setMappingCount] = useState(0)
   const [mappingColumn, setMappingColumn] = useState([])
-  console.log(fileColumns)
-  console.log(fileResponses)
 
   const fieldMaping = e => {
     const field = e.target.options[e.target.options.selectedIndex].text
@@ -46,9 +44,17 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
         {tableColumns.length - mappingCount}
         )
       </p>
-      <Tabs>
-        <Tab><button className="btcd-s-tab-link s-t-l-active mt-2 mb-2" type="button">Field Map</button></Tab>
-        <Tab><button className="btcd-s-tab-link mt-2 mb-2" type="button">Assign Default Value</button></Tab>
+      <Tabs
+        selectedTabClassName="s-t-l-active"
+      >
+        <TabList className="flx mt-2 mb-2">
+          <Tab className="btcd-s-tab-link">
+            Field Map
+          </Tab>
+          <Tab className="btcd-s-tab-link">
+            Assign Default Value
+          </Tab>
+        </TabList>
       </Tabs>
       {' '}
       <table style={{ width: '100%', overflowX: 'scroll', overflowY: 'scroll' }}>

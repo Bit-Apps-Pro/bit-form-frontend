@@ -25,7 +25,7 @@ export default function Cooltip({ className, children, width = 'auto', icnSize =
       <div
         role="button"
         tabIndex="0"
-        className={`popper-icn cp d-in-b ig-c ${className}`}
+        className={`popper-icn cp d-in-b ig-c cooltip-icn ${className}`}
       >
         <QuestionIcn size={icnSize} />
       </div>

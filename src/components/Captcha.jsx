@@ -58,7 +58,7 @@ export default function Captcha() {
         </TabList>
         <div className="btcd-hr" />
         {['v3', 'v2'].map(ver => (
-          <TabPanel>
+          <TabPanel key={ver}>
             <h2>{__(`Google reCAPTCHA ${ver}`, 'bitform')}</h2>
             <small>
               {__('reCAPTCHA is a free service that protects your website from spam and abuse.', 'bitform')}

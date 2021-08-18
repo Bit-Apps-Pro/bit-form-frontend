@@ -1,6 +1,6 @@
-import { Panel, Tab, Tabs } from '@bumaga/tabs'
 import { memo, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'
 import FormEntryPayments from './FormEntryPayments'
@@ -11,74 +11,63 @@ import { $fieldLabels } from '../../GlobalStates'
 
 function EntryRelatedInfo({ formID, entryID, rowDtl, setSnackbar, integrations, close }) {
   const allLabels = useRecoilValue($fieldLabels)
-  const [tab, settab] = useState('')
   const payPattern = /paypal|razorpay/
   const paymentFields = allLabels.filter(label => label.type.match(payPattern))
   return (
     <Modal lg show setModal={close} title={__('Related Info', 'bitform')}>
-      <Tabs>
-        {paymentFields?.length ? (
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'payment' && 's-t-l-active'}`} type="button">
+      <Tabs
+        selectedTabClassName="s-t-l-active"
+      >
+        <TabList className="flx m-0">
+          {!!(paymentFields?.length) && (
+            <Tab className="btcd-s-tab-link">
               {__('Payment', 'bitform')}
-            </button>
-          </Tab>
-        ) : ''}
-        <Tab>
-          <button className={`btcd-s-tab-link ${tab === 'timeline' && 's-t-l-active'}`} type="button">
+            </Tab>
+          )}
+          <Tab className="btcd-s-tab-link">
             {__('Timeline', 'bitform')}
-          </button>
-        </Tab>
-        <Tab>
-          <button className={`btcd-s-tab-link ${tab === 'note' && 's-t-l-active'}`} type="button">
-            {__('Notes', 'bitform')}
-          </button>
-        </Tab>
-        {rowDtl?.GCLID ? (
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 'google_ad' && 's-t-l-active'}`} type="button">
-              {__('Google Ads Information', 'bitform')}
-            </button>
           </Tab>
-        ) : ''}
+          <Tab className="btcd-s-tab-link">
+            {__('Notes', 'bitform')}
+          </Tab>
+          {!!(rowDtl?.GCLID) && (
+            <Tab className="btcd-s-tab-link">
+              {__('Google Ads Information', 'bitform')}
+            </Tab>
+          )}
+        </TabList>
 
-        {paymentFields?.length ? (
-          <Panel>
+        {!!(paymentFields?.length) && (
+          <TabPanel>
             <FormEntryPayments
               formID={formID}
               rowDtl={rowDtl}
-              settab={settab}
             />
-          </Panel>
-        ) : ''}
-        {/* Timeline Panel */}
-        <Panel>
+          </TabPanel>
+        )}
+        <TabPanel>
           <FormEntryTimeline
             formID={formID}
             entryID={entryID}
-            settab={settab}
             integrations={integrations}
           />
-        </Panel>
-        {/* Notes Panel */}
-        <Panel>
+        </TabPanel>
+        <TabPanel>
           <FormEntryNotes
             formID={formID}
             entryID={entryID}
             allLabels={allLabels}
             setSnackbar={setSnackbar}
             rowDtl={rowDtl}
-            settab={settab}
           />
-        </Panel>
-        {rowDtl?.GCLID ? (
-          <Panel>
+        </TabPanel>
+        {!!(rowDtl?.GCLID) && (
+          <TabPanel>
             <GoogleAdInfo
               rowDtl={rowDtl}
-              settab={settab}
             />
-          </Panel>
-        ) : ''}
+          </TabPanel>
+        )}
       </Tabs>
 
     </Modal>

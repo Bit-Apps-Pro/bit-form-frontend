@@ -265,6 +265,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
         <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('metabox_file_map', data.metabox_file_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
       </div>
       <button
+        id="secondary-update-btn"
         className="btn f-left btcd-btn-lg green sh-sm flx"
         type="button"
         onClick={() => saveConfig()}

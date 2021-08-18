@@ -7,15 +7,15 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $additionalSettings, $bits, $fields } from '../GlobalStates'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
-import { deepCopy } from '../Utils/Helpers'
 import SingleToggle2 from './Utilities/SingleToggle2'
-import TrashIcn from '../Icons/TrashIcn'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -82,6 +82,7 @@ export default function SingleFormSettings() {
     } else {
       delete additionalSettings.enabled.onePerIp
     }
+    additionalSettings.updateForm = 1
     setadditional(additionalSettings)
     // saveForm('addional', additionalSettings)
   }
@@ -115,6 +116,7 @@ export default function SingleFormSettings() {
       }
 
       additional.enabled.recaptchav3 = true
+      additional.updateForm = 1
       if (!additional.settings.recaptchav3) {
         additional.settings.recaptchav3 = {
           score: '0.6',
@@ -123,6 +125,7 @@ export default function SingleFormSettings() {
       }
     } else {
       delete additional.enabled.recaptchav3
+      additional.updateForm = 1
       delete additional.settings.recaptchav3
     }
     setadditional({ ...additional })
@@ -135,6 +138,7 @@ export default function SingleFormSettings() {
     } else {
       delete additional.enabled.captureGCLID
     }
+    additional.updateForm = 1
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -146,6 +150,7 @@ export default function SingleFormSettings() {
     } else {
       delete additional.enabled.honeypot
     }
+    additional.updateForm = 1
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -157,6 +162,7 @@ export default function SingleFormSettings() {
     } else {
       delete additional.enabled.entry_limit
     }
+    additional.updateForm = 1
     setadditional({ ...additional })
   }
 
@@ -219,6 +225,7 @@ export default function SingleFormSettings() {
         delete additional.enabled.blocked_ip
       }
     }
+    additional.updateForm = 1
     setadditional({ ...additional })
   }
 
@@ -245,6 +252,7 @@ export default function SingleFormSettings() {
         additional.settings.blocked_ip[i].status = false
       }
     }
+    additional.updateForm = 1
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -262,6 +270,7 @@ export default function SingleFormSettings() {
         additional.settings.private_ip[i].status = false
       }
     }
+    additional.updateForm = 1
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -278,6 +287,7 @@ export default function SingleFormSettings() {
     } else {
       delete additional.enabled.restrict_form
     }
+    additional.updateForm = 1
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -428,6 +438,7 @@ export default function SingleFormSettings() {
     } else {
       delete additional.enabled.validateFocusLost
     }
+    additional.updateForm = 1
     setadditional(additional)
     // saveForm('addional', additional)
   }
@@ -517,13 +528,13 @@ export default function SingleFormSettings() {
       </Accordions>
 
       <div className="w-6 mt-3">
-        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt  ${!isPro && 'btcd-inte-pro'}`}>
+        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt cooltip-box ${!isPro && 'btcd-inte-pro'}`}>
           <div className="">
             <div className="flx">
               <HoneypotIcn w="20" h="19" />
               <span className="flx ml-2">
                 <b>{__('Honeypot trap for bot', 'bitform')}</b>
-                <Cooltip width={250} icnSize={17} className="ml-2">
+                <Cooltip width={250} icnSize={17} className="ml-2 d-non">
                   <div className="txt-body">
                     Honeypot protection provides security mechanisms to protect your
                     site from form submission by spam bots. If spam bot activity is detected, form submission is blocked.

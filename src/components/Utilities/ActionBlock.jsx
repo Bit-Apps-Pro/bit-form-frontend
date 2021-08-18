@@ -1,17 +1,18 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import Button from './Button'
 import MtInput from './MtInput'
 import MtSelect from './MtSelect'
 import TrashIcn from '../../Icons/TrashIcn'
-import { $fields, $fieldsArr } from '../../GlobalStates'
+import { $fields, $fieldsArr, $updateBtn } from '../../GlobalStates'
 
 function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
   const fields = useRecoilValue($fields)
   const formFields = useRecoilValue($fieldsArr)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   let fieldKey = ''
   let type = ''
 
@@ -26,10 +27,12 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
 
   const changeAction = val => {
     setworkFlows(prv => produce(prv, draft => { draft[lgcGrpInd].actions[actionInd].action = val }))
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeAtnVal = val => {
     setworkFlows(prv => produce(prv, draft => { draft[lgcGrpInd].actions[actionInd].val = val }))
+    setUpdateBtn({ unsaved: true })
   }
 
   const changeAtnField = val => {
@@ -37,6 +40,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
       draft[lgcGrpInd].actions[actionInd].field = val
       draft[lgcGrpInd].actions[actionInd].val = ''
     }))
+    setUpdateBtn({ unsaved: true })
   }
 
   const delAction = () => {
@@ -45,6 +49,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
         draft[lgcGrpInd].actions.splice(actionInd, 1)
       }
     }))
+    setUpdateBtn({ unsaved: true })
   }
 
   const isNotFileUpField = fields[action.field]?.typ !== 'file-up'

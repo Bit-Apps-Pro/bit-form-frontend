@@ -1,9 +1,7 @@
-import { Panel, Tab, Tabs } from '@bumaga/tabs'
-
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../../../Utils/i18nwrap'
-import ZohoBiginNewRecord from './ZohoBiginNewRecord'
-import ZohoBiginRelatedRecord from './ZohoBiginRelatedRecord'
 import { refreshModules } from './ZohoBiginCommonFunc'
+import ZohoBiginNewRecord from './ZohoBiginNewRecord'
 
 export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, handleInput, biginConf, setBiginConf, isLoading, setisLoading, setSnackbar }) {
   return (
@@ -22,15 +20,16 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
       </select>
       {tab === 0 && <button onClick={() => refreshModules(formID, biginConf, setBiginConf, setisLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Bigin Modules', 'bitform')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>}
       <br />
-      <Tabs>
-        <div className="flx mt-2">
-          <Tab>
-            <button className={`btcd-s-tab-link ${tab === 0 && 's-t-l-active'}`} type="button">
-              {__('New Record', 'bitform')}
-            </button>
+      <Tabs
+        selectedTabClassName="s-t-l-active"
+      >
+        <TabList className="flx mt-2 mb-0">
+          <Tab className="btcd-s-tab-link mb-0">
+            {__('New Record', 'bitform')}
           </Tab>
+        </TabList>
 
-          {/* {biginConf?.relatedlists && biginConf.relatedlists.map((_, indx) => (
+        {/* {biginConf?.relatedlists && biginConf.relatedlists.map((_, indx) => (
             <>
               <Tab key={`rel-${indx + 64}`}>
                 <button className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`} type="button">
@@ -42,10 +41,9 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
             </>
           ))}
           {biginConf.relatedlists.length < 3 && <button onClick={addNewRelatedTab} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Add More Related List"' }} type="button">+</button>} */}
-        </div>
         <div className="btcd-hr" />
 
-        <Panel>
+        <TabPanel>
           <ZohoBiginNewRecord
             tab={tab}
             settab={settab}
@@ -56,10 +54,10 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
             isLoading={isLoading}
             setSnackbar={setSnackbar}
           />
-        </Panel>
-        {
+        </TabPanel>
+        {/* {
           biginConf?.relatedlists && biginConf.relatedlists.map((_, indx) => (
-            <Panel key={`rlt-${indx + 89}`}>
+            <TabPanel key={`rlt-${indx + 89}`}>
               <ZohoBiginRelatedRecord
                 indx={indx}
                 tab={tab}
@@ -73,9 +71,9 @@ export default function ZohoBiginIntegLayout({ tab, settab, formID, formFields, 
                 setisLoading={setisLoading}
                 setSnackbar={setSnackbar}
               />
-            </Panel>
+            </TabPanel>
           ))
-        }
+        } */}
       </Tabs>
     </>
   )

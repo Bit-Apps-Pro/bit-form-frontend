@@ -28,7 +28,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
   let fieldKey = []
 
   columns.map((col, index) => {
-    if (!hidden.includes(col.accessor)) {
+    if (!hidden?.includes(col.accessor)) {
       colHeading[index] = {
         key: col.accessor,
         val: col.Header,
