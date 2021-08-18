@@ -30,13 +30,13 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
       // eslint-disable-next-line no-undef
       key = atob(bitFormsFront?.paymentKeys?.razorpayKey || '')
     } else if (typeof bits !== 'undefined') {
-      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.options.payIntegID && Number(pay.id) === Number(attr.options.payIntegID))
+      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
       if (!payInteg) return false
       key = payInteg.apiKey
     }
     setClientID(key)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attr.options.payIntegID])
+  }, [attr.payIntegID])
 
   useEffect(() => {
     if (resetFieldValue) {
@@ -49,7 +49,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
 
   const loadRazorpayScript = async () => {
     if (!document.getElementById('razorpaysrc')) {
-      const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js', 'razorpaysrc')
+      const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js', 'sha256-WaK8tHBbvmUh/aQh4KOXqmWuNplM3g9ygIfpkPkb+aw=', 'razorpaysrc')
       if (!res) {
         // eslint-disable-next-line no-console
         console.warn('Is your internet working properly to load razorpay script?')
@@ -170,7 +170,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
           </button>
         </div>
       )}
-      {!attr.options.payIntegID && (
+      {!attr.payIntegID && (
         <p>Select a config from field settings to render the Razorpay.</p>
       )}
     </InputWrapper>
