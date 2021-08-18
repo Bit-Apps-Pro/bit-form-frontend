@@ -8,11 +8,13 @@ import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-rou
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Toaster } from 'react-hot-toast'
+import { useFela } from 'react-fela'
 import { __ } from './Utils/i18nwrap'
 import TableLoader from './components/Loaders/TableLoader'
 import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
+import ut from './styles/2.utilities'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const AppSettings = lazy(() => import('./pages/AppSettings'))
@@ -22,9 +24,9 @@ const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
   const loaderStyle = { height: '90vh' }
-
+  const { css } = useFela()
   return (
-    <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
+    <Suspense fallback={(<Loader className={css([ut['g-c'], loaderStyle])} />)}>
       <Toaster
         position="bottom-right"
         containerStyle={{ inset: '-25px 30px 20px -10px' }}
