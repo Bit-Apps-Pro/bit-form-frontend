@@ -22,16 +22,18 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = (src, type) => new Promise((resolve) => {
+export const loadScript = (src, integrity, type) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
+  script.integrity = integrity
+  script.crossOrigin = 'anonymous'
+  script.id = type
   script.onload = () => {
     resolve(true)
   }
   script.onerror = () => {
     resolve(false)
   }
-  script.id = type
   document.body.appendChild(script)
 })
 
