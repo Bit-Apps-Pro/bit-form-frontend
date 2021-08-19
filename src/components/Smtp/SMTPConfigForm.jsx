@@ -66,11 +66,6 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
     }
   }
 
-  useEffect(() => {
-    settab('mail_config')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <form

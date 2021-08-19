@@ -8,14 +8,10 @@ import { $bits } from '../GlobalStates'
 import SnackMsg from './Utilities/SnackMsg'
 import CopyText from './Utilities/CopyText'
 
-const randomKey = length => {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-  for (let i = 0; i < length; i += 1) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-  return result
+const randomKey = () => {
+  const a = new Uint32Array(4)
+  window.crypto.getRandomValues(a)
+  return (performance.now().toString(36) + Array.from(a).map(A => A.toString(36)).join('')).replace(/\./g, '')
 }
 
 export default function Apikey() {
@@ -44,7 +40,7 @@ export default function Apikey() {
   }
 
   const changeKey = () => {
-    setKey(randomKey(40))
+    setKey(randomKey())
   }
 
   useEffect(() => {
@@ -61,7 +57,7 @@ export default function Apikey() {
       error: __('Error Occured', 'bitform'),
       loading: __('Loading API key...'),
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -1,10 +1,6 @@
-/* eslint-disable no-param-reassign */
-import { atom, selector, selectorFamily } from 'recoil'
 import produce from 'immer'
-import { __ } from './Utils/i18nwrap'
-import { bitDecipher, getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
-import { sortLayoutByXY } from './Utils/FormBuilderHelper'
-import bitsFetch from './Utils/bitsFetch'
+import { atom, selector, selectorFamily } from 'recoil'
+import { getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
 
 // atoms
 // eslint-disable-next-line no-undef
@@ -27,11 +23,6 @@ export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
-// export const $test = selector({
-//   key: '$test',
-//   get: ({ get }) => 'sdf',
-
-// })
 
 export const $reportSelector = selectorFamily({
   key: '$reportSelector',

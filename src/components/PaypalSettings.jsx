@@ -7,11 +7,11 @@ export default function PaypalSettings({ paySetting, handleInput }) {
       <div className="btcd-hr" />
       <div className="flx mt-3">
         <b className="wdt-150">{__('Integration Name:', 'bitform')}</b>
-        <input type="text" className="btcd-paper-inp" placeholder="Integration Name" value={paySetting.name} name="name" onChange={handleInput} />
+        <input type="text" className="btcd-paper-inp" placeholder="Integration Name" value={paySetting.name || ''} name="name" onChange={handleInput} />
       </div>
       <div className="flx mt-3">
         <b className="wdt-150">{__('Client ID:', 'bitform')}</b>
-        <input type="text" className="btcd-paper-inp" placeholder="Client ID" value={paySetting.clientID} name="clientID" onChange={handleInput} />
+        <input type="text" className="btcd-paper-inp" placeholder="Client ID" value={paySetting.clientID || ''} name="clientID" onChange={handleInput} />
       </div>
       <div className="flx">
         <small className="d-blk mt-5" style={{ marginLeft: 130 }}>

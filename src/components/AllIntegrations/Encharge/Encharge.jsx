@@ -21,7 +21,7 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
   const [enchargeConf, setEnchargeConf] = useState({
     name: 'Encharge API',
     type: 'Encharge',
-    lists: [],
+    tags: '',
     api_key: process.env.NODE_ENV === 'development' ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOjE1MjkyLCJuYW1lIjoiYmFzZSJ9.yZ0PHY7bfPvYP-laE2ES92kt-lwmvJajKk_U9FCm-Bs' : '',
     field_map: [
       { formField: '', enChargeFields: '' },

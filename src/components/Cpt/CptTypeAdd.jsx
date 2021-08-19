@@ -48,11 +48,6 @@ export default function Cpt({ settab, types }) {
     setCptConfig(newConf)
   }
 
-  useEffect(() => {
-    settab('add_type')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const existPostType = val => {
     const exists = types.find(post => post === val)
     if (exists) {

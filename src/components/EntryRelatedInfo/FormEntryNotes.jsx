@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../GlobalStates'
 import noData from '../../resource/img/nodata.svg'
@@ -10,7 +11,7 @@ import LoaderSm from '../Loaders/LoaderSm'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import NoteForm from './NoteForm'
 
-export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar, rowDtl, settab }) {
+export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
@@ -26,7 +27,6 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
   })
 
   useEffect(() => {
-    settab('note')
     isPro && setIsLoading('allNotes')
     setFirstLoad(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,6 +56,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     const noteDetails = allNotes.find(note => note.id === noteID)
     const { title, content } = JSON.parse(noteDetails.info_details)
     setData({ noteID, title, content })
+    setShowForm(true)
   }
 
   const confDeleteNote = noteID => {
@@ -74,7 +75,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
     closeConfMdl()
     bitsFetch({ noteID: confMdl.noteID, formID, entryID }, 'bitforms_form_entry_delete_note').then((res) => {
       if (res !== undefined && res.success) {
-        setSnackbar({ show: true, msg: __('Note Deleted Successfully', 'bitform') })
+        toast.success(__('Note Deleted Successfully', 'bitform'))
         setFetchData(true)
       }
       setIsLoading(false)
@@ -83,7 +84,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
 
   const replaceFieldWithValue = str => {
     const pattern = /\${\w[^ ${}]*}/g
-    const keys = str.match(pattern)
+    const keys = str?.match?.(pattern) || ''
     const uniqueKeys = keys?.filter?.((key, index) => keys.indexOf(key) === index) || []
     let replacedStr = str
 
@@ -155,7 +156,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, setSnackbar
         {showForm
           ? (
             <NoteForm
-              {...{ formID, entryID, allLabels, showForm, setShowForm, setSnackbar, setFetchData, data, setData }}
+              {...{ formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData }}
             />
           )
           : <button type="button" className="btn" onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}

@@ -12,7 +12,7 @@ const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 
-function FormSettings({ setProModal, saveForm }) {
+function FormSettings({ setProModal }) {
   console.log('%c $render FormSettings', 'background:green;padding:3px;border-radius:5px;color:white')
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
@@ -28,7 +28,6 @@ function FormSettings({ setProModal, saveForm }) {
   return (
     <div className="btcd-f-settings">
       <aside className="btcd-f-sidebar">
-        <br />
         <br />
         <br />
         <NavLink to={`/form/settings/${formType}/${formID}/form-settings`} activeClassName="btcd-f-a">
@@ -61,7 +60,7 @@ function FormSettings({ setProModal, saveForm }) {
               <ConfType formID={formID} />
             </Route>
             <Route path={`${path}email-templates`}>
-              <EmailTemplate formID={formID} saveForm={saveForm} />
+              <EmailTemplate formID={formID} />
             </Route>
             <Route path={`${path}workflow`}>
               <Workflow setProModal={setProModal} formID={formID} />
