@@ -77,7 +77,7 @@ const tutorialLinks = {
   },
   zohoCreator: {
     title: 'How to Setup Zoho Creator integration',
-    link: '',
+    link: 'https://www.youtube.com/watch?v=QfYq-vgASPQ',
   },
   zohoCrm: {
     title: 'How to Setup Zoho-CRM integration',
@@ -109,11 +109,11 @@ const tutorialLinks = {
   },
   zohoSheet: {
     title: 'How to Setup Zoho Sheet integration',
-    link: '',
+    link: 'https://www.youtube.com/watch?v=p8BXKgl3qro&list=PLJDk81Wj7a_MAkRRN2DUdP4dLNqyYe67C',
   },
   zohoSign: {
     title: 'How to Setup Zoho Sign integration',
-    link: 'https://www.youtube.com/watch?v=QJLs6agchig',
+    link: 'https://www.youtube.com/watch?v=QJLs6agchig&list=PLJDk81Wj7a_PlMjnqUulHqKbZYvtDzbZk',
   },
   zohoWorkDrive: {
     title: 'How to Setup Zoho Work Drive integration',
