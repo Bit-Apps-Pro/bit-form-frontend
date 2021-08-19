@@ -1,4 +1,4 @@
-import { convertLayout, delAllPrevKeys, getEmptyXPos, isRestYhasBlockX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { checkFieldsExtraAttr, convertLayout, delAllPrevKeys, getEmptyXPos, isRestYhasBlockX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 
 describe('▶ check get Empty X Position form given arr', () => {
   const maxCol = 6
@@ -146,5 +146,35 @@ describe('▶ check layout sorting by xy', () => {
 
   test('test 2', () => {
     expect(sortLayoutByXY(lay2)).toEqual(expectLay2)
+  })
+})
+
+// eslint-disable-next-line no-underscore-dangle
+const __ = str => str
+
+describe('▶ check fields extra attribute in grid layout', () => {
+  const bits1 = { isPro: 0 }
+  const bits2 = { isPro: 1 }
+  const field1 = { lbl: 'Select Country' }
+  const field2 = { typ: 'razorpay' }
+  const field3 = { typ: 'paypal' }
+  const field4 = { typ: 'recaptcha' }
+  const allFields = {
+    'bf1-1': { typ: 'select', lbl: 'Select country' },
+    'bf2-2': { typ: 'recaptcha' },
+    'bf3-3': { typ: 'razorpay' },
+  }
+  const additional = { enabled: { reCaptchav3: 0 } }
+  test('test 1', () => {
+    expect(checkFieldsExtraAttr(field1, allFields, [], {}, bits1, __)).toStrictEqual({ msg: 'Country Field available in Pro version of Bit Form.', validType: 'pro' })
+  })
+  test('test 2', () => {
+    expect(checkFieldsExtraAttr(field2, allFields, [], {}, bits2, __)).toStrictEqual({ msg: 'You cannot add more than one razorpay field in the same form.', validType: 'onlyOne' })
+  })
+  test('test 3', () => {
+    expect(checkFieldsExtraAttr(field3, allFields, [], {}, bits2, __)).toStrictEqual({})
+  })
+  test('test 4', () => {
+    expect(checkFieldsExtraAttr(field4, allFields, [], additional, bits2, __)).toStrictEqual({ msg: 'You cannot add more than one recaptcha field in the same form.', validType: 'onlyOne' })
   })
 })

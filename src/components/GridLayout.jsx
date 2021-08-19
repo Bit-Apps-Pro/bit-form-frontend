@@ -296,7 +296,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const handleFieldExtraAttr = () => {
-    const extraAttr = checkFieldsExtraAttr(draggingField.fieldData, fields, payments, additional)
+    const extraAttr = checkFieldsExtraAttr(draggingField.fieldData, fields, payments, additional, bits, __)
 
     if (extraAttr.validType === 'pro') {
       setProModal({ show: true, msg: extraAttr.msg })
