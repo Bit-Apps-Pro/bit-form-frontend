@@ -206,8 +206,15 @@
 
 }
 
+.f-c-b {
+  color : var(--white-0-13);
+}
+.f-c-w {
+  color:  var(-white-0-100-0);
+}
+
 .container {
-  width: 960px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -241,7 +248,7 @@
 }
 
 .code:hover {
-  box-shadow: rgb(175 175 175) 0px 0px 4px 2px;
+  box-shadow: rgb(220 221 222 / 71%) 0px 0px 7px 1px;;
   transform: scale(1.02);
 }
 
@@ -463,171 +470,227 @@
 .white-73 {
   background-color: var(--white-73);
 }
+
 .white-0-0-17 {
   background-color: var(--white-0-0-17);
 }
+
 .white-0-0-29 {
   background-color: var(--white-0-0-29);
 }
+
 .white-0-0-32 {
   background-color: var(--white-0-0-32);
 }
+
 .white-0-81-32 {
   background-color: var(--white-0-81-32);
 }
+
 .white-0-13 {
   background-color: var(--white-0-13);
 }
+
 .white-0-21 {
   background-color: var(--white-0-21);
 }
+
 .white-0-27 {
   background-color: var(--white-0-27);
 }
+
 .white-0-29 {
   background-color: var(--white-0-29);
 }
+
 .white-0-31 {
   background-color: var(--white-0-31);
 }
+
 .white-2-47 {
   background-color: var(--white-2-47);
 }
+
 .white-0-78 {
   background-color: var(--white-0-78);
 }
+
 .white-0-50 {
   background-color: var(--white-0-50);
 }
+
 .white-0-61 {
   background-color: var(--white-0-61);
 }
+
 .white-0-69 {
   background-color: var(--white-0-69);
 }
+
 .white-0-75 {
   background-color: var(--white-0-75);
 }
+
 .white-0-80 {
   background-color: var(--white-0-80);
 }
+
 .white-0-83 {
   background-color: var(--white-0-83);
 }
+
 .white-0-86 {
   background-color: var(--white-0-86);
 }
+
 .white-0-89 {
   background-color: var(--white-0-89);
 }
+
 .white-0-93 {
   background-color: var(--white-0-93);
 }
+
 .white-0-97 {
   background-color: var(--white-0-97);
 }
+
 .white-0-90 {
   background-color: var(--white-0-90);
 }
+
 .white-0-77 {
   background-color: var(--white-0-77);
 }
+
 .white-0-0-64 {
   background-color: var(--white-0-0-64);
 }
+
 .white-0-5-2 {
   background-color: var(--white-0-5-2);
 }
+
 .white-0-9 {
   background-color: var(--white-0-9);
 }
+
 .white-16-86 {
   background-color: var(--white-16-86);
 }
+
 .white-24-34-0 {
   background-color: var(--white-24-34-0);
 }
+
 .white-55-96 {
   background-color: var(--white-55-96);
 }
+
 .white-0-95 {
   background-color: var(--white-0-95);
 }
+
 .white-100-a-658 {
   background-color: var(--white-100-a-658);
 }
+
 .white-0-100-90 {
   background-color: var(--white-0-100-90);
 }
+
 .white-0-0-12 {
   background-color: var(--white-0-0-12);
 }
+
 .white-0-0-14 {
   background-color: var(--white-0-0-14);
 }
+
 .white-0-100-0 {
   background-color: var(--white-0-100-0);
 }
+
 .white-100-50-2 {
   background-color: var(--white-100-50-2);
 }
+
 .white-100 {
   background-color: var(--white-100);
 }
+
 .black-0 {
   background-color: var(--black-0);
 }
+
 .light-98 {
   background-color: var(--light-98);
 }
+
 .lightgray {
   background-color: var(--lightgray);
 }
+
 .crimson {
   background-color: var(--crimson);
 }
+
 .red-100-45 {
   background-color: var(--red-100-45);
 }
+
 .red-100-49 {
   background-color: var(--red-100-49);
 }
+
 .red-100-50 {
   background-color: var(--red-100-50);
 }
+
 .red-100-61 {
   background-color: var(--red-100-61);
 }
+
 .red-83-54 {
   background-color: var(--red-83-54);
 }
+
 .g-41 {
   background-color: var(--g-41);
 }
+
 .g-45 {
   background-color: var(--g-45);
 }
+
 .g-49 {
   background-color: var(--g-49);
 }
+
 .g-89-7 {
   background-color: var(--g-89-7);
 }
+
 .g-23-61-45 {
   background-color: var(--g-23-61-45);
 }
+
 .g-100-50-2 {
   background-color: var(--g-100-50-2);
 }
+
 .g-100-50-2 {
   background-color: var(--g-100-50-2);
 }
+
 .g-100-25 {
   background-color: var(--g-100-25);
 }
+
 .wave-blue-46 {
   background-color: var(--wave-blue-46);
 }
+
 .wave-blue-58 {
   background-color: var(--wave-blue-58);
 }
