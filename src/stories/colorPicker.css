@@ -205,7 +205,10 @@
   --wave-blue-58: hsla(var(--wave-blue-base), 100%, 58%, 100%);
 
 }
-
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+}
 .f-c-b {
   color: var(--white-0-13);
 }
@@ -258,7 +261,7 @@
   border-bottom-width: 0;
   top: -8px;
   left: 50%;
-  border-top-color: red;
+  border-top-color: var(--red-100-45);
 }
 
 .code:hover::after {
@@ -268,7 +271,7 @@
   position: absolute;
   top: -32px;
   left: 30%;
-  background-color: red;
+  background-color: var(--red-100-45);
   border-radius: 4px;
   font-size: 14px;
   padding-top: 2px;
