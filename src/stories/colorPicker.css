@@ -207,10 +207,11 @@
 }
 
 .f-c-b {
-  color : var(--white-0-13);
+  color: var(--white-0-13);
 }
+
 .f-c-w {
-  color:  var(-white-0-100-0);
+  color: var(-white-0-100-0);
 }
 
 .container {
@@ -245,10 +246,36 @@
   height: 20px;
   padding: 10px 0;
   transition: .2s all ease;
+  position: relative;
+}
+
+.code:hover::before {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  border: 7px solid transparent;
+  border-bottom-width: 0;
+  top: -6px;
+  left: 50%;
+  border-top-color: red;
+}
+
+.code:hover::after {
+  width: 118px;
+  height: 23px;
+  content: 'Copy color code';
+  position: absolute;
+  top: -28px;
+  left: 30%;
+  background-color: red;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .code:hover {
-  box-shadow: rgb(220 221 222 / 71%) 0px 0px 7px 1px;;
+  box-shadow: rgb(220 221 222 / 71%) 0px 0px 7px 1px;
+  ;
   transform: scale(1.02);
 }
 
