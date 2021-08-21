@@ -256,7 +256,7 @@
   position: absolute;
   border: 7px solid transparent;
   border-bottom-width: 0;
-  top: -6px;
+  top: -8px;
   left: 50%;
   border-top-color: red;
 }
@@ -266,11 +266,13 @@
   height: 23px;
   content: 'Copy color code';
   position: absolute;
-  top: -28px;
+  top: -32px;
   left: 30%;
   background-color: red;
   border-radius: 4px;
   font-size: 14px;
+  padding-top: 2px;
+  transition: translate 0s cubic-bezier(0.65, 0.49, 0.33, 0.86) 0s;
 }
 
 .code:hover {
