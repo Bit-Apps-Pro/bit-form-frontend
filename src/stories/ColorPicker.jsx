@@ -10,10 +10,13 @@ function ColorPicker() {
     <div className="container">
       <div className="row">
         <div className="col">
-          <div className="colors ">
+          <div className="colors">
             <div className="title blue">
               Blue
             </div>
+
+            {/* <button onClick={copyVar} type="button" className="code b-54-12"> var name: --b-53-8</button> */}
+
             <div onClick={copyVar} className="code b-53-8">
               var name: --b-53-8
             </div>
@@ -49,10 +52,10 @@ function ColorPicker() {
             </div>
             <div onClick={copyVar} className="code b-59">
               var name: --b-59
-            </div>        
+            </div>
             <div onClick={copyVar} className="code b-92-62">
               var name: --b-92-62
-            </div>    
+            </div>
             <div onClick={copyVar} className="code b-72">
               var name: --b-72
             </div>
@@ -71,7 +74,6 @@ function ColorPicker() {
             <div onClick={copyVar} className="code b-37-69">
               var name: --b-37-69
             </div>
- 
             <div onClick={copyVar} className="code b-19-48">
               var name: --b-19-48
             </div>
@@ -174,7 +176,7 @@ function ColorPicker() {
           </div>
         </div>
         <div className="col">
-          <div className="colors ">
+          <div className="colors">
             <div className="title white-73">
               White
             </div>
@@ -262,13 +264,13 @@ function ColorPicker() {
             <div onClick={copyVar} className="code white-0-95 f-c-b">
               var name: --white-0-95
             </div>
-            <div onClick={copyVar} className="code white-0-97">
+            <div onClick={copyVar} className="code white-0-97 f-c-b">
               var name: --white-0-97
             </div>
             <div onClick={copyVar} className="code white-16-86">
               var name: --white-16-86
             </div>
-            <div onClick={copyVar} className="code white-24-34-0 f-c-b" >
+            <div onClick={copyVar} className="code white-24-34-0 f-c-b">
               var name: --white-24-34-0
             </div>
             <div onClick={copyVar} className="code white-55-96">
@@ -314,15 +316,6 @@ function ColorPicker() {
             <div onClick={copyVar} className="code red-100-50">
               var name: --red-100-50
             </div>
-
-
-
-
-
-
-
-
-
             <div onClick={copyVar} className="code g-41">
               var name: --g-41
             </div>
@@ -344,20 +337,18 @@ function ColorPicker() {
             <div onClick={copyVar} className="code g-23-61-45">
               var name: --g-23-61-45
             </div>
-            <div onClick={copyVar} className="code lightgray">
+            <div onClick={copyVar} className="code lightgray f-c-b">
               var name: --lightgray
             </div>
-            <div onClick={copyVar} className="code light-98">
+            <div onClick={copyVar} className="code light-98 f-c-b">
               var name: --light-98
             </div>
-
             <div onClick={copyVar} className="code g-100-50-2 f-c-b">
               var name: --g-100-50-2
             </div>
             <div onClick={copyVar} className="code g-100-50-2 f-c-b">
               var name: --g-100-50-2
             </div>
-            
           </div>
         </div>
       </div>
