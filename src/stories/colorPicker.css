@@ -9,7 +9,7 @@
   --blue-l: 50%;
   --blue-a: 1;
   --db-h: 221;
-  /*db for deep blue */
+  /* db for deep blue */
   --db-s: 93%;
   --db-l: 16%;
   --dbg-h: 217;
@@ -576,4 +576,58 @@
 }
 .black-0 {
   background-color: var(--black-0);
+}
+.light-98 {
+  background-color: var(--light-98);
+}
+.lightgray {
+  background-color: var(--lightgray);
+}
+.crimson {
+  background-color: var(--crimson);
+}
+.red-100-45 {
+  background-color: var(--red-100-45);
+}
+.red-100-49 {
+  background-color: var(--red-100-49);
+}
+.red-100-50 {
+  background-color: var(--red-100-50);
+}
+.red-100-61 {
+  background-color: var(--red-100-61);
+}
+.red-83-54 {
+  background-color: var(--red-83-54);
+}
+.g-41 {
+  background-color: var(--g-41);
+}
+.g-45 {
+  background-color: var(--g-45);
+}
+.g-49 {
+  background-color: var(--g-49);
+}
+.g-89-7 {
+  background-color: var(--g-89-7);
+}
+.g-23-61-45 {
+  background-color: var(--g-23-61-45);
+}
+.g-100-50-2 {
+  background-color: var(--g-100-50-2);
+}
+.g-100-50-2 {
+  background-color: var(--g-100-50-2);
+}
+.g-100-25 {
+  background-color: var(--g-100-25);
+}
+.wave-blue-46 {
+  background-color: var(--wave-blue-46);
+}
+.wave-blue-58 {
+  background-color: var(--wave-blue-58);
 }

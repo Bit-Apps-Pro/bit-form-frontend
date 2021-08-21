@@ -170,11 +170,177 @@ function ColorPicker() {
         </div>
         <div className="col">
           <div className="colors ">
-            <div className="title blue">
-              Blue
+            <div className="title white-73">
+              White
             </div>
-            <div className="code b-11-50">
-              var name: --b-11-50
+            <div className="code white-0-0-17">
+              var name: --white-0-0-17
+            </div>
+            <div className="code white-0-0-29">
+              var name: --white-0-0-29
+            </div>
+            <div className="code white-0-0-32">
+              var name: --white-0-0-32
+            </div>
+            <div className="code white-0-81-32">
+              var name: --white-0-81-32
+            </div>
+            <div className="code white-0-13">
+              var name: --white-0-13
+            </div>
+            <div className="code white-0-21">
+              var name: --white-0-21
+            </div>
+            <div className="code white-0-29">
+              var name: --white-0-29
+            </div>
+            <div className="code white-0-31">
+              var name: --white-0-31
+            </div>
+            <div className="code white-2-47">
+              var name: --white-2-47
+            </div>
+            <div className="code white-0-78">
+              var name: --white-0-78
+            </div>
+            <div className="code white-0-50">
+              var name: --white-0-50
+            </div>
+            <div className="code white-0-61">
+              var name: --white-0-61
+            </div>
+            <div className="code white-0-69">
+              var name: --white-0-69
+            </div>
+            <div className="code white-0-75">
+              var name: --white-0-75
+            </div>
+            <div className="code white-0-80">
+              var name: --white-0-80
+            </div>
+            <div className="code white-0-83">
+              var name: --white-0-83
+            </div>
+            <div className="code white-0-86">
+              var name: --white-0-86
+            </div>
+            <div className="code white-0-89">
+              var name: --white-0-89
+            </div>
+            <div className="code white-0-93">
+              var name: --white-0-93
+            </div>
+            <div className="code white-0-97">
+              var name: --white-0-97
+            </div>
+            <div className="code white-0-90">
+              var name: --white-0-90
+            </div>
+            <div className="code white-0-77">
+              var name: --white-0-77
+            </div>
+            <div className="code white-0-0-64">
+              var name: --white-0-0-64
+            </div>
+            <div className="code white-0-5-2">
+              var name: --white-0-5-2
+            </div>
+            <div className="code white-0-9">
+              var name: --white-0-9
+            </div>
+            <div className="code white-16-86">
+              var name: --white-16-86
+            </div>
+            <div className="code white-24-34-0">
+              var name: --white-24-34-0
+            </div>
+            <div className="code white-55-96">
+              var name: --white-55-96
+            </div>
+            <div className="code white-0-95">
+              var name: --white-0-95
+            </div>
+            <div className="code white-100-a-658">
+              var name: --white-100-a-658
+            </div>
+            <div className="code white-0-100-90">
+              var name: --white-0-100-90
+            </div>
+            <div className="code white-0-0-12">
+              var name: --white-0-0-12
+            </div>
+            <div className="code white-0-0-14">
+              var name: --white-0-0-14
+            </div>
+            <div className="code white-0-100-0">
+              var name: --white-0-100-0
+            </div>
+            <div className="code white-100-50-2">
+              var name: --white-100-50-2
+            </div>
+            <div className="code white-100">
+              var name: --white-100
+            </div>
+            <div className="code black-0">
+              var name: --black-0
+            </div>
+          </div>
+        </div>
+        <div className="col">
+          <div className="colors ">
+            <div className="title white-73">
+              White
+            </div>
+            <div className="code light-98">
+              var name: --light-98
+            </div>
+            <div className="code lightgray">
+              var name: --lightgray
+            </div>
+            <div className="code crimson">
+              var name: --crimson
+            </div>
+            <div className="code red-100-45">
+              var name: --red-100-45
+            </div>
+            <div className="code red-100-49">
+              var name: --red-100-49
+            </div>
+            <div className="code red-100-50">
+              var name: --red-100-50
+            </div>
+            <div className="code red-100-61">
+              var name: --red-100-61
+            </div>
+            <div className="code red-83-54">
+              var name: --red-83-54
+            </div>
+            <div className="code g-41">
+              var name: --g-41
+            </div>
+            <div className="code g-45">
+              var name: --g-45
+            </div>
+            <div className="code g-89-7">
+              var name: --g-89-7
+            </div>
+            <div className="code g-23-61-45">
+              var name: --g-23-61-45
+            </div>
+            <div className="code g-100-50-2">
+              var name: --g-100-50-2
+            </div>
+            <div className="code g-100-50-2">
+              var name: --g-100-50-2
+            </div>
+            <div className="code g-100-25">
+              var name: --g-100-25
+            </div>
+            <div className="code wave-blue-46">
+              var name: --wave-blue-46
+            </div>
+            <div className="code wave-blue-58">
+              var name: --wave-blue-58
             </div>
           </div>
         </div>
