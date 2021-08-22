@@ -4,9 +4,8 @@ export default {
   title: 'Example/OptionMenu',
   component: OptionMenu,
   argTypes: { backgroundColor: { control: 'color' } },
-
 }
 
 const Template = (args) => <OptionMenu />
 
-export const Option = Template.bind({})
+export const Menu = Template.bind({})
