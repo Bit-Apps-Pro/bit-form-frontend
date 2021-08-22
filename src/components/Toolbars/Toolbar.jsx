@@ -353,12 +353,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
   ]
 
-  const FIELDS_EXTRA_ATTR = {
-    paypal: { pro: true, onlyOne: true, checkDefaultConfig: true },
-    razorpay: { pro: true, onlyOne: true, checkDefaultConfig: true },
-    recaptcha: { onlyOne: true },
-  }
-
   return (
     <div className="toolBar-wrp" style={{ width: tolbarSiz && 58 }}>
       <div className="btcd-toolbar-title">
