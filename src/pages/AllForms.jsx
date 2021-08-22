@@ -5,13 +5,17 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
-import MenuBtn from '../components/Utilities/MenuBtn'
 import Modal from '../components/Utilities/Modal'
+import OptionMenu from '../components/Utilities/OptionMenu'
 import Progressbar from '../components/Utilities/Progressbar'
 import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import { $bits, $forms, $newFormId } from '../GlobalStates'
+import CopyIcn from '../Icons/CopyIcn'
+import DownloadIcon from '../Icons/DownloadIcon'
+import EditIcn from '../Icons/EditIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -79,7 +83,37 @@ function AllFroms() {
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action')
     // eslint-disable-next-line max-len
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> })
+    ncols.push({
+      sticky: 'right',
+      width: 100,
+      minWidth: 60,
+      Header: 'Actions',
+      accessor: 't_action',
+      Cell: val => (
+        <>
+          {/* <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> */}
+          <OptionMenu title="Actions" w={150} h={160}>
+            <Link to={`/form/builder/edit/${val.row.original.formID}/fs`} type="button" className="flx" aria-label="actions">
+              <EditIcn size={18} />
+              &nbsp;
+              Edit
+            </Link>
+            <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
+              <CopyIcn size={18} />
+              &nbsp;Duplicate
+            </button>
+            <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
+              <DownloadIcon size={18} />
+              &nbsp;Export
+            </button>
+            <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
+              <TrashIcn size={16} />
+              &nbsp;Delete
+            </button>
+          </OptionMenu>
+        </>
+      ),
+    })
     setCols([...ncols])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newFormId])
