@@ -1290,12 +1290,15 @@ input[type="checkbox"].disabled:checked:before {
   outline: none;
   font-weight: 600;
 }
+
 .style-acc .btgl:hover {
   background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.95);
 }
+
 .style-acc .btgl .btcd-icn {
   font-size: 20px;
 }
+
 .style-acc .body {
   padding: 10px;
 }
@@ -1322,18 +1325,31 @@ input[type="checkbox"].disabled:checked:before {
   overflow: hidden;
   box-shadow: 0 1px 2px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2);
 
-  & .ui-color-picker {
-    margin: 0;
+  // & .ui-color-picker {
+  //   margin: 0;
 
-    & .picker-area {
-      padding: 5px;
-    }
-  }
+  //   & .picker-area {
+  //     padding: 5px;
+  //   }
+  // }
 
-  & .gradient-controls {
-    height: 45px;
-    margin-bottom: 0px;
-  }
+  // & .gradient-controls {
+  //   height: 45px;
+  //   margin-bottom: 0px;
+  // }
+}
+
+.btc-pick .ui-color-picker {
+  margin: 0;
+}
+
+.btc-pick .ui-color-picker .picker-area {
+  padding: 5px;
+}
+
+.btc-pick .gradient-controls {
+  height: 45px;
+  margin-bottom: 0px;
 }
 
 .clr-pick {
