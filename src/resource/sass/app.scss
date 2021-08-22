@@ -1480,9 +1480,11 @@ input[type="checkbox"].disabled:checked:before {
   height: 13px;
   width: 13px;
 }
+
 .btc-btn-grp svg .line-icn {
   stroke: var(--dp-blue);
 }
+
 .btc-btn-grp svg .fill-icn {
   fill: var(--dp-blue);
 }
@@ -1500,22 +1502,22 @@ input[type="checkbox"].disabled:checked:before {
   z-index: 9;
   height: 0;
   width: 0;
+}
 
-  &>button {
-    background: transparent;
-    color: var(--dp-blue);
-    width: 22px;
-    height: 22px;
-    border-radius: 3px;
-    border: none;
-    transform: scale(0);
-    transition: transform 300ms;
-  }
+.blk-icn-wrp >.blk-wrp-btn {
+  background: transparent;
+  color: var(--dp-blue);
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: none;
+  transform: scale(0);
+  transition: transform 300ms;
+}
 
-  &>button:hover {
-    background: var(--white-0-95);
-    color: var(--black-0);
-  }
+.blk-icn-wrp > .blk-wrp-btn:hover {
+  background: var(--white-0-95);
+  color: var(--black-0);
 }
 
 .fld-lbl {
