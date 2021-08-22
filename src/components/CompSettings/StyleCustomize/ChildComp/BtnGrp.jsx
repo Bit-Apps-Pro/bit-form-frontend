@@ -5,7 +5,7 @@ export default function BtnGrp({ btns, value, onChange, className }) {
         <button
           key={btn.lbl}
           onClick={() => onChange(btn.lbl)}
-          className={`tooltip ${value === btn.lbl && 'active'}`}
+          className={`tooltip grp-btn ${value === btn.lbl && 'active'}`}
           style={{ '--tooltip-txt': `"${btn.lbl}"` }}
           type="button"
         >

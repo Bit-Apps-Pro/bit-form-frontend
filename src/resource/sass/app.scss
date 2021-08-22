@@ -1378,60 +1378,113 @@ input[type="checkbox"].disabled:checked:before {
   transition: transform 100ms;
 }
 
-.btc-btn-grp {
-  & button:first-child {
-    border-radius: 7px 0 0 7px;
-  }
+// .btc-btn-grp {
+//   & button:first-child {
+//     border-radius: 7px 0 0 7px;
+//   }
 
-  & button {
-    background: transparent;
-    color: var(--gray-4);
-    position: relative;
-    font-size: 13px;
-    border: 1px solid var(--lightgray);
-    border-right: 0;
-    border-radius: 0;
-    outline: none;
-    padding: 3px 7px;
-    cursor: pointer;
+//   & button {
+//     background: transparent;
+//     color: var(--gray-4);
+//     position: relative;
+//     font-size: 13px;
+//     border: 1px solid var(--lightgray);
+//     border-right: 0;
+//     border-radius: 0;
+//     outline: none;
+//     padding: 3px 7px;
+//     cursor: pointer;
 
-    & .btcd-icn {
-      font-size: 15px;
-    }
-  }
+//     & .btcd-icn {
+//       font-size: 15px;
+//     }
+//   }
 
-  & button:last-child {
-    border-radius: 0 7px 7px 0;
-    border-right: 1px solid var(--lightgray);
-  }
+//   & button:last-child {
+//     border-radius: 0 7px 7px 0;
+//     border-right: 1px solid var(--lightgray);
+//   }
 
-  & button.active {
-    background: var(--b-50);
-    color: var(--white);
-    border-color: var(--b-50);
+//   & button.active {
+//     background: var(--b-50);
+//     color: var(--white);
+//     border-color: var(--b-50);
 
-    & .line-icn {
-      stroke: var(--white);
-    }
+//     & .line-icn {
+//       stroke: var(--white);
+//     }
 
-    & .fill-icn {
-      fill: var(--white);
-    }
-  }
+//     & .fill-icn {
+//       fill: var(--white);
+//     }
+//   }
 
-  & svg {
-    display: block;
-    height: 13px;
-    width: 13px;
+//   & svg {
+//     display: block;
+//     height: 13px;
+//     width: 13px;
 
-    & .line-icn {
-      stroke: var(--dp-blue);
-    }
+//     & .line-icn {
+//       stroke: var(--dp-blue);
+//     }
 
-    & .fill-icn {
-      fill: var(--dp-blue);
-    }
-  }
+//     & .fill-icn {
+//       fill: var(--dp-blue);
+//     }
+//   }
+// }
+
+
+.btc-btn-grp .grp-btn:first-child {
+  border-radius: 7px 0 0 7px;
+}
+
+.btc-btn-grp .grp-btn {
+  background: transparent;
+  color: var(--gray-4);
+  position: relative;
+  font-size: 13px;
+  border: 1px solid var(--lightgray);
+  border-right: 0;
+  border-radius: 0;
+  outline: none;
+  padding: 3px 7px;
+  cursor: pointer;
+}
+
+.btc-btn-grp .grp-btn .btcd-icn {
+  font-size: 15px;
+}
+
+.btc-btn-grp .grp-btn:last-child {
+  border-radius: 0 7px 7px 0;
+  border-right: 1px solid var(--lightgray);
+}
+
+.btc-btn-grp .grp-btn.active {
+  background: var(--b-50);
+  color: var(--white);
+  border-color: var(--b-50);
+}
+
+.btc-btn-grp .grp-btn.active .line-icn {
+  stroke: var(--white);
+}
+
+.btc-btn-grp .grp-btn.active .fill-icn {
+  fill: var(--white);
+}
+
+.btc-btn-grp svg {
+  display: block;
+  height: 13px;
+  width: 13px;
+}
+.btc-btn-grp svg .line-icn {
+  stroke: var(--dp-blue);
+}
+.btc-btn-grp svg .fill-icn {
+  fill: var(--dp-blue);
 }
 
 // components style
