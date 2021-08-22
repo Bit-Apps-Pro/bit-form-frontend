@@ -1504,7 +1504,7 @@ input[type="checkbox"].disabled:checked:before {
   width: 0;
 }
 
-.blk-icn-wrp >.blk-wrp-btn {
+.blk-icn-wrp>.blk-wrp-btn {
   background: transparent;
   color: var(--dp-blue);
   width: 22px;
@@ -1515,7 +1515,7 @@ input[type="checkbox"].disabled:checked:before {
   transition: transform 300ms;
 }
 
-.blk-icn-wrp > .blk-wrp-btn:hover {
+.blk-icn-wrp>.blk-wrp-btn:hover {
   background: var(--white-0-95);
   color: var(--black-0);
 }
@@ -1584,10 +1584,15 @@ input[type="checkbox"].disabled:checked:before {
     border-bottom: 1px solid var(--white-0-78);
   }
 
-  &>.settings {
-    font-size: 14px;
-    height: calc(100% - 85px);
-  }
+  // &>.settings {
+  //   font-size: 14px;
+  //   height: calc(100% - 85px);
+  // }
+}
+
+.elm-settings .settings {
+  font-size: 14px;
+  height: calc(100% - 85px);
 }
 
 .elm-settings-title {
