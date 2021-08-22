@@ -134,7 +134,7 @@ export default function AllEmailTemplates({ formID }) {
         )
           : (
             <div className="txt-center btcd-empty">
-              <span className="btcd-icn icn-stack" />
+              <span className="btcd-icn icn-stack d-b-fs-50" />
               {__('Empty', 'bitform')}
             </div>
           )}

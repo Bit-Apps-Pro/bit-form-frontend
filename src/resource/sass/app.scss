@@ -809,11 +809,11 @@ input[type="checkbox"].disabled:checked:before {
 .btcd-empty {
   // color: hsl(215, 44%, 87%);
   color: var(--b-44-87);
+}
 
-  &>.icn-stack {
-    display: block;
-    font-size: 50px; 
-  }
+.d-b-fs-50 {
+  display: block;
+  font-size: 50px;
 }
 
 .btcd-ck-wrp {
@@ -3131,7 +3131,7 @@ nav.top-nav {
 
   &:after {
     position: absolute;
-    top: 100%;
+    top: 102%;
     left: 50%;
     content: "";
     margin-left: -10px;
