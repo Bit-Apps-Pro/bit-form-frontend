@@ -1184,16 +1184,16 @@ input[type="checkbox"].disabled:checked:before {
   right: 45%;
   font-weight: 500;
   opacity: 0.6;
+}
 
-  &>div {
-    // color    : #374072;
-    color: var(--b-35-33);
-    font-size: 18px;
-  }
+.btcd-no-data .data-txt {
+  // color    : #374072;
+  color: var(--b-35-33);
+  font-size: 18px;
+}
 
-  & img {
-    width: 200px;
-  }
+.btcd-no-data img {
+  width: 200px;
 }
 
 .bar {
