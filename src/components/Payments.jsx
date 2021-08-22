@@ -156,8 +156,8 @@ export default function Payments() {
                     </button>
                   </div>
                   <div className="txt-center body py-1" title={`${pay.name} | ${pay.type}`}>
-                    <div>{pay.name}</div>
-                    <small>{pay.type}</small>
+                    <div className="int-name">{pay.name}</div>
+                    <small className="int-type">{pay.type}</small>
                   </div>
                 </div>
               ))}
