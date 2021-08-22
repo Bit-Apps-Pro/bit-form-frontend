@@ -357,14 +357,14 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     <div className="toolBar-wrp" style={{ width: tolbarSiz && 58 }}>
       <div className="btcd-toolbar-title">
         {!tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
+        <button className="icn-btn toolbar-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div>
       {useMemo(() => (
         <Scrollbars autoHide style={{ maxWidth: 400 }}>
           <div className="toolBar">
             {tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className="mr-1">{tool.icn}</span>
+                <span className="mr-1 tool-icn">{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}

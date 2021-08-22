@@ -537,7 +537,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
         {!isloading && allResp.length === 0 && (
           <div className="btcd-no-data txt-center">
             <img src={noData} alt="no data found" />
-            <div className="mt-2">{__('No Response Found.', 'bitform')}</div>
+            <div className="mt-2 data-txt">{__('No Response Found.', 'bitform')}</div>
           </div>
         )}
       </div>
