@@ -193,40 +193,38 @@ export const propertyValueSumX = (propertyValue = '') => {
   return summ || 0
 }
 
-export const validateField = (field, allFields, extraFieldsAttr, paymentsIntegs = [], setProModal, setModal, additionalSettings) => {
-  // eslint-disable-next-line no-undef
-  if (extraFieldsAttr[field.typ]?.pro && !bits.isPro) {
-    setProModal({ show: true, msg: __(`${field.typ} field is available in Pro Version!`, 'bitform') })
-    return { validationMsg: 'pro' }
-  }
-  if (extraFieldsAttr[field.typ]?.onlyOne) {
-    if (Object.values(allFields).find(fld => fld.typ === field.typ)) {
-      setModal({
-        show: true,
-        msg: __(`You cannot add more than one ${field.typ} field in same form.`, 'bitform'),
-      })
-      return { validationMsg: 'alread-exist' }
-    }
-  }
-  if (extraFieldsAttr[field.typ]?.checkDefaultConfig) {
-    const [payConf] = paymentsIntegs.filter(pay => pay.type.toLowerCase() === field.typ)
-    if (payConf?.length === 1) return { validationMsg: 'extraAttrAvailable', data: payConf }
-  }
-  if (field.typ === 'recaptcha') {
-    if (additionalSettings?.enabled?.recaptchav3) {
-      setModal({
-        show: true,
-        msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.', 'bitform'),
-      })
-    }
-  }
+const FIELDS_EXTRA_ATTR = {
+  paypal: { pro: true, onlyOne: true, setDefaultPayConfig: true },
+  razorpay: { pro: true, onlyOne: true, setDefaultPayConfig: true },
+  recaptcha: { onlyOne: true },
+}
 
+export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], additionalSettings, bits, __) => {
   // TODO country field with type  and list it in extraFieldsAttr
   // eslint-disable-next-line no-undef
   if (field.lbl === 'Select Country' && !bits.isPro) {
-    setModal({
-      show: true,
-      msg: __('Country Field available in Pro version of Bit Form.', 'bitform'),
-    })
+    return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.', 'bitform') }
   }
+
+  if (field.typ === 'recaptcha' && additionalSettings?.enabled?.recaptchav3) {
+    return { msg: __('You can use either ReCaptcha-V2 or ReCaptcha-V3 in a form. to use ReCaptcha-V2 disable the ReCaptcha-V3 from the Form Settings.', 'bitform') }
+  }
+
+  // eslint-disable-next-line no-undef
+  if (FIELDS_EXTRA_ATTR[field.typ]?.pro && !bits.isPro) {
+    return { validType: 'pro', msg: __(`${field.typ} field is available in Pro Version!`, 'bitform') }
+  }
+
+  if (FIELDS_EXTRA_ATTR[field.typ]?.onlyOne && Object.values(allFields).find(fld => fld.typ === field.typ)) {
+    return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.typ} field in the same form.`, 'bitform') }
+  }
+
+  if (FIELDS_EXTRA_ATTR[field.typ]?.setDefaultPayConfig) {
+    const payConf = paymentsIntegs.filter(pay => pay.type.toLowerCase() === field.typ)
+    if (payConf.length === 1) {
+      return { validType: 'setDefaultPayConfig', payData: payConf[0] }
+    }
+  }
+
+  return {}
 }

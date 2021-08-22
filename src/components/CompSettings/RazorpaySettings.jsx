@@ -29,6 +29,12 @@ export default function RazorpaySettings() {
     { name: __('Right', 'bitform'), value: 'right' },
   ]
 
+  const setPayIntegId = e => {
+    fieldData.payIntegID = e.target.value
+
+    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  }
+
   const handleInput = (name, value, type) => {
     if (type) {
       if (!fieldData.options[type]) fieldData.options[type] = {}
@@ -146,7 +152,7 @@ export default function RazorpaySettings() {
       <div className="mt-3">
         <b>{__('Select Config', 'bitform')}</b>
         <br />
-        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={fieldData.options.payIntegID}>
+        <select name="payIntegID" id="payIntegID" onChange={setPayIntegId} className="btcd-paper-inp mt-1" value={fieldData.payIntegID}>
           <option value="">Select Config</option>
           {getRazorpayConfigs()}
         </select>
@@ -157,7 +163,7 @@ export default function RazorpaySettings() {
         {isSubscription && <SingleInput inpType="text" title={__('Plan Id', 'bitform')} value={fieldData.planId || ''} action={e => handleInput('planId', e.target.value)} />}
       </div> */}
 
-      {fieldData?.options?.payIntegID && (
+      {fieldData?.payIntegID && (
         <>
           {!isSubscription && (
             <>

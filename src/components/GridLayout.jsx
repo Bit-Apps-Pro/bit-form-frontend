@@ -2,17 +2,17 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
+import produce, { createDraft, finishDraft } from 'immer'
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { createDraft, finishDraft } from 'immer'
+import { $additionalSettings, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { checkFieldsExtraAttr, propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { deepCopy, isType } from '../Utils/Helpers'
-import { $draggingField, $bits, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $additionalSettings, $updateBtn } from '../GlobalStates'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -20,8 +20,6 @@ import ConfirmModal from './Utilities/ConfirmModal'
 function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   console.log('render gridlay')
   const { payments } = useContext(AppSettings)
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
   const [layout, setLay] = useRecoilState($layouts)
@@ -215,7 +213,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const draftField = createDraft(newData)
     if (checkPayments && isType('array', checkPayments)) {
       if (newData.fieldData.typ === 'razorpay') {
-        draftField.fieldData.options.payIntegID = checkPayments[0].id
+        draftField.fieldData.payIntegID = checkPayments[0].id
       } else {
         draftField.fieldData.payIntegID = checkPayments[0].id
       }
@@ -297,96 +295,36 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setAlertMdl(tmpAlert)
   }
 
-  const checkPaymentFields = elm => {
-    const payPattern = /paypal|razorpay/
-    const fld = elm.typ.match(payPattern)
-    if (fld) {
-      const payFields = fields ? Object.values(fields).filter(field => field.typ === fld[0]) : []
-      let msg
-      if (!isPro) {
-        msg = __(`${fld[0]} is in Pro Version!`, 'bitform')
-        setProModal({ show: true, msg })
-      } else if (payFields.length) {
-        msg = __(
-          <p>
-            You cannot add more than one &nbsp;
-            {fld[0]}
-            &nbsp;
-            field in same form.
-          </p>, 'bitform',
-        )
-        setAlertMdl({ show: true, msg })
-      }
-      if (msg) {
-        return false
-      }
+  const handleFieldExtraAttr = () => {
+    const extraAttr = checkFieldsExtraAttr(draggingField.fieldData, fields, payments, additional, bits, __)
 
-      const payConf = payments.filter(pay => pay.type.toLowerCase() === fld[0])
-      if (payConf.length === 1) {
-        return payConf
-      }
-    }
-    return true
-  }
-
-  const checkCaptchaField = () => {
-    let msg
-    if (additional?.enabled?.recaptchav3) {
-      msg = __(
-        <p>
-          You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV2 disable the ReCaptchaV3 from the Form Settings.
-        </p>, 'bitform',
-      )
-    } else {
-      const capchaFlds = fields ? Object.values(fields).filter(field => field.typ === 'recaptcha') : []
-      if (capchaFlds.length) {
-        msg = __(
-          <p>
-            You cannot add more than one reCaptcha field in same form.
-          </p>, 'bitform',
-        )
-      }
+    if (extraAttr.validType === 'pro') {
+      setProModal({ show: true, msg: extraAttr.msg })
+      return 0
     }
 
-    if (msg) {
-      setAlertMdl({ show: true, msg })
-      return false
+    if (extraAttr.validType === 'onlyOne') {
+      setAlertMdl({ show: true, msg: extraAttr.msg })
+      return 0
     }
 
-    return true
-  }
-
-  const checkCountryField = () => {
-    let msg
-    if (!isPro) {
-      msg = __(
-        <p>
-          Country field is in Pro Version!
-        </p>, 'bitform',
-      )
+    if (extraAttr.validType === 'setDefaultPayConfig') {
+      const newFldData = produce(draggingField, draft => {
+        // eslint-disable-next-line no-param-reassign
+        draft.fieldData.payIntegID = extraAttr.payData.id
+      })
+      return newFldData
     }
 
-    if (msg) {
-      setProModal({ show: true, msg })
-      return false
-    }
-
-    return true
+    return draggingField
   }
 
   const onDrop = (lay, elmPrms) => {
-    const checkPayments = checkPaymentFields(draggingField.fieldData)
-    const draftField = createDraft(draggingField)
-    if (checkPayments && isType('array', checkPayments)) {
-      if (draggingField.fieldData.typ === 'razorpay') {
-        draftField.fieldData.options.payIntegID = checkPayments[0].id
-      } else {
-        draftField.fieldData.payIntegID = checkPayments[0].id
-      }
-    } else if (!checkPayments) return
+    const fldStatus = handleFieldExtraAttr()
+    let tmpDraggingField = draggingField
+    if (fldStatus) tmpDraggingField = fldStatus
+    else return
 
-    if (draggingField.fieldData.typ === 'recaptcha' && !checkCaptchaField()) return
-    if (draggingField.fieldData.lbl === 'Select Country' && !checkCountryField()) return
     const { w, h, minH, maxH, minW } = draggingField.fieldSize
     // eslint-disable-next-line prefer-const
     let { x, y } = elmPrms
@@ -409,8 +347,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
     }
     setLayouts({ ...tmpLayouts })
-    const updatedField = finishDraft(draftField)
-    setFields({ ...fields, [newBlk]: updatedField.fieldData })
+    setFields({ ...fields, [newBlk]: tmpDraggingField.fieldData })
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
   }
