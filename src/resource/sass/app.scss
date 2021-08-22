@@ -810,9 +810,9 @@ input[type="checkbox"].disabled:checked:before {
   // color: hsl(215, 44%, 87%);
   color: var(--b-44-87);
 
-  &>span {
+  &>.icn-stack {
     display: block;
-    font-size: 50px;
+    font-size: 50px; 
   }
 }
 
