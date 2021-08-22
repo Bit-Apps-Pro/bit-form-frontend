@@ -13,6 +13,7 @@ import Loader from './components/Loaders/Loader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
 import ut from './styles/2.utilities'
+import './resource/sass/app.scss'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const AppSettings = lazy(() => import('./pages/AppSettings'))
