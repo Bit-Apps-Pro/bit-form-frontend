@@ -13,6 +13,7 @@ import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
 import './resource/sass/app.scss'
 import ut from './styles/2.utilities'
+import { __ } from './Utils/i18nwrap'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const AppSettings = lazy(() => import('./pages/AppSettings'))
