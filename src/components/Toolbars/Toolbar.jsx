@@ -363,7 +363,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     <div className="toolBar-wrp" style={{ width: tolbarSiz && 58 }}>
       <div className="btcd-toolbar-title">
         {!tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
+        <button className="icn-btn toolbar-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div>
       {useMemo(() => (
         <Scrollbars autoHide style={{ maxWidth: 400 }}>

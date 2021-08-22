@@ -735,17 +735,17 @@ input[type="checkbox"].disabled:checked:before {
   align-items: center;
   margin: 5px 0 10px 12px;
   font-weight: bold;
+}
 
-  &>button {
+.toolbar-btn {
+  background: var(--gray-1);
+  color: var(--b-11-50);
+  width: 25px;
+  height: 25px;
+  font-weight: bold;
+
+  &:hover {
     background: var(--gray-1);
-    color: var(--b-11-50);
-    width: 25px;
-    height: 25px;
-    font-weight: bold;
-
-    &:hover {
-      background: var(--gray-1);
-    }
   }
 }
 
