@@ -226,8 +226,8 @@ function Integrations() {
                   )}
                 </div>
                 <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
-                  <div>{inte.name}</div>
-                  <small className="txt-dp">{inte.type}</small>
+                  <div className="int-name">{inte.name}</div>
+                  <small className="txt-dp int-type">{inte.type}</small>
                 </div>
               </div>
             ))}

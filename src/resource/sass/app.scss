@@ -1619,79 +1619,79 @@ input[type="checkbox"].disabled:checked:before {
   box-shadow: 1px 2px 3px var(--b-38-89);
   background-color: var(--b-97);
   transition: box-shadow 0.2s, transform 0.3s;
+}
 
-  &>.btcd-inte-atn {
-    background: var(--white);
-    position: absolute;
-    bottom: 38px;
-    height: 0px;
-    width: 100%;
-    text-align: center;
-    overflow: hidden;
-    transition: height 0.2s;
+.btcd-inte-card>.btcd-inte-atn {
+  background: var(--white);
+  position: absolute;
+  bottom: 38px;
+  height: 0px;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  transition: height 0.2s;
+}
 
-    & .btn {
-      padding: 3px;
-    }
+.btcd-inte-card>.btcd-inte-atn .btn {
+  padding: 3px;
+}
 
-    & span.btcd-icn {
-      font-size: 16px;
-    }
+.btcd-inte-card>.btcd-inte-atn span.btcd-icn {
+  font-size: 16px;
+}
+
+.btcd-inte-card .body {
+  background: var(--white);
+}
+
+.btcd-inte-card .body .int-name {
+  width: 85%;
+  font-size: 14px;
+  height: 17px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: auto;
+  white-space: pre;
+}
+
+.btcd-inte-card .body .int-type {
+  font-size: 12px;
+}
+
+.btcd-inte-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.btcd-inte-card.add-inte {
+  // color    : hsl(228, 96%, 90%);
+  color: var(--b-90);
+  font-size: 100px;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    // color: hsl(229, 58%, 82%);
+    color: var(--b-58-82);
   }
+}
 
-  &>.body {
-    background: var(--white);
+.btcd-inte-card:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter) {
+  transform: scale(1.02);
+  box-shadow: 2px 2px 7px var(--b-35-86);
+}
 
-    &>div {
-      width: 85%;
-      font-size: 14px;
-      height: 17px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      margin: auto;
-      white-space: pre;
-    }
+.btcd-inte-card:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter)>.btcd-inte-atn {
+  height: 42px;
+  overflow: visible;
+}
 
-    & small {
-      font-size: 12px;
-    }
-  }
-
-  & a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &.add-inte {
-    // color    : hsl(228, 96%, 90%);
-    color: var(--b-90);
-    font-size: 100px;
-    cursor: pointer;
-    outline: none;
-
-    &:hover {
-      // color: hsl(229, 58%, 82%);
-      color: var(--b-58-82);
-    }
-  }
-
-  &:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter) {
-    transform: scale(1.02);
-    box-shadow: 2px 2px 7px var(--b-35-86);
-
-    &>.btcd-inte-atn {
-      height: 42px;
-      overflow: visible;
-    }
-  }
-
-  & img {
-    display: block;
-    max-height: 160px;
-    max-width: 160px;
-    transform: scale(0.8);
-    margin: auto;
-  }
+.btcd-inte-card img {
+  display: block;
+  max-height: 160px;
+  max-width: 160px;
+  transform: scale(0.8);
+  margin: auto;
 }
 
 .inte-sm {
