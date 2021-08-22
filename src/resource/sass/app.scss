@@ -1262,25 +1262,42 @@ input[type="checkbox"].disabled:checked:before {
   overflow: hidden;
   margin: auto;
 
-  & .btgl {
-    cursor: pointer;
-    padding: 10px;
-    font-size: 16px;
-    outline: none;
-    font-weight: 600;
+  // & .btgl {
+  //   cursor: pointer;
+  //   padding: 10px;
+  //   font-size: 16px;
+  //   outline: none;
+  //   font-weight: 600;
 
-    & .btcd-icn {
-      font-size: 20px;
-    }
+  //   & .btcd-icn {
+  //     font-size: 20px;
+  //   }
 
-    &:hover {
-      background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.95);
-    }
-  }
+  //   &:hover {
+  //     background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.95);
+  //   }
+  // }
 
-  & .body {
-    padding: 10px;
-  }
+  // & .body {
+  //   padding: 10px;
+  // }
+}
+
+.style-acc .btgl {
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  font-weight: 600;
+}
+.style-acc .btgl:hover {
+  background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.95);
+}
+.style-acc .btgl .btcd-icn {
+  font-size: 20px;
+}
+.style-acc .body {
+  padding: 10px;
 }
 
 .style-acc.active,
