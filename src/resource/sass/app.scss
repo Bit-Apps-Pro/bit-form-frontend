@@ -738,8 +738,8 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .toolbar-btn {
-  background: var(--gray-1);
-  color: var(--b-11-50);
+  background: var(--gray-1) !important;
+  color: var(--b-11-50) !important;
   width: 25px;
   height: 25px;
   font-weight: bold;
@@ -775,7 +775,7 @@ input[type="checkbox"].disabled:checked:before {
   box-shadow: 0 1px 3px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2);
   transition: all 200ms;
 
-  &>span {
+  &>.tool-icn {
     display: flex;
     color: var(--dp-blue);
     font-size: 25px;
@@ -790,7 +790,7 @@ input[type="checkbox"].disabled:checked:before {
     // box-shadow: 0 1px 11px -4px hsl(0, 0%, 69%);
     box-shadow: 0 1px 11px -4px var(--white-0-69);
 
-    &>span {
+    &>.tool-icn {
       color: var(--b-50);
     }
   }

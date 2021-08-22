@@ -370,7 +370,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           <div className="toolBar">
             {tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className="mr-1">{tool.icn}</span>
+                <span className="mr-1 tool-icn">{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}

@@ -4,15 +4,16 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
 import { useFela } from 'react-fela'
-import { __ } from './Utils/i18nwrap'
-import TableLoader from './components/Loaders/TableLoader'
+import { Toaster } from 'react-hot-toast'
+import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
 import Loader from './components/Loaders/Loader'
+import TableLoader from './components/Loaders/TableLoader'
 import './resource/icons/style.css'
 import logo from './resource/img/bit-form-logo.svg'
+import './resource/sass/app.scss'
 import ut from './styles/2.utilities'
+import { __ } from './Utils/i18nwrap'
 
 const AllForms = lazy(() => import('./pages/AllForms'))
 const AppSettings = lazy(() => import('./pages/AppSettings'))
