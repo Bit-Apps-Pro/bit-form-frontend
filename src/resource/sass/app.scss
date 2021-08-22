@@ -871,62 +871,113 @@ input[type="checkbox"].disabled:checked:before {
   border-color: var(--b-50) !important;
 }
 
-.btc-range {
-  & .icn {
-    & svg {
-      height: 13px;
-      width: 13px;
-    }
-  }
+// .btc-range {
+//   & .icn {
+//     & svg {
+//       height: 13px;
+//       width: 13px;
+//     }
+//   }
 
-  & .inp-grp {
-    &:hover {
-      .icn {
-        color: var(--b-50);
-        background-color: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.92);
+//   & .inp-grp {
+//     &:hover {
+//       .icn {
+//         color: var(--b-50);
+//         background-color: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.92);
 
-        & .line-icn {
-          stroke: var(--b-50);
-        }
+//         & .line-icn {
+//           stroke: var(--b-50);
+//         }
 
-        & .fill-icn {
-          fill: var(--b-50);
-        }
+//         & .fill-icn {
+//           fill: var(--b-50);
+//         }
 
-        .border-icn {
-          border-color: var(--b-50);
-        }
-      }
-    }
-  }
+//         .border-icn {
+//           border-color: var(--b-50);
+//         }
+//       }
+//     }
+//   }
 
-  & .icn {
-    // background     : rgb(238, 243, 250);
-    background: var(--white-55-96);
-    width: 30px;
-    max-width: 30px;
-    min-width: 30px;
-    max-height: 30px;
-    height: 30px;
-    justify-content: center;
-  }
+//   & .icn {
+//     // background     : hsl(215, 55%, 96%);
+//     background: var(--white-55-96);
+//     width: 30px;
+//     max-width: 30px;
+//     min-width: 30px;
+//     max-height: 30px;
+//     height: 30px;
+//     justify-content: center;
+//   }
 
-  & input[type="number"] {
-    width: 55px;
-    line-height: 1 !important;
-    outline: none;
-    border-radius: 5px;
-    // border       : 1px solid #e0e0e0;
-    border: 1px solid var(--white-0-89);
-    font-size: 14px;
-    padding: 4px;
+//   & input[type="number"] {
+//     width: 55px;
+//     line-height: 1 !important;
+//     outline: none;
+//     border-radius: 5px;
+//     // border       : 1px solid #e0e0e0;
+//     border: 1px solid var(--white-0-89);
+//     font-size: 14px;
+//     padding: 4px;
 
-    &:hover,
-    :focus {
-      box-shadow: none;
-      // border-color: gray;
-      border-color: var(--white-0-50);
-    }
+//     &:hover,
+//     :focus {
+//       box-shadow: none;
+//       // border-color: gray;
+//       border-color: var(--white-0-50);
+//     }
+//   }
+// }
+
+.btc-range .icn svg {
+  height: 13px;
+  width: 13px;
+}
+
+.btc-range .inp-grp:hover .icn {
+  color: var(--b-50);
+  background-color: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.92);
+}
+
+.btc-range .inp-grp:hover .icn .line-icn {
+  stroke: var(--b-50);
+}
+
+.btc-range .inp-grp:hover .icn .fill-icn {
+  fill: var(--b-50);
+}
+
+.btc-range .inp-grp:hover .icn .border-icn {
+  border-color: var(--b-50);
+}
+
+.btc-range .icn {
+  // background     : hsl(215, 55%, 96%);
+  background: var(--white-55-96);
+  width: 30px;
+  max-width: 30px;
+  min-width: 30px;
+  max-height: 30px;
+  height: 30px;
+  justify-content: center;
+}
+
+.btc-range-input-number {
+  width: 55px;
+  line-height: 1 !important;
+  outline: none;
+  border-radius: 5px !important;
+  // border       : 1px solid #e0e0e0;
+  border: 1px solid var(--white-0-89) !important;
+  font-size: 14px;
+  padding: 4px !important;
+
+  &:hover,
+  :focus {
+    box-shadow: none;
+    // border-color: gray;
+    border-color: var(--white-0-50);
   }
 }
 

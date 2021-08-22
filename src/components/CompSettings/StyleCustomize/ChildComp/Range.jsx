@@ -68,6 +68,6 @@ const RSlider = ({ icn, lbl, action, rVal, unit, max, min, parseNumber, step }) 
   <div className="flx flx-between mt-1 inp-grp">
     <span className="icn tooltip pos-rel br-50 flx mr-1" style={{ '--tooltip-txt': `"${lbl}"`, '--tt-left': '100%' }}>{icn}</span>
     <input step={step} title={`${lbl} ${rVal} ${unit}`} onChange={action} className="btc-range mr-1" type="range" min={min} max={max} value={rVal} />
-    <input step={step} onChange={action} className="ml-1" type="number" placeholder="auto" value={parseNumber(rVal)} min="0" />
+    <input step={step} onChange={action} className="ml-1 btc-range-input-number" type="number" placeholder="auto" value={parseNumber(rVal)} min="0" />
   </div>
 )
