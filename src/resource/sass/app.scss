@@ -3865,6 +3865,7 @@ select.btcd-ud-inp {
   position: absolute;
   top: 7px;
   right: 20%;
+  z-index: 999;
   & .active {
     background: transparentize(#fff, 0.7);
     color: transparentize(#fff, 0);
