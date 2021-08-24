@@ -1,0 +1,65 @@
+.material-outlined {
+  position: relative;
+  width: 300px;
+}
+
+.material-outlined input {
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 16px 36px;
+  color: gray;
+  transition: 0.2s ease-out;
+}
+
+.material-outlined label {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  color: gray;
+  padding: 0 5px;
+  margin: 0 8px;
+  transition: 0.2s ease-out;
+  transform-origin: left top;
+  pointer-events: none;
+}
+
+
+.material-outlined > span {
+  position: absolute;
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.material-outlined span.leading {
+  left: 8px;
+}
+
+.material-outlined span.trailing {
+  right: 8px;
+}
+
+.material-outlined input:focus {
+  border-color: #6200ee;
+}
+
+.material-outlined input:focus ~ span,
+.material-outlined input:focus ~ label {
+  color: #6200ee;
+}
+
+.material-outlined input:focus ~ label,
+.material-outlined input:not(:placeholder-shown) ~ label {
+  left: 0;
+  top: 0;
+  transform: translateY(-50%) scale(0.9) !important;
+}
+
+.material-outlined input:not(:focus)::placeholder {
+  opacity: 0;
+}
