@@ -1,17 +1,20 @@
 import { useContext, useState } from 'react'
-
+import { useFela } from 'react-fela'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { __ } from '../Utils/i18nwrap'
+import app from '../styles/app.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import CopyText from './Utilities/CopyText'
 import bitsFetch from '../Utils/bitsFetch'
-import SnackMsg from './Utilities/SnackMsg'
+import { __ } from '../Utils/i18nwrap'
 import LoaderSm from './Loaders/LoaderSm'
+import CopyText from './Utilities/CopyText'
+import SnackMsg from './Utilities/SnackMsg'
+
 
 export default function Captcha() {
   const { reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
   const [snack, setsnack] = useState({ show: false })
   const [loading, setLoading] = useState(false)
+  const { css } = useFela()
 
   const saveCaptcha = version => {
     setLoading(true)
@@ -90,7 +93,7 @@ export default function Captcha() {
                 <a className="btcd-link" href="https://www.google.com/recaptcha/admin/" target="_blank" rel="noreferrer">{__('Google reCAPTCHA Admin', 'bitform')}</a>
               </p>
             </div>
-            <button onClick={() => saveCaptcha(ver)} type="button" className="btn btn-md f-right blue" disabled={loading}>
+            <button onClick={() => saveCaptcha(ver)} type="button" className={`${css(app.btn)} btn-md f-right blue`} disabled={loading}>
               {__('Save', 'bitform')}
               {loading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
             </button>

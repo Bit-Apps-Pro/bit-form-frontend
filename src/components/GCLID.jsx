@@ -1,7 +1,9 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import { setGrantTokenResponse } from './AllIntegrations/IntegrationHelpers/IntegrationHelpers'
@@ -23,6 +25,8 @@ export default function GCLID() {
   const [isLoading, setisLoading] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '', clientCustomerId: '' })
   const [isAuthorized, setisAuthorized] = useState(false)
+
+  const { css } = useFela()
 
   useEffect(() => {
     window.opener && setGrantTokenResponse('gclid')
@@ -187,13 +191,13 @@ export default function GCLID() {
           </small>
         </div>
 
-        <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+        <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
           {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
         <br />
         {isAuthorized && (
-          <button onClick={e => saveGoogleConfig(e)} className="btn f-right btcd-btn-lg blue sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={e => saveGoogleConfig(e)} className={`${css(app.btn)} f-right btcd-btn-lg blue sh-sm flx`} type="button" disabled={!isAuthorized}>
             Save
           </button>
         )}

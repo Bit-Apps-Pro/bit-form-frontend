@@ -10,6 +10,8 @@ import LoaderSm from './Loaders/LoaderSm'
 import PaypalSettings from './PaypalSettings'
 import RazorpaySettings from './RazorpaySettings'
 import SnackMsg from './Utilities/SnackMsg'
+import app from '../styles/app.style'
+import { useFela } from 'react-fela'
 
 export default function Payment({ allIntegURL }) {
   const bits = useRecoilValue($bits)
@@ -19,6 +21,7 @@ export default function Payment({ allIntegURL }) {
   const history = useHistory()
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
   const [paySetting, setPaySetting] = useState(
     (indx && payments?.[indx])
       ? { ...payments[indx] }
@@ -86,7 +89,7 @@ export default function Payment({ allIntegURL }) {
           />,
         }[type]
       }
-      <button type="button" onClick={handleSubmit} className="btn btn-md f-right blue" disabled={isLoading}>
+      <button type="button" onClick={handleSubmit} className={`${css(app.btn)} btn-md f-right blue`} disabled={isLoading}>
         {__('Save', 'bitform')}
         {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>

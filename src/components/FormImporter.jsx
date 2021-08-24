@@ -1,16 +1,19 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
+import { $forms } from '../GlobalStates'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
-import { $forms } from '../GlobalStates'
 import { formsReducer } from '../Utils/Reducers'
 
 export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
   const setForms = useSetRecoilState($forms)
   const [importProp, setImportProp] = useState({ prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
   const [error, setError] = useState({ formDetail: '', prop: '' })
+  const { css } = useFela()
   const handleChange = (ev) => {
     if (error[ev.target.name]) {
       setError({ ...error, [ev.target.name]: '' })
@@ -191,8 +194,8 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
         </div>
       </div>
       <div className="flx flx-between w-5">
-        <button onClick={() => setModal(false)} className="btn round btcd-btn-lg blue blue-sh" type="button"> Cancel </button>
-        <button onClick={handleImport} className="btn round btcd-btn-lg blue blue-sh" type="button"> Import </button>
+        <button onClick={() => setModal(false)} className={`${css(app.btn)} round btcd-btn-lg blue blue-sh`} type="button"> Cancel </button>
+        <button onClick={handleImport} className={`${css(app.btn)} round btcd-btn-lg blue blue-sh`} type="button"> Import </button>
       </div>
     </div>
   )

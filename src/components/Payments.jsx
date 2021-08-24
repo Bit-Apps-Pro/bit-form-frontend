@@ -26,7 +26,7 @@ export default function Payments() {
   const { path, url } = useRouteMatch()
   const allIntegURL = url
   const history = useHistory()
-  const css = useFela()
+  const { css } = useFela()
 
   const pays = [
     { type: 'PayPal', logo: paypal },

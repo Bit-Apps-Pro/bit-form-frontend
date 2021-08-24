@@ -1654,7 +1654,7 @@ input[type="checkbox"].disabled:checked:before {
   white-space: pre;
 }
 
-.btcd-inte-card .body .int-type {
+.int-type {
   font-size: 12px;
 }
 
@@ -1818,30 +1818,30 @@ input[type="checkbox"].disabled:checked:before {
   border-radius: 8px;
 }
 
-.btn {
-  display: inline-flex;
-  color: inherit;
-  border: none;
-  padding: 7px 10px;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  outline: none;
-  font-size: 14px;
-  text-decoration: none;
-  white-space: nowrap;
-  font-weight: 600;
+// .btn {
+//   display: inline-flex;
+//   color: inherit;
+//   border: none;
+//   padding: 7px 10px;
+//   border-radius: 8px;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 10px;
+//   margin-bottom: 10px;
+//   cursor: pointer;
+//   outline: none;
+//   font-size: 14px;
+//   text-decoration: none;
+//   white-space: nowrap;
+//   font-weight: 600;
 
-  &:disabled {
-    background-color: var(--white-0-90);
-    box-shadow: none;
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-}
+//   &:disabled {
+//     background-color: var(--white-0-90);
+//     box-shadow: none;
+//     opacity: 0.7;
+//     cursor: not-allowed;
+//   }
+// }
 
 .vis-disabled {
   background: #45516f !important;

@@ -3,9 +3,11 @@
 const customProperties = {
   g: ($ = 'center') => ({ placeContent: $ }),
   d: $ => ({ display: $ }),
+  b: $ => ({ border: $ }),
   pe: $ => ({ pointerEvents: $ }),
   us: $ => ({ userSelect: $ }),
   fltr: $ => ({ filter: $ }),
+  bS: $ => ({ boxShadow: $ }),
 
   fs: $ => ({ fontSize: $ }),
   fw: $ => ({ fontWeight: $ }),
@@ -28,6 +30,13 @@ const customProperties = {
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
   fDri: $ => ({ flexDriection: $ }),
+  jC: $ => ({ justifyContent: $ }),
+  aI: $ => ({ alignItems: $ }),
+  cr: $ => ({ cursor: $ }),
+  otln: $ => ({ outline: $ }),
+  tD: $ => ({ textDecoration: $ }),
+  wS: $ => ({ whiteSpace: $ }),
+  o: $ => ({ opacity: $ }),
 
   size: $ => ({ width: `${$}px`, height: `${$}px` }),
 
