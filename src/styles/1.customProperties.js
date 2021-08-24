@@ -3,13 +3,19 @@
 const customProperties = {
   g: ($ = 'center') => ({ placeContent: $ }),
   d: $ => ({ display: $ }),
+  pe: $ => ({ pointerEvents: $ }),
+  us: $ => ({ userSelect: $ }),
+  fltr: $ => ({ filter: $ }),
 
   fs: $ => ({ fontSize: $ }),
-  po: $ => ({ position: $ }),
-  pot: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
-  pob: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
-  pol: $ => ({ left: Number.isInteger($) ? `${$}px` : $ }),
-  por: $ => ({ rigth: Number.isInteger($) ? `${$}px` : $ }),
+  fw: $ => ({ fontWeight: $ }),
+  ts: $ => ({ textShadow: $ }),
+  txA: $ => ({ textAlign: $ }),
+  pos: $ => ({ position: $ }),
+  yt: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
+  yb: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
+  xl: $ => ({ left: Number.isInteger($) ? `${$}px` : $ }),
+  xr: $ => ({ rigth: Number.isInteger($) ? `${$}px` : $ }),
 
   bg: $ => ({ background: $ }),
   clr: $ => ({ color: $ }),
@@ -21,10 +27,12 @@ const customProperties = {
     ...$ === 'align-center' && { alignItems: 'center' },
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
+  fDri: $ => ({ flexDriection: $ }),
 
   size: $ => ({ width: `${$}px`, height: `${$}px` }),
 
   w: $ => ({ width: Number.isInteger($) ? `${$}px` : $ }),
+  h: $ => ({ height: Number.isInteger($) ? `${$}px` : $ }),
   mx_w: $ => ({ maxWidth: Number.isInteger($) ? `${$}px` : $ }),
   mx_h: $ => ({ maxHeight: Number.isInteger($) ? `${$}px` : $ }),
   br: $ => ({ borderRadius: `${$}px` }),
@@ -54,6 +62,7 @@ const customProperties = {
   my: $ => ($ === 'auto'
     ? { marginTop: 'auto', marginBottom: 'auto' }
     : { marginTop: `${$}px`, marginBottom: `${$}px` }),
-
+  z: $ => ({ zIndex: $ }),
+  c: $ => ({ content: $ }),
 }
 export default customProperties

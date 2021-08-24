@@ -1,13 +1,14 @@
 /* eslint-disable-next-line no-undef */
-import { useState } from 'react'
 import { withQuicklink } from 'quicklink/dist/react/hoc'
+import { useState } from 'react'
+import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import toast from 'react-hot-toast'
 import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
-import metabox from '../resource/img/integ/metabox.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
@@ -24,6 +25,7 @@ import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
+import metabox from '../resource/img/integ/metabox.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
@@ -37,7 +39,9 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -45,10 +49,6 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
-import TrashIcn from '../Icons/TrashIcn'
-import { deepCopy } from '../Utils/Helpers'
-import { useFela } from 'react-fela'
-import app from '../styles/app.style'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -191,7 +191,7 @@ function Integrations() {
                       onKeyPress={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
                       role="button"
                       tabIndex="0"
-                      className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
+                      className={`btcd-inte-card ${css(app.inte_sm)} mr-4 mt-3 ${inte.disable && !inte.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${inte.pro && 'btcd-inte-pro'}`}
                     >
                       {inte.pro && (
                         <div className="pro-filter">

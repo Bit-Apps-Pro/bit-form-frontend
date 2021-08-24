@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { useFela } from 'react-fela'
 import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
@@ -6,6 +7,7 @@ import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
+import app from '../styles/app.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
@@ -24,6 +26,7 @@ export default function Payments() {
   const { path, url } = useRouteMatch()
   const allIntegURL = url
   const history = useHistory()
+  const css = useFela()
 
   const pays = [
     { type: 'PayPal', logo: paypal },
@@ -124,7 +127,7 @@ export default function Payments() {
                       onKeyPress={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
                       role="button"
                       tabIndex="0"
-                      className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && 'btcd-inte-dis'} ${pay.pro && 'btcd-inte-pro'}`}
+                      className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${pay.pro && 'btcd-inte-pro'}`}
                     >
                       {pay.pro && (
                         <div className="pro-filter">
