@@ -49,7 +49,6 @@ const app = {
       h: '100%',
     },
   },
-
   btcd_inte_pro: {
     pe: 'none',
     us: 'none',
@@ -78,7 +77,7 @@ const app = {
   inte_sm_img: {
     mx_w: '110px !important',
     mx_h: '110px !important',
-    mx: 'auto',
+    m: 'auto',
     p: 12,
   },
 }
