@@ -47,6 +47,8 @@ import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
 import TrashIcn from '../Icons/TrashIcn'
 import { deepCopy } from '../Utils/Helpers'
+import { useFela } from 'react-fela'
+import app from '../styles/app.style'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -60,6 +62,7 @@ function Integrations() {
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const { css } = useFela()
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks, pro: !isPro },
@@ -195,7 +198,7 @@ function Integrations() {
                           <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
-                      <img loading="lazy" src={inte.logo} alt="" />
+                      <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />
                       <div className="txt-center">
                         {inte.type}
                       </div>
