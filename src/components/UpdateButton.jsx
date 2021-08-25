@@ -1,9 +1,11 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
@@ -15,6 +17,7 @@ import LoaderSm from './Loaders/LoaderSm'
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const history = useHistory()
   const { formType, formID } = useParams()
+  const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
   const lay = useRecoilValue($layouts)
@@ -211,7 +214,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   return (
-    <button id="update-btn" className={`btn tooltip pos-rel ${!updateBtn.unsaved ? 'vis-disabled' : 'blue'}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
+    <button id="update-btn" className={`${css(app.btn)} tooltip pos-rel ${!updateBtn.unsaved ? 'vis-disabled' : 'blue'}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>
