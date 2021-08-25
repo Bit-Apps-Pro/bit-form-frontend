@@ -1,7 +1,9 @@
 import { useContext, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
+import app from '../styles/app.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -10,8 +12,6 @@ import LoaderSm from './Loaders/LoaderSm'
 import PaypalSettings from './PaypalSettings'
 import RazorpaySettings from './RazorpaySettings'
 import SnackMsg from './Utilities/SnackMsg'
-import app from '../styles/app.style'
-import { useFela } from 'react-fela'
 
 export default function Payment({ allIntegURL }) {
   const bits = useRecoilValue($bits)

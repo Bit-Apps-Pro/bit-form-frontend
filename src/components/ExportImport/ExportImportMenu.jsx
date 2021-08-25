@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
+import app from '../../styles/app.style'
 import Export from './Export'
 
 export default function ExportImportMenu({ formID, cols, report }) {
   // const [showImportMdl, setshowImportMdl] = useState(false)
   const [showExportMdl, setshowExportMdl] = useState(false)
+  const { css } = useFela()
   // const importShow = () => {
   //   setshowImportMdl(true)
   // }
@@ -28,7 +31,7 @@ export default function ExportImportMenu({ formID, cols, report }) {
       <div className="btcd-menu">
         {/* <button onClick={() => importShow()} className="" type="button">Import Data</button>
         {' '} */}
-        <button onClick={() => exportShow()} className="btn ml-2 mt-0 mb-0" type="button">Export</button>
+        <button onClick={() => exportShow()} className={`${css(app.btn)} ml-2 mt-0 mb-0`} type="button">Export</button>
         {/* <button onClick={() => exportData('pdf')} className="" type="button">pdf</button>
         <button onClick={() => exportData('csv')} className="" type="button">csv</button>
         <button onClick={() => exportData('xlsx')} className="" type="button">xls</button>

@@ -77,7 +77,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         <button
           onClick={() => nextPage(3)}
           disabled={!activeCampaingConf?.listId || activeCampaingConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
           {__('Next', 'bitform')}

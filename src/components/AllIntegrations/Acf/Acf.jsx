@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useHistory } from 'react-router-dom'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
@@ -16,6 +18,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const [acfFields, setAcfFields] = useState([])
   const [acfFileFields, setAcfFileFields] = useState([])
+  const { css } = useFela()
 
   const [data, setData] = useState({
     name: 'CPT/Post Creation With ACF',
@@ -259,7 +262,7 @@ function Acf({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
       <button
         id="secondary-update-btn"
-        className="btn f-left btcd-btn-lg green sh-sm flx"
+        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         onClick={() => saveConfig()}
       >

@@ -1,4 +1,5 @@
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
@@ -11,6 +12,7 @@ import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, 
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import '../resource/sass/components.scss'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -54,6 +56,7 @@ function FormDetails() {
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
+  const { css } = useFela()
 
   const setNewFormProps = () => {
     if (formType === 'new') {
@@ -261,7 +264,7 @@ function FormDetails() {
             {proModal.msg}
           </h4>
           <div className="txt-center">
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className={`${css(app.btn)} btn-lg blue`} type="button">{__('Buy Premium', 'bitform')}</button></a>
           </div>
         </Modal>
         <ConfirmModal
@@ -310,7 +313,7 @@ function FormDetails() {
 
           <div className="btcd-bld-btn">
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
-            <NavLink to="/" className="btn btcd-btn-close" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <NavLink to="/" className={`${css(app.btn)} btcd-btn-close`} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />
             </NavLink>
           </div>

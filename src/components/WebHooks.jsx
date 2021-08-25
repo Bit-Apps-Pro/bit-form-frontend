@@ -1,16 +1,18 @@
 import { memo, useState } from 'react'
+import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
+import TrashIcn from '../Icons/TrashIcn'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import ConfirmModal from './Utilities/ConfirmModal'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
+import ConfirmModal from './Utilities/ConfirmModal'
 import SnackMsg from './Utilities/SnackMsg'
-import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
-import TrashIcn from '../Icons/TrashIcn'
 
 function WebHooks({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -18,6 +20,7 @@ function WebHooks({ removeIntegration }) {
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const { css } = useFela()
 
   const handleHookTitle = (e, idx) => {
     const confirmation = deepCopy(allConf)
@@ -189,7 +192,7 @@ function WebHooks({ removeIntegration }) {
                   </select>
                 </div>
               </div>
-              <Button onClick={() => testWebhook(i)} className="btn btcd-btn-o-blue">{__('Test Webhook', 'bitform')}</Button>
+              <Button onClick={() => testWebhook(i)} className={`${css(app.btn)} btcd-btn-o-blue`}>{__('Test Webhook', 'bitform')}</Button>
               <br />
               <br />
               <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>

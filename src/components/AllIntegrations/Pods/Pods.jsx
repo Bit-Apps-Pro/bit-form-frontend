@@ -1,20 +1,23 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useHistory } from 'react-router-dom'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import { addFieldMap, checkMappedPostFields, checkMappedPodFields } from './PodHelperFunction'
-import PodsFieldMap from './FieldMap'
-import SnackMsg from '../../Utilities/SnackMsg'
 import { postFields } from '../../../Utils/StaticData/postField'
-import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import SnackMsg from '../../Utilities/SnackMsg'
+import TutorialLink from '../../Utilities/TutorialLink'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import PodsFieldMap from './FieldMap'
+import { addFieldMap, checkMappedPodFields, checkMappedPostFields } from './PodHelperFunction'
 
 function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
   const [types, setTypes] = useState([])
   const [pods, setPods] = useState([])
   const [users, setUsers] = useState([])
+  const { css } = useFela()
   const history = useHistory()
   const [data, setData] = useState({
     name: 'Pods',
@@ -196,7 +199,7 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
 
       <button
         id="secondary-update-btn"
-        className="btn f-left btcd-btn-lg green sh-sm flx"
+        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         // onClick={() => saveIntegConfig(integrations, setIntegration, allIntegURL, data, history)}
         onClick={() => saveConfig()}

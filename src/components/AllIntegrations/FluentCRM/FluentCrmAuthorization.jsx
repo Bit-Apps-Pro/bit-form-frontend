@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-import LoaderSm from '../../Loaders/LoaderSm'
+import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
-import TutorialLink from '../../Utilities/TutorialLink'
+import app from '../../../styles/app.style'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluentCrmConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -12,6 +14,7 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isMounted, setIsMounted] = useState(true)
+  const { css } = useFela()
   useEffect(() => () => {
     setIsMounted(false)
   }, [])
@@ -63,12 +66,12 @@ export default function FluentCrmAuthorization({ formID, fluentCrmConf, setFluen
             Please! First Install Fluent CRM Plugins
           </div>
         )}
-        <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+        <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
           {isAuthorized ? __('Connected ✔', 'bitform') : __('Connect to Fluent CRM', 'bitform')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
         <br />
-        <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+        <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
           {__('Next', 'bitform')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

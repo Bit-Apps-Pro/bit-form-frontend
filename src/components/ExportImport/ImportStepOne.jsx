@@ -1,6 +1,10 @@
+import { useFela } from 'react-fela'
+import app from '../../styles/app.style'
+
 export default function ImportStepOne() {
   sessionStorage.removeItem('file_header')
   sessionStorage.removeItem('file_data')
+  const { css } = useFela()
   const fileUpload = event => {
     event.preventDefault()
     const selectedFile = event.target.files[0]
@@ -81,7 +85,7 @@ export default function ImportStepOne() {
         <input name="file" onChange={e => fileUpload(e)} type="file" id="file" className="btcd-paper-inp w-9" placeholder="file upload" />
       </div>
       <div>
-        <button type="submit" className="btn btn-md blue btcd-mdl-btn">Next</button>
+        <button type="submit" className={`${css(app.btn)} btn-md blue btcd-mdl-btn`}>Next</button>
       </div>
     </div>
   )

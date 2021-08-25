@@ -1,8 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '../Utils/i18nwrap'
+import { useFela } from 'react-fela'
 import greeting from '../resource/img/home.svg'
+import app from '../styles/app.style'
+import { __ } from '../Utils/i18nwrap'
 
 export default function Welcome({ setModal }) {
+  const { css } = useFela()
   return (
     <div className="btcd-greeting">
       <img src={greeting} alt="" />
@@ -15,7 +18,7 @@ export default function Welcome({ setModal }) {
         <br />
         {__('for Wordpress', 'bitform')}
       </div>
-      <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg dp-blue">{__('Create First Form', 'bitform')}</button>
+      <button onClick={() => setModal(true)} type="button" className={`${css(app.btn)} round btcd-btn-lg dp-blue`}>{__('Create First Form', 'bitform')}</button>
     </div>
   )
 }

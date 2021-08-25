@@ -1,18 +1,20 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import CloseIcn from '../../../Icons/CloseIcn'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
+import TrashIcn from '../../../Icons/TrashIcn'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
-import Button from '../../Utilities/Button'
 import LoaderSm from '../../Loaders/LoaderSm'
-import TrashIcn from '../../../Icons/TrashIcn'
+import Button from '../../Utilities/Button'
 
 export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHooks, step, setstep, setSnackbar, create, isInfo }) {
   const getUrlParams = url => url?.match(/(\?|&)([^=]+)=([^&]+|)/gi)
   const [isLoading, setIsLoading] = useState(false)
   const method = ['GET', 'POST', 'PUT', 'PATCH', 'OPTION', 'DELETE', 'TRACE', 'CONNECT']
-
+  const { css } = useFela()
   const testWebHook = (webHooksDetaila) => {
     setIsLoading(true)
     bitsFetch({ hookDetails: webHooksDetaila }, 'bitforms_test_webhook').then(response => {
@@ -109,7 +111,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           </div>
         </div>
         {!isInfo && (
-          <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className="btn btcd-btn-o-blue">
+          <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={`${css(app.btn)} btcd-btn-o-blue`}>
             {__('Test Webhook', 'bitform')}
             {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
           </Button>
@@ -151,7 +153,7 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
           </div>
         </div>
         {create && (
-          <button onClick={() => nextPage()} className="btn btcd-btn-lg green sh-sm flx" type="button">
+          <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
             {__('Next', 'bitform')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

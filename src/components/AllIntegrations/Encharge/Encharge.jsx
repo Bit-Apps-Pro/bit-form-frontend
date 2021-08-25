@@ -1,8 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -18,6 +20,7 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
   const [enchargeConf, setEnchargeConf] = useState({
     name: 'Encharge API',
     type: 'Encharge',
@@ -70,7 +73,7 @@ function Encharge({ formFields, setIntegration, integrations, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={enchargeConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
           {__('Next', 'bitform')}

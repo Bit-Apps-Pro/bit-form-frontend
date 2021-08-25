@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
@@ -10,6 +11,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoRecruitAuthorization from './ZohoRecruitAuthorization'
 import { checkMappedFields, handleInput } from './ZohoRecruitCommonFunc'
 import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
+import app from '../../../styles/app.style'
 
 function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -18,6 +20,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
+  const { css } = useFela()
   const [recruitConf, setRecruitConf] = useState({
     name: 'Zoho Recruit API',
     type: 'Zoho Recruit',
@@ -84,7 +87,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
         <button
           onClick={() => nextPage(3)}
           disabled={recruitConf.module === '' || recruitConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
           {__('Next', 'bitform')}

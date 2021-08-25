@@ -1,10 +1,12 @@
 import { lazy, Suspense } from 'react'
+import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
+import app from '../../styles/app.style'
 
 const EditZohoAnalytics = lazy(() => import('./ZohoAnalytics/EditZohoAnalytics'))
 const EditZohoBigin = lazy(() => import('./ZohoBigin/EditZohoBigin'))
@@ -43,6 +45,7 @@ export default function EditInteg({ allIntegURL }) {
   const [integs, setIntegration] = useRecoilState($integrations)
   const integrations = deepCopy(integs)
   const formFields = useRecoilValue($fieldsArr)
+  const { css } = useFela()
 
   const IntegType = () => {
     switch (integrations[id].type) {
@@ -117,7 +120,7 @@ export default function EditInteg({ allIntegURL }) {
   return (
     <div>
       <div className="flx">
-        <Link to={allIntegURL} className="btn btcd-btn-o-gray">
+        <Link to={allIntegURL} className={`${css(app.btn)} btcd-btn-o-gray`}>
           <span className="btcd-icn icn-chevron-left" />
           &nbsp;Back
         </Link>
