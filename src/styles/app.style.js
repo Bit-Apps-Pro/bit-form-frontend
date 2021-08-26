@@ -23,19 +23,13 @@ const app = {
       h: '100%',
       z: 9,
     },
-    '&:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit)': {
-      '&:before': {
-        c: '+',
-      },
-    },
+    '&:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit)': { '&:before': { c: '+' } },
   },
   btcd_inte_dis: {
     pe: 'none',
     us: 'none',
 
-    '&>img': {
-      fltr: 'grayscale(1) !important',
-    },
+    '&>img': { fltr: 'grayscale(1) !important' },
     '&::before': {
       flx: 'center',
       bg: 'var(--b-63-18-67)',
@@ -99,8 +93,8 @@ const app = {
     },
   },
   inte_sm_img: {
-    mx_w: '110px !important',
-    mx_h: '110px !important',
+    mxW: '110px !important',
+    mxH: '110px !important',
     m: 'auto',
     p: 12,
   },

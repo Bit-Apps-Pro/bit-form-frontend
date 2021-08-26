@@ -42,8 +42,8 @@ const customProperties = {
 
   w: $ => ({ width: Number.isInteger($) ? `${$}px` : $ }),
   h: $ => ({ height: Number.isInteger($) ? `${$}px` : $ }),
-  mx_w: $ => ({ maxWidth: Number.isInteger($) ? `${$}px` : $ }),
-  mx_h: $ => ({ maxHeight: Number.isInteger($) ? `${$}px` : $ }),
+  mxW: $ => ({ maxWidth: Number.isInteger($) ? `${$}px` : $ }),
+  mxH: $ => ({ maxHeight: Number.isInteger($) ? `${$}px` : $ }),
   br: $ => ({ borderRadius: `${$}px` }),
   p: $ => ({ padding: Number.isInteger($) ? `${$}px` : $ }),
   pt: $ => ({ paddingTop: `${$}${$ !== 'auto' && 'px'}` }),
