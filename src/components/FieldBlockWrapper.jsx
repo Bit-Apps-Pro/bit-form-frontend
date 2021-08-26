@@ -45,7 +45,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
         </button>
         <button
           type="button"
-          className="g-c cp us-n"
+          className="g-c cp us-n no-drg"
           title={__('Style', 'bitform')}
           onClick={() => navigateToStyle(fields[layoutItem.i].typ)}
         >
@@ -53,17 +53,16 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
         </button>
         <button
           type="button"
-          className="g-c cp us-n"
+          className="g-c cp us-n no-drg"
           title={__('Settings', 'bitform')}
           onClick={navigateToFieldSettings}
-
         >
           <EditIcn size="17" />
         </button>
         <button
           data-close
           type="button"
-          className="drag g-c us-n"
+          className="drag g-c us-n no-drg"
           unselectable="on"
           draggable="false"
           style={{ cursor: 'pointer' }}
