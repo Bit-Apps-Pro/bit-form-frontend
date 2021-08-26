@@ -25,7 +25,7 @@ const customProperties = {
   flx: $ => ({
     display: 'flex',
     ...$ === 'center' && { alignItems: 'center', justifyContent: 'center' },
-    ...$ === 'between' && { justifyContent: 'between' },
+    ...$ === 'between' && { justifyContent: 'space-between' },
     ...$ === 'align-center' && { alignItems: 'center' },
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
