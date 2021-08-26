@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { useFela } from 'react-fela'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
@@ -9,6 +11,7 @@ import TableCheckBox from '../Utilities/TableCheckBox'
 
 export default function Cpt({ settab, types }) {
   const [snack, setsnack] = useState({ show: false })
+  const { css } = useFela()
   const [cptConfig, setCptConfig] = useState({
     public: 1,
     public_queryable: 1,
@@ -108,7 +111,7 @@ export default function Cpt({ settab, types }) {
           <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_in_menu} className="wdt-200 mt-4 mr-2" value={cptConfig.show_in_menu} name="show_in_menu" style={{ marginLeft: 60 }} title={<b>{__('Show in Menu', 'bitform')}</b>} subTitle={__('This show the post type in the admin menu and where to show that menu.', 'bitform')} />
           <TableCheckBox onChange={(e) => handleAction(e, 'check')} checked={!!cptConfig.show_ui} name="show_ui" className="wdt-200 mt-4 mr-2 " value={cptConfig.show_ui} title={<b>{__('Show UI', 'bitform')}</b>} subTitle={__('Whether or not to generate a default UI for managing this post type', 'bitform')} />
         </div>
-        <button type="submit" className="btn btcd-btn-lg blue flx" disabled={isLoading}>
+        <button type="submit" className={`${css(app.btn)} btcd-btn-lg blue flx`} disabled={isLoading}>
           {__('Add Post Type', 'bitform')}
           {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>

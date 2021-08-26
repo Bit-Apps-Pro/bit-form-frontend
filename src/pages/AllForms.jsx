@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { lazy, memo, useCallback, useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import FormTemplates from '../components/FormTemplates'
@@ -16,6 +17,7 @@ import CopyIcn from '../Icons/CopyIcn'
 import DownloadIcon from '../Icons/DownloadIcon'
 import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { dateTimeFormatter } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -30,6 +32,7 @@ function AllFroms() {
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const newFormId = useRecoilValue($newFormId)
   const bits = useRecoilValue($bits)
+  const { css } = useFela()
 
   const handleStatus = (e, id) => {
     const status = e.target.checked
@@ -274,11 +277,11 @@ function AllFroms() {
       </Modal>
       {allForms.length ? (
         <>
-          <div className="af-header flx flx-between">
+          <div className={css(app.af_header)}>
             <h2>{__('Forms', 'bitform')}</h2>
-            <button onClick={() => setModal(true)} type="button" className="btn round btcd-btn-lg blue blue-sh">{__('Create From', 'bitform')}</button>
+            <button onClick={() => setModal(true)} type="button" className={`${css(app.btn)} round btcd-btn-lg blue blue-sh`}>{__('Create From', 'bitform')}</button>
           </div>
-          <div className="forms">
+          <div>
             <Table
               className="f-table btcd-all-frm"
               height={500}

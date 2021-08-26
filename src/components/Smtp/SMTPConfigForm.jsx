@@ -1,7 +1,9 @@
-import { useRef, useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { __ } from '../../Utils/i18nwrap'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
+import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 import CheckBox from '../Utilities/CheckBox'
 
@@ -9,6 +11,7 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
   const [isLoading, setIsLoading] = useState(false)
   const [isShowing, setIsShowing] = useState(true)
   const [isAuthentic, setIsAuthentic] = useState(true)
+  const { css } = useFela()
 
   useEffect(() => {
     setIsShowing(Number(status) === 1)
@@ -154,7 +157,7 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
           )}
         </div>
       )}
-      <button type="submit" className="btn btcd-btn-lg blue flx" disabled={isLoading}>
+      <button type="submit" className={`${css(app.btn)} btcd-btn-lg blue flx`} disabled={isLoading}>
         {__('Save Changes', 'bitform')}
         {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
       </button>

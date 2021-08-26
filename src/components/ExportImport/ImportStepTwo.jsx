@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import { Tab, TabList, Tabs } from 'react-tabs'
+import app from '../../styles/app.style'
 
 export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns }) {
   const [mappingCount, setMappingCount] = useState(0)
   const [mappingColumn, setMappingColumn] = useState([])
+  const { css } = useFela()
 
   const fieldMaping = e => {
     const field = e.target.options[e.target.options.selectedIndex].text
@@ -114,9 +117,9 @@ export default function ImportStepTwo({ fileResponses, fileColumns, tableColumns
         ))}
       </table>
       <div>
-        <button type="submit" className="btn btn-md blue btcd-mdl-btn">Import Data</button>
+        <button type="submit" className={`${css(app.btn)} btn-md blue btcd-mdl-btn`}>Import Data</button>
         {'  '}
-        <button type="button" className="btn btn-md white btcd-mdl-btn">Cancel</button>
+        <button type="button" className={`${css(app.btn)} btn-md white btcd-mdl-btn`}>Cancel</button>
       </div>
     </div>
   )

@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -11,6 +13,7 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { css } = useFela()
 
   const authorizeHandler = () => {
     setisLoading('auth')
@@ -66,14 +69,14 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         )}
 
         {!isAuthorized && (
-          <button onClick={authorizeHandler} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button">
+          <button onClick={authorizeHandler} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button">
             {__('Connect', 'bitform')}
           </button>
         )}
 
         {isAuthorized && (
           <>
-            <button onClick={() => setStep(2)} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
+            <button onClick={() => setStep(2)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx mt-5`} type="button" disabled={!isAuthorized}>
               {__('Next', 'bitform')}
               <BackIcn className="ml-1 rev-icn" />
             </button>

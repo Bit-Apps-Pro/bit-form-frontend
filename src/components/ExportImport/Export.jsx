@@ -1,15 +1,18 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useState } from 'react'
-import { __ } from '../../Utils/i18nwrap'
-import Modal from '../Utilities/Modal'
+import { useFela } from 'react-fela'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
+import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
+import Modal from '../Utilities/Modal'
 import SnackMsg from '../Utilities/SnackMsg'
 
 export default function Export({ showExportMdl, close, cols, formID, report }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [isLoading, setIsLoading] = useState(false)
+  const { css } = useFela()
   const [data, setData] = useState({
     fileFormate: 'csv',
     sort: 'ASC',
@@ -46,26 +49,26 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
     setIsLoading(true)
     bitsFetch({ data },
       'bitforms_filter_export_data').then((res) => {
-      if (res !== undefined && res.success) {
-        if (res.data?.count !== 0) {
-          const header = []
-          header[0] = 'Entry ID'
-          colHeading.map((col, index) => {
-            header[index + 1] = col.val
-          })
-          const ws = XLSX.utils.json_to_sheet(res.data)
-          /* add to workbook */
-          const wb = XLSX.utils.book_new()
-          XLSX.utils.sheet_add_aoa(ws, [header])
-          XLSX.utils.book_append_sheet(wb, ws)
-          /* generate an XLSX file */
-          XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
-        } else {
-          setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
+        if (res !== undefined && res.success) {
+          if (res.data?.count !== 0) {
+            const header = []
+            header[0] = 'Entry ID'
+            colHeading.map((col, index) => {
+              header[index + 1] = col.val
+            })
+            const ws = XLSX.utils.json_to_sheet(res.data)
+            /* add to workbook */
+            const wb = XLSX.utils.book_new()
+            XLSX.utils.sheet_add_aoa(ws, [header])
+            XLSX.utils.book_append_sheet(wb, ws)
+            /* generate an XLSX file */
+            XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
+          } else {
+            setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
+          }
         }
-      }
-      setIsLoading(false)
-    })
+        setIsLoading(false)
+      })
   }
 
   const handleInput = (typ, val) => {
@@ -133,7 +136,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
             </select>
           </div>
           <div>
-            <button type="button" onClick={e => getEntry(e)} className="btn btn-md blue btcd-mdl-btn" disabled={isLoading}>
+            <button type="button" onClick={e => getEntry(e)} className={`${css(app.btn)} btn-md blue btcd-mdl-btn`} disabled={isLoading}>
               {__('Export', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
             </button>

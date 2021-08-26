@@ -1,4 +1,5 @@
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
@@ -11,6 +12,7 @@ import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, 
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import '../resource/sass/components.scss'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -54,6 +56,7 @@ function FormDetails() {
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
+  const { css } = useFela()
 
   const setNewFormProps = () => {
     if (formType === 'new') {
@@ -199,9 +202,9 @@ function FormDetails() {
             if (responseData.form_content.layout !== undefined) {
               const l = responseData.form_content.layout
               const nl = { lg: [], md: [], sm: [] }
-              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
               console.log('seted lay', l, nl)
               setLay(nl)
             }
@@ -261,7 +264,7 @@ function FormDetails() {
             {proModal.msg}
           </h4>
           <div className="txt-center">
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className={`${css(app.btn)} btn-lg blue`} type="button">{__('Buy Premium', 'bitform')}</button></a>
           </div>
         </Modal>
         <ConfirmModal
@@ -310,7 +313,7 @@ function FormDetails() {
 
           <div className="btcd-bld-btn">
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
-            <NavLink to="/" className="btn btcd-btn-close" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <NavLink to="/" className={`${css(app.btn)} btcd-btn-close`} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />
             </NavLink>
           </div>

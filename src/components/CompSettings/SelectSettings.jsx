@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
@@ -20,6 +22,7 @@ import ImportOptions from './ImportOptions'
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const { css } = useFela()
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -273,7 +276,7 @@ export default function SelectSettings() {
           </>
         )
       }
-      <button onClick={openImportModal} className="btn" type="button">
+      <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
@@ -288,11 +291,11 @@ export default function SelectSettings() {
                 <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="remove option"><CloseIcn size="14" /></button>
+              <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="remove option"><CloseIcn size="14" /></button>
             </div>
           </div>
         ))}
-        <button onClick={addOpt} className="btn blue" type="button">{__('Add More +', 'bitform')}</button>
+        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
       </div>
       <Modal
         md

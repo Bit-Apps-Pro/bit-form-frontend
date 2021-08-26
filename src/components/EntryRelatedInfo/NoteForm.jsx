@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
@@ -7,6 +9,7 @@ import TinyMCE from '../Utilities/TinyMCE'
 
 export default function NoteForm({ formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData }) {
   const editMode = Boolean(data.noteID)
+  const { css } = useFela()
   const [isLoading, setIsLoading] = useState(false)
   const [noteTitle, setNoteTitle] = useState(data.title)
   const [noteContent, setNoteContent] = useState(data.content)
@@ -61,7 +64,7 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
     <div className="mt-2 w-7">
       <b>
         {editMode ? __('Edit Note ', 'bitform') : __('Create New Note ', 'bitform')}
-        <button type="button" className="btn" onClick={() => (editMode ? cancelEditMode() : setShowForm(false))} style={{ fontSize: 16 }}>x</button>
+        <button type="button" className={css(app.btn)} onClick={() => (editMode ? cancelEditMode() : setShowForm(false))} style={{ fontSize: 16 }}>x</button>
       </b>
       <br />
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
@@ -81,11 +84,11 @@ export default function NoteForm({ formID, entryID, allLabels, showForm, setShow
           onChangeHandler={handleNoteContent}
         />
         {editMode && (
-          <button type="button" className="btn btn-md mr-2" onClick={cancelEditMode}>
+          <button type="button" className={`${css(app.btn)} btn-md mr-2`} onClick={cancelEditMode}>
             {__('Cancel', 'bitform')}
           </button>
         )}
-        <button type="submit" className="btn btn-md blue" disabled={isLoading}>
+        <button type="submit" className={`${css(app.btn)} btn-md blue`} disabled={isLoading}>
           {editMode ? __('Edit', 'bitform') : __('Add', 'bitform')}
           {' '}
           {__('Note', 'bitform')}

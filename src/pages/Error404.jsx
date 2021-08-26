@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { Link, useHistory } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap'
 import space from '../resource/img/space.svg'
+import app from '../styles/app.style'
+import { __ } from '../Utils/i18nwrap'
 
 export default function Error404() {
+  const { css } = useFela()
   const [sec, setsec] = useState(9)
   const history = useHistory()
   useEffect(() => {
@@ -26,7 +29,7 @@ export default function Error404() {
         {sec}
         <br />
         <br />
-        <Link to="/" className="btn dp-blue btcd-btn-lg">{__('Go Home', 'bitform')}</Link>
+        <Link to="/" className={`${css(app.btn)} dp-blue btcd-btn-lg`}>{__('Go Home', 'bitform')}</Link>
       </div>
       <img src={space} alt="404 not found" />
     </div>

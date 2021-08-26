@@ -1,13 +1,14 @@
 /* eslint-disable-next-line no-undef */
-import { useState } from 'react'
 import { withQuicklink } from 'quicklink/dist/react/hoc'
+import { useState } from 'react'
+import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import toast from 'react-hot-toast'
 import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
-import metabox from '../resource/img/integ/metabox.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
 import zohoAnalytics from '../resource/img/integ/analytics.svg'
 import zohoBigin from '../resource/img/integ/bigin.svg'
@@ -24,6 +25,7 @@ import integromat from '../resource/img/integ/integromat.svg'
 import zohoMail from '../resource/img/integ/mail.svg'
 import mailChimp from '../resource/img/integ/mailchimp.svg'
 import mailPoet from '../resource/img/integ/mailpoet.svg'
+import metabox from '../resource/img/integ/metabox.svg'
 import pabbly from '../resource/img/integ/pabbly.svg'
 import pods from '../resource/img/integ/pods.svg'
 import zohoProjects from '../resource/img/integ/projects.svg'
@@ -37,7 +39,9 @@ import wooCommerce from '../resource/img/integ/woocommerce.svg'
 import zohoWorkdrive from '../resource/img/integ/workdrive.svg'
 import zapier from '../resource/img/integ/zapier.svg'
 import zohoflow from '../resource/img/integ/zohoflow.svg'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import EditInteg from './AllIntegrations/EditInteg'
 import IntegInfo from './AllIntegrations/IntegInfo'
@@ -45,8 +49,6 @@ import NewInteg from './AllIntegrations/NewInteg'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import SnackMsg from './Utilities/SnackMsg'
-import TrashIcn from '../Icons/TrashIcn'
-import { deepCopy } from '../Utils/Helpers'
 
 function Integrations() {
   const [integrs, setIntegration] = useRecoilState($integrations)
@@ -60,6 +62,7 @@ function Integrations() {
   const { formID } = useParams()
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const { css } = useFela()
   const integs = [
     { type: 'Zoho CRM', logo: zohoCRM, pro: !isPro },
     { type: 'Web Hooks', logo: webhooks, pro: !isPro },
@@ -188,14 +191,14 @@ function Integrations() {
                       onKeyPress={() => !inte.disable && !inte.pro && setNewInteg(inte.type)}
                       role="button"
                       tabIndex="0"
-                      className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
+                      className={`btcd-inte-card ${css(app.inte_sm)} mr-4 mt-3 ${inte.disable && !inte.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${inte.pro && 'btcd-inte-pro'}`}
                     >
                       {inte.pro && (
                         <div className="pro-filter">
                           <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
-                      <img loading="lazy" src={inte.logo} alt="" />
+                      <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />
                       <div className="txt-center">
                         {inte.type}
                       </div>
@@ -213,21 +216,21 @@ function Integrations() {
               <div role="button" className="btcd-inte-card mr-4 mt-3" key={`inte-${i + 3}`}>
                 {getLogo(inte.type)}
                 <div className="btcd-inte-atn txt-center">
-                  <Link to={`${allIntegURL}/edit/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
+                  <Link to={`${allIntegURL}/edit/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
                     <EditIcn size="15" />
                   </Link>
-                  <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
+                  <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => inteDelConf(i)} type="button">
                     <TrashIcn />
                   </button>
                   {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
-                    <Link to={`${allIntegURL}/info/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
+                    <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
                       <span className="btcd-icn icn-information-outline" />
                     </Link>
                   )}
                 </div>
                 <div className="txt-center body w-10 py-1" title={`${inte.name} | ${inte.type}`}>
-                  <div>{inte.name}</div>
-                  <small className="txt-dp">{inte.type}</small>
+                  <div className="int-name">{inte.name}</div>
+                  <small className="txt-dp int-type">{inte.type}</small>
                 </div>
               </div>
             ))}

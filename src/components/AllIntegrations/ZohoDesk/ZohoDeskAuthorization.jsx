@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
@@ -9,6 +11,7 @@ import { handleAuthorize, refreshOrganizations } from './ZohoDeskCommonFunc'
 
 export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
+  const { css } = useFela()
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -70,12 +73,12 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
 
         {!isInfo && (
           <>
-            <button onClick={() => handleAuthorize(deskConf, setDeskConf, setError, setisAuthorized, setisLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+            <button onClick={() => handleAuthorize(deskConf, setDeskConf, setError, setisAuthorized, setisLoading, setSnackbar)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
-            <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+            <button onClick={nextPage} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
               {__('Next', 'bitform')}
               <BackIcn className="ml-1 rev-icn" />
             </button>

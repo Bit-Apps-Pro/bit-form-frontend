@@ -1,20 +1,23 @@
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBox from '../Utilities/CheckBox'
+import AcfFieldOptions, { generateAcfOptions } from './ImportOptionsComps/AcfFieldOptions'
 import FileUploadImportOptions from './ImportOptionsComps/FileUploadImportOptions'
 import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
 import PostTypeImportOptions, { generatePostOptions } from './ImportOptionsComps/PostTypeImportOptions'
 import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
 import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
-import AcfFieldOptions, { generateAcfOptions } from './ImportOptionsComps/AcfFieldOptions'
 
 export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const { css } = useFela()
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -179,7 +182,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
         </div>
 
       )}
-      <button onClick={handleImport} className="btn blue" type="button" disabled={!newOptions.length || false}>
+      <button onClick={handleImport} className={`${css(app.btn)} blue`} type="button" disabled={!newOptions.length || false}>
         <DownloadIcon size="15" />
         &nbsp;
         {__('Import', 'bitform')}

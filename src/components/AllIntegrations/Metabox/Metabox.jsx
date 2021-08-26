@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useHistory } from 'react-router-dom'
-import { __ } from '../../../Utils/i18nwrap'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { addFieldMap, checkMappedPostFields, checkMappedAcfFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
-import FieldMap from './FieldMap'
+import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import SnackMsg from '../../Utilities/SnackMsg'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-import TutorialLink from '../../Utilities/TutorialLink'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import FieldMap from './FieldMap'
+import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
 
 function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
   const [postTypes, setPostTypes] = useState([])
   const [users, setUsers] = useState([])
   const [snack, setSnackbar] = useState({ show: false })
   const history = useHistory()
+  const { css } = useFela()
   const [metaboxFields, setMetaboxFields] = useState([])
   const [metaboxFileFields, setMetaboxFileFields] = useState([])
 
@@ -266,7 +267,7 @@ function Metabox({ formFields, setIntegration, integrations, allIntegURL }) {
       </div>
       <button
         id="secondary-update-btn"
-        className="btn f-left btcd-btn-lg green sh-sm flx"
+        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         onClick={() => saveConfig()}
       >

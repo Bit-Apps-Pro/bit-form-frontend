@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
@@ -11,7 +12,7 @@ import { $additionalSettings, $draggingField, $fields, $layouts, $selectedFieldI
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { checkFieldsExtraAttr, propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { checkFieldsExtraAttr, compact, convertLayout, propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { deepCopy, isType } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
@@ -29,7 +30,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   // const cols = { lg: 6, md: 4, sm: 2 }
-  const cols = { lg: 120, md: 80, sm: 40 }
+  // const cols = { lg: 120, md: 80, sm: 40 }
+  const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43 / 10)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
@@ -134,135 +136,19 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     return summ || 0
   }
 
-  // eslint-disable-next-line consistent-return
-  const getPos = (vgrid, width, h, col) => {
-    const w = width > col ? col : width
-    for (let i = 0; i < vgrid.length; i += 1) {
-      for (let j = 0; j < vgrid[i].length; j += 1) {
-        if (!vgrid[i][j]) {
-          if (h > i) {
-            vgrid.push(Array(col).fill(0))
-          }
-          if (col - j >= w) {
-            // chek height
-            let clr = true
-            for (let k = i; k < i + h; k += 1) {
-              // check clr right by w
-              if (k > vgrid.length - 1) {
-                vgrid.push(Array(col).fill(0))
-              }
-              for (let m = j; m < w + j - 1; m += 1) {
-                if (vgrid[k][m]) {
-                  clr = false
-                }
-              }
-            }
-            if (clr) {
-              for (let r = i; r < h + i; r += 1) {
-                for (let c = j; c < w + j; c += 1) {
-                  // eslint-disable-next-line no-param-reassign
-                  vgrid[r][c] = 1
-                }
-              }
-              return { x: j, y: i, vgrid, w }
-            }
-          } else {
-            break
-          }
-        } else {
-          vgrid.push(Array(col).fill(0))
-        }
-      }
-    }
-  }
-
-  const genLay = (lay, col) => {
-    const sortedLay = sortLayoutByXY(lay)
-    const nlay = []
-    const nvgrid = Array(Array(col).fill(0))
-    for (let i = 0; i < sortedLay.length; i += 1) {
-      const o = { ...sortedLay[i] }
-      const { x, y, w } = getPos(nvgrid, o.w, o.h, col)
-      o.x = x
-      o.y = y
-      o.w = w
-      nlay.push(o)
-    }
-    return nlay
-  }
-
-  const genFilterLay = (lay, col, idx) => {
-    const nlay = []
-    const nvgrid = Array(Array(col).fill(0))
-    for (let i = 0; i < lay.length; i += 1) {
-      const o = { ...lay[i] }
-      if (o.i !== idx) {
-        const { x, y, w } = getPos(nvgrid, o.w, o.h, col)
-        o.x = x
-        o.y = y
-        o.w = w
-        nlay.push(o)
-      }
-    }
-    return nlay
-  }
-
   const margeNewData = () => {
+    addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
-    const checkPayments = checkPaymentFields(newData.fieldData)
-    const draftField = createDraft(newData)
-    if (checkPayments && isType('array', checkPayments)) {
-      if (newData.fieldData.typ === 'razorpay') {
-        draftField.fieldData.payIntegID = checkPayments[0].id
-      } else {
-        draftField.fieldData.payIntegID = checkPayments[0].id
-      }
-    } else if (!checkPayments) return
-    if (newData.fieldData.typ === 'recaptcha' && !checkCaptchaField()) return
-    if (newData.fieldData.lbl === 'Select Country' && !checkCountryField()) return
-    const { w, h, minH, maxH, minW } = newData.fieldSize
-    const newBlk = { i: `bf${formID}-${uniqueFieldId}`, x: 0, y: Infinity, w, h, minH, maxH, minW }
-    console.log({ newBlk })
-    const tmpLayouts = layouts
-    tmpLayouts.lg.push(newBlk)
-    tmpLayouts.md.push(newBlk)
-    tmpLayouts.sm.push(newBlk)
-    tmpLayouts[breakpoint] = sortLayoutByXY(tmpLayouts[breakpoint])
-    if (breakpoint === 'lg') {
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'md') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'sm') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-    }
-    setLayouts({ ...tmpLayouts })
-    const updatedField = finishDraft(draftField)
-    setFields({ ...fields, [`bf${formID}-${uniqueFieldId}`]: updatedField.fieldData })
-    sessionStorage.setItem('btcd-lc', '-')
-    setUpdateBtn({ unsaved: true })
-  }
-  function extendLayout(lays) {
-    const newlayuts = { lg: [], md: [], sm: [] }
-    const layuts = deepCopy(lays)
-    layuts.lg.map(itm => { newlayuts.lg.push({ ...itm, w: itm.w * 20 }) })
-    layuts.md.map(itm => { newlayuts.md.push({ ...itm, w: itm.w * 20 }) })
-    layuts.sm.map(itm => { newlayuts.sm.push({ ...itm, w: itm.w * 20 }) })
-    console.log('lays', newlayuts)
-    return newlayuts
   }
 
   const onLayoutChange = (newLay, newLays) => {
-    console.log('newlay', newLays)
     if (newLays.lg.length === layouts.lg.length
       && newLays.md.length === layouts.md.length
       && newLays.sm.length === layouts.sm.length) {
       // setLayouts(extendLayout(newLays))
       // setLay(extendLayout(newLays))
-      setLayouts(newLays)
-      setLay(deepCopy(newLays))
+      setLayouts((newLays))
+      setLay((newLays))
     }
   }
 
@@ -276,11 +162,22 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         return
       }
     }
-    const nwLay = {}
+    const nwLay = produce(layouts, draft => {
+      if (breakpoint === 'lg') {
+        draft.lg = draft.lg.filter(l => l.i !== i)
+        draft.md = compact(draft.md.filter(l => l.i !== i), 'vertical')
+        draft.sm = compact(draft.sm.filter(l => l.i !== i), 'vertical')
+      } else if (breakpoint === 'md') {
+        draft.lg = compact(draft.lg.filter(l => l.i !== i), 'vertical')
+        draft.md = draft.md.filter(l => l.i !== i)
+        draft.sm = compact(draft.sm.filter(l => l.i !== i), 'vertical')
+      } else if (breakpoint === 'sm') {
+        draft.lg = compact(draft.lg.filter(l => l.i !== i), 'vertical')
+        draft.md = compact(draft.md.filter(l => l.i !== i), 'vertical')
+        draft.sm = draft.sm.filter(l => l.i !== i)
+      }
+    })
     const tmpFields = { ...fields }
-    nwLay.lg = genFilterLay(layouts.lg, cols.lg, i)
-    nwLay.md = genFilterLay(layouts.md, cols.md, i)
-    nwLay.sm = genFilterLay(layouts.sm, cols.sm, i)
     delete tmpFields[i]
     setLayouts(nwLay)
     setFields(tmpFields)
@@ -295,8 +192,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setAlertMdl(tmpAlert)
   }
 
-  const handleFieldExtraAttr = () => {
-    const extraAttr = checkFieldsExtraAttr(draggingField.fieldData, fields, payments, additional, bits, __)
+  const handleFieldExtraAttr = (fieldData) => {
+    const extraAttr = checkFieldsExtraAttr(fieldData, fields, payments, additional, bits, __)
 
     if (extraAttr.validType === 'pro') {
       setProModal({ show: true, msg: extraAttr.msg })
@@ -316,40 +213,44 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       return newFldData
     }
 
-    return draggingField
+    return fieldData
   }
 
-  const onDrop = (lay, elmPrms) => {
-    const fldStatus = handleFieldExtraAttr()
-    let tmpDraggingField = draggingField
-    if (fldStatus) tmpDraggingField = fldStatus
-    else return
-
-    const { w, h, minH, maxH, minW } = draggingField.fieldSize
+  function addNewField(fieldData, fieldSize, addPosition) {
+    const processedFieldData = handleFieldExtraAttr(fieldData)
+    if (!processedFieldData) return
+    const { w, h, minH, maxH, minW } = fieldSize
     // eslint-disable-next-line prefer-const
-    let { x, y } = elmPrms
+    let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
     const newBlk = `bf${formID}-${uniqueFieldId}`
-    const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
-    const tmpLayouts = layouts
-    tmpLayouts.lg.push(newLayoutItem)
-    tmpLayouts.md.push(newLayoutItem)
-    tmpLayouts.sm.push(newLayoutItem)
-    tmpLayouts[breakpoint] = sortLayoutByXY(tmpLayouts[breakpoint])
-    if (breakpoint === 'lg') {
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'md') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.sm = genLay(tmpLayouts.sm, cols.sm)
-    } else if (breakpoint === 'sm') {
-      tmpLayouts.lg = genLay(tmpLayouts.lg, cols.lg)
-      tmpLayouts.md = genLay(tmpLayouts.md, cols.md)
-    }
-    setLayouts({ ...tmpLayouts })
-    setFields({ ...fields, [newBlk]: tmpDraggingField.fieldData })
+    const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10, minH: minH * 10 || minH, maxH: maxH * 10 || maxH, minW: minW * 10 || minW }
+    // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
+    const tmpLayouts = produce(layouts, drftLay => {
+      drftLay.lg.push(newLayoutItem)
+      drftLay.md.push(newLayoutItem)
+      drftLay.sm.push(newLayoutItem)
+      drftLay[breakpoint] = sortLayoutByXY(drftLay[breakpoint])
+      if (breakpoint === 'lg') {
+        drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
+        drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
+      } else if (breakpoint === 'md') {
+        drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
+        drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
+      } else if (breakpoint === 'sm') {
+        drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
+        drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
+      }
+    })
+
+    setLayouts(tmpLayouts)
+    setFields({ ...fields, [newBlk]: processedFieldData })
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
+  }
+
+  const onDrop = (lay, dropPosition) => {
+    addNewField(draggingField.fieldData, draggingField.fieldSize, dropPosition)
   }
 
   return (

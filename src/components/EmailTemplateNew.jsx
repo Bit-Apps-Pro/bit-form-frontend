@@ -11,6 +11,8 @@ import BackIcn from '../Icons/BackIcn'
 import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import TinyMCE from './Utilities/TinyMCE'
+import app from '../styles/app.style'
+import { useFela } from 'react-fela'
 
 function EmailTemplateNew() {
   console.log('%c $render EmailTemplate new', 'background:purple;padding:3px;border-radius:5px;color:white')
@@ -20,6 +22,7 @@ function EmailTemplateNew() {
   const [showTemplateModal, setTemplateModal] = useState(false)
   const { formType, formID } = useParams()
   const history = useHistory()
+  const { css } = useFela()
 
   const handleBody = value => {
     setTem(prev => ({ ...prev, body: value }))
@@ -53,12 +56,12 @@ function EmailTemplateNew() {
         <h4 className="txt-dp">{__('Email Templates Coming soon', 'bitform')}</h4>
       </Modal>
 
-      <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className="btn btcd-btn-o-gray">
+      <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className={`${css(app.btn)} btcd-btn-o-gray`}>
         <BackIcn className="mr-1" />
         {__('Back', 'bitfrom')}
       </NavLink>
 
-      <button id="secondary-update-btn" onClick={save} className="btn blue f-right" type="button">{__('Save Template', 'bitform')}</button>
+      <button id="secondary-update-btn" onClick={save} className={`${css(app.btn)} blue f-right`} type="button">{__('Save Template', 'bitform')}</button>
 
       <div className="mt-3 flx">
         <b style={{ width: 103 }}>

@@ -13,11 +13,13 @@ import { __ } from '../Utils/i18nwrap'
 import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Table from './Utilities/Table'
+import app from '../styles/app.style'
+import { useFela } from 'react-fela'
 
 export default function AllEmailTemplates({ formID }) {
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
-
+  const {css } = useFela()
   const { url } = useRouteMatch()
 
   const duplicateTem = i => {
@@ -119,7 +121,7 @@ export default function AllEmailTemplates({ formID }) {
         </a>
       </h5>
       <div className="">
-        <Link to={`${url}/new`} className="btn blue">
+        <Link to={`${url}/new`} className={`${css(app.btn)} blue`}>
           <span className="btcd-icn icn-layout" />
           &nbsp;
           {__('Add New Template', 'bitform')}

@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { useFela } from 'react-fela'
 import { Link, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
@@ -6,6 +7,7 @@ import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
+import app from '../styles/app.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
@@ -24,6 +26,7 @@ export default function Payments() {
   const { path, url } = useRouteMatch()
   const allIntegURL = url
   const history = useHistory()
+  const { css } = useFela()
 
   const pays = [
     { type: 'PayPal', logo: paypal },
@@ -124,7 +127,7 @@ export default function Payments() {
                       onKeyPress={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
                       role="button"
                       tabIndex="0"
-                      className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && 'btcd-inte-dis'} ${pay.pro && 'btcd-inte-pro'}`}
+                      className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${pay.pro && 'btcd-inte-pro'}`}
                     >
                       {pay.pro && (
                         <div className="pro-filter">
@@ -148,16 +151,16 @@ export default function Payments() {
                 <div role="button" className="btcd-inte-card  mr-4 mt-3 inte-edit" key={`inte-${i + 3}`}>
                   {getLogo(pay.type)}
                   <div className="btcd-inte-atn txt-center">
-                    <Link to={`${allIntegURL}/${pay.type}/${i}`} className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
+                    <Link to={`${allIntegURL}/${pay.type}/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'` }} type="button">
                       <EditIcn size="15" />
                     </Link>
-                    <button className="btn btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => payDelConf(i)} type="button">
+                    <button className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm mr-2 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'` }} onClick={() => payDelConf(i)} type="button">
                       <TrashIcn />
                     </button>
                   </div>
                   <div className="txt-center body py-1" title={`${pay.name} | ${pay.type}`}>
-                    <div>{pay.name}</div>
-                    <small>{pay.type}</small>
+                    <div className="int-name">{pay.name}</div>
+                    <small className="int-type">{pay.type}</small>
                   </div>
                 </div>
               ))}

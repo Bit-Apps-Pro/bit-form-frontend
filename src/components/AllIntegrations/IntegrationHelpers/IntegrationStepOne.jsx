@@ -1,9 +1,12 @@
-import { __ } from '../../../Utils/i18nwrap'
-import CopyText from '../../Utilities/CopyText'
-import LoaderSm from '../../Loaders/LoaderSm'
+import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
+import { __ } from '../../../Utils/i18nwrap'
+import LoaderSm from '../../Loaders/LoaderSm'
+import CopyText from '../../Utilities/CopyText'
 
 export default function IntegrationStepOne({ step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children }) {
+  const { css } = useFela()
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
@@ -42,12 +45,12 @@ export default function IntegrationStepOne({ step, confTmp, handleInput, error, 
 
       {children}
 
-      <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+      <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
         {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
       <br />
-      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+      <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
         {__('Next', 'bitform')}
         <BackIcn className="ml-1 rev-icn" />
       </button>

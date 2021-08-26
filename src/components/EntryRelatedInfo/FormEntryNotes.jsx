@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../GlobalStates'
 import noData from '../../resource/img/nodata.svg'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -14,6 +16,7 @@ import NoteForm from './NoteForm'
 export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const { css } = useFela()
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const [isLoading, setIsLoading] = useState(false)
   const [confMdl, setConfMdl] = useState({ show: false })
@@ -118,7 +121,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
           <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'`, fontSize: 16 }} onClick={() => setEditMode(note.id)}>
             <span className="btcd-icn icn-document-edit" />
           </button>
-          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? 'btn' : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'`, fontSize: 16 }} disabled={isDeleting}>
+          <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? css(app.btn) : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'`, fontSize: 16 }} disabled={isDeleting}>
             <span className="btcd-icn icn-trash-fill" />
             {isDeleting && <LoaderSm size={20} clr="#000" className="ml-2" />}
           </button>
@@ -159,7 +162,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
               {...{ formID, entryID, allLabels, showForm, setShowForm, setFetchData, data, setData }}
             />
           )
-          : <button type="button" className="btn" onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}
+          : <button type="button" className={css(app.btn)} onClick={() => setShowForm(true)}>{__('create new note', 'bitform')}</button>}
         {isLoading === 'allNotes'
           ? (
             <Loader style={{

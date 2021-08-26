@@ -1,7 +1,9 @@
 import { lazy, Suspense, useState } from 'react'
+import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../../GlobalStates'
+import app from '../../styles/app.style'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
 
@@ -34,6 +36,7 @@ export default function IntegInfo({ allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const integ = integrations[id]
   const bits = useRecoilValue($bits)
+  const { css } = useFela
 
   // route is info/:id but for redirect uri need to make new/:type
   let location = window.location.toString()
@@ -102,7 +105,7 @@ export default function IntegInfo({ allIntegURL }) {
     <>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="flx">
-        <Link to={allIntegURL} className="btn btcd-btn-o-gray">
+        <Link to={allIntegURL} className={`${css(app.btn)} btcd-btn-o-gray`}>
           <span className="btcd-icn icn-chevron-left" />
           &nbsp;Back
         </Link>

@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -14,6 +16,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
   const history = useHistory()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
+  const { css } = useFela
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [mailPoetConf, setMailPoetConf] = useState({
@@ -79,7 +82,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
         <button
           onClick={() => nextPage(3)}
           disabled={mailPoetConf.lists === '' || mailPoetConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
           {__('Next', 'bitform')}

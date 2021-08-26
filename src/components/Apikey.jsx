@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { __ } from '../Utils/i18nwrap'
-import bitsFetch from '../Utils/bitsFetch'
-import LoaderSm from './Loaders/LoaderSm'
+import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
-import SnackMsg from './Utilities/SnackMsg'
+import app from '../styles/app.style'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
+import LoaderSm from './Loaders/LoaderSm'
 import CopyText from './Utilities/CopyText'
+import SnackMsg from './Utilities/SnackMsg'
 
 const randomKey = () => {
   const a = new Uint32Array(4)
@@ -20,6 +22,7 @@ export default function Apikey() {
   const { isPro } = bits
   const [snack, setsnack] = useState({ show: false })
   const [isLoading, setisLoading] = useState(false)
+  const { css } = useFela()
 
   const handleSubmit = e => {
     setisLoading(true)
@@ -101,7 +104,7 @@ export default function Apikey() {
             </span>
           </label>
         </div>
-        <button type="button" onClick={(e) => handleSubmit(e)} className="btn btn-md f-right blue" disabled={isLoading}>
+        <button type="button" onClick={(e) => handleSubmit(e)} className={`${css(app.btn)} btn-md f-right blue`} disabled={isLoading}>
           {__('Save', 'bitform')}
           {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>

@@ -1,17 +1,19 @@
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
-import LoaderSm from '../../Loaders/LoaderSm'
-import { refreshEnchargeHeader } from './EnchargeCommonFunc'
-import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
-
+import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
+import { refreshEnchargeHeader } from './EnchargeCommonFunc'
 export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { css } = useFela()
 
   const handleAuthorize = () => {
     const newConf = { ...enchargeConf }
@@ -87,12 +89,12 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
         )}
         {!isInfo && (
           <>
-            <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+            <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔', 'bitform') : __('Authorize', 'bitform')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
-            <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+            <button onClick={() => nextPage(2)} className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`} type="button" disabled={!isAuthorized}>
               {__('Next', 'bitform')}
               <BackIcn className="ml-1 rev-icn" />
             </button>
