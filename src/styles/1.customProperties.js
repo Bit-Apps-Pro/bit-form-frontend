@@ -9,7 +9,7 @@ const customProperties = {
   fltr: $ => ({ filter: $ }),
   bS: $ => ({ boxShadow: $ }),
 
-  fs: $ => ({ fontSize: $ }),
+  fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   txA: $ => ({ textAlign: $ }),

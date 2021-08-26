@@ -94,7 +94,7 @@ const app = {
     '&:disabled': {
       b: 'var(--white-0-90)',
       bS: 'none',
-      o: '0.7',
+      o: 0.7,
       c: 'not-allowed',
     },
   },
