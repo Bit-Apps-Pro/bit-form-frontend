@@ -202,9 +202,9 @@ function FormDetails() {
             if (responseData.form_content.layout !== undefined) {
               const l = responseData.form_content.layout
               const nl = { lg: [], md: [], sm: [] }
-              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 20, h: itm.h * 10, x: itm.x * 20, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 20 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
               console.log('seted lay', l, nl)
               setLay(nl)
             }
