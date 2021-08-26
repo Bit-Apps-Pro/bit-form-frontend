@@ -37,7 +37,7 @@ const customProperties = {
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
 
-  fd: $ => ({ flexDriection: $ }),
+  fd: $ => ({ flexDirection: $ }),
   jC: $ => ({ justifyContent: $ }),
   aI: $ => ({ alignItems: $ }),
   cr: $ => ({ cursor: $ }),
