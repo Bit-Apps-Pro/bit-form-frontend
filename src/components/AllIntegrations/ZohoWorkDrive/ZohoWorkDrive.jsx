@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
-import { __ } from '../../../Utils/i18nwrap'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useHistory, useParams } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import ZohoWorkDriveIntegLayout from './ZohoWorkDriveIntegLayout'
 import ZohoWorkDriveAuthorization from './ZohoWorkDriveAuthorization'
-import BackIcn from '../../../Icons/BackIcn'
+import ZohoWorkDriveIntegLayout from './ZohoWorkDriveIntegLayout'
 
 function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
   const { formID } = useParams()
+  const { css } = useFela()
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -73,7 +76,7 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
         <button
           onClick={() => nextPage(3)}
           disabled={workDriveConf.team === '' || workDriveConf.folder === ''}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
           {__('Next', 'bitform')}

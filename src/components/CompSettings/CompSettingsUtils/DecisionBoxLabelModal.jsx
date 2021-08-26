@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import app from '../../../styles/app.style'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Modal from '../../Utilities/Modal'
@@ -8,6 +10,7 @@ import TinyMCE from '../../Utilities/TinyMCE'
 
 export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
   const fldKey = useRecoilValue($selectedFieldId)
+  const { css } = useFela()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const lbl = fieldData.lbl || fieldData?.info?.lbl
@@ -44,8 +47,8 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
         onChangeHandler={setLbl}
       />
       <div className="mt-2 f-right">
-        <button type="button" className="btn mr-2" onClick={cancelModal}>Cancel</button>
-        <button type="button" className="btn blue" onClick={() => setLabelModal(false)}>Save</button>
+        <button type="button" className={`${css(app.btn)} mr-2`} onClick={cancelModal}>Cancel</button>
+        <button type="button" className={`${css(app.btn)} blue`} onClick={() => setLabelModal(false)}>Save</button>
       </div>
     </Modal>
   )

@@ -1,12 +1,15 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { __ } from '../../Utils/i18nwrap'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
+import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 
 export default function MailSendTest({ settab }) {
   const [isTestLoading, setisTestLoading] = useState(false)
+  const { css } = useFela()
   const formRef = useRef(null)
   const handleSubmit = (e) => {
     const testEmailData = new FormData(formRef.current)
@@ -65,7 +68,7 @@ export default function MailSendTest({ settab }) {
             </label>
             <input id="message" name="message" className="btcd-paper-inp" placeholder="Message" type="text" required />
           </div>
-          <button type="submit" className="btn f-left btcd-btn-lg blue sh-sm flx" disabled={isTestLoading}>
+          <button type="submit" className={`${css(app.btn)} f-left btcd-btn-lg blue sh-sm flx`} disabled={isTestLoading}>
             {__('Send Test Mail', 'bitform')}
             {isTestLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
           </button>

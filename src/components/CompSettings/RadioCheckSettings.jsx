@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo, useState, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
@@ -21,6 +23,7 @@ function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const { css } = useFela()
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -246,7 +249,7 @@ function RadioCheckSettings() {
           </>
         )
       }
-      <button onClick={openImportModal} className="btn" type="button">
+      <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
@@ -268,11 +271,11 @@ function RadioCheckSettings() {
                 <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                 <span className="btcd-mrk ck br-50 " />
               </label>
-              <button onClick={() => rmvOpt(i)} className="btn cls-btn" type="button" aria-label="close"><CloseIcn size="12" /></button>
+              <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="close"><CloseIcn size="12" /></button>
             </div>
           </div>
         ))}
-        <button onClick={addOpt} className="btn blue" type="button">
+        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">
           {__('Add More +', 'bitform')}
         </button>
       </div>

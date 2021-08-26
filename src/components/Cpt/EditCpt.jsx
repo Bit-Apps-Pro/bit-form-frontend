@@ -1,11 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useEffect, useState, useRef } from 'react'
-import { __ } from '../../Utils/i18nwrap'
+import { useRef, useState } from 'react'
+import { useFela } from 'react-fela'
+import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
-import TableCheckBox from '../Utilities/TableCheckBox'
-import SnackMsg from '../Utilities/SnackMsg'
+import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
+import SnackMsg from '../Utilities/SnackMsg'
+import TableCheckBox from '../Utilities/TableCheckBox'
 import DeleteCpt from './DeleteCpt'
 
 export default function AllCpt({ posts, types }) {
@@ -15,6 +17,7 @@ export default function AllCpt({ posts, types }) {
   const [editPost, setEditPost] = useState({})
   const [snack, setsnack] = useState({ show: false })
   const formRef = useRef(null)
+  const { css } = useFela()
 
   const searchPostHandle = (slug) => {
     setSlugName(slug)
@@ -112,7 +115,7 @@ export default function AllCpt({ posts, types }) {
               <TableCheckBox onChange={(e) => handleInput(e, 'check')} checked={editPost?.show_ui === 1} name="show_ui" className="wdt-200 mt-4 mr-2 " value={editPost?.show_ui} title={__('Show UI', 'bitform')} subTitle={__('Generate a default UI for managing this post type', 'bitform')} />
             </div>
             <div className="d-flx flx-wrp">
-              <button type="submit" className="btn f-left btcd-btn-lg blue sh-sm flx" disabled={isLoading}>
+              <button type="submit" className={`${css(app.btn)} f-left btcd-btn-lg blue sh-sm flx`} disabled={isLoading}>
                 {__('Update Post Type', 'bitform')}
                 {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
               </button>

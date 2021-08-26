@@ -1,22 +1,24 @@
 /* eslint-disable no-undef */
-import { useState, useEffect } from 'react'
-
-import { __ } from '../../../../Utils/i18nwrap'
-import StyleAccordion from '../ChildComp/StyleAccordion'
-import BtnGrp from '../ChildComp/BtnGrp'
-import ColorPicker from '../ChildComp/ColorPicker'
-import usePseudo from '../ChildComp/usePseudo'
-import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
-import Range from '../ChildComp/Range'
-import TableCheckBox from '../../../Utilities/TableCheckBox'
+import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
+import BlurIcn from '../../../../Icons/BlurIcn'
 import ColorIcn from '../../../../Icons/ColorIcn'
+import HWordinateIcn from '../../../../Icons/HWordinateIcn'
 import NoneIcn from '../../../../Icons/NoneIcn'
 import XYordinateIcn from '../../../../Icons/XYordinateIcn'
-import HWordinateIcn from '../../../../Icons/HWordinateIcn'
-import BlurIcn from '../../../../Icons/BlurIcn'
+import app from '../../../../styles/app.style'
+import { __ } from '../../../../Utils/i18nwrap'
+import TableCheckBox from '../../../Utilities/TableCheckBox'
+import BtnGrp from '../ChildComp/BtnGrp'
+import ColorPicker from '../ChildComp/ColorPicker'
+import Range from '../ChildComp/Range'
+import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
+import StyleAccordion from '../ChildComp/StyleAccordion'
+import usePseudo from '../ChildComp/usePseudo'
 
 export default function Background({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
+  const { css } = useFela()
   let bgClr = style?.[pcls]?.['background-color'] || style?.[cls]?.['background-color']
   if (style?.[pcls]?.['background-image'] && style?.[pcls]?.['background-image'].indexOf('gradient')) {
     bgClr = style?.[pcls]?.['background-image']
@@ -211,7 +213,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
             <div>
               <div className="flx flx-between mt-2">
                 <span className="f-5">{__('Picture Upload', 'bitform')}</span>
-                <button onClick={setBgImg} className="btn" type="button">{__('Browse...', 'bitform')}</button>
+                <button onClick={setBgImg} className={css(app.btn)} type="button">{__('Browse...', 'bitform')}</button>
               </div>
               {ImgWarn !== '' && <small className="txt-center" style={{ color: '#efbb28' }}>{ImgWarn}</small>}
             </div>

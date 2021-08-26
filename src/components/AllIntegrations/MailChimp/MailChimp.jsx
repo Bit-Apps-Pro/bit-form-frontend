@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveIntegConfig } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 import MailChimpAuthorization from './MailChimpAuthorization'
-import { checkAddressFieldMapRequired, handleInput, setGrantTokenResponse, checkMappedFields } from './MailChimpCommonFunc'
+import { checkAddressFieldMapRequired, checkMappedFields, handleInput, setGrantTokenResponse } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 
 function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
@@ -17,6 +19,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
   const [sheetConf, setSheetConf] = useState({
     name: 'Mail Chimp API',
     type: 'Mail Chimp',
@@ -85,7 +88,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={!sheetConf.listId || sheetConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className={`${css(app.btn)} f-right btcd-btn-lg green sh-sm flx`}
           type="button"
         >
           {__('Next', 'bitform')}

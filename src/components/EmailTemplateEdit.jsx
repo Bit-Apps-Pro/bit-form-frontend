@@ -1,10 +1,12 @@
 /* eslint-disable no-param-reassign */
 
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { NavLink, Redirect, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fieldsArr, $mailTemplates } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
+import app from '../styles/app.style'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import TinyMCE from './Utilities/TinyMCE'
@@ -15,6 +17,7 @@ function EmailTemplateEdit() {
   const history = useHistory()
   const [mailTemp, setMailTem] = useRecoilState($mailTemplates)
   const formFields = useRecoilValue($fieldsArr)
+  const { css } = useFela()
 
   const handleTitle = e => {
     const mailTem = deepCopy(mailTemp)
@@ -53,12 +56,12 @@ function EmailTemplateEdit() {
   return (
     mailTemp.length < 1 ? <Redirect to={`/form/settings/edit/${formID}/email-templates`} /> : (
       <div style={{ width: 900 }}>
-        <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className="btn btcd-btn-o-gray">
+        <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} className={`${css(app.btn)} btcd-btn-o-gray`}>
           <BackIcn className="mr-1" />
           {__('Back', 'bitform')}
         </NavLink>
 
-        <button id="secondary-update-btn" onClick={save} className="btn blue f-right" type="button">{__('Update Template', 'bitform')}</button>
+        <button id="secondary-update-btn" onClick={save} className={`${css(app.btn)} blue f-right`} type="button">{__('Update Template', 'bitform')}</button>
 
         <div className="mt-3 flx">
           <b style={{ width: 102 }}>

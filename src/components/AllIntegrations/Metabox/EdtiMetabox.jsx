@@ -1,14 +1,16 @@
 /* eslint-disable no-param-reassign */
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
-import { __ } from '../../../Utils/i18nwrap'
-import SnackMsg from '../../Utilities/SnackMsg'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
-import FieldMap from './FieldMap'
-import { addFieldMap, checkMappedPostFields, checkMappedAcfFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
+import SnackMsg from '../../Utilities/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import FieldMap from './FieldMap'
+import { addFieldMap, checkMappedAcfFields, checkMappedPostFields, refreshMetaboxFields, refreshPostTypes } from './MetaboxHelperFunction'
 
 function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
@@ -19,6 +21,7 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
   const [users, setUsers] = useState([])
   const [data, setData] = useState({ ...integrations[id] })
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
 
   useEffect(() => {
     bitsFetch({}, 'bitforms_get_post_type').then((res) => {
@@ -242,7 +245,7 @@ function EdtiMetabox({ formFields, setIntegration, integrations, allIntegURL }) 
       </div>
 
       <button
-        className="btn f-left btcd-btn-lg green sh-sm flx"
+        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         onClick={() => saveConfig()}
       >

@@ -37,7 +37,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
       <div className="blk-icn-wrp pos-abs flx o-h">
         <button
           type="button"
-          className="drag g-c us-n"
+          className="drag g-c us-n blk-wrp-btn"
           style={{ cursor: 'move' }}
           title={__('Move', 'bitform')}
         >
@@ -45,7 +45,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
         </button>
         <button
           type="button"
-          className="g-c cp us-n no-drg"
+          className="g-c cp us-n no-drg blk-wrp-btn"
           title={__('Style', 'bitform')}
           onClick={() => navigateToStyle(fields[layoutItem.i].typ)}
         >
@@ -53,7 +53,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
         </button>
         <button
           type="button"
-          className="g-c cp us-n no-drg"
+          className="g-c cp us-n no-drg blk-wrp-btn"
           title={__('Settings', 'bitform')}
           onClick={navigateToFieldSettings}
         >
@@ -62,7 +62,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
         <button
           data-close
           type="button"
-          className="drag g-c us-n no-drg"
+          className="drag g-c us-n no-drg blk-wrp-btn"
           unselectable="on"
           draggable="false"
           style={{ cursor: 'pointer' }}

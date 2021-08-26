@@ -1,19 +1,22 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
+import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import { addFieldMap, checkMappedPostFields, checkMappedPodFields } from './PodHelperFunction'
-import PodsFieldMap from './FieldMap'
-import SnackMsg from '../../Utilities/SnackMsg'
 import { postFields } from '../../../Utils/StaticData/postField'
+import SnackMsg from '../../Utilities/SnackMsg'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import PodsFieldMap from './FieldMap'
+import { addFieldMap, checkMappedPodFields, checkMappedPostFields } from './PodHelperFunction'
 
 function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
   const [types, setTypes] = useState([])
   const [users, setUsers] = useState([])
   const { id } = useParams()
   const history = useHistory()
+  const { css } = useFela()
   const [data, setData] = useState({ ...integrations[id] })
   const [pods, setPods] = useState([])
   const [snack, setSnackbar] = useState({ show: false })
@@ -172,7 +175,7 @@ function EditPod({ formFields, setIntegration, integrations, allIntegURL }) {
 
       <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap('post_map', data.post_map.length, data, setData)} className="icn-btn sh-sm" type="button">+</button></div>
       <button
-        className="btn f-left btcd-btn-lg green sh-sm flx"
+        className={`${css(app.btn)} f-left btcd-btn-lg green sh-sm flx`}
         type="button"
         onClick={() => saveConfig()}
       >
