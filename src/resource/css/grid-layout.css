@@ -44,11 +44,10 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: rgba(87, 165, 255, 0.233);
+  background: rgba(120, 183, 255, 0.2);
   /* border: 2px solid rgb(28, 89, 255); */
-  opacity: .5;
   transition-duration: 100ms;
-  z-index: 2;
+  border: 2px dashed rgb(0, 89, 255);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
