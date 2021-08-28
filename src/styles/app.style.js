@@ -23,11 +23,7 @@ const app = {
       h: '100%',
       z: 9,
     },
-    '&:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit)': {
-      '&:before': {
-        c: '+',
-      },
-    },
+    '&:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit)': { '&:before': { c: '+' } },
   },
   btcd_inte_dis: {
     pe: 'none',
