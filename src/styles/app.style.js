@@ -104,5 +104,10 @@ const app = {
     m: 'auto',
     p: 12,
   },
+  wrapper: {
+    ta: 'center',
+    my: '50',
+    mx: 'auto',
+  },
 }
 export default app

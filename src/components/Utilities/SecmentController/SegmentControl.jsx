@@ -1,7 +1,10 @@
 import './SegmentControl.css'
 import { useEffect, useRef, useState } from 'react'
+import { useFela } from 'react-fela'
+import app from '../../../styles/app.style'
 
 export default function SegmentControl({ defaultActive }) {
+  const { css } = useFela()
   const options = [
     { label: 'Sunny', icn: '' },
     { label: 'Cloudy', icn: '' },
@@ -31,7 +34,7 @@ export default function SegmentControl({ defaultActive }) {
     $('.tabs a.active').classList.remove('active')
     const currentElmLeft = elm.offsetLeft
     const { width: currentElmWidth } = elm.getBoundingClientRect()
-    console.log(selectorRef)
+    // console.log(selectorRef)
     selectorRef.current.style.left = `${currentElmLeft}px`
     selectorRef.current.style.width = `${currentElmWidth}px`
     setactive(options[i].label)
@@ -39,7 +42,7 @@ export default function SegmentControl({ defaultActive }) {
   }
 
   return (
-    <div className="wrapper">
+    <div className={css(app.wrapper)}>
       <nav className="tabs">
         <div ref={selectorRef} className="selector" />
         {options.map((item, i) => (
