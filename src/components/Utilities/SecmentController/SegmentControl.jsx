@@ -57,7 +57,7 @@ function SegmentControl({ defaultActive, options }) {
         clr: '#005aff',
         t: 'color 0.3s ease 0.3s',
       },
-      '& .ico': { mr: 5 },
+      '& .icn': { mr: 5 },
     },
   }
   // const options = [
