@@ -28,10 +28,7 @@ const app = {
   btcd_inte_dis: {
     pe: 'none',
     us: 'none',
-
-    '&>img': {
-      fl: 'grayscale(1) !important',
-    },
+    '&>img': { fl: 'grayscale(1) !important' },
     '&::before': {
       flx: 'center',
       bg: 'var(--b-63-18-67)',
@@ -70,6 +67,7 @@ const app = {
       z: 4,
     },
   },
+  // for button
   btn: {
     d: 'inline-flex',
     clr: 'inherit',
@@ -100,10 +98,6 @@ const app = {
     m: 'auto',
     p: 12,
   },
-  wrapper: {
-    ta: 'center',
-    my: '50',
-    mx: 'auto',
-  },
+
 }
 export default app

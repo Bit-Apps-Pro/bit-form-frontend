@@ -7,6 +7,12 @@ const customProperties = {
   us: $ => ({ userSelect: $ }),
   fl: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
+  ls: $ => ({ listStyle: $ }),
+  t: $ => ({ transition: $ }),
+  tdl: $ => ({ transitionDelay: $ }),
+  tdu: $ => ({ transitionDuration: $ }),
+  ttf: $ => ({ transitionTimingFunction: $ }),
+  tf: $ => ({ transform: $ }),
 
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   fw: $ => ({ fontWeight: $ }),
