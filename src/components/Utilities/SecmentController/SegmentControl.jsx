@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import './SegmentControl.css'
 
-function SegmentControl({ defaultActive, options }) {
+function SegmentControl({ defaultActive, options, size }) {
   const { css } = useFela()
+  const baseSize = size * 0.87
+  console.log(baseSize)
 
   const style = {
     wrapper: {
@@ -14,7 +16,8 @@ function SegmentControl({ defaultActive, options }) {
     },
     tabs: {
       mt: 50,
-      fs: 15,
+      // fs: 15,
+      fs: baseSize,
       py: 3,
       px: 5,
       bg: '#f1f1f1',

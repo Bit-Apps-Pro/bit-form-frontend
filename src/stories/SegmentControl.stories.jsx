@@ -14,7 +14,10 @@ const renderer = createRenderer({
 export default {
   title: 'Example/SegmentControl',
   component: SegmentControl,
-  argTypes: { backgroundColor: { control: 'color' } },
+  argTypes: {
+    backgroundColor: { control: 'color' },
+    size: { control: { type: 'range', min: 50, max: 200, step: 1 } },
+  },
 }
 const options = [
   { label: 'Sunny', icn: '' },
