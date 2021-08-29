@@ -4,9 +4,8 @@ import './SegmentControl.css'
 
 function SegmentControl({ defaultActive, options, size }) {
   const { css } = useFela()
-  const baseSize = size
-  console.log(baseSize) // 100
-
+  const baseSize = size // 100
+  const floor = (number) => (Math.floor(baseSize / number))
   const style = {
     wrapper: {
       ta: 'center',
@@ -16,13 +15,13 @@ function SegmentControl({ defaultActive, options, size }) {
     },
     tabs: {
       mt: baseSize / 2, // 50
-      fs: Math.floor(baseSize / 6.67), // 15
-      py: Math.floor(baseSize / 33.34), // 3
-      px: Math.floor(baseSize / 20), // 5
+      fs: floor(6.67), // 15
+      py: floor(33.34), // 3
+      px: floor(20), // 5
       bg: '#f1f1f1',
       ls: 'none',
       d: 'inline-block',
-      br: Math.floor(baseSize / 7.15), // 14,
+      br: floor(7.15), // 14,
       pos: 'relative',
       bs: '0 1px 8px -7px grey inset',
     },
@@ -30,11 +29,11 @@ function SegmentControl({ defaultActive, options, size }) {
       h: '80%',
       d: 'inline-block',
       pos: 'absolute',
-      xl: Math.floor(baseSize / 20), // 5
+      xl: floor(20), // 5
       yt: '50%',
       tf: 'translatey(-50%)',
       z: 1,
-      br: Math.floor(baseSize / 9.09), // 11,
+      br: floor(9.09), // 11,
       tdu: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
       bg: '#fff',
@@ -45,8 +44,8 @@ function SegmentControl({ defaultActive, options, size }) {
       clr: '#777',
       flxi: 'align-center',
       pos: 'relative',
-      py: Math.floor(baseSize / 10), // 10,
-      px: Math.floor(baseSize / 5), // 20,
+      py: floor(10), // 10,
+      px: floor(5), // 20,
       z: 1,
       tdl: '0.3s',
       tdu: '0.6s',
