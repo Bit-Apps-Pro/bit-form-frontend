@@ -4,6 +4,7 @@ import felaPluginCustomProperty from 'fela-plugin-custom-property'
 import { RendererProvider } from 'react-fela'
 import SegmentControl from '../components/Utilities/SecmentController/SegmentControl'
 import customProperties from '../styles/1.customProperties'
+import icon from '../resource/img/settings/dollar-sign .svg'
 
 const renderer = createRenderer({
   plugins: [
@@ -20,10 +21,10 @@ export default {
   },
 }
 const options = [
-  { label: 'Sunny', icn: '' },
-  { label: 'Cloudy', icn: '' },
-  { label: 'Rainy', icn: '' },
-  { label: 'Snow', icn: '' },
+  { label: 'Sunny', icn: <img src={icon} /> },
+  { label: 'Cloudy', icn: <img src={icon} /> },
+  { label: 'Rainy', icn: <img src={icon} /> },
+  { label: 'Snow', icn: <img src={icon} /> },
 ]
 
 const Template = (args) => (

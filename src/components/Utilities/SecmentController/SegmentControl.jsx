@@ -50,7 +50,6 @@ function SegmentControl({ defaultActive, options, size }) {
       tdl: '0.3s',
       tdu: '0.6s',
       '&:hover': {
-        // clr: 'var(--white-0-0-32)', // '#333',
         clr: 'var(--white-0-21)', // '#333',
         tdl: '0s',
         tdu: '300ms',
@@ -59,7 +58,24 @@ function SegmentControl({ defaultActive, options, size }) {
         clr: 'var(--b-50) !important', // '#005aff',
         t: 'color 0.3s ease 0.3s',
       },
-      '& .icn': { mr: 5 },
+      '& .icn': {
+        mr: floor(20),
+        w: floor(5),
+        d: 'block',
+      },
+      '& .icn img, .icn svg': {
+        o: 0,
+        tf: 'scale(0)',
+        mt: floor(20), // 5
+      },
+    },
+    segment_img: {
+      '& img, svg': {
+        o: '1 !important',
+        tf: 'scale(1) !important',
+        tdl: '.3s',
+        tdu: '300ms',
+      },
     },
   }
   // const options = [
@@ -72,13 +88,18 @@ function SegmentControl({ defaultActive, options, size }) {
   const tabsRef = useRef(null)
   const [active, setactive] = useState(false)
 
+  const clientRect = (activeElement) => {
+    const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
+    selectorRef.current.style.left = `${activeElement.offsetLeft}px`
+    selectorRef.current.style.width = `${toActiveElmWidth}px`
+  }
+  // console.log(htmlParse(options[0].icn))
+
   useEffect(() => {
     const defaultItem = defaultActive || options[0].label
     setactive(defaultItem)
     const toActiveElement = tabsRef.current.querySelector(`[href="#${defaultItem}"]`)
-    const { width: toActiveElmWidth } = toActiveElement.getBoundingClientRect()
-    selectorRef.current.style.left = `${toActiveElement.offsetLeft}px`
-    selectorRef.current.style.width = `${toActiveElmWidth}px`
+    clientRect(toActiveElement)
   }, [])
 
   const onClickHandler = (e, i) => {
@@ -88,12 +109,10 @@ function SegmentControl({ defaultActive, options, size }) {
       elm = e.target.parentNode
     }
 
+    if (!e.type === 'keypress' || !e.type === 'click') return
+
     tabsRef.current.querySelector('.tabs a.active').classList.remove('active')
-    const currentElmLeft = elm.offsetLeft
-    const { width: currentElmWidth } = elm.getBoundingClientRect()
-    // console.log(selectorRef)
-    selectorRef.current.style.left = `${currentElmLeft}px`
-    selectorRef.current.style.width = `${currentElmWidth}px`
+    clientRect(elm)
     setactive(options[i].label)
     // setOptions({ ...options, active: options.op[index] })
   }
@@ -106,17 +125,19 @@ function SegmentControl({ defaultActive, options, size }) {
           <a
             key={`segment-option-${i * 10}`}
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
-            onClick={(e) => onClickHandler(e, i)}
+            onClick={e => onClickHandler(e, i)}
+            onKeyPress={e => onClickHandler(e, i)}
             href={`#${item.label}`}
           >
             {item.icn && (
-              <span className="icn">{item.icn}</span>
+              // <span className="icn"><img className={`${active === item.label ? css(style.segment_img) : ''}`} src={item.icn} alt="" /></span>
+              <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
             {item.label}
           </a>
         ))}
       </div>
-    </div>
+    </div >
   )
 }
 
