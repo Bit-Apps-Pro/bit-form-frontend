@@ -78,12 +78,6 @@ function SegmentControl({ defaultActive, options, size }) {
       },
     },
   }
-  // const options = [
-  //   { label: 'Sunny', icn: '' },
-  //   { label: 'Cloudy', icn: '' },
-  //   { label: 'Rainy', icn: '' },
-  //   { label: 'Snow', icn: '' },
-  // ]
   const selectorRef = useRef(null)
   const tabsRef = useRef(null)
   const [active, setactive] = useState(false)
@@ -93,7 +87,6 @@ function SegmentControl({ defaultActive, options, size }) {
     selectorRef.current.style.left = `${activeElement.offsetLeft}px`
     selectorRef.current.style.width = `${toActiveElmWidth}px`
   }
-  // console.log(htmlParse(options[0].icn))
 
   useEffect(() => {
     const defaultItem = defaultActive || options[0].label
@@ -114,7 +107,6 @@ function SegmentControl({ defaultActive, options, size }) {
     tabsRef.current.querySelector('.tabs a.active').classList.remove('active')
     clientRect(elm)
     setactive(options[i].label)
-    // setOptions({ ...options, active: options.op[index] })
   }
 
   return (
