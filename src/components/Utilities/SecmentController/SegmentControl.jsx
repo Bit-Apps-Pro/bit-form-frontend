@@ -50,7 +50,8 @@ function SegmentControl({ defaultActive, options, size }) {
       tdl: '0.3s',
       tdu: '0.6s',
       '&:hover': {
-        clr: 'var(--white-0-0-32)', // '#333',
+        // clr: 'var(--white-0-0-32)', // '#333',
+        clr: 'var(--white-0-21)', // '#333',
         tdl: '0s',
         tdu: '300ms',
       },
