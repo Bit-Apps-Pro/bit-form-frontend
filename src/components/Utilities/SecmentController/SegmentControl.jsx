@@ -102,7 +102,7 @@ function SegmentControl({ defaultActive, options, size }) {
     clientRect(toActiveElement)
   }, [])
 
-  const onClickHandler = (e, i) => {
+  const eventHandler = (e, i) => {
     e.preventDefault()
     let elm = e.target
     if (e.target.tagName !== 'A') {
@@ -125,12 +125,11 @@ function SegmentControl({ defaultActive, options, size }) {
           <a
             key={`segment-option-${i * 10}`}
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
-            onClick={e => onClickHandler(e, i)}
-            onKeyPress={e => onClickHandler(e, i)}
+            onClick={e => eventHandler(e, i)}
+            onKeyPress={e => eventHandler(e, i)}
             href={`#${item.label}`}
           >
             {item.icn && (
-              // <span className="icn"><img className={`${active === item.label ? css(style.segment_img) : ''}`} src={item.icn} alt="" /></span>
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
             {item.label}
