@@ -18,7 +18,7 @@ function SegmentControl({ defaultActive, options, size }) {
       fs: floor(6.67), // 15
       py: floor(33.34), // 3
       px: floor(20), // 5
-      bg: '#f1f1f1',
+      bg: 'var(--white-0-95)', // '#f1f1f1',
       ls: 'none',
       d: 'inline-block',
       br: floor(7.15), // 14,
@@ -36,12 +36,12 @@ function SegmentControl({ defaultActive, options, size }) {
       br: floor(9.09), // 11,
       tdu: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
-      bg: '#fff',
+      bg: 'var(--white-100)', // '#fff',
       bs: ' 0 2px 5px 0px #c7c7c7',
     },
     tab_link: {
       td: 'none',
-      clr: '#777',
+      clr: 'var(--white-0-50)', // '#777',
       flxi: 'align-center',
       pos: 'relative',
       py: floor(10), // 10,
@@ -50,12 +50,12 @@ function SegmentControl({ defaultActive, options, size }) {
       tdl: '0.3s',
       tdu: '0.6s',
       '&:hover': {
-        clr: '#333',
+        clr: 'var(--white-0-0-32)', // '#333',
         tdl: '0s',
         tdu: '300ms',
       },
       '&.active': {
-        clr: '#005aff',
+        clr: 'var(--b-50) !important', // '#005aff',
         t: 'color 0.3s ease 0.3s',
       },
       '& .icn': { mr: 5 },
