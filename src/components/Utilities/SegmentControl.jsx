@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import './SegmentControl.css'
 
-function SegmentControl({ defaultActive, options, size }) {
+function SegmentControl({ defaultActive, options, size, component = 'a', onChange }) {
   const { css } = useFela()
   const baseSize = size // 100
   const floor = (number) => (Math.floor(baseSize / number))
   const style = {
     wrapper: {
       ta: 'center',
-      my: baseSize / 2, // 50
+      // my: baseSize / 2, // 50
       mx: 'auto',
-      p: baseSize / 10, // 10
+      // p: baseSize / 10, // 10
     },
     tabs: {
-      mt: baseSize / 2, // 50
+      // mt: baseSize / 2, // 50
       fs: floor(6.67), // 15
       py: floor(33.34), // 3
       px: floor(20), // 5
@@ -24,6 +23,12 @@ function SegmentControl({ defaultActive, options, size }) {
       br: floor(7.15), // 14,
       pos: 'relative',
       bs: '0 1px 8px -7px grey inset',
+
+      '& button': {
+        bg: 'none',
+        ol: 'none',
+        b: 'none',
+      },
     },
     selector: {
       h: '80%',
@@ -82,7 +87,7 @@ function SegmentControl({ defaultActive, options, size }) {
   const tabsRef = useRef(null)
   const [active, setactive] = useState(false)
 
-  const clientRect = (activeElement) => {
+  const setSelectorPos = (activeElement) => {
     const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
     selectorRef.current.style.left = `${activeElement.offsetLeft}px`
     selectorRef.current.style.width = `${toActiveElmWidth}px`
@@ -91,35 +96,37 @@ function SegmentControl({ defaultActive, options, size }) {
   useEffect(() => {
     const defaultItem = defaultActive || options[0].label
     setactive(defaultItem)
-    const toActiveElement = tabsRef.current.querySelector(`[href="#${defaultItem}"]`)
-    clientRect(toActiveElement)
+    const toActiveElement = tabsRef.current.querySelector(`[data-label="${defaultItem}"]`)
+    setSelectorPos(toActiveElement)
   }, [])
 
   const eventHandler = (e, i) => {
     e.preventDefault()
     let elm = e.target
-    if (e.target.tagName !== 'A') {
+    if (e.target.tagName !== component.toUpperCase()) {
       elm = e.target.parentNode
     }
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    tabsRef.current.querySelector('.tabs a.active').classList.remove('active')
-    clientRect(elm)
+    tabsRef.current.querySelector(`.tabs ${component}.active`).classList.remove('active')
+    setSelectorPos(elm)
     setactive(options[i].label)
+    onChange(options[i].label)
   }
 
   return (
     <div className={css(style.wrapper)}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
-        {options.map((item, i) => (
+        {component === 'a' && options?.map((item, i) => (
           <a
             key={`segment-option-${i * 10}`}
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
             onClick={e => eventHandler(e, i)}
             onKeyPress={e => eventHandler(e, i)}
             href={`#${item.label}`}
+            data-label={item.label}
           >
             {item.icn && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
@@ -127,8 +134,24 @@ function SegmentControl({ defaultActive, options, size }) {
             {item.label}
           </a>
         ))}
+        {component === 'button' && options?.map((item, i) => (
+          // eslint-disable-next-line react/button-has-type
+          <button
+            key={`segment-option-${i * 10}`}
+            className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
+            onClick={e => eventHandler(e, i)}
+            onKeyPress={e => eventHandler(e, i)}
+            data-label={item.label}
+          >
+            {item.icn && (
+              <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
+            )}
+            {item.label}
+          </button>
+        ))}
+
       </div>
-    </div >
+    </div>
   )
 }
 
