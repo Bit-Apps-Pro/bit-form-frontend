@@ -58,7 +58,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
   const [debounce, setDebounce] = useState(null)
-  const [showHistory, setShowHistory] = useState(null)
   const bits = useRecoilValue($bits)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
@@ -237,8 +236,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   return (
     <div>
       <div>
-        <button type="button" onClick={() => setShowHistory(oldState => !oldState)}>...</button>
-        {showHistory && <FormBuilderHistory />}
+
+        <FormBuilderHistory />
       </div>
       <Container
         ref={conRef}

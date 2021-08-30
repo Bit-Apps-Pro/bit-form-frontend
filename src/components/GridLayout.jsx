@@ -12,7 +12,7 @@ import { $additionalSettings, $builderHistory, $draggingField, $fields, $layouts
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { checkFieldsExtraAttr, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, checkFieldsExtraAttr, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
@@ -178,11 +178,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
 
-    setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-      const state = { fldKey, breakpoint, layout: removedLay, fldData }
-      const len = draft.data.push({ event: `${fldData.lbl} removed`, action: 'remove_fld', state })
-      draft.active = len - 1
-    }))
+    // add to history
+    const event = `${fldData.lbl} removed`
+    const action = 'remove_fld'
+    const state = { fldKey, breakpoint, layout: removedLay, fldData }
+    addToBuilderHistory(setBuilderHistory, { event, action, state })
   }
 
   const clsAlertMdl = () => {
@@ -231,11 +231,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setFields({ ...fields, [newBlk]: processedFieldData })
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
-    setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-      const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData }
-      const len = draft.data.push({ event: `${fieldData.lbl} added`, action: 'add_fld', state })
-      draft.active = len - 1
-    }))
+
+    // add to history
+    const event = `${fieldData.lbl} added`
+    const action = 'add_fld'
+    const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData }
+    addToBuilderHistory(setBuilderHistory, { event, action, state })
   }
 
   const onDrop = (lay, dropPosition) => {
