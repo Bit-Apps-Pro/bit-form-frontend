@@ -412,6 +412,13 @@ export function compact(layout, compactType, cols) {
   return out
 }
 
+export const addToBuilderHistory = (setBuilderHistory, historyData) => {
+  setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+    draft.histories.splice(draft.active + 1)
+    draft.active = draft.histories.push(historyData) - 1
+  }))
+}
+
 export const compactNewLayoutItem = (breakpoint, layout, layouts) => {
   const cols = { lg: 60, md: 40, sm: 20 }
   return produce(layouts, drftLay => {
