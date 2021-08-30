@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 
-function SegmentControl({ defaultActive, options, size, component = 'a', onChange }) {
+function SegmentControl({ defaultActive, options, size, component = 'a', onChange, vairent = 'white' }) {
   const { css } = useFela()
-  const baseSize = size // 100
+  const baseSize = Number(size) // 100
   const floor = (number) => (Math.floor(baseSize / number))
+  const clr = {}
+  if (vairent === 'white') {
+    clr.tabBg = 'var(--white-0-95)'
+    clr.selectorBg = 'var(--white-100)'
+  }
   const style = {
     wrapper: {
       ta: 'center',
@@ -17,7 +22,8 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       fs: floor(6.67), // 15
       py: floor(33.34), // 3
       px: floor(20), // 5
-      bg: 'var(--white-0-95)', // '#f1f1f1',
+      // bg: 'var(--white-0-95)', // '#f1f1f1',
+      bg: clr.tabBg, // '#f1f1f1',
       ls: 'none',
       d: 'inline-block',
       br: floor(7.15), // 14,
@@ -41,7 +47,8 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       br: floor(9.09), // 11,
       tdu: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
-      bg: 'var(--white-100)', // '#fff',
+      // bg: 'var(--white-100)', // '#fff',
+      bg: clr.selectorBg, // '#fff',
       bs: ' 0 2px 5px 0px #c7c7c7',
     },
     tab_link: {
