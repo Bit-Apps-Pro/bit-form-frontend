@@ -2,22 +2,30 @@
 const customProperties = {
   g: ($ = 'center') => ({ placeContent: $ }),
   d: $ => ({ display: $ }),
+
   b: $ => ({ border: $ }),
+  brl: $ => ({ borderLeft: $ }),
+  brr: $ => ({ borderRight: $ }),
+
   pe: $ => ({ pointerEvents: $ }),
   us: $ => ({ userSelect: $ }),
   fl: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
   ls: $ => ({ listStyle: $ }),
+
   t: $ => ({ transition: $ }),
   tdl: $ => ({ transitionDelay: $ }),
   tdu: $ => ({ transitionDuration: $ }),
   ttf: $ => ({ transitionTimingFunction: $ }),
   tf: $ => ({ transform: $ }),
 
+  of: $ => ({ overflow: $ }),
+
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   ta: $ => ({ textAlign: $ }),
+
   pos: $ => ({ position: $ }),
   yt: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
   yb: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
