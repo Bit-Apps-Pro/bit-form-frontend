@@ -3,17 +3,17 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import produce, { createDraft, finishDraft } from 'immer'
+import produce from 'immer'
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { checkFieldsExtraAttr, compact, convertLayout, propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
-import { deepCopy, isType } from '../Utils/Helpers'
+import { checkFieldsExtraAttr, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -38,6 +38,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
 
   useEffect(() => {
     checkAllLayoutSame()
@@ -154,36 +155,34 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const onBreakpointChange = bp => setBreakpoint(bp)
 
-  const removeLayoutItem = i => {
-    if (fields[i]?.typ === 'button' && fields[i]?.btnTyp === 'submit') {
+  const removeLayoutItem = fldKey => {
+    const fldData = fields[fldKey]
+    if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
       const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
       if (!payFields.length) {
         setAlertMdl({ show: true, msg: __('Submit button cannot be removed') })
         return
       }
     }
-    const nwLay = produce(layouts, draft => {
-      if (breakpoint === 'lg') {
-        draft.lg = draft.lg.filter(l => l.i !== i)
-        draft.md = compact(draft.md.filter(l => l.i !== i), 'vertical')
-        draft.sm = compact(draft.sm.filter(l => l.i !== i), 'vertical')
-      } else if (breakpoint === 'md') {
-        draft.lg = compact(draft.lg.filter(l => l.i !== i), 'vertical')
-        draft.md = draft.md.filter(l => l.i !== i)
-        draft.sm = compact(draft.sm.filter(l => l.i !== i), 'vertical')
-      } else if (breakpoint === 'sm') {
-        draft.lg = compact(draft.lg.filter(l => l.i !== i), 'vertical')
-        draft.md = compact(draft.md.filter(l => l.i !== i), 'vertical')
-        draft.sm = draft.sm.filter(l => l.i !== i)
-      }
-    })
+    const removedLay = {
+      lg: layouts.lg.find(l => l.i === fldKey),
+      md: layouts.md.find(l => l.i === fldKey),
+      sm: layouts.sm.find(l => l.i === fldKey),
+    }
+    const nwLay = compactRemovedLayoutItem(fldKey, breakpoint, layouts)
     const tmpFields = { ...fields }
-    delete tmpFields[i]
+    delete tmpFields[fldKey]
     setLayouts(nwLay)
     setFields(tmpFields)
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
+
+    setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+      const state = { fldKey, breakpoint, layout: removedLay, fldData }
+      const len = draft.data.push({ event: `${fldData.lbl} removed`, action: 'remove_fld', state })
+      draft.active = len - 1
+    }))
   }
 
   const clsAlertMdl = () => {
@@ -226,27 +225,17 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const newBlk = `bf${formID}-${uniqueFieldId}`
     const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10, minH: minH * 10 || minH, maxH: maxH * 10 || maxH, minW: minW * 10 || minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
-    const tmpLayouts = produce(layouts, drftLay => {
-      drftLay.lg.push(newLayoutItem)
-      drftLay.md.push(newLayoutItem)
-      drftLay.sm.push(newLayoutItem)
-      drftLay[breakpoint] = sortLayoutByXY(drftLay[breakpoint])
-      if (breakpoint === 'lg') {
-        drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
-        drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
-      } else if (breakpoint === 'md') {
-        drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
-        drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
-      } else if (breakpoint === 'sm') {
-        drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
-        drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
-      }
-    })
+    const tmpLayouts = compactNewLayoutItem(breakpoint, newLayoutItem, layouts)
 
     setLayouts(tmpLayouts)
     setFields({ ...fields, [newBlk]: processedFieldData })
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
+    setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+      const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData }
+      const len = draft.data.push({ event: `${fieldData.lbl} added`, action: 'add_fld', state })
+      draft.active = len - 1
+    }))
   }
 
   const onDrop = (lay, dropPosition) => {
