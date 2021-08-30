@@ -3,23 +3,27 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { NavLink, Route, Switch, useHistory, useParams, withRouter } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
+import SegmentControl from '../components/Utilities/SegmentControl'
 import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import '../resource/sass/components.scss'
 import app from '../styles/app.style'
+// import useSWR from 'swr'
+import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FormEntries from './FormEntries'
 import FormSettings from './FormSettings'
-// import useSWR from 'swr'
 
+// eslint-disable-next-line import/no-cycle
 const FormBuilderHOC = lazy(() => import('./FormBuilderHOC'))
 
 export const FormSaveContext = createContext(null)
@@ -250,6 +254,24 @@ function FormDetails() {
     })
   }
 
+  const options = [
+    { label: 'Builder' },
+    { label: 'Responses' },
+    { label: 'Settings' },
+  ]
+
+  const onChangeHandler = (evn) => {
+    if (evn === 'Builder') {
+      history.push(`/form/builder/${formType}/${formID}/fs`)
+    }
+    if (evn === 'Responses') {
+      history.push(`/form/responses/${formType}/${formID}/`)
+    }
+    if (evn === 'Settings') {
+      history.push(`/form/settings/${formType}/${formID}/form-settings`)
+    }
+  }
+
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -275,13 +297,35 @@ function FormDetails() {
           btnTxt={modal.btnTxt}
           close={closeModal}
         />
-        <nav className="btcd-bld-nav">
+        <nav className={css(navbar.btct_bld_nav)}>
+          <div className={css(navbar.btcd_bld_title)}>
+            <NavLink className={css(navbar.nav_back_icn)} exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+              <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
+            </NavLink>
+            <div className={css(navbar.bit_icn)}>
+              <img src={bitIcn} alt="" />
+            </div>
+            <input
+              className={css(navbar.btcd_bld_title_inp)}
+              onChange={({ target: { value } }) => setFormName(value)}
+              value={formName}
+            />
+          </div>
           <div className="btcd-bld-lnk">
-            <NavLink exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            {/* <NavLink className="u" exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
               {__('Home', 'bitform')}
-            </NavLink>
-            <NavLink
+            </NavLink> */}
+            <SegmentControl
+              options={options}
+              size="90"
+              component="button"
+              onChange={onChangeHandler}
+              varient=""
+              tabBg="var(--b-35-33)"
+              selectorBg="var(--b-50)"
+            />
+            {/* <NavLink
               exact
               to={`/form/builder/${formType}/${formID}/fs`}
               activeClassName="app-link-active"
@@ -301,15 +345,9 @@ function FormDetails() {
               isActive={(m, l) => l.pathname.match(/settings/g)}
             >
               {__('Settings', 'bitform')}
-            </NavLink>
+            </NavLink> */}
           </div>
-          <div className="btcd-bld-title">
-            <input
-              className="btcd-bld-title-inp br-50"
-              onChange={({ target: { value } }) => setFormName(value)}
-              value={formName}
-            />
-          </div>
+
 
           <div className="btcd-bld-btn">
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
