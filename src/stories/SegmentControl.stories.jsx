@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-props-no-spreading */
 import { createRenderer } from 'fela'
 import felaPluginCustomProperty from 'fela-plugin-custom-property'
 import { RendererProvider } from 'react-fela'
-import SegmentControl from '../components/Utilities/SecmentController/SegmentControl'
+import SegmentControl from '../components/Utilities/SegmentControl'
 import customProperties from '../styles/1.customProperties'
 import icon from '../resource/img/settings/dollar-sign .svg'
 
