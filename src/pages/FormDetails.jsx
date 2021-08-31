@@ -62,6 +62,11 @@ function FormDetails() {
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const { css } = useFela()
 
+  const activePath = () => {
+    const pathArray = history.location.pathname.split('/')
+    return pathArray[2].charAt(0).toUpperCase() + pathArray[2].slice(1)
+  }
+
   const setNewFormProps = () => {
     if (formType === 'new') {
       const defaultConfirmationValue = {
@@ -317,6 +322,7 @@ function FormDetails() {
               {__('Home', 'bitform')}
             </NavLink> */}
             <SegmentControl
+              defaultActive={activePath()}
               options={options}
               size="90"
               component="button"
