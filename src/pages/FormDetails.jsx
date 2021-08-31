@@ -303,7 +303,7 @@ function FormDetails() {
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
             </NavLink>
             <div className={css(navbar.bit_icn)}>
-              <img src={bitIcn} alt="" />
+              <img width="16" src={bitIcn} alt="" />
             </div>
             <input
               className={css(navbar.btcd_bld_title_inp)}
@@ -311,7 +311,7 @@ function FormDetails() {
               value={formName}
             />
           </div>
-          <div className="btcd-bld-lnk">
+          <div className={css(navbar.btcd_bld_lnk)}>
             {/* <NavLink className="u" exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
               {__('Home', 'bitform')}
@@ -321,9 +321,7 @@ function FormDetails() {
               size="90"
               component="button"
               onChange={onChangeHandler}
-              varient=""
-              tabBg="var(--b-35-33)"
-              selectorBg="var(--b-50)"
+              variant="blue"
             />
             {/* <NavLink
               exact
@@ -349,9 +347,9 @@ function FormDetails() {
           </div>
 
 
-          <div className="btcd-bld-btn">
+          <div className={css(navbar.btcd_bld_btn)}>
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
-            <NavLink to="/" className={`${css(app.btn)} btcd-btn-close`} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <NavLink to="/" className={`${css(navbar.cls_btn)} btcd-btn-close`} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />
             </NavLink>
           </div>
