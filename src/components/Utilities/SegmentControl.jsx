@@ -7,7 +7,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
   const baseSize = Number(size) // 100
   const floor = (number) => (Math.floor(baseSize / number))
   const clr = {}
-  // console.log(va)
+
   if (variant === 'white') {
     clr.tabBg = 'var(--white-0-95)'
     clr.selectorBg = 'var(--white-100)'
@@ -21,22 +21,17 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
   const style = {
     wrapper: {
       ta: 'center',
-      // my: baseSize / 2, // 50
       mx: 'auto',
-      // p: baseSize / 10, // 10
     },
     tabs: {
-      // mt: baseSize / 2, // 50
       fs: floor(6.67), // 15
       py: floor(33.34), // 3
       px: floor(20), // 5
-      // bg: 'var(--white-0-95)', // '#f1f1f1',
       bg: clr.tabBg, // '#f1f1f1',
       ls: 'none',
       d: 'inline-block',
       br: floor(7.15), // 14,
       pos: 'relative',
-      // bs: '0 1px 8px -7px grey inset',
 
       '& button': {
         bg: 'none',
@@ -55,13 +50,10 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       br: floor(9.09), // 11,
       tdu: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
-      // bg: 'var(--white-100)', // '#fff',
       bg: clr.selectorBg, // '#fff',
-      // bs: ' 0 2px 5px 0px #c7c7c7',
     },
     tab_link: {
       td: 'none',
-      // clr: 'var(--white-0-50)', // '#777',
       flxi: 'align-center',
       pos: 'relative',
       py: floor(10), // 10,
@@ -76,11 +68,6 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
         tdl: '0s',
         tdu: '300ms',
       },
-      // '&.active': {
-      //   // clr: 'var(--b-50) !important', // '#005aff',
-      //   clr: clr.active, // '#005aff',
-      //   t: 'color 0.3s ease 0.3s',
-      // },
       '& .icn': {
         mr: floor(20),
         w: floor(5),
