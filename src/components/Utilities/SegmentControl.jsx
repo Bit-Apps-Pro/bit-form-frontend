@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
+import { __ } from '../../Utils/i18nwrap'
 
 function SegmentControl({ defaultActive, options, size, component = 'a', onChange, variant = 'white' }) {
   const { css } = useFela()
@@ -163,7 +164,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
             {item.icn && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
-            {item.label}
+            {__(item.label, 'bitform')}
           </button>
         ))}
 
