@@ -352,7 +352,6 @@ function FormDetails() {
             </NavLink> */}
           </div>
 
-
           <div className={css(navbar.btcd_bld_btn)}>
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
             <NavLink to="/" className={`${css(navbar.cls_btn)} btcd-btn-close`} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
