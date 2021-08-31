@@ -70,6 +70,7 @@
   --b-79-96: hsla(var(--blue-base), 79%, 96%, 100%);
   // --b-50: hsl( var(--blue-base) , 50%);
   --b-50: hsla(var(--blue-base), 100%, 50%, 100%);
+  --b-100-50-5: hsla(var(--blue-base), 100%, 50%, 50%);
   --b-50-22: hsla(var(--blue-base), 50%, 22%, 100%);
   --b-59: hsla(var(--blue-base), 100%, 59%, 100%);
   --b-50-95: hsla(var(--blue-base), 50%, 95%, 100%);
@@ -3037,72 +3038,72 @@ nav.top-nav {
 //   margin: 5px 0;
 // }
 
-.btcd-bld-lnk {
-  display: flex;
-  box-shadow: none;
-  margin-top: 2px;
-  margin-left: -15%;
+//use fela css
+// .btcd-bld-lnk {
+  // display: flex;
+  // box-shadow: none;
+  // margin-top: 2px;
+  // margin-left: -15%;
 
-  &>a {
-    display: inline-block;
-    // background: hsla(var(--blue-h), var(--white-s), var(--white-l), 0.1);
-    background: var(--b-0-100-1);
-    color: var(--white);
-    padding: 6px 15px;
-    margin: 6px;
-    border-radius: 100px;
-    text-decoration: none;
-    line-height: 16px;
-    transition: background 0.3s !important;
+  // &>a {
+  //   display: inline-block;
+  //   background: var(--b-0-100-1);
+  //   color: var(--white);
+  //   padding: 6px 15px;
+  //   margin: 6px;
+  //   border-radius: 100px;
+  //   text-decoration: none;
+  //   line-height: 16px;
+  //   transition: background 0.3s !important;
 
-    &:hover {
-      // background: hsla(var(--blue-h), var(--white-s), var(--white-l), 0.3);
-      background: var(--b-0-100-3);
-    }
-  }
+  //   &:hover {
+  //     background: var(--b-0-100-3);
+  //   }
+  // }
 
-  &>a>.btcd-icn {
-    font-size: 26px;
-    margin-right: 5px;
-  }
-}
+  // &>a>.btcd-icn {
+  //   font-size: 26px;
+  //   margin-right: 5px;
+  // }
+// }
 
-.btcd-bld-btn {
-  display: flex;
-  align-items: center;
+// use fela css
+// .btcd-bld-btn {
+//   display: flex;
+//   align-items: center;
 
-  &>button,
-  a {
-    height: 28px;
-    border-radius: 20px;
-    text-decoration: none;
-    margin: 5px 10px 5px 5px;
-    padding: 7px 25px;
-    // box-shadow     : 0 2px 4px 0 rgba(0, 0, 0, 0.76);
-    box-shadow: 0 2px 4px 0 var(--white-0-0-64);
+//   &>button,
+//   a {
+//     height: 28px;
+//     border-radius: 20px;
+//     text-decoration: none;
+//     margin: 5px 10px 5px 5px;
+//     padding: 7px 25px;
+//     // box-shadow     : 0 2px 4px 0 rgba(0, 0, 0, 0.76);
+//     box-shadow: 0 2px 4px 0 var(--white-0-0-64);
 
-    &:disabled {
-      background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.5) !important;
-    }
-  }
+//     &:disabled {
+//       background: hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.5) !important;
+//     }
+//   }
 
-  &>.btcd-btn-close {
-    background: hsla(var(--blue-h), var(--white-s), var(--white-l), 0.6);
-    color: var(--white);
-    font-size: 22px;
-    height: 30px;
-    width: 30px;
-    margin-right: 20px;
-    padding: 0;
-    border-radius: 100px;
-    text-align: center;
+//   &>.btcd-btn-close {
+//     background: hsla(var(--blue-h), var(--white-s), var(--white-l), 0.6);
+//     color: var(--white);
+//     font-size: 22px;
+//     height: 30px;
+//     width: 30px;
+//     margin-right: 20px;
+//     padding: 0;
+//     border-radius: 100px;
+//     text-align: center;
 
-    &:hover {
-      // background: rgb(255, 57, 57) !important;
-      background: var(--red-100-61) !important;
-    }
-  }
-}
+//     &:hover {
+//       // background: rgb(255, 57, 57) !important;
+//       background: var(--red-100-61) !important;
+//     }
+//   }
+// }
 
 .pro-modal {
   & h4 {
@@ -3116,6 +3117,7 @@ nav.top-nav {
   }
 }
 
+// use fela css
 // .btcd-bld-title {
 //   margin-right: 200px;
 // }
@@ -3149,12 +3151,13 @@ nav.top-nav {
   transition: flex-grow 500ms;
 }
 
-.app-link-active {
-  background: var(--white) !important;
-  // color      : #0e112f !important;
-  color: var(--b-54-12) !important;
-  font-weight: bold !important;
-}
+// use fela css || replace with segmentcontrol
+// .app-link-active {
+//   background: var(--white) !important;
+//   // color      : #0e112f !important;
+//   color: var(--b-54-12) !important;
+//   font-weight: bold !important;
+// }
 
 .btcd-f-settings {
   background-color: var(--white);
