@@ -1,14 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 
-function SegmentControl({ defaultActive, options, size, component = 'a', onChange, vairent = 'white' }) {
+function SegmentControl({ defaultActive, options, size, component = 'a', onChange, variant = 'white' }) {
   const { css } = useFela()
   const baseSize = Number(size) // 100
   const floor = (number) => (Math.floor(baseSize / number))
   const clr = {}
-  if (vairent === 'white') {
+  // console.log(va)
+  if (variant === 'white') {
     clr.tabBg = 'var(--white-0-95)'
     clr.selectorBg = 'var(--white-100)'
+    clr.active = 'var(--b-50) !important'
+  }
+  if (variant === 'blue') {
+    clr.tabBg = '#454A65'
+    clr.selectorBg = 'var(--b-50)'
+    clr.active = 'var(--white-100)'
   }
   const style = {
     wrapper: {
@@ -28,7 +35,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       d: 'inline-block',
       br: floor(7.15), // 14,
       pos: 'relative',
-      bs: '0 1px 8px -7px grey inset',
+      // bs: '0 1px 8px -7px grey inset',
 
       '& button': {
         bg: 'none',
@@ -49,11 +56,11 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
       // bg: 'var(--white-100)', // '#fff',
       bg: clr.selectorBg, // '#fff',
-      bs: ' 0 2px 5px 0px #c7c7c7',
+      // bs: ' 0 2px 5px 0px #c7c7c7',
     },
     tab_link: {
       td: 'none',
-      clr: 'var(--white-0-50)', // '#777',
+      // clr: 'var(--white-0-50)', // '#777',
       flxi: 'align-center',
       pos: 'relative',
       py: floor(10), // 10,
@@ -61,15 +68,18 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       z: 1,
       tdl: '0.3s',
       tdu: '0.6s',
-      '&:hover': {
-        clr: 'var(--white-0-21)', // '#333',
+      clr: clr.active,
+
+      '&:hover:not(.active)': {
+        clr: 'var(--white-0-100-90)', // '#333',
         tdl: '0s',
         tdu: '300ms',
       },
-      '&.active': {
-        clr: 'var(--b-50) !important', // '#005aff',
-        t: 'color 0.3s ease 0.3s',
-      },
+      // '&.active': {
+      //   // clr: 'var(--b-50) !important', // '#005aff',
+      //   clr: clr.active, // '#005aff',
+      //   t: 'color 0.3s ease 0.3s',
+      // },
       '& .icn': {
         mr: floor(20),
         w: floor(5),
