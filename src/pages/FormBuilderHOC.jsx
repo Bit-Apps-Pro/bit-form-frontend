@@ -1,20 +1,21 @@
 /* eslint-disable no-param-reassign */
-import { useParams } from 'react-router-dom'
 import merge from 'deepmerge-alt'
-import { useRecoilValue } from 'recoil'
 import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { __ } from '../Utils/i18nwrap'
-import css2json from '../Utils/css2json'
-import j2c from '../Utils/j2c.es6'
-import GridLayout from '../components/GridLayout'
+import { useRecoilValue } from 'recoil'
 import CompSettings from '../components/CompSettings/CompSettings'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
+import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
+import OptionToolBar from '../components/OptionToolBar'
 import ToolBar from '../components/Toolbars/Toolbar'
+import { $bits, $newFormId } from '../GlobalStates'
+import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { $newFormId, $bits } from '../GlobalStates'
 import { bitCipher, multiAssign } from '../Utils/Helpers'
+import { __ } from '../Utils/i18nwrap'
+import j2c from '../Utils/j2c.es6'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -60,6 +61,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const bits = useRecoilValue($bits)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
+  // eslint-disable-next-line no-console
   console.log('render formbuilder')
   useEffect(() => {
     if (formType === 'new') {
@@ -208,6 +210,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       resizer.resizeSection(2, { toSize: rightBarWidth + s2 })
     }
     conRef.current.applyResizer(resizer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conRef])
 
   const setGrWidth = (paneWidth) => {
@@ -234,6 +237,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <div>
+      <OptionToolBar />
       <Container
         ref={conRef}
         style={{ height: '100vh' }}
