@@ -6,6 +6,7 @@ const customProperties = {
   b: $ => ({ border: $ }),
   brl: $ => ({ borderLeft: $ }),
   brr: $ => ({ borderRight: $ }),
+  brb: $ => ({ borderBottom: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
   us: $ => ({ userSelect: $ }),
