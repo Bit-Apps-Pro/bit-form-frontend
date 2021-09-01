@@ -233,75 +233,77 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }
 
   return (
-    <Container
-      ref={conRef}
-      style={{ height: '100vh' }}
-      beforeApplyResizer={onResize}
-      afterResizing={afterResizing}
-      onActivate={onResizeActivate}
-    >
-      <style>{styleSheet}</style>
-      <Section
-        className="tool-sec"
-        defaultSize={toolbarOff ? 50 : 165}
-        minSize={notIE && 58}
+    <div>
+      <Container
+        ref={conRef}
+        style={{ height: '100vh' }}
+        beforeApplyResizer={onResize}
+        afterResizing={afterResizing}
+        onActivate={onResizeActivate}
       >
-        <ToolBar
-          setNewData={addNewData}
-          className="tile"
-          tolbarSiz={tolbarSiz}
-          setTolbar={setTolbar}
-        />
-      </Section>
-      <Bar className="bar bar-l" />
+        <style>{styleSheet}</style>
+        <Section
+          className="tool-sec"
+          defaultSize={toolbarOff ? 50 : 165}
+          minSize={notIE && 58}
+        >
+          <ToolBar
+            setNewData={addNewData}
+            className="tile"
+            tolbarSiz={tolbarSiz}
+            setTolbar={setTolbar}
+          />
+        </Section>
+        <Bar className="bar bar-l" />
 
-      <Section
-        onSizeChanged={setGrWidth}
-        minSize={notIE && 320}
-        defaultSize={gridWidth}
-      >
-        {!isLoading && !styleLoading ? (
-          <>
-            <div className="btcd-device-btn flx">
-              {[
-                { lbl: 'sm', icn: 'phone_android', tip: __('Phone View', 'bitform') },
-                { lbl: 'md', icn: 'tablet_android', tip: __('Tablet View', 'bitform') },
-                { lbl: 'lg', icn: 'laptop_mac', tip: __('Laptop View', 'bitform') },
-              ]
-                .map(itm => <button key={itm.icn} onClick={() => setResponsiveView(itm.lbl)} className={`flx pos-rel tooltip phone ${brkPoint === itm.lbl && 'active'}`} style={{ '--tooltip-txt': `"${itm.tip}"` }} aria-label="responsive butoon" type="button"><span className={`btcd-icn icn-${itm.icn}`} /></button>)}
-            </div>
-            <GridLayout
-              // theme={theme}
-              style={styleProvider()}
-              gridWidth={gridWidth}
-              newData={newData}
-              setNewData={setNewData}
-              formType={formType}
-              formID={formID}
-            // formSettings={formSettings}
-            />
-          </>
-        ) : <GridLayoutLoader />}
+        <Section
+          onSizeChanged={setGrWidth}
+          minSize={notIE && 320}
+          defaultSize={gridWidth}
+        >
+          {!isLoading && !styleLoading ? (
+            <>
+              <div className="btcd-device-btn flx">
+                {[
+                  { lbl: 'sm', icn: 'phone_android', tip: __('Phone View', 'bitform') },
+                  { lbl: 'md', icn: 'tablet_android', tip: __('Tablet View', 'bitform') },
+                  { lbl: 'lg', icn: 'laptop_mac', tip: __('Laptop View', 'bitform') },
+                ]
+                  .map(itm => <button key={itm.icn} onClick={() => setResponsiveView(itm.lbl)} className={`flx pos-rel tooltip phone ${brkPoint === itm.lbl && 'active'}`} style={{ '--tooltip-txt': `"${itm.tip}"` }} aria-label="responsive butoon" type="button"><span className={`btcd-icn icn-${itm.icn}`} /></button>)}
+              </div>
+              <GridLayout
+                // theme={theme}
+                style={styleProvider()}
+                gridWidth={gridWidth}
+                newData={newData}
+                setNewData={setNewData}
+                formType={formType}
+                formID={formID}
+              // formSettings={formSettings}
+              />
+            </>
+          ) : <GridLayoutLoader />}
 
-      </Section>
+        </Section>
 
-      <Bar className="bar bar-r" />
-      <Section id="settings-menu" defaultSize={300}>
-        <CompSettings
-          brkPoint={brkPoint}
-          style={styleProvider()}
-          setResponsiveView={setResponsiveView}
-          styleDispatch={styleDispatch}
-          formID={formID}
-        // fields={fields}
-        // elm={elmSetting}
-        // updateData={updateFields}
-        // setSubmitConfig={setSubmitConfig}
-        // lay={lay}
-        // setLay={setLay}
-        />
-      </Section>
-    </Container>
+        <Bar className="bar bar-r" />
+        <Section id="settings-menu" defaultSize={300}>
+          <CompSettings
+            brkPoint={brkPoint}
+            style={styleProvider()}
+            setResponsiveView={setResponsiveView}
+            styleDispatch={styleDispatch}
+            formID={formID}
+          // fields={fields}
+          // elm={elmSetting}
+          // updateData={updateFields}
+          // setSubmitConfig={setSubmitConfig}
+          // lay={lay}
+          // setLay={setLay}
+          />
+        </Section>
+      </Container>
+    </div>
   )
 })
 
