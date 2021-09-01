@@ -8,7 +8,7 @@ export default function AddIcon({ size, w, h, stroke = 2.43 }) {
     s.h = h
   }
   return (
-    <svg width={s.w} height={w.h} viewBox="0 0 30 30">
+    <svg width={s.w} height={s.h} viewBox="0 0 30 30">
       <path
         className="svg-icn"
         strokeWidth="stroke"
