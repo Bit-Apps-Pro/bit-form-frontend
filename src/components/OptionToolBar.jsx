@@ -4,10 +4,9 @@ import AddIcon from '../Icons/AddIcon'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
-import RedoIcon from '../Icons/RedoIcon'
 import TabletIcon from '../Icons/TabletIcon'
-import UndoIcon from '../Icons/UndoIcon'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
+import FormBuilderHistory from './FormBuilderHistory'
 
 export default function OptionToolBar() {
   const { css } = useFela()
@@ -26,11 +25,7 @@ export default function OptionToolBar() {
             <button className={css(OptionToolBarStyle.device_btn)} type="button"><EllipsisIcon size="30" /></button>
           </div>
           <div className={css(OptionToolBarStyle.border_right)} />
-          <div className={css(OptionToolBarStyle.option_right)}>
-            <button type="button" className={css(OptionToolBarStyle.right_btn)}><UndoIcon size="25" /></button>
-            <button type="button" className={css(OptionToolBarStyle.right_btn)}><RedoIcon size="25" /></button>
-            <button type="button" className={css(OptionToolBarStyle.right_btn)}><EllipsisIcon size="30" /></button>
-          </div>
+          <FormBuilderHistory />
         </div>
       </div>
       <div className="theme-section" />

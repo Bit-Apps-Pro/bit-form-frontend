@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates'
+import EllipsisIcon from '../Icons/EllipsisIcon'
+import RedoIcon from '../Icons/RedoIcon'
+import UndoIcon from '../Icons/UndoIcon'
+import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { compactNewLayoutItem, compactRemovedLayoutItem } from '../Utils/FormBuilderHelper'
 
 export default function FormBuilderHistory({ }) {
+  const { css } = useFela()
   const [disabled, setDisabled] = useState(false)
   const [showHistory, setShowHistory] = useState(null)
   const [fields, setFields] = useRecoilState($fields)
@@ -83,22 +89,24 @@ export default function FormBuilderHistory({ }) {
 
   return (
     <div>
-      <button type="button" disabled={!active || disabled} onClick={() => handleHistory(active - 1)}>
-        undo
-      </button>
-      <button type="button" disabled={(active === (histories.length - 1)) || disabled} onClick={() => handleHistory(active + 1)}>
-        redo
-      </button>
-      <button type="button" onClick={() => setShowHistory(oldState => !oldState)}>
-        ...
-      </button>
+      <div className={css(OptionToolBarStyle.option_right)}>
+        <button type="button" disabled={!active || disabled} className={css(OptionToolBarStyle.right_btn)} onClick={() => handleHistory(active - 1)}>
+          <UndoIcon size="25" />
+        </button>
+        <button type="button" disabled={(active === (histories.length - 1)) || disabled} className={css(OptionToolBarStyle.right_btn)} onClick={() => handleHistory(active + 1)}>
+          <RedoIcon size="25" />
+        </button>
+        <button type="button" onClick={() => setShowHistory(oldState => !oldState)} className={css(OptionToolBarStyle.right_btn)}>
+          <EllipsisIcon size="30" />
+        </button>
+      </div>
 
       {showHistory && (
         <div style={{
           position: 'fixed',
           background: '#000',
           width: '300px',
-          zIndex: 1,
+          zIndex: 9999,
           height: '100vh',
           overflow: 'auto',
         }}

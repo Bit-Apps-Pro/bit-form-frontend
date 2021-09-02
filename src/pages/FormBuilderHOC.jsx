@@ -16,7 +16,6 @@ import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, multiAssign } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import j2c from '../Utils/j2c.es6'
-import FormBuilderHistory from '../components/FormBuilderHistory'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -238,7 +237,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <div>
-      <FormBuilderHistory />
       <OptionToolBar />
       <Container
         ref={conRef}
