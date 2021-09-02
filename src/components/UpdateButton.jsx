@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
-import app from '../styles/app.style'
+import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
@@ -214,7 +214,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   return (
-    <button id="update-btn" className={`${css(app.btn)} tooltip pos-rel ${!updateBtn.unsaved ? 'vis-disabled' : 'blue'}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
+    <button id="update-btn" className={`${css(navbar.btn)} tooltip pos-rel ${!updateBtn.unsaved ? 'vis-disabled' : 'blue'}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>

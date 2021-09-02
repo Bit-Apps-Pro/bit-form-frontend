@@ -1,18 +1,32 @@
 // import { isInteger } from "core-js/core/number"
-
 const customProperties = {
   g: ($ = 'center') => ({ placeContent: $ }),
   d: $ => ({ display: $ }),
+
   b: $ => ({ border: $ }),
+  brl: $ => ({ borderLeft: $ }),
+  brr: $ => ({ borderRight: $ }),
+  brb: $ => ({ borderBottom: $ }),
+
   pe: $ => ({ pointerEvents: $ }),
   us: $ => ({ userSelect: $ }),
-  fltr: $ => ({ filter: $ }),
-  bS: $ => ({ boxShadow: $ }),
+  fl: $ => ({ filter: $ }),
+  bs: $ => ({ boxShadow: $ }),
+  ls: $ => ({ listStyle: $ }),
 
-  fs: $ => ({ fontSize: $ }),
+  t: $ => ({ transition: $ }),
+  tdl: $ => ({ transitionDelay: $ }),
+  tdu: $ => ({ transitionDuration: $ }),
+  ttf: $ => ({ transitionTimingFunction: $ }),
+  tf: $ => ({ transform: $ }),
+
+  of: $ => ({ overflow: $ }),
+
+  fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
-  txA: $ => ({ textAlign: $ }),
+  ta: $ => ({ textAlign: $ }),
+
   pos: $ => ({ position: $ }),
   yt: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
   yb: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
@@ -22,20 +36,29 @@ const customProperties = {
   bg: $ => ({ background: $ }),
   clr: $ => ({ color: $ }),
   bgc: $ => ({ backgroundColor: $ }),
+
   flx: $ => ({
     display: 'flex',
     ...$ === 'center' && { alignItems: 'center', justifyContent: 'center' },
-    ...$ === 'between' && { justifyContent: 'between' },
+    ...$ === 'between' && { justifyContent: 'space-between' },
     ...$ === 'align-center' && { alignItems: 'center' },
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
-  fDri: $ => ({ flexDriection: $ }),
+  flxi: $ => ({
+    display: 'inline-flex',
+    ...$ === 'center' && { alignItems: 'center', justifyContent: 'center' },
+    ...$ === 'between' && { justifyContent: 'space-between' },
+    ...$ === 'align-center' && { alignItems: 'center' },
+    ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
+  }),
+
+  fd: $ => ({ flexDirection: $ }),
   jC: $ => ({ justifyContent: $ }),
   aI: $ => ({ alignItems: $ }),
   cr: $ => ({ cursor: $ }),
-  otln: $ => ({ outline: $ }),
-  tD: $ => ({ textDecoration: $ }),
-  wS: $ => ({ whiteSpace: $ }),
+  ol: $ => ({ outline: $ }),
+  td: $ => ({ textDecoration: $ }),
+  ws: $ => ({ whiteSpace: $ }),
   o: $ => ({ opacity: $ }),
 
   size: $ => ({ width: `${$}px`, height: `${$}px` }),

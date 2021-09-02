@@ -44,7 +44,7 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: rgba(120, 183, 255, 0.2);
+  background: rgba(160, 205, 255, 0.2);
   /* border: 2px solid rgb(28, 89, 255); */
   transition-duration: 100ms;
   border: 2px dashed rgb(0, 89, 255);

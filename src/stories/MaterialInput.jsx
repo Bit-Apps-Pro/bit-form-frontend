@@ -48,7 +48,7 @@ const MtInput = ({ size }) => {
       },
 
       ':not(:placeholder-shown) ~ label': lblTopStyle,
-      ':not(:focus)::placeholder': { opacity: '0' },
+      // ':not(:focus)::placeholder': { opacity: '0' },
     },
 
     'material-outlined__label': {

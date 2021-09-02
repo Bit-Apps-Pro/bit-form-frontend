@@ -22,6 +22,7 @@
   right: 0;
   color: black;
 }
+
 .menu-btn:hover {
   background: var(--white-0-97);
 }
@@ -73,22 +74,20 @@
   color: var(--b-54-12);
 }
 
-
-
 .drop-down-show .drop-down-title {
   opacity: 1;
   transition-delay: 300ms;
 }
 
 .items-wrp {
-  visibility:hidden;
-  transition: opacity 200ms ease,visibility 0s ease 300ms ;
+  visibility: hidden;
+  transition: opacity 200ms ease, visibility 0s ease 300ms;
   margin: 0;
   opacity: 0;
 }
 
 .drop-down-show .items-wrp {
-  transition: opacity 400ms ease 400ms ;
+  transition: opacity 400ms ease 400ms;
   opacity: 1;
   visibility: visible;
 }
