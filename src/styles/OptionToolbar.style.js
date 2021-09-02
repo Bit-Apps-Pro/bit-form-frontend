@@ -78,9 +78,7 @@ const OptionToolBarStyle = {
     w: 38,
     h: 33,
     mr: 2,
-    '&:hover': {
-      clr: 'var(--white-2-47)',
-    },
+    '&:hover': { clr: 'var(--white-2-47)' },
   },
 }
 
