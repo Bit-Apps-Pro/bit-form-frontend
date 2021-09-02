@@ -1,6 +1,8 @@
-export default function BlurIcn() {
+export default function BlurIcn({ h, w }) {
   return (
     <svg
+      height={h}
+      width={w}
       className="btc-line-icn"
       viewBox="0 0 111.6 180.6"
     >
