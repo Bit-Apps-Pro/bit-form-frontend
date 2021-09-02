@@ -25,11 +25,6 @@ export const $builderHistory = atom({ key: '$builderHistory', default: { histori
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
-// export const $test = selector({
-//   key: '$test',
-//   get: ({ get }) => 'sdf',
-
-// })
 
 export const $reportSelector = selectorFamily({
   key: '$reportSelector',
