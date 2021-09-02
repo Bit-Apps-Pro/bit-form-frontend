@@ -25,7 +25,7 @@ export default function OptionToolBar() {
             <button className={css(OptionToolBarStyle.device_btn)} type="button"><MobileIcon size="25" /></button>
             <button className={css(OptionToolBarStyle.device_btn)} type="button"><EllipsisIcon size="30" /></button>
           </div>
-          <div className={css(OptionToolBarStyle.border_right)}></div>
+          <div className={css(OptionToolBarStyle.border_right)} />
           <div className={css(OptionToolBarStyle.option_right)}>
             <button type="button" className={css(OptionToolBarStyle.right_btn)}><UndoIcon size="25" /></button>
             <button type="button" className={css(OptionToolBarStyle.right_btn)}><RedoIcon size="25" /></button>
@@ -33,7 +33,6 @@ export default function OptionToolBar() {
           </div>
         </div>
       </div>
-
       <div className="theme-section" />
     </div>
   )
