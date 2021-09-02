@@ -23,19 +23,12 @@ const app = {
       h: '100%',
       z: 9,
     },
-    '&:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit)': {
-      '&:before': {
-        c: '+',
-      },
-    },
+    '&:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit)': { '&:before': { c: '+' } },
   },
   btcd_inte_dis: {
     pe: 'none',
     us: 'none',
-
-    '&>img': {
-      fltr: 'grayscale(1) !important',
-    },
+    '&>img': { fl: 'grayscale(1) !important' },
     '&::before': {
       flx: 'center',
       bg: 'var(--b-63-18-67)',
@@ -57,8 +50,8 @@ const app = {
       flx: 'center',
       bg: 'var(--b-31-44-27)',
       pos: 'absolute',
-      txA: 'center',
-      fDri: 'column',
+      ta: 'center',
+      fd: 'column',
       h: '100%',
       w: '100%',
       z: 9,
@@ -74,6 +67,7 @@ const app = {
       z: 4,
     },
   },
+  // for button
   btn: {
     d: 'inline-flex',
     clr: 'inherit',
@@ -85,24 +79,25 @@ const app = {
     aI: 'center',
     my: 10,
     cr: 'pointer',
-    otln: 'none',
+    ol: 'none',
     fs: 14,
-    tD: 'none',
-    wS: 'nowrap',
+    td: 'none',
+    ws: 'nowrap',
     fw: 600,
 
     '&:disabled': {
       b: 'var(--white-0-90)',
-      bS: 'none',
-      o: '0.7',
+      bs: 'none',
+      o: 0.7,
       c: 'not-allowed',
     },
   },
   inte_sm_img: {
-    mx_w: '110px !important',
-    mx_h: '110px !important',
+    mxW: '110px !important',
+    mxH: '110px !important',
     m: 'auto',
     p: 12,
   },
+
 }
 export default app

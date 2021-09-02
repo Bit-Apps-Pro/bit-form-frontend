@@ -21,7 +21,6 @@ export default function OptionMenu({ title, children, w = 200, h = 250 }) {
         <ul className="items-wrp" aria-hidden={!isActive}>
           {children}
         </ul>
-
       </div>
     </div>
   )

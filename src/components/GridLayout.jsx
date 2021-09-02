@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
-import produce, { createDraft, finishDraft } from 'immer'
+import produce from 'immer'
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -13,7 +13,7 @@ import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { checkFieldsExtraAttr, compact, convertLayout, propertyValueSumX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
-import { deepCopy, isType } from '../Utils/Helpers'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
