@@ -44,7 +44,7 @@ const OptionToolBarStyle = {
       bg: 'var(--b-79-96)',
       clr: 'var(--b-59)',
     },
-    '::after': {
+    '&.acitve::after': {
       pos: 'absolute',
       c: '""',
       w: 4,
