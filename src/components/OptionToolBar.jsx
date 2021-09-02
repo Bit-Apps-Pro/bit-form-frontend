@@ -20,7 +20,7 @@ export default function OptionToolBar() {
         </div>
         <div className={css(OptionToolBarStyle.option_section)}>
           <div className={css(OptionToolBarStyle.devices)}>
-            <button className={css(OptionToolBarStyle.device_btn)} type="button"><LaptopIcn w="35" h="32" /></button>
+            <button className={`${css(OptionToolBarStyle.device_btn)} active`} type="button"><LaptopIcn w="35" h="32" /></button>
             <button className={css(OptionToolBarStyle.device_btn)} type="button"><TabletIcon w="25" h="23" /></button>
             <button className={css(OptionToolBarStyle.device_btn)} type="button"><MobileIcon size="25" /></button>
             <button className={css(OptionToolBarStyle.device_btn)} type="button"><EllipsisIcon size="30" /></button>
