@@ -1,4 +1,4 @@
-export default function AddIcon({ size, w, h, stroke = 2.43 }) {
+export default function AddIcon({ size, w, h, stroke = 2 }) {
   const s = {}
   if (size) {
     s.w = size
