@@ -1,0 +1,41 @@
+body {
+  background: rgb(245, 245, 245);
+}
+
+.flx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 1px 4px 2px #e7e7e8;
+  margin: 10px;
+  padding: 10px;
+}
+.icon:hover {
+  color: var(--b-50);
+  background: #e3eff3;
+}
+
+.svg-icn {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.btc-line-icn .line-icn {
+  fill: none;
+  stroke: #000;
+  stroke-width: 16px;
+}
