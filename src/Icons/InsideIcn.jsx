@@ -1,4 +1,4 @@
-export default function SpreadIcn() {
+export default function InsideIcn() {
   return (
     <svg
       className="btc-line-icn"
