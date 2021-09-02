@@ -18,13 +18,24 @@ body {
   border: 1px solid #efefef;
   border-radius: 8px;
   background-color: #fff;
-  box-shadow: 0px 1px 4px 2px #e7e7e8;
+  box-shadow: 0px 1px 8px 2px #ececef;
   margin: 10px;
   padding: 10px;
+  transition: 0.3s all cubic-bezier(1, -0.51, 0.31, 2.32), background 0.3s;
+  transform: scale(1);
 }
+
 .icon:hover {
   color: var(--b-50);
   background: #e3eff3;
+  border: 1px solid #fdfdfd;
+}
+
+.icon:active, .icon:focus {
+  transform: scale(1.1);
+  color: var(--b-50);
+  background: #e3eff3;
+  border: 1px solid #fdfdfd;
 }
 
 .svg-icn {
