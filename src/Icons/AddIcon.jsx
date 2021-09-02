@@ -1,14 +1,6 @@
-export default function AddIcon({ size, w, h, stroke = 2 }) {
-  const s = {}
-  if (size) {
-    s.w = size
-    s.h = size
-  } else {
-    s.w = w
-    s.h = h
-  }
+export default function AddIcon({ size, stroke = 2 }) {
   return (
-    <svg width={s.w} height={s.h} viewBox="0 0 30 30">
+    <svg width={size} height={size} viewBox="0 0 30 30">
       <path
         className="svg-icn"
         strokeWidth="stroke"
