@@ -70,210 +70,219 @@ import MenuIcon from '../Icons/__MenuIcon'
 import './ShowIcon.css'
 
 export default function ShowIcon() {
+  const copyVar = (e) => {
+    const btnName = e.target.dataset.name
+    navigator.clipboard.writeText(btnName)
+  }
+  const KeyPressHandler = (e) => {
+    if (e.code === 'Enter') {
+      copyVar(e)
+    }
+  }
   return (
     <div className="flx">
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<MenuIcon size="30" />'>
         <MenuIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<AddIcon size="30" stroke="" />'>
         <AddIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<APIIcon size="30" />'>
         <APIIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BackIcn size="30", stroke="", className="" />'>
         <BackIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BdrDashIcn size="30" />'>
         <BdrDashIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BdrDottedIcn size="30" />'>
         <BdrDottedIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BdrDoubleIcn size="30" />'>
         <BdrDoubleIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BdrSolidIcn size="30" />'>
         <BdrSolidIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BlurIcn h="25" w="17" />'>
         <BlurIcn h="25" w="17" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BrushIcn stroke="", height="", width="" />'>
         <BrushIcn height="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<BtnIcn size="30" />'>
         <BtnIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<CheckBoxIcn w="30" />'>
         <CheckBoxIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<CloseIcn size="30", stroke="", className="" />'>
         <CloseIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<CodeSnippetIcn size="30" />'>
         <CodeSnippetIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<ColorIcn  h="30", w="20", className="", style={} />'>
         <ColorIcn w="30" h="20" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<ColorPickerIcn w="30" />'>
         <ColorPickerIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<CopyIcn size="30" stroke ="" />'>
         <CopyIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<CPTIcn size="30" />'>
         <CPTIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<DateIcn w="30" />'>
         <DateIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<DateTimeIcn w="30" />'>
         <DateTimeIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<DecisionBoxIcn size="30" />'>
         <DecisionBoxIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<DocIcn size="30" className="" />'>
         <DocIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<DownloadIcon size="30" />'>
         <DownloadIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<DropDownIcn w="30" />'>
         <DropDownIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<EditIcn size="30" className="", stroke="" />'>
         <EditIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<EditIcon size="30" stroke="" />'>
         <EditIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<EllipsisIcon size="30" stroke="" />'>
         <EllipsisIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<FieldIcn w="30" />'>
         <FieldIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<FileUploadIcn w="30" />'>
         <FileUploadIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<FlagIcn size="30" />'>
         <FlagIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<FormIcn w="30" />'>
         <FormIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<GoogleAdIcn size="30" />'>
         <GoogleAdIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<HeightIcn h="30" />'>
         <HeightIcn h="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<HoneypotIcn h="30" w="20" />'>
         <HoneypotIcn h="30" w="20" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<HWordinateIcn h="30" w="20"className="" style="" />'>
         <HWordinateIcn h="30" w="20" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<ImageIcn w="20" />'>
         <ImageIcn w="20" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<InsideIcn size="30" />'>
         <InsideIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<ItemBlockIcn w="20" />'>
         <ItemBlockIcn w="20" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<LaptopIcn size="30" stroke="" />'>
         <LaptopIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<LayerIcon size="30" stroke="" />'>
         <LayerIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<MailIcn size="30" />'>
         <MailIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<MailOpenIcn size="30" />'>
         <MailOpenIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<MobileIcon size="30" stroke="" />'>
         <MobileIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<MonthIcn w="30" />'>
         <MonthIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<MoveIcn size="30" stroke=""/>'>
         <MoveIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<NoneIcn size="30" />'>
         <NoneIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<NumberIcn w="30" />'>
         <NumberIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<PasswordIcn size="30" />'>
         <PasswordIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<PaymentsIcn size="30" className="" />'>
         <PaymentsIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<PaypalIcn w="30" />'>
         <PaypalIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<QuestionIcn size="30" stroke="" />'>
         <QuestionIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<RadioIcn size="30" />'>
         <RadioIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<RazorPayIcn w="20" h="25" />'>
         <RazorPayIcn w="20" h="25" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<ReCaptchaIcn size="30" className="", stroke="" />'>
         <ReCaptchaIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<RedoIcon size="30" stroke="" />'>
         <RedoIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<Settings2 size="30" />'>
         <Settings2 size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<SettingsIcn size="30" stroke="" />'>
         <SettingsIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<SpreadIcn size="30" />'>
         <SpreadIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<TabletIcon size="30" stroke="" />'>
         <TabletIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<TextareaIcn size="30" />'>
         <TextareaIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<TextIcn size="30" />'>
         <TextIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<TimeIcn size="30" />'>
         <TimeIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<TrashIcn size="30" stroke="" />'>
         <TrashIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<UndoIcon size="30" stroke="" />'>
         <UndoIcon size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<UrlIcn w="30" />'>
         <UrlIcn w="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<WeekIcn size="30" />'>
         <WeekIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<XYordinateIcn size="30" />'>
         <XYordinateIcn size="30" />
       </button>
-      <button className="icon">
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-name='<YoutubeIcn size="30" color="" className />'>
         <YoutubeIcn size="30" />
       </button>
     </div>
