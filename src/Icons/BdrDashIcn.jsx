@@ -1,6 +1,8 @@
-export default function BdrDashIcn() {
+export default function BdrDashIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="btc-line-icn"
       viewBox="0 0 184.6 39.8"
     >
