@@ -4735,7 +4735,7 @@ select.btcd-ud-inp {
   position: absolute;
   top: 7px;
   right: 20%;
-
+  z-index: 999;
   & .active {
     background: hsla(var(--blue-h), var(--white-s), var(--white-l), 0.3);
     color: var(--white);

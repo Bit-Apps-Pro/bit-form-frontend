@@ -19,16 +19,12 @@ export const $confirmations = atom({ key: '$confirmations', default: {}, dangero
 export const $integrations = atom({ key: '$integrations', default: [], dangerouslyAllowMutability: true })
 export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
+export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{ event: 'reset' }], active: 0 } })
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
-// export const $test = selector({
-//   key: '$test',
-//   get: ({ get }) => 'sdf',
-
-// })
 
 export const $reportSelector = selectorFamily({
   key: '$reportSelector',

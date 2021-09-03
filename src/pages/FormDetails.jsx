@@ -358,7 +358,6 @@ function FormDetails() {
             </NavLink>
           </div>
         </nav>
-
         <Switch>
           <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
             <Suspense fallback={<BuilderLoader />}>
