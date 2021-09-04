@@ -53,6 +53,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       bg: clr.selectorBg, // '#fff',
     },
     tab_link: {
+      cr: 'pointer',
       td: 'none',
       flxi: 'align-center',
       pos: 'relative',
