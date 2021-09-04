@@ -8,11 +8,11 @@ import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addToBuilderHistory, checkFieldsExtraAttr, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, checkFieldsExtraAttr, cols, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
@@ -26,12 +26,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [layout, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
+  const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [layouts, setLayouts] = useState(layout)
-  const [breakpoint, setBreakpoint] = useState('lg')
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   // const cols = { lg: 6, md: 4, sm: 2 }
   // const cols = { lg: 120, md: 80, sm: 40 }
-  const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(43 / 10)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
@@ -150,6 +149,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       // setLay(extendLayout(newLays))
       setLayouts((newLays))
       setLay((newLays))
+
+      // // add to history
+      // const event = 'Layout Changed'
+      // const action = 'layout_change'
+      // const state = { layout: newLays }
+      // addToBuilderHistory(setBuilderHistory, { event, action, state })
     }
   }
 
