@@ -214,7 +214,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   }
 
   return (
-    <button id="update-btn" className={`${css(navbar.btn)} tooltip pos-rel ${!updateBtn.unsaved ? 'vis-disabled' : 'blue'}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
+    <button id="update-btn" className={`${css(navbar.btn)} tooltip ${!updateBtn.unsaved ? css(navbar.visDisable) : ''}`} type="button" onClick={() => saveOrUpdateForm('update-btn')} disabled={updateBtn.disabled} style={{ '--tooltip-txt': `'${__('ctrl + s', 'bitform')}'` }}>
       {buttonText}
       {updateBtn.loading && <LoaderSm size={20} clr="white" className="ml-1" />}
     </button>
