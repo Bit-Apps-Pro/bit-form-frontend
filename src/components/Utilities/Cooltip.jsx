@@ -9,7 +9,7 @@ import 'tippy.js/themes/material.css'
 import 'tippy.js/dist/backdrop.css'
 import 'tippy.js/animations/shift-away.css'
 
-export default function Cooltip({ className, children, width = 'auto', icnSize = 20 }) {
+export default function Cooltip({ className, children, width = 'auto', icnSize = 20, tip = false }) {
   return (
     <Tippy
       animateFill
@@ -27,7 +27,7 @@ export default function Cooltip({ className, children, width = 'auto', icnSize =
         tabIndex="0"
         className={`popper-icn cp d-in-b ig-c cooltip-icn ${className}`}
       >
-        <QuestionIcn size={icnSize} />
+        {tip ? children : <QuestionIcn size={icnSize} />}
       </div>
     </Tippy>
   )
