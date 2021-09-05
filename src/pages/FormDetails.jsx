@@ -12,7 +12,9 @@ import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
+import CheckBoxIcn from '../Icons/CheckBoxIcn'
 import CloseIcn from '../Icons/CloseIcn'
+import HoneypotIcn from '../Icons/HoneypotIcn'
 import '../resource/sass/components.scss'
 import app from '../styles/app.style'
 // import useSWR from 'swr'
@@ -214,7 +216,6 @@ function FormDetails() {
               l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
               l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
               l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              console.log('seted lay', l, nl)
               setLay(nl)
             }
             // exp end
@@ -308,7 +309,7 @@ function FormDetails() {
               <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
             </NavLink>
             <div className={css(navbar.bit_icn)}>
-              <img width="16" src={bitIcn} alt="" />
+              <img width="16" src={bitIcn} alt="BitForm logo" />
             </div>
             <input
               className={css(navbar.btcd_bld_title_inp)}
@@ -317,39 +318,14 @@ function FormDetails() {
             />
           </div>
           <div className={css(navbar.btcd_bld_lnk)}>
-            {/* <NavLink className="u" exact to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
-              <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
-              {__('Home', 'bitform')}
-            </NavLink> */}
             <SegmentControl
-              defaultActive={activePath()}
+              defaultActive="Responses"
               options={options}
               size="90"
               component="button"
               onChange={onChangeHandler}
               variant="blue"
             />
-            {/* <NavLink
-              exact
-              to={`/form/builder/${formType}/${formID}/fs`}
-              activeClassName="app-link-active"
-              isActive={(m, l) => l.pathname.match(/\/form\/builder/g)}
-            >
-              {__('Builder', 'bitform')}
-            </NavLink>
-            <NavLink
-              to={`/form/responses/${formType}/${formID}/`}
-              activeClassName="app-link-active"
-            >
-              {__('Responses', 'bitform')}
-            </NavLink>
-            <NavLink
-              to={`/form/settings/${formType}/${formID}/form-settings`}
-              activeClassName="app-link-active"
-              isActive={(m, l) => l.pathname.match(/settings/g)}
-            >
-              {__('Settings', 'bitform')}
-            </NavLink> */}
           </div>
           <div className={css(navbar.btcd_bld_btn)}>
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
