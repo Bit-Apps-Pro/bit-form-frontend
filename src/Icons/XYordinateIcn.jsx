@@ -1,6 +1,8 @@
-export default function XYordinateIcn() {
+export default function XYordinateIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="btc-line-icn"
       viewBox="0 0 136.4 140.1"
     >

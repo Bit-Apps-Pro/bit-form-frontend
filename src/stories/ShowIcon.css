@@ -1,0 +1,52 @@
+body {
+  background: #f5f5f5;
+}
+
+.flx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 1px 8px 2px #ececef;
+  margin: 10px;
+  padding: 10px;
+  transition: 0.3s all cubic-bezier(1, -0.51, 0.31, 2.32), background 0.3s;
+  transform: scale(1);
+}
+
+.icon:hover {
+  color: var(--b-50);
+  background: #e3eff3;
+  border: 1px solid #fdfdfd;
+}
+
+.icon:active, .icon:focus {
+  transform: scale(1.1);
+  color: var(--b-50);
+  background: #e3eff3;
+  border: 1px solid #fdfdfd;
+}
+
+.svg-icn {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.btc-line-icn .line-icn {
+  fill: none;
+  stroke: #000;
+  stroke-width: 16px;
+}

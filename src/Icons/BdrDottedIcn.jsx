@@ -1,6 +1,8 @@
-export default function BdrDottedIcn() {
+export default function BdrDottedIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="btc-line-icn"
       viewBox="-10 0 200 45"
     >

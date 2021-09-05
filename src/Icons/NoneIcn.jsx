@@ -1,6 +1,8 @@
-export default function NoneIcn() {
+export default function NoneIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="btc-line-icn"
       viewBox="0 0 170.2 170.2"
     >

@@ -1,6 +1,8 @@
-export default function SpreadIcn() {
+export default function InsideIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="btc-line-icn"
       viewBox="0 0 172.3 163.8"
     >

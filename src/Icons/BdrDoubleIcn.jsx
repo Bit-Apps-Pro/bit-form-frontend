@@ -1,6 +1,8 @@
-export default function BdrDoubleIcn() {
+export default function BdrDoubleIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="btc-line-icn"
       viewBox="0 0 175.7 66.1"
     >

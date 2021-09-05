@@ -1,6 +1,8 @@
-export default function SpreadIcn() {
+export default function SpreadIcn({ size }) {
   return (
     <svg
+      width={size}
+      height={size}
       className="fill-icn"
       viewBox="0 0 133 132.9"
     >
