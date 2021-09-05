@@ -61,7 +61,7 @@ const customProperties = {
   ws: $ => ({ whiteSpace: $ }),
   o: $ => ({ opacity: $ }),
 
-  size: $ => ({ width: `${$}px`, height: `${$}px` }),
+  size: ($) => ({ width: Number.isInteger($) ? `${$}px` : $, height: Number.isInteger($) ? `${$}px` : $ }),
 
   w: $ => ({ width: Number.isInteger($) ? `${$}px` : $ }),
   h: $ => ({ height: Number.isInteger($) ? `${$}px` : $ }),
