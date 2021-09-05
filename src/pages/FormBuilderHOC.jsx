@@ -3,14 +3,14 @@ import merge from 'deepmerge-alt'
 import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import CompSettings from '../components/CompSettings/CompSettings'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $newFormId } from '../GlobalStates'
+import { $bits, $breakpoint, $newFormId } from '../GlobalStates'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, multiAssign } from '../Utils/Helpers'
@@ -53,7 +53,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [newData, setNewData] = useState(null)
-  const [brkPoint, setbrkPoint] = useState('lg')
+  const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
@@ -261,14 +261,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         >
           {!isLoading && !styleLoading ? (
             <>
-              <div className="btcd-device-btn flx">
-                {[
-                  { lbl: 'sm', icn: 'phone_android', tip: __('Phone View', 'bitform') },
-                  { lbl: 'md', icn: 'tablet_android', tip: __('Tablet View', 'bitform') },
-                  { lbl: 'lg', icn: 'laptop_mac', tip: __('Laptop View', 'bitform') },
-                ]
-                  .map(itm => <button key={itm.icn} onClick={() => setResponsiveView(itm.lbl)} className={`flx pos-rel tooltip phone ${brkPoint === itm.lbl && 'active'}`} style={{ '--tooltip-txt': `"${itm.tip}"` }} aria-label="responsive butoon" type="button"><span className={`btcd-icn icn-${itm.icn}`} /></button>)}
-              </div>
               <GridLayout
                 // theme={theme}
                 style={styleProvider()}
@@ -277,7 +269,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
                 setNewData={setNewData}
                 formType={formType}
                 formID={formID}
-              // formSettings={formSettings}
               />
             </>
           ) : <GridLayoutLoader />}
