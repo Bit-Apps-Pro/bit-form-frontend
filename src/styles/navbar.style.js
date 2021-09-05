@@ -73,9 +73,9 @@ const navbar = {
     fw: 500,
     bg: 'var(--g-45)',
     ol: 'none',
-    b: 'none',
-    clr: 'var(--b-63-18-67)',
+    clr: 'var(--b-53-13)',
     br: '10px !important',
+    b: '1px solid var(--g-89-7)',
     h: 28,
     td: 'none',
     my: 5,
@@ -84,11 +84,12 @@ const navbar = {
     px: 15,
     pos: 'relative',
     fs: 14,
+    cr: 'pointer',
     flx: 'align-center',
     w: 'auto',
     '&:disabled': { bg: 'var(--b-100-50-5) !important' },
   },
-  visDisable: { bg: 'var(--b-50-22) !important', clr: 'var(--b-37-69) !important' },
+  visDisable: { bg: 'var(--b-50-22) !important', clr: 'var(--b-37-69) !important', b: 'none !important', fw: 600 },
 }
 
 export default navbar

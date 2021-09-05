@@ -1,6 +1,6 @@
 const OptionToolBarStyle = {
   optionToolBar: {
-    flx: 'between',
+    flx: 'center-between',
     w: '100%',
     h: 40,
     bg: 'var(--white-100)',
@@ -9,7 +9,7 @@ const OptionToolBarStyle = {
   },
   form_section: {
     flx: 'center-between',
-    w: '75%',
+    w: '80%',
   },
   field_btn: {
     flx: 'align-center',
@@ -29,13 +29,9 @@ const OptionToolBarStyle = {
     },
   },
   txt: { ml: 3 },
-  option_section: { flx: 'between' },
-  devices: {
-    flx: 'center',
-    p: 0,
-    // brr: '0.5px solid var(--white-0-83)',
-  },
-  device_btn: {
+  option_section: { flx: 'center-between' },
+
+  icn_btn: {
     b: 'none',
     ol: 'none',
     p: 0,
@@ -46,24 +42,9 @@ const OptionToolBarStyle = {
     flx: 'center',
     mr: 2,
     z: 1,
+    pos: 'relative',
     of: 'hidden',
     cr: 'pointer',
-    pos: 'relative',
-    // '&:hover': { bg: 'var(--white-0-81-32)' },
-    '::before': {
-      content: '""',
-      z: -1,
-      pos: 'absolute',
-      // background: 'red',
-      size: 0,
-      top: '50%',
-      left: '50%',
-      br: '50%',
-      tf: 'translate(-50%,-50%)',
-      t: '400ms border',
-      b: '0px solid var(--white-0-81-32)',
-    },
-    ':hover::before': { b: '30px solid var(--white-0-81-32)' },
     '&.acitve::after': {
       pos: 'absolute',
       c: '""',
@@ -74,24 +55,20 @@ const OptionToolBarStyle = {
       br: '50%',
     },
     ':focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
+    '&.active': {
+      bg: 'var(--b-79-96)',
+      clr: 'var(--b-50)',
+    },
   },
   border_right: {
     flx: 'center',
     w: '0.5px',
-    h: 30,
-    bg: 'var(--white-0-61)',
+    h: 25,
+    mx: 1,
+    bg: 'var(--b-20-93)',
 
   },
   option_right: { flx: 'center' },
-  right_btn: {
-    b: 'none',
-    ol: 'none',
-    bg: 'none',
-    w: 38,
-    h: 33,
-    mr: 2,
-    '&:hover': { clr: 'var(--white-2-47)' },
-  },
 }
 
 export default OptionToolBarStyle
