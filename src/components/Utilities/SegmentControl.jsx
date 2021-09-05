@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 
-function SegmentControl({ defaultActive, options, size, component = 'a', onChange, variant = 'white' }) {
+function SegmentControl({ defaultActive, options, size = 100, component = 'a', onChange, variant = 'white' }) {
   const { css } = useFela()
   const baseSize = Number(size) // 100
   const floor = (number) => (Math.floor(baseSize / number))
@@ -16,7 +16,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
   if (variant === 'blue') {
     clr.tabBg = '#454A65'
     clr.selectorBg = 'var(--b-50)'
-    clr.active = 'var(--white-100)'
+    clr.active = 'var(--b-44-87)'
   }
   const style = {
     wrapper: {
@@ -32,7 +32,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       d: 'inline-block',
       br: floor(7.15), // 14,
       pos: 'relative',
-
+      '& .active': { clr: 'var(--white-100) !important' },
       '& button': {
         bg: 'none',
         ol: 'none',
@@ -54,6 +54,7 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
     },
     tab_link: {
       td: 'none',
+      fw: 500,
       flxi: 'align-center',
       pos: 'relative',
       py: floor(10), // 10,
@@ -62,21 +63,22 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
       tdl: '0.3s',
       tdu: '0.6s',
       clr: clr.active,
-
-      '&:hover:not(.active)': {
+      cr: 'pointer',
+      ':hover:not(.active)': {
         clr: 'var(--white-0-100-90)', // '#333',
         tdl: '0s',
         tdu: '300ms',
       },
       '& .icn': {
         mr: floor(20),
-        w: floor(5),
+        size: floor(9),
         d: 'block',
+        o: 'hidden',
       },
       '& .icn img, .icn svg': {
         o: 0,
         tf: 'scale(0)',
-        mt: floor(20), // 5
+        // mt: floor(20), // 5
       },
     },
     segment_img: {
@@ -107,12 +109,14 @@ function SegmentControl({ defaultActive, options, size, component = 'a', onChang
 
   const eventHandler = (e, i) => {
     e.preventDefault()
+    if (e.type === 'keypress' && e.code !== 'Space') return
+    if (e.type === 'keypress' && e.code !== 'Enter') return
+
     let elm = e.target
     if (e.target.tagName !== component.toUpperCase()) {
       elm = e.target.parentNode
     }
 
-    if (!e.type === 'keypress' || !e.type === 'click') return
 
     tabsRef.current.querySelector(`.tabs ${component}.active`).classList.remove('active')
     setSelectorPos(elm)
