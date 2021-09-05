@@ -160,12 +160,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     conRef.current.applyResizer(res)
   }, [conRef])
 
-  // const updateFields = useCallback(updatedElm => {
-  //   const tmp = { ...fields }
-  //   tmp[updatedElm.id] = updatedElm.data
-  //   setFields(tmp)
-  // }, [fields, setFields])
-
   const addNewData = useCallback(ndata => {
     setNewData(ndata)
   }, [])
@@ -237,7 +231,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <div>
-      <OptionToolBar />
+      <OptionToolBar setResponsiveView={setResponsiveView} />
       <Container
         ref={conRef}
         style={{ height: '100vh' }}
@@ -298,12 +292,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
             setResponsiveView={setResponsiveView}
             styleDispatch={styleDispatch}
             formID={formID}
-          // fields={fields}
-          // elm={elmSetting}
-          // updateData={updateFields}
-          // setSubmitConfig={setSubmitConfig}
-          // lay={lay}
-          // setLay={setLay}
           />
         </Section>
       </Container>
