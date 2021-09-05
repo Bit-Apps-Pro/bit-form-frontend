@@ -5,25 +5,7 @@ import { $draggingField } from '../../GlobalStates'
 function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, title }) {
   console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')
   const setDraggingField = useSetRecoilState($draggingField)
-  function debounce(func, wait, immediate) {
-    let timeout
-    return function () {
-      const context = this; const
-        args = arguments
-      const later = function () {
-        timeout = null
-        if (!immediate) func.apply(context, args)
-      }
-      const callNow = immediate && !timeout
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-      if (callNow) func.apply(context, args)
-    }
-  }
 
-  const bounce = (e) => {
-    console.log(e)
-  }
   useEffect(() => {
     const a = document.createElement('div')
     a.innerHTML = 'asd'
