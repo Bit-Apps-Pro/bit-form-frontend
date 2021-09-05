@@ -54,7 +54,7 @@ export default function Captcha() {
       >
         <TabList className="flx m-0 mt-2">
           {['v3', 'v2'].map(ver => (
-            <Tab className="btcd-s-tab-link">
+            <Tab key={`cp-${ver}`} className="btcd-s-tab-link">
               <b>{__(`reCaptcha ${ver}`, 'bitform')}</b>
             </Tab>
           ))}
