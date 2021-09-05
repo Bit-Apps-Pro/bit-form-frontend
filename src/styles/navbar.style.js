@@ -15,17 +15,21 @@ const navbar = {
   nav_back_icn: {
     w: 38,
     of: 'hidden',
-    p: 8,
+    py: 4,
     clr: 'var(--white-100)',
-    px: 30,
+    pr: 15,
+    pl: 25,
+    mx: 5,
+    br: 100,
+    ':hover': { clr: 'var(--white-100)', bg: 'var(--b-50-22)' },
   },
   bit_icn: {
     flx: 'center',
     w: 40,
     h: '70%',
     p: '5px 7px',
-    brl: '0.5px solid var(--b-13-52)',
-    brr: '0.5px solid var(--white-0-61)',
+    brl: '0.5px solid var(--b-38-62-40)',
+    brr: '0.5px solid var(--b-38-62-40)',
     my: 5,
   },
 
@@ -40,11 +44,11 @@ const navbar = {
     t: 'background 0.3s !important',
     ol: 'none',
     ml: 12,
-    br: 16,
+    br: 12,
 
-    '&:hover': { bg: 'var(--b-0-100-1)' },
+    '&:hover': { bg: 'var(--b-16-35)' },
     '&:focus': {
-      bg: 'var(--white)',
+      bg: 'var(--b-44-87)',
       clr: 'var(--b-54-12)',
     },
   },
@@ -56,22 +60,21 @@ const navbar = {
   btcd_bld_btn: { flx: 'center' },
   cls_btn: {
     clr: 'var(--white)',
-    fs: 22,
     size: 30,
-    mr: 20,
-    mt: 8,
+    mr: 15,
+    flx: 'center',
     p: 0,
     ta: 'center',
     t: 'color 0.5s !important',
-
     '&:hover': { clr: 'var(--red-100-61) !important' },
   },
 
   btn: {
-    bg: 'var(--b-50) !important',
+    fw: 500,
+    bg: 'var(--g-45)',
     ol: 'none',
     b: 'none',
-    clr: 'var(--white-100) !important',
+    clr: 'var(--b-63-18-67)',
     br: '10px !important',
     h: 28,
     td: 'none',
@@ -79,10 +82,13 @@ const navbar = {
     mx: 10,
     py: 7,
     px: 15,
+    pos: 'relative',
     fs: 14,
-
+    flx: 'align-center',
+    w: 'auto',
     '&:disabled': { bg: 'var(--b-100-50-5) !important' },
   },
+  visDisable: { bg: 'var(--b-50-22) !important', clr: 'var(--b-37-69) !important' },
 }
 
 export default navbar
