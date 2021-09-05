@@ -2609,6 +2609,7 @@ nav.top-nav {
     font-size: 13px;
     font-weight: 600;
     content: var(--tooltip-txt);
+    // content: attr(data-iod);
     border-radius: 7px;
     padding: 7px 10px;
     width: var(--tt-width);
@@ -2627,7 +2628,7 @@ nav.top-nav {
 
   &:hover::after {
     left: var(--tt-left);
-    animation: tooltipAnim 300ms ease 0s normal forwards;
+    animation: tooltipAnim 300ms ease 300ms normal forwards;
     ;
   }
 }
@@ -5229,7 +5230,9 @@ _:-ms-fullscreen,
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-
+.tippy-box[data-theme~=light-border]{
+  box-shadow: 0 3px 6px -1px #00000026, 0 4px 35px -12px rgb(0 8 16 / 32%) !important;
+}
 .tippy-box {
   border-radius: 8px !important;
 }
