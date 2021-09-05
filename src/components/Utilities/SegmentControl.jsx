@@ -40,6 +40,7 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
       },
     },
     selector: {
+      w: 0,
       h: '80%',
       d: 'inline-block',
       pos: 'absolute',
@@ -64,7 +65,6 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
       tdl: '0.3s',
       tdu: '0.6s',
       clr: clr.active,
-      cr: 'pointer',
       ':hover:not(.active)': {
         clr: 'var(--white-0-100-90)', // '#333',
         tdl: '0s',
@@ -93,7 +93,7 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
   }
   const selectorRef = useRef(null)
   const tabsRef = useRef(null)
-  const [active, setactive] = useState(false)
+  const [active, setactive] = useState(defaultActive || options[0].label)
 
   const setSelectorPos = (activeElement) => {
     const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
@@ -102,11 +102,9 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
   }
 
   useEffect(() => {
-    const defaultItem = defaultActive || options[0].label
-    setactive(defaultItem)
-    const toActiveElement = tabsRef.current.querySelector(`[data-label="${defaultItem}"]`)
+    const toActiveElement = tabsRef.current.querySelector(`[data-label="${active}"]`)
     setSelectorPos(toActiveElement)
-  }, [])
+  }, [active])
 
   const eventHandler = (e, i) => {
     e.preventDefault()
@@ -117,7 +115,6 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
     if (e.target.tagName !== component.toUpperCase()) {
       elm = e.target.parentNode
     }
-
 
     tabsRef.current.querySelector(`.tabs ${component}.active`).classList.remove('active')
     setSelectorPos(elm)
