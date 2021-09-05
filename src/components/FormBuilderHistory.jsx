@@ -5,8 +5,11 @@ import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalS
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import RedoIcon from '../Icons/RedoIcon'
 import UndoIcon from '../Icons/UndoIcon'
+import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { compactNewLayoutItem, compactRemovedLayoutItem } from '../Utils/FormBuilderHelper'
+import Downmenu from './Utilities/Downmenu'
+import Tip from './Utilities/Tip'
 
 export default function FormBuilderHistory({ }) {
   const { css } = useFela()
@@ -90,27 +93,24 @@ export default function FormBuilderHistory({ }) {
   return (
     <div>
       <div className={css(OptionToolBarStyle.option_right)}>
-        <button type="button" disabled={!active || disabled} className={css(OptionToolBarStyle.right_btn)} onClick={() => handleHistory(active - 1)}>
-          <UndoIcon size="25" />
-        </button>
-        <button type="button" disabled={(active === (histories.length - 1)) || disabled} className={css(OptionToolBarStyle.right_btn)} onClick={() => handleHistory(active + 1)}>
-          <RedoIcon size="25" />
-        </button>
-        <button type="button" onClick={() => setShowHistory(oldState => !oldState)} className={css(OptionToolBarStyle.right_btn)}>
-          <EllipsisIcon size="30" />
-        </button>
-      </div>
-
-      {showHistory && (
-        <div style={{
-          position: 'fixed',
-          background: '#000',
-          width: '300px',
-          zIndex: 9999,
-          height: '100vh',
-          overflow: 'auto',
-        }}
+        <Tip msg="Undo">
+          <button type="button" disabled={!active || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active - 1)}>
+            <UndoIcon size="25" />
+          </button>
+        </Tip>
+        <Tip msg="Redo">
+          <button type="button" disabled={(active === (histories.length - 1)) || disabled} className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])} onClick={() => handleHistory(active + 1)}>
+            <RedoIcon size="25" />
+          </button>
+        </Tip>
+        <Downmenu
+          place="bottom-end"
+          onShow={() => setShowHistory(true)}
+          onHide={() => setShowHistory(false)}
         >
+          <button type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${showHistory ? 'active' : ''}`}>
+            <EllipsisIcon size="38" />
+          </button>
           <div>
             {histories.map((history, indx) => (
               <span
@@ -125,8 +125,8 @@ export default function FormBuilderHistory({ }) {
               </span>
             ))}
           </div>
-        </div>
-      )}
+        </Downmenu>
+      </div>
     </div>
   )
 }
