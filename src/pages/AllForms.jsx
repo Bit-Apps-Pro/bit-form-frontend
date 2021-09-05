@@ -279,7 +279,7 @@ function AllFroms() {
         <>
           <div className={css(app.af_header)}>
             <h2>{__('Forms', 'bitform')}</h2>
-            <button onClick={() => setModal(true)} type="button" className={`${css(app.btn)} round btcd-btn-lg blue blue-sh`}>{__('Create From', 'bitform')}</button>
+            <button onClick={() => setModal(true)} type="button" className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}>{__('Create Form', 'bitform')}</button>
           </div>
           <div>
             <Table
