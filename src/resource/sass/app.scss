@@ -238,6 +238,10 @@ body {
   background: var(--white);
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -1847,10 +1851,6 @@ input[type="checkbox"].disabled:checked:before {
 //   }
 // }
 
-.vis-disabled {
-  background: #45516f !important;
-  color: hsla(var(--white-base), 0%, 0%, 100%) !important;
-}
 
 .btcd-btn-o-blue {
   background: transparent;
