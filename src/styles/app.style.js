@@ -92,6 +92,7 @@ const app = {
       c: 'not-allowed',
     },
   },
+
   inte_sm_img: {
     mxW: '110px !important',
     mxH: '110px !important',
