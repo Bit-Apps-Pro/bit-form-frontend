@@ -27,67 +27,66 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
       fs: floor(6.67), // 15
       py: floor(33.34), // 3
       px: floor(20), // 5
-      bg: clr.tabBg, // '#f1f1f1',
+      bd: clr.tabBg, // '#f1f1f1',
       ls: 'none',
-      d: 'inline-block',
-      br: floor(7.15), // 14,
-      pos: 'relative',
-      '& .active': { clr: 'var(--white-100) !important' },
+      dy: 'inline-block',
+      brs: floor(7.15), // 14,
+      pn: 'relative',
+      '& .active': { cr: 'var(--white-100) !important' },
       '& button': {
-        bg: 'none',
-        ol: 'none',
+        bd: 'none',
+        oe: 'none',
         b: 'none',
       },
     },
     selector: {
       h: '80%',
-      d: 'inline-block',
-      pos: 'absolute',
-      xl: floor(20), // 5
-      yt: '50%',
-      tf: 'translatey(-50%)',
-      z: 1,
-      br: floor(9.09), // 11,
-      tdu: '0.5s',
+      dy: 'inline-block',
+      pn: 'absolute',
+      lt: floor(20), // 5
+      tp: '50%',
+      tm: 'translatey(-50%)',
+      zx: 1,
+      brs: floor(9.09), // 11,
+      tdn: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
-      bg: clr.selectorBg, // '#fff',
+      bd: clr.selectorBg, // '#fff',
     },
     tab_link: {
-      cr: 'pointer',
+      crs: 'pointer',
       td: 'none',
       fw: 500,
       flxi: 'align-center',
-      pos: 'relative',
+      pn: 'relative',
       py: floor(10), // 10,
       px: floor(5), // 20,
-      z: 1,
-      tdl: '0.3s',
-      tdu: '0.6s',
-      clr: clr.active,
-      cr: 'pointer',
+      zx: 1,
+      tdy: '0.3s',
+      tdn: '0.6s',
+      cr: clr.active,
       ':hover:not(.active)': {
-        clr: 'var(--white-0-100-90)', // '#333',
-        tdl: '0s',
-        tdu: '300ms',
+        cr: 'var(--white-0-100-90)', // '#333',
+        tdy: '0s',
+        tdn: '300ms',
       },
       '& .icn': {
         mr: floor(20),
-        size: floor(9),
-        d: 'block',
-        o: 'hidden',
+        se: floor(9),
+        dy: 'block',
+        oy: 'hidden',
       },
       '& .icn img, .icn svg': {
-        o: 0,
-        tf: 'scale(0)',
+        oy: 0,
+        tm: 'scale(0)',
         // mt: floor(20), // 5
       },
     },
     segment_img: {
       '& img, svg': {
-        o: '1 !important',
-        tf: 'scale(1) !important',
-        tdl: '.3s',
-        tdu: '300ms',
+        oy: '1 !important',
+        tm: 'scale(1) !important',
+        tdy: '.3s',
+        tdn: '300ms',
       },
     },
   }
@@ -117,8 +116,6 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
     if (e.target.tagName !== component.toUpperCase()) {
       elm = e.target.parentNode
     }
-
-
     tabsRef.current.querySelector(`.tabs ${component}.active`).classList.remove('active')
     setSelectorPos(elm)
     setactive(options[i].label)
