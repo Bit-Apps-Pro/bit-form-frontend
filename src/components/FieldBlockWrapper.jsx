@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import BrushIcn from '../Icons/BrushIcn'
+import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
 import MoveIcn from '../Icons/MoveIcn'
 import TrashIcn from '../Icons/TrashIcn'
@@ -8,6 +9,7 @@ import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import MapComponents from './MapComponents'
+import Downmenu from './Utilities/Downmenu'
 
 export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields, formID }) {
   const history = useHistory()
@@ -34,14 +36,14 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
 
   return (
     <>
-      <div className="blk-icn-wrp pos-abs flx o-h">
+      <div className="blk-icn-wrp pos-abs flx">
         <button
           type="button"
           className="drag g-c us-n blk-wrp-btn"
           style={{ cursor: 'move' }}
           title={__('Move', 'bitform')}
         >
-          <MoveIcn size="17" stroke="2" />
+          <MoveIcn size="20" stroke="2" />
         </button>
         <button
           type="button"
@@ -49,7 +51,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
           title={__('Style', 'bitform')}
           onClick={() => navigateToStyle(fields[layoutItem.i].typ)}
         >
-          <BrushIcn height="16" width="14" />
+          <BrushIcn height="18" width="14" />
         </button>
         <button
           type="button"
@@ -57,7 +59,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
           title={__('Settings', 'bitform')}
           onClick={navigateToFieldSettings}
         >
-          <EditIcn size="17" />
+          <EditIcn size="20" />
         </button>
         <button
           data-close
@@ -69,8 +71,22 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
           onClick={() => removeLayoutItem(layoutItem.i)}
           title={__('Remove', 'bitform')}
         >
-          <TrashIcn size="16" />
+          <TrashIcn size="19" />
         </button>
+        <Downmenu>
+          <button
+            data-close
+            type="button"
+            className="drag g-c us-n no-drg blk-wrp-btn"
+            unselectable="on"
+            draggable="false"
+            style={{ cursor: 'pointer' }}
+            title={__('More Options', 'bitform')}
+          >
+            <ChevronDownIcn size="19" />
+          </button>
+          <div>asdsdfsdfasd</div>
+        </Downmenu>
       </div>
       <ComponentsByTheme />
     </>
