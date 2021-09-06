@@ -252,6 +252,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
                 measureBeforeMount={false}
+                useCSSTransforms
                 isDroppable={draggingField !== null}
                 className="layout"
                 onDrop={onDrop}

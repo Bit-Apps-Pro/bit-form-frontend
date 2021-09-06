@@ -1,41 +1,41 @@
 // import { isInteger } from "core-js/core/number"
 const customProperties = {
   g: ($ = 'center') => ({ placeContent: $ }),
-  d: $ => ({ display: $ }),
+  dy: $ => ({ display: $ }),
 
   b: $ => ({ border: $ }),
-  brl: $ => ({ borderLeft: $ }),
-  brr: $ => ({ borderRight: $ }),
-  brb: $ => ({ borderBottom: $ }),
+  bl: $ => ({ borderLeft: $ }),
+  br: $ => ({ borderRight: $ }),
+  bb: $ => ({ borderBottom: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
   us: $ => ({ userSelect: $ }),
-  fl: $ => ({ filter: $ }),
+  fr: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
   ls: $ => ({ listStyle: $ }),
 
-  t: $ => ({ transition: $ }),
-  tdl: $ => ({ transitionDelay: $ }),
-  tdu: $ => ({ transitionDuration: $ }),
+  tn: $ => ({ transition: $ }),
+  tdy: $ => ({ transitionDelay: $ }),
+  tdn: $ => ({ transitionDuration: $ }),
   ttf: $ => ({ transitionTimingFunction: $ }),
-  tf: $ => ({ transform: $ }),
+  tm: $ => ({ transform: $ }),
 
-  of: $ => ({ overflow: $ }),
+  ow: $ => ({ overflow: $ }),
 
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   ta: $ => ({ textAlign: $ }),
 
-  pos: $ => ({ position: $ }),
-  yt: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
-  yb: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
-  xl: $ => ({ left: Number.isInteger($) ? `${$}px` : $ }),
-  xr: $ => ({ rigth: Number.isInteger($) ? `${$}px` : $ }),
+  pn: $ => ({ position: $ }),
+  tp: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
+  bm: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
+  lt: $ => ({ left: Number.isInteger($) ? `${$}px` : $ }),
+  rt: $ => ({ rigth: Number.isInteger($) ? `${$}px` : $ }),
 
-  bg: $ => ({ background: $ }),
-  clr: $ => ({ color: $ }),
-  bgc: $ => ({ backgroundColor: $ }),
+  bd: $ => ({ background: $ }),
+  cr: $ => ({ color: $ }),
+  bc: $ => ({ backgroundColor: $ }),
 
   flx: $ => ({
     display: 'flex',
@@ -53,26 +53,28 @@ const customProperties = {
   }),
 
   fd: $ => ({ flexDirection: $ }),
-  jC: $ => ({ justifyContent: $ }),
-  aI: $ => ({ alignItems: $ }),
-  cr: $ => ({ cursor: $ }),
-  ol: $ => ({ outline: $ }),
+  jc: $ => ({ justifyContent: $ }),
+  ai: $ => ({ alignItems: $ }),
+  cur: $ => ({ cursor: $ }),
+  oe: $ => ({ outline: $ }),
   td: $ => ({ textDecoration: $ }),
   ws: $ => ({ whiteSpace: $ }),
-  o: $ => ({ opacity: $ }),
+  oy: $ => ({ opacity: $ }),
 
-  size: ($) => ({ width: Number.isInteger($) ? `${$}px` : $, height: Number.isInteger($) ? `${$}px` : $ }),
+  se: ($) => ({ width: Number.isInteger($) ? `${$}px` : $, height: Number.isInteger($) ? `${$}px` : $ }),
 
   w: $ => ({ width: Number.isInteger($) ? `${$}px` : $ }),
   h: $ => ({ height: Number.isInteger($) ? `${$}px` : $ }),
-  mxW: $ => ({ maxWidth: Number.isInteger($) ? `${$}px` : $ }),
-  mxH: $ => ({ maxHeight: Number.isInteger($) ? `${$}px` : $ }),
-  br: $ => ({ borderRadius: Number.isInteger($) ? `${$}px` : $ }),
+  mxw: $ => ({ maxWidth: Number.isInteger($) ? `${$}px` : $ }),
+  mxh: $ => ({ maxHeight: Number.isInteger($) ? `${$}px` : $ }),
+  brs: $ => ({ borderRadius: Number.isInteger($) ? `${$}px` : $ }),
+
   p: $ => ({ padding: Number.isInteger($) ? `${$}px` : $ }),
   pt: $ => ({ paddingTop: Number.isInteger($) ? `${$}px` : $ }),
   pr: $ => ({ paddingRight: Number.isInteger($) ? `${$}px` : $ }),
   pb: $ => ({ paddingBottom: Number.isInteger($) ? `${$}px` : $ }),
   pl: $ => ({ paddingLeft: Number.isInteger($) ? `${$}px` : $ }),
+
   m: $ => ({ margin: Number.isInteger($) ? `${$}px` : $ }),
   mt: $ => ({ marginTop: Number.isInteger($) ? `${$}px` : $ }),
   mr: $ => ({ marginRight: Number.isInteger($) ? `${$}px` : $ }),
@@ -94,7 +96,7 @@ const customProperties = {
   my: $ => ($ === 'auto'
     ? { marginTop: 'auto', marginBottom: 'auto' }
     : { marginTop: `${$}px`, marginBottom: `${$}px` }),
-  z: $ => ({ zIndex: $ }),
-  c: $ => ({ content: $ }),
+  zx: $ => ({ zIndex: $ }),
+  ct: $ => ({ content: $ }),
 }
 export default customProperties

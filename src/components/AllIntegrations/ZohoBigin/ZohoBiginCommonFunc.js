@@ -35,7 +35,7 @@ export const handleTabChange = (recordTab, settab, biginConf, setBiginConf, form
 
 export const moduleChange = (recordTab, biginConf, formID, setBiginConf, setisLoading, setSnackbar) => {
   const newConf = { ...biginConf }
-  const module = recordTab === 0 ? newConf.module : newConf.relatedlists.[recordTab - 1].module
+  const module = recordTab === 0 ? newConf.module : newConf.relatedlists[recordTab - 1].module
 
   if (recordTab === 0) {
     newConf.actions = {}

@@ -1,6 +1,6 @@
 ﻿| Property                  | Shorthand | Value           | Example                                                                                                                 |
 |---------------------------|-----------|-----------------|-------------------------------------------------------------------------------------------------------------------------|
-| display                   | d         | string          | d:'block', d:'inline-block', d:'none'                                                                                   |
+| display                   | d         | string          | dy:'block', dy:'inline-block', dy:'none'                                                                                   |
 | display: flex             | flx       | sting           | flx: 'center', flx:'between', flx:'align-center', flx:'center-between'                                                  |
 | border                    | b         | sting           | b: '1px solid red'                                                                                                      |
 | point-events              | pe        | sting           | pe:'auto', pe:'none', pe:'stroke', pe:'fill'                                                                            |
@@ -11,27 +11,27 @@
 | fontWeight                | fw        | number          | fw: 500,                                                                                                                |
 | textShadow                | ts        | string          | ts: '2px 2px #ff0000'                                                                                                   |
 | textAlign                 | ta        | string          | ta: 'center'                                                                                                            |
-| position                  | pos       | string          | pos: 'relative'                                                                                                         |
-| top                       | yt        | number | string | yt: 10, yt: '10px', yt:'10%'                                                                                            |
-| bottom                    | yb        | number | string | yb: 10, yb: '10px', yb:'10%'                                                                                            |
-| left                      | xl        | number | string | xl: 10, xl: '10px', xl:'10%'                                                                                            |
-| rigth                     | xr        | number | string | xr: 10, xr: '10px', xr:'10%'                                                                                            |
-| background                | bg        | string          | bg:'red'                                                                                                                |
-| color                     | clr       | string          | clr: 'red'                                                                                                              |
-| backgroundColor           | bgc       | string          | bgc: 'green'                                                                                                            |
+| position                  | pos       | string          | pn: 'relative'                                                                                                         |
+| top                       | yt        | number | string | tp: 10, tp: '10px', tp:'10%'                                                                                            |
+| bottom                    | yb        | number | string | bm: 10, bm: '10px', bm:'10%'                                                                                            |
+| left                      | xl        | number | string | lt: 10, lt: '10px', lt:'10%'                                                                                            |
+| rigth                     | xr        | number | string | rt: 10, rt: '10px', rt:'10%'                                                                                            |
+| background                | bg        | string          | bd:'red'                                                                                                                |
+| color                     | clr       | string          | cr: 'red'                                                                                                              |
+| backgroundColor           | bgc       | string          | bc: 'green'                                                                                                            |
 | flexDriection             | fd        | string          | fd: 'row'                                                                                                               |
-| justifyContent            | jC        | string          | jC: 'center'                                                                                                            |
+| justifyContent            | jC        | string          | jc: 'center'                                                                                                            |
 | alignItems                | aI        | string          | al: 'center'                                                                                                            |
 | cursor                    | cr        | string          | cr: 'pointer'                                                                                                           |
 | outline                   | otln      | string          | otln: 'none'                                                                                                            |
 | textDecoration            | td        | string          | td: 'none'                                                                                                              |
 | whiteSpace                | ws        | sting           | ws:'normal'                                                                                                             |
-| opacity                   | o         | number          | o: 10                                                                                                                   |
-| width, height             | size      | number | string | size: 10, size: '10px'                                                                                                  |
+| opacity                   | o         | number          | oy: 10                                                                                                                   |
+| width, height             | size      | number | string | se: 10, se: '10px'                                                                                                  |
 | width                     | w         | number | string | w: 10, w: '10px'                                                                                                        |
 | height                    | h         | number | string | h: 10, h: '10px'                                                                                                        |
-| maxWidth                  | mxW       | number | string | mxW: 10, mxW: '10px'                                                                                                    |
-| maxHeight                 | mxH       | number | string | mxH: 10, mxH: '10px'                                                                                                    |
+| maxWidth                  | mxW       | number | string | mxw: 10, mxw: '10px'                                                                                                    |
+| maxHeight                 | mxH       | number | string | mxh: 10, mxh: '10px'                                                                                                    |
 | borderRadius              | br        | number          | br: 10                                                                                                                  |
 | padding                   | p         | number | string | p: 10, p: '10px'                                                                                                        |
 | paddingTop                | pt        | number | string | pt: 10, pt: '10px'                                                                                                      |
@@ -47,5 +47,5 @@
 | paddingBottom, paddingTop | py        | number | string | py: 10, py: '10px'                                                                                                      |
 | marginRight, marginLeft   | mx        | number | string | mx: 10, mx: '10px'                                                                                                      |
 | marginTop,marginBottom    | my        | number | string | my: 10, my: '10px'                                                                                                      |
-| zIndex                    | z         | number          | z: 1                                                                                                                    |
-| content                   | c         | string          | c:'', c:'your content'                                                                                                  |
+| zIndex                    | z         | number          | zx: 1                                                                                                                    |
+| content                   | c         | string          | ct:'', ct:'your content'                                                                                                  |

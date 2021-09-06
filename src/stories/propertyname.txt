@@ -1,0 +1,68 @@
+dy: display
+b: border, 
+
+bl: borderLeft
+br: borderRight 
+bb: borderBottom
+bt: borderTop
+
+pe: pointerEvents
+us: userSelect
+fr: filter
+bs: boxShadow
+ls: listStyle
+
+tn: transition
+tdy: transitionDelay 
+tdn: transitionDuration
+ttf: transitionTimingFunction
+tm: transform
+
+ow: overflow
+fs: fontSize
+fw: fontWeight 
+ts: textShadow
+ta: textAlign
+cur: cursor
+
+pn: position
+tp: top
+bm: bottom
+lt: left
+rt: right
+
+bd: background
+cr: color,
+bc: backgroundColor,
+fwp: flexwrap //
+fd: flexDirection
+jc: justifyContent
+ai: alignItems
+oe: outline
+td: textDecoration
+ws: whiteSpace
+oy: opacity
+se: size
+w: width
+h: height
+mxw: maxWidth
+mxh: maxHeight
+brs: borderRadius
+
+p: padding
+pt: paddingTop
+pb: paddingBottom
+pl: paddingLeft
+pr: paddingRight
+px: paddingLeft, paddingRight
+py: paddingTop, paddingBottom
+
+m: margin
+mt: marginTop
+mb: marginBottom
+ml: marginLeft
+mr: marginRight
+mx: marginLeft, marginRight
+my: marginTop, marginBottom
+zx: zIndex
+ct: content
