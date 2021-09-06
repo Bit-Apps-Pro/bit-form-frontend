@@ -116,7 +116,9 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
       elm = e.target.parentNode
     }
 
-    tabsRef.current.querySelector(`.tabs ${component}.active`).classList.remove('active')
+    if (!e.type === 'keypress' || !e.type === 'click') return
+
+    tabsRef.current.querySelector(`.tabs ${component}.active`)?.classList.remove('active')
     setSelectorPos(elm)
     setactive(options[i].label)
     onChange(options[i].label)
