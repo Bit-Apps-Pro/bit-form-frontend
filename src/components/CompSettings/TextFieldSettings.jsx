@@ -1,17 +1,20 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import produce from 'immer'
 import { memo } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $breakpoint, $fields, $layouts, $selectedFieldId } from '../../GlobalStates'
+import { cols } from '../../Utils/FormBuilderHelper'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 import CopyText from '../Utilities/CopyText'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import { deepCopy } from '../../Utils/Helpers'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -208,6 +211,7 @@ function TextFieldSettings() {
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} className="field-key-cpy m-0 w-7" />
       </div>
+      <FieldHideSettings />
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
       <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />

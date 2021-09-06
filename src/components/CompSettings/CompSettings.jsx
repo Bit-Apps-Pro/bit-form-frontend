@@ -207,20 +207,33 @@ const RenderSettings = () => {
 function FieldList() {
   const fields = useRecoilValue($fields)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const arr = []
-  for (const fld in fields) {
-    if (Object.prototype.hasOwnProperty.call(fields, fld)) {
-      // eslint-disable-next-line prefer-const
-      let { typ, lbl, adminLbl } = fields[fld]
-      if (fields[fld].typ === 'decision-box') {
-        lbl = fields[fld].adminLbl
-      }
-      arr.push(
-        <FieldOptionBtn key={fld} icn={fields[fld].typ} title={lbl || adminLbl || typ} sub={fld} action={() => setSelectedFieldId(fld)} />,
-      )
-    }
+
+  const hiddenFlds = Object.entries(fields).filter(fld => fld[1].hidden)
+  const notHiddenFlds = Object.entries(fields).filter(fld => !fld[1].hidden)
+
+  const FieldListSection = ({ title, filteredFields }) => {
+    if (!filteredFields.length) return ''
+    return (
+      <div className="mt-5">
+        <span>{title}</span>
+        {filteredFields.map(([fldKey, fldData]) => {
+          let { lbl } = fldData
+          const { typ, adminLbl } = fldData
+          if (typ === 'decision-box') {
+            lbl = adminLbl
+          }
+          return <FieldOptionBtn key={fldKey} icn={typ} title={lbl || adminLbl || typ} sub={fldKey} action={() => setSelectedFieldId(fldKey)} />
+        })}
+      </div>
+    )
   }
-  return arr
+
+  return (
+    <>
+      <FieldListSection title="Hidden Fields" filteredFields={hiddenFlds} />
+      <FieldListSection title="All Fields" filteredFields={notHiddenFlds} />
+    </>
+  )
 }
 
 const FieldIcon = icn => {
