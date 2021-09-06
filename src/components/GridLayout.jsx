@@ -5,7 +5,7 @@
 
 import produce from 'immer'
 import { memo, useContext, useEffect, useState } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
@@ -245,7 +245,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbars autoHide>
+      <Scrollbars autoHide >
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>

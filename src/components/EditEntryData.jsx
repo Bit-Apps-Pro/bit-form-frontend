@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import Scrollbars from 'react-custom-scrollbars'
+import Scrollbars from 'react-custom-scrollbars-2'
 import { useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { $bits } from '../GlobalStates'
 import Bitforms from '../user-frontend/Bitforms'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import LoaderSm from './Loaders/LoaderSm'
 import Modal from './Utilities/Modal'
-import app from '../styles/app.style'
-import { useFela } from 'react-fela'
 
 export default function EditEntryData(props) {
   const { formID, entryID, allResp, setAllResp, setSnackbar } = props
@@ -21,7 +20,7 @@ export default function EditEntryData(props) {
   const [formLayoutStyle, setFormLayoutStyle] = useState('')
   const ref = useRef(null)
   const [fields, setFields] = useState(null)
-  const {css} = useFela();
+  const { css } = useFela()
   useEffect(() => {
     setshowEdit(true)
     // eslint-disable-next-line no-undef

@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 
 import { memo, useMemo } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import DateIcn from '../../Icons/DateIcn'

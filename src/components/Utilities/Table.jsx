@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import { memo, useEffect, useState, useRef, forwardRef } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
