@@ -23,7 +23,7 @@ fs: fontSize
 fw: fontWeight 
 ts: textShadow
 ta: textAlign
-crs: cursor
+cur: cursor
 
 pn: position
 tp: top
