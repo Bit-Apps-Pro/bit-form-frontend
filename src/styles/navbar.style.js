@@ -29,7 +29,7 @@ const navbar = {
     h: '70%',
     p: '5px 7px',
     bl: '0.5px solid var(--b-38-62-40)',
-    brs: '0.5px solid var(--b-38-62-40)',
+    br: '0.5px solid var(--b-38-62-40)',
     my: 5,
   },
 

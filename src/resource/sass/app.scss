@@ -705,7 +705,7 @@ input[type="checkbox"].disabled:checked:before {
 .layout-wrapper {
   margin: auto;
   margin-top: 3px;
-  height: calc(100% - 40px);
+  height: calc(100% - 82px);
 }
 
 .isDragging {
@@ -1513,10 +1513,12 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .blk-wrp-btn {
+  cursor: pointer;
+  outline: none;
   background: transparent;
   color: var(--dp-blue);
-  width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 30px;
   border-radius: 3px;
   border: none;
   transform: scale(0);
@@ -1526,6 +1528,9 @@ input[type="checkbox"].disabled:checked:before {
 .blk-wrp-btn:hover {
   background: var(--white-0-95);
   color: var(--black-0);
+}
+.blk-wrp-btn:focus-visible{
+  box-shadow: 0 0 0 2px var(--b-50) inset;
 }
 
 .fld-lbl {
