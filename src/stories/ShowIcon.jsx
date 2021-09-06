@@ -67,6 +67,7 @@ import WeekIcn from '../Icons/WeekIcn'
 import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
 import MenuIcon from '../Icons/__MenuIcon'
+import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import './ShowIcon.css'
 
 export default function ShowIcon() {
@@ -285,6 +286,9 @@ export default function ShowIcon() {
       </button>
       <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<YoutubeIcn size="30" color="" className />'>
         <YoutubeIcn size="30" />
+      </button>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<ChevronDownIcn size="30" />'>
+        <ChevronDownIcn size="30" />
       </button>
     </div>
   )
