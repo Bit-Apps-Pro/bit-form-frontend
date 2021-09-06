@@ -319,7 +319,7 @@ function FormDetails() {
           </div>
           <div className={css(navbar.btcd_bld_lnk)}>
             <SegmentControl
-              defaultActive="Responses"
+              defaultActive={activePath()}
               options={options}
               size="90"
               component="button"
