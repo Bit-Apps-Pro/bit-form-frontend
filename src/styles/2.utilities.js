@@ -12,7 +12,7 @@ const ut = {
       size: 0,
       top: '50%',
       left: '50%',
-      br: '50%',
+      brs: '50%',
       tf: 'translate(-50%,-50%)',
       t: '400ms border, opacity 300ms',
       o: 0,

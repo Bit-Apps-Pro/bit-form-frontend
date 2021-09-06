@@ -10,7 +10,7 @@ const app = {
     pn: 'relative',
     w: 110,
     h: 130,
-    br: 15,
+    brs: 15,
     fs: '11px',
 
     '&:before': {
@@ -63,7 +63,7 @@ const app = {
       fs: 14,
       fw: 600,
       mt: 5,
-      br: 5,
+      brs: 5,
       zx: 4,
     },
   },
@@ -74,7 +74,7 @@ const app = {
     b: 'none',
     px: 10,
     py: 7,
-    br: 8,
+    brs: 8,
     jc: 'center',
     ai: 'center',
     my: 10,

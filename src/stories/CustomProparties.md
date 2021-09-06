@@ -32,7 +32,7 @@
 | height                    | h         | number | string | h: 10, h: '10px'                                                                                                        |
 | maxWidth                  | mxW       | number | string | mxw: 10, mxw: '10px'                                                                                                    |
 | maxHeight                 | mxH       | number | string | mxh: 10, mxh: '10px'                                                                                                    |
-| borderRadius              | br        | number          | br: 10                                                                                                                  |
+| borderRadius              | br        | number          | brs: 10                                                                                                                  |
 | padding                   | p         | number | string | p: 10, p: '10px'                                                                                                        |
 | paddingTop                | pt        | number | string | pt: 10, pt: '10px'                                                                                                      |
 | paddingRight              | pr        | number | string | pr: 10, pr: '10px'                                                                                                      |

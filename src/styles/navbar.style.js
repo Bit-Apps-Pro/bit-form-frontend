@@ -20,7 +20,7 @@ const navbar = {
     pr: 15,
     pl: 25,
     mx: 5,
-    br: 100,
+    brs: 100,
     ':hover': { cr: 'var(--white-100)', bd: 'var(--b-50-22)' },
   },
   bit_icn: {
@@ -29,7 +29,7 @@ const navbar = {
     h: '70%',
     p: '5px 7px',
     bl: '0.5px solid var(--b-38-62-40)',
-    br: '0.5px solid var(--b-38-62-40)',
+    brs: '0.5px solid var(--b-38-62-40)',
     my: 5,
   },
 
@@ -44,7 +44,7 @@ const navbar = {
     tn: 'background 0.3s !important',
     oe: 'none',
     ml: 12,
-    br: 12,
+    brs: 12,
 
     '&:hover': { bd: 'var(--b-16-35)' },
     '&:focus': {
@@ -74,7 +74,7 @@ const navbar = {
     bd: 'var(--g-45)',
     oe: 'none',
     cr: 'var(--b-63-18-67)',
-    br: '10px !important',
+    brs: '10px !important',
     b: '1px solid var(--g-89-7)',
     h: 28,
     td: 'none',

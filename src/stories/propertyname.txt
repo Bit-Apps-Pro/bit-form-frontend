@@ -2,7 +2,7 @@ dy: display
 b: border, 
 
 bl: borderLeft
-br: borderRight 
+brs: borderRight 
 bb: borderBottom
 bt: borderTop
 

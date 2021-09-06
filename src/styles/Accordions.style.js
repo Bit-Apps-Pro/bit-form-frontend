@@ -1,6 +1,6 @@
 const accordion = {
   bg: 'var(--white)',
-  br: 8,
+  brs: 8,
   ':hover': {
     bgc: '#eaedff',
     '& .edit-icn': {

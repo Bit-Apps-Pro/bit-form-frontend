@@ -5,7 +5,7 @@ const customProperties = {
 
   b: $ => ({ border: $ }),
   bl: $ => ({ borderLeft: $ }),
-  br: $ => ({ borderRight: $ }),
+  brs: $ => ({ borderRight: $ }),
   bb: $ => ({ borderBottom: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
