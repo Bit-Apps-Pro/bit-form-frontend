@@ -1,13 +1,14 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $fields, $layouts, $selectedFieldId } from '../../../GlobalStates'
+import { $breakpoint, $fields, $layouts, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldHideSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   const [fields, setFields] = useRecoilState($fields)
   const setLayouts = useSetRecoilState($layouts)
   const breakpoint = useRecoilValue($breakpoint)
@@ -19,7 +20,6 @@ export default function FieldHideSettings() {
       fieldData.hidden.push(breakpoint)
       setLayouts(oldLayouts => produce(oldLayouts, draft => {
         const fldLayIndex = draft[breakpoint].findIndex(lay => lay.i === fldKey)
-        console.log({ fldLayIndex })
         draft[breakpoint][fldLayIndex].hidden = true
       }))
     } else if (Array.isArray(fieldData.hidden)) {
@@ -27,11 +27,12 @@ export default function FieldHideSettings() {
       if (!fieldData.hidden.length) delete fieldData.hidden
       setLayouts(oldLayouts => produce(oldLayouts, draft => {
         const fldLayIndex = draft[breakpoint].findIndex(lay => lay.i === fldKey)
-        console.log({ fldLayIndex }, oldLayouts[breakpoint])
         draft[breakpoint][fldLayIndex].hidden = false
       }))
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setUpdateBtn({ unsaved: true })
   }
 
   return <SingleToggle title={__('Hidden Field:', 'bitform')} action={setHidden} isChecked={isHidden} className="mt-3" />

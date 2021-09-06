@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
@@ -24,7 +25,8 @@ export default function DecisionBoxSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setRequired(e) {
@@ -39,7 +41,8 @@ export default function DecisionBoxSettings() {
     } else {
       delete fieldData.valid.req
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setChecked(e) {
@@ -50,13 +53,15 @@ export default function DecisionBoxSettings() {
     } else {
       delete fieldData.valid.checked
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setMsg = (val, typ) => {
     fieldData.msg[typ] = val
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (

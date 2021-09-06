@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
@@ -26,7 +27,8 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
     } else {
       delete fieldData.err[name].custom
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setShowErrMsg = e => {
@@ -38,7 +40,8 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
     } else {
       delete fieldData.err[name].show
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const openErrorModal = () => {
@@ -47,7 +50,8 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
     fieldData.err[type].custom = true
     if (!fieldData.err[type].msg) fieldData.err[type].msg = fieldData.err[type].dflt
     setTimeout(() => {
-      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+      // eslint-disable-next-line no-param-reassign
+      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
       setErrorModal(true)
     })
   }

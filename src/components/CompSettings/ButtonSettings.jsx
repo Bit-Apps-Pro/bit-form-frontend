@@ -1,12 +1,13 @@
+import produce from 'immer'
 import { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../../Utils/i18nwrap'
-import SingleInput from '../Utilities/SingleInput'
-import SingleToggle from '../Utilities/SingleToggle'
-import SelectBox2 from '../Utilities/SelectBox2'
-import Back2FldList from './Back2FldList'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
+import { __ } from '../../Utils/i18nwrap'
+import SelectBox2 from '../Utilities/SelectBox2'
+import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
+import Back2FldList from './Back2FldList'
 
 export default function ButtonSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -28,7 +29,8 @@ export default function ButtonSettings() {
   function setSubBtnTxt(e) {
     fieldData.txt = e.target.value
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setBtnTyp(e) {
@@ -41,12 +43,14 @@ export default function ButtonSettings() {
     if (error.btnTyp) {
       seterror({ btnTyp: '' })
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setButtonAlign(e) {
     fieldData.align = e.target.value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const checkSubmitBtn = () => {
@@ -55,7 +59,8 @@ export default function ButtonSettings() {
   }
   function setFulW(e) {
     fieldData.fulW = e.target.checked
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setBtnSiz(e) {
@@ -64,7 +69,8 @@ export default function ButtonSettings() {
     } else {
       fieldData.btnSiz = 'md'
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (
@@ -77,7 +83,7 @@ export default function ButtonSettings() {
       <SingleInput inpType="text" title={__('Submit Button Text:', 'bitform')} value={txt} action={setSubBtnTxt} />
       <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={align} action={setButtonAlign} />
       <SelectBox2 title={__('Button Type:', 'bitform')} options={type} value={btnTyp} action={setBtnTyp} />
-      { error.btnTyp && <span style={{ color: 'red' }}>{error.btnTyp}</span>}
+      {error.btnTyp && <span style={{ color: 'red' }}>{error.btnTyp}</span>}
       <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} className="mt-5" />
       <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} className="mt-5" />
     </div>

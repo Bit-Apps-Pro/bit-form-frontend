@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
@@ -83,7 +84,8 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
       disabled = true
       fieldObject = fieldData?.customType
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     setImportOpts({ dataSrc, fieldObject, disabled })
   }
 

@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
@@ -10,7 +11,8 @@ export default function ReCaptchaSettigns() {
   const fieldData = deepCopy(fields[fldKey])
   const onInput = ({ target: { name, value } }) => {
     fieldData[name] = value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (
