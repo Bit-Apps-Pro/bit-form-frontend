@@ -419,25 +419,24 @@ export const addToBuilderHistory = (setBuilderHistory, historyData) => {
   }))
 }
 
-export const compactNewLayoutItem = (breakpoint, layout, layouts) => {
-  const cols = { lg: 60, md: 40, sm: 20 }
-  return produce(layouts, drftLay => {
-    drftLay.lg.push(layout.lg || layout)
-    drftLay.md.push(layout.md || layout)
-    drftLay.sm.push(layout.sm || layout)
-    drftLay[breakpoint] = sortLayoutByXY(drftLay[breakpoint])
-    if (breakpoint === 'lg') {
-      drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
-      drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
-    } else if (breakpoint === 'md') {
-      drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
-      drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
-    } else if (breakpoint === 'sm') {
-      drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
-      drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
-    }
-  })
-}
+export const cols = { lg: 60, md: 40, sm: 20 }
+
+export const compactNewLayoutItem = (breakpoint, layout, layouts) => produce(layouts, drftLay => {
+  drftLay.lg.push(layout.lg || layout)
+  drftLay.md.push(layout.md || layout)
+  drftLay.sm.push(layout.sm || layout)
+  drftLay[breakpoint] = sortLayoutByXY(drftLay[breakpoint])
+  if (breakpoint === 'lg') {
+    drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
+    drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
+  } else if (breakpoint === 'md') {
+    drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
+    drftLay.sm = convertLayout(sortLayoutByXY(drftLay.sm), cols.sm)
+  } else if (breakpoint === 'sm') {
+    drftLay.lg = convertLayout(sortLayoutByXY(drftLay.lg), cols.lg)
+    drftLay.md = convertLayout(sortLayoutByXY(drftLay.md), cols.md)
+  }
+})
 
 export const compactRemovedLayoutItem = (fldKey, breakpoint, layouts) => produce(layouts, draft => {
   if (breakpoint === 'lg') {
