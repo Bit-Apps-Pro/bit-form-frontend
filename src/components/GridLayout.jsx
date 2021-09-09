@@ -239,13 +239,45 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     addToBuilderHistory(setBuilderHistory, { event, action, state })
   }
 
+  const cloneLayoutItem = fldKey => {
+    const fldData = fields[fldKey]
+    if (!handleFieldExtraAttr(fldData)) return
+
+    const newBlk = `bf${formID}-${uniqueFieldId}`
+    const newLayItem = {}
+
+    const tmpLayouts = produce(layouts, draft => {
+      const allBreakpoints = ['sm', 'md', 'lg']
+      allBreakpoints.forEach(brkpnt => {
+        const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
+        const { x, y, w, h, minH, maxH, minW } = layouts[brkpnt][layIndx]
+        const newLayoutItem = { i: newBlk, x, y: y + h, w, h, minH, maxH, minW }
+        newLayItem[brkpnt] = newLayoutItem
+        draft[brkpnt].splice(layIndx, 0, newLayoutItem)
+      })
+    })
+
+    setLayouts(tmpLayouts)
+    // eslint-disable-next-line no-param-reassign
+    setFields(oldFields => produce(oldFields, draft => { draft[newBlk] = fldData }))
+
+    sessionStorage.setItem('btcd-lc', '-')
+    setUpdateBtn({ unsaved: true })
+
+    // add to history
+    const event = `${fldData.lbl} cloned`
+    const action = 'add_fld'
+    const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData }
+    addToBuilderHistory(setBuilderHistory, { event, action, state })
+  }
+
   const onDrop = (lay, dropPosition) => {
     addNewField(draggingField.fieldData, draggingField.fieldSize, dropPosition)
   }
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbars autoHide >
+      <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>
@@ -275,7 +307,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                 {layouts[breakpoint].map(layoutItem => (
                   <div
                     key={layoutItem.i}
-                    className="blk"
+                    className="blk fld-blk-wrap"
                     onClick={() => setSelectedFieldId(layoutItem.i)}
                     onKeyPress={() => setSelectedFieldId(layoutItem.i)}
                     role="button"
@@ -285,6 +317,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                       {...{
                         layoutItem,
                         removeLayoutItem,
+                        cloneLayoutItem,
                         fields,
                         formID,
                       }}

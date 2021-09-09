@@ -199,6 +199,8 @@ const FIELDS_EXTRA_ATTR = {
   paypal: { pro: true, onlyOne: true, setDefaultPayConfig: true },
   razorpay: { pro: true, onlyOne: true, setDefaultPayConfig: true },
   recaptcha: { onlyOne: true },
+  submit: { onlyOne: true },
+  reset: { onlyOne: true },
 }
 
 export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], additionalSettings, bits, __) => {
@@ -219,6 +221,10 @@ export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], addi
 
   if (FIELDS_EXTRA_ATTR[field.typ]?.onlyOne && Object.values(allFields).find(fld => fld.typ === field.typ)) {
     return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.typ} field in the same form.`, 'bitform') }
+  }
+
+  if (field.typ === 'button' && FIELDS_EXTRA_ATTR[field.btnTyp]?.onlyOne && Object.values(allFields).find(fld => fld.typ === field.typ)) {
+    return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.btnTyp} button in the same form.`, 'bitform') }
   }
 
   if (FIELDS_EXTRA_ATTR[field.typ]?.setDefaultPayConfig) {
