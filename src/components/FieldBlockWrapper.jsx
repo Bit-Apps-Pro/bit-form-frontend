@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import { hideAll } from 'tippy.js'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -61,23 +62,36 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
         >
           <EditIcn size="20" />
         </button>
-        <button
-          data-close
-          type="button"
-          className="drag g-c us-n no-drg blk-wrp-btn"
-          unselectable="on"
-          draggable="false"
-          style={{ cursor: 'pointer' }}
-          onClick={() => removeLayoutItem(layoutItem.i)}
-          title={__('Remove', 'bitform')}
-        >
-          <TrashIcn size="19" />
-        </button>
+        <Downmenu place="top">
+          <button
+            data-close
+            type="button"
+            className="g-c us-n no-drg blk-wrp-btn"
+            unselectable="on"
+            draggable="false"
+            style={{ cursor: 'pointer' }}
+            title={__('Remove', 'bitform')}
+          >
+            <TrashIcn size="19" />
+          </button>
+          <div className="wdt-200">
+            <div className="mb-2 f-5">Are you sure ?</div>
+            <div className="f-12 mb-1 f-rob">After deleting this field, you will lose all previous responses of this field.</div>
+            <div className="f-12 mb-2 f-rob">
+              <b>Tip : </b>
+              You can hide this field instead.
+            </div>
+            <div className="flx flx-c">
+              <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
+              <button onClick={() => removeLayoutItem(layoutItem.i)} className="tip-btn red-btn" type="button">Delete</button>
+            </div>
+          </div>
+        </Downmenu>
         <Downmenu>
           <button
             data-close
             type="button"
-            className="drag g-c us-n no-drg blk-wrp-btn"
+            className="g-c us-n no-drg blk-wrp-btn"
             unselectable="on"
             draggable="false"
             style={{ cursor: 'pointer' }}
