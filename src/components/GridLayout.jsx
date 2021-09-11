@@ -317,7 +317,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                     key={layoutItem.i}
                     data-key={layoutItem.i}
                     className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                    className="blk fld-blk-wrap"
                     onClick={() => setSelectedFieldId(layoutItem.i)}
                     onKeyPress={() => setSelectedFieldId(layoutItem.i)}
                     role="button"
