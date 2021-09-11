@@ -12,12 +12,9 @@ import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
-import CheckBoxIcn from '../Icons/CheckBoxIcn'
 import CloseIcn from '../Icons/CloseIcn'
-import HoneypotIcn from '../Icons/HoneypotIcn'
 import '../resource/sass/components.scss'
 import app from '../styles/app.style'
-// import useSWR from 'swr'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
@@ -213,9 +210,9 @@ function FormDetails() {
             if (responseData.form_content.layout !== undefined) {
               const l = responseData.form_content.layout
               const nl = { lg: [], md: [], sm: [] }
-              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
-              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 10, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 10 } }) })
+              l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
+              l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
+              l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
               setLay(nl)
             }
             // exp end
@@ -334,27 +331,29 @@ function FormDetails() {
             </NavLink>
           </div>
         </nav>
-        <Switch>
-          <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
-            <Suspense fallback={<BuilderLoader />}>
-              <FormBuilderHOC isLoading={isLoading} />
-            </Suspense>
-          </Route>
-          <Route path="/form/responses/:formType/:formID/">
-            {!isLoading ? (
-              <FormEntries
-                allResp={allResponse}
-                setAllResp={setAllResponse}
-                integrations={integrations}
+        <div className={css(navbar.builder_routes)}>
+          <Switch>
+            <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
+              <Suspense fallback={<BuilderLoader />}>
+                <FormBuilderHOC isLoading={isLoading} />
+              </Suspense>
+            </Route>
+            <Route path="/form/responses/:formType/:formID/">
+              {!isLoading ? (
+                <FormEntries
+                  allResp={allResponse}
+                  setAllResp={setAllResponse}
+                  integrations={integrations}
+                />
+              ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
+            </Route>
+            <Route path="/form/settings/:formType/:formID/:settings?">
+              <FormSettings
+                setProModal={setProModal}
               />
-            ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
-          </Route>
-          <Route path="/form/settings/:formType/:formID/:settings?">
-            <FormSettings
-              setProModal={setProModal}
-            />
-          </Route>
-        </Switch>
+            </Route>
+          </Switch>
+        </div>
       </div>
     </ShowProModalContext.Provider>
   )
