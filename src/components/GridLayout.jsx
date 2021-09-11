@@ -24,7 +24,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
   const [layout, setLay] = useRecoilState($layouts)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
+  const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
@@ -33,7 +33,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   // const cols = { lg: 120, md: 80, sm: 40 }
   const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
-  const [rowHeight, setRowHeight] = useState(43 / 10)
+  const [rowHeight, setRowHeight] = useState(2)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const additional = useRecoilValue($additionalSettings)
@@ -119,7 +119,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     //   h += topNbottomPadding - 39
     // }
     // h += 40 // default field height
-    setRowHeight((h / 2) / 10)
+    // setRowHeight((h / 2) / 10)
 
     // set row height in local
     sessionStorage.setItem('btcd-rh', h / 2)
@@ -138,7 +138,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const margeNewData = () => {
-    addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
+    const { newBlk: newFieldKey } = addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
+    setTimeout(() => {
+      document.querySelector(`[data-key="${newFieldKey}"]`)?.focus()
+      // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }, 500)
     setNewData(null)
   }
 
@@ -148,8 +152,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       && newLays.sm.length === layouts.sm.length) {
       // setLayouts(extendLayout(newLays))
       // setLay(extendLayout(newLays))
-      setLayouts((newLays))
-      setLay((newLays))
+      setLayouts(newLays)
+      setLay(newLays)
+      console.log('layout changed')
     }
   }
 
@@ -223,7 +228,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
     const newBlk = `bf${formID}-${uniqueFieldId}`
-    const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10, minH: minH * 10 || minH, maxH: maxH * 10 || maxH, minW: minW * 10 || minW }
+    const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 20, minH: minH * 10 || minH, maxH: maxH * 20 || maxH, minW: minW * 10 || minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const tmpLayouts = compactNewLayoutItem(breakpoint, newLayoutItem, layouts)
 
@@ -237,6 +242,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const action = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
+
+    return { newBlk }
   }
 
   const onDrop = (lay, dropPosition) => {
@@ -245,13 +252,14 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <Scrollbars autoHide >
+      <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
                 measureBeforeMount={false}
+                compactType="vertical"
                 useCSSTransforms
                 isDroppable={draggingField !== null}
                 className="layout"
@@ -275,7 +283,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                 {layouts[breakpoint].map(layoutItem => (
                   <div
                     key={layoutItem.i}
-                    className="blk"
+                    data-key={layoutItem.i}
+                    className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
                     onClick={() => setSelectedFieldId(layoutItem.i)}
                     onKeyPress={() => setSelectedFieldId(layoutItem.i)}
                     role="button"
