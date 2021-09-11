@@ -4,6 +4,7 @@ const customProperties = {
   dy: $ => ({ display: $ }),
 
   b: $ => ({ border: $ }),
+  bt: $ => ({ borderTop: $ }),
   bl: $ => ({ borderLeft: $ }),
   br: $ => ({ borderRight: $ }),
   bb: $ => ({ borderBottom: $ }),
@@ -31,7 +32,7 @@ const customProperties = {
   tp: $ => ({ top: Number.isInteger($) ? `${$}px` : $ }),
   bm: $ => ({ bottom: Number.isInteger($) ? `${$}px` : $ }),
   lt: $ => ({ left: Number.isInteger($) ? `${$}px` : $ }),
-  rt: $ => ({ rigth: Number.isInteger($) ? `${$}px` : $ }),
+  rt: $ => ({ right: Number.isInteger($) ? `${$}px` : $ }),
 
   bd: $ => ({ background: $ }),
   cr: $ => ({ color: $ }),
