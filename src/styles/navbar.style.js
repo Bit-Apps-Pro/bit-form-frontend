@@ -6,10 +6,9 @@ const navbar = {
     h: 40,
     w: '100%',
     zx: 999,
-
-    '&+div': { mt: 40 },
+    inset: 0,
   },
-
+  builder_routes: { mt: 40 },
   btcd_bld_title: { flx: 'align-center' },
 
   nav_back_icn: {
