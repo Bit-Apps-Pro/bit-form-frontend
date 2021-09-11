@@ -15,6 +15,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
 
 export default function SelectSettings() {
@@ -226,6 +227,27 @@ export default function SelectSettings() {
           tipTitle="By enabling this feature, user will see the error message if select box is empty"
         />
       )}
+      <div className="pos-rel">
+        {!bits.isPro && (
+          <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+            <div className="pro">
+              {__('Available On', 'bitform')}
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
+            </div>
+          </div>
+        )}
+        <UniqField
+          type="entryUnique"
+          isUnique="isEntryUnique"
+          title="Validate as Entry Unique"
+          tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        />
+      </div>
       <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" />
       {

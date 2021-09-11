@@ -8,6 +8,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
+import UniqField from './CompSettingsUtils/UniqField'
 import { deepCopy } from '../../Utils/Helpers'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -275,7 +276,7 @@ function TextFieldSettings() {
         )
       }
       {
-        fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && (
+        fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
           <>
             <div className="flx">
               <div className="w-7 mr-2 mt-3">
@@ -300,6 +301,61 @@ function TextFieldSettings() {
           </>
         )
       }
+
+      <div className="pos-rel">
+        {
+          fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
+            <div>
+              { !bits.isPro && (
+                <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+                  <div className="pro">
+                    {__('Available On', 'bitform')}
+                    <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                      <span className="txt-pro">
+                        {' '}
+                        {__('Premium', 'bitform')}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              )}
+              <UniqField
+                type="entryUnique"
+                isUnique="isEntryUnique"
+                title="Validate as Entry Unique"
+                tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+              />
+            </div>
+          )
+        }
+      </div>
+      <div className="pos-rel">
+        {
+          fieldData.typ.match(/^(email|username)$/) && (
+            <div>
+              { !bits.isPro && (
+                <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+                  <div className="pro">
+                    {__('Available On', 'bitform')}
+                    <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                      <span className="txt-pro">
+                        {' '}
+                        {__('Premium', 'bitform')}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              )}
+              <UniqField
+                type="userUnique"
+                isUnique="isUserUnique"
+                title="Validate as User Unique"
+                tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+              />
+            </div>
+          )
+        }
+      </div>
     </div>
   )
 }
