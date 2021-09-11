@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable react/button-has-type */
 import AddIcon from '../Icons/AddIcon'
 import APIIcon from '../Icons/APIIcon'
@@ -10,6 +11,8 @@ import BlurIcn from '../Icons/BlurIcn'
 import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
 import CheckBoxIcn from '../Icons/CheckBoxIcn'
+import ChevronDownIcn from '../Icons/ChevronDownIcn'
+import ChevronRightIcon from '../Icons/ChevronRightIcon'
 import CloseIcn from '../Icons/CloseIcn'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
 import ColorIcn from '../Icons/ColorIcn'
@@ -25,6 +28,8 @@ import DropDownIcn from '../Icons/DropDownIcn'
 import EditIcn from '../Icons/EditIcn'
 import EditIcon from '../Icons/EditIcon'
 import EllipsisIcon from '../Icons/EllipsisIcon'
+import EyeIcon from '../Icons/EyeIcon'
+import EyeOffIcon from '../Icons/EyeOffIcon'
 import FieldIcn from '../Icons/FieldIcn'
 import FileUploadIcn from '../Icons/FileUploadIcn'
 import FlagIcn from '../Icons/FlagIcn'
@@ -67,13 +72,12 @@ import WeekIcn from '../Icons/WeekIcn'
 import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
 import MenuIcon from '../Icons/__MenuIcon'
-import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import './ShowIcon.css'
 
 export default function ShowIcon() {
   const copyVar = (e) => {
     const btnName = e.target.dataset.componentName
-    console.log(e.target.dataset)
+    // console.log(e.target.dataset)
     navigator.clipboard.writeText(btnName)
   }
   const KeyPressHandler = (e) => {
@@ -289,6 +293,15 @@ export default function ShowIcon() {
       </button>
       <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<ChevronDownIcn size="30" />'>
         <ChevronDownIcn size="30" />
+      </button>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<EyeIcon size="30" stroke="" />'>
+        <EyeIcon size="30" />
+      </button>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<EyeOffIcon size="30" stroke="" />'>
+        <EyeOffIcon size="30" />
+      </button>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<ChevronRightIcon size="30" stroke="" />'>
+        <ChevronRightIcon size="30" />
       </button>
     </div>
   )
