@@ -3,8 +3,9 @@ import { useState, useRef, memo } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import EditIcn from '../../Icons/EditIcn'
 import Button from './Button'
+import SingleToggle2 from './SingleToggle2'
 
-function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse }) {
+function Accordions({ title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse, toggle, action, checked }) {
   console.log('%c $render Accordions', 'background:aquamarine;padding:3px;border-radius:5px;')
 
   const [tgl, setTgl] = useState(false)
@@ -47,7 +48,8 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
           </div>
           {subtitle !== undefined && <small>{subtitle}</small>}
         </div>
-
+        {toggle && (
+          <SingleToggle2 action={action} checked={checked} className="flx" />)}
         <Button icn>
           <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} style={{ color: tgl ? 'white' : 'inherit' }} />
         </Button>

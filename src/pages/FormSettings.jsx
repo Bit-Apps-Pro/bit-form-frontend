@@ -5,8 +5,10 @@ import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import MailOpenIcn from '../Icons/MailOpenIcn'
+import UserIcn from '../Icons/UserIcn'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
+const WpAuth = lazy(() => import('../components/AuthSettings'))
 const Integrations = lazy(() => import('../components/Integrations'))
 const Workflow = lazy(() => import('../components/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
@@ -50,12 +52,19 @@ function FormSettings({ setProModal }) {
           <span className="btcd-icn icn-code" />
           {__('Integrations', 'bitform')}
         </NavLink>
+        <NavLink to={`/form/settings/${formType}/${formID}/auth-settings`} activeClassName="btcd-f-a em-tem">
+          <span className="mr-1"><UserIcn size="21" /></span>
+          {__('WP Auth', 'bitform')}
+        </NavLink>
       </aside>
 
       <div id="btcd-settings-wrp" className="btcd-s-wrp">
         <Switch>
           <Suspense fallback={<FSettingsLoader />}>
             <Route path={`${path}form-settings`} component={withQuicklink(SingleFormSettings, { origins: [] })} />
+            <Route path={`${path}auth-settings`}>
+              <WpAuth formID={formID} />
+            </Route>
             <Route path={`${path}confirmations`}>
               <ConfType formID={formID} />
             </Route>
