@@ -230,7 +230,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }
 
   return (
-    <div>
+    <>
       <OptionToolBar setResponsiveView={setResponsiveView} />
       <Container
         ref={conRef}
@@ -286,7 +286,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           />
         </Section>
       </Container>
-    </div>
+    </>
   )
 })
 
