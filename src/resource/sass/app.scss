@@ -233,6 +233,12 @@
 
 $select-arrow : "data:image/svg+xml;charset=utf8,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3C!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ --%3E%3Cg%3E%3Ctitle%3Ebackground%3C/title%3E%3Crect fill='none' id='canvas_background' height='22' width='22' y='-1' x='-1'/%3E%3Cg display='none' overflow='visible' y='0' x='0' height='100%25' width='100%25' id='canvasGrid'%3E%3Crect fill='url(%23gridpattern)' stroke-width='0' y='0' x='0' height='100%25' width='100%25'/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Ctitle%3ELayer 1%3C/title%3E%3Cline transform='rotate(45 9.707600593566898,10.544168472290037) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_2' y2='14.860267' x2='9.7076' y1='6.228069' x1='9.7076' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3Cline transform='rotate(-45 4.444442749023432,10.544166564941404) ' stroke-linecap='undefined' stroke-linejoin='undefined' id='svg_1' y2='14.860266' x2='4.444443' y1='6.228067' x1='4.444443' stroke-width='1.5' stroke='%238c8c8c' fill='none'/%3E%3C/g%3E%3C/svg%3E";
 
+* {
+  box-sizing: border-box;
+  line-height: 1;
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   background: var(--white);
@@ -271,10 +277,7 @@ a:hover {
   }
 }
 
-* {
-  box-sizing: border-box;
-  line-height: 1;
-}
+
 
 //TODO WP OVERRIDE START
 
@@ -1498,40 +1501,7 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 // components style
-.com-wrp {
-  width: 100%;
-  height: 100%;
-  cursor: default;
-}
 
-.blk-icn-wrp {
-  background: var(--white-100-a-658);
-  right: 0;
-  z-index: 9;
-  height: 0;
-  width: 0;
-}
-
-.blk-wrp-btn {
-  cursor: pointer;
-  outline: none;
-  background: transparent;
-  color: var(--dp-blue);
-  width: 30px;
-  height: 30px;
-  border-radius: 3px;
-  border: none;
-  transform: scale(0);
-  transition: transform 300ms;
-}
-
-.blk-wrp-btn:hover {
-  background: var(--white-0-95);
-  color: var(--black-0);
-}
-.blk-wrp-btn:focus-visible{
-  box-shadow: 0 0 0 2px var(--b-50) inset;
-}
 
 .fld-lbl {
   cursor: default;
@@ -1543,13 +1513,9 @@ input[type="checkbox"].disabled:checked:before {
   outline: none;
 
   &:focus {
-    &>.fld-wrp {
-      box-shadow: 0 0 0 2px var(--b-73) inset !important;
-    }
 
     & .blk-icn-wrp {
-      height: auto;
-      width: auto;
+      visibility: visible;
     }
 
     & .blk-icn-wrp button {
@@ -1563,8 +1529,7 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover .blk-icn-wrp,
   :focus .blk-icn-wrp {
-    height: auto;
-    width: auto;
+   visibility: visible;
   }
 
   &:hover .blk-icn-wrp button,
@@ -2739,6 +2704,7 @@ nav.top-nav {
 }
 
 .btc-mdl-trn-enter {
+  will-change: transform, border-radius;
   & .btcd-modal {
     overflow: hidden !important;
   }
@@ -2751,7 +2717,7 @@ nav.top-nav {
 
 .btc-mdl-trn-enter-active {
   & .btcd-modal {
-    border-radius: 20px;
+    border-radius: 13px;
     transform: scale(1);
     transition: transform 50ms, border-radius 100ms;
   }
@@ -2764,7 +2730,7 @@ nav.top-nav {
 .btcd-modal-wrp {
   display: flex;
   // background             : rgba(18, 21, 60, 0.53);
-  background: var(--b-54-15-53);
+  background: var(--b-95-31-18);
   position: fixed;
   top: 0;
   left: 0;
@@ -2782,14 +2748,15 @@ nav.top-nav {
 .btcd-modal {
   display: inline-table;
   background: var(--white);
-  border-radius: 20px;
+  border-radius: 13px;
   overflow: hidden;
   width: 700px;
+  border: 1px solid var(--white-0-80);
   margin: auto;
   height: 70%;
   min-height: 70%;
   transition: transform 0.3s, border-radius 0.5s ease;
-  box-shadow: 0 0 14px 1px var(--white-0-0-64);
+  box-shadow: 0 0 44px -20px var(--white-0-0-64);
 }
 
 // .d-blk .btc-mdl-trn-enter-done{
@@ -2939,6 +2906,7 @@ nav.top-nav {
   top: 80px !important;
   right: 20px !important;
   left: 20px !important;
+  // margin-top: 40px;
   // background-color: hsl(0, 0%, 100%);
   background-color: var(--white-100);
   // background-image: radial-gradient(hsl(237, 92%, 62%) 0.5px, hsl(0, 0%, 100%) 0.5px);
@@ -3313,6 +3281,10 @@ nav.top-nav {
 
 .f-sm {
   font-size: 11px;
+}
+
+.f-12 {
+  font-size: 12px;
 }
 
 .btcd-paper-inp {
@@ -5235,11 +5207,12 @@ _:-ms-fullscreen,
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
 .tippy-box[data-theme~=light-border]{
   box-shadow: 0 3px 6px -1px #00000026, 0 4px 35px -12px rgb(0 8 16 / 32%) !important;
 }
 .tippy-box {
-  border-radius: 8px !important;
+  border-radius: .8em !important;
 }
 
 .tippy-backdrop {
