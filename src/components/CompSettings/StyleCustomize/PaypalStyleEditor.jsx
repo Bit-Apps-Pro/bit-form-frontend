@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
+import produce from 'immer'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { __ } from '../../../Utils/i18nwrap'
+import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates'
+import BackIcn from '../../../Icons/BackIcn'
 import BrushIcn from '../../../Icons/BrushIcn'
 import { deepCopy } from '../../../Utils/Helpers'
-import BackIcn from '../../../Icons/BackIcn'
-import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates'
+import { __ } from '../../../Utils/i18nwrap'
 
 export default function PaypalStyleEditor() {
   const { formID, formType } = useParams()
@@ -121,13 +122,15 @@ export default function PaypalStyleEditor() {
     if (name === 'payBtn' && value === 'CARD') {
       fieldData.style.color = 'white'
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setHeight = val => {
     if (val >= 25 && val <= 55) {
       fieldData.style.height = val
-      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+      // eslint-disable-next-line no-param-reassign
+      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     }
     setCustomHeight(val)
   }
@@ -143,13 +146,15 @@ export default function PaypalStyleEditor() {
       fieldData.style.height = 55
       setCustomHeight(55)
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setWidth = val => {
     if (val >= 150 && val <= 750) {
       fieldData.style.width = val
-      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+      // eslint-disable-next-line no-param-reassign
+      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     }
     setCustomWidth(val)
   }
@@ -165,7 +170,8 @@ export default function PaypalStyleEditor() {
       fieldData.style.width = 750
       setCustomWidth(750)
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (

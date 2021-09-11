@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -33,7 +34,8 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   const cancelModal = () => {
     fieldData.err[type].msg = value
     setTimeout(() => {
-      setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+      // eslint-disable-next-line no-param-reassign
+      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
       setErrorModal(false)
     })
   }

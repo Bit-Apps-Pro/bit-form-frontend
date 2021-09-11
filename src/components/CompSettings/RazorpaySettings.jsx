@@ -1,8 +1,11 @@
+import produce from 'immer'
 import { useContext, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../../Utils/i18nwrap'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
+import TrashIcn from '../../Icons/TrashIcn'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
+import { __ } from '../../Utils/i18nwrap'
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData'
 import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
@@ -10,8 +13,6 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
-import TrashIcn from '../../Icons/TrashIcn'
 
 export default function RazorpaySettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -32,7 +33,8 @@ export default function RazorpaySettings() {
   const setPayIntegId = e => {
     fieldData.payIntegID = e.target.value
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const handleInput = (name, value, type) => {
@@ -53,7 +55,8 @@ export default function RazorpaySettings() {
       fieldData.options.invoice.itemName = 'Due Amount'
     }
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setAmountType = e => {
@@ -62,17 +65,20 @@ export default function RazorpaySettings() {
     delete fieldData.options.amount
     delete fieldData.options.amountFld
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const handleBtnStyle = e => {
     fieldData[e.target.name] = e.target.value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setFulW = e => {
     fieldData.fulW = e.target.checked
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setBtnSiz = e => {
@@ -81,7 +87,8 @@ export default function RazorpaySettings() {
     } else {
       fieldData.btnSiz = 'md'
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const handleNotes = (action, i, type, val) => {
@@ -116,7 +123,8 @@ export default function RazorpaySettings() {
     }
 
     fieldData.options.notes = noteObj
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const getSpecifiedFields = type => {

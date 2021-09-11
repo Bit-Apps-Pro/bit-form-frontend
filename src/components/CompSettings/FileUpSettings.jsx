@@ -1,14 +1,15 @@
 /* eslint-disable no-param-reassign */
+import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import CopyText from '../Utilities/CopyText'
+import DropDown from '../Utilities/DropDown'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import DropDown from '../Utilities/DropDown'
-import CopyText from '../Utilities/CopyText'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import { deepCopy } from '../../Utils/Helpers'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 
 export default function FileUpSettings() {
@@ -45,7 +46,8 @@ export default function FileUpSettings() {
     } else {
       delete fieldData.valid.req
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setMultiple(e) {
@@ -54,7 +56,8 @@ export default function FileUpSettings() {
     } else {
       delete fieldData.mul
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setAdminLabel(e) {
@@ -63,12 +66,14 @@ export default function FileUpSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setUpBtnTxt(e) {
     fieldData.upBtnTxt = e.target.value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setMxUp(e) {
@@ -80,7 +85,8 @@ export default function FileUpSettings() {
       fieldData.unit = 'MB'
     }
     console.log('max', e.target.value, fieldData)
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setFileFilter(value) {
@@ -90,19 +96,22 @@ export default function FileUpSettings() {
     } else {
       fieldData.exts = val.join(',._RF_,')
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   // const setMaxUpTyp = e => {
   //   if (e.target.value) fieldData.mxUpTyp = e.target.value
   //   else delete fieldData.mxUpTyp
 
-  //   setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  //          // eslint-disable-next-line no-param-reassign
+  setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   // }
 
   // const setUnit = e => {
   //   fieldData.unit = e.target.value
-  //   setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+  //          // eslint-disable-next-line no-param-reassign
+  setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   // }
 
   return (
@@ -161,7 +170,8 @@ export default function FileUpSettings() {
           fieldData={fieldData}
           type="exts"
           title="Error Message"
-          updateAction={() => setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))}
+          updateAction={() =>        // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))}
         />
       )} */}
     </div>

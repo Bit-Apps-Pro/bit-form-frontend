@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -30,7 +31,8 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
 
   const cancelModal = () => {
     fieldData.lbl = value
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     setLabelModal(false)
   }
 

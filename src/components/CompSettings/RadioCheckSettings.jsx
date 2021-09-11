@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
+import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -49,7 +50,8 @@ function RadioCheckSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setRound(e) {
@@ -58,19 +60,22 @@ function RadioCheckSettings() {
     } else {
       delete fieldData.round
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function rmvOpt(ind) {
     options.splice(ind, 1)
     fieldData.opt = options
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function addOpt() {
     options.push({ lbl: `Option ${options.length + 1}` })
     fieldData.opt = options
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setCheck(e, i) {
@@ -88,7 +93,8 @@ function RadioCheckSettings() {
       delete options[i].check
     }
     fieldData.opt = options
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setReq(e, i) {
@@ -106,7 +112,8 @@ function RadioCheckSettings() {
     fieldData.err.req.dflt = reqOpts ? `<p>${reqOpts} is required</p>` : '<p>This field is required</p>'
     fieldData.err.req.show = true
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setRadioRequired = e => {
@@ -120,7 +127,8 @@ function RadioCheckSettings() {
       delete fieldData.valid.req
       delete fieldData.mn
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setOptLbl(e, i) {
@@ -128,7 +136,8 @@ function RadioCheckSettings() {
     tmp.lbl = e.target.value
     options[i] = tmp
     fieldData.opt = options
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const openImportModal = () => {
@@ -154,7 +163,8 @@ function RadioCheckSettings() {
       fieldData.err.mn.show = true
       if (!isOptionRequired) setRadioRequired({ target: { checked: true } })
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setMax(e) {
@@ -168,7 +178,8 @@ function RadioCheckSettings() {
       fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
       fieldData.err.mx.show = true
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setDisabledOnMax = e => {
@@ -179,7 +190,8 @@ function RadioCheckSettings() {
       delete fieldData.valid.disableOnMax
     }
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (

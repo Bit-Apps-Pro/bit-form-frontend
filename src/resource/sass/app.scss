@@ -1509,6 +1509,20 @@ input[type="checkbox"].disabled:checked:before {
   text-overflow: ellipsis;
 }
 
+.fld-hide {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
 .blk {
   outline: none;
 

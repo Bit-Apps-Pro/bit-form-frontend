@@ -1,15 +1,16 @@
+import produce from 'immer'
 import { useContext } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { __ } from '../../Utils/i18nwrap'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
+import { deepCopy } from '../../Utils/Helpers'
+import { __ } from '../../Utils/i18nwrap'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
 import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
-import { deepCopy } from '../../Utils/Helpers'
 
 export default function PaypalSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -33,7 +34,8 @@ export default function PaypalSettings() {
       const localeArr = fieldData.locale.split(' - ')
       fieldData.locale = localeArr[localeArr.length - 1]
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setSubscription = e => {
@@ -49,7 +51,8 @@ export default function PaypalSettings() {
     delete fieldData.amount
     delete fieldData.amountFld
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setAmountType = e => {
@@ -58,7 +61,8 @@ export default function PaypalSettings() {
     delete fieldData.amount
     delete fieldData.amountFld
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setShippingType = e => {
@@ -67,7 +71,8 @@ export default function PaypalSettings() {
     delete fieldData.shipping
     delete fieldData.shippingFld
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setTaxType = e => {
@@ -76,7 +81,8 @@ export default function PaypalSettings() {
     delete fieldData.tax
     delete fieldData.taxFld
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setDescType = e => {
@@ -85,7 +91,8 @@ export default function PaypalSettings() {
     delete fieldData.description
     delete fieldData.descFld
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const getAmountFields = () => {

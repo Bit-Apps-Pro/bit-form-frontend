@@ -12,7 +12,7 @@ import { __ } from '../Utils/i18nwrap'
 import MapComponents from './MapComponents'
 import Downmenu from './Utilities/Downmenu'
 
-export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields, formID }) {
+export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneLayoutItem, fields, formID }) {
   const history = useHistory()
   const { reCaptchaV2 } = useContext(AppSettings)
 
@@ -99,7 +99,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, fields
           >
             <ChevronDownIcn size="19" />
           </button>
-          <div>asdsdfsdfasd</div>
+          <button type="button" onClick={() => cloneLayoutItem(layoutItem.i)}>Clone Field</button>
         </Downmenu>
       </div>
       <ComponentsByTheme />

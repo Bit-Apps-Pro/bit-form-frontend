@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
 import { memo } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $breakpoint, $fields, $layouts, $selectedFieldId } from '../../GlobalStates'
-import { cols } from '../../Utils/FormBuilderHelper'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
@@ -46,7 +45,8 @@ function TextFieldSettings() {
     } else {
       delete fieldData.valid.req
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setAutoComplete(e) {
@@ -55,7 +55,8 @@ function TextFieldSettings() {
     } else {
       delete fieldData.ac
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setAdminLabel(e) {
@@ -64,7 +65,8 @@ function TextFieldSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setPlaceholder(e) {
@@ -73,7 +75,8 @@ function TextFieldSettings() {
     } else {
       fieldData.ph = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setMin(e) {
@@ -86,7 +89,8 @@ function TextFieldSettings() {
       fieldData.err.mn.dflt = `<p>Minimum number is ${e.target.value}<p>`
       fieldData.err.mn.show = true
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   function setMax(e) {
@@ -99,7 +103,8 @@ function TextFieldSettings() {
       fieldData.err.mx.dflt = `<p>Maximum number is ${e.target.value}</p>`
       fieldData.err.mx.show = true
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setRegexr = e => {
@@ -119,7 +124,8 @@ function TextFieldSettings() {
         delete fieldData.valid.validations
       }
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setFlags = e => {
@@ -129,7 +135,8 @@ function TextFieldSettings() {
     } else {
       fieldData.valid.flags = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
@@ -178,7 +185,8 @@ function TextFieldSettings() {
       delete fieldData.err.regexr.show
     }
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setPasswordLimit = e => {
@@ -195,7 +203,8 @@ function TextFieldSettings() {
 
     fieldData.err.regexr.dflt = generatePasswordErrMsg(validations)
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   console.log('fieldData', fieldData)

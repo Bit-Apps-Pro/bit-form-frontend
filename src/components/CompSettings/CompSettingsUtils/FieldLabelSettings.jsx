@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -16,7 +17,8 @@ export default function FieldLabelSettings() {
     } else {
       fieldData.lbl = e.target.value
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const hideFieldLabel = e => {
@@ -26,7 +28,8 @@ export default function FieldLabelSettings() {
       delete fieldData.valid.hideLbl
     }
 
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (
