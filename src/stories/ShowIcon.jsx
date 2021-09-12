@@ -58,6 +58,7 @@ import RadioIcn from '../Icons/RadioIcn'
 import RazorPayIcn from '../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
 import RedoIcon from '../Icons/RedoIcon'
+import SearchIcon from '../Icons/SearchIcon'
 import Settings2 from '../Icons/Settings2'
 import SettingsIcn from '../Icons/SettingsIcn'
 import SpreadIcn from '../Icons/SpreadIcn'
@@ -294,14 +295,17 @@ export default function ShowIcon() {
       <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<ChevronDownIcn size="30" />'>
         <ChevronDownIcn size="30" />
       </button>
-      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<EyeIcon size="30" stroke="" />'>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<EyeIcon size="30" stroke="2" />'>
         <EyeIcon size="30" />
       </button>
-      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<EyeOffIcon size="30" stroke="" />'>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<EyeOffIcon size="30" stroke="2" />'>
         <EyeOffIcon size="30" />
       </button>
-      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<ChevronRightIcon size="30" stroke="" />'>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<ChevronRightIcon size="30" stroke="2" />'>
         <ChevronRightIcon size="30" />
+      </button>
+      <button onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name='<SearchIcon size="30" stroke="2" />'>
+        <SearchIcon size="24" />
       </button>
     </div>
   )
