@@ -7,15 +7,21 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $additionalSettings, $bits, $fields } from '../GlobalStates'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
-import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
+import Modal from './Utilities/Modal'
 import Cooltip from './Utilities/Cooltip'
 import SingleToggle2 from './Utilities/SingleToggle2'
+import TrashIcn from '../Icons/TrashIcn'
+import LoginIcn from '../Icons/LoginIcn'
+import FocusIcn from '../Icons/FocusIcn'
+import DBIcn from '../Icons/DBIcn'
+import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
+import EmptyIcn from '../Icons/EmptyIcn'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -25,6 +31,7 @@ export default function SingleFormSettings() {
   const { reCaptchaV3 } = useContext(AppSettings)
   const bits = useRecoilValue($bits)
   const { isPro } = bits
+  const [proModal, setProModal] = useState({ show: false, msg: '' })
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }
@@ -87,6 +94,26 @@ export default function SingleFormSettings() {
     // saveForm('addional', additionalSettings)
   }
 
+  const enableSubmission = e => {
+    const additionalSettings = deepCopy(additionalSetting)
+    if (!isPro) {
+      setProModal({ show: true, msg: 'Disable entry storing is in Pro Version!' })
+      return
+    }
+    if (e.target.checked) {
+      additionalSettings.enabled.submission = true
+    } else {
+      delete additionalSettings.enabled.submission
+    }
+    setadditional(additionalSettings)
+  }
+
+  const setCustomMsg = (e, typ) => {
+    const additionalSettings = deepCopy(additionalSetting)
+    additionalSettings.settings[typ][e.target.name] = e.target.value
+    setadditional(additionalSettings)
+  }
+
   const enableReCaptchav3 = e => {
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
@@ -133,6 +160,10 @@ export default function SingleFormSettings() {
 
   const toggleCaptureGCLID = e => {
     const additional = deepCopy(additionalSetting)
+    if (isPro) {
+      setProModal({ show: true, msg: 'Google Ads is in Pro Version!' })
+      return false
+    }
     if (e.target.checked) {
       additional.enabled.captureGCLID = true
     } else {
@@ -443,6 +474,29 @@ export default function SingleFormSettings() {
     // saveForm('addional', additional)
   }
 
+  const setAccordingEnable = (e, type, title) => {
+    const additional = deepCopy(additionalSetting)
+    if (!isPro) {
+      setProModal({ show: true, msg: `${title} is in Pro Version!` })
+      return true
+    }
+
+    let msg = ''
+    if (type === 'is_login') msg = 'You must be logged in.'
+    else msg = 'Empty form cannot be submitted.'
+
+    if (e.target.checked) {
+      if (!additional.settings[type]) {
+        additional.settings[type] = { message: __(msg, 'bitform') }
+      }
+      additional.enabled[type] = true
+    } else {
+      delete additional.enabled[type]
+      delete additional.settings[type]
+    }
+    setadditional(additional)
+  }
+
   return (
     <div>
       <h2>{__('Settings', 'bitform')}</h2>
@@ -458,12 +512,57 @@ export default function SingleFormSettings() {
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
+      <Accordions
+        customTitle={(
+          <b>
+            <span className="mr-2"><LoginIcn size={20} /></span>
+            {__('Require user to be logged in', 'bitform')}
+          </b>
+        )}
+        toggle
+        action={(e) => setAccordingEnable(e, 'is_login', 'User Require Login')}
+        checked={additionalSetting?.enabled?.is_login}
+        cls="w-6 mt-3"
+      >
+        <>
+          <div className="mb-2 ml-2">
+            <b>Error message</b>
+            <br />
+            <input type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'is_login')} value={additionalSetting.settings?.is_login?.message} />
+          </div>
+        </>
+      </Accordions>
+      <Accordions
+        customTitle={(
+          <b>
+            <span className="mr-2">
+              <EmptyIcn size="20" />
+            </span>
+            {__('Disallow empty form submission', 'bitform')}
+          </b>
+        )}
+        cls="w-6 mt-3"
+        toggle
+        action={(e) => setAccordingEnable(e, 'empty_submission', 'Empty Submission')}
+        checked={additionalSetting?.enabled?.empty_submission}
+      >
+        <>
+          <div className="mb-2 ml-2">
+            <b>Error message</b>
+            <br />
+            <input type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'empty_submission')} value={additionalSetting.settings?.empty_submission?.message} />
+          </div>
+        </>
+
+      </Accordions>
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
-          <div>
+          <div className="flx">
             <b>
-              <span className="btcd-icn icn-one mr-2" />
+              <span className="mr-2">
+                <FocusIcn size="20" />
+              </span>
               {__('Validate Form Input on Focus Lost', 'bitform')}
             </b>
           </div>
@@ -471,10 +570,25 @@ export default function SingleFormSettings() {
         </div>
       </div>
 
+      <div className="w-6 mt-3">
+        <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
+          <div className="flx">
+            <span className="mr-2">
+              <DBIcn size="20" />
+            </span>
+            <b>
+              {__('Disable entry storing in responses', 'bitform')}
+            </b>
+          </div>
+          <SingleToggle2 disabled={!isPro} action={enableSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
+        </div>
+      </div>
       <Accordions
         customTitle={(
           <b>
-            <span className="btcd-icn icn-one mr-2" />
+            <span className="mr-2">
+              <ReCaptchaIcn size="20" />
+            </span>
             {__('Enable ReCaptcha V3', 'bitform')}
           </b>
         )}
@@ -783,6 +897,23 @@ export default function SingleFormSettings() {
         )}
       </Accordions>
  */}
+      <div>
+        <Modal
+          sm
+          show={proModal.show}
+          setModal={() => setProModal({ show: false })}
+          title={__('Premium Feature', 'bitform')}
+          className="pro-modal"
+        >
+          <h4 className="txt-center mt-5">
+            {proModal.msg}
+          </h4>
+          <div className="txt-center">
+            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+          </div>
+
+        </Modal>
+      </div>
       <div className="mb-4 mt-4"><br /></div>
 
       <ConfirmModal
