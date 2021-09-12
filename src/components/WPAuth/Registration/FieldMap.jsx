@@ -18,7 +18,7 @@ export default function FieldMap({ i, type, formFields, field, userConf, setUser
 
   const handleCustomValue = (event, indx) => {
     const newConf = { ...userConf }
-    newConf[propName][indx].customValue = event.target.value
+    newConf[authType][propName][indx].customValue = event.target.value
     setUserConf(newConf)
   }
   const isRequired = !!customFields.find(fl => fl.key === field[fldName] && fl.required)
