@@ -1,12 +1,12 @@
-// import { useRecoilValue } from 'recoil'
-// import { $breakpoint, $layouts, $selectedFieldId } from '../GlobalStates'
+import { useRecoilValue } from 'recoil'
+import { $breakpoint, $layouts, $selectedFieldId } from '../GlobalStates'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
-  // const fldKey = useRecoilValue($selectedFieldId)
-  // const breakpoint = useRecoilValue($breakpoint)
-  // const layouts = useRecoilValue($layouts)
-  // const fldLayIndex = layouts[breakpoint].findIndex(lay => lay.i === fldKey)
-  // const isHidden = layouts[breakpoint][fldLayIndex]?.hidden || false
+  const fldKey = useRecoilValue($selectedFieldId)
+  const breakpoint = useRecoilValue($breakpoint)
+  const layouts = useRecoilValue($layouts)
+  const fldLayIndex = layouts[breakpoint].findIndex(lay => lay.i === fldKey)
+  const isHidden = layouts[breakpoint][fldLayIndex]?.hidden || false
 
   const err = fieldData.error || ''
   return (
