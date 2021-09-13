@@ -19,7 +19,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type }) {
 
   useEffect(() => {
     const tmpConf = { ...dataConf }
-    if (!tmpConf[type]?.forgot_map[0]?.forgotField) {
+    if (!tmpConf[type]?.forgot_map?.[0]?.forgotField) {
       tmpConf[type].forgot_map = forgotField.filter(fld => fld.required).map(fl => ({ formField: '', forgotField: fl.key, required: fl.required }))
     }
     setDataConf(tmpConf)

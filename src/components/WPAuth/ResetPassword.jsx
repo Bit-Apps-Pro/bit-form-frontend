@@ -26,7 +26,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
 
   useEffect(() => {
     const tmpConf = { ...dataConf }
-    if (!tmpConf[type]?.reset_map[0]?.resetField) {
+    if (!tmpConf[type]?.reset_map?.[0]?.resetField) {
       tmpConf[type].reset_map = resetPasswordFields.filter(fld => fld.required).map(fl => ({ formField: '', resetField: fl.key, required: fl.required }))
     }
     setDataConf(tmpConf)

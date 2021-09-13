@@ -19,7 +19,7 @@ export default function Registration({ formFields, dataConf, setDataConf, pages,
         setRoles(Object.values(res?.data))
       }
     })
-    if (!tmpConf[type]?.user_map[0]?.userField) {
+    if (!tmpConf[type]?.user_map?.[0]?.userField) {
       tmpConf[type].user_map = userFields.filter(fld => fld.required).map(fl => ({ formField: '', userField: fl.key, required: fl.required }))
     }
 

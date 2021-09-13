@@ -39,7 +39,7 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
 
   useEffect(() => {
     const tmpConf = { ...dataConf }
-    if (!tmpConf[type]?.login_map[0]?.loginField) {
+    if (!tmpConf[type]?.login_map?.[0]?.loginField) {
       tmpConf[type].login_map = loginFields.filter(fld => fld.required).map(fl => ({ formField: '', loginField: fl.key, required: fl.required }))
     }
     setDataConf(tmpConf)

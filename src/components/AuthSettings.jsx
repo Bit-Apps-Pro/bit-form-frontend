@@ -117,7 +117,7 @@ export default function AdditionalSettings() {
 
   const saveSettings = (e) => {
     e.preventDefault()
-    // setIsLoading(true)
+    setIsLoading(true)
     Object.keys(dataConf).forEach(key => type !== key && delete dataConf[key])
     dataConf.formId = formID
     dataConf.type = type
@@ -238,6 +238,7 @@ export default function AdditionalSettings() {
 
               <button
                 type="button"
+                id="secondary-update-btn"
                 onClick={(e) => saveSettings(e)}
                 className="btn btcd-btn-lg blue flx"
                 disabled={isLoading}
