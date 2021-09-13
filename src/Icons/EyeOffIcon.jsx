@@ -4,6 +4,7 @@ export default function EyeOffIcon({ size, stroke = 2 }) {
       width={size}
       height={size}
       viewBox="0 0 24 24"
+      stroke="currentColor"
       strokeWidth={stroke}
       className="svg-icn"
     >
