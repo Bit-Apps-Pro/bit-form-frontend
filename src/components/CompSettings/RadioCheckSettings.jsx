@@ -18,6 +18,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
 
 function RadioCheckSettings() {
@@ -261,6 +262,27 @@ function RadioCheckSettings() {
           </>
         )
       }
+      <div className="pos-rel">
+        {!bits.isPro && (
+          <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+            <div className="pro">
+              {__('Available On', 'bitform')}
+              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
+            </div>
+          </div>
+        )}
+        <UniqField
+          type="entryUnique"
+          isUnique="isEntryUnique"
+          title="Validate as Entry Unique"
+          tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        />
+      </div>
       <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
