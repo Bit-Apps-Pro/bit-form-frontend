@@ -154,7 +154,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       // setLay(extendLayout(newLays))
       setLayouts(newLays)
       setLay(newLays)
-      console.log('layout changed')
     }
   }
 
