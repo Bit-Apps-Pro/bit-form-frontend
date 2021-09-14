@@ -117,7 +117,11 @@ export default function FormBuilderHistory({ }) {
             <ul className={css(builderHistoryStyle.list)}>
               {histories.map((history, indx) => (
                 <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
-                  <button type="button" className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`} onClick={() => handleHistory(indx)}>
+                  <button
+                    type="button"
+                    className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
+                    onClick={() => handleHistory(indx)}
+                  >
                     {history.event}
                   </button>
                 </li>
