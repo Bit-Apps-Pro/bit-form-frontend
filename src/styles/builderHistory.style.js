@@ -12,8 +12,7 @@ const builderHistoryStyle = {
 
   btn: {
     b: 0,
-    p: '8px 8px',
-    pr: 36,
+    p: '5px 10px',
     m: 1,
     w: '100%',
     brs: 8,
