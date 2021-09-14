@@ -7,6 +7,7 @@ const customProperties = {
   br: $ => ({ borderRight: $ }),
   bb: $ => ({ borderBottom: $ }),
   brs: $ => ({ borderRadius: Number.isInteger($) ? `${$}px` : $ }),
+  bcr: $ => ({ borderColor: $ }),
 
   bd: $ => ({ background: $ }),
   cr: $ => ({ color: $ }),

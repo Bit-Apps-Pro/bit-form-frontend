@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-useless-escape */
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
 import { memo, useState } from 'react'
+import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -37,7 +39,7 @@ import StyleAccordion from '../CompSettings/StyleCustomize/ChildComp/StyleAccord
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
   const [searchData, setSearchData] = useState([])
-  const [isTrue, setIsTrue] = useState(false)
+
   const tools = [
     {
       groupTitle: 'Basic Fields',
@@ -368,7 +370,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       fields: [
         {
           name: __('Paypal', 'bitform'),
-          keywords: 'Paypal, payment',
+          keywords: 'Paypal, Payment, payment, paypal',
           icn: <PaypalIcn w="23" />,
           pos: { h: 5, w: 6, i: 'n_blk', minH: 3, maxH: 7, minW: 2 },
           elm: {
@@ -386,7 +388,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         },
         {
           name: __('Razorpay', 'bitform'),
-          keywords: 'Paypal, payment ',
+          keywords: 'Razorpay, razorpay, Payment, payment',
           icn: <RazorPayIcn w="17" h="23" />,
           pos: { h: 2, w: 6, i: 'n_blk', minH: 2, maxH: 7, minW: 2 },
           elm: {
@@ -419,18 +421,24 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   ]
 
   const searchHandler = (e) => {
-    const searchTool = e.target.value
-    tools.map(item => {
-      // eslint-disable-next-line no-unused-vars
-      const searchVlu = item.fields.filter(field => (field.keywords.includes(searchTool)))
+    const searchTool = e.target.value.trim()
+    const searchItem = []
 
-      if (searchVlu.length > 0) {
-        setSearchData(searchVlu)
-        setIsTrue(true)
-      }
-    })
+    if (searchTool !== '') {
+      tools.map(item => {
+        const itm = item.fields.filter(field => (field.keywords.includes(searchTool)))
+        searchItem.push(...itm)
+      })
+    } else {
+      // eslint-disable-next-line no-const-assign
+      setSearchData([])
+    }
+    console.log(searchItem.length)
+    if (searchItem.length > 0) {
+      setSearchData(searchItem)
+    }
   }
-
+  console.log(searchData.length)
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
       {/* <div className="btcd-toolbar-title">
@@ -438,15 +446,17 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         <button className="icn-btn toolbar-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div> */}
       <div className={css(Toolbars.fields_search)}>
-        <input type="text" name="searchIcn" onChange={searchHandler} className={css(Toolbars.search_field)} />
-        <span className={css(Toolbars.search_icn)}>
-          <SearchIcon size="20" />
-        </span>
+        <label htmlFor="search-icon">
+          <span className={css(Toolbars.search_icn)}>
+            <SearchIcon size="20" />
+          </span>
+        </label>
+        <input id="search-icon" type="text" name="searchIcn" onChange={searchHandler} className={css(Toolbars.search_field)} />
       </div>
-      {!isTrue && tools.map(grp => (
-        <StyleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle}>
+      <Scrollbars autoHide style={{ maxWidth: 400 }}>
+        {searchData && (
           <div className={css(Toolbars.tool_bar)}>
-            {grp.fields.map((fl, i) => (
+            {searchData.map((fl, i) => (
               <div tabIndex="0" key={`tool-index-${i + 9}`} type="button" role="button" className={css(Toolbars.tool)} draggable="true" unselectable="on">
                 <span className={css(Toolbars.tool_icn)}>
                   {fl.icn}
@@ -455,8 +465,22 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
               </div>
             ))}
           </div>
-        </StyleAccordion>
-      ))}
+        )}
+        {searchData.length === 0 && tools.map(grp => (
+          <StyleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle}>
+            <div className={css(Toolbars.tool_bar)}>
+              {grp.fields.map((fl, i) => (
+                <div tabIndex="0" key={`tool-index-${i + 9}`} type="button" role="button" className={css(Toolbars.tool)} draggable="true" unselectable="on">
+                  <span className={css(Toolbars.tool_icn)}>
+                    {fl.icn}
+                  </span>
+                  {fl.name}
+                </div>
+              ))}
+            </div>
+          </StyleAccordion>
+        ))}
+      </Scrollbars>
 
       {/* {useMemo(() => (
         <Scrollbars autoHide style={{ maxWidth: 400 }}>

@@ -19,11 +19,16 @@ const Toolbars = {
     oe: 'none',
     b: '1px solid var(--white-0-75) !important',
     brs: '9px !important',
+    pl: '25px !important',
+    '&:focus': {
+      bs: '0px 0px 0px 3px var(--b-100-64-40) !important',
+      bcr: 'var(--b-92-62) !important',
+    },
   },
   search_icn: {
     pn: 'absolute',
     tp: 4,
-    rt: 4,
+    lt: 4,
     cr: 'var(--white-0-75)',
     cur: 'pointer',
   },
