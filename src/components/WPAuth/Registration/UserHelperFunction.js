@@ -37,11 +37,3 @@ export const checkMappedUserFields = (data, type, field) => {
   }
   return true
 }
-export const checkMappedMetaboxFields = data => {
-  const mappedFields = data?.metabox_map ? data.metabox_map.filter(mappedField => !mappedField.formField && mappedField.metaboxField && mappedField.required) : []
-  if (mappedFields.length > 0) {
-    return false
-  }
-
-  return true
-}
