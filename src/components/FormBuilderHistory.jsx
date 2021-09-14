@@ -6,6 +6,7 @@ import EllipsisIcon from '../Icons/EllipsisIcon'
 import RedoIcon from '../Icons/RedoIcon'
 import UndoIcon from '../Icons/UndoIcon'
 import ut from '../styles/2.utilities'
+import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { compactNewLayoutItem, compactRemovedLayoutItem } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
@@ -111,19 +112,17 @@ export default function FormBuilderHistory({ }) {
           <button type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${showHistory ? 'active' : ''}`}>
             <EllipsisIcon size="38" />
           </button>
-          <div>
-            {histories.map((history, indx) => (
-              <span
-                key={`bf-${indx * 2}`}
-                role="button"
-                tabIndex="-1"
-                style={{ display: 'block', width: '100%', padding: 10, cursor: 'pointer', background: active === indx ? 'red' : '', color: active >= indx ? 'white' : 'gray' }}
-                onClick={() => handleHistory(indx)}
-                onKeyPress={() => handleHistory(indx)}
-              >
-                {history.event}
-              </span>
-            ))}
+
+          <div className={css(builderHistoryStyle.menu)}>
+            <ul className={css(builderHistoryStyle.list)}>
+              {histories.map((history, indx) => (
+                <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
+                  <button type="button" className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`} onClick={() => handleHistory(indx)}>
+                    {history.event}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </Downmenu>
       </div>
