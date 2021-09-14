@@ -6,6 +6,11 @@ const builderHistoryStyle = {
     pb: 2,
     bb: '1px solid var(--lightgray)',
   },
+  secondary: {
+    dy: 'block',
+    pt: 2,
+    pb: 2,
+  },
   list: {
     m: 0,
     dy: 'block',
@@ -27,6 +32,10 @@ const builderHistoryStyle = {
     bc: 'var(--white-100)',
     cur: 'pointer',
     '&:hover': { bc: 'var(--white-0-93)' },
+    '&:focus-visible': {
+      oe: 'none',
+      bs: '0 0 0 2px var(--b-50) inset',
+    },
     '&.active': { fw: 500, bc: 'var(--white-0-93)' },
     '&.unactive': { cr: 'var(--white-0-0-64)' },
   },

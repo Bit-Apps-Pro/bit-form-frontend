@@ -115,6 +115,11 @@ export default function FormBuilderHistory({ }) {
 
           <div className={css(builderHistoryStyle.menu)}>
             <p className={css(builderHistoryStyle.title)}>History</p>
+            {!histories.length && (
+              <span className={css(builderHistoryStyle.secondary)}>
+                no data found
+              </span>
+            )}
             <ul className={css(builderHistoryStyle.list)}>
               {histories.map((history, indx) => (
                 <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
