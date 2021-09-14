@@ -17,6 +17,7 @@ import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import SnackMsg from './Utilities/SnackMsg'
 import Loader from './Loaders/Loader'
 import { fogotPassTamplate, activationTamplate, activationMessage } from '../Utils/StaticData/tamplate'
+import produce from 'immer'
 
 export default function AdditionalSettings() {
   const bits = useRecoilValue($bits)
@@ -118,18 +119,19 @@ export default function AdditionalSettings() {
   const saveSettings = (e) => {
     e.preventDefault()
     setIsLoading(true)
-    const tmpConf = { ...dataConf }
-    Object.keys(dataConf).forEach(key => type !== key && delete dataConf[key])
-    dataConf.formId = formID
-    dataConf.type = type
-    dataConf.status = status
-    const submission = validation()
+    const tmpConf = produce(dataConf, draft => {
+      Object.keys(draft).forEach(key => type !== key && delete draft[key])
+      draft.formId = formID
+      draft.type = type
+      draft.status = status
+    })
 
+    const submission = validation()
     if (!submission) {
       setIsLoading(false)
       return
     }
-    const prom = bitsFetch(dataConf,
+    const prom = bitsFetch(tmpConf,
       'bitforms_save_auth_settings')
       .then((res) => {
         if (res !== undefined && res.success) {
@@ -141,7 +143,6 @@ export default function AdditionalSettings() {
       loading: __('Saving...', 'bitform'),
       error: __('Something went wrong, Try again.', 'bitform'),
     })
-    setDataConf(tmpConf)
   }
 
   const userManagementType = () => {

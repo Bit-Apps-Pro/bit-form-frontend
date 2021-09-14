@@ -1,20 +1,20 @@
+/* eslint-disable no-param-reassign */
 // eslint-disable-next-line no-unused-vars
+import produce from 'immer'
 import { __ } from '../../../Utils/i18nwrap'
 
 export const addFieldMap = (authType, fldProp, i, confTmp, setConf) => {
-  const newConf = { ...confTmp }
-  newConf[authType][fldProp].splice(i, 0, {})
-
-  setConf({ ...newConf })
+  setConf(tmpConf => produce(tmpConf, draft => {
+    draft[authType][fldProp].splice(i, 0, {})
+  }))
 }
 
 export const delFieldMap = (authType, fldProp, i, confTmp, setConf) => {
-  const newConf = { ...confTmp }
-  if (newConf[authType][fldProp].length > 1) {
-    newConf[authType][fldProp].splice(i, 1)
-  }
-
-  setConf({ ...newConf })
+  setConf(tmpConf => produce(tmpConf, draft => {
+    if (draft[authType][fldProp].length > 1) {
+      draft[authType][fldProp].splice(i, 1)
+    }
+  }))
 }
 
 export const handleFieldMapping = (authType, fldProp, event, index, conftTmp, setConf, formFields, setSnackbar) => {
@@ -26,8 +26,10 @@ export const handleFieldMapping = (authType, fldProp, event, index, conftTmp, se
     setSnackbar({ show: true, msg: 'should be selected email field..' })
     return
   }
-  newConf[authType][fldProp][index][event.target.name] = event.target.value
-  setConf({ ...newConf })
+
+  setConf(tmpConf => produce(tmpConf, draft => {
+    draft[authType][fldProp][index][event.target.name] = event.target.value
+  }))
 }
 
 export const checkMappedUserFields = (data, type, field) => {

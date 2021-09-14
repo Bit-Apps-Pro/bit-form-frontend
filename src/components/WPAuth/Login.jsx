@@ -1,9 +1,9 @@
+/* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import produce from 'immer'
 import { useEffect } from 'react'
-import Cooltip from '../Utilities/Cooltip'
 import FieldMap from './FieldMap'
-import { addFieldMap } from './HelperFunction'
 
 function Login({ fields, dataConf, setDataConf, pages, type }) {
   const loginFields = [
@@ -25,23 +25,27 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
   ]
 
   const inputHandler = (e) => {
-    const tmpConf = { ...dataConf }
-    const { name, value } = e.target
-    tmpConf[type][name] = value
-    setDataConf(tmpConf)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      const { name, value } = e.target
+      // eslint-disable-next-line no-param-reassign
+      draft[type][name] = value
+    }))
   }
 
   const handlePage = (e) => {
-    const tmpConf = { ...dataConf }
-    tmpConf[type].redirect_url = e.target.value
-    setDataConf(tmpConf)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      // eslint-disable-next-line no-param-reassign
+      draft[type].redirect_url = e.target.value
+    }))
   }
 
   useEffect(() => {
-    const tmpConf = { ...dataConf }
-    if (!tmpConf[type]?.login_map?.[0]?.loginField) {
-      tmpConf[type].login_map = loginFields.filter(fld => fld.required).map(fl => ({ formField: '', loginField: fl.key, required: fl.required }))
-    }
+    const tmpConf = produce(dataConf, draft => {
+      if (!draft[type]?.login_map?.[0]?.loginField) {
+        draft[type].login_map = loginFields.filter(fld => fld.required).map(fl => ({ formField: '', loginField: fl.key, required: fl.required }))
+      }
+    })
+
     setDataConf(tmpConf)
   }, [])
 
