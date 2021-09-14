@@ -99,6 +99,5 @@ const app = {
     m: 'auto',
     p: 12,
   },
-
 }
 export default app

@@ -285,7 +285,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
+          <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'visible' }}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
