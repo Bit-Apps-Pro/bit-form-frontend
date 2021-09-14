@@ -118,6 +118,7 @@ export default function AdditionalSettings() {
   const saveSettings = (e) => {
     e.preventDefault()
     setIsLoading(true)
+    const tmpConf = { ...dataConf }
     Object.keys(dataConf).forEach(key => type !== key && delete dataConf[key])
     dataConf.formId = formID
     dataConf.type = type
@@ -140,6 +141,7 @@ export default function AdditionalSettings() {
       loading: __('Saving...', 'bitform'),
       error: __('Something went wrong, Try again.', 'bitform'),
     })
+    setDataConf(tmpConf)
   }
 
   const userManagementType = () => {
