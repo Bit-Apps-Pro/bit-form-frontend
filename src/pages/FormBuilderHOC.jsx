@@ -59,6 +59,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [styleLoading, setstyleLoading] = useState(true)
   const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
+  const [showToolBar, setShowToolbar] = useState(false)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   // eslint-disable-next-line no-console
@@ -146,10 +147,10 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     sessionStorage.setItem('btcd-fs', bitCipher(oldStyleText))
   }
 
-  const setTolbar = useCallback(() => {
+  const toggleToolBar = useCallback(() => {
     const res = conRef.current.getResizer()
     if (res.getSectionSize(0) >= 160) {
-      res.resizeSection(0, { toSize: 50 })
+      res.resizeSection(0, { toSize: 0 })
       setTolbarSiz(true)
       localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: true }))
     } else {
@@ -231,7 +232,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <>
-      <OptionToolBar setResponsiveView={setResponsiveView} />
+      <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
       <Container
         ref={conRef}
         style={{ height: '100vh' }}
@@ -242,14 +243,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         <style>{styleSheet}</style>
         <Section
           className="tool-sec"
-          defaultSize={toolbarOff ? 50 : 165}
-          minSize={notIE && 58}
+          defaultSize={showToolBar ? 0 : 165}
+          style={{ background: 'gray' }}
         >
           <ToolBar
             setNewData={addNewData}
             className="tile"
             tolbarSiz={tolbarSiz}
-            setTolbar={setTolbar}
+            setTolbar={toggleToolBar}
           />
         </Section>
         <Bar className="bar bar-l" />

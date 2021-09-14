@@ -91,10 +91,10 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
         {label && <span>{label}</span>}
       </button>
       <div className="wdt-200">
-        <div className="mb-2 f-5">Are you sure ?</div>
+        <div className="mb-2 mt-1"><b>Are you sure ?</b></div>
         <div className="f-12 mb-1 f-rob">After deleting this field, you will lose all previous responses of this field.</div>
         <div className="f-12 mb-2 f-rob">
-          <b>Tip : </b>
+          <i>Tip : </i>
           You can hide this field instead.
         </div>
         <div className="flx flx-c">

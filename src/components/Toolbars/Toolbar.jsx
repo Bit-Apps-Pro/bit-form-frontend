@@ -35,6 +35,7 @@ import Toolbars from '../../styles/Toolbars.style'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import StyleAccordion from '../CompSettings/StyleCustomize/ChildComp/StyleAccordion'
+import Tools from './Tools'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
@@ -60,7 +61,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         {
           name: __('User Name', 'bitform'),
           keywords: 'User Name, Username, User name, username, user name, text',
-          icn: <UserIcn size="23" />,
+          icn: <UserIcn size="22" />,
           pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
           elm: {
             typ: 'username',
@@ -467,15 +468,13 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </div>
         )}
         {searchData.length === 0 && tools.map(grp => (
-          <StyleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle}>
+          <StyleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle} open>
             <div className={css(Toolbars.tool_bar)}>
-              {grp.fields.map((fl, i) => (
-                <div tabIndex="0" key={`tool-index-${i + 9}`} type="button" role="button" className={css(Toolbars.tool)} draggable="true" unselectable="on">
-                  <span className={css(Toolbars.tool_icn)}>
-                    {fl.icn}
-                  </span>
-                  {fl.name}
-                </div>
+              {grp.fields.map((fld, i) => (
+                <Tools key={fld.name} setNewData={setNewData} value={{ fieldData: fld.elm, fieldSize: fld.pos }}>
+                  <span className="mr-1 tool-icn">{fld.icn}</span>
+                  {!tolbarSiz && fld.name}
+                </Tools>
               ))}
             </div>
           </StyleAccordion>
