@@ -1,4 +1,11 @@
 const builderHistoryStyle = {
+  menu: { mnw: 150 },
+  title: {
+    mt: 0,
+    mb: 5,
+    pb: 2,
+    bb: '1px solid var(--lightgray)',
+  },
   list: {
     m: 0,
     dy: 'block',
