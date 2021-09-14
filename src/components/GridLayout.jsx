@@ -259,7 +259,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         const { x, y, w, h, minH, maxH, minW } = layouts[brkpnt][layIndx]
         const newLayoutItem = { i: newBlk, x, y: y + h, w, h, minH, maxH, minW }
         newLayItem[brkpnt] = newLayoutItem
-        draft[brkpnt].splice(layIndx, 0, newLayoutItem)
+        draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
       })
     })
 
