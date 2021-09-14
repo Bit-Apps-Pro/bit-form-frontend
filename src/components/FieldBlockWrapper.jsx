@@ -173,7 +173,6 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
                     className={`${css(context.btn)}}`}
                     unselectable="on"
                     draggable="false"
-                    style={{ cursor: 'pointer' }}
                     title={__('More Options', 'bitform')}
                   >
                     <EyeOffIcon size="19" />

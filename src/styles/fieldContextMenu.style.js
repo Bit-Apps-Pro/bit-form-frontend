@@ -15,7 +15,6 @@ const context = {
   item: {
     pn: 'relative',
     mb: 0,
-    fw: 500,
   },
 
   btn: {
@@ -24,11 +23,16 @@ const context = {
     pr: 36,
     w: '100%',
     brs: 8,
+    fw: 500,
     flx: 'align-center',
     pn: 'relative',
     bc: 'var(--white-100)',
     cur: 'pointer',
     '&:hover': { bc: 'var(--white-0-93)' },
+    '&:focus-visible': {
+      oe: 'none',
+      bs: '0 0 0 2px var(--b-50) inset',
+    },
     '& svg': {
       'flex-shrink': 0,
       w: 20,
