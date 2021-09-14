@@ -1,23 +1,27 @@
 import { useState } from 'react'
+import produce from 'immer'
 import { __ } from '../../Utils/i18nwrap'
 import TinyMCE from '../Utilities/TinyMCE'
 import Modal from '../Utilities/Modal'
+
 
 export default function CustomMassageMdl({ dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title }) {
   const [tem, setTem] = useState({ body: dataConf[type].acti_succ_msg ? dataConf[type].acti_succ_msg : tamplate })
 
   const handleBody = value => {
-    const tmpConf = { ...dataConf }
     setTem(prev => ({ ...prev, body: value }))
-    tmpConf[type].acti_succ_msg = value
-    setDataConf(tmpConf)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      // eslint-disable-next-line no-param-reassign
+      draft[type].acti_succ_msg = value
+    }))
   }
 
   const cancelModal = () => {
-    const tmpConf = { ...dataConf }
-    tmpConf[type].acti_succ_msg = tamplate
     setTimeout(() => {
-      setDataConf(tmpConf)
+      setDataConf(tmpConf => produce(tmpConf, draft => {
+        // eslint-disable-next-line no-param-reassign
+        draft[type].acti_succ_msg = tamplate
+      }))
       setshowMdl(false)
     })
   }

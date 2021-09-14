@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
+import produce from 'immer'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import UserMetaField from './UserMetaField'
@@ -12,16 +14,18 @@ export default function Registration({ formFields, dataConf, setDataConf, pages,
   const { formID } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
   const [roles, setRoles] = useState([])
+
   useEffect(() => {
-    const tmpConf = { ...dataConf }
     bitsFetch({}, 'bitforms_get_wp_roles').then((res) => {
       if (res?.success && res !== undefined) {
         setRoles(Object.values(res?.data))
       }
     })
-    if (!tmpConf[type]?.user_map[0]?.userField) {
-      tmpConf[type].user_map = userFields.filter(fld => fld.required).map(fl => ({ formField: '', userField: fl.key, required: fl.required }))
-    }
+    const tmpConf = produce(dataConf, draft => {
+      if (!draft[type]?.user_map?.[0]?.userField) {
+        draft[type].user_map = userFields.filter(fld => fld.required).map(fl => ({ formField: '', userField: fl.key, required: fl.required }))
+      }
+    })
 
     setDataConf(tmpConf)
   }, [])
