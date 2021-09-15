@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
+import produce from 'immer'
 import { __ } from '../Utils/i18nwrap'
 import { $bits, $fieldsArr } from '../GlobalStates'
 import CheckBox from './Utilities/CheckBox'
@@ -17,7 +18,6 @@ import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import SnackMsg from './Utilities/SnackMsg'
 import Loader from './Loaders/Loader'
 import { fogotPassTamplate, activationTamplate, activationMessage } from '../Utils/StaticData/tamplate'
-import produce from 'immer'
 
 export default function AdditionalSettings() {
   const bits = useRecoilValue($bits)
@@ -25,7 +25,7 @@ export default function AdditionalSettings() {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoad, setIsLoad] = useState(false)
   const formFields = useRecoilValue($fieldsArr)
-  const [type, setType] = useState()
+  const [type, setType] = useState('register')
   const { formID } = useParams()
 
   const [dataConf, setDataConf] = useState({
@@ -65,7 +65,7 @@ export default function AdditionalSettings() {
         tmpConf[res.data[0]?.integration_name] = JSON.parse(res.data[0]?.integration_details)
         setDataConf(tmpConf)
         setType(res.data[0]?.integration_name)
-        setStatus(res.data[0]?.status)
+        setStatus(Number(res.data[0]?.status))
       }
       setIsLoad(false)
     })
@@ -125,7 +125,6 @@ export default function AdditionalSettings() {
       draft.type = type
       draft.status = status
     })
-
     const submission = validation()
     if (!submission) {
       setIsLoading(false)
@@ -236,7 +235,7 @@ export default function AdditionalSettings() {
                 <label htmlFor="status">
                   <b>{__('Enable', 'bitform')}</b>
                 </label>
-                <SingleToggle2 action={handleStatus} checked={status} className="ml-4 flx" />
+                <SingleToggle2 action={handleStatus} checked={status === 1} className="ml-4 flx" />
               </div>
 
               <button
