@@ -21,6 +21,7 @@ import context from '../styles/fieldContextMenu.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
 import Downmenu from './Utilities/Downmenu'
 
@@ -76,35 +77,6 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
     return false
   }
 
-  const DeleteButton = ({ placement, className, label }) => (
-    <Downmenu place={placement || 'top'}>
-      <button
-        data-close
-        type="button"
-        className={className}
-        unselectable="on"
-        draggable="false"
-        style={{ cursor: 'pointer' }}
-        title={__('Remove', 'bitform')}
-      >
-        <TrashIcn size="19" />
-        {label && <span>{label}</span>}
-      </button>
-      <div className="wdt-200">
-        <div className="mb-2 mt-1"><b>Are you sure ?</b></div>
-        <div className="f-12 mb-1 f-rob">After deleting this field, you will lose all previous responses of this field.</div>
-        <div className="f-12 mb-2 f-rob">
-          <i>Tip : </i>
-          You can hide this field instead.
-        </div>
-        <div className="flx flx-c">
-          <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
-          <button onClick={() => removeLayoutItem(layoutItem.i)} className="tip-btn red-btn" type="button">Delete</button>
-        </div>
-      </div>
-    </Downmenu>
-  )
-
   return (
     <>
       <div className="blk-icn-wrp pos-abs flx">
@@ -132,7 +104,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
         >
           <EditIcn size="20" />
         </button>
-        <DeleteButton className="g-c us-n no-drg blk-wrp-btn" />
+        <FieldDeleteButton className="g-c us-n no-drg blk-wrp-btn" removeLayoutItem={removeLayoutItem} fieldId={layoutItem.i} />
         <Downmenu>
           <button
             data-close
@@ -215,7 +187,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
                 </Downmenu>
               </li>
               <li className={css(context.item)}>
-                <DeleteButton placement="bottom" className={css(context.btn, context.delete)} label="Remove" />
+                <FieldDeleteButton placement="bottom" className={css(context.btn, context.delete)} label="Remove" removeLayoutItem={removeLayoutItem} fieldId={layoutItem.i} />
               </li>
             </ul>
           </div>
