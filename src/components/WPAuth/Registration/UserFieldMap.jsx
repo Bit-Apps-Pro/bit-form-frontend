@@ -110,7 +110,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <br />
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
-            <div className="f-m">{__('Redirect Page:', 'bitform')}</div>
+            <div className="f-m fw-500">{__('Redirect Page:', 'bitform')}</div>
             <select className="btcd-paper-inp mt-1" value={userConf[type]?.redirect_url} onChange={e => handlePage(e)}>
               <option value="">{__('Custom Link', 'bitform')}</option>
               {pages && pages.map((urlDetail, ind) => (
@@ -119,7 +119,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             </select>
           </div>
           <div className="w-5 ml-2">
-            <div className="f-m">Link</div>
+            <div className="f-m fw-500">Link</div>
             <input onChange={handleInput} name="redirect_url" className="btcd-paper-inp mt-1" type="text" value={userConf[type]?.redirect_url} />
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
 
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
-            <div className="f-m">{__('WP User Role', 'bitform')}</div>
+            <div className="f-m fw-500">{__('WP User Role', 'bitform')}</div>
             <select name="user_role" onChange={handleInput} value={userConf[type]?.user_role} className="btcd-paper-inp mt-1">
               <option disabled selected>Select User Role</option>
               {roles.map((role, index) => (
@@ -137,7 +137,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             </select>
           </div>
           <div className="w-5 ml-2">
-            <div className="f-m">
+            <div className="f-m fw-500">
               {__('Success Messages', 'bitform')}
             </div>
 
@@ -147,7 +147,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <br />
         <div className="flx integ-fld-wrp">
           <div className="w-5">
-            <div className="f-m">{__('User Approval  Method:', 'bitform')}</div>
+            <div className="f-m fw-500">{__('User Approval  Method:', 'bitform')}</div>
             <select className="btcd-paper-inp mt-1" name="activation" value={userConf[type]?.activation} onChange={handleInput}>
               <option disabled selected value="">{__('select approval method', 'bitform')}</option>
               <option value="auto_approve">Auto Approve</option>

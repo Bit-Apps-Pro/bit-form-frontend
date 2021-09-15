@@ -76,7 +76,7 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
       <br />
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
-          <div className="f-m">{__('Redirect Page:', 'bitform')}</div>
+          <div className="f-m fw-500">{__('Redirect Page:', 'bitform')}</div>
           <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={e => handlePage(e)}>
             <option value="">{__('Custom Link', 'bitform')}</option>
             {pages && pages.map((urlDetail, ind) => (
@@ -85,12 +85,12 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
           </select>
         </div>
         <div className="w-5 ml-2">
-          <div className="f-m">Link:</div>
+          <div className="f-m fw-500">Link:</div>
           <input onChange={inputHandler} name="redirect_url" className="btcd-paper-inp mt-1" type="text" value={dataConf[type]?.redirect_url} />
         </div>
       </div>
       <br />
-      <div className="f-m">Login Success Message </div>
+      <div className="f-m fw-500">Login Success Message </div>
       <input onChange={e => inputHandler(e)} name="succ_msg" className="btcd-paper-inp mt-1 w-5" type="text" value={dataConf[type]?.succ_msg} />
     </div>
   )
