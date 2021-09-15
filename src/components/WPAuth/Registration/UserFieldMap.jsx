@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import produce from 'immer'
 import { __ } from '../../../Utils/i18nwrap'
 import Cooltip from '../../Utilities/Cooltip'
 import { userFields } from '../../../Utils/StaticData/userField'
@@ -16,25 +17,33 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
   const [showMsgMdl, setshowMsgMdl] = useState(false)
 
   const handleInput = e => {
-    const newConf = { ...userConf }
-    newConf[type][e.target.name] = e.target.value
-    setUserConf(newConf)
+    setUserConf(tmpConf => produce(tmpConf, draft => {
+      const { name, value } = e.target
+      // eslint-disable-next-line no-param-reassign
+      draft[type][name] = value
+    }))
   }
 
   const handleCheckd = e => {
-    const newConf = { ...userConf }
-    if (e.target.checked) {
-      newConf[type][e.target.name] = true
-    } else {
-      delete newConf[type][e.target.name]
-    }
-    setUserConf(newConf)
+    setUserConf(tmpConf => produce(tmpConf, draft => {
+      const { name, checked } = e.target
+      // eslint-disable-next-line no-param-reassign
+      if (checked) {
+        // eslint-disable-next-line no-param-reassign
+        draft[type][name] = true
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        delete draft[type][name]
+      }
+    }))
   }
 
   const handlePage = (e) => {
-    const tmpConf = { ...userConf }
-    tmpConf[type].redirect_url = e.target.value
-    setUserConf(tmpConf)
+    setUserConf(tmpConf => produce(tmpConf, draft => {
+      const { value } = e.target
+      // eslint-disable-next-line no-param-reassign
+      draft[type].redirect_url = value
+    }))
   }
 
   return (
@@ -79,7 +88,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
 
         <div className="flx">
           <div className="w-5 mt-5 ">
-            <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification', 'bitform')} checked={!!userConf[type].user_notify} value={false} />
+            <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification', 'bitform')} checked={!!userConf[type]?.user_notify} value={false} />
             <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
               <div className="txt-body">
                 When this option is enabled, a welcome email will be sent to WordPress after registration.
@@ -88,7 +97,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             </Cooltip>
           </div>
           <div className="w-5 mt-5">
-            <TableCheckBox name="admin_notify" onChange={handleCheckd} title={__('Admin Email Notification', 'bitform')} checked={!!userConf[type].admin_notify} value={false} />
+            <TableCheckBox name="admin_notify" onChange={handleCheckd} title={__('Admin Email Notification', 'bitform')} checked={!!userConf[type]?.admin_notify} value={false} />
             <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
               <div className="txt-body">
                 If this option is enabled, e-mail will be sent from WordPress to admin.
@@ -120,7 +129,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
             <div className="f-m">{__('WP User Role', 'bitform')}</div>
-            <select name="user_role" onChange={handleInput} value={userConf[type].user_role} className="btcd-paper-inp mt-1">
+            <select name="user_role" onChange={handleInput} value={userConf[type]?.user_role} className="btcd-paper-inp mt-1">
               <option disabled selected>Select User Role</option>
               {roles.map((role, index) => (
                 <option key={`acf-${index * 2}`} value={role?.key}>{role?.name}</option>

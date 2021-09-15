@@ -13,10 +13,11 @@ import Register from './WPAuth/Registration/Registration'
 import bitsFetch from '../Utils/bitsFetch'
 import LoaderSm from './Loaders/LoaderSm'
 import SingleToggle2 from './Utilities/SingleToggle2'
-import { checkMappedUserFields, checkMappedMetaboxFields } from './WPAuth/Registration/UserHelperFunction'
+import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import SnackMsg from './Utilities/SnackMsg'
 import Loader from './Loaders/Loader'
 import { fogotPassTamplate, activationTamplate, activationMessage } from '../Utils/StaticData/tamplate'
+import produce from 'immer'
 
 export default function AdditionalSettings() {
   const bits = useRecoilValue($bits)
@@ -117,18 +118,20 @@ export default function AdditionalSettings() {
 
   const saveSettings = (e) => {
     e.preventDefault()
-    // setIsLoading(true)
-    Object.keys(dataConf).forEach(key => type !== key && delete dataConf[key])
-    dataConf.formId = formID
-    dataConf.type = type
-    dataConf.status = status
-    const submission = validation()
+    setIsLoading(true)
+    const tmpConf = produce(dataConf, draft => {
+      Object.keys(draft).forEach(key => type !== key && delete draft[key])
+      draft.formId = formID
+      draft.type = type
+      draft.status = status
+    })
 
+    const submission = validation()
     if (!submission) {
       setIsLoading(false)
       return
     }
-    const prom = bitsFetch(dataConf,
+    const prom = bitsFetch(tmpConf,
       'bitforms_save_auth_settings')
       .then((res) => {
         if (res !== undefined && res.success) {
@@ -238,6 +241,7 @@ export default function AdditionalSettings() {
 
               <button
                 type="button"
+                id="secondary-update-btn"
                 onClick={(e) => saveSettings(e)}
                 className="btn btcd-btn-lg blue flx"
                 disabled={isLoading}
