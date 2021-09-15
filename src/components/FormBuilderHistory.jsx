@@ -65,8 +65,6 @@ export default function FormBuilderHistory({ }) {
 
     setDisabled(true)
 
-    document.body.style.setProperty('cursor', 'wait', 'important')
-
     let draftLayouts = { ...layouts }
     const draftFields = { ...fields }
     changableHistories.forEach(({ action, state }) => {
@@ -86,7 +84,6 @@ export default function FormBuilderHistory({ }) {
     sessionStorage.setItem('btcd-lc', '-')
     setLayouts(draftLayouts)
     setFields(draftFields)
-    document.body.style.setProperty('cursor', 'auto', 'important')
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
     setDisabled(false)
   }
@@ -114,6 +111,12 @@ export default function FormBuilderHistory({ }) {
           </button>
 
           <div className={css(builderHistoryStyle.menu)}>
+            <p className={css(builderHistoryStyle.title)}>History</p>
+            {!histories.length && (
+              <span className={css(builderHistoryStyle.secondary)}>
+                no data found
+              </span>
+            )}
             <ul className={css(builderHistoryStyle.list)}>
               {histories.map((history, indx) => (
                 <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>

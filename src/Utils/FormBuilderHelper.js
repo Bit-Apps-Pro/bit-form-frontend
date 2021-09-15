@@ -420,6 +420,9 @@ export function compact(layout, compactType, cols) {
 
 export const addToBuilderHistory = (setBuilderHistory, historyData) => {
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
+    if (!draft.histories.length) {
+      draft.histories.push({ event: 'reset' })
+    }
     draft.histories.splice(draft.active + 1)
     draft.active = draft.histories.push(historyData) - 1
   }))
