@@ -14,7 +14,6 @@ import { $bits, $breakpoint, $newFormId } from '../GlobalStates'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, multiAssign } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
 import j2c from '../Utils/j2c.es6'
 
 const styleReducer = (style, action) => {
@@ -242,9 +241,10 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         <style>{styleSheet}</style>
         <Section
           className="tool-sec"
-          defaultSize={toolbarOff ? 50 : 165}
+          defaultSize={toolbarOff ? 50 : 200}
           minSize={notIE && 58}
         >
+
           <ToolBar
             setNewData={addNewData}
             className="tile"
