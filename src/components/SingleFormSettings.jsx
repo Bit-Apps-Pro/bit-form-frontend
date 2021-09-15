@@ -506,7 +506,7 @@ export default function SingleFormSettings() {
           <div>
             <b>
               <span className="btcd-icn icn-one mr-2" />
-              {__('Allow Single Entry for each IP address', 'bitform')}
+              {__('Allow single entry for each IP address', 'bitform')}
             </b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
@@ -516,7 +516,7 @@ export default function SingleFormSettings() {
         customTitle={(
           <b>
             <span className="mr-2"><LoginIcn size={20} /></span>
-            {__('Require user to be logged in', 'bitform')}
+            {__('Require user to be logged in for submit form', 'bitform')}
           </b>
         )}
         toggle
@@ -563,7 +563,7 @@ export default function SingleFormSettings() {
               <span className="mr-2">
                 <FocusIcn size="20" />
               </span>
-              {__('Validate Form Input on Focus Lost', 'bitform')}
+              {__('Validate form input on focus lost', 'bitform')}
             </b>
           </div>
           <SingleToggle2 action={setValidateFocusLost} checked={'validateFocusLost' in additionalSetting.enabled} className="flx" />
@@ -577,7 +577,7 @@ export default function SingleFormSettings() {
               <DBIcn size="20" />
             </span>
             <b>
-              {__('Disable entry storing in responses', 'bitform')}
+              {__('Disable entry storing in WordPress database', 'bitform')}
             </b>
           </div>
           <SingleToggle2 disabled={!isPro} action={enableSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
