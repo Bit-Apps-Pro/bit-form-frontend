@@ -100,7 +100,7 @@ export default function Apikey() {
               onClick={changeKey}
               onKeyPress={changeKey}
             >
-              {__('Genarate new API key', 'bitform')}
+              {__('Generate new API key', 'bitform')}
             </span>
           </label>
         </div>

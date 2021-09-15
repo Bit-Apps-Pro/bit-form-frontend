@@ -1,22 +1,22 @@
+import produce from 'immer'
+
 export const addFieldMap = (type, fldProp, i, confTmp, setConf) => {
-  const newConf = { ...confTmp }
-  newConf[type][fldProp].splice(i, 0, {})
-  console.log('new Config', newConf)
-  setConf({ ...newConf })
+  setConf(tmpConf => produce(tmpConf, draft => {
+    draft[type][fldProp].splice(i, 0, {})
+  }))
 }
 
 export const delFieldMap = (type, fldProp, i, confTmp, setConf) => {
-  const newConf = { ...confTmp }
-  if (newConf[type][fldProp].length > 1) {
-    newConf[type][fldProp].splice(i, 1)
-  }
-
-  setConf({ ...newConf })
+  setConf(tmpConf => produce(tmpConf, draft => {
+    if (draft[type][fldProp].length > 1) {
+      draft[type][fldProp].splice(i, 1)
+    }
+  }))
 }
 
 export const handleFieldMapping = (type, fldProp, event, index, conftTmp, setConf) => {
-  const newConf = { ...conftTmp }
-  newConf[type][fldProp][index][event.target.name] = event.target.value
-
-  setConf({ ...newConf })
+  setConf(tmpConf => produce(tmpConf, draft => {
+    // eslint-disable-next-line no-param-reassign
+    draft[type][fldProp][index][event.target.name] = event.target.value
+  }))
 }

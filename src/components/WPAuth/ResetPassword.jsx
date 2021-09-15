@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import produce from 'immer'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
@@ -18,24 +20,24 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
   ]
 
   const inputHandler = (e) => {
-    const tmpConf = { ...dataConf }
-    const { name, value } = e.target
-    tmpConf[type][name] = value
-    setDataConf(tmpConf)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      const { name, value } = e.target
+      draft[type][name] = value
+    }))
   }
 
   useEffect(() => {
-    const tmpConf = { ...dataConf }
-    if (!tmpConf[type]?.reset_map[0]?.resetField) {
-      tmpConf[type].reset_map = resetPasswordFields.filter(fld => fld.required).map(fl => ({ formField: '', resetField: fl.key, required: fl.required }))
-    }
-    setDataConf(tmpConf)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      if (!draft[type]?.reset_map?.[0]?.resetField) {
+        draft[type].reset_map = resetPasswordFields.filter(fld => fld.required).map(fl => ({ formField: '', resetField: fl.key, required: fl.required }))
+      }
+    }))
   }, [])
 
   const handlePage = (e) => {
-    const tmpConf = { ...dataConf }
-    tmpConf[type].redirect_url = e.target.value
-    setDataConf(tmpConf)
+    setDataConf(tmpConf => produce(tmpConf, draft => {
+      draft[type].redirect_url = e.target.value
+    }))
   }
 
   return (

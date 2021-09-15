@@ -17,7 +17,7 @@ export default function StyleAccordion({ className, title, children, open, onOpe
 
   useEffect(() => {
     toggleAccordion(open)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
   return (
@@ -30,15 +30,15 @@ export default function StyleAccordion({ className, title, children, open, onOpe
         onKeyPress={() => toggleAccordion(!tgl)}
       >
         <div className="flx flx-between">
-          <span>{title}</span>
+          <span className="title">{title}</span>
           <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} />
         </div>
       </div>
 
-      <div style={{ height: H, transition: 'height 300ms' }}>
+      <div style={{ height: H, transition: 'height 300ms', overflow: 'hidden' }}>
         <CSSTransition
           in={tgl}
-          timeout={300}
+          timeout={150}
           onEntering={el => setH(el.offsetHeight)}
           onEntered={() => setH('auto')}
           onExit={el => setH(el.offsetHeight)}

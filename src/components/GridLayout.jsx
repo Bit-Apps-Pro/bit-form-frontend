@@ -138,11 +138,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const margeNewData = () => {
-    const { newBlk: newFieldKey } = addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
-    setTimeout(() => {
-      document.querySelector(`[data-key="${newFieldKey}"]`)?.focus()
-      // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    }, 500)
+    addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
   }
 
@@ -154,7 +150,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       // setLay(extendLayout(newLays))
       setLayouts(newLays)
       setLay(newLays)
-      console.log('layout changed')
     }
   }
 
@@ -227,7 +222,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // eslint-disable-next-line prefer-const
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
-    const newBlk = `bf${formID}-${uniqueFieldId}`
+    const newBlk = `b${formID}${uniqueFieldId}`
     const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 20, minH: minH * 10 || minH, maxH: maxH * 20 || maxH, minW: minW * 10 || minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const tmpLayouts = compactNewLayoutItem(breakpoint, newLayoutItem, layouts)
@@ -242,7 +237,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const action = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
-
+    setTimeout(() => {
+      document.querySelector(`[data-key="${newBlk}"]`)?.focus()
+      // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }, 500)
     return { newBlk }
   }
 
@@ -250,7 +248,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const fldData = fields[fldKey]
     if (!handleFieldExtraAttr(fldData)) return
 
-    const newBlk = `bf${formID}-${uniqueFieldId}`
+    const newBlk = `b${formID}${uniqueFieldId}`
     const newLayItem = {}
 
     const tmpLayouts = produce(layouts, draft => {
@@ -260,7 +258,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
         const { x, y, w, h, minH, maxH, minW } = layouts[brkpnt][layIndx]
         const newLayoutItem = { i: newBlk, x, y: y + h, w, h, minH, maxH, minW }
         newLayItem[brkpnt] = newLayoutItem
-        draft[brkpnt].splice(layIndx, 0, newLayoutItem)
+        draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
       })
     })
 
@@ -270,6 +268,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
+
+    setTimeout(() => {
+      document.querySelector(`[data-key="${newBlk}"]`)?.focus()
+      // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }, 500)
 
     // add to history
     const event = `${fldData.lbl} cloned`
@@ -286,7 +289,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'auto' }}>
+          <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'visible' }}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}

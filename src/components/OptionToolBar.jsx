@@ -15,17 +15,17 @@ import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 
-export default function OptionToolBar({ setResponsiveView }) {
+export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
-        <div className={`${css(OptionToolBarStyle.field_btn)} __active`}>
-          <AddIcon size="25" />
+        <button onClick={toggleToolBar} type="button" className={`${css(OptionToolBarStyle.field_btn)} ${showToolBar && 'active'}`}>
+          <AddIcon size="22" />
           <span className={css(OptionToolBarStyle.txt)}>Form Fields</span>
-        </div>
+        </button>
         <div className={css(OptionToolBarStyle.option_section)}>
           <Tip msg="Large Screen View">
             <button onClick={() => setResponsiveView('lg')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`} type="button"><LaptopIcn size={29} stroke={1.6} /></button>

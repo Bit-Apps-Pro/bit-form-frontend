@@ -19,7 +19,7 @@ const Toolbars = {
     oe: 'none',
     b: '1px solid var(--white-0-75) !important',
     brs: '9px !important',
-    pl: '25px !important',
+    pl: '32px !important',
     '&:focus': {
       bs: '0px 0px 0px 3px var(--b-100-64-40) !important',
       bcr: 'var(--b-92-62) !important',
@@ -27,17 +27,24 @@ const Toolbars = {
   },
   search_icn: {
     pn: 'absolute',
-    tp: 4,
-    lt: 4,
+    tp: '50%',
+    mx: 8,
+    tm: 'translateY(-50%)',
     cr: 'var(--white-0-75)',
     cur: 'pointer',
+    '& svg': { dy: 'block' },
   },
-  sec_acc: { mnh: 30 },
+  sec_acc: {
+    mb: 15,
+    cr: 'var(--white-0-50)',
+    '& .title': { fw: 400 },
+    '& .btgl': { cur: 'pointer !important' },
+  },
 
   tool_bar: {
     dy: 'flex',
     flxp: 'wrap',
-    mxh: 200,
+    // mxh: 200,
     owy: 'scroll',
     px: 2,
     py: 5,
@@ -65,7 +72,7 @@ const Toolbars = {
     dy: 'flex',
     cr: 'var(--dp-blue)',
     fs: 25,
-    mr: 5,
+    mr: 10,
   },
 }
 

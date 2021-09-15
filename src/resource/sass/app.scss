@@ -716,7 +716,8 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .layout {
-  overflow: hidden;
+  // overflow: hidden;
+  overflow: visible;
   min-height: 100px !important;
 }
 
@@ -1237,10 +1238,10 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .bar-l {
-  // background    : #f8f8f8;
+  background    : #f8f8f8;
   background: var(--white-0-97);
-  width: 0;
-  pointer-events: none;
+  width: 10px;
+  // pointer-events: none;
 
   &::before {
     content: "";
