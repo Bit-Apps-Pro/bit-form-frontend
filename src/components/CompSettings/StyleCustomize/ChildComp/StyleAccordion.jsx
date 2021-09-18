@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 StyleAccordion.defaultProps = {
@@ -8,17 +8,17 @@ StyleAccordion.defaultProps = {
 
 export default function StyleAccordion({ className, title, children, open, onOpen }) {
   const [tgl, setTgl] = useState(open)
-  const [H, setH] = useState(0)
+  const [H, setH] = useState(open ? 'auto' : 0)
 
   const toggleAccordion = (val) => {
     setTgl(val)
     val && onOpen()
   }
 
-  useEffect(() => {
-    toggleAccordion(open)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open])
+  // useEffect(() => {
+  //   toggleAccordion(open)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [open])
 
   return (
     <div className={`${className} ${tgl && 'active'}`}>
