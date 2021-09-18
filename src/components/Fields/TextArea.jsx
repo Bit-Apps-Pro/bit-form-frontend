@@ -4,8 +4,9 @@ import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
-export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID }) {
+export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses }) {
   const [value, setvalue] = useState(attr.val)
   const textAreaRef = useRef(null)
   useEffect(() => {
@@ -47,28 +48,31 @@ export default function TextArea({ fieldKey, attr, onBlurHandler, resetFieldValu
   }
 
   return (
-    <InputWrapper
-      formID={formID}
-      fieldKey={fieldKey}
-      fieldData={attr}
-    >
-      <div>
-        <textarea
-          id={fieldKey}
-          className={`fld fld-${formID} no-drg textarea`}
-          style={{ height: 'calc(100% - 30px)' }}
-          ref={textAreaRef}
-          {...'ph' in attr && { placeholder: attr.ph }}
-          {...'ac' in attr && { autoComplete: attr.ac }}
-          {...'req' in attr.valid && { required: attr.valid.req }}
-          {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
-          {...'name' in attr && { name: attr.name }}
-          {...onBlurHandler && { onInput: onBlurHandler }}
-          onBlur={handleBlur}
-          {...{ value }}
-          onChange={onChangeHandler}
-        />
-      </div>
-    </InputWrapper>
+    <>
+      <RenderStyle styleClasses={styleClasses} />
+      <InputWrapper
+        formID={formID}
+        fieldKey={fieldKey}
+        fieldData={attr}
+      >
+        <div>
+          <textarea
+            id={fieldKey}
+            className={`${fieldKey}-fld`}
+            style={{ height: 'calc(100% - 30px)' }}
+            ref={textAreaRef}
+            {...'ph' in attr && { placeholder: attr.ph }}
+            {...'ac' in attr && { autoComplete: attr.ac }}
+            {...'req' in attr.valid && { required: attr.valid.req }}
+            {...'disabled' in attr.valid && { readOnly: attr.valid.disabled }}
+            {...'name' in attr && { name: attr.name }}
+            {...onBlurHandler && { onInput: onBlurHandler }}
+            onBlur={handleBlur}
+            {...{ value }}
+            onChange={onChangeHandler}
+          />
+        </div>
+      </InputWrapper>
+    </>
   )
 }
