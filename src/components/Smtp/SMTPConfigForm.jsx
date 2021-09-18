@@ -79,7 +79,7 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
       }}
     >
       <small className="d-blk mt-3">
-        <a className="btcd-link" href="https://bitpress.pro/smtp-configuration/" target="_blank" rel="noreferrer">{__('Learn more about SMTP configuration', 'bitform')}</a>
+        <a className="btcd-link" href="https://docs.form.bitapps.pro/wpbitform-form-settings#smtp-configuration" target="_blank" rel="noreferrer">{__('Learn more about SMTP configuration', 'bitform')}</a>
       </small>
       <div className="mt-2">
         <label htmlFor="status">

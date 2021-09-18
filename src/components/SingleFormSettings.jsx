@@ -909,7 +909,7 @@ export default function SingleFormSettings() {
             {proModal.msg}
           </h4>
           <div className="txt-center">
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
+            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium', 'bitform')}</button></a>
           </div>
 
         </Modal>

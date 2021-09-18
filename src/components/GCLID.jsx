@@ -130,7 +130,7 @@ export default function GCLID() {
           <div className="pro-blur flx" style={{ height: '99%', left: -15, width: '104%' }}>
             <div className="pro">
               {__('Available On', 'bitform')}
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
                   {__('Premium', 'bitform')}
