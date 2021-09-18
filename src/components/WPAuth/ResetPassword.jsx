@@ -5,7 +5,7 @@ import produce from 'immer'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
-function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
+function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
   const resetPasswordFields = [
     {
       key: 'new_password',
@@ -41,7 +41,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
   }
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Login Fields Mapping</b></div>

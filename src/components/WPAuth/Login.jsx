@@ -5,7 +5,7 @@ import produce from 'immer'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
-function Login({ fields, dataConf, setDataConf, pages, type }) {
+function Login({ fields, dataConf, setDataConf, pages, type, status }) {
   const loginFields = [
     {
       key: 'user_login',
@@ -50,7 +50,7 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
   }, [])
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Login Fields Mapping</b></div>
