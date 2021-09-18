@@ -3,7 +3,7 @@ export default function EyeOffIcon({ size, stroke = 2 }) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 28 28"
       stroke="currentColor"
       strokeWidth={stroke}
       className="svg-icn"
