@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable react/button-has-type */
+import { useState } from 'react'
 import AddIcon from '../Icons/AddIcon'
 import APIIcon from '../Icons/APIIcon'
 import BackIcn from '../Icons/BackIcn'
@@ -76,6 +77,7 @@ import MenuIcon from '../Icons/__MenuIcon'
 import './ShowIcon.css'
 
 export default function ShowIcon() {
+  const [searchIcon, setSearchIcon] = useState([])
   const copyVar = (e) => {
     const btnName = e.target.dataset.componentName
     // console.log(e.target.dataset)
@@ -84,6 +86,16 @@ export default function ShowIcon() {
   const KeyPressHandler = (e) => {
     if (e.code === 'Enter') {
       copyVar(e)
+    }
+  }
+  const searchHandler = (e) => {
+    const val = e.target.value
+
+    if (val !== '') {
+      const items = icons.filter((itm) => (itm.name.toLowerCase().includes(val.toLowerCase())))
+      setSearchIcon([...items])
+    } else {
+      setSearchIcon([])
     }
   }
   const icons = [
@@ -454,12 +466,32 @@ export default function ShowIcon() {
     },
   ]
   return (
-    <div className="flx">
-      {icons.map((icn, i) => (
-        <button key={`icon-id-${i * 2}`} onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
-          {icn.icon}
-        </button>
-      ))}
-    </div>
+    <>
+      <div className="icn-search flx">
+        <input type="text" placeholder="Search Icon" onChange={searchHandler} />
+      </div>
+
+      {searchIcon
+        && (
+          <div className="flx">
+            {searchIcon.map((icn, i) => (
+              <button key={`icon-id-${i * 5}`} onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
+                {icn.icon}
+              </button>
+            ))}
+          </div>
+        )}
+
+      {searchIcon.length === 0
+        && (
+          <div className="flx">
+            {icons.map((icn, i) => (
+              <button key={`icon-id-${i * 2}`} onClick={copyVar} onKeyPress={KeyPressHandler} type="button" className="icon" data-component-name={icn.com}>
+                {icn.icon}
+              </button>
+            ))}
+          </div>
+        )}
+    </>
   )
 }
