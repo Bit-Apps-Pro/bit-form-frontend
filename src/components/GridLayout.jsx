@@ -8,7 +8,7 @@ import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn, $styles } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -17,6 +17,8 @@ import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import ConfirmModal from './Utilities/ConfirmModal'
+import RenderStyle from './style-new/RenderStyle'
+import defaultTheme from './style-new/defaultTheme'
 
 function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   console.log('render gridlay')
@@ -26,6 +28,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [layout, setLay] = useRecoilState($layouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
+  const [styles, setStyles] = useRecoilState($styles)
   const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -222,7 +225,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // eslint-disable-next-line prefer-const
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
-    const newBlk = `b${formID}${uniqueFieldId}`
+    const newBlk = `b${formID}-${uniqueFieldId}`
     const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 20, minH: minH * 10 || minH, maxH: maxH * 20 || maxH, minW: minW * 10 || minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const tmpLayouts = compactNewLayoutItem(breakpoint, newLayoutItem, layouts)
@@ -241,6 +244,19 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       document.querySelector(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
+
+    // add style
+    console.log('f data', processedFieldData)
+    const newStyle = produce(styles, draftStyle => {
+      const globalTheme = draftStyle.theme
+      if (globalTheme === 'defaultBlue') {
+        const fieldStyle = { theme: 'defaultBlue', classes: defaultTheme(newBlk, processedFieldData.typ) }
+        draftStyle.fields[newBlk] = fieldStyle
+      }
+    })
+    console.log('new style ', newStyle)
+    setStyles(newStyle)
+
     return { newBlk }
   }
 
@@ -248,7 +264,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const fldData = fields[fldKey]
     if (!handleFieldExtraAttr(fldData)) return
 
-    const newBlk = `b${formID}${uniqueFieldId}`
+    const newBlk = `b${formID}-${uniqueFieldId}`
     const newLayItem = {}
 
     const tmpLayouts = produce(layouts, draft => {
@@ -287,9 +303,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      <RenderStyle styleClasses={styles.commonClasses} />
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID} _frm-bg`} style={{ overflow: 'visible' }}>
+          <div className={`_frm-bg-${formID} _frm-bg`}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
                 width={Math.round(builderWidth)}
