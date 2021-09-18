@@ -3,7 +3,7 @@
 import { MaterialInput } from './MaterialInput'
 
 export default {
-  title: 'Example/Material Input',
+  title: 'Material Input',
   component: MaterialInput,
   argTypes: {
     backgroundColor: { control: 'color' },
