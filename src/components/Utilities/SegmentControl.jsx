@@ -97,7 +97,8 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
 
   const setSelectorPos = (activeElement) => {
     const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
-    selectorRef.current.style.left = `${activeElement.offsetLeft}px`
+    // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
+    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 4}px, -50%)`
     selectorRef.current.style.width = `${toActiveElmWidth}px`
   }
 
