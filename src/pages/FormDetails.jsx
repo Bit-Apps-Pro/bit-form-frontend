@@ -10,7 +10,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import '../resource/sass/components.scss'
@@ -35,6 +35,7 @@ function FormDetails() {
   const setReports = useSetRecoilState($reports)
   const setLay = useSetRecoilState($layouts)
   const newFormId = useRecoilValue($newFormId)
+  const setFormId = useSetRecoilState($formId)
   const setFields = useSetRecoilState($fields)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const [fulScn, setFulScn] = useState(true)
@@ -60,6 +61,10 @@ function FormDetails() {
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const { css } = useFela()
+
+  useEffect(() => {
+    setFormId(formID)
+  }, [formID])
 
   const activePath = () => {
     const pathArray = history.location.pathname.split('/')

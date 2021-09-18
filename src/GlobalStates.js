@@ -5,6 +5,7 @@ import { getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from '
 // atoms
 // eslint-disable-next-line no-undef
 export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} })
+export const $formId = atom({ key: '$formId', default: 0 })
 export const $forms = atom({ key: '$forms', default: getFormsByPhpVar(), dangerouslyAllowMutability: true })
 export const $reports = atom({ key: '$reports', default: [], dangerouslyAllowMutability: true })
 export const $fields = atom({ key: '$fields', default: [], dangerouslyAllowMutability: true })
@@ -21,6 +22,75 @@ export const $integrations = atom({ key: '$integrations', default: [], dangerous
 export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
 export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [], active: 0 } })
+export const $styles = atom({
+  key: '$styles',
+  default: {
+    theme: 'defaultBlue',
+    themeVars: {
+      '--primaryColor': 'blue',
+      '--border-radius': '10px',
+    },
+    form: { 'frm-wrp-': { background: 'red' } },
+    commonClasses: { 'f-wrp': {} },
+    fields: {
+      'bf9-3-': {
+        theme: 'default_blue',
+        classes: {
+          'bf9-3--fw': {
+            background: 'Red',
+            height: '100%',
+            'text-align': 'start',
+            width: '100%',
+            padding: '10px',
+          },
+          'bf9-3--lbl': {
+            display: 'block',
+            overflow: 'hidden',
+            margin: 0,
+            'font-weight': 500,
+            'font-size': '16px',
+            color: 'rgba(42, 49, 99, 1)!important',
+            'line-height': '1.4!important',
+          },
+          'bf9-3--fld': {
+            display: ' inline-block !important',
+            direction: 'inherit !important',
+            height: '40px',
+            'max-width': '100% !important',
+            'font-family': 'sans-serif',
+            width: '100% !important',
+            outline: 'none !important',
+            'background-color': 'rgba(0, 0, 0, 0)!important',
+            'border-color': 'rgba(199, 212, 221, 1)!important',
+            'border-radius': '6px 6px 6px 6px!important',
+            'border-style': 'solid!important',
+            'border-width': '1px 1px 1px 1px!important',
+            'font-size': '15px!important',
+            color: 'rgba(0, 0, 0, 1)!important',
+            margin: '5px 0 0 0!important',
+            padding: '10px 8px 10px 8px!important',
+            'line-height': '1.4 !important',
+          },
+          'bf9-3--fld:focus': {
+            'box-shadow': '0px 0px 0px 3px rgba(151, 203, 252, 0.38) !important',
+            'border-color': 'rgba(29, 158, 249, 1)!important',
+          },
+          'bf9-3--fld:hover': { 'border-color': 'rgba(29, 158, 249, 1)!important' },
+          'bf9-3--fld::placeholder': { color: 'rgba(213, 212, 221, 1)!important' },
+        },
+      },
+      field_key2: {
+        theme: 'default red',
+        themeVars: {},
+        type: 'textarea',
+        classes: {
+          class1: { background: 'Red' },
+          class2: { 'font-size': '12px' },
+        },
+      },
+    },
+  },
+})
 
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
