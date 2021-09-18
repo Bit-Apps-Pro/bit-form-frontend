@@ -220,10 +220,10 @@ export default function AdditionalSettings() {
               <div className="mt-2">
                 <label htmlFor="status">
                   <b>{__('', 'bitform')}</b>
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'register'} title={<small className="txt-dp"><b>Registration</b></small>} value="register" />
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'login'} title={<small className="txt-dp"><b>Log In</b></small>} value="login" />
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'forgot'} title={<small className="txt-dp"><b>Forgot Password</b></small>} value="forgot" />
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'reset'} title={<small className="txt-dp"><b>Reset Password</b></small>} value="reset" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'register'} title={<small className="txt-dp"><b>Registration</b></small>} value="register" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'login'} title={<small className="txt-dp"><b>Log In</b></small>} value="login" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'forgot'} title={<small className="txt-dp"><b>Forgot Password</b></small>} value="forgot" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'reset'} title={<small className="txt-dp"><b>Reset Password</b></small>} value="reset" />
                 </label>
               </div>
 
@@ -238,7 +238,8 @@ export default function AdditionalSettings() {
 
               <button
                 type="button"
-                onClick={(e) => saveSettings(e)}
+                id="secondary-update-btn"
+                onClick={saveSettings}
                 className="btn btcd-btn-lg blue flx"
                 disabled={isLoading}
               >
@@ -250,7 +251,7 @@ export default function AdditionalSettings() {
                   <p className="p-1 f-m">
                     <strong>Note : </strong>
                     {' '}
-                    When the login, forgot password, reset password is enabled in the form then the entries will not be saved in the database.
+                    When the login, forgot password or reset password any of these feature enabled in the form, the entries will not be saved in the WP database.
                   </p>
                 )}
               </div>
