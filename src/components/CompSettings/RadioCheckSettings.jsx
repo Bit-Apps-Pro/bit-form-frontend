@@ -252,7 +252,7 @@ function RadioCheckSettings() {
           <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
             <div className="pro">
               {__('Available On', 'bitform')}
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
                   {__('Premium', 'bitform')}
@@ -311,7 +311,7 @@ function RadioCheckSettings() {
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
                 {__('Available On', 'bitform')}
-                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
                     {__('Premium', 'bitform')}

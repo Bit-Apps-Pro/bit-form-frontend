@@ -202,7 +202,7 @@ export default function AdditionalSettings() {
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">
             {__('Available On', 'bitform')}
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
                 {__('Premium', 'bitform')}
               </span>
