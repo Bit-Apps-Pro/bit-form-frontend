@@ -1,4 +1,6 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useRef } from 'react'
+import { Menu, useContextMenu } from 'react-contexify'
+import 'react-contexify/dist/ReactContexify.css'
 import { useHistory } from 'react-router-dom'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
@@ -15,8 +17,7 @@ import Downmenu from './Utilities/Downmenu'
 export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneLayoutItem, fields, formID }) {
   const history = useHistory()
   const { reCaptchaV2 } = useContext(AppSettings)
-  const [show, setShow] = useState(false)
-
+  const { show } = useContextMenu({ id: layoutItem.i })
   const rootRef = useRef(null)
 
   const navigateToFieldSettings = () => {
@@ -38,30 +39,21 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
     return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
 
-  const showContextMenu = e => {
+  const handleContextMenu = e => {
     e.preventDefault()
     const topPos = rootRef.current.getBoundingClientRect().top + window.scrollY
     const leftPos = rootRef.current.getBoundingClientRect().left + window.scrollX
     const x = (e.clientX - leftPos) + 5
     const y = e.clientY - topPos
-    setShow({ x, y, show: true })
-    console.log('right click', topPos, leftPos, e.clientX - leftPos, e.clientY - topPos, { x: e.clientX, y: e.clientY })
+    show(e, { id: layoutItem.i, position: { x, y } })
   }
 
   return (
     <div
-      ref={rootRef}
-      onContextMenuCapture={showContextMenu}
+      onContextMenu={handleContextMenu}
       style={{ position: 'relative' }}
+      ref={rootRef}
     >
-      <FieldContextMenu
-        show={show}
-        layoutItem={layoutItem}
-        navigateToFieldSettings={navigateToFieldSettings}
-        navigateToStyle={navigateToStyle}
-        cloneLayoutItem={cloneLayoutItem}
-        removeLayoutItem={removeLayoutItem}
-      />
       <div className="blk-icn-wrp pos-abs flx">
         <button
           type="button"
@@ -101,7 +93,6 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
             <ChevronDownIcn size="19" />
           </button>
           <FieldContextMenu
-            show
             layoutItem={layoutItem}
             navigateToFieldSettings={navigateToFieldSettings}
             navigateToStyle={navigateToStyle}
@@ -111,6 +102,15 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
         </Downmenu>
       </div>
       <ComponentsByTheme />
+      <Menu id={layoutItem.i}>
+        <FieldContextMenu
+          layoutItem={layoutItem}
+          navigateToFieldSettings={navigateToFieldSettings}
+          navigateToStyle={navigateToStyle}
+          cloneLayoutItem={cloneLayoutItem}
+          removeLayoutItem={removeLayoutItem}
+        />
+      </Menu>
     </div>
   )
 }

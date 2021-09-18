@@ -17,7 +17,7 @@ import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
 import Downmenu from './Utilities/Downmenu'
 
-export default function FieldContextMenu({ show, layoutItem, navigateToFieldSettings, navigateToStyle, cloneLayoutItem, removeLayoutItem }) {
+export default function FieldContextMenu({ layoutItem, navigateToFieldSettings, navigateToStyle, cloneLayoutItem, removeLayoutItem }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
@@ -50,9 +50,7 @@ export default function FieldContextMenu({ show, layoutItem, navigateToFieldSett
   }
 
   return (
-    <div
-      {...show.show && { style: { top: show.y, left: show.x, position: 'absolute' } }}
-    >
+    <div>
       <div className={css(context.menu)}>
         <ul className={css(context.list)}>
           <li className={css(context.item)}>
@@ -133,6 +131,5 @@ export default function FieldContextMenu({ show, layoutItem, navigateToFieldSett
         </ul>
       </div>
     </div>
-
   )
 }
