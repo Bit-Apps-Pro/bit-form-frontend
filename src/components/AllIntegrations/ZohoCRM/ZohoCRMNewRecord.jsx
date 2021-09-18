@@ -77,7 +77,7 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
                   <div className="pro-blur flx">
                     <div className="pro">
                       Available On
-                      <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                      <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                         <span className="txt-pro">
                           {' '}
                           {__('Premium', 'bitform')}

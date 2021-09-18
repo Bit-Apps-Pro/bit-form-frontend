@@ -5,7 +5,7 @@ import produce from 'immer'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
-function Login({ fields, dataConf, setDataConf, pages, type }) {
+function Login({ fields, dataConf, setDataConf, pages, type, status }) {
   const loginFields = [
     {
       key: 'user_login',
@@ -50,7 +50,7 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
   }, [])
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Login Fields Mapping</b></div>
@@ -77,7 +77,7 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
           <div className="f-m">{__('Redirect Page:', 'bitform')}</div>
-          <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={e => handlePage(e)}>
+          <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={handlePage}>
             <option value="">{__('Custom Link', 'bitform')}</option>
             {pages && pages.map((urlDetail, ind) => (
               <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
@@ -85,13 +85,13 @@ function Login({ fields, dataConf, setDataConf, pages, type }) {
           </select>
         </div>
         <div className="w-5 ml-2">
-          <div className="f-m">Link:</div>
+          <div className="f-m fw-500">Link:</div>
           <input onChange={inputHandler} name="redirect_url" className="btcd-paper-inp mt-1" type="text" value={dataConf[type]?.redirect_url} />
         </div>
       </div>
       <br />
       <div className="f-m">Login Success Message </div>
-      <input onChange={e => inputHandler(e)} name="succ_msg" className="btcd-paper-inp mt-1 w-5" type="text" value={dataConf[type]?.succ_msg} />
+      <input onChange={inputHandler} name="succ_msg" className="btcd-paper-inp mt-1 w-5" type="text" value={dataConf[type]?.succ_msg} />
     </div>
   )
 }

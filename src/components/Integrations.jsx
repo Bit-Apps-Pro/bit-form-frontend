@@ -195,7 +195,7 @@ function Integrations() {
                     >
                       {inte.pro && (
                         <div className="pro-filter">
-                          <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
+                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
                       <img className={css(app.inte_sm_img)} loading="lazy" src={inte.logo} alt="" />

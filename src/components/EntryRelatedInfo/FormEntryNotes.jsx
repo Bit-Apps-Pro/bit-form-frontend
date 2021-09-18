@@ -147,7 +147,7 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
           <div className="pro-blur mt-4 flx">
             <div className="pro">
               {__('Available On', 'bitform')}
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
                   {__('Premium', 'bitform')}

@@ -323,7 +323,7 @@ function TextFieldSettings() {
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
-                    <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                    <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                       <span className="txt-pro">
                         {' '}
                         {__('Premium', 'bitform')}
@@ -350,7 +350,7 @@ function TextFieldSettings() {
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
-                    <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                    <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                       <span className="txt-pro">
                         {' '}
                         {__('Premium', 'bitform')}
