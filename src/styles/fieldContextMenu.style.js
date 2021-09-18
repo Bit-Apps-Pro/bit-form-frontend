@@ -28,7 +28,10 @@ const context = {
     pn: 'relative',
     bc: 'var(--white-100)',
     cur: 'pointer',
-    '&:hover': { bc: 'var(--white-0-93)' },
+    '&:hover': {
+      bc: 'var(--white-0-93)',
+      '& svg': { fr: 'drop-shadow(1px 1px 0.5px #b3b3b3)' },
+    },
     '&:focus-visible': {
       oe: 'none',
       bs: '0 0 0 2px var(--b-50) inset',
