@@ -34,6 +34,7 @@ const customProperties = {
   owy: $ => ({ overflowY: $ }),
 
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
+  lh: $ => ({ lineHeight: $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   ta: $ => ({ textAlign: $ }),

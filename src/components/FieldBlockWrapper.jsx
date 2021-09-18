@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
@@ -16,6 +16,8 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
   const history = useHistory()
   const { reCaptchaV2 } = useContext(AppSettings)
   const [show, setShow] = useState(false)
+
+  const rootRef = useRef(null)
 
   const navigateToFieldSettings = () => {
     history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
@@ -38,13 +40,22 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
 
   const showContextMenu = e => {
     e.preventDefault()
-    setShow({ x: e.pageX, y: e.pageY })
-    console.log('right click')
+    const topPos = rootRef.current.getBoundingClientRect().top + window.scrollY
+    const leftPos = rootRef.current.getBoundingClientRect().left + window.scrollX
+    const x = (e.clientX - leftPos) + 5
+    const y = e.clientY - topPos
+    setShow({ x, y, show: true })
+    console.log('right click', topPos, leftPos, e.clientX - leftPos, e.clientY - topPos, { x: e.clientX, y: e.clientY })
   }
 
   return (
-    <div onContextMenuCapture={showContextMenu}>
+    <div
+      ref={rootRef}
+      onContextMenuCapture={showContextMenu}
+      style={{ position: 'relative' }}
+    >
       <FieldContextMenu
+        show={show}
         layoutItem={layoutItem}
         navigateToFieldSettings={navigateToFieldSettings}
         navigateToStyle={navigateToStyle}
@@ -90,6 +101,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
             <ChevronDownIcn size="19" />
           </button>
           <FieldContextMenu
+            show
             layoutItem={layoutItem}
             navigateToFieldSettings={navigateToFieldSettings}
             navigateToStyle={navigateToStyle}
