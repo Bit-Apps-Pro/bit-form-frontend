@@ -67,7 +67,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
       <br />
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
-          <div className="f-m fw-500">{__('Reset Page Url:', 'bitform')}</div>
+          <div className="f-m fw-500">{__('Redirect Page:', 'bitform')}</div>
           <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={e => handlePage(e)}>
             <option value="">{__('Custom Link', 'bitform')}</option>
             {pages && pages.map((urlDetail, ind) => (
