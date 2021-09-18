@@ -1516,10 +1516,10 @@ input[type="checkbox"].disabled:checked:before {
   position: relative;
 
   &::after {
-    content: "";
     position: absolute;
     top: 0;
     left: 0;
+    content: "";
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.2);
@@ -3523,7 +3523,8 @@ select.btcd-paper-inp {
 
 //table checkbox start
 .btcd-label-cbx {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   -ms-user-select: none;
   -webkit-user-select: none;
   cursor: pointer;
