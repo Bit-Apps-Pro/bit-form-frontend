@@ -10,7 +10,7 @@ import UserFieldMap from './UserFieldMap'
 import { userFields } from '../../../Utils/StaticData/userField'
 import bitsFetch from '../../../Utils/bitsFetch'
 
-export default function Registration({ formFields, dataConf, setDataConf, pages, type }) {
+export default function Registration({ formFields, dataConf, setDataConf, pages, type, status }) {
   const { formID } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
   const [roles, setRoles] = useState([])
@@ -31,7 +31,7 @@ export default function Registration({ formFields, dataConf, setDataConf, pages,
   }, [])
 
   return (
-    <div style={{ width: 900 }}>
+    <div style={{ width: 900, opacity: status === 0 && 0.6 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div>
         <UserFieldMap

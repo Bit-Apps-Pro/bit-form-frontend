@@ -8,7 +8,7 @@ import EmailNotification from './EmailNotification'
 import EditIcn from '../../Icons/EditIcn'
 import Cooltip from '../Utilities/Cooltip'
 
-function Forgot({ fields, dataConf, setDataConf, pages, type }) {
+function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   const [showMdl, setshowMdl] = useState(false)
   const forgotField = [
     {
@@ -44,7 +44,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type }) {
   }
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Forget Password Fields Mapping</b></div>

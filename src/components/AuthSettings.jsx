@@ -154,6 +154,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       case 'forgot':
@@ -164,6 +165,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       case 'reset':
@@ -174,6 +176,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       case 'register':
@@ -184,6 +187,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       default:
@@ -229,14 +233,14 @@ export default function AdditionalSettings() {
                 </label>
               </div>
 
-              {userManagementType()}
-
               <div className="mt-2 ml-1 flx">
                 <label htmlFor="status">
                   <b>{__('Enable', 'bitform')}</b>
                 </label>
                 <SingleToggle2 action={handleStatus} checked={status === 1} className="ml-4 flx" />
               </div>
+
+              {userManagementType()}
 
               <button
                 type="button"
