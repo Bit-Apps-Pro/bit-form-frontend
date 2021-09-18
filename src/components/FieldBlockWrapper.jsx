@@ -3,7 +3,6 @@ import { useContext } from 'react'
 import { useFela } from 'react-fela'
 import { useHistory } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
-import { hideAll } from 'tippy.js'
 import { $fields, $updateBtn } from '../GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckBoxIcn from '../Icons/CheckBoxIcn'
@@ -16,7 +15,6 @@ import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import MoveIcn from '../Icons/MoveIcn'
 import TabletIcon from '../Icons/TabletIcon'
-import TrashIcn from '../Icons/TrashIcn'
 import context from '../styles/fieldContextMenu.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
@@ -48,7 +46,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
     if (componentProps && componentProps.typ === 'recaptcha') {
       componentProps.siteKey = reCaptchaV2.siteKey
     }
-    return <MapComponents isBuilder formID={formID} atts={componentProps} />
+    return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
 
   const handleFieldHide = brkpnt => {
@@ -127,7 +125,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
               </li>
               <li className={css(context.item)}>
                 <button type="button" className={css(context.btn)} onClick={() => navigateToStyle(fields[layoutItem.i].typ)}>
-                  <BrushIcn height="18" width="14" />
+                  <BrushIcn height="18" width="14" stroke="1.6" />
                   <span>Style</span>
                 </button>
               </li>
@@ -147,7 +145,7 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
                     draggable="false"
                     title={__('More Options', 'bitform')}
                   >
-                    <EyeOffIcon size="19" />
+                    <EyeOffIcon size="16" />
                     <span>Hide</span>
                     <ChevronRightIcon size="19" />
                   </button>
@@ -163,21 +161,21 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
                       <li className={css(context.item)}>
                         <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('lg')}>
                           <LaptopIcn size="19" />
-                          <span>large</span>
+                          <span>Large</span>
                           {checkIfHidden('lg') && <CheckBoxIcn w="19" />}
                         </button>
                       </li>
                       <li className={css(context.item)}>
                         <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('md')}>
                           <TabletIcon size="19" />
-                          <span>medium</span>
+                          <span>Medium</span>
                           {checkIfHidden('md') && <CheckBoxIcn w="19" />}
                         </button>
                       </li>
                       <li className={css(context.item)}>
                         <button type="button" className={css(context.btn, context.checked)} onClick={() => handleFieldHide('sm')}>
-                          <MobileIcon size="19" />
-                          <span>small</span>
+                          <MobileIcon size="18" />
+                          <span>Small</span>
                           {checkIfHidden('sm') && <CheckBoxIcn w="19" />}
                         </button>
                       </li>
