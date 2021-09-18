@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useRecoilValue } from 'recoil'
 import ReCaptcha from './Fields/Recaptcha'
 import TextField from './Fields/TextField'
 import TextArea from './Fields/TextArea'
@@ -13,6 +14,8 @@ import SubmitBtn from './Fields/SubmitBtn'
 import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
+import { $styles } from '../GlobalStates'
+
 // import NewDropDown from './Fields/NewDropDown'
 /*
 typ: input type
@@ -27,8 +30,10 @@ req: required
 mul: multiple
 */
 
-function MapComponents(props) {
-  switch (props?.atts?.typ) {
+function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID }) {
+  const styles = useRecoilValue($styles)
+  // console.log('--style', styles.fields[fieldKey], fieldKey)
+  switch (atts?.typ) {
     case 'text':
     case 'number':
     case 'password':
@@ -41,35 +46,35 @@ function MapComponents(props) {
     case 'month':
     case 'week':
     case 'color':
-      return <TextField fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <TextField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'textarea':
-      return <TextArea fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <TextArea fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'check':
-      return <CheckBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <CheckBox formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'radio':
-      return <RadioBox formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <RadioBox formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'select':
-      return <DropDown isBuilder={props.isBuilder} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+      return <DropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     // case 'dropdown':
-    //   return <NewDropDown isBuilder={props.isBuilder} formID={props.formID} attr={props.atts} onBlurHandler={props.onBlurHandler} resetFieldValue={props.resetFieldValue} />
+    //   return <NewDropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'file-up':
-      return <FileUp formID={props.formID} attr={props.atts} entryID={props.entryID} resetFieldValue={props.resetFieldValue} />
+      return <FileUp formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'submit':
-      return <SubmitBtn formID={props.formID} attr={props.atts} buttonDisabled={props.buttonDisabled} handleReset={props.handleReset} />
+      return <SubmitBtn formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'hidden':
-      return <HiddenField formID={props.formID} attr={props.atts} />
+      return <HiddenField formID={formID} attr={atts} />
     case 'recaptcha':
-      return <ReCaptcha formID={props.formID} attr={props.atts} />
+      return <ReCaptcha formID={formID} attr={atts} />
     case 'decision-box':
-      return <DecisionBox formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+      return <DecisionBox formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'html':
-      return <Html formID={props.formID} attr={props.atts} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+      return <Html formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'button':
-      return <Button formID={props.formID} attr={props.atts} fieldData={props.fieldData} buttonDisabled={props.buttonDisabled} handleReset={props.handleReset} />
+      return <Button formID={formID} attr={atts} fieldData={fieldData} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'paypal':
-      return <Paypal isBuilder={props.isBuilder} fieldKey={props.fieldKey} formID={props.formID} attr={props.atts} contentID={props.contentID} fieldData={props.fieldData} resetFieldValue={props.resetFieldValue} />
+      return <Paypal isBuilder={isBuilder} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'razorpay':
-      return <RazorPay fieldKey={props.fieldKey} contentID={props.contentID} formID={props.formID} attr={props.atts} buttonDisabled={props.buttonDisabled} resetFieldValue={props.resetFieldValue} />
+      return <RazorPay fieldKey={fieldKey} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:
