@@ -57,7 +57,7 @@ export default function Registration({ formFields, dataConf, setDataConf, pages,
       <p className="p-1 f-m">
         <strong>Note</strong>
         {' '}
-        : If the Username and Password fields are blank then the user will take the value of the email field as the field and the password will be auto generated.
+        : If the Username and Password fields are blank then the user will take the value of the email field as the field and the password will be auto generate.
       </p>
 
     </div>
