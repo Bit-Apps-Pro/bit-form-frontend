@@ -37,7 +37,7 @@
     padding: 5px 15px;
   }
 }
-
+//frontend field wrapper
 .btcd-fld-itm {
   height: 100%;
 }
@@ -51,9 +51,7 @@
   display: flex;
   align-items: center;
 }
-#sdf{
-  
-}
+
 [type="date"]{
 
 }
@@ -89,24 +87,22 @@
   z-index: 99999;
   border: none;
 }
-
+//tinymce prbrlm
 .fld-wrp p{
   margin: 0;
 }
 .fld-wrp {
-  min-height: inherit;
-  font-family: sans-serif ;
-  box-sizing: border-box ;
-  width: 100%;
-  cursor: default;
-  height: 100%;
-  box-sizing: border-box ;
-  text-align: start;
+  // min-height: inherit;
+  // font-family: sans-serif ;
+  // box-sizing: border-box ;
+  // cursor: default;
+ 
 }
 
 .fld-wrp > * {
   box-sizing: border-box !important;
 }
+
 .dpd-prefix{
   border-radius: 4px;
   margin-right: 10px;
@@ -115,12 +111,12 @@
 }
 
 .fld-lbl {
-  display: block;
-  overflow: hidden;
+  // display: block;
+  // overflow: hidden;
   /* white-space: nowrap;
   text-overflow: ellipsis; */
-  margin: 0;
-  font-weight: 500;
+  // margin: 0;
+  // font-weight: 500;
 }
 .fld-wrp .msl-vars {
   --input-width: 100%;
@@ -159,14 +155,14 @@
 
 input.fld,
 textarea.fld {
-  display: inline-block !important;
-  direction: inherit !important;
-  height: 40px;
-  max-width: 100% !important;
-  font-family: sans-serif ;
-  width: 100% !important;
-  outline: none !important;
-  line-height: 1;
+  // display: inline-block !important;
+  // direction: inherit !important;
+  // height: 40px;
+  // max-width: 100% !important;
+  // font-family: sans-serif ;
+  // width: 100% !important;
+  // outline: none !important;
+  // line-height: 1;
   // transition: border 200ms !important;
 }
 
@@ -186,14 +182,14 @@ textarea.fld {
   padding: 2px;
 }
 
-textarea.fld {
-  height: calc(100% - 30px);
-  resize: vertical;
-}
-.textarea {
-  height: calc(100% - 30px) ;
-  resize: vertical;
-}
+// textarea.fld {
+//   height: calc(100% - 30px);
+//   resize: vertical;
+// }
+// .textarea {
+//   height: calc(100% - 30px) ;
+//   resize: vertical;
+// }
 
 .fld {
   & .btcd-mrk {
