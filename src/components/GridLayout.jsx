@@ -7,18 +7,22 @@ import produce from 'immer'
 import { memo, useContext, useEffect, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { useHistory } from 'react-router'
+import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $uniqueFieldId, $updateBtn, $styles } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { addToBuilderHistory, checkFieldsExtraAttr, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
-import ConfirmModal from './Utilities/ConfirmModal'
-import RenderStyle from './style-new/RenderStyle'
+import FieldContextMenu from './FieldContextMenu'
 import defaultTheme from './style-new/defaultTheme'
+import RenderStyle from './style-new/RenderStyle'
+import ConfirmModal from './Utilities/ConfirmModal'
 
 function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   console.log('render gridlay')
@@ -42,6 +46,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const additional = useRecoilValue($additionalSettings)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const [contextMenu, setContextMenu] = useState({})
+  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
+  const history = useHistory()
 
   useEffect(() => {
     checkAllLayoutSame()
@@ -295,14 +302,52 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const action = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
+
+    resetContextMenu()
   }
 
   const onDrop = (lay, dropPosition) => {
     addNewField(draggingField.fieldData, draggingField.fieldSize, dropPosition)
   }
 
+  const handleContextMenu = (e, fldKey) => {
+    e.preventDefault()
+    const topPos = ref.current.getBoundingClientRect().top + window.scrollY
+    const leftPos = ref.current.getBoundingClientRect().left + window.scrollX
+    let x = (e.clientX - leftPos) + 5
+    const y = e.clientY - topPos
+
+    const test = document.getElementById('layout-wrapper')
+    const rootW = Number(test.style.width.substr(0, test.style.width.indexOf('px')))
+
+    const right = (x + 170) > rootW
+    if (right) {
+      x = (e.clientX - leftPos) - 150
+    }
+    setContextMenu({ fldKey, x, y })
+    setSelectedFieldId(fldKey)
+    setIsComponentVisible(true)
+  }
+
+  const resetContextMenu = () => {
+    setContextMenu({})
+    setIsComponentVisible(false)
+  }
+
+  const navigateToFieldSettings = () => {
+    history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
+    resetContextMenu()
+  }
+
+  const navigateToStyle = typ => {
+    if (typ === 'paypal') history.replace(history.location.pathname.replace(/fs|style\/.+|style/g, 'style/fl/ppl'))
+    // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
+    else history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
+    resetContextMenu()
+  }
+
   return (
-    <div style={{ width: gridWidth - 9 }} className="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+    <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <RenderStyle styleClasses={styles.commonClasses} />
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
@@ -337,10 +382,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                     key={layoutItem.i}
                     data-key={layoutItem.i}
                     className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                    onClick={() => setSelectedFieldId(layoutItem.i)}
+                    onClick={() => { setSelectedFieldId(layoutItem.i); setContextMenu({}) }}
                     onKeyPress={() => setSelectedFieldId(layoutItem.i)}
                     role="button"
                     tabIndex={0}
+                    onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                   >
                     <FieldBlockWrapper
                       {...{
@@ -349,6 +395,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                         cloneLayoutItem,
                         fields,
                         formID,
+                        navigateToFieldSettings,
+                        navigateToStyle,
                       }}
                     />
                   </div>
@@ -358,6 +406,29 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
           </div>
         </div>
       </Scrollbars>
+      <div ref={ref} className="pos-rel">
+        <CSSTransition
+          in={isComponentVisible}
+          timeout={150}
+          classNames="btc-pk"
+          unmountOnExit
+          onExit={() => resetContextMenu()}
+        >
+          <FieldContextMenu
+            isContextMenu
+            isComponentVisible={isComponentVisible}
+            setIsComponentVisible={setIsComponentVisible}
+            contextMenu={contextMenu}
+            setContextMenu={setContextMenu}
+            resetContextMenu={resetContextMenu}
+            navigateToFieldSettings={navigateToFieldSettings}
+            navigateToStyle={navigateToStyle}
+            cloneLayoutItem={cloneLayoutItem}
+            removeLayoutItem={removeLayoutItem}
+          />
+        </CSSTransition>
+      </div>
+
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"

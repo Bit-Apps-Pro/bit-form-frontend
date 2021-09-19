@@ -4,6 +4,8 @@ const context = {
     fd: 'column',
     brs: 10,
     pn: 'relative',
+    bc: 'var(--white-100)',
+    zx: 99,
   },
 
   list: {
@@ -15,6 +17,7 @@ const context = {
   item: {
     pn: 'relative',
     mb: 0,
+    w: '100%',
   },
 
   btn: {

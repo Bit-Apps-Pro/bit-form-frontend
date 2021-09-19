@@ -1,7 +1,5 @@
-import { useContext, useRef } from 'react'
-import { Menu, useContextMenu } from 'react-contexify'
+import { useContext } from 'react'
 import 'react-contexify/dist/ReactContexify.css'
-import { useHistory } from 'react-router-dom'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -14,21 +12,15 @@ import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
 import Downmenu from './Utilities/Downmenu'
 
-export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneLayoutItem, fields, formID }) {
-  const history = useHistory()
+export default function FieldBlockWrapper({
+  layoutItem,
+  removeLayoutItem,
+  cloneLayoutItem,
+  fields,
+  formID,
+  navigateToFieldSettings,
+  navigateToStyle }) {
   const { reCaptchaV2 } = useContext(AppSettings)
-  const { show } = useContextMenu({ id: layoutItem.i })
-  const rootRef = useRef(null)
-
-  const navigateToFieldSettings = () => {
-    history.replace(history.location.pathname.replace(/style\/.+|style/g, 'fs'))
-  }
-
-  const navigateToStyle = typ => {
-    if (typ === 'paypal') history.replace(history.location.pathname.replace(/fs|style\/.+|style/g, 'style/fl/ppl'))
-    // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    else history.replace(history.location.pathname.replace(/fs|style\/.+/g, 'style'))
-  }
 
   const ComponentsByTheme = () => {
     const componentProps = deepCopy(fields[layoutItem.i])
@@ -39,21 +31,8 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
     return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
 
-  const handleContextMenu = e => {
-    e.preventDefault()
-    const topPos = rootRef.current.getBoundingClientRect().top + window.scrollY
-    const leftPos = rootRef.current.getBoundingClientRect().left + window.scrollX
-    const x = (e.clientX - leftPos) + 5
-    const y = e.clientY - topPos
-    show(e, { id: layoutItem.i, position: { x, y } })
-  }
-
   return (
-    <div
-      onContextMenu={handleContextMenu}
-      style={{ position: 'relative' }}
-      ref={rootRef}
-    >
+    <>
       <div className="blk-icn-wrp pos-abs flx">
         <button
           type="button"
@@ -102,15 +81,6 @@ export default function FieldBlockWrapper({ layoutItem, removeLayoutItem, cloneL
         </Downmenu>
       </div>
       <ComponentsByTheme />
-      <Menu id={layoutItem.i}>
-        <FieldContextMenu
-          layoutItem={layoutItem}
-          navigateToFieldSettings={navigateToFieldSettings}
-          navigateToStyle={navigateToStyle}
-          cloneLayoutItem={cloneLayoutItem}
-          removeLayoutItem={removeLayoutItem}
-        />
-      </Menu>
-    </div>
+    </>
   )
 }
