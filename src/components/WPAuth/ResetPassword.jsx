@@ -9,7 +9,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
   const resetPasswordFields = [
     {
       key: 'new_password',
-      name: 'New Passord',
+      name: 'New Password',
       required: true,
     },
     {
