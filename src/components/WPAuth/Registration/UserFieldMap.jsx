@@ -87,18 +87,18 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         </div>
 
         <div className="flx">
-          <div className="w-5 mt-5 ">
+          <div className="w-5 mt-5 flx">
             <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification', 'bitform')} checked={!!userConf[type]?.user_notify} value={false} />
-            <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
+            <Cooltip width={250} icnSize={17} className="ml-1">
               <div className="txt-body">
                 When this option is enabled, a welcome email will be sent to WordPress after registration.
                 <br />
               </div>
             </Cooltip>
           </div>
-          <div className="w-5 mt-5">
+          <div className="w-5 mt-5 flx">
             <TableCheckBox name="admin_notify" onChange={handleCheckd} title={__('Admin Email Notification', 'bitform')} checked={!!userConf[type]?.admin_notify} value={false} />
-            <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
+            <Cooltip width={250} icnSize={17} className="ml-1">
               <div className="txt-body">
                 If this option is enabled, e-mail will be sent from WordPress to admin.
                 <br />
@@ -111,7 +111,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
             <div className="f-m">{__('Redirect Page:', 'bitform')}</div>
-            <select className="btcd-paper-inp mt-1" value={userConf[type]?.redirect_url} onChange={e => handlePage(e)}>
+            <select className="btcd-paper-inp mt-1" value={userConf[type]?.redirect_url} onChange={handlePage}>
               <option value="">{__('Custom Link', 'bitform')}</option>
               {pages && pages.map((urlDetail, ind) => (
                 <option key={`r-url-${ind + 22}`} value={urlDetail.url}>{urlDetail.title}</option>
@@ -119,7 +119,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             </select>
           </div>
           <div className="w-5 ml-2">
-            <div className="f-m">Link</div>
+            <div className="f-m fw-500">Link</div>
             <input onChange={handleInput} name="redirect_url" className="btcd-paper-inp mt-1" type="text" value={userConf[type]?.redirect_url} />
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
 
         <div className="flx integ-fld-wrp">
           <div className="w-5 ">
-            <div className="f-m">{__('WP User Role', 'bitform')}</div>
+            <div className="f-m fw-500">{__('WP User Role', 'bitform')}</div>
             <select name="user_role" onChange={handleInput} value={userConf[type]?.user_role} className="btcd-paper-inp mt-1">
               <option disabled selected>Select User Role</option>
               {roles.map((role, index) => (
@@ -137,7 +137,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             </select>
           </div>
           <div className="w-5 ml-2">
-            <div className="f-m">
+            <div className="f-m fw-500">
               {__('Success Messages', 'bitform')}
             </div>
 
@@ -147,7 +147,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         <br />
         <div className="flx integ-fld-wrp">
           <div className="w-5">
-            <div className="f-m">{__('User Approval  Method:', 'bitform')}</div>
+            <div className="f-m fw-500">{__('User Approval  Method:', 'bitform')}</div>
             <select className="btcd-paper-inp mt-1" name="activation" value={userConf[type]?.activation} onChange={handleInput}>
               <option disabled selected value="">{__('select approval method', 'bitform')}</option>
               <option value="auto_approve">Auto Approve</option>
@@ -157,9 +157,9 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
           </div>
 
           {userConf[type]?.activation === 'auto_approve' && (
-            <div className="w-5 ml-2">
+            <div className="w-5 ml-2 flx">
               <TableCheckBox name="auto_login" onChange={handleCheckd} title={__('Auto Login After Registration', 'bitform')} checked={!!userConf[type]?.auto_login} value={false} />
-              <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
+              <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
                   if checked Auto Login, the user login automatically after registration.
                   <br />

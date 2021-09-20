@@ -5,7 +5,7 @@ import produce from 'immer'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
-function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
+function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
   const resetPasswordFields = [
     {
       key: 'new_password',
@@ -41,7 +41,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
   }
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Login Fields Mapping</b></div>
@@ -67,7 +67,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
       <br />
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
-          <div className="f-m">{__('Reset Page Url:', 'bitform')}</div>
+          <div className="f-m fw-500">{__('Reset Page Url:', 'bitform')}</div>
           <select className="btcd-paper-inp mt-1" value={dataConf[type]?.redirect_url} onChange={e => handlePage(e)}>
             <option value="">{__('Custom Link', 'bitform')}</option>
             {pages && pages.map((urlDetail, ind) => (
@@ -76,14 +76,14 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages }) {
           </select>
         </div>
         <div className="w-5 ml-2">
-          <div className="f-m">Link:</div>
+          <div className="f-m fw-500">Link:</div>
           <input onChange={inputHandler} name="redirect_url" className="btcd-paper-inp mt-1" type="text" value={dataConf[type]?.redirect_url} />
         </div>
       </div>
       <br />
       <div className="flx integ-fld-wrp">
         <div className="w-5">
-          <div className="f-m">{__('Success Message:', 'bitform')}</div>
+          <div className="f-m fw-500">{__('Success Message:', 'bitform')}</div>
           <input className="btcd-paper-inp mt-1" onChange={(e) => inputHandler(e)} name="succ_msg" value={dataConf[type]?.succ_msg} type="text" placeholder={__('Success Message', 'bitform')} />
         </div>
       </div>

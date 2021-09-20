@@ -36,7 +36,7 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
           <div className="pro-blur flx w-9">
             <div className="pro">
               {__('Available On', 'bitform')}
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
                   {__('Premium', 'bitform')}

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
+import produce from 'immer'
 import { __ } from '../Utils/i18nwrap'
 import { $bits, $fieldsArr } from '../GlobalStates'
 import CheckBox from './Utilities/CheckBox'
@@ -17,7 +18,6 @@ import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import SnackMsg from './Utilities/SnackMsg'
 import Loader from './Loaders/Loader'
 import { fogotPassTamplate, activationTamplate, activationMessage } from '../Utils/StaticData/tamplate'
-import produce from 'immer'
 
 export default function AdditionalSettings() {
   const bits = useRecoilValue($bits)
@@ -25,7 +25,7 @@ export default function AdditionalSettings() {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoad, setIsLoad] = useState(false)
   const formFields = useRecoilValue($fieldsArr)
-  const [type, setType] = useState()
+  const [type, setType] = useState('register')
   const { formID } = useParams()
 
   const [dataConf, setDataConf] = useState({
@@ -65,7 +65,7 @@ export default function AdditionalSettings() {
         tmpConf[res.data[0]?.integration_name] = JSON.parse(res.data[0]?.integration_details)
         setDataConf(tmpConf)
         setType(res.data[0]?.integration_name)
-        setStatus(res.data[0]?.status)
+        setStatus(Number(res.data[0]?.status))
       }
       setIsLoad(false)
     })
@@ -125,7 +125,6 @@ export default function AdditionalSettings() {
       draft.type = type
       draft.status = status
     })
-
     const submission = validation()
     if (!submission) {
       setIsLoading(false)
@@ -155,6 +154,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       case 'forgot':
@@ -165,6 +165,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       case 'reset':
@@ -175,6 +176,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       case 'register':
@@ -185,6 +187,7 @@ export default function AdditionalSettings() {
             setDataConf={setDataConf}
             pages={pages}
             type={type}
+            status={status}
           />
         )
       default:
@@ -199,7 +202,7 @@ export default function AdditionalSettings() {
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">
             {__('Available On', 'bitform')}
-            <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
               <span className="txt-pro">
                 {__('Premium', 'bitform')}
               </span>
@@ -223,26 +226,26 @@ export default function AdditionalSettings() {
               <div className="mt-2">
                 <label htmlFor="status">
                   <b>{__('', 'bitform')}</b>
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'register'} title={<small className="txt-dp"><b>Registration</b></small>} value="register" />
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'login'} title={<small className="txt-dp"><b>Log In</b></small>} value="login" />
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'forgot'} title={<small className="txt-dp"><b>Forgot Password</b></small>} value="forgot" />
-                  <CheckBox radio name="type" onChange={e => handleInput(e)} checked={type === 'reset'} title={<small className="txt-dp"><b>Reset Password</b></small>} value="reset" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'register'} title={<small className="txt-dp"><b>Registration</b></small>} value="register" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'login'} title={<small className="txt-dp"><b>Log In</b></small>} value="login" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'forgot'} title={<small className="txt-dp"><b>Forgot Password</b></small>} value="forgot" />
+                  <CheckBox radio name="type" onChange={handleInput} checked={type === 'reset'} title={<small className="txt-dp"><b>Reset Password</b></small>} value="reset" />
                 </label>
               </div>
-
-              {userManagementType()}
 
               <div className="mt-2 ml-1 flx">
                 <label htmlFor="status">
                   <b>{__('Enable', 'bitform')}</b>
                 </label>
-                <SingleToggle2 action={handleStatus} checked={status} className="ml-4 flx" />
+                <SingleToggle2 action={handleStatus} checked={status === 1} className="ml-4 flx" />
               </div>
+
+              {userManagementType()}
 
               <button
                 type="button"
                 id="secondary-update-btn"
-                onClick={(e) => saveSettings(e)}
+                onClick={saveSettings}
                 className="btn btcd-btn-lg blue flx"
                 disabled={isLoading}
               >
@@ -254,7 +257,7 @@ export default function AdditionalSettings() {
                   <p className="p-1 f-m">
                     <strong>Note : </strong>
                     {' '}
-                    When the login, forgot password, reset password is enabled in the form then the entries will not be saved in the database.
+                    When the login, forgot password or reset password any of these feature enabled in the form, the entries will not be saved in the WP database.
                   </p>
                 )}
               </div>

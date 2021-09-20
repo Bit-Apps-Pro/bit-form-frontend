@@ -943,7 +943,7 @@ function Workflow({ formID }) {
               &nbsp;
               {__('Conditional Logics', 'bitform')}
               ,&nbsp;
-              <a href="https://bitpress.pro/" target="_blank" rel="noreferrer"><b className="txt-pro">{__('Buy Premium', 'bitform')}</b></a>
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><b className="txt-pro">{__('Buy Premium', 'bitform')}</b></a>
             </div>
           )}
         </Fragment>

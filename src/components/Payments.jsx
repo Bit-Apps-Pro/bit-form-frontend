@@ -104,7 +104,7 @@ export default function Payments() {
                 <div className="pro-blur flx w-10" style={{ top: 5, left: -10 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
-                    <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                    <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                       <span className="txt-pro">
                         {' '}
                         {__('Premium', 'bitform')}
@@ -131,7 +131,7 @@ export default function Payments() {
                     >
                       {pay.pro && (
                         <div className="pro-filter">
-                          <span className="txt-pro"><a href="https://bitpress.pro/" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
+                          <span className="txt-pro"><a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">{__('Premium', 'bitform')}</a></span>
                         </div>
                       )}
                       <img src={pay.logo} alt="" style={{ padding: 0 }} />
