@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import { __ } from '../../../../Utils/i18nwrap'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import usePseudo from '../ChildComp/usePseudo'
@@ -68,7 +68,7 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Color', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Color', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -129,6 +129,6 @@ export default function Color({ style, cls, styleConfig, styleDispatch, brkPoint
           <ColorPicker alwGradient={false} value={placeholderClr} onChange={setPlcholderClr} />
         </div>
       )}
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

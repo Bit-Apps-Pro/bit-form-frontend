@@ -1,5 +1,5 @@
 import { __ } from '../../../../Utils/i18nwrap'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 import XYordinateIcn from '../../../../Icons/XYordinateIcn'
@@ -20,7 +20,7 @@ export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, 
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Block Gap', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Block Gap', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
@@ -35,6 +35,6 @@ export default function Gap({ style, cls, styleConfig, styleDispatch, brkPoint, 
         value={gridGap}
         onChange={setGridGap}
       />
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

@@ -1,5 +1,5 @@
 import { __ } from '../../../../Utils/i18nwrap'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
 import Range from '../ChildComp/Range'
 import BorderIcn from '../../../../Icons/BorderIcn'
@@ -15,7 +15,7 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Margin', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Margin', 'bitform')}>
       {'responsive' in styleConfig && <ResponsiveBtns brkPoint={brkPoint} setResponsiveView={setResponsiveView} />}
 
       <Range
@@ -32,6 +32,6 @@ export default function Margin({ style, cls, styleConfig, styleDispatch, brkPoin
         value={margin}
         onChange={setMargin}
       />
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

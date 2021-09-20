@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
 
@@ -14,7 +14,7 @@ export default function Height({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title="Height">
+    <SimpleAccordion className="style-acc w-9" title="Height">
       <div className="mt-2">
         <span className="f-5">Input Height</span>
         <Range
@@ -30,6 +30,6 @@ export default function Height({ style, cls, styleConfig, styleDispatch, brkPoin
           onChange={setHeight}
         />
       </div>
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

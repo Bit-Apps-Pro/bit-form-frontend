@@ -13,7 +13,7 @@ import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import Range from '../ChildComp/Range'
 import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import usePseudo from '../ChildComp/usePseudo'
 
 export default function Background({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
@@ -153,7 +153,7 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Background', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Background', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -399,6 +399,6 @@ export default function Background({ style, cls, styleConfig, styleDispatch, brk
         </div>
       )}
 
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

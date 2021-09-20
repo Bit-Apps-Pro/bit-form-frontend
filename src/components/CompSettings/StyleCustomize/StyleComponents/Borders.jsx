@@ -1,17 +1,17 @@
-import { __ } from '../../../../Utils/i18nwrap'
-import Range from '../ChildComp/Range'
-import StyleAccordion from '../ChildComp/StyleAccordion'
-import BtnGrp from '../ChildComp/BtnGrp'
-import ColorPicker from '../ChildComp/ColorPicker'
-import usePseudo from '../ChildComp/usePseudo'
-import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
-import NoneIcn from '../../../../Icons/NoneIcn'
-import BdrDoubleIcn from '../../../../Icons/BdrDoubleIcn'
 import BdrDashIcn from '../../../../Icons/BdrDashIcn'
 import BdrDottedIcn from '../../../../Icons/BdrDottedIcn'
+import BdrDoubleIcn from '../../../../Icons/BdrDoubleIcn'
 import BdrSolidIcn from '../../../../Icons/BdrSolidIcn'
 import BorderIcn from '../../../../Icons/BorderIcn'
+import NoneIcn from '../../../../Icons/NoneIcn'
 import { spreadIn4Value } from '../../../../Utils/Helpers'
+import { __ } from '../../../../Utils/i18nwrap'
+import BtnGrp from '../ChildComp/BtnGrp'
+import ColorPicker from '../ChildComp/ColorPicker'
+import Range from '../ChildComp/Range'
+import ResponsiveBtns from '../ChildComp/ResponsiveBtns'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
+import usePseudo from '../ChildComp/usePseudo'
 
 export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoint, setResponsiveView }) {
   const [pseudo, pcls, setPseudo] = usePseudo(cls)
@@ -55,7 +55,7 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Border', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Border', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -134,6 +134,6 @@ export default function Borders({ style, cls, styleConfig, styleDispatch, brkPoi
           />
         </div>
       )}
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }
