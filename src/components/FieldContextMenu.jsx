@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { Item } from 'react-contexify'
+import { hideAll } from 'tippy.js'
 import { $fields, $selectedFieldId, $updateBtn } from '../GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckBoxIcn from '../Icons/CheckBoxIcn'
@@ -71,8 +71,9 @@ export default function FieldContextMenu({ isContextMenu,
   const deselectFieldId = e => {
     e.stopPropagation()
 
+    hideAll()
     setSelectedFieldId(null)
-    resetContextMenu()
+    if (resetContextMenu) resetContextMenu()
   }
 
   console.log({ contextMenu })
