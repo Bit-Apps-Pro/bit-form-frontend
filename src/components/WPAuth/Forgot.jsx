@@ -72,7 +72,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
           <div className="f-m fw-500">
-            {__('Reset Page Url:', 'bitform')}
+            {__('Redirect Page:', 'bitform')}
             <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
               <div className="txt-body">
                 This redirect page will be redirected to the reset form when the email is verified.
