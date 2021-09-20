@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import 'react-contexify/dist/ReactContexify.css'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import EditIcn from '../Icons/EditIcn'
