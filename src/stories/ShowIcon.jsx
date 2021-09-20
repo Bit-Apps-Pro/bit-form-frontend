@@ -13,6 +13,7 @@ import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
 import CheckBoxIcn from '../Icons/CheckBoxIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
+import ChevronLeft from '../Icons/ChevronLeft'
 import ChevronRightIcon from '../Icons/ChevronRightIcon'
 import CloseIcn from '../Icons/CloseIcn'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
@@ -440,9 +441,14 @@ export default function ShowIcon() {
       com: '<YoutubeIcn size="30" />',
     },
     {
-      name: 'ChevronDown Icon',
+      name: 'Chevron Down Icon',
       icon: <ChevronDownIcn size="30" />,
       com: '<ChevronDownIcn size="30" />',
+    },
+    {
+      name: 'Chevron Left Icon',
+      icon: <ChevronLeft size="24" />,
+      com: '<ChevronLeft size="30" />',
     },
     {
       name: 'Eye Icon',
