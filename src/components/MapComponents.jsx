@@ -50,27 +50,27 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     case 'textarea':
       return <TextArea fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'check':
-      return <CheckBox formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+      return <CheckBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'radio':
-      return <RadioBox formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+      return <RadioBox fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'select':
-      return <DropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+      return <DropDown fieldKey={fieldKey} isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     // case 'dropdown':
     //   return <NewDropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'file-up':
-      return <FileUp formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
+      return <FileUp fieldKey={fieldKey} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'submit':
-      return <SubmitBtn formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
+      return <SubmitBtn fieldKey={fieldKey} formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'hidden':
-      return <HiddenField formID={formID} attr={atts} />
+      return <HiddenField fieldKey={fieldKey} formID={formID} attr={atts} />
     case 'recaptcha':
-      return <ReCaptcha formID={formID} attr={atts} />
+      return <ReCaptcha fieldKey={fieldKey} formID={formID} attr={atts} />
     case 'decision-box':
-      return <DecisionBox formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
+      return <DecisionBox fieldKey={fieldKey} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'html':
-      return <Html formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
+      return <Html fieldKey={fieldKey} formID={formID} attr={atts} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'button':
-      return <Button formID={formID} attr={atts} fieldData={fieldData} buttonDisabled={buttonDisabled} handleReset={handleReset} />
+      return <Button fieldKey={fieldKey} formID={formID} attr={atts} fieldData={fieldData} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'paypal':
       return <Paypal isBuilder={isBuilder} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'razorpay':

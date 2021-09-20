@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import validateForm from '../../user-frontend/validation'
 import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
-export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID }) {
+export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   let defaultValue
   if ('val' in attr && attr.val && attr.val.length > 0) {
     if (typeof attr.val === 'string') {
@@ -68,35 +69,42 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID 
   }
 
   return (
-    <InputWrapper
-      formID={formID}
-      fieldKey={attr.name}
-      fieldData={attr}
-    >
-      <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
-        {attr.opt.map((itm, i) => (
-          <label key={`opt-${i + 24}`} className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
-            <span>
-              {itm.lbl}
-            </span>
-            <input
-              type="checkbox"
-              ref={checkBoxRef}
-              disabled={attr.valid.disabled}
-              readOnly={attr?.valid?.readonly}
-              // {...itm.check && { defaultChecked: true }}
-              // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
-              defaultValue={itm.val || itm.lbl}
-              {...itm.req && { required: true }}
-              {...'name' in attr && { name: `${attr.name}[]` }}
-              {...{ checked: Array.isArray(value) && value.indexOf(itm.val || itm.lbl) >= 0 }}
-              onChange={onChangeHandler}
-              onBlur={handleBlur}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
-        ))}
-      </div>
-    </InputWrapper>
+    <>
+      <RenderStyle styleClasses={styleClasses} />
+      <InputWrapper
+        formID={formID}
+        // fieldKey={attr.name}
+        fieldKey={fieldKey}
+        fieldData={attr}
+      >
+        {/* cc for checkbox container */}
+        <div className={`${fieldKey}-cc`}>
+          {attr.opt.map((itm, i) => (
+            <div key={`opt-${i + 24}`} className={`${fieldKey}-cw`}>
+              <input
+                id={`${fieldKey}-chk-${i}`}
+                type="checkbox"
+                className={`${fieldKey}-ci`}
+                ref={checkBoxRef}
+                disabled={attr.valid.disabled}
+                // readOnly={attr?.valid?.readonly}
+                // {...itm.check && { defaultChecked: true }}
+                // {...value && value.indexOf(itm.lbl) >= 0 && { defaultChecked: true }}
+                defaultValue={itm.val || itm.lbl}
+                {...itm.req && { required: true }}
+                {...'name' in attr && { name: `${attr.name}[]` }}
+                {...{ checked: Array.isArray(value) && value.indexOf(itm.val || itm.lbl) >= 0 }}
+                onChange={onChangeHandler}
+                onBlur={handleBlur}
+              />
+              <label htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
+                <i className={`${fieldKey}-bx ${fieldKey}-ck`} />
+                <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
+              </label>
+            </div>
+          ))}
+        </div>
+      </InputWrapper>
+    </>
   )
 }
