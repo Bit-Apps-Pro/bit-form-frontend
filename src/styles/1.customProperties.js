@@ -12,10 +12,12 @@ const customProperties = {
   bd: $ => ({ background: $ }),
   cr: $ => ({ color: $ }),
   bc: $ => ({ backgroundColor: $ }),
+  bi: $ => ({ backgroundImage: $ }),
 
   g: ($ = 'center') => ({ placeContent: $ }),
   dy: $ => ({ display: $ }),
   flxp: $ => ({ flexWrap: $ }),
+  bsz: $ => ({ boxSizing: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
   us: $ => ({ userSelect: $ }),
@@ -34,6 +36,7 @@ const customProperties = {
   owy: $ => ({ overflowY: $ }),
 
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
+  lh: $ => ({ lineHeight: $ }),
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   ta: $ => ({ textAlign: $ }),

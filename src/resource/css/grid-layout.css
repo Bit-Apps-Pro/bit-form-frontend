@@ -19,9 +19,10 @@
 }
 
 .blk:focus .blk-icn-wrp,
-.blk :hover .blk-icn-wrp,
+.blk:hover .blk-icn-wrp,
 .itm-focus .blk-icn-wrp {
   visibility: visible;
+  z-index: 1;
 }
 
 .blk:focus .blk-icn-wrp button,
