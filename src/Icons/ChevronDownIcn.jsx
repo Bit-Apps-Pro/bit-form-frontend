@@ -1,9 +1,9 @@
-export default function ChevronDownIcn({ rotate, size, stroke = 2 }) {
+export default function ChevronDownIcn({ rotate, size, stroke = 2, viewBox = '0 0 24 24' }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox={viewBox}
       fill="none"
       stroke="currentColor"
       strokeWidth={stroke}

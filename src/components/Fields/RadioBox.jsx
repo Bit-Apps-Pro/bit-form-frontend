@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect, createRef } from 'react'
 import validateForm from '../../user-frontend/validation'
 import InputWrapper from '../InputWrapper'
+import RenderStyle from '../style-new/RenderStyle'
 
-export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID }) {
+export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
   const [value, setvalue] = useState(attr.val || '')
   const radioRef = useRef([])
   radioRef.current = attr.opt.map((_, i) => radioRef.current[i] ?? createRef())
@@ -50,7 +51,6 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
       onBlurHandler(event)
     }
   }
-  const n = Math.random()
 
   const handleBlur = e => {
     const { name, form } = e.target
@@ -58,32 +58,38 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID 
   }
 
   return (
-    <InputWrapper
-      formID={formID}
-      fieldKey={attr.name}
-      fieldData={attr}
-    >
-      <div className={`no-drg fld fld-${formID} btcd-ck-con ${attr.round && 'btcd-round'}`}>
-        {attr.opt.map((itm, i) => (
-          <label key={`opr-${i + 22}`} className={`btcd-ck-wrp btcd-ck-wrp-${formID}`}>
-            <span>{itm.lbl}</span>
-            <input
-              type="radio"
-              ref={radioRef.current[i]}
-              name={n}
-              value={itm.val || itm.lbl}
-              {...itm.check && { checked: true }}
-              {...attr.valid.req && { required: true }}
-              {...'name' in attr && { name: attr.name }}
-              {...{ checked: value === (itm.val || itm.lbl) }}
-              {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
-              onChange={onChangeHandler}
-              onBlur={handleBlur}
-            />
-            <span className="btcd-mrk rdo" />
-          </label>
-        ))}
-      </div>
-    </InputWrapper>
+    <>
+      <RenderStyle styleClasses={styleClasses} />
+      <InputWrapper
+        formID={formID}
+        fieldKey={fieldKey}
+        fieldData={attr}
+      >
+        <div className={`${fieldKey}-cc`}>
+          {attr.opt.map((itm, i) => (
+            <div key={`opr-${i + 22}`} className={`${fieldKey}-cw`}>
+              <input
+                type="radio"
+                className={`${fieldKey}-ci`}
+                ref={radioRef.current[i]}
+                name={fieldKey}
+                value={itm.val || itm.lbl}
+                {...itm.check && { checked: true }}
+                {...attr.valid.req && { required: true }}
+                {...'name' in attr && { name: attr.name }}
+                {...{ checked: value === (itm.val || itm.lbl) }}
+                // {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
+                onChange={onChangeHandler}
+                onBlur={handleBlur}
+              />
+              <label htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
+                <i className={`${fieldKey}-bx ${fieldKey}-rdo`} />
+                <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
+              </label>
+            </div>
+          ))}
+        </div>
+      </InputWrapper>
+    </>
   )
 }

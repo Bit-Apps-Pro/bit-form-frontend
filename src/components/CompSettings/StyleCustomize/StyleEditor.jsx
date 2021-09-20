@@ -1,17 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useHistory } from 'react-router-dom'
+import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
+import CustomInputControl from './ChildComp/CustomInputControl'
 import Background from './StyleComponents/Background'
 import Borders from './StyleComponents/Borders'
-import Padding from './StyleComponents/Padding'
-import Margin from './StyleComponents/Margin'
-import Shadow from './StyleComponents/Shadow'
 import Color from './StyleComponents/Color'
-import FontSetting from './StyleComponents/FontSetting'
 import Direction from './StyleComponents/Direction'
+import FontSetting from './StyleComponents/FontSetting'
 import Gap from './StyleComponents/Gap'
 import Height from './StyleComponents/Height'
-import BackIcn from '../../../Icons/BackIcn'
+import Margin from './StyleComponents/Margin'
+import Padding from './StyleComponents/Padding'
+import Shadow from './StyleComponents/Shadow'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()
@@ -37,6 +38,8 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
       )}
 
       {title && <h4 className="ml-2 txt-blue">{title}</h4>}
+
+      <CustomInputControl width="45%" label="Width" value={10} min={1} max={1000} />
 
       {'background' in styleConfig && (
         <>

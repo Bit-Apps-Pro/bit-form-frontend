@@ -8,7 +8,7 @@ import EmailNotification from './EmailNotification'
 import EditIcn from '../../Icons/EditIcn'
 import Cooltip from '../Utilities/Cooltip'
 
-function Forgot({ fields, dataConf, setDataConf, pages, type }) {
+function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   const [showMdl, setshowMdl] = useState(false)
   const forgotField = [
     {
@@ -44,7 +44,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type }) {
   }
 
   return (
-    <div style={{ width: 800 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Forget Password Fields Mapping</b></div>
@@ -71,8 +71,8 @@ function Forgot({ fields, dataConf, setDataConf, pages, type }) {
       <br />
       <div className="flx integ-fld-wrp">
         <div className="w-5 ">
-          <div className="f-m">
-            {__('Reset Page Url:', 'bitform')}
+          <div className="f-m fw-500">
+            {__('Redirect Page:', 'bitform')}
             <Cooltip width={250} icnSize={17} className="ml-1 mt-4 p-0">
               <div className="txt-body">
                 This redirect page will be redirected to the reset form when the email is verified.
@@ -88,7 +88,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type }) {
             ))}
           </select>
         </div>
-        <div className="w-5 ml-2 mt-5">
+        <div className="w-5 ml-2 mt-5 fw-500">
           <div className="f-m">
             Link
             {' '}
@@ -122,7 +122,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type }) {
       <br />
 
       <div className="w-5">
-        <div className="f-m">{__('Success Message:', 'bitform')}</div>
+        <div className="f-m fw-500">{__('Success Message:', 'bitform')}</div>
         <input className="btcd-paper-inp mt-1" onChange={(e) => inputHandler(e)} name="succ_msg" value={dataConf[type]?.succ_msg} type="text" placeholder={__('Success Message', 'bitform')} />
       </div>
 

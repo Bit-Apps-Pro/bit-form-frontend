@@ -1,13 +1,13 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const safePostCssParser = require('postcss-safe-parser');
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const safePostCssParser = require('postcss-safe-parser')
 const svgToMiniDataURI = require('mini-svg-data-uri')
 // const autoprefixer = require('autoprefixer');
 // const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -17,9 +17,7 @@ module.exports = (env, argv) => {
   const production = argv.mode !== 'development'
   return {
     devtool: production ? false : 'source-map',
-    entry: {
-      bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
-    },
+    entry: { bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js') },
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, '../assets/js/'),
@@ -71,9 +69,7 @@ module.exports = (env, argv) => {
                 }
                 : false,
             },
-            cssProcessorPluginOptions: {
-              preset: ['default', { minifyFontValues: { removeQuotes: false } }],
-            },
+            cssProcessorPluginOptions: { preset: ['default', { minifyFontValues: { removeQuotes: false } }] },
           }),
         ]),
       ],
@@ -81,20 +77,14 @@ module.exports = (env, argv) => {
     plugins: [
       // new BundleAnalyzerPlugin(),
       // new CleanWebpackPlugin(),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development'),
-        },
-      }),
+      new webpack.DefinePlugin({ 'process.env': { NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development') } }),
       new MiniCssExtractPlugin({
         filename: '../css/[name].css?v=[contenthash:6]',
         ignoreOrder: true,
       }),
     ],
 
-    resolve: {
-      extensions: ['.js', '.jsx', '.json', '.css'],
-    },
+    resolve: { extensions: ['.js', '.jsx', '.json', '.css'] },
 
     module: {
       strictExportPresence: true,
@@ -131,13 +121,9 @@ module.exports = (env, argv) => {
             // 'style-loader',
             {
               loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: '',
-              },
+              options: { publicPath: '' },
             },
-            {
-              loader: 'css-loader',
-            },
+            { loader: 'css-loader' },
             {
               loader: 'postcss-loader',
               options: {
@@ -150,11 +136,7 @@ module.exports = (env, argv) => {
             },
             {
               loader: 'sass-loader',
-              options: {
-                sassOptions: {
-                  outputStyle: 'compressed',
-                },
-              },
+              options: { sassOptions: { outputStyle: 'compressed' } },
             },
           ],
         },
@@ -169,9 +151,7 @@ module.exports = (env, argv) => {
             {
               loader: 'url-loader',
               options: {
-                options: {
-                  generator: (content) => svgToMiniDataURI(content.toString()),
-                },
+                options: { generator: (content) => svgToMiniDataURI(content.toString()) },
                 name: production ? '[name][contenthash:8].[ext]' : '[name].[ext]',
                 outputPath: '../img',
               },

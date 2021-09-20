@@ -763,6 +763,10 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
+.fw-500{
+  font-weight: 500;
+}
+
 .toolBar {
   display: flex;
   padding-bottom: 80px;
@@ -5172,6 +5176,10 @@ _:-ms-fullscreen,
 
 .p-4 {
   padding: 20px;
+}
+
+.pr-4 {
+  padding-right: 20px !important;
 }
 
 .pl-6 {
