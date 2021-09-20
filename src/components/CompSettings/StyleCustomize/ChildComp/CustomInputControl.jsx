@@ -1,12 +1,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import Tippy from '@tippyjs/react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import customInputControlStyle from '../../../../styles/customInputControl.style'
 
 const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
   const { css } = useFela()
+  const rangeRef = useRef(null)
+
+  useEffect(() => {
+    rangeRef.current.style.backgroundSize = `${(val - min) * 100 / (max - min)}% 100%`
+  }, [max, min, val])
 
   return (
     <div className="flx">
@@ -14,6 +19,7 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
       &nbsp;
       <input
         type="range"
+        ref={rangeRef}
         className={css(customInputControlStyle.range)}
         min={min}
         max={max}
