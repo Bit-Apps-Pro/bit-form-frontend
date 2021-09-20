@@ -1,5 +1,5 @@
 import { __ } from '../../../../Utils/i18nwrap'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import BtnGrp from '../ChildComp/BtnGrp'
 import ColorPicker from '../ChildComp/ColorPicker'
 import Range from '../ChildComp/Range'
@@ -58,7 +58,7 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Shadow', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Shadow', 'bitform')}>
       {('hover' in styleConfig
         || 'focus' in styleConfig
         || 'responsive' in styleConfig)
@@ -113,6 +113,6 @@ export default function Shadow({ style, cls, styleConfig, styleDispatch, brkPoin
           />
         </>
       )}
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

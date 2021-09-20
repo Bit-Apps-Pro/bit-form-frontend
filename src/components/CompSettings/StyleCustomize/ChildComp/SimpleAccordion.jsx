@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
+import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 
-StyleAccordion.defaultProps = {
+SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
 }
 
-export default function StyleAccordion({ className, title, children, open, onOpen }) {
+export default function SimpleAccordion({ className, title, children, open, onOpen }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
@@ -31,7 +32,8 @@ export default function StyleAccordion({ className, title, children, open, onOpe
       >
         <div className="flx flx-between">
           <span className="title">{title}</span>
-          <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} />
+          <ChevronDownIcn size="20" rotate={!!tgl} />
+          {/* <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} /> */}
         </div>
       </div>
 

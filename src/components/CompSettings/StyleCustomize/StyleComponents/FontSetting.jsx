@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import { __ } from '../../../../Utils/i18nwrap'
-import StyleAccordion from '../ChildComp/StyleAccordion'
+import SimpleAccordion from '../ChildComp/SimpleAccordion'
 import usePseudo from '../ChildComp/usePseudo'
 import Range from '../ChildComp/Range'
 import HeightIcn from '../../../../Icons/HeightIcn'
@@ -24,7 +24,7 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
   }
 
   return (
-    <StyleAccordion className="style-acc w-9" title={__('Font', 'bitform')}>
+    <SimpleAccordion className="style-acc w-9" title={__('Font', 'bitform')}>
       {'size' in styleConfig && (
         <div className="mt-2">
           <span className="f-5">{__('Font Size', 'bitform')}</span>
@@ -67,6 +67,6 @@ export default function FontSetting({ style, cls, styleConfig, styleDispatch, br
           />
         </div>
       )}
-    </StyleAccordion>
+    </SimpleAccordion>
   )
 }

@@ -6,7 +6,7 @@ import BorderIcn from '../../../Icons/BorderIcn'
 import HeightIcn from '../../../Icons/HeightIcn'
 import ColorPicker from './ChildComp/ColorPicker'
 import Range from './ChildComp/Range'
-import StyleAccordion from './ChildComp/StyleAccordion'
+import SimpleAccordion from './ChildComp/SimpleAccordion'
 import StyleEditor from './StyleEditor'
 
 export default function DropdownStyleEditors({ editorLabel, style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }) {
@@ -44,7 +44,7 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
         <div className="btcd-hr m-a" />
       </Link>
 
-      <StyleAccordion
+      <SimpleAccordion
         open={controlAccordion === 1}
         onOpen={() => setcontrolAccordion(1)}
         title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdown Input Style</span>}
@@ -52,7 +52,7 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
       >
         <StyleEditor noBack compStyle={style} cls={`.fld-${formID}.dpd .msl`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.dropdown} formID={formID} />
 
-        <StyleAccordion title="Min Height" className="style-acc w-9">
+        <SimpleAccordion title="Min Height" className="style-acc w-9">
           <Range
             info={[{ icn: <HeightIcn h="20" />, lbl: 'Minimum Height' }]}
             className="btc-range"
@@ -63,10 +63,10 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
             value={minHeight}
             onChange={(val) => setValueByProperty(val, 'min-height', `.fld-${formID}.dpd .msl`)}
           />
-        </StyleAccordion>
+        </SimpleAccordion>
         <div className="btcd-hr m-a" />
 
-        <StyleAccordion title="Border Radius" className="style-acc w-9">
+        <SimpleAccordion title="Border Radius" className="style-acc w-9">
           <Range
             info={[
               { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },
@@ -82,10 +82,10 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
             value={borderRadius}
             onChange={(val) => setValueByProperty(val, '--border-radius')}
           />
-        </StyleAccordion>
+        </SimpleAccordion>
         <div className="btcd-hr m-a" />
 
-        <StyleAccordion title="Font Size" className="style-acc w-9">
+        <SimpleAccordion title="Font Size" className="style-acc w-9">
           <Range
             info={[
               { icn: <b>T</b>, lbl: 'Font Size' },
@@ -98,10 +98,10 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
             value={fontSize}
             onChange={(val) => setValueByProperty(val, '--font-size')}
           />
-        </StyleAccordion>
+        </SimpleAccordion>
         <div className="btcd-hr m-a" />
 
-        <StyleAccordion title="Line Height" className="style-acc w-9">
+        <SimpleAccordion title="Line Height" className="style-acc w-9">
           <Range
             info={[{
               icn: (
@@ -119,20 +119,20 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
             step={0.1}
             onChange={(val) => setValueByProperty(val, '--line-height')}
           />
-        </StyleAccordion>
+        </SimpleAccordion>
         <div className="btcd-hr m-a" />
 
-      </StyleAccordion>
+      </SimpleAccordion>
       <div className="btcd-hr m-a" />
 
-      <StyleAccordion open={controlAccordion === 2} onOpen={() => setcontrolAccordion(2)} title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdowns Active Menu</span>} className="style-acc">
+      <SimpleAccordion open={controlAccordion === 2} onOpen={() => setcontrolAccordion(2)} title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdowns Active Menu</span>} className="style-acc">
         <div className="flx flx-between w-9 p-2 m-a">
           <b>Background Color</b>
           <ColorPicker value={activeMenuBgColor} onChange={val => setValueByProperty(val.style, '--active-menu-background', `.fld-${formID}.dpd`)} />
         </div>
         <div className="btcd-hr m-a" />
 
-        <StyleAccordion title="Border Radius" className="style-acc w-9">
+        <SimpleAccordion title="Border Radius" className="style-acc w-9">
           <Range
             info={[
               { icn: <BorderIcn borderRadius="6px 1px 1px 1px" />, lbl: 'Radius Top Left' },
@@ -148,20 +148,20 @@ export default function DropdownStyleEditors({ editorLabel, style, styleDispatch
             value={activeMenuRadius}
             onChange={(val) => setValueByProperty(val, '--active-menu-radius', `.fld-${formID}.dpd`)}
           />
-        </StyleAccordion>
+        </SimpleAccordion>
         <div className="btcd-hr m-a" />
-      </StyleAccordion>
+      </SimpleAccordion>
       <div className="btcd-hr m-a" />
 
-      <StyleAccordion open={controlAccordion === 3} onOpen={() => setcontrolAccordion(3)} title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdowns Options Style</span>} className="style-acc">
+      <SimpleAccordion open={controlAccordion === 3} onOpen={() => setcontrolAccordion(3)} title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdowns Options Style</span>} className="style-acc">
         <StyleEditor noBack compStyle={style} cls={`.fld-${formID}.dpd .msl-option`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.dropdownOptions} formID={formID} />
-      </StyleAccordion>
+      </SimpleAccordion>
       <div className="btcd-hr m-a" />
 
-      <StyleAccordion open={controlAccordion === 4} onOpen={() => setcontrolAccordion(4)} title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdowns Chips Style</span>} className="style-acc">
+      <SimpleAccordion open={controlAccordion === 4} onOpen={() => setcontrolAccordion(4)} title={<span className="txt-blue" style={{ fontSize: 16 }}>Dropdowns Chips Style</span>} className="style-acc">
         <StyleEditor noBack compStyle={style} cls={`.fld-${formID}.dpd .msl-chip`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.dropdownChip} formID={formID} />
         <StyleEditor title="Chip Delete Button" noBack compStyle={style} cls={`.fld-${formID}.dpd .msl-chip div[aria-label="delete-value"]`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.dropdownChipButton} formID={formID} />
-      </StyleAccordion>
+      </SimpleAccordion>
       <div className="btcd-hr m-a" />
 
     </div>

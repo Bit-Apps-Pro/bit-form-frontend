@@ -34,7 +34,7 @@ import WeekIcn from '../../Icons/WeekIcn'
 import Toolbars from '../../styles/Toolbars.style'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
-import StyleAccordion from '../CompSettings/StyleCustomize/ChildComp/StyleAccordion'
+import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import Tools from './Tools'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
@@ -468,7 +468,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </div>
         )}
         {searchData.length === 0 && tools.map(grp => (
-          <StyleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle} open>
+          <SimpleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle} open>
             <div className={css(Toolbars.tool_bar)}>
               {grp.fields.map((fld, i) => (
                 <Tools key={fld.name} setNewData={setNewData} value={{ fieldData: fld.elm, fieldSize: fld.pos }}>
@@ -477,7 +477,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
                 </Tools>
               ))}
             </div>
-          </StyleAccordion>
+          </SimpleAccordion>
         ))}
       </Scrollbars>
 

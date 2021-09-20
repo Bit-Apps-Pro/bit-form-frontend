@@ -12,7 +12,7 @@ import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
-import StyleAccordion from './StyleCustomize/ChildComp/StyleAccordion'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function RazorpaySettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -218,16 +218,16 @@ export default function RazorpaySettings() {
             </>
           )}
 
-          <StyleAccordion title="Additional Settings" className="style-acc">
-            <StyleAccordion title="Button" className="style-acc">
+          <SimpleAccordion title="Additional Settings" className="style-acc">
+            <SimpleAccordion title="Button" className="style-acc">
               <SingleInput inpType="text" title={__('Button Text', 'bitform')} value={fieldData.btnTxt || ''} name="btnTxt" action={handleBtnStyle} className="mt-0" />
               <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={fieldData.align} action={handleBtnStyle} name="align" />
               <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fieldData.fulW} className="mt-5" />
               <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={fieldData.btnSiz === 'sm'} className="mt-5" />
-            </StyleAccordion>
+            </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <StyleAccordion title="Theme" className="style-acc">
+            <SimpleAccordion title="Theme" className="style-acc">
               <div>
                 <b>{__('Theme Color:', 'bitform')}</b>
                 <input className="ml-2" type="color" value={fieldData.options.theme.color} onChange={e => handleInput('color', e.target.value, 'theme')} />
@@ -236,15 +236,15 @@ export default function RazorpaySettings() {
                 <b>{__('Background Color:', 'bitform')}</b>
                 <input className="ml-2" type="color" value={fieldData.options.theme.backdrop_color} onChange={e => handleInput('backdrop_color', e.target.value, 'theme')} />
               </div>
-            </StyleAccordion>
+            </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <StyleAccordion title="Modal" className="style-acc">
+            <SimpleAccordion title="Modal" className="style-acc">
               <SingleToggle title={__('Confirm on Close:', 'bitform')} action={e => handleInput('confirm_close', e.target.checked, 'modal')} isChecked={fieldData.options.modal.confirm_close} />
-            </StyleAccordion>
+            </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <StyleAccordion title="Prefill" className="style-acc">
+            <SimpleAccordion title="Prefill" className="style-acc">
               <div className="mt-2">
                 <b>{__('Name :', 'bitform')}</b>
                 <select onChange={e => handleInput(e.target.name, e.target.value, 'prefill')} name="prefillNameFld" className="btcd-paper-inp mt-1" value={fieldData.options.prefill.prefillNameFld}>
@@ -266,10 +266,10 @@ export default function RazorpaySettings() {
                   {getSpecifiedFields('number')}
                 </select>
               </div>
-            </StyleAccordion>
+            </SimpleAccordion>
             <div className="btcd-hr" />
 
-            <StyleAccordion title="Notes" className="style-acc">
+            <SimpleAccordion title="Notes" className="style-acc">
               <div className="flx">
                 <div className="w-10"><b>{__('Key :', 'bitform')}</b></div>
                 <div className="w-10"><b>{__('Value :', 'bitform')}</b></div>
@@ -288,17 +288,17 @@ export default function RazorpaySettings() {
                 </div>
               ))}
               <div className="txt-center mt-2"><button className="icn-btn" type="button" onClick={() => handleNotes('add')}>+</button></div>
-            </StyleAccordion>
+            </SimpleAccordion>
             <div className="btcd-hr" />
             {/* invoice */}
-            {/* <StyleAccordion title="Invoice" className="style-acc">
+            {/* <SimpleAccordion title="Invoice" className="style-acc">
               <SingleToggle title={__('Generate Invoice', 'bitform')} action={e => handleInput('generate', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.generate} />
               <SingleInput inpType="text" title={__('Item Name', 'bitform')} value={fieldData.options?.invoice?.itemName || ''} name="btnTxt" action={e => handleInput('itemName', e.target.value, 'invoice')} className="mt-3" />
               <SingleToggle title={__('Send SMS to customer', 'bitform')} action={e => handleInput('sendSMS', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendSMS} className="mt-3" />
               <SingleToggle title={__('Send Email to customer', 'bitform')} action={e => handleInput('sendEmail', e.target.checked, 'invoice')} isChecked={fieldData.options?.invoice?.sendEmail} className="mt-3" />
-            </StyleAccordion>
+            </SimpleAccordion>
             <div className="btcd-hr" /> */}
-          </StyleAccordion>
+          </SimpleAccordion>
         </>
       )}
 
