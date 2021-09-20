@@ -12,6 +12,7 @@ const customProperties = {
   bd: $ => ({ background: $ }),
   cr: $ => ({ color: $ }),
   bc: $ => ({ backgroundColor: $ }),
+  bi: $ => ({ backgroundImage: $ }),
 
   g: ($ = 'center') => ({ placeContent: $ }),
   dy: $ => ({ display: $ }),
