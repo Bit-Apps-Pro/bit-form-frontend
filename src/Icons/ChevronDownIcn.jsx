@@ -9,7 +9,7 @@ export default function ChevronDownIcn({ rotate, size, stroke = 2 }) {
       strokeWidth={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
-      style={rotate ? { transform: 'rotate(180deg)' } : { transform: 'rotate(0deg)' }}
+      style={rotate ? { transform: 'rotate(180deg)', transition: '0.5s' } : { transform: 'rotate(0deg)', transition: '0.5s' }}
     >
       <polyline points="6 9 12 15 18 9" />
     </svg>

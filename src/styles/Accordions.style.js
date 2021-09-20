@@ -3,10 +3,8 @@ const accordion = {
   brs: 8,
   ':hover': {
     bgc: '#eaedff',
-    '& .edit-icn': {
-      display: 'inline-block'
-    }
-  }
+    '& .edit-icn': { dy: 'inline-block' },
+  },
 }
 
 export default accordion

@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import SingleToggle from '../../../Utilities/SingleToggle'
 
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
 }
 
-export default function SimpleAccordion({ className, title, children, open, onOpen }) {
+export default function SimpleAccordion({ className, title, children, open, onOpen, switching }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
@@ -24,7 +25,7 @@ export default function SimpleAccordion({ className, title, children, open, onOp
   return (
     <div className={`${className} ${tgl && 'active'}`}>
       <div
-        className="btgl"
+        className="btgl w-10"
         tabIndex="0"
         role="button"
         onClick={() => toggleAccordion(!tgl)}
@@ -32,7 +33,12 @@ export default function SimpleAccordion({ className, title, children, open, onOp
       >
         <div className="flx flx-between">
           <span className="title">{title}</span>
-          <ChevronDownIcn size="20" rotate={!!tgl} />
+          <div className="flx flx-between">
+            {switching && (
+              <SingleToggle />
+            )}
+            <ChevronDownIcn size="20" rotate={!!tgl} />
+          </div>
           {/* <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} /> */}
         </div>
       </div>

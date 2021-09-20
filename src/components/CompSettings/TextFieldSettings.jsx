@@ -1,7 +1,9 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -15,6 +17,9 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import textFieldSettings from '../../styles/textFieldSettings'
+import ChevronLeft from '../../Icons/ChevronLeft'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -30,6 +35,7 @@ function TextFieldSettings() {
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
+  const { css } = useFela()
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -211,7 +217,47 @@ function TextFieldSettings() {
   console.log('fieldData', fieldData)
 
   return (
-    <div className="mr-4 ml-2">
+    <div className="">
+      <div className={`${css(textFieldSettings.section)} ${css(textFieldSettings.bb)}`}>
+        <span className={css(textFieldSettings.mainTitle)}>Text Field Settings</span>
+        <button className={css(textFieldSettings.btn)}>
+          <ChevronLeft size="20" />
+          Back
+        </button>
+      </div>
+
+      <div className={`${css(textFieldSettings.section)}`}>
+        <span className={css(textFieldSettings.title)}>Field key</span>
+        <CopyText value="bit-form" className="field-key-cpy m-0 w-5" />
+      </div>
+
+      <SimpleAccordion title={__('Label', 'bitform')} className={`${css(textFieldSettings.section)}`} switching />
+      <hr />
+      <SimpleAccordion title={__('Placeholder', 'bitform')} className={`${css(textFieldSettings.placeholder_section)}`} switching>
+        <div className={css(textFieldSettings.placeholder)}>
+          <input className={css(textFieldSettings.placeholer_input)} type="text" />
+        </div>
+      </SimpleAccordion>
+      <hr />
+      <SimpleAccordion title={__('Name', 'bitform')} className={`${css(textFieldSettings.placeholder_section)}`} switching>
+        <div className={css(textFieldSettings.placeholder)}>
+          <input className={css(textFieldSettings.placeholer_input)} type="text" />
+        </div>
+      </SimpleAccordion>
+      <hr />
+      <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(textFieldSettings.placeholder_section)} />
+      {
+        fieldData?.valid?.req && (
+          <ErrorMessageSettings
+            type="req"
+            title="Error Message"
+            tipTitle="By enabling this feature, user will see the error message when input is empty"
+          />
+        )
+      }
+
+      {/* end */}
+
       <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
@@ -224,7 +270,7 @@ function TextFieldSettings() {
       <FieldHideSettings />
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
+      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
       {
         fieldData?.valid?.req && (
           <ErrorMessageSettings
@@ -233,7 +279,7 @@ function TextFieldSettings() {
             tipTitle="By enabling this feature, user will see the error message when input is empty"
           />
         )
-      }
+      } */}
       {fieldData.typ.match(/^(text|url|password|number|email|)$/) && <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
       {fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
       {
@@ -319,7 +365,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
@@ -346,7 +392,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(email|username)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
