@@ -27,7 +27,6 @@ const MenuItemWrapper = ({ isContextMenu, children }) => {
 
 export default function FieldContextMenu({ isContextMenu,
   isComponentVisible,
-  setIsComponentVisible,
   contextMenu,
   setContextMenu,
   resetContextMenu,
@@ -76,7 +75,6 @@ export default function FieldContextMenu({ isContextMenu,
     if (resetContextMenu) resetContextMenu()
   }
 
-  console.log({ contextMenu })
 
   const generateContextMenuStyle = () => {
     if (isContextMenu && isComponentVisible) {
@@ -117,7 +115,7 @@ export default function FieldContextMenu({ isContextMenu,
           </li>
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className={css(context.item)}>
-              <Downmenu place="right-start" arrow={false}>
+              <Downmenu place="right-start" arrow={false} trigger="mouseenter click">
                 <button
                   data-close
                   type="button"
@@ -135,7 +133,7 @@ export default function FieldContextMenu({ isContextMenu,
                     <li className={css(context.item)}>
                       <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('all')}>
                         <ChevronDownIcn size="19" />
-                        <span>all</span>
+                        <span>Always</span>
                         {checkIfHidden() && <CheckBoxIcn w="19" />}
                       </button>
                     </li>
