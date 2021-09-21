@@ -1,16 +1,22 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
+import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
 
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
 }
 
-export default function SimpleAccordion({ className, title, children, open, onOpen, switching }) {
+export default function SimpleAccordion({ className, title, children, open, onOpen, switching, tip, tipProps }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
+
+  const { css } = useFela()
 
   const toggleAccordion = (val) => {
     setTgl(val)
@@ -31,9 +37,18 @@ export default function SimpleAccordion({ className, title, children, open, onOp
         onClick={() => toggleAccordion(!tgl)}
         onKeyPress={() => toggleAccordion(!tgl)}
       >
-        <div className="flx flx-between">
-          <span className="title">{title}</span>
-          <div className="flx flx-between">
+        <div className={`${css(SimpleAccordionStyle.flxbwn)} ${SimpleAccordionStyle.hrv_tip}`}>
+          <span className={`title ${css(SimpleAccordionStyle.dflx)}`}>
+            {title}
+            {tip && (
+              <span className="ml-2 hover-tip">
+                <Cooltip {...tipProps}>
+                  {tip}
+                </Cooltip>
+              </span>
+            )}
+          </span>
+          <div className={css(SimpleAccordionStyle.flxbwn)}>
             {switching && (
               <SingleToggle />
             )}

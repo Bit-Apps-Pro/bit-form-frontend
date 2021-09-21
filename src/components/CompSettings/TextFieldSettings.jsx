@@ -18,8 +18,11 @@ import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import textFieldSettings from '../../styles/textFieldSettings'
-import ChevronLeft from '../../Icons/ChevronLeft'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import EditIcn from '../../Icons/EditIcn'
+import CheckBoxMini from '../Utilities/CheckBoxMini'
+import Cooltip from '../Utilities/Cooltip'
+import Back2FldBtn from './Back2FldBtn'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -220,22 +223,29 @@ function TextFieldSettings() {
     <div className="">
       <div className={`${css(textFieldSettings.section)} ${css(textFieldSettings.bb)}`}>
         <span className={css(textFieldSettings.mainTitle)}>Text Field Settings</span>
-        <button className={css(textFieldSettings.btn)}>
-          <ChevronLeft size="20" />
-          Back
-        </button>
+        <Back2FldBtn size="20" className={css(textFieldSettings.btn)} />
       </div>
-
+      <hr />
       <div className={`${css(textFieldSettings.section)}`}>
         <span className={css(textFieldSettings.title)}>Field key</span>
-        <CopyText value="bit-form" className="field-key-cpy m-0 w-5" />
+        <CopyText value={fldKey} className="field-key-cpy m-0 w-5" />
       </div>
 
-      <SimpleAccordion title={__('Label', 'bitform')} className={`${css(textFieldSettings.section)}`} switching />
       <hr />
+      <SimpleAccordion title={__('Field Label', 'bitform')} className={`${css(textFieldSettings.placeholder_section)}`} switching>
+        <div className={css(textFieldSettings.placeholder)}>
+          <input className={css(textFieldSettings.placeholer_input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+        </div>
+      </SimpleAccordion>
+      <hr />
+      <SimpleAccordion title={__('Admin Label', 'bitform')} className={`${css(textFieldSettings.placeholder_section)}`} switching>
+        <div className={css(textFieldSettings.placeholder)}>
+          <input className={css(textFieldSettings.placeholer_input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+        </div>
+      </SimpleAccordion>
       <SimpleAccordion title={__('Placeholder', 'bitform')} className={`${css(textFieldSettings.placeholder_section)}`} switching>
         <div className={css(textFieldSettings.placeholder)}>
-          <input className={css(textFieldSettings.placeholer_input)} type="text" />
+          <input className={css(textFieldSettings.placeholer_input)} type="text" value={placeholder} onChange={setPlaceholder} />
         </div>
       </SimpleAccordion>
       <hr />
@@ -245,6 +255,27 @@ function TextFieldSettings() {
         </div>
       </SimpleAccordion>
       <hr />
+      <SimpleAccordion title={__('Required', 'bitform')} className={`${css(textFieldSettings.placeholder_section)} ${css(textFieldSettings.hover_tip)}`} switching tip="hello!" tipProps={{ width: 200, icnSize: 17 }}>
+        <div className="flx flx-between mt-1 mb-1 mr-2">
+          <div className="flx">
+            <CheckBoxMini className=" mr-2" title={__('Custom Error Message', 'bitform')} />
+            <Cooltip width={250} icnSize={17} className="mr-2">
+              <div className="txt-body">
+                Check the box to enable the custom error message.
+                <br />
+                Note: You can edit the message by clicking on edit icon.
+              </div>
+            </Cooltip>
+          </div>
+          <span
+            role="button"
+            tabIndex="-1"
+            className="cp"
+          >
+            <EditIcn size={19} />
+          </span>
+        </div>
+      </SimpleAccordion>
       <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(textFieldSettings.placeholder_section)} />
       {
         fieldData?.valid?.req && (
@@ -415,7 +446,7 @@ function TextFieldSettings() {
           )
         }
       </div>
-    </div>
+    </div >
   )
 }
 

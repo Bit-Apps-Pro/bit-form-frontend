@@ -1,10 +1,12 @@
 const textFieldSettings = {
   section: {
     flx: 'center-between',
-    m: 10,
+    mx: 10,
+    my: 5,
     p: 10,
     brs: 8,
     fw: 600,
+
     '&:hover': { bc: 'var(--b-97)' },
   },
   // bb: { bb: '1px solid var(--white-0-0-14)' },
@@ -16,12 +18,14 @@ const textFieldSettings = {
     bc: 'var(--white-0-97)',
     px: 4,
     brs: 8,
+    cur: 'pointer',
     cr: 'var(--white-0-50)',
   },
   title: { fs: 14, fw: 600 },
 
   placeholder_section: {
-    m: 10,
+    my: 5,
+    mx: 10,
     py: 10,
     fw: 600,
   },
@@ -34,6 +38,14 @@ const textFieldSettings = {
     my: 10,
     b: 'none !important',
     brs: 8,
+  },
+  hover_tip: {
+    '&:hover': {
+      '& .hover-tip': {
+        tm: 'scale(1.1)',
+        tn: '0.2s',
+      },
+    },
   },
 
 }
