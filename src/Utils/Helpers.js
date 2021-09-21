@@ -13,6 +13,11 @@ export const hideWpMenu = () => {
   }
 }
 
+export const isObjectEmpty = (obj) => {
+  // eslint-disable-next-line guard-for-in
+  for (const p in obj) return false; return true
+}
+
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')) {
