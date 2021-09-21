@@ -1,14 +1,14 @@
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
-const svgToMiniDataURI = require('mini-svg-data-uri')
-const RouteManifest = require('webpack-route-manifest')
+// const svgToMiniDataURI = require('mini-svg-data-uri')
+// const RouteManifest = require('webpack-route-manifest')
 // const svgToMiniDataURI = require('mini-svg-data-uri')
 // const RouteManifest = require('webpack-route-manifest')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
   const { hot } = argv
   return {
     // devtool: production ? false : 'source-map',
-    devtool: production ? false : 'eval',
+    devtool: production ? false : 'eval-cheap-module-source-map',
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
       // bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
