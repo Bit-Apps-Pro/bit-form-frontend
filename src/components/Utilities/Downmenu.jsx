@@ -9,11 +9,11 @@ import 'tippy.js/animations/scale.css'
 import 'tippy.js/dist/svg-arrow.css'
 import 'tippy.js/animations/shift-away-extreme.css'
 
-export default function Downmenu({ className, children, width = 'auto', place = 'bottom', onShow, onHide, arrow = true }) {
+export default function Downmenu({ className, children, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click' }) {
   return (
     <Tippy
       inertia
-      trigger="click"
+      trigger={trigger}
       placement={place}
       duration={350}
       interactiveBorder={20}

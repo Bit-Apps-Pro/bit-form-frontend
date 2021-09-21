@@ -15,6 +15,7 @@ import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
 import { $styles } from '../GlobalStates'
+import '../resource/sass/components.scss'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -32,7 +33,6 @@ mul: multiple
 
 function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID }) {
   const styles = useRecoilValue($styles)
-  // console.log('--style', styles.fields[fieldKey], fieldKey)
   switch (atts?.typ) {
     case 'text':
     case 'number':

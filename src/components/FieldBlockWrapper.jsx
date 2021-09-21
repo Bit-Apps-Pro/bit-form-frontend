@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable react/jsx-pascal-case */
 import { useContext } from 'react'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
@@ -9,10 +11,10 @@ import { __ } from '../Utils/i18nwrap'
 import FieldContextMenu from './FieldContextMenu'
 import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
+import MapComponents_old from './MapComponents_old'
 import Downmenu from './Utilities/Downmenu'
 
-export default function FieldBlockWrapper({
-  layoutItem,
+export default function FieldBlockWrapper({ layoutItem,
   removeLayoutItem,
   cloneLayoutItem,
   fields,
@@ -26,6 +28,9 @@ export default function FieldBlockWrapper({
     // TODO move this code with recaptcha component after remove react frontend
     if (componentProps && componentProps.typ === 'recaptcha') {
       componentProps.siteKey = reCaptchaV2.siteKey
+    }
+    if (1) {
+      return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
     }
     return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
   }
