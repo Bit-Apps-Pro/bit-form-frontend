@@ -9,7 +9,7 @@ const OptionToolBarStyle = {
   },
   form_section: {
     flx: 'center-between',
-    w: '80%',
+    w: '85%',
   },
   field_btn: {
     flx: 'align-center',
@@ -50,6 +50,8 @@ const OptionToolBarStyle = {
     ow: 'hidden',
     cur: 'pointer',
     pn: 'relative',
+    cr: 'var(--b-54-12)',
+    ':focus:not(:focus-visible)': { bs: 'none' },
     ':hover:not(:disabled, .active)': { cr: 'var(--b-53-13)' },
     ':focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
     '&.active': {
@@ -65,6 +67,9 @@ const OptionToolBarStyle = {
     bd: 'var(--b-20-93)',
   },
   option_right: { flx: 'center' },
+  rightSideBarBtn: {
+    ml: 15
+  }
 }
 
 export default OptionToolBarStyle
