@@ -3,6 +3,7 @@ const ut = {
     display: 'grid',
     placeContent: 'center',
   },
+  flxc: { flx: 'align-center' },
   icn_hover: {
     pn: 'relative',
     '::before': {
