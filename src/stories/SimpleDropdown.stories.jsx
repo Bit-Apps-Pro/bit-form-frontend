@@ -1,0 +1,43 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-props-no-spreading */
+import { createRenderer } from 'fela'
+import felaPluginCustomProperty from 'fela-plugin-custom-property'
+import { RendererProvider } from 'react-fela'
+import customProperties from '../styles/1.customProperties'
+import icon from '../resource/img/settings/dollar-sign .svg'
+import SimpleDropdown from '../components/Utilities/SimpleDropdown'
+import CheckBoxIcn from '../Icons/CheckBoxIcn'
+import EditIcn from '../Icons/EditIcn'
+import FieldIcn from '../Icons/FieldIcn'
+
+const renderer = createRenderer({
+  devMode: true,
+  plugins: [
+    felaPluginCustomProperty(customProperties),
+  ],
+})
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  title: 'Example/Simpledropdown',
+  component: SimpleDropdown,
+  argTypes: {
+    backgroundColor: { control: 'color' },
+    size: { control: { type: 'range', min: 50, max: 200, step: 1 } },
+  },
+}
+const options = [
+  { label: 'Sunny', icn: '💢', value: 'sadf' },
+  { label: 'Cloudy', icn: <CheckBoxIcn w="18" />, value: 'sadf' },
+  { label: 'Rainy', icn: <EditIcn size="15" />, value: 'sadf' },
+  { label: 'Snow', icn: <FieldIcn w="18" />, value: 'sadf' },
+]
+
+const Template = (args) => (
+  <RendererProvider renderer={renderer}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh', background: 'white' }}><SimpleDropdown {...args} /></div>
+  </RendererProvider>
+)
+
+export const Default = Template.bind({})
+Default.args = { options }
+// export const Segment = Template.bind({})
