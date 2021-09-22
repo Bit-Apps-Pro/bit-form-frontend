@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react'
+import { NavLink, useParams } from 'react-router-dom'
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $breakpoint } from '../GlobalStates'
@@ -14,9 +15,13 @@ import { __ } from '../Utils/i18nwrap'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
+import EditIcn from '../Icons/EditIcn'
+import BrushIcn from '../Icons/BrushIcn'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
+  const { formType, formID } = useParams()
+
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
   return (
@@ -43,17 +48,42 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           >
             <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${responsiveMenu ? 'active' : ''}`} type="button"><EllipsisIcon size="38" /></button>
             <div>
-              <div>  <button>sdas</button></div>
-              <div>  <button>sdas</button></div>
-              <div>  <button>sdas</button></div>
-              <div>  <button>sdas</button></div>
-              <div>  <button>sdas</button></div>
-              <div>  <button>sdas</button></div>
-              <div>  <button>sdas</button></div>
+              <div><button>sdas</button></div>
+              <div><button>sdas</button></div>
+              <div><button>sdas</button></div>
+              <div><button>sdas</button></div>
+              <div><button>sdas</button></div>
+              <div><button>sdas</button></div>
+              <div><button>sdas</button></div>
             </div>
           </Downmenu>
+
           <div className={css(OptionToolBarStyle.border_right)} />
+
           <FormBuilderHistory />
+
+          <div className={css(OptionToolBarStyle.border_right)} />
+
+          <div className={css([ut.flxc, OptionToolBarStyle.rightSideBarBtn])}>
+            <Tip msg="Fields Settings">
+              <NavLink
+                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
+                activeClassName="active"
+                to={`/form/builder/${formType}/${formID}/fs`}
+              >
+                <EditIcn size="21" />
+              </NavLink>
+            </Tip>
+            <Tip msg="Theme Customization">
+              <NavLink
+                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
+                activeClassName="active"
+                to={`/form/builder/${formType}/${formID}/style`}
+              >
+                <BrushIcn size="20" />
+              </NavLink>
+            </Tip>
+          </div>
         </div>
       </div>
       <div className="theme-section" />
