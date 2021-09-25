@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useHistory } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { $draggableModal } from '../../../GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import CustomInputControl from './ChildComp/CustomInputControl'
@@ -13,9 +15,13 @@ import Height from './StyleComponents/Height'
 import Margin from './StyleComponents/Margin'
 import Padding from './StyleComponents/Padding'
 import Shadow from './StyleComponents/Shadow'
+import { showDraggableModal } from './styleEditorHelpers'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()
+
+  const setDraggableModal = useSetRecoilState($draggableModal)
+
   const goBackUrl = () => {
     if (history.location.pathname.match(/style\/fl\/.+/g)) return history.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')
     // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
@@ -40,6 +46,17 @@ function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brk
       {title && <h4 className="ml-2 txt-blue">{title}</h4>}
 
       <CustomInputControl width="45%" label="Width" value={10} min={1} max={1000} />
+
+      <div className="flx flx-between pos-rel">
+        <span>Type</span>
+        <div className="flx flx-between" style={{ backgroundColor: '#ddd' }}>
+          <div role="button" tabIndex="0" onClick={e => showDraggableModal(e, setDraggableModal)} onKeyPress={e => showDraggableModal(e, setDraggableModal)}>
+            <span style={{ backgroundColor: 'red' }}>&nbsp;</span>
+            <span>10 rem dashed</span>
+          </div>
+          <span>x</span>
+        </div>
+      </div>
 
       {'background' in styleConfig && (
         <>

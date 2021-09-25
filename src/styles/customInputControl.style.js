@@ -2,7 +2,6 @@ const customInputControlStyle = {
   container: {
     flx: 'center',
     w: '100%',
-    m: 'auto',
     brs: 8,
     ow: 'hidden',
     h: 30,
@@ -92,8 +91,9 @@ const customInputControlStyle = {
     oe: 'none',
     p: 0,
     h: 6,
+    my: 12,
     bc: '#dedede',
-    bi: '-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4099FF), color-stop(100%, #4099FF))',
+    bi: 'linear-gradient(90deg, #4099FF 0%, #4099FF 100%)',
     'background-size': '50% 100%',
     'background-repeat': 'no-repeat',
     brs: 10,
@@ -114,8 +114,7 @@ const customInputControlStyle = {
     },
 
     '::-webkit-slider-thumb': {
-      h: 15,
-      w: 15,
+      se: 15,
       bc: '#4099FF',
       b: '3px solid #FFFFFF',
       brs: '100%',
@@ -124,8 +123,7 @@ const customInputControlStyle = {
     },
 
     '::-moz-range-thumb': {
-      h: 15,
-      w: 15,
+      se: 15,
       bc: '#4099FF',
       b: '3px solid #FFFFFF',
       brs: '100%',
@@ -133,103 +131,13 @@ const customInputControlStyle = {
     },
 
     '::-ms-thumb': {
-      h: 15,
-      w: 15,
+      se: 15,
       bc: '#4099FF',
       b: '3px solid #FFFFFF',
       brs: '100%',
       bs: '0 0 1px 0px rgba(0,0,0,0.1)',
     },
-
-    // ':focus': { oe: 'none' },
-
-    // '::-webkit-slider-thumb': {
-    //   '-webkit-appearance': 'none',
-    //   w: 15,
-    //   h: 15,
-    //   brs: '100%',
-    //   bc: '#4099FF',
-    //   b: '3px solid #FFFFFF',
-    //   bs: '0 1px 2px #CDC2C2',
-    //   mt: 'calc(6 * 0.5 - max(15px * 0.5, 3px))',
-
-    //   ':hover': { bc: '#0061C3' },
-    // },
-
-    // '::-webkit-slider-runnable-track': {
-    //   h: 6,
-    //   brs: 5,
-    //   bc: 'linear-gradient(#4099FF,#4099FF) 0/var(--sx) 100% no-repeat, #C9C9C9',
-    //   b: 'none',
-    //   bs: 'none',
-    // },
-
-    // /* mozilla */
-    // '::-moz-range-thumb': {
-    //   w: 'max(calc(15px - 3px - 3px),0px)',
-    //   h: 'max(calc(15px - 3px - 3px),0px)',
-    //   brs: '100%',
-    //   bc: '#4099FF',
-    //   b: '3px solid #FFFFFF',
-    //   bs: '0 1px 2px #CDC2C2',
-    // },
-
-    // '::-moz-range-track': {
-    //   h: 6,
-    //   brs: 5,
-    //   bc: 'linear-gradient(#4099FF,#4099FF) 0/var(--sx) 100% no-repeat, #C9C9C9',
-    //   b: 'none',
-    //   bs: 'none',
-
-    //   ':hover': { bc: '#0061C3' },
-    // },
-
-    // '::-ms-fill-upper': {
-    //   bc: 'transparent',
-    //   bcr: 'transparent',
-    // },
-
-    // '::-ms-fill-lower': {
-    //   h: 6,
-    //   brs: '5px 0 0 5px',
-    //   mr: 0,
-    //   bc: '#4099FF',
-    //   b: 'none',
-    // },
-
-    // '::-ms-thumb': {
-    //   w: 15,
-    //   h: 15,
-    //   brs: '100%',
-    //   bc: '#4099FF',
-    //   b: '3px solid #FFFFFF',
-    //   bs: '0 1px 2px #CDC2C2',
-    //   mt: 0,
-    //   bsz: 'border-box',
-
-    //   ':hover': { bc: '#0061C3' },
-    // },
-
-    // '::-ms-track': {
-    //   h: 6,
-    //   brs: 5,
-    //   bc: '#C9C9C9',
-    //   b: 'none',
-    //   bs: 'none',
-    //   bsz: 'border-box',
-    // },
-
-    /* progress support */
-    //     input[type = range].styled - slider.slider - progress {
-    //       --range: calc(var(--max) - var(--min)),
-    // --ratio: calc((var(--value) - var(--min)) / var(--range)),
-    // --sx: calc(0.5 * 15px + var(--ratio) * (100 % - 15px)),
-    //     }
-
-    /* ms */
-
   },
-
 }
 
 export default customInputControlStyle
