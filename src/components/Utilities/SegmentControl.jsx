@@ -2,7 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 
-function SegmentControl({ defaultActive, options, size = 100, component = 'a', onChange, variant = 'white' }) {
+function SegmentControl({ defaultActive,
+  options,
+  size = 100,
+  component = 'a',
+  onChange,
+  variant = 'white',
+  show,
+  activeShow,
+  square }) {
   const { css } = useFela()
   const baseSize = Number(size) // 100
   const floor = (number) => (Math.floor(baseSize / number))
@@ -14,14 +22,21 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
     clr.active = 'var(--b-50) !important'
   }
   if (variant === 'blue') {
-    clr.tabBg = '#454A65'
     clr.selectorBg = 'var(--b-50)'
-    clr.active = 'var(--b-44-87)'
+    clr.tabBg = '#454A65'
+    clr.tabClr = 'var(--b-44-87)'
+    clr.active = 'var(--white-100) !important'
+  }
+  if (variant === 'lightgray') {
+    clr.selectorBg = 'var(--white-100)'
+    clr.tabBg = 'var(--white-0-95)'
+    clr.tabClr = 'var(--b-44-87)'
+    clr.active = 'var(--b-50) !important'
   }
   const style = {
     wrapper: {
       ta: 'center',
-      mx: 'auto',
+      // mx: 'auto',
     },
     tabs: {
       fs: floor(6.67), // 15
@@ -32,7 +47,7 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
       dy: 'inline-block',
       brs: floor(7.15), // 14,
       pn: 'relative',
-      '& .active': { cr: 'var(--white-100) !important' },
+      '& .active': { cr: clr.active },
       '& button': {
         bd: 'none',
         oe: 'none',
@@ -59,20 +74,22 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
       fw: 500,
       flxi: 'align-center',
       pn: 'relative',
-      py: floor(10), // 10,
-      px: floor(5), // 20,
+      py: square ? floor(8) : floor(10), // 10,
+      px: square ? floor(8) : floor(5), // 20,
       zx: 1,
       tdy: '0.3s',
       tdn: '0.6s',
-      cr: clr.active,
+      cr: clr.tabClr,
       ':hover:not(.active)': {
         cr: 'var(--white-0-100-90)', // '#333',
         tdy: '0s',
         tdn: '300ms',
       },
       '& .icn': {
-        mr: floor(20),
-        se: floor(9),
+        mr: show?.includes('label') ? floor(20) : 0,
+        lh: '75%',
+        // se: floor(9),
+
         dy: 'block',
         oy: 'hidden',
       },
@@ -125,6 +142,15 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
     onChange(options[i].label)
   }
 
+  const checkToShow = (item, key) => {
+    if (item[key]) {
+      if (activeShow && active === item.label && activeShow.includes(key)) return true
+      if (show && show.includes(key)) return true
+      if (!show && !activeShow) return true
+    }
+    return false
+  }
+
   return (
     <div className={css(style.wrapper)}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
@@ -138,28 +164,27 @@ function SegmentControl({ defaultActive, options, size = 100, component = 'a', o
             href={`#${item.label}`}
             data-label={item.label}
           >
-            {item.icn && (
+            {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
-            {item.label}
+            {checkToShow(item, 'label') && __(item.label, 'bitform')}
           </a>
         ))}
         {component === 'button' && options?.map((item, i) => (
-          // eslint-disable-next-line react/button-has-type
           <button
             key={`segment-option-${i * 10}`}
+            type="button"
             className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
             onClick={e => eventHandler(e, i)}
             onKeyPress={e => eventHandler(e, i)}
             data-label={item.label}
           >
-            {item.icn && (
+            {checkToShow(item, 'icn') && (
               <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
             )}
-            {__(item.label, 'bitform')}
+            {checkToShow(item, 'label') && __(item.label, 'bitform')}
           </button>
         ))}
-
       </div>
     </div>
   )
