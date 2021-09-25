@@ -1,21 +1,17 @@
 const sizeControlStyle = {
-
   container: {
-    // bc: 'red',
     b: '1px solid #ddd',
     brs: 10,
     flx: 'align-center',
-    h: 30,
-    p: 5,
+    h: 32,
+    p: 3,
   },
 
   input: {
-
-    // bc: 'red',
-    flx: 'center',
+    jc: 'space-between !important',
 
     ':hover': {
-      b: 0,
+      b: '1px solid transparent',
 
       '& > div > input:first-child': { bc: 'transparent !important' },
       '& button': { dy: 'none' },
@@ -23,8 +19,8 @@ const sizeControlStyle = {
 
     '& > span:first-child': { w: '20%', p: 0 },
 
-    '& > div > input:first-child': { pr: '0px !important', w: '80%' },
-
+    '& > div': { w: '70%' },
+    '& > div > input:first-child': { pr: '0px !important' },
   },
 
   selectt: {
@@ -35,8 +31,13 @@ const sizeControlStyle = {
     all: 'unset',
     brs: '0 !important',
     bl: '1px solid #ddd',
+    p: '0px !important',
+    pr: '3px !important',
+    pl: '3px !important',
 
     '&::-ms-expand': { display: 'none !important' },
+    '&:focus': { bs: 'none !important' },
+
   },
 }
 

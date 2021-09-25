@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import ChevronLeft from '../../../../Icons/ChevronLeft'
+import ChevronRightIcon from '../../../../Icons/ChevronRightIcon'
 import boxSizeControlStyle from '../../../../styles/boxSizeControl.style'
 import SegmentControl from '../../../Utilities/SegmentControl'
-import CustomInputControl from './CustomInputControl'
 import SizeControl from './SizeControl'
 
 export default function BoxSizeControl({ title }) {
@@ -13,7 +14,6 @@ export default function BoxSizeControl({ title }) {
     { label: 'All', icn: <ChevronDownIcn size={19} />, show: ['icn'] },
     { label: 'Individual', icn: <ChevronDownIcn size={19} />, show: ['icn'] },
   ]
-
 
   return (
     <div className="mt-2">
@@ -31,63 +31,18 @@ export default function BoxSizeControl({ title }) {
         />
       </div>
       <div className={css(boxSizeControlStyle.segmentcontainer)}>
-        {/* {controller === 'All' && (
-          <>
-            <CustomInputControl
-              label={<ChevronDownIcn size={19} />}
-              value={val}
-              min={1}
-              max={100}
-              width="100px"
-              onChange={onChangeHandler}
-            />
-            <select name="" id="">
-              <option value="px">px</option>
-              <option value="percent">%</option>
-              <option value="em">em</option>
-              <option value="rem">rem</option>
-            </select>
-          </>
-        )} */}
+        {controller === 'All' && (
+          <SizeControl label={<ChevronDownIcn size={19} />} />
+        )}
 
-        <SizeControl />
-
-        {/* {controller === 'Individual' && (
+        {controller === 'Individual' && (
           <>
-            <CustomInputControl
-              label={<ChevronDownIcn size={19} />}
-              value={val}
-              min={1}
-              max={100}
-              width="100px"
-              onChange={onChangeHandler}
-            />
-            <CustomInputControl
-              label={<ChevronDownIcn size={19} />}
-              value={val}
-              min={1}
-              max={100}
-              width="100px"
-              onChange={onChangeHandler}
-            />
-            <CustomInputControl
-              label={<ChevronDownIcn size={19} />}
-              value={val}
-              min={1}
-              max={100}
-              width="100px"
-              onChange={onChangeHandler}
-            />
-            <CustomInputControl
-              label={<ChevronDownIcn size={19} />}
-              value={val}
-              min={1}
-              max={100}
-              width="100px"
-              onChange={onChangeHandler}
-            />
+            <SizeControl label={<ChevronDownIcn size={19} />} />
+            <SizeControl label={<ChevronRightIcon size={19} />} />
+            <SizeControl label={<ChevronLeft size={19} />} />
+            <SizeControl label={<ChevronDownIcn size={19} />} />
           </>
-        )} */}
+        )}
       </div>
     </div>
   )

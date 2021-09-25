@@ -4,8 +4,8 @@ const colorPickerInputStyle = {
   inputcontainer: { pn: 'relative' },
 
   colorbox: {
-    w: 30,
-    h: 30,
+    w: 25,
+    h: 25,
     brs: 7,
     dy: 'inline-block',
     bc: 'red',
@@ -16,7 +16,7 @@ const colorPickerInputStyle = {
 
   input: {
     w: 120,
-    h: 36,
+    h: 31,
     b: '0 !important',
     brs: '7px !important',
     cr: '#9E9E9E !important',
