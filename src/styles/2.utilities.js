@@ -38,6 +38,7 @@ const ut = {
   mr1: { mr: 5 },
   mr2: { mr: 10 },
   mr4: { mr: 20 },
+  mr30: { mr: 30 },
   mr8: { mr: 40 },
   ml0: { ml: '0!important' },
   ml1: { ml: 5 },
