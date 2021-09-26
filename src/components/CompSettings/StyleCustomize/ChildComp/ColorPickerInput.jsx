@@ -1,6 +1,7 @@
 import { useFela } from 'react-fela'
 import CloseIcn from '../../../../Icons/CloseIcn'
 import colorPickerInputStyle from '../../../../styles/colorPickerInput.style'
+import SimpleColorPicker from '../../../style-new/SimpleColorPicker'
 import Downmenu from '../../../Utilities/Downmenu'
 
 export default function ColorPickerInput({ title }) {

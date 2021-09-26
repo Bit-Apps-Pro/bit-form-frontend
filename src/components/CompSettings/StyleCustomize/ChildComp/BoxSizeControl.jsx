@@ -32,15 +32,15 @@ export default function BoxSizeControl({ title }) {
       </div>
       <div className={css(boxSizeControlStyle.segmentcontainer)}>
         {controller === 'All' && (
-          <SizeControl label={<ChevronDownIcn size={19} />} />
+          <SizeControl label={<ChevronDownIcn size={19} />} width={110} />
         )}
 
         {controller === 'Individual' && (
           <>
-            <SizeControl label={<ChevronDownIcn size={19} />} />
-            <SizeControl label={<ChevronRightIcon size={19} />} />
-            <SizeControl label={<ChevronLeft size={19} />} />
-            <SizeControl label={<ChevronDownIcn size={19} />} />
+            <SizeControl label={<ChevronDownIcn size={19} />} width={110} />
+            <SizeControl label={<ChevronRightIcon size={19} />} width={110} />
+            <SizeControl label={<ChevronLeft size={19} />} width={110} />
+            <SizeControl label={<ChevronDownIcn size={19} />} width={110} />
           </>
         )}
       </div>

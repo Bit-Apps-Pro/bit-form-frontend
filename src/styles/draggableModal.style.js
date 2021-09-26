@@ -1,6 +1,6 @@
 const draggableModalStyle = {
   container: {
-    w: 250,
+    w: 270,
     bc: '#fff',
     pn: 'absolute',
     tp: 10,
