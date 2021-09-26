@@ -16,7 +16,7 @@ const customProperties = {
 
   g: ($ = 'center') => ({ placeContent: $ }),
   dy: $ => ({ display: $ }),
-  flxp: $ => ({ flexWrap: $ }),
+  flxp: $ => ({ flexWrap: 'wrap' }),
   bsz: $ => ({ boxSizing: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
@@ -53,6 +53,7 @@ const customProperties = {
     display: 'flex',
     ...$ === 'center' && { alignItems: 'center', justifyContent: 'center' },
     ...$ === 'between' && { justifyContent: 'space-between' },
+    ...$ === 'jc' && { justifyContent: 'center' },
     ...$ === 'align-center' && { alignItems: 'center' },
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
@@ -68,6 +69,7 @@ const customProperties = {
   jc: $ => ({ justifyContent: $ }),
   ai: $ => ({ alignItems: $ }),
   cur: $ => ({ cursor: $ }),
+  curp: () => ({ cursor: 'pointer' }),
   oe: $ => ({ outline: $ }),
   td: $ => ({ textDecoration: $ }),
   ws: $ => ({ whiteSpace: $ }),
