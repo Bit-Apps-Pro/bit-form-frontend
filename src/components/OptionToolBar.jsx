@@ -32,14 +32,14 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <span className={css(OptionToolBarStyle.txt)}>Form Fields</span>
         </button>
         <div className={css(OptionToolBarStyle.option_section)}>
-          <Tip msg="Large Screen View">
-            <button onClick={() => setResponsiveView('lg')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`} type="button"><LaptopIcn size={29} stroke={1.6} /></button>
+          <Tip msg="Small Screen View">
+            <button onClick={() => setResponsiveView('sm')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`} type="button"><MobileIcon size={23} /></button>
           </Tip>
           <Tip msg="Medium Screen View">
             <button onClick={() => setResponsiveView('md')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'md' && 'active'}`} type="button"><TabletIcon size={22} /></button>
           </Tip>
-          <Tip msg="Small Screen View">
-            <button onClick={() => setResponsiveView('sm')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`} type="button"><MobileIcon size={23} /></button>
+          <Tip msg="Large Screen View">
+            <button onClick={() => setResponsiveView('lg')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'lg' && 'active'}`} type="button"><LaptopIcn size={29} stroke={1.6} /></button>
           </Tip>
           <Downmenu
             place="bottom-end"
@@ -75,6 +75,15 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               </NavLink>
             </Tip>
             <Tip msg="Theme Customization">
+              <NavLink
+                className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
+                activeClassName="active"
+                to={`/form/builder/${formType}/${formID}/themes`}
+              >
+                <BrushIcn size="20" />
+              </NavLink>
+            </Tip>
+            <Tip msg="Custom Styling">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
                 activeClassName="active"
