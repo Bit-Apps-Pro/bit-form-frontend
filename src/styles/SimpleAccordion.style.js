@@ -2,6 +2,7 @@ const SimpleAccordionStyle = {
   flxbwn: { flx: 'between' },
   dflx: {
     flx: 'align-center',
+    fw: 600,
     '& .hover-tip': { tm: 'scale(0)' },
   },
   hrv_tip: {},

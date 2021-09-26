@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { $bits, $fields, $selectedFieldId } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
-import SingleToggle from '../../Utilities/SingleToggle'
+import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function UniqField({ type, title, tipTitle, isUnique }) {
+export default function UniqField({ type, title, tipTitle, isUnique, className }) {
+  const bits = useRecoilValue($bits)
   const [errorModal, setErrorModal] = useState(false)
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
@@ -45,6 +46,7 @@ export default function UniqField({ type, title, tipTitle, isUnique }) {
   }
 
   const openErrorModal = () => {
+    if (!bits.isPro) return
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
     fieldData.err[type].custom = true
@@ -56,53 +58,70 @@ export default function UniqField({ type, title, tipTitle, isUnique }) {
   }
 
   return (
-    <div className="err-msg-wrapper">
-      <div className="flx flx-between ">
-        <h4 className="mt-2 mb-2 flx">
-          {__(title, 'bitform')}
-          <Cooltip width={250} icnSize={17} className="ml-2">
-            <div className="txt-body">{__(tipTitle, 'bitform')}</div>
-          </Cooltip>
-        </h4>
-        <SingleToggle name={isUnique} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
-      </div>
-      {fieldData?.err?.[type]?.[isUnique] && (
-        <>
-          <div className="flx flx-between mt-1 mb-1 mr-2">
-            <div className="flx">
-              <CheckBoxMini className=" mr-2" name={type} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
-              <Cooltip width={250} icnSize={17} className="mr-2">
-                <div className="txt-body">
-                  Check the box to enable the custom error message.
-                  <br />
-                  Note: You can edit the message by clicking on edit icon.
-                </div>
+    <SimpleAccordion
+      title={title}
+      className={className}
+      tip={tipTitle}
+      toggleName={isUnique}
+      toggleAction={setShowErrMsg}
+      toggleChecked={fieldData?.err?.[type]?.[isUnique]}
+      switching
+      tipProps={{ width: 200, icnSize: 17 }}
+    >
+      <>
+        {/* <div className="err-msg-wrapper">
+          <div className="flx flx-between ">
+            <h4 className="mt-2 mb-2 flx">
+              {__(title, 'bitform')}
+              <Cooltip width={250} icnSize={17} className="ml-2">
+                <div className="txt-body">{__(tipTitle, 'bitform')}</div>
               </Cooltip>
+            </h4>
+            <SingleToggle name={isUnique} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
+          </div> */}
+        {fieldData?.err?.[type]?.[isUnique] && (
+          <>
+            <div className="flx flx-between mt-1 mb-1 mr-2">
+              <div className="flx">
+                <CheckBoxMini className=" mr-2" name={type} disabled={!bits.isPro} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
+                <Cooltip width={250} icnSize={17} className="mr-2">
+                  <div className="txt-body">
+                    Check the box to enable the custom error message.
+                    <br />
+                    Note: You can edit the message by clicking on edit icon.
+                  </div>
+                </Cooltip>
+                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+              </div>
+              <span
+                role="button"
+                tabIndex="-1"
+                className="cp"
+                onClick={openErrorModal}
+                onKeyPress={openErrorModal}
+              >
+                <EditIcn size={19} />
+              </span>
+
             </div>
-            <span
-              role="button"
-              tabIndex="-1"
-              className="cp"
-              onClick={openErrorModal}
-              onKeyPress={openErrorModal}
-            >
-              <EditIcn size={19} />
-            </span>
+            {!$bits.isPro && (
+              <div
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: errMsg }}
+                className="err-msg-box mt-2"
+              />
+            )}
+          </>
+        )}
 
-          </div>
-          <div
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: errMsg }}
-            className="err-msg-box mt-2"
-          />
-        </>
-      )}
+        <CustomErrorMessageModal
+          errorModal={errorModal}
+          setErrorModal={setErrorModal}
+          type={type}
+        />
+        {/* </div> */}
+      </>
 
-      <CustomErrorMessageModal
-        errorModal={errorModal}
-        setErrorModal={setErrorModal}
-        type={type}
-      />
-    </div>
+    </SimpleAccordion>
   )
 }

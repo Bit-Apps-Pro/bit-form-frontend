@@ -3,16 +3,18 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
+import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
-import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
 
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
+  hideAccordion: false,
 }
 
-export default function SimpleAccordion({ className, title, children, open, onOpen, switching, tip, tipProps }) {
+export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, hideAccordion }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
@@ -37,24 +39,25 @@ export default function SimpleAccordion({ className, title, children, open, onOp
         onClick={() => toggleAccordion(!tgl)}
         onKeyPress={() => toggleAccordion(!tgl)}
       >
-        <div className={`${css(SimpleAccordionStyle.flxbwn)} ${SimpleAccordionStyle.hrv_tip}`}>
+        <div className={css(SimpleAccordionStyle.flxbwn)}>
           <span className={`title ${css(SimpleAccordionStyle.dflx)}`}>
             {title}
             {tip && (
               <span className="ml-2 hover-tip">
                 <Cooltip {...tipProps}>
-                  {tip}
+                  <div className="txt-body">{__(tip, 'bitform')}</div>
                 </Cooltip>
               </span>
             )}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             {switching && (
-              <SingleToggle />
+              <SingleToggle name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
             )}
-            <ChevronDownIcn size="20" rotate={!!tgl} />
+            {!hideAccordion && (
+              <ChevronDownIcn size="20" rotate={!!tgl} />
+            )}
           </div>
-          {/* <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} /> */}
         </div>
       </div>
 

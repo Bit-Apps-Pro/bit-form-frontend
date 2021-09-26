@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-export default function CheckBoxMini({ className, cls, id, name, refer, onChange, checked, value, title }) {
+export default function CheckBoxMini({ className, cls, id, name, refer, onChange, checked, value, title, disabled }) {
   const checkId = id || Math.random()
   return (
     <div className={`form-check ${className}`}>
@@ -12,6 +12,7 @@ export default function CheckBoxMini({ className, cls, id, name, refer, onChange
         onChange={onChange}
         checked={checked}
         value={value}
+        disabled={disabled}
       />
       <label className="form-check-label" htmlFor={checkId}>{title}</label>
     </div>

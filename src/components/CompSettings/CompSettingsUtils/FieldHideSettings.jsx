@@ -5,7 +5,7 @@ import { $breakpoint, $fields, $selectedFieldId, $updateBtn } from '../../../Glo
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
 
-export default function FieldHideSettings() {
+export default function FieldHideSettings({ cls }) {
   const fldKey = useRecoilValue($selectedFieldId)
   const breakpoint = useRecoilValue($breakpoint)
   const [fields, setFields] = useRecoilState($fields)
@@ -26,5 +26,9 @@ export default function FieldHideSettings() {
     setUpdateBtn({ unsaved: true })
   }
 
-  return <SingleToggle title={__('Hidden Field:', 'bitform')} action={setHidden} isChecked={isHidden} className="mt-3" />
+  return (
+    <div className={cls}>
+      <SingleToggle title={__('Hidden Field:', 'bitform')} action={setHidden} isChecked={isHidden} />
+    </div>
+  )
 }

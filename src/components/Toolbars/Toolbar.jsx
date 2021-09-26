@@ -471,7 +471,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           <SimpleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle} open>
             <div className={css(Toolbars.tool_bar)}>
               {grp.fields.map((fld, i) => (
-                <Tools key={fld.name} setNewData={setNewData} value={{ fieldData: fld.elm, fieldSize: fld.pos }}>
+                <Tools key={`tool-bar-${fld.name}`} setNewData={setNewData} value={{ fieldData: fld.elm, fieldSize: fld.pos }}>
                   <span className="mr-1 tool-icn">{fld.icn}</span>
                   {!tolbarSiz && fld.name}
                 </Tools>

@@ -1,4 +1,4 @@
-const textFieldSettings = {
+const FieldStyle = {
   section: {
     flx: 'center-between',
     mx: 10,
@@ -23,14 +23,13 @@ const textFieldSettings = {
   },
   title: { fs: 14, fw: 600 },
 
-  placeholder_section: {
-    my: 5,
+  fieldSection: {
     mx: 10,
     py: 10,
     fw: 600,
   },
   placeholder: { dy: 'block' },
-  placeholer_input: {
+  input: {
     w: '99%',
     bd: 'var(--b-79-96) !important',
     oe: 'none !important',
@@ -47,7 +46,11 @@ const textFieldSettings = {
       },
     },
   },
+  mNun: {
+    m: 0,
+    bb: '0.5px soild var(--white-0-83)',
+  },
 
 }
 
-export default textFieldSettings
+export default FieldStyle
