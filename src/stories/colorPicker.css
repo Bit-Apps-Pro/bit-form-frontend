@@ -96,6 +96,7 @@
   --b-100-64-40: hsla(var(--blue-base), 100%, 64%, 40%);
   --b-15-94: hsla(var(--blue-base), 15%, 94%, 40%);
   --b-100-48-1: hsla(var(--blue-base), 100%, 48%, 10%);
+  --b-88-23-22: hsla( var(--blue-base), 88%, 23%, 22%);
   /* // --b-100: hsla(var(--blue-base), 100%, 100%); */
 
   /* for deep blue  */
@@ -496,6 +497,9 @@ body {
 
 .b-100-48-1 {
   background-color: var(--b-100-48-1);
+}
+.b-88-23-22 {
+  background-color: var(--b-88-23-22);
 }
 
 

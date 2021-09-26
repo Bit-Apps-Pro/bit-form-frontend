@@ -98,6 +98,7 @@
   --b-0-100-1: hsla(var(--blue-base), 0%, 100%, 10%);
   --b-0-100-2: hsla(var(--blue-base), 0%, 100%, 20%);
   --b-0-100-3: hsla(var(--blue-base), 0%, 100%, 30%);
+  --b-88-23-22: hsla(var(--blue-base), 88%, 23%, 22%);
   // --b-100: hsla(var(--blue-base), 100%, 100%);
 
   /* for deep blue  */
@@ -492,7 +493,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .pro-blur {
   // background             : #07316f38;
-  background: var(--b-50);
+  background: var(--b-88-23-22);
   position: absolute;
   top: -15px;
   left: -20px;
