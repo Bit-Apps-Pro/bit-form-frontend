@@ -3,7 +3,6 @@ const ut = {
     display: 'grid',
     placeContent: 'center',
   },
-  flxc: { flx: 'align-center' },
   icn_hover: {
     pn: 'relative',
     '::before': {
@@ -22,5 +21,11 @@ const ut = {
     ':hover::before': { b: '30px solid var(--white-0-81-32)', oy: 1 },
     ':disabled::before': { dy: 'none' },
   },
+  fontBody: { fontFamily: '"Roboto", sans-serif' },
+  fw500: { fw: 500 },
+  flxb: { flx: 'between' },
+  flxcb: { flx: 'center-between' },
+  flxc: { flx: 'align-center' },
+
 }
 export default ut
