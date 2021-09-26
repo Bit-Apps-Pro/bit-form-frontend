@@ -1572,7 +1572,9 @@ input[type="checkbox"].disabled:checked:before {
 .elm-settings {
   background: var(--white-100);
   height: 100%;
-  max-width: 500px;
+  max-width: 330px;
+  padding-left: 5px;
+  min-width: 270px;
   margin-right: 0;
   margin-left: auto;
   font-size: 18px;
@@ -5361,6 +5363,31 @@ _:-ms-fullscreen,
 
 .youtube a {
   color: var(--black);
+}
+
+.slide-enter,
+.slide-exit {
+  transition: transform 1000ms ease-out;
+}
+
+.slide-enter {
+  transform: translateX(100%);
+}
+
+.slide-enter.slide-enter-active {
+  transform: translateX(0%);
+} 
+
+.slide-exit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateX(0%);
+}
+
+.slide-exit-active {
+  transform: translateX(-100%);
 }
 
 @keyframes scale-in {
