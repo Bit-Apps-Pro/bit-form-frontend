@@ -24,8 +24,9 @@ const simppleDpdStyle = {
   },
   selected_icn: { mr: 7 },
   selected: {
+    fw: 500,
     flx: 'between',
-    cur: 'pointer',
+    curp: 1, 
     w: '96%',
     p: '0 5px',
     fs: 13,
@@ -50,7 +51,7 @@ const simppleDpdStyle = {
   opt_btn: {
     brs: 7,
     fs: 13,
-    cur: 'pointer',
+    curp: 1, 
     ta: 'left',
     b: 'none',
     p: 3,
@@ -71,7 +72,7 @@ const simppleDpdStyle = {
     w: 25,
     h: 25,
     brs: '50%',
-    cur: 'pointer',
+    curp: 1, 
     tn: 'transform 0.2s',
     bd: 'none',
     b: 'none',

@@ -83,7 +83,7 @@ const navbar = {
     px: 15,
     pn: 'relative',
     fs: 14,
-    cur: 'pointer',
+    curp: 1, 
     flx: 'align-center',
     w: 'auto',
     '&:disabled': { bd: 'var(--b-100-50-5) !important' },

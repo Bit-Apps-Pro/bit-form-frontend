@@ -30,7 +30,7 @@ const builderHistoryStyle = {
     brs: 8,
     flx: 'align-center',
     bc: 'var(--white-100)',
-    cur: 'pointer',
+    curp: 1, 
     '&:hover': { bc: 'var(--white-0-93)' },
     '&:focus-visible': {
       oe: 'none',

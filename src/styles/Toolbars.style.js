@@ -31,7 +31,7 @@ const Toolbars = {
     mx: 8,
     tm: 'translateY(-50%)',
     cr: 'var(--white-0-75)',
-    cur: 'pointer',
+    curp: 1, 
     '& svg': { dy: 'block' },
   },
   sec_acc: {
