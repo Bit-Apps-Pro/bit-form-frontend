@@ -36,6 +36,7 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
 export default function CustomInputControl(
   { width,
     label,
+    className,
     value,
     min,
     max,
@@ -47,12 +48,11 @@ export default function CustomInputControl(
     showArrow = true },
 ) {
   const { css } = useFela()
-  const [val, setval] = useState(value)
   const [visible, setVisible] = useState(false)
 
   const handleValueBasedOnPointer = e => {
     const startpos = e.clientX
-    let startval = parseFloat(val)
+    let startval = parseFloat(value)
     if (isNaN(startval)) startval = min
     document.onmousemove = (ev) => {
       const moved = Math.floor(ev.clientX - startpos)
@@ -60,7 +60,7 @@ export default function CustomInputControl(
       let newVal = startval + inc
       if (newVal < min) newVal = min
       if (newVal > max) newVal = max
-      setval(newVal)
+      if (onChange) onChange(newVal)
     }
     document.onmouseup = () => {
       document.onmousemove = null
@@ -69,31 +69,25 @@ export default function CustomInputControl(
 
   const onChangeHandler = e => {
     const inputVal = e.target.value
-    setval(inputVal)
-
-    if (onChange) onChange()
+    if (onChange) onChange(inputVal)
   }
 
   const stepUp = () => {
-    setval(oldValue => {
-      const newVal = Number(oldValue) + (step || 1)
-      if (newVal < min) return min
-      if (newVal > max) return max
-      return newVal
-    })
+    let newVal = Number(value) + (step || 1)
+    if (newVal < min) newVal = min
+    if (newVal > max) newVal = max
+    if (onChange) onChange(newVal)
   }
 
   const stepDown = () => {
-    setval(oldValue => {
-      const newVal = oldValue - (step || 1)
-      if (newVal < min) return min
-      if (newVal > max) return max
-      return newVal
-    })
+    let newVal = Number(value) - (step || 1)
+    if (newVal < min) newVal = min
+    if (newVal > max) newVal = max
+    if (onChange) onChange(newVal)
   }
 
   return (
-    <div className={css(customInputControlStyle.container, visible ? customInputControlStyle.visible : '')} style={{ width: width || '100%' }}>
+    <div className={`${css(customInputControlStyle.container, visible ? customInputControlStyle.visible : '')} ${className}`} style={{ width: width || '100%' }}>
       <span
         className={css(customInputControlStyle.label, resizeValueByLabel ? customInputControlStyle.resizer : '')}
         onMouseDown={resizeValueByLabel ? handleValueBasedOnPointer : undefined}
@@ -110,7 +104,7 @@ export default function CustomInputControl(
         interactive
         maxWidth="auto"
         arrow
-        content={<SliderInput min={min} max={max} step={step} val={val} onChangeHandler={onChangeHandler} />}
+        content={<SliderInput min={min} max={max} step={step} val={value} onChangeHandler={onChangeHandler} />}
         visible={visible}
         onClickOutside={() => setVisible(false)}
       >
@@ -126,7 +120,7 @@ export default function CustomInputControl(
             onChange={onChangeHandler}
             onFocusCapture={showRangeTip ? () => setVisible(true) : undefined}
             onWheelCapture={!changeValueOnScroll ? e => e.target.blur() : undefined}
-            value={val}
+            value={value}
           />
           {showArrow && (
             <>

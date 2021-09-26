@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import CompSettings from '../components/CompSettings/CompSettings'
+import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
 import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
@@ -232,6 +233,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   return (
     <>
       <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
+      <DraggableModal />
       <Container
         ref={conRef}
         style={{ height: '100vh' }}
@@ -245,7 +247,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           defaultSize={showToolBar ? 0 : 165}
           style={{ background: 'gray' }}
         >
-
           <ToolBar
             setNewData={addNewData}
             className="tile"

@@ -22,7 +22,7 @@ const MenuItemWrapper = ({ isContextMenu, children }) => {
   function handleItemClick(event) {
     event.stopPropagation()
   }
-  return isContextMenu ? <div onClick={handleItemClick}>{children}</div> : children
+  return isContextMenu ? <div role="button" tabIndex="0" onClick={handleItemClick} onKeyPress={handleItemClick}>{children}</div> : children
 }
 
 export default function FieldContextMenu({ isContextMenu,

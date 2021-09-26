@@ -2,6 +2,7 @@ const simppleDpdStyle = {
   dpd_wrp: {
     dy: 'inline-block',
     pn: 'relative',
+    zx: 5,
   },
   dpd: {
     ow: 'hidden',

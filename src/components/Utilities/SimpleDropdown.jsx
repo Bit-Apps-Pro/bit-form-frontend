@@ -73,7 +73,7 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
   }
 
   return (
-    <div className={css(simppleDpdStyle.dpd_wrp)}>
+    <div className={css(simppleDpdStyle.dpd_wrp)} style={{ width: w, height: h }}>
       <div
         ref={ref}
         role="button"
@@ -82,7 +82,7 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
         tabIndex="0"
         className={`${menu.open && css(simppleDpdStyle.dpd_open)} ${css(simppleDpdStyle.dpd)} ${css({ w })}`}
       >
-        <div className={css(simppleDpdStyle.selected)} style={{ height: h }}>
+        <div className={css(simppleDpdStyle.selected)} style={{ height: h - 8 }}>
           <div className={css(ut.flxc)}>
             {selectedItem?.icn && <div className={css(simppleDpdStyle.selected_icn)}>{selectedItem.icn}</div>}
             <div>{selectedItem?.label || placeholder}</div>
