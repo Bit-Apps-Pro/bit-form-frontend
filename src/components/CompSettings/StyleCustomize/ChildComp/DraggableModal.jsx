@@ -4,6 +4,7 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $draggableModal } from '../../../../GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
+import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
 
 const ChildrenComp = () => {
@@ -27,10 +28,10 @@ export default function DraggableModal() {
   return (
     <Draggable handle=".draggable-modal-handler" bounds="parent">
       <div className={css(draggableModalStyle.container)} style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none' }}>
-        <div className="flx flx-between draggable-modal-handler">
+        <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handler`}>
           <span className={css(draggableModalStyle.title)}>Border</span>
           <button type="button" className={css(draggableModalStyle.button)} onClick={() => setDraggableModal({ show: false })}>
-            <CloseIcn size={14} />
+            <CloseIcn size={10} />
           </button>
         </div>
         <hr className={css(draggableModalStyle.hr)} />

@@ -69,7 +69,7 @@ function SegmentControl({ defaultActive,
       bd: clr.selectorBg, // '#fff',
     },
     tab_link: {
-      curp: 1, 
+      curp: 1,
       td: 'none',
       fw: 500,
       flxi: 'align-center',
@@ -89,24 +89,22 @@ function SegmentControl({ defaultActive,
         mr: show?.includes('label') ? floor(20) : 0,
         lh: '75%',
         // se: floor(9),
-
         dy: 'block',
-        oy: 'hidden',
       },
-      '& .icn img, .icn svg': {
-        oy: 0,
-        tm: 'scale(0)',
-        // mt: floor(20), // 5
-      },
+      // '& .icn img, .icn svg': {
+      //   oy: 0,
+      //   tm: 'scale(0)',
+      //   // mt: floor(20), // 5
+      // },
     },
-    segment_img: {
-      '& img, svg': {
-        oy: '1 !important',
-        tm: 'scale(1) !important',
-        tdy: '.3s',
-        tdn: '300ms',
-      },
-    },
+    // segment_img: {
+    //   '& > img, & > svg': {
+    //     oy: '1 !important',
+    //     tm: 'scale(1) !important',
+    //     tdy: '.3s',
+    //     tdn: '300ms',
+    //   },
+    // },
   }
   const selectorRef = useRef(null)
   const tabsRef = useRef(null)

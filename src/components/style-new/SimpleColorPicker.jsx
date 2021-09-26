@@ -26,6 +26,7 @@ export default function SimpleColorPicker() {
     </div>
   )
 }
+
 const c = {
   container: { w: 300 },
   preview_wrp: {
