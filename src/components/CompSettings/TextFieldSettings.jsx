@@ -10,7 +10,7 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import CopyText from '../Utilities/CopyText'
+import CoolCopy from '../Utilities/CoolCopy'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
@@ -244,7 +244,8 @@ function TextFieldSettings() {
       <hr className={css(FieldStyle.mNun)} />
       <div className={`${css(FieldStyle.section)}`}>
         <span className={css(FieldStyle.title)}>Field key</span>
-        <CopyText value={fldKey} className="field-key-cpy m-0 w-5" />
+        <CoolCopy value={fldKey} />
+        {/* <CopyText value={fldKey} className="field-key-cpy m-0 w-5" /> */}
       </div>
 
       <hr className={css(FieldStyle.mNun)} />
