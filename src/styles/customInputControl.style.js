@@ -62,7 +62,7 @@ const customInputControlStyle = {
     pn: 'absolute',
     rt: 4,
     fs: 15,
-    curp: 1, 
+    curp: 1,
     cr: 'var(--white-2-47)',
     lh: 0,
     dy: 'none',
@@ -97,7 +97,7 @@ const customInputControlStyle = {
     'background-size': '50% 100%',
     'background-repeat': 'no-repeat',
     brs: 10,
-    curp: 1, 
+    curp: 1,
     '-webkit-appearance': 'none',
 
     '::-webkit-slider-runnable-track': {

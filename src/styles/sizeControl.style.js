@@ -6,6 +6,7 @@ const sizeControlStyle = {
     h: 30,
     p: 3,
     bc: 'var(--white-0-95)',
+    cr: 'var(--white-0-50)',
   },
 
   input: {
@@ -18,9 +19,15 @@ const sizeControlStyle = {
       '& button': { dy: 'none' },
     },
 
-    '& > span:first-child': { w: '20%', p: 0 },
+    ':focus': { bc: 'transparent !important' },
 
-    '& > div': { w: '70%' },
+    '& > span:first-child': {
+      w: '40%',
+      p: 0,
+      flx: 'center',
+    },
+
+    '& > div': { w: '60%' },
     '& > div > input:first-child': { pr: '0px !important' },
   },
 
