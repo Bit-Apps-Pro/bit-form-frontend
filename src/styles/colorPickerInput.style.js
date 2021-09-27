@@ -1,7 +1,7 @@
 const colorPickerInputStyle = {
   title: { fs: 12 },
 
-  inputcontainer: { pn: 'relative' },
+  inputcontainer: { pn: 'relative', h: 30 },
 
   colorbox: {
     w: 25,
