@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import BoxCornersIcn from '../../../../Icons/BoxCornersIcn'
-import BoxIcn from '../../../../Icons/BoxIcn'
-import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
-import ChevronLeft from '../../../../Icons/ChevronLeft'
-import ChevronRightIcon from '../../../../Icons/ChevronRightIcon'
+import BorderBottomLeftRadiusIcn from '../../../../Icons/BorderBottomLeftRadiusIcn'
+import BorderBottomRightRadiusIcn from '../../../../Icons/BorderBottomRightRadiusIcn'
+import BorderRadiusCornersIcn from '../../../../Icons/BorderRadiusCornersIcn'
+import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
+import BorderTopLeftRadiusIcn from '../../../../Icons/BorderTopLeftRadiusIcn'
+import BorderTopRightRadiusIcn from '../../../../Icons/BorderTopRightRadiusIcn'
 import boxSizeControlStyle from '../../../../styles/boxSizeControl.style'
 import SegmentControl from '../../../Utilities/SegmentControl'
 import SizeControl from './SizeControl'
@@ -13,8 +14,8 @@ export default function BoxSizeControl({ title }) {
   const [controller, setController] = useState('All')
   const { css } = useFela()
   const options = [
-    { label: 'All', icn: <BoxIcn size={16} />, show: ['icn'] },
-    { label: 'Individual', icn: <BoxCornersIcn size={16} />, show: ['icn'] },
+    { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'] },
+    { label: 'Individual', icn: <BorderRadiusCornersIcn size={16} />, show: ['icn'] },
   ]
 
   return (
@@ -34,15 +35,15 @@ export default function BoxSizeControl({ title }) {
       </div>
       <div className={css(boxSizeControlStyle.segmentcontainer)}>
         {controller === 'All' && (
-          <SizeControl label={<ChevronDownIcn size={19} />} width={100} />
+          <SizeControl label={<BorderRadiusIcn size={19} />} width={100} />
         )}
 
         {controller === 'Individual' && (
           <>
-            <SizeControl label={<ChevronDownIcn size={19} />} width={100} />
-            <SizeControl label={<ChevronRightIcon size={19} />} width={100} />
-            <SizeControl label={<ChevronLeft size={19} />} width={100} />
-            <SizeControl label={<ChevronDownIcn size={19} />} width={100} />
+            <SizeControl label={<BorderTopLeftRadiusIcn size={12} />} width={100} />
+            <SizeControl label={<BorderTopRightRadiusIcn size={12} />} width={100} />
+            <SizeControl label={<BorderBottomLeftRadiusIcn size={12} />} width={100} />
+            <SizeControl label={<BorderBottomRightRadiusIcn size={12} />} width={100} />
           </>
         )}
       </div>
