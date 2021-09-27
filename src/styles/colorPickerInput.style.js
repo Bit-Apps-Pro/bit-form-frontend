@@ -22,7 +22,7 @@ const colorPickerInputStyle = {
     cr: '#9E9E9E !important',
     pl: '38px !important',
     pr: '20px !important',
-    bc: '#F1F2FB !important',
+    bc: 'var(--white-0-95) !important',
     oe: 'none',
     fs: 12,
 
