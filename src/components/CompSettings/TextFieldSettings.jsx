@@ -41,7 +41,6 @@ function TextFieldSettings() {
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
 
   function setRequired(e) {
-    console.log(e.target.checked)
     if (e.target.checked) {
       const tmp = { ...fieldData.valid }
       tmp.req = true
