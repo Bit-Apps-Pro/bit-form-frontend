@@ -1,8 +1,12 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
 import { memo } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
@@ -10,11 +14,12 @@ import CopyText from '../Utilities/CopyText'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
-import Back2FldList from './Back2FldList'
+import Back2FldBtn from './Back2FldBtn'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
-import UniqField from './CompSettingsUtils/UniqField'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
+import UniqField from './CompSettingsUtils/UniqField'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -30,11 +35,13 @@ function TextFieldSettings() {
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
+  const { css } = useFela()
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
 
   function setRequired(e) {
+    console.log(e.target.checked)
     if (e.target.checked) {
       const tmp = { ...fieldData.valid }
       tmp.req = true
@@ -65,6 +72,24 @@ function TextFieldSettings() {
       delete fieldData.adminLbl
     } else {
       fieldData.adminLbl = e.target.value
+    }
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+  }
+  const hideAdminLabel = (e) => {
+    if (!e.target.checked) {
+      fieldData.valid.hideAdminLbl = true
+    } else {
+      delete fieldData.valid.hideAdminLbl
+    }
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+  }
+  const hidePlaceholder = (e) => {
+    if (!e.target.checked) {
+      fieldData.valid.hidePlaceholder = true
+    } else {
+      delete fieldData.valid.hidePlaceholder
     }
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
@@ -211,8 +236,139 @@ function TextFieldSettings() {
   console.log('fieldData', fieldData)
 
   return (
-    <div className="mr-4 ml-2">
-      <Back2FldList />
+    <div className="">
+      <div className={`${css(FieldStyle.section)} ${css(FieldStyle.bb)}`}>
+        <span className={css(FieldStyle.mainTitle)}>Text Field Settings</span>
+        <Back2FldBtn size="20" className={css(FieldStyle.btn)} />
+      </div>
+      <hr className={css(FieldStyle.mNun)} />
+      <div className={`${css(FieldStyle.section)}`}>
+        <span className={css(FieldStyle.title)}>Field key</span>
+        <CopyText value={fldKey} className="field-key-cpy m-0 w-5" />
+      </div>
+
+      <hr className={css(FieldStyle.mNun)} />
+
+      <FieldLabelSettings />
+
+      <hr className={css(FieldStyle.mNun)} />
+
+      <SimpleAccordion
+        title={__('Admin Label', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        switching
+        toggleAction={hideAdminLabel}
+        toggleChecked={!fieldData.valid.hideAdminLbl}
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.mNun)} />
+
+      <SimpleAccordion
+        title={__('Placeholder', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        switching
+        toggleAction={hidePlaceholder}
+        toggleChecked={!fieldData.valid.hidePlaceholder}
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.mNun)} />
+
+      <SimpleAccordion
+        title={__('Name', 'bitform')}
+        className={`${css(FieldStyle.fieldSection)}`}
+        switching
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input className={css(FieldStyle.input)} type="text" />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.mNun)} />
+
+      <SimpleAccordion
+        title={__('Required', 'bitform')}
+        // eslint-disable-next-line react/jsx-no-bind
+        toggleAction={setRequired}
+        toggleChecked={isRequired}
+        className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
+        switching
+        tip="By enabling this feature, user will see the error message when input is empty"
+        tipProps={{ width: 200, icnSize: 17 }}
+      >
+        <ErrorMessageSettings
+          type="req"
+          title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message when input is empty"
+        />
+      </SimpleAccordion>
+      {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
+      <hr className={css(FieldStyle.mNun)} />
+      <SimpleAccordion
+        title={__('Pattern', 'bitform')}
+        className={`${css(FieldStyle.fieldSection)}`}
+      >
+        {
+          fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
+            <>
+              <div className=" mr-2 mt-3">
+                <div className="flx">
+                  <h4 className={`m-0 ${css(FieldStyle.title)}`}>{__('Expression:', 'bitform')}</h4>
+                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+                </div>
+                <input className={css(FieldStyle.input)} type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
+                <datalist id="patterns">
+                  {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
+                </datalist>
+              </div>
+              <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" cls={css(FieldStyle.input)} disabled={!bits.isPro} />
+              {regexr && (
+                <ErrorMessageSettings
+                  type="regexr"
+                  title="Error Message"
+                  tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
+                />
+              )}
+            </>
+          )
+        }
+      </SimpleAccordion>
+      <hr className={css(FieldStyle.mNun)} />
+
+      <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.mr30)}`} />
+
+      <hr className={css(FieldStyle.mNun)} />
+      {fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
+        <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr30)}`}>
+          <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
+        </div>
+      )}
+      <hr className={css(FieldStyle.mNun)} />
+      {
+        fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
+          <UniqField
+            type="entryUnique"
+            isUnique="isEntryUnique"
+            title="Validate as Entry Unique"
+            tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+            className={css(FieldStyle.fieldSection)}
+          />
+        )
+      }
+
+      {/* <div className={`${css(FieldStyle.fieldSection)}`}>
+        <span>Hidden Field:</span>
+      </div> */}
+      {/* end */}
+
+      {/* <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
@@ -220,11 +376,10 @@ function TextFieldSettings() {
       <div className="flx">
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} className="field-key-cpy m-0 w-7" />
-      </div>
-      <FieldHideSettings />
-      <FieldLabelSettings />
-      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
+      </div> */}
+
+      {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
+      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
       {
         fieldData?.valid?.req && (
           <ErrorMessageSettings
@@ -233,9 +388,9 @@ function TextFieldSettings() {
             tipTitle="By enabling this feature, user will see the error message when input is empty"
           />
         )
-      }
-      {fieldData.typ.match(/^(text|url|password|number|email|)$/) && <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />}
-      {fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
+      } */}
+      {/* {fieldData.typ.match(/^(text|url|password|number|email|)$/) && <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />} */}
+      {/* {fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />} */}
       {
         fieldData.typ === 'number' && (
           <>
@@ -288,7 +443,7 @@ function TextFieldSettings() {
           </div>
         )
       }
-      {
+      {/* {
         fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
           <>
             <div className="flx">
@@ -313,13 +468,13 @@ function TextFieldSettings() {
             )}
           </>
         )
-      }
+      } */}
 
-      <div className="pos-rel">
+      {/* <div className="pos-rel">
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
@@ -341,31 +496,31 @@ function TextFieldSettings() {
             </div>
           )
         }
-      </div>
+      </div> */}
       <div className="pos-rel">
         {
           fieldData.typ.match(/^(email|username)$/) && (
-            <div>
-              { !bits.isPro && (
-                <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
-                  <div className="pro">
-                    {__('Available On', 'bitform')}
-                    <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                      <span className="txt-pro">
-                        {' '}
-                        {__('Premium', 'bitform')}
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              )}
-              <UniqField
-                type="userUnique"
-                isUnique="isUserUnique"
-                title="Validate as User Unique"
-                tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-              />
-            </div>
+            // <div>
+            //   {!bits.isPro && (
+            //     <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+            //       <div className="pro">
+            //         {__('Available On', 'bitform')}
+            //         <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+            //           <span className="txt-pro">
+            //             {' '}
+            //             {__('Premium', 'bitform')}
+            //           </span>
+            //         </a>
+            //       </div>
+            //     </div>
+            //   )}
+            <UniqField
+              type="userUnique"
+              isUnique="isUserUnique"
+              title="Validate as User Unique"
+              tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+            />
+            // </div>
           )
         }
       </div>

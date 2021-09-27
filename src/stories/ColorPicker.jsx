@@ -178,6 +178,9 @@ function ColorPicker() {
             <div onClick={copyVar} onKeyPress={tabHandler} role="button" aria-label="color code copy" tabIndex="0" className="code b-100-48-1">
               var name: --b-100-48-1
             </div>
+            <div onClick={copyVar} onKeyPress={tabHandler} role="button" aria-label="color code copy" tabIndex="0" className="code b-88-23-22">
+              var name: --b-88-23-22
+            </div>
           </div>
         </div>
         <div className="col">

@@ -1,15 +1,24 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
+import { __ } from '../../../../Utils/i18nwrap'
+import Cooltip from '../../../Utilities/Cooltip'
+import SingleToggle from '../../../Utilities/SingleToggle'
 
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
+  hideAccordion: false,
 }
 
-export default function SimpleAccordion({ className, title, children, open, onOpen }) {
+export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, hideAccordion }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
+
+  const { css } = useFela()
 
   const toggleAccordion = (val) => {
     setTgl(val)
@@ -24,16 +33,31 @@ export default function SimpleAccordion({ className, title, children, open, onOp
   return (
     <div className={`${className} ${tgl && 'active'}`}>
       <div
-        className="btgl"
+        className="btgl w-10"
         tabIndex="0"
         role="button"
         onClick={() => toggleAccordion(!tgl)}
         onKeyPress={() => toggleAccordion(!tgl)}
       >
-        <div className="flx flx-between">
-          <span className="title">{title}</span>
-          <ChevronDownIcn size="20" rotate={!!tgl} />
-          {/* <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} /> */}
+        <div className={css(SimpleAccordionStyle.flxbwn)}>
+          <span className={`title ${css(SimpleAccordionStyle.dflx)}`}>
+            {title}
+            {tip && (
+              <span className="ml-2 hover-tip">
+                <Cooltip {...tipProps}>
+                  <div className="txt-body">{__(tip, 'bitform')}</div>
+                </Cooltip>
+              </span>
+            )}
+          </span>
+          <div className={css(SimpleAccordionStyle.flxbwn)}>
+            {switching && (
+              <SingleToggle name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
+            )}
+            {!hideAccordion && (
+              <ChevronDownIcn size="20" rotate={!!tgl} />
+            )}
+          </div>
         </div>
       </div>
 
