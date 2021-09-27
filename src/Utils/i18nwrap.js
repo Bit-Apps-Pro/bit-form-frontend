@@ -4,7 +4,7 @@
 import { __ as i18n_, sprintf as i18nsprintf } from '@wordpress/i18n'
 
 const __ = (text, domain = null) => {
-  if (bits?.translations && bits.translations[text]) {
+  if (typeof bits !== 'undefined' && bits?.translations && bits.translations[text]) {
     return bits?.translations[text]
   }
   if (typeof wp !== 'undefined' && !wp?.i18n) {
