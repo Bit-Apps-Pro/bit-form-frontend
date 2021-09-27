@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import BoxCornersIcn from '../../../../Icons/BoxCornersIcn'
+import BoxIcn from '../../../../Icons/BoxIcn'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ChevronLeft from '../../../../Icons/ChevronLeft'
 import ChevronRightIcon from '../../../../Icons/ChevronRightIcon'
@@ -11,8 +13,8 @@ export default function BoxSizeControl({ title }) {
   const [controller, setController] = useState('All')
   const { css } = useFela()
   const options = [
-    { label: 'All', icn: <ChevronDownIcn size={19} />, show: ['icn'] },
-    { label: 'Individual', icn: <ChevronDownIcn size={19} />, show: ['icn'] },
+    { label: 'All', icn: <BoxIcn size={16} />, show: ['icn'] },
+    { label: 'Individual', icn: <BoxCornersIcn size={16} />, show: ['icn'] },
   ]
 
   return (
@@ -32,15 +34,15 @@ export default function BoxSizeControl({ title }) {
       </div>
       <div className={css(boxSizeControlStyle.segmentcontainer)}>
         {controller === 'All' && (
-          <SizeControl label={<ChevronDownIcn size={19} />} width={110} />
+          <SizeControl label={<ChevronDownIcn size={19} />} width={100} />
         )}
 
         {controller === 'Individual' && (
           <>
-            <SizeControl label={<ChevronDownIcn size={19} />} width={110} />
-            <SizeControl label={<ChevronRightIcon size={19} />} width={110} />
-            <SizeControl label={<ChevronLeft size={19} />} width={110} />
-            <SizeControl label={<ChevronDownIcn size={19} />} width={110} />
+            <SizeControl label={<ChevronDownIcn size={19} />} width={100} />
+            <SizeControl label={<ChevronRightIcon size={19} />} width={100} />
+            <SizeControl label={<ChevronLeft size={19} />} width={100} />
+            <SizeControl label={<ChevronDownIcn size={19} />} width={100} />
           </>
         )}
       </div>
