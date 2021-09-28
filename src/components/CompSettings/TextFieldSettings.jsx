@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import produce from 'immer'
@@ -259,6 +260,7 @@ function TextFieldSettings() {
         switching
         toggleAction={hideAdminLabel}
         toggleChecked={!fieldData.valid.hideAdminLbl}
+        open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
@@ -273,6 +275,7 @@ function TextFieldSettings() {
         switching
         toggleAction={hidePlaceholder}
         toggleChecked={!fieldData.valid.hidePlaceholder}
+        open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
@@ -285,6 +288,7 @@ function TextFieldSettings() {
         title={__('Name', 'bitform')}
         className={`${css(FieldStyle.fieldSection)}`}
         switching
+        open
       >
         <div className={css(FieldStyle.placeholder)}>
           <input className={css(FieldStyle.input)} type="text" />
@@ -302,6 +306,7 @@ function TextFieldSettings() {
         switching
         tip="By enabling this feature, user will see the error message when input is empty"
         tipProps={{ width: 200, icnSize: 17 }}
+        open
       >
         <ErrorMessageSettings
           type="req"
@@ -314,6 +319,7 @@ function TextFieldSettings() {
       <SimpleAccordion
         title={__('Pattern', 'bitform')}
         className={`${css(FieldStyle.fieldSection)}`}
+        open
       >
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
@@ -342,24 +348,31 @@ function TextFieldSettings() {
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />
 
-      <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.mr30)}`} />
+      <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`} />
 
       <hr className={css(FieldStyle.divider)} />
+
       {fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
-        <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr30)}`}>
-          <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
-        </div>
+        <>
+          <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+            <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
+          </div>
+          <hr className={css(FieldStyle.divider)} />
+        </>
       )}
-      <hr className={css(FieldStyle.divider)} />
+
       {
         fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
-          <UniqField
-            type="entryUnique"
-            isUnique="isEntryUnique"
-            title="Validate as Entry Unique"
-            tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-            className={css(FieldStyle.fieldSection)}
-          />
+          <>
+            <UniqField
+              type="entryUnique"
+              isUnique="isEntryUnique"
+              title="Validate as Entry Unique"
+              tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+              className={css(FieldStyle.fieldSection)}
+            />
+            <hr className={css(FieldStyle.divider)} />
+          </>
         )
       }
 
@@ -394,26 +407,38 @@ function TextFieldSettings() {
       {
         fieldData.typ === 'number' && (
           <>
-            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} className="w-10" />
-            {fieldData.mn && (
-              <ErrorMessageSettings
-                type="mn"
-                title="Min Error Message"
-                tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
-              />
-            )}
-            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} className="w-10" />
-            {fieldData.mx && (
-              <ErrorMessageSettings
-                type="mx"
-                title="Max Error Message"
-                tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
-              />
-            )}
+            <SimpleAccordion title="Number:" className={`${css(FieldStyle.fieldSection)}`} open>
+              {/* <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
+              <div className={css(FieldStyle.fieldNumber)}>
+                <span>{__('Min:', 'bitform')}</span>
+                <input className={css(FieldStyle.inputNumber)} type="number" value={min} onChange={setMin} />
+              </div>
+              {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
+              {fieldData.mn && (
+                <ErrorMessageSettings
+                  type="mn"
+                  title="Min Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
+                />
+              )}
+              <div className={css(FieldStyle.fieldNumber)}>
+                <span>{__('Max:', 'bitform')}</span>
+                <input className={css(FieldStyle.inputNumber)} type="number" value={max} onChange={setMax} />
+              </div>
+              {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
+              {fieldData.mx && (
+                <ErrorMessageSettings
+                  type="mx"
+                  title="Max Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when input number is greater than ${fieldData.mx}`}
+                />
+              )}
+            </SimpleAccordion>
+            <hr className={css(FieldStyle.divider)} />
           </>
         )
       }
-      {
+      {/* {
         fieldData.typ.match(/^(url|number|email|)$/) && (
           <ErrorMessageSettings
             type="invalid"
@@ -421,7 +446,7 @@ function TextFieldSettings() {
             tipTitle={`By enabling this feature, user will see the error message when input value is not any ${fieldData.typ}`}
           />
         )
-      }
+      } */}
       {
         fieldData.typ === 'password' && (
           <div>
