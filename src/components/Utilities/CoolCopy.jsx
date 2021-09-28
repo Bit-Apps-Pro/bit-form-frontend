@@ -1,11 +1,11 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import CopyIcn from '../../Icons/CopyIcn'
 import { __ } from '../../Utils/i18nwrap'
 import Tip from './Tip'
 
-export default function CoolCopy({ className, cls, value, readOnly }) {
+export default function CoolCopy({ className, cls, value, readOnly = true }) {
   const { css } = useFela()
   const copyInput = useRef(null)
 
@@ -27,40 +27,41 @@ export default function CoolCopy({ className, cls, value, readOnly }) {
       .catch(() => toast.error(__('Failed to Copy, Try Again.', 'bitform')))
   }
   return (
-    <div className={className}>
-      <label className={css(style.label)} htmlFor="text-copy">
-        <input ref={copyInput} className={`${css(style.input)} ${cls}`} id="text-copy" type="text" value={value} readOnly={readOnly} />
-        <button onClick={copyText} className={`${css(style.btn)}`} type="button" aria-label="Copy" style={{ '--tooltip-txt': '"Copy"' }}>
-          <Tip msg="Copy">
-            <CopyIcn w="20" />
-          </Tip>
+    <div className={`${css(style.wrapper)} ${className}`}>
+      <Tip msg="Copy">
+        <input aria-label="Copy field key" ref={copyInput} className={`${css(style.input)} ${cls}`} id="text-copy" type="text" value={value} readOnly={readOnly} />
+        <button onClick={copyText} className={`${css(style.btn)}`} type="button" aria-label="Copy field key">
+          <CopyIcn w="20" />
         </button>
-      </label>
+      </Tip>
     </div>
   )
 }
 
 const style = {
-  label: { pn: 'relative !important' },
+  wrapper: { pn: 'relative' },
   input: {
     bd: 'var(--white-0-95)',
     oe: 'none',
-    b: '1px solid var(--b-79-96)',
+    b: 'none !important',
     brs: '10px !important',
-    p: '10px 30px 10px 10px',
-    w: 80,
-    fw: 600,
+    p: '2px 40px 2px 10px !important',
+    w: 100,
+    fw: 500,
+    bs: 'none !important',
+    ':focus-visible': { bs: '0 0 0 2px var(--b-50) !important' }
   },
   btn: {
     pn: 'absolute !important',
     b: 'none',
     oe: 'none',
     bd: 'none',
-    tp: '-2px',
+    tp: '50%',
+    tm: 'translateY(-50%)',
     rt: 2,
     cur: 'pointer',
     tn: 'color 0.2s',
-    cr: 'var(--b-59)',
-    '&:hover': { cr: 'var(--b-73)' },
+    cr: 'var(--white-0-61)',
+    '&:hover': { cr: 'var(--b-50)' },
   },
 }
