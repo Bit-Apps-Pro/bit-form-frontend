@@ -28,7 +28,7 @@ export const $styles = atom({
   default: {
     theme: 'defaultBlue',
     themeVars: {
-      '--primaryColor': 'blue',
+      '--global-primary-color': 'blue',
       '--border-radius': '10px',
     },
     form: { 'frm-wrp-': { background: 'red' } },
@@ -36,6 +36,9 @@ export const $styles = atom({
     fields: {
       'bf9-3-': {
         theme: 'default_blue',
+        themeVars:{
+          '--primary-color': '--global-primary-color'
+        },
         classes: {
           'bf9-3--fw': {
             background: 'Red',
@@ -63,9 +66,9 @@ export const $styles = atom({
             outline: 'none !important',
             'background-color': 'rgba(0, 0, 0, 0)!important',
             'border-color': 'rgba(199, 212, 221, 1)!important',
-            'border-radius': '6px 6px 6px 6px!important',
+            'border-radius': '6px 6px 6px 6px !important',
             'border-style': 'solid!important',
-            'border-width': '1px 1px 1px 1px!important',
+            'border-width': '1px 1px 1px 1px !important',
             'font-size': '15px!important',
             color: 'rgba(0, 0, 0, 1)!important',
             margin: '5px 0 0 0!important',
