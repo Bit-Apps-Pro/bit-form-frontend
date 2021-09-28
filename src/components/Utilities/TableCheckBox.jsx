@@ -12,7 +12,7 @@ export default function TableCheckBox(props) {
             <line x1="7" y1="10" x2="13" y2="10" />
           </svg>
         </div>
-        <span>{props.title}</span>
+        <span className="btcd-cbx-title">{props.title}</span>
         {props.subTitle && (
           <>
             <br />
