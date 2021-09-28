@@ -22,7 +22,7 @@ const ut = {
     ':disabled::before': { dy: 'none' },
   },
   fontBody: { fontFamily: '"Roboto", sans-serif' },
-  fw500: { fw: 500 },
+  fw500: { fw: 500 }, 
   flxb: { flx: 'between' },
   flxcb: { flx: 'center-between' },
   flxc: { flx: 'align-center' },

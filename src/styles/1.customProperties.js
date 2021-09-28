@@ -20,7 +20,12 @@ const customProperties = {
   bsz: $ => ({ boxSizing: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
-  us: $ => ({ userSelect: $ }),
+  us: () => ({
+    userSelect: 'none',
+    '-webkit-user-select': 'none',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+  }),
   fr: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
   ls: $ => ({ listStyle: $ }),
