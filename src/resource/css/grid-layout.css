@@ -67,6 +67,7 @@
   background: var(--red-100-61);
   color: var(--white-100);
   border: 1px solid var(--crimson);
+  text-shadow: 0 0.5px 1px #101010b5;
 }
 
 .red-btn:hover {

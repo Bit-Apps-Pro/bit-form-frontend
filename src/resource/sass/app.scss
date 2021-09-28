@@ -764,7 +764,7 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
-.fw-500{
+.fw-500 {
   font-weight: 500;
 }
 
@@ -1243,7 +1243,7 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .bar-l {
-  background    : #f8f8f8;
+  background: #f8f8f8;
   background: var(--white-0-97);
   width: 10px;
   // pointer-events: none;
@@ -1261,11 +1261,14 @@ input[type="checkbox"].disabled:checked:before {
 
 .bar-r {
   background: var(--white-100);
-  & div{
+
+  & div {
     border-left: 1px solid var(--white-0-69);
   }
+
   &:hover {
     width: 8px;
+
     &>div {
       border-left: 3px solid var(--b-50);
       width: 12px;
@@ -1856,7 +1859,9 @@ input[type="checkbox"].disabled:checked:before {
 
 .btn,
 .icn-btn {
+  background: transparent;
   transition: transform 0.1s;
+  transition: box-shadow .2s;
 
   &:active {
     transform: scale(0.95);
@@ -1865,6 +1870,7 @@ input[type="checkbox"].disabled:checked:before {
   &:focus {
     box-shadow: none;
   }
+  &:focus-visible { box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important; }
 }
 
 .action-btn-wrapper {
@@ -2360,7 +2366,7 @@ nav.top-nav {
   &:active,
   &:focus {
     // background: #dcdcdc;
-    background: var(--white-0-86);
+    // background: var(--white-0-86);
     // border    : 1px solid #d4d4d4;
     border: 1px solid var(--white-0-83);
   }
@@ -3304,7 +3310,7 @@ nav.top-nav {
   &:focus {
     border-color: var(--b-50) !important;
     // box-shadow  : 0 0 0 0px var(--b-50), 0 0 0 4px rgba(0, 131, 243, 0.1) !important;
-    box-shadow: 0 0 0 0px var(--b-50), 0 0 0 4px var(--b-100-48-1) !important;
+    box-shadow: 0 0 0 1px var(--b-50), 0 0 0 4px var(--b-100-48-1) !important;
   }
 
   &:disabled {
@@ -4826,7 +4832,8 @@ select.btcd-ud-inp {
 .btcd-link {
   color: var(--blue); //blue
   box-shadow: none !important;
-
+  transition: box-shadow .2s;
+  &:focus-visible { box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important; }
   &:hover {
     // color          : #287eff;
     color: var(--b-59);
@@ -5351,7 +5358,7 @@ _:-ms-fullscreen,
 
 .slide-enter.slide-enter-active {
   transform: translateX(0%);
-} 
+}
 
 .slide-exit {
   position: absolute;

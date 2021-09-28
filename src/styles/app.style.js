@@ -78,13 +78,14 @@ const app = {
     jc: 'center',
     ai: 'center',
     my: 10,
-    cr: 'pointer',
+    cur: 'pointer',
     oe: 'none',
     fs: 14,
     td: 'none',
     ws: 'nowrap',
     fw: 600,
-
+    tn: 'box-shadow .2s',
+    ':focus-visible': { bs: '0 0 0 2px white, 0 0 0 4px blue' },
     '&:disabled': {
       b: 'var(--white-0-90)',
       bs: 'none',

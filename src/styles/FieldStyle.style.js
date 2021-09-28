@@ -27,27 +27,37 @@ const FieldStyle = {
     mx: 10,
     py: 10,
     fw: 600,
+    '& .toggle-icn': {
+      cr: 'var(--white-0-61)'
+    }
   },
   placeholder: { dy: 'block' },
   input: {
-    w: '99%',
+    fs: 14,
+    fw: 400,
+    w: '96%',
     bd: 'var(--b-79-96) !important',
     oe: 'none !important',
-    mr: 10,
+    mx: 'auto',
+    dy: 'block',
     my: 10,
     b: 'none !important',
-    brs: 8,
+    brs: '8px !important',
+    ':focus': {
+      bs: '0 0 0 2px var(--b-50) !important',
+    }
   },
   hover_tip: {
     '&:hover': {
       '& .hover-tip': {
-        tm: 'scale(1.1)',
+        oy: 1,
         tn: '0.2s',
       },
     },
   },
-  mNun: {
-    m: 0,
+  divider: {
+    my: 0,
+    mx: 10,
     bb: '0.5px soild var(--white-0-83)',
   },
 
