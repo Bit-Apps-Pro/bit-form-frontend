@@ -3,7 +3,7 @@ const SimpleAccordionStyle = {
   dflx: {
     flx: 'align-center',
     fw: 600,
-    '& .hover-tip': { tm: 'scale(0)' },
+    '& .hover-tip': { oy: 0 },
   },
   hrv_tip: {},
   ':hover': { bd: 'var(--b-50-95)' },
