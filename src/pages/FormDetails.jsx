@@ -211,13 +211,15 @@ function FormDetails() {
             const responseData = res.data
             // responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
             // exp start
-            if (responseData.form_content.layout !== undefined) {
+            if (responseData.form_content.layout !== undefined && responseData.form_content.layout.lg[0].w < 12) {
               const l = responseData.form_content.layout
               const nl = { lg: [], md: [], sm: [] }
               l.lg.map(itm => { nl.lg.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
               l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
               l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
               setLay(nl)
+            } else {
+              setLay(responseData.form_content.layout)
             }
             // exp end
 
@@ -352,9 +354,7 @@ function FormDetails() {
               ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />}
             </Route>
             <Route path="/form/settings/:formType/:formID/:settings?">
-              <FormSettings
-                setProModal={setProModal}
-              />
+              <FormSettings setProModal={setProModal} />
             </Route>
           </Switch>
         </div>
