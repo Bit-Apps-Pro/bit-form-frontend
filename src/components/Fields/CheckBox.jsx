@@ -79,6 +79,16 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
       >
         {/* cc for checkbox container */}
         <div className={`${fieldKey}-cc`}>
+          {/* <svg className={`${fieldKey}-cks`}>
+            <symbol id="check" viewbox="0 0 12 10">
+              <polyline
+                points="1.5 6 4.5 9 10.5 1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+            </symbol>
+          </svg> */}
           {attr.opt.map((itm, i) => (
             <div key={`opt-${i + 24}`} className={`${fieldKey}-cw`}>
               <input
