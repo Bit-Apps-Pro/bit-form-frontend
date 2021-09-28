@@ -16,9 +16,9 @@ export default function BorderStyle() {
   return (
     <div className="d-flx flx-col">
       <ColorPickerInput title="Color" />
-      <div className="flx flx-between mt-2 pos-rel">
+      <div className="flx flx-between mt-2">
         <span className={css(borderStyle.title)}>Type</span>
-        <SimpleDropdown options={options} w={120} h={31} />
+        <SimpleDropdown options={options} w={120} h={30} />
       </div>
       <BoxSizeControl title="Width" />
     </div>

@@ -3,7 +3,7 @@ import { useFela } from 'react-fela'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
-export default function SizeControl({ label, className }) {
+export default function SizeControl({ label, className, width }) {
   const [val, setval] = useState(10)
   const { css } = useFela()
 
@@ -12,14 +12,14 @@ export default function SizeControl({ label, className }) {
   }
 
   return (
-    <div className={`${css(sizeControlStyle.container)} ${className}`}>
+    <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width: `${width}px` }}>
       <CustomInputControl
         className={css(sizeControlStyle.input)}
         label={label}
         value={val}
         min={1}
         max={100}
-        width="60px"
+        width={`${width - 20}px`}
         onChange={onChangeHandler}
       />
       <select name="" id="" className={css(sizeControlStyle.selectt)}>

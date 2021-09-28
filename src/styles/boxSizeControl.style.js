@@ -10,6 +10,7 @@ const boxSizeControlStyle = {
     flx: 'align-center',
     jc: 'flex-end',
     flxp: 'wrap',
+    gap: '5px',
     mt: 10,
   },
 }

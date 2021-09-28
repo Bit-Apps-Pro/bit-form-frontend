@@ -422,10 +422,11 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   ]
 
   const searchHandler = (e) => {
-    const searchTool = e.target.value.trim()
+    let searchTool = e.target.value.trim()
     const searchItem = []
 
-    if (searchTool !== '') {
+    if (searchTool) {
+      searchTool = searchTool.toLowerCase()
       tools.map(item => {
         const itm = item.fields.filter(field => (field.keywords.includes(searchTool)))
         searchItem.push(...itm)
@@ -468,7 +469,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </div>
         )}
         {searchData.length === 0 && tools.map(grp => (
-          <SimpleAccordion className={css(Toolbars.sec_acc)} title={grp.groupTitle} open>
+          <SimpleAccordion key={grp.groupTitle} className={css(Toolbars.sec_acc)} title={grp.groupTitle} open>
             <div className={css(Toolbars.tool_bar)}>
               {grp.fields.map((fld, i) => (
                 <Tools key={`tool-bar-${fld.name}`} setNewData={setNewData} value={{ fieldData: fld.elm, fieldSize: fld.pos }}>

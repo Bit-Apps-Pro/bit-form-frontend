@@ -27,7 +27,7 @@ const draggableModalStyle = {
     b: 0,
     bc: 'transparent',
     cr: 'var(--white-0-0-32)',
-    cur: 'pointer',
+    curp: 1,
     flx: 'center',
     ':hover': { cr: 'var(--white-0-0-64)' },
   },
