@@ -7,14 +7,14 @@ import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
 import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
+import ut from '../../../../styles/2.utilities'
 
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
-  hideAccordion: false,
 }
 
-export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, hideAccordion }) {
+export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked }) {
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
@@ -43,20 +43,16 @@ export default function SimpleAccordion({ className, title, toggleName, children
           <span className={`title ${css(SimpleAccordionStyle.dflx)}`}>
             {title}
             {tip && (
-              <span className="ml-2 hover-tip">
-                <Cooltip {...tipProps}>
-                  <div className="txt-body">{__(tip, 'bitform')}</div>
-                </Cooltip>
-              </span>
+              <Cooltip {...{ ...tipProps, className: 'hover-tip' }}>
+                <div className="txt-body">{__(tip, 'bitform')}</div>
+              </Cooltip>
             )}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             {switching && (
-              <SingleToggle name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
+              <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
             )}
-            {!hideAccordion && (
-              <ChevronDownIcn size="20" rotate={!!tgl} />
-            )}
+            <ChevronDownIcn className="toggle-icn" size="20" rotate={!!tgl} />
           </div>
         </div>
       </div>
