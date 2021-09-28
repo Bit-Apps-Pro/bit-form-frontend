@@ -626,7 +626,7 @@ input[type="checkbox"].disabled:checked:before {
   // background: #00faa7;
   background: var(--g-49);
   // color     : #022217;
-  color: var(--g-89-7);
+  color: var(--b-53-8);
 
   &:hover {
     // background: #00e699;
@@ -3499,7 +3499,7 @@ select.btcd-paper-inp {
 
 //table checkbox start
 .btcd-label-cbx {
-  display: inline-flex;
+  // display: inline-flex;
   align-items: center;
   -ms-user-select: none;
   -webkit-user-select: none;
@@ -3552,6 +3552,9 @@ select.btcd-paper-inp {
         }
       }
     }
+  }
+  .btcd-cbx-title {
+    font-size: 14px;
   }
 
   .btcd-t-cbx {
@@ -5220,15 +5223,6 @@ _:-ms-fullscreen,
   background: var(--dp-blue-bg) !important;
 }
 
-.popper-icn {
-  color: var(--dp-blue-bg);
-  opacity: 0.3;
-}
-
-.popper-icn:hover {
-  opacity: 1;
-  cursor: help;
-}
 
 .txt-body {
   line-height: 1.1;
