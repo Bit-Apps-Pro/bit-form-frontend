@@ -9,11 +9,12 @@ import 'tippy.js/dist/backdrop.css'
 import 'tippy.js/animations/shift-away.css'
 import { useFela } from 'react-fela'
 
-export default function Tip({ className, children, width = 'auto', msg = '', place = 'bottom' }) {
+export default function Tip({ className, children, width = 'auto', msg = '', place = 'bottom', trigger = 'mouseenter' }) {
   const { css } = useFela()
   const style = { fw: 400 }
   return (
     <Tippy
+      trigger={trigger}
       animateFill
       placement={place}
       plugins={[animateFill]}
