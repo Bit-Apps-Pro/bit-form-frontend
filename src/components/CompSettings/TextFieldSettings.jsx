@@ -240,18 +240,18 @@ function TextFieldSettings() {
         <span className={css(FieldStyle.mainTitle)}>Text Field Settings</span>
         <Back2FldBtn size="20" className={css(FieldStyle.btn)} />
       </div>
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
       <div className={`${css(FieldStyle.section)}`}>
         <span className={css(FieldStyle.title)}>Field key</span>
         <CoolCopy value={fldKey} />
         {/* <CopyText value={fldKey} className="field-key-cpy m-0 w-5" /> */}
       </div>
 
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
 
       <FieldLabelSettings />
 
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
         title={__('Admin Label', 'bitform')}
@@ -265,7 +265,7 @@ function TextFieldSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
         title={__('Placeholder', 'bitform')}
@@ -279,7 +279,7 @@ function TextFieldSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
         title={__('Name', 'bitform')}
@@ -291,7 +291,7 @@ function TextFieldSettings() {
         </div>
       </SimpleAccordion>
 
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
 
       <SimpleAccordion
         title={__('Required', 'bitform')}
@@ -310,7 +310,7 @@ function TextFieldSettings() {
         />
       </SimpleAccordion>
       {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
       <SimpleAccordion
         title={__('Pattern', 'bitform')}
         className={`${css(FieldStyle.fieldSection)}`}
@@ -340,17 +340,17 @@ function TextFieldSettings() {
           )
         }
       </SimpleAccordion>
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
 
       <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.mr30)}`} />
 
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
       {fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
         <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr30)}`}>
           <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
         </div>
       )}
-      <hr className={css(FieldStyle.mNun)} />
+      <hr className={css(FieldStyle.divider)} />
       {
         fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
           <UniqField
