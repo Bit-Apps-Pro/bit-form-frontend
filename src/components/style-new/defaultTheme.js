@@ -15,7 +15,7 @@ export default function defaultTheme(fk, type) {
     case 'textarea':
       return {
         [`.${fk}-fw`]: {
-          background: 'Red',
+          background: 'var(--primary-color)',
           height: '100%',
           'text-align': 'start',
           width: '100%',
@@ -60,6 +60,14 @@ export default function defaultTheme(fk, type) {
     case 'check':
     case 'radio':
       return {
+        // checkbox symbol
+        // [`${fk}-cks`]: {
+        //   position: 'absolute',
+        //   width: 0,
+        //   height: 0,
+        //   'pointer-events': 'none',
+        //   'user-select': 'none',
+        // },
         [`.${fk}-fw`]: {
           height: '100%',
           'text-align': 'start',
