@@ -27,8 +27,8 @@ const sizeControlStyle = {
       flx: 'center',
     },
 
-    '& > div': { w: '60%' },
-    '& > div > input:first-child': { pr: '0px !important' },
+    '& > div:nth-child(2)': { w: '60%' },
+    '& > div:nth-child(2) > input:first-child': { pr: '0px !important' },
   },
 
   selectt: {
