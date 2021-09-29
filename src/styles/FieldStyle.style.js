@@ -10,18 +10,6 @@ const FieldStyle = {
     // '&:hover': { bc: 'var(--b-97)' },
   },
   // bb: { bb: '1px solid var(--white-0-0-14)' },
-  mainTitle: { fs: 16, fw: 700 },
-  btn: {
-    oe: 'none',
-    flx: 'center-between',
-    b: '1px solid var(--white-0-89)',
-    bc: 'var(--white-0-97)',
-    px: 4,
-    brs: 8,
-    cur: 'pointer',
-    cr: 'var(--white-0-50)',
-  },
-
   title: { fs: 14, fw: 600 },
 
   fieldSection: {
