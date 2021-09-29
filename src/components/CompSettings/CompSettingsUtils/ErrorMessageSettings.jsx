@@ -6,12 +6,12 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
+import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
-import ErrorMessages from '../../../styles/ErrorMessages.style'
 
 export default function ErrorMessageSettings({ type, title, tipTitle }) {
   const [errorModal, setErrorModal] = useState(false)
