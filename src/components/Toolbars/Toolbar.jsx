@@ -55,7 +55,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             lbl: __('Text Field', 'bitform'),
             ph: __('Placeholder Text...', 'bitform'),
             valid: {},
-            err: { entryUnique: { dflt: 'That Field is taken. Try another.', show: true } },
+            err: { entryUnique: { dflt: 'This value is already taken, please try another. .', show: true } },
           },
         },
         {
@@ -81,7 +81,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             lbl: __('Multi-Line Text', 'bitform'),
             ph: __('Placeholder Text...', 'bitform'),
             valid: {},
-            err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+            err: { entryUnique: { dflt: 'This value is already taken, please try another. .', show: true } },
           },
         },
         {
@@ -98,7 +98,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
               { lbl: __('Option 3', 'bitform') },
             ],
             valid: {},
-            err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+            err: { entryUnique: { dflt: 'This value is already taken, please try another. .', show: true } },
           },
         },
         {
@@ -116,7 +116,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
               { lbl: __('Option 3', 'bitform') },
             ],
             valid: {},
-            err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+            err: { entryUnique: { dflt: 'This value is already taken, please try another. .', show: true } },
           },
         },
         {
@@ -180,7 +180,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
               { label: 'Option 3', value: 'Option 3' },
             ],
             valid: {},
-            err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+            err: { entryUnique: { dflt: 'This value is already taken, please try another. .', show: true } },
           },
         },
         {
