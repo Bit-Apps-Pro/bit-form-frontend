@@ -173,7 +173,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             type={type}
             showMdl={showMdl}
             setshowMdl={setshowMdl}
-            title="Customize  Activation Email Tamplate"
+            title="Customize  Activation Email template"
           />
         </div>
         {userConf[type]?.activation === 'email_verify' && (
@@ -188,7 +188,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Customize  Activation Email Tamplate', 'bitform')}</div>
+              <div className="f-m ml-1">{__('Customize  Activation Email template', 'bitform')}</div>
             </div>
             <div className="flx w-5 ml-2 mt-4">
               <span
