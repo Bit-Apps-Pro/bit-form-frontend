@@ -11,17 +11,15 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import CoolCopy from '../Utilities/CoolCopy'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
-import Back2FldBtn from './Back2FldBtn'
-import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -78,6 +76,9 @@ function TextFieldSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
   const hideAdminLabel = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    console.log('hideadmin label')
     if (!e.target.checked) {
       fieldData.valid.hideAdminLbl = true
     } else {
@@ -238,20 +239,7 @@ function TextFieldSettings() {
 
   return (
     <div className="">
-      <div className={`${css(FieldStyle.section)}`}>
-        <span className={css(FieldStyle.mainTitle)}>Field Settings</span>
-        <Back2FldBtn size="20" className={css(FieldStyle.btn)} />
-      </div>
-
-      <hr className={css(FieldStyle.divider)} />
-
-      <div className={`${css(FieldStyle.section)}`}>
-        <span className={css(FieldStyle.title)}>Field key</span>
-        <CoolCopy value={fldKey} />
-        {/* <CopyText value={fldKey} className="field-key-cpy m-0 w-5" /> */}
-      </div>
-
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
       <FieldLabelSettings />
 
