@@ -71,11 +71,11 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
         </h4>
         <SingleToggle name={type} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.show} />
       </div> */}
-      <div className={css(ErrorMessages.flxBetween)}>
+      <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
         {/* flx flx-between mt-1 mb-1 mr-2 */}
-        <div className={css(ErrorMessages.flx)}>
-          <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)}`} name={type} checked={fieldData?.err?.[type]?.show || false} title={__('Show Error Message', 'bitform')} onChange={setShowErrMsg} />
-          <Cooltip width={250} icnSize={17} className={css(ut.mr2)}>
+        <div className={`${css(ErrorMessages.flx)}`}>
+          <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} checked={fieldData?.err?.[type]?.show || false} title={__('Show Error Message', 'bitform')} onChange={setShowErrMsg} />
+          <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hover-tip`}>
             <div className={css(ErrorMessages.tipBody)}>
               Check the box to enable the custom error message.
               <br />
@@ -96,10 +96,10 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
       {fieldData?.err?.[type]?.show && (
         <>
           {/* <div className="flx flx-between mt-1 mb-1 mr-2"> */}
-          <div className={css(ErrorMessages.flxBetween)}>
+          <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
             <div className={css(ErrorMessages.flx)}>
-              <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)}`} name={type} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
-              <Cooltip width={250} icnSize={17} className={css(ut.mr2)}>
+              <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
+              <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hover-tip`}>
                 <div className={css(ErrorMessages.tipBody)}>
                   Check the box to enable the custom error message.
                   <br />

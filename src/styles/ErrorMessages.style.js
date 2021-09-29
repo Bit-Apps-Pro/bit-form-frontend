@@ -23,7 +23,6 @@ const ErrorMessages = {
     oe: 'none',
     bd: 'none',
   },
-
   errMsgBox: {
     w: 'calc(100% - 10px)',
     brs: 5,
@@ -32,6 +31,10 @@ const ErrorMessages = {
     px: 10,
     fs: 13,
     '& p': { m: '0!important' },
+  },
+  checked: {
+    '& .hover-tip': { oy: 0 },
+    '&:hover': { '& .hover-tip': { oy: 1, tn: '0.2s' } },
   },
 }
 

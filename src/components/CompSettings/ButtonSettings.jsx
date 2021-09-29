@@ -1,13 +1,18 @@
 import produce from 'immer'
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import CoolCopy from '../Utilities/CoolCopy'
 import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
+import Back2FldBtn from './Back2FldBtn'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function ButtonSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -15,6 +20,7 @@ export default function ButtonSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const [error, seterror] = useState({})
   const { txt, align, fulW, btnSiz, btnTyp } = fieldData
+  const { css } = useFela()
 
   const pos = [
     { name: __('Left', 'bitform'), value: 'left' },
@@ -74,18 +80,83 @@ export default function ButtonSettings() {
   }
 
   return (
-    <div className="ml-2 mr-4">
-      <Back2FldList />
-      <div>
+    <div className="">
+      <div className={`${css(FieldStyle.section)}`}>
+        <span className={css(FieldStyle.mainTitle)}>Field Settings</span>
+        <Back2FldBtn size="20" className={css(FieldStyle.btn)} />
+      </div>
+      <hr className={css(FieldStyle.divider)} />
+
+      <div className={`${css(FieldStyle.section)}`}>
+        <span className={css(FieldStyle.title)}>Field key</span>
+        <CoolCopy value={fldKey} />
+      </div>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Submit Button Text', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input className={css(FieldStyle.input)} value={txt} type="text" onChange={setSubBtnTxt} />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Button Align', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <select className={css(FieldStyle.input)} name="" id="" value={align} onChange={setButtonAlign}>
+            {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
+          </select>
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Button Type', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <select className={css(FieldStyle.input)} name="" id="" value={btnTyp} onChange={setBtnTyp}>
+            {type.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
+          </select>
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+        <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
+      </div>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+        <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} />
+      </div>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* end  */}
+      {/* <div>
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Button', 'bitform')}
-      </div>
-      <SingleInput inpType="text" title={__('Submit Button Text:', 'bitform')} value={txt} action={setSubBtnTxt} />
-      <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={align} action={setButtonAlign} />
-      <SelectBox2 title={__('Button Type:', 'bitform')} options={type} value={btnTyp} action={setBtnTyp} />
+      </div> */}
+      {/* <SingleInput inpType="text" title={__('Submit Button Text:', 'bitform')} value={txt} action={setSubBtnTxt} /> */}
+      {/* <SelectBox2 title={__('Button Align:', 'bitform')} options={pos} value={align} action={setButtonAlign} /> */}
+      {/* <SelectBox2 title={__('Button Type:', 'bitform')} options={type} value={btnTyp} action={setBtnTyp} /> */}
       {error.btnTyp && <span style={{ color: 'red' }}>{error.btnTyp}</span>}
-      <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} className="mt-5" />
-      <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} className="mt-5" />
+      {/* <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} className="mt-5" /> */}
+      {/* <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} className="mt-5" /> */}
     </div>
   )
 }

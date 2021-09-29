@@ -16,6 +16,7 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldBtn from './Back2FldBtn'
+import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -237,11 +238,13 @@ function TextFieldSettings() {
 
   return (
     <div className="">
-      <div className={`${css(FieldStyle.section)} ${css(FieldStyle.bb)}`}>
-        <span className={css(FieldStyle.mainTitle)}>Text Field Settings</span>
+      <div className={`${css(FieldStyle.section)}`}>
+        <span className={css(FieldStyle.mainTitle)}>Field Settings</span>
         <Back2FldBtn size="20" className={css(FieldStyle.btn)} />
       </div>
+
       <hr className={css(FieldStyle.divider)} />
+
       <div className={`${css(FieldStyle.section)}`}>
         <span className={css(FieldStyle.title)}>Field key</span>
         <CoolCopy value={fldKey} />
@@ -381,8 +384,8 @@ function TextFieldSettings() {
       </div> */}
       {/* end */}
 
-      {/* <Back2FldList />
-      <div className="mb-2">
+      {/* <Back2FldList /> */}
+      {/* <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
       </div>
@@ -539,12 +542,16 @@ function TextFieldSettings() {
             //       </div>
             //     </div>
             //   )}
-            <UniqField
-              type="userUnique"
-              isUnique="isUserUnique"
-              title="Validate as User Unique"
-              tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-            />
+            <>
+              <UniqField
+                className={`${css(FieldStyle.fieldSection)}`}
+                type="userUnique"
+                isUnique="isUserUnique"
+                title="Validate as User Unique"
+                tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+              />
+              <hr className={css(FieldStyle.divider)} />
+            </>
             // </div>
           )
         }
