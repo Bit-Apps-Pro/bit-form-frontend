@@ -2,19 +2,22 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
+import { useRecoilValue } from 'recoil'
+import { $bits } from '../../../../GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import ut from '../../../../styles/2.utilities'
 import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
 import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
-import ut from '../../../../styles/2.utilities'
 
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
 }
 
-export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked }) {
+export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, isPro }) {
+  const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState(open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
@@ -47,6 +50,8 @@ export default function SimpleAccordion({ className, title, toggleName, children
                 <div className="txt-body">{__(tip, 'bitform')}</div>
               </Cooltip>
             )}
+
+            {isPro && !bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             {switching && (
