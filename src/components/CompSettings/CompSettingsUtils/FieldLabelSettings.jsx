@@ -42,6 +42,7 @@ export default function FieldLabelSettings() {
       tipProps={{ width: 250, icnSize: 17 }}
       toggleAction={hideFieldLabel}
       toggleChecked={!fieldData.valid.hideLbl}
+      open
     >
       <input className={`${css(FieldStyle.input)}`} type="text" onChange={setLabel} value={label} />
     </SimpleAccordion>

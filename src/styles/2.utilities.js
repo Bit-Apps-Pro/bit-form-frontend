@@ -22,7 +22,7 @@ const ut = {
     ':disabled::before': { dy: 'none' },
   },
   fontBody: { fontFamily: '"Roboto", sans-serif' },
-  fw500: { fw: 500 }, 
+  fw500: { fw: 500 },
   flxb: { flx: 'between' },
   flxcb: { flx: 'center-between' },
   flxc: { flx: 'align-center' },
@@ -58,6 +58,5 @@ const ut = {
   pr4: { pr: '20px !important' },
   pl6: { pl: 30 },
   py1: { py: 5 },
-
 }
 export default ut
