@@ -91,7 +91,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification', 'bitform')} checked={!!userConf[type]?.user_notify} value={false} />
             <Cooltip width={250} icnSize={17} className="ml-1">
               <div className="txt-body">
-                When this option is enabled, a welcome email will be sent to WordPress after registration.
+                When this option is enabled, a welcome email will be sent from WordPress after registration.
                 <br />
               </div>
             </Cooltip>
