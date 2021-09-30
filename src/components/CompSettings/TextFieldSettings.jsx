@@ -339,13 +339,13 @@ function TextFieldSettings() {
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />
 
-      <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`} />
+      <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`} />
 
       <hr className={css(FieldStyle.divider)} />
 
       {fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
         <>
-          <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+          <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
             <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
           </div>
           <hr className={css(FieldStyle.divider)} />

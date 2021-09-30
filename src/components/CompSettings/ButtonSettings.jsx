@@ -124,13 +124,13 @@ export default function ButtonSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
         <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
       </div>
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
         <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} />
       </div>
 

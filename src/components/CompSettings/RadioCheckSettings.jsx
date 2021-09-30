@@ -235,7 +235,7 @@ function RadioCheckSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
         <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} />
       </div>
 
@@ -356,6 +356,7 @@ function RadioCheckSettings() {
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
           className={css(FieldStyle.fieldSection)}
+          isPro
         />
       </div>
 
