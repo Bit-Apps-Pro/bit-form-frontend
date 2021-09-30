@@ -34,8 +34,8 @@ const ErrorMessages = {
     '& p': { m: '0!important' },
   },
   checked: {
-    '& .hover-tip': { oy: 0 },
-    '&:hover': { '& .hover-tip': { oy: 1, tn: '0.2s' } },
+    '& .hovertip': { oy: 0 },
+    '&:hover': { '& .hovertip': { oy: 1, tn: '0.2s' } },
   },
 }
 
