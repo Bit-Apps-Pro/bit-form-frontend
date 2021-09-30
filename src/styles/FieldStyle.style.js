@@ -15,12 +15,10 @@ const FieldStyle = {
     my: 5,
     p: 5,
     fw: 600,
+    brs: 8,
     tn: 'background-color 0.2s',
     '& .toggle-icn': { cr: 'var(--white-0-61)' },
-    '&:hover': {
-      bc: 'var(--b-23-95)',
-      brs: 8,
-    },
+    '&:hover': { bc: 'var(--b-23-95)' },
   },
 
   placeholder: { dy: 'block' },
