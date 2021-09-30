@@ -88,7 +88,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
             <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
               <div className={css(ErrorMessages.flx)}>
                 <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} disabled={!bits.isPro} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
-                <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hover-tip`}>
+                <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
                   <div className={css(ErrorMessages.tipBody)}>
                     Check the box to enable the custom error message.
                     <br />
