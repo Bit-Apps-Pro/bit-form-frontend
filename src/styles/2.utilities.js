@@ -3,6 +3,21 @@ const ut = {
     display: 'grid',
     placeContent: 'center',
   },
+
+  proBadge: {
+    bd: ' var(--red-100-50)',
+    cr: 'var(--white)',
+    p: 6,
+    brs: '50%',
+    fs: 12,
+    fw: 700,
+  },
+  tipBody: {
+    lh: '1.1',
+    fs: '12.5px',
+    fw: 100,
+    ff: '"Roboto", sans-serif',
+  },
   icn_hover: {
     pn: 'relative',
     '::before': {

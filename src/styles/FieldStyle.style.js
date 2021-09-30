@@ -63,6 +63,16 @@ const FieldStyle = {
     oe: 'none !important',
     b: 'none !important',
   },
+  flxCenter: {
+    flx: 'align-center',
+    '& .hovertip': { oy: 0 },
+    '&:hover': {
+      '& .hovertip': {
+        oy: 1,
+        tn: '0.2s',
+      },
+    },
+  },
 
 }
 
