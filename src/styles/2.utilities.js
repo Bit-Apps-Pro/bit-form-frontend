@@ -45,6 +45,7 @@ const ut = {
   mr4: { mr: 20 },
   mr30: { mr: 30 },
   mr8: { mr: 40 },
+  pr8: { pr: 40 },
   ml0: { ml: '0!important' },
   ml1: { ml: 5 },
   ml2: { ml: 10 },
