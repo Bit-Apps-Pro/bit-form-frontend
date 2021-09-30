@@ -6,19 +6,25 @@ const FieldStyle = {
     // p: 10,
     brs: 8,
     fw: 600,
-
-    // '&:hover': { bc: 'var(--b-97)' },
   },
-  // bb: { bb: '1px solid var(--white-0-0-14)' },
+
   title: { fs: 14, fw: 600 },
 
   fieldSection: {
     mx: 10,
-    py: 10,
+    my: 5,
+    p: 5,
     fw: 600,
+    tn: 'background-color 0.2s',
     '& .toggle-icn': { cr: 'var(--white-0-61)' },
+    '&:hover': {
+      bc: 'var(--b-23-95)',
+      brs: 8,
+    },
   },
+
   placeholder: { dy: 'block' },
+
   input: {
     fs: 14,
     fw: 400,
@@ -32,6 +38,7 @@ const FieldStyle = {
     brs: '8px !important',
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
   },
+
   hover_tip: {
     '&:hover': {
       '& .hover-tip': {
@@ -40,15 +47,18 @@ const FieldStyle = {
       },
     },
   },
+
   divider: {
     my: 0,
     mx: 10,
     bb: '0.5px soild var(--white-0-83)',
   },
+
   fieldNumber: {
     flx: 'center-between',
     py: 10,
   },
+
   inputNumber: {
     w: 80,
     bd: 'var(--b-79-96) !important',

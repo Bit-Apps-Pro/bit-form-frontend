@@ -1,6 +1,6 @@
 const ErrorMessages = {
   wrapper: {
-    bc: 'var(--b-50-95)',
+    // bc: 'var(--b-50-95)',
     p: '5px 0px 10px 7px',
     brs: 8,
     mt: 10,
@@ -26,7 +26,8 @@ const ErrorMessages = {
   errMsgBox: {
     w: 'calc(100% - 10px)',
     brs: 5,
-    bc: 'var(--white-0-95)',
+    // bc: 'var(--b-23-95)',
+    bc: 'var(--white-0-89)',
     py: 15,
     px: 10,
     fs: 13,
