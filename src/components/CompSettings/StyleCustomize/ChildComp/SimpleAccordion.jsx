@@ -51,7 +51,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
               </Cooltip>
             )}
 
-            {isPro && !bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+            {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             {switching && (

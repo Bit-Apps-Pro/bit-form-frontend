@@ -7,7 +7,9 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
@@ -20,6 +22,8 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
@@ -222,8 +226,8 @@ export default function SelectSettings() {
   }
 
   return (
-    <div className="ml-2 mr-4">
-      <Back2FldList />
+    <div className="">
+      {/* <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
@@ -231,19 +235,71 @@ export default function SelectSettings() {
       <div className="flx">
         <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
         <CopyText value={fldKey} className="field-key-cpy m-0 w-7" />
-      </div>
+      </div> */}
+      <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
+
       <FieldLabelSettings />
-      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />}
-      <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Admin Label', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
+
+      {/* {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />} */}
+      {fieldData.typ.match(/^(text|url|password|number|email|select)$/) && (
+        <SimpleAccordion
+          title={__('Placeholder', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          open
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
+          </div>
+        </SimpleAccordion>
+      )}
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Required', 'bitform')}
+        // eslint-disable-next-line react/jsx-no-bind
+        toggleAction={setRequired}
+        toggleChecked={isRequired}
+        className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
+        switching
+        tip="By enabling this feature, user will see the error message when input is empty"
+        tipProps={{ width: 200, icnSize: 17 }}
+        open
+      >
+        <ErrorMessageSettings
+          type="req"
+          title="Error Message"
+          tipTitle="By enabling this feature, user will see the error message when input is empty"
+        />
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
       {fieldData?.valid?.req && (
         <ErrorMessageSettings
           type="req"
           title="Error Message"
           tipTitle="By enabling this feature, user will see the error message if select box is empty"
         />
-      )}
-      <div className="pos-rel">
+      )} */}
+      {/* <div className="pos-rel">
         {!bits.isPro && (
           <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
             <div className="pro">
@@ -263,9 +319,88 @@ export default function SelectSettings() {
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
         />
+      </div> */}
+      <div className="pos-rel">
+        <UniqField
+          type="entryUnique"
+          isUnique="isEntryUnique"
+          title="Validate as Entry Unique"
+          tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+          className={css(FieldStyle.fieldSection)}
+          isPro
+        />
       </div>
-      <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
-      <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" />
+
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" /> */}
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
+        <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} />
+      </div>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Multiple Select:', 'bitform')}
+        // eslint-disable-next-line react/jsx-no-bind
+        toggleAction={setMultiple}
+        toggleChecked={isMultiple}
+        className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
+        switching
+        tip="By enabling this feature, user will see the error message when input is empty"
+        tipProps={{ width: 200, icnSize: 17 }}
+        open
+      >
+        {
+          fieldData.mul && (
+            <>
+              <div>
+                <div className={`${css(FieldStyle.flxCenter)} ${css(ut.mt2)} ${css(ut.mb2)}`}>
+                  <h4 className={css(ut.m0)}>{__('Minimum:', 'bitform')}</h4>
+                  <Cooltip width={250} icnSize={17} className={`${css(ut.ml2)} hovertip`}>
+                    <div className={css(ut.tipBody)}>{__('Set minimum number to be selected for dropdown option', 'bitform')}</div>
+                  </Cooltip>
+                  {!isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
+                </div>
+                <input className={css(FieldStyle.input)} type="number" value={min} onChange={setMin} disabled={!isPro} />
+              </div>
+
+              {fieldData.mn && (
+                <ErrorMessageSettings
+                  type="mn"
+                  title="Min Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when selected options is less than ${fieldData.mn}`}
+                />
+              )}
+
+              <div>
+                <div className={`${css(FieldStyle.flxCenter)} ${css(ut.mt2)} ${css(ut.mb2)}`}>
+                  <h4 className={css(ut.m0)}>{__('Maximum:', 'bitform')}</h4>
+                  <Cooltip width={250} icnSize={17} className={`${css(ut.ml2)} hovertip`}>
+                    <div className={css(ut.tipBody)}>{__('Set maximum number to be selected for dropdown option', 'bitform')}</div>
+                  </Cooltip>
+                  {!bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
+                </div>
+                <input className={css(FieldStyle.input)} type="number" value={max} onChange={setMax} disabled={!isPro} />
+              </div>
+              {fieldData.mx && (
+                <>
+                  <ErrorMessageSettings
+                    type="mx"
+                    title="Max Error Message"
+                    tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
+                  />
+                  {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
+                </>
+              )}
+            </>
+          )
+        }
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       {
         fieldData.mul && (
           <>
@@ -305,33 +440,45 @@ export default function SelectSettings() {
                   title="Max Error Message"
                   tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
                 />
-                {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
+                <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
               </>
             )}
           </>
         )
-      }
-      <button onClick={openImportModal} className={css(app.btn)} type="button">
-        <DownloadIcon size="16" />
-        &nbsp;
-        {__('Import Options', 'bitform')}
-      </button>
-      <div className="opt">
-        <span className="font-w-m">{__('Options:', 'bitform')}</span>
-        {fieldData.opt.map((itm, i) => (
-          <div key={`opt-${i + 8}`} className="flx flx-between">
-            <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
-            <div className="flx mt-2">
-              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
-                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
-                <span className="btcd-mrk ck br-50" />
-              </label>
-              <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="remove option"><CloseIcn size="14" /></button>
-            </div>
+      } */}
+
+      <SimpleAccordion
+        title={__('Options', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <>
+          <button onClick={openImportModal} className={css(app.btn)} type="button">
+            <DownloadIcon size="16" />
+            &nbsp;
+            {__('Import Options', 'bitform')}
+          </button>
+          <div className={`opt ${css(ut.mt0)}`}>
+            <span className="font-w-m">{__('Options:', 'bitform')}</span>
+            {fieldData.opt.map((itm, i) => (
+              <div key={`opt-${i + 8}`} className="flx flx-between">
+                <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className={css(ut.mt0)} />
+                <div className="flx mt-2">
+                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
+                    <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
+                    <span className="btcd-mrk ck br-50" />
+                  </label>
+                  <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="remove option"><CloseIcn size="14" /></button>
+                </div>
+              </div>
+            ))}
+            <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
           </div>
-        ))}
-        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
-      </div>
+        </>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
       <Modal
         md
         autoHeight
