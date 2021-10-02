@@ -47,7 +47,7 @@ const style = {
     brs: '10px !important',
     p: '2px 40px 2px 10px !important',
     w: 100,
-    fw: 500,
+    fw: '500 !important',
     bs: 'none !important',
     ':focus-visible': { bs: '0 0 0 2px var(--b-50) !important' }
   },
