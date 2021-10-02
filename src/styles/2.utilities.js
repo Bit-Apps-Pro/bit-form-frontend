@@ -71,6 +71,8 @@ const ut = {
 
   // padding
   pr8: { pr: 40 },
+  px10: { px: 10 },
+  py5: { py: 5 },
   p1: { p: 5 },
   p2: { p: 10 },
   p3: { p: 15 },
