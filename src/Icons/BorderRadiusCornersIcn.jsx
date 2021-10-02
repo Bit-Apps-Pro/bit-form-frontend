@@ -1,6 +1,11 @@
 /* eslint-disable max-len */
-export default function BorderRadiusCornersIcn({ size }) {
+export default function BorderRadiusCornersIcn({ size, stroke = 4 }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox=" 0 0 12 12" fill="none"><path fill="currentColor" d="M3.375 10.875H2.25A1.125 1.125 0 0 1 1.125 9.75V8.625a.375.375 0 0 0-.75 0V9.75a1.877 1.877 0 0 0 1.875 1.875h1.125a.375.375 0 1 0 0-.75ZM11.25 8.25a.375.375 0 0 0-.375.375V9.75a1.125 1.125 0 0 1-1.125 1.125H8.625a.375.375 0 1 0 0 .75H9.75a1.877 1.877 0 0 0 1.875-1.875V8.625a.375.375 0 0 0-.375-.375ZM9.75.375H8.625a.375.375 0 0 0 0 .75H9.75a1.125 1.125 0 0 1 1.125 1.125v1.125a.375.375 0 1 0 .75 0V2.25A1.877 1.877 0 0 0 9.75.375Zm-9 3.375a.375.375 0 0 0 .375-.375V2.25A1.125 1.125 0 0 1 2.25 1.125h1.125a.375.375 0 1 0 0-.75H2.25A1.877 1.877 0 0 0 .375 2.25v1.125a.375.375 0 0 0 .375.375Z" /></svg>
+    <svg width={size} height={size} viewBox="0 0 38 36" fill="none">
+      <path d="M3 24V29V29C3 31.7614 5.23858 34 8 34H13" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" />
+      <path d="M36 12L36 7V7C36 4.23858 33.7614 2 31 2L26 2" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" />
+      <path d="M26 34L31 34V34C33.7614 34 36 31.7614 36 29L36 24" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" />
+      <path d="M13 2L8 2V2C5.23858 2 3 4.23858 3 7L3 12" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" />
+    </svg>
   )
 }

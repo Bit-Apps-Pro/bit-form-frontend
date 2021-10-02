@@ -1,7 +1,7 @@
 export default function BorderRadiusIcn({ size }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 13 13" fill="none">
-      <rect width="12" height="12" x=".5" y=".5" stroke="currentColor" rx="2.5" />
+    <svg width={size} height={size} viewBox="0 0 37 37" fill="none">
+      <rect x="2" y="2" width="33" height="33" rx="9" stroke="currentColor" strokeWidth="4" />
     </svg>
   )
 }
