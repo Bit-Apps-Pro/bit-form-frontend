@@ -7,7 +7,7 @@ import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
 import BorderTopLeftRadiusIcn from '../../../../Icons/BorderTopLeftRadiusIcn'
 import BorderTopRightRadiusIcn from '../../../../Icons/BorderTopRightRadiusIcn'
 import boxSizeControlStyle from '../../../../styles/boxSizeControl.style'
-import SegmentControl from '../../../Utilities/SegmentControl'
+import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import SizeControl from './SizeControl'
 
 export default function BoxSizeControl({ title }) {
@@ -22,7 +22,7 @@ export default function BoxSizeControl({ title }) {
     <div className="mt-2">
       <div className={css(boxSizeControlStyle.titlecontainer)}>
         <span className={css(boxSizeControlStyle.title)}>{title}</span>
-        <SegmentControl
+        <StyleSegmentControl
           square
           defaultActive="All"
           options={options}
