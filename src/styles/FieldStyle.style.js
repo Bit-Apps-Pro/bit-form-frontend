@@ -22,7 +22,7 @@ const FieldStyle = {
     cr: 'var(--white-0-50)',
   },
 
-  title: { fs: 14, fw: 600 },
+  title: { fs: 14, fw: 500, mx: 10 },
 
   fieldSection: {
     mx: 10,
@@ -33,13 +33,14 @@ const FieldStyle = {
   placeholder: { dy: 'block' },
   input: {
     fs: 14,
-    fw: 400,
+    fw: 500,
     w: '96%',
     bd: 'var(--b-79-96) !important',
     oe: 'none !important',
     mx: 'auto',
     dy: 'block',
-    my: 10,
+    mt: 10,
+    mb: 3,
     b: 'none !important',
     brs: '8px !important',
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
