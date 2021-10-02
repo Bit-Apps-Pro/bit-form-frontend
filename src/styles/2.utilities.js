@@ -41,6 +41,8 @@ const ut = {
   flxb: { flx: 'between' },
   flxcb: { flx: 'center-between' },
   flxc: { flx: 'align-center' },
+  flxClm: { dy: 'flex', fd: 'column' },
+  // margin
   ma: { m: 'auto' },
   m0: { m: '0 !important' },
   mb0: { mb: 0 },
@@ -60,13 +62,15 @@ const ut = {
   mr4: { mr: 20 },
   mr30: { mr: 30 },
   mr8: { mr: 40 },
-  pr8: { pr: 40 },
   ml0: { ml: '0!important' },
   ml1: { ml: 5 },
   ml2: { ml: 10 },
   ml4: { ml: '20px!important' },
   ml5: { ml: '25px!important' },
   ml6: { ml: '30px!important' },
+
+  // padding
+  pr8: { pr: 40 },
   p1: { p: 5 },
   p2: { p: 10 },
   p3: { p: 15 },
@@ -74,5 +78,36 @@ const ut = {
   pr4: { pr: '20px !important' },
   pl6: { pl: 30 },
   py1: { py: 5 },
+
+  // width
+  wmd: { w: '900px' },
+
+  w1: { w: '10% !important' },
+
+  w2: { w: '20% !important' },
+
+  w3: { w: ' 30% !important' },
+
+  w4: { w: '40% !important' },
+
+  w5: { w: '50% !important' },
+
+  w6: { w: '60% !important' },
+
+  w7: { w: '70% !important' },
+
+  w8: { w: '80% !important' },
+
+  w9: { w: '90% !important' },
+
+  w10: { w: '100% !important' },
+
+  wdt100: { w: '100px !important' },
+
+  wdt150: { w: '150px !important' },
+
+  wdt200: { w: '200px !important' },
+
+  wdt300: { w: '300px !important' },
 }
 export default ut

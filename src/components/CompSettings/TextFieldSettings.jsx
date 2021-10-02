@@ -277,12 +277,11 @@ function TextFieldSettings() {
 
       <SimpleAccordion
         title={__('Name', 'bitform')}
-        className={`${css(FieldStyle.fieldSection)}`}
-        switching
+        className={css(FieldStyle.fieldSection)}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} type="text" />
+          <input className={css(FieldStyle.input)} />
         </div>
       </SimpleAccordion>
 
@@ -293,7 +292,7 @@ function TextFieldSettings() {
         // eslint-disable-next-line react/jsx-no-bind
         toggleAction={setRequired}
         toggleChecked={isRequired}
-        className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
         switching
         tip="By enabling this feature, user will see the error message when input is empty"
         tipProps={{ width: 200, icnSize: 17 }}
@@ -307,45 +306,47 @@ function TextFieldSettings() {
       </SimpleAccordion>
       {/* <SingleToggle title={__('Required', 'bitform')} action={setRequired} isChecked={isRequired} className={css(FieldStyle.fieldSection)} /> */}
       <hr className={css(FieldStyle.divider)} />
-      <SimpleAccordion
-        title={__('Pattern', 'bitform')}
-        className={`${css(FieldStyle.fieldSection)}`}
-        open
-      >
-        {
-          fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
-            <>
-              <div className=" mr-2 mt-3">
-                <div className="flx">
-                  <h4 className={`m-0 ${css(FieldStyle.title)}`}>{__('Expression:', 'bitform')}</h4>
-                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+      {
+        fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
+          <>
+            <SimpleAccordion
+              title={__('Pattern', 'bitform')}
+              className={css(FieldStyle.fieldSection)}
+              open
+            >
+              <>
+                <div className={css(ut.mr2, ut.mt3)}>
+                  <div className={css(ut.flxc)}>
+                    <h4 className={css(ut.m0, FieldStyle.title)}>{__('Expression:', 'bitform')}</h4>
+                    {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
+                  </div>
+                  <input className={css(FieldStyle.input)} type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
+                  <datalist id="patterns">
+                    {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
+                  </datalist>
                 </div>
-                <input className={css(FieldStyle.input)} type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
-                <datalist id="patterns">
-                  {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
-                </datalist>
-              </div>
-              <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" cls={css(FieldStyle.input)} disabled={!bits.isPro} />
-              {regexr && (
-                <ErrorMessageSettings
-                  type="regexr"
-                  title="Error Message"
-                  tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
-                />
-              )}
-            </>
-          )
-        }
-      </SimpleAccordion>
-      <hr className={css(FieldStyle.divider)} />
+                <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" cls={css(FieldStyle.input)} disabled={!bits.isPro} />
+                {regexr && (
+                  <ErrorMessageSettings
+                    type="regexr"
+                    title="Error Message"
+                    tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
+                  />
+                )}
+              </>
+            </SimpleAccordion>
+            <hr className={css(FieldStyle.divider)} />
+          </>
+        )
+      }
 
-      <FieldHideSettings cls={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`} />
+      <FieldHideSettings cls={css(FieldStyle.fieldSection, ut.pr8)} />
 
       <hr className={css(FieldStyle.divider)} />
 
       {fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
         <>
-          <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
+          <div className={css(FieldStyle.fieldSection, ut.pr8)}>
             <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
           </div>
           <hr className={css(FieldStyle.divider)} />
@@ -398,7 +399,7 @@ function TextFieldSettings() {
       {
         fieldData.typ === 'number' && (
           <>
-            <SimpleAccordion title="Number:" className={`${css(FieldStyle.fieldSection)}`} open>
+            <SimpleAccordion title="Number:" className={css(FieldStyle.fieldSection)} open>
               {/* <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
               <div className={css(FieldStyle.fieldNumber)}>
                 <span>{__('Min:', 'bitform')}</span>
@@ -440,23 +441,38 @@ function TextFieldSettings() {
       } */}
       {
         fieldData.typ === 'password' && (
-          <div>
-            <div className="flx mt-2 mb-2">
-              <h4 className="m-0">{__('Validations:', 'bitform')}</h4>
-              {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
-            </div>
-            <TableCheckBox className="w-10" name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-            <TableCheckBox className="w-10 mt-2" name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-            <TableCheckBox className="w-10 mt-2" name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-            <TableCheckBox className="w-10 mt-2" name="special" checked={fieldData.valid?.validations?.special || false} value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])" title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-            <TableCheckBox className="w-10 mt-2" name="limit" checked={fieldData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-            {fieldData.valid?.validations?.limit && (
-              <div>
-                <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" />
-                <SingleInput inpType="number" name="mx" title={__('Max:', 'bitform')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} />
+          <>
+            <SimpleAccordion
+              title={__('Validations', 'bitform')}
+              className={css(FieldStyle.fieldSection)}
+              open
+              isPro
+            >
+              <div className={css(ut.mt1, ut.flxClm)}>
+                <TableCheckBox className={css(ut.w10)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                <TableCheckBox className={css(ut.w10, ut.mt2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                <TableCheckBox className={css(ut.w10, ut.mt2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                <TableCheckBox className={css(ut.w10, ut.mt2)} name="special" checked={fieldData.valid?.validations?.special || false} value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])" title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                <TableCheckBox className={css(ut.w10, ut.mt2)} name="limit" checked={fieldData.valid?.validations?.limit || false} value=".{8,32}" title={__('Limit Password Length', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                {fieldData.valid?.validations?.limit && (
+                  <div>
+                    <div className={css(FieldStyle.fieldNumber)}>
+                      <span>{__('Min:', 'bitform')}</span>
+                      <input className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mn} onChange={setPasswordLimit} />
+                    </div>
+                    <div className={css(FieldStyle.fieldNumber)}>
+                      <span>{__('Max:', 'bitform')}</span>
+                      <input className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mx} onChange={setPasswordLimit} />
+                    </div>
+                    {/* <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" /> */}
+                    {/* <SingleInput inpType="number" name="mx" title={__('Max:', 'bitform')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} /> */}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </SimpleAccordion>
+            <hr className={css(FieldStyle.divider)} />
+          </>
+
         )
       }
       {/* {
@@ -532,7 +548,7 @@ function TextFieldSettings() {
             //   )}
             <>
               <UniqField
-                className={`${css(FieldStyle.fieldSection)}`}
+                className={css(FieldStyle.fieldSection)}
                 type="userUnique"
                 isUnique="isUserUnique"
                 title="Validate as User Unique"
