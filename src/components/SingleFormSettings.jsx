@@ -160,7 +160,7 @@ export default function SingleFormSettings() {
 
   const toggleCaptureGCLID = e => {
     const additional = deepCopy(additionalSetting)
-    if (isPro) {
+    if (!isPro) {
       setProModal({ show: true, msg: 'Google Ads is in Pro Version!' })
       return false
     }
