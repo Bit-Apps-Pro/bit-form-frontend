@@ -42,6 +42,9 @@ const ut = {
   flxcb: { flx: 'center-between' },
   flxc: { flx: 'align-center' },
   flxClm: { dy: 'flex', fd: 'column' },
+
+  cp: { cur: 'pointer' },
+  pmt0: { '& p': { m: 0 } },
   // margin
   ma: { m: 'auto' },
   m0: { m: '0 !important' },
