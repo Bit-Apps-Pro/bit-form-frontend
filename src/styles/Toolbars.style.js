@@ -24,6 +24,7 @@ const Toolbars = {
       bs: '0px 0px 0px 3px var(--b-100-64-40) !important',
       bcr: 'var(--b-92-62) !important',
     },
+    '::placeholder': { fs: 12 },
   },
   search_icn: {
     pn: 'absolute',
@@ -31,7 +32,7 @@ const Toolbars = {
     mx: 8,
     tm: 'translateY(-50%)',
     cr: 'var(--white-0-75)',
-    curp: 1, 
+    curp: 1,
     '& svg': { dy: 'block' },
   },
   sec_acc: {
