@@ -329,7 +329,7 @@ function TextFieldSettings() {
             <>
               <div className=" mr-2 mt-3">
                 <div className="flx">
-                  <h4 className={`m-0 ${css(FieldStyle.title)}`}>{__('Expression:', 'bitform')}</h4>
+                  <h4 className={`${css(FieldStyle.title)}`}>{__('Expression:', 'bitform')}</h4>
                   {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
                 </div>
                 <input className={css(FieldStyle.input)} type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
@@ -454,7 +454,7 @@ function TextFieldSettings() {
         fieldData.typ === 'password' && (
           <div>
             <div className="flx mt-2 mb-2">
-              <h4 className="m-0">{__('Validations:', 'bitform')}</h4>
+              <h4>{__('Validations:', 'bitform')}</h4>
               {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
             </div>
             <TableCheckBox className="w-10" name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)', 'bitform')} onChange={setPasswordValidation} disabled={!bits.isPro} />
