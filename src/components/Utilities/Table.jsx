@@ -339,10 +339,17 @@ function Table(props) {
                             key={`t-d-${cell.row.index}`}
                             className="td flx"
                             {...cell.getCellProps()}
-                            onClick={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
-                            onKeyPress={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
-                            role="button"
-                            tabIndex={0}
+                            {...props.rorowClickable
+                            && typeof cell.column.Header === 'string'
+                            && {
+                              onClick: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
+                              onKeyPress: e => props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } }),
+                              role: 'button',
+                              tabIndex: 0,
+                            }
+                            }
+                            // onClick={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
+                            // onKeyPress={(e) => props.rowClickable && typeof cell.column.Header === 'string' && props.onRowClick(e, row.cells, cell.row.index, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter } })}
                             aria-label="cell"
                           >
                             {cell.render('Cell')}
