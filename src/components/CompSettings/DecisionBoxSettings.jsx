@@ -9,10 +9,7 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
-import CopyText from '../Utilities/CopyText'
-import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -107,7 +104,7 @@ export default function DecisionBoxSettings() {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: fieldData.lbl || fieldData?.info?.lbl }}
           // className="err-msg-box mt-2"
-          className={css(FieldStyle.input, ut.px10, ut.py5, style.pmt0)}
+          className={css(FieldStyle.input, ut.px10, ut.py5, ut.pmt0)}
         />
       </div>
 
@@ -191,5 +188,3 @@ export default function DecisionBoxSettings() {
     </div>
   )
 }
-
-const style = { pmt0: { '& p': { m: 0 } } }
