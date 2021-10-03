@@ -233,7 +233,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
     const newBlk = `b${formID}-${uniqueFieldId}`
-    const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 20, minH: minH * 10 || minH, maxH: maxH * 20 || maxH, minW: minW * 10 || minW }
+    const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const tmpLayouts = compactNewLayoutItem(breakpoint, newLayoutItem, layouts)
 
