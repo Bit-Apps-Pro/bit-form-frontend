@@ -114,28 +114,34 @@ const customInputControlStyle = {
     },
 
     '::-webkit-slider-thumb': {
-      se: 15,
+      se: 14,
       bc: '#4099FF',
       b: '3px solid #FFFFFF',
       brs: '100%',
-      bs: '0 0 1px 0px rgba(0,0,0,0.1)',
       '-webkit-appearance': 'none',
+      bs: '0 1px 3px 0px rgba(0,0,0,0.3)',
+      tn: 'transform 0.2s cubic-bezier(0.42, 0, 0.68, 3.27) 0s',
     },
+    '::-webkit-slider-thumb:active': { tm: 'scale(0.85)', tn: 'transform .2s ease' },
 
+    '::-moz-range-thumb:active': { tm: 'scale(0.85)', tn: 'transform .2s ease' },
     '::-moz-range-thumb': {
-      se: 15,
+      se: 14,
       bc: '#4099FF',
       b: '3px solid #FFFFFF',
       brs: '100%',
-      bs: '0 0 1px 0px rgba(0,0,0,0.1)',
+      bs: '0 1px 3px 0px rgba(0,0,0,0.3)',
+      tn: 'transform 0.2s cubic-bezier(0.42, 0, 0.68, 3.27) 0s',
     },
 
+    '::-ms-thumb:active': { tm: 'scale(0.85)',tn: 'transform .2s ease'  },
     '::-ms-thumb': {
-      se: 15,
+      se: 14,
       bc: '#4099FF',
       b: '3px solid #FFFFFF',
       brs: '100%',
-      bs: '0 0 1px 0px rgba(0,0,0,0.1)',
+      bs: '0 1px 3px 0px rgba(0,0,0,0.3)',
+      tn: 'transform 0.2s cubic-bezier(0.42, 0, 0.68, 3.27) 0s',
     },
   },
 }

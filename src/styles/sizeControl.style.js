@@ -1,6 +1,5 @@
 const sizeControlStyle = {
   container: {
-    b: '1px solid #ddd',
     brs: 10,
     flx: 'align-center',
     h: 30,
