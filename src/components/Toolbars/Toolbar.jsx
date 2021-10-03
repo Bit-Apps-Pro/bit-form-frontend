@@ -35,6 +35,7 @@ import Toolbars from '../../styles/Toolbars.style'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import Tools from './Tools'
+import ut from '../../styles/2.utilities'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
@@ -454,16 +455,16 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
       {useMemo(() => (
         <Scrollbars autoHide style={{ maxWidth: 400 }}>
-          <div className="toolBar">
+          <div className={css(Toolbars.tool_bar)}>
             {searchData.length === 0 && tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className="mr-1 tool-icn">{tool.icn}</span>
+                <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}
             {searchData && searchData.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
-                <span className="mr-1 tool-icn">{tool.icn}</span>
+                <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}

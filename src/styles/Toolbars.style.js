@@ -30,7 +30,7 @@ const Toolbars = {
     '::placeholder': { fs: 12 },
     '::-webkit-search-cancel-button': {
       bd: 'var(--b-92-62) !important',
-      backgroundImage: 'url("data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>") !important',
+      bi: 'url("data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>") !important',
       brs: 4,
     },
 
@@ -59,30 +59,12 @@ const Toolbars = {
     px: 2,
     py: 5,
   },
-  tool: {
-    flx: 'align-center',
-    bd: 'var(--white)',
-    cr: 'var(--dp-blue)',
-    fw: 500,
-    fs: 15,
-    ws: 'nowrap',
-    wb: 'keep-all',
-    w: 156,
-    h: 55,
-    p: 15,
-    b: '1px solid var(--white-0-75)',
-    brs: 15,
-    cur: 'grab',
-    ow: 'hidden',
-    m: '5px 0',
-    bs: '0 1px 3px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2)',
-    t: 'all 200ms',
-  },
+
   tool_icn: {
     dy: 'flex',
     cr: 'var(--dp-blue)',
     fs: 25,
-    mr: 10,
+    mr: 5,
   },
   shortcut: {
     pn: 'absolute',
@@ -95,5 +77,4 @@ const Toolbars = {
     rt: 5,
   },
 }
-
 export default Toolbars
