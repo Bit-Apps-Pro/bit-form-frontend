@@ -254,7 +254,7 @@ function TextFieldSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+          <input aria-label="Admin label for this Field" placeholder="Type Admin label here..." className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
         </div>
       </SimpleAccordion>
 
@@ -269,7 +269,7 @@ function TextFieldSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} aria-label="Placeholder for this field" placeholder="Type placeholder here..." />
+          <input aria-label="Placeholer for this Field" placeholder="Type Placeholder here..." className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
         </div>
       </SimpleAccordion>
 
@@ -281,7 +281,7 @@ function TextFieldSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} />
+          <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} />
         </div>
       </SimpleAccordion>
 
@@ -320,7 +320,7 @@ function TextFieldSettings() {
                     <h4 className={css(ut.m0, FieldStyle.title)}>{__('Expression:', 'bitform')}</h4>
                     {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
                   </div>
-                  <input className={css(FieldStyle.input)} type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
+                  <input className={css(FieldStyle.input)} aria-label="Pattern for input field" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
                   <datalist id="patterns">
                     {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
                   </datalist>
@@ -403,7 +403,7 @@ function TextFieldSettings() {
               {/* <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
               <div className={css(FieldStyle.fieldNumber)}>
                 <span>{__('Min:', 'bitform')}</span>
-                <input className={css(FieldStyle.inputNumber)} type="number" value={min} aria-label="Minimum value for number input" onChange={setMin} />
+                <input aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={min} onChange={setMin} />
               </div>
               {/* <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} cls={css(FieldStyle.input)} /> */}
               {fieldData.mn && (
@@ -415,7 +415,7 @@ function TextFieldSettings() {
               )}
               <div className={css(FieldStyle.fieldNumber)}>
                 <span>{__('Max:', 'bitform')}</span>
-                <input className={css(FieldStyle.inputNumber)} type="number" value={max} onChange={setMax} aria-label="Minimum value for number input" />
+                <input aria-label="Maximum number for this field" placeholder="Type maximun number here..." className={css(FieldStyle.inputNumber)} type="number" value={max} onChange={setMax} />
               </div>
               {/* <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} cls={css(FieldStyle.input)} /> */}
               {fieldData.mx && (
@@ -458,11 +458,11 @@ function TextFieldSettings() {
                   <div>
                     <div className={css(FieldStyle.fieldNumber)}>
                       <span>{__('Min:', 'bitform')}</span>
-                      <input className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mn} onChange={setPasswordLimit} />
+                      <input aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mn} onChange={setPasswordLimit} />
                     </div>
                     <div className={css(FieldStyle.fieldNumber)}>
                       <span>{__('Max:', 'bitform')}</span>
-                      <input className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mx} onChange={setPasswordLimit} />
+                      <input aria-label="Maximum number for this field" placeholder="Type maximum number here..." className={css(FieldStyle.inputNumber)} type="number" value={fieldData.valid?.validations?.limit?.mx} onChange={setPasswordLimit} />
                     </div>
                     {/* <SingleInput inpType="number" name="mn" title={__('Min:', 'bitform')} value={fieldData.valid?.validations?.limit?.mn} action={setPasswordLimit} width={100} className="mr-4" /> */}
                     {/* <SingleInput inpType="number" name="mx" title={__('Max:', 'bitform')} value={fieldData.valid?.validations?.limit?.mx} action={setPasswordLimit} width={100} /> */}
