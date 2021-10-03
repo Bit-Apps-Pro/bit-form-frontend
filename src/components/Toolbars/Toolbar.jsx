@@ -199,8 +199,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         err: { invalid: { dflt: 'Email is invalid', show: true }, entryUnique: { dflt: 'That email is already exist, please try another one.', show: true } },
       },
     },
-
-
     {
       name: __('Time', 'bitform'),
       keywords: 'Time, time',
