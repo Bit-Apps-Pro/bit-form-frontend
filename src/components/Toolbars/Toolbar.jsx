@@ -3,7 +3,7 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import { memo, useMemo, useState } from 'react'
+import { memo, useMemo, useState, useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import BtnIcn from '../../Icons/BtnIcn'
@@ -400,6 +400,15 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     }, */
   ]
 
+  useEffect(() => {
+    window.addEventListener('keyup', searchKey)
+  }, [])
+  const searchKey = (e) => {
+    if (e.code === 'Slash') {
+      document.getElementById('search-icon').focus()
+    }
+  }
+
   const searchHandler = (e) => {
     let searchTool = e.target.value.trim()
     const searchItem = []
@@ -430,7 +439,16 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             <SearchIcon size="20" />
           </span>
         </label>
-        <input aria-label="Search Field" placeholder="Search Field" id="search-icon" type="text" name="searchIcn" onChange={searchHandler} className={css(Toolbars.search_field)} />
+        <input
+          aria-label="Search Field"
+          placeholder="Search Field"
+          id="search-icon"
+          type="search"
+          name="searchIcn"
+          onChange={searchHandler}
+          className={css(Toolbars.search_field)}
+        />
+        <div className={`${css(Toolbars.shortcut)} shortcut`}>/</div>
       </div>
 
       {useMemo(() => (
