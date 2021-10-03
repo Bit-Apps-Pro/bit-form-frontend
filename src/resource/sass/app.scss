@@ -769,56 +769,59 @@ input[type="checkbox"].disabled:checked:before {
   font-weight: 500;
 }
 
+// use fela
 .toolBar {
   display: flex;
   padding-bottom: 80px;
   flex-wrap: wrap;
 }
 
-.tools {
-  display: flex;
-  background: var(--white);
-  color: var(--dp-blue);
-  font-weight: 500;
-  font-size: 15px;
-  white-space: nowrap;
-  word-break: keep-all;
-  width: 145px;
-  height: 35px;
-  padding: 8px;
-  border-radius: 8px;
-  align-items: center;
-  cursor: -webkit-grab;
-  cursor: grab;
-  overflow: hidden;
-  margin: 5px;
-  box-shadow: 0 1px 3px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2);
-  transition: all 200ms;
+// use fela
+// .tools {
+//   display: flex;
+//   background: var(--white);
+//   color: var(--dp-blue);
+//   font-weight: 500;
+//   font-size: 15px;
+//   white-space: nowrap;
+//   word-break: keep-all;
+//   width: 145px;
+//   height: 35px;
+//   padding: 8px;
+//   border-radius: 8px;
+//   align-items: center;
+//   cursor: -webkit-grab;
+//   cursor: grab;
+//   overflow: hidden;
+//   margin: 5px;
+//   box-shadow: 0 1px 3px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2);
+//   transition: all 200ms;
 
-  &>.tool-icn {
-    display: flex;
-    color: var(--dp-blue);
-    font-size: 25px;
-    margin-right: 5px;
-  }
+//   // use fela
+//   &>.tool-icn {
+//     display: flex;
+//     color: var(--dp-blue);
+//     font-size: 25px;
+//     margin-right: 5px;
+//   }
 
-  &:hover,
-  &:focus {
-    color: var(--b-50);
-    outline: none;
-    transform: scale(1.05);
-    // box-shadow: 0 1px 11px -4px hsl(0, 0%, 69%);
-    box-shadow: 0 1px 11px -4px var(--white-0-69);
+//   &:hover,
+//   &:focus {
+//     color: var(--b-50);
+//     outline: none;
+//     transform: scale(1.05);
+//     // box-shadow: 0 1px 11px -4px hsl(0, 0%, 69%);
+//     box-shadow: 0 1px 11px -4px var(--white-0-69);
 
-    &>.tool-icn {
-      color: var(--b-50);
-    }
-  }
+//     &>.tool-icn {
+//       color: var(--b-50);
+//     }
+//   }
 
-  &:active {
-    border: 2px solid var(--b-50);
-  }
-}
+//   &:active {
+//     border: 2px solid var(--b-50);
+//   }
+// }
 
 .tool-img {
   width: 21px;
@@ -1871,7 +1874,10 @@ input[type="checkbox"].disabled:checked:before {
   &:focus {
     box-shadow: none;
   }
-  &:focus-visible { box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important; }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important;
+  }
 }
 
 .action-btn-wrapper {
@@ -4791,7 +4797,11 @@ select.btcd-ud-inp {
   color: var(--blue); //blue
   box-shadow: none !important;
   transition: box-shadow .2s;
-  &:focus-visible { box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important; }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px blue !important;
+  }
+
   &:hover {
     // color          : #287eff;
     color: var(--b-59);

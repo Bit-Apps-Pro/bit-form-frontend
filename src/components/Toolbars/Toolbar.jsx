@@ -45,7 +45,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Check Box', 'bitform'),
       keywords: 'Check Box, check box',
       icn: <CheckBoxIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
       elm: {
         typ: 'check',
         lbl: __('Check Boxs', 'bitform'),
@@ -55,14 +55,14 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'This value is already taken, please try another. ', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
       },
     },
     {
       name: __('Date', 'bitform'),
       keywords: 'Date, date',
       icn: <DateIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'date',
         lbl: __('Date Input', 'bitform'),
@@ -74,7 +74,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Date-Time', 'bitform'),
       keywords: 'Date-Time, Date-time, Date, Time',
       icn: <DateTimeIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'datetime-local',
         lbl: __('Date-Time Input', 'bitform'),
@@ -86,7 +86,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Dropdown', 'bitform'),
       keywords: 'Dropdown, dropdown, Menu, menu',
       icn: <DropDownIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
       elm: {
         typ: 'select',
         lbl: __('Drop-Down', 'bitform'),
@@ -97,7 +97,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { label: 'Option 3', value: 'Option 3' },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'This value is already taken, please try another.', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
       },
     },
 
@@ -105,39 +105,39 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Text', 'bitform'),
       keywords: 'Text, text',
       icn: <TextIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'text',
         lbl: __('Text Field', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'This value is already taken, please try another. ', show: true } },
+        err: { entryUnique: { dflt: 'That Field is taken. Try another.', show: true } },
       },
     },
     {
       name: __('User Name', 'bitform'),
       keywords: 'User Name, Username, User name, username, user name, text',
       icn: <UserIcn size="22" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'username',
         lbl: __('User Name', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'This username is already taken. Try another one.', show: true } },
+        err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
       },
     },
     {
       name: __('Multiline Text', 'bitform'),
       keywords: 'Multline Text, multiline text',
       icn: <TextareaIcn size="23" />,
-      pos: { h: 3, w: 6, i: 'block-5', minH: 3 },
+      pos: { h: 60, w: 60, i: 'block-5', minH: 60 },
       elm: {
         typ: 'textarea',
         lbl: __('Multi-Line Text', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'This value is already taken, please try another. ', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
       },
     },
 
@@ -145,7 +145,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Radio Button', 'bitform'),
       keywords: 'Radio button, radio button, button',
       icn: <RadioIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
       elm: {
         typ: 'radio',
         lbl: __('Radio', 'bitform'),
@@ -156,27 +156,27 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'This value is already taken, please try another. ', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
       },
     },
     {
       name: __('Number', 'bitform'),
       keywords: 'Number, number',
       icn: <NumberIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'number',
         lbl: __('Number Field', 'bitform'),
         ph: __('Number Input', 'bitform'),
         valid: {},
-        err: { invalid: { dflt: 'Number is invalid', show: true }, entryUnique: { dflt: 'This value is already taken, please try another one.', show: true } },
+        err: { invalid: { dflt: 'Number is invalid', show: true }, entryUnique: { dflt: 'That Number field is taken. Try another.', show: true } },
       },
     },
     {
       name: __('Password', 'bitform'),
       keywords: 'Password, password',
       icn: <PasswordIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'password',
         lbl: __('Password Field', 'bitform'),
@@ -189,21 +189,22 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Email', 'bitform'),
       keywords: 'Email, email',
       icn: <MailIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'email',
         lbl: __('Email Field', 'bitform'),
         ph: __('example@mail.com', 'bitform'),
         pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{1,24})+$',
         valid: {},
-        err: { invalid: { dflt: 'Email is invalid', show: true }, entryUnique: { dflt: 'That email is already exist, please try another one.', show: true } },
+        err: { invalid: { dflt: 'Email is invalid', show: true }, entryUnique: { dflt: 'That email is taken. Try another.', show: true } },
       },
     },
+
     {
       name: __('Time', 'bitform'),
       keywords: 'Time, time',
       icn: <TimeIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'time',
         lbl: __('Time Input', 'bitform'),
@@ -216,7 +217,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Month', 'bitform'),
       keywords: 'Month, month, Date',
       icn: <MonthIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'month',
         lbl: __('Month Input', 'bitform'),
@@ -228,7 +229,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Week', 'bitform'),
       keywords: 'Week, week, Date',
       icn: <WeekIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'week',
         lbl: __('Week Input', 'bitform'),
@@ -240,7 +241,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Country', 'bitform'),
       keywords: 'Country, country',
       icn: <FlagIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
       elm: {
         typ: 'select',
         lbl: __('Select Country', 'bitform'),
@@ -253,7 +254,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('File Upload', 'bitform'),
       keywords: 'File Upload, file upload',
       icn: <FileUploadIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2, minW: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40, minW: 20 },
       elm: {
         typ: 'file-up',
         lbl: __('File Upload', 'bitform'),
@@ -266,7 +267,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('URL', 'bitform'),
       keywords: 'URL, url',
       icn: <UrlIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'url',
         attr: {
@@ -277,14 +278,14 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('URL Field', 'bitform'),
         ph: __('https://www.example.com', 'bitform'),
         valid: {},
-        err: { invalid: { dflt: 'URL is invalid', show: true }, entryUnique: { dflt: 'This URL is already exist, please try another one.', show: true } },
+        err: { invalid: { dflt: 'URL is invalid', show: true }, entryUnique: { dflt: 'That URL is taken. Try another.', show: true } },
       },
     },
     {
       name: __('Color Picker', 'bitform'),
       keywords: 'Color Picker, color picker',
       icn: <ColorPickerIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
       elm: {
         typ: 'color',
         lbl: __('Color Picker', 'bitform'),
@@ -296,7 +297,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('reCaptcha v2', 'bitform'),
       keywords: 'ReCaptcha, reCaptcha, recaptcha, recaptcha v2',
       icn: <ReCaptchaIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', maxH: 2, minH: 2, minW: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40, minW: 20 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
@@ -308,7 +309,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Decision Box', 'bitform'),
       keywords: 'Decision box, GDPR, gdpr',
       icn: <DecisionBoxIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 1 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 20 },
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box', 'bitform'),
@@ -325,7 +326,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: 'HTML',
       keywords: 'HTML, Html, html',
       icn: <CodeSnippetIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block' },
+      pos: { h: 40, w: 60, i: 'n_blk' },
       elm: {
         typ: 'html',
         lbl: 'HTML Content',
@@ -337,7 +338,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: 'Button',
       keywords: 'Button, button',
       icn: <BtnIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2, maxH: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40, maxH: 40 },
       elm: {
         typ: 'button',
         btnTyp: 'button',
@@ -354,7 +355,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Paypal', 'bitform'),
       keywords: 'Paypal, Payment, payment, paypal',
       icn: <PaypalIcn w="23" />,
-      pos: { h: 5, w: 6, i: 'shadow_block', minH: 3, maxH: 7, minW: 2 },
+      pos: { h: 100, w: 60, i: 'n_blk', minH: 60, maxH: 140, minW: 20 },
       elm: {
         typ: 'paypal',
         currency: 'USD',
@@ -372,7 +373,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Razorpay', 'bitform'),
       keywords: 'Razorpay, razorpay, Payment, payment',
       icn: <RazorPayIcn w="17" h="23" />,
-      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2, maxH: 7, minW: 2 },
+      pos: { h: 40, w: 60, i: 'n_blk', minH: 40, maxH: 140, minW: 20 },
       elm: {
         typ: 'razorpay',
         lbl: __('Razorpay', 'bitform'),
@@ -393,7 +394,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     /* {
       name: 'Blank Block',
       icn: blank,
-      pos: { h: 2, w: 3, i: 'block-5' },
+      pos: { h: 40, w: 30, i: 'block-5' },
       elm: {
         typ: 'blank',
       },
