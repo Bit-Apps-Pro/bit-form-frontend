@@ -14,8 +14,8 @@ export default function BoxSizeControl({ title }) {
   const [controller, setController] = useState('All')
   const { css } = useFela()
   const options = [
-    { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'] },
-    { label: 'Individual', icn: <BorderRadiusCornersIcn size={16} />, show: ['icn'] },
+    { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'], tip: 'Radius allside' },
+    { label: 'Individual', icn: <BorderRadiusCornersIcn size={16} />, show: ['icn'], tip: 'Radius per corner' },
   ]
 
   return (
