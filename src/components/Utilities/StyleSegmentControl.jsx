@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
+import Tip from './Tip'
 
 export default function StyleSegmentControl({ defaultActive,
   options,
@@ -47,8 +48,9 @@ export default function StyleSegmentControl({ defaultActive,
       brs: 6,
       tdn: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
-      bd: 'var(--white-100)',
       wiilChange: 'transform',
+      bs: '0 2px 3px -1px grey',
+      bd: 'linear-gradient(0deg, #efefef, white)',
     },
     tab_link: {
       curp: 1,
@@ -125,21 +127,27 @@ export default function StyleSegmentControl({ defaultActive,
     <div className={css(style.wrapper)}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
-        {options?.map((item, i) => (
-          <button
-            key={`segment-option-${i * 10}`}
-            type="button"
-            className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
-            onClick={e => eventHandler(e, i)}
-            onKeyPress={e => eventHandler(e, i)}
-            data-label={item.label}
-          >
-            {checkToShow(item, 'icn') && (
-              <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
-            )}
-            {checkToShow(item, 'label') && __(item.label, 'bitform')}
-          </button>
-        ))}
+        {options?.map((item, i) => {
+          const btn = (
+            <button
+              key={`segment-option-${i * 10}`}
+              type="button"
+              className={`${css(style.tab_link)} ${active === item.label ? ' active' : ''}`}
+              onClick={e => eventHandler(e, i)}
+              onKeyPress={e => eventHandler(e, i)}
+              data-label={item.label}
+            >
+              {checkToShow(item, 'icn') && (
+                <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
+              )}
+              {checkToShow(item, 'label') && __(item.label, 'bitform')}
+            </button>
+          )
+          if (item.tip) {
+            return <Tip msg={item.tip} place="top" whiteSpaceNowrap theme="light-border" delay={1000}>{btn}</Tip>
+          }
+          return btn
+        })}
       </div>
     </div>
   )
