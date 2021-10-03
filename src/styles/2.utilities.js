@@ -77,6 +77,7 @@ const ut = {
     cr: 'var(--b-44-87)',
     flx: 'center',
     fd: 'column',
+    fw: 500,
   },
 
   // padding
