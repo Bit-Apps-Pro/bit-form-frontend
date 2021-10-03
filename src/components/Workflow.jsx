@@ -3,9 +3,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { Fragment, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $confirmations, $fieldsArr, $integrations, $mailTemplates, $updateBtn, $workflows } from '../GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
+import StackIcn from '../Icons/StackIcn'
+import TrashIcn from '../Icons/TrashIcn'
+import ut from '../styles/2.utilities'
+import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import ActionBlock from './Utilities/ActionBlock'
@@ -17,10 +24,6 @@ import LogicBlock from './Utilities/LogicBlock'
 import LogicChip from './Utilities/LogicChip'
 import MtSelect from './Utilities/MtSelect'
 import TableCheckBox from './Utilities/TableCheckBox'
-import bitsFetch from '../Utils/bitsFetch'
-import { $mailTemplates, $workflows, $bits, $integrations, $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
-import { deepCopy } from '../Utils/Helpers'
-import TrashIcn from '../Icons/TrashIcn'
 
 function Workflow({ formID }) {
   const [confMdl, setconfMdl] = useState({ show: false })
@@ -30,6 +33,7 @@ function Workflow({ formID }) {
   const confirmations = useRecoilValue($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const { css } = useFela()
   /* eslint-disable-next-line no-undef */
   const workFlows = deepCopy(allWorkFlows)
   const bits = useRecoilValue($bits)
@@ -948,8 +952,8 @@ function Workflow({ formID }) {
           )}
         </Fragment>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack d-b-fs-50" />
+        <div className={css(ut.btcdEmpty, ut.txCenter)}>
+          <StackIcn size="50" />
           {__('Empty', 'bitform')}
         </div>
       )}

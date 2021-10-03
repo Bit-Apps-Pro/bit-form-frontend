@@ -71,6 +71,13 @@ const ut = {
   ml4: { ml: '20px!important' },
   ml5: { ml: '25px!important' },
   ml6: { ml: '30px!important' },
+  txCenter: { ta: 'center' },
+
+  btcdEmpty: {
+    cr: 'var(--b-44-87)',
+    flx: 'center',
+    fd: 'column',
+  },
 
   // padding
   pr8: { pr: 40 },

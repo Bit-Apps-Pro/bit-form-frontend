@@ -1,15 +1,18 @@
 import { memo, useEffect, useState } from 'react'
-
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
+import CloseIcn from '../Icons/CloseIcn'
+import StackIcn from '../Icons/StackIcn'
+import TrashIcn from '../Icons/TrashIcn'
+import ut from '../styles/2.utilities'
+import bitsFetch from '../Utils/bitsFetch'
+import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
-import bitsFetch from '../Utils/bitsFetch'
 import ConfirmModal from './Utilities/ConfirmModal'
-import { deepCopy } from '../Utils/Helpers'
-import CloseIcn from '../Icons/CloseIcn'
-import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
-import TrashIcn from '../Icons/TrashIcn'
+
 
 function RedirUrl({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -17,6 +20,7 @@ function RedirUrl({ removeIntegration }) {
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const { css } = useFela()
 
   useEffect(() => {
     bitsFetch(null, 'bitforms_get_all_wp_pages')
@@ -196,8 +200,8 @@ function RedirUrl({ removeIntegration }) {
           <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><TrashIcn size={16} /></Button>
         </div>
       )) : (
-        <div className="txt-center btcd-empty">
-          <span className="btcd-icn icn-stack d-b-fs-50" />
+        <div className={css(ut.btcdEmpty, ut.txCenter)}>
+          <StackIcn size="50" />
           {__('Empty', 'bitform')}
         </div>
       )}

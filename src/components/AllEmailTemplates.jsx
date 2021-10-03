@@ -15,6 +15,9 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Table from './Utilities/Table'
 import app from '../styles/app.style'
 import { useFela } from 'react-fela'
+import LayoutIcn from '../Icons/LayoutIcn'
+import StackIcn from '../Icons/StackIcn'
+import ut from '../styles/2.utilities'
 
 export default function AllEmailTemplates({ formID }) {
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
@@ -122,7 +125,7 @@ export default function AllEmailTemplates({ formID }) {
       </h5>
       <div className="">
         <Link to={`${url}/new`} className={`${css(app.btn)} blue`}>
-          <span className="btcd-icn icn-layout" />
+          <LayoutIcn size="20" />
           &nbsp;
           {__('Add New Template', 'bitform')}
         </Link>
@@ -135,8 +138,8 @@ export default function AllEmailTemplates({ formID }) {
           />
         )
           : (
-            <div className="txt-center btcd-empty">
-              <span className="btcd-icn icn-stack d-b-fs-50" />
+            <div className={css(ut.btcdEmpty, ut.txCenter)}>
+              <StackIcn size="50" />
               {__('Empty', 'bitform')}
             </div>
           )}

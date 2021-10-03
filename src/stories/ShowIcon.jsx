@@ -23,6 +23,7 @@ import CopyIcn from '../Icons/CopyIcn'
 import CPTIcn from '../Icons/CPTIcn'
 import DateIcn from '../Icons/DateIcn'
 import DateTimeIcn from '../Icons/DateTimeIcn'
+import DBIcn from '../Icons/DBIcn'
 import DecisionBoxIcn from '../Icons/DecisionBoxIcn'
 import DocIcn from '../Icons/DocIcn'
 import DownloadIcon from '../Icons/DownloadIcon'
@@ -30,11 +31,13 @@ import DropDownIcn from '../Icons/DropDownIcn'
 import EditIcn from '../Icons/EditIcn'
 import EditIcon from '../Icons/EditIcon'
 import EllipsisIcon from '../Icons/EllipsisIcon'
+import EmptyIcn from '../Icons/EmptyIcn'
 import EyeIcon from '../Icons/EyeIcon'
 import EyeOffIcon from '../Icons/EyeOffIcon'
 import FieldIcn from '../Icons/FieldIcn'
 import FileUploadIcn from '../Icons/FileUploadIcn'
 import FlagIcn from '../Icons/FlagIcn'
+import FocusIcn from '../Icons/FocusIcn'
 import FormIcn from '../Icons/FormIcn'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HeightIcn from '../Icons/HeightIcn'
@@ -45,6 +48,8 @@ import InsideIcn from '../Icons/InsideIcn'
 import ItemBlockIcn from '../Icons/ItemBlockIcn'
 import LaptopIcn from '../Icons/LaptopIcn'
 import LayerIcon from '../Icons/LayerIcon'
+import LayoutIcn from '../Icons/LayoutIcn'
+import LoginIcn from '../Icons/LoginIcn'
 import MailIcn from '../Icons/MailIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
 import MobileIcon from '../Icons/MobileIcon'
@@ -64,6 +69,7 @@ import SearchIcon from '../Icons/SearchIcon'
 import Settings2 from '../Icons/Settings2'
 import SettingsIcn from '../Icons/SettingsIcn'
 import SpreadIcn from '../Icons/SpreadIcn'
+import StackIcn from '../Icons/StackIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import TextareaIcn from '../Icons/TextareaIcn'
 import TextIcn from '../Icons/TextIcn'
@@ -71,6 +77,7 @@ import TimeIcn from '../Icons/TimeIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import UndoIcon from '../Icons/UndoIcon'
 import UrlIcn from '../Icons/UrlIcn'
+import UserIcn from '../Icons/UserIcn'
 import WeekIcn from '../Icons/WeekIcn'
 import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
@@ -99,11 +106,52 @@ export default function ShowIcon() {
       setSearchIcon([])
     }
   }
+
   const icons = [
     {
       key: 'Menu Icon',
       icon: <MenuIcon size="30" />,
       com: '<MenuIcon size="30" />',
+    },
+    {
+      key: 'User Icon',
+      icon: <UserIcn size="30" />,
+      com: '<UserIcn size="30" />',
+    },
+    {
+      key: 'Login Icon',
+      icon: <LoginIcn size="30" />,
+      com: '<LoginIcn size="30" />',
+    },
+    {
+      key: 'DB Icon',
+      icon: <DBIcn size="30" />,
+      com: '<DBIcn size="30" />',
+    },
+    {
+      key: 'Focus Icon',
+      icon: <FocusIcn size="30" />,
+      com: '<FocusIcn size="30" />',
+    },
+    {
+      key: 'Height Icon',
+      icon: <HeightIcn h="30" />,
+      com: '<HeightIcn h="30" />',
+    },
+    {
+      key: 'Empty Icon',
+      icon: <EmptyIcn size="30" />,
+      com: '<EmptyIcn size="30" />',
+    },
+    {
+      key: 'Empty stack Icon',
+      icon: <StackIcn />,
+      com: '<StackIcn size="30" />',
+    },
+    {
+      key: 'Layout icon',
+      icon: <LayoutIcn />,
+      com: '<LayoutIcn size="30" />',
     },
     {
       key: 'Add Icon',
@@ -261,11 +309,6 @@ export default function ShowIcon() {
       com: '<GoogleAdIcn size="30" />',
     },
     {
-      key: 'Height Icon',
-      icon: <HeightIcn h="30" />,
-      com: '<HeightIcn h="30" />',
-    },
-    {
       key: 'Honeypot Icon',
       icon: <HoneypotIcn h="30" w="20" />,
       com: '<HoneypotIcn h="30" w="20" />',
@@ -411,7 +454,7 @@ export default function ShowIcon() {
       com: '<TimeIcn size="30" />',
     },
     {
-      key: 'Trash Icon',
+      key: 'Delete Trash Icon',
       icon: <TrashIcn size="30" />,
       com: '<TrashIcn size="30" />',
     },
@@ -471,10 +514,17 @@ export default function ShowIcon() {
       com: '<SearchIcon size="24" />',
     },
   ]
+
+  icons.sort((a, b) => {
+    const ka = a.key.toLowerCase()
+    const kb = b.key.toLowerCase()
+    return ka < kb ? -1 : 1
+  })
+
   return (
     <>
       <div className="icn-search flx">
-        <input type="text" placeholder="Search Icon" onChange={searchHandler} />
+        <input aria-label="Search icon" type="text" placeholder="Search Icon" onChange={searchHandler} />
       </div>
 
       {searchIcon
