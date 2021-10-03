@@ -7,19 +7,20 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
+import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import Cooltip from '../Utilities/Cooltip'
-import CopyText from '../Utilities/CopyText'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -196,50 +197,122 @@ function RadioCheckSettings() {
   }
 
   return (
-    <div className="mr-4 ml-2">
-      <Back2FldList />
-      <div className="mb-2">
-        <span className="font-w-m">Field Type : </span>
-        {fieldData.typ === 'check' ? 'Check Box' : 'Radio'}
-      </div>
-      <div className="flx">
-        <span className="font-w-m w-4">{__('Field Key : ', 'bitform')}</span>
-        <CopyText value={fldKey} className="field-key-cpy m-0" />
-      </div>
+    <div className="">
+      <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ === 'check' ? 'Check Box' : 'Radio'} fieldKey={fldKey} />
+
       <FieldLabelSettings />
-      <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Admin Label', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Required', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        switching
+        toggleAction={setRadioRequired}
+        toggleChecked={isRadioRequired}
+        open
+      >
+        {(isRadioRequired || isOptionRequired) && (
+          <ErrorMessageSettings
+            type="req"
+            title="Error Message"
+            tipTitle="By enabling this feature, user will see the error message when required option is not checked"
+          />
+        )}
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
+        <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} />
+      </div>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
+
+      {/* <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
           type="req"
           title="Error Message"
           tipTitle="By enabling this feature, user will see the error message when required option is not checked"
         />
-      )}
-      <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" />
+      )} */}
+      {/* <SingleToggle title={__('Rounded:', 'bitform')} action={setRound} isChecked={isRound} className="mt-3" /> */}
       {
         fieldData.typ === 'check' && (
           <>
-            <div>
-              <div className="flx mt-2 mb-2">
-                <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
-                <Cooltip width={250} icnSize={17} className="ml-2">
-                  <div className="txt-body">{__('Set minimum number to be selected for checkbox option', 'bitform')}</div>
-                </Cooltip>
-                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+            <SimpleAccordion
+              title={__('Minimum', 'bitform')}
+              className={css(FieldStyle.fieldSection)}
+              tip="Set minimum number to be selected for checkbox option"
+              open
+              isPro
+            >
+              {/* <div>
+                <div className="flx mt-2 mb-2">
+                  <h4 className="m-0">{__('Minimum:', 'bitform')}</h4>
+                  <Cooltip width={250} icnSize={17} className="ml-2">
+                    <div className="txt-body">{__('Set minimum number to be selected for checkbox option', 'bitform')}</div>
+                  </Cooltip>
+                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
+                </div>
+                <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
+              </div> */}
+              <div className={css(FieldStyle.placeholder)}>
+                <input className={css(FieldStyle.input)} value={min} type="text" onChange={setMin} disabled={!isPro} />
               </div>
-              <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
-            </div>
 
-            {fieldData.mn && (
-              <ErrorMessageSettings
-                type="mn"
-                title="Min Error Message"
-                tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
-              />
-            )}
+              {fieldData.mn && (
+                <ErrorMessageSettings
+                  type="mn"
+                  title="Min Error Message"
+                  tipTitle={`By enabling this feature, user will see the error message when selected checkbox is less than ${fieldData.mn}`}
+                />
+              )}
+            </SimpleAccordion>
 
-            <div>
+            <hr className={css(FieldStyle.divider)} />
+
+            <SimpleAccordion
+              title={__('Minimum', 'bitform')}
+              className={css(FieldStyle.fieldSection)}
+              tip="Set maximum number to be selected for checkbox option"
+              open
+              isPro
+            >
+              <div className={css(FieldStyle.placeholder)}>
+                <input className={css(FieldStyle.input)} value={max} type="number" onChange={setMax} disabled={!isPro} />
+              </div>
+
+              {fieldData.mx && (
+                <>
+                  <ErrorMessageSettings
+                    type="mx"
+                    title="Max Error Message"
+                    tipTitle={`By enabling this feature, user will see the error message when selected checkbox is greater than ${fieldData.mx}`}
+                  />
+                  <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+                </>
+              )}
+            </SimpleAccordion>
+
+            <hr className={css(FieldStyle.divider)} />
+
+            {/* <div>
               <div className="flx mt-2 mb-2">
                 <h4 className="m-0">{__('Maximum:', 'bitform')}</h4>
                 <Cooltip width={250} icnSize={17} className="ml-2">
@@ -258,12 +331,13 @@ function RadioCheckSettings() {
                 />
                 <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
               </>
-            )}
+            )} */}
+
           </>
         )
       }
       <div className="pos-rel">
-        {!bits.isPro && (
+        {/* {!bits.isPro && (
           <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
             <div className="pro">
               {__('Available On', 'bitform')}
@@ -275,15 +349,60 @@ function RadioCheckSettings() {
               </a>
             </div>
           </div>
-        )}
+        )} */}
         <UniqField
           type="entryUnique"
           isUnique="isEntryUnique"
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+          className={css(FieldStyle.fieldSection)}
+          isPro
         />
       </div>
-      <button onClick={openImportModal} className={css(app.btn)} type="button">
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Options', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <>
+          <button onClick={openImportModal} className={css(app.btn)} type="button">
+            <DownloadIcon size="16" />
+            &nbsp;
+            {__('Import Options', 'bitform')}
+          </button>
+          <div className="opt mt-1">
+            <span className="font-w-m">{__('Options:', 'bitform')}</span>
+            {options.map((itm, i) => (
+              <div key={`opt-${i + 8}`} className="flx flx-between">
+                <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
+                <div className="flx mt-1">
+                  {fieldData.typ === 'check'
+                    && (
+                      <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
+                        <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
+                        <span className="btcd-mrk ck br-50 " />
+                      </label>
+                    )}
+                  <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
+                    <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
+                    <span className="btcd-mrk ck br-50 " />
+                  </label>
+                  <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="close"><CloseIcn size="12" /></button>
+                </div>
+              </div>
+            ))}
+            <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">
+              {__('Add More +', 'bitform')}
+            </button>
+          </div>
+        </>
+      </SimpleAccordion>
+      <hr className={css(FieldStyle.divider)} />
+
+      {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
@@ -312,7 +431,7 @@ function RadioCheckSettings() {
         <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">
           {__('Add More +', 'bitform')}
         </button>
-      </div>
+      </div> */}
       <Modal
         md
         autoHeight

@@ -13,6 +13,7 @@ import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 export default function ButtonSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -81,18 +82,7 @@ export default function ButtonSettings() {
 
   return (
     <div className="">
-      <div className={`${css(FieldStyle.section)}`}>
-        <span className={css(FieldStyle.mainTitle)}>Field Settings</span>
-        <Back2FldBtn size="20" className={css(FieldStyle.btn)} />
-      </div>
-      <hr className={css(FieldStyle.divider)} />
-
-      <div className={`${css(FieldStyle.section)}`}>
-        <span className={css(FieldStyle.title)}>Field key</span>
-        <CoolCopy value={fldKey} />
-      </div>
-
-      <hr className={css(FieldStyle.divider)} />
+      <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
       <SimpleAccordion
         title={__('Submit Button Text', 'bitform')}
@@ -134,13 +124,13 @@ export default function ButtonSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
         <SingleToggle title={__('Full Width Button:', 'bitform')} action={setFulW} isChecked={fulW} />
       </div>
 
       <hr className={css(FieldStyle.divider)} />
 
-      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.mr8)}`}>
+      <div className={`${css(FieldStyle.fieldSection)} ${css(ut.pr8)}`}>
         <SingleToggle title={__('Small Button:', 'bitform')} action={setBtnSiz} isChecked={btnSiz === 'sm'} />
       </div>
 

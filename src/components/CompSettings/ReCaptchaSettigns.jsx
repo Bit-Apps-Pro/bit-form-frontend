@@ -1,11 +1,17 @@
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
+import style from '../../styles/FieldSettingTitle.style'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import Back2FldList from './Back2FldList'
+import Back2FldBtn from './Back2FldBtn'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function ReCaptchaSettigns() {
+  const { css } = useFela()
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -16,23 +22,42 @@ export default function ReCaptchaSettigns() {
   }
 
   return (
-    <div className="ml-2 mr-4">
-      <Back2FldList />
+    <div>
+      <div className={css(style.section, style.flxColumn)}>
+        <Back2FldBtn size="20" className={css(style.btn)} />
+        <div>
+          <div className={css(style.mainTitle)}>{__('Field Settings', 'bitform')}</div>
+          <span className={css(style.subtitle, ut.fontBody)}>{__('reCAPTCHA', 'bitform')}</span>
+        </div>
+      </div>
+      <hr className={css(style.divider)} />
+
+      {/* <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">
           {__('Field Type :', 'bitform')}
         </span>
         {__('reCAPTCHA', 'bitform')}
-      </div>
-      <div>
+      </div> */}
+      <SimpleAccordion
+        title="Theme"
+        className={css(FieldStyle.fieldSection)}
+      >
+        <select onChange={onInput} name="theme" value={fieldData.theme} className={css(FieldStyle.input, ut.w10)}>
+          <option value="dark">{__('Dark', 'bitform')}</option>
+          <option value="light">{__('Light', 'bitform')}</option>
+        </select>
+      </SimpleAccordion>
+      <hr className={css(style.divider)} />
+      {/* <div className={css(style.section)}>
         <label htmlFor="recap-thm">
           {__('Theme', 'bitform')}
-          <select onChange={onInput} name="theme" value={fieldData.theme} className="btcd-paper-inp mt-1">
+          <select onChange={onInput} name="theme" value={fieldData.theme} className={css(style.input, ut.w10)}>
             <option value="dark">{__('Dark', 'bitform')}</option>
             <option value="light">{__('Light', 'bitform')}</option>
           </select>
         </label>
-      </div>
+      </div> */}
     </div>
   )
 }

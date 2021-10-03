@@ -3,6 +3,21 @@ const ut = {
     display: 'grid',
     placeContent: 'center',
   },
+
+  proBadge: {
+    bd: ' var(--red-100-50)',
+    cr: 'var(--white)',
+    p: 6,
+    brs: '50%',
+    fs: 12,
+    fw: 700,
+  },
+  tipBody: {
+    lh: '1.1',
+    fs: '12.5px',
+    fw: 100,
+    ff: '"Roboto", sans-serif',
+  },
   icn_hover: {
     pn: 'relative',
     '::before': {
@@ -26,6 +41,11 @@ const ut = {
   flxb: { flx: 'between' },
   flxcb: { flx: 'center-between' },
   flxc: { flx: 'align-center' },
+  flxClm: { dy: 'flex', fd: 'column' },
+
+  cp: { cur: 'pointer' },
+  pmt0: { '& p': { m: 0 } },
+  // margin
   ma: { m: 'auto' },
   m0: { m: '0 !important' },
   mb0: { mb: 0 },
@@ -51,6 +71,11 @@ const ut = {
   ml4: { ml: '20px!important' },
   ml5: { ml: '25px!important' },
   ml6: { ml: '30px!important' },
+
+  // padding
+  pr8: { pr: 40 },
+  px10: { px: 10 },
+  py5: { py: 5 },
   p1: { p: 5 },
   p2: { p: 10 },
   p3: { p: 15 },
@@ -58,5 +83,36 @@ const ut = {
   pr4: { pr: '20px !important' },
   pl6: { pl: 30 },
   py1: { py: 5 },
+
+  // width
+  wmd: { w: '900px' },
+
+  w1: { w: '10% !important' },
+
+  w2: { w: '20% !important' },
+
+  w3: { w: ' 30% !important' },
+
+  w4: { w: '40% !important' },
+
+  w5: { w: '50% !important' },
+
+  w6: { w: '60% !important' },
+
+  w7: { w: '70% !important' },
+
+  w8: { w: '80% !important' },
+
+  w9: { w: '90% !important' },
+
+  w10: { w: '100% !important' },
+
+  wdt100: { w: '100px !important' },
+
+  wdt150: { w: '150px !important' },
+
+  wdt200: { w: '200px !important' },
+
+  wdt300: { w: '300px !important' },
 }
 export default ut

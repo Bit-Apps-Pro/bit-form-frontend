@@ -1,8 +1,12 @@
 import produce from 'immer'
 import { useContext } from 'react'
+import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
+import style from '../../styles/FieldSettingTitle.style'
+import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -10,7 +14,8 @@ import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/pa
 import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
+import Back2FldBtn from './Back2FldBtn'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function PaypalSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
@@ -23,6 +28,8 @@ export default function PaypalSettings() {
   const isDynamicAmount = fieldData?.amountType === 'dynamic'
   const isDynamicShipping = fieldData?.shippingType === 'dynamic'
   const isDynamicTax = fieldData?.taxType === 'dynamic'
+
+  const { css } = useFela()
 
   const handleInput = (name, value) => {
     if (value) {
@@ -126,20 +133,42 @@ export default function PaypalSettings() {
   const fundOptions = () => fundLists.map(fund => ({ label: fund.label, value: fund.value }))
 
   return (
-    <div className="ml-2 mr-4">
-      <Back2FldList />
+    <div>
+
+      <div className={css(style.section, style.flxColumn)}>
+        <Back2FldBtn size="20" className={css(style.btn)} />
+        <div>
+          <div className={css(style.mainTitle)}>{__('Field Settings', 'bitform')}</div>
+          <span className={css(style.subtitle, ut.fontBody)}>{__(fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1), 'bitform')}</span>
+        </div>
+      </div>
+      <hr className={css(style.divider)} />
+
+      {/* <Back2FldList />
       <div className="mb-2">
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Paypal', 'bitform')}
-      </div>
-      <div className="mt-3">
+      </div> */}
+
+      <SimpleAccordion
+        title="Select Config"
+        className={css(FieldStyle.fieldSection)}
+      >
+        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className={css(FieldStyle.input)} value={fieldData.payIntegID}>
+          <option value="">Select Config</option>
+          {getPaypalConfigs()}
+        </select>
+      </SimpleAccordion>
+      <hr className={css(style.divider)} />
+
+      {/* <div className="mt-3">
         <b>{__('Select Config', 'bitform')}</b>
         <br />
         <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={fieldData.payIntegID}>
           <option value="">Select Config</option>
           {getPaypalConfigs()}
         </select>
-      </div>
+      </div> */}
 
       {fieldData.payIntegID && (
         <>

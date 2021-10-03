@@ -6,12 +6,12 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
+import ErrorMessages from '../../../styles/ErrorMessages.style'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
-import ErrorMessages from '../../../styles/ErrorMessages.style'
 
 export default function ErrorMessageSettings({ type, title, tipTitle }) {
   const [errorModal, setErrorModal] = useState(false)
@@ -75,7 +75,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
         {/* flx flx-between mt-1 mb-1 mr-2 */}
         <div className={`${css(ErrorMessages.flx)}`}>
           <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} checked={fieldData?.err?.[type]?.show || false} title={__('Show Error Message', 'bitform')} onChange={setShowErrMsg} />
-          <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hover-tip`}>
+          <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
             <div className={css(ErrorMessages.tipBody)}>
               Check the box to enable the custom error message.
               <br />
@@ -99,7 +99,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
           <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
             <div className={css(ErrorMessages.flx)}>
               <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
-              <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hover-tip`}>
+              <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
                 <div className={css(ErrorMessages.tipBody)}>
                   Check the box to enable the custom error message.
                   <br />
