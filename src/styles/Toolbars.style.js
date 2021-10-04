@@ -5,14 +5,16 @@ const Toolbars = {
     ow: 'hidden',
     mxw: 190,
     mnw: 55,
-    px: 14,
+    px: 3,
     pt: 14,
     pb: 35,
     tn: 'width 500ms',
   },
   fields_search: {
     pn: 'relative',
-    mb: 15,
+    ml: 7,
+    mr: 5,
+    tn: 'width .2s',
   },
   search_field: {
     w: '100%',
@@ -20,18 +22,26 @@ const Toolbars = {
     b: '1px solid var(--white-0-75) !important',
     brs: '9px !important',
     pl: '27px !important',
-    pr: '27px !important',
-    '&:focus': {
-      bs: '0px 0px 0px 3px var(--b-100-64-40) !important',
+    pr: '5px !important',
+    ':focus': {
+      bs: '0px 0px 0px 1.5px var(--b-50) !important',
       bcr: 'var(--b-92-62) !important',
-      '& ~ .shortcut': { dy: 'none' },
       pr: '0px !important',
+      '& ~ .shortcut': { dy: 'none' },
+      '& ~ span svg': { cr: 'var(--b-50)' },
     },
     '::placeholder': { fs: 12 },
     '::-webkit-search-cancel-button': {
-      bd: 'var(--b-92-62) !important',
-      bi: 'url("data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>") !important',
-      brs: 4,
+      appearance: 'none',
+      w: 14,
+      h: 14,
+      mr: 10,
+      bd: 'var(--white-0-83)',
+      curp: 1,
+      backgroundPosition: '54% 50% !important',
+      // eslint-disable-next-line quotes
+      bi: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='Black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E")`,
+      brs: 20,
     },
 
   },
@@ -39,6 +49,7 @@ const Toolbars = {
     pn: 'absolute',
     tp: '50%',
     mx: 6,
+    lt: 0,
     tm: 'translateY(-50%)',
     cr: 'var(--white-0-75)',
     curp: 1,
@@ -59,7 +70,17 @@ const Toolbars = {
     px: 2,
     py: 5,
   },
-
+  sort_btn: {
+    w: 25,
+    h: 25,
+    b: 'none',
+    brs: 6,
+    flxc: 1,
+    curp: 1,
+    ':hover': {
+      bd: 'red'
+    }
+  },
   tool_icn: {
     dy: 'flex',
     cr: 'var(--dp-blue)',
@@ -68,12 +89,15 @@ const Toolbars = {
   },
   shortcut: {
     pn: 'absolute',
-    cr: 'var(--white-0-75)',
-    b: '1px solid var(--white-0-81-32)',
+    cr: 'var(--white-0-0-64)',
+    b: '1px solid var(--white-0-75)',
     brs: 4,
     px: 6,
-    py: 2,
-    tp: 5,
+    py: 3,
+    fs: 12,
+    fw: 600,
+    tp: '50%',
+    tm: 'translateY(-50%)',
     rt: 5,
   },
 }

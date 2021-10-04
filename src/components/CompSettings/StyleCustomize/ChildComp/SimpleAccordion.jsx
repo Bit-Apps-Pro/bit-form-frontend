@@ -24,6 +24,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
   const { css } = useFela()
 
   const toggleAccordion = (val) => {
+    console.log('toogle acc')
     setTgl(val)
     val && onOpen()
   }
@@ -32,6 +33,8 @@ export default function SimpleAccordion({ className, title, toggleName, children
   //   toggleAccordion(open)
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [open])
+
+  const cancelBubble = (e) => e.stopPropagation()
 
   return (
     <div className={`${className} ${tgl && 'active'}`}>
@@ -53,7 +56,8 @@ export default function SimpleAccordion({ className, title, toggleName, children
 
             {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
           </span>
-          <div className={css(SimpleAccordionStyle.flxbwn)}>
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+          <div onClick={cancelBubble} onKeyPress={cancelBubble} className={css(SimpleAccordionStyle.flxbwn)}>
             {switching && (
               <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
             )}

@@ -67,6 +67,7 @@ function SegmentControl({ defaultActive,
       tdn: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
       bd: clr.selectorBg, // '#fff',
+      wiilChange: 'transform',
     },
     tab_link: {
       curp: 1,

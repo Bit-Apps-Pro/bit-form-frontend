@@ -28,7 +28,9 @@ export default function CopyText({ value, className, readOnly }) {
     <div className={className}>
       <label htmlFor="copy-input-fld" className="flx">
         <input id="copy-input-fld" ref={copyInput} className={`w-10 ${readOnly && 'readonly'}`} value={value} readOnly />
-        <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button"><CopyIcn size="14" /></button>
+        <button onClick={copyText} className="tooltip" style={{ '--tooltip-txt': '"Copy"' }} aria-label="Copy" type="button">
+          <CopyIcn size="14" />
+        </button>
       </label>
     </div>
   )

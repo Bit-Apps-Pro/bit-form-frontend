@@ -40,13 +40,14 @@ import ut from '../../styles/2.utilities'
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
   const [searchData, setSearchData] = useState([])
+  const [focusSearch, setfocusSearch] = useState(false)
 
   const tools = [
     {
       name: __('Check Box', 'bitform'),
       keywords: 'Check Box, check box',
       icn: <CheckBoxIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'check',
         lbl: __('Check Boxs', 'bitform'),
@@ -63,7 +64,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Date', 'bitform'),
       keywords: 'Date, date',
       icn: <DateIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'date',
         lbl: __('Date Input', 'bitform'),
@@ -75,7 +76,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Date-Time', 'bitform'),
       keywords: 'Date-Time, Date-time, Date, Time',
       icn: <DateTimeIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'datetime-local',
         lbl: __('Date-Time Input', 'bitform'),
@@ -87,7 +88,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Dropdown', 'bitform'),
       keywords: 'Dropdown, dropdown, Menu, menu',
       icn: <DropDownIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'select',
         lbl: __('Drop-Down', 'bitform'),
@@ -106,7 +107,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Text', 'bitform'),
       keywords: 'Text, text',
       icn: <TextIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'text',
         lbl: __('Text Field', 'bitform'),
@@ -119,7 +120,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('User Name', 'bitform'),
       keywords: 'User Name, Username, User name, username, user name, text',
       icn: <UserIcn size="22" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'username',
         lbl: __('User Name', 'bitform'),
@@ -146,7 +147,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Radio Button', 'bitform'),
       keywords: 'Radio button, radio button, button',
       icn: <RadioIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'radio',
         lbl: __('Radio', 'bitform'),
@@ -164,7 +165,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Number', 'bitform'),
       keywords: 'Number, number',
       icn: <NumberIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'number',
         lbl: __('Number Field', 'bitform'),
@@ -177,7 +178,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Password', 'bitform'),
       keywords: 'Password, password',
       icn: <PasswordIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'password',
         lbl: __('Password Field', 'bitform'),
@@ -190,7 +191,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Email', 'bitform'),
       keywords: 'Email, email',
       icn: <MailIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'email',
         lbl: __('Email Field', 'bitform'),
@@ -205,7 +206,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Time', 'bitform'),
       keywords: 'Time, time',
       icn: <TimeIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'time',
         lbl: __('Time Input', 'bitform'),
@@ -218,7 +219,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Month', 'bitform'),
       keywords: 'Month, month, Date',
       icn: <MonthIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'month',
         lbl: __('Month Input', 'bitform'),
@@ -230,7 +231,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Week', 'bitform'),
       keywords: 'Week, week, Date',
       icn: <WeekIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'week',
         lbl: __('Week Input', 'bitform'),
@@ -242,7 +243,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Country', 'bitform'),
       keywords: 'Country, country',
       icn: <FlagIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
         typ: 'select',
         lbl: __('Select Country', 'bitform'),
@@ -255,7 +256,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('File Upload', 'bitform'),
       keywords: 'File Upload, file upload',
       icn: <FileUploadIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40, minW: 20 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, minW: 20 },
       elm: {
         typ: 'file-up',
         lbl: __('File Upload', 'bitform'),
@@ -268,7 +269,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('URL', 'bitform'),
       keywords: 'URL, url',
       icn: <UrlIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'url',
         attr: {
@@ -286,7 +287,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Color Picker', 'bitform'),
       keywords: 'Color Picker, color picker',
       icn: <ColorPickerIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
         typ: 'color',
         lbl: __('Color Picker', 'bitform'),
@@ -298,7 +299,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('reCaptcha v2', 'bitform'),
       keywords: 'ReCaptcha, reCaptcha, recaptcha, recaptcha v2',
       icn: <ReCaptchaIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', maxH: 40, minH: 40, minW: 20 },
+      pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40, minW: 20 },
       elm: {
         typ: 'recaptcha',
         theme: 'light',
@@ -310,7 +311,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Decision Box', 'bitform'),
       keywords: 'Decision box, GDPR, gdpr',
       icn: <DecisionBoxIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 20 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 20 },
       elm: {
         typ: 'decision-box',
         adminLbl: __('Decision Box', 'bitform'),
@@ -327,7 +328,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: 'HTML',
       keywords: 'HTML, Html, html',
       icn: <CodeSnippetIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk' },
+      pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
         typ: 'html',
         lbl: 'HTML Content',
@@ -339,7 +340,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: 'Button',
       keywords: 'Button, button',
       icn: <BtnIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40, maxH: 40 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
       elm: {
         typ: 'button',
         btnTyp: 'button',
@@ -356,7 +357,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Paypal', 'bitform'),
       keywords: 'Paypal, Payment, payment, paypal',
       icn: <PaypalIcn w="23" />,
-      pos: { h: 100, w: 60, i: 'n_blk', minH: 60, maxH: 140, minW: 20 },
+      pos: { h: 100, w: 60, i: 'shadow_block', minH: 60, maxH: 140, minW: 20 },
       elm: {
         typ: 'paypal',
         currency: 'USD',
@@ -374,7 +375,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Razorpay', 'bitform'),
       keywords: 'Razorpay, razorpay, Payment, payment',
       icn: <RazorPayIcn w="17" h="23" />,
-      pos: { h: 40, w: 60, i: 'n_blk', minH: 40, maxH: 140, minW: 20 },
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 140, minW: 20 },
       elm: {
         typ: 'razorpay',
         lbl: __('Razorpay', 'bitform'),
@@ -409,6 +410,9 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     if (e.code === 'Slash') {
       document.getElementById('search-icon').focus()
     }
+    if (e.code === 'Escape') {
+      document.getElementById('search-icon').blur()
+    }
   }
 
   const searchHandler = (e) => {
@@ -435,22 +439,25 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         {!tolbarSiz && 'Tool Bar'}
         <button className="icn-btn toolbar-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div> */}
-      <div className={css(Toolbars.fields_search)}>
-        <label htmlFor="search-icon">
+      <div className={css(ut.flxc)}>
+        <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '100%' : '70%' }}>
+          <input
+            aria-label="Search Field"
+            placeholder="Search..."
+            id="search-icon"
+            type="search"
+            name="searchIcn"
+            onChange={searchHandler}
+            onFocus={() => setfocusSearch(true)}
+            onBlur={() => setfocusSearch(false)}
+            className={css(Toolbars.search_field)}
+          />
           <span className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
-        </label>
-        <input
-          aria-label="Search Field"
-          placeholder="Search Field"
-          id="search-icon"
-          type="search"
-          name="searchIcn"
-          onChange={searchHandler}
-          className={css(Toolbars.search_field)}
-        />
-        <div className={`${css(Toolbars.shortcut)} shortcut`}>/</div>
+          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
+        </div>
+        {!focusSearch && <button className={css(Toolbars.sort_btn)} type="button" aria-label="Sort Fields">s</button>}
       </div>
 
       {useMemo(() => (

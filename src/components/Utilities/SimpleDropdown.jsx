@@ -77,7 +77,7 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
   }
 
   return (
-    <div className={css(simppleDpdStyle.dpd_wrp)} style={{ width: w, height: h }}>
+    <div className={css(simppleDpdStyle.dpd_wrp)} style={{ width: w, height: h, ...menu.open && { zIndex: 999 } }}>
       <div
         ref={ref}
         role="button"
@@ -129,7 +129,6 @@ const simppleDpdStyle = {
   dpd_wrp: {
     dy: 'inline-block',
     pn: 'relative',
-    zx: 5,
   },
   dpd: {
     ow: 'hidden',

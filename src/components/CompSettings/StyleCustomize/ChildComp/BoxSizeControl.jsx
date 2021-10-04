@@ -7,22 +7,22 @@ import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
 import BorderTopLeftRadiusIcn from '../../../../Icons/BorderTopLeftRadiusIcn'
 import BorderTopRightRadiusIcn from '../../../../Icons/BorderTopRightRadiusIcn'
 import boxSizeControlStyle from '../../../../styles/boxSizeControl.style'
-import SegmentControl from '../../../Utilities/SegmentControl'
+import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import SizeControl from './SizeControl'
 
 export default function BoxSizeControl({ title }) {
   const [controller, setController] = useState('All')
   const { css } = useFela()
   const options = [
-    { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'] },
-    { label: 'Individual', icn: <BorderRadiusCornersIcn size={16} />, show: ['icn'] },
+    { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'], tip: 'Radius allside' },
+    { label: 'Individual', icn: <BorderRadiusCornersIcn size={16} />, show: ['icn'], tip: 'Radius per corner' },
   ]
 
   return (
     <div className="mt-2">
       <div className={css(boxSizeControlStyle.titlecontainer)}>
         <span className={css(boxSizeControlStyle.title)}>{title}</span>
-        <SegmentControl
+        <StyleSegmentControl
           square
           defaultActive="All"
           options={options}
