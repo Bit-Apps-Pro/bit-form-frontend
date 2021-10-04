@@ -9,13 +9,6 @@ function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, titl
 
   const { css } = useFela()
 
-  useEffect(() => {
-    const a = document.createElement('div')
-    a.innerHTML = 'asd'
-    a.classList.add('tools')
-    document.body.appendChild(a)
-  }, [])
-
   return (
     <div
       tabIndex={0}
@@ -60,17 +53,24 @@ const tool = {
   cur: 'grab',
   ow: 'hidden',
   m: 5,
-  bs: '0 1px 3px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2)',
+  bs: '0 0 0 1.5px var(--white-0-86) inset',
   tn: 'all 200ms',
 
-  ':hover, :focus': {
+  ':hover': {
     cr: 'var(--b-50)',
     oe: 'none,',
     tm: 'scale(1.05)',
-    // box-shadow: 0 1px 11px -4px hsl(0, 0%, 69%);
-    bs: '0 1px 11px -4px var(--white-0-69)',
-
-    '& > .tool-icn': { cr: 'var(--b-50) !important' },
+    bs: '0 0 0 1.5px var(--white-0-86) inset, 0 1px 11px -4px var(--white-0-69)',
   },
-  ':active': { b: ' 2px solid var(--b-50)' },
+  ':focus': {
+    cr: 'var(--b-50)',
+    oe: 'none,',
+    tm: 'scale(1.05)',
+    bs: '0 0 0 1.5px var(--white-0-86) inset, 0 1px 11px -4px var(--white-0-69)',
+  },
+  ':hover .tool-icn': { cr: 'var(--b-50) !important' },
+  ':focus .tool-icn': { cr: 'var(--b-50) !important' },
+  ':active': {
+    bs: '0 0 0 1.5px var(--b-50) inset, 0 0 2px var(--white-2-47), 0 1px 11px -4px var(--white-0-69)',
+  },
 }

@@ -40,6 +40,7 @@ import ut from '../../styles/2.utilities'
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
   const [searchData, setSearchData] = useState([])
+  const [focusSearch, setfocusSearch] = useState(false)
 
   const tools = [
     {
@@ -409,6 +410,9 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     if (e.code === 'Slash') {
       document.getElementById('search-icon').focus()
     }
+    if (e.code === 'Escape') {
+      document.getElementById('search-icon').blur()
+    }
   }
 
   const searchHandler = (e) => {
@@ -435,22 +439,25 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         {!tolbarSiz && 'Tool Bar'}
         <button className="icn-btn toolbar-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
       </div> */}
-      <div className={css(Toolbars.fields_search)}>
-        <label htmlFor="search-icon">
+      <div className={css(ut.flxc)}>
+        <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '100%' : '70%' }}>
+          <input
+            aria-label="Search Field"
+            placeholder="Search..."
+            id="search-icon"
+            type="search"
+            name="searchIcn"
+            onChange={searchHandler}
+            onFocus={() => setfocusSearch(true)}
+            onBlur={() => setfocusSearch(false)}
+            className={css(Toolbars.search_field)}
+          />
           <span className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
-        </label>
-        <input
-          aria-label="Search Field"
-          placeholder="Search Field"
-          id="search-icon"
-          type="search"
-          name="searchIcn"
-          onChange={searchHandler}
-          className={css(Toolbars.search_field)}
-        />
-        <div className={`${css(Toolbars.shortcut)} shortcut`}>/</div>
+          <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
+        </div>
+        {!focusSearch && <button className={css(Toolbars.sort_btn)} type="button" aria-label="Sort Fields">s</button>}
       </div>
 
       {useMemo(() => (
