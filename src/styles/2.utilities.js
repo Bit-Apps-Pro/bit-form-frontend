@@ -86,33 +86,20 @@ const ut = {
 
   // width
   wmd: { w: '900px' },
-
   w1: { w: '10% !important' },
-
   w2: { w: '20% !important' },
-
   w3: { w: ' 30% !important' },
-
   w4: { w: '40% !important' },
-
   w5: { w: '50% !important' },
-
   w6: { w: '60% !important' },
-
   w7: { w: '70% !important' },
-
   w8: { w: '80% !important' },
-
   w9: { w: '90% !important' },
-
   w10: { w: '100% !important' },
 
   wdt100: { w: '100px !important' },
-
   wdt150: { w: '150px !important' },
-
   wdt200: { w: '200px !important' },
-
   wdt300: { w: '300px !important' },
 }
 export default ut
