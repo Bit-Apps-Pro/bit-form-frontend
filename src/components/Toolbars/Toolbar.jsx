@@ -41,11 +41,12 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
   const [searchData, setSearchData] = useState([])
   const [focusSearch, setfocusSearch] = useState(false)
+  const [sortedTools, setSortedTools] = useState([])
 
   const tools = [
     {
       name: __('Check Box', 'bitform'),
-      keywords: 'Check Box, check box',
+      keywords: 'Check Box',
       icn: <CheckBoxIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
@@ -62,7 +63,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Date', 'bitform'),
-      keywords: 'Date, date',
+      keywords: 'Date',
       icn: <DateIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -74,7 +75,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Date-Time', 'bitform'),
-      keywords: 'Date-Time, Date-time, Date, Time',
+      keywords: 'Date-Time, Date, Time',
       icn: <DateTimeIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -86,7 +87,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Dropdown', 'bitform'),
-      keywords: 'Dropdown, dropdown, Menu, menu',
+      keywords: 'Dropdown, Menu',
       icn: <DropDownIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
@@ -105,7 +106,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
     {
       name: __('Text', 'bitform'),
-      keywords: 'Text, text',
+      keywords: 'Text',
       icn: <TextIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -118,7 +119,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('User Name', 'bitform'),
-      keywords: 'User Name, Username, User name, username, user name, text',
+      keywords: 'User Name, text',
       icn: <UserIcn size="22" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -131,7 +132,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Multiline Text', 'bitform'),
-      keywords: 'Multline Text, multiline text',
+      keywords: 'Multline Text',
       icn: <TextareaIcn size="23" />,
       pos: { h: 60, w: 60, i: 'block-5', minH: 60 },
       elm: {
@@ -145,7 +146,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
     {
       name: __('Radio Button', 'bitform'),
-      keywords: 'Radio button, radio button, button',
+      keywords: 'Radio button, button',
       icn: <RadioIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
@@ -163,7 +164,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Number', 'bitform'),
-      keywords: 'Number, number',
+      keywords: 'Number',
       icn: <NumberIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -176,7 +177,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Password', 'bitform'),
-      keywords: 'Password, password',
+      keywords: 'Password',
       icn: <PasswordIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -189,7 +190,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Email', 'bitform'),
-      keywords: 'Email, email',
+      keywords: 'Email',
       icn: <MailIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -204,7 +205,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
     {
       name: __('Time', 'bitform'),
-      keywords: 'Time, time',
+      keywords: 'Time',
       icn: <TimeIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -217,7 +218,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
     {
       name: __('Month', 'bitform'),
-      keywords: 'Month, month, Date',
+      keywords: 'Month, Date',
       icn: <MonthIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -229,7 +230,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Week', 'bitform'),
-      keywords: 'Week, week, Date',
+      keywords: 'Week, Date',
       icn: <WeekIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -241,7 +242,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Country', 'bitform'),
-      keywords: 'Country, country',
+      keywords: 'Country',
       icn: <FlagIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
       elm: {
@@ -254,7 +255,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('File Upload', 'bitform'),
-      keywords: 'File Upload, file upload',
+      keywords: 'File Upload',
       icn: <FileUploadIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, minW: 20 },
       elm: {
@@ -267,7 +268,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('URL', 'bitform'),
-      keywords: 'URL, url',
+      keywords: 'URL',
       icn: <UrlIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -285,7 +286,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Color Picker', 'bitform'),
-      keywords: 'Color Picker, color picker',
+      keywords: 'Color Picker',
       icn: <ColorPickerIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40 },
       elm: {
@@ -297,7 +298,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('reCaptcha v2', 'bitform'),
-      keywords: 'ReCaptcha, reCaptcha, recaptcha, recaptcha v2',
+      keywords: 'ReCaptcha v2',
       icn: <ReCaptchaIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', maxH: 40, minH: 40, minW: 20 },
       elm: {
@@ -309,7 +310,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Decision Box', 'bitform'),
-      keywords: 'Decision box, GDPR, gdpr',
+      keywords: 'Decision box, GDPR',
       icn: <DecisionBoxIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 20 },
       elm: {
@@ -326,7 +327,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: 'HTML',
-      keywords: 'HTML, Html, html',
+      keywords: 'HTML',
       icn: <CodeSnippetIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block' },
       elm: {
@@ -338,7 +339,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: 'Button',
-      keywords: 'Button, button',
+      keywords: 'Button',
       icn: <BtnIcn size="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 40 },
       elm: {
@@ -355,7 +356,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Paypal', 'bitform'),
-      keywords: 'Paypal, Payment, payment, paypal',
+      keywords: 'Paypal, payment',
       icn: <PaypalIcn w="23" />,
       pos: { h: 100, w: 60, i: 'shadow_block', minH: 60, maxH: 140, minW: 20 },
       elm: {
@@ -373,7 +374,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Razorpay', 'bitform'),
-      keywords: 'Razorpay, razorpay, Payment, payment',
+      keywords: 'Razorpay, payment',
       icn: <RazorPayIcn w="17" h="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 40, maxH: 140, minW: 20 },
       elm: {
@@ -421,7 +422,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
 
     if (searchTool) {
       searchTool = searchTool.toLowerCase()
-      const itm = tools.filter(field => (field.keywords.includes(searchTool)))
+      const itm = tools.filter(field => (field.keywords.toLowerCase().includes(searchTool)))
       searchItem.push(...itm)
     } else {
       // eslint-disable-next-line no-const-assign
@@ -432,6 +433,17 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       setSearchData(searchItem)
     }
   }
+
+  const sortingField = () => {
+    tools.sort((a, b) => {
+      const fa = a.name.toLowerCase()
+      const fb = b.name.toLowerCase()
+      return fa < fb ? -1 : 1
+    })
+    setSortedTools(tools)
+    setSearchData([])
+  }
+  console.log(sortedTools)
 
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
@@ -457,7 +469,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </span>
           <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
         </div>
-        {!focusSearch && <button className={css(Toolbars.sort_btn)} type="button" aria-label="Sort Fields">s</button>}
+        {!focusSearch && <button className={css(Toolbars.sort_btn)} type="button" onClick={sortingField} aria-label="Sort Fields">s</button>}
       </div>
 
       {useMemo(() => (
