@@ -126,6 +126,9 @@ export default function ShowIcon() {
       document.getElementById('search-bar').blur()
     }
   }
+  const searchBtn = () => {
+    document.getElementById('search-bar').focus()
+  }
 
   const icons = [
     {
@@ -585,7 +588,7 @@ export default function ShowIcon() {
     <>
       <div className="icn-search flx">
         <div className="main">
-          <span className="search-key" title="Press 'S' for Search Icon">S</span>
+          <button onClick={searchBtn} className="search-key" title="Press 'S' for Search Icon">S</button>
           <input className="input" aria-label="Search icon" id="search-bar" type="text" placeholder="Search Icon" onChange={searchHandler} />
         </div>
       </div>

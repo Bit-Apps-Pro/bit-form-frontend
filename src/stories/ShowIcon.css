@@ -13,16 +13,17 @@ body {
   border: 1px solid #efefef;
   box-shadow: 0px 1px 8px 2px #ececef;
   border-radius: 8px;
-  width: 100%;
+  width: 95%;
 }
 
 .search-key {
+  background: transparent;
   display: block;
   cursor: pointer;
   color: #979797;
   position: absolute;
   top: 50%;
-  right: -24px;
+  right: 0;
   transform: translateY(-50%);
   border: 1px solid #e7e7e775;
   padding: 3px 7px;
