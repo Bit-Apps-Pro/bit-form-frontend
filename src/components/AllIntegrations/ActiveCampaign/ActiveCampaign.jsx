@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useState } from 'react'
+import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useHistory, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import app from '../../../styles/app.style'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
@@ -18,6 +20,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const { css } = useFela()
   const [activeCampaingConf, setActiveCampaingConf] = useState({
     name: 'Active Campaign API',
     type: 'ActiveCampaign',
@@ -82,7 +85,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
         >
           {__('Next', 'bitform')}
           {' '}
-&nbsp;
+          &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button>
 

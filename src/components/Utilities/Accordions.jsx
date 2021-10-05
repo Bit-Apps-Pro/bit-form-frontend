@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef, memo } from 'react'
 import { CSSTransition } from 'react-transition-group'
+import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import EditIcn from '../../Icons/EditIcn'
 import Button from './Button'
 import SingleToggle2 from './SingleToggle2'
@@ -42,7 +43,7 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
         <div className="btcd-accr-title w-10">
           <div>
             {customTitle}
-            {title !== undefined && <input title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />}
+            {title !== undefined && <input aria-label="accrodions" title={title} ref={inp} className={titleEditable && 'edit'} style={{ color: tgl ? 'white' : 'inherit' }} type="text" onChange={onTitleChange} value={title} readOnly={titleEditable === undefined} />}
             {titleEditable && <div className="edit-icn" onClick={focusEdit} onKeyPress={focusEdit} role="button" tabIndex={0} aria-label="focus edit"><span style={{ color: tgl ? 'white' : 'gray' }}><EditIcn /></span></div>}
             {!tgl && header}
           </div>
@@ -51,7 +52,7 @@ function Accordions({ title, customTitle, subtitle, children, titleEditable, onT
         {toggle && (
           <SingleToggle2 action={action} checked={checked} className="flx" />)}
         <Button icn>
-          <span className={`btcd-icn icn-${tgl ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}`} style={{ color: tgl ? 'white' : 'inherit' }} />
+          <ChevronDownIcn size="20" rotate={!!tgl} />
         </Button>
       </div>
 

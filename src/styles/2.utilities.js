@@ -71,6 +71,7 @@ const ut = {
   ml4: { ml: '20px!important' },
   ml5: { ml: '25px!important' },
   ml6: { ml: '30px!important' },
+
   txCenter: { ta: 'center' },
 
   btcdEmpty: {

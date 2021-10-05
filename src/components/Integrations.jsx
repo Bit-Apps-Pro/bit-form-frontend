@@ -7,6 +7,7 @@ import { Link, Route, Switch, useHistory, useParams, useRouteMatch } from 'react
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates'
 import EditIcn from '../Icons/EditIcn'
+import InfoIcn from '../Icons/InfoIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import acf from '../resource/img/integ/ACF.svg'
 import activeCampaign from '../resource/img/integ/activeCampaign.svg'
@@ -182,7 +183,7 @@ function Integrations() {
               style={{ width: 1000 }}
             >
               <div className=" btcd-inte-wrp txt-center">
-                <input type="search" className="btcd-paper-inp w-5 mt-3" onChange={searchInteg} placeholder="Search Integrations..." style={{ height: 37 }} />
+                <input aria-label="Search Ingegration" type="search" className="btcd-paper-inp w-5 mt-3" onChange={searchInteg} placeholder="Search Integrations..." style={{ height: 37 }} />
                 <div className="flx flx-center flx-wrp pb-3">
                   {availableIntegs.map((inte, i) => (
                     <div
@@ -224,7 +225,7 @@ function Integrations() {
                   </button>
                   {typeof (integs.find(int => int.type === inte.type)?.info) !== 'boolean' && (
                     <Link to={`${allIntegURL}/info/${i}`} className={`${css(app.btn)} btcd-btn-o-blue btcd-btn-sm tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Info', 'bitform')}'` }} type="button">
-                      <span className="btcd-icn icn-information-outline" />
+                      <InfoIcn />
                     </Link>
                   )}
                 </div>

@@ -14,6 +14,11 @@ import TableCheckBox from './TableCheckBox'
 import TableLoader2 from '../Loaders/TableLoader2'
 import ExportImportMenu from '../ExportImport/ExportImportMenu'
 import { $reports, $reportSelector } from '../../GlobalStates'
+import SearchIcon from '../../Icons/SearchIcon'
+import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
+import CopyIcn from '../../Icons/CopyIcn'
+import TrashIcn from '../../Icons/TrashIcn'
+import SortIcn from '../../Icons/SortIcn'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -42,7 +47,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
 
   return (
     <div className="f-search">
-      <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}><span className="btcd-icn icn-search" /></button>
+      <button type="button" className="icn-btn" aria-label="icon-btn" onClick={() => { setSearch(globalFilter || undefined) }}><SearchIcon size="15" /></button>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label>
         <input
@@ -177,8 +182,7 @@ function Table(props) {
     if (columns.length && allColumns.length >= columns.length) {
       if (reportData && 'details' in reportData) {
         if (stateSavable && reportData.details) {
-          let details
-          details = { ...reportData.details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
+          const details = { ...reportData.details, order: ['selection', ...columns.map(singleColumn => ('id' in singleColumn ? singleColumn.id : singleColumn.accessor))], type: 'table' }
           if (state.columnOrder.length === 0 && typeof reportData.details === 'object' && 'order' in reportData.details) {
             setColumnOrder(reportData.details.order)
           } else {
@@ -257,17 +261,17 @@ function Table(props) {
                 {'setBulkStatus' in props
                   && (
                     <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
-                      <span className="btcd-icn icn-toggle_off" />
+                      <ToggleLeftIcn />
                     </button>
                   )}
                 {'duplicateData' in props
                   && (
                     <button onClick={showBulkDupMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Duplicate"' }} aria-label="icon-btn" type="button">
-                      <span className="btcd-icn icn-file_copy" style={{ fontSize: 16 }} />
+                      <CopyIcn w="15" />
                     </button>
                   )}
                 <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
-                  <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} />
+                  <TrashIcn size="20" />
                 </button>
                 <small className="btcd-pill">
                   {selectedFlatRows.length}
@@ -299,16 +303,13 @@ function Table(props) {
                   <div key={`t-th-${i + 8}`} className="tr" {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map(column => (
                       <div key={column.id} className="th flx" {...column.getHeaderProps()}>
-                        <div {...column.id !== 't_action' && column.getSortByToggleProps()}>
+                        <div {...column.id !== 't_action' && column.getSortByToggleProps()} style={{ display: 'flex', alignItems: 'center' }}>
                           {column.render('Header')}
                           {' '}
                           {(column.id !== 't_action' && column.id !== 'selection') && (
-                            <span>
-                              {column.isSorted
-                                ? column.isSortedDesc
-                                  ? String.fromCharCode(9662)
-                                  : String.fromCharCode(9652)
-                                : <span className="btcd-icn icn-sort" style={{ fontSize: 10, marginLeft: 5 }} />}
+                            <span style={{ marginLeft: 5, display: 'flex', flexDirection: 'column' }}>
+                              {(column.isSorted || column.isSortedDesc) && <SortIcn />}
+                              {(column.isSorted || !column.isSortedDesc) && <SortIcn style={{ transform: 'rotate(180deg)' }} />}
                             </span>
                           )}
                         </div>

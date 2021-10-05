@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -44,7 +45,7 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailPoetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <input aria-label="Integration Name" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailPoetConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         {isLoading === 'auth' && (
           <div className="flx mt-5">
             <LoaderSm size={25} clr="#022217" className="mr-2" />
@@ -54,8 +55,8 @@ export default function MailPoetAuthorization({ formID, mailPoetConf, setMailPoe
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (
           <div className="flx mt-5" style={{ color: 'red' }}>
-            <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-              &times;
+            <span className="mr-2" style={{ fontSize: 30, marginTop: -5 }}>
+              <CloseIcn size="15" />
             </span>
             Please! First Install Mailpoet Plugins
           </div>

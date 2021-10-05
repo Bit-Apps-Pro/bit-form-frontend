@@ -8,6 +8,8 @@ import MailOpenIcn from '../Icons/MailOpenIcn'
 import Settings2 from '../Icons/Settings2'
 import UserIcn from '../Icons/UserIcn'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
+import InfoIcn from '../Icons/InfoIcn'
+import ConditionalIcn from '../Icons/ConditionalIcn'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
@@ -39,11 +41,11 @@ function FormSettings({ setProModal }) {
           {__('Form Settings', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/confirmations`} activeClassName="btcd-f-a">
-          <span className="btcd-icn icn-information-outline" />
+          <span><InfoIcn size="20" stroke="3" /></span>
           {__('Confirmations', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/workflow`} activeClassName="btcd-f-a">
-          <span className="btcd-icn icn-flow-tree" />
+          <span><ConditionalIcn size="20" /></span>
           {__('Conditional Logics', 'bitform')}
         </NavLink>
         <NavLink to={`/form/settings/${formType}/${formID}/email-templates`} activeClassName="btcd-f-a em-tem">

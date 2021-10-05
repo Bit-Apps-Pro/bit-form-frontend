@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates'
+import ChevronLeft from '../../Icons/ChevronLeft'
 import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -119,7 +120,7 @@ export default function NewInteg({ allIntegURL }) {
     <div>
       <div className="flx">
         <Link to={allIntegURL} className={`${css(app.btn)} btcd-btn-o-gray`}>
-          <span className="btcd-icn icn-chevron-left" />
+          <ChevronLeft size="15" />
           &nbsp;Back
         </Link>
         <div className="w-8 txt-center">
