@@ -10,25 +10,24 @@ export default function InfoIcn({ size = 30, stroke = 2 }) {
         rx="11"
         ry="11.09"
       />
-      <line
+      <ellipse
         className="svg-icn"
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        x1="15"
-        y1="13.15"
-        x2="15"
-        y2="21.72"
+        strokeWidth={2}
+        strokeMiterlimit="10"
+        cx="15"
+        cy="11"
+        rx="1"
+        ry="1"
       />
       <line
         className="svg-icn"
-        strokeWidth={stroke}
+        strokeWidth={stroke - 0.5}
         strokeLinecap="round"
         strokeLinejoin="round"
         x1="15"
-        y1="9.71"
+        y1="18"
         x2="15"
-        y2="9.71"
+        y2="21.72"
       />
     </svg>
   )
