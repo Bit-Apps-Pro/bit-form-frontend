@@ -11,6 +11,15 @@ body {
   width: 50%;
 }
 
+.icn-search input:active,
+.icn-search input:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
 .flx {
   display: flex;
   align-items: center;
@@ -40,7 +49,8 @@ body {
   border: 1px solid #fdfdfd;
 }
 
-.icon:active, .icon:focus {
+.icon:active,
+.icon:focus {
   transform: scale(1.1);
   color: var(--b-50);
   background: #e3eff3;
