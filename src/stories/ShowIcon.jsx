@@ -584,7 +584,10 @@ export default function ShowIcon() {
   return (
     <>
       <div className="icn-search flx">
-        <input aria-label="Search icon" id="search-bar" type="text" placeholder="Search Icon" onChange={searchHandler} />
+        <div className="main">
+          <span className="search-key" title="Press 'S' for Search Icon">S</span>
+          <input className="input" aria-label="Search icon" id="search-bar" type="text" placeholder="Search Icon" onChange={searchHandler} />
+        </div>
       </div>
 
       {searchIcon
