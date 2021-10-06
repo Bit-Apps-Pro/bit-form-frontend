@@ -336,7 +336,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                 className="layout"
                 onDrop={onDrop}
                 resizeHandles={['se', 'e']}
-                onLayoutChange={onLayoutChange}
                 droppingItem={draggingField?.fieldSize}
                 cols={cols}
                 // cols={{ lg: 120, md: 120, sm: 120 }}
