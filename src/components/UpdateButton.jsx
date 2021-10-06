@@ -4,10 +4,10 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
-import { sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { produceNewLayouts, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -25,14 +25,15 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const formName = useRecoilValue($formName)
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
+  const builderHelperStates = useRecoilValue($builderHelperStates)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const [reports, setReports] = useRecoilState($reports)
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [updateBtn, setUpdateBtn] = useRecoilState($updateBtn)
   const [workFlows, setworkFlows] = useRecoilState($workflows)
-  const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [integrations, setIntegration] = useRecoilState($integrations)
+  const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
 
   useEffect(() => {
@@ -143,10 +144,13 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     setUpdateBtn({ disabled: true, loading: true })
 
-    const sortLayoutLG = { lg: [], md: [], sm: [] }
-    sortLayoutLG.lg = sortLayoutByXY(lay.lg)
-    sortLayoutLG.md = lay.md
-    sortLayoutLG.sm = lay.sm
+    const cols = { lg: 60, md: 40, sm: 20 }
+    let layouts = lay
+    if (builderHelperStates.respectLGLayoutOrder
+      || lay.lg.length !== lay.md.length
+      || lay.lg.length !== lay.sm.length) {
+      layouts = produceNewLayouts(lay, ['md', 'sm'], cols)
+    }
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle &&= bitDecipher(formStyle)
@@ -154,7 +158,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(savedFormId && { id: savedFormId }),
       ...(!savedFormId && { form_id: newFormId }),
       ...(savedFormId && { reports }),
-      layout: sortLayoutLG,
+      layout: layouts,
       fields,
       form_name: formName,
       additional: additionalSettings,
