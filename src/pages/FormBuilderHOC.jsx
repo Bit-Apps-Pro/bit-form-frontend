@@ -181,7 +181,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   const setResponsiveView = useCallback(view => {
     const resizer = conRef.current.getResizer()
-    const leftBarWidth = toolbarOff ? 50 : 165
+    const leftBarWidth = toolbarOff ? 50 : 180
     const rightBarWidth = 307
     const mobileSize = 400
     const tabletSize = 590
@@ -244,7 +244,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         <style>{styleSheet}</style>
         <Section
           className="tool-sec"
-          defaultSize={showToolBar ? 0 : 165}
+          defaultSize={showToolBar ? 0 : 180}
           style={{ background: 'gray' }}
         >
           <ToolBar
