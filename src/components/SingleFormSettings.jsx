@@ -5,23 +5,29 @@ import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $additionalSettings, $bits, $fields } from '../GlobalStates'
+import BlockIcn from '../Icons/BlockIcn'
+import DateIcn from '../Icons/DateIcn'
+import DBIcn from '../Icons/DBIcn'
+import EmptyIcn from '../Icons/EmptyIcn'
+import FocusIcn from '../Icons/FocusIcn'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
+import IpBlockIcn from '../Icons/IpBlockIcn'
+import LockIcn from '../Icons/LockIcn'
+import LoginIcn from '../Icons/LoginIcn'
+import NoneIcn from '../Icons/NoneIcn'
+import OneIcn from '../Icons/OneIcn'
+import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
+import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
-import Modal from './Utilities/Modal'
 import Cooltip from './Utilities/Cooltip'
+import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
-import TrashIcn from '../Icons/TrashIcn'
-import LoginIcn from '../Icons/LoginIcn'
-import FocusIcn from '../Icons/FocusIcn'
-import DBIcn from '../Icons/DBIcn'
-import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
-import EmptyIcn from '../Icons/EmptyIcn'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -503,11 +509,11 @@ export default function SingleFormSettings() {
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
-          <div>
-            <b>
-              <span className="btcd-icn icn-one mr-2" />
-              {__('Allow single entry for each IP address', 'bitform')}
-            </b>
+          <div className="flx">
+            <span className="mr-2">
+              <IpBlockIcn size="22" />
+            </span>
+            <b>{__('Allow single entry for each IP address', 'bitform')}</b>
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
         </div>
@@ -528,7 +534,7 @@ export default function SingleFormSettings() {
           <div className="mb-2 ml-2">
             <b>Error message</b>
             <br />
-            <input type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'is_login')} value={additionalSetting.settings?.is_login?.message} />
+            <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'is_login')} value={additionalSetting.settings?.is_login?.message} />
           </div>
         </>
       </Accordions>
@@ -550,7 +556,7 @@ export default function SingleFormSettings() {
           <div className="mb-2 ml-2">
             <b>Error message</b>
             <br />
-            <input type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'empty_submission')} value={additionalSetting.settings?.empty_submission?.message} />
+            <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'empty_submission')} value={additionalSetting.settings?.empty_submission?.message} />
           </div>
         </>
 
@@ -633,7 +639,7 @@ export default function SingleFormSettings() {
                 <div className="mb-2 ml-2">
                   <b>Low Score Message</b>
                   <br />
-                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additionalSetting.settings?.recaptchav3?.message} />
+                  <input aria-label="Low Score Messages" type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additionalSetting.settings?.recaptchav3?.message} />
                 </div>
               </>
             )}
@@ -669,12 +675,12 @@ export default function SingleFormSettings() {
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
           <div className="">
             <b>
-              <span className="btcd-icn icn-block mr-2" />
+              <span className="mr-2"><NoneIcn size="15" /></span>
               {__('Disable this form after limited entry', 'bitform')}
             </b>
           </div>
           <div className="flx">
-            <input onChange={setEntryLimit} value={additionalSetting.settings.entry_limit} disabled={!('entry_limit' in additionalSetting.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
+            <input aria-label="Disable this form after limited entry" onChange={setEntryLimit} value={additionalSetting.settings.entry_limit} disabled={!('entry_limit' in additionalSetting.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
             <SingleToggle2 action={handleEntryLimit} checked={'entry_limit' in additionalSetting.enabled} className="flx" />
           </div>
         </div>
@@ -683,7 +689,9 @@ export default function SingleFormSettings() {
       <Accordions
         customTitle={(
           <b>
-            <span className="btcd-icn icn-date mr-2" />
+            <span className="mr-2">
+              <DateIcn w="15" />
+            </span>
             {__('Limit Form Submission Period', 'bitform')}
           </b>
         )}
@@ -769,7 +777,10 @@ export default function SingleFormSettings() {
       <Accordions
         customTitle={(
           <b>
-            <span className="btcd-icn icn-r-block mr-2" />
+            {/* <span className="btcd-icn icn-r-block mr-2" /> */}
+            <span className="mr-2">
+              <BlockIcn size="20" />
+            </span>
             {__('Blocked IP list', 'bitform')}
           </b>
         )}
@@ -797,7 +808,10 @@ export default function SingleFormSettings() {
       <Accordions
         customTitle={(
           <b>
-            <span className="btcd-icn icn-lock mr-2" />
+            {/* <span className="btcd-icn icn-lock mr-2" /> */}
+            <span className="mr-2">
+              <LockIcn size="18" />
+            </span>
             {__('Allowed IP', 'bitform')}
           </b>
         )}
@@ -822,7 +836,7 @@ export default function SingleFormSettings() {
         {'private_ip' in additionalSetting.settings && additionalSetting.settings.private_ip.map((itm, i) => (
           <div className="flx mt-1" key={`blk-ip-${i + 11}`}>
             <SingleToggle2 action={(e) => handleIpStatus(e, i, 'private')} checked={itm.status} />
-            <input type="text" onChange={(e) => handleIp(e, i, 'private')} className="btcd-paper-inp" value={itm.ip} placeholder="000.0.0.00" />
+            <input aria-label="ip" type="text" onChange={(e) => handleIp(e, i, 'private')} className="btcd-paper-inp" value={itm.ip} placeholder="000.0.0.00" />
             <button onClick={() => delPrivateIp(i)} className="icn-btn ml-2" aria-label="delete" type="button"><TrashIcn /></button>
           </div>
         ))}

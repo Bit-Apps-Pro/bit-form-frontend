@@ -11,6 +11,7 @@ import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
 import { $bits, $fieldLabels, $forms, $reportSelector } from '../GlobalStates'
+import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -41,30 +42,30 @@ function FormEntries({ allResp, setAllResp, integrations }) {
   const reportData = useRecoilValue($reportSelector(0))
 
   useEffect(() => {
-        if (reportData) {
-          const allLabelObj = {}
+    if (reportData) {
+      const allLabelObj = {}
 
-          allLabels.map((itm) => {
-            allLabelObj[itm.key] = itm
-          })
-          const labels = []
-          console.log('reportData', reportData, allLabels, );
-          reportData.details?.order?.forEach((field) => {
-            if (
-              field
-              && field !== 'sl'
-              && field !== 'selection'
-              && field !== 'table_ac'
-            ) {
-              allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
-            }
-          })
-          // temporary tuen off report feature
-          tableHeaderHandler(labels.length ? labels : allLabels)
-        } else if (allLabels.length) {
-          tableHeaderHandler(allLabels)
+      allLabels.map((itm) => {
+        allLabelObj[itm.key] = itm
+      })
+      const labels = []
+      console.log('reportData', reportData, allLabels)
+      reportData.details?.order?.forEach((field) => {
+        if (
+          field
+          && field !== 'sl'
+          && field !== 'selection'
+          && field !== 'table_ac'
+        ) {
+          allLabelObj[field] !== undefined && labels.push(allLabelObj[field])
         }
-        // console.log(`reportData`, reportData)
+      })
+      // temporary tuen off report feature
+      tableHeaderHandler(labels.length ? labels : allLabels)
+    } else if (allLabels.length) {
+      tableHeaderHandler(allLabels)
+    }
+    // console.log(`reportData`, reportData)
     // tableHeaderHandler(reportData?.details?.order || allLabels)
   }, [allLabels])
 
@@ -248,10 +249,9 @@ function FormEntries({ allResp, setAllResp, integrations }) {
       minWidth: 70,
       sticky: 'right',
       Header: (
-        <span
-          className="btcd-icn btcd-icn-sm icn-settings ml-2"
-          title={__('Settings', 'bitform')}
-        />
+        <span className="ml-2" title={__('Settings', 'bitform')}>
+          <SettingsIcn size="20" />
+        </span>
       ),
       accessor: 'table_ac',
       Cell: (val) => (
@@ -409,7 +409,7 @@ function FormEntries({ allResp, setAllResp, integrations }) {
     }
 
     if (entry.accessor === '__user_id') {
-      return  bits?.user[allResp[rowDtl.idx]?.[entry.accessor]]?.url ? (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>) : null
+      return bits?.user[allResp[rowDtl.idx]?.[entry.accessor]]?.url ? (<a href={bits.user[allResp[rowDtl.idx]?.[entry.accessor]].url}>{bits.user[allResp[rowDtl.idx]?.[entry.accessor]].name}</a>) : null
     }
 
     if (entry.accessor === '__user_ip' && isFinite(allResp[rowDtl.idx]?.[entry.accessor])) {

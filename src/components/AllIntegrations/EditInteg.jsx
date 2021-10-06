@@ -7,6 +7,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import app from '../../styles/app.style'
+import ChevronLeft from '../../Icons/ChevronLeft'
 
 const EditZohoAnalytics = lazy(() => import('./ZohoAnalytics/EditZohoAnalytics'))
 const EditZohoBigin = lazy(() => import('./ZohoBigin/EditZohoBigin'))
@@ -121,7 +122,7 @@ export default function EditInteg({ allIntegURL }) {
     <div>
       <div className="flx">
         <Link to={allIntegURL} className={`${css(app.btn)} btcd-btn-o-gray`}>
-          <span className="btcd-icn icn-chevron-left" />
+          <ChevronLeft size="15" />
           &nbsp;Back
         </Link>
         <div className="w-8 txt-center">

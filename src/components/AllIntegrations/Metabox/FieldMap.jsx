@@ -1,3 +1,4 @@
+import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './MetaboxHelperFunction'
@@ -35,7 +36,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
           <option value="">{__('Select Field', 'bitform')}</option>
           {type === 'post' ? (
             <>
-              { formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
+              {formFields.map(f => f.type !== 'file-up33' && <option key={`ff-zhcrm-${f.key}`} value={f.key}>{f.name}</option>)}
               <option value="custom">{__('Custom...', 'bitform')}</option>
             </>
           ) : (
@@ -76,7 +77,7 @@ export default function FieldMap({ i, type, formFields, field, dataConf, setData
               +
             </button>
             <button onClick={() => delFieldMap(propName, i, dataConf, setDataConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
-              <span className="btcd-icn icn-trash-2" />
+              <TrashIcn size="15" />
             </button>
           </>
         )}

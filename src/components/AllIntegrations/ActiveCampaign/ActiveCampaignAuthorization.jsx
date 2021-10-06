@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -66,15 +67,15 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
       />
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
         <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
+        <input aria-label="Integration name" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
         <div className="mt-3 wdt-200"><b>{__('Access API URL:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={activeCampaingConf.api_url} type="text" placeholder={__('Access API URL...', 'bitform')} disabled={isInfo} />
+        <input aria-label="Access API URL" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={activeCampaingConf.api_url} type="text" placeholder={__('Access API URL...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
 
         <div className="mt-3 wdt-200"><b>{__('Access API Key:', 'bitform')}</b></div>
-        <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={activeCampaingConf.api_key} type="text" placeholder={__('Access API Key...', 'bitform')} disabled={isInfo} />
+        <input aria-label="Access API Key" className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={activeCampaingConf.api_key} type="text" placeholder={__('Access API Key...', 'bitform')} disabled={isInfo} />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
         {isLoading === 'auth' && (
           <div className="flx mt-5">
@@ -85,8 +86,8 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (
           <div className="flx mt-5" style={{ color: 'red' }}>
-            <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-              &times;
+            <span className="mr-2" style={{ fontSize: 30, marginTop: -5 }}>
+              <CloseIcn size="15" />
             </span>
             Sorry, API key is invalid
           </div>

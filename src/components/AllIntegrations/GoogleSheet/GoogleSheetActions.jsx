@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
+import InfoIcn from '../../../Icons/InfoIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../Utilities/CheckBox'
 import Modal from '../../Utilities/Modal'
@@ -117,7 +118,7 @@ export default function GoogleSheetActions({ sheetConf, setSheetConf, formFields
                 <small>Here Month and Amount are Zoho Sheet&apos;s worksheet header name</small>
                 {' '}
                 <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"', fontSize: 15 }}>
-                  <span className="btcd-icn icn-information-outline" />
+                  <InfoIcn size="15" />
                 </span>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={sheetConf.actions?.update?.criteria} />
               </div>

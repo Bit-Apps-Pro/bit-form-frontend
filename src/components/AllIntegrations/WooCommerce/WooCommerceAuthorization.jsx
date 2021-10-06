@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -61,8 +62,8 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (
           <div className="flx mt-5" style={{ color: 'red' }}>
-            <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-              &times;
+            <span className="mr-2" style={{ fontSize: 30, marginTop: -5 }}>
+              <CloseIcn size="15" />
             </span>
             WooCommerce plugin must be activated to integrate with Bit Form.
           </div>

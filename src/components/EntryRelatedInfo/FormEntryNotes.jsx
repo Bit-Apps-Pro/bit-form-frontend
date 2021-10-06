@@ -3,6 +3,8 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../../GlobalStates'
+import DocIcn from '../../Icons/DocIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import noData from '../../resource/img/nodata.svg'
 import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -119,10 +121,10 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
               </small>
             )}
           <button type="button" className="icn-btn ml-1 tooltip pos-rel" style={{ '--tooltip-txt': `'${__('Edit', 'bitform')}'`, fontSize: 16 }} onClick={() => setEditMode(note.id)}>
-            <span className="btcd-icn icn-document-edit" />
+            <DocIcn size="15" />
           </button>
           <button type="button" onClick={() => confDeleteNote(note.id)} className={`${isDeleting ? css(app.btn) : 'icn-btn'} ml-1 tooltip pos-rel`} style={{ '--tooltip-txt': `'${__('Delete', 'bitform')}'`, fontSize: 16 }} disabled={isDeleting}>
-            <span className="btcd-icn icn-trash-fill" />
+            <TrashIcn size="15" />
             {isDeleting && <LoaderSm size={20} clr="#000" className="ml-2" />}
           </button>
         </div>
