@@ -845,24 +845,27 @@ input[type="checkbox"].disabled:checked:before {
   color: var(--white-0-21);
   position: relative;
   align-items: center;
-  padding-left: 35px;
-  font-weight: normal;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 500;
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none;
   min-height: 25px;
-  margin: 8px;
+  padding: 8px;
   width: auto;
+  border-radius: 8px;
+}
+.btcd-ck-wrp:hover {
+  background: var(--b-97);
 }
 
 .btcd-ck-wrp input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 0;
+  height: 1px;
+  width: 1px;
 }
 
 .btcd-ck-con {
@@ -872,17 +875,17 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .btcd-mrk {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  margin-right: 7px;
   height: 20px;
   width: 20px;
-  box-sizing: content-box;
+  aspect-ratio: 1/1;
   border-radius: 3px;
-  background-color: var(--white);
-  // border          : 2px solid rgb(212, 212, 212);
   border: 2px solid var(--white-0-83);
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow .3s;
+}
+.btcd-ck-wrp input:focus-visible ~ .btcd-mrk {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px blue;
 }
 
 .btcd-ck-wrp:hover input~.btcd-mrk {
@@ -892,6 +895,44 @@ input[type="checkbox"].disabled:checked:before {
 .btcd-ck-wrp input:checked~.btcd-mrk {
   background-color: var(--b-50);
   border-color: var(--b-50) !important;
+}
+
+.btcd-mrk:after {
+  position: absolute;
+  content: "";
+  transform: scale(0);
+  transition: transform .3s;
+  filter: drop-shadow(0 2px 1px #0000005e);
+}
+
+.btcd-ck-wrp input:checked~.btcd-mrk:after {
+}
+.btcd-ck-wrp input:checked~.btcd-mrk:not(.rdo):after {
+  transform: scale(1) translate(-50%, -50%) rotate(45deg);
+}
+.btcd-ck-wrp input:checked~.btcd-mrk:not(.ck):after {
+  transform: translate(-50%, -50%) scale(1) ;
+}
+
+.btcd-ck-wrp .btcd-mrk:not(.rdo):after {
+  top: 46%;
+  left: 50%;
+  width: 3px;
+  height: 7px;
+  border: solid var(--white);
+  border-width: 0 3px 3px 0;
+  transform: scale(0) translate(-50%, -50%) rotate(45deg);
+}
+
+.btcd-ck-wrp .btcd-mrk:not(.ck):after {
+  background: var(--white);
+  top: 50%;
+  left: 50%;
+  aspect-ratio: 1/1;
+  transform: scale(0) translate(-50%, -50%);
+  width: 45%;
+  height: 45%;
+  border-radius: 50%;
 }
 
 // .btc-range {
@@ -1166,40 +1207,14 @@ input[type="checkbox"].disabled:checked:before {
 
 // btc range end ============
 
-.btcd-mrk:after {
-  display: none;
-  position: absolute;
-  content: "";
-}
 
-.btcd-ck-wrp input:checked~.btcd-mrk:after {
-  display: block;
-}
-
-.btcd-ck-wrp .btcd-mrk:not(.rdo):after {
-  top: 47%;
-  left: 50%;
-  width: 5px;
-  height: 10px;
-  border: solid var(--white);
-  border-width: 0 3px 3px 0;
-  transform: translate(-50%, -50%) rotate(45deg);
-}
 
 .icn-rotate-45 {
   display: inline-block;
   transform: rotate(45deg);
 }
 
-.btcd-ck-wrp .btcd-mrk:not(.ck):after {
-  background: var(--white);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 45%;
-  height: 45%;
-  border-radius: 50%;
-}
+
 
 .btcd-no-data {
   position: absolute;
