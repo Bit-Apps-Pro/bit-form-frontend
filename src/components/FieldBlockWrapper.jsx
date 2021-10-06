@@ -29,7 +29,7 @@ export default function FieldBlockWrapper({ layoutItem,
     if (componentProps && componentProps.typ === 'recaptcha') {
       componentProps.siteKey = reCaptchaV2.siteKey
     }
-    if (1) {
+    if (0) {
       return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
     }
     return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
