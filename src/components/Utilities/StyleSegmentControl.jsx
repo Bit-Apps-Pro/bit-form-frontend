@@ -48,7 +48,7 @@ export default function StyleSegmentControl({ defaultActive,
       brs: 6,
       tdn: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
-      wiilChange: 'transform',
+      willChange: 'transform',
       bs: '0 2px 3px -1px grey',
       bd: 'linear-gradient(0deg, #efefef, white)',
     },
@@ -87,8 +87,8 @@ export default function StyleSegmentControl({ defaultActive,
   const setSelectorPos = (activeElement) => {
     const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
     // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
-    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
     selectorRef.current.style.width = `${toActiveElmWidth}px`
+    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
   }
 
   useEffect(() => {
@@ -101,14 +101,14 @@ export default function StyleSegmentControl({ defaultActive,
     if (e.type === 'keypress' && e.code !== 'Space') return
     if (e.type === 'keypress' && e.code !== 'Enter') return
 
-    let elm = e.target
-    if (e.target.tagName !== 'BUTTON') {
-      elm = e.target.parentNode
-    }
+    const elm = e.currentTarget
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    tabsRef.current.querySelector('.tabs button.active')?.classList.remove('active')
+    const currentActiveElm = tabsRef.current.querySelector('.tabs button.active')
+    if (elm === currentActiveElm) return
+
+    currentActiveElm?.classList.remove('active')
     setSelectorPos(elm)
     setactive(options[i].label)
     onChange(options[i].label)

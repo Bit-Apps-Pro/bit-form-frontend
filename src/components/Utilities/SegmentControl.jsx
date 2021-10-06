@@ -67,7 +67,7 @@ function SegmentControl({ defaultActive,
       tdn: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
       bd: clr.selectorBg, // '#fff',
-      wiilChange: 'transform',
+      willChange: 'transform',
     },
     tab_link: {
       curp: 1,
@@ -120,8 +120,8 @@ function SegmentControl({ defaultActive,
   const setSelectorPos = (activeElement) => {
     const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
     // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
-    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 4}px, -50%)`
     selectorRef.current.style.width = `${toActiveElmWidth}px`
+    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 4}px, -50%)`
   }
 
   useEffect(() => {
@@ -134,14 +134,14 @@ function SegmentControl({ defaultActive,
     if (e.type === 'keypress' && e.code !== 'Space') return
     if (e.type === 'keypress' && e.code !== 'Enter') return
 
-    let elm = e.target
-    if (e.target.tagName !== component.toUpperCase()) {
-      elm = e.target.parentNode
-    }
+    const elm = e.currentTarget
 
     if (!e.type === 'keypress' || !e.type === 'click') return
 
-    tabsRef.current.querySelector(`.tabs ${component}.active`)?.classList.remove('active')
+    const currentActiveElm = tabsRef.current.querySelector(`.tabs ${component}.active`)
+    if (elm === currentActiveElm) return
+
+    currentActiveElm?.classList.remove('active')
     setSelectorPos(elm)
     setactive(options[i].label)
     onChange(options[i].label)
