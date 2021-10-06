@@ -3,19 +3,21 @@
 }
 
 .itm-focus {
-  box-shadow: 0 0 0 2px var(--b-50) inset;
+  outline: 3px solid var(--b-50);
+  outline-offset: 3px;
   z-index: 9;
 }
 
 
 .blk {
-  outline: none;
+  /* outline: none; */
 }
 
-.blk:focus-visible,
-.blk:focus {
+.blk:focus:not(.itm-focus) {
   z-index: 9;
-  box-shadow: 0 0 0 2px var(--b-73) inset;
+  /* box-shadow: 0 0 0 2px var(--b-50) inset; */
+  outline: 3px solid var(--g-41);
+  outline-offset: 3px;
 }
 
 .blk:focus .blk-icn-wrp,
@@ -81,9 +83,11 @@
 .flx-c {
   justify-content: center;
 }
-.mt-1{
+
+.mt-1 {
   margin-top: 5px;
 }
+
 .mr-2 {
   margin-right: 10px;
 }
