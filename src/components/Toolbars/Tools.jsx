@@ -1,13 +1,23 @@
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
-import { $draggingField } from '../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $breakpoint, $builderHelperStates, $draggingField } from '../../GlobalStates'
 
 function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, title }) {
   console.log('%c $render Tools', 'background:red;padding:3px;border-radius:5px;color:white')
   const setDraggingField = useSetRecoilState($draggingField)
+  const [brkPoint] = useRecoilState($breakpoint)
+  const setBuilderHelperStates = useSetRecoilState($builderHelperStates)
 
   const { css } = useFela()
+
+  const handleOnDrag = (e) => {
+    e.dataTransfer.setData('text/plain', '')
+    setDraggingField(value)
+    if (brkPoint !== 'lg') {
+      setBuilderHelperStates(prv => ({ ...prv, forceBuilderWidthToLG: !prv.forceBuilderWidthToLG }))
+    }
+  }
 
   return (
     <div
@@ -22,12 +32,7 @@ function Tools({ setNewData, setDrgElm, value, setisToolDragging, children, titl
       unselectable="on"
       onClick={() => setNewData(value)}
       onKeyPress={() => setNewData(value)}
-      onDragStart={(e) => {
-        e.dataTransfer.setData('text/plain', '')
-        // setDrgElm(value)
-        // setisToolDragging(true)
-        setDraggingField(value)
-      }}
+      onDragStart={handleOnDrag}
       onDragEnd={() => setDraggingField(null)}
     >
       {children}
@@ -70,7 +75,5 @@ const tool = {
   },
   ':hover .tool-icn': { cr: 'var(--b-50) !important' },
   ':focus .tool-icn': { cr: 'var(--b-50) !important' },
-  ':active': {
-    bs: '0 0 0 1.5px var(--b-50) inset, 0 0 2px var(--white-2-47), 0 1px 11px -4px var(--white-0-69)',
-  },
+  ':active': { bs: '0 0 0 1.5px var(--b-50) inset, 0 0 2px var(--white-2-47), 0 1px 11px -4px var(--white-0-69)' },
 }

@@ -369,7 +369,7 @@ function compactItem(compareWith, l, compactType, cols, fullLayout) {
   return l
 }
 
-function sortLayoutItemsByRowCol(layout) {
+export function sortLayoutItemsByRowCol(layout) {
   // Slice to clone array as sort modifies
   return layout.slice(0).sort((a, b) => {
     if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
@@ -418,6 +418,19 @@ export function compact(layout, compactType, cols) {
   return out
 }
 
+export function produceNewLayouts(layouts, breakpointArr, cols) {
+  return produce(layouts, draftLay => {
+    draftLay.lg = sortLayoutItemsByRowCol(draftLay.lg)
+    const minFieldW = draftLay.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
+    if (breakpointArr.indexOf('md') > -1) {
+      draftLay.md = convertLayout(draftLay.lg, cols.md, minFieldW)
+    }
+    if (breakpointArr.indexOf('sm')) {
+      draftLay.sm = convertLayout(draftLay.lg, cols.sm, minFieldW)
+    }
+  })
+}
+
 export const addToBuilderHistory = (setBuilderHistory, historyData) => {
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
     if (!draft.histories.length) {
@@ -453,18 +466,27 @@ export const compactNewLayoutItem = (breakpoint, layout, layouts) => produce(lay
   }
 })
 
-export const compactRemovedLayoutItem = (fldKey, breakpoint, layouts) => produce(layouts, draft => {
-  if (breakpoint === 'lg') {
-    draft.lg = draft.lg.filter(l => l.i !== fldKey)
-    draft.md = compact(draft.md.filter(l => l.i !== fldKey), 'vertical')
-    draft.sm = compact(draft.sm.filter(l => l.i !== fldKey), 'vertical')
-  } else if (breakpoint === 'md') {
-    draft.lg = compact(draft.lg.filter(l => l.i !== fldKey), 'vertical')
-    draft.md = draft.md.filter(l => l.i !== fldKey)
-    draft.sm = compact(draft.sm.filter(l => l.i !== fldKey), 'vertical')
-  } else if (breakpoint === 'sm') {
-    draft.lg = compact(draft.lg.filter(l => l.i !== fldKey), 'vertical')
-    draft.md = compact(draft.md.filter(l => l.i !== fldKey), 'vertical')
-    draft.sm = draft.sm.filter(l => l.i !== fldKey)
-  }
+export const addNewItemInLayout = (layouts, newItem) => produce(layouts, draftLayouts => {
+  draftLayouts.lg.push(newItem)
+  // draftLayouts.md.push(newItem)
+  // draftLayouts.sm.push(newItem)
+})
+
+export const filterLayoutItem = (fldKey, layouts) => produce(layouts, draft => {
+  // if (breakpoint === 'lg') {
+  //   draft.lg = draft.lg.filter(l => l.i !== fldKey)
+  //   draft.md = compact(draft.md.filter(l => l.i !== fldKey), 'vertical')
+  //   draft.sm = compact(draft.sm.filter(l => l.i !== fldKey), 'vertical')
+  // } else if (breakpoint === 'md') {
+  //   draft.lg = compact(draft.lg.filter(l => l.i !== fldKey), 'vertical')
+  //   draft.md = draft.md.filter(l => l.i !== fldKey)
+  //   draft.sm = compact(draft.sm.filter(l => l.i !== fldKey), 'vertical')
+  // } else if (breakpoint === 'sm') {
+  //   draft.lg = compact(draft.lg.filter(l => l.i !== fldKey), 'vertical')
+  //   draft.md = compact(draft.md.filter(l => l.i !== fldKey), 'vertical')
+  //   draft.sm = draft.sm.filter(l => l.i !== fldKey)
+  // }
+  draft.lg = draft.lg.filter(l => l.i !== fldKey)
+  draft.md = draft.md.filter(l => l.i !== fldKey)
+  draft.sm = draft.sm.filter(l => l.i !== fldKey)
 })

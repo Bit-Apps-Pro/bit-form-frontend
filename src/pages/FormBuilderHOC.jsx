@@ -11,7 +11,7 @@ import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $newFormId } from '../GlobalStates'
+import { $bits, $breakpoint, $builderHelperStates, $newFormId } from '../GlobalStates'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, multiAssign } from '../Utils/Helpers'
@@ -54,6 +54,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
+  const [builderHelperStates, setb] = useRecoilState($builderHelperStates)
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
@@ -64,6 +65,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const notIE = !window.document.documentMode
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
+  const { forceBuilderWidthToLG } = builderHelperStates
   useEffect(() => {
     if (formType === 'new') {
       sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
@@ -85,6 +87,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setStyleSheet(j2c.sheet(style))
     }
   }, [brkPoint, style])
+
+  useEffect(() => { setResponsiveView('lg') }, [forceBuilderWidthToLG])
 
   const styleProvider = () => {
     if (brkPoint === 'md') {
@@ -245,7 +249,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         <Section
           className="tool-sec"
           defaultSize={showToolBar ? 0 : 180}
-          style={{ background: 'gray' }}
         >
           <ToolBar
             setNewData={addNewData}

@@ -17,6 +17,7 @@ import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 import EditIcn from '../Icons/EditIcn'
 import BrushIcn from '../Icons/BrushIcn'
+import BreakpointSizeControl from './BreakpointSizeControl'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
@@ -47,15 +48,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             onHide={() => setResponsiveMenu(false)}
           >
             <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${responsiveMenu ? 'active' : ''}`} type="button"><EllipsisIcon size="38" /></button>
-            <div>
-              <div><button>sdas</button></div>
-              <div><button>sdas</button></div>
-              <div><button>sdas</button></div>
-              <div><button>sdas</button></div>
-              <div><button>sdas</button></div>
-              <div><button>sdas</button></div>
-              <div><button>sdas</button></div>
-            </div>
+            <BreakpointSizeControl />
           </Downmenu>
 
           <div className={css(OptionToolBarStyle.border_right)} />

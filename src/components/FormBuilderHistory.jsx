@@ -8,7 +8,7 @@ import UndoIcon from '../Icons/UndoIcon'
 import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
-import { compactNewLayoutItem, compactRemovedLayoutItem } from '../Utils/FormBuilderHelper'
+import { compactNewLayoutItem, filterLayoutItem } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 
@@ -74,8 +74,8 @@ export default function FormBuilderHistory({ }) {
         draftLayouts = compactNewLayoutItem(breakpoint, layout, draftLayouts)
         draftFields[fldKey] = fldData
       } else if (historyAction === 'remove_fld') {
-        const { fldKey, breakpoint } = state
-        draftLayouts = compactRemovedLayoutItem(fldKey, breakpoint, draftLayouts)
+        const { fldKey } = state
+        draftLayouts = filterLayoutItem(fldKey, draftLayouts)
         delete draftFields[fldKey]
         setSelectedFieldId(null)
       }

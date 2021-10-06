@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
@@ -14,7 +15,7 @@ import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fie
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addToBuilderHistory, checkFieldsExtraAttr, compactNewLayoutItem, compactRemovedLayoutItem, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, sortLayoutItemsByRowCol, convertLayout, filterLayoutItem, propertyValueSumX, produceNewLayouts } from '../Utils/FormBuilderHelper'
 import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -29,11 +30,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
-  const [layout, setLay] = useRecoilState($layouts)
+  const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
+  const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
   const [styles, setStyles] = useRecoilState($styles)
-  const [layouts, setLayouts] = useState(layout)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   // const cols = { lg: 6, md: 4, sm: 2 }
@@ -50,46 +51,23 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
 
-  useEffect(() => {
-    checkAllLayoutSame()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useEffect(() => { setRootLayouts(layouts) }, [layouts])
 
-  // check all layout by breakpoint is same otherwise push missing layout item
-  function checkAllLayoutSame() {
-    let notSame = false
-
-    layouts.lg.map(item => {
-      if (!layouts.md.find(itm => itm.i === item.i)) {
-        const tmpItem = { ...item }
-        if (tmpItem.w >= cols.md) {
-          tmpItem.w = cols.md
-        }
-        layouts.md.push(tmpItem)
-        notSame = true
-      } else if (!layouts.sm.find(itm => itm.i === item.i)) {
-        const tmpItem = { ...item }
-        if (tmpItem.w >= cols.sm) {
-          tmpItem.w = cols.sm
-        }
-        layouts.sm.push(tmpItem)
-        notSame = true
-      }
-    })
-    if (notSame) { setLayouts(layouts) }
-  }
+  useEffect(() => { margeNewData() }, [newData, fields])
 
   useEffect(() => {
-    setLayouts(deepCopy(layout))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layout])
-
-  useEffect(() => {
-    if (newData !== null) {
-      margeNewData()
+    const lgLength = layouts.lg.length
+    const mdLength = layouts.md.length
+    const smLength = layouts.sm.length
+    if (breakpoint === 'md' && lgLength !== mdLength) {
+      const newLayouts = produceNewLayouts(layouts, ['md'], cols)
+      setLayouts(newLayouts)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newData, fields])
+    if (breakpoint === 'sm' && lgLength !== smLength) {
+      const newLayouts = produceNewLayouts(layouts, ['sm'], cols)
+      setLayouts(newLayouts)
+    }
+  }, [breakpoint])
 
   useEffect(() => {
     let w = 0
@@ -148,19 +126,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const margeNewData = () => {
-    addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
-    setNewData(null)
-  }
-
-  const onLayoutChange = (newLay, newLays) => {
-    if (newLays.lg.length === layouts.lg.length
-      && newLays.md.length === layouts.md.length
-      && newLays.sm.length === layouts.sm.length) {
-      // setLayouts(extendLayout(newLays))
-      // setLay(extendLayout(newLays))
-      setLayouts(newLays)
-      setLay(newLays)
+    if (newData !== null) {
+      addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     }
+    setNewData(null)
   }
 
   const onBreakpointChange = bp => setBreakpoint(bp)
@@ -179,9 +148,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
       md: layouts.md.find(l => l.i === fldKey),
       sm: layouts.sm.find(l => l.i === fldKey),
     }
-    const nwLay = compactRemovedLayoutItem(fldKey, breakpoint, layouts)
-    const tmpFields = { ...fields }
-    delete tmpFields[fldKey]
+    const nwLay = filterLayoutItem(fldKey, layouts)
+    const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
     setLayouts(nwLay)
     setFields(tmpFields)
     setSelectedFieldId(null)
@@ -235,9 +203,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const newBlk = `b${formID}-${uniqueFieldId}`
     const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
-    const tmpLayouts = compactNewLayoutItem(breakpoint, newLayoutItem, layouts)
-
-    setLayouts(tmpLayouts)
+    const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
+    setLayouts(newLayouts)
     setFields({ ...fields, [newBlk]: processedFieldData })
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
@@ -253,7 +220,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }, 500)
 
     // add style
-    console.log('f data', processedFieldData)
     const newStyle = produce(styles, draftStyle => {
       const globalTheme = draftStyle.theme
       if (globalTheme === 'defaultBlue') {
@@ -358,7 +324,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <RenderStyle styleClasses={styles.commonClasses} />
       <Scrollbars autoHide>
-        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField ? 'isDragging' : ''}>
+        <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`}>
             <div className={`_frm-${formID}`}>
               <ResponsiveReactGridLayout
@@ -366,7 +332,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                 measureBeforeMount={false}
                 compactType="vertical"
                 useCSSTransforms
-                isDroppable={draggingField !== null}
+                isDroppable={draggingField !== null && breakpoint === 'lg'}
                 className="layout"
                 onDrop={onDrop}
                 resizeHandles={['se', 'e']}
