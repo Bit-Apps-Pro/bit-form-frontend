@@ -2,13 +2,42 @@ body {
   background: #f5f5f5;
 }
 
-.icn-search input {
-  padding: 10px;
+.main {
+  width: 50%;
+  position: relative;
+}
+
+.input {
+  padding: 10px 20px 10px 10px;
   outline: 0;
   border: 1px solid #efefef;
   box-shadow: 0px 1px 8px 2px #ececef;
   border-radius: 8px;
-  width: 50%;
+  width: 95%;
+}
+
+.search-key {
+  background: transparent;
+  display: block;
+  cursor: pointer;
+  color: #979797;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  border: 1px solid #e7e7e775;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+
+.input:active,
+.input:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
 
 .flx {
@@ -40,7 +69,8 @@ body {
   border: 1px solid #fdfdfd;
 }
 
-.icon:active, .icon:focus {
+.icon:active,
+.icon:focus {
   transform: scale(1.1);
   color: var(--b-50);
   background: #e3eff3;

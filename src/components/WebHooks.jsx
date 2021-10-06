@@ -4,7 +4,9 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
+import StackIcn from '../Icons/StackIcn'
 import TrashIcn from '../Icons/TrashIcn'
+import ut from '../styles/2.utilities'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
@@ -231,8 +233,8 @@ function WebHooks({ removeIntegration }) {
             <Button onClick={() => showDelConf(i)} icn className="sh-sm white mt-2"><TrashIcn size={16} /></Button>
           </div>
         )) : (
-          <div className="txt-center btcd-empty">
-            <span className="btcd-icn icn-stack d-b-fs-50" />
+          <div className={css(ut.btcdEmpty, ut.txCenter)}>
+            <StackIcn size="50" />
             {__('Empty', 'bitform')}
           </div>
         )}

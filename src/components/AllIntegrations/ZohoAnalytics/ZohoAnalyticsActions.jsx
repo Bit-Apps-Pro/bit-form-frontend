@@ -7,6 +7,7 @@ import CheckBox from '../../Utilities/CheckBox'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Modal from '../../Utilities/Modal'
 import TitleModal from '../../Utilities/TitleModal'
+import InfoIcn from '../../../Icons/InfoIcn'
 
 export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)
@@ -166,7 +167,7 @@ export default function ZohoAnalyticsActions({ analyticsConf, setAnalyticsConf, 
                 <br />
                 <small>{__('Here Department, Salary and Country are Zoho Analytics table column name', 'bitform')}</small>
                 <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': `'${__('Supported Arithmetic Operators: ( +, -, *, / ) and Supported Relational Operators: ( =, !=, <, >, <=, >=, LIKE, NOT LIKE, IN, NOT IN, BETWEEN )', 'bitform')}'`, '--tt-wrap': 'wrap', '--tt-width': '225px', fontSize: 15 }}>
-                  <span className="btcd-icn icn-information-outline" />
+                  <InfoIcn size="15" />
                 </span>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={analyticsConf.actions?.update?.criteria} />
               </div>

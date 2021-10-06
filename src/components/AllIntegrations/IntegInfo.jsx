@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../../GlobalStates'
+import ChevronLeft from '../../Icons/ChevronLeft'
 import app from '../../styles/app.style'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
@@ -36,7 +37,7 @@ export default function IntegInfo({ allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const integ = integrations[id]
   const bits = useRecoilValue($bits)
-  const { css } = useFela
+  const { css } = useFela()
 
   // route is info/:id but for redirect uri need to make new/:type
   let location = window.location.toString()
@@ -106,7 +107,7 @@ export default function IntegInfo({ allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="flx">
         <Link to={allIntegURL} className={`${css(app.btn)} btcd-btn-o-gray`}>
-          <span className="btcd-icn icn-chevron-left" />
+          <ChevronLeft size="15" />
           &nbsp;Back
         </Link>
         <div className="w-8 txt-center">

@@ -7,6 +7,7 @@ import CheckBox from '../../Utilities/CheckBox'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Modal from '../../Utilities/Modal'
 import TitleModal from '../../Utilities/TitleModal'
+import InfoIcn from '../../../Icons/InfoIcn'
 
 export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }) {
   const [updateMdl, setUpdateMdl] = useState(false)
@@ -117,7 +118,7 @@ export default function ZohoSheetActions({ sheetConf, setSheetConf, formFields }
                 <small>Here Month and Amount are Zoho Sheet&apos;s worksheet header name</small>
                 {' '}
                 <span className="icn-btn ml-2 tooltip" style={{ '--tooltip-txt': '"Supported Relational Operators: =, !=, <, >, <=, >=, contains"', fontSize: 15 }}>
-                  <span className="btcd-icn icn-information-outline" />
+                  <InfoIcn size="15" />
                 </span>
                 <textarea name="" rows="5" className="btcd-paper-inp mt-1" onChange={e => setUpdateSettings(e.target.value, 'criteria')} value={sheetConf.actions?.update?.criteria} />
               </div>

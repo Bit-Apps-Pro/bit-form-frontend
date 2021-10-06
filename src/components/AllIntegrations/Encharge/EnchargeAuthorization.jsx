@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BackIcn from '../../../Icons/BackIcn'
+import CloseIcn from '../../../Icons/CloseIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
@@ -8,6 +9,7 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { refreshEnchargeHeader } from './EnchargeCommonFunc'
+
 export default function EnchargeAuthorization({ formID, enchargeConf, setEnchargeConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
@@ -81,8 +83,8 @@ export default function EnchargeAuthorization({ formID, enchargeConf, setEncharg
 
         {(showAuthMsg && !isAuthorized && !isLoading) && (
           <div className="flx mt-5" style={{ color: 'red' }}>
-            <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-              &times;
+            <span className=" mr-2" style={{ fontSize: 30, marginTop: -5 }}>
+              <CloseIcn size="15" />
             </span>
             Sorry, API key is invalid
           </div>

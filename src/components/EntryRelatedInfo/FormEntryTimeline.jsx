@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits, $fieldLabels } from '../../GlobalStates'
+import DocIcn from '../../Icons/DocIcn'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -80,10 +81,7 @@ function FormEntryTimeline({ formID, entryID, integrations }) {
       return data.content.split('b::f').map(str => (
         <p key={str}>
           {' '}
-          <span
-            className="btcd-icn icn-document-edit"
-            style={{ fontSize: 16 }}
-          />
+          <DocIcn size="15" />
           {replaceFieldWithLabel(str)}
         </p>
       ))

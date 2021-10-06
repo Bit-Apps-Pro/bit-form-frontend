@@ -6,6 +6,7 @@ import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import FormImporter from './FormImporter'
 import DownloadIcon from '../Icons/DownloadIcon'
+import FormIcn from '../Icons/FormIcn'
 // import bitsFetch from '../Utils/bitsFetch'
 import app from '../styles/app.style'
 
@@ -29,7 +30,7 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
     <div className="btcd-tem-lay flx">
       {staticTem.map(tem => (
         <div key={tem.lbl} className="btcd-tem flx">
-          <span className="btcd-icn icn-file" style={{ fontSize: 90 }} />
+          <FormIcn w="50" />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
             <Link to={`/form/builder/new/${tem.lbl}/fs`} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Create', 'bitform')}</Link>

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable react/button-has-type */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddIcon from '../Icons/AddIcon'
 import APIIcon from '../Icons/APIIcon'
 import BackIcn from '../Icons/BackIcn'
@@ -8,6 +8,7 @@ import BdrDashIcn from '../Icons/BdrDashIcn'
 import BdrDottedIcn from '../Icons/BdrDottedIcn'
 import BdrDoubleIcn from '../Icons/BdrDoubleIcn'
 import BdrSolidIcn from '../Icons/BdrSolidIcn'
+import BlockIcn from '../Icons/BlockIcn'
 import BlurIcn from '../Icons/BlurIcn'
 import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
@@ -19,10 +20,12 @@ import CloseIcn from '../Icons/CloseIcn'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
 import ColorIcn from '../Icons/ColorIcn'
 import ColorPickerIcn from '../Icons/ColorPickerIcn'
+import ConditionalIcn from '../Icons/ConditionalIcn'
 import CopyIcn from '../Icons/CopyIcn'
 import CPTIcn from '../Icons/CPTIcn'
 import DateIcn from '../Icons/DateIcn'
 import DateTimeIcn from '../Icons/DateTimeIcn'
+import DBIcn from '../Icons/DBIcn'
 import DecisionBoxIcn from '../Icons/DecisionBoxIcn'
 import DocIcn from '../Icons/DocIcn'
 import DownloadIcon from '../Icons/DownloadIcon'
@@ -30,21 +33,28 @@ import DropDownIcn from '../Icons/DropDownIcn'
 import EditIcn from '../Icons/EditIcn'
 import EditIcon from '../Icons/EditIcon'
 import EllipsisIcon from '../Icons/EllipsisIcon'
+import EmptyIcn from '../Icons/EmptyIcn'
 import EyeIcon from '../Icons/EyeIcon'
 import EyeOffIcon from '../Icons/EyeOffIcon'
 import FieldIcn from '../Icons/FieldIcn'
 import FileUploadIcn from '../Icons/FileUploadIcn'
 import FlagIcn from '../Icons/FlagIcn'
+import FocusIcn from '../Icons/FocusIcn'
 import FormIcn from '../Icons/FormIcn'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HeightIcn from '../Icons/HeightIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
 import HWordinateIcn from '../Icons/HWordinateIcn'
 import ImageIcn from '../Icons/ImageIcn'
+import InfoIcn from '../Icons/InfoIcn'
 import InsideIcn from '../Icons/InsideIcn'
+import IpBlockIcn from '../Icons/IpBlockIcn'
 import ItemBlockIcn from '../Icons/ItemBlockIcn'
 import LaptopIcn from '../Icons/LaptopIcn'
 import LayerIcon from '../Icons/LayerIcon'
+import LayoutIcn from '../Icons/LayoutIcn'
+import LockIcn from '../Icons/LockIcn'
+import LoginIcn from '../Icons/LoginIcn'
 import MailIcn from '../Icons/MailIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
 import MobileIcon from '../Icons/MobileIcon'
@@ -52,6 +62,7 @@ import MonthIcn from '../Icons/MonthIcn'
 import MoveIcn from '../Icons/MoveIcn'
 import NoneIcn from '../Icons/NoneIcn'
 import NumberIcn from '../Icons/NumberIcn'
+import OneIcn from '../Icons/OneIcn'
 import PasswordIcn from '../Icons/PasswordIcn'
 import PaymentsIcn from '../Icons/PaymentsIcn'
 import PaypalIcn from '../Icons/PaypalIcn'
@@ -63,14 +74,18 @@ import RedoIcon from '../Icons/RedoIcon'
 import SearchIcon from '../Icons/SearchIcon'
 import Settings2 from '../Icons/Settings2'
 import SettingsIcn from '../Icons/SettingsIcn'
+import SortIcn from '../Icons/SortIcn'
 import SpreadIcn from '../Icons/SpreadIcn'
+import StackIcn from '../Icons/StackIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import TextareaIcn from '../Icons/TextareaIcn'
 import TextIcn from '../Icons/TextIcn'
 import TimeIcn from '../Icons/TimeIcn'
+import ToggleLeftIcn from '../Icons/ToggleLeftIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import UndoIcon from '../Icons/UndoIcon'
 import UrlIcn from '../Icons/UrlIcn'
+import UserIcn from '../Icons/UserIcn'
 import WeekIcn from '../Icons/WeekIcn'
 import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
@@ -99,11 +114,107 @@ export default function ShowIcon() {
       setSearchIcon([])
     }
   }
+  useEffect(() => {
+    window.addEventListener('keyup', searchIcn)
+  }, [])
+
+  const searchIcn = (e) => {
+    if (e.code === 'KeyS') {
+      document.getElementById('search-bar').focus()
+    }
+    if (e.code === 'Escape') {
+      document.getElementById('search-bar').blur()
+    }
+  }
+  const searchBtn = () => {
+    document.getElementById('search-bar').focus()
+  }
+
   const icons = [
     {
       key: 'Menu Icon',
       icon: <MenuIcon size="30" />,
       com: '<MenuIcon size="30" />',
+    },
+    {
+      key: 'Ip Block Icon',
+      icon: <IpBlockIcn size="30" />,
+      com: '<IpBlockIcn size="30" />',
+    },
+    {
+      key: 'Conditional or flow tree Icon',
+      icon: <ConditionalIcn size="30" />,
+      com: '<ConditionalIcn size="30" />',
+    },
+    {
+      key: 'Toggle left Icon',
+      icon: <ToggleLeftIcn size="30" />,
+      com: '<ToggleLeftIcn size="30" />',
+    },
+    {
+      key: 'Sort Icon',
+      icon: <SortIcn size="30" />,
+      com: '<SortIcn size="30" />',
+    },
+    {
+      key: 'Block Icon',
+      icon: <BlockIcn size="30" />,
+      com: '<BlockIcn size="30" />',
+    },
+    {
+      key: 'Lock Icon',
+      icon: <LockIcn size="30" />,
+      com: '<LockIcn size="30" />',
+    },
+    {
+      key: 'One Icon',
+      icon: <OneIcn size="30" />,
+      com: '<OneIcn size="30" />',
+    },
+    {
+      key: 'Information Icon',
+      icon: <InfoIcn size="30" />,
+      com: '<InfoIcn size="30" />',
+    },
+    {
+      key: 'User Icon',
+      icon: <UserIcn size="30" />,
+      com: '<UserIcn size="30" />',
+    },
+    {
+      key: 'Login Icon',
+      icon: <LoginIcn size="30" />,
+      com: '<LoginIcn size="30" />',
+    },
+    {
+      key: 'DB Icon',
+      icon: <DBIcn size="30" />,
+      com: '<DBIcn size="30" />',
+    },
+    {
+      key: 'Focus Icon',
+      icon: <FocusIcn size="30" />,
+      com: '<FocusIcn size="30" />',
+    },
+    {
+      key: 'Height Icon',
+      icon: <HeightIcn h="30" />,
+      com: '<HeightIcn h="30" />',
+    },
+    {
+      key: 'Empty Icon',
+      icon: <EmptyIcn size="30" />,
+      com: '<EmptyIcn size="30" />',
+    },
+    {
+      key: 'Empty stack Icon',
+      icon: <StackIcn />,
+      com: '<StackIcn size="30" />',
+    },
+    {
+      key: 'Layout icon',
+      icon: <LayoutIcn />,
+      com: '<LayoutIcn size="30" />',
     },
     {
       key: 'Add Icon',
@@ -261,11 +372,6 @@ export default function ShowIcon() {
       com: '<GoogleAdIcn size="30" />',
     },
     {
-      key: 'Height Icon',
-      icon: <HeightIcn h="30" />,
-      com: '<HeightIcn h="30" />',
-    },
-    {
       key: 'Honeypot Icon',
       icon: <HoneypotIcn h="30" w="20" />,
       com: '<HoneypotIcn h="30" w="20" />',
@@ -411,7 +517,7 @@ export default function ShowIcon() {
       com: '<TimeIcn size="30" />',
     },
     {
-      key: 'Trash Icon',
+      key: 'Delete Trash Icon',
       icon: <TrashIcn size="30" />,
       com: '<TrashIcn size="30" />',
     },
@@ -471,10 +577,20 @@ export default function ShowIcon() {
       com: '<SearchIcon size="24" />',
     },
   ]
+
+  icons.sort((a, b) => {
+    const ka = a.key.toLowerCase()
+    const kb = b.key.toLowerCase()
+    return ka < kb ? -1 : 1
+  })
+
   return (
     <>
       <div className="icn-search flx">
-        <input type="text" placeholder="Search Icon" onChange={searchHandler} />
+        <div className="main">
+          <button onClick={searchBtn} className="search-key" title="Press 'S' for Search Icon">S</button>
+          <input className="input" aria-label="Search icon" id="search-bar" type="text" placeholder="Search Icon" onChange={searchHandler} />
+        </div>
       </div>
 
       {searchIcon
