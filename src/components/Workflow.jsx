@@ -657,23 +657,23 @@ function Workflow({ formID }) {
             >
               <div className="flx">
                 <b className="txt-dp"><small>Action Run When:</small></b>
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Create/Edit', 'bitform')}</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Create', 'bitform')}</small>} checked={lgcGrp.action_run === 'create'} value="create" />
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Edit', 'bitform')}</small>} checked={lgcGrp.action_run === 'edit'} value="edit" />
-                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 28}`} title={<small className="txt-dp">{__('Record Delete', 'bitform')}</small>} checked={lgcGrp.action_run === 'delete'} value="delete" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 1}`} title={<small className="txt-dp">{__('Record Create/Edit', 'bitform')}</small>} checked={lgcGrp.action_run === 'create_edit'} value="create_edit" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 2}`} title={<small className="txt-dp">{__('Record Create', 'bitform')}</small>} checked={lgcGrp.action_run === 'create'} value="create" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 3}`} title={<small className="txt-dp">{__('Record Edit', 'bitform')}</small>} checked={lgcGrp.action_run === 'edit'} value="edit" />
+                <CheckBox radio onChange={e => changeActionRun(e.target.value, lgcGrpInd)} name={`ar-${lgcGrpInd + 4}`} title={<small className="txt-dp">{__('Record Delete', 'bitform')}</small>} checked={lgcGrp.action_run === 'delete'} value="delete" />
               </div>
               {lgcGrp.action_run !== 'delete' && (
                 <div className="flx">
                   <b className="txt-dp"><small>Action Effect:</small></b>
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Form Load', 'bitform')}</small>} checked={lgcGrp.action_type === 'onload'} value="onload" />
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Field Input', 'bitform')}</small>} checked={lgcGrp.action_type === 'oninput'} value="oninput" />
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Form Validate', 'bitform')}</small>} checked={lgcGrp.action_type === 'onvalidate'} value="onvalidate" />
-                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 26}`} title={<small className="txt-dp">{__('On Form Submit', 'bitform')}</small>} checked={lgcGrp.action_type === 'onsubmit'} value="onsubmit" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 5}`} title={<small className="txt-dp">{__('On Form Load', 'bitform')}</small>} checked={lgcGrp.action_type === 'onload'} value="onload" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 6}`} title={<small className="txt-dp">{__('On Field Input', 'bitform')}</small>} checked={lgcGrp.action_type === 'oninput'} value="oninput" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 7}`} title={<small className="txt-dp">{__('On Form Validate', 'bitform')}</small>} checked={lgcGrp.action_type === 'onvalidate'} value="onvalidate" />
+                  <CheckBox radio onChange={e => changeActionType(e.target.value, lgcGrpInd)} name={`at-${lgcGrpInd + 8}`} title={<small className="txt-dp">{__('On Form Submit', 'bitform')}</small>} checked={lgcGrp.action_type === 'onsubmit'} value="onsubmit" />
                 </div>
               )}
               <div className="flx">
                 <b className="txt-dp"><small>Action Behaviour:</small></b>
-                {!lgcGrp?.action_type?.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">{__('Always', 'bitform')}</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
+                {!lgcGrp?.action_type?.match(/^(onvalidate|oninput)$/) && <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 121}`} title={<small className="txt-dp">{__('Always', 'bitform')}</small>} checked={lgcGrp.action_behaviour === 'always'} value="always" />}
                 <CheckBox radio onChange={e => changeActionBehave(e.target.value, lgcGrpInd)} name={`ab-${lgcGrpInd + 111}`} title={<small className="txt-dp">{__('Condition', 'bitform')}</small>} checked={lgcGrp.action_behaviour === 'cond'} value="cond" />
               </div>
 
