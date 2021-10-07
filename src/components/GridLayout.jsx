@@ -11,7 +11,7 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -31,6 +31,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
+  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
@@ -50,8 +51,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
+  const { reRenderGridLayoutByRootLay } = builderHelperStates
 
-  useEffect(() => { setRootLayouts(layouts) }, [layouts])
+  useEffect(() => { setLayouts(rootLayouts); setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: false })) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => { margeNewData() }, [newData, fields])
 
@@ -276,6 +278,15 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     addNewField(draggingField.fieldData, draggingField.fieldSize, dropPosition)
   }
 
+  const handleLayoutChange = (l, layoutsFromGrid) => {
+    if (layoutsFromGrid.lg.length === layoutsFromGrid.md.length
+      && layoutsFromGrid.lg.length === layoutsFromGrid.sm.length
+      && layoutsFromGrid.md.length === layoutsFromGrid.sm.length) {
+      setLayouts(layoutsFromGrid)
+      setRootLayouts(layoutsFromGrid)
+    }
+  }
+
   const handleContextMenu = (e, fldKey) => {
     e.preventDefault()
     const topPos = ref.current.getBoundingClientRect().top + window.scrollY
@@ -337,6 +348,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                 onDrop={onDrop}
                 resizeHandles={['se', 'e']}
                 droppingItem={draggingField?.fieldSize}
+                onLayoutChange={handleLayoutChange}
+                // cols={cols}
                 cols={cols}
                 // cols={{ lg: 120, md: 120, sm: 120 }}
                 breakpoints={{ lg: 700, md: 420, sm: 300 }}

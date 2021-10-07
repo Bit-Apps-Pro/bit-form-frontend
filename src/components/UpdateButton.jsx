@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
-import { produceNewLayouts, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { layoutOrderSortedByLg, produceNewLayouts } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -20,12 +20,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const lay = useRecoilValue($layouts)
+  const [lay, setLay] = useRecoilState($layouts)
   const fields = useRecoilValue($fields)
   const formName = useRecoilValue($formName)
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
-  const builderHelperStates = useRecoilValue($builderHelperStates)
+  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const [reports, setReports] = useRecoilState($reports)
@@ -146,10 +146,12 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     const cols = { lg: 60, md: 40, sm: 20 }
     let layouts = lay
-    if (builderHelperStates.respectLGLayoutOrder
-      || lay.lg.length !== lay.md.length
+    if (lay.lg.length !== lay.md.length
       || lay.lg.length !== lay.sm.length) {
       layouts = produceNewLayouts(lay, ['md', 'sm'], cols)
+    }
+    if (builderHelperStates.respectLGLayoutOrder) {
+      layouts = layoutOrderSortedByLg(lay, cols)
     }
 
     let formStyle = sessionStorage.getItem('btcd-fs')
@@ -186,6 +188,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             setButtonText('Update')
             history.replace(`/form/builder/edit/${data.id}/fs`)
           }
+          setLay(layouts)
+          setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: true }))
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)

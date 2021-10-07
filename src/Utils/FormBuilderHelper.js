@@ -431,6 +431,19 @@ export function produceNewLayouts(layouts, breakpointArr, cols) {
   })
 }
 
+export function layoutOrderSortedByLg(lay, cols) {
+  return produce(lay, drft => {
+    const draftedLay = drft
+    draftedLay.md = sortLayoutByLg(draftedLay.md, draftedLay.lg)
+    draftedLay.sm = sortLayoutByLg(draftedLay.sm, draftedLay.lg)
+    draftedLay.lg = sortLayoutItemsByRowCol(draftedLay.lg)
+    const minFieldWidthMd = draftedLay.md.reduce((prv, cur) => (prv < cur ? prv : cur))
+    const minFieldWidthSm = draftedLay.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
+    draftedLay.md = convertLayout(draftedLay.md, cols.md, minFieldWidthMd)
+    draftedLay.sm = convertLayout(draftedLay.lg, cols.sm, minFieldWidthSm)
+  })
+}
+
 export const addToBuilderHistory = (setBuilderHistory, historyData) => {
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
     if (!draft.histories.length) {
@@ -490,3 +503,14 @@ export const filterLayoutItem = (fldKey, layouts) => produce(layouts, draft => {
   draft.md = draft.md.filter(l => l.i !== fldKey)
   draft.sm = draft.sm.filter(l => l.i !== fldKey)
 })
+
+export function sortLayoutByLg(layoutArr, orderLayout) {
+  const newLayoutByOrder = []
+  const layout = layoutArr
+  for (let i = 0; i < orderLayout.length; i += 1) {
+    const index = layout.findIndex(itm => itm.i === orderLayout[i].i)
+    newLayoutByOrder.push(layout[index])
+    layout.splice(index, 0)
+  }
+  return newLayoutByOrder
+}
