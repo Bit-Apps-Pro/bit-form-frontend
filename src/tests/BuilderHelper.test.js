@@ -1,4 +1,4 @@
-import { checkFieldsExtraAttr, convertLayout, delAllPrevKeys, getEmptyXPos, isRestYhasBlockX, sortLayoutByXY } from '../Utils/FormBuilderHelper'
+import { checkFieldsExtraAttr, convertLayout, delAllPrevKeys, getEmptyXPos, isRestYhasBlockX, sortLayoutByLg, sortLayoutByXY } from '../Utils/FormBuilderHelper'
 
 describe('▶ check get Empty X Position form given arr', () => {
   const maxCol = 6
@@ -146,6 +146,33 @@ describe('▶ check layout sorting by xy', () => {
 
   test('test 2', () => {
     expect(sortLayoutByXY(lay2)).toEqual(expectLay2)
+  })
+})
+describe('▶ check layout sorting by given layout', () => {
+  const order = [
+    { i: '1' },
+    { i: '2' },
+    { i: '3' },
+    { i: '4' },
+    { i: '5' },
+  ]
+
+  const layout = [
+    { i: '3', a: '21' },
+    { i: '2', a: '21' },
+    { i: '1', a: '21' },
+    { i: '5', a: '21' },
+    { i: '4', a: '21' },
+  ]
+  const expect = [
+    { i: '1', a: '21' },
+    { i: '2', a: '21' },
+    { i: '3', a: '21' },
+    { i: '4', a: '21' },
+    { i: '5', a: '21' },
+  ]
+  test('test 1', () => {
+    expect(sortLayoutByLg(layout, order)).toEqual(expect)
   })
 })
 
