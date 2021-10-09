@@ -853,62 +853,6 @@ export default function SingleFormSettings() {
         </div>
       </div>
 
-      {/*  <Accordions
-        customTitle={(
-          <b>
-            <span className="btcd-icn icn-one mr-2" />
-            {__('Disable storing form entries', 'bitform')}
-          </b>
-        )}
-        cls="w-6 mt-3"
-      >
-        <div className="flx mb-2 ml-2">
-          <SingleToggle2 action={handleDisableStoreEntry} checked={'disableStoreEntry' in additionalSetting.enabled} className="flx" />
-          {__('Enable / Disable', 'bitform')}
-        </div>
-        {additionalSetting.enabled.disableStoreEntry && (
-          <>
-            <div className="flx mb-4 ml-2">
-              <SingleToggle2 action={hideReCaptchaBadge} checked={additionalSetting.settings?.recaptchav3?.hideReCaptcha} className="flx" />
-              {__('Hide ReCaptcha Badge', 'bitform')}
-            </div>
-            <span
-              className="btcd-link cp mb-4 ml-2"
-              onClick={toggleCaptchaAdvanced}
-              onKeyDown={toggleCaptchaAdvanced}
-              role="button"
-              tabIndex="0"
-              style={{ outline: 'none' }}
-            >
-              {__(`${!showCaptchaAdvanced ? 'Show' : 'Hide'} Advanced Settings`, 'bitform')}
-            </span>
-            {showCaptchaAdvanced && (
-              <>
-                <div className="mt-3 mb-4 ml-2">
-                  <b>Tolerance Level</b>
-                  <br />
-                  <div className="flx mt-1">
-                    <div className="mt-1">
-                      <input aria-label="Recaptcha tolerance label range input" type="range" className="btc-range mr-2" min="0.3" max="0.9" step="0.3" onChange={setReCaptchaScore} value={additionalSetting.settings?.recaptchav3?.score} />
-                      <p className="m-0">
-                        <b>{showToleranceLabel(additionalSetting.settings?.recaptchav3?.score)}</b>
-                      </p>
-                    </div>
-                    <input aria-label="Recaptcha tolerance label input" className="btcd-paper-inp w-1" type="number" min="0" max="1" step="0.1" onChange={setReCaptchaScore} value={additionalSetting.settings?.recaptchav3?.score} />
-                  </div>
-
-                </div>
-                <div className="mb-2 ml-2">
-                  <b>Low Score Message</b>
-                  <br />
-                  <input type="text" placeholder="Low Score Message" className="btcd-paper-inp w-6 mt-1" onChange={setReCaptchaLowScoreMessage} value={additionalSetting.settings?.recaptchav3?.message} />
-                </div>
-              </>
-            )}
-          </>
-        )}
-      </Accordions>
- */}
       <div>
         <Modal
           sm
