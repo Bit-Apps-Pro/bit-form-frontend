@@ -1,11 +1,9 @@
 const draggableModalStyle = {
   container: {
-    w: 250,
     bc: 'var(--white-100)',
     pn: 'absolute',
     tp: 10,
     zx: 9999,
-    px: 9,
     pt: 0,
     pb: 10,
     brs: 10,
@@ -16,6 +14,7 @@ const draggableModalStyle = {
   title: {
     fw: 500,
     fs: 14,
+    px: 3,
     dy: 'block',
     w: '90%',
     cur: 'move',
@@ -35,6 +34,7 @@ const draggableModalStyle = {
   hr: { mx: 10, mb: 10, mt: 5 },
 
   content: { px: 10 },
+
   titleBar: {
     h: 25,
     pt: 17,

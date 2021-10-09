@@ -18,7 +18,8 @@ const FieldStyle = {
     brs: 8,
     tn: 'background-color 0.2s',
     '& .toggle-icn': { cr: 'var(--white-0-61)' },
-    '&:hover': { bc: 'var(--b-23-95)' },
+    ':focus-visible': { bs: '0 0 0 2px blue' },
+    ':hover': { bc: 'hsl(0deg 0% 88% / 32%)' },
   },
 
   placeholder: { dy: 'block' },
@@ -39,10 +40,18 @@ const FieldStyle = {
   },
 
   hover_tip: {
+    '& .hover-tip': {
+      brs: 10,
+      ':focus-visible': {
+        oy: '1 !important',
+        focusShadow: 1,
+      },
+    },
     '&:hover': {
       '& .hover-tip': {
         oy: 1,
         tn: '0.2s',
+
       },
     },
   },
@@ -66,7 +75,14 @@ const FieldStyle = {
   },
   flxCenter: {
     flx: 'align-center',
-    '& .hovertip': { oy: 0 },
+    '& .hovertip': {
+      oy: 0,
+      brs: 10,
+      ':focus-visible': {
+        oy: '1 !important',
+        focusShadow: 1,
+      },
+    },
     '&:hover': {
       '& .hovertip': {
         oy: 1,
@@ -74,7 +90,7 @@ const FieldStyle = {
       },
     },
   },
-
+  singleOption: { pr: 36 },
 }
 
 export default FieldStyle

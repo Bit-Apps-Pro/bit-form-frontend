@@ -2,6 +2,7 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $builderHelperStates } from '../GlobalStates'
 import LaptopIcn from '../Icons/LaptopIcn'
+import LockIcn from '../Icons/LockIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
@@ -35,7 +36,7 @@ export default function BreakpointSizeControl() {
       </div>
       <div className={css(s.divider)} />
       <div className={css(ut.flxcb, ut.mt2, ut.mb1)}>
-        <div className={css(ut.flxi, ut.w6)}>
+        <div className={css(ut.flxi, ut.w7)}>
           <span className={css(ut.fw500, ut.fs12)}>Respect Large Device Order</span>
           <Cooltip icnSize="15"><span className={css([ut.tipBody, ut.mr2])}>When this option is enabled tablet and mobile devices layout will auto genarate according to desktop device field order.</span></Cooltip>
         </div>
@@ -46,7 +47,7 @@ export default function BreakpointSizeControl() {
 }
 
 const s = {
-  wraper: { w: 180 },
+  wraper: { w: 160 },
   title: {
     my: 5,
     fw: 600,

@@ -1,0 +1,228 @@
+:root {
+  --tooltip-txt: "";
+  --tt-left: 50%;
+  --tt-width: auto;
+  --tt-wrap: nowrap;
+  --blue-h: 215;
+  --blue-s: 100%;
+  --blue-l: 50%;
+  --blue-a: 1;
+  --db-h: 221; // db for deep blue
+  --db-s: 93%;
+  --db-l: 16%;
+  --dbg-h: 217; // dbg for deep blue bg
+  --dbg-s: 52%;
+  --dbg-l: 15%;
+  --white-s: 0%;
+  --white-l: 100%;
+  --black-s: 0%;
+  --black-l: 0%;
+
+  --blue: hsl(var(--blue-h), var(--blue-s), var(--blue-l));
+  --dp-blue: hsl(var(--db-h), var(--db-s), var(--db-l));
+  --dp-blue-bg: hsl(var(--dbg-h), var(--dbg-s), var(--dbg-l));
+  --white: hsl(var(--blue-h), var(--white-s), var(--white-l));
+  --black: hsl(var(--blue-h), var(--black-s), var(--black-l));
+  --gray-1: hsl(var(--blue-h), 45%, 98%);
+  --gray-3: hsl(var(--blue-h), 0%, 89%);
+  --gray-4: hsl(var(--db-h), 21%, 42%);
+  --red: hsl(0, 100%, 64%);
+
+
+  /* TODO for blue and hue */
+  --blue-h-s: 215, 100%;
+  --blue-base: 215;
+  // --b-10: hsla(var(--blue-base), 10%, 100%);
+  --b-11-50: hsla(var(--blue-base), 11%, 50%, 100%);
+  --b-12-81: hsla(var(--blue-base), 12%, 81%, 100%);
+  --b-13-52: hsla(var(--blue-base), 13%, 52%, 100%);
+  --b-13-88: hsla(var(--blue-base), 13%, 88%, 100%);
+  --b-15-83: hsla(var(--blue-base), 15%, 83%, 100%);
+  --b-16-35: hsla(var(--blue-base), 16%, 35%, 100%);
+  --b-16-87: hsla(var(--blue-base), 16%, 87%, 100%);
+  --b-16-86: hsla(var(--blue-base), 16%, 86%, 100%);
+  --b-19-48: hsla(var(--blue-base), 19%, 48%, 100%);
+  --b-20-93: hsla(var(--blue-base), 20%, 93%, 100%);
+  --b-23-95: hsla(var(--blue-base), 23%, 95%, 100%);
+  // --b-88-23-2: hsla(var(--blue-base), 88%, 23%, 20%);
+  // --b-20: hsla(var(--blue-base), 20%, 100%);
+  // --b-30: hsla(var(--blue-base), 30%, 100%);
+  --b-30-84: hsla(var(--blue-base), 30%, 84%, 100%);
+  --b-36: hsla(var(--blue-base), 100%, 36%, 100%);
+  --b-31-44-27: hsla(var(--blue-base), 31%, 44%, 0.278);
+  --b-31-81: hsla(var(--blue-base), 31%, 81%, 100%);
+  --b-33-93: hsla(var(--blue-base), 33%, 93%, 100%);
+  --b-35-33: hsla(var(--blue-base), 35%, 33%, 100%);
+  --b-36-96: hsla(var(--blue-base), 36%, 96%, 100%);
+  --b-37-18: hsla(var(--blue-base), 37%, 18%, 100%);
+  --b-37-69: hsla(var(--blue-base), 37%, 69%, 100%);
+  --b-38-62-40: hsla(var(--blue-base), 38%, 62%, 40%);
+  // --b-40: hsla(var(--blue-base), 40%, 100%);
+  --b-44-20: hsla(var(--blue-base), 44%, 20%, 100%);
+  --b-44-87: hsla(var(--blue-base), 44%, 87%, 100%);
+  --b-49-79: hsla(var(--blue-base), 49%, 79%, 100%);
+  --b-49-91: hsla(var(--blue-base), 49%, 91%, 100%);
+  --b-53-8: hsla(var(--blue-base), 53%, 8%, 100%);
+  --b-53-13: hsla(var(--blue-base), 53%, 13%, 100%);
+  --b-54-15-53: hsla(var(--blue-base), 54%, 15%, 53%);
+  --b-54-12: hsla(var(--blue-base), 54%, 12%, 100%);
+  --b-79-96: hsla(var(--blue-base), 79%, 96%, 100%);
+  // --b-50: hsl( var(--blue-base) , 50%);
+  --b-50: hsla(var(--blue-base), 100%, 50%, 100%);
+  --b-100-50-5: hsla(var(--blue-base), 100%, 50%, 50%);
+  --b-50-22: hsla(var(--blue-base), 50%, 22%, 100%);
+  --b-59: hsla(var(--blue-base), 100%, 59%, 100%);
+  --b-50-95: hsla(var(--blue-base), 50%, 95%, 100%);
+  --b-54-31: hsla(var(--blue-base), 54%, 31%, 100%);
+  // --b-60: hsla(var(--blue-base), 60%, 100%);
+  --b-63-18-67: hsla(var(--blue-base), 63%, 18%, 67%);
+  // --b-70: hsla(var(--blue-base), 70%, 100%);
+  --b-72: hsla(var(--blue-base), 100%, 72%, 100%);
+  --b-73: hsla(var(--blue-base), 100%, 73%, 100%);
+  --b-82-11-5: hsla(var(--blue-base), 82%, 2%, 5%);
+  --b-86: hsla(var(--blue-base), 100%, 86%, 100%);
+  --b-70-12-24: hsla(var(--blue-base), 70%, 12%, 24%);
+  // --b-80: hsla(var(--blue-base), 80%, 100%);
+  --b-58-82: hsla(var(--blue-base), 58%, 82%, 100%);
+  --b-35-86: hsla(var(--blue-base), 35%, 86%, 100%);
+  --b-38-89: hsla(var(--blue-base), 38%, 89%, 100%);
+  --b-90: hsla(var(--blue-base), 100%, 90%, 100%);
+  --b-92-62: hsla(var(--blue-base), 92%, 62%, 100%);
+  --b-93-16-8: hsla(var(--blue-base), 93%, 13%, 80%);
+  --b-95-31-18: hsla(var(--blue-base), 95%, 31%, 18%);
+  --b-97: hsla(var(--blue-base), 100%, 97%, 100%);
+  --b-100-64-40: hsla(var(--blue-base), 100%, 64%, 40%);
+  --b-15-94: hsla(var(--blue-base), 15%, 94%, 40%);
+  --b-100-48-1: hsla(var(--blue-base), 100%, 48%, 10%);
+  --b-0-100-1: hsla(var(--blue-base), 0%, 100%, 10%);
+  --b-0-100-2: hsla(var(--blue-base), 0%, 100%, 20%);
+  --b-0-100-3: hsla(var(--blue-base), 0%, 100%, 30%);
+  --b-88-23-22: hsla(var(--blue-base), 88%, 23%, 22%);
+  // --b-100: hsla(var(--blue-base), 100%, 100%);
+
+  /* for deep blue  */
+  --db-h-s: 221, 100%;
+  // --db-10: hsla(var(--db-h-s), 10%, 100%);
+  // --db-20: hsla(var(--db-h-s), 20%, 100%);
+  // --db-30: hsla(var(--db-h-s), 30%, 100%);
+  // --db-40: hsla(var(--db-h-s), 40%, 100%);
+  // --db-50: hsla(var(--db-h-s), 50%, 100%);
+  // --db-60: hsla(var(--db-h-s), 60%, 100%);
+  // --db-70: hsla(var(--db-h-s), 70%, 100%);
+  // --db-80: hsla(var(--db-h-s), 80%, 100%);
+  // --db-90: hsla(var(--db-h-s), 90%, 100%);
+  // --db-100: hsla(var(--db-h-s), 100%, 100%);
+
+  /* dbg for deep blue bg */
+  --dbg-h-s: 217, 100%;
+  // --dbg-10: hsla(var(--dbg-h-s), 10%, 100%);
+  // --dbg-20: hsla(var(--dbg-h-s), 20%, 100%);
+  // --dbg-30: hsla(var(--dbg-h-s), 30%, 100%);
+  // --dbg-40: hsla(var(--dbg-h-s), 40%, 100%);
+  // --dbg-50: hsla(var(--dbg-h-s), 50%, 100%);
+  // --dbg-60: hsla(var(--dbg-h-s), 60%, 100%);
+  // --dbg-70: hsla(var(--dbg-h-s), 70%, 100%);
+  // --dbg-80: hsla(var(--dbg-h-s), 80%, 100%);
+  // --dbg-90: hsla(var(--dbg-h-s), 90%, 100%);
+  // --dbg-100: hsla(var(--dbg-h-s), 100%, 100%);
+
+  /* TODO for white */
+  --white-base: 0;
+  // --white-10: hsla(var(--white-base), 100%, 10%, 100%);
+  // --white-20: hsla(var(--white-base), 100%, 20%, 100%);
+  // --white-30: hsla(var(--white-base), 100%, 30%, 100%);
+  // --white-40: hsla(var(--white-base), 100%, 40%, 100%);
+  // --white-50: hsla(var(--white-base), 100%, 50%, 100%);
+  // --white-60: hsla(var(--white-base), 100%, 60%, 100%);
+  --white-73: hsla(var(--white-base), 100%, 73%, 100%);
+  --white-0-0-17: hsla(var(--white-base), 0%, 0%, 17%);
+  --white-0-0-29: hsla(var(--white-base), 0%, 0%, 29%);
+  --white-0-0-32: hsla(var(--white-base), 0%, 0%, 32%);
+  --white-0-81-32: hsla(var(--white-base), 0%, 81%, 32%);
+  --white-0-13: hsla(var(--white-base), 0%, 13%, 100%);
+  --white-0-21: hsla(var(--white-base), 0%, 21%, 100%);
+  --white-0-27: hsla(var(--white-base), 0%, 27%, 100%);
+  --white-0-29: hsla(var(--white-base), 0%, 29%, 100%);
+  --white-0-31: hsla(var(--white-base), 0%, 31%, 100%);
+  --white-2-47: hsla(var(--white-base), 2%, 47%, 100%);
+  --white-0-78: hsla(var(--white-base), 0%, 78%, 100%);
+  --white-0-50: hsla(var(--white-base), 0%, 50%, 100%);
+  --white-0-61: hsla(var(--white-base), 0%, 61%, 100%);
+  --white-0-69: hsla(var(--white-base), 0%, 69%, 100%);
+  --white-0-75: hsla(var(--white-base), 0%, 75%, 100%);
+  --white-0-80: hsla(var(--white-base), 0%, 80%, 100%);
+  --white-0-83: hsla(var(--white-base), 0%, 83%, 100%);
+  --white-0-86: hsla(var(--white-base), 0%, 86%, 100%);
+  --white-0-89: hsla(var(--white-base), 0%, 89%, 100%);
+  --white-0-93: hsla(var(--white-base), 0%, 93%, 100%);
+  --white-0-97: hsla(var(--white-base), 0%, 97%, 100%);
+  --white-0-90: hsla(var(--white-base), 0%, 90%, 100%);
+  --white-0-77: hsla(var(--white-base), 0%, 77%, 100%);
+  --white-0-0-64: hsla(var(--white-base), 0%, 0%, 64%);
+  --white-0-5-2: hsla(var(--white-base), 0%, 5%, 20%);
+  --white-0-9: hsla(var(--white-base), 0%, 9%, 100%);
+  --white-16-86: hsla(var(--white-base), 16%, 86%, 100%);
+  --white-24-34-0: hsla(var(--white-base), 24%, 34%, 0%);
+  --white-55-96: hsla(var(--white-base), 55%, 96%, 100%);
+
+  // --white-70: hsla(var(--white-base), 100%, 70%, 100%);
+  // --white-80: hsla(var(--white-base), 100%, 80%, 100%);
+  // --white-90: hsla(var(--white-base), 100%, 90%, 100%);
+  --white-0-95: hsla(var(--white-base), 0%, 95%, 100%);
+  // --white-100: hsla(var(--white-base), 100%, 100%, 100%);
+  --white-100-a-658: hsla(var(--white-base), 0%, 100%, 0.658);
+  --white-0-100-90: hsla(var(--white-base), 0%, 100%, 90%);
+  --white-0-0-12: hsla(var(--white-base), 0%, 0%, 12%);
+  --white-0-0-14: hsla(var(--white-base), 0%, 0%, 14%);
+  --white-0-100-0: hsla(var(--white-base), 0%, 100%, 0);
+  --white-100-50-2: hsla(var(--white-base), 100%, 50%, 2%);
+  --white-100: hsla(var(--white-base), 0%, 100%, 100%);
+
+  --black-0: hsla(var(--white-base), 0%, 0%, 100%);
+
+  --light-base: 222;
+  --light-98: hsla(var(--light-base), 100%, 98%, 100%);
+  --lightgray: hsla(var(--white-base), 0%, 83%, 100%);
+
+  --crimson: hsla(348, 83%, 47%, 100%);
+  --red-100-45: hsla(var(--white-base), 100%, 45%, 100%);
+  --red-100-49: hsla(var(--white-base), 100%, 49%, 100%);
+  --red-100-50: hsla(var(--white-base), 100%, 50%, 100%);
+  --red-100-61: hsla(var(--white-base), 100%, 61%, 100%);
+  --red-83-54: hsla(var(--white-base), 83%, 54%, 100%);
+
+  // base green 
+  --green: 160;
+  --g-41: hsla(var(--green), 100%, 41%, 100%);
+  --g-45: hsla(var(--green), 100%, 45%, 100%);
+  --g-49: hsla(var(--green), 100%, 49%, 100%);
+  --g-89-7: hsla(var(--green), 100%, 49%, 100%);
+  --g-23-61-45: hsla(var(--green), 23%, 61%, 45%);
+  --g-100-50-2: hsla(var(--green), 100%, 50%, 2%);
+  --g-100-25: hsla(120, 100%, 25%, 100%);
+
+  // VAPORWAVE BLUE
+  --wave-blue-base: 192;
+  --wave-blue-46: hsla(var(--wave-blue-base), 100%, 46%, 100%);
+  --wave-blue-58: hsla(var(--wave-blue-base), 100%, 58%, 100%);
+
+}
+
+//skelaton loader
+.loader{
+  background: rgb(255, 255, 255);
+  width:200px;
+  height: 70px;
+  background-image: linear-gradient(90deg, #e9e9e9 0px, #f7f7f7 30px, #ebebeb 60px);
+  background-size: 200%;
+  animation: skeleton 1s infinite ease-out;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: calc(100%);
+  }
+  60%, 100% {
+    background-position: -100%;
+  }
+}
