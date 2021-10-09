@@ -76,13 +76,10 @@ function TextFieldSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
   const hideAdminLabel = (e) => {
-    e.stopPropagation()
-    e.preventDefault()
-    console.log('hideadmin label')
-    if (!e.target.checked) {
-      fieldData.valid.hideAdminLbl = true
+    if (e.target.checked) {
+      fieldData.adminLbl = fieldData.lbl || fldKey
     } else {
-      delete fieldData.valid.hideAdminLbl
+      delete fieldData.adminLbl
     }
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
@@ -235,8 +232,6 @@ function TextFieldSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
-  console.log('fieldData', fieldData)
-
   return (
     <div className="">
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
@@ -250,11 +245,18 @@ function TextFieldSettings() {
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={hideAdminLabel}
-        toggleChecked={!fieldData.valid.hideAdminLbl}
+        toggleChecked={fieldData?.adminLbl != null}
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="Admin label for this Field" placeholder="Type Admin label here..." className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+          <input
+            aria-label="Admin label for this Field"
+            placeholder="Type Admin label here..."
+            className={css(FieldStyle.input)}
+            value={adminLabel}
+            type="text"
+            onChange={setAdminLabel}
+          />
         </div>
       </SimpleAccordion>
 
@@ -340,13 +342,13 @@ function TextFieldSettings() {
         )
       }
 
-      <FieldHideSettings cls={css(FieldStyle.fieldSection, ut.pr8)} />
+      <FieldHideSettings cls={css(FieldStyle.fieldSection, FieldStyle.singleOption)} />
 
       <hr className={css(FieldStyle.divider)} />
 
       {fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
         <>
-          <div className={css(FieldStyle.fieldSection, ut.pr8)}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}>
             <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} />
           </div>
           <hr className={css(FieldStyle.divider)} />
