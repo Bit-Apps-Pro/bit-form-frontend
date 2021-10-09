@@ -20,7 +20,7 @@ const renderer = createRenderer({
   plugins: [
     customProperty(customProperties),
   ],
-  filterClassName: cls => cls.indexOf('cp') !== -1 
+  filterClassName: cls => cls.indexOf('cp') !== -1,
 })
 
 // if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
