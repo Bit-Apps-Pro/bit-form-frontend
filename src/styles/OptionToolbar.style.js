@@ -19,7 +19,7 @@ const OptionToolBarStyle = {
     py: 4,
     fs: 12,
     fw: '600',
-    curp: 1, 
+    curp: 1,
     b: 'none',
     bd: 'transparent',
     brs: 10,
@@ -48,7 +48,7 @@ const OptionToolBarStyle = {
     mr: 2,
     zx: 1,
     ow: 'hidden',
-    curp: 1, 
+    curp: 1,
     pn: 'relative',
     cr: 'var(--b-54-12)',
     ':disabled': { oy: 0.4, cur: 'not-allowed' },
@@ -68,9 +68,7 @@ const OptionToolBarStyle = {
     bd: 'var(--b-20-93)',
   },
   option_right: { flx: 'center' },
-  rightSideBarBtn: {
-    ml: 15
-  }
+  rightSideBarBtn: { ml: 15 },
 }
 
 export default OptionToolBarStyle

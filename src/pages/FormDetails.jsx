@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
+import ShareBtn from '../components/ShareBtn'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
@@ -13,7 +14,6 @@ import SegmentControl from '../components/Utilities/SegmentControl'
 import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
-import app from '../styles/app.style'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { bitDecipher, hideWpMenu, showWpMenu } from '../Utils/Helpers'
@@ -281,6 +281,8 @@ function FormDetails() {
     }
   }
 
+  console.log(formType, 'form type')
+
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -331,6 +333,7 @@ function FormDetails() {
             />
           </div>
           <div className={css(navbar.btcd_bld_btn)}>
+            {formType === 'edit' && <ShareBtn /> }
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
             <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />

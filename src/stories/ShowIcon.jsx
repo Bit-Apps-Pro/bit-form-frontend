@@ -2,7 +2,9 @@
 /* eslint-disable react/button-has-type */
 import { useEffect, useState } from 'react'
 import AddIcon from '../Icons/AddIcon'
+import AllDeviceIcn from '../Icons/AllDeviceIcn'
 import APIIcon from '../Icons/APIIcon'
+import AtoZSortIcn from '../Icons/AtoZSortIcn'
 import BackIcn from '../Icons/BackIcn'
 import BdrDashIcn from '../Icons/BdrDashIcn'
 import BdrDottedIcn from '../Icons/BdrDottedIcn'
@@ -13,6 +15,7 @@ import BlurIcn from '../Icons/BlurIcn'
 import BrushIcn from '../Icons/BrushIcn'
 import BtnIcn from '../Icons/BtnIcn'
 import CheckBoxIcn from '../Icons/CheckBoxIcn'
+import CheckMarkIcn from '../Icons/CheckMarkIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import ChevronLeft from '../Icons/ChevronLeft'
 import ChevronRightIcon from '../Icons/ChevronRightIcon'
@@ -27,6 +30,7 @@ import DateIcn from '../Icons/DateIcn'
 import DateTimeIcn from '../Icons/DateTimeIcn'
 import DBIcn from '../Icons/DBIcn'
 import DecisionBoxIcn from '../Icons/DecisionBoxIcn'
+import DeSelectIcn from '../Icons/DeSelectIcn'
 import DocIcn from '../Icons/DocIcn'
 import DownloadIcon from '../Icons/DownloadIcon'
 import DropDownIcn from '../Icons/DropDownIcn'
@@ -43,6 +47,7 @@ import FocusIcn from '../Icons/FocusIcn'
 import FormIcn from '../Icons/FormIcn'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HeightIcn from '../Icons/HeightIcn'
+import HistoryIcn from '../Icons/HistoryIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
 import HWordinateIcn from '../Icons/HWordinateIcn'
 import ImageIcn from '../Icons/ImageIcn'
@@ -74,6 +79,7 @@ import RedoIcon from '../Icons/RedoIcon'
 import SearchIcon from '../Icons/SearchIcon'
 import Settings2 from '../Icons/Settings2'
 import SettingsIcn from '../Icons/SettingsIcn'
+import ShareIcn from '../Icons/ShareIcn'
 import SortIcn from '../Icons/SortIcn'
 import SpreadIcn from '../Icons/SpreadIcn'
 import StackIcn from '../Icons/StackIcn'
@@ -135,6 +141,36 @@ export default function ShowIcon() {
       key: 'Menu Icon',
       icon: <MenuIcon size="30" />,
       com: '<MenuIcon size="30" />',
+    },
+    {
+      key: 'A to Z Sort',
+      icon: <AtoZSortIcn />,
+      com: '<AtoZSortIcn size="30" />',
+    },
+    {
+      key: 'Check Mark',
+      icon: <CheckMarkIcn />,
+      com: '<CheckMarkIcn size="30" />',
+    },
+    {
+      key: 'Share Icon',
+      icon: <ShareIcn />,
+      com: '<ShareIcn size="30" />',
+    },
+    {
+      key: 'History',
+      icon: <HistoryIcn />,
+      com: '<HistoryIcn size="30" />',
+    },
+    {
+      key: 'DeSelect',
+      icon: <DeSelectIcn />,
+      com: '<DeSelectIcn size="30" />',
+    },
+    {
+      key: 'All Device',
+      icon: <AllDeviceIcn />,
+      com: '<AllDeviceIcn size="30" />',
     },
     {
       key: 'Ip Block Icon',

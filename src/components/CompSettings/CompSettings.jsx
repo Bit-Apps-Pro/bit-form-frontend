@@ -35,15 +35,7 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { formType, formID } = useParams()
   // const [scrollTopShadow, setScrollTopShadow] = useState(false)
 
-  // const TabLink = ({ title, sub, icn, link }) => (
-  //   <NavLink to={`/form/builder/${formType}/${formID}/${link}`} activeClassName="s-t-l-active" className="btcd-s-tab-link active flx w-5 ">
-  //     {typeof icn === 'string' ? <span className={`btcd-icn icn-${icn} mr-2`} /> : icn}
-  //     <div className="d-in-b">
-  //       <div className="title">{title}</div>
-  //       <div className="sub">{sub}</div>
-  //     </div>
-  //   </NavLink>
-  // )
+
 
   // const onSettingScroll = ({ target: { scrollTop } }) => {
   //   scrollTop > 20 ? setScrollTopShadow(true) : setScrollTopShadow(false)

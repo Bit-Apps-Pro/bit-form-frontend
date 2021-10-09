@@ -30,7 +30,7 @@ const context = {
     flx: 'align-center',
     pn: 'relative',
     bc: 'var(--white-100)',
-    curp: 1, 
+    curp: 1,
     '&:hover': {
       bc: 'var(--white-0-93)',
       '& svg': { fr: 'drop-shadow(1px 1px 0.5px #b3b3b3)' },
@@ -52,6 +52,7 @@ const context = {
       },
     },
   },
+  btnColor: { cr: 'var(--b-50)' },
 
   delete: { '&:hover': { cr: 'var(--red-100-49)' } },
 }
