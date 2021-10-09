@@ -44,7 +44,13 @@ export default function FieldLabelSettings() {
       toggleChecked={!fieldData.valid.hideLbl}
       open
     >
-      <input className={`${css(FieldStyle.input)}`} type="text" onChange={setLabel} value={label} />
+      <input
+        className={`${css(FieldStyle.input)}`}
+        aria-label="Field Label input"
+        type="text"
+        onChange={setLabel}
+        value={label}
+      />
     </SimpleAccordion>
   )
 }

@@ -23,10 +23,26 @@ export default function SimpleAccordion({ className, title, toggleName, children
 
   const { css } = useFela()
 
-  const toggleAccordion = (val) => {
-    console.log('toogle acc')
-    setTgl(val)
-    val && onOpen()
+  const toggleAccordion = (e) => {
+    e.preventDefault()
+    if (e.type === 'keypress') {
+      if (e.code === 'Space' || e.code === 'Enter') {
+        setTgl(prv => !prv)
+        !tgl && onOpen()
+        return
+      }
+    }
+    if (e.type === 'keyup') {
+      if (e.code === 'Escape') {
+        setTgl(false)
+        onOpen(false)
+        return
+      }
+    }
+    if (e.type === 'click') {
+      setTgl(prv => !prv)
+      !tgl && onOpen()
+    }
   }
 
   // useEffect(() => {
@@ -37,13 +53,19 @@ export default function SimpleAccordion({ className, title, toggleName, children
   const cancelBubble = (e) => e.stopPropagation()
 
   return (
-    <div className={`${className} ${tgl && 'active'}`}>
+    <div
+      role="button"
+      tabIndex={0}
+      onKeyUp={toggleAccordion}
+      onKeyPress={toggleAccordion}
+      className={`${className} ${tgl && 'active'}`}
+    >
       <div
         className="btgl w-10"
-        tabIndex="0"
+        tabIndex="-1"
         role="button"
-        onClick={() => toggleAccordion(!tgl)}
-        onKeyPress={() => toggleAccordion(!tgl)}
+        onClick={toggleAccordion}
+        onKeyPress={toggleAccordion}
       >
         <div className={css(SimpleAccordionStyle.flxbwn)}>
           <span className={`title ${css(SimpleAccordionStyle.dflx)}`}>
@@ -57,10 +79,12 @@ export default function SimpleAccordion({ className, title, toggleName, children
             {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
           </span>
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <div onClick={cancelBubble} onKeyPress={cancelBubble} className={css(SimpleAccordionStyle.flxbwn)}>
-            {switching && (
-              <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
-            )}
+          <div className={css(SimpleAccordionStyle.flxbwn)}>
+            <div onClick={cancelBubble} onKeyPress={cancelBubble}>
+              {switching && (
+                <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
+              )}
+            </div>
             <ChevronDownIcn className="toggle-icn" size="20" rotate={!!tgl} />
           </div>
         </div>
@@ -76,7 +100,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
           onExiting={() => setH(0)}
           unmountOnExit
         >
-          <div className="body">
+          <div className="body" onClick={cancelBubble} onKeyPress={cancelBubble}>
             {children}
           </div>
         </CSSTransition>
