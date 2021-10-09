@@ -24,7 +24,11 @@ export default function ShareBtn({ shotCode }) {
 }
 
 const style = {
-  title: { fs: 12, mb: 5 },
+  title: {
+    fs: 12,
+    mb: 5,
+    fw: 500,
+  },
   shareIcn: {
     bd: 'none',
     oe: 'none',
@@ -43,5 +47,8 @@ const style = {
     w: 200,
     p: 10,
   },
-  downmenuinput: { w: '100% !important' },
+  downmenuinput: {
+    w: '100% !important',
+    fs: 12,
+  },
 }
