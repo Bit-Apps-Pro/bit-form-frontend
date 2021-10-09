@@ -67,7 +67,6 @@ const navbar = {
     tn: 'color 0.5s !important',
     '&:hover': { cr: 'var(--red-100-61) !important' },
   },
-
   btn: {
     fw: 500,
     bd: 'var(--g-45)',
