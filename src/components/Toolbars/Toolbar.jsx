@@ -441,16 +441,12 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       return fa < fb ? -1 : 1
     })
     setSortedTools(tools)
-    setSearchData([])
+    console.log(sortedTools)
   }
-  console.log(sortedTools)
 
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
-      {/* <div className="btcd-toolbar-title">
-        {!tolbarSiz && 'Tool Bar'}
-        <button className="icn-btn toolbar-btn" onClick={setTolbar} type="button" aria-label="Toggle Toolbar"><span className={`btcd-icn icn-${tolbarSiz ? 'chevron-right' : 'chevron-left'}`} /></button>
-      </div> */}
+
       <div className={css(ut.flxc)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '100%' : '70%' }}>
           <input

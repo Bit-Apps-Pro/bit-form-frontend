@@ -1,22 +1,21 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
 import { useFela } from 'react-fela'
+import { NavLink, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $breakpoint } from '../GlobalStates'
 import AddIcon from '../Icons/AddIcon'
+import BrushIcn from '../Icons/BrushIcn'
+import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
-import { __ } from '../Utils/i18nwrap'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
-import EditIcn from '../Icons/EditIcn'
-import BrushIcn from '../Icons/BrushIcn'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()

@@ -1,12 +1,16 @@
+import LaptopIcn from '../../../../Icons/LaptopIcn'
+import MobileIcon from '../../../../Icons/MobileIcon'
+import TabletIcon from '../../../../Icons/TabletIcon'
 import { __ } from '../../../../Utils/i18nwrap'
 
 export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
   return (
     <div className="resp-btn pos-rel flx">
+
       {[
-        { lbl: 'sm', icn: 'phone_android', tip: __('Phone View', 'bitform') },
-        { lbl: 'md', icn: 'tablet_android', tip: __('Tablet View', 'bitform') },
-        { lbl: 'lg', icn: 'laptop_mac', tip: __('Laptop View', 'bitform') }]
+        { lbl: 'sm', icn: <MobileIcon size="15" />, tip: __('Phone View', 'bitform') },
+        { lbl: 'md', icn: <TabletIcon size="15" />, tip: __('Tablet View', 'bitform') },
+        { lbl: 'lg', icn: <LaptopIcn size="17" />, tip: __('Laptop View', 'bitform') }]
         .map(itm => (
           <button
             key={itm.icn}
@@ -16,7 +20,7 @@ export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
             type="button"
             aria-label="reponcive view"
           >
-            <span className={`btcd-icn icn-${itm.icn}`} />
+            {itm.icn}
           </button>
         ))}
     </div>

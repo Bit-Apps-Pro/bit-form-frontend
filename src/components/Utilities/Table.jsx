@@ -19,6 +19,7 @@ import ToggleLeftIcn from '../../Icons/ToggleLeftIcn'
 import CopyIcn from '../../Icons/CopyIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import SortIcn from '../../Icons/SortIcn'
+import EyeOffIcon from '../../Icons/EyeOffIcon'
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -63,7 +64,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
-    <Menu icn="icn-remove_red_eye">
+    <Menu icn={<EyeOffIcon size="20" />}>
       <Scrollbars autoHide style={{ width: 200 }}>
         <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
           {tableCol.map((column, i) => (
@@ -103,51 +104,51 @@ function Table(props) {
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder } = useTable({
-    debug: true,
-    fetchData,
-    columns,
-    data,
-    manualPagination: typeof props.pageCount !== 'undefined',
-    pageCount: props.pageCount,
-    initialState: {
-      pageIndex: 0,
-      hiddenColumns: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'hiddenColumns' in reportData.details) ? reportData.details.hiddenColumns : [],
-      pageSize: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'pageSize' in reportData.details) ? reportData.details.pageSize : 10,
-      sortBy: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'sortBy' in reportData.details) ? reportData.details.sortBy : [],
-      filters: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'filters' in reportData.details) ? reportData.details.filters : [],
-      globalFilter: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'globalFilter' in reportData.details) ? reportData.details.globalFilter : '',
-      columnOrder: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'order' in reportData.details) ? reportData.details.order : [],
-    },
-    autoResetPage: false,
-    autoResetHiddenColumns: false,
-    autoResetSortBy: false,
-    autoResetFilters: false,
-    autoResetGlobalFilter: false,
-  },
-  useFilters,
-  useGlobalFilter,
-  useSortBy,
-  usePagination,
-  useSticky,
-  useColumnOrder,
-  // useBlockLayout,
-  useFlexLayout,
-  props.resizable ? useResizeColumns : '', // resize
-  props.rowSeletable ? useRowSelect : '', // row select
-  props.rowSeletable ? (hooks => {
-    hooks.allColumns.push(cols => [
-      {
-        id: 'selection',
-        width: 50,
-        maxWidth: 50,
-        minWidth: 67,
-        sticky: 'left',
-        Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
-        Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+      debug: true,
+      fetchData,
+      columns,
+      data,
+      manualPagination: typeof props.pageCount !== 'undefined',
+      pageCount: props.pageCount,
+      initialState: {
+        pageIndex: 0,
+        hiddenColumns: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'hiddenColumns' in reportData.details) ? reportData.details.hiddenColumns : [],
+        pageSize: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'pageSize' in reportData.details) ? reportData.details.pageSize : 10,
+        sortBy: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'sortBy' in reportData.details) ? reportData.details.sortBy : [],
+        filters: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'filters' in reportData.details) ? reportData.details.filters : [],
+        globalFilter: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'globalFilter' in reportData.details) ? reportData.details.globalFilter : '',
+        columnOrder: (reportData && 'details' in reportData && typeof reportData.details === 'object' && 'order' in reportData.details) ? reportData.details.order : [],
       },
-      ...cols,
-    ])
-  }) : '')
+      autoResetPage: false,
+      autoResetHiddenColumns: false,
+      autoResetSortBy: false,
+      autoResetFilters: false,
+      autoResetGlobalFilter: false,
+    },
+      useFilters,
+      useGlobalFilter,
+      useSortBy,
+      usePagination,
+      useSticky,
+      useColumnOrder,
+      // useBlockLayout,
+      useFlexLayout,
+      props.resizable ? useResizeColumns : '', // resize
+      props.rowSeletable ? useRowSelect : '', // row select
+      props.rowSeletable ? (hooks => {
+        hooks.allColumns.push(cols => [
+          {
+            id: 'selection',
+            width: 50,
+            maxWidth: 50,
+            minWidth: 67,
+            sticky: 'left',
+            Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+            Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+          },
+          ...cols,
+        ])
+      }) : '')
   const [stateSavable, setstateSavable] = useState(false)
   const [search, setSearch] = useState(globalFilter)
   useEffect(() => {

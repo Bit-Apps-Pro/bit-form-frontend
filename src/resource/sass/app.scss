@@ -2682,28 +2682,28 @@ nav.top-nav {
   }
 }
 
-.btcd-mnu {
-  font-size: 22px;
+// .btcd-mnu {
+//   font-size: 22px;
 
-  &:hover {
-    // background: #f0f4ff;
-    background: var(--b-97);
-    color: var(--b-50);
-  }
+//   &:hover {
+//     // background: #f0f4ff;
+//     background: var(--b-97);
+//     color: var(--b-50);
+//   }
 
-  &::after {
-    content: "\02261";
-  }
+//   &::after {
+//     content: "\02261";
+//   }
 
-  &:focus {
-    background: var(--b-50);
-    color: var(--white);
-  }
+//   &:focus {
+//     background: var(--b-50);
+//     color: var(--white);
+//   }
 
-  &:focus::after {
-    content: "\000D7";
-  }
-}
+//   &:focus::after {
+//     content: "\000D7";
+//   }
+// }
 
 .btc-mdl-trn-enter {
   will-change: transform, border-radius;

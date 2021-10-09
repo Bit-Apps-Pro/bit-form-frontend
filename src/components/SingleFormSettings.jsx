@@ -777,7 +777,6 @@ export default function SingleFormSettings() {
       <Accordions
         customTitle={(
           <b>
-            {/* <span className="btcd-icn icn-r-block mr-2" /> */}
             <span className="mr-2">
               <BlockIcn size="20" />
             </span>
@@ -808,7 +807,6 @@ export default function SingleFormSettings() {
       <Accordions
         customTitle={(
           <b>
-            {/* <span className="btcd-icn icn-lock mr-2" /> */}
             <span className="mr-2">
               <LockIcn size="18" />
             </span>
