@@ -42,6 +42,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const [searchData, setSearchData] = useState([])
   const [focusSearch, setfocusSearch] = useState(false)
   const [sortedTools, setSortedTools] = useState([])
+  const [isSorted, setIsSorted] = useState(false)
 
   const tools = [
     {
@@ -417,6 +418,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   }
 
   const searchHandler = (e) => {
+    setSortedTools([])
     let searchTool = e.target.value.trim()
     const searchItem = []
 
@@ -429,26 +431,35 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       setSearchData([])
     }
 
-    if (searchItem.length > 0) {
-      setSearchData(searchItem)
-    }
+    if (searchItem.length > 0) setSearchData(searchItem)
+
+    if (searchTool === '' && isSorted) sortTools()
   }
 
-  const sortingField = () => {
+  const sortTools = () => {
     tools.sort((a, b) => {
       const fa = a.name.toLowerCase()
       const fb = b.name.toLowerCase()
       return fa < fb ? -1 : 1
     })
+    setIsSorted(true)
     setSortedTools(tools)
-    console.log(sortedTools)
+  }
+
+  const sortingField = () => {
+    if (!isSorted) {
+      sortTools()
+    } else {
+      setIsSorted(false)
+      setSortedTools(tools)
+    }
   }
 
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
 
       <div className={css(ut.flxc)}>
-        <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '100%' : '70%' }}>
+        <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '62%' }}>
           <input
             aria-label="Search Field"
             placeholder="Search..."
@@ -465,19 +476,25 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </span>
           <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
         </div>
-        {!focusSearch && <button className={css(Toolbars.sort_btn)} type="button" onClick={sortingField} aria-label="Sort Fields">s</button>}
+        {!focusSearch && <button className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">s</button>}
       </div>
 
       {useMemo(() => (
         <Scrollbars autoHide style={{ maxWidth: 400 }}>
           <div className={css(Toolbars.tool_bar)}>
-            {searchData.length === 0 && tools.map(tool => (
+            {searchData.length === 0 && sortedTools.length === 0 && tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}
-            {searchData && searchData.map(tool => (
+            {sortedTools.length === 0 && searchData && searchData.map(tool => (
+              <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
+                <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
+                {!tolbarSiz && tool.name}
+              </Tools>
+            ))}
+            {searchData.length === 0 && sortedTools && sortedTools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}
@@ -486,7 +503,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </div>
         </Scrollbars>
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      ), [tolbarSiz, searchData])}
+      ), [tolbarSiz, searchData, isSorted, sortedTools])}
     </div>
   )
 }
