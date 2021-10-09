@@ -3,11 +3,12 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $fields, $selectedFieldId, $updateBtn } from '../GlobalStates'
+import AllDeviceIcn from '../Icons/AllDeviceIcn'
 import BrushIcn from '../Icons/BrushIcn'
-import CheckBoxIcn from '../Icons/CheckBoxIcn'
-import ChevronDownIcn from '../Icons/ChevronDownIcn'
+import CheckMarkIcn from '../Icons/CheckMarkIcn'
 import ChevronRightIcon from '../Icons/ChevronRightIcon'
 import CopyIcn from '../Icons/CopyIcn'
+import DeSelectIcn from '../Icons/DeSelectIcn'
 import EditIcn from '../Icons/EditIcn'
 import EyeOffIcon from '../Icons/EyeOffIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
@@ -75,7 +76,6 @@ export default function FieldContextMenu({ isContextMenu,
     if (resetContextMenu) resetContextMenu()
   }
 
-
   const generateContextMenuStyle = () => {
     if (isContextMenu && isComponentVisible) {
       if (contextMenu.fldKey) {
@@ -91,7 +91,7 @@ export default function FieldContextMenu({ isContextMenu,
         <ul className={css(context.list)}>
           <li className={css(context.item)}>
             <button type="button" className={css(context.btn)} onClick={deselectFieldId}>
-              <EditIcn size="19" />
+              <DeSelectIcn />
               <span>Deselect</span>
             </button>
           </li>
@@ -132,30 +132,30 @@ export default function FieldContextMenu({ isContextMenu,
                   <ul className={css(context.list)}>
                     <li className={css(context.item)}>
                       <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('all')}>
-                        <ChevronDownIcn size="19" />
+                        <AllDeviceIcn size="19" />
                         <span>Always</span>
-                        {checkIfHidden() && <CheckBoxIcn w="19" />}
+                        {checkIfHidden() && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
                       </button>
                     </li>
                     <li className={css(context.item)}>
                       <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('lg')}>
                         <LaptopIcn size="19" />
                         <span>Large</span>
-                        {checkIfHidden('lg') && <CheckBoxIcn w="19" />}
+                        {checkIfHidden('lg') && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
                       </button>
                     </li>
                     <li className={css(context.item)}>
                       <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('md')}>
                         <TabletIcon size="19" />
                         <span>Medium</span>
-                        {checkIfHidden('md') && <CheckBoxIcn w="19" />}
+                        {checkIfHidden('md') && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
                       </button>
                     </li>
                     <li className={css(context.item)}>
                       <button type="button" className={css(context.btn, context.checked)} onClick={() => handleFieldHide('sm')}>
                         <MobileIcon size="18" />
                         <span>Small</span>
-                        {checkIfHidden('sm') && <CheckBoxIcn w="19" />}
+                        {checkIfHidden('sm') && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
                       </button>
                     </li>
                   </ul>

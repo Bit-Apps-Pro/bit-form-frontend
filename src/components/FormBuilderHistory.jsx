@@ -5,6 +5,7 @@ import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalS
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import RedoIcon from '../Icons/RedoIcon'
 import UndoIcon from '../Icons/UndoIcon'
+import HistoryIcn from '../Icons/HistoryIcn'
 import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
@@ -111,7 +112,10 @@ export default function FormBuilderHistory({ }) {
           </button>
 
           <div className={css(builderHistoryStyle.menu)}>
-            <p className={css(builderHistoryStyle.title)}>History</p>
+            <p className={css(builderHistoryStyle.title)}>
+              <span className={css(ut.mr1)}><HistoryIcn size="15" /></span>
+              History
+            </p>
             {!histories.length && (
               <span className={css(builderHistoryStyle.secondary)}>
                 no data found

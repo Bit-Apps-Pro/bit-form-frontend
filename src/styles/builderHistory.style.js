@@ -1,6 +1,7 @@
 const builderHistoryStyle = {
   menu: { mnw: 150 },
   title: {
+    flx: 'align-center',
     mt: 0,
     mb: 5,
     pb: 2,

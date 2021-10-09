@@ -72,11 +72,12 @@ const Toolbars = {
   },
   sort_btn: {
     w: 25,
-    h: 25,
+    h: 30,
     b: 'none',
     brs: 6,
     flxc: 1,
     curp: 1,
+    flx: 'center',
     ':hover': { bd: 'red' },
     '&.active': {
       bd: 'var(--b-79-96)',

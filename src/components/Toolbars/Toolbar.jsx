@@ -23,6 +23,7 @@ import PasswordIcn from '../../Icons/PasswordIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
+import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import TextareaIcn from '../../Icons/TextareaIcn'
@@ -459,7 +460,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
 
       <div className={css(ut.flxc)}>
-        <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '62%' }}>
+        <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%' }}>
           <input
             aria-label="Search Field"
             placeholder="Search..."
@@ -476,7 +477,12 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           </span>
           <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
         </div>
-        {!focusSearch && <button className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">s</button>}
+        {!focusSearch
+          && (
+            <button className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">
+              <AtoZSortIcn size="25" />
+            </button>
+          )}
       </div>
 
       {useMemo(() => (
