@@ -1,34 +1,31 @@
 import { useFela } from 'react-fela'
-import { hideAll } from 'tippy.js'
+import { useSetRecoilState } from 'recoil'
+import { $draggableModal } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import ut from '../../styles/2.utilities'
-import DownMenu from '../Utilities/Downmenu'
+import { showDraggableModal } from '../CompSettings/StyleCustomize/styleEditorHelpers'
 
 export default function SimpleColorPicker() {
   const { css } = useFela()
+  const setDraggableModal = useSetRecoilState($draggableModal)
+
   return (
-    <div>
-      <DownMenu place="left">
-        <div className={css(c.preview_wrp)}>
-          <button type="button" className={css(c.pickrBtn)}>
-            <div className={css(c.preview)} />
-            <span className={css(c.clrVal)}>#ssdasdasdasdf98s</span>
-          </button>
-          <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
-            <CloseIcn size="12" />
-          </button>
-        </div>
-        <div className={css([ut.flxcb, c.container])}>
-          <span>Color Picker</span>
-          <button onClick={hideAll} type="button" aria-label="Close Color picker"><CloseIcn size="20" /></button>
-        </div>
-      </DownMenu>
+    <div className={css(c.preview_wrp)}>
+      <button
+        onClick={e => showDraggableModal(e, setDraggableModal, 'color-picker', 250)}
+        type="button"
+        className={css(c.pickrBtn)}
+      >
+        <div className={css(c.preview)} />
+        <span className={css(c.clrVal)}>#ssdasdasdasdf98s</span>
+      </button>
+      <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+        <CloseIcn size="12" />
+      </button>
     </div>
   )
 }
 
 const c = {
-  container: { w: 300 },
   preview_wrp: {
     bd: 'var(--white-0-95)',
     w: 150,
