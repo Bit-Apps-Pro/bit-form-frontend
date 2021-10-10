@@ -20,7 +20,7 @@ const optionmenu = {
     rt: 0,
     cr: 'black',
     '&:hover': { bd: 'var(--white-0-97)' },
-    '&focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
+    '&:focus-visible': { bs: '0 0 0 2px var(--b-50) inset' },
   },
   btnActive: { bs: 'none' },
   dropDown: {
