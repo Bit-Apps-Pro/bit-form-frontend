@@ -18,6 +18,7 @@ const customProperties = {
   dy: $ => ({ display: $ }),
   flxp: $ => ({ flexWrap: 'wrap' }),
   bsz: $ => ({ boxSizing: $ }),
+  vy: $ => ({ visibility: $ }),
 
   pe: $ => ({ pointerEvents: $ }),
   us: () => ({
