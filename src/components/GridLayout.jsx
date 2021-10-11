@@ -53,7 +53,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const history = useHistory()
   const { reRenderGridLayoutByRootLay } = builderHelperStates
 
-  useEffect(() => { setLayouts(rootLayouts); setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: false })) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => { margeNewData() }, [newData, fields])
 

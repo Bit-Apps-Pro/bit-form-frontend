@@ -189,7 +189,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             history.replace(`/form/builder/edit/${data.id}/fs`)
           }
           setLay(layouts)
-          setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: true }))
+          setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)

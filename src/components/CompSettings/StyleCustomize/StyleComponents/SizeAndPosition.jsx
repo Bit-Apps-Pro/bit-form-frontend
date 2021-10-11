@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $layouts, $updateBtn } from '../../../../GlobalStates'
+import { $breakpoint, $builderHelperStates, $layouts, $updateBtn } from '../../../../GlobalStates'
 import ut from '../../../../styles/2.utilities'
 import FieldStyle from '../../../../styles/FieldStyle.style'
 import SimpleAccordion from '../ChildComp/SimpleAccordion'
@@ -13,6 +13,7 @@ function SizeAndPosition({ fieldKey }) {
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const breakpoint = useRecoilValue($breakpoint)
   const fieldSize = layouts[breakpoint].find(fl => (fl.i === fieldKey))
+  const setBuilderHelperStates = useSetRecoilState($builderHelperStates)
 
   // console.log(layouts)]
 
@@ -32,6 +33,7 @@ function SizeAndPosition({ fieldKey }) {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
       draft[breakpoint][layIndex].x = val
     }))
+    setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn({ unsaved: true })
   }
   const wHandler = (e) => {
