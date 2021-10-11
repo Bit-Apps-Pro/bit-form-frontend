@@ -37,9 +37,7 @@ export const $styles = atom({
     fields: {
       'bf9-3-': {
         theme: 'default_blue',
-        themeVars: {
-          '--primary-color': '--global-primary-color'
-        },
+        themeVars: { '--primary-color': '--global-primary-color' },
         classes: {
           'bf9-3--fw': {
             background: 'Red',

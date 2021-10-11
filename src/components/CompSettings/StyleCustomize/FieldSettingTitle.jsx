@@ -4,6 +4,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CoolCopy from '../../Utilities/CoolCopy'
 import Back2FldBtn from '../Back2FldBtn'
 import style from '../../../styles/FieldSettingTitle.style'
+import SizeAndPosition from './StyleComponents/SizeAndPosition'
 
 export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
   const { css } = useFela()
@@ -24,6 +25,8 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
         <CoolCopy value={fieldKey} />
       </div>
 
+      <hr className={css(style.divider)} />
+      <SizeAndPosition fieldKey={fieldKey} />
       <hr className={css(style.divider)} />
     </>
   )

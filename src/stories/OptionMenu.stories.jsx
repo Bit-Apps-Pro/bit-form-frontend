@@ -1,4 +1,4 @@
-import OptionMenu from '../components/Utilities/OptionMenu'
+import OptionMenu from './OptionMenu'
 
 export default {
   title: 'Example/OptionMenu',
