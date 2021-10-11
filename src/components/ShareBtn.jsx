@@ -5,7 +5,7 @@ import ut from '../styles/2.utilities'
 import CoolCopy from './Utilities/CoolCopy'
 import Downmenu from './Utilities/Downmenu'
 
-export default function ShareBtn({ shotCode }) {
+export default function ShareBtn() {
   const { css } = useFela()
   const { formID } = useParams()
   console.log(formID)
@@ -13,7 +13,7 @@ export default function ShareBtn({ shotCode }) {
     <Downmenu>
       <button type="button" className={css(style.shareIcn)}>
         Share
-        <span className={css(ut.ml1)}><ShareIcn size="15" /></span>
+        <span className={css(ut.ml1)}><ShareIcn size="12" /></span>
       </button>
       <div className={css(style.downmenu)}>
         <div className={css(style.title)}>Short Code</div>
@@ -25,9 +25,9 @@ export default function ShareBtn({ shotCode }) {
 
 const style = {
   title: {
-    fs: 12,
+    fs: 14,
     mb: 5,
-    fw: 500,
+    fw: 600,
   },
   shareIcn: {
     bd: 'none',
@@ -41,11 +41,13 @@ const style = {
     px: 10,
     py: 5,
     brs: 8,
+    curp: 1,
     ':hover': { bd: 'var(--b-35-33)' },
   },
   downmenu: {
     w: 200,
-    p: 10,
+    px: 5,
+    py: 8,
   },
   downmenuinput: {
     w: '100% !important',

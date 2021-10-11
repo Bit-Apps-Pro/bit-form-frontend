@@ -462,6 +462,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       <div className={css(ut.flxc)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%' }}>
           <input
+            title="Search Field"
             aria-label="Search Field"
             placeholder="Search..."
             id="search-icon"
@@ -472,15 +473,15 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             onBlur={() => setfocusSearch(false)}
             className={css(Toolbars.search_field)}
           />
-          <span className={css(Toolbars.search_icn)}>
+          <span title="search" className={css(Toolbars.search_icn)}>
             <SearchIcon size="20" />
           </span>
           <div className={`${css(Toolbars.shortcut)} shortcut`} title={'Press "/" to focus search'}>/</div>
         </div>
         {!focusSearch
           && (
-            <button className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">
-              <AtoZSortIcn size="25" />
+            <button title="Sort by ascending order" className={`${css(Toolbars.sort_btn)} ${isSorted && 'active'}`} type="button" onClick={sortingField} aria-label="Sort Fields">
+              <AtoZSortIcn size="20" />
             </button>
           )}
       </div>
@@ -488,19 +489,19 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       {useMemo(() => (
         <Scrollbars autoHide style={{ maxWidth: 400 }}>
           <div className={css(Toolbars.tool_bar)}>
-            {searchData.length === 0 && sortedTools.length === 0 && tools.map(tool => (
+            {!searchData.length && !sortedTools.length && tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}
-            {sortedTools.length === 0 && searchData && searchData.map(tool => (
+            {!sortedTools.length && searchData && searchData.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}
               </Tools>
             ))}
-            {searchData.length === 0 && sortedTools && sortedTools.map(tool => (
+            {!searchData.length && sortedTools && sortedTools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
                 {!tolbarSiz && tool.name}

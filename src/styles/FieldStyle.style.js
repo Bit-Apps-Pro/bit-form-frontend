@@ -90,7 +90,7 @@ const FieldStyle = {
       },
     },
   },
-  singleOption: { pr: 36 },
+  singleOption: { pr: '36px !important' },
 }
 
 export default FieldStyle

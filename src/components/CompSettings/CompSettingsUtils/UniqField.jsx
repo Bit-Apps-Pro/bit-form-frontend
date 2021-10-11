@@ -83,40 +83,36 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
             </h4>
             <SingleToggle name={isUnique} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
           </div> */}
-        {fieldData?.err?.[type]?.[isUnique] && (
-          <>
-            <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
-              <div className={css(ErrorMessages.flx)}>
-                <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} disabled={!bits.isPro} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
-                <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
-                  <div className={css(ErrorMessages.tipBody)}>
-                    Check the box to enable the custom error message.
-                    <br />
-                    Note: You can edit the message by clicking on edit icon.
-                  </div>
-                </Cooltip>
-                {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
-              </div>
-              <span
-                role="button"
-                tabIndex="-1"
-                className={css(ErrorMessages.btn)}
-                onClick={openErrorModal}
-                onKeyPress={openErrorModal}
-              >
-                <EditIcn size={19} />
-              </span>
-
+        <>
+          <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
+            <div className={css(ErrorMessages.flx)}>
+              <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} disabled={!bits.isPro} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
+              <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+                <div className={css(ErrorMessages.tipBody)}>
+                  Check the box to enable the custom error message.
+                  <br />
+                  Note: You can edit the message by clicking on edit icon.
+                </div>
+              </Cooltip>
+              {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
             </div>
-            {!$bits.isPro && (
-              <div
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: errMsg }}
-                className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
-              />
-            )}
-          </>
-        )}
+            <span
+              role="button"
+              tabIndex="-1"
+              className={css(ErrorMessages.btn)}
+              onClick={openErrorModal}
+              onKeyPress={openErrorModal}
+            >
+              <EditIcn size={19} />
+            </span>
+
+          </div>
+          <div
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: errMsg }}
+            className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
+          />
+        </>
 
         <CustomErrorMessageModal
           errorModal={errorModal}

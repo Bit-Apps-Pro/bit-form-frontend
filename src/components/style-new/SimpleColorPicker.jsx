@@ -28,7 +28,8 @@ export default function SimpleColorPicker() {
 const c = {
   preview_wrp: {
     bd: 'var(--white-0-95)',
-    w: 150,
+    w: 130,
+    mnw: 130,
     brs: 10,
     p: 3,
     flx: 'center-between',
@@ -60,7 +61,7 @@ const c = {
     p: 0,
   },
   clrVal: {
-    w: 80,
+    w: 70,
     textOverflow: 'ellipsis',
     ow: 'hidden',
   },

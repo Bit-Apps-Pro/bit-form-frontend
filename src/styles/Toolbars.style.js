@@ -7,7 +7,7 @@ const Toolbars = {
     mnw: 55,
     px: 3,
     pt: 14,
-    pb: 35,
+    pb: 140,
     tn: 'width 500ms',
   },
   fields_search: {
@@ -69,17 +69,20 @@ const Toolbars = {
     owy: 'scroll',
     px: 2,
     pt: 5,
-    pb: 40
+    pb: 40,
   },
   sort_btn: {
     w: 25,
     h: 30,
+    cr: 'var(--b-54-12)',
+    p: 0,
     b: 'none',
-    brs: 6,
+    bd: 'transparent',
+    brs: 8,
     flxc: 1,
     curp: 1,
     flx: 'center',
-    ':hover': { bd: 'red' },
+    ':hover:not(.active)': { bd: 'var(--white-0-81-32)' },
     '&.active': {
       bd: 'var(--b-79-96)',
       cr: 'var(--b-50)',

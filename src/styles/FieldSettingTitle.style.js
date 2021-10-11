@@ -24,11 +24,12 @@ const style = {
     mx: 10,
     bb: '0.5px soild var(--white-0-83)',
   },
-  subtitle: { fs: 12, fw: 500 },
+  subtitle: { fs: 12, fw: 400 },
   btn: {
     oe: 'none',
-    flx: 'center-between',
+    flx: 'center',
     tn: 'background 0.2s',
+    lh: 1.2,
     // b: '1px solid var(--white-0-89)',
     // bc: 'var(--white-0-97)',
     bc: 'none',
@@ -42,7 +43,9 @@ const style = {
     ml: '-5px',
     mb: 5,
     fw: 400,
-    '&:hover': { bc: 'var(--white-0-97) !important' },
+    fs: 12,
+    ':hover': { cr: 'var(--b-50)' },
+    ':focus-visible': { focusShadow: 1 },
   },
 }
 export default style

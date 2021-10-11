@@ -17,7 +17,7 @@ function Back2FldBtn({ className, size }) {
       onKeyPress={() => setSelectedFieldId(null)}
     >
       <ChevronLeft size={size} />
-      {__('Back', 'bitform')}
+      <span>{__('Back to fields list', 'bitform')}</span>
     </button>
   )
 }

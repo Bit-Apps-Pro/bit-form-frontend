@@ -113,7 +113,7 @@ export default function FormBuilderHistory({ }) {
 
           <div className={css(builderHistoryStyle.menu)}>
             <p className={css(builderHistoryStyle.title)}>
-              <span className={css(ut.mr1)}><HistoryIcn size="15" /></span>
+              <span className={css(ut.mr1)}><HistoryIcn size="20" /></span>
               History
             </p>
             {!histories.length && (

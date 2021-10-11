@@ -10,7 +10,7 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
   return (
     <>
       <div className={css(style.section, style.flxColumn)}>
-        <Back2FldBtn size="20" className={css(style.btn)} />
+        <Back2FldBtn size="16" className={css(style.btn, ut.fontBody)} />
         <div>
           <div className={css(style.mainTitle)}>{__(title, 'bitform')}</div>
           <span className={css(style.subtitle, ut.fontBody)}>{__(subtitle[0].toUpperCase() + subtitle.slice(1), 'bitform')}</span>
@@ -19,7 +19,7 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
 
       <hr className={css(style.divider)} />
 
-      <div className={css(style.section)}>
+      <div className={css(style.section, { mx: 15 })}>
         <span className={css(style.title)}>Field key</span>
         <CoolCopy value={fieldKey} />
       </div>

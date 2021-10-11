@@ -6,6 +6,8 @@ const builderHistoryStyle = {
     mb: 5,
     pb: 2,
     bb: '1px solid var(--lightgray)',
+    fs: 14,
+    fw: 600,
   },
   secondary: {
     dy: 'block',
@@ -31,7 +33,7 @@ const builderHistoryStyle = {
     brs: 8,
     flx: 'align-center',
     bc: 'var(--white-100)',
-    curp: 1, 
+    curp: 1,
     '&:hover': { bc: 'var(--white-0-93)' },
     '&:focus-visible': {
       oe: 'none',
