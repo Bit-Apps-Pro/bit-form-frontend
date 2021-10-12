@@ -10,6 +10,11 @@ const Toolbars = {
     pb: 140,
     tn: 'width 500ms',
   },
+  searchBar: {
+    bs: '0 2px 8px -2px black',
+    pn: 'relative',
+    zx: 99,
+  },
   fields_search: {
     pn: 'relative',
     ml: 7,

@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
-import ShareBtn from '../components/ShareBtn'
+import PublishBtn from '../components/PublishBtn'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
@@ -333,7 +333,7 @@ function FormDetails() {
             />
           </div>
           <div className={css(navbar.btcd_bld_btn)}>
-            {formType === 'edit' && <ShareBtn /> }
+            {formType === 'edit' && <PublishBtn /> }
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
             <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />

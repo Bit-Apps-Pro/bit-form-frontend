@@ -23,7 +23,8 @@ export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
 export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [], active: 0 } })
 export const $draggableModal = atom({ key: '$draggableModal', default: { show: false, component: null, position: { x: 0, y: 0 }, width: 250 } })
-export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { forceBuilderWidthToLG: 0, respectLGLayoutOrder: true, reRenderGridLayoutByRootLay: false } })
+export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { forceBuilderWidthToLG: 0, respectLGLayoutOrder: true, reRenderGridLayoutByRootLay: false, styleMood: false } })
+export const $flags = atom({ key: '$flags', default: { saveStyle: true } })
 export const $styles = atom({
   key: '$styles',
   default: {
