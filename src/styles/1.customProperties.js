@@ -27,6 +27,11 @@ const customProperties = {
     '-moz-user-select': 'none',
     '-ms-user-select': 'none',
   }),
+  ae: $ => ({
+    appearance: $ || 'none',
+    '-webkit-appearance': $ || 'none',
+    '-moz-appearance': $ || 'none',
+  }),
   fr: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
   ls: $ => ({ listStyle: $ }),

@@ -29,7 +29,6 @@ const customInputControlStyle = {
   inputcontainer: {
     dy: 'inline-block',
     h: '100%',
-    w: '50%',
     pn: 'relative',
   },
 
@@ -134,7 +133,7 @@ const customInputControlStyle = {
       tn: 'transform 0.2s cubic-bezier(0.42, 0, 0.68, 3.27) 0s',
     },
 
-    '::-ms-thumb:active': { tm: 'scale(0.85)',tn: 'transform .2s ease'  },
+    '::-ms-thumb:active': { tm: 'scale(0.85)', tn: 'transform .2s ease' },
     '::-ms-thumb': {
       se: 14,
       bc: '#4099FF',
