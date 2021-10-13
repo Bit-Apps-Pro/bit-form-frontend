@@ -74,7 +74,7 @@ const Toolbars = {
   sort_btn: {
     w: 25,
     h: 30,
-    cr: 'var(--b-54-12)',
+    cr: 'var(--white-0-50)',
     p: 0,
     b: 'none',
     bd: 'transparent',
@@ -82,7 +82,7 @@ const Toolbars = {
     flxc: 1,
     curp: 1,
     flx: 'center',
-    ':hover:not(.active)': { bd: 'var(--white-0-81-32)' },
+    ':hover:not(.active)': { bd: 'var(--white-0-81-32)', cr: 'var(--b-53-8)' },
     '&.active': {
       bd: 'var(--b-79-96)',
       cr: 'var(--b-50)',
