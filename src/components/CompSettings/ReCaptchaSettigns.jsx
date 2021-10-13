@@ -32,7 +32,7 @@ export default function ReCaptchaSettigns() {
       </div>
       <hr className={css(style.divider)} />
 
-      {/* <Back2FldList />
+      {/* 
       <div className="mb-2">
         <span className="font-w-m">
           {__('Field Type :', 'bitform')}

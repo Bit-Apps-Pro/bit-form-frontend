@@ -375,7 +375,6 @@ function TextFieldSettings() {
       </div> */}
       {/* end */}
 
-      {/* <Back2FldList /> */}
       {/* <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
