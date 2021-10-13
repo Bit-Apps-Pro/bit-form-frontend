@@ -130,6 +130,6 @@ const customProperties = {
   zx: $ => ({ zIndex: $ }),
   ct: $ => ({ content: $ }),
 
-  focusShadow: () => ({ boxShadow: '0 0 0 2px var(--b-50)' }),
+  focusShadow: () => ({ boxShadow: '0 0 0 2px var(--b-50) !important' }),
 }
 export default customProperties

@@ -136,7 +136,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       name: __('Multiline Text', 'bitform'),
       keywords: 'Multline Text',
       icn: <TextareaIcn size="23" />,
-      pos: { h: 60, w: 60, i: 'block-5', minH: 60 },
+      pos: { h: 60, w: 60, i: 'shadow_block', minH: 60 },
       elm: {
         typ: 'textarea',
         lbl: __('Multi-Line Text', 'bitform'),
@@ -399,7 +399,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     /* {
       name: 'Blank Block',
       icn: blank,
-      pos: { h: 40, w: 30, i: 'block-5' },
+      pos: { h: 40, w: 30, i: 'shadow_block' },
       elm: {
         typ: 'blank',
       },

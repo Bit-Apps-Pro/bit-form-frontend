@@ -204,7 +204,6 @@ const FIELDS_EXTRA_ATTR = {
 }
 
 export const checkFieldsExtraAttr = (field, allFields, paymentsIntegs = [], additionalSettings, bits, __) => {
-  // TODO country field with type  and list it in extraFieldsAttr
   // eslint-disable-next-line no-undef
   if (field.lbl === 'Select Country' && !bits.isPro) {
     return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.', 'bitform') }
@@ -418,30 +417,59 @@ export function compact(layout, compactType, cols) {
   return out
 }
 
+// export function produceNewLayouts(layouts, breakpointArr, cols) {
+//   return produce(layouts, draftLay => {
+//     draftLay.lg = sortLayoutItemsByRowCol(draftLay.lg)
+//     const minFieldW = draftLay.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
+//     const tmpLg = deepCopy(layouts.lg)
+//     if (breakpointArr.indexOf('md') > -1) {
+//       draftLay.md = convertLayout(tmpLg, cols.md, minFieldW)
+//     }
+//     if (breakpointArr.indexOf('sm') > -1) {
+//       draftLay.sm = convertLayout(tmpLg, cols.sm, minFieldW)
+//     }
+//     console.log('drft', draftLay.lg, draftLay.md, draftLay.sm)
+//   })
+// }
 export function produceNewLayouts(layouts, breakpointArr, cols) {
-  return produce(layouts, draftLay => {
-    draftLay.lg = sortLayoutItemsByRowCol(draftLay.lg)
-    const minFieldW = draftLay.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
-    if (breakpointArr.indexOf('md') > -1) {
-      draftLay.md = convertLayout(draftLay.lg, cols.md, minFieldW)
-    }
-    if (breakpointArr.indexOf('sm')) {
-      draftLay.sm = convertLayout(draftLay.lg, cols.sm, minFieldW)
-    }
-  })
+  const lays = deepCopy(layouts)
+  lays.lg = sortLayoutItemsByRowCol(lays.lg)
+  const minFieldW = lays.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
+  if (breakpointArr.indexOf('md') > -1) {
+    lays.md = convertLayout(lays.lg, cols.md, minFieldW)
+  }
+  if (breakpointArr.indexOf('sm') > -1) {
+    lays.sm = convertLayout(lays.lg, cols.sm, minFieldW)
+  }
+  return lays
 }
 
+// export function layoutOrderSortedByLg(lay, cols) {
+//   return produce(lay, drft => {
+//     const draftedLay = drft
+//     draftedLay.md = sortLayoutByLg(draftedLay.md, draftedLay.lg)
+//     draftedLay.sm = sortLayoutByLg(draftedLay.sm, draftedLay.lg)
+//     draftedLay.lg = sortLayoutItemsByRowCol(draftedLay.lg)
+//     const minFieldWidthMd = draftedLay.md.reduce((prv, cur) => (prv < cur ? prv : cur))
+//     const minFieldWidthSm = draftedLay.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
+//     draftedLay.md = convertLayout(draftedLay.md, cols.md, minFieldWidthMd)
+//     draftedLay.sm = convertLayout(draftedLay.lg, cols.sm, minFieldWidthSm)
+//   })
+// }
+
 export function layoutOrderSortedByLg(lay, cols) {
-  return produce(lay, drft => {
-    const draftedLay = drft
-    draftedLay.md = sortLayoutByLg(draftedLay.md, draftedLay.lg)
-    draftedLay.sm = sortLayoutByLg(draftedLay.sm, draftedLay.lg)
-    draftedLay.lg = sortLayoutItemsByRowCol(draftedLay.lg)
-    const minFieldWidthMd = draftedLay.md.reduce((prv, cur) => (prv < cur ? prv : cur))
-    const minFieldWidthSm = draftedLay.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
-    draftedLay.md = convertLayout(draftedLay.md, cols.md, minFieldWidthMd)
-    draftedLay.sm = convertLayout(draftedLay.lg, cols.sm, minFieldWidthSm)
-  })
+  const tmpLay = deepCopy(lay)
+  const newLay = { lg: [], md: [], sm: [] }
+
+  newLay.lg = sortLayoutItemsByRowCol(tmpLay.lg)
+  newLay.md = sortLayoutByLg(tmpLay.md, newLay.lg)
+  newLay.sm = sortLayoutByLg(tmpLay.sm, newLay.lg)
+  const minFieldWidthSm = tmpLay.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
+  const minFieldWidthMd = tmpLay.md.reduce((prv, cur) => (prv < cur ? prv : cur))
+  newLay.md = convertLayout(newLay.md, cols.md, minFieldWidthMd)
+  newLay.sm = convertLayout(newLay.sm, cols.sm, minFieldWidthSm)
+
+  return newLay
 }
 
 export const addToBuilderHistory = (setBuilderHistory, historyData) => {
@@ -481,6 +509,8 @@ export const compactNewLayoutItem = (breakpoint, layout, layouts) => produce(lay
 
 export const addNewItemInLayout = (layouts, newItem) => produce(layouts, draftLayouts => {
   draftLayouts.lg.push(newItem)
+  draftLayouts.md.push(newItem)
+  draftLayouts.sm.push(newItem)
   // draftLayouts.md.push(newItem)
   // draftLayouts.sm.push(newItem)
 })
