@@ -24,6 +24,7 @@ import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import Option from './Option'
 
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
@@ -48,6 +49,7 @@ export default function SelectSettings() {
     disabled = true
   }
   const [importOpts, setImportOpts] = useState({})
+  const [optionMdl, setOptionMdl] = useState(false)
 
   useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
   // set defaults
@@ -174,6 +176,15 @@ export default function SelectSettings() {
   const openImportModal = () => {
     importOpts.show = true
     setImportOpts({ ...importOpts })
+  }
+
+  const openOptionModal = () => {
+    console.log(fieldData.opt, 'aa')
+    setOptionMdl(true)
+  }
+
+  const closeOptionModal = () => {
+    setOptionMdl(false)
   }
 
   const closeImportModal = () => {
@@ -478,7 +489,33 @@ export default function SelectSettings() {
       </SimpleAccordion>
 
       <hr className={css(FieldStyle.divider)} />
+      <button onClick={openImportModal} className={css(app.btn)} type="button">
+        <DownloadIcon size="16" />
+        &nbsp;
+        {__('Import Options', 'bitform')}
+      </button>
+      <br />
+      <button onClick={openOptionModal} className={css(app.btn)} type="button">
+        &nbsp;
+        {__('Edit Options', 'bitform')}
+      </button>
 
+      {/* <div className="opt">
+        <span className="font-w-m">{__('Options:', 'bitform')}</span>
+        {fieldData.opt.map((itm, i) => (
+          <div key={`opt-${i + 8}`} className="flx flx-between">
+            <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
+            <div className="flx mt-2">
+              <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
+                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
+                <span className="btcd-mrk ck br-50" />
+              </label>
+              <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="remove option"><CloseIcn size="14" /></button>
+            </div>
+          </div>
+        ))}
+        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
+      </div> */}
       <Modal
         md
         autoHeight
@@ -506,6 +543,37 @@ export default function SelectSettings() {
             setImportOpts={setImportOpts}
             lblKey="label"
             valKey="value"
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        md
+        autoHeight
+        show={optionMdl}
+        setModal={closeOptionModal}
+        className="o-v"
+        title={__('Options', 'bitform')}
+      >
+        <div className="pos-rel">
+          {!isPro && (
+            <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
+              <div className="pro">
+                {__('Available On', 'bitform')}
+                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+                  <span className="txt-pro">
+                    &nbsp;
+                    {__('Premium', 'bitform')}
+                  </span>
+                </a>
+              </div>
+            </div>
+          )}
+          <Option
+            options={fieldData.opt}
+            lblKey="label"
+            valKey="value"
+            type="select"
           />
         </div>
       </Modal>
