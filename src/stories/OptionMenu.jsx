@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import './OptionMenu.css'
 import useComponentVisible from '../components/CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 

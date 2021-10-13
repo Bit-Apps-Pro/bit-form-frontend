@@ -21,6 +21,7 @@ import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
+import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import defaultTheme from './style-new/defaultTheme'
 import RenderStyle from './style-new/RenderStyle'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -293,9 +294,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }
   }
 
-  const handleDragStop = (layout, newlayouts, a, b) => {
+  const setRegenarateLayFlag = () => {
     sessionStorage.setItem('btcd-lc', '-')
-    console.log('on drg stop', { layout, newlayouts, a, b })
   }
 
   const handleContextMenu = (e, fldKey) => {
@@ -345,64 +345,97 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       <RenderStyle styleClasses={styles.commonClasses} />
+      {builderHelperStates.styleMood && <RenderGridLayoutStyle />}
+
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`}>
             <div className={`_frm-${formID}`}>
-              <ResponsiveReactGridLayout
-                width={Math.round(builderWidth)}
-                measureBeforeMount={false}
-                compactType="vertical"
-                useCSSTransforms
-                isDroppable={draggingField !== null && breakpoint === 'lg'}
-                className="layout"
-                onDrop={onDrop}
-                resizeHandles={['se', 'e']}
-                droppingItem={draggingField?.fieldSize}
-                onLayoutChange={handleLayoutChange}
-                // cols={cols}
-                cols={cols}
-                // cols={{ lg: 120, md: 120, sm: 120 }}
-                breakpoints={{ lg: 700, md: 420, sm: 300 }}
-                rowHeight={rowHeight}
-                margin={gridContentMargin}
-                containerPadding={[1, 1]}
-                draggableCancel=".no-drg"
-                draggableHandle=".drag"
-                layouts={layouts}
-                onBreakpointChange={onBreakpointChange}
-                onDragStop={handleDragStop}
-                onResizeStop={() => sessionStorage.setItem('btcd-lc', '-')}
-              >
-                {layouts[breakpoint].map(layoutItem => (
-                  <div
-                    key={layoutItem.i}
-                    data-key={layoutItem.i}
-                    className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                    onClick={() => handleFldBlockEvent(layoutItem.i)}
-                    onKeyPress={() => handleFldBlockEvent(layoutItem.i)}
-                    role="button"
-                    tabIndex={0}
-                    onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                  >
-                    <FieldBlockWrapper
-                      {...{
-                        layoutItem,
-                        removeLayoutItem,
-                        cloneLayoutItem,
-                        fields,
-                        formID,
-                        navigateToFieldSettings,
-                        navigateToStyle,
-                      }}
-                    />
-                  </div>
-                ))}
-              </ResponsiveReactGridLayout>
+              {!builderHelperStates.styleMood ? (
+
+                <ResponsiveReactGridLayout
+                  width={Math.round(builderWidth)}
+                  measureBeforeMount
+                  compactType="vertical"
+                  useCSSTransforms
+                  isDroppable={draggingField !== null && breakpoint === 'lg'}
+                  className="layout"
+                  onDrop={onDrop}
+                  resizeHandles={['se', 'e']}
+                  droppingItem={draggingField?.fieldSize}
+                  onLayoutChange={handleLayoutChange}
+                  // cols={cols}
+                  cols={cols}
+                  // cols={{ lg: 120, md: 120, sm: 120 }}
+                  breakpoints={{ lg: 700, md: 420, sm: 300 }}
+                  rowHeight={rowHeight}
+                  margin={gridContentMargin}
+                  containerPadding={[1, 1]}
+                  draggableCancel=".no-drg"
+                  draggableHandle=".drag"
+                  layouts={layouts}
+                  onBreakpointChange={onBreakpointChange}
+                  onDragStop={setRegenarateLayFlag}
+                  onResizeStop={setRegenarateLayFlag}
+                >
+                  {layouts[breakpoint].map(layoutItem => (
+                    <div
+                      key={layoutItem.i}
+                      data-key={layoutItem.i}
+                      className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
+                      onClick={() => handleFldBlockEvent(layoutItem.i)}
+                      onKeyPress={() => handleFldBlockEvent(layoutItem.i)}
+                      role="button"
+                      tabIndex={0}
+                      onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                    >
+                      <FieldBlockWrapper
+                        {...{
+                          layoutItem,
+                          removeLayoutItem,
+                          cloneLayoutItem,
+                          fields,
+                          formID,
+                          navigateToFieldSettings,
+                          navigateToStyle,
+                        }}
+                      />
+                    </div>
+                  ))}
+                </ResponsiveReactGridLayout>
+              ) : (
+                <div className="_frm-g">
+                  {layouts[breakpoint].map(layoutItem => (
+                    <div
+                      key={layoutItem.i}
+                      data-key={layoutItem.i}
+                      className={layoutItem.i}
+                      onClick={() => handleFldBlockEvent(layoutItem.i)}
+                      onKeyPress={() => handleFldBlockEvent(layoutItem.i)}
+                      role="button"
+                      tabIndex={0}
+                      onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                    >
+                      <FieldBlockWrapper
+                        {...{
+                          layoutItem,
+                          removeLayoutItem,
+                          cloneLayoutItem,
+                          fields,
+                          formID,
+                          navigateToFieldSettings,
+                          navigateToStyle,
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </Scrollbars>
+
       <div ref={ref} className="pos-rel">
         <CSSTransition
           in={isComponentVisible}

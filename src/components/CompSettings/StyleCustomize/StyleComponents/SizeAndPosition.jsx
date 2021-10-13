@@ -16,9 +16,9 @@ function SizeAndPosition({ fieldKey }) {
   const setBuilderHelperStates = useSetRecoilState($builderHelperStates)
 
   const maxValue = {
-    lg: { w: 60, h: 0, x: 60 - 2, y: 0 },
-    md: { w: 40, h: 0, x: 40 - 2, y: 0 },
-    sm: { w: 20, h: 0, x: 20 - 2, y: 0 },
+    lg: { w: 60, h: 0, x: 60 - fieldSize.w, y: 0 },
+    md: { w: 40, h: 0, x: 40 - fieldSize.w, y: 0 },
+    sm: { w: 20, h: 0, x: 20 - fieldSize.w, y: 0 },
   }
 
   const xHandler = (e) => {
@@ -29,34 +29,44 @@ function SizeAndPosition({ fieldKey }) {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
       draft[breakpoint][layIndex].x = val
     }))
+
     setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn({ unsaved: true })
   }
   const wHandler = (e) => {
     const val = e.target.valueAsNumber
-    if (!maxValue[breakpoint].w >= val) return
+    if (val > maxValue[breakpoint].w) return
+
     setLayouts(layout => produce(layout, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
       draft[breakpoint][layIndex].w = val
     }))
+
+    setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn({ unsaved: true })
   }
   const yHandler = (e) => {
     const val = e.target.valueAsNumber
-    if (!maxValue[breakpoint].y >= val) return
+    if (val > maxValue[breakpoint].y) return
+
     setLayouts(layout => produce(layout, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
       draft[breakpoint][layIndex].y = val
     }))
+
+    setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn({ unsaved: true })
   }
   const hHandler = (e) => {
     const val = e.target.valueAsNumber
-    if (!maxValue[breakpoint].h >= val) return
+    if (val > maxValue[breakpoint].h) return
+
     setLayouts(layout => produce(layout, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
       draft[breakpoint][layIndex].h = val
     }))
+
+    setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn({ unsaved: true })
   }
   return (

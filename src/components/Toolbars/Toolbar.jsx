@@ -44,6 +44,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const [focusSearch, setfocusSearch] = useState(false)
   const [sortedTools, setSortedTools] = useState([])
   const [isSorted, setIsSorted] = useState(false)
+  const [isScroll, setIsScroll] = useState(false)
 
   const tools = [
     {
@@ -455,11 +456,21 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       setSortedTools(tools)
     }
   }
+  const onScrollHandler = (e) => {
+    const { scrollTop } = e.target
+    if (scrollTop > 50) setIsScroll(true)
+    else setIsScroll(false)
+  }
+
+  //   box-shadow: 0 2px 8px -2px black;
+  //   position: relative;
+  //   z-index: 99;
+  // }
 
   return (
     <div className={css(Toolbars.toolbar_wrp)} style={{ width: tolbarSiz && 200 }}>
 
-      <div className={css(ut.flxc)}>
+      <div className={css(ut.flxc, isScroll && Toolbars.searchBar)}>
         <div className={css(Toolbars.fields_search)} style={{ width: focusSearch ? '80%' : '68%' }}>
           <input
             title="Search Field"
@@ -487,7 +498,11 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       </div>
 
       {useMemo(() => (
-        <Scrollbars autoHide style={{ maxWidth: 400 }}>
+        <Scrollbars
+          onScroll={onScrollHandler}
+          autoHide
+          style={{ maxWidth: 400 }}
+        >
           <div className={css(Toolbars.tool_bar)}>
             {!searchData.length && !sortedTools.length && tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>

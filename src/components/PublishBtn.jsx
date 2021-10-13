@@ -1,19 +1,16 @@
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import ShareIcn from '../Icons/ShareIcn'
-import ut from '../styles/2.utilities'
 import CoolCopy from './Utilities/CoolCopy'
 import Downmenu from './Utilities/Downmenu'
 
-export default function ShareBtn() {
+export default function PublishBtn() {
   const { css } = useFela()
   const { formID } = useParams()
-  console.log(formID)
+
   return (
     <Downmenu>
       <button type="button" className={css(style.shareIcn)}>
-        Share
-        <span className={css(ut.ml1)}><ShareIcn size="12" /></span>
+        Publish
       </button>
       <div className={css(style.downmenu)}>
         <div className={css(style.title)}>Short Code</div>
@@ -31,15 +28,17 @@ const style = {
   },
   shareIcn: {
     bd: 'none',
+    px: 15,
+    py: 7,
     oe: 'none',
     b: 'none',
     cr: 'var(--white-100)',
     flx: 'align-center',
     fs: 12,
-    fw: 500,
+    fw: 400,
     tn: 'background 0.2s',
-    px: 10,
-    py: 5,
+    mx: 10,
+    my: 5,
     brs: 8,
     curp: 1,
     ':hover': { bd: 'var(--b-35-33)' },

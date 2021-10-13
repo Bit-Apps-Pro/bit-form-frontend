@@ -2,8 +2,8 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import { $breakpoint } from '../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $breakpoint, $builderHelperStates } from '../GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -13,17 +13,21 @@ import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
+import BreakpointSizeControl from './BreakpointSizeControl'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
+import SingleToggle from './Utilities/SingleToggle'
 import Tip from './Utilities/Tip'
-import BreakpointSizeControl from './BreakpointSizeControl'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
   const { formType, formID } = useParams()
-
+  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
+
+  const styleMoodHandler = () => setBuilderHelperStates(prv => ({ ...prv, styleMood: !prv.styleMood }))
+
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
@@ -83,6 +87,9 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               >
                 <BrushIcn size="20" />
               </NavLink>
+            </Tip>
+            <Tip msg="Style render">
+              <SingleToggle name="styleMood" isChecked={builderHelperStates.styleMood} action={styleMoodHandler} />
             </Tip>
           </div>
         </div>
