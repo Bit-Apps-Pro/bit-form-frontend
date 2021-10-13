@@ -95,6 +95,7 @@ const ut = {
   pr4: { pr: '20px !important' },
   pl6: { pl: 30 },
   py1: { py: 5 },
+  dyn: { dy: 'none' },
 
   // width
   wmd: { w: '900px' },
