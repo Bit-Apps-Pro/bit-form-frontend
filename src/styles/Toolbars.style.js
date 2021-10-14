@@ -6,7 +6,7 @@ const Toolbars = {
     mxw: 190,
     mnw: 55,
     px: 3,
-    pt: 14,
+    pt: 8,
     pb: 140,
     tn: 'width 500ms',
   },
@@ -14,6 +14,7 @@ const Toolbars = {
     bs: '0 2px 8px -2px black',
     pn: 'relative',
     zx: 99,
+    pb: 8,
   },
   fields_search: {
     pn: 'relative',
@@ -75,6 +76,7 @@ const Toolbars = {
     px: 2,
     pt: 5,
     pb: 40,
+
   },
   sort_btn: {
     w: 25,

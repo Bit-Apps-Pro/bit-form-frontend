@@ -61,9 +61,7 @@ function FormDetails() {
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const { css } = useFela()
 
-  useEffect(() => {
-    setFormId(formID)
-  }, [formID])
+  useEffect(() => { setFormId(formID) }, [formID])
 
   const activePath = () => {
     const pathArray = history.location.pathname.split('/')
@@ -333,7 +331,7 @@ function FormDetails() {
             />
           </div>
           <div className={css(navbar.btcd_bld_btn)}>
-            {formType === 'edit' && <PublishBtn /> }
+            {formType === 'edit' && <PublishBtn />}
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
             <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />
