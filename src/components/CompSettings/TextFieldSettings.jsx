@@ -85,6 +85,7 @@ function TextFieldSettings() {
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
   const hidePlaceholder = (e) => {
+    console.log(e.target.checked)
     if (!e.target.checked) {
       fieldData.valid.hidePlaceholder = true
     } else {
@@ -245,8 +246,9 @@ function TextFieldSettings() {
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={hideAdminLabel}
-        toggleChecked={fieldData?.adminLbl != null}
-        open
+        toggleChecked={fieldData?.adminLbl !== undefined}
+        open={fieldData?.adminLbl !== undefined}
+        disable={!fieldData?.adminLbl}
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -268,7 +270,8 @@ function TextFieldSettings() {
         switching
         toggleAction={hidePlaceholder}
         toggleChecked={!fieldData.valid.hidePlaceholder}
-        open
+        open={!fieldData.valid.hidePlaceholder}
+        disable={fieldData.valid.hidePlaceholder}
       >
         <div className={css(FieldStyle.placeholder)}>
           <input aria-label="Placeholer for this Field" placeholder="Type Placeholder here..." className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
@@ -298,7 +301,8 @@ function TextFieldSettings() {
         switching
         tip="By enabling this feature, user will see the error message when input is empty"
         tipProps={{ width: 200, icnSize: 17 }}
-        open
+        open={isRequired}
+        disable={!isRequired}
       >
         <ErrorMessageSettings
           type="req"
@@ -401,7 +405,7 @@ function TextFieldSettings() {
         fieldData.typ === 'number' && (
           <>
             <SimpleAccordion title="Number:" className={css(FieldStyle.fieldSection)} open>
-              {/* <input className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
+              {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
               <div className={css(FieldStyle.fieldNumber)}>
                 <span>{__('Min:', 'bitform')}</span>
                 <input aria-label="Minimum number for this field" placeholder="Type minimum number here..." className={css(FieldStyle.inputNumber)} type="number" value={min} onChange={setMin} />
@@ -485,7 +489,7 @@ function TextFieldSettings() {
                   <h4 className="m-0">{__('Pattern:', 'bitform')}</h4>
                   {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
                 </div>
-                <input className="btcd-paper-inp mt-1" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
+                <input aria-label="Maximum number for this field" className="btcd-paper-inp mt-1" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
                 <datalist id="patterns">
                   {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
                 </datalist>

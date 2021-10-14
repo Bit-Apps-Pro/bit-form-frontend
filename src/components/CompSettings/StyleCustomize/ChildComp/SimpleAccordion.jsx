@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilValue } from 'recoil'
@@ -14,17 +14,22 @@ import SingleToggle from '../../../Utilities/SingleToggle'
 SimpleAccordion.defaultProps = {
   onOpen: () => { },
   open: false,
+  disable: false,
 }
 
-export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, isPro }) {
+export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable }) {
   const bits = useRecoilValue($bits)
-  const [tgl, setTgl] = useState(open)
+  const [tgl, setTgl] = useState(!disable && open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
+  console.log('toggleChecked', toggleChecked, 'title', title, 'open', open)
   const { css } = useFela()
-
   const toggleAccordion = (e) => {
-    e.preventDefault()
+    // e.preventDefault()
+    console.log('depend on use effect before return', 'disable', disable, 'open', open, 'title', title)
+    if (disable) return
+    console.log('depend on use effect after return', 'disable', disable, 'open', open, 'title', title)
+
     if (e.type === 'keypress') {
       if (e.code === 'Space' || e.code === 'Enter') {
         setTgl(prv => !prv)
@@ -45,10 +50,8 @@ export default function SimpleAccordion({ className, title, toggleName, children
     }
   }
 
-  // useEffect(() => {
-  //   toggleAccordion(open)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [open])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { setTgl(!disable) }, [disable])
 
   const cancelBubble = (e) => e.stopPropagation()
 
