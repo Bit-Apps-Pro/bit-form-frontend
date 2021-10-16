@@ -15,19 +15,10 @@ function SizeAndPosition({ fieldKey }) {
   const fieldSize = layouts[breakpoint].find(fl => (fl.i === fieldKey))
   const setBuilderHelperStates = useSetRecoilState($builderHelperStates)
 
-  console.log({ layouts })
-  // console.log('fields', fieldSize)
-
-  // const maxValue = {
-  //   lg: { w: 60, h: '', x: 60 - fieldSize.w, y: '' },
-  //   md: { w: 40, h: '', x: 40 - fieldSize.w, y: '' },
-  //   sm: { w: 20, h: '', x: 20 - fieldSize.w, y: '' },
-  // }
-
   const maxValue = {
-    lg: { w: 60, h: '', x: 60 - 2, y: '' },
-    md: { w: 40, h: '', x: 40 - 2, y: '' },
-    sm: { w: 20, h: '', x: 20 - 2, y: '' },
+    lg: { w: 60, h: 0, x: 60 - fieldSize.w, y: 0 },
+    md: { w: 40, h: 0, x: 40 - fieldSize.w, y: 0 },
+    sm: { w: 20, h: 0, x: 20 - fieldSize.w, y: 0 },
   }
 
   const xHandler = (e) => {
@@ -85,11 +76,11 @@ function SizeAndPosition({ fieldKey }) {
       open
     >
       <div className={css(s.fd)}>
-        <label className={css(ut.w5, s.label, ut.mb2)} htmlFor="x">
+        <label className={css(ut.w5, s.label)} htmlFor="x">
           <span className={css(s.name)}>X</span>
           <input aria-label="position x" placeholder="" max={maxValue[breakpoint].x} onChange={xHandler} value={fieldSize.x} className={css(ut.w8, s.input)} id="x" type="number" />
         </label>
-        <label className={css(ut.w5, s.label, ut.mb2)} htmlFor="w">
+        <label className={css(ut.w5, s.label)} htmlFor="w">
           <span className={css(s.name)}>W</span>
           <input aria-label="position w" placeholder="" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
         </label>
@@ -129,6 +120,6 @@ const s = {
     tn: 'background o.2s',
     brs: '8px !important',
     '&:hover': { bd: 'var(--white-0-81-32)' },
-    '&:focus': { b: '1px solid var(--b-59) !important' },
+    '&:focus': { focusShadow: 1 },
   },
 }

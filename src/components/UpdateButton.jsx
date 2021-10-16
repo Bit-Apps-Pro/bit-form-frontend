@@ -7,9 +7,9 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
-import { layoutOrderSortedByLg, produceNewLayouts } from '../Utils/FormBuilderHelper'
+import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
 import { select } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher } from '../Utils/Helpers'
+import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer, reportsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
@@ -35,7 +35,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [integrations, setIntegration] = useRecoilState($integrations)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
-
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
       const newIntegrations = produce(integrations, draft => {
@@ -112,6 +111,39 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     return (payFields.length > 0 || btns.length > 0)
   }
 
+  const prepareLayout = (lays) => {
+    const cols = { lg: 60, md: 40, sm: 20 }
+    let layouts = deepCopy(lays)
+
+    // if all layout length not same then produce new layout
+    if (layouts.lg.length !== layouts.md.length
+      || layouts.lg.length !== layouts.sm.length) {
+      layouts = produceNewLayouts(layouts, ['md', 'sm'], cols)
+    }
+
+    if (builderHelperStates.respectLGLayoutOrder) {
+      layouts = layoutOrderSortedByLg(layouts, cols)
+    } else {
+      // sort all layout by x and y
+      layouts.lg = sortLayoutItemsByRowCol(layouts.lg)
+      layouts.md = sortLayoutItemsByRowCol(layouts.md)
+      layouts.sm = sortLayoutItemsByRowCol(layouts.sm)
+
+      // if any layout item width cross the max col then produce new layout
+      if (layouts.md.findIndex(itm => itm.w > cols.md) > -1) {
+        const minFieldWidthMd = layouts.md.reduce((prv, cur) => (prv < cur ? prv : cur))
+        layouts.md = convertLayout(layouts.md, cols.md, minFieldWidthMd)
+      }
+      // if any layout item width cross the max col then produce new layout
+      if (layouts.sm.findIndex(itm => itm.w > cols.sm) > -1) {
+        const minFieldWidthSm = layouts.sm.reduce((prv, cur) => (prv < cur ? prv : cur))
+        layouts.sm = convertLayout(layouts.sm, cols.sm, minFieldWidthSm)
+      }
+    }
+
+    return layouts
+  }
+
   const saveForm = (type, updatedData) => {
     let mailTemplates = mailTem
     let additionalSettings = additional
@@ -144,15 +176,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     setUpdateBtn({ disabled: true, loading: true })
 
-    const cols = { lg: 60, md: 40, sm: 20 }
-    let layouts = lay
-    if (lay.lg.length !== lay.md.length
-      || lay.lg.length !== lay.sm.length) {
-      layouts = produceNewLayouts(lay, ['md', 'sm'], cols)
-    }
-    if (builderHelperStates.respectLGLayoutOrder) {
-      layouts = layoutOrderSortedByLg(lay, cols)
-    }
+    const layouts = prepareLayout(lay)
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle &&= bitDecipher(formStyle)

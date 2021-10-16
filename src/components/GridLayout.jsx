@@ -25,6 +25,9 @@ import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import defaultTheme from './style-new/defaultTheme'
 import RenderStyle from './style-new/RenderStyle'
 import ConfirmModal from './Utilities/ConfirmModal'
+// user will create form in desktop and it will ok for all device
+// user may check all breakpoint is that ok ?
+// user may chnage size and pos in different breakpoint
 
 function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   console.log('render gridlay')
@@ -57,7 +60,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => { margeNewData() }, [newData, fields])
-
   useEffect(() => {
     const lgLength = layouts.lg.length
     const mdLength = layouts.md.length
@@ -65,10 +67,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     if (breakpoint === 'md' && lgLength !== mdLength) {
       const newLayouts = produceNewLayouts(layouts, ['md'], cols)
       setLayouts(newLayouts)
+      setRootLayouts(newLayouts)
     }
     if (breakpoint === 'sm' && lgLength !== smLength) {
       const newLayouts = produceNewLayouts(layouts, ['sm'], cols)
       setLayouts(newLayouts)
+      setRootLayouts(newLayouts)
     }
   }, [breakpoint])
 
@@ -154,6 +158,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const nwLay = filterLayoutItem(fldKey, layouts)
     const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
     setLayouts(nwLay)
+    setRootLayouts(nwLay)
     setFields(tmpFields)
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
@@ -208,6 +213,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
     setLayouts(newLayouts)
+    setRootLayouts(newLayouts)
     setFields({ ...fields, [newBlk]: processedFieldData })
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
@@ -255,6 +261,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     })
 
     setLayouts(tmpLayouts)
+    setRootLayouts(tmpLayouts)
     // eslint-disable-next-line no-param-reassign
     setFields(oldFields => produce(oldFields, draft => { draft[newBlk] = fldData }))
 
@@ -280,12 +287,15 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const handleLayoutChange = (l, layoutsFromGrid) => {
-    if (layoutsFromGrid.lg.length === layoutsFromGrid.md.length
-      && layoutsFromGrid.lg.length === layoutsFromGrid.sm.length
-      && layoutsFromGrid.md.length === layoutsFromGrid.sm.length) {
-      setLayouts(layoutsFromGrid)
+    if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
+      console.log('set layout on change', layoutsFromGrid)
       setRootLayouts(layoutsFromGrid)
+      setLayouts(layoutsFromGrid)
     }
+  }
+
+  const setRegenarateLayFlag = () => {
+    sessionStorage.setItem('btcd-lc', '-')
   }
 
   const handleContextMenu = (e, fldKey) => {
@@ -345,7 +355,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
                 <ResponsiveReactGridLayout
                   width={Math.round(builderWidth)}
-                  measureBeforeMount={true}
+                  measureBeforeMount
                   compactType="vertical"
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
@@ -365,8 +375,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                   draggableHandle=".drag"
                   layouts={layouts}
                   onBreakpointChange={onBreakpointChange}
-                  onDragStop={() => sessionStorage.setItem('btcd-lc', '-')}
-                  onResizeStop={() => sessionStorage.setItem('btcd-lc', '-')}
+                  onDragStop={setRegenarateLayFlag}
+                  onResizeStop={setRegenarateLayFlag}
                 >
                   {layouts[breakpoint].map(layoutItem => (
                     <div
@@ -421,11 +431,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                   ))}
                 </div>
               )}
-
             </div>
           </div>
         </div>
       </Scrollbars>
+
       <div ref={ref} className="pos-rel">
         <CSSTransition
           in={isComponentVisible}
