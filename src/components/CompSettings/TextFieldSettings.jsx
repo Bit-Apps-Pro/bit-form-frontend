@@ -39,7 +39,6 @@ function TextFieldSettings() {
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
-
   function setRequired(e) {
     if (e.target.checked) {
       const tmp = { ...fieldData.valid }
@@ -84,12 +83,12 @@ function TextFieldSettings() {
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
+
   const hidePlaceholder = (e) => {
-    console.log(e.target.checked)
-    if (!e.target.checked) {
-      fieldData.valid.hidePlaceholder = true
+    if (e.target.checked) {
+      fieldData.ph = fieldData.lbl + ' type here...' || 'Type here...'
     } else {
-      delete fieldData.valid.hidePlaceholder
+      delete fieldData.ph
     }
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
@@ -269,9 +268,9 @@ function TextFieldSettings() {
         className={css(FieldStyle.fieldSection)}
         switching
         toggleAction={hidePlaceholder}
-        toggleChecked={!fieldData.valid.hidePlaceholder}
-        open={!fieldData.valid.hidePlaceholder}
-        disable={fieldData.valid.hidePlaceholder}
+        toggleChecked={fieldData?.ph !== undefined}
+        open={fieldData?.ph !== undefined}
+        disable={!fieldData?.ph}
       >
         <div className={css(FieldStyle.placeholder)}>
           <input aria-label="Placeholer for this Field" placeholder="Type Placeholder here..." className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
