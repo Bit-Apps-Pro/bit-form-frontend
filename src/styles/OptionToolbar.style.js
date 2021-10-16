@@ -9,7 +9,8 @@ const OptionToolBarStyle = {
   },
   form_section: {
     flx: 'center-between',
-    w: '85%',
+    w: '100%',
+    pr: 25,
   },
   field_btn: {
     flx: 'align-center',

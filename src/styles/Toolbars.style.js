@@ -24,10 +24,11 @@ const Toolbars = {
   search_field: {
     w: '100%',
     oe: 'none',
-    b: '1px solid var(--white-0-75) !important',
+    b: 'none !important',
     brs: '9px !important',
     pl: '27px !important',
     pr: '5px !important',
+    bd: 'var(--white-0-97) !important',
     ':focus': {
       bs: '0px 0px 0px 1.5px var(--b-50) !important',
       bcr: 'var(--b-92-62) !important',
@@ -56,7 +57,7 @@ const Toolbars = {
     mx: 6,
     lt: 0,
     tm: 'translateY(-50%)',
-    cr: 'var(--white-0-75)',
+    cr: 'var(--white-0-50)',
     curp: 1,
     '& svg': { dy: 'block' },
   },
