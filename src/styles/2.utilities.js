@@ -40,6 +40,8 @@ const ut = {
   fw500: { fw: 500 },
   fs12: { fs: 12 },
 
+  dnone: { dy: 'none' },
+
   flxi: { flxi: 1 },
   flxb: { flx: 'between' },
   flxcb: { flx: 'center-between' },
@@ -76,6 +78,7 @@ const ut = {
   ml6: { ml: '30px!important' },
 
   txCenter: { ta: 'center' },
+  txRight: { ta: 'right' },
 
   btcdEmpty: {
     cr: 'var(--b-44-87)',

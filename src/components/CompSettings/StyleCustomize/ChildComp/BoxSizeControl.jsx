@@ -35,15 +35,15 @@ export default function BoxSizeControl({ title }) {
       </div>
       <div className={css(boxSizeControlStyle.segmentcontainer)}>
         {controller === 'All' && (
-          <SizeControl label={<BorderRadiusIcn size={19} />} width={100} />
+          <SizeControl label={<BorderRadiusIcn size={19} />} width="100px" />
         )}
 
         {controller === 'Individual' && (
           <>
-            <SizeControl label={<BorderTopLeftRadiusIcn size={12} />} width={100} />
-            <SizeControl label={<BorderTopRightRadiusIcn size={12} />} width={100} />
-            <SizeControl label={<BorderBottomLeftRadiusIcn size={12} />} width={100} />
-            <SizeControl label={<BorderBottomRightRadiusIcn size={12} />} width={100} />
+            <SizeControl label={<BorderTopLeftRadiusIcn size={12} />} width="100px" />
+            <SizeControl label={<BorderTopRightRadiusIcn size={12} />} width="100px" />
+            <SizeControl label={<BorderBottomLeftRadiusIcn size={12} />} width="100px" />
+            <SizeControl label={<BorderBottomRightRadiusIcn size={12} />} width="100px" />
           </>
         )}
       </div>
