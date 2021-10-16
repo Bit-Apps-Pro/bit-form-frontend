@@ -210,7 +210,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           if (action === 'bitforms_create_new_form' && savedFormId === 0 && buttonText === 'Save') {
             setSavedFormId(data.id)
             setButtonText('Update')
-            history.replace(`/form/builder/edit/${data.id}/fs`)
+            history.replace(`/form/builder/edit/${data.id}/fields-list`)
           }
           setLay(layouts)
           setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))

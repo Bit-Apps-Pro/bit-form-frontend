@@ -96,7 +96,7 @@ function AllFroms() {
         <>
           {/* <MenuBtn formID={val.row.original.formID} newFormId={val} index={val.row.id} del={() => showDelModal(val.row.original.formID, val.row.index)} dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} /> */}
           <OptionMenu title="Actions" w={150} h={164}>
-            <Link to={`/form/builder/edit/${val.row.original.formID}/fs`} type="button" className="flx" aria-label="actions">
+            <Link to={`/form/builder/edit/${val.row.original.formID}/fields-list`} type="button" className="flx" aria-label="actions">
               <EditIcn size={18} />
               &nbsp;
               Edit

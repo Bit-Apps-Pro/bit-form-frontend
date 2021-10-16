@@ -1,41 +1,28 @@
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { Link, NavLink, useLocation, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { Link, useLocation, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import { __ } from '../../Utils/i18nwrap'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FieldIcn from '../../Icons/FieldIcn'
 import FormIcn from '../../Icons/FormIcn'
 import ImageIcn from '../../Icons/ImageIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
-import DecisionBoxSettings from './DecisionBoxSettings'
-import HtmlFieldSettings from './HtmlFieldSettings'
-import ButtonSettings from './ButtonSettings'
-import FileUpSettings from './FileUpSettings'
-import PaypalSettings from './PaypalSettings'
-import RadioCheckSettings from './RadioCheckSettings'
-import RazorpaySettings from './RazorpaySettings'
-import ReCaptchaSettigns from './ReCaptchaSettigns'
-import SelectSettings from './SelectSettings'
 import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
 import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
-import TextFieldSettings from './TextFieldSettings'
 import BtnIcn from '../../Icons/BtnIcn'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import FieldLinkBtn from './FieldLinkButton'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import ThemeGallary from '../style-new/ThemeGallary'
 import ThemeCustomize from '../style-new/ThemeCustomize'
+import RenderFieldSettings from './RenderFieldSettings'
+import RenderFieldsList from './RenderFieldsList'
 
 function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   // const [scrollTopShadow, setScrollTopShadow] = useState(false)
-
-
 
   // const onSettingScroll = ({ target: { scrollTop } }) => {
   //   scrollTop > 20 ? setScrollTopShadow(true) : setScrollTopShadow(false)
@@ -53,91 +40,92 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
           // onScroll={onSettingScroll}
           autoHide
         >
-          <TransitionGroup>
-            <CSSTransition key={location.key} classNames="slide" timeout={5000}>
+          {/* <TransitionGroup> */}
+          {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
 
-              <Switch>
-                <Route path={`${path}/fs`}><RenderSettings /></Route>
-                <Route path={`${path}/themes`}><ThemeGallary /></Route>
-                <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
+          <Switch>
+            <Route path={`${path}/fields-list`} component={RenderFieldsList} />
+            <Route path={`${path}/field-settings/:fieldKey`} component={RenderFieldSettings} />
+            <Route path={`${path}/themes`}><ThemeGallary /></Route>
+            <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
 
-                <Route exact path={`${path}/style`}>
-                  <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
-                    <FieldLinkBtn icn={<ImageIcn w="20" />} title={__('Background Customize', 'bitform')} />
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/f`}>
-                    <FieldLinkBtn icn={<FormIcn w="20" />} title={__('Form Customize', 'bitform')} />
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
-                    <FieldLinkBtn icn={<ItemBlockIcn w="20" />} title={__('Field Block Customize', 'bitform')} />
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
-                    <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Customize', 'bitform')} />
-                  </Link>
-                </Route>
-                <Route path={`${path}/style/bg`}>
-                  <StyleEditor editorLabel={__('Form Background', 'bitform')} compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
-                </Route>
-                <Route path={`${path}/style/f`}>
-                  <StyleEditor editorLabel={__('Form style', 'bitform')} compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
-                </Route>
-                <Route path={`${path}/style/fb`}>
-                  <StyleEditor editorLabel={__('Field Block', 'bitform')} compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
-                </Route>
-                <Route exact path={`${path}/style/fl`}>
-                  <Link to={`/form/builder/${formType}/${formID}/style`}>
-                    <h4 className="w-9 mt-2 m-a flx txt-dp">
-                      <button className="icn-btn" type="button" aria-label="back btn">
-                        <BackIcn />
-                      </button>
-                      <div className="flx w-10">
-                        <span>{__('Back', 'bitform')}</span>
-                        <div className="txt-center w-10 f-5">{__('Field Customize', 'bitform')}</div>
-                      </div>
-                    </h4>
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
-                    <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Style', 'bitform')} />
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/fl/dpd`}>
-                    <FieldLinkBtn icn={<DropDownIcn w="20" />} title="Dropdown Style" />
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
-                    <FieldLinkBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
-                  </Link>
-                  <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
-                    <FieldLinkBtn icn={<BtnIcn size="24" />} title="Button Style" />
-                  </Link>
-                </Route>
-                <Route path={`${path}/style/fl/fld`}>
-                  <StyleEditor editorLabel={__('Field Style', 'bitform')} title={__('Label Style', 'bitform')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
-                  <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
-                </Route>
-                <Route path={`${path}/style/fl/ppl`}>
-                  <PaypalStyleEditor />
-                </Route>
-                <Route path={`${path}/style/fl/dpd`}>
-                  <DropdownStyleEditors
-                    editorLabel="Dropdown Style"
-                    {...{ style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }}
-                  />
-                </Route>
-                <Route path={`${path}/style/fl/btn`}>
-                  <StyleEditor
-                    title={`${__('Button Style', 'bitform')}`}
-                    noBack
-                    compStyle={style}
-                    cls=".btcd-sub-btn"
-                    styleDispatch={styleDispatch}
-                    brkPoint={brkPoint}
-                    setResponsiveView={setResponsiveView}
-                    styleConfig={styleEditorConfig.button}
-                    formID={formID}
-                  />
-                </Route>
-              </Switch>
-            </CSSTransition>
-          </TransitionGroup>
+            <Route exact path={`${path}/style`}>
+              <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
+                <FieldLinkBtn icn={<ImageIcn w="20" />} title={__('Background Customize', 'bitform')} />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/f`}>
+                <FieldLinkBtn icn={<FormIcn w="20" />} title={__('Form Customize', 'bitform')} />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fb`}>
+                <FieldLinkBtn icn={<ItemBlockIcn w="20" />} title={__('Field Block Customize', 'bitform')} />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl`}>
+                <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Customize', 'bitform')} />
+              </Link>
+            </Route>
+            <Route path={`${path}/style/bg`}>
+              <StyleEditor editorLabel={__('Form Background', 'bitform')} compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />
+            </Route>
+            <Route path={`${path}/style/f`}>
+              <StyleEditor editorLabel={__('Form style', 'bitform')} compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />
+            </Route>
+            <Route path={`${path}/style/fb`}>
+              <StyleEditor editorLabel={__('Field Block', 'bitform')} compStyle={style} cls={`.fld-wrp-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_block} formID={formID} />
+            </Route>
+            <Route exact path={`${path}/style/fl`}>
+              <Link to={`/form/builder/${formType}/${formID}/style`}>
+                <h4 className="w-9 mt-2 m-a flx txt-dp">
+                  <button className="icn-btn" type="button" aria-label="back btn">
+                    <BackIcn />
+                  </button>
+                  <div className="flx w-10">
+                    <span>{__('Back', 'bitform')}</span>
+                    <div className="txt-center w-10 f-5">{__('Field Customize', 'bitform')}</div>
+                  </div>
+                </h4>
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/fld`}>
+                <FieldLinkBtn icn={<FieldIcn w="20" />} title={__('Field Style', 'bitform')} />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/dpd`}>
+                <FieldLinkBtn icn={<DropDownIcn w="20" />} title="Dropdown Style" />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/ppl`}>
+                <FieldLinkBtn icn={<PaypalIcn w="20" />} title={__('Paypal Style', 'bitform')} />
+              </Link>
+              <Link to={`/form/builder/${formType}/${formID}/style/fl/btn`}>
+                <FieldLinkBtn icn={<BtnIcn size="24" />} title="Button Style" />
+              </Link>
+            </Route>
+            <Route path={`${path}/style/fl/fld`}>
+              <StyleEditor editorLabel={__('Field Style', 'bitform')} title={__('Label Style', 'bitform')} compStyle={style} cls={`.fld-lbl-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field_label} formID={formID} />
+              <StyleEditor title={__('Field Style', 'bitform')} noBack compStyle={style} cls={`input.fld-${formID},textarea.fld-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.field} formID={formID} />
+            </Route>
+            <Route path={`${path}/style/fl/ppl`}>
+              <PaypalStyleEditor />
+            </Route>
+            <Route path={`${path}/style/fl/dpd`}>
+              <DropdownStyleEditors
+                editorLabel="Dropdown Style"
+                {...{ style, styleDispatch, brkPoint, setResponsiveView, styleEditorConfig, formID }}
+              />
+            </Route>
+            <Route path={`${path}/style/fl/btn`}>
+              <StyleEditor
+                title={`${__('Button Style', 'bitform')}`}
+                noBack
+                compStyle={style}
+                cls=".btcd-sub-btn"
+                styleDispatch={styleDispatch}
+                brkPoint={brkPoint}
+                setResponsiveView={setResponsiveView}
+                styleConfig={styleEditorConfig.button}
+                formID={formID}
+              />
+            </Route>
+          </Switch>
+          {/* </CSSTransition> */}
+          {/* </TransitionGroup> */}
           <div className="mb-50" />
         </Scrollbars>
       </div>
@@ -145,79 +133,3 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   )
 }
 export default CompSettings
-
-const RenderSettings = () => {
-  const fields = useRecoilValue($fields)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const seletedFieldType = fields?.[selectedFieldId]?.typ
-  switch (seletedFieldType) {
-    case 'text':
-    case 'username':
-    case 'number':
-    case 'password':
-    case 'email':
-    case 'url':
-    case 'textarea':
-    case 'date':
-    case 'datetime-local':
-    case 'time':
-    case 'month':
-    case 'week':
-    case 'color':
-      return <TextFieldSettings />
-    case 'check':
-    case 'radio':
-      return <RadioCheckSettings />
-    case 'select':
-    case 'dropdown':
-      return <SelectSettings />
-    case 'file-up':
-      return <FileUpSettings />
-    case 'recaptcha':
-      return <ReCaptchaSettigns />
-    case 'decision-box':
-      return <DecisionBoxSettings />
-    case 'html':
-      return <HtmlFieldSettings />
-    case 'button':
-      return <ButtonSettings />
-    case 'paypal':
-      return <PaypalSettings />
-    case 'razorpay':
-      return <RazorpaySettings />
-    default:
-      return <FieldList />
-  }
-}
-
-function FieldList() {
-  const fields = useRecoilValue($fields)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-
-  const hiddenFlds = Object.entries(fields).filter(fld => fld[1].hidden)
-  const notHiddenFlds = Object.entries(fields).filter(fld => !fld[1].hidden)
-
-  const FieldListSection = ({ title, filteredFields }) => {
-    if (!filteredFields.length) return ''
-    return (
-      <div className="mt-5">
-        <span>{title}</span>
-        {filteredFields.map(([fldKey, fldData]) => {
-          let { lbl } = fldData
-          const { typ, adminLbl } = fldData
-          if (typ === 'decision-box') {
-            lbl = adminLbl
-          }
-          return <FieldLinkBtn key={fldKey} icn={typ} title={lbl || adminLbl || typ} sub={fldKey} action={() => setSelectedFieldId(fldKey)} />
-        })}
-      </div>
-    )
-  }
-
-  return (
-    <>
-      <FieldListSection title="Hidden Fields" filteredFields={hiddenFlds} />
-      <FieldListSection title="All Fields" filteredFields={notHiddenFlds} />
-    </>
-  )
-}

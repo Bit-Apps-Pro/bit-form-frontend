@@ -271,7 +271,7 @@ function FormDetails() {
 
   const onChangeHandler = (evn) => {
     if (evn === 'Builder') {
-      history.push(`/form/builder/${formType}/${formID}/fs`)
+      history.push(`/form/builder/${formType}/${formID}/fields-list`)
     }
     if (evn === 'Responses') {
       history.push(`/form/responses/${formType}/${formID}/`)

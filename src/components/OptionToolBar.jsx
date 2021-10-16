@@ -65,7 +65,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
                 activeClassName="active"
-                to={`/form/builder/${formType}/${formID}/fs`}
+                to={`/form/builder/${formType}/${formID}/fields-list`}
               >
                 <EditIcn size="21" />
               </NavLink>

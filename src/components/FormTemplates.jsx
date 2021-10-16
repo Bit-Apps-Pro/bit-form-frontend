@@ -33,7 +33,7 @@ export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) 
           <FormIcn w="50" />
           <div>{tem.lbl}</div>
           <div className="btcd-hid-btn">
-            <Link to={`/form/builder/new/${tem.lbl}/fs`} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Create', 'bitform')}</Link>
+            <Link to={`/form/builder/new/${tem.lbl}/fields-list`} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Create', 'bitform')}</Link>
           </div>
         </div>
       ))}
