@@ -54,12 +54,12 @@ const tool = {
   h: 35,
   p: 8,
   brs: 8,
-  // b: '1px solid var(--white-0-75)',
   cur: 'grab',
   ow: 'hidden',
   m: 5,
   bs: '0 0 0 1.5px var(--white-0-86) inset',
   tn: 'all 200ms',
+  ':first-child': { mt: 0 },
 
   ':hover': {
     cr: 'var(--b-50)',

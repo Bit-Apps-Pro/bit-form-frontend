@@ -34,6 +34,7 @@ const FieldStyle = {
     dy: 'block',
     mt: 10,
     mb: 3,
+    bs: 'none !important',
     b: 'none !important',
     brs: '8px !important',
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
