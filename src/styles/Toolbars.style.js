@@ -11,10 +11,11 @@ const Toolbars = {
     tn: 'width 500ms',
   },
   searchBar: {
-    bs: '0 2px 8px -2px black',
+    bs: '#7b7b7b 0px 7px 9px -9px',
     pn: 'relative',
     zx: 99,
     pb: 8,
+    clipPath: 'inset(0 0 -15px 0)'
   },
   fields_search: {
     pn: 'relative',
