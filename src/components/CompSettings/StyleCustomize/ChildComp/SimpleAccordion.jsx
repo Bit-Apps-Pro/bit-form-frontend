@@ -22,13 +22,10 @@ export default function SimpleAccordion({ className, title, toggleName, children
   const [tgl, setTgl] = useState(!disable && open)
   const [H, setH] = useState(open ? 'auto' : 0)
 
-  console.log('toggleChecked', toggleChecked, 'title', title, 'open', open)
   const { css } = useFela()
   const toggleAccordion = (e) => {
     // e.preventDefault()
-    console.log('depend on use effect before return', 'disable', disable, 'open', open, 'title', title)
     if (disable) return
-    console.log('depend on use effect after return', 'disable', disable, 'open', open, 'title', title)
 
     if (e.type === 'keypress') {
       if (e.code === 'Space' || e.code === 'Enter') {
