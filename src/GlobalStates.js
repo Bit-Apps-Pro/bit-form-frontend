@@ -28,16 +28,23 @@ export const $flags = atom({ key: '$flags', default: { saveStyle: true } })
 export const $styles = atom({
   key: '$styles',
   default: {
-    theme: 'defaultBlue',
+    theme: 'bitform-default',
     themeVars: {
-      '--global-primary-color': 'blue',
+      '--global-primary-color': 'hsla(0, 10%, 20%, 100)',
+      '--gph': 0,
+      '--gps': 10,
+      '--gpl': 20,
+      '--gpa': 100,
       '--border-radius': '10px',
+      '--dir': 'ltr'
     },
-    form: { 'frm-wrp-': { background: 'red' } },
+    form: { _frm: {} },
     commonClasses: { 'f-wrp': {} },
     fields: {
       'bf9-3-': {
         theme: 'default_blue',
+        overrideGlobalTheme: false,
+        fieldType:'',
         themeVars: { '--primary-color': '--global-primary-color' },
         classes: {
           'bf9-3--fw': {
@@ -100,6 +107,12 @@ export const $styles = atom({
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels)), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
 export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) => getNewId(get($fields)) })
+export const $fieldsDirection = selector({
+  key: '$fieldsDirection', get: ({ get }) => {
+    const styles = get($styles)
+    return styles.themeVars['--dir']
+  }
+})
 
 export const $reportSelector = selectorFamily({
   key: '$reportSelector',

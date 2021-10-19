@@ -2,20 +2,19 @@ import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import { showDraggableModal } from '../CompSettings/StyleCustomize/styleEditorHelpers'
+import { showDraggableModal } from './styleHelpers'
 
-export default function SimpleColorPicker() {
+export default function SimpleColorPicker({ subtitle, action, value }) {
   const { css } = useFela()
   const setDraggableModal = useSetRecoilState($draggableModal)
-
   return (
     <div className={css(c.preview_wrp)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, 'color-picker', 250)}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action, value })}
         type="button"
         className={css(c.pickrBtn)}
       >
-        <div className={css(c.preview)} />
+        <div className={css(c.preview)} style={{ background: value }} />
         <span className={css(c.clrVal)}>#ssdasdasdasdf98s</span>
       </button>
       <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">

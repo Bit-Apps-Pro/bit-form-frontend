@@ -39,7 +39,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
-  const [styles, setStyles] = useRecoilState($styles)
+  // const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   // const cols = { lg: 6, md: 4, sm: 2 }
@@ -229,15 +230,13 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }, 500)
 
     // add style
-    const newStyle = produce(styles, draftStyle => {
+    setStyles(styles => produce(styles, draftStyle => {
       const globalTheme = draftStyle.theme
-      if (globalTheme === 'defaultBlue') {
-        const fieldStyle = { theme: 'defaultBlue', classes: defaultTheme(newBlk, processedFieldData.typ) }
+      if (globalTheme === 'bitform-default') {
+        const fieldStyle = defaultTheme(newBlk, processedFieldData.typ, draftStyle.themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
-    })
-    console.log('new style ', newStyle)
-    setStyles(newStyle)
+    }))
 
     return { newBlk }
   }
@@ -344,7 +343,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      <RenderStyle styleClasses={styles.commonClasses} />
       {builderHelperStates.styleMood && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide>

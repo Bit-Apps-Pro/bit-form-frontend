@@ -1,13 +1,17 @@
 import { useRecoilValue } from 'recoil'
-import { $breakpoint } from '../GlobalStates'
+import { $breakpoint, $fieldsDirection } from '../GlobalStates'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
   const breakpoint = useRecoilValue($breakpoint)
+  const fieldDirection = useRecoilValue($fieldsDirection)
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
   const err = fieldData.error || ''
   return (
-    <div className={`${fieldKey}-fw  drag  ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}>
+    <div
+      className={`${fieldKey}-fw  drag  ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
+      style={{ direction: fieldDirection }}
+    >
       {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
         <label title={fieldData.lbl} className={`${fieldKey}-lbl`} htmlFor={fieldKey}>
           {fieldData.lbl}

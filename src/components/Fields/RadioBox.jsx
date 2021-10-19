@@ -69,6 +69,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
           {attr.opt.map((itm, i) => (
             <div key={`opr-${i + 22}`} className={`${fieldKey}-cw`}>
               <input
+                id={`${fieldKey}-chk-${i}`}
                 type="radio"
                 className={`${fieldKey}-ci`}
                 ref={radioRef.current[i]}
@@ -83,7 +84,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 onBlur={handleBlur}
               />
               <label htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <i className={`${fieldKey}-bx ${fieldKey}-rdo`} />
+                <span className={`${fieldKey}-bx ${fieldKey}-rdo`} />
                 <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
               </label>
             </div>

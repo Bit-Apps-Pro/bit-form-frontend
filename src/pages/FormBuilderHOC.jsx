@@ -10,6 +10,7 @@ import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemePro
 import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
+import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
 import { $bits, $breakpoint, $builderHelperStates, $newFormId } from '../GlobalStates'
 import css2json from '../Utils/css2json'
@@ -236,6 +237,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <>
+      <RenderThemeVarsAndFormCSS />
       <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
       <DraggableModal />
       <Container

@@ -79,16 +79,21 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
       >
         {/* cc for checkbox container */}
         <div className={`${fieldKey}-cc`}>
-          {/* <svg className={`${fieldKey}-cks`}>
-            <symbol id="check" viewbox="0 0 12 10">
+          <svg className={`${fieldKey}-cks`}>
+            <symbol id={`${fieldKey}-ck-svg`} viewBox="0 0 12 10">
               <polyline
+                className={`${fieldKey}-ck-svgline`}
                 points="1.5 6 4.5 9 10.5 1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
+              // strokeLinecap="round"
+              // strokeLinejoin="round"
+              // strokeDasharray="16"
+              // strokeDashoffset="16"
+              // strokeWidth="2"
+              // fill="none"
+              // stroke="currentColor"
               />
             </symbol>
-          </svg> */}
+          </svg>
           {attr.opt.map((itm, i) => (
             <div key={`opt-${i + 24}`} className={`${fieldKey}-cw`}>
               <input
@@ -108,7 +113,11 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 onBlur={handleBlur}
               />
               <label htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <i className={`${fieldKey}-bx ${fieldKey}-ck`} />
+                <span className={`${fieldKey}-bx ${fieldKey}-ck`}>
+                  <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
+                    <use href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
+                  </svg>
+                </span>
                 <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
               </label>
             </div>
