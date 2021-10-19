@@ -4,8 +4,9 @@ import ColorPicker from '@atomik-color/component'
 import { useRecoilState } from 'recoil'
 import produce from 'immer'
 import { useEffect, useState } from 'react'
-import { hsv2hsl, str2Color } from './colorHelpers'
+import { hsv2hsl } from './colorHelpers'
 import { $styles } from '../../GlobalStates'
+import { str2Color } from '@atomik-color/core'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
