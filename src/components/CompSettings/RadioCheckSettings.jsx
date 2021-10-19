@@ -21,6 +21,7 @@ import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import Option from './Option'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -45,6 +46,7 @@ function RadioCheckSettings() {
     fieldObject = fieldData?.customType
   }
   const [importOpts, setImportOpts] = useState({})
+  const [optionMdl, setOptionMdl] = useState(false)
   useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
   function setAdminLabel(e) {
     if (e.target.value === '') {
@@ -145,6 +147,15 @@ function RadioCheckSettings() {
   const openImportModal = () => {
     importOpts.show = true
     setImportOpts({ ...importOpts })
+  }
+
+  const openOptionModal = () => {
+    console.log(fieldData.opt, 'aa')
+    setOptionMdl(true)
+  }
+
+  const closeOptionModal = () => {
+    setOptionMdl(false)
   }
 
   const closeImportModal = () => {
@@ -407,7 +418,12 @@ function RadioCheckSettings() {
         &nbsp;
         {__('Import Options', 'bitform')}
       </button>
-      <div className="opt mt-1">
+      <br />
+      <button onClick={openOptionModal} className={css(app.btn)} type="button">
+        &nbsp;
+        {__('Edit Options', 'bitform')}
+      </button>
+      {/* <div className="opt mt-1">
         <span className="font-w-m">{__('Options:', 'bitform')}</span>
         {options.map((itm, i) => (
           <div key={`opt-${i + 8}`} className="flx flx-between">
@@ -432,6 +448,36 @@ function RadioCheckSettings() {
           {__('Add More +', 'bitform')}
         </button>
       </div> */}
+      <Modal
+        md
+        autoHeight
+        show={optionMdl}
+        setModal={closeOptionModal}
+        className="o-v"
+        title={__('Options', 'bitform')}
+      >
+        <div className="pos-rel">
+          {!isPro && (
+            <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
+              <div className="pro">
+                {__('Available On', 'bitform')}
+                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+                  <span className="txt-pro">
+                    &nbsp;
+                    {__('Premium', 'bitform')}
+                  </span>
+                </a>
+              </div>
+            </div>
+          )}
+          <Option
+            options={options}
+            lblKey="lbl"
+            valKey="val"
+            type={fieldData.typ}
+          />
+        </div>
+      </Modal>
       <Modal
         md
         autoHeight

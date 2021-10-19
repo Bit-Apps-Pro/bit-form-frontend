@@ -61,9 +61,7 @@ function FormDetails() {
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const { css } = useFela()
 
-  useEffect(() => {
-    setFormId(formID)
-  }, [formID])
+  useEffect(() => { setFormId(formID) }, [formID])
 
   const activePath = () => {
     const pathArray = history.location.pathname.split('/')

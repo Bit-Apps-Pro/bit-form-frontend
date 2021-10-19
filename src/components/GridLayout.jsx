@@ -168,7 +168,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // add to history
     const event = `${fldData.lbl} removed`
     const action = 'remove_fld'
-    const state = { fldKey, breakpoint, layout: removedLay, fldData }
+    const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
   }
 
@@ -213,16 +213,17 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const newLayoutItem = { i: newBlk, x, y, w, h, minH, maxH, minW }
     // const newLayoutItem = { i: newBlk, x, y, w: w * 10, h: h * 10 }
     const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
+    const newFields = { ...fields, [newBlk]: processedFieldData }
     setLayouts(newLayouts)
     setRootLayouts(newLayouts)
-    setFields({ ...fields, [newBlk]: processedFieldData })
+    setFields(newFields)
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
 
     // add to history
     const event = `${fieldData.lbl} added`
     const action = 'add_fld'
-    const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData }
+    const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
     setTimeout(() => {
       document.querySelector(`[data-key="${newBlk}"]`)?.focus()
@@ -261,8 +262,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
     setLayouts(tmpLayouts)
     setRootLayouts(tmpLayouts)
+    const oldFields = produce(fields, draft => { draft[newBlk] = fldData })
     // eslint-disable-next-line no-param-reassign
-    setFields(oldFields => produce(oldFields, draft => { draft[newBlk] = fldData }))
+    setFields(oldFields)
 
     sessionStorage.setItem('btcd-lc', '-')
     setUpdateBtn({ unsaved: true })
@@ -275,7 +277,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // add to history
     const event = `${fldData.lbl} cloned`
     const action = 'add_fld'
-    const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData }
+    const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
 
     resetContextMenu()

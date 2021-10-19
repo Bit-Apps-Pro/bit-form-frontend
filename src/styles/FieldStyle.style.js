@@ -36,6 +36,7 @@ const FieldStyle = {
     px: 8,
     mt: 10,
     mb: 3,
+    bs: 'none !important',
     b: 'none !important',
     brs: '8px !important',
     '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
