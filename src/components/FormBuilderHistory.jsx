@@ -12,6 +12,7 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { compactNewLayoutItem, filterLayoutItem } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
+import Scrollbars from 'react-custom-scrollbars-2'
 
 export default function FormBuilderHistory({ }) {
   const { css } = useFela()
@@ -133,24 +134,27 @@ export default function FormBuilderHistory({ }) {
               <span className={css(ut.mr1)}><HistoryIcn size="20" /></span>
               History
             </p>
-            {!histories.length && (
-              <span className={css(builderHistoryStyle.secondary)}>
-                no data found
-              </span>
-            )}
-            <ul className={css(builderHistoryStyle.list)}>
-              {histories.map((history, indx) => (
-                <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
-                  <button
-                    type="button"
-                    className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
-                    onClick={() => handleHistory(indx)}
-                  >
-                    {history.event}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            
+              {histories.length <= 1 && (
+                <span className={css(builderHistoryStyle.secondary)}>
+                  no data found
+                </span>
+              )}
+
+              <ul className={css(builderHistoryStyle.list)}>
+                {histories.map((history, indx) => (
+                  <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
+                    <button
+                      type="button"
+                      className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
+                      onClick={() => handleHistory(indx)}
+                    >
+                      {history.event}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+     
           </div>
         </Downmenu>
       </div>

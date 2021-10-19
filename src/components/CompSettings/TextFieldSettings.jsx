@@ -4,10 +4,11 @@
 import produce from 'immer'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $builderHistory, $fields, $selectedFieldId } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
@@ -36,6 +37,7 @@ function TextFieldSettings() {
   const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
+  const setBuilderHistory = useSetRecoilState($builderHistory)
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -52,7 +54,10 @@ function TextFieldSettings() {
       delete fieldData.valid.req
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // const allFields = 
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Required ${e.target.checked} ${fieldData.lbl || adminLabel || fldKey} `, state: { fields: allFields } })
   }
 
   function setAutoComplete(e) {
@@ -62,7 +67,10 @@ function TextFieldSettings() {
       delete fieldData.ac
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete ${e.target.checked} ${fieldData.lbl || adminLabel || fldKey} `, state: { fields: allFields } })
   }
 
   function setAdminLabel(e) {
@@ -72,7 +80,10 @@ function TextFieldSettings() {
       fieldData.adminLbl = e.target.value
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Change ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
   const hideAdminLabel = (e) => {
     if (e.target.checked) {
@@ -81,7 +92,10 @@ function TextFieldSettings() {
       delete fieldData.adminLbl
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hide ${e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   const hidePlaceholder = (e) => {
@@ -91,7 +105,10 @@ function TextFieldSettings() {
       delete fieldData.ph
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hide Placeholder ${e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   function setPlaceholder(e) {
@@ -101,7 +118,10 @@ function TextFieldSettings() {
       fieldData.ph = e.target.value
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Change Placeholder ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   function setMin(e) {
@@ -115,7 +135,10 @@ function TextFieldSettings() {
       fieldData.err.mn.show = true
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Change Minimum Number ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   function setMax(e) {
@@ -129,7 +152,10 @@ function TextFieldSettings() {
       fieldData.err.mx.show = true
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Change Maximun Number ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   const setRegexr = e => {
@@ -150,7 +176,10 @@ function TextFieldSettings() {
       }
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Change Pattern ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   const setFlags = e => {
@@ -161,7 +190,10 @@ function TextFieldSettings() {
       fieldData.valid.flags = e.target.value
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Change Flag ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
@@ -211,7 +243,10 @@ function TextFieldSettings() {
     }
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Added Password Validation ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   const setPasswordLimit = e => {
@@ -225,11 +260,13 @@ function TextFieldSettings() {
     }
 
     fieldData.valid.regexr = generatePasswordPattern(validations)
-
     fieldData.err.regexr.dflt = generatePasswordErrMsg(validations)
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Added Password Limit ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
   }
 
   return (
