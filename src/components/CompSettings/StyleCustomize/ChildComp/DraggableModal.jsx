@@ -9,11 +9,13 @@ import draggableModalStyle from '../../../../styles/draggableModal.style'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
+const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 
 const RenderComponent = ({ component }) => {
   switch (component) {
     case 'border-style': return <BorderStyle />
     case 'color-picker': return <SimpleColorPickerMenu />
+    case 'font': return <FontPickerMenu />
     default: return 'loading'
   }
 }
@@ -21,6 +23,7 @@ const setTitle = (component) => {
   switch (component) {
     case 'border-style': return 'Border'
     case 'color-picker': return 'Color picker'
+    case 'font': return 'Fonts'
     default: return '...'
   }
 }

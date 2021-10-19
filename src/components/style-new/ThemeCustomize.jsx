@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import ut from '../../styles/2.utilities'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import SimpleColorPicker from './SimpleColorPicker'
+import FontPicker from './FontPicker'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -35,6 +36,10 @@ export default function ThemeCustomize() {
           </div>
 
           <div className={css(cls.divider)} />
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Font Family</span>
+            <FontPicker />
+          </div>
 
         </div>
       </div>
