@@ -4,7 +4,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
@@ -13,6 +13,7 @@ import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer, reportsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
+
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const history = useHistory()
@@ -35,6 +36,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [integrations, setIntegration] = useRecoilState($integrations)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
+  const style = useRecoilValue($styles)
+
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
       const newIntegrations = produce(integrations, draft => {
@@ -180,16 +183,19 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     let formStyle = sessionStorage.getItem('btcd-fs')
     formStyle &&= bitDecipher(formStyle)
+    // console.log(formStyle.toString())
     const formData = {
       ...(savedFormId && { id: savedFormId }),
       ...(!savedFormId && { form_id: newFormId }),
       ...(savedFormId && { reports }),
       layout: layouts,
       fields,
+      // saveStyle && style obj
       form_name: formName,
       additional: additionalSettings,
       workFlows,
       formStyle,
+      style,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
       rowHeight: sessionStorage.getItem('btcd-rh'),
       formSettings: {
@@ -223,7 +229,16 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.reports && setReports(reprts => reportsReducer(reprts, { type: 'set', reports: data?.reports || [] }))
           setAllForms(allforms => formsReducer(allforms, {
             type: action === 'bitforms_create_new_form' ? 'add' : 'update',
-            data: { formID: data.id, status: data.status !== '0', formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: data.entries, views: data.views, conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3), created_at: data.created_at },
+            data: {
+              formID: data.id,
+              status: data.status !== '0',
+              formName: data.form_name,
+              shortcode: `bitform id='${data.id}'`,
+              entries: data.entries,
+              views: data.views,
+              conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3),
+              created_at: data.created_at
+            },
           }))
           resetUpdateBtn()
           sessionStorage.removeItem('btcd-lc')

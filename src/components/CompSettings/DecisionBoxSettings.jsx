@@ -72,7 +72,7 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
-      {/* <Back2FldList />
+      {/* 
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {' '}

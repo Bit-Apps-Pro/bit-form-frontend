@@ -31,7 +31,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
-        <button onClick={toggleToolBar} type="button" className={`${css(OptionToolBarStyle.field_btn)} ${showToolBar && 'active'}`}>
+        <button onClick={toggleToolBar} type="button" className={`${css(OptionToolBarStyle.field_btn)} ${!showToolBar && 'active'}`}>
           <AddIcon size="22" />
           <span className={css(OptionToolBarStyle.txt)}>Form Fields</span>
         </button>
