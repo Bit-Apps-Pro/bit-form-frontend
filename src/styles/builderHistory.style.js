@@ -15,9 +15,12 @@ const builderHistoryStyle = {
     pb: 2,
   },
   list: {
+    mxh: 300,
     m: 0,
     dy: 'block',
     w: '100%',
+    ow: 'scroll',
+    owx: 'hidden',
   },
 
   item: {
