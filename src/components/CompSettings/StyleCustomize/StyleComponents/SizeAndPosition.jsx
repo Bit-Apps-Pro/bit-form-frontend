@@ -73,7 +73,6 @@ function SizeAndPosition({ fieldKey }) {
     <SimpleAccordion
       title="Sizes & Positions"
       className={css(FieldStyle.fieldSection)}
-      open
     >
       <div className={css(s.fd)}>
         <label className={css(ut.w5, s.label)} htmlFor="x">
