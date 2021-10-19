@@ -5,11 +5,10 @@ import { $breakpoint, $layouts } from '../GlobalStates'
 export default function RenderGridLayoutStyle() {
   const layouts = useRecoilValue($layouts)
   const breakpoint = useRecoilValue($breakpoint)
-
   const lay_row_height = 2
 
-  const mdWidth = 600
-  const smWidth = 400
+  // const mdWidth = 600
+  // const smWidth = 400
   let lgStyles = ''
   let mdStyles = ''
   let smStyles = ''
