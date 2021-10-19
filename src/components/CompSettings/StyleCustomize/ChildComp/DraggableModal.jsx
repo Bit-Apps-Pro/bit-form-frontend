@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
@@ -10,10 +10,10 @@ import draggableModalStyle from '../../../../styles/draggableModal.style'
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
 
-const RenderComponent = ({ component }) => {
+const RenderComponent = ({ component, action, value }) => {
   switch (component) {
     case 'border-style': return <BorderStyle />
-    case 'color-picker': return <SimpleColorPickerMenu />
+    case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
     default: return 'loading'
   }
 }
@@ -28,7 +28,10 @@ const setTitle = (component) => {
 export default function DraggableModal() {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width } = draggableModal
+  const { show, position, component, width, subtitle, action, value } = draggableModal
+  const [pos, setPos] = useState('')
+
+  useEffect(() => { setPos({ ...position }) }, [position])
 
   const DragableModalLoader = () => (
     <>
@@ -43,11 +46,17 @@ export default function DraggableModal() {
     </>
   )
 
+  if (!show) return <></>
+
   return (
-    <Draggable handle=".draggable-modal-handler" bounds="parent">
-      <div className={css(draggableModalStyle.container)} style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }}>
+    <Draggable handle=".draggable-modal-handler" bounds="parent" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)}>
+      <div className={css(draggableModalStyle.container)} style={{ width }}>
+        {/* style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }} */}
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handler`}>
-          <span className={css(draggableModalStyle.title)}>{setTitle(component)}</span>
+          <div className={css(ut.flxClm, draggableModalStyle.titleContainer)}>
+            <span className={css(draggableModalStyle.title)}>{setTitle(component)}</span>
+            <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
+          </div>
           <button type="button" className={css(draggableModalStyle.button)} onClick={() => setDraggableModal({ show: false })}>
             <CloseIcn size={10} />
           </button>
@@ -55,7 +64,7 @@ export default function DraggableModal() {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} />
+            <RenderComponent component={component} action={action} value={value} />
           </Suspense>
         </div>
       </div>
