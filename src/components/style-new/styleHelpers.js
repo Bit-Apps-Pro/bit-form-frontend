@@ -26,16 +26,19 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
     for (const fieldKey in drft.fields) {
       if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
         if (drft.fields[fieldKey].overrideGlobalTheme === false) {
-          if (drft.fields[fieldKey].fieldType === 'check') {
-            if (dir === 'rtl') {
-              const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right']
-              drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left'] = prvMargin
-              delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right']
-            } else if (dir === 'ltr') {
-              const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
-              drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right'] = prvMargin
-              delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
-            }
+          switch (drft.fields[fieldKey].fieldType) {
+            case 'check':
+            case 'radio':
+              if (dir === 'rtl') {
+                const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right']
+                drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left'] = prvMargin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right']
+              } else if (dir === 'ltr') {
+                const prvMargin = drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
+                drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right'] = prvMargin
+                delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
+              }
+              break
           }
         }
       }

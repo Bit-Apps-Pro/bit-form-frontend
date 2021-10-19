@@ -15,7 +15,7 @@ import Height from './StyleComponents/Height'
 import Margin from './StyleComponents/Margin'
 import Padding from './StyleComponents/Padding'
 import Shadow from './StyleComponents/Shadow'
-import { showDraggableModal } from './styleEditorHelpers'
+import { showDraggableModal } from '../../style-new/styleHelpers'
 
 function StyleEditor({ editorLabel, title, noBack, compStyle, styleDispatch, brkPoint, setResponsiveView, cls, styleConfig, formID: genaratedID }) {
   const history = useHistory()
