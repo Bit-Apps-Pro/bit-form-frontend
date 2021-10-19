@@ -373,7 +373,7 @@ function RadioCheckSettings() {
 
       <hr className={css(FieldStyle.divider)} />
 
-      <SimpleAccordion
+      {/* <SimpleAccordion
         title={__('Options', 'bitform')}
         className={css(FieldStyle.fieldSection)}
         open
@@ -410,10 +410,10 @@ function RadioCheckSettings() {
             </button>
           </div>
         </>
-      </SimpleAccordion>
+      </SimpleAccordion> */}
       <hr className={css(FieldStyle.divider)} />
 
-      {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
+      <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
@@ -423,31 +423,6 @@ function RadioCheckSettings() {
         &nbsp;
         {__('Edit Options', 'bitform')}
       </button>
-      {/* <div className="opt mt-1">
-        <span className="font-w-m">{__('Options:', 'bitform')}</span>
-        {options.map((itm, i) => (
-          <div key={`opt-${i + 8}`} className="flx flx-between">
-            <SingleInput inpType="text" value={itm.lbl} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
-            <div className="flx mt-1">
-              {fieldData.typ === 'check'
-                && (
-                  <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
-                    <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
-                    <span className="btcd-mrk ck br-50 " />
-                  </label>
-                )}
-              <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
-                <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
-                <span className="btcd-mrk ck br-50 " />
-              </label>
-              <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="close"><CloseIcn size="12" /></button>
-            </div>
-          </div>
-        ))}
-        <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">
-          {__('Add More +', 'bitform')}
-        </button>
-      </div> */}
       <Modal
         md
         autoHeight
