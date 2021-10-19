@@ -4,7 +4,7 @@
 
 .itm-focus {
   outline: 3px solid var(--b-50);
-  outline-offset: 3px;
+  /* outline-offset: 3px; */
   z-index: 9;
 }
 
@@ -17,7 +17,7 @@
   z-index: 9;
   /* box-shadow: 0 0 0 2px var(--b-50) inset; */
   outline: 3px solid var(--g-41);
-  outline-offset: 3px;
+  /* outline-offset: 3px; */
 }
 
 .blk:focus .blk-icn-wrp,

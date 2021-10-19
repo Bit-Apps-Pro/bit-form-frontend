@@ -19,7 +19,7 @@ const FieldStyle = {
     tn: 'background-color 0.2s',
     '& .toggle-icn': { cr: 'var(--white-0-61)' },
     ':focus-visible': { bs: '0 0 0 2px blue' },
-    ':hover': { bc: 'hsl(0deg 0% 88% / 32%)' },
+    ':hover': { bc: 'hsl(210deg 100% 98%)' },
   },
 
   placeholder: { dy: 'block' },
@@ -32,10 +32,13 @@ const FieldStyle = {
     oe: 'none !important',
     mx: 'auto',
     dy: 'block',
+    lh: '2 !important',
+    px: 8,
     mt: 10,
     mb: 3,
     b: 'none !important',
     brs: '8px !important',
+    '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
     ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
   },
 

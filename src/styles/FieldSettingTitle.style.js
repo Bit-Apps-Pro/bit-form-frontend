@@ -29,7 +29,7 @@ const style = {
     oe: 'none',
     flx: 'center',
     tn: 'background 0.2s',
-    lh: 1.2,
+    lh: '1.2 !important',
     // b: '1px solid var(--white-0-89)',
     // bc: 'var(--white-0-97)',
     bc: 'none',

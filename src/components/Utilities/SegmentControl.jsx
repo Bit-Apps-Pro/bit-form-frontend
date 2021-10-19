@@ -22,6 +22,7 @@ function SegmentControl({ defaultActive,
     clr.active = 'var(--b-50) !important'
   }
   if (variant === 'blue') {
+    // clr.selectorBg = 'linear-gradient(0deg, #0043d9, var(--b-50))'
     clr.selectorBg = 'var(--b-50)'
     clr.tabBg = '#454A65'
     clr.tabClr = 'var(--b-44-87)'
@@ -68,6 +69,7 @@ function SegmentControl({ defaultActive,
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
       bd: clr.selectorBg, // '#fff',
       willChange: 'transform',
+      bs: variant === 'blue' && '0 2px 7px -2px #000b31f7',
     },
     tab_link: {
       curp: 1,

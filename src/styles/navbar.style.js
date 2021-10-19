@@ -1,6 +1,6 @@
 const navbar = {
   btct_bld_nav: {
-    flx: 'between',
+    flx: 'center-between',
     bd: 'var(--dp-blue-bg)',
     pn: 'fixed',
     h: 40,
@@ -8,7 +8,7 @@ const navbar = {
     zx: 999,
     inset: 0,
   },
-  builder_routes: { mt: 40 },
+  builder_routes: { mt: 40, pn: 'relative' },
   btcd_bld_title: { flx: 'align-center' },
 
   nav_back_icn: {
@@ -51,10 +51,7 @@ const navbar = {
       cr: 'var(--b-54-12)',
     },
   },
-  btcd_bld_lnk: {
-    mt: 2,
-    ml: '-15%',
-  },
+  btcd_bld_lnk: { ml: '-15%' },
 
   btcd_bld_btn: { flx: 'center' },
   cls_btn: {
