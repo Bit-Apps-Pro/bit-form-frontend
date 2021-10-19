@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import validateForm from '../../user-frontend/validation'
 import { observeElement, select } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
-export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses }) {
+function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses }) {
   const type = attr.typ === 'url' ? 'text' : attr.typ
   const textFieldRef = useRef(null)
   const [value, setvalue] = useState(attr.val !== undefined ? attr.val : '')
@@ -80,3 +80,4 @@ export default function TextField({ fieldKey, attr, onBlurHandler, resetFieldVal
     </>
   )
 }
+export default memo(TextField)
