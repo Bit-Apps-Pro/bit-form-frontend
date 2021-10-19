@@ -1,21 +1,19 @@
-import { useState } from 'react'
 import { NavLink, Route, Switch } from 'react-router-dom'
-import { __ } from '../Utils/i18nwrap'
 // import Cpt from '../components/Cpt/Cpt'
 import Apikey from '../components/Apikey'
 import Captcha from '../components/Captcha'
+import Cpt from '../components/Cpt/Cpt'
+import GCLID from '../components/GCLID'
 // import Cpt from '../components/Cpt/Cpt';
 import Payments from '../components/Payments'
-import GCLID from '../components/GCLID'
 import SMTP from '../components/Smtp/SMTP'
-import Cpt from '../components/Cpt/Cpt'
-import CPTIcn from '../Icons/CPTIcn'
 import APIIcon from '../Icons/APIIcon'
+import CPTIcn from '../Icons/CPTIcn'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
-import PaymentsIcn from '../Icons/PaymentsIcn'
-import MailIcn from '../Icons/MailIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
+import PaymentsIcn from '../Icons/PaymentsIcn'
 import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
+import { __ } from '../Utils/i18nwrap'
 
 function AppSettingsPage() {
   return (
