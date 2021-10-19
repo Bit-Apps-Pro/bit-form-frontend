@@ -36,7 +36,7 @@ export default function HtmlFieldSettings() {
         </div>
       </div>
       <hr className={css(style.divider)} />
-      {/* <Back2FldList />
+      {/* 
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {' '}

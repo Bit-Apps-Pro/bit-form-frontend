@@ -13,11 +13,9 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
-import CopyText from '../Utilities/CopyText'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
@@ -227,7 +225,7 @@ export default function SelectSettings() {
 
   return (
     <div className="">
-      {/* <Back2FldList />
+      {/* 
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}

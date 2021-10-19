@@ -3,7 +3,8 @@ import merge from 'deepmerge-alt'
 import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import useSWR from "swr"
 import CompSettings from '../components/CompSettings/CompSettings'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
@@ -12,7 +13,8 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $builderHelperStates, $newFormId } from '../GlobalStates'
+import { $bits, $breakpoint, $builderHelperStates, $newFormId, $styles } from '../GlobalStates'
+import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, multiAssign } from '../Utils/Helpers'
@@ -64,9 +66,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [showToolBar, setShowToolbar] = useState(false)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
+
+  const setStyle = useSetRecoilState($styles)
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
   const { forceBuilderWidthToLG } = builderHelperStates
+
   useEffect(() => {
     if (formType === 'new') {
       sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
@@ -76,6 +81,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (formType === 'edit') {
+    const { data: fetchedStyle } = useSWR('bitforms_form_helpers_state', (uri) =>
+      bitsFetch({ formID }, uri)
+        .then(({ data: [response] }) => response?.builder_helper_state)
+    )
+    useEffect(() => { fetchedStyle && setStyle(JSON.parse(fetchedStyle)) }, [fetchedStyle])
+  }
 
   useEffect(() => {
     if (brkPoint === 'md') {
@@ -157,10 +170,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     if (res.getSectionSize(0) >= 160) {
       res.resizeSection(0, { toSize: 0 })
       setTolbarSiz(true)
+      setShowToolbar(true)
       localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: true }))
     } else {
       res.resizeSection(0, { toSize: 160 })
       setTolbarSiz(false)
+      setShowToolbar(false)
       localStorage.setItem('bit-form-config', JSON.stringify({ toolbarOff: false }))
     }
     conRef.current.applyResizer(res)

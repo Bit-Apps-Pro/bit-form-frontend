@@ -13,7 +13,7 @@ export default function ResponsiveBtns({ brkPoint, setResponsiveView }) {
         { lbl: 'lg', icn: <LaptopIcn size="17" />, tip: __('Laptop View', 'bitform') }]
         .map(itm => (
           <button
-            key={itm.icn}
+            key={`${itm.lbl}+${Math.random()}`}
             title={itm.tip}
             onClick={() => setResponsiveView(itm.lbl)}
             className={`br-50 flx mr-1 ${itm.lbl === brkPoint && 'blue'}`}

@@ -8,7 +8,7 @@ import CopyText from '../Utilities/CopyText'
 import DropDown from '../Utilities/DropDown'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
+import Back2FldBtn from './Back2FldBtn'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 
@@ -116,7 +116,7 @@ export default function FileUpSettings() {
 
   return (
     <div className="ml-2 mr-4">
-      <Back2FldList />
+      <Back2FldBtn />
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         File Upload

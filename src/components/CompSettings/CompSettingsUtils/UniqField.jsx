@@ -71,7 +71,8 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
       toggleChecked={fieldData?.err?.[type]?.[isUnique]}
       switching
       tipProps={{ width: 200, icnSize: 17 }}
-      open
+      open={fieldData?.err?.[type]?.[isUnique]}
+      disable={!fieldData?.err?.[type]?.[isUnique]}
     >
       <>
         {/* <div className="err-msg-wrapper">

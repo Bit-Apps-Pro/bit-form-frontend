@@ -15,14 +15,20 @@ function SizeAndPosition({ fieldKey }) {
   const fieldSize = layouts[breakpoint].find(fl => (fl.i === fieldKey))
   const setBuilderHelperStates = useSetRecoilState($builderHelperStates)
 
+  const maxY = layouts[breakpoint].reduce((prv, curr) => prv.y > curr.y ? prv.y : curr.y)
+
   const maxValue = {
-    lg: { w: 60, h: 0, x: 60 - fieldSize.w, y: 0 },
-    md: { w: 40, h: 0, x: 40 - fieldSize.w, y: 0 },
-    sm: { w: 20, h: 0, x: 20 - fieldSize.w, y: 0 },
+    lg: { w: 60, h: fieldSize.maxH || null, x: Math.abs(60 - fieldSize.w), y: maxY },
+    md: { w: 40, h: fieldSize.maxH || null, x: Math.abs(40 - fieldSize.w), y: maxY },
+    sm: { w: 20, h: fieldSize.maxH || null, x: Math.abs(20 - fieldSize.w), y: maxY },
   }
+
+  console.log('fieldSize', fieldSize)
+  console.log('max value', maxValue)
 
   const xHandler = (e) => {
     const val = e.target.valueAsNumber
+    if (val < 0) return
     if (val > maxValue[breakpoint].x) return
 
     setLayouts(layout => produce(layout, draft => {
@@ -35,6 +41,7 @@ function SizeAndPosition({ fieldKey }) {
   }
   const wHandler = (e) => {
     const val = e.target.valueAsNumber
+    if (val < 0) return
     if (val > maxValue[breakpoint].w) return
 
     setLayouts(layout => produce(layout, draft => {
@@ -47,7 +54,8 @@ function SizeAndPosition({ fieldKey }) {
   }
   const yHandler = (e) => {
     const val = e.target.valueAsNumber
-    if (val > maxValue[breakpoint].y) return
+    if (val < 0) return
+    if (maxValue[breakpoint].y !== null && val > maxValue[breakpoint].y) return
 
     setLayouts(layout => produce(layout, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
@@ -59,7 +67,8 @@ function SizeAndPosition({ fieldKey }) {
   }
   const hHandler = (e) => {
     const val = e.target.valueAsNumber
-    if (val > maxValue[breakpoint].h) return
+    if (val < 0) return
+    if (maxValue[breakpoint].h !== null && val > maxValue[breakpoint].h) return
 
     setLayouts(layout => produce(layout, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
@@ -77,19 +86,19 @@ function SizeAndPosition({ fieldKey }) {
       <div className={css(s.fd)}>
         <label className={css(ut.w5, s.label)} htmlFor="x">
           <span className={css(s.name)}>X</span>
-          <input aria-label="position x" placeholder="" max={maxValue[breakpoint].x} onChange={xHandler} value={fieldSize.x} className={css(ut.w8, s.input)} id="x" type="number" />
+          <input aria-label="position x" placeholder="" min="0" max={maxValue[breakpoint].x} onChange={xHandler} value={fieldSize.x} className={css(ut.w8, s.input)} id="x" type="number" />
         </label>
         <label className={css(ut.w5, s.label)} htmlFor="w">
           <span className={css(s.name)}>W</span>
-          <input aria-label="position w" placeholder="" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
+          <input aria-label="position w" placeholder="" min="0" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
         </label>
         <label className={css(ut.w5, s.label)} htmlFor="y">
           <span className={css(s.name)}>Y</span>
-          <input aria-label="position y" placeholder="" max={maxValue[breakpoint].y} onChange={yHandler} value={fieldSize.y} className={css(ut.w8, s.input)} id="y" type="number" />
+          <input aria-label="position y" placeholder="" min="0" max={maxValue[breakpoint].y} onChange={yHandler} value={fieldSize.y} className={css(ut.w8, s.input)} id="y" type="number" />
         </label>
         <label className={css(ut.w5, s.label)} htmlFor="h">
           <span className={css(s.name)}>H</span>
-          <input aria-label="position h" placeholder="" max={maxValue[breakpoint].h} onChange={hHandler} value={fieldSize.h} className={css(ut.w8, s.input)} id="h" type="number" />
+          <input aria-label="position h" placeholder="" min="0" max={maxValue[breakpoint].h} onChange={hHandler} value={fieldSize.h} className={css(ut.w8, s.input)} id="h" type="number" />
         </label>
       </div>
     </SimpleAccordion>

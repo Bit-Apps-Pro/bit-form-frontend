@@ -11,7 +11,7 @@ import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldList from './Back2FldList'
+import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function RazorpaySettings() {
@@ -151,7 +151,7 @@ export default function RazorpaySettings() {
 
   return (
     <div className="ml-2 mr-4">
-      <Back2FldList />
+      <Back2FldBtn />
       <div className="mb-2">
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Razor Pay', 'bitform')}
