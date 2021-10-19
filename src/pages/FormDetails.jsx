@@ -125,10 +125,10 @@ function FormDetails() {
         valid: {},
       }
       const btnFld = []
-      btnFld[`bf${newFormId}-1`] = btnData
+      btnFld[`b${newFormId}-1`] = btnData
       setFields(btnFld)
       const btnLay = { lg: [], md: [], sm: [] }
-      const subBtnLay = { h: 2, i: `bf${newFormId}-1`, minH: 2, w: 6, x: 0, y: Infinity }
+      const subBtnLay = { h: 40, i: `b${newFormId}-1`, minH: 20, w: 60, x: 0, y: 0 }
       btnLay.lg.push(subBtnLay)
       btnLay.md.push(subBtnLay)
       btnLay.sm.push(subBtnLay)
@@ -333,7 +333,7 @@ function FormDetails() {
             />
           </div>
           <div className={css(navbar.btcd_bld_btn)}>
-            {formType === 'edit' && <PublishBtn /> }
+            {formType === 'edit' && <PublishBtn />}
             <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
             <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
               <CloseIcn size="14" />
