@@ -16,8 +16,8 @@ import FieldLinkBtn from './FieldLinkButton'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import ThemeGallary from '../style-new/ThemeGallary'
 import ThemeCustomize from '../style-new/ThemeCustomize'
-import RenderFieldSettings from './RenderFieldSettings'
-import RenderFieldsList from './RenderFieldsList'
+import FieldSettings from './FieldSettings'
+import FieldsList from './FieldsList'
 
 function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
@@ -44,8 +44,8 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
           {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
 
           <Switch>
-            <Route path={`${path}/fields-list`} component={RenderFieldsList} />
-            <Route path={`${path}/field-settings/:fieldKey`} component={RenderFieldSettings} />
+            <Route path={`${path}/fields-list`} component={FieldsList} />
+            <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
             <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
 

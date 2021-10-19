@@ -12,7 +12,7 @@ import ReCaptchaSettigns from './ReCaptchaSettigns'
 import SelectSettings from './SelectSettings'
 import TextFieldSettings from './TextFieldSettings'
 
-export default function RenderFieldSettings() {
+export default function FieldSettings() {
   const { formType, formID } = useParams()
   const history = useHistory()
   const fields = useRecoilValue($fields)
