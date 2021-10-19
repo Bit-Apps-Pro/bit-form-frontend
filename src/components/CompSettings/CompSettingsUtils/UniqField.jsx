@@ -20,6 +20,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
+
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
     if (!fieldData.err) fieldData.err = {}
@@ -84,7 +85,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
             <SingleToggle name={isUnique} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
           </div> */}
         <>
-          <div className={`${css(ErrorMessages.flxBetween)} ${css(ErrorMessages.checked)}`}>
+          <div className={`${css(ErrorMessages.flxBetween, ErrorMessages.checked, ut.px10, ut.mt2)}`}>
             <div className={css(ErrorMessages.flx)}>
               <CheckBoxMini className={`${css(ut.mr2)} ${css(ut.fw500)} `} name={type} disabled={!bits.isPro} checked={fieldData?.err?.[type]?.custom || false} title={__('Custom Error Message', 'bitform')} onChange={setCustomErrMsg} />
               <Cooltip width={250} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
@@ -96,15 +97,15 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
               </Cooltip>
               {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
             </div>
-            <span
-              role="button"
-              tabIndex="-1"
+            <button
+              type="button"
+              aria-label="Edit custom message"
               className={css(ErrorMessages.btn)}
               onClick={openErrorModal}
               onKeyPress={openErrorModal}
             >
               <EditIcn size={19} />
-            </span>
+            </button>
 
           </div>
           <div
