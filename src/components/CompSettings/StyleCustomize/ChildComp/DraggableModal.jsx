@@ -43,7 +43,7 @@ export default function DraggableModal() {
     </>
   )
 
-  return (
+  return show && (
     <Draggable handle=".draggable-modal-handler" bounds="parent">
       <div className={css(draggableModalStyle.container)} style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }}>
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handler`}>

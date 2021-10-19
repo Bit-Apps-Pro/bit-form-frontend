@@ -12,7 +12,7 @@ export default function SizeControl({ label, className, width }) {
   }
 
   return (
-    <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width: `${width}px` }}>
+    <div className={`${css(sizeControlStyle.container)} ${className}`} style={{ width }}>
       <CustomInputControl
         className={css(sizeControlStyle.input)}
         label={label}

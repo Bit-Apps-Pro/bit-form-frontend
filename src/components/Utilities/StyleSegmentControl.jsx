@@ -8,7 +8,8 @@ export default function StyleSegmentControl({ defaultActive,
   size = 100,
   onChange,
   show,
-  activeShow }) {
+  activeShow,
+  wideTab }) {
   const { css } = useFela()
   const baseSize = Number(size)
   const floor = (number) => (Math.floor(baseSize / number))
@@ -26,7 +27,7 @@ export default function StyleSegmentControl({ defaultActive,
       flx: 'center',
       px: 3,
       ls: 'none',
-      dy: 'inline-block',
+      // dy: 'inline-block',
       brs: 8,
       pn: 'relative',
       '& .active': { cr: 'var(--b-50) !important' },
@@ -63,7 +64,11 @@ export default function StyleSegmentControl({ defaultActive,
       aspectRatio: '1/1',
       w: 24,
       h: 24,
-      brs: 6,
+      ...wideTab && {
+        w: '100%',
+        h: 30,
+      },
+      brs: 8,
       flxi: 'center',
       tdy: '0.3s',
       tdn: '0.6s',
@@ -94,6 +99,8 @@ export default function StyleSegmentControl({ defaultActive,
   useEffect(() => {
     const toActiveElement = tabsRef.current.querySelector(`[data-label="${active}"]`)
     setSelectorPos(toActiveElement)
+
+    if (onChange) onChange(active)
   }, [active])
 
   const eventHandler = (e, i) => {
@@ -106,12 +113,13 @@ export default function StyleSegmentControl({ defaultActive,
     if (!e.type === 'keypress' || !e.type === 'click') return
 
     const currentActiveElm = tabsRef.current.querySelector('.tabs button.active')
-    if (elm === currentActiveElm) return
+    if (elm !== currentActiveElm) {
+      currentActiveElm?.classList.remove('active')
+      setSelectorPos(elm)
+      setactive(options[i].label)
+    }
 
-    currentActiveElm?.classList.remove('active')
-    setSelectorPos(elm)
-    setactive(options[i].label)
-    onChange(options[i].label)
+    if (onChange) onChange(options[i].label)
   }
 
   const checkToShow = (item, key) => {
