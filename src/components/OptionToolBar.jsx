@@ -10,13 +10,16 @@ import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
+import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
+import SegmentControl from './Utilities/SegmentControl'
 import SingleToggle from './Utilities/SingleToggle'
+import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
@@ -88,6 +91,8 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
                 <BrushIcn size="20" />
               </NavLink>
             </Tip>
+            {/* <StyleSegmentControl show={['icn', 'label']} options={[{ icn: <BrushIcn size="14" />, label: 'asd', show: ['icn'], value: 'asd' }, { icn: <BrushIcn size="14" />, label: 'asd', show: ['icn'], value: 'sdf' }]} /> */}
+            {/* <SegmentControl component="a" size="80" options={[{ icn: <BrushIcn /> }, { icn: <SettingsIcn /> }]} /> */}
             <Tip msg="Style render">
               <SingleToggle name="styleMood" isChecked={builderHelperStates.styleMood} action={styleMoodHandler} />
             </Tip>
