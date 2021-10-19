@@ -52,39 +52,56 @@ export default function FormBuilderHistory({ }) {
     remove_fld: 'add_fld',
   }
 
+  // const handleHistory = indx => {
+  //   if (indx < 0 || disabled) return
+  //   const actionType = active >= indx ? 'undo' : 'redo'
+  //   let changableHistories = []
+  //   if (actionType === 'undo') {
+  //     changableHistories = histories.slice(indx + 1).reverse()
+  //   } else if (actionType === 'redo') {
+  //     changableHistories = histories.slice(active + 1, indx + 1)
+  //   }
+
+  //   if (!changableHistories.length) return
+
+  //   setDisabled(true)
+
+  //   let draftLayouts = { ...layouts }
+  //   const draftFields = { ...fields }
+  //   changableHistories.forEach(({ action, state }) => {
+  //     const historyAction = actionType === 'undo' ? actionsBasedOnType[action] : action
+  //     if (historyAction === 'add_fld') {
+  //       const { fldKey, breakpoint, layout, fldData } = state
+  //       draftLayouts = compactNewLayoutItem(breakpoint, layout, draftLayouts)
+  //       draftFields[fldKey] = fldData
+  //     } else if (historyAction === 'remove_fld') {
+  //       const { fldKey } = state
+  //       draftLayouts = filterLayoutItem(fldKey, draftLayouts)
+  //       delete draftFields[fldKey]
+  //       setSelectedFieldId(null)
+  //     }
+  //   })
+
+  //   sessionStorage.setItem('btcd-lc', '-')
+  //   setLayouts(draftLayouts)
+  //   setFields(draftFields)
+  //   setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
+  //   setDisabled(false)
+  // }
+
   const handleHistory = indx => {
     if (indx < 0 || disabled) return
-    const actionType = active >= indx ? 'undo' : 'redo'
-    let changableHistories = []
-    if (actionType === 'undo') {
-      changableHistories = histories.slice(indx + 1).reverse()
-    } else if (actionType === 'redo') {
-      changableHistories = histories.slice(active + 1, indx + 1)
-    }
 
-    if (!changableHistories.length) return
+    const { state } = histories[indx]
 
-    setDisabled(true)
-
-    let draftLayouts = { ...layouts }
-    const draftFields = { ...fields }
-    changableHistories.forEach(({ action, state }) => {
-      const historyAction = actionType === 'undo' ? actionsBasedOnType[action] : action
-      if (historyAction === 'add_fld') {
-        const { fldKey, breakpoint, layout, fldData } = state
-        draftLayouts = compactNewLayoutItem(breakpoint, layout, draftLayouts)
-        draftFields[fldKey] = fldData
-      } else if (historyAction === 'remove_fld') {
-        const { fldKey } = state
-        draftLayouts = filterLayoutItem(fldKey, draftLayouts)
-        delete draftFields[fldKey]
-        setSelectedFieldId(null)
-      }
-    })
-
+    // setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
-    setLayouts(draftLayouts)
-    setFields(draftFields)
+    if (state.layouts) {
+      setLayouts(state.layouts)
+    }
+    if (state.fields) {
+      setFields(state.fields)
+    }
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
     setDisabled(false)
   }
