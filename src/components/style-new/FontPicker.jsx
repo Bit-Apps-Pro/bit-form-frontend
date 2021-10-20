@@ -2,7 +2,7 @@ import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import { showDraggableModal } from '../CompSettings/StyleCustomize/styleEditorHelpers'
+import { showDraggableModal } from '../style-new/styleHelpers'
 
 export default function FontPicker() {
   const { css } = useFela()
@@ -12,7 +12,7 @@ export default function FontPicker() {
     <div className={css(c.preview_wrp)}>
       <button
         className={css(c.btn)}
-        onClick={e => showDraggableModal(e, setDraggableModal, 'font', 250)}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font' })}
         type="button"
       >
         <div />
