@@ -2,7 +2,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
-import DownloadIcon from '../../Icons/DownloadIcon'
+import BackIcn from '../../Icons/BackIcn'
 import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -15,7 +15,7 @@ import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
 import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
 
-export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey }) {
+export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKey, setEditOptionType }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const { css } = useFela()
@@ -72,7 +72,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
     if (importOpts?.dataSrc === 'post') fieldData.customType = importOpts?.fieldObject
     if (importOpts?.dataSrc === 'acf') fieldData.customType = importOpts?.fieldObject
     if (importOpts.type === 'merge') {
-      fieldData.custom_type.oldOpt = fieldData.opt
+      if (fieldData.customType) fieldData.custom_type.oldOpt = fieldData.opt
       fieldData.opt = fieldData.opt.concat(opts)
     } else {
       fieldData.opt = opts
@@ -87,6 +87,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     setImportOpts({ dataSrc, fieldObject, disabled })
+    setEditOptionType('Visual')
   }
 
   const newOptions = generateNewOptions()
@@ -185,9 +186,9 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
 
       )}
       <button onClick={handleImport} className={`${css(app.btn)} blue`} type="button" disabled={!newOptions.length || false}>
-        <DownloadIcon size="15" />
+        <BackIcn size="15" />
         &nbsp;
-        {__('Import', 'bitform')}
+        {__('Import & Edit', 'bitform')}
       </button>
     </div>
   )

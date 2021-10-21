@@ -5,7 +5,6 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
@@ -13,15 +12,14 @@ import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
-import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
+import EditOptions from './EditOptions/EditOptions'
 import ImportOptions from './ImportOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import Option from './Option'
 
 function RadioCheckSettings() {
   console.log('%c $render RadioCheckSettings', 'background:royalblue;padding:3px;border-radius:5px;color:white')
@@ -150,7 +148,7 @@ function RadioCheckSettings() {
   }
 
   const openOptionModal = () => {
-    console.log(fieldData.opt, 'aa')
+    console.log(fieldData, 'aa')
     setOptionMdl(true)
   }
 
@@ -413,12 +411,12 @@ function RadioCheckSettings() {
       </SimpleAccordion> */}
       <hr className={css(FieldStyle.divider)} />
 
-      <button onClick={openImportModal} className={css(app.btn)} type="button">
+      {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
-      </button>
-      <br />
+      </button> */}
+      {/* <br /> */}
       <button onClick={openOptionModal} className={css(app.btn)} type="button">
         &nbsp;
         {__('Edit Options', 'bitform')}
@@ -445,7 +443,8 @@ function RadioCheckSettings() {
               </div>
             </div>
           )}
-          <Option
+          <EditOptions
+            optionMdl={optionMdl}
             options={options}
             lblKey="lbl"
             valKey="val"
@@ -453,7 +452,7 @@ function RadioCheckSettings() {
           />
         </div>
       </Modal>
-      <Modal
+      {/* <Modal
         md
         autoHeight
         show={importOpts.show}
@@ -483,7 +482,7 @@ function RadioCheckSettings() {
             customType={fieldData}
           />
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   )
 }
