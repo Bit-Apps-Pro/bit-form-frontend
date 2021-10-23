@@ -63,20 +63,20 @@ export default function FontPickerMenu() {
       <StyleSegmentControl options={[{ label: 'Google' }, { label: 'Custom' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} wideTab />
       {loading && (
         <div title="Loading...">
-          {Array(5).fill(1).map((itm, i) => (
-            <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css({ w: '80%', h: 20, brs: 5, lh: 2 })} loader`} />
+          <div className={css(ut.mt2)} />
+          {Array(10).fill(1).map((itm, i) => (
+            <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css({ w: '95%', h: 28, brs: 5, lh: 2, my: 3, mx: 5 })} loader`} />
           ))}
         </div>
       )}
-      <br />
       {controller.parent === 'Google' && (
         <>
-          <div className={css(ut.flxc, fontStyle.searchBar)}>
+          <div className={css(ut.flxc, fontStyle.searchBar, ut.mt2, ut.mb2)}>
             <div className={css(fontStyle.fields_search)} style={{ width: focusSearch ? '90%' : '78%' }}>
               <input
-                title="Search Field"
-                aria-label="Search Field"
-                placeholder="Search..."
+                title="Search fonts"
+                aria-label="Search fonts"
+                placeholder="Search fonts..."
                 id="search-icon"
                 type="search"
                 name="searchIcn"
@@ -96,7 +96,6 @@ export default function FontPickerMenu() {
                 </button>
               )}
           </div>
-          <br />
           <VirtualList
             width="100%"
             height={200}
@@ -105,12 +104,10 @@ export default function FontPickerMenu() {
             scrollToIndex={fonts.length ? scrolIndex : 0}
             renderItem={({ index, style }) => (
               <div key={index} style={style}>
-                <div className={css(fontStyle.item)}>
-                  <button className={css(fontStyle.btn)} type="button" onClick={() => setCheck(fonts[index]?.family)}>
-                    <span className={css(fontStyle.title)}>{fonts[index].family}</span>
-                    {data === fonts[index].family && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />}
-                  </button>
-                </div>
+                <button className={css(fontStyle.btn)} type="button" onClick={() => setCheck(fonts[index]?.family)}>
+                  <span className={css(fontStyle.title)}>{fonts[index].family}</span>
+                  {data === fonts[index].family && <CheckMarkIcn className={css(fontStyle.btnColor)} size="19" />}
+                </button>
               </div>
             )}
           />
