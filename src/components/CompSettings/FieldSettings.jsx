@@ -21,7 +21,6 @@ export default function FieldSettings() {
   const seletedFieldType = fields?.[selectedFieldId]?.typ
   if (!selectedFieldId) {
     history.push(`/form/builder/${formType}/${formID}/fields-list`)
-    return <></>
   }
   switch (seletedFieldType) {
     case 'text':
