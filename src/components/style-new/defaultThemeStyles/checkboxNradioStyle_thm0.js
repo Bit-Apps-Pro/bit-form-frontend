@@ -37,6 +37,7 @@ export default function checkboxNradioStyle_thm0({ fk, type, direction }) {
       cursor: 'pointer',
       display: 'flex',
       'align-items': 'center',
+      color: 'var(--global-font-color)'
     },
     [`.${fk}-ct`]: {
       'line-height': 'initial'
@@ -51,21 +52,18 @@ export default function checkboxNradioStyle_thm0({ fk, type, direction }) {
       'border-color': 'var(--global-primary-color)',
     },
     [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gph), var(--gps), var(--gpl), 0.3)' },
+    [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-primary-color)' },
     [`.${fk}-ci:active ~ .${fk}-cl .${fk}-bx`]: { transform: 'scale(0.9)' },
     [`.${fk}-ci:disabled ~ .${fk}-cl`]: {
       opacity: 0.6,
       'pointer-events': 'none',
       cursor: 'not-allowed',
     },
-    // [`.${fk}-ci:disabled ~ .${fk}-cl .${fk}-bx`]: {
-    //   opacity: 0.6,
-    //   cursor: 'not-allowed'
-    // },
     [`.${fk}-cw:hover .box`]: { 'border-color': 'var(--global-primary-color)' },
     [`.${fk}-bx`]: {
       position: 'relative',
-      height: '20px',
-      width: '20px',
+      height: '18px',
+      width: '18px',
       border: '2px solid gray',
       display: 'inline-flex',
       ...direction === 'rtl' && { 'margin-left': '10px' },
@@ -73,21 +71,14 @@ export default function checkboxNradioStyle_thm0({ fk, type, direction }) {
       transition: 'all 0.2s',
       'justify-content': 'center',
       'align-items': 'center',
-      background: 'white',
     },
-    // [`.${fk}-bx::before`]: {
-    //   content: '""',
-    //   position: 'absolute',
-    //   left: '50%',
-    //   height: 0,
-    //   width: 0,
-    // },
+
     ...type === 'check' && {
       [`.${fk}-ck`]: { 'border-radius': '5px' },
       [`.${fk}-svgwrp`]: {
         height: '12px',
         width: '10px',
-        filter: 'drop-shadow(0px 1px 1px #000)',
+        filter: 'drop-shadow(0px 1px 1px hsl(var(--gph), var(--gps), 13%))',
       },
       [`.${fk}-ck-icn`]: { 'stroke-dashoffset': '16px' },
       [`.${fk}-ck-svgline`]: {
@@ -99,19 +90,6 @@ export default function checkboxNradioStyle_thm0({ fk, type, direction }) {
         'stroke-dasharray': '16px',
       },
       [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-ck-icn`]: { 'stroke-dashoffset': 0 },
-      // [`.${fk}-ck::before`]: {
-      //   top: '40%',
-      //   border: 'solid white',
-      //   'border-width': 0,
-      //   transition: 'all 0.2s cubic-bezier(0.25, 0.1, 0.59, 1.82)',
-      //   filter: 'drop-shadow(1px 1px 1px gray)',
-      //   transform: 'translate(-50%, -50%) rotate(45deg)',
-      // },
-      // [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-ck::before`]: {
-      //   width: '3px',
-      //   height: '8px',
-      //   'border-width': '0 3px 3px 0',
-      // },
     },
 
     ...type === 'radio' && {
