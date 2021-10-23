@@ -2,8 +2,8 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $breakpoint, $builderHelperStates } from '../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $breakpoint, $builderHelperStates, $flags } from '../GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -25,11 +25,11 @@ import Tip from './Utilities/Tip'
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
   const { formType, formID } = useParams()
-  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
+  const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
 
-  const styleMoodHandler = () => setBuilderHelperStates(prv => ({ ...prv, styleMood: !prv.styleMood }))
+  const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
 
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
@@ -94,7 +94,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
             {/* <StyleSegmentControl show={['icn', 'label']} options={[{ icn: <BrushIcn size="14" />, label: 'asd', show: ['icn'], value: 'asd' }, { icn: <BrushIcn size="14" />, label: 'asd', show: ['icn'], value: 'sdf' }]} /> */}
             {/* <SegmentControl component="a" size="80" options={[{ icn: <BrushIcn /> }, { icn: <SettingsIcn /> }]} /> */}
             <Tip msg="Style render">
-              <SingleToggle name="styleMood" isChecked={builderHelperStates.styleMood} action={styleMoodHandler} />
+              <SingleToggle name="styleMood" isChecked={flags.styleMode} action={styleModeHandler} />
             </Tip>
           </div>
         </div>
