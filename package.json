@@ -14,6 +14,8 @@
     "deepmerge-alt": "^0.3.0",
     "fela": "11.7.0",
     "fela-plugin-custom-property": "11.7.0",
+    "filepond": "^4.30.3",
+    "filepond-plugin-image-preview": "^4.6.10",
     "immer": "^9.0.6",
     "quicklink": "^2.2.0",
     "react": "^17.0.2",
