@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
-import DownloadIcon from '../../Icons/DownloadIcon'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -15,15 +13,14 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import Modal from '../Utilities/Modal'
-import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
-import ImportOptions from './ImportOptions'
-import Option from './Option'
+import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+
 
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
@@ -486,43 +483,13 @@ export default function SelectSettings() {
         )
       } */}
 
-      <SimpleAccordion
-        title={__('Options', 'bitform')}
-        className={css(FieldStyle.fieldSection)}
-        open
-      >
-        <>
-          <button onClick={openImportModal} className={css(app.btn)} type="button">
-            <DownloadIcon size="16" />
-            &nbsp;
-            {__('Import Options', 'bitform')}
-          </button>
-          <div className={`opt ${css(ut.mt0)}`}>
-            <span className="font-w-m">{__('Options:', 'bitform')}</span>
-            {fieldData.opt.map((itm, i) => (
-              <div key={`opt-${i + 8}`} className="flx flx-between">
-                <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className={css(ut.mt0)} />
-                <div className="flx mt-2">
-                  <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
-                    <input aria-label="Option" onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
-                    <span className="btcd-mrk ck br-50" />
-                  </label>
-                  <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="remove option"><CloseIcn size="14" /></button>
-                </div>
-              </div>
-            ))}
-            <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
-          </div>
-        </>
-      </SimpleAccordion>
-
       <hr className={css(FieldStyle.divider)} />
-      <button onClick={openImportModal} className={css(app.btn)} type="button">
+      {/* <button onClick={openImportModal} className={css(app.btn)} type="button">
         <DownloadIcon size="16" />
         &nbsp;
         {__('Import Options', 'bitform')}
       </button>
-      <br />
+      <br /> */}
       <button onClick={openOptionModal} className={css(app.btn)} type="button">
         &nbsp;
         {__('Edit Options', 'bitform')}
@@ -544,7 +511,7 @@ export default function SelectSettings() {
         ))}
         <button onClick={addOpt} className={`${css(app.btn)} blue`} type="button">{__('Add More +', 'bitform')}</button>
       </div> */}
-      <Modal
+      {/* <Modal
         md
         autoHeight
         show={importOpts.show}
@@ -573,7 +540,7 @@ export default function SelectSettings() {
             valKey="value"
           />
         </div>
-      </Modal>
+      </Modal> */}
 
       <Modal
         md
@@ -597,14 +564,23 @@ export default function SelectSettings() {
               </div>
             </div>
           )}
-          <Option
+          {/* <Option
+            optionMdl={optionMdl}
             options={fieldData.opt}
             lblKey="label"
             valKey="value"
             type="select"
+          /> */}
+          <EditOptions
+            optionMdl={optionMdl}
+            options={fieldData.opt}
+            lblKey="label"
+            valKey="value"
+            type="select"
+            hasGroup
           />
         </div>
       </Modal>
-    </div>
+    </div >
   )
 }

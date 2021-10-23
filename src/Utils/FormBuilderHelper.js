@@ -480,15 +480,17 @@ export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn
     // if (!draft.histories.length) {
     //   draft.histories.push({ event: 'reset' })
     // }
-    if(draft.histories[draft.histories.length - 1].event === historyData.event) {
+    if (draft.histories[draft.histories.length - 1].event === historyData.event) {
       draft.histories.pop()
-      draft.active= draft.histories.length - 1
+      draft.active = draft.histories.length - 1
     }
     draft.histories.splice(draft.active + 1)
     draft.active = draft.histories.push(historyData) - 1
   }))
 
-  setUpdateBtn({ unsaved:true })
+  if (setUpdateBtn) {
+    setUpdateBtn({ unsaved: true })
+  }
 }
 
 export const cols = { lg: 60, md: 40, sm: 20 }

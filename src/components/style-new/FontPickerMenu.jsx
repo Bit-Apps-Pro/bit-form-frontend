@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import VirtualList from 'react-tiny-virtual-list-oss'
+import VirtualList from 'react-tiny-virtual-list'
 import useSWR from 'swr'
 import ut from '../../styles/2.utilities'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -60,7 +60,7 @@ export default function FontPickerMenu() {
 
   return (
     <div className={css(fontStyle.container)}>
-      <StyleSegmentControl options={[{ label: 'Google' }, { label: 'Custom' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} wideTab />
+      <StyleSegmentControl options={[{ label: 'Google' }, { label: 'Custom' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} activeValue={controller.parent} wideTab />
       {loading && (
         <div title="Loading...">
           <div className={css(ut.mt2)} />

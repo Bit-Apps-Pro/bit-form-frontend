@@ -4,6 +4,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Tip from './Tip'
 
 export default function StyleSegmentControl({ defaultActive,
+  activeValue,
   options,
   size = 100,
   onChange,
@@ -94,10 +95,12 @@ export default function StyleSegmentControl({ defaultActive,
   }
 
   useEffect(() => {
+    if (activeValue) { setactive(activeValue) }
+  }, [activeValue])
+
+  useEffect(() => {
     const toActiveElement = tabsRef.current.querySelector(`[data-label="${active}"]`)
     setSelectorPos(toActiveElement)
-
-    if (onChange) onChange(active)
   }, [active])
 
   const eventHandler = (e, i) => {
