@@ -11,15 +11,10 @@ import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
-SimpleAccordion.defaultProps = {
-  onOpen: () => { },
-  open: false,
-  disable: false,
-}
 
-export default function SimpleAccordion({ className, title, toggleName, children, open, onOpen, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable }) {
+export default function SimpleAccordion({ className, title, toggleName, children, open = false, onOpen = () => { }, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable }) {
   const bits = useRecoilValue($bits)
-  const [tgl, setTgl] = useState(!disable && open)
+  const [tgl, setTgl] = useState(!disable && open || false)
   const [H, setH] = useState(open ? 'auto' : 0)
 
   const { css } = useFela()
@@ -48,7 +43,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { setTgl(!disable) }, [disable])
+  useEffect(() => { if (disable !== undefined) setTgl(!disable); console.log({ disable }) }, [disable])
 
   const cancelBubble = (e) => e.stopPropagation()
 
@@ -78,9 +73,8 @@ export default function SimpleAccordion({ className, title, toggleName, children
 
             {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
           </span>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div className={css(SimpleAccordionStyle.flxbwn)}>
-            <div onClick={cancelBubble} onKeyPress={cancelBubble}>
+            <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
               {switching && (
                 <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
               )}
