@@ -13,9 +13,16 @@ export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
+
+  const {
+    '--global-primary-color': globalPrimaryColor,
+    '--dir': direction,
+    '--global-font-color': globalFontColor,
+    '--global-bg-color': globalBgColor
+  } = styles.themeVars
   // const [h,s,l/]
-  const globalPrimaryColor = styles.themeVars['--global-primary-color']
-  const direction = styles.themeVars['--dir']
+  // const globalPrimaryColor = ['--global-primary-color']
+  // const direction = styles.themeVars['--dir']
   // console.log()
 
 
@@ -43,23 +50,26 @@ export default function ThemeCustomize() {
         <br />
         <div className={css(cls.container)}>
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Form Background</span>
-            <SimpleColorPicker subtitle="Theme Primary Color" />
+            <span className={css(ut.fw500)}>Background Color</span>
+            <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Primary Color</span>
-            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} />
+            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Font Color</span>
+            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
+          </div>
+        </div>
 
-          <div className={css(cls.divider)} />
-          <div className={css(ut.flxcb)}>
+        <div className={css(cls.divider)} />
+
+        <div className={css({ mr: 15 })}>
+          <div className={css(ut.flxcb, ut.mb2)}>
             <span className={css(ut.fw500)}>Font Family</span>
             <FontPicker />
           </div>
-
-
-        </div>
-        <div className={css({ mr: 15 })}>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
             <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />

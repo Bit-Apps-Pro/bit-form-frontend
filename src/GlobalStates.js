@@ -23,8 +23,8 @@ export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
 export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{event: 'reset', state: {}}], active: 0 } })
 export const $draggableModal = atom({ key: '$draggableModal', default: { show: false, component: null, position: { x: 0, y: 0 }, width: 250 } })
-export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { forceBuilderWidthToLG: 0, respectLGLayoutOrder: true, reRenderGridLayoutByRootLay: 0, styleMood: false } })
-export const $flags = atom({ key: '$flags', default: { saveStyle: true } })
+export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { forceBuilderWidthToLG: 0, respectLGLayoutOrder: true, reRenderGridLayoutByRootLay: 0 } })
+export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false } })
 export const $styles = atom({
   key: '$styles',
   default: {
@@ -35,16 +35,26 @@ export const $styles = atom({
       '--gps': 10,
       '--gpl': 20,
       '--gpa': 100,
+      '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+      '--gfh': 0,
+      '--gfs': 10,
+      '--gfl': 20,
+      '--gfa': 100,
+      '--global-bg-color': 'hsla(240, 100%, 97%, 100)',
+      '--gbg-h': 0,
+      '--gbg-s': 10,
+      '--gbg-l': 20,
+      '--gbg-a': 100,
+      '--global-fld-bg-color': 'var(--global-bg-color)',
       '--border-radius': '10px',
       '--dir': 'ltr'
     },
-    form: { _frm: {} },
-    commonClasses: { 'f-wrp': {} },
+    form: { _frm: { background: 'var(--global-bg-color)' } },
     fields: {
       'bf9-3-': {
         theme: 'default_blue',
         overrideGlobalTheme: false,
-        fieldType:'',
+        fieldType: '',
         themeVars: { '--primary-color': '--global-primary-color' },
         classes: {
           'bf9-3--fw': {
