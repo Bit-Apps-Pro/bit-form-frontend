@@ -1,6 +1,7 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { select } from './globalHelpers'
 import { deepCopy } from './Helpers'
 import { __ } from './i18nwrap'
 
@@ -551,4 +552,26 @@ export function sortLayoutByLg(layoutArr, orderLayout) {
     layout.splice(index, 0)
   }
   return newLayoutByOrder
+}
+
+const getElementTotalHeight = (elm) => {
+  if (elm) {
+    const height = elm.offsetHeight || 0
+    const { marginTop, marginBottom } = window.getComputedStyle(elm)
+    const marginTopNumber = Number(marginTop.match(/\d+/gi))
+    const marginBottomNumber = Number(marginBottom.match(/\d+/gi))
+    return Math.round(height + marginTopNumber + marginBottomNumber)
+  }
+  return 0
+}
+
+export const fitLayoutItems = (lays) => {
+  return produce(lays, draftLayout => {
+    draftLayout.lg.map(fld => {
+      const height = getElementTotalHeight(select(`.${fld.i}-fw`))
+      if (height) {
+        fld.h = Math.round(height / 2)
+      }
+    })
+  })
 }
