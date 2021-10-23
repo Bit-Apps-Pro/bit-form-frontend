@@ -11,12 +11,12 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHistory, $draggingField, $fields, $layouts, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHistory, $draggingField, $fields, $flags, $layouts, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, sortLayoutItemsByRowCol, convertLayout, filterLayoutItem, propertyValueSumX, produceNewLayouts } from '../Utils/FormBuilderHelper'
-import { deepCopy, isObjectEmpty } from '../Utils/Helpers'
+import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, propertyValueSumX, produceNewLayouts, fitLayoutItems } from '../Utils/FormBuilderHelper'
+import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
@@ -39,12 +39,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
-  // const [styles, setStyles] = useRecoilState($styles)
+  const flags = useRecoilValue($flags)
   const setStyles = useSetRecoilState($styles)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
-  // const cols = { lg: 6, md: 4, sm: 2 }
-  // const cols = { lg: 120, md: 80, sm: 40 }
   const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(2)
@@ -57,8 +55,16 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
   const { reRenderGridLayoutByRootLay } = builderHelperStates
+  const { styleMode } = flags
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
+
+  useEffect(() => {
+    console.log('stylemode update')
+    const nl = fitLayoutItems(layouts)
+    setLayouts(nl)
+    setRootLayouts(nl)
+  }, [styleMode])
 
   useEffect(() => { margeNewData() }, [newData, fields])
   useEffect(() => {
@@ -345,14 +351,13 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
-      {builderHelperStates.styleMood && <RenderGridLayoutStyle />}
+      {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`}>
             <div className={`_frm-${formID}`}>
-              {!builderHelperStates.styleMood ? (
-
+              {!styleMode ? (
                 <ResponsiveReactGridLayout
                   width={Math.round(builderWidth)}
                   measureBeforeMount
@@ -415,6 +420,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                       role="button"
                       tabIndex={0}
                       onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+
                     >
                       <FieldBlockWrapper
                         {...{
