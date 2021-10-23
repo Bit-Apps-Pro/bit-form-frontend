@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { createContext, lazy, memo, Suspense, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -11,7 +12,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
-import { $additionalSettings, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $builderHistory, $confirmations, $fieldLabels, $fields, $formId, $formName, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $updateBtn, $workflows } from '../GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import navbar from '../styles/navbar.style'
@@ -59,6 +60,7 @@ function FormDetails() {
   const resetIntegrations = useResetRecoilState($integrations)
   const resetConfirmations = useResetRecoilState($confirmations)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
   const { css } = useFela()
 
   useEffect(() => { setFormId(formID) }, [formID])
@@ -125,12 +127,14 @@ function FormDetails() {
       const btnFld = []
       btnFld[`b${newFormId}-1`] = btnData
       setFields(btnFld)
+      setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = btnFld }))
       const btnLay = { lg: [], md: [], sm: [] }
       const subBtnLay = { h: 40, i: `b${newFormId}-1`, minH: 20, w: 60, x: 0, y: 0 }
       btnLay.lg.push(subBtnLay)
       btnLay.md.push(subBtnLay)
       btnLay.sm.push(subBtnLay)
       setLay(btnLay)
+      setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = btnLay }))
       setisLoading(false)
     }
   }
@@ -153,8 +157,12 @@ function FormDetails() {
 
     if (sessionStorage.getItem('bitformData')) {
       const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
-      formData.layout !== undefined && setLay(formData.layout)
+      if (formData.layout !== undefined) {
+        setLay(formData.layout)
+        setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = formData.layout }))
+      }
       setFields(formData.fields)
+      setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = formData.fields }))
       setFormName(formData.form_name)
       setworkFlows(formData.workFlows)
       setAdditional(formData.additional)
@@ -192,8 +200,13 @@ function FormDetails() {
           if (res?.success && componentMounted) {
             let responseData = JSON.parse(res.data)
             if (typeof data !== 'object') { responseData = JSON.parse(res.data) }
-            responseData.form_content.layout !== undefined && setLay(responseData.form_content.layout)
+            if (responseData.form_content.layout !== undefined) {
+              setLay(responseData.form_content.layout)
+              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
+            }
             setFields(responseData.form_content.fields)
+            // setBuilderHistory(oldHistory => oldHistory.histories[0].state.fields = responseData.form_content.fields)
+            setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
             setFormName(responseData.form_content.form_name)
             setisLoading(false)
             sessionStorage.setItem('btcd-lc', '-')
@@ -216,12 +229,15 @@ function FormDetails() {
               l.md.map(itm => { nl.md.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
               l.sm.map(itm => { nl.sm.push({ ...itm, w: itm.w * 10, h: itm.h * 20, x: itm.x * 10, y: itm.y * 10, ...itm.maxW && { maxW: itm.maxW * 10 }, ...itm.maxH && { maxH: itm.maxH * 20 } }) })
               setLay(nl)
+              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = nl }))
             } else {
               setLay(responseData.form_content.layout)
+              setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
             }
             // exp end
 
             setFields(responseData.form_content.fields)
+            setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
             setFormName(responseData.form_content.form_name)
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)

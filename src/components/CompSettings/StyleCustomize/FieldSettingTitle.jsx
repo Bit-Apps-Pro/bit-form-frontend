@@ -1,9 +1,9 @@
 import { useFela } from 'react-fela'
 import ut from '../../../styles/2.utilities'
+import style from '../../../styles/FieldSettingTitle.style'
 import { __ } from '../../../Utils/i18nwrap'
 import CoolCopy from '../../Utilities/CoolCopy'
 import Back2FldBtn from '../Back2FldBtn'
-import style from '../../../styles/FieldSettingTitle.style'
 import SizeAndPosition from './StyleComponents/SizeAndPosition'
 
 export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
@@ -26,7 +26,7 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
       </div>
 
       <hr className={css(style.divider)} />
-      <SizeAndPosition fieldKey={fieldKey} />
+      <SizeAndPosition fldKey={fieldKey} />
       <hr className={css(style.divider)} />
     </>
   )

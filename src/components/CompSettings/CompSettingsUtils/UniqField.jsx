@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields, $selectedFieldId } from '../../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import produce from 'immer'
+import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -11,6 +12,7 @@ import Cooltip from '../../Utilities/Cooltip'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 import ErrorMessages from '../../../styles/ErrorMessages.style'
+import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 
 export default function UniqField({ type, title, tipTitle, isUnique, className }) {
   const bits = useRecoilValue($bits)
@@ -20,6 +22,8 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
@@ -31,7 +35,10 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
     } else {
       delete fieldData.err[name].custom
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Custom Error Message Added.', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setShowErrMsg = e => {
@@ -46,7 +53,10 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
     } else {
       delete fieldData.err[type][name]
     }
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Show Error Message ${checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openErrorModal = () => {

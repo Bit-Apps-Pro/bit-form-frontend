@@ -1,8 +1,9 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
@@ -13,6 +14,8 @@ export default function FieldLabelSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const label = fieldData.lbl || ''
   const { css } = useFela()
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   function setLabel(e) {
     if (e.target.value === '') {
       delete fieldData.lbl
@@ -20,7 +23,10 @@ export default function FieldLabelSettings() {
       fieldData.lbl = e.target.value
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Change Field Label', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideFieldLabel = e => {
@@ -30,7 +36,10 @@ export default function FieldLabelSettings() {
       delete fieldData.valid.hideLbl
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || fldKey} Label`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
