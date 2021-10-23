@@ -99,7 +99,7 @@ export default function StyleSegmentControl({ defaultActive,
   }
 
   useEffect(() => {
-    setactive(activeValue)
+    if (activeValue) { setactive(activeValue) }
   }, [activeValue])
 
   useEffect(() => {
