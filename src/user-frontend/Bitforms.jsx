@@ -513,7 +513,7 @@ export default function Bitforms(props) {
         </div>
       </form>
       {
-        snack && (typeof message === 'string' ? <Toast msg={message} show={snack} setSnack={setSnack} error={hasError} /> : message.map((msg, index) => <Toast msg={msg} show={snack} setSnack={setSnack} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
+        snack && (typeof message === 'string' ? <Toast formId={props.formID} msg={message} show={snack} setSnack={setSnack} error={hasError} /> : message.map((msg, index) => <Toast formId={props.formID} msg={msg} show={snack} setSnack={setSnack} error={hasError} index={index} canClose={message.length - 1 === index} editMode={props.editMode} />))
       }
     </div>
   )
@@ -538,23 +538,7 @@ function Toast(props) {
     transition: 'right 0.5s',
     zIndex: 9999,
   }
-  const closeButtonStyle = {
-    position: 'absolute',
-    top: props.editMode && -20,
-    right: props.editMode ? -15 : 10,
-    background: props.error ? 'red' : '#666',
-    height: '25px',
-    width: '25px',
-    fontSize: '21px',
-    padding: '3px 6px',
-    color: 'white',
-    borderRadius: '50px',
-    lineHeight: '0.8',
-    marginLeft: '7px',
-    cursor: 'pointer',
-    float: !props.editMode && 'right',
-    zIndex: 9999,
-  }
+
   if (props.index && props.index > 0) {
     toatStyles.bottom += props.index * 2 * 45
   }
@@ -571,14 +555,14 @@ function Toast(props) {
     const timer = setTimeout(() => {
       if (props.show) {
         // !props.index && props.canClose === undefined && props.setSnack(false)
-        // props.setSnack(false)
+        props.setSnack(false)
       }
     }, resetTime)
     return () => clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return snack && (
-    <div className="toast btcd-flx" id={`success-${props.formId}`}>
+    <div className="bf-toast btcd-flx" id={`success-${props.formId}`}>
       {
         /<\/?[a-z][\s\S]*>/i.test(props.msg)
           ? (
