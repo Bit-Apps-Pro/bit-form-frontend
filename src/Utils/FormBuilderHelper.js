@@ -473,21 +473,21 @@ export function layoutOrderSortedByLg(lay, cols) {
   return newLay
 }
 
-export const addToBuilderHistory = (setBuilderHistory, historyData) => {
-  console.log('History added', historyData)
+export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn) => {
 
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
     // if (!draft.histories.length) {
     //   draft.histories.push({ event: 'reset' })
     // }
     if(draft.histories[draft.histories.length - 1].event === historyData.event) {
-      console.log('added ')
       draft.histories.pop()
       draft.active= draft.histories.length - 1
     }
     draft.histories.splice(draft.active + 1)
     draft.active = draft.histories.push(historyData) - 1
   }))
+
+  setUpdateBtn({ unsaved:true })
 }
 
 export const cols = { lg: 60, md: 40, sm: 20 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates'
+import Scrollbars from 'react-custom-scrollbars-2'
+import { $builderHelperStates, $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import RedoIcon from '../Icons/RedoIcon'
 import UndoIcon from '../Icons/UndoIcon'
@@ -12,7 +13,7 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { compactNewLayoutItem, filterLayoutItem } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
-import Scrollbars from 'react-custom-scrollbars-2'
+import { deepCopy } from '../Utils/Helpers'
 
 export default function FormBuilderHistory({ }) {
   const { css } = useFela()
@@ -23,6 +24,7 @@ export default function FormBuilderHistory({ }) {
   const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
+  const setBuilderHelpers = useSetRecoilState($builderHelperStates)
 
   const handleUndoRedoShortcut = e => {
     if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
@@ -95,17 +97,37 @@ export default function FormBuilderHistory({ }) {
 
     const { state } = histories[indx]
 
+    console.log('History', indx, state)
+
     // setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
     if (state.layouts) {
       setLayouts(state.layouts)
+      // setBuilderHelpers(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
+    } else {
+      checkedState(indx, setLayouts, 'layouts')
     }
+    setBuilderHelpers(prvState => ({ ...prvState, reRenderGridLayoutByRootLay: prvState.reRenderGridLayoutByRootLay + 1 }))
+
     if (state.fields) {
       setFields(state.fields)
+    } else {
+      checkedState(indx, setFields, 'fields')
     }
+
     setBuilderHistory(oldHistory => ({ ...oldHistory, active: indx }))
     setDisabled(false)
   }
+
+  const checkedState = (indx, setState, layer) => {
+    for (let i = indx - 1; i >= 0; i--) {
+      if (layer in histories[i].state) {
+        setState(histories[i].state[layer])
+        break
+      }
+    }
+  }
+  console.log(histories)
 
   return (
     <div>
@@ -134,27 +156,31 @@ export default function FormBuilderHistory({ }) {
               <span className={css(ut.mr1)}><HistoryIcn size="20" /></span>
               History
             </p>
-            
-              {histories.length <= 1 && (
-                <span className={css(builderHistoryStyle.secondary)}>
-                  no data found
-                </span>
-              )}
 
-              <ul className={css(builderHistoryStyle.list)}>
-                {histories.map((history, indx) => (
-                  <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
-                    <button
-                      type="button"
-                      className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
-                      onClick={() => handleHistory(indx)}
-                    >
-                      {history.event}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-     
+            {histories.length <= 1 && (
+              <span className={css(builderHistoryStyle.secondary)}>
+                no data found
+              </span>
+            )}
+            {
+              histories.length > 1 && (
+                <ul className={css(builderHistoryStyle.list)}>
+                  {histories.map((history, indx) => (
+                    <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
+                      <button
+                        type="button"
+                        className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
+                        onClick={() => handleHistory(indx)}
+                      >
+                        <span className={css(builderHistoryStyle.subtitle)}>{history.event}</span>
+                        {indx > 0 && <span>{history.state.fldKey}</span>}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+
           </div>
         </Downmenu>
       </div>

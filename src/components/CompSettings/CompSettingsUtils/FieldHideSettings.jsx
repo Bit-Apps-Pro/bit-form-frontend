@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
+import { $breakpoint, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
+import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'
 
@@ -11,9 +12,11 @@ export default function FieldHideSettings({ cls }) {
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const isHidden = fields[fldKey].hidden?.includes(breakpoint) || false
+  const setBuilderHistory = useSetRecoilState($builderHistory)
   const setHidden = e => {
     const { checked } = e.target
-    setFields(allFields => produce(allFields, draft => {
+
+    const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
       if (!fldData.hidden) fldData.hidden = []
       if (checked) {
@@ -22,8 +25,11 @@ export default function FieldHideSettings({ cls }) {
         fldData.hidden.splice(fldData.hidden.indexOf(breakpoint), 1)
       }
       if (!fldData.hidden.length) delete fldData.hidden
-    }))
-    setUpdateBtn({ unsaved: true })
+    })
+    console.log(allFields)
+
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hidden Field ${checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

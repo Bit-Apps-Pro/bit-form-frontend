@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHistory, $fields, $selectedFieldId } from '../../../GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -15,6 +15,7 @@ export default function FieldLabelSettings() {
   const label = fieldData.lbl || ''
   const { css } = useFela()
   const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   function setLabel(e) {
     if (e.target.value === '') {
       delete fieldData.lbl
@@ -25,7 +26,7 @@ export default function FieldLabelSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Change ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields } })
+    addToBuilderHistory(setBuilderHistory, { event: 'Change Field Label', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideFieldLabel = e => {
@@ -38,7 +39,7 @@ export default function FieldLabelSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Hide ${fieldData.lbl || adminLabel || fldKey} Label`, state: { fields: allFields } })
+    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || fldKey} Label`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

@@ -1,5 +1,8 @@
 const builderHistoryStyle = {
-  menu: { mnw: 150 },
+  menu: {
+    mnw: 150,
+    mxw: 200,
+  },
   title: {
     flx: 'align-center',
     mt: 0,
@@ -19,7 +22,7 @@ const builderHistoryStyle = {
     m: 0,
     dy: 'block',
     w: '100%',
-    ow: 'scroll',
+    owy: 'auto',
     owx: 'hidden',
   },
 
@@ -34,7 +37,8 @@ const builderHistoryStyle = {
     m: 1,
     w: '100%',
     brs: 8,
-    flx: 'align-center',
+    // flx: 'align-center',
+    ta: 'start',
     bc: 'var(--white-100)',
     curp: 1,
     '&:hover': { bc: 'var(--white-0-93)' },
@@ -44,6 +48,12 @@ const builderHistoryStyle = {
     },
     '&.active': { fw: 500, bc: 'var(--white-0-93)' },
     '&.unactive': { cr: 'var(--white-0-0-64)' },
+  },
+  subtitle: {
+    dy: 'block',
+    ws: 'nowrap',
+    ow: 'hidden',
+    to: 'ellipsis',
   },
 }
 

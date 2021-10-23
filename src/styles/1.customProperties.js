@@ -53,6 +53,7 @@ const customProperties = {
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   ta: $ => ({ textAlign: $ }),
+  to: $ => ({ textOverflow: $ }),
 
   // position
   pn: $ => ({ position: $ }),
