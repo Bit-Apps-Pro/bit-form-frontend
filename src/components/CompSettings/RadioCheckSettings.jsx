@@ -3,12 +3,12 @@
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
-import DownloadIcon from '../../Icons/DownloadIcon'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
@@ -17,7 +17,6 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
-import ImportOptions from './ImportOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -37,6 +36,9 @@ function RadioCheckSettings() {
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const dataSrc = fieldData?.customType?.type || 'fileupload'
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
+
   let fieldObject = null
   let disabled = false
   if (fieldData?.customType?.type) {
@@ -46,6 +48,7 @@ function RadioCheckSettings() {
   const [importOpts, setImportOpts] = useState({})
   const [optionMdl, setOptionMdl] = useState(false)
   useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
+
   function setAdminLabel(e) {
     if (e.target.value === '') {
       delete fieldData.adminLbl
@@ -53,7 +56,10 @@ function RadioCheckSettings() {
       fieldData.adminLbl = e.target.value
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Admin label Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setRound(e) {
@@ -63,21 +69,31 @@ function RadioCheckSettings() {
       delete fieldData.round
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Option Rounded ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function rmvOpt(ind) {
     options.splice(ind, 1)
     fieldData.opt = options
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Option Remove', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function addOpt() {
     options.push({ lbl: `Option ${options.length + 1}` })
     fieldData.opt = options
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'New Option added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setCheck(e, i) {
@@ -96,7 +112,10 @@ function RadioCheckSettings() {
     }
     fieldData.opt = options
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Default option ${e.target.checked ? 'added' : 'remove'}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setReq(e, i) {
@@ -115,10 +134,14 @@ function RadioCheckSettings() {
     fieldData.err.req.show = true
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Required option ${e.target.checked ? 'added' : 'remove'}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setRadioRequired = e => {
+    console.log('set radio required')
     if (e.target.checked) {
       fieldData.valid.req = true
       if (!fieldData.err) fieldData.err = {}
@@ -130,7 +153,10 @@ function RadioCheckSettings() {
       delete fieldData.mn
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Radio Required ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setOptLbl(e, i) {
@@ -139,7 +165,10 @@ function RadioCheckSettings() {
     options[i] = tmp
     fieldData.opt = options
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Option label Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openImportModal = () => {
@@ -175,7 +204,10 @@ function RadioCheckSettings() {
       if (!isOptionRequired) setRadioRequired({ target: { checked: true } })
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMax(e) {
@@ -190,7 +222,10 @@ function RadioCheckSettings() {
       fieldData.err.mx.show = true
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Set Maximum number ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setDisabledOnMax = e => {
@@ -202,7 +237,23 @@ function RadioCheckSettings() {
     }
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Disable ${!e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const hideAdminLabel = (e) => {
+    if (e.target.checked) {
+      fieldData.adminLbl = fieldData.lbl || fldKey
+    } else {
+      delete fieldData.adminLbl
+    }
+    // eslint-disable-next-line no-param-reassign
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
@@ -216,10 +267,14 @@ function RadioCheckSettings() {
       <SimpleAccordion
         title={__('Admin Label', 'bitform')}
         className={css(FieldStyle.fieldSection)}
-        open
+        switching
+        toggleAction={hideAdminLabel}
+        toggleChecked={fieldData?.adminLbl !== undefined}
+        open={fieldData?.adminLbl !== undefined}
+        disable={!fieldData?.adminLbl}
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+          <input aria-label="Admin label" className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
         </div>
       </SimpleAccordion>
 
@@ -282,7 +337,7 @@ function RadioCheckSettings() {
                 <input className="btcd-paper-inp" type="number" value={min} onChange={setMin} disabled={!isPro} />
               </div> */}
               <div className={css(FieldStyle.placeholder)}>
-                <input className={css(FieldStyle.input)} value={min} type="text" onChange={setMin} disabled={!isPro} />
+                <input aria-label="Minimum number" className={css(FieldStyle.input)} value={min} type="text" onChange={setMin} disabled={!isPro} />
               </div>
 
               {fieldData.mn && (
@@ -304,7 +359,7 @@ function RadioCheckSettings() {
               isPro
             >
               <div className={css(FieldStyle.placeholder)}>
-                <input className={css(FieldStyle.input)} value={max} type="number" onChange={setMax} disabled={!isPro} />
+                <input aria-label="minimim number" className={css(FieldStyle.input)} value={max} type="number" onChange={setMax} disabled={!isPro} />
               </div>
 
               {fieldData.mx && (
@@ -391,12 +446,12 @@ function RadioCheckSettings() {
                   {fieldData.typ === 'check'
                     && (
                       <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Required', 'bitform')}'` }}>
-                        <input onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
+                        <input aria-label="checkbox" onChange={(e) => setReq(e, i)} type="checkbox" checked={itm.req !== undefined} disabled={isRadioRequired} />
                         <span className="btcd-mrk ck br-50 " />
                       </label>
                     )}
                   <label className="btcd-ck-wrp tooltip m-0" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
-                    <input onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
+                    <input aria-label="checkbox" onChange={(e) => setCheck(e, i)} type="checkbox" checked={itm.check !== undefined} />
                     <span className="btcd-mrk ck br-50 " />
                   </label>
                   <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="close"><CloseIcn size="12" /></button>

@@ -2,20 +2,22 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHelperStates, $layouts, $updateBtn } from '../../../../GlobalStates'
+import { $breakpoint, $builderHelperStates, $builderHistory, $layouts, $updateBtn } from '../../../../GlobalStates'
 import ut from '../../../../styles/2.utilities'
 import FieldStyle from '../../../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../ChildComp/SimpleAccordion'
 
-function SizeAndPosition({ fieldKey }) {
+function SizeAndPosition({ fldKey }) {
   const { css } = useFela()
   const [layouts, setLayouts] = useRecoilState($layouts)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
   const breakpoint = useRecoilValue($breakpoint)
-  const fieldSize = layouts[breakpoint].find(fl => (fl.i === fieldKey))
+  const fieldSize = layouts[breakpoint].find(fl => (fl.i === fldKey))
   const setBuilderHelperStates = useSetRecoilState($builderHelperStates)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
-  const maxY = layouts[breakpoint].reduce((prv, curr) => prv.y > curr.y ? prv.y : curr.y)
+  const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y))
 
   const maxValue = {
     lg: { w: 60, h: fieldSize.maxH || null, x: Math.abs(60 - fieldSize.w), y: maxY },
@@ -23,60 +25,61 @@ function SizeAndPosition({ fieldKey }) {
     sm: { w: 20, h: fieldSize.maxH || null, x: Math.abs(20 - fieldSize.w), y: maxY },
   }
 
-  console.log('fieldSize', fieldSize)
-  console.log('max value', maxValue)
-
   const xHandler = (e) => {
     const val = e.target.valueAsNumber
     if (val < 0) return
     if (val > maxValue[breakpoint].x) return
 
-    setLayouts(layout => produce(layout, draft => {
-      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
+    const layout = produce(layouts, draft => {
+      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].x = val
-    }))
+    })
 
+    setLayouts(layout)
     setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    setUpdateBtn({ unsaved: true })
+    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position X', state: { layouts: layout, fldKey } }, setUpdateBtn)
   }
   const wHandler = (e) => {
     const val = e.target.valueAsNumber
     if (val < 0) return
     if (val > maxValue[breakpoint].w) return
 
-    setLayouts(layout => produce(layout, draft => {
-      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
+    const layout = produce(layouts, draft => {
+      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].w = val
-    }))
+    })
 
+    setLayouts(layout)
     setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    setUpdateBtn({ unsaved: true })
+    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position W', state: { layouts: layout, fldKey } }, setUpdateBtn)
   }
   const yHandler = (e) => {
     const val = e.target.valueAsNumber
     if (val < 0) return
     if (maxValue[breakpoint].y !== null && val > maxValue[breakpoint].y) return
 
-    setLayouts(layout => produce(layout, draft => {
-      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
+    const layout = produce(layouts, draft => {
+      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].y = val
-    }))
+    })
 
+    setLayouts(layout)
     setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    setUpdateBtn({ unsaved: true })
+    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position Y', state: { layouts: layout, fldKey } }, setUpdateBtn)
   }
   const hHandler = (e) => {
     const val = e.target.valueAsNumber
     if (val < 0) return
     if (maxValue[breakpoint].h !== null && val > maxValue[breakpoint].h) return
 
-    setLayouts(layout => produce(layout, draft => {
-      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fieldKey))
+    const layout = produce(layouts, draft => {
+      const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].h = val
-    }))
+    })
 
+    setLayouts(layout)
     setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    setUpdateBtn({ unsaved: true })
+    addToBuilderHistory(setBuilderHistory, { event: 'Update Size and Position H', state: { layouts: layout, fldKey } }, setUpdateBtn)
   }
   return (
     <SimpleAccordion

@@ -1,17 +1,14 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import CoolCopy from '../Utilities/CoolCopy'
-import SelectBox2 from '../Utilities/SelectBox2'
-import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
-import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -22,6 +19,8 @@ export default function ButtonSettings() {
   const [error, seterror] = useState({})
   const { txt, align, fulW, btnSiz, btnTyp } = fieldData
   const { css } = useFela()
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const pos = [
     { name: __('Left', 'bitform'), value: 'left' },
@@ -37,7 +36,10 @@ export default function ButtonSettings() {
     fieldData.txt = e.target.value
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Submit button text added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setBtnTyp(e) {
@@ -51,13 +53,19 @@ export default function ButtonSettings() {
       seterror({ btnTyp: '' })
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Submit button type added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setButtonAlign(e) {
     fieldData.align = e.target.value
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Submit button type added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const checkSubmitBtn = () => {
@@ -67,7 +75,10 @@ export default function ButtonSettings() {
   function setFulW(e) {
     fieldData.fulW = e.target.checked
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Full width button added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setBtnSiz(e) {
@@ -77,7 +88,10 @@ export default function ButtonSettings() {
       fieldData.btnSiz = 'md'
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Change button size', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
@@ -90,7 +104,7 @@ export default function ButtonSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} value={txt} type="text" onChange={setSubBtnTxt} />
+          <input aria-label="Submit button text" className={css(FieldStyle.input)} value={txt} type="text" onChange={setSubBtnTxt} />
         </div>
       </SimpleAccordion>
 

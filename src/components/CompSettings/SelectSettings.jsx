@@ -3,12 +3,12 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
-import DownloadIcon from '../../Icons/DownloadIcon'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
@@ -20,6 +20,7 @@ import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+
 
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
@@ -37,6 +38,8 @@ export default function SelectSettings() {
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const dataSrc = fieldData?.customType?.type || 'fileupload'
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
   let fieldObject = null
   let disabled = false
   if (fieldData?.customType?.type) {
@@ -71,8 +74,9 @@ export default function SelectSettings() {
       delete fieldData.valid.req
       delete fieldData.mn
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Checkbox Required ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setAdminLabel(e) {
@@ -81,8 +85,9 @@ export default function SelectSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Admin label Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setPlaceholder(e) {
@@ -91,8 +96,9 @@ export default function SelectSettings() {
     } else {
       fieldData.ph = e.target.value
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Update Placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMultiple(e) {
@@ -107,8 +113,9 @@ export default function SelectSettings() {
         delete fieldData.err.mx
       }
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Multiple checkbox added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setAllowCustomOption(e) {
@@ -117,22 +124,25 @@ export default function SelectSettings() {
     } else {
       delete fieldData.customOpt
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Allow custom option added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function rmvOpt(ind) {
     options.splice(ind, 1)
     fieldData.opt = options
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Remove Option', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function addOpt() {
     options.push({ label: `Option ${fieldData.opt.length + 1}`, value: `Option ${fieldData.opt.length + 1}` })
     fieldData.opt = options
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'New Option Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setCheck(e) {
@@ -154,8 +164,9 @@ export default function SelectSettings() {
         delete fieldData.val
       }
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Set checked', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setOptLbl(e, i) {
@@ -164,8 +175,9 @@ export default function SelectSettings() {
     tmp.label = updateVal
     tmp.value = updateVal.replace(',', '_')
     fieldData.opt[i] = tmp
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Optioln label Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openImportModal = () => {
@@ -200,8 +212,9 @@ export default function SelectSettings() {
       fieldData.err.mn.show = true
       setRequired({ target: { checked: true } })
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Minimum number Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMax(e) {
@@ -215,8 +228,9 @@ export default function SelectSettings() {
       fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
       fieldData.err.mx.show = true
     }
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Maximum number Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setDisabledOnMax = e => {
@@ -227,13 +241,25 @@ export default function SelectSettings() {
       delete fieldData.valid.disableOnMax
     }
 
-    // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Disable on Minimum number Added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const hideAdminLabel = (e) => {
+    if (e.target.checked) {
+      fieldData.adminLbl = fieldData.lbl || fldKey
+    } else {
+      delete fieldData.adminLbl
+    }
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
     <div className="">
-      {/* 
+      {/*
       <div className="mb-2">
         <span className="font-w-m">Field Type : </span>
         {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
@@ -251,10 +277,14 @@ export default function SelectSettings() {
       <SimpleAccordion
         title={__('Admin Label', 'bitform')}
         className={css(FieldStyle.fieldSection)}
-        open
+        switching
+        toggleAction={hideAdminLabel}
+        toggleChecked={fieldData?.adminLbl !== undefined}
+        open={fieldData?.adminLbl !== undefined}
+        disable={!fieldData?.adminLbl}
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+          <input aria-label="Admin label" className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
         </div>
       </SimpleAccordion>
 
@@ -368,7 +398,7 @@ export default function SelectSettings() {
                   </Cooltip>
                   {!isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
                 </div>
-                <input className={css(FieldStyle.input)} type="number" value={min} onChange={setMin} disabled={!isPro} />
+                <input aria-label="Minimum number" className={css(FieldStyle.input)} type="number" value={min} onChange={setMin} disabled={!isPro} />
               </div>
 
               {fieldData.mn && (
@@ -387,7 +417,7 @@ export default function SelectSettings() {
                   </Cooltip>
                   {!bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro', 'bitform')}</span>}
                 </div>
-                <input className={css(FieldStyle.input)} type="number" value={max} onChange={setMax} disabled={!isPro} />
+                <input aria-label="Maximum numebr" className={css(FieldStyle.input)} type="number" value={max} onChange={setMax} disabled={!isPro} />
               </div>
               {fieldData.mx && (
                 <>
@@ -551,6 +581,6 @@ export default function SelectSettings() {
           />
         </div>
       </Modal>
-    </div>
+    </div >
   )
 }

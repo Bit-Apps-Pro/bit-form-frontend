@@ -1,11 +1,13 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
@@ -21,6 +23,8 @@ export default function DecisionBoxSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const [labelModal, setLabelModal] = useState(false)
   const { css } = useFela()
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   function setAdminLabel(e) {
     if (e.target.value === '') {
@@ -29,7 +33,10 @@ export default function DecisionBoxSettings() {
       fieldData.adminLbl = e.target.value
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Admin label added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setRequired(e) {
@@ -45,7 +52,10 @@ export default function DecisionBoxSettings() {
       delete fieldData.valid.req
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Required field validation ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setChecked(e) {
@@ -57,14 +67,20 @@ export default function DecisionBoxSettings() {
       delete fieldData.valid.checked
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Default checked ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setMsg = (val, typ) => {
     fieldData.msg[typ] = val
 
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: 'Message added', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
@@ -72,7 +88,7 @@ export default function DecisionBoxSettings() {
 
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
 
-      {/* 
+      {/*
       <div className="mb-2">
         <span className="font-w-m">Field Type :</span>
         {' '}
@@ -118,7 +134,7 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} value={fieldData.adminLbl || ''} type="text" onChange={setAdminLabel} />
+          <input aria-label="admib label" className={css(FieldStyle.input)} value={fieldData.adminLbl || ''} type="text" onChange={setAdminLabel} />
         </div>
       </SimpleAccordion>
 
@@ -160,7 +176,7 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} type="text" value={fieldData.msg.checked || ''} onChange={e => setMsg(e.target.value, 'checked')} />
+          <input aria-label="Checked value" className={css(FieldStyle.input)} type="text" value={fieldData.msg.checked || ''} onChange={e => setMsg(e.target.value, 'checked')} />
         </div>
       </SimpleAccordion>
 
@@ -172,7 +188,7 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input className={css(FieldStyle.input)} type="text" value={fieldData.msg.unchecked || ''} onChange={e => setMsg(e.target.value, 'unchecked')} />
+          <input aria-label="Uncheked value" className={css(FieldStyle.input)} type="text" value={fieldData.msg.unchecked || ''} onChange={e => setMsg(e.target.value, 'unchecked')} />
         </div>
       </SimpleAccordion>
       <hr className={css(FieldStyle.divider)} />

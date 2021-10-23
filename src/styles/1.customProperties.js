@@ -45,6 +45,7 @@ const customProperties = {
 
   ow: $ => ({ overflow: $ }),
   owy: $ => ({ overflowY: $ }),
+  owx: $ => ({ overflowX: $ }),
 
   fs: $ => ({ fontSize: Number.isInteger($) ? `${$}px` : $ }),
   ff: $ => ({ fontFamily: Number.isInteger($) ? `${$}px` : $ }),
@@ -52,6 +53,7 @@ const customProperties = {
   fw: $ => ({ fontWeight: $ }),
   ts: $ => ({ textShadow: $ }),
   ta: $ => ({ textAlign: $ }),
+  to: $ => ({ textOverflow: $ }),
 
   // position
   pn: $ => ({ position: $ }),
