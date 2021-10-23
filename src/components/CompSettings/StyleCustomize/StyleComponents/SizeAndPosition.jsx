@@ -95,14 +95,14 @@ function SizeAndPosition({ fldKey }) {
           <span className={css(s.name)}>W</span>
           <input aria-label="position w" placeholder="" min="0" max={maxValue[breakpoint].w} onChange={wHandler} value={fieldSize.w} className={css(ut.w8, s.input)} id="w" type="number" />
         </label>
-        <label className={css(ut.w5, s.label)} htmlFor="y">
+        {/* <label className={css(ut.w5, s.label)} htmlFor="y">
           <span className={css(s.name)}>Y</span>
           <input aria-label="position y" placeholder="" min="0" max={maxValue[breakpoint].y} onChange={yHandler} value={fieldSize.y} className={css(ut.w8, s.input)} id="y" type="number" />
         </label>
         <label className={css(ut.w5, s.label)} htmlFor="h">
           <span className={css(s.name)}>H</span>
           <input aria-label="position h" placeholder="" min="0" max={maxValue[breakpoint].h} onChange={hHandler} value={fieldSize.h} className={css(ut.w8, s.input)} id="h" type="number" />
-        </label>
+        </label> */}
       </div>
     </SimpleAccordion>
   )
