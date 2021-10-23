@@ -55,6 +55,10 @@ const builderHistoryStyle = {
     ow: 'hidden',
     to: 'ellipsis',
   },
+  fldkey: {
+    fs: 10,
+    cr: 'var(--white-0-50)',
+  },
 }
 
 export default builderHistoryStyle

@@ -171,9 +171,10 @@ export default function FormBuilderHistory({ }) {
                         type="button"
                         className={`${css(builderHistoryStyle.btn)} ${active === indx && 'active'} ${active < indx && 'unactive'}`}
                         onClick={() => handleHistory(indx)}
+                        title={history.event}
                       >
                         <span className={css(builderHistoryStyle.subtitle)}>{history.event}</span>
-                        {indx > 0 && <span>{history.state.fldKey}</span>}
+                        {indx > 0 && <span className={css(builderHistoryStyle.fldkey)}>{history.state.fldKey}</span>}
                       </button>
                     </li>
                   ))}
