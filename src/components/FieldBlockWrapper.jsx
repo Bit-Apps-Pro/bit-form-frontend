@@ -22,7 +22,6 @@ export default function FieldBlockWrapper({ layoutItem,
   navigateToFieldSettings,
   navigateToStyle }) {
   const { reCaptchaV2 } = useContext(AppSettings)
-
   const ComponentsByTheme = () => {
     const componentProps = deepCopy(fields[layoutItem.i])
     // TODO move this code with recaptcha component after remove react frontend
