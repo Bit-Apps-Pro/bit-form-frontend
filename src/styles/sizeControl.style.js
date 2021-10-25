@@ -6,13 +6,18 @@ const sizeControlStyle = {
     p: 3,
     bc: 'var(--white-0-95)',
     cr: 'var(--white-0-50)',
+    b: '1px solid transparent',
+
+    ':hover': {
+      b: '1px solid var(--white-0-50)',
+    }
   },
 
   input: {
     jc: 'space-between !important',
 
     ':hover': {
-      b: '1px solid transparent',
+      b: '1px solid transparent !important',
 
       '& > div > input:first-child': { bc: 'transparent !important' },
       '& button': { dy: 'none' },

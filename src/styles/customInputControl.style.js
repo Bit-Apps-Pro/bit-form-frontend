@@ -45,7 +45,7 @@ const customInputControlStyle = {
 
     ':focus': {
       bs: 'none !important',
-      bc: 'var(--white-0-89) !important',
+      // bc: 'transparent !important',
       dy: 'initial',
     },
 

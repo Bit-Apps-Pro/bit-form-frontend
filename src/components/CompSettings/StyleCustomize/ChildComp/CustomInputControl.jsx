@@ -88,12 +88,14 @@ export default function CustomInputControl(
 
   return (
     <div className={`${css(customInputControlStyle.container, visible ? customInputControlStyle.visible : '')} ${className}`} style={{ width: width || '100%' }}>
-      <span
-        className={css(customInputControlStyle.label, resizeValueByLabel ? customInputControlStyle.resizer : '')}
-        onMouseDown={resizeValueByLabel ? handleValueBasedOnPointer : undefined}
-      >
-        {label}
-      </span>
+      {label && (
+        <span
+          className={css(customInputControlStyle.label, resizeValueByLabel ? customInputControlStyle.resizer : '')}
+          onMouseDown={resizeValueByLabel ? handleValueBasedOnPointer : undefined}
+        >
+          {label}
+        </span>
+      )}
       <Tippy
         inertia
         placement="bottom"
