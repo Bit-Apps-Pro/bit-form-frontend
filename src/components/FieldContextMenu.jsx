@@ -2,7 +2,7 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $fields, $selectedFieldId, $updateBtn } from '../GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates'
 import AllDeviceIcn from '../Icons/AllDeviceIcn'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckMarkIcn from '../Icons/CheckMarkIcn'
@@ -15,6 +15,7 @@ import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
 import context from '../styles/fieldContextMenu.style'
+import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
 import Downmenu from './Utilities/Downmenu'
@@ -41,9 +42,24 @@ export default function FieldContextMenu({ isContextMenu,
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
+  const setBuilderHistory = useSetRecoilState($builderHistory)
 
   const handleFieldHide = brkpnt => {
-    setFields(allFields => produce(allFields, draft => {
+    // setFields(allFields => produce(allFields, draft => {
+    //   const fldData = draft[fldKey]
+    //   if (!fldData.hidden) fldData.hidden = []
+    //   if (brkpnt === 'all' && fldData.hidden.length < 3) {
+    //     fldData.hidden = ['lg', 'md', 'sm']
+    //   } else if (brkpnt === 'all') {
+    //     fldData.hidden = []
+    //   } else if (fldData.hidden.includes(brkpnt)) {
+    //     fldData.hidden.splice(fldData.hidden.indexOf(brkpnt), 1)
+    //   } else {
+    //     fldData.hidden.push(brkpnt)
+    //   }
+    //   if (!fldData.hidden.length) delete fldData.hidden
+    // }))
+    const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
       if (!fldData.hidden) fldData.hidden = []
       if (brkpnt === 'all' && fldData.hidden.length < 3) {
@@ -56,9 +72,10 @@ export default function FieldContextMenu({ isContextMenu,
         fldData.hidden.push(brkpnt)
       }
       if (!fldData.hidden.length) delete fldData.hidden
-    }))
-
-    setUpdateBtn({ unsaved: true })
+    })
+    console.log(allFields)
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field hide`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const checkIfHidden = brkpnt => {

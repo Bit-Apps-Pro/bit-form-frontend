@@ -59,7 +59,7 @@ function TextFieldSettings() {
     // const allFields =
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Required ${e.target.checked} ${fieldData.lbl || adminLabel || fldKey} `, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field Required ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey} `, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setAutoComplete(e) {
@@ -72,10 +72,11 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete ${e.target.checked} ${fieldData.lbl || adminLabel || fldKey} `, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete ${e.target.checked ? 'on' : 'off'} : ${fieldData.lbl || adminLabel || fldKey} `, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setAdminLabel(e) {
+    console.log('form admin label', e)
     if (e.target.value === '') {
       delete fieldData.adminLbl
     } else {
@@ -85,7 +86,10 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Change Admin Label', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    // e.persist()
+    // if(!(e.ctrl && e.key.toLowerCase() === 'z' || e.key.toLowerCase() === 'y')) {
+    //   addToBuilderHistory(setBuilderHistory, { event: `Admin Label changed: ${fieldData.lbl || adminLabel}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    // }
   }
   const hideAdminLabel = (e) => {
     if (e.target.checked) {
@@ -97,7 +101,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Admin lable hide ${!e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hidePlaceholder = (e) => {
@@ -110,7 +114,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Hide ${e.target.checked} Placeholder ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Placeholder hide ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setPlaceholder(e) {
@@ -123,7 +127,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Change Placeholder', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Placeholder changed ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMin(e) {
@@ -140,7 +144,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Update Minimum Number ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Minimum number update ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMax(e) {
@@ -157,7 +161,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Update Maximun Number', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: 'Maximun number Update ', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setRegexr = e => {
@@ -181,7 +185,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Change Pattern ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Pattern changed ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setFlags = e => {
@@ -195,7 +199,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Change Flag ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Flag changed ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
@@ -248,7 +252,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Added Password Validation ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Password Validation Added ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setPasswordLimit = e => {
@@ -268,7 +272,7 @@ function TextFieldSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Added Password Limit ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Password Limit Added ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

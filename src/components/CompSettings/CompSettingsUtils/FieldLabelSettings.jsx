@@ -26,7 +26,7 @@ export default function FieldLabelSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Change Field Label', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field Label Change ${fieldData.lbl || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideFieldLabel = e => {
@@ -39,7 +39,7 @@ export default function FieldLabelSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Hide ${!e.target.checked} ${fieldData.lbl || fldKey} Label`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field lable Hide ${!e.target.checked ? 'on': 'off'}: ${fieldData.lbl || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

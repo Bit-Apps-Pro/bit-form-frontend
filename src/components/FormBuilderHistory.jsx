@@ -14,6 +14,7 @@ import { compactNewLayoutItem, filterLayoutItem } from '../Utils/FormBuilderHelp
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 import { deepCopy } from '../Utils/Helpers'
+import VirtualList from 'react-tiny-virtual-list'
 
 export default function FormBuilderHistory({ }) {
   const { css } = useFela()
@@ -25,6 +26,7 @@ export default function FormBuilderHistory({ }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
   const setBuilderHelpers = useSetRecoilState($builderHelperStates)
+  const [scrolIndex, setScrolIndex] = useState(0)
 
   const handleUndoRedoShortcut = e => {
     if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
@@ -120,14 +122,24 @@ export default function FormBuilderHistory({ }) {
   }
 
   const checkedState = (indx, setState, layer) => {
-    for (let i = indx - 1; i >= 0; i--) {
+    for (let i = indx - 1; i >= 0; i -= 1) {
       if (layer in histories[i].state) {
         setState(histories[i].state[layer])
         break
       }
     }
   }
-  console.log(histories)
+  const generateItemSize = () => {
+    const arr = []
+    for(let i = 0; i < histories.length; i++) {
+      if(i === 0) {
+        arr.push(30)
+      } else {
+        arr.push(40)
+      }
+    }
+    return arr
+  }
 
   return (
     <div>
@@ -164,8 +176,29 @@ export default function FormBuilderHistory({ }) {
             )}
             {
               histories.length > 1 && (
-                <ul className={css(builderHistoryStyle.list)}>
-                  {histories.map((history, indx) => (
+                <div className={css(builderHistoryStyle.list)}>
+                  <VirtualList
+                    // width="100%"
+                    height={200}
+                    itemCount={histories.length || 1}
+                    itemSize={histories.length ? generateItemSize() : 0}
+                    scrollToIndex={histories.length ? scrolIndex : 0}
+                    renderItem={({ index, style }) => (
+                      <div key={`bf-${index * 2}`} className={css(builderHistoryStyle.item)} style={style}>
+                        <button
+                          type="button"
+                          className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
+                          onClick={() => handleHistory(index)}
+                          title={histories[index].event}
+                        >
+                          <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
+                          {index > 0 && <span className={css(builderHistoryStyle.fldkey)}>Field Key: {histories[index].state.fldKey}</span>}
+                        </button>
+                      </div>
+                    )}
+
+                  />
+                  {/* {histories.map((history, indx) => (
                     <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
                       <button
                         type="button"
@@ -177,8 +210,8 @@ export default function FormBuilderHistory({ }) {
                         {indx > 0 && <span className={css(builderHistoryStyle.fldkey)}>{history.state.fldKey}</span>}
                       </button>
                     </li>
-                  ))}
-                </ul>
+                  ))} */}
+                </div>
               )
             }
 

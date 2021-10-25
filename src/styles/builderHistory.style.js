@@ -24,6 +24,7 @@ const builderHistoryStyle = {
     w: '100%',
     owy: 'auto',
     owx: 'hidden',
+    ff: 'Roboto',
   },
 
   item: {
