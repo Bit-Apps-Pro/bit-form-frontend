@@ -7,13 +7,14 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import useSWR from "swr"
 import CompSettings from '../components/CompSettings/CompSettings'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
-import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider'
+import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
 import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
 import { $bits, $breakpoint, $builderHelperStates, $newFormId, $styles } from '../GlobalStates'
+import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
@@ -252,7 +253,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <>
-      <RenderThemeVarsAndFormCSS />
       <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
       <DraggableModal />
       <Container
@@ -283,15 +283,18 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         >
           {!isLoading && !styleLoading ? (
             <>
-              <GridLayout
-                // theme={theme}
-                style={styleProvider()}
-                gridWidth={gridWidth}
-                newData={newData}
-                setNewData={setNewData}
-                formType={formType}
-                formID={formID}
-              />
+              <RenderPortal style={{ width: '100%', height: 'calc(100% - 82px)', overflow: 'hidden', display: 'initial', pointerEvent: 'none' }}>
+                <RenderThemeVarsAndFormCSS />
+                {/* <GridLayout
+                  // theme={theme}
+                  style={styleProvider()}
+                  gridWidth={gridWidth}
+                  newData={newData}
+                  setNewData={setNewData}
+                  formType={formType}
+                  formID={formID}
+                /> */}
+              </RenderPortal>
             </>
           ) : <GridLayoutLoader />}
 

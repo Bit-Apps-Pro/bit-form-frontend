@@ -1,23 +1,29 @@
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $styles } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $styles } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
 import Tip from '../Utilities/Tip'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import SliderModal from '../Utilities/SliderModal'
 import { useState } from 'react'
-
+import themeProvider from './themes/0_themeProvider'
 export default function ThemeGallary() {
   const { css } = useFela()
 
   const [styles, setStyles] = useRecoilState($styles)
+  const fields = useRecoilValue($fields)
+  const fieldsArray = Object.entries(fields)
   const [modal, setModal] = useState({ show: false })
   const themes = [
-    { name: 'Bit Form Default', slug: 'bitform-default', img: 'defaultTheme.svg' },
+    { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
     { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
   ]
+
+  const handleThemeApply = (themeSlug) => {
+    setStyles(themeProvider(themeSlug, fieldsArray))
+  }
 
   return (
     <div className={css(themeGalStyle.wrp)}>
@@ -31,7 +37,7 @@ export default function ThemeGallary() {
       <h4 className={css(themeGalStyle.title)}>Themes</h4>
       <div className={css(themeGalStyle.thm_container)}>
         {themes.map(theme => (
-          <ThemeGallary.Card key={theme.name} name={theme.name} img={theme.img} isActive={styles.theme === theme.slug} />
+          <ThemeGallary.Card key={theme.name} applyThemeAction={() => handleThemeApply(theme.slug)} name={theme.name} img={theme.img} isActive={styles.theme === theme.slug} />
         ))}
       </div>
     </div>
@@ -39,9 +45,10 @@ export default function ThemeGallary() {
 }
 
 
-const Card = ({ name, img, isActive }) => {
+const Card = ({ name, img, isActive, applyThemeAction }) => {
   const { formType, formID } = useParams()
   const { css } = useFela()
+
   return (
     <div className={css(themeGalStyle.thm_wrp)}>
       <div className={css(themeGalStyle.thm_btn, isActive && themeGalStyle.activeStyle)}>
@@ -61,6 +68,7 @@ const Card = ({ name, img, isActive }) => {
             <Tip msg="Apply Theme">
               <button
                 type="button"
+                onClick={applyThemeAction}
                 className={css(themeGalStyle.thm_ctrl_btn)}
                 aria-label="Theme Preview"><CheckMarkIcn size="20px" />
               </button>

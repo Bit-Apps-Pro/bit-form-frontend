@@ -7,6 +7,7 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
       setModal(false)
     }
   }
+  const cancelBubble = (e) => e.stopPropagation()
 
   return (
     <CSSTransition
@@ -18,11 +19,15 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
       <div
         role="button"
         tabIndex={0}
-        onKeyPress={handleClickOutside}
-        onClick={handleClickOutside}
+        onKeyDown={handleClickOutside}
+        onMouseDown={handleClickOutside}
         className="btcd-modal-wrp"
       >
         <div
+          tabIndex="-1"
+          onClick={cancelBubble}
+          onKeyPress={cancelBubble}
+          role="button"
           className={`btcd-modal ${sm ? 'btcd-m-sm' : ''} ${lg ? 'btcd-m-lg' : ''} ${className} ${autoHeight ? 'auto-height' : ''}`}
           style={style}
         >

@@ -233,7 +233,9 @@
   background: #00001f40;
 }
 .btc-slider-modal-enter-active div[data-modal],
-.btc-slider-modal-enter-done div[data-modal]{
+.btc-slider-modal-enter-done div[data-modal],
+.btc-slider-modal-enter-done div[data-arrow]{
+  opacity: 1;
   transform: scale(1);
 }
 .btc-slider-modal-exit div[data-modal]{

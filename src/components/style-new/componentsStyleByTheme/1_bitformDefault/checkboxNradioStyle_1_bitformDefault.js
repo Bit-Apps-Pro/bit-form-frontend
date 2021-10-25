@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default function checkboxNradioStyle_thm0({ fk, type, direction }) {
+export default function checkboxNradioStyle_1_bitformDefault({ fk, type, direction }) {
   return {
     // checkbox symbol
     [`.${fk}-cks`]: {
@@ -59,7 +59,6 @@ export default function checkboxNradioStyle_thm0({ fk, type, direction }) {
       'pointer-events': 'none',
       cursor: 'not-allowed',
     },
-    [`.${fk}-cw:hover .box`]: { 'border-color': 'var(--global-primary-color)' },
     [`.${fk}-bx`]: {
       position: 'relative',
       height: '18px',

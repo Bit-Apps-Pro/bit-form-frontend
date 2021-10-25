@@ -81,7 +81,7 @@ export default function SliderModal({ show = true, setModal, children, isInfinit
           data-modal
           className={css(s.modal)}
         >
-          <div className={css(s.leftArrwWrp)}>
+          <div data-arrow className={css(s.leftArrwWrp)}>
             <button
               onClick={() => handleStep('dec')}
               className={css(s.arrwBtn)}
@@ -92,7 +92,7 @@ export default function SliderModal({ show = true, setModal, children, isInfinit
               <ChevronLeft size="30" />
             </button>
           </div>
-          <div className={css(s.rightArrwWrp)}>
+          <div data-arrow className={css(s.rightArrwWrp)}>
             <button
               onClick={() => handleStep('inc')}
               className={css(s.arrwBtn, s.rightArw)}
@@ -103,7 +103,6 @@ export default function SliderModal({ show = true, setModal, children, isInfinit
               <ChevronLeft size="30" />
             </button>
           </div>
-          {step}
           <div className={css(ut.flxcb, ut.px10)}>
             <h2 id="title" className={css(s.title)}>Title</h2>
             <div>
@@ -189,18 +188,22 @@ const s = {
     h: 70,
     flx: 'center',
     pn: 'absolute',
-    tp: '50%',
+    tp: '40%',
     tm: 'translateY(-50%)',
-    lt: '-60px'
+    lt: '-60px',
+    oy: 0,
+    tn:'opacity .3s'
   },
   rightArrwWrp: {
     w: 60,
     h: 70,
     flx: 'center',
     pn: 'absolute',
-    tp: '50%',
+    tp: '40%',
     tm: 'translateY(-50%)',
-    rt: '-60px'
+    rt: '-60px',
+    oy: 0,
+    tn:'opacity .3s'
   },
   rightArw: {
     tm: 'rotate(180deg)'

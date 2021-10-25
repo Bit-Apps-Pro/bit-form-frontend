@@ -22,7 +22,7 @@ export const json2CssStr = (jsonValue) => {
 }
 
 export const changeFormDir = (style, dir) => produce(style, drft => {
-  if (drft.theme === 'bitform-default') {
+  if (drft.theme === 'bitformDefault') {
     for (const fieldKey in drft.fields) {
       if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
         if (drft.fields[fieldKey].overrideGlobalTheme === false) {

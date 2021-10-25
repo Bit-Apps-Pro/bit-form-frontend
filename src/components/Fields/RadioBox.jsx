@@ -83,8 +83,8 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
               />
-              <label htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <span className={`${fieldKey}-bx ${fieldKey}-rdo`} />
+              <label data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
+                <span data-bx className={`${fieldKey}-bx`} />
                 <span className={`${fieldKey}-ct`}>{itm.lbl}</span>
               </label>
             </div>

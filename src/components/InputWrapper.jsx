@@ -14,17 +14,20 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       className={`${fieldKey}-fw  ${flags.styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
     >
-      {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
-        <label title={fieldData.lbl} className={`${fieldKey}-lbl`} htmlFor={fieldKey}>
-          {fieldData.lbl}
-          {fieldData.valid?.req && (
-            <>
-              {' '}
-              <span className="fld-req-symbol">*</span>
-            </>
-          )}
-        </label>
-      )}
+      <div>
+        {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
+          <label title={fieldData.lbl} className={`${fieldKey}-lbl`} htmlFor={fieldKey}>
+            {fieldData.lbl}
+            {fieldData.valid?.req && (
+              <>
+                {' '}
+                <span className="fld-req-symbol">*</span>
+              </>
+            )}
+          </label>
+        )}
+        <small>asdasd asdfasdf sdafs sdf </small>
+      </div>
       {children}
       {(err || fieldData?.err) && (
         <div className={`error-wrapper ${err && 'h-a'}`}>

@@ -28,6 +28,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
 
   useEffect(() => {
     const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
+    console.log({ _h, _s, _l })
     switch (action?.type) {
       case 'global-primary-color':
         setStyles(prvState => produce(prvState, drft => {
@@ -60,9 +61,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
       default:
         break;
     }
-    if (action?.type === 'global-primary-color') {
-
-    }
+    
   }, [color])
 
   return (

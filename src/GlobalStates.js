@@ -28,7 +28,7 @@ export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMod
 export const $styles = atom({
   key: '$styles',
   default: {
-    theme: 'bitform-default',
+    theme: 'bitformDefault',
     themeVars: {
       '--global-primary-color': 'hsla(0, 10%, 20%, 100)',
       '--gph': 0,

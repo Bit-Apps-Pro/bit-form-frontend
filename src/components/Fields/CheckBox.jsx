@@ -112,10 +112,10 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
               />
-              <label htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
-                <span className={`${fieldKey}-bx ${fieldKey}-ck`}>
+              <label data-cl htmlFor={`${fieldKey}-chk-${i}`} className={`${fieldKey}-cl`}>
+                <span data-bx className={`${fieldKey}-bx ${fieldKey}-ck`}>
                   <svg width="12" height="10" viewBox="0 0 12 10" className={`${fieldKey}-svgwrp`}>
-                    <use href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
+                    <use data-ck-icn href={`#${fieldKey}-ck-svg`} className={`${fieldKey}-ck-icn`} />
                   </svg>
                 </span>
                 <span className={`${fieldKey}-ct`}>{itm.lbl}</span>

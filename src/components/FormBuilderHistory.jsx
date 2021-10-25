@@ -97,7 +97,6 @@ export default function FormBuilderHistory({ }) {
 
     const { state } = histories[indx]
 
-    console.log('History', indx, state)
 
     // setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
@@ -127,7 +126,6 @@ export default function FormBuilderHistory({ }) {
       }
     }
   }
-  console.log(histories)
 
   return (
     <div>
