@@ -5,10 +5,13 @@ import Tip from './Tip'
 
 export default function StyleSegmentControl({ defaultActive,
   activeValue,
+  className,
   options,
   size = 100,
   onChange,
   show,
+  width,
+  tipPlace = 'top',
   activeShow,
   wideTab }) {
   const { css } = useFela()
@@ -18,6 +21,7 @@ export default function StyleSegmentControl({ defaultActive,
   const style = {
     wrapper: {
       ta: 'center',
+      ...width && { w: width },
       // mx: 'auto',
     },
     tabs: {
@@ -132,7 +136,7 @@ export default function StyleSegmentControl({ defaultActive,
   }
 
   return (
-    <div className={css(style.wrapper)}>
+    <div className={`${css(style.wrapper)} ${className}`}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
         {options?.map((item, i) => {
@@ -152,7 +156,7 @@ export default function StyleSegmentControl({ defaultActive,
             </button>
           )
           if (item.tip) {
-            return <Tip msg={item.tip} place="top" whiteSpaceNowrap theme="light-border" delay={1000}>{btn}</Tip>
+            return <Tip className={css({ w: '100%', dy: 'inline-block' })} msg={item.tip} place={tipPlace} whiteSpaceNowrap theme="light-border" delay={500}>{btn}</Tip>
           }
           return btn
         })}

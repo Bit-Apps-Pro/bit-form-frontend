@@ -1,35 +1,42 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { NavLink, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHelperStates, $flags } from '../GlobalStates'
+import { NavLink, useParams, useHistory } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $breakpoint, $flags } from '../GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
-import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
-import SegmentControl from './Utilities/SegmentControl'
 import SingleToggle from './Utilities/SingleToggle'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
+  const history = useHistory()
   const { formType, formID } = useParams()
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
 
   const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
+
+  const handleRightPanel = (currentActive) => {
+    if (currentActive === 'fld-settings') {
+      history.push(`/form/builder/${formType}/${formID}/fields-list`)
+    } else if (currentActive === 'theme-customize') {
+      history.push(`/form/builder/${formType}/${formID}/themes`)
+    }
+  }
 
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
@@ -91,10 +98,26 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
                 <BrushIcn size="20" />
               </NavLink>
             </Tip>
-            {/* <StyleSegmentControl show={['icn', 'label']} options={[{ icn: <BrushIcn size="14" />, label: 'asd', show: ['icn'], value: 'asd' }, { icn: <BrushIcn size="14" />, label: 'asd', show: ['icn'], value: 'sdf' }]} /> */}
-            {/* <SegmentControl component="a" size="80" options={[{ icn: <BrushIcn /> }, { icn: <SettingsIcn /> }]} /> */}
+            <StyleSegmentControl
+              width={180}
+              show={['icn']}
+              tipPlace="bottom"
+              options={[
+                { icn: <EditIcn size="19" />, label: 'fld-settings', tip: 'Field Settings' },
+                { icn: <BrushIcn size="15" />, label: 'theme-customize', tip: 'Theme Customization' },
+              ]}
+              onChange={handleRightPanel}
+              // activeValue={controller.parent}
+              wideTab
+              className={css(ut.mr4)}
+            />
+
             <Tip msg="Style render">
-              <SingleToggle name="styleMood" isChecked={flags.styleMode} action={styleModeHandler} />
+              <SingleToggle
+                name="styleMood"
+                isChecked={flags.styleMode}
+                action={styleModeHandler}
+              />
             </Tip>
           </div>
         </div>
