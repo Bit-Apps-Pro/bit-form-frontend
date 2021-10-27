@@ -38,7 +38,7 @@ export default function Tip({ className,
       arrow={false}
       content={<span className={css([style, felaStyle])}>{msg}</span>}
     >
-      <span>{children}</span>
+      <span className={className}>{children}</span>
     </Tippy>
   )
 }
