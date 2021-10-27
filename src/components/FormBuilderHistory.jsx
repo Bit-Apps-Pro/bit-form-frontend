@@ -26,7 +26,7 @@ export default function FormBuilderHistory({ }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
   const setBuilderHelpers = useSetRecoilState($builderHelperStates)
-  const [scrolIndex, setScrolIndex] = useState(0)
+  // const [scrolIndex, setScrolIndex] = useState(0)
 
   const handleUndoRedoShortcut = e => {
     console.log('undo redo triggered')
@@ -183,7 +183,7 @@ export default function FormBuilderHistory({ }) {
                     height={200}
                     itemCount={histories.length || 1}
                     itemSize={histories.length ? generateItemSize() : 0}
-                    scrollToIndex={histories.length ? scrolIndex : 0}
+                    scrollToIndex={active}
                     renderItem={({ index, style }) => (
                       <div key={`bf-${index * 2}`} id="user" className={css(builderHistoryStyle.item)} style={style}>
                         <button

@@ -52,7 +52,10 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
       delete fieldData.err[name].show
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field required custom error message updated`, type: `change_custom_error_message`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openErrorModal = () => {

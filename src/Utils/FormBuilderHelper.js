@@ -477,9 +477,6 @@ export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn
 
   console.log('historyData', historyData)
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-    // if (!draft.histories.length) {
-    //   draft.histories.push({ event: 'reset' })
-    // }
     const lastHistory = draft.histories[draft.histories.length - 1]
     if ((lastHistory.type === historyData.type) && (lastHistory.state.fldKey === historyData.state.fldKey)) {
       draft.histories.pop()

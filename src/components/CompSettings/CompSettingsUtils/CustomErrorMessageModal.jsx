@@ -1,9 +1,10 @@
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import app from '../../../styles/app.style'
+import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Modal from '../../Utilities/Modal'
@@ -17,6 +18,8 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   const fieldData = deepCopy(fld)
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
   const [value, setValue] = useState(errMsg)
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   useEffect(() => {
     if (errorModal) setValue(errMsg)
@@ -28,7 +31,10 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
     if (!fdata.err) fdata.err = {}
     if (!fdata.err[name]) fdata.err[name] = {}
     fdata.err[name].msg = val
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
+    // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fdata } }))
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field required custom error message updated`, type: `change_custom_error_message`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const cancelModal = () => {

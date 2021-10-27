@@ -165,7 +165,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     sessionStorage.setItem('btcd-lc', '-')
 
     // add to history
-    const event = `${fldData.lbl} removed`
+    const event = `${generateFieldLblForHistory(fldData)} removed`
     const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
     addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
@@ -201,6 +201,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     return fieldData
   }
 
+  const generateFieldLblForHistory = fldData =>  {
+    if(fldData.typ === 'button') return fldData.txt
+    if(fldData.typ === 'decision-box') return 'Decision Box'
+    return fldData.lbl
+  }
+
   function addNewField(fieldData, fieldSize, addPosition) {
     const processedFieldData = handleFieldExtraAttr(fieldData)
     if (!processedFieldData) return
@@ -219,7 +225,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     sessionStorage.setItem('btcd-lc', '-')
 
     // add to history
-    const event = `${fieldData.typ === 'button' ? fieldData.txt : fieldData.lbl} added`
+    const event = `${generateFieldLblForHistory(fieldData)} added`
     const type = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
     addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
@@ -272,7 +278,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }, 500)
 
     // add to history
-    const event = `${fldData.lbl} cloned`
+    const event = `${generateFieldLblForHistory(fldData)} cloned`
     const type = 'clone_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
     addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
@@ -290,7 +296,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
       setRootLayouts(layoutsFromGrid)
       setLayouts(layoutsFromGrid)
-      addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
+      // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
 

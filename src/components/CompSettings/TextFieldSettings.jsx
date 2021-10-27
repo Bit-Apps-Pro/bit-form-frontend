@@ -74,7 +74,6 @@ function TextFieldSettings() {
   }
 
   function setAdminLabel(e) {
-    console.log('form admin label', e, e.target.value)
     if (e.target.value === '') {
       delete fieldData.adminLbl
     } else {
@@ -93,10 +92,10 @@ function TextFieldSettings() {
     } else {
       delete fieldData.adminLbl
     }
-    const req = e.target.checked ? 'Show' : 'Hide'
+    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `${req} Admin label`, type: `${req.toLowerCase()}_adminlabel`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hidePlaceholder = (e) => {

@@ -26,7 +26,7 @@ export default function FieldLabelSettings() {
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field Label Change ${fieldData.lbl || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field Label Change ${fieldData.lbl || fldKey}`, type: 'field_label_change', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideFieldLabel = e => {
@@ -37,9 +37,10 @@ export default function FieldLabelSettings() {
     }
     // eslint-disable-next-line no-param-reassign
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    const  req = !e.target.checked ? 'on': 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field lable Hide ${!e.target.checked ? 'on': 'off'}: ${fieldData.lbl || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

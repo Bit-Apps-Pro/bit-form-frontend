@@ -73,9 +73,15 @@ export default function FieldContextMenu({ isContextMenu,
       }
       if (!fldData.hidden.length) delete fldData.hidden
     })
-    console.log(allFields)
+
+    let activeBrkpnt
+    if (brkpnt === 'all') activeBrkpnt = 'all device'
+    else if (brkpnt === 'lg') activeBrkpnt = 'large'
+    else if (brkpnt === 'md') activeBrkpnt = 'medium'
+    else activeBrkpnt = 'small'
+
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field hide`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field Hidden ${activeBrkpnt} ${fields[fldKey].hidden ? 'off' : 'on'}  `, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const checkIfHidden = brkpnt => {

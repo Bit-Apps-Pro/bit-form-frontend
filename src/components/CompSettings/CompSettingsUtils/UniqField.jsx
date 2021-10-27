@@ -36,9 +36,10 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
       delete fieldData.err[name].custom
     }
     // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Custom Error Message Added.', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Validate as Entry Unique ${req}`, type: `validate_entry_unique_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setShowErrMsg = e => {
@@ -53,10 +54,10 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
     } else {
       delete fieldData.err[type][name]
     }
-    // setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
+    const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Show Error Message ${checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field required custom error message updated`, type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openErrorModal = () => {
