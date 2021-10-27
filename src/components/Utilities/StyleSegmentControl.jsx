@@ -12,6 +12,7 @@ export default function StyleSegmentControl({ defaultActive,
   show,
   width,
   tipPlace = 'top',
+  borderRadius = 8,
   activeShow,
   wideTab }) {
   const { css } = useFela()
@@ -33,7 +34,7 @@ export default function StyleSegmentControl({ defaultActive,
       px: 3,
       ls: 'none',
       // dy: 'inline-block',
-      brs: 8,
+      brs: borderRadius,
       pn: 'relative',
       '& .active': { cr: 'var(--b-50) !important' },
       '& button': {
@@ -51,7 +52,7 @@ export default function StyleSegmentControl({ defaultActive,
       tp: '50%',
       tm: 'translatey(-50%)',
       zx: 1,
-      brs: 6,
+      brs: borderRadius - 2,
       tdn: '0.5s',
       ttf: 'cubic-bezier(0.68, -0.55, 0.36, 1.35)',
       willChange: 'transform',
@@ -70,7 +71,7 @@ export default function StyleSegmentControl({ defaultActive,
       // mxh: 24,
       w: wideTab ? '100%' : 24,
       h: wideTab ? 30 : 24,
-      brs: 8,
+      brs: borderRadius,
       flxi: 'center',
       tdy: '0.3s',
       tdn: '0.6s',
@@ -86,6 +87,7 @@ export default function StyleSegmentControl({ defaultActive,
         flx: 'center',
       },
     },
+    icn: { fr: 'drop-shadow(0 1px 1px lightgray)' },
   }
   const selectorRef = useRef(null)
   const tabsRef = useRef(null)
@@ -150,13 +152,13 @@ export default function StyleSegmentControl({ defaultActive,
               data-label={item.label}
             >
               {checkToShow(item, 'icn') && (
-                <span className={`icn ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
+                <span className={`icn ${css(style.icn)} ${active === item.label ? css(style.segment_img) : ''}`}>{item.icn}</span>
               )}
               {checkToShow(item, 'label') && __(item.label, 'bitform')}
             </button>
           )
           if (item.tip) {
-            return <Tip className={css({ w: '100%', dy: 'inline-block' })} msg={item.tip} place={tipPlace} whiteSpaceNowrap theme="light-border" delay={500}>{btn}</Tip>
+            return <Tip key={`segment-option-${i * 100}`} className={css({ w: '100%', dy: 'inline-block' })} msg={item.tip} place={tipPlace} whiteSpaceNowrap theme="light-border" delay={500}>{btn}</Tip>
           }
           return btn
         })}
