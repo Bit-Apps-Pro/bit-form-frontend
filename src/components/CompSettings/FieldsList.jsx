@@ -13,6 +13,7 @@ export default function FieldsList() {
 
   if (selectedFieldId) {
     history.push(`/form/builder/${formType}/${formID}/field-settings/${selectedFieldId}`)
+    return <></>
   }
 
   const hiddenFlds = Object.entries(fields).filter(([, fld]) => fld.hidden)
