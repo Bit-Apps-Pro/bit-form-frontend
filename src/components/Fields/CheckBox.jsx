@@ -84,13 +84,6 @@ export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID,
               <polyline
                 className={`${fieldKey}-ck-svgline`}
                 points="1.5 6 4.5 9 10.5 1"
-              // strokeLinecap="round"
-              // strokeLinejoin="round"
-              // strokeDasharray="16"
-              // strokeDashoffset="16"
-              // strokeWidth="2"
-              // fill="none"
-              // stroke="currentColor"
               />
             </symbol>
           </svg>
