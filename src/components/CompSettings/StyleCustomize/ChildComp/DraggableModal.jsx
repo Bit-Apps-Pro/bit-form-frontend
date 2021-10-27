@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
@@ -6,6 +6,7 @@ import { $draggableModal } from '../../../../GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
+import LabelControlMenu from '../../../style-new/LabelControlMenu'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
@@ -16,6 +17,7 @@ const RenderComponent = ({ component, action, value }) => {
     case 'border-style': return <BorderStyle />
     case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
     case 'font': return <FontPickerMenu />
+    case 'label-control': return <LabelControlMenu />
     default: return 'loading'
   }
 }
@@ -24,6 +26,7 @@ const setTitle = (component) => {
     case 'border-style': return 'Border'
     case 'color-picker': return 'Color picker'
     case 'font': return 'Fonts'
+    case 'label-control': return 'Label Placement Control'
     default: return '...'
   }
 }
@@ -33,8 +36,11 @@ export default function DraggableModal() {
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const { show, position, component, width, subtitle, action, value } = draggableModal
   const [pos, setPos] = useState('')
-
-  useEffect(() => { setPos({ ...position }) }, [position])
+  const dragableRef = useRef(null)
+  useEffect(() => {
+    setPos({ ...position })
+    // console.log('ref', dragableRef.current.props.children)
+  }, [position])
 
   const DragableModalLoader = () => (
     <>
@@ -52,8 +58,8 @@ export default function DraggableModal() {
   if (!show) return <></>
 
   return (
-    <Draggable handle=".draggable-modal-handler" bounds="parent" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)}>
-      <div className={css(draggableModalStyle.container)} style={{ width }}>
+    <Draggable ref={dragableRef} handle=".draggable-modal-handler" bounds="parent" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)}>
+      <div className={css(draggableModalStyle.container)} style={{ width, ...pos && { transition: 'transform .2s' } }}>
         {/* style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }} */}
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handler`}>
           <div className={css(ut.flxClm, draggableModalStyle.titleContainer)}>
