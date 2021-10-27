@@ -1,8 +1,7 @@
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
-import { showDraggableModal } from '../style-new/styleHelpers'
+import { showDraggableModal } from './styleHelpers'
 
 export default function FontPicker() {
   const { css } = useFela()
