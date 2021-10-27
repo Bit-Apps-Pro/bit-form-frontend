@@ -11,7 +11,6 @@ import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
-
 export default function SimpleAccordion({ className, title, toggleName, children, open = false, onOpen = () => { }, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable }) {
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState(!disable && open || false)
@@ -84,7 +83,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
         </div>
       </div>
 
-      <div style={{ height: H, transition: 'height 300ms', overflow: 'hidden' }}>
+      <div style={{ height: H, transition: 'height 300ms' }}>
         <CSSTransition
           in={tgl}
           timeout={150}
