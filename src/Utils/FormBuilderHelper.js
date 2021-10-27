@@ -475,10 +475,8 @@ export function layoutOrderSortedByLg(lay, cols) {
 
 export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn) => {
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
-    // if (!draft.histories.length) {
-    //   draft.histories.push({ event: 'reset' })
-    // }
-    if (draft.histories[draft.histories.length - 1].event === historyData.event) {
+    const lastHistory = draft.histories[draft.histories.length - 1]
+    if ((lastHistory.type === historyData.type) && (lastHistory.state.fldKey === historyData.state.fldKey)) {
       draft.histories.pop()
       draft.active = draft.histories.length - 1
     }

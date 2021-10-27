@@ -124,7 +124,7 @@ function FormDetails() {
         align: 'right',
         valid: {},
       }
-      const btnFld = []
+      const btnFld = {}
       btnFld[`b${newFormId}-1`] = btnData
       setFields(btnFld)
       setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = btnFld }))

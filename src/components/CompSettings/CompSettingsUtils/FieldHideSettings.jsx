@@ -27,9 +27,9 @@ export default function FieldHideSettings({ cls }) {
       if (!fldData.hidden.length) delete fldData.hidden
     })
     console.log(allFields)
-
+    const req = checked ? 'on' : 'off'
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Hidden Field ${checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Hidden Field ${req}`, type: `hide_Field_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

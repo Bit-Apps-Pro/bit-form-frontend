@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import Scrollbars from 'react-custom-scrollbars-2'
+import VirtualList from 'react-tiny-virtual-list'
 import { $builderHelperStates, $builderHistory, $fields, $layouts, $selectedFieldId } from '../GlobalStates'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import RedoIcon from '../Icons/RedoIcon'
@@ -10,12 +11,10 @@ import HistoryIcn from '../Icons/HistoryIcn'
 import ut from '../styles/2.utilities'
 import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
-import { compactNewLayoutItem, filterLayoutItem } from '../Utils/FormBuilderHelper'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
-import { deepCopy } from '../Utils/Helpers'
 
-export default function FormBuilderHistory({ }) {
+export default function FormBuilderHistory() {
   const { css } = useFela()
   const [disabled, setDisabled] = useState(false)
   const [showHistory, setShowHistory] = useState(null)
@@ -25,8 +24,10 @@ export default function FormBuilderHistory({ }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const { active, histories } = builderHistory
   const setBuilderHelpers = useSetRecoilState($builderHelperStates)
+  // const [scrolIndex, setScrolIndex] = useState(0)
 
   const handleUndoRedoShortcut = e => {
+    console.log('undo redo triggered')
     if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
       let action = ''
       if (e.key.toLowerCase() === 'z') {
@@ -44,9 +45,9 @@ export default function FormBuilderHistory({ }) {
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', handleUndoRedoShortcut)
+    document.addEventListener('keypress', handleUndoRedoShortcut)
 
-    return () => document.removeEventListener('keydown', handleUndoRedoShortcut)
+    return () => document.removeEventListener('keypress', handleUndoRedoShortcut)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, disabled])
 
@@ -97,7 +98,6 @@ export default function FormBuilderHistory({ }) {
 
     const { state } = histories[indx]
 
-
     // setDisabled(true)
     sessionStorage.setItem('btcd-lc', '-')
     if (state.layouts) {
@@ -119,12 +119,23 @@ export default function FormBuilderHistory({ }) {
   }
 
   const checkedState = (indx, setState, layer) => {
-    for (let i = indx - 1; i >= 0; i--) {
+    for (let i = indx - 1; i >= 0; i -= 1) {
       if (layer in histories[i].state) {
         setState(histories[i].state[layer])
         break
       }
     }
+  }
+  const generateItemSize = () => {
+    const arr = []
+    for (let i = 0; i < histories.length; i += 1) {
+      if (i === 0) {
+        arr.push(25)
+      } else {
+        arr.push(40)
+      }
+    }
+    return arr
   }
 
   return (
@@ -162,8 +173,35 @@ export default function FormBuilderHistory({ }) {
             )}
             {
               histories.length > 1 && (
-                <ul className={css(builderHistoryStyle.list)}>
-                  {histories.map((history, indx) => (
+                <div className={css(builderHistoryStyle.list)}>
+                  <VirtualList
+                    width="100%"
+                    height={200}
+                    itemCount={histories.length || 1}
+                    itemSize={histories.length ? generateItemSize() : 0}
+                    scrollToIndex={active}
+                    renderItem={({ index, style }) => (
+                      <div key={`bf-${index * 2}`} id="user" className={css(builderHistoryStyle.item)} style={style}>
+                        <button
+                          type="button"
+                          className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
+                          onClick={() => handleHistory(index)}
+                          title={histories[index].event}
+                        >
+                          <span className={css(builderHistoryStyle.subtitle)}>{histories[index].event}</span>
+                          {index > 0 && (
+                            <span className={css(builderHistoryStyle.fldkey)}>
+                              Field Key:
+                              {' '}
+                              {histories[index].state.fldKey}
+                            </span>
+                          )}
+                        </button>
+                      </div>
+                    )}
+
+                  />
+                  {/* {histories.map((history, indx) => (
                     <li key={`bf-${indx * 2}`} className={css(builderHistoryStyle.item)}>
                       <button
                         type="button"
@@ -175,8 +213,8 @@ export default function FormBuilderHistory({ }) {
                         {indx > 0 && <span className={css(builderHistoryStyle.fldkey)}>{history.state.fldKey}</span>}
                       </button>
                     </li>
-                  ))}
-                </ul>
+                  ))} */}
+                </div>
               )
             }
 

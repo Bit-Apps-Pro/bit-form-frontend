@@ -32,11 +32,9 @@ export default function DecisionBoxSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Admin label added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${fieldData.adminLbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setRequired(e) {
@@ -51,11 +49,10 @@ export default function DecisionBoxSettings() {
     } else {
       delete fieldData.valid.req
     }
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Required field validation ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    const req = e.target.checked ? 'on' : 'off'
+    addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${fieldData.adminLbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setChecked(e) {
@@ -66,18 +63,13 @@ export default function DecisionBoxSettings() {
     } else {
       delete fieldData.valid.checked
     }
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Default checked ${e.target.checked}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: `set_check_${Math.random() * 5 * 4 + 3}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setMsg = (val, typ) => {
     fieldData.msg[typ] = val
-
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: 'Message added', state: { fields: allFields, fldKey } }, setUpdateBtn)

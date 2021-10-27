@@ -170,13 +170,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setFields(tmpFields)
     setSelectedFieldId(null)
     sessionStorage.setItem('btcd-lc', '-')
-    setUpdateBtn({ unsaved: true })
 
     // add to history
-    const event = `${fldData.lbl} removed`
-    const action = 'remove_fld'
+    const event = `${generateFieldLblForHistory(fldData)} removed`
+    const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
-    addToBuilderHistory(setBuilderHistory, { event, action, state })
+    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
   }
 
   const clsAlertMdl = () => {
@@ -209,6 +208,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     return fieldData
   }
 
+  const generateFieldLblForHistory = fldData => {
+    if (fldData.typ === 'button') return fldData.txt
+    if (fldData.typ === 'decision-box') return 'Decision Box'
+    return fldData.lbl
+  }
+
   function addNewField(fieldData, fieldSize, addPosition) {
     const processedFieldData = handleFieldExtraAttr(fieldData)
     if (!processedFieldData) return
@@ -225,13 +230,12 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setRootLayouts(newLayouts)
     setFields(newFields)
     sessionStorage.setItem('btcd-lc', '-')
-    setUpdateBtn({ unsaved: true })
 
     // add to history
-    const event = `${fieldData.lbl} added`
-    const action = 'add_fld'
+    const event = `${generateFieldLblForHistory(fieldData)} added`
+    const type = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
-    addToBuilderHistory(setBuilderHistory, { event, action, state })
+    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -278,7 +282,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setFields(oldFields)
 
     sessionStorage.setItem('btcd-lc', '-')
-    setUpdateBtn({ unsaved: true })
 
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
@@ -286,10 +289,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }, 500)
 
     // add to history
-    const event = `${fldData.lbl} cloned`
-    const action = 'add_fld'
+    const event = `${generateFieldLblForHistory(fldData)} cloned`
+    const type = 'clone_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
-    addToBuilderHistory(setBuilderHistory, { event, action, state })
+    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
 
     resetContextMenu()
   }
@@ -302,6 +305,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setRootLayouts(layoutsFromGrid)
       setLayouts(layoutsFromGrid)
+      // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
 
