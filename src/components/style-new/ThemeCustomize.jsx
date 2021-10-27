@@ -8,24 +8,21 @@ import { $styles } from '../../GlobalStates'
 import SingleToggle from '../Utilities/SingleToggle'
 import { changeFormDir } from './styleHelpers'
 import FontPicker from './FontPicker'
+import LabelControl from './LabelControl'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
 
-  const {
-    '--global-primary-color': globalPrimaryColor,
+  const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
     '--global-font-color': globalFontColor,
-    '--global-bg-color': globalBgColor
-  } = styles.themeVars
+    '--global-bg-color': globalBgColor } = styles.themeVars
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
   // const direction = styles.themeVars['--dir']
   // console.log()
-
-
 
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
@@ -70,10 +67,17 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Font Family</span>
             <FontPicker />
           </div>
-          <div className={css(ut.flxcb)}>
+
+          <div className={css(ut.flxcb, ut.mb2)}>
             <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
             <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
           </div>
+
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Label Alignment</span>
+            <LabelControl />
+          </div>
+          {[...Array(20).keys()].map(e => <br />)}
         </div>
       </div>
     </div>

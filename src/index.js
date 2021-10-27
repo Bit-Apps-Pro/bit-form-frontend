@@ -13,6 +13,7 @@ import customProperty from 'fela-plugin-custom-property'
 import AppSettingsProvider from './Utils/AppSettingsContext'
 import Loader from './components/Loaders/Loader'
 import customProperties from './styles/1.customProperties'
+import { RenderPortal } from './RenderPortal'
 
 const App = lazy(() => import('./App'))
 
@@ -57,7 +58,8 @@ ReactDOM.render(
         </RendererProvider>
       </Suspense>
     </AppSettingsProvider>
-  </RecoilRoot>, document.getElementById('btcd-app'),
+  </RecoilRoot>
+  , document.getElementById('btcd-app'),
 )
 
 // serviceWorker.register();

@@ -1,10 +1,9 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { select } from './globalHelpers'
+import { select, selectInGrid } from './globalHelpers'
 import { deepCopy } from './Helpers'
 import { __ } from './i18nwrap'
-
 
 /**
  * sort a layout array by x and y axis
@@ -475,7 +474,6 @@ export function layoutOrderSortedByLg(lay, cols) {
 }
 
 export const addToBuilderHistory = (setBuilderHistory, historyData, setUpdateBtn) => {
-
   setBuilderHistory(oldHistory => produce(oldHistory, draft => {
     // if (!draft.histories.length) {
     //   draft.histories.push({ event: 'reset' })
@@ -567,13 +565,11 @@ const getElementTotalHeight = (elm) => {
   return 0
 }
 
-export const fitLayoutItems = (lays) => {
-  return produce(lays, draftLayout => {
-    draftLayout.lg.map(fld => {
-      const height = getElementTotalHeight(select(`.${fld.i}-fw`))
-      if (height) {
-        fld.h = Math.round(height / 2)
-      }
-    })
+export const fitLayoutItems = (lays) => produce(lays, draftLayout => {
+  draftLayout.lg.map(fld => {
+    const height = getElementTotalHeight(selectInGrid(`.${fld.i}-fw`))
+    if (height) {
+      fld.h = Math.round(height / 2)
+    }
   })
-}
+})

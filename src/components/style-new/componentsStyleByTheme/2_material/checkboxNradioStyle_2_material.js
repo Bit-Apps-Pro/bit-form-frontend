@@ -38,11 +38,9 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       cursor: 'pointer',
       display: 'flex',
       'align-items': 'center',
-      color: 'var(--global-font-color)'
+      color: 'var(--global-font-color)',
     },
-    [`.${fk}-ct`]: {
-      'line-height': 'initial'
-    },
+    [`.${fk}-ct`]: { 'line-height': 'initial' },
     [`.${fk}-bx`]: {
       position: 'relative',
       height: '18px',
@@ -54,7 +52,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       transition: 'all 0.2s',
       'justify-content': 'center',
       'align-items': 'center',
-      'border-radius': type === 'check' ? '3px' : '50%'
+      'border-radius': type === 'check' ? '3px' : '50%',
     },
     [`.${fk}-bx::before`]: {
       content: '""',
@@ -63,7 +61,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       position: 'absolute',
       'box-shadow': '0 0 0 0 transparent',
       'border-radius': '50%',
-      transition: 'box-shadow 0.2s, background 0.2s'
+      transition: 'box-shadow 0.2s, background 0.2s',
     },
     [`.${fk}-bx:hover::before`]: {
       background: 'hsla(var(--gph), var(--gps), var(--gpl), 0.2)',
@@ -95,7 +93,6 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       cursor: 'not-allowed',
     },
 
-
     ...type === 'check' && {
       [`.${fk}-svgwrp`]: {
         height: '12px',
@@ -104,7 +101,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       },
       [`.${fk}-ck-icn`]: {
         'stroke-dashoffset': '16px',
-        transition: 'stroke-dashoffset 0.3s'
+        transition: 'stroke-dashoffset 0.3s',
       },
       [`.${fk}-ck-svgline`]: {
         stroke: 'white',
@@ -121,9 +118,6 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       [`.${fk}-bx::after`]: {
         content: '""',
         position: 'absolute',
-        background: 'red',
-        height: '10px',
-        width: '10px',
         'border-radius': '50%',
         // transition: 'all 0.2s cubic-bezier(0.25, 0.1, 0.59, 1.82)',
         transition: 'all 0.3s',
@@ -131,8 +125,8 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
         left: '50%',
         width: 0,
         height: 0,
-        background: 'white',
-        'box-shadow': '0 1px 3px 0px grey',
+        background: 'var(--global-fld-bg-color)',
+        'box-shadow': '0 1px 3px 0px hsl(var(--gph), var(--gps), 13%)',
         transform: 'translate(-50%, -50%)',
       },
       [`.${fk}-ci:checked ~ label[data-cl] span[data-bx]::after`]: {

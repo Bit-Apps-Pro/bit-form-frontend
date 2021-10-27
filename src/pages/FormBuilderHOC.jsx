@@ -4,13 +4,14 @@ import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'r
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import useSWR from "swr"
+import useSWR from 'swr'
 import CompSettings from '../components/CompSettings/CompSettings'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
 import GridLayout from '../components/GridLayout'
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
+import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
 import { $bits, $breakpoint, $builderHelperStates, $newFormId, $styles } from '../GlobalStates'
@@ -65,6 +66,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
   const [showToolBar, setShowToolbar] = useState(false)
+  const [isBuilderResizing, setIsBuilderResizing] = useState(false)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
 
@@ -84,12 +86,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }, [])
 
   if (formType === 'edit') {
-    const { data: fetchedStyle } = useSWR('bitforms_form_helpers_state', (uri) =>
-      bitsFetch({ formID }, uri)
-        .then(({ data: [response] }) => response?.builder_helper_state)
-    )
-    useEffect(() => { fetchedStyle && setStyle(JSON.parse(fetchedStyle)) }, [fetchedStyle])
+    const { data: fetchedBuilderHelperStates } = useSWR('bitforms_form_helpers_state', (uri) => bitsFetch({ formID }, uri)
+      .then(({ data: [response] }) => {
+        if (response?.builder_helper_state) {
+          setStyle(JSON.parse(fetchedBuilderHelperStates))
+        }
+      }))
   }
+  // useEffect(() => { fetchedStyle && setStyle(JSON.parse(fetchedStyle)) }, [fetchedStyle])
 
   useEffect(() => {
     if (brkPoint === 'md') {
@@ -117,7 +121,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     return style
   }
 
-  const setExistingStyle = () => {
+  function setExistingStyle() {
     const headers = new Headers()
     headers.append('pragma', 'no-cache')
     headers.append('cache-control', 'no-cache')
@@ -148,7 +152,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       })
   }
 
-  const recheckStyleById = (oldStyleText) => {
+  function recheckStyleById(oldStyleText) {
     if (!new RegExp(`._frm-bg-${formID}|._frm-${formID}`, 'g').test(oldStyleText)
       || oldStyleText.match(/._frm-bg-\d+/g)?.[0] !== `._frm-bg-${formID}`) {
       let replaceId
@@ -193,10 +197,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }, [])
 
   const onResizeActivate = useCallback(() => {
+    console.log('resize active')
+    setIsBuilderResizing(true)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 0ms'
   }, [])
 
   const afterResizing = useCallback(() => {
+    console.log('resize off')
+    setIsBuilderResizing(false)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 500ms'
   }, [])
 
@@ -262,7 +270,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         afterResizing={afterResizing}
         onActivate={onResizeActivate}
       >
-        <style>{styleSheet}</style>
         <Section
           className="tool-sec"
           defaultSize={showToolBar ? 0 : 180}
@@ -283,9 +290,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         >
           {!isLoading && !styleLoading ? (
             <>
-              <RenderPortal style={{ width: '100%', height: 'calc(100% - 82px)', overflow: 'hidden', display: 'initial', pointerEvent: 'none' }}>
+              <RenderPortal
+                id="bit-grid-layout"
+                style={{ width: gridWidth - 9, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: isBuilderResizing ? 'none' : 'all' }}
+              >
                 <RenderThemeVarsAndFormCSS />
-                {/* <GridLayout
+                <RenderCssInPortal />
+                <style>{styleSheet}</style>
+                <GridLayout
                   // theme={theme}
                   style={styleProvider()}
                   gridWidth={gridWidth}
@@ -293,7 +305,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
                   setNewData={setNewData}
                   formType={formType}
                   formID={formID}
-                /> */}
+                />
               </RenderPortal>
             </>
           ) : <GridLayoutLoader />}

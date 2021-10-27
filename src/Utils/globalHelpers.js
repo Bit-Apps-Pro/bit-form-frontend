@@ -38,3 +38,4 @@ export const loadScript = (src, integrity, type) => new Promise((resolve) => {
 })
 
 export const select = (selector) => document.querySelector(selector)
+export const selectInGrid = (selector) => document.getElementById('bit-grid-layout')?.contentWindow?.document.querySelector(selector)

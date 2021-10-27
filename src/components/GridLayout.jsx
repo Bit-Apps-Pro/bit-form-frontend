@@ -16,15 +16,17 @@ import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, propertyValueSumX, produceNewLayouts, fitLayoutItems } from '../Utils/FormBuilderHelper'
+import { selectInGrid } from '../Utils/globalHelpers'
 import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from './FieldBlockWrapper'
 import FieldContextMenu from './FieldContextMenu'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
-import defaultTheme from './style-new/defaultTheme'
-import RenderStyle from './style-new/RenderStyle'
+import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
+import materialTheme from './style-new/themes/2_material'
 import ConfirmModal from './Utilities/ConfirmModal'
+
 // user will create form in desktop and it will ok for all device
 // user may check all breakpoint is that ok ?
 // user may chnage size and pos in different breakpoint
@@ -60,7 +62,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
 
   useEffect(() => {
-    console.log('stylemode update')
     const nl = fitLayoutItems(layouts)
     setLayouts(nl)
     setRootLayouts(nl)
@@ -232,15 +233,19 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
     addToBuilderHistory(setBuilderHistory, { event, action, state })
     setTimeout(() => {
-      document.querySelector(`[data-key="${newBlk}"]`)?.focus()
+      selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
     // add style
     setStyles(styles => produce(styles, draftStyle => {
       const globalTheme = draftStyle.theme
-      if (globalTheme === 'bitform-default') {
-        const fieldStyle = defaultTheme(newBlk, processedFieldData.typ, draftStyle.themeVars['--dir'])
+      if (globalTheme === 'bitformDefault') {
+        const fieldStyle = bitformDefaultTheme(newBlk, processedFieldData.typ, draftStyle.themeVars['--dir'])
+        draftStyle.fields[newBlk] = fieldStyle
+      }
+      if (globalTheme === 'material') {
+        const fieldStyle = materialTheme(newBlk, processedFieldData.typ, draftStyle.themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
     }))
@@ -276,7 +281,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setUpdateBtn({ unsaved: true })
 
     setTimeout(() => {
-      document.querySelector(`[data-key="${newBlk}"]`)?.focus()
+      selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
@@ -295,7 +300,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const handleLayoutChange = (l, layoutsFromGrid) => {
     if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
-      console.log('set layout on change', layoutsFromGrid)
       setRootLayouts(layoutsFromGrid)
       setLayouts(layoutsFromGrid)
     }
@@ -312,9 +316,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     let x = (e.clientX - leftPos) + 5
     const y = e.clientY - topPos
 
-    const test = document.getElementById('layout-wrapper')
-    const rootW = Number(test.style.width.substr(0, test.style.width.indexOf('px')))
-
+    const test = selectInGrid('#layout-wrapper')
+    const rootW = Number(test.style.width.match(/\d+/gi))
+    console.log(rootW)
     const right = (x + 170) > rootW
     if (right) {
       x = (e.clientX - leftPos) - 150
@@ -343,7 +347,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   const handleFldBlockEvent = (fieldId) => {
     setSelectedFieldId(fieldId)
-    console.log('empty cobntatex')
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
@@ -351,6 +354,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
   return (
     <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+      {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide>
@@ -369,9 +373,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                   resizeHandles={['se', 'e']}
                   droppingItem={draggingField?.fieldSize}
                   onLayoutChange={handleLayoutChange}
-                  // cols={cols}
                   cols={cols}
-                  // cols={{ lg: 120, md: 120, sm: 120 }}
                   breakpoints={{ lg: 700, md: 420, sm: 300 }}
                   rowHeight={rowHeight}
                   margin={gridContentMargin}
