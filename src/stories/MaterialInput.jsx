@@ -85,38 +85,73 @@ const MtInput = ({ size }) => {
   }
 
   return (
-    <div className={css(mtinput['material-outlined'])}>
-      <input id="exampleField1" className={css(mtinput['material-outlined__input'])} placeholder=" " type="text" />
-      <label htmlFor="exampleField1" className={css(mtinput['material-outlined__label'])}>Text Field</label>
-      <span className={css(mtinput['material-outlined__icon'], mtinput['material-outlined__icon--leading'])}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
-      </span>
-      <span className={css(mtinput['material-outlined__icon'], mtinput['material-outlined__icon--trailing'])}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
-      </span>
-    </div>
+    <>
+      <div className={css(mtinput['material-outlined'])}>
+        <input id="exampleField1" className={css(mtinput['material-outlined__input'])} placeholder=" " type="text" />
+        <label htmlFor="exampleField1" className={css(mtinput['material-outlined__label'])}>Text Field</label>
+        <span className={css(mtinput['material-outlined__icon'], mtinput['material-outlined__icon--leading'])}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </span>
+        <span className={css(mtinput['material-outlined__icon'], mtinput['material-outlined__icon--trailing'])}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </span>
+      </div>
+      <hr />
+      <div >
+        <input id="exampleField1" placeholder=" " type="text" />
+        <label htmlFor="exampleField1">Text Field</label>
+        <span >
+          <svg
+            width="30px"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+        </span>
+        <span>
+          <svg
+            width="30px"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </span>
+      </div>
+    </>
   )
 }
 
