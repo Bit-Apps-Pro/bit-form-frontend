@@ -99,6 +99,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               </NavLink>
             </Tip>
             <StyleSegmentControl
+              borderRadius={10}
               width={180}
               show={['icn']}
               tipPlace="bottom"
