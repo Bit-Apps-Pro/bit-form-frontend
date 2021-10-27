@@ -56,9 +56,9 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldData={attr}
       >
         <div className={`${fieldKey}-iw`}>
-          <span>dasd</span>
           <input
             id={fieldKey}
+            ref={textFieldRef}
             className={`${fieldKey}-fld no-drg`}
             type={type}
             {...'req' in attr.valid && { required: attr.valid.req }}
@@ -73,7 +73,6 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             onBlur={handleBlur}
             {...{ value }}
             {...{ onChange: onChangeHandler }}
-            ref={textFieldRef}
           />
         </div>
       </InputWrapper>
