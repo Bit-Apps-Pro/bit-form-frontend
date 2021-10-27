@@ -21,7 +21,6 @@ import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
-
 export default function SelectSettings() {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
@@ -48,7 +47,7 @@ export default function SelectSettings() {
   }
   const [importOpts, setImportOpts] = useState({})
   const [optionMdl, setOptionMdl] = useState(false)
-
+  
   useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
   // set defaults
   if (isMultiple) {
@@ -62,6 +61,7 @@ export default function SelectSettings() {
   }
 
   function setRequired(e) {
+    console.log('from SelectSetting', fieldData)
     if (e.target.checked) {
       const tmp = { ...fieldData.valid }
       tmp.req = true
@@ -74,9 +74,10 @@ export default function SelectSettings() {
       delete fieldData.valid.req
       delete fieldData.mn
     }
+    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Checkbox Required ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setAdminLabel(e) {
@@ -87,7 +88,7 @@ export default function SelectSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label Added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Admin label updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setPlaceholder(e) {
@@ -96,9 +97,10 @@ export default function SelectSettings() {
     } else {
       fieldData.ph = e.target.value
     }
+    const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Placeholder changed ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `${req} Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMultiple(e) {
@@ -113,9 +115,10 @@ export default function SelectSettings() {
         delete fieldData.err.mx
       }
     }
+    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Multiple checkbox added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Multiple option ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_multiple_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setAllowCustomOption(e) {
@@ -124,9 +127,10 @@ export default function SelectSettings() {
     } else {
       delete fieldData.customOpt
     }
+    const req = e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Custom option added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Custom option ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_allow_custom_option`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function rmvOpt(ind) {
@@ -134,7 +138,7 @@ export default function SelectSettings() {
     fieldData.opt = options
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Option remove: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option removed to ${options[ind].label}`, type: `rmv_option_field`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function addOpt() {
@@ -142,7 +146,7 @@ export default function SelectSettings() {
     fieldData.opt = options
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `New Option Added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option added to ${fieldData.opt.label}`, type: `add_option_field`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setCheck(e) {
@@ -166,7 +170,7 @@ export default function SelectSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Checked ${e.target.checked ? 'on' : 'off'} : ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Check by default ${e.target.checked ? 'on' : 'off'} : {options}`, type: `set_check_field`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setOptLbl(e, i) {
@@ -177,7 +181,7 @@ export default function SelectSettings() {
     fieldData.opt[i] = tmp
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Optioln label added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Option label updated to ${tmp.label}`, type: `set_opt_label_field`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openImportModal = () => {
@@ -214,7 +218,7 @@ export default function SelectSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Minimum number Added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setMax(e) {
@@ -230,7 +234,7 @@ export default function SelectSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Maximum number added: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setDisabledOnMax = e => {
@@ -243,18 +247,20 @@ export default function SelectSettings() {
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Minimum number Disable: ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_disable_on_max`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideAdminLabel = (e) => {
+    console.log('from SelectSetting', fieldData)
     if (e.target.checked) {
       fieldData.adminLbl = fieldData.lbl || fldKey
     } else {
       delete fieldData.adminLbl
     }
+    const req = e.target.checked ? 'Show' : 'Hide'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Admin label Hide ${e.target.checked ? 'on' : 'off'}: ${!e.target.checked} ${fieldData.lbl || adminLabel || fldKey}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `${req} Admin label: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_adminlabel`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (
@@ -502,7 +508,7 @@ export default function SelectSettings() {
             <SingleInput inpType="text" value={itm.label} action={e => setOptLbl(e, i)} width={140} className="mt-0" />
             <div className="flx mt-2">
               <label className="btcd-ck-wrp tooltip" style={{ '--tooltip-txt': `'${__('Check by Default', 'bitform')}'` }}>
-                <input onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
+                <input aria-label="chek" onChange={setCheck} type="checkbox" data-value={itm.value} checked={typeof fieldData.val === 'string' ? fieldData.val === itm.value : fieldData?.val?.some(d => d === itm.value)} />
                 <span className="btcd-mrk ck br-50" />
               </label>
               <button onClick={() => rmvOpt(i)} className={`${css(app.btn)} cls-btn`} type="button" aria-label="remove option"><CloseIcn size="14" /></button>

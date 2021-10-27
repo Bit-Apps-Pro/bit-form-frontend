@@ -34,12 +34,9 @@ export default function ButtonSettings() {
   ]
   function setSubBtnTxt(e) {
     fieldData.txt = e.target.value
-
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Submit button text added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Button text updated : ${fieldData.txt}`, type:'change_btn_txt', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setBtnTyp(e) {
@@ -52,33 +49,28 @@ export default function ButtonSettings() {
     if (error.btnTyp) {
       seterror({ btnTyp: '' })
     }
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Submit button type added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Type updated to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setButtonAlign(e) {
     fieldData.align = e.target.value
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Submit button type added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Alignment changed to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_align', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const checkSubmitBtn = () => {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
     return btns.length >= 1
   }
+
   function setFulW(e) {
     fieldData.fulW = e.target.checked
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Full width button added', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Full width ${e.target.checked ? 'on' : 'off'}`, type: 'set_btn_full', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setBtnSiz(e) {
@@ -87,11 +79,9 @@ export default function ButtonSettings() {
     } else {
       fieldData.btnSiz = 'md'
     }
-    // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: 'Change button size', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Size updated to ${e.target.checked ? 'small' : 'medium'}`, type: 'set_btn_size', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   return (

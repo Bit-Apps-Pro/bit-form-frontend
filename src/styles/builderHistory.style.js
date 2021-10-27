@@ -18,13 +18,16 @@ const builderHistoryStyle = {
     pb: 2,
   },
   list: {
+    w: 200,
     mxh: 300,
     m: 0,
+    mb: 5,
     dy: 'block',
-    w: '100%',
     owy: 'auto',
-    owx: 'hidden',
     ff: 'Roboto',
+    '&> div': {
+      owx: 'hidden !important',
+    }
   },
 
   item: {

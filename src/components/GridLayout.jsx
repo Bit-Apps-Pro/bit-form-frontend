@@ -166,9 +166,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
     // add to history
     const event = `${fldData.lbl} removed`
-    const action = 'remove_fld'
+    const type = 'remove_fld'
     const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
-    addToBuilderHistory(setBuilderHistory, { event, action, state }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
   }
 
   const clsAlertMdl = () => {
@@ -219,10 +219,10 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     sessionStorage.setItem('btcd-lc', '-')
 
     // add to history
-    const event = `${fieldData.lbl} added`
-    const action = 'add_fld'
+    const event = `${fieldData.typ === 'button' ? fieldData.txt : fieldData.lbl} added`
+    const type = 'add_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayoutItem, fldData: processedFieldData, layouts: newLayouts, fields: newFields }
-    addToBuilderHistory(setBuilderHistory, { event, action, state }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
     setTimeout(() => {
       document.querySelector(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -273,9 +273,9 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
 
     // add to history
     const event = `${fldData.lbl} cloned`
-    const action = 'add_fld'
+    const type = 'clone_fld'
     const state = { fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields }
-    addToBuilderHistory(setBuilderHistory, { event, action, state }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event, type, state }, setUpdateBtn)
 
     resetContextMenu()
   }

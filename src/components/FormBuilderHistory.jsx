@@ -29,6 +29,7 @@ export default function FormBuilderHistory({ }) {
   const [scrolIndex, setScrolIndex] = useState(0)
 
   const handleUndoRedoShortcut = e => {
+    console.log('undo redo triggered')
     if (e.target.tagName !== 'INPUT' && e.ctrlKey) {
       let action = ''
       if (e.key.toLowerCase() === 'z') {
@@ -46,9 +47,9 @@ export default function FormBuilderHistory({ }) {
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', handleUndoRedoShortcut)
+    document.addEventListener('keypress', handleUndoRedoShortcut)
 
-    return () => document.removeEventListener('keydown', handleUndoRedoShortcut)
+    return () => document.removeEventListener('keypress', handleUndoRedoShortcut)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, disabled])
 
@@ -133,7 +134,7 @@ export default function FormBuilderHistory({ }) {
     const arr = []
     for(let i = 0; i < histories.length; i++) {
       if(i === 0) {
-        arr.push(30)
+        arr.push(25)
       } else {
         arr.push(40)
       }
@@ -178,13 +179,13 @@ export default function FormBuilderHistory({ }) {
               histories.length > 1 && (
                 <div className={css(builderHistoryStyle.list)}>
                   <VirtualList
-                    // width="100%"
+                    width="100%"
                     height={200}
                     itemCount={histories.length || 1}
                     itemSize={histories.length ? generateItemSize() : 0}
                     scrollToIndex={histories.length ? scrolIndex : 0}
                     renderItem={({ index, style }) => (
-                      <div key={`bf-${index * 2}`} className={css(builderHistoryStyle.item)} style={style}>
+                      <div key={`bf-${index * 2}`} id="user" className={css(builderHistoryStyle.item)} style={style}>
                         <button
                           type="button"
                           className={`${css(builderHistoryStyle.btn)} ${active === index && 'active'} ${active < index && 'unactive'}`}
