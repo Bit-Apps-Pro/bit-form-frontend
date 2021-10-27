@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
@@ -22,7 +23,7 @@ export default function SizeControl({ label, className, width }) {
         width={`${width - 20}px`}
         onChange={onChangeHandler}
       />
-      <select name="" id="" className={css(sizeControlStyle.selectt)}>
+      <select name="" id="" className={css(sizeControlStyle.selectt, ut.fontBody)}>
         <option value="px">px</option>
         <option value="percent">%</option>
         <option value="em">em</option>
