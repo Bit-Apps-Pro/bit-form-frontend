@@ -16,6 +16,7 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
+import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import SingleToggle from './Utilities/SingleToggle'
 import Tip from './Utilities/Tip'
 

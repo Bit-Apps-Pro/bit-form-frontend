@@ -1,18 +1,18 @@
+import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import produce from 'immer'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
+import ErrorMessages from '../../../styles/ErrorMessages.style'
+import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
-import ErrorMessages from '../../../styles/ErrorMessages.style'
-import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 
 export default function UniqField({ type, title, tipTitle, isUnique, className }) {
   const bits = useRecoilValue($bits)
@@ -54,10 +54,9 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
     } else {
       delete fieldData.err[type][name]
     }
-    const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Field required custom error message updated`, type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: 'Field required custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const openErrorModal = () => {
