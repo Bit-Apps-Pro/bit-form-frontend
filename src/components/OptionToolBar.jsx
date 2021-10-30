@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { NavLink, useParams, useHistory } from 'react-router-dom'
+import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates'
 import AddIcon from '../Icons/AddIcon'
@@ -16,8 +16,8 @@ import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
-import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import SingleToggle from './Utilities/SingleToggle'
+import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {

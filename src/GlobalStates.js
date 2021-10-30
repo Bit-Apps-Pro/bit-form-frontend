@@ -14,6 +14,7 @@ export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerously
 export const $selectedFieldId = atom({ key: '$selectedFieldId', default: null })
 export const $draggingField = atom({ key: '$draggingField', default: null })
 export const $breakpoint = atom({ key: '$breakpoint', default: 'lg' })
+export const $breakpointSize = atom({ key: '$breakpointSize', default: { lg: 1024, md: 960, sm: 570 } })
 export const $mailTemplates = atom({ key: '$mailTemplates', default: [], dangerouslyAllowMutability: true })
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: { validateFocusLost: true }, settings: {} } })
 export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllowMutability: true })
@@ -21,7 +22,7 @@ export const $confirmations = atom({ key: '$confirmations', default: {}, dangero
 export const $integrations = atom({ key: '$integrations', default: [], dangerouslyAllowMutability: true })
 export const $formName = atom({ key: '$formName', default: 'Untitled Form' })
 export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } })
-export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{event: 'reset', state: {}}], active: 0 } })
+export const $builderHistory = atom({ key: '$builderHistory', default: { histories: [{ event: 'reset', state: {} }], active: 0 } })
 export const $draggableModal = atom({ key: '$draggableModal', default: { show: false, component: null, position: { x: 0, y: 0 }, width: 250 } })
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { forceBuilderWidthToLG: 0, respectLGLayoutOrder: true, reRenderGridLayoutByRootLay: 0 } })
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false } })
@@ -47,7 +48,7 @@ export const $styles = atom({
       '--gbg-a': 100,
       '--global-fld-bg-color': 'var(--global-bg-color)',
       '--border-radius': '10px',
-      '--dir': 'ltr'
+      '--dir': 'ltr',
     },
     form: { _frm: { background: 'var(--global-bg-color)' } },
     fields: {
@@ -121,7 +122,7 @@ export const $fieldsDirection = selector({
   key: '$fieldsDirection', get: ({ get }) => {
     const styles = get($styles)
     return styles.themeVars['--dir']
-  }
+  },
 })
 
 export const $reportSelector = selectorFamily({

@@ -4,7 +4,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $breakpointSize, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
@@ -37,6 +37,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
   const style = useRecoilValue($styles)
+  const breakpointSize = useRecoilValue($breakpointSize)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -196,6 +197,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       workFlows,
       formStyle,
       style,
+      breakpointSize,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
       rowHeight: sessionStorage.getItem('btcd-rh'),
       formSettings: {

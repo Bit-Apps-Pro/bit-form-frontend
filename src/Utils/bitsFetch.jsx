@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 
 export default async function bitsFetch(data, action, contentType = null, queryParam = null) {
+  if (!action) return
   const uri = new URL(typeof bits === 'undefined' ? bitFromsFront?.ajaxURL : bits.ajaxURL)
   uri.searchParams.append('action', action)
   uri.searchParams.append('_ajax_nonce', typeof bits === 'undefined' ? '' : bits.nonce)
