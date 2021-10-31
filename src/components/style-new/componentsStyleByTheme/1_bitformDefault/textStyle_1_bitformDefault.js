@@ -2,18 +2,21 @@
 export default function textStyle_1_bitformDefault({ fk, type, direction }) {
   return {
     [`.${fk}-fw`]: {
-      background: 'var(--primary-color)',
-      height: '100%',
+      display: 'var(--fw-dis, block)',
+      'flex-direction': 'var(--fw-fdir, row)',
+      // background: 'var(--primary-color)',
+      // height: '100%',
       width: '100%',
       padding: '10px',
     },
-    [`.${fk}-lbl`]: {
-      display: 'block',
-    },
-    [`.${fk}-st`]: {
-      'font-size': '12px'
-    },
-    [`.${fk}-iw`]: { position: 'relative' },
+    [`.${fk}-lw`]: { width: 'var(--lw-width)', 'align-self': 'var(--lw-sa, auto)' },
+    [`.${fk}-lbl`]: { display: 'block', 'text-align': 'var(--lbl-al, left)' },
+    [`.${fk}-st`]: { 'font-size': '12px', 'text-align': 'var(--st-al, left)' },
+    [`.${fk}-ht`]: { 'font-size': '12px', 'text-align': 'var(--ht-al, left)' },
+    [`.${fk}-iw`]: { width: 'var(--iw-width)' },
+    [`.${fk}-ifw`]: { position: 'relative' },
+
+    // field style
     [`.${fk}-fld`]: {
       display: ' inline-block !important',
       direction: 'inherit !important',
