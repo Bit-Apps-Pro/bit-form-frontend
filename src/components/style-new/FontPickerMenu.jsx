@@ -64,7 +64,7 @@ export default function FontPickerMenu() {
       {loading && (
         <div title="Loading...">
           <div className={css(ut.mt2)} />
-          {Array(10).fill(1).map((itm, i) => (
+          {Array(6).fill(1).map((itm, i) => (
             <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css({ w: '95%', h: 28, brs: 5, lh: 2, my: 3, mx: 5 })} loader`} />
           ))}
         </div>
