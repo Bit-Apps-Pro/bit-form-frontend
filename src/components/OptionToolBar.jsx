@@ -17,6 +17,7 @@ import BreakpointSizeControl from './BreakpointSizeControl'
 import FormBuilderHistory from './FormBuilderHistory'
 import Downmenu from './Utilities/Downmenu'
 import SingleToggle from './Utilities/SingleToggle'
+import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
