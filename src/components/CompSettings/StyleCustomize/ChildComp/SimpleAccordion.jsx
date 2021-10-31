@@ -13,7 +13,7 @@ import SingleToggle from '../../../Utilities/SingleToggle'
 
 export default function SimpleAccordion({ className, title, toggleName, children, open = false, onOpen = () => { }, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable }) {
   const bits = useRecoilValue($bits)
-  const [tgl, setTgl] = useState(!disable && open || false)
+  const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
 
   const { css } = useFela()
@@ -42,7 +42,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { if (disable !== undefined) setTgl(!disable); console.log({ disable }) }, [disable])
+  useEffect(() => { if (disable !== undefined) setTgl(!disable) }, [disable])
 
   const cancelBubble = (e) => e.stopPropagation()
 
