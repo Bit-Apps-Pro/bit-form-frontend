@@ -33,6 +33,7 @@ export default function SelectSettings() {
   const isMultiple = fieldData.mul
   const allowCustomOpt = fieldData.customOpt !== undefined
   const adminLabel = fieldData.adminLbl === undefined ? '' : fieldData.adminLbl
+  const fieldName = fieldData.fieldName || fldKey
   const placeholder = fieldData.ph === undefined ? '' : fieldData.ph
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
@@ -263,6 +264,15 @@ export default function SelectSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `${req} Admin label: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req}_adminlabel`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
+  const handleFieldName = ({ target: { value } }) => {
+    if (value !== '') fieldData.fieldName = value
+    else fieldData.fieldName = fldKey
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
   return (
     <div className="">
       {/*
@@ -295,6 +305,17 @@ export default function SelectSettings() {
       </SimpleAccordion>
 
       <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+          title={__('Name', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          open
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} value={fieldName} onChange={handleFieldName} />
+          </div>
+        </SimpleAccordion>
+        <hr className={css(FieldStyle.divider)} />
 
       {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
 

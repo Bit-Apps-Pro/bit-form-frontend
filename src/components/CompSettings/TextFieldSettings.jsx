@@ -40,6 +40,7 @@ function TextFieldSettings() {
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
   const autoComplete = fieldData.autoComplete || 'Off'
+  const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const regexr = fieldData.valid.regexr || ''
@@ -305,6 +306,14 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Auto Complete  ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+  const handleFieldName = ({ target: { value } }) => {
+    if (value !== '') fieldData.fieldName = value
+    else fieldData.fieldName = fldKey
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
   return (
     <>
       <div className="">
@@ -375,7 +384,7 @@ function TextFieldSettings() {
           title={__('Suggestion', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
-          toggleAction={()=>(e)}
+          toggleAction={() => (e)}
           toggleChecked
           open
           disable={false}
@@ -420,7 +429,7 @@ function TextFieldSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} />
+            <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} value={fieldName} onChange={handleFieldName} />
           </div>
         </SimpleAccordion>
 

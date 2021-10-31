@@ -30,6 +30,7 @@ function RadioCheckSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const options = deepCopy(fields[fldKey].opt)
   const adminLabel = fieldData.adminLbl || ''
+  const fieldName = fieldData.fieldName || fldKey
   const isRound = fieldData.round || false
   const isRadioRequired = fieldData.valid.req || false
   const isOptionRequired = fieldData.opt.find(opt => opt.req)
@@ -230,6 +231,15 @@ function RadioCheckSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `${req} Admin label: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req}_adminlabel`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
+  const handleFieldName = ({ target: { value } }) => {
+    if (value !== '') fieldData.fieldName = value
+    else fieldData.fieldName = fldKey
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
   return (
     <div className="">
       <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ === 'check' ? 'Check Box' : 'Radio'} fieldKey={fldKey} />
@@ -249,6 +259,18 @@ function RadioCheckSettings() {
       >
         <div className={css(FieldStyle.placeholder)}>
           <input aria-label="Admin label" className={css(FieldStyle.input)} value={adminLabel} type="text" onChange={setAdminLabel} />
+        </div>
+      </SimpleAccordion>
+
+      <hr className={css(FieldStyle.divider)} />
+
+      <SimpleAccordion
+        title={__('Name', 'bitform')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} value={fieldName} onChange={handleFieldName} />
         </div>
       </SimpleAccordion>
 
@@ -326,14 +348,14 @@ function RadioCheckSettings() {
             <hr className={css(FieldStyle.divider)} />
 
             <SimpleAccordion
-              title={__('Minimum', 'bitform')}
+              title={__('Maximum', 'bitform')}
               className={css(FieldStyle.fieldSection)}
               tip="Set maximum number to be selected for checkbox option"
               open
               isPro
             >
               <div className={css(FieldStyle.placeholder)}>
-                <input aria-label="minimim number" className={css(FieldStyle.input)} value={max} type="number" onChange={setMax} disabled={!isPro} />
+                <input aria-label="maximim number" className={css(FieldStyle.input)} value={max} type="number" onChange={setMax} disabled={!isPro} />
               </div>
 
               {fieldData.mx && (
