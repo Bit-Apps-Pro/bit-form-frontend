@@ -14,7 +14,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       className={`${fieldKey}-fw  ${flags.styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
     >
-      <div className={`${fieldKey}`}>
+      <div className={`${fieldKey}-lw`}>
         {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
           <label title={fieldData.lbl} className={`${fieldKey}-lbl`} htmlFor={fieldKey}>
             {fieldData.lbl}
@@ -28,9 +28,9 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         )}
         <div className={`${fieldKey}-st`}>sub title</div>
       </div>
-      <div>
+      <div className={`${fieldKey}-iw`}>
         {children}
-        <small>helper text</small>
+        <div className={`${fieldKey}-ht`}>helper text</div>
       </div>
       {(err || fieldData?.err) && (
         <div className={`error-wrapper ${err && 'h-a'}`}>
