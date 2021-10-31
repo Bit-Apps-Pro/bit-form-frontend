@@ -55,7 +55,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div className={`${fieldKey}-iw`}>
+        <div className={`${fieldKey}-ifw`}>
           <input
             id={fieldKey}
             ref={textFieldRef}

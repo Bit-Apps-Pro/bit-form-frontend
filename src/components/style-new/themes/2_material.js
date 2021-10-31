@@ -60,7 +60,7 @@ export default function materialTheme(fk, type, direction) {
           color: 'rgba(42, 49, 99, 1)!important',
           'line-height': '1.4!important',
         },
-        [`.${fk}-iw`]: { position: 'relative' },
+        [`.${fk}-ifw`]: { position: 'relative' },
         [`.${fk}-fld`]: {
           display: ' inline-block !important',
           direction: 'inherit !important',
