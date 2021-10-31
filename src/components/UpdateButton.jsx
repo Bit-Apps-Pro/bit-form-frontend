@@ -4,7 +4,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $builderHelperStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $builderHelperStates, $builderHookStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
@@ -27,6 +27,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
   const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
+  const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const [reports, setReports] = useRecoilState($reports)
@@ -219,7 +220,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
             history.replace(`/form/builder/edit/${data.id}/fields-list`)
           }
           setLay(layouts)
-          setBuilderHelperStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+          setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)

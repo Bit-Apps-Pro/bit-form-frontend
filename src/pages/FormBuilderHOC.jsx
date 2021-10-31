@@ -14,7 +14,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $builderHelperStates, $newFormId, $styles } from '../GlobalStates'
+import { $bits, $breakpoint, $builderHookStates, $newFormId, $styles } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -59,7 +59,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
-  const [builderHelperStates, setb] = useRecoilState($builderHelperStates)
+  const builderHookStates = useRecoilValue($builderHookStates)
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
@@ -73,7 +73,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setStyle = useSetRecoilState($styles)
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
-  const { forceBuilderWidthToLG } = builderHelperStates
+  const { forceBuilderWidthToLG } = builderHookStates
 
   useEffect(() => {
     if (formType === 'new') {

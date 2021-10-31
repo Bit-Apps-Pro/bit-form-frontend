@@ -11,7 +11,7 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHistory, $draggingField, $fields, $flags, $layouts, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $layouts, $reCalculateFieldHeights, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
@@ -37,11 +37,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
-  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const draggingField = useRecoilValue($draggingField)
   const flags = useRecoilValue($flags)
+  const builderHookStates = useRecoilValue($builderHookStates)
   const setStyles = useSetRecoilState($styles)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
@@ -56,7 +56,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const history = useHistory()
-  const { reRenderGridLayoutByRootLay } = builderHelperStates
+  const { reRenderGridLayoutByRootLay, reCalculateFieldHeights } = builderHookStates
   const { styleMode } = flags
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
@@ -65,7 +65,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     const nl = fitLayoutItems(layouts)
     setLayouts(nl)
     setRootLayouts(nl)
-  }, [styleMode])
+  }, [styleMode, reCalculateFieldHeights])
 
   useEffect(() => { margeNewData() }, [newData, fields])
   useEffect(() => {
