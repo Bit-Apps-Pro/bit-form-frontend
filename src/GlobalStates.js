@@ -14,6 +14,7 @@ export const $fieldLabels = atom({ key: '$fieldLabels', default: [], dangerously
 export const $selectedFieldId = atom({ key: '$selectedFieldId', default: null })
 export const $draggingField = atom({ key: '$draggingField', default: null })
 export const $breakpoint = atom({ key: '$breakpoint', default: 'lg' })
+export const $breakpointSize = atom({ key: '$breakpointSize', default: { lg: 1024, md: 960, sm: 570 } })
 export const $mailTemplates = atom({ key: '$mailTemplates', default: [], dangerouslyAllowMutability: true })
 export const $additionalSettings = atom({ key: '$additionalSettings', default: { enabled: { validateFocusLost: true }, settings: {} } })
 export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllowMutability: true })

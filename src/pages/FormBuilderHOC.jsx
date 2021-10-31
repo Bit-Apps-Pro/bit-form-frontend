@@ -14,7 +14,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $builderHookStates, $newFormId, $styles } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $builderHookStates, $newFormId, $styles } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -47,7 +47,7 @@ const styleReducer = (style, action) => {
 }
 
 const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
-  // const formSettings = {}
+  // const formSettings = {}cd
   // const { formType, formID: pramsFormId } = {}
   // const { formType, formID pramsFormId } = { formType: 'edit', formID: 2 }
   // const isLoading = false
@@ -69,6 +69,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [isBuilderResizing, setIsBuilderResizing] = useState(false)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
+  const setBreakpointSize = useSetRecoilState($breakpointSize)
 
   const setStyle = useSetRecoilState($styles)
   // eslint-disable-next-line no-console
@@ -85,15 +86,16 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (formType === 'edit') {
-    const { data: fetchedBuilderHelperStates } = useSWR('bitforms_form_helpers_state', (uri) => bitsFetch({ formID }, uri)
-      .then(({ data: [response] }) => {
-        if (response?.builder_helper_state) {
-          setStyle(JSON.parse(fetchedBuilderHelperStates))
-        }
-      }))
-  }
-  // useEffect(() => { fetchedStyle && setStyle(JSON.parse(fetchedStyle)) }, [fetchedStyle])
+  const { data: fetchedBuilderHelperStates } = useSWR(formType === 'edit' ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
+    .then(({ data: [response] }) => response?.builder_helper_state))
+
+  useEffect(() => {
+    if (fetchedBuilderHelperStates) {
+      const parseStyle = JSON.parse(fetchedBuilderHelperStates || '{}')
+      setStyle(parseStyle.style)
+      setBreakpointSize(parseStyle.breakpointSize)
+    }
+  }, [fetchedBuilderHelperStates])
 
   useEffect(() => {
     if (brkPoint === 'md') {
@@ -261,6 +263,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   return (
     <>
+      {/* {formType === 'edit' && <FetchBuilderHelperStates formID={formID} />} */}
       <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
       <DraggableModal />
       <Container

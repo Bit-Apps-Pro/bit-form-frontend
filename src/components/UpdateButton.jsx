@@ -4,7 +4,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $builderHelperStates, $builderHookStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
@@ -13,7 +13,6 @@ import { bitCipher, bitDecipher, deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer, reportsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
-
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const history = useHistory()
@@ -26,7 +25,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const formName = useRecoilValue($formName)
   const newFormId = useRecoilValue($newFormId)
   const setAllForms = useSetRecoilState($forms)
-  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
+  const builderHelperStates = useSetRecoilState($builderHelperStates)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const setFieldLabels = useSetRecoilState($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
@@ -38,6 +37,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
   const style = useRecoilValue($styles)
+  const breakpointSize = useRecoilValue($breakpointSize)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -197,6 +197,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       workFlows,
       formStyle,
       style,
+      breakpointSize,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
       rowHeight: sessionStorage.getItem('btcd-rh'),
       formSettings: {
@@ -238,7 +239,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
               entries: data.entries,
               views: data.views,
               conversion: data.entries === 0 ? 0.00 : ((data.entries / (data.views === '0' ? 1 : data.views)) * 100).toPrecision(3),
-              created_at: data.created_at
+              created_at: data.created_at,
             },
           }))
           resetUpdateBtn()

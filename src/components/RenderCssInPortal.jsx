@@ -296,7 +296,12 @@ arrow:after,
   const gridLayoutStyle = styled.div`
 :root {
     --b-50: #006aff;
-    --g-41: #00faa7
+    --g-41: #00faa7;
+    --white-base: 0;
+    --white-100: hsla(var(--white-base), 0%, 100%, 100%);
+    --white-0-93: hsla(var(--white-base), 0%, 93%, 100%);
+    --black-0: hsla(var(--white-base), 0%, 0%, 100%);
+    --red-100-49: hsla(var(--white-base), 100%, 49%, 100%);
 }
  
  body {
@@ -382,7 +387,6 @@ arrow:after,
  .red-btn:hover {
     background: var(--red-83-54)
  }
- 
  
  .blk-icn-wrp {
     background: var(--white-100-a-658);
@@ -520,16 +524,82 @@ arrow:after,
     cursor: ew-resize;
     background-image: url('data:image/svg+xml;utf8,<svg width="7" height="18" viewBox="0 0 29 72" fill="none" xmlns="http://www.w3.org/2000/svg"><style>.r{fill: black;width: 12px;height: 12px;rx: 10px;}</style><rect x="10" y="1" class="r" /><rect x="10" y="31" class="r" /><rect x="10" y="61" class="r" /></svg>')
  }
+ .context-menu {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    position: relative;
+    background-color: var(--white-100);
+    z-index: 99;
+ }
+ .context-list {
+    margin: 0px;
+    display: block;
+    width: 100%;
+    list-style: none;
+    padding-left: 0;
+  }
+  .context-item {
+    position: relative;
+    margin-bottom: 0px;
+    width: 100%;
+  }
+  .context-btn {
+    border: 0px;
+    padding: 8px 8px;
+    padding-right: 36px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: var(--white-100);
+    cursor: pointer;
+  }
+  .context-btn:hover {
+    background-color: var(--white-0-93);
+  }
+  .context-btn:hover svg {
+    filter: drop-shadow(1px 1px 0.5px #b3b3b3);
+  }
+  .context-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--b-50) inset
+  }
+  .context-btn svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    stroke: var(--black-0);
+  }
+  .context-btn svg:nth-of-type(2) {
+    margin-right: 0;
+    position: absolute;
+    right: 8;
+  }
+  .context-btn-color { 
+    color: var(--b-50)
+  }
+  .delete:hover { 
+    color: var(--red-100-49) !important;
+  }
+  .delete:hover svg {
+    stroke: var(--red-100-49) !important;
+  }
+
   `
 
   const utils = styled.div`
+  .pos-rel { position: relative}
    .g-c {
       display: -ms-grid;
       display: grid;
       place-content: center;
    }
    .f-rob {font-family: "Roboto",sans-serif}
-   /* .f-head {font-family: } */
+    .f-mon {font-family:"Montserrat", sans-serif !important; } 
    .wdt-200 {width: 200px !important;}
    .curp{cursor:pointer}
    .us-n {
@@ -551,6 +621,12 @@ arrow:after,
    .mb-2 {margin-bottom: 10px}
 
    .f-12{font-size:12px;}
+   .svg-icn {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 `
 
   return (

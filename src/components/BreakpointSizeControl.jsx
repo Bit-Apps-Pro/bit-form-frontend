@@ -1,6 +1,7 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
-import { $builderHelperStates } from '../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
@@ -11,8 +12,16 @@ import SingleToggle from './Utilities/SingleToggle'
 export default function BreakpointSizeControl() {
   const { css } = useFela()
   const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
+  const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const toggleRespectOrder = () => setBuilderHelperStates(prv => ({ ...prv, respectLGLayoutOrder: !prv.respectLGLayoutOrder }))
+  const breakpointSizeHandler = ({ target: { name, value } }) => {
+    // eslint-disable-next-line no-param-reassign
+    const size = produce(breakpointSize, draft => { draft[name] = value })
+    setBreakpointSize(size)
+    setUpdateBtn({ unsaved: true })
+  }
 
   return (
     <div className={css(s.wraper)}>
@@ -20,17 +29,17 @@ export default function BreakpointSizeControl() {
       <div className={css(s.divider)} />
       <div className={css(ut.flxc, s.inputWrp)}>
         <span className={css(s.icon_wrp)}><LaptopIcn size="27" /></span>
-        <input title="Large device breakpoint size" aria-label="Large device breakpoint size" value="1024" className={css(s.input)} type="number" />
+        <input title="Large device breakpoint size" aria-label="Large device breakpoint size" name="lg" onChange={breakpointSizeHandler} value={breakpointSize.lg} className={css(s.input)} type="number" />
         <span>px</span>
       </div>
       <div className={css(ut.flxc, s.inputWrp)}>
         <span className={css(s.icon_wrp)}><TabletIcon size="24" /></span>
-        <input title="Medium device breakpoint size" aria-label="Medium device breakpoint size" value="1024" className={css(s.input)} type="number" />
+        <input title="Medium device breakpoint size" aria-label="Medium device breakpoint size" name="md" onChange={breakpointSizeHandler} value={breakpointSize.md} className={css(s.input)} type="number" />
         <span>px</span>
       </div>
       <div className={css(ut.flxc, s.inputWrp)}>
         <span className={css(s.icon_wrp)}><MobileIcon size="25" /></span>
-        <input title="Mobile device breakpoint size" aria-label="Mobile device breakpoint size" value="1024" className={css(s.input)} type="number" />
+        <input title="Mobile device breakpoint size" aria-label="Mobile device breakpoint size" name="sm" onChange={breakpointSizeHandler} value={breakpointSize.sm} className={css(s.input)} type="number" />
         <span>px</span>
       </div>
       <div className={css(s.divider)} />

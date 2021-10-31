@@ -1,5 +1,4 @@
 import produce from 'immer'
-import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates'
@@ -14,7 +13,6 @@ import EyeOffIcon from '../Icons/EyeOffIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
-import context from '../styles/fieldContextMenu.style'
 import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
@@ -40,7 +38,6 @@ export default function FieldContextMenu({ isContextMenu,
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const { css } = useFela()
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const setBuilderHistory = useSetRecoilState($builderHistory)
 
@@ -110,39 +107,39 @@ export default function FieldContextMenu({ isContextMenu,
 
   return (
     <div style={generateContextMenuStyle()}>
-      <div className={css(context.menu)}>
-        <ul className={css(context.list)}>
-          <li className={css(context.item)}>
-            <button type="button" className={css(context.btn)} onClick={deselectFieldId}>
+      <div className="context-menu">
+        <ul className="context-list">
+          <li className="context-item">
+            <button type="button" className="context-btn" onClick={deselectFieldId}>
               <DeSelectIcn />
               <span>Deselect</span>
             </button>
           </li>
-          <li className={css(context.item)}>
-            <button type="button" className={css(context.btn)} onClick={navigateToFieldSettings}>
+          <li className="context-item">
+            <button type="button" className="context-btn" onClick={navigateToFieldSettings}>
               <EditIcn size="19" />
               <span>Settings</span>
             </button>
           </li>
-          <li className={css(context.item)}>
-            <button type="button" className={css(context.btn)} onClick={() => navigateToStyle(fields[fldKey].typ)}>
+          <li className="context-item">
+            <button type="button" className="context-btn" onClick={() => navigateToStyle(fields[fldKey].typ)}>
               <BrushIcn height="18" width="14" stroke="1.6" />
               <span>Style</span>
             </button>
           </li>
-          <li className={css(context.item)}>
-            <button type="button" className={css(context.btn)} onClick={() => cloneLayoutItem(fldKey)}>
+          <li className="context-item">
+            <button type="button" className="context-btn" onClick={() => cloneLayoutItem(fldKey)}>
               <CopyIcn size="19" />
               <span>Clone</span>
             </button>
           </li>
           <MenuItemWrapper isContextMenu={isContextMenu}>
-            <li className={css(context.item)}>
+            <li className="context-item">
               <Downmenu place="right-start" arrow={false} trigger="mouseenter click">
                 <button
                   data-close
                   type="button"
-                  className={`${css(context.btn)}}`}
+                  className="context-btn"
                   unselectable="on"
                   draggable="false"
                   title={__('More Options', 'bitform')}
@@ -151,34 +148,34 @@ export default function FieldContextMenu({ isContextMenu,
                   <span>Hide</span>
                   <ChevronRightIcon size="19" />
                 </button>
-                <div className={css(context.menu)}>
-                  <ul className={css(context.list)}>
-                    <li className={css(context.item)}>
-                      <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('all')}>
+                <div className="flx pos-rel context-menu">
+                  <ul className="context-list">
+                    <li className="context-item">
+                      <button type="button" className="context-btn" onClick={() => handleFieldHide('all')}>
                         <AllDeviceIcn size="19" />
                         <span>Always</span>
-                        {checkIfHidden() && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
+                        {checkIfHidden() && <CheckMarkIcn cls="context-btn-color" size="19" />}
                       </button>
                     </li>
-                    <li className={css(context.item)}>
-                      <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('lg')}>
+                    <li className="context-item">
+                      <button type="button" className="context-btn" onClick={() => handleFieldHide('lg')}>
                         <LaptopIcn size="19" />
                         <span>Large</span>
-                        {checkIfHidden('lg') && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
+                        {checkIfHidden('lg') && <CheckMarkIcn cls="context-btn-color" size="19" />}
                       </button>
                     </li>
-                    <li className={css(context.item)}>
-                      <button type="button" className={css(context.btn)} onClick={() => handleFieldHide('md')}>
+                    <li className="context-item">
+                      <button type="button" className="context-btn" onClick={() => handleFieldHide('md')}>
                         <TabletIcon size="19" />
                         <span>Medium</span>
-                        {checkIfHidden('md') && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
+                        {checkIfHidden('md') && <CheckMarkIcn cls="context-btn-color" size="19" />}
                       </button>
                     </li>
-                    <li className={css(context.item)}>
-                      <button type="button" className={css(context.btn, context.checked)} onClick={() => handleFieldHide('sm')}>
+                    <li className="context-item">
+                      <button type="button" className="context-btn" onClick={() => handleFieldHide('sm')}>
                         <MobileIcon size="18" />
                         <span>Small</span>
-                        {checkIfHidden('sm') && <CheckMarkIcn cls={css(context.btnColor)} size="19" />}
+                        {checkIfHidden('sm') && <CheckMarkIcn cls="context-btn-color" size="19" />}
                       </button>
                     </li>
                   </ul>
@@ -187,8 +184,8 @@ export default function FieldContextMenu({ isContextMenu,
             </li>
           </MenuItemWrapper>
           <MenuItemWrapper isContextMenu={isContextMenu}>
-            <li className={css(context.item)}>
-              <FieldDeleteButton placement="bottom" className={css(context.btn, context.delete)} label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} />
+            <li className="context-item">
+              <FieldDeleteButton placement="bottom" className="context-btn delete" label="Remove" fieldId={fldKey} removeLayoutItem={removeLayoutItem} resetContextMenu={resetContextMenu} />
             </li>
           </MenuItemWrapper>
         </ul>
