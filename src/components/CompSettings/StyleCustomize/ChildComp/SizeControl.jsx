@@ -4,10 +4,9 @@ import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
-export default function SizeControl({ label, className, width, options = [], sizeHandler, byteType, inputHandler, value }) {
+export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, value }) {
   const [val, setval] = useState(10)
   const { css } = useFela()
-  console.log('ssssssssss', sizeVal)
   const onChangeHandler = value => {
     setval(value)
   }
@@ -23,7 +22,7 @@ export default function SizeControl({ label, className, width, options = [], siz
         width={`${width - 20}px`}
         onChange={inputHandler}
       />
-      <select name="" value={byteType} className={css(sizeControlStyle.selectt, ut.fontBody)} onChange={sizeHandler}>
+      <select name="" value={unit} className={css(sizeControlStyle.selectt, ut.fontBody)} onChange={sizeHandler}>
         {!options && (
           <>
             <option value="px">px</option>
