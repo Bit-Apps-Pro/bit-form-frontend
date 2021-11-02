@@ -58,6 +58,9 @@ export const $styles = atom({
       '--lbl-al': '',
       '--st-al': '',
       '--ht-al': '',
+      '--fl-fs': '16px',
+      '--st-fs': '12px',
+      '--ht-fs': '12px',
     },
     form: { _frm: { background: 'var(--global-bg-color)' } },
     fields: {
