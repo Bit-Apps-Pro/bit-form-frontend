@@ -95,8 +95,23 @@ import UserIcn from '../Icons/UserIcn'
 import WeekIcn from '../Icons/WeekIcn'
 import XYordinateIcn from '../Icons/XYordinateIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
+import LblPlacementInlineIcn from '../Icons/LblPlacementInlineIcn'
 import MenuIcon from '../Icons/__MenuIcon'
 import './ShowIcon.css'
+import LblPlacementReverseIcn from '../Icons/LblPlacementReverseIcn'
+import LblPlacementReverseStkIcn from '../Icons/LblPlacementReverseStkIcn'
+import LblPlacementTopIcn from '../Icons/LblPlacementTopIcn'
+import LblPlacementTopStkIcn from '../Icons/LblPlacementTopStkIcn'
+import LblPlsmntInlineStkIcn from '../Icons/LblPlsmntInlineStkIcn'
+import LblvarticalPlsmentCntrIcn from '../Icons/LblvarticalPlsmentCntrIcn'
+import LblvarticalPlsmentCntrStkIcn from '../Icons/LblvarticalPlsmentCntrStkIcn'
+import LblvarticalPlsmntBottomStkIcon from '../Icons/LblvarticalPlsmntBottomStkIcon'
+import LblvarticalPlsmntBottomIcon from '../Icons/LblvarticalPlsmntBottomIcon'
+import LblvertcalPlsmntTopIcn from '../Icons/LblvertcalPlsmntTopIcn'
+import LblverticalPlsmntTopStkIcn from '../Icons/LblverticalPlsmntTopStkIcn'
+import TxtAlignCntrIcn from '../Icons/TxtAlignCntrIcn'
+import TxtAlignLeftIcn from '../Icons/TxtAlignLeftIcn'
+import TxtAlignRightIcn from '../Icons/TxtAlignRightIcn'
 
 export default function ShowIcon() {
   const [searchIcon, setSearchIcon] = useState([])
@@ -125,7 +140,7 @@ export default function ShowIcon() {
   }, [])
 
   const searchIcn = (e) => {
-    if (e.code === 'KeyS') {
+    if (e.code === 'KeyA') {
       document.getElementById('search-bar').focus()
     }
     if (e.code === 'Escape') {
@@ -612,6 +627,82 @@ export default function ShowIcon() {
       icon: <SearchIcon size="24" />,
       com: '<SearchIcon size="24" />',
     },
+    {
+      key: 'Label placement inline',
+      icon: <LblPlacementInlineIcn />,
+      com: '<LblPlacementInlineIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label placement inline stroke',
+      icon: <LblPlsmntInlineStkIcn />,
+      com: '<LblPlsmntInlineStkIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label placement Riverse',
+      icon: <LblPlacementReverseIcn />,
+      com: '<LblPlacementReverseIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label placement Riverse stroke',
+      icon: <LblPlacementReverseStkIcn />,
+      com: '<LblPlacementReverseStkIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label placement Top',
+      icon: <LblPlacementTopIcn />,
+      com: '<LblPlacementTopIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label placement Top stroke',
+      icon: <LblPlacementTopStkIcn />,
+      com: '<LblPlacementTopStkIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label vartical placement center',
+      icon: <LblvarticalPlsmentCntrIcn />,
+      com: '<LblvarticalPlsmentCntrIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label vartical placement center Stroke',
+      icon: <LblvarticalPlsmentCntrStkIcn />,
+      com: '<LblvarticalPlsmentCntrStkIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label vartical placement Bottom',
+      icon: <LblvarticalPlsmntBottomIcon />,
+      com: '<LblvarticalPlsmntBottomIcon size="30" stroke="2" />',
+    },
+    {
+      key: 'Label vartical placement Bottom stroke',
+      icon: <LblvarticalPlsmntBottomStkIcon />,
+      com: '<LblvarticalPlsmntBottomStkIcon size="30" stroke="2" />',
+    },
+    {
+      key: 'Label vartical placement top',
+      icon: <LblvertcalPlsmntTopIcn />,
+      com: '<LblvertcalPlsmntTopIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Label vartical placement top stroke',
+      icon: <LblverticalPlsmntTopStkIcn />,
+      com: '<LblverticalPlsmntTopStkIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Text Align center',
+      icon: <TxtAlignCntrIcn />,
+      com: '<TxtAlignCntrIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Text Align left',
+      icon: <TxtAlignLeftIcn />,
+      com: '<TxtAlignLeftIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Text Align Right',
+      icon: <TxtAlignRightIcn />,
+      com: '<TxtAlignRightIcn size="30" stroke="2" />',
+    },
+
   ]
 
   icons.sort((a, b) => {
@@ -624,7 +715,7 @@ export default function ShowIcon() {
     <>
       <div className="icn-search flx">
         <div className="main">
-          <button onClick={searchBtn} className="search-key" title="Press 'S' for Search Icon">S</button>
+          <button onClick={searchBtn} className="search-key" title="Press 'A' for Search Icon">S</button>
           <input className="input" aria-label="Search icon" id="search-bar" type="text" placeholder="Search Icon" onChange={searchHandler} />
         </div>
       </div>

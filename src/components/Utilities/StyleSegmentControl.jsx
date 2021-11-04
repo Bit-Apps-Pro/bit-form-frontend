@@ -158,7 +158,7 @@ export default function StyleSegmentControl({ defaultActive,
             </button>
           )
           if (item.tip) {
-            return <Tip key={`segment-option-${i * 100}`} className={css({ w: '100%', dy: 'inline-block' })} msg={item.tip} place={tipPlace} whiteSpaceNowrap theme="light-border" delay={500}>{btn}</Tip>
+            return <Tip key={`segment-option-${i * 100}`} className={css({ w: '100%', dy: 'inline-block' })} msg={item.tip} place={tipPlace} whiteSpaceNowrap theme="light-border" delay={300}>{btn}</Tip>
           }
           return btn
         })}

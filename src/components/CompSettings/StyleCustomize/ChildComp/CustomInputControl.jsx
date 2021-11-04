@@ -42,7 +42,7 @@ export default function CustomInputControl(
     max,
     step = 1,
     onChange,
-    showRangeTip = true,
+    showRangeTip = false,
     resizeValueByLabel = true,
     changeValueOnScroll = true,
     showArrow = true },
@@ -56,7 +56,7 @@ export default function CustomInputControl(
     if (Number.isNaN(startval)) startval = min
     document.onmousemove = (ev) => {
       const moved = Math.floor(ev.clientX - startpos)
-      const inc = Math.round(Math.sign(moved) * Math.pow(Math.abs(moved) / 10, 1.2))
+      const inc = Math.round(Math.sign(moved) * (Math.abs(moved) / 10) ** 1.2)
       let newVal = startval + inc
       if (newVal < min) newVal = min
       if (newVal > max) newVal = max
@@ -67,19 +67,44 @@ export default function CustomInputControl(
     }
   }
 
+  const getStepByEvent = (e) => {
+    let stp = 0
+    if (e.altKey && !e.shiftKey && !e.ctrlKey) stp = 0.1
+    if (!e.altKey && e.shiftKey && !e.ctrlKey) stp = 10
+    if (!e.altKey && !e.shiftKey && e.ctrlKey) stp = 100
+    return stp
+  }
+
   const onChangeHandler = ({ target: { valueAsNumber } }) => {
     if (onChange) onChange(valueAsNumber)
   }
 
-  const stepUp = () => {
-    let newVal = Number(value) + (step || 1)
+  const handleArrowKey = e => {
+    if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
+      e.preventDefault()
+      if (e.code === 'ArrowDown') {
+        onChange((e.target.valueAsNumber + (getStepByEvent(e) || step)) * -1)
+        return
+      }
+      onChange(e.target.valueAsNumber + (getStepByEvent(e) || step))
+    }
+  }
+
+  const stepUp = (e) => {
+    let newVal = Number(value) + (getStepByEvent(e) || step)
+    if (!Number.isInteger(newVal)) {
+      newVal = parseFloat(newVal.toFixed(3))
+    }
     if (newVal < min) newVal = min
     if (newVal > max) newVal = max
     if (onChange) onChange(newVal)
   }
 
-  const stepDown = () => {
-    let newVal = Number(value) - (step || 1)
+  const stepDown = (e) => {
+    let newVal = Number(value) - (getStepByEvent(e) || step)
+    if (!Number.isInteger(newVal)) {
+      newVal = parseFloat(newVal.toFixed(3))
+    }
     if (newVal < min) newVal = min
     if (newVal > max) newVal = max
     if (onChange) onChange(newVal)
@@ -119,6 +144,7 @@ export default function CustomInputControl(
             max={max}
             step={step}
             onChange={onChangeHandler}
+            onKeyDown={handleArrowKey}
             onFocusCapture={showRangeTip ? () => setVisible(true) : undefined}
             onWheelCapture={!changeValueOnScroll ? e => e.target.blur() : undefined}
             value={value}

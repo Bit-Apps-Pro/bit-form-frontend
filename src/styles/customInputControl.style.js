@@ -38,6 +38,7 @@ const customInputControlStyle = {
     oe: 'none',
     brs: '0px !important',
     m: 0,
+    p: '0 !important',
     h: '100%',
     w: '100%',
     mnh: 'auto !important',
