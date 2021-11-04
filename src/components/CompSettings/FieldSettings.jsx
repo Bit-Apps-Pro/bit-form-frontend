@@ -6,6 +6,7 @@ import RazorpaySettings from '../RazorpaySettings'
 import ButtonSettings from './ButtonSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import FileUpSettings from './FileUpSettings'
+import AdFileUpSettings from './AdFileUpSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
@@ -45,6 +46,8 @@ export default function FieldSettings() {
       return <SelectSettings />
     case 'file-up':
       return <FileUpSettings />
+    case 'ad-file-up':
+      return <AdFileUpSettings />
     case 'recaptcha':
       return <ReCaptchaSettigns />
     case 'decision-box':

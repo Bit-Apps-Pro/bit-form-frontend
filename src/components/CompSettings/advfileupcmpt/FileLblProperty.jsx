@@ -1,0 +1,55 @@
+import { useState } from 'react'
+import produce from 'immer'
+import { __ } from '../../../Utils/i18nwrap'
+import { useFela } from 'react-fela'
+import ut from '../../../styles/2.utilities'
+import FieldStyle from '../../../styles/FieldStyle.style'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { deepCopy } from '../../../Utils/Helpers'
+import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import Cooltip from '../../Utilities/Cooltip'
+
+export default function FileLblProperty({ placeholder, type, title, inputType = 'text', max = '', min = '', coolTip = '' }) {
+
+  const { css } = useFela()
+  const fldKey = useRecoilValue($selectedFieldId)
+  const [fields, setFields] = useRecoilState($fields)
+  const fieldData = deepCopy(fields[fldKey])
+
+  const setFieldProperty = (e, typ) => {
+    const { value } = e.target
+    if (parseInt(max) < value && max !== '') {
+      return true
+    }
+    if (value) {
+      fieldData.config[typ] = value
+    } else {
+      delete fieldData.config[typ]
+    }
+    // eslint-disable-next-line no-param-reassign
+    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+  }
+
+
+  return (
+    <div className={css(ut.flxcb)}>
+      <div className={css(ut.dyb, ut.w4, FieldStyle.labelTip)}>
+        <label className={css(ut.fw500)}>{__(title, 'bitform')}</label>
+        <Cooltip width={250} icnSize={17}>
+          <div className={css(ut.tipBody)}>
+            {coolTip}
+          </div>
+        </Cooltip>
+      </div>
+      <input
+        placeholder={placeholder}
+        className={css(FieldStyle.input, ut.w5)}
+        value={fieldData?.config?.[type]}
+        type={inputType}
+        onChange={(e) => setFieldProperty(e, type)}
+        {...inputType === 'number' && { max: max }}
+        {...inputType === 'number' && { min: min }}
+      />
+    </div >
+  )
+}

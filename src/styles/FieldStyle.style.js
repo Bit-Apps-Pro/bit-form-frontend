@@ -77,6 +77,10 @@ const FieldStyle = {
     oe: 'none !important',
     b: 'none !important',
   },
+  sizeUnit: {
+    brs: 8,
+    mt: 5,
+  },
   flxCenter: {
     flx: 'align-center',
     '& .hovertip': {
@@ -95,6 +99,38 @@ const FieldStyle = {
     },
   },
   singleOption: { pr: '36px !important' },
+  selectBox: {
+    fs: 14,
+    fw: 500,
+    w: '96%',
+    bd: 'var(--b-79-96) !important',
+
+    oe: 'none !important',
+    ae: 'auto !important',
+    mx: 'auto',
+    dy: 'block',
+    lh: '2 !important',
+    px: 8,
+    p: '0 !important',
+    mt: 10,
+    mb: 3,
+    bs: 'none !important',
+    b: 'none !important',
+    brs: '8px !important',
+    '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
+    ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
+  },
+  labelTip: {
+    '& div[data-tipbtn]': {
+      tm: 'scale(0)',
+      tn: 'transform .2s'
+    },
+    ':hover': {
+      '& div[data-tipbtn]': {
+        tm: 'scale(1)',
+      }
+    }
+  }
 }
 
 export default FieldStyle
