@@ -1,28 +1,16 @@
-import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
+import { useFela } from 'react-fela'
+import Scrollbars from 'react-custom-scrollbars-2'
 import Modal from '../../Utilities/Modal'
 import ut from '../../../styles/2.utilities'
-import { useFela } from 'react-fela'
 import FileLblProperty from './FileLblProperty'
-import Scrollbars from 'react-custom-scrollbars-2'
+
 export default function FileLblPropertyMdl({ showMdl, setshowMdl, title }) {
   const { css } = useFela()
-  const [isScroll, setIsScroll] = useState(false)
-  const cancelModal = () => {
-    setshowMdl(false)
-  }
-
-  const onScrollHandler = (e) => {
-    const { scrollTop } = e.target
-    if (scrollTop > 50) setIsScroll(true)
-    else setIsScroll(false)
-  }
 
   return (
     <>
       <Modal md show={showMdl} setModal={setshowMdl} title={title}>
         <Scrollbars
-          onScroll={onScrollHandler}
           autoHide
           style={{ height: 'calc(100% - 42px)' }}
         >

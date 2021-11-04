@@ -1,16 +1,15 @@
-import produce from "immer"
-import { useFela } from "react-fela"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { $fields, $selectedFieldId } from "../../../GlobalStates"
-import ut from "../../../styles/2.utilities"
-import FieldStyle from "../../../styles/FieldStyle.style"
-import { deepCopy } from "../../../Utils/Helpers"
-import { __ } from "../../../Utils/i18nwrap"
-import SizeControl from "../StyleCustomize/ChildComp/SizeControl"
-import TableCheckBox from "../../Utilities/TableCheckBox"
+import produce from 'immer'
+import { useFela } from 'react-fela'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import ut from '../../../styles/2.utilities'
+import FieldStyle from '../../../styles/FieldStyle.style'
+import { deepCopy } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
+import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 function FileTypeSize({ action }) {
-
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -23,7 +22,6 @@ function FileTypeSize({ action }) {
       delete fieldData.config[name]
     }
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-
   }
 
   const sizeHandler = (e, typ) => {
@@ -34,12 +32,11 @@ function FileTypeSize({ action }) {
 
   const inputHandler = (e, typ) => {
     fieldData.config[typ] = e.toString().concat(findByte(fieldData.config, typ))
-    console.log(fieldData.config[typ], 'asdfs')
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const findByte = (data, typ) => {
-    let val = data?.[typ]?.match(/KB|MB|GB/)
+    const val = data?.[typ]?.match(/KB|MB|GB/)
     if (val) {
       return val[0]
     }
@@ -47,7 +44,7 @@ function FileTypeSize({ action }) {
   }
 
   const findValue = (data, typ) => {
-    let val = data?.[typ]?.split(findByte(data, typ))
+    const val = data?.[typ]?.split(findByte(data, typ))
     if (val) {
       return val[0]
     }
@@ -117,7 +114,7 @@ function FileTypeSize({ action }) {
           {fieldData?.config?.maxFileSize && (
             <SizeControl
               className={css(ut.mt1)}
-              label=''
+              label=""
               width={94}
               options={['KB', 'MB']}
               sizeHandler={(e) => sizeHandler(e, 'maxFileSize')}
@@ -130,7 +127,6 @@ function FileTypeSize({ action }) {
         {fieldData?.config?.maxFileSize && (
           <>
             <div className={css(FieldStyle.placeholder)}>
-              <label></label>
               <input
                 placeholder="File is too large"
                 className={css(FieldStyle.input)}
@@ -165,7 +161,7 @@ function FileTypeSize({ action }) {
           {fieldData?.config?.maxTotalFileSize && (
             <SizeControl
               className={css(ut.mt1)}
-              label=''
+              label=""
               width={94}
               options={['KB', 'MB']}
               sizeHandler={(e) => sizeHandler(e, 'maxTotalFileSize')}

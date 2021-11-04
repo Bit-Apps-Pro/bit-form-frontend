@@ -1,16 +1,15 @@
-import { useState } from 'react'
+/* eslint-disable react/jsx-props-no-spreading */
 import produce from 'immer'
-import { __ } from '../../../Utils/i18nwrap'
 import { useFela } from 'react-fela'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { __ } from '../../../Utils/i18nwrap'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { deepCopy } from '../../../Utils/Helpers'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import Cooltip from '../../Utilities/Cooltip'
 
 export default function FileLblProperty({ placeholder, type, title, inputType = 'text', max = '', min = '', coolTip = '' }) {
-
   const { css } = useFela()
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
@@ -18,7 +17,7 @@ export default function FileLblProperty({ placeholder, type, title, inputType = 
 
   const setFieldProperty = (e, typ) => {
     const { value } = e.target
-    if (parseInt(max) < value && max !== '') {
+    if (Number(max) < value && max !== '') {
       return true
     }
     if (value) {
@@ -29,7 +28,6 @@ export default function FileLblProperty({ placeholder, type, title, inputType = 
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
-
 
   return (
     <div className={css(ut.flxcb)}>
@@ -47,9 +45,9 @@ export default function FileLblProperty({ placeholder, type, title, inputType = 
         value={fieldData?.config?.[type]}
         type={inputType}
         onChange={(e) => setFieldProperty(e, type)}
-        {...inputType === 'number' && { max: max }}
-        {...inputType === 'number' && { min: min }}
+        {...inputType === 'number' && { max }}
+        {...inputType === 'number' && { min }}
       />
-    </div >
+    </div>
   )
 }
