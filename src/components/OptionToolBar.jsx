@@ -23,7 +23,8 @@ import Tip from './Utilities/Tip'
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
   const history = useHistory()
-  const { formType, formID } = useParams()
+  const { formType, formID, rightBar } = useParams()
+  console.log('------', useParams())
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
@@ -103,12 +104,12 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               width={180}
               show={['icn']}
               tipPlace="bottom"
+              defaultActive={rightBar.match(/themes|theme-customize/gi) ? 'theme-customize' : 'fld-settings'}
               options={[
                 { icn: <EditIcn size="19" />, label: 'fld-settings', tip: 'Field Settings' },
                 { icn: <BrushIcn size="15" />, label: 'theme-customize', tip: 'Theme Customization' },
               ]}
               onChange={handleRightPanel}
-              // activeValue={controller.parent}
               wideTab
               className={css(ut.mr4)}
             />
