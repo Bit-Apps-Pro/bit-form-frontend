@@ -4,9 +4,9 @@ import ColorPicker from '@atomik-color/component'
 import { useRecoilState } from 'recoil'
 import produce from 'immer'
 import { useEffect, useState } from 'react'
+import { str2Color } from '@atomik-color/core'
 import { hsv2hsl } from './colorHelpers'
 import { $styles } from '../../GlobalStates'
-import { str2Color } from '@atomik-color/core'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
@@ -28,7 +28,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
 
   useEffect(() => {
     const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
-    console.log({ _h, _s, _l })
     switch (action?.type) {
       case 'global-primary-color':
         setStyles(prvState => produce(prvState, drft => {
@@ -51,7 +50,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'global-bg-color':
         setStyles(prvState => produce(prvState, drft => {
           drft.themeVars['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          console.log(drft.themeVars['--global-bg-color'])
           drft.themeVars['--gbg-h'] = Math.round(_h)
           drft.themeVars['--gbg-s'] = `${Math.round(_s)}%`
           drft.themeVars['--gbg-l'] = `${Math.round(_l)}%`
@@ -59,9 +57,8 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       default:
-        break;
+        break
     }
-    
   }, [color])
 
   return (
