@@ -45,6 +45,7 @@ export default function LabelControlMenu() {
     if (styles.themeVars['--fw-dis'] === 'flex' && styles.themeVars['--fw-fdir'] === '') return 'inline'
     if (styles.themeVars['--fw-dis'] === 'flex' && styles.themeVars['--fw-fdir'] === 'row-reverse') return 'inline-rev'
   }
+
   const handleLabelPosition = (name) => {
     switch (name) {
       case 'top':
@@ -104,17 +105,9 @@ export default function LabelControlMenu() {
     }
   }
 
-  const setLabelAlign = (name) => {
-    setAlign(name, '--lbl-al')
-  }
-
-  const setSubLabelAlign = (name) => {
-    setAlign(name, '--st-al')
-  }
-
-  const setHelperTextAlign = (name) => {
-    setAlign(name, '--ht-al')
-  }
+  const setLabelAlign = (name) => setAlign(name, '--lbl-al')
+  const setSubLabelAlign = (name) => setAlign(name, '--st-al')
+  const setHelperTextAlign = (name) => setAlign(name, '--ht-al')
 
   const setAlign = (name, posVar) => {
     switch (name) {

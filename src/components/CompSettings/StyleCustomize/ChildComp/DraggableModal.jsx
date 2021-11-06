@@ -7,6 +7,7 @@ import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
+import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
@@ -18,6 +19,7 @@ const RenderComponent = ({ component, action, value }) => {
     case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
+    case 'spacing-control': return <SpacingControlMenu />
     default: return 'loading'
   }
 }
@@ -27,6 +29,7 @@ const setTitle = (component) => {
     case 'color-picker': return 'Color picker'
     case 'font': return 'Fonts'
     case 'label-control': return 'Label Placement Control'
+    case 'spacing-control': return 'Label Spacing Control'
     default: return '...'
   }
 }
