@@ -1,132 +1,89 @@
-import { useState } from 'react'
-import { useFela } from 'react-fela'
-import ut from '../../styles/2.utilities'
-import BoxSizeControl from '../CompSettings/StyleCustomize/ChildComp/BoxSizeControl'
+import produce from 'immer'
+import { useRecoilState } from 'recoil'
+import { $styles } from '../../GlobalStates'
 import LabelSpaceControl from '../CompSettings/StyleCustomize/ChildComp/LabelSpaceControl'
 
 export default function SpacingControlMenu() {
-  const { css } = useFela()
-  const [marginFull, setMarginFull] = useState(false)
-  const [paddingFull, setPaddingFull] = useState(false)
-  const [spacing, setSpacing] = useState('10px 30px')
+  const [styles, setStyles] = useRecoilState($styles)
 
-  const handlerMargin = (value) => {
-    if (value === 'F') setMarginFull(true)
-    else setMarginFull(false)
-  }
-  const handlerPadding = value => {
-    if (value === 'F') setPaddingFull(true)
-    else setPaddingFull(false)
+  const { '--lw-m': lblWrpMargin } = styles.themeVars
+  const { '--lw-p': lblWrpPadding } = styles.themeVars
+  const { '--fl-m': fldLblMargin } = styles.themeVars
+  const { '--fl-p': fldLblPadding } = styles.themeVars
+  const { '--st-m': subTitleMargin } = styles.themeVars
+  const { '--st-p': subTitlePadding } = styles.themeVars
+  const { '--ht-m': hlpTxtMargin } = styles.themeVars
+  const { '--ht-p': hlpTxtPadding } = styles.themeVars
+  const { '--fld-m': fldMargin } = styles.themeVars
+  const { '--fld-p': fldPadding } = styles.themeVars
+
+  const lblWrpMarginHandler = (v) => {
+    console.log(v)
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--lw-m'] = `${v}`
+    }))
   }
 
-  const onChangeHandler = v => {
-    console.log(' spacing', v)
-    setSpacing(v)
+  const lblWrpPaddingHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--lw-p'] = `${v}`
+    }))
+  }
+
+  const fldLblMarginHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--fl-m'] = `${v}`
+    }))
+  }
+
+  const fldLblPaddingHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--fl-p'] = `${v}`
+    }))
+  }
+  const subTitleMarginHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--st-m'] = `${v}`
+    }))
+  }
+  const subTitlePaddingHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--st-p'] = `${v}`
+    }))
+  }
+  const HlpTxtMarginHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--ht-m'] = `${v}`
+    }))
+  }
+  const HlpTxtPaddingHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--ht-p'] = `${v}`
+    }))
+  }
+  const FldMarginHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--fld-m'] = `${v}`
+    }))
+  }
+  const FldPaddingHandler = (v) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--fld-p'] = `${v}`
+    }))
   }
 
   return (
     <>
-      <div>
-        {/* <div className={css(s.title)}>
-          <span>Margin</span>
-          <StyleSegmentControl
-            show={['icn']}
-            tipPlace="bottom"
-            options={[
-              { icn: <BorderRadiusIcn size="17" />, label: 'FX', tip: 'All side' },
-              { icn: 'F', label: 'F', tip: 'Full' },
-            ]}
-            onChange={handlerMargin}
-          />
-        </div> */}
-        {/* <BoxSizeControl value="10px 30px 30px 11rem" unit={'px'} /> */}
-        <LabelSpaceControl value={spacing} onChange={val => onChangeHandler(val)} unitOption={['px', 'em', 'rem']} />
-        {/* <div className={css(s.fd)}>
-          {!marginFull ? (
-            <>
-              <label className={css(s.label)} htmlFor="margin_left">
-                <span className={css(s.name)}>L</span>
-                <input aria-label="margin left" placeholder="" min="0" className={css(ut.w8, s.input)} id="margin_left" type="number" />
-                <select className={css(s.select)}>
-                  <option value="px">px</option>
-                  <option value="em">em</option>
-                  <option value="rem">rem</option>
-                </select>
-              </label>
-              <label className={css(s.label)} htmlFor="margin_right">
-                <span className={css(s.name)}>R</span>
-                <input aria-label="margin right" placeholder="" min="0" className={css(ut.w8, s.input)} id="margin_right" type="number" />
-              </label>
-              <label className={css(s.label)} htmlFor="margin_top">
-                <span className={css(s.name)}>T</span>
-                <input aria-label="margin top" placeholder="" min="0" className={css(ut.w8, s.input)} id="margin_top" type="number" />
-              </label>
-              <label className={css(s.label)} htmlFor="margin_bottom">
-                <span className={css(s.name)}>B</span>
-                <input aria-label="margin bottom" placeholder="" min="0" className={css(ut.w8, s.input)} id="margin_bottom" type="number" />
-              </label>
-            </>
-          ) : (
-            <label className={css(s.label)} htmlFor="margin_bottom">
-              <span className={css(s.name)}>B</span>
-              <input aria-label="margin bottom" placeholder="" min="0" className={css(ut.w8, s.input)} id="margin_bottom" type="number" />
-            </label>
-          )}
-        </div> */}
-      </div>
-
+      <LabelSpaceControl value={lblWrpMargin} title="Label Wrapper Margin" onChange={val => lblWrpMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={lblWrpPadding} title="Label Wrapper Padding" onChange={val => lblWrpPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={fldLblMargin} title="Field Label Margin" onChange={val => fldLblMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={fldLblPadding} title="Field Label Padding" onChange={val => fldLblPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={subTitleMargin} title="Sub Title Margin" onChange={val => subTitleMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={subTitlePadding} title="Sub Title Padding" onChange={val => subTitlePaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={hlpTxtMargin} title="Helper Text Margin" onChange={val => HlpTxtMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={hlpTxtPadding} title="Helper TextPadding" onChange={val => HlpTxtPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={fldMargin} title="Field Margin" onChange={val => FldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <LabelSpaceControl value={fldPadding} title="Field Padding" onChange={val => FldPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
     </>
-
   )
-}
-
-const s = {
-  title: { flx: 'center-between' },
-  fd: {
-    flx: 'center-between',
-    flxp: 1,
-    my: 10,
-  },
-  label: {
-    w: '48%',
-    pn: 'relative',
-    flx: 'center-between',
-    bd: 'var(--white-0-97)',
-    mx: 2,
-    my: 5,
-    brs: 4,
-  },
-  name: {
-    pn: 'absolute',
-    tp: 8,
-    lt: 10,
-    fw: 500,
-  },
-  input: {
-    pl: '30px !important',
-    ta: 'center',
-    oe: 'none !important',
-    b: 'none !important',
-    bd: 'none !important',
-    tn: 'background o.2s',
-    brs: '8px !important',
-    '&:hover': { bd: 'var(--white-0-81-32)' },
-    '&:focus': { bs: 'none !important', oe: 'none' },
-  },
-  select: {
-    bi: 'none !important',
-    all: 'unset',
-    'border-top-left-radius': '0 !important',
-    'border-bottom-left-radius': '0 !important',
-    bl: '1px solid var(--white-0-75)',
-    p: '0px !important',
-    pr: '3px !important',
-    pl: '3px !important',
-    bc: 'var(--white-0-95) !important',
-    lh: '1 !important',
-    mnh: '18px !important',
-    h: 18,
-
-    '&:focus': { bs: 'none !important' },
-  },
 }

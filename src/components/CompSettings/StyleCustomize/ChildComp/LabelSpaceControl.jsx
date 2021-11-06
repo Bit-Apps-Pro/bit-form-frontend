@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import BorderRadiusCornersIcn from '../../../../Icons/BorderRadiusCornersIcn'
 import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
@@ -8,11 +8,13 @@ import SizeControl from './SizeControl'
 
 export default function LabelSpaceControl({ value, unitOption, title, onChange = () => { } }) {
   const { css } = useFela()
-  const values = value?.trim().split(' ')
+  const values = (value || '0px 0px 0px 0px').trim().split(' ')
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')
+  const [sizeValue, setSizeValue] = useState([...values])
+
 
   const getValue = (stringVal) => stringVal?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
-  const getUnit = (stringVal) => stringVal?.match(/([A-z]|%)+/gi)[0]
+  const getUnit = (stringVal) => stringVal && stringVal.match(/([A-z]|%)+/gi)[0]
 
   const options = [
     { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'], tip: 'Radius allside' },
@@ -20,13 +22,24 @@ export default function LabelSpaceControl({ value, unitOption, title, onChange =
   ]
 
   /*
-  varable [size].lenght 4
-  size[0] = top,
-  size[1] = right
-  size[2] = bottom
-  size[3] = left
+    varable [size].lenght 4
+    size[0] = top,
+    size[1] = right
+    size[2] = bottom
+    size[3] = left
   */
   let size = []
+  // useEffect(() => {
+  //   const sizeArr = []
+  //   if (controller === 'All') {
+  //     sizeArr.push(values[0])
+  //   } else {
+  //     for (let i = 0; i < 4; i += 1) {
+  //       sizeArr.push(values[0])
+  //     }
+  //   }
+  //   setSizeValue(...sizeArr)
+  // }, [controller])
 
   if (values.length === 1 && controller === 'All') {
     size.push(values[0])
@@ -73,6 +86,20 @@ export default function LabelSpaceControl({ value, unitOption, title, onChange =
     onChange(v)
   }
 
+  const changeHandler = (val) => {
+    const s = []
+    if (val === 'All') {
+      s.push(values[0])
+    } else {
+      for (let i = 0; i < 4; i += 1) {
+        s.push(values[0])
+      }
+    }
+    setSizeValue(...s)
+    setController(val)
+  }
+  console.log(sizeValue, 'controller', controller)
+
   return (
     <div className={css(ut.mt2)}>
       <div className={css(s.titlecontainer)}>
@@ -83,7 +110,7 @@ export default function LabelSpaceControl({ value, unitOption, title, onChange =
           options={options}
           size={60}
           component="button"
-          onChange={lbl => setController(lbl)}
+          onChange={lbl => changeHandler(lbl)}
           show={['icn']}
           variant="lightgray"
           activeValue={controller}
@@ -91,14 +118,14 @@ export default function LabelSpaceControl({ value, unitOption, title, onChange =
       </div>
       <div className={css(s.segmentcontainer)}>
         {controller === 'All' && (
-          <SizeControl inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label={<BorderRadiusIcn size={19} />} value={getValue(size[0])} unit={getUnit(size[0])} options={unitOption} width="100px" />
+          <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label={<BorderRadiusIcn size={19} />} value={size[0] && getValue(size[0])} unit={size[0] && getUnit(size[0])} options={unitOption} width="100px" />
         )}
         {controller === 'Individual' && (
           <>
-            <SizeControl inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label="T" width="100px" value={getValue(size[0])} unit={getUnit(size[0])} options={unitOption} />
-            <SizeControl inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="1" label="R" width="100px" value={getValue(size[1])} unit={getUnit(size[1])} options={unitOption} />
-            <SizeControl inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="2" label="B" width="100px" value={getValue(size[2])} unit={getUnit(size[2])} options={unitOption} />
-            <SizeControl inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="3" label="L" width="100px" value={getValue(size[3])} unit={getUnit(size[3])} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label="T" width="100px" value={size[0] && getValue(size[0]) || 0} unit={size[0] && getUnit(size[0]) || 'px'} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="1" label="R" width="100px" value={size[1] && getValue(size[1]) || 0} unit={size[1] && getUnit(size[1]) || 'px'} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="2" label="B" width="100px" value={size[2] && getValue(size[2]) || 0} unit={size[2] && getUnit(size[2]) || 'px'} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="3" label="L" width="100px" value={size[3] && getValue(size[3]) || 0} unit={size[3] && getUnit(size[3]) || 'px'} options={unitOption} />
           </>
         )}
       </div>

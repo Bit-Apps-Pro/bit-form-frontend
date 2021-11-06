@@ -52,7 +52,7 @@ export const $styles = atom({
       '--dir': 'ltr',
       '--fw-dis': '',
       '--fw-fdir': '',
-      '--lw-width': '',
+      '--lw-width': '20px', // for widht
       '--iw-width': '',
       '--lw-sa': '',
       '--lbl-al': '',
@@ -61,6 +61,16 @@ export const $styles = atom({
       '--fl-fs': '16px',
       '--st-fs': '12px',
       '--ht-fs': '12px',
+      '--lw-m': '', // label wrapper for margin
+      '--lw-p': '', // label wrapper for padding
+      '--fl-m': '', // field label
+      '--fl-p': '',
+      '--st-m': '', // subtitle
+      '--st-p': '',
+      '--ht-m': '', // helper text
+      '--ht-p': '',
+      '--fld-m': '', // field
+      '--fld-p': '',
     },
     form: { _frm: { background: 'var(--global-bg-color)' } },
     fields: {

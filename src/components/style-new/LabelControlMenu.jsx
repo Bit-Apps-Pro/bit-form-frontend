@@ -27,6 +27,7 @@ export default function LabelControlMenu() {
   const { '--fl-fs': fldLblFs } = styles.themeVars
   const { '--st-fs': subTitleFs } = styles.themeVars
   const { '--ht-fs': heplrTxtFs } = styles.themeVars
+  const { '--lw-width': lblwitdh } = styles.themeVars
 
   const getValue = (stringVal) => stringVal.match(/[-]?([0-9]*[.])?[0-9]+/gi)
   const getUnit = (stringVal) => stringVal.match(/([A-z]|%)+/gi)
@@ -39,6 +40,9 @@ export default function LabelControlMenu() {
 
   const [heplrTxtFsVal] = getValue(heplrTxtFs)
   const [heplrTxtFsUnit] = getUnit(heplrTxtFs)
+
+  const [lblWidthVal] = getValue(lblwitdh)
+  const [lblWidthUnit] = getUnit(lblwitdh)
 
   const activeLabelPosition = () => {
     if (styles.themeVars['--fw-dis'] === '') return 'top'
@@ -153,6 +157,12 @@ export default function LabelControlMenu() {
     }))
   }
 
+  const lblWidthHandler = ({ value, unit }) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--lw-width'] = `${value}${unit}`
+    }))
+  }
+
   const unitConverter = (unit, value, name) => {
     const [preUnit] = getUnit(styles.themeVars[name])
 
@@ -209,6 +219,17 @@ export default function LabelControlMenu() {
           sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--ht-fs')}
           name="heprTxt"
           options={['px', 'em', 'rem']}
+        />
+      </div>
+      <div className={css(ut.flxcb, ut.mb2)}>
+        <span className={css(ut.fs12)}>Label Width</span>
+        <SizeControl
+          width="115px"
+          value={Number(lblWidthVal)}
+          unit={lblWidthUnit}
+          inputHandler={lblWidthHandler}
+          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--lw-width')}
+          options={['px', 'em', 'rem', '%']}
         />
       </div>
 
