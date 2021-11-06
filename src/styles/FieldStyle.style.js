@@ -123,14 +123,10 @@ const FieldStyle = {
   labelTip: {
     '& div[data-tipbtn]': {
       tm: 'scale(0)',
-      tn: 'transform .2s'
+      tn: 'transform .2s',
     },
-    ':hover': {
-      '& div[data-tipbtn]': {
-        tm: 'scale(1)',
-      }
-    }
-  }
+    ':hover': { '& div[data-tipbtn]': { tm: 'scale(1)' } },
+  },
 }
 
 export default FieldStyle

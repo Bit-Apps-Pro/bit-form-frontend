@@ -149,9 +149,8 @@ export default function FileLblPropertyMdl({ showMdl, setshowMdl, title }) {
             />
           </div>
 
-          <div className="">
-            <button type="button" className={css(ut.mr2, ut.btn_primary)} onClick={cancelModal}>Cancel</button>
-            <button type="button" className={css(ut.mr2, ut.btn_primary)} onClick={() => setshowMdl(false)}>Save</button>
+          <div>
+            <button type="button" className={css(ut.mr2, ut.btn_primary)} onClick={() => setshowMdl(false)}>Close</button>
           </div>
         </Scrollbars>
       </Modal>

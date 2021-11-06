@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-mixed-operators */
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -5,7 +8,7 @@ import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -26,8 +29,6 @@ import FileTypeSize from './advfileupcmpt/FileTypeSize'
 import Cooltip from '../Utilities/Cooltip'
 
 function AdFileUpSettings() {
-  console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
-  const bits = useRecoilValue($bits)
   const [lblPropertyMdl, setLblPropertyMdl] = useState(false)
   const [imgValdiateMdl, setImgValdiateMdl] = useState(false)
   const fldKey = useRecoilValue($selectedFieldId)
@@ -85,7 +86,7 @@ function AdFileUpSettings() {
   const setErrorMsg = e => {
     const { value, name, type } = e.target
     if (value && type === 'number') {
-      fieldData.config[name] = parseInt(value)
+      fieldData.config[name] = Number(value)
     } else if (value && type !== 'number') {
       fieldData.config[name] = value
     } else {
@@ -100,8 +101,6 @@ function AdFileUpSettings() {
       fieldData.config[typ] = []
     }
     fieldData.config[typ] = val
-    console.log(fileFormats.length)
-
     // eslint-disable-next-line no-param-reassign
     setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
   }
@@ -161,12 +160,12 @@ function AdFileUpSettings() {
         tip="The capture option will only work on mobile devices."
         tipProps={{ width: 200, icnSize: 17 }}
       >
-        <select className={css(FieldStyle.input, ut.mt2)} name='captureMethod' onChange={setErrorMsg}>
+        <select className={css(FieldStyle.input, ut.mt2)} name="captureMethod" onChange={setErrorMsg}>
           <option value="">Select</option>
           <option value="null">Off</option>
-          <option value="camera">Camera</option>
-          <option value="microphone">Microphone</option>
-          <option value="camcorder">Camcorder</option>
+          <option value="capture">On</option>
+          <option value="user">User Camera</option>
+          <option value="environment">Environment Camera</option>
         </select>
       </SimpleAccordion>
 
@@ -211,7 +210,7 @@ function AdFileUpSettings() {
 
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
-              <div className={css(ut.fw500)}>{__('Only drag and drop', 'bitform')}</div>
+              <div className={css(ut.fw500)}>{__('Allow File Browse', 'bitform')}</div>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
                   Enable or disable file browser
@@ -269,7 +268,7 @@ function AdFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.allowReorder} name='allowReorder' action={handle} />
+            <SingleToggle isChecked={fieldData?.config?.allowReorder} name="allowReorder" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -281,7 +280,7 @@ function AdFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.instantUpload} name='instantUpload' action={handle} />
+            <SingleToggle isChecked={fieldData?.config?.instantUpload} name="instantUpload" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -293,7 +292,7 @@ function AdFileUpSettings() {
                 </div>
               </Cooltip>
             </div>
-            <SingleToggle isChecked={fieldData?.config?.dropOnPage} name='dropOnPage' action={handle} />
+            <SingleToggle isChecked={fieldData?.config?.dropOnPage} name="dropOnPage" action={handle} />
           </div>
           <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip)}>
             <div className={css(ut.flxb)}>
@@ -335,7 +334,7 @@ function AdFileUpSettings() {
         toggleChecked={fieldData?.config?.allowFileSizeValidation}
         open={fieldData?.config?.allowFileSizeValidation}
         disable={!fieldData?.config?.allowFileSizeValidation}
-        tip="Enable or disable file size validation"
+        tip="Note : If you enable this option, the File size validation features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <FileTypeSize action={setErrorMsg} />
@@ -360,10 +359,12 @@ function AdFileUpSettings() {
             customValue={false}
             titleClassName={css(ut.mt2, ut.fw500)}
             title={__('Allowed File Type:', 'bitform')}
-            isMultiple addable
+            isMultiple
+            addable
             options={fileFormats}
             placeholder={__('Select File Type', 'bitform')}
-            jsonValue action={(e) => setFileFilter(e, 'acceptedFileTypes')}
+            jsonValue
+            action={(e) => setFileFilter(e, 'acceptedFileTypes')}
             value={fieldData?.config?.acceptedFileTypes}
           // tip="Select the fill types that will be accepted."
           // tipProps={{ width: 200, icnSize: 17 }}
@@ -418,7 +419,7 @@ function AdFileUpSettings() {
         toggleChecked={fieldData?.config?.allowImagePreview}
         open={fieldData?.config?.allowImagePreview}
         disable={!fieldData?.config?.allowImagePreview}
-        tip="Enable or disable preview mode"
+        tip="Note : If you enable this option, the Image Preview features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -484,7 +485,7 @@ function AdFileUpSettings() {
 
       <div className={css(ut.flxcb, ut.mt2, FieldStyle.labelTip, FieldStyle.fieldSection)}>
         <div className={css(ut.flxb)}>
-          <div >{__('Video/Pdf Preview', 'bitform')}</div>
+          <div>{__('Video/Pdf Preview', 'bitform')}</div>
           <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
             <div className={css(ut.tipBody)}>
               Enable or disable Video or Pdf preview mode
@@ -492,7 +493,7 @@ function AdFileUpSettings() {
             </div>
           </Cooltip>
         </div>
-        <SingleToggle className={css(ut.mr30)} isChecked={fieldData?.config?.allowPreview} name='allowPreview' action={(e) => enablePlugin(e, 'allowPreview')} />
+        <SingleToggle className={css(ut.mr30)} isChecked={fieldData?.config?.allowPreview} name="allowPreview" action={(e) => enablePlugin(e, 'allowPreview')} />
       </div>
 
       <hr className={css(FieldStyle.divider)} />
@@ -505,7 +506,7 @@ function AdFileUpSettings() {
         toggleChecked={fieldData?.config?.allowImageCrop}
         open={fieldData?.config?.allowImageCrop}
         disable={!fieldData?.config?.allowImageCrop}
-        tip="Note : Its features will not work when it is disabled"
+        tip="Note : If you enable this option, the Image Crop features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <div className={css(ut.mt2, FieldStyle.labelTip)}>
@@ -540,7 +541,7 @@ function AdFileUpSettings() {
         toggleChecked={fieldData?.config?.allowImageResize}
         open={fieldData?.config?.allowImageResize}
         disable={!fieldData?.config?.allowImageResize}
-        tip="Note : Its features will not work when it is disabled"
+        tip="Note :If you enable this option, the Image Resize features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <div className={css(FieldStyle.placeholder, ut.mt2, FieldStyle.labelTip)}>
@@ -609,7 +610,7 @@ function AdFileUpSettings() {
         toggleChecked={fieldData?.config?.allowImageTransform}
         open={fieldData?.config?.allowImageTransform}
         disable={!fieldData?.config?.allowImageTransform}
-        tip="Note : Its features will not work when it is disabled"
+        tip="Note : If you enable this option, the Image Transform features will work"
         tipProps={{ width: 200, icnSize: 17 }}
       >
         <div className={css(ut.mt2, ut.ml2)}>
@@ -667,7 +668,7 @@ function AdFileUpSettings() {
               <label className={css(ut.fw500, ut.ml1, ut.mt1)}>Client Transforms</label>
               <Cooltip width={250} icnSize={17} className={css(ut.ml2)}>
                 <div className={css(ut.tipBody)}>
-
+                  Client Transform
                 </div>
               </Cooltip>
               <select className={css(FieldStyle.selectBox, ut.mr2, ut.fw500, ut.w3)} name="imageTransformClientTransforms" onChange={setErrorMsg}>
