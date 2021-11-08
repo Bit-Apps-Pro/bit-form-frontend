@@ -294,6 +294,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           dropOnElement: false,
           allowFileSizeValidation: false,
           allowFileTypeValidation: false,
+          allowPreview: false,
           allowImageCrop: false,
           allowImagePreview: false,
           allowImageResize: false,

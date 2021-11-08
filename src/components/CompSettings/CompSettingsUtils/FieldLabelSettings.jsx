@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -37,7 +38,7 @@ export default function FieldLabelSettings() {
     }
     // eslint-disable-next-line no-param-reassign
     // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-    const  req = !e.target.checked ? 'on': 'off'
+    const req = !e.target.checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Field label Hide ${req}: ${fieldData.lbl || fldKey}`, type: `field_label_hide_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)

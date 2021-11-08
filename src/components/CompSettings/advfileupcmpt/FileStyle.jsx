@@ -10,7 +10,7 @@ function FileStyle({ action, value }) {
     <div className={css(ut.ml2, ut.mt2)}>
       <div className={css(ut.mt1, FieldStyle.labelTip)}>
         <div className={`${css(ut.dyb, ut.flxcb)}`}>
-          <label className={css(ut.fw500, ut.mr1)}>{__('Panel Layout', 'bitform')}</label>
+          <label htmlFor="panel" className={css(ut.fw500, ut.mr1)}>{__('Panel Layout', 'bitform')}</label>
           <Cooltip width={250} icnSize={17} className={css(ut.mt0)}>
             <div className={css(ut.tipBody)} />
           </Cooltip>
@@ -24,7 +24,7 @@ function FileStyle({ action, value }) {
       </div>
       <div className={css(ut.mt1, FieldStyle.labelTip)}>
         <div className={css(ut.dyb, ut.flxcb)}>
-          <label className={css(ut.fw500, ut.mr1)}>{__('Remove Buttom', 'bitform')}</label>
+          <label htmlFor="remove_btn" className={css(ut.fw500, ut.mr1)}>{__('Remove Buttom', 'bitform')}</label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
               The position of the remove item button
@@ -41,7 +41,7 @@ function FileStyle({ action, value }) {
       </div>
       <div className={css(ut.mt1, FieldStyle.labelTip)}>
         <div className={css(ut.dyb, ut.flxcb)}>
-          <label className={css(ut.fw500, ut.mr1)}>{__('Process Button', 'bitform')}</label>
+          <label htmlFor="process_btn" className={css(ut.fw500, ut.mr1)}>{__('Process Button', 'bitform')}</label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
               The position of the process item button
@@ -58,7 +58,7 @@ function FileStyle({ action, value }) {
       </div>
       <div className={css(ut.mt1, FieldStyle.labelTip)}>
         <div className={css(ut.dyb, ut.flxcb)}>
-          <label className={css(ut.fw500, ut.mr1)}>{__('Load Indicator', 'bitform')}</label>
+          <label htmlFor="load_indicator" className={css(ut.fw500, ut.mr1)}>{__('Load Indicator', 'bitform')}</label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
               The position of the load indicator
@@ -75,7 +75,7 @@ function FileStyle({ action, value }) {
       </div>
       <div className={css(ut.mt1, FieldStyle.labelTip)}>
         <div className={css(ut.dyb, ut.flxcb)}>
-          <label className={css(ut.fw500, ut.mr2)}>{__('Progress Indicator', 'bitform')}</label>
+          <label htmlFor="process_indicator" className={css(ut.fw500, ut.mr2)}>{__('Progress Indicator', 'bitform')}</label>
           <Cooltip width={250} icnSize={17}>
             <div className={css(ut.tipBody)}>
               The position of the progress indicator

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -17,7 +18,7 @@ function FileTypeSize({ action }) {
   const fileSizeChange = (e) => {
     const { name } = e.target
     if (e.target.checked) {
-      fieldData.config[name] = '1KB'
+      fieldData.config[name] = '1MB'
     } else {
       delete fieldData.config[name]
     }
@@ -40,7 +41,7 @@ function FileTypeSize({ action }) {
     if (val) {
       return val[0]
     }
-    return 'KB'
+    return 'MB'
   }
 
   const findValue = (data, typ) => {
@@ -68,7 +69,7 @@ function FileTypeSize({ action }) {
               <SizeControl
                 className={css(ut.mt1)}
                 width={94}
-                options={['KB', 'MB']}
+                options={['MB', 'KB']}
                 sizeHandler={(e) => sizeHandler(e, 'minFileSize')}
                 byteType={findByte(fieldData?.config, 'minFileSize')}
                 value={findValue(fieldData?.config, 'minFileSize')}
@@ -116,7 +117,7 @@ function FileTypeSize({ action }) {
               className={css(ut.mt1)}
               label=""
               width={94}
-              options={['KB', 'MB']}
+              options={['MB', 'KB']}
               sizeHandler={(e) => sizeHandler(e, 'maxFileSize')}
               sizeVal={findByte(fieldData?.config, 'maxFileSize')}
               value={findValue(fieldData?.config, 'maxFileSize')}
@@ -163,7 +164,7 @@ function FileTypeSize({ action }) {
               className={css(ut.mt1)}
               label=""
               width={94}
-              options={['KB', 'MB']}
+              options={['MB', 'KB']}
               sizeHandler={(e) => sizeHandler(e, 'maxTotalFileSize')}
               sizeVal={findByte(fieldData?.config, 'maxTotalFileSize')}
               value={findValue(fieldData?.config, 'maxTotalFileSize')}
