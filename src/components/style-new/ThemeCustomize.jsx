@@ -1,15 +1,15 @@
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import ut from '../../styles/2.utilities'
-import ChevronLeft from '../../Icons/ChevronLeft'
-import SimpleColorPicker from './SimpleColorPicker'
 import { $styles } from '../../GlobalStates'
+import ChevronLeft from '../../Icons/ChevronLeft'
+import ut from '../../styles/2.utilities'
 import SingleToggle from '../Utilities/SingleToggle'
-import { changeFormDir } from './styleHelpers'
 import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
-import SpacingControl from './SpacingControl'
+import LabelSpacingControl from './LabelSpacingControl'
+import SimpleColorPicker from './SimpleColorPicker'
+import { changeFormDir } from './styleHelpers'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -80,7 +80,7 @@ export default function ThemeCustomize() {
           </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Label Spacing</span>
-            <SpacingControl />
+            <LabelSpacingControl />
           </div>
           {[...Array(20).keys()].map(e => <br />)}
         </div>

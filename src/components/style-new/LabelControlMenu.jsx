@@ -24,10 +24,16 @@ export default function LabelControlMenu() {
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [openVarPos, setOpenVarPos] = useState(false)
 
-  const { '--fl-fs': fldLblFs } = styles.themeVars
-  const { '--st-fs': subTitleFs } = styles.themeVars
-  const { '--ht-fs': heplrTxtFs } = styles.themeVars
-  const { '--lw-width': lblwitdh } = styles.themeVars
+  const { '--fl-fs': fldLblFs,
+    '--st-fs': subTitleFs,
+    '--ht-fs': heplrTxtFs,
+    '--lw-width': lblwitdh,
+    '--fw-dis': fwDis,
+    '--fw-fdir': fwFdir,
+    '--lw-sa': lwSa,
+    '--lbl-al': lblAl,
+    '--st-al': stAl,
+    '--ht-al': htAl } = styles.themeVars
 
   const getValue = (stringVal) => stringVal.match(/[-]?([0-9]*[.])?[0-9]+/gi)
   const getUnit = (stringVal) => stringVal.match(/([A-z]|%)+/gi)
@@ -45,9 +51,9 @@ export default function LabelControlMenu() {
   const [lblWidthUnit] = getUnit(lblwitdh)
 
   const activeLabelPosition = () => {
-    if (styles.themeVars['--fw-dis'] === '') return 'top'
-    if (styles.themeVars['--fw-dis'] === 'flex' && styles.themeVars['--fw-fdir'] === '') return 'inline'
-    if (styles.themeVars['--fw-dis'] === 'flex' && styles.themeVars['--fw-fdir'] === 'row-reverse') return 'inline-rev'
+    if (fwDis === '') return 'top'
+    if (fwDis === 'flex' && fwFdir === '') return 'inline'
+    if (fwDis === 'flex' && fwFdir === 'row-reverse') return 'inline-rev'
   }
 
   const handleLabelPosition = (name) => {
@@ -259,7 +265,7 @@ export default function LabelControlMenu() {
               { icn: <LblvarticalPlsmntBottomIcon size="17" />, label: 'end', tip: 'Bottom' },
             ]}
             onChange={e => setLabelVerticalPos(e)}
-            activeValue={styles.themeVars['--lw-sa']}
+            activeValue={lwSa}
           />
         </div>
       </Grow>
@@ -274,7 +280,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setLabelAlign(e)}
-          activeValue={styles.themeVars['--lbl-al']}
+          activeValue={lblAl}
         />
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
@@ -288,7 +294,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setSubLabelAlign(e)}
-          activeValue={styles.themeVars['--st-al']}
+          activeValue={stAl}
         />
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
@@ -302,7 +308,7 @@ export default function LabelControlMenu() {
             { icn: <TxtAlignRightIcn size="17" />, label: 'right', tip: 'Right' },
           ]}
           onChange={e => setHelperTextAlign(e)}
-          activeValue={styles.themeVars['--ht-al']}
+          activeValue={htAl}
         />
       </div>
     </div>
