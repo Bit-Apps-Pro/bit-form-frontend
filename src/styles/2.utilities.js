@@ -41,6 +41,7 @@ const ut = {
   fs12: { fs: 12 },
 
   dnone: { dy: 'none' },
+  dyb: { dy: 'inline-block' },
 
   flxi: { flxi: 1 },
   flxb: { flx: 'between' },
@@ -91,6 +92,7 @@ const ut = {
   pr8: { pr: 40 },
   px10: { px: 10 },
   py5: { py: 5 },
+  p0: { p: 0 },
   p1: { p: 5 },
   p2: { p: 10 },
   p3: { p: 15 },
@@ -118,5 +120,19 @@ const ut = {
   wdt150: { w: '150px !important' },
   wdt200: { w: '200px !important' },
   wdt300: { w: '300px !important' },
+  btn_primary: {
+    bd: 'var(--b-92-62)',
+    brs: 8,
+    p: 6,
+    //cr: 'var(--white-100)',
+    b: 'none'
+  },
+  btn: {
+    cur: 'pointer',
+    b: 'none',
+    oe: 'none',
+    bd: 'none',
+  }
+
 }
 export default ut

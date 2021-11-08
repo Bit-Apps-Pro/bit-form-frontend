@@ -1,9 +1,13 @@
+/* eslint-disable no-param-reassign */
+import { produce } from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
@@ -19,7 +23,11 @@ export default function ThemeCustomize() {
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
     '--global-font-color': globalFontColor,
-    '--global-bg-color': globalBgColor } = styles.themeVars
+    '--global-bg-color': globalBgColor,
+    '--g-bdr-rad': globalBorderRad } = styles.themeVars
+
+  const globalBdrRadValue = globalBorderRad.match(/\d+/gi)
+  const globalBdrRadUnit = globalBorderRad.match(/[^\d+]/gi)
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
   // const direction = styles.themeVars['--dir']
@@ -28,6 +36,12 @@ export default function ThemeCustomize() {
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
     setStyles(prv => changeFormDir(prv, dir))
+  }
+
+  const setBorderRad = (value) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.themeVars['--g-bdr-rad'] = `${value}${globalBdrRadUnit}`
+    }))
   }
 
   return (
@@ -74,7 +88,7 @@ export default function ThemeCustomize() {
             <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
           </div>
 
-          <div className={css(ut.flxcb)}>
+          <div className={css(ut.flxcb, ut.mb2)}>
             <span className={css(ut.fw500)}>Label Alignment</span>
             <LabelControl />
           </div>
@@ -82,7 +96,21 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Label Spacing</span>
             <LabelSpacingControl />
           </div>
-          {[...Array(20).keys()].map(e => <br />)}
+
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Border Radius</span>
+            <SizeControl
+              inputHandler={setBorderRad}
+              // inputHandler={(value) => sets(value)}
+              // value={s}
+              value={globalBdrRadValue}
+              unit={globalBdrRadUnit}
+              width="110px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
+
+          {[...Array(20).keys()].map(() => <br />)}
         </div>
       </div>
     </div>

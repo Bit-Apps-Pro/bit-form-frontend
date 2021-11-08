@@ -27,6 +27,7 @@ export default function Cooltip({ className, children, width = 'auto', icnSize =
       <div
         role="button"
         tabIndex="0"
+        data-tipbtn
         className={`${css(c.popper_icn)} ${className}`}
       >
         {tip ? children : <QuestionIcn size={icnSize} />}

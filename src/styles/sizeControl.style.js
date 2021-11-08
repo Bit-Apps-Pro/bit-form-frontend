@@ -7,10 +7,8 @@ const sizeControlStyle = {
     bc: 'var(--white-0-95)',
     cr: 'var(--white-0-50)',
     b: '1px solid transparent',
-
-    ':hover': {
-      b: '1px solid var(--white-0-50)',
-    }
+    ':focus-within': { focusShadow: 1 },
+    ':hover': { b: '1px solid var(--white-0-50)' },
   },
 
   input: {

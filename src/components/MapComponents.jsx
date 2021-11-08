@@ -16,6 +16,7 @@ import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
 import { $styles } from '../GlobalStates'
 import '../resource/sass/components.scss'
+import AdvanceFileUp from './Fields/AdvanceFileUp'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -59,6 +60,8 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
     //   return <NewDropDown isBuilder={isBuilder} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'file-up':
       return <FileUp fieldKey={fieldKey} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
+    case 'ad-file-up':
+      return <AdvanceFileUp fieldKey={fieldKey} formID={formID} attr={atts} entryID={entryID} resetFieldValue={resetFieldValue} />
     case 'submit':
       return <SubmitBtn fieldKey={fieldKey} formID={formID} attr={atts} buttonDisabled={buttonDisabled} handleReset={handleReset} />
     case 'hidden':

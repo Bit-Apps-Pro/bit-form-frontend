@@ -10,7 +10,7 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
   const rangeRef = useRef(null)
 
   useEffect(() => {
-    rangeRef.current.style.backgroundSize = `${(val - min) * 100 / (max - min)}% 100%`
+    rangeRef.current.style.backgroundSize = `${((val - min) * 100) / (max - min)}% 100%`
   }, [max, min, val])
 
   return (
@@ -24,7 +24,7 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
         min={min}
         max={max}
         step={step}
-        onChange={onChangeHandler}
+        onInput={onChangeHandler}
         value={val}
       />
       &nbsp;
@@ -53,10 +53,10 @@ export default function CustomInputControl(
   const handleValueBasedOnPointer = e => {
     const startpos = e.clientX
     let startval = parseFloat(value)
-    if (isNaN(startval)) startval = min
+    if (Number.isNaN(startval)) startval = min
     document.onmousemove = (ev) => {
       const moved = Math.floor(ev.clientX - startpos)
-      const inc = Math.round(Math.sign(moved) * Math.pow(Math.abs(moved) / 10, 1.2))
+      const inc = Math.round(Math.sign(moved) * (Math.abs(moved) / 10) ** 1.2)
       let newVal = startval + inc
       if (newVal < min) newVal = min
       if (newVal > max) newVal = max
@@ -66,10 +66,6 @@ export default function CustomInputControl(
       document.onmousemove = null
     }
   }
-
-  // const onChangeHandler = ({ target: { valueAsNumber } }) => {
-  //   if (onChange) onChange(valueAsNumber)
-  // }
 
   const getStepByEvent = (e) => {
     let stp = 0

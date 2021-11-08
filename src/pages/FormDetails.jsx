@@ -356,7 +356,7 @@ function FormDetails() {
         </nav>
         <div className={css(navbar.builder_routes)}>
           <Switch>
-            <Route exact path="/form/builder/:formType/:formID/:s?/:s?/:s?">
+            <Route exact path="/form/builder/:formType/:formID/:rightBar?/:f?/:d?">
               <Suspense fallback={<BuilderLoader />}>
                 <FormBuilderHOC isLoading={isLoading} />
               </Suspense>
