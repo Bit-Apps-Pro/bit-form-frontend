@@ -1,73 +1,73 @@
 import produce from 'immer'
 import { useRecoilState } from 'recoil'
-import { $styles } from '../../GlobalStates'
+import { $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function SpacingControlMenu() {
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
 
-  const { '--lw-m': lblWrpMargin } = styles.themeVars
-  const { '--lw-p': lblWrpPadding } = styles.themeVars
-  const { '--fl-m': fldLblMargin } = styles.themeVars
-  const { '--fl-p': fldLblPadding } = styles.themeVars
-  const { '--st-m': subTitleMargin } = styles.themeVars
-  const { '--st-p': subTitlePadding } = styles.themeVars
-  const { '--ht-m': hlpTxtMargin } = styles.themeVars
-  const { '--ht-p': hlpTxtPadding } = styles.themeVars
-  const { '--fld-m': fldMargin } = styles.themeVars
-  const { '--fld-p': fldPadding } = styles.themeVars
+  const { '--lw-m': lblWrpMargin,
+    '--lw-p': lblWrpPadding,
+    '--fl-m': fldLblMargin,
+    '--fl-p': fldLblPadding,
+    '--st-m': subTitleMargin,
+    '--st-p': subTitlePadding,
+    '--ht-m': hlpTxtMargin,
+    '--ht-p': hlpTxtPadding,
+    '--fld-m': fldMargin,
+    '--fld-p': fldPadding } = themeVars
 
   const lblWrpMarginHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--lw-m'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--lw-m'] = `${v}`
     }))
   }
 
   const lblWrpPaddingHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--lw-p'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--lw-p'] = `${v}`
     }))
   }
 
   const fldLblMarginHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--fl-m'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--fl-m'] = `${v}`
     }))
   }
 
   const fldLblPaddingHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--fl-p'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--fl-p'] = `${v}`
     }))
   }
   const subTitleMarginHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--st-m'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--st-m'] = `${v}`
     }))
   }
   const subTitlePaddingHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--st-p'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--st-p'] = `${v}`
     }))
   }
   const HlpTxtMarginHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--ht-m'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--ht-m'] = `${v}`
     }))
   }
   const HlpTxtPaddingHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--ht-p'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--ht-p'] = `${v}`
     }))
   }
   const FldMarginHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--fld-m'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--fld-m'] = `${v}`
     }))
   }
   const FldPaddingHandler = (v) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--fld-p'] = `${v}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--fld-p'] = `${v}`
     }))
   }
 

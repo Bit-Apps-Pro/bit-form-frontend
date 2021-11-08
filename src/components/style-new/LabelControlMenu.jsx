@@ -3,7 +3,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $builderHookStates, $styles } from '../../GlobalStates'
+import { $builderHookStates, $themeVars } from '../../GlobalStates'
 import LblPlacementInlineIcn from '../../Icons/LblPlacementInlineIcn'
 import LblPlacementReverseIcn from '../../Icons/LblPlacementReverseIcn'
 import LblPlacementTopIcn from '../../Icons/LblPlacementTopIcn'
@@ -20,7 +20,7 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 
 export default function LabelControlMenu() {
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [openVarPos, setOpenVarPos] = useState(false)
 
@@ -33,7 +33,7 @@ export default function LabelControlMenu() {
     '--lw-sa': lwSa,
     '--lbl-al': lblAl,
     '--st-al': stAl,
-    '--ht-al': htAl } = styles.themeVars
+    '--ht-al': htAl } = themeVars
 
   const getValue = (stringVal) => stringVal.match(/[-]?([0-9]*[.])?[0-9]+/gi)
   const getUnit = (stringVal) => stringVal.match(/([A-z]|%)+/gi)
@@ -59,31 +59,31 @@ export default function LabelControlMenu() {
   const handleLabelPosition = (name) => {
     switch (name) {
       case 'top':
-        setStyles(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle.themeVars['--fw-dis'] = ''
-          drftStyle.themeVars['--lw-width'] = ''
-          drftStyle.themeVars['--iw-width'] = ''
-          drftStyle.themeVars['--lw-sa'] = ''
+        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+          drftStyle['--fw-dis'] = ''
+          drftStyle['--lw-width'] = ''
+          drftStyle['--iw-width'] = ''
+          drftStyle['--lw-sa'] = ''
         }))
         setOpenVarPos(false)
         setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
         break
       case 'inline':
-        setStyles(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle.themeVars['--fw-dis'] = 'flex'
-          drftStyle.themeVars['--fw-fdir'] = ''
-          drftStyle.themeVars['--lw-width'] ||= '40%'
-          drftStyle.themeVars['--iw-width'] = '100%'
+        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+          drftStyle['--fw-dis'] = 'flex'
+          drftStyle['--fw-fdir'] = ''
+          drftStyle['--lw-width'] ||= '40%'
+          drftStyle['--iw-width'] = '100%'
         }))
         setOpenVarPos(true)
         setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
         break
       case 'inline-rev':
-        setStyles(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle.themeVars['--fw-dis'] = 'flex'
-          drftStyle.themeVars['--fw-fdir'] = 'row-reverse'
-          drftStyle.themeVars['--lw-width'] ||= '40%'
-          drftStyle.themeVars['--iw-width'] = '100%'
+        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+          drftStyle['--fw-dis'] = 'flex'
+          drftStyle['--fw-fdir'] = 'row-reverse'
+          drftStyle['--lw-width'] ||= '40%'
+          drftStyle['--iw-width'] = '100%'
         }))
         setOpenVarPos(true)
         setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
@@ -96,18 +96,18 @@ export default function LabelControlMenu() {
   const setLabelVerticalPos = (name) => {
     switch (name) {
       case 'top':
-        setStyles(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle.themeVars['--lw-sa'] = ''
+        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+          drftStyle['--lw-sa'] = ''
         }))
         break
       case 'center':
-        setStyles(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle.themeVars['--lw-sa'] = 'center'
+        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+          drftStyle['--lw-sa'] = 'center'
         }))
         break
       case 'end':
-        setStyles(prvStyle => produce(prvStyle, drftStyle => {
-          drftStyle.themeVars['--lw-sa'] = 'end'
+        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+          drftStyle['--lw-sa'] = 'end'
         }))
         break
       default:
@@ -122,18 +122,18 @@ export default function LabelControlMenu() {
   const setAlign = (name, posVar) => {
     switch (name) {
       case 'left':
-        setStyles(preStyle => produce(preStyle, drftStyle => {
-          drftStyle.themeVars[posVar] = ''
+        setThemeVars(preStyle => produce(preStyle, drftStyle => {
+          drftStyle[posVar] = ''
         }))
         break
       case 'center':
-        setStyles(preStyle => produce(preStyle, drftStyle => {
-          drftStyle.themeVars[posVar] = 'center'
+        setThemeVars(preStyle => produce(preStyle, drftStyle => {
+          drftStyle[posVar] = 'center'
         }))
         break
       case 'right':
-        setStyles(preStyle => produce(preStyle, drftStyle => {
-          drftStyle.themeVars[posVar] = 'right'
+        setThemeVars(preStyle => produce(preStyle, drftStyle => {
+          drftStyle[posVar] = 'right'
         }))
         break
       default:
@@ -146,31 +146,31 @@ export default function LabelControlMenu() {
   }
 
   const fontSizeHandler = ({ value, unit }) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--fl-fs'] = `${value}${unit}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--fl-fs'] = `${value}${unit}`
     }))
   }
 
   const subTtlFontSizeHandler = ({ value, unit }) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--st-fs'] = `${value}${unit}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--st-fs'] = `${value}${unit}`
     }))
   }
 
   const hlprTxtFontSizeHandler = ({ value, unit }) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--ht-fs'] = `${value}${unit}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--ht-fs'] = `${value}${unit}`
     }))
   }
 
   const lblWidthHandler = ({ value, unit }) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.themeVars['--lw-width'] = `${value}${unit}`
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle['--lw-width'] = `${value}${unit}`
     }))
   }
 
   const unitConverter = (unit, value, name) => {
-    const [preUnit] = getUnit(styles.themeVars[name])
+    const [preUnit] = getUnit(themeVars[name])
 
     if (preUnit === unit) return value
     if (preUnit === 'px' && unit === 'em') return (value * 0.0714285714285714).toFixed(2)
@@ -184,8 +184,8 @@ export default function LabelControlMenu() {
   const unitHandler = (unit, value, name) => {
     if (value) {
       const convetVal = unitConverter(unit, value, name)
-      setStyles(preStyle => produce(preStyle, drftStyle => {
-        drftStyle.themeVars[name] = `${convetVal}${unit}`
+      setThemeVars(preStyle => produce(preStyle, drftStyle => {
+        drftStyle[name] = `${convetVal}${unit}`
       }))
     }
   }

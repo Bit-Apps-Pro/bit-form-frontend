@@ -87,8 +87,8 @@ export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) =
 export const $fieldsDirection = selector({
   key: '$fieldsDirection',
   get: ({ get }) => {
-    const styles = get($styles)
-    return styles.themeVars['--dir']
+    const themeVars = get($themeVars)
+    return themeVars['--dir']
   },
 })
 
