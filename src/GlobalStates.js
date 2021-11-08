@@ -27,51 +27,54 @@ export const $draggableModal = atom({ key: '$draggableModal', default: { show: f
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false } })
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0 } })
+export const $themeVars = atom({
+  key: '$themeVars',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)',
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0,
+    '--gfs': 10,
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)',
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bg-color': 'var(--global-bg-color)',
+    '--g-bdr-rad': '11px',
+    '--dir': 'ltr',
+    '--fw-dis': '',
+    '--fw-fdir': '',
+    '--lw-width': '20px', // for widht
+    '--iw-width': '',
+    '--lw-sa': '',
+    '--lbl-al': '',
+    '--st-al': '',
+    '--ht-al': '',
+    '--fl-fs': '16px',
+    '--st-fs': '12px',
+    '--ht-fs': '12px',
+    '--lw-m': '', // label wrapper for margin
+    '--lw-p': '', // label wrapper for padding
+    '--fl-m': '', // field label
+    '--fl-p': '',
+    '--st-m': '', // subtitle
+    '--st-p': '',
+    '--ht-m': '', // helper text
+    '--ht-p': '',
+    '--fld-m': '', // field
+    '--fld-p': '',
+  },
+})
 export const $styles = atom({
   key: '$styles',
   default: {
     theme: 'bitformDefault',
-    themeVars: {
-      '--global-primary-color': 'hsla(0, 10%, 20%, 100)',
-      '--gph': 0,
-      '--gps': 10,
-      '--gpl': 20,
-      '--gpa': 100,
-      '--global-font-color': 'hsla(0, 10%, 20%, 100)',
-      '--gfh': 0,
-      '--gfs': 10,
-      '--gfl': 20,
-      '--gfa': 100,
-      '--global-bg-color': 'hsla(240, 100%, 97%, 100)',
-      '--gbg-h': 0,
-      '--gbg-s': 10,
-      '--gbg-l': 20,
-      '--gbg-a': 100,
-      '--global-fld-bg-color': 'var(--global-bg-color)',
-      '--g-bdr-rad': '11px',
-      '--dir': 'ltr',
-      '--fw-dis': '',
-      '--fw-fdir': '',
-      '--lw-width': '20px', // for widht
-      '--iw-width': '',
-      '--lw-sa': '',
-      '--lbl-al': '',
-      '--st-al': '',
-      '--ht-al': '',
-      '--fl-fs': '16px',
-      '--st-fs': '12px',
-      '--ht-fs': '12px',
-      '--lw-m': '', // label wrapper for margin
-      '--lw-p': '', // label wrapper for padding
-      '--fl-m': '', // field label
-      '--fl-p': '',
-      '--st-m': '', // subtitle
-      '--st-p': '',
-      '--ht-m': '', // helper text
-      '--ht-p': '',
-      '--fld-m': '', // field
-      '--fld-p': '',
-    },
     form: { _frm: { background: 'var(--global-bg-color)' } },
     fields: {},
   },
