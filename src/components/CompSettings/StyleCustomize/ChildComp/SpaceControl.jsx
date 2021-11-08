@@ -12,9 +12,10 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')
   const [sizeValue, setSizeValue] = useState([...values])
 
-
   const getValue = (stringVal) => stringVal?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
   const getUnit = (stringVal) => stringVal && stringVal.match(/([A-z]|%)+/gi)[0]
+  const sizeValues = (v) => (v && getValue(v)) || 0
+  const sizeUnits = (v) => (v && getUnit(v)) || 'px'
 
   const options = [
     { label: 'All', icn: <BorderRadiusIcn size={16} />, show: ['icn'], tip: 'Radius allside' },
@@ -66,7 +67,7 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
   const unitConverter = (unit, val, id) => {
     const preUnit = getUnit(size[id])
     if (preUnit === unit) return val
-    if (preUnit === 'px' && unit === 'em') return (val * 0.0714285714285714).toFixed(2)
+    if (preUnit === 'px' && unit === 'em') return (val * 0.0714285714285714).toFixed(3)
     if (preUnit === 'px' && unit === 'rem') return val * 0.0625
     if (preUnit === 'em' && unit === 'px') return val * 14
     if (preUnit === 'em' && unit === 'rem') return val / 16
@@ -122,10 +123,10 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
         )}
         {controller === 'Individual' && (
           <>
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label="T" width="100px" value={size[0] && getValue(size[0]) || 0} unit={size[0] && getUnit(size[0]) || 'px'} options={unitOption} />
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="1" label="R" width="100px" value={size[1] && getValue(size[1]) || 0} unit={size[1] && getUnit(size[1]) || 'px'} options={unitOption} />
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="2" label="B" width="100px" value={size[2] && getValue(size[2]) || 0} unit={size[2] && getUnit(size[2]) || 'px'} options={unitOption} />
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="3" label="L" width="100px" value={size[3] && getValue(size[3]) || 0} unit={size[3] && getUnit(size[3]) || 'px'} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label="T" width="100px" value={sizeValues(size[0])} unit={sizeUnits(size[0])} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="1" label="R" width="100px" value={sizeValues(size[1])} unit={sizeUnits(size[1])} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="2" label="B" width="100px" value={sizeValues(size[2])} unit={sizeUnits(size[2])} options={unitOption} />
+            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="3" label="L" width="100px" value={sizeValues(size[3])} unit={sizeUnits(size[3])} options={unitOption} />
           </>
         )}
       </div>

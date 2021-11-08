@@ -2,7 +2,7 @@
 import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
@@ -17,7 +17,7 @@ import { changeFormDir } from './styleHelpers'
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
+  const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
 
   const { '--global-primary-color': globalPrimaryColor,
@@ -28,6 +28,7 @@ export default function ThemeCustomize() {
 
   const globalBdrRadValue = globalBorderRad.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
   const globalBdrRadUnit = globalBorderRad.match(/([A-z]|%)+/gi)[0]
+
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
   // const direction = styles.themeVars['--dir']
@@ -38,10 +39,21 @@ export default function ThemeCustomize() {
     setStyles(prv => changeFormDir(prv, dir))
     setThemeVars(prv => produce(prv, drft => { drft['--dir'] = dir }))
   }
+  const unitConverter = (unit, val) => {
+    const preUnit = globalBdrRadUnit
+    if (preUnit === unit) return val
+    if (preUnit === 'px' && unit === 'em') return (val * 0.0714285714285714).toFixed(3)
+    if (preUnit === 'px' && unit === 'rem') return val * 0.0625
+    if (preUnit === 'em' && unit === 'px') return val * 14
+    if (preUnit === 'em' && unit === 'rem') return val / 16
+    if (preUnit === 'rem' && unit === 'em') return val / 14
+    if (preUnit === 'rem' && unit === 'px') return val * 16
+  }
 
-  const setBorderRad = (value) => {
+  const setBorderRad = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
-      drft['--g-bdr-rad'] = `${value}${globalBdrRadUnit}`
+      drft['--g-bdr-rad'] = `${convertvalue}${unit || globalBdrRadUnit}`
     }))
   }
 
@@ -99,12 +111,10 @@ export default function ThemeCustomize() {
           </div>
 
           <div className={css(ut.flxcb)}>
-            {console.log('---', globalBdrRadUnit)}
             <span className={css(ut.fw500)}>Border Radius</span>
             <SizeControl
               inputHandler={setBorderRad}
-              // inputHandler={(value) => sets(value)}
-              // value={s}
+              sizeHandler={({ unitKey, unitValue }) => setBorderRad({ unit: unitKey, value: unitValue })}
               value={globalBdrRadValue}
               unit={globalBdrRadUnit}
               width="110px"
