@@ -1,34 +1,33 @@
 /* eslint-disable no-param-reassign */
+import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { produce } from 'immer'
-import { useState } from 'react'
-import ut from '../../styles/2.utilities'
+import { $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
-import SimpleColorPicker from './SimpleColorPicker'
-import { $styles } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import { changeFormDir } from './styleHelpers'
 import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
-import SpacingControl from './SpacingControl'
-import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import LabelSpacingControl from './LabelSpacingControl'
+import SimpleColorPicker from './SimpleColorPicker'
+import { changeFormDir } from './styleHelpers'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
-  const [s, sets] = useState(0)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
-    '--g-bdr-rad': globalBorderRad } = styles.themeVars
+    '--g-bdr-rad': globalBorderRad } = themeVars
 
-  const globalBdrRadValue = globalBorderRad.match(/\d+/gi)
-  const globalBdrRadUnit = globalBorderRad.match(/[^\d+]/gi)
+  const globalBdrRadValue = globalBorderRad.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
+  const globalBdrRadUnit = globalBorderRad.match(/([A-z]|%)+/gi)[0]
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
   // const direction = styles.themeVars['--dir']
@@ -37,11 +36,12 @@ export default function ThemeCustomize() {
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
     setStyles(prv => changeFormDir(prv, dir))
+    setThemeVars(prv => produce(prv, drft => { drft['--dir'] = dir }))
   }
 
   const setBorderRad = (value) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.themeVars['--g-bdr-rad'] = `${value}${globalBdrRadUnit}`
+    setThemeVars(prvStyle => produce(prvStyle, drft => {
+      drft['--g-bdr-rad'] = `${value}${globalBdrRadUnit}`
     }))
   }
 
@@ -95,10 +95,11 @@ export default function ThemeCustomize() {
           </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Label Spacing</span>
-            <SpacingControl />
+            <LabelSpacingControl />
           </div>
 
           <div className={css(ut.flxcb)}>
+            {console.log('---', globalBdrRadUnit)}
             <span className={css(ut.fw500)}>Border Radius</span>
             <SizeControl
               inputHandler={setBorderRad}

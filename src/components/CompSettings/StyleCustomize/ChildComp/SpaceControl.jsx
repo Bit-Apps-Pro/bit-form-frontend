@@ -6,7 +6,7 @@ import ut from '../../../../styles/2.utilities'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import SizeControl from './SizeControl'
 
-export default function LabelSpaceControl({ value, unitOption, title, onChange = () => { } }) {
+export default function SpaceControl({ value, unitOption, title, onChange = () => { } }) {
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')

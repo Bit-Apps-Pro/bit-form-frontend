@@ -11,11 +11,11 @@ import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useHistory } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHelperStates, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $layouts, $reCalculateFieldHeights, $selectedFieldId, $styles, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $layouts, $selectedFieldId, $styles, $themeVars, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, propertyValueSumX, produceNewLayouts, fitLayoutItems } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, fitLayoutItems, produceNewLayouts, propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -43,6 +43,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const flags = useRecoilValue($flags)
   const builderHookStates = useRecoilValue($builderHookStates)
   const setStyles = useSetRecoilState($styles)
+  const themeVars = useRecoilValue($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
   const cols = { lg: 60, md: 40, sm: 20 }
@@ -245,11 +246,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     setStyles(styles => produce(styles, draftStyle => {
       const globalTheme = draftStyle.theme
       if (globalTheme === 'bitformDefault') {
-        const fieldStyle = bitformDefaultTheme(newBlk, processedFieldData.typ, draftStyle.themeVars['--dir'])
+        const fieldStyle = bitformDefaultTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
       if (globalTheme === 'material') {
-        const fieldStyle = materialTheme(newBlk, processedFieldData.typ, draftStyle.themeVars['--dir'])
+        const fieldStyle = materialTheme(newBlk, processedFieldData.typ, themeVars['--dir'])
         draftStyle.fields[newBlk] = fieldStyle
       }
     }))

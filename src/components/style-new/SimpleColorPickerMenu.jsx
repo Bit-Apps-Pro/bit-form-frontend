@@ -6,21 +6,22 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { str2Color } from '@atomik-color/core'
 import { hsv2hsl } from './colorHelpers'
-import { $styles } from '../../GlobalStates'
+import { $styles, $themeVars } from '../../GlobalStates'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState({ h: 0, s: 0, v: 0, a: 100 })
 
   useEffect(() => {
     switch (action?.type) {
       case 'global-primary-color':
-        return setColor(str2Color(styles.themeVars['--global-primary-color']))
+        return setColor(str2Color(themeVars['--global-primary-color']))
       case 'global-font-color':
-        return setColor(str2Color(styles.themeVars['--global-font-color']))
+        return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-bg-color':
-        return setColor(str2Color(styles.themeVars['--global-bg-color']))
+        return setColor(str2Color(themeVars['--global-bg-color']))
       default:
         break
     }
@@ -30,30 +31,30 @@ export default function SimpleColorPickerMenu({ action, value }) {
     const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
     switch (action?.type) {
       case 'global-primary-color':
-        setStyles(prvState => produce(prvState, drft => {
-          drft.themeVars['--global-primary-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          drft.themeVars['--gph'] = Math.round(_h)
-          drft.themeVars['--gps'] = `${Math.round(_s)}%`
-          drft.themeVars['--gpl'] = `${Math.round(_l)}%`
-          drft.themeVars['--gpa'] = color.a / 100
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--global-primary-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--gph'] = Math.round(_h)
+          drft['--gps'] = `${Math.round(_s)}%`
+          drft['--gpl'] = `${Math.round(_l)}%`
+          drft['--gpa'] = color.a / 100
         }))
         break
       case 'global-font-color':
-        setStyles(prvState => produce(prvState, drft => {
-          drft.themeVars['--global-font-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          drft.themeVars['--gfh'] = Math.round(_h)
-          drft.themeVars['--gfs'] = `${Math.round(_s)}%`
-          drft.themeVars['--gfl'] = `${Math.round(_l)}%`
-          drft.themeVars['--gfa'] = color.a / 100
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--global-font-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--gfh'] = Math.round(_h)
+          drft['--gfs'] = `${Math.round(_s)}%`
+          drft['--gfl'] = `${Math.round(_l)}%`
+          drft['--gfa'] = color.a / 100
         }))
         break
       case 'global-bg-color':
-        setStyles(prvState => produce(prvState, drft => {
-          drft.themeVars['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          drft.themeVars['--gbg-h'] = Math.round(_h)
-          drft.themeVars['--gbg-s'] = `${Math.round(_s)}%`
-          drft.themeVars['--gbg-l'] = `${Math.round(_l)}%`
-          drft.themeVars['--gbg-a'] = color.a / 100
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--gbg-h'] = Math.round(_h)
+          drft['--gbg-s'] = `${Math.round(_s)}%`
+          drft['--gbg-l'] = `${Math.round(_l)}%`
+          drft['--gbg-a'] = color.a / 100
         }))
         break
       default:

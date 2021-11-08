@@ -44,5 +44,4 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
       }
     }
   }
-  drft.themeVars['--dir'] = dir
 })
