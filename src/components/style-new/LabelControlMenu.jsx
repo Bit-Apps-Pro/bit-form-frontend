@@ -27,6 +27,7 @@ export default function LabelControlMenu() {
   const { '--fl-fs': fldLblFs } = styles.themeVars
   const { '--st-fs': subTitleFs } = styles.themeVars
   const { '--ht-fs': heplrTxtFs } = styles.themeVars
+  const { '--lw-width': lblwitdh } = styles.themeVars
 
   const getValue = (stringVal) => stringVal.match(/[-]?([0-9]*[.])?[0-9]+/gi)
   const getUnit = (stringVal) => stringVal.match(/([A-z]|%)+/gi)
@@ -40,11 +41,15 @@ export default function LabelControlMenu() {
   const [heplrTxtFsVal] = getValue(heplrTxtFs)
   const [heplrTxtFsUnit] = getUnit(heplrTxtFs)
 
+  const [lblWidthVal] = getValue(lblwitdh)
+  const [lblWidthUnit] = getUnit(lblwitdh)
+
   const activeLabelPosition = () => {
     if (styles.themeVars['--fw-dis'] === '') return 'top'
     if (styles.themeVars['--fw-dis'] === 'flex' && styles.themeVars['--fw-fdir'] === '') return 'inline'
     if (styles.themeVars['--fw-dis'] === 'flex' && styles.themeVars['--fw-fdir'] === 'row-reverse') return 'inline-rev'
   }
+
   const handleLabelPosition = (name) => {
     switch (name) {
       case 'top':
@@ -104,17 +109,9 @@ export default function LabelControlMenu() {
     }
   }
 
-  const setLabelAlign = (name) => {
-    setAlign(name, '--lbl-al')
-  }
-
-  const setSubLabelAlign = (name) => {
-    setAlign(name, '--st-al')
-  }
-
-  const setHelperTextAlign = (name) => {
-    setAlign(name, '--ht-al')
-  }
+  const setLabelAlign = (name) => setAlign(name, '--lbl-al')
+  const setSubLabelAlign = (name) => setAlign(name, '--st-al')
+  const setHelperTextAlign = (name) => setAlign(name, '--ht-al')
 
   const setAlign = (name, posVar) => {
     switch (name) {
@@ -157,6 +154,12 @@ export default function LabelControlMenu() {
   const hlprTxtFontSizeHandler = ({ value, unit }) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.themeVars['--ht-fs'] = `${value}${unit}`
+    }))
+  }
+
+  const lblWidthHandler = ({ value, unit }) => {
+    setStyles(preStyle => produce(preStyle, drftStyle => {
+      drftStyle.themeVars['--lw-width'] = `${value}${unit}`
     }))
   }
 
@@ -216,6 +219,17 @@ export default function LabelControlMenu() {
           sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--ht-fs')}
           name="heprTxt"
           options={['px', 'em', 'rem']}
+        />
+      </div>
+      <div className={css(ut.flxcb, ut.mb2)}>
+        <span className={css(ut.fs12)}>Label Width</span>
+        <SizeControl
+          width="115px"
+          value={Number(lblWidthVal)}
+          unit={lblWidthUnit}
+          inputHandler={lblWidthHandler}
+          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--lw-width')}
+          options={['px', 'em', 'rem', '%']}
         />
       </div>
 

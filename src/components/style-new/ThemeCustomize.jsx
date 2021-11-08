@@ -9,6 +9,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import { changeFormDir } from './styleHelpers'
 import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
+import SpacingControl from './SpacingControl'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -76,6 +77,10 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Label Alignment</span>
             <LabelControl />
+          </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Label Spacing</span>
+            <SpacingControl />
           </div>
           {[...Array(20).keys()].map(e => <br />)}
         </div>
