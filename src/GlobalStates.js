@@ -30,45 +30,58 @@ export const $builderHookStates = atom({ key: '$builderHookStates', default: { r
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
-    '--global-primary-color': 'hsla(0, 10%, 20%, 100)',
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
     '--gph': 0, // global primary hue
     '--gps': 10, // global primary saturation
     '--gpl': 20, // global primary lightness
     '--gpa': 100, // global primary opacity
     '--global-font-color': 'hsla(0, 10%, 20%, 100)',
-    '--gfh': 0,
-    '--gfs': 10,
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
     '--gfl': 20,
     '--gfa': 100,
-    '--global-bg-color': 'hsla(240, 100%, 97%, 100)',
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
     '--gbg-h': 0,
     '--gbg-s': 10,
     '--gbg-l': 20,
     '--gbg-a': 100,
-    '--global-fld-bg-color': 'var(--global-bg-color)',
-    '--g-bdr-rad': '11px',
-    '--dir': 'ltr',
-    '--fw-dis': '',
-    '--fw-fdir': '',
-    '--lw-width': '20px', // for widht
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)', // border color
+    '--gfbc-h': 0,
+    '--gfbc-s': 10,
+    '--gfbc-l': 20,
+    '--gfbc-a': 100,
+    // '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+    '--global-fld-bg-color': 'hsla(215, 10%, 20%, 100)', // field background color
+    '--gfbg-h': 0,
+    '--gfbg-s': 10,
+    '--gfbg-l': 20,
+    '--gfbg-a': 100,
+    '--g-bdr-rad': '11px', // border radius
+    '--dir': 'ltr', // direaction
+    '--fw-dis': '', // field wrapper display
+    '--fw-fdir': '', // field wrapper flex direction
+    '--lw-width': '20px', // for width
     '--iw-width': '',
     '--lw-sa': '',
-    '--lbl-al': '',
-    '--st-al': '',
-    '--ht-al': '',
-    '--fl-fs': '16px',
-    '--st-fs': '12px',
-    '--ht-fs': '12px',
+    '--lbl-al': '', // label align
+    '--st-al': '', // subtitle align
+    '--ht-al': '', // helper text align
+    '--fl-fs': '16px', // field label font size
+    '--st-fs': '12px', // subtitle font size
+    '--ht-fs': '12px', // hepler text font size
     '--lw-m': '', // label wrapper for margin
     '--lw-p': '', // label wrapper for padding
-    '--fl-m': '', // field label
-    '--fl-p': '',
-    '--st-m': '', // subtitle
-    '--st-p': '',
-    '--ht-m': '', // helper text
-    '--ht-p': '',
-    '--fld-m': '', // field
-    '--fld-p': '',
+    '--fl-m': '', // field label margin
+    '--fl-p': '', // field label padding
+    '--st-m': '', // subtitle margin
+    '--st-p': '', // subtitle padding
+    '--ht-m': '', // helper text margin
+    '--ht-p': '', // hepler text padding
+    // '--fld-p': '', // field padding
+    '--fld-m': '', // field margin
+    '--fld-fs': '12px', // field font size
+    '--fw-m': '', // field wrapper margin
+    '--fw-p': '', // field wrapper paddin
   },
 })
 export const $styles = atom({
