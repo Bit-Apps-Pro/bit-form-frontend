@@ -10,8 +10,7 @@ export default function SizeControl({ label, className, width, options = [], siz
   const onChangeHandler = value => {
     setval(value)
   }
-  console.log(unit)
-  console.log(unit?.match(/rem|em\w+/gi))
+
   // const step = (unit && unit?.match(/em|rem/gi)) ? 0.001 : 1
   const step = 1
 

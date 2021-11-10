@@ -42,7 +42,7 @@ export default function CustomInputControl(
     max,
     step = 1,
     onChange,
-    showRangeTip = false,
+    showRangeTip = true,
     resizeValueByLabel = true,
     changeValueOnScroll = true,
     showArrow = true },

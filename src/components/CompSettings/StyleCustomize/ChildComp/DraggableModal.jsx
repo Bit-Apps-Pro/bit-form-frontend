@@ -6,7 +6,9 @@ import { $draggableModal } from '../../../../GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
+import FieldWrapperControlMenu from '../../../style-new/FieldWrapperControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
+import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
@@ -20,6 +22,8 @@ const RenderComponent = ({ component, action, value }) => {
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
+    case 'field-margin-control': return <MarginControlMenu />
+    case 'field-wrapper-control': return <FieldWrapperControlMenu />
     default: return 'loading'
   }
 }
@@ -30,6 +34,8 @@ const setTitle = (component) => {
     case 'font': return 'Fonts'
     case 'label-control': return 'Label Placement Control'
     case 'spacing-control': return 'Label Spacing Control'
+    case 'field-margin-control': return 'Field Margin Control'
+    case 'field-wrapper-control': return 'Field Wrapper Control'
     default: return '...'
   }
 }

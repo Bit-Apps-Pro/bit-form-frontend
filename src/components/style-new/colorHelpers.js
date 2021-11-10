@@ -1,4 +1,3 @@
-
 /**
 * @func hsl2hsv
 * @desc Return an HSV color from an HSL color

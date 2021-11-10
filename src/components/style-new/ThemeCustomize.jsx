@@ -8,6 +8,8 @@ import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
+import FieldMarginControl from './FieldMarginControl'
+import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
@@ -24,10 +26,16 @@ export default function ThemeCustomize() {
     '--dir': direction,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
-    '--g-bdr-rad': globalBorderRad } = themeVars
+    '--g-bdr-rad': globalBorderRad,
+    '--global-fld-bdr-clr': globalFldBdrClr,
+    '--global-fld-bg-color': globalFldBgClr,
+    '--fld-fs': fldFs } = themeVars
 
   const globalBdrRadValue = globalBorderRad.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
   const globalBdrRadUnit = globalBorderRad.match(/([A-z]|%)+/gi)[0]
+
+  const fldFSValue = fldFs?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
+  const fldFSUnit = fldFs?.match(/([A-z]|%)+/gi)[0]
 
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
@@ -50,10 +58,16 @@ export default function ThemeCustomize() {
     if (preUnit === 'rem' && unit === 'px') return val * 16
   }
 
-  const setBorderRad = ({ value, unit }) => {
+  const borderRadHandler = ({ value, unit }) => {
     const convertvalue = unitConverter(unit, value)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft['--g-bdr-rad'] = `${convertvalue}${unit || globalBdrRadUnit}`
+    }))
+  }
+  const fldFsSizeHandler = ({ value, unit }) => {
+    const convertvalue = unitConverter(unit, value)
+    setThemeVars(prvStyle => produce(prvStyle, drft => {
+      drft['--fld-fs'] = `${convertvalue}${unit || globalBdrRadUnit}`
     }))
   }
 
@@ -86,6 +100,14 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Font Color</span>
             <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
           </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Border Color</span>
+            <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Field Background Color</span>
+            <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
+          </div>
         </div>
 
         <div className={css(cls.divider)} />
@@ -109,14 +131,33 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Label Spacing</span>
             <LabelSpacingControl />
           </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Field Margin</span>
+            <FieldMarginControl />
+          </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Field Wrapper Control</span>
+            <FieldWrapperControl />
+          </div>
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
             <SizeControl
-              inputHandler={setBorderRad}
-              sizeHandler={({ unitKey, unitValue }) => setBorderRad({ unit: unitKey, value: unitValue })}
+              inputHandler={borderRadHandler}
+              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
               value={globalBdrRadValue}
               unit={globalBdrRadUnit}
+              width="110px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Field Font Size</span>
+            <SizeControl
+              inputHandler={fldFsSizeHandler}
+              sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+              value={fldFSValue}
+              unit={fldFSUnit}
               width="110px"
               options={['px', 'em', 'rem']}
             />
