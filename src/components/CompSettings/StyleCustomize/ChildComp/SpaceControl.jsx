@@ -10,7 +10,6 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')
-  const [sizeValue, setSizeValue] = useState([...values])
 
   const getValue = (stringVal) => stringVal?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
   const getUnit = (stringVal) => stringVal && stringVal.match(/([A-z]|%)+/gi)[0]
@@ -70,18 +69,10 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
   }
 
   const changeHandler = (val) => {
-    const s = []
-    if (val === 'All') {
-      s.push(values[0])
-    } else {
-      for (let i = 0; i < 4; i += 1) {
-        s.push(values[0])
-      }
-    }
-    setSizeValue(...s)
+    if (val === 'All') values = [values[0]]
+    else values = Array(4).fill(values[0])
     setController(val)
   }
-  console.log(sizeValue, 'controller', controller)
 
   return (
     <div className={css(ut.mt2)}>
