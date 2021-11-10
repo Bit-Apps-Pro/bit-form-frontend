@@ -15,7 +15,7 @@ export default function SimpleColorPicker({ subtitle, action, value }) {
         className={css(c.pickrBtn)}
       >
         <div className={css(c.preview)} style={{ background: value }} />
-        <span className={css(c.clrVal)}>#ssdasdasdasdf98s</span>
+        <span className={css(c.clrVal)}>{value}</span>
       </button>
       <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
         <CloseIcn size="12" />
