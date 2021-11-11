@@ -6,7 +6,6 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
-import { unitConverterHelper } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
@@ -15,7 +14,7 @@ import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir } from './styleHelpers'
+import { changeFormDir, unitConverterHelper } from './styleHelpers'
 
 export default function ThemeCustomize() {
   const { css } = useFela()

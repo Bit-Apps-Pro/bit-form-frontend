@@ -3,7 +3,7 @@ import { useFela } from 'react-fela'
 import BorderRadiusCornersIcn from '../../../../Icons/BorderRadiusCornersIcn'
 import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
 import ut from '../../../../styles/2.utilities'
-import { unitConverterHelper } from '../../../../Utils/Helpers'
+import { unitConverterHelper } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import SizeControl from './SizeControl'
 
