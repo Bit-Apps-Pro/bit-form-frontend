@@ -6,6 +6,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import { unitConverterHelper } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
@@ -47,27 +48,17 @@ export default function ThemeCustomize() {
     setStyles(prv => changeFormDir(prv, dir))
     setThemeVars(prv => produce(prv, drft => { drft['--dir'] = dir }))
   }
-  const unitConverter = (unit, val) => {
-    const preUnit = globalBdrRadUnit
-    if (preUnit === unit) return val
-    if (preUnit === 'px' && unit === 'em') return (val * 0.0714285714285714).toFixed(3)
-    if (preUnit === 'px' && unit === 'rem') return val * 0.0625
-    if (preUnit === 'em' && unit === 'px') return val * 14
-    if (preUnit === 'em' && unit === 'rem') return val / 16
-    if (preUnit === 'rem' && unit === 'em') return val / 14
-    if (preUnit === 'rem' && unit === 'px') return val * 16
-  }
 
   const borderRadHandler = ({ value, unit }) => {
-    const convertvalue = unitConverter(unit, value)
+    const convertvalue = unitConverterHelper(unit, value, globalBdrRadUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft['--g-bdr-rad'] = `${convertvalue}${unit || globalBdrRadUnit}`
     }))
   }
   const fldFsSizeHandler = ({ value, unit }) => {
-    const convertvalue = unitConverter(unit, value)
+    const convertvalue = unitConverterHelper(unit, value, fldFSUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
-      drft['--fld-fs'] = `${convertvalue}${unit || globalBdrRadUnit}`
+      drft['--fld-fs'] = `${convertvalue}${unit || fldFSUnit}`
     }))
   }
 

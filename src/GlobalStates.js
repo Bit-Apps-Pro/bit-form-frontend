@@ -60,7 +60,7 @@ export const $themeVars = atom({
     '--dir': 'ltr', // direaction
     '--fw-dis': '', // field wrapper display
     '--fw-fdir': '', // field wrapper flex direction
-    '--lw-width': '20px', // for width
+    '--lw-width': '50px', // for width
     '--iw-width': '',
     '--lw-sa': '',
     '--lbl-al': '', // label align
