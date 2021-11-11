@@ -1,17 +1,10 @@
-import { useState } from 'react'
 import { useFela } from 'react-fela'
 import ut from '../../../../styles/2.utilities'
 import sizeControlStyle from '../../../../styles/sizeControl.style'
 import CustomInputControl from './CustomInputControl'
 
 export default function SizeControl({ label, className, width, options = [], sizeHandler, unit, inputHandler, value, name, min = 1, max = 100, id }) {
-  const [val, setval] = useState(10)
   const { css } = useFela()
-  const onChangeHandler = value => {
-    setval(value)
-  }
-
-  // const step = (unit && unit?.match(/em|rem/gi)) ? 0.001 : 1
   const step = 1
 
   return (
@@ -42,7 +35,7 @@ export default function SizeControl({ label, className, width, options = [], siz
         )}
 
         {options && options?.map((item, i) => (
-          <option value={item}>{item}</option>
+          <option key={`scopt-${i * 2}`} value={item}>{item}</option>
         ))}
       </select>
     </div>
