@@ -295,3 +295,23 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
   }
   return ((y < x) ? -1 : ((y > x) ? 1 : 0))
 })
+
+export const unitConverterHelper = (unit, value, preUnit) => {
+  if (preUnit === unit) return value
+
+  if (preUnit === 'px' && unit === 'em') return Number((value * 0.0625).toFixed(3))
+  if (preUnit === 'px' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
+  if (preUnit === 'px' && unit === '%') return Number(value * 6.25)
+
+  if (preUnit === 'em' && unit === 'px') return Number(value * 16)
+  if (preUnit === 'em' && unit === 'rem') return Number(value)
+  if (preUnit === 'em' && unit === '%') return Number(value * 100)
+
+  if (preUnit === 'rem' && unit === 'em') return Number(value)
+  if (preUnit === 'rem' && unit === 'px') return Number(value * 16)
+  if (preUnit === 'rem' && unit === '%') return Number(value * 100)
+
+  if (preUnit === '%' && unit === 'px') return Number(value * 0.16)
+  if (preUnit === '%' && unit === 'rem') return Number(value * 0.01)
+  if (preUnit === '%' && unit === 'em') return Number(value * 0.01)
+}

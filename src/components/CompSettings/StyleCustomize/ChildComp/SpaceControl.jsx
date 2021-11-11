@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import BorderRadiusCornersIcn from '../../../../Icons/BorderRadiusCornersIcn'
 import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
 import ut from '../../../../styles/2.utilities'
+import { unitConverterHelper } from '../../../../Utils/Helpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import SizeControl from './SizeControl'
 
@@ -28,7 +29,6 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
     values[2] = bottom
     values[3] = left
   */
-
   if (values.length === 1 && controller === 'All') {
     values = [values[0]]
   }
@@ -45,19 +45,10 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
     values = [values[0], values[1], values[2], values[1]]
   }
 
-  const unitConverter = (unit, val, id) => {
-    const preUnit = getUnit(values[id])
-    if (preUnit === unit) return val
-    if (preUnit === 'px' && unit === 'em') return (val * 0.0714285714285714).toFixed(3)
-    if (preUnit === 'px' && unit === 'rem') return val * 0.0625
-    if (preUnit === 'em' && unit === 'px') return val * 14
-    if (preUnit === 'em' && unit === 'rem') return val / 16
-    if (preUnit === 'rem' && unit === 'em') return val / 14
-    if (preUnit === 'rem' && unit === 'px') return val * 16
-  }
-
   const handleValues = ({ value: val, unit, id }) => {
-    const convertvalue = unitConverter(unit, val, id)
+    const preUnit = getUnit(values[id])
+    const convertvalue = unitConverterHelper(unit, val, preUnit)
+
     values[id] = convertvalue + unit
     let v
     if (controller === 'All') {

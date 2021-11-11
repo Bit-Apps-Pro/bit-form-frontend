@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
@@ -14,6 +13,7 @@ import TxtAlignCntrIcn from '../../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../../Icons/TxtAlignRightIcn'
 import ut from '../../styles/2.utilities'
+import { unitConverterHelper } from '../../Utils/Helpers'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -27,7 +27,7 @@ export default function LabelControlMenu() {
   const { '--fl-fs': fldLblFs,
     '--st-fs': subTitleFs,
     '--ht-fs': heplrTxtFs,
-    '--lw-width': lblwitdh,
+    '--lw-width': lblwidth,
     '--fw-dis': fwDis,
     '--fw-fdir': fwFdir,
     '--lw-sa': lwSa,
@@ -47,8 +47,9 @@ export default function LabelControlMenu() {
   const [heplrTxtFsVal] = getValue(heplrTxtFs)
   const [heplrTxtFsUnit] = getUnit(heplrTxtFs)
 
-  const [lblWidthVal] = getValue(lblwitdh)
-  const [lblWidthUnit] = getUnit(lblwitdh)
+  const [lblWidthVal] = getValue(lblwidth)
+  const [lblWidthUnit] = getUnit(lblwidth)
+  console.log(lblwidth, lblWidthUnit, lblWidthVal)
 
   const activeLabelPosition = () => {
     if (fwDis === '') return 'top'
@@ -169,21 +170,10 @@ export default function LabelControlMenu() {
     }))
   }
 
-  const unitConverter = (unit, value, name) => {
-    const [preUnit] = getUnit(themeVars[name])
-
-    if (preUnit === unit) return value
-    if (preUnit === 'px' && unit === 'em') return (value * 0.0714285714285714).toFixed(2)
-    if (preUnit === 'px' && unit === 'rem') return value * 0.0625
-    if (preUnit === 'em' && unit === 'px') return value * 14
-    if (preUnit === 'em' && unit === 'rem') return value / 16
-    if (preUnit === 'rem' && unit === 'em') return value / 14
-    if (preUnit === 'rem' && unit === 'px') return value * 16
-  }
-
   const unitHandler = (unit, value, name) => {
     if (value) {
-      const convetVal = unitConverter(unit, value, name)
+      const [preUnit] = getUnit(themeVars[name])
+      const convetVal = unitConverterHelper(unit, value, preUnit)
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[name] = `${convetVal}${unit}`
       }))
