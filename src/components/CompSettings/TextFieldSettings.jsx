@@ -5,6 +5,8 @@
 import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
@@ -40,7 +42,7 @@ function TextFieldSettings() {
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
-  const autoComplete = fieldData.autoComplete || 'Off'
+  const autoComplete = fieldData.autoComplete.trim().split(' ') || ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
@@ -70,6 +72,8 @@ function TextFieldSettings() {
     const req = e.target.checked ? 'on' : 'off'
     addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+
+  // 'address, user, 
 
   function setAutoComplete(e) {
     if (e.target.checked) {
@@ -291,13 +295,22 @@ function TextFieldSettings() {
     setOptionMdl(false)
   }
 
-  const handleSuggestion = ({ target: { value } }) => {
-    if (value !== '') fieldData.autoComplete = value
+  // const handleSuggestion = ({ target: { value } }) => {
+  //   if (value !== '') fieldData.autoComplete = value
+  //   else delete fieldData.autoComplete
+
+  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  //   setFields(allFields)
+  //   addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  // }
+  const autoCompleteHandler= (value) => {
+    const val = value.split(',').join(' ')
+    if (val !== '') fieldData.autoComplete = val
     else delete fieldData.autoComplete
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const autoCompleteChecked = ({ target: { checked } }) => {
@@ -326,6 +339,7 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
   const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
+
 
   return (
     <>
@@ -438,7 +452,15 @@ function TextFieldSettings() {
           disable={!fieldData.autoComplete}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select
+            <MultiSelect
+              width="100%"
+              defaultValue={autoComplete}
+              className={`${css(FieldStyle.input)}`}
+              placeholder='Select one'
+              options={autofillList}
+              onChange={val => autoCompleteHandler(val)}
+            />
+            {/* <select
               className={css(FieldStyle.input)}
               name="suggestion" value={autoComplete}
               onChange={handleSuggestion}
@@ -449,7 +471,7 @@ function TextFieldSettings() {
                 }
                 return <option value={item.value}>{item.label}</option>
               })}
-            </select>
+            </select> */}
           </div>
 
         </SimpleAccordion>
