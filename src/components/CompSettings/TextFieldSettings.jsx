@@ -45,7 +45,7 @@ function TextFieldSettings() {
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
-  const autoComplete = fieldData.autoComplete.trim().split(' ') || ['Off']
+  const autoComplete = fieldData?.autoComplete?.trim()?.split(' ') || ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
@@ -312,7 +312,6 @@ function TextFieldSettings() {
     const val = value.split(',').join(' ')
     if (val !== '') fieldData.autoComplete = val
     else delete fieldData.autoComplete
-
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
