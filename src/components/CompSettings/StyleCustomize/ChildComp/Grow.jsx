@@ -9,16 +9,26 @@ export default function Grow({ children, open }) {
     setTgl(open)
   }, [open])
 
+  const getAbsoluteHeight = (el) => {
+    const styles = window.getComputedStyle(el)
+    const margin = parseFloat(styles.marginTop)
+      + parseFloat(styles.marginBottom)
+    return Math.ceil(el.offsetHeight + margin)
+  }
+
+  const setAccHeight = (el) => setH(getAbsoluteHeight(el))
+
   return (
-    <div style={{ height: H, transition: 'height 300ms' }}>
+    <div style={{ height: H, transition: 'height 300ms', overflow: H === 'auto' ? 'auto' : 'hidden' }}>
       <CSSTransition
         in={tgl}
-        timeout={150}
-        onEntering={el => setH(el.offsetHeight)}
+        timeout={300}
+        onEntering={setAccHeight}
         onEntered={() => setH('auto')}
         onExit={el => setH(el.offsetHeight)}
         onExiting={() => setH(0)}
         unmountOnExit
+        style={{ overflow: tgl ? 'auto' : 'hidden' }}
       >
         <div className="body">
           {children}
