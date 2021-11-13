@@ -10,10 +10,10 @@ const customInputControlStyle = {
 
     ':hover': {
       b: '1px solid var(--white-0-50)',
-
       '& input': { bc: 'var(--white-0-89) !important' },
       '& button': { dy: 'initial' },
     },
+    '& div[data-tippy-root]': { w: '80%' },
 
   },
   visible: { bs: '0 0 0 2px var(--b-50) outset' },
@@ -30,6 +30,7 @@ const customInputControlStyle = {
     dy: 'inline-block',
     h: '100%',
     pn: 'relative',
+    width: '100%',
   },
 
   input: {
@@ -38,7 +39,7 @@ const customInputControlStyle = {
     oe: 'none',
     brs: '0px !important',
     m: 0,
-    p: '0 !important',
+    p: '0 0 0 3px !important',
     h: '100%',
     w: '100%',
     mnh: 'auto !important',
@@ -60,13 +61,13 @@ const customInputControlStyle = {
     oe: 'none',
     b: 0,
     pn: 'absolute',
-    rt: 4,
+    rt: 0,
     fs: 15,
     curp: 1,
     cr: 'var(--white-2-47)',
     lh: 0,
     dy: 'none',
-    bc: 'transparent !important',
+    bc: 'var(--white-0-95) !important',
     tn: 'all .2s',
 
     ':hover': { cr: 'var(--black-0)', bs: 'none' },
@@ -74,14 +75,13 @@ const customInputControlStyle = {
   },
 
   inc: {
-    tp: 2,
+    tp: 3,
     tm: 'rotate(180deg)',
-
     ':hover': { tp: 1 },
   },
 
   dec: {
-    bm: 2,
+    bm: 3,
 
     ':hover': { bm: 1 },
   },
@@ -144,6 +144,7 @@ const customInputControlStyle = {
       tn: 'transform 0.2s cubic-bezier(0.42, 0, 0.68, 3.27) 0s',
     },
   },
+
 }
 
 export default customInputControlStyle
