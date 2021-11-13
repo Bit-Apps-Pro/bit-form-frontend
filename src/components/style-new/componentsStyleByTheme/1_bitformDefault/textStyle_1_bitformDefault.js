@@ -4,15 +4,15 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-fw`]: {
       display: 'var(--fw-dis, block)',
       'flex-direction': 'var(--fw-fdir, row)',
-      // background: 'var(--primary-color)',
-      // height: '100%',
+      background: 'var(--global-fld-bg-color)',
       width: '100%',
       padding: '10px',
+      position: 'relative',
     },
-    [`.${fk}-lw`]: { width: 'var(--lw-width)', 'align-self': 'var(--lw-sa, auto)' },
-    [`.${fk}-lbl`]: { display: 'block', 'text-align': 'var(--lbl-al, left)' },
-    [`.${fk}-st`]: { 'font-size': '12px', 'text-align': 'var(--st-al, left)' },
-    [`.${fk}-ht`]: { 'font-size': '12px', 'text-align': 'var(--ht-al, left)' },
+    [`.${fk}-lw`]: { width: 'var(--lw-width)', 'align-self': 'var(--lw-sa, auto)', margin: 'var(--lw-m)', padding: 'var(--lw-p)' },
+    [`.${fk}-lbl`]: { 'font-size': 'var(--fl-fs)', display: 'block', 'text-align': 'var(--lbl-al, left)', margin: 'var(--fl-m)', padding: 'var(--fl-p)' },
+    [`.${fk}-st`]: { 'font-size': 'var(--st-fs)', 'text-align': 'var(--st-al, left)' },
+    [`.${fk}-ht`]: { 'font-size': 'var(--ht-fs)', 'text-align': 'var(--ht-al, left)' },
     [`.${fk}-iw`]: { width: 'var(--iw-width)' },
     [`.${fk}-ifw`]: { position: 'relative' },
 
@@ -42,5 +42,19 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     },
     [`.${fk}-fld:hover`]: { 'border-color': 'rgba(29, 158, 249, 1)!important' },
     [`.${fk}-fld::placeholder`]: { color: 'rgba(213, 212, 221, 1)!important' },
+
+    // fld icon
+    [`.${fk}-pre-i`]: {
+      position: 'absolute',
+      left: '3px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+    },
+    [`.${fk}-suf-i`]: {
+      position: 'absolute',
+      right: '3px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+    },
   }
 }

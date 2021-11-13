@@ -165,7 +165,7 @@ const cls = {
   breadcumbLink: { fs: 11, flxi: 'center', mr: 3, ':focus': { bs: 'none' } },
   l1: { cr: 'var(--white-0-61)', ':hover': { textDecoration: 'underline !important' } },
   l2: { cr: 'var(--white-0-21)' },
-  wrp: { ml: 5, mt: 10, fs: 14 },
+  wrp: { ml: 5, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },

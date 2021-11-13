@@ -46,16 +46,16 @@ export const $themeVars = atom({
     '--gbg-l': 20,
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)', // border color
-    '--gfbc-h': 0,
-    '--gfbc-s': 10,
-    '--gfbc-l': 20,
-    '--gfbc-a': 100,
-    // '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
-    '--global-fld-bg-color': 'hsla(215, 10%, 20%, 100)', // field background color
-    '--gfbg-h': 0,
-    '--gfbg-s': 10,
-    '--gfbg-l': 20,
-    '--gfbg-a': 100,
+    // '--gfbc-h': 0,
+    // '--gfbc-s': 10,
+    // '--gfbc-l': 20,
+    // '--gfbc-a': 100,
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+    // '--global-fld-bg-color': 'hsla(215, 10%, 20%, 100)', // field background color
+    // '--gfbg-h': 0,
+    // '--gfbg-s': 10,
+    // '--gfbg-l': 20,
+    // '--gfbg-a': 100,
     '--g-bdr-rad': '11px', // border radius
     '--dir': 'ltr', // direaction
     '--fw-dis': '', // field wrapper display

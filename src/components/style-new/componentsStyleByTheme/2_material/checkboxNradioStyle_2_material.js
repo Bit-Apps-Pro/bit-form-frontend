@@ -97,7 +97,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       [`.${fk}-svgwrp`]: {
         height: '12px',
         width: '10px',
-        filter: 'drop-shadow(0px 1px 1px hsl(var(--gph), var(--gps), 13%))',
+        filter: 'drop-shadow(0px 1.5px .5px hsl(var(--gph), var(--gps), 13%))',
       },
       [`.${fk}-ck-icn`]: {
         'stroke-dashoffset': '16px',
