@@ -112,6 +112,8 @@ import LblverticalPlsmntTopStkIcn from '../Icons/LblverticalPlsmntTopStkIcn'
 import TxtAlignCntrIcn from '../Icons/TxtAlignCntrIcn'
 import TxtAlignLeftIcn from '../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../Icons/TxtAlignRightIcn'
+import BoxIcon from '../Icons/BoxIcon'
+import BoxFullIcon from '../Icons/BoxFullIcon'
 
 export default function ShowIcon() {
   const [searchIcon, setSearchIcon] = useState([])
@@ -701,6 +703,36 @@ export default function ShowIcon() {
       key: 'Text Align Right',
       icon: <TxtAlignRightIcn />,
       com: '<TxtAlignRightIcn size="30" stroke="2" />',
+    },
+    {
+      key: 'Box icon full',
+      icon: <BoxFullIcon size={20} />,
+      com: '<BoxFullIcon size={18} />',
+    },
+    {
+      key: 'Box icon',
+      icon: <BoxIcon size={20} />,
+      com: '<BoxIcon size={18} />',
+    },
+    {
+      key: 'Box icon top',
+      icon: <BoxIcon size={20} varient="top" />,
+      com: '<BoxIcon size={18} varient="top"  />',
+    },
+    {
+      key: 'Box icon bottom',
+      icon: <BoxIcon size={20} varient="bottom" />,
+      com: '<BoxIcon size={18} varient="bottom"  />',
+    },
+    {
+      key: 'Box icon left',
+      icon: <BoxIcon size={20} varient="left" />,
+      com: '<BoxIcon size={18} varient="left"  />',
+    },
+    {
+      key: 'Box icon right',
+      icon: <BoxIcon size={20} varient="right" />,
+      com: '<BoxIcon size={18} varient="right"  />',
     },
 
   ]
