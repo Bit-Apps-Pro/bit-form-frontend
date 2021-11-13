@@ -14,7 +14,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $builderHookStates, $newFormId, $styles } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempThemeVars, $themeVars, $builderHookStates, $newFormId, $styles } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -70,6 +70,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
+  const setThemeVars = useSetRecoilState($themeVars)
+  const setTempThemeVars = useSetRecoilState($tempThemeVars)
 
   const setStyle = useSetRecoilState($styles)
   // eslint-disable-next-line no-console
@@ -92,8 +94,11 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   useEffect(() => {
     if (fetchedBuilderHelperStates) {
       const parseStyle = JSON.parse(fetchedBuilderHelperStates || '{}')
+      console.log('parseStyle', parseStyle)
       setStyle(parseStyle.style)
       setBreakpointSize(parseStyle.breakpointSize)
+      setTempThemeVars(parseStyle?.themeVars)
+      setThemeVars(parseStyle.themeVars)
     }
   }, [fetchedBuilderHelperStates])
 

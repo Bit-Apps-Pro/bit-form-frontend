@@ -84,6 +84,10 @@ export const $themeVars = atom({
     '--fw-p': '', // field wrapper paddin
   },
 })
+export const $tempThemeVars = atom({
+  key: '$tempThemeVars',
+  default: {},
+})
 export const $styles = atom({
   key: '$styles',
   default: {

@@ -2,9 +2,10 @@
 import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $styles, $themeVars } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
+import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -21,6 +22,7 @@ export default function ThemeCustomize() {
   const { formType, formID } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const tempThemeVars = useRecoilValue($tempThemeVars)
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -60,6 +62,12 @@ export default function ThemeCustomize() {
       drft['--fld-fs'] = `${convertvalue}${unit || fldFSUnit}`
     }))
   }
+  const undoColor = (value) => {
+    console.log('theme theme vars', tempThemeVars[value])
+    setThemeVars(prvStyle => produce(prvStyle, drft => {
+      drft[value] = tempThemeVars[value]
+    }))
+  }
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -79,23 +87,48 @@ export default function ThemeCustomize() {
         <br />
         <div className={css(cls.container)}>
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Background Color</span>
+            <div className={css(ut.flxb)}>
+              <span className={css(ut.fw500)}>Background Color</span>
+              <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            </div>
             <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Primary Color</span>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>Primary Color</span>
+              <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            </div>
             <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Font Color</span>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>Font Color</span>
+              <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            </div>
             <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Border Color</span>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>Border Color</span>
+              <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            </div>
             <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Field Background Color</span>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>Field Background Color</span>
+              <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            </div>
             <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
           </div>
         </div>
@@ -170,4 +203,11 @@ const cls = {
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { ml: 12, mr: 15 },
+  btn: {
+    b: 'none',
+    oe: 'none',
+    brs: 8,
+    bc: 'var(--white-0-95)',
+    cur: 'pointer',
+  },
 }

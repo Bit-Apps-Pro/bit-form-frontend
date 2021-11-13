@@ -34,19 +34,14 @@ export default function SimpleColorPickerMenu({ action, value }) {
   useEffect(() => {
     switch (action?.type) {
       case 'global-primary-color':
-        console.log('global promary color', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-primary-color']))
       case 'global-font-color':
-        console.log('global-font', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-bg-color':
-        console.log('global bg', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-bg-color']))
       case 'global-fld-bdr-color':
-        console.log('global fld', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
       case 'global-fld-bg-color':
-        console.log('global fld bg', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-fld-bg-color']))
       default:
         break
@@ -75,6 +70,9 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
+        console.log(`hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`)
+        console.log('--global-bg-color', themeVars['--global-bg-color'])
+
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
           drft['--gbg-h'] = Math.round(_h)
@@ -122,6 +120,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
+        console.log(colorVar)
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `var(${colorVar})`
         }))
