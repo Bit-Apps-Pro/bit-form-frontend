@@ -5,6 +5,8 @@
 import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
@@ -37,9 +39,10 @@ function TextFieldSettings() {
   const isRequired = fieldData.valid.req || false
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
+  const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
-  const autoComplete = fieldData.autoComplete || 'Off'
+  const autoComplete = fieldData.autoComplete.trim().split(' ') || ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
@@ -69,6 +72,8 @@ function TextFieldSettings() {
     const req = e.target.checked ? 'on' : 'off'
     addToBuilderHistory(setBuilderHistory, { event: `Field required ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+
+  // 'address, user, 
 
   function setAutoComplete(e) {
     if (e.target.checked) {
@@ -290,14 +295,24 @@ function TextFieldSettings() {
     setOptionMdl(false)
   }
 
-  const handleSuggestion = ({ target: { value } }) => {
-    if (value !== '') fieldData.autoComplete = value
+  // const handleSuggestion = ({ target: { value } }) => {
+  //   if (value !== '') fieldData.autoComplete = value
+  //   else delete fieldData.autoComplete
+
+  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  //   setFields(allFields)
+  //   addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  // }
+  const autoCompleteHandler= (value) => {
+    const val = value.split(',').join(' ')
+    if (val !== '') fieldData.autoComplete = val
     else delete fieldData.autoComplete
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+
   const autoCompleteChecked = ({ target: { checked } }) => {
     if (checked) fieldData.autoComplete = autoComplete
     else delete fieldData.autoComplete
@@ -306,6 +321,7 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Auto Complete  ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+
   const handleFieldName = ({ target: { value } }) => {
     if (value !== '') fieldData.fieldName = value
     else fieldData.fieldName = fldKey
@@ -314,10 +330,25 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+
+  const handleInputmode = ({ target: { value } }) => {
+    if (value !== '') fieldData.inputMode = value
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+  const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
+
+
   return (
     <>
       <div className="">
-        <FieldSettingTitle title="Field Settings" subtitle={fieldData.typ} fieldKey={fldKey} />
+        <FieldSettingTitle
+          title="Field Settings"
+          subtitle={fieldData.typ}
+          fieldKey={fldKey}
+        />
 
         <FieldLabelSettings />
 
@@ -358,7 +389,12 @@ function TextFieldSettings() {
           disable={!fieldData?.ph}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <input aria-label="Placeholer for this Field" placeholder="Type Placeholder here..." className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} />
+            <input
+              aria-label="Placeholer for this Field"
+              placeholder="Type Placeholder here..."
+              className={css(FieldStyle.input)}
+              type="text" value={placeholder}
+              onChange={setPlaceholder} />
           </div>
         </SimpleAccordion>
 
@@ -374,7 +410,14 @@ function TextFieldSettings() {
           disable={!fieldData?.defaultValue}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <input aria-label="Default value for this Field" placeholder="Type default value here..." className={css(FieldStyle.input)} type="text" value={defaultValue} onChange={setDefaultValue} />
+            <input
+              aria-label="Default value for this Field"
+              placeholder="Type default value here..."
+              className={css(FieldStyle.input)}
+              type="text"
+              value={defaultValue}
+              onChange={setDefaultValue}
+            />
           </div>
         </SimpleAccordion>
 
@@ -409,14 +452,26 @@ function TextFieldSettings() {
           disable={!fieldData.autoComplete}
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select className={css(FieldStyle.input)} name="suggestion" value={autoComplete} onChange={handleSuggestion}>
+            <MultiSelect
+              width="100%"
+              defaultValue={autoComplete}
+              className={`${css(FieldStyle.input)}`}
+              placeholder='Select one'
+              options={autofillList}
+              onChange={val => autoCompleteHandler(val)}
+            />
+            {/* <select
+              className={css(FieldStyle.input)}
+              name="suggestion" value={autoComplete}
+              onChange={handleSuggestion}
+            >
               {autofillList.map((item) => {
                 if (item.type === 'group_start') {
                   return <optgroup label={item.label} />
                 }
                 return <option value={item.value}>{item.label}</option>
               })}
-            </select>
+            </select> */}
           </div>
 
         </SimpleAccordion>
@@ -429,11 +484,39 @@ function TextFieldSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <input aria-label="Name for this Field" placeholder="Type field name here..." className={css(FieldStyle.input)} value={fieldName} onChange={handleFieldName} />
+            <input
+              aria-label="Name for this Field"
+              placeholder="Type field name here..."
+              className={css(FieldStyle.input)}
+              value={fieldName}
+              onChange={handleFieldName}
+            />
           </div>
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
+        {fieldData.typ === 'text' && (
+          <>
+            <SimpleAccordion
+              title={__('Input mode', 'bitform')}
+              className={css(FieldStyle.fieldSection)}
+              open
+            >
+              <div className={css(FieldStyle.placeholder)}>
+                <select className={css(FieldStyle.input)}
+                  aria-label="Input mode for this Field"
+                  placeholder="Type field inpur mode here..."
+                  className={css(FieldStyle.input)}
+                  value={imputMode}
+                  onChange={handleInputmode}
+                >
+                  {inputModeList.map(itm => <option key={`input-itm${Math.random() * 222 + 89}`} value={itm}>{itm}</option>)}
+                </select>
+              </div>
+            </SimpleAccordion>
+            <hr className={css(FieldStyle.divider)} />
+          </>
+        )}
 
         <SimpleAccordion
           title={__('Required', 'bitform')}
@@ -469,7 +552,16 @@ function TextFieldSettings() {
                       <h4 className={css(ut.m0, FieldStyle.title)}>{__('Expression:', 'bitform')}</h4>
                       {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
                     </div>
-                    <input className={css(FieldStyle.input)} aria-label="Pattern for input field" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
+                    <input
+                      className={css(FieldStyle.input)}
+                      aria-label="Pattern for input field"
+                      type="text"
+                      placeholder="e.g. ([A-Z])\w+"
+                      list="patterns"
+                      disabled={!bits.isPro}
+                      value={generateBackslashPattern(regexr)}
+                      onChange={setRegexr}
+                    />
                     <datalist id="patterns">
                       {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
                     </datalist>
