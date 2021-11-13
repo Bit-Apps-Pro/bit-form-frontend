@@ -1,25 +1,25 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import BorderRadiusCornersIcn from '../../../../Icons/BorderRadiusCornersIcn'
-import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
+import BoxFullIcon from '../../../../Icons/BoxFullIcon'
+import BoxIcon from '../../../../Icons/BoxIcon'
 import ut from '../../../../styles/2.utilities'
 import { unitConverterHelper } from '../../../../Utils/Helpers'
+import { getNumFromStr, getStrFromStr } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
+import Grow from './Grow'
 import SizeControl from './SizeControl'
 
-export default function SpaceControl({ value, unitOption, title, onChange = () => { } }) {
+export default function SpaceControl({ value, unitOption, title, onChange = () => { }, className }) {
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')
 
-  const getValue = (stringVal) => stringVal?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
-  const getUnit = (stringVal) => stringVal && stringVal.match(/([A-z]|%)+/gi)[0]
-  const sizeValues = (v) => (v && getValue(v)) || 0
-  const sizeUnits = (v) => (v && getUnit(v)) || 'px'
+  const sizeValues = (v) => (v && getNumFromStr(v)) || 0
+  const sizeUnits = (v) => (v && getStrFromStr(v)) || 'px'
 
   const options = [
-    { label: 'All', icn: <BorderRadiusIcn values={16} />, show: ['icn'], tip: 'Radius allside' },
-    { label: 'Individual', icn: <BorderRadiusCornersIcn values={16} />, show: ['icn'], tip: 'Radius per corner' },
+    { label: 'All', icn: <BoxFullIcon stroke="1.7" size={14} />, show: ['icn'], tip: 'All Side' },
+    { label: 'Individual', icn: <BoxIcon stroke="1.7" size="15" />, show: ['icn'], tip: 'Individual Side' },
   ]
 
   /*
@@ -46,7 +46,7 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
   }
 
   const handleValues = ({ value: val, unit, id }) => {
-    const preUnit = getUnit(values[id])
+    const preUnit = getStrFromStr(values[id])
     const convertvalue = unitConverterHelper(unit, val, preUnit)
 
     values[id] = convertvalue + unit
@@ -66,7 +66,7 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
   }
 
   return (
-    <div className={css(ut.mt2)}>
+    <div className={className}>
       <div className={css(s.titlecontainer)}>
         <span className={css(s.title)}>{title}</span>
         <StyleSegmentControl
@@ -78,21 +78,77 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
           onChange={lbl => changeHandler(lbl)}
           show={['icn']}
           variant="lightgray"
+          noShadow
           activeValue={controller}
         />
       </div>
       <div className={css(s.segmentcontainer)}>
-        {controller === 'All' && (
-          <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label={<BorderRadiusIcn values={19} />} value={values[0] && getValue(values[0])} unit={values[0] && getUnit(values[0])} options={unitOption} width="100px" />
-        )}
-        {controller === 'Individual' && (
-          <>
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="0" label="T" width="100px" value={sizeValues(values[0])} unit={sizeUnits(values[0])} options={unitOption} />
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="1" label="R" width="100px" value={sizeValues(values[1])} unit={sizeUnits(values[1])} options={unitOption} />
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="2" label="B" width="100px" value={sizeValues(values[2])} unit={sizeUnits(values[2])} options={unitOption} />
-            <SizeControl min="0" inputHandler={handleValues} sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })} id="3" label="L" width="100px" value={sizeValues(values[3])} unit={sizeUnits(values[3])} options={unitOption} />
-          </>
-        )}
+        <Grow open={controller === 'All'}>
+          <div className={css({ p: 2 })}>
+            <SizeControl
+              min="0"
+              inputHandler={handleValues}
+              sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
+              id="0"
+              label={<BoxFullIcon size={14} />}
+              value={values[0] && getNumFromStr(values[0])}
+              unit={values[0] && getStrFromStr(values[0])}
+              options={unitOption}
+              width="110px"
+            />
+          </div>
+        </Grow>
+        <Grow open={controller === 'Individual'}>
+          <div className={css(ut.flxc, { flxp: 'wrap', jc: 'end', p: 2 })}>
+            <SizeControl
+              min="0"
+              inputHandler={handleValues}
+              sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
+              id="0"
+              label={<BoxIcon size="14" varient="top" className={css(s.blueTxt)} />}
+              width="100px"
+              value={sizeValues(values[0])}
+              unit={sizeUnits(values[0])}
+              options={unitOption}
+              className={css(ut.mr1, ut.mb1)}
+            />
+            <SizeControl
+              min="0"
+              inputHandler={handleValues}
+              sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
+              id="1"
+              label={<BoxIcon size="14" varient="right" className={css(s.blueTxt)} />}
+              width="100px"
+              value={sizeValues(values[1])}
+              unit={sizeUnits(values[1])}
+              options={unitOption}
+              className={css(ut.mb1)}
+            />
+            <SizeControl
+              min="0"
+              inputHandler={handleValues}
+              sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
+              id="2"
+              label={<BoxIcon size="14" varient="bottom" className={css(s.blueTxt)} />}
+              width="100px"
+              value={sizeValues(values[2])}
+              unit={sizeUnits(values[2])}
+              options={unitOption}
+              className={css(ut.mr1)}
+            />
+            <SizeControl
+              min="0"
+              inputHandler={handleValues}
+              sizeHandler={({ unitKey, unitValue, id }) => handleValues({ value: unitValue, unit: unitKey, id })}
+              id="3"
+              label={<BoxIcon size="14" varient="left" className={css(s.blueTxt)} />}
+              width="100px"
+              value={sizeValues(values[3])}
+              unit={sizeUnits(values[3])}
+              options={unitOption}
+            />
+          </div>
+        </Grow>
       </div>
     </div>
   )
@@ -104,9 +160,9 @@ const s = {
     flx: 'align-center',
     jc: 'flex-end',
     flxp: 'wrap',
-    gap: '5px',
     mt: 10,
   },
   titlecontainer: { flx: 'center-between' },
-  title: { fs: 12 },
+  title: { fs: 12, fw: 500 },
+  blueTxt: { cr: 'var(--b-50)' },
 }
