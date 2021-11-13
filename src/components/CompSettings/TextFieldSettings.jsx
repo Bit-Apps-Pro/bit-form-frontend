@@ -7,6 +7,8 @@ import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
+import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -25,6 +27,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
+import Icons from './Icons'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -49,6 +52,8 @@ function TextFieldSettings() {
   const setBuilderHistory = useSetRecoilState($builderHistory)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const [optionMdl, setOptionMdl] = useState(false)
+  const [icnMdl, setIcnMdl] = useState(false)
+  const [icnType, setIcnType] = useState('')
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -314,6 +319,20 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
+
+  const setIconModel = (typ) => {
+    setIcnType(typ)
+    setIcnMdl(true)
+  }
+
+  const removeIcon = (iconType) => {
+    if (fieldData[iconType]) {
+      delete fieldData[iconType]
+      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      setFields(allFields)
+    }
+  }
+
   return (
     <>
       <div className="">
@@ -343,6 +362,56 @@ function TextFieldSettings() {
               // onKeyDown={setAdminLabel}
               onKeyPress={e => console.log(e.target.value)}
             />
+          </div>
+        </SimpleAccordion>
+        <hr className={css(FieldStyle.divider)} />
+        <SimpleAccordion
+          title={__('Icon', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          toggleAction={hideAdminLabel}
+          toggleChecked
+          open
+        // disable={!fieldData?.adminLbl}
+        >
+          <div className={css(FieldStyle.placeholder, ut.mt2)}>
+            <div className={css(ut.flxc)}>
+              <span className={css(ut.w9)}>PrefIX </span>
+              <div className={css(ut.w3, ut.flxcb)}>
+                {fieldData?.prefixIcn && (
+                  <img src={fieldData?.prefixIcn} alt="icon" width="25" height="25" style={{ marginBottom: '-9px' }} />
+                )}
+
+                <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.btn)}>
+                  <EditIcn size={21} />
+                </button>
+                {fieldData?.prefixIcn && (
+                  <button onClick={() => removeIcon('prefixIcn')} className={css(ut.btn)} type="button">
+                    <CloseIcn size="15" />
+                  </button>
+                )}
+
+              </div>
+            </div>
+          </div>
+
+          <div className={css(FieldStyle.placeholder, ut.mt2)}>
+            <div className={css(ut.flxc)}>
+              <span className={css(ut.w9)}>Suffix </span>
+              <div className={css(ut.w3, ut.flxcb)}>
+                {fieldData?.suffixIcn && (
+                  <img src={fieldData?.suffixIcn} alt="icon" width="25" height="25" style={{ marginBottom: '-9px' }} />
+                )}
+                <button onClick={() => setIconModel('suffixIcn')} className={css(ut.btn)} type="button">
+                  <EditIcn size={21} />
+                </button>
+                {fieldData?.suffixIcn && (
+                  <button onClick={() => removeIcon('suffixIcn')} className={css(ut.btn)} type="button">
+                    <CloseIcn size="15" />
+                  </button>
+                )}
+
+              </div>
+            </div>
           </div>
         </SimpleAccordion>
 
@@ -521,33 +590,6 @@ function TextFieldSettings() {
           )
         }
 
-        {/* <div className={`${css(FieldStyle.fieldSection)}`}>
-        <span>Hidden Field:</span>
-      </div> */}
-        {/* end */}
-
-        {/* <div className="mb-2">
-        <span className="font-w-m">Field Type :</span>
-        {fieldData.typ.charAt(0).toUpperCase() + fieldData.typ.slice(1)}
-      </div>
-      <div className="flx">
-        <span className="font-w-m mr-1">{__('Field Key : ', 'bitform')}</span>
-        <CopyText value={fldKey} className="field-key-cpy m-0 w-7" />
-      </div> */}
-
-        {/* <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} /> */}
-        {/* <SingleToggle title={__('Required:', 'bitform')} action={setRequired} isChecked={isRequired} className="mt-3" />
-      {
-        fieldData?.valid?.req && (
-          <ErrorMessageSettings
-            type="req"
-            title="Error Message"
-            tipTitle="By enabling this feature, user will see the error message when input is empty"
-          />
-        )
-      } */}
-        {/* {fieldData.typ.match(/^(text|url|password|number|email|)$/) && <SingleToggle title={__('Auto Fill:', 'bitform')} action={setAutoComplete} isChecked={isAutoComplete} className="mt-3" />} */}
-        {/* {fieldData.typ.match(/^(text|url|textarea|password|number|email|)$/) && <SingleInput inpType="text" title={__('Placeholder:', 'bitform')} value={placeholder} action={setPlaceholder} />} */}
         {
           fieldData.typ === 'number' && (
             <>
@@ -636,77 +678,9 @@ function TextFieldSettings() {
 
           )
         }
-        {/* {
-        fieldData.typ.match(/^(text|url|textarea|password|number|email|username|)$/) && (
-          <>
-            <div className="flx">
-              <div className="w-7 mr-2 mt-3">
-                <div className="flx">
-                  <h4 className="m-0">{__('Pattern:', 'bitform')}</h4>
-                  {!bits.isPro && <span className="pro-badge ml-2">{__('Pro', 'bitform')}</span>}
-                </div>
-                <input aria-label="Maximum number for this field" className="btcd-paper-inp mt-1" type="text" placeholder="e.g. ([A-Z])\w+" list="patterns" disabled={!bits.isPro} value={generateBackslashPattern(regexr)} onChange={setRegexr} />
-                <datalist id="patterns">
-                  {predefinedPatterns.map((opt, i) => <option key={`${i * 2}`} value={generateBackslashPattern(opt.val)}>{opt.lbl}</option>)}
-                </datalist>
-              </div>
-              <SingleInput inpType="text" title={__('Flags:', 'bitform')} value={flags} action={setFlags} placeholder="e.g. g" className="w-2" cls="mt-2" disabled={!bits.isPro} />
-            </div>
-            {regexr && (
-              <ErrorMessageSettings
-                type="regexr"
-                title="Error Message"
-                tipTitle="By enabling this feature, user will see the error message when input value does not match the pattern"
-              />
-            )}
-          </>
-        )
-      } */}
-
-        {/* <div className="pos-rel">
-        {
-          fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
-            <div>
-              {!bits.isPro && (
-                <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
-                  <div className="pro">
-                    {__('Available On', 'bitform')}
-                    <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                      <span className="txt-pro">
-                        {' '}
-                        {__('Premium', 'bitform')}
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              )}
-              <UniqField
-                type="entryUnique"
-                isUnique="isEntryUnique"
-                title="Validate as Entry Unique"
-                tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-              />
-            </div>
-          )
-        }
-      </div> */}
         <div className="pos-rel">
           {
             fieldData.typ.match(/^(email|username)$/) && (
-              // <div>
-              //   {!bits.isPro && (
-              //     <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
-              //       <div className="pro">
-              //         {__('Available On', 'bitform')}
-              //         <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-              //           <span className="txt-pro">
-              //             {' '}
-              //             {__('Premium', 'bitform')}
-              //           </span>
-              //         </a>
-              //       </div>
-              //     </div>
-              //   )}
               <>
                 <UniqField
                   className={css(FieldStyle.fieldSection)}
@@ -755,6 +729,19 @@ function TextFieldSettings() {
             hasGroup
           />
         </div>
+      </Modal>
+
+      <Modal
+        md
+        autoHeight
+        show={icnMdl}
+        setModal={setIcnMdl}
+        className="o-v"
+        title={__('Icons', 'bitform')}
+      >
+        <div className="pos-rel" />
+
+        <Icons iconType={icnType} setModal={setIcnMdl} />
       </Modal>
     </>
   )
