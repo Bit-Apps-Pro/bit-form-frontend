@@ -22,6 +22,7 @@ const renderer = createRenderer({
     customProperty(customProperties),
   ],
   filterClassName: cls => cls.indexOf('cp') !== -1,
+  devMode: true,
 })
 
 // if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
