@@ -2,6 +2,8 @@ import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
+import ut from '../../styles/2.utilities'
+import ColorPreview from './ColorPreview'
 import { showDraggableModal } from './styleHelpers'
 
 export default function SimpleColorPicker({ subtitle, action, value }) {
@@ -14,12 +16,12 @@ export default function SimpleColorPicker({ subtitle, action, value }) {
         type="button"
         className={css(c.pickrBtn)}
       >
-        <div className={css(c.preview)} style={{ background: value }} />
-        <span className={css(c.clrVal)}>{value}</span>
+        <ColorPreview bg={value} h={25} w={25} className={css(ut.mr2)} />
+        <span className={css(c.clrVal)}>{value.replaceAll(/\(|var|\)/gi, '')}</span>
       </button>
-      <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+      {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
         <CloseIcn size="12" />
-      </button>
+      </button> */}
     </div>
   )
 }
@@ -60,7 +62,8 @@ const c = {
     p: 0,
   },
   clrVal: {
-    w: 70,
+    w: 90,
+    ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',
   },

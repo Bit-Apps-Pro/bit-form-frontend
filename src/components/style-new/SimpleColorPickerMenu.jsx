@@ -6,24 +6,24 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $styles, $themeVars } from '../../GlobalStates'
-import BorderRadiusCornersIcn from '../../Icons/BorderRadiusCornersIcn'
-import BorderRadiusIcn from '../../Icons/BorderRadiusIcn'
+import { $themeVars } from '../../GlobalStates'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsv2hsl } from './colorHelpers'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import ColorPreview from './ColorPreview'
+import ut from '../../styles/2.utilities'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [color, setColor] = useState({ h: 0, s: 0, v: 0, a: 100 })
-  const [controller, setController] = useState('Var')
-  const [colorVar, setColorVar] = useState()
+  const [color, setColor] = useState()
+  const isColorVar = typeof color === 'string'
+  const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
+  // const [colorVar, setColorVar] = useState()
   const options = [
-    { label: 'Var', icn: 'Variable', show: ['icn'], tip: 'Variable color' },
-    { label: 'Custom', icn: 'Custom', show: ['icn'], tip: 'Custom color' },
+    { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
+    { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
   const { '--global-bg-color': globalBgColor,
     '--global-fld-bdr-clr': globalFldBdrClr,
@@ -32,28 +32,25 @@ export default function SimpleColorPickerMenu({ action, value }) {
     '--global-primary-color': globalPrimaryColor } = themeVars
 
   useEffect(() => {
+    if (isColorVar) return
     switch (action?.type) {
       case 'global-primary-color':
-        console.log('global promary color', str2Color(themeVars['--global-primary-color']))
+        console.log('set color')
         return setColor(str2Color(themeVars['--global-primary-color']))
       case 'global-font-color':
-        console.log('global-font', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-bg-color':
-        console.log('global bg', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-bg-color']))
       case 'global-fld-bdr-color':
-        console.log('global fld', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
       case 'global-fld-bg-color':
-        console.log('global fld bg', str2Color(themeVars['--global-primary-color']))
         return setColor(str2Color(themeVars['--global-fld-bg-color']))
       default:
         break
     }
   }, [action])
 
-  useEffect(() => {
+  const handleColor = () => {
     const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
     switch (action?.type) {
       case 'global-primary-color':
@@ -86,67 +83,85 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'global-fld-bdr-color':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          drft['--gfbc-h'] = Math.round(_h)
-          drft['--gfbc-s'] = `${Math.round(_s)}%`
-          drft['--gfbc-l'] = `${Math.round(_l)}%`
-          drft['--gfbc-a'] = color.a / 100
+          // drft['--gfbc-h'] = Math.round(_h)
+          // drft['--gfbc-s'] = `${Math.round(_s)}%`
+          // drft['--gfbc-l'] = `${Math.round(_l)}%`
+          // drft['--gfbc-a'] = color.a / 100
         }))
         break
       case 'global-fld-bg-color':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-fld-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          drft['--gfbg-h'] = Math.round(_h)
-          drft['--gfbg-s'] = `${Math.round(_s)}%`
-          drft['--gfbg-l'] = `${Math.round(_l)}%`
-          drft['--gfbg-a'] = color.a / 100
+          // drft['--gfbg-h'] = Math.round(_h)
+          // drft['--gfbg-s'] = `${Math.round(_s)}%`
+          // drft['--gfbg-l'] = `${Math.round(_l)}%`
+          // drft['--gfbg-a'] = color.a / 100
         }))
         break
       default:
         break
     }
-  }, [color])
-
-  const ColHandler = (val) => {
-    setColorVar(val)
   }
-  useEffect(() => {
+
+  const handleColorVar = () => {
     switch (action?.type) {
       case 'global-primary-color':
+        console.log('set color')
+
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-primary-color'] = `var(${colorVar})`
+          drft['--global-primary-color'] = `var(${color})`
         }))
         break
       case 'global-font-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-font-color'] = `var(${colorVar})`
+          drft['--global-font-color'] = `var(${color})`
         }))
         break
       case 'global-bg-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-bg-color'] = `var(${colorVar})`
+          drft['--global-bg-color'] = `var(${color})`
         }))
         break
       case 'global-fld-bdr-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-fld-bdr-clr'] = `var(${colorVar})`
+          drft['--global-fld-bdr-clr'] = `var(${color})`
         }))
         break
       case 'global-fld-bg-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-fld-bg-color'] = `var(${colorVar})`
+          drft['--global-fld-bg-color'] = `var(${color})`
         }))
         break
       default:
         break
     }
-  }, [colorVar])
+  }
+
+  useEffect(() => {
+    console.log('handle var', isColorVar, color)
+    if (isColorVar) {
+      console.log('handle var')
+      handleColorVar()
+    } else if (color) {
+      handleColor()
+    }
+  }, [color])
+
+  const setColorState = (val) => {
+    setColor(val)
+  }
+
+  // useEffect(() => {
+  //   if (!isColorVar) return
+
+  // }, [colorVar])
 
   return (
     <div className={css(c.preview_wrp)}>
       <div className={css(boxSizeControlStyle.titlecontainer, c.mb)}>
-        <span className={css(boxSizeControlStyle.title, c.m)}>Color</span>
         <StyleSegmentControl
           square
+          noShadow
           defaultActive="Var"
           options={options}
           size={60}
@@ -162,31 +177,32 @@ export default function SimpleColorPickerMenu({ action, value }) {
 
       <Grow open={controller === 'Var'}>
         <div className={css(c.varClr)}>
-          <button className={css(c.clrItem, value === globalBgColor ? c.active : null)} type="button" onClick={() => ColHandler('--global-bg-color')}>
-            <span className={css(c.color)} style={{ background: globalBgColor }} />
+          {console.log({ globalBgColor, color, value })}
+          <button className={`${css(c.clrItem)} ${css(color === '--global-bg-color' ? c.active : null)}`} type="button" onClick={() => setColorState('--global-bg-color')}>
+            <ColorPreview bg={globalBgColor} className={css(ut.mr2)} />
             <span>Background Color</span>
           </button>
-          <button className={css(c.clrItem, value === globalPrimaryColor ? c.active : null)} type="button" onClick={() => ColHandler('--global-primary-color')}>
-            <span className={css(c.color)} style={{ background: globalPrimaryColor }} />
+          <button className={css(c.clrItem, color === '--global-primary-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-primary-color')}>
+            <ColorPreview bg={globalPrimaryColor} className={css(ut.mr2)} />
             <span>Background Primary Color</span>
           </button>
-          <button className={css(c.clrItem, value === globalFontColor ? c.active : null)} type="button" onClick={() => ColHandler('--global-font-color')}>
-            <span className={css(c.color)} style={{ background: globalFontColor }} />
+          <button className={css(c.clrItem, color === '--global-font-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-font-color')}>
+            <ColorPreview bg={globalFontColor} className={css(ut.mr2)} />
             <span>Font Color</span>
           </button>
-          <button className={css(c.clrItem, value === globalFldBdrClr ? c.active : null)} type="button" onClick={() => ColHandler('--global-fld-bdr-clr')}>
-            <span className={css(c.color)} style={{ background: globalFldBdrClr }} />
+          <button className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bdr-clr')}>
+            <ColorPreview bg={globalFldBdrClr} className={css(ut.mr2)} />
             <span>Field Border Color</span>
           </button>
-          <button className={css(c.clrItem, value === globalFldBgColor ? c.active : null)} type="button" onClick={() => ColHandler('--global-fld-bg-color')}>
-            <span className={css(c.color)} style={{ background: globalFldBgColor }} />
+          <button className={css(c.clrItem, color === '--global-fld-bg-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bg-color')}>
+            <ColorPreview bg={globalFldBgColor} className={css(ut.mr2)} />
             <span>Field Background Color</span>
           </button>
         </div>
       </Grow>
 
       <Grow open={controller === 'Custom'}>
-        <ColorPicker showParams showPreview onChange={setColor} value={color} />
+        <ColorPicker showParams showPreview onChange={setColorState} value={color} />
       </Grow>
 
     </div>
@@ -217,22 +233,22 @@ const c = {
     brs: 8,
     mr: 10,
   },
+  bggrid: { bi: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2N89erVfwY0ICYmxoguxjgUFKI7GsTH5m4M3w1ChQC1/Ca8i2n1WgAAAABJRU5ErkJggg==)' },
   varClr: { my: 5 },
-  active: {
-    bd: 'var(--b-79-96)',
-    cr: 'var(--b-50)',
-  },
+  active: { bcr: 'var(--b-50) !important', bd: '#f3f8ff' },
   clrItem: {
     dy: 'block',
     flx: 'align-center',
-    bd: 'var(--white-0-93)',
+    bd: 'transparent',
+    b: '2px solid var(--white-0-93)',
     p: 3,
     mb: 8,
-    brs: 8,
-    fs: 13,
+    brs: 10,
+    fs: 12,
     cur: 'pointer',
     w: '100%',
-    b: 'none',
+    tn: 'background .3s',
+    ':hover': { bd: 'var(--white-0-97)' },
   },
   m: { mr: 15 },
   mb: { mb: 5 },
