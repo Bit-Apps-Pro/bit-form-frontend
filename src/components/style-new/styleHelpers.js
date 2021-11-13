@@ -65,3 +65,6 @@ export const unitConverterHelper = (unit, value, preUnit) => {
   if (preUnit === '%' && unit === 'rem') return Number(value * 0.01)
   if (preUnit === '%' && unit === 'em') return Number(value * 0.01)
 }
+
+export const getNumFromStr = (str = '') => str.match(/[-]?([0-9]*[.])?[0-9]+/gi)?.[0]
+export const getStrFromStr = (str = '') => str.match(/([A-z]|%)+/gi)?.[0]
