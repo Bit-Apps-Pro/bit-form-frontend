@@ -121,6 +121,7 @@ export default function CustomInputControl(
         </span>
       )}
       <Tippy
+        className={css(customInputControlStyle.tip)}
         inertia
         placement="bottom"
         duration={350}
@@ -128,7 +129,7 @@ export default function CustomInputControl(
         theme="light-border"
         animation="shift-away-extreme"
         interactive
-        maxWidth="auto"
+        maxWidth="100%"
         arrow
         content={<SliderInput min={min} max={max} step={step} val={value} onChangeHandler={onChangeHandler} />}
         visible={visible}
@@ -142,6 +143,7 @@ export default function CustomInputControl(
             type="number"
             min={min}
             max={max}
+            placeholder="auto"
             step={step}
             onChange={onChangeHandler}
             onKeyDown={handleArrowKey}
@@ -150,7 +152,7 @@ export default function CustomInputControl(
             value={value}
           />
           {showArrow && (
-            <>
+            <div>
               <button
                 type="button"
                 className={css(customInputControlStyle.button, customInputControlStyle.inc)}
@@ -165,7 +167,7 @@ export default function CustomInputControl(
               >
                 <ChevronDownIcn size={9} viewBox="6 9 12 6" />
               </button>
-            </>
+            </div>
           )}
         </div>
       </Tippy>
