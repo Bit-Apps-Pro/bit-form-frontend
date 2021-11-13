@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
@@ -16,7 +17,7 @@ import ut from '../../styles/2.utilities'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { unitConverterHelper } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 
 export default function LabelControlMenu() {
   const { css } = useFela()
@@ -27,7 +28,7 @@ export default function LabelControlMenu() {
   const { '--fl-fs': fldLblFs,
     '--st-fs': subTitleFs,
     '--ht-fs': heplrTxtFs,
-    '--lw-width': lblwidth,
+    '--lw-width': lblWidth,
     '--fw-dis': fwDis,
     '--fw-fdir': fwFdir,
     '--lw-sa': lwSa,
@@ -35,21 +36,17 @@ export default function LabelControlMenu() {
     '--st-al': stAl,
     '--ht-al': htAl } = themeVars
 
-  const getValue = (stringVal) => stringVal.match(/[-]?([0-9]*[.])?[0-9]+/gi)
-  const getUnit = (stringVal) => stringVal.match(/([A-z]|%)+/gi)
+  const fldLblFsVal = getNumFromStr(fldLblFs)
+  const fldLblFsUnit = getStrFromStr(fldLblFs)
 
-  const [fldLblFsVal] = getValue(fldLblFs)
-  const [fldLblFsUnit] = getUnit(fldLblFs)
+  const subTitleFsVal = getNumFromStr(subTitleFs)
+  const subTitleFsUnit = getStrFromStr(subTitleFs)
 
-  const [subTitleFsVal] = getValue(subTitleFs)
-  const [subTitleFsUnit] = getUnit(subTitleFs)
+  const heplrTxtFsVal = getNumFromStr(heplrTxtFs)
+  const heplrTxtFsUnit = getStrFromStr(heplrTxtFs)
 
-  const [heplrTxtFsVal] = getValue(heplrTxtFs)
-  const [heplrTxtFsUnit] = getUnit(heplrTxtFs)
-
-  const [lblWidthVal] = getValue(lblwidth)
-  const [lblWidthUnit] = getUnit(lblwidth)
-  console.log(lblwidth, lblWidthUnit, lblWidthVal)
+  const lblWidthVal = getNumFromStr(lblWidth)
+  const lblWidthUnit = getStrFromStr(lblWidth)
 
   const activeLabelPosition = () => {
     if (fwDis === '') return 'top'
@@ -172,7 +169,7 @@ export default function LabelControlMenu() {
 
   const unitHandler = (unit, value, name) => {
     if (value) {
-      const [preUnit] = getUnit(themeVars[name])
+      const preUnit = getStrFromStr(themeVars[name])
       const convetVal = unitConverterHelper(unit, value, preUnit)
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[name] = `${convetVal}${unit}`
@@ -185,7 +182,7 @@ export default function LabelControlMenu() {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Font Size</span>
         <SizeControl
-          width="115px"
+          width="105px"
           value={Number(fldLblFsVal || 0)}
           unit={fldLblFsUnit}
           inputHandler={fontSizeHandler}
@@ -196,7 +193,7 @@ export default function LabelControlMenu() {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Subtitle Font Size</span>
         <SizeControl
-          width="115px"
+          width="105px"
           value={Number(subTitleFsVal)}
           unit={subTitleFsUnit}
           inputHandler={subTtlFontSizeHandler}
@@ -208,7 +205,7 @@ export default function LabelControlMenu() {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Helper Text Font Size</span>
         <SizeControl
-          width="115px"
+          width="105px"
           value={Number(heplrTxtFsVal)}
           unit={heplrTxtFsUnit}
           inputHandler={hlprTxtFontSizeHandler}
@@ -220,7 +217,7 @@ export default function LabelControlMenu() {
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Width</span>
         <SizeControl
-          width="115px"
+          width="105px"
           value={Number(lblWidthVal)}
           unit={lblWidthUnit}
           inputHandler={lblWidthHandler}
