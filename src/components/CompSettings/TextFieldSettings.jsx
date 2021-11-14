@@ -45,6 +45,7 @@ function TextFieldSettings() {
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
+  const suggestions = fieldData.suggestions || []
   const autoComplete = fieldData?.autoComplete?.trim()?.split(' ') || ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
@@ -355,6 +356,13 @@ function TextFieldSettings() {
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
     }
+  }
+
+  const handleSuggestions = newSuggestions => {
+    fieldData.suggestions = newSuggestions
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    setUpdateBtn({ unsaved: true })
   }
 
   return (
@@ -813,11 +821,11 @@ function TextFieldSettings() {
 
           <EditOptions
             optionMdl={optionMdl}
-            options={[]}
-            lblKey="label"
-            valKey="value"
-            type="select"
-            hasGroup
+            options={suggestions}
+            setOptions={newSuggestions => handleSuggestions(newSuggestions)}
+            lblKey="lbl"
+            valKey="val"
+            checkByDefault={false}
           />
         </div>
       </Modal>
