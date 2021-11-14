@@ -13,7 +13,7 @@ export function observeElement(element, property, callback, delay = 0) {
         const oldValue = this[property]
         descriptor.set.apply(this, args)
         const newValue = this[property]
-        if (typeof callback == 'function') {
+        if (typeof callback === 'function') {
           setTimeout(callback.bind(this, oldValue, newValue), delay)
         }
         return newValue
