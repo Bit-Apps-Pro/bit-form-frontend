@@ -7,12 +7,10 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $styles, $themeVars } from '../../GlobalStates'
-import BorderRadiusCornersIcn from '../../Icons/BorderRadiusCornersIcn'
-import BorderRadiusIcn from '../../Icons/BorderRadiusIcn'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsv2hsl } from './colorHelpers'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import { hsv2hsl } from './colorHelpers'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()

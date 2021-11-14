@@ -38,7 +38,6 @@ export default function ThemeCustomize() {
 
   const fldFSValue = fldFs?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
   const fldFSUnit = fldFs?.match(/([A-z]|%)+/gi)[0]
-
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
   // const direction = styles.themeVars['--dir']
@@ -63,9 +62,14 @@ export default function ThemeCustomize() {
     }))
   }
   const undoColor = (value) => {
-    console.log('theme theme vars', tempThemeVars[value])
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft[value] = tempThemeVars[value]
+    }))
+  }
+
+  const undoHandler = (value) => {
+    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+      drftStyle[value] = tempThemeVars[value] || '0px'
     }))
   }
 
@@ -165,6 +169,9 @@ export default function ThemeCustomize() {
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
+            <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
+              <UndoIcon size="20" />
+            </button>
             <SizeControl
               inputHandler={borderRadHandler}
               sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
@@ -176,6 +183,9 @@ export default function ThemeCustomize() {
           </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Font Size</span>
+            <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
+              <UndoIcon size="20" />
+            </button>
             <SizeControl
               inputHandler={fldFsSizeHandler}
               sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
@@ -210,4 +220,5 @@ const cls = {
     bc: 'var(--white-0-95)',
     cur: 'pointer',
   },
+  pnt: { cur: 'not-allowed' },
 }

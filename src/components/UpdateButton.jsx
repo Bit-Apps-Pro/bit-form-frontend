@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'

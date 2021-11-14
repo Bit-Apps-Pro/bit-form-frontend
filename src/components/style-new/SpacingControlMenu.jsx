@@ -1,10 +1,12 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useRecoilState } from 'recoil'
-import { $themeVars } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $tempThemeVars, $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function SpacingControlMenu() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const tempThemeVars = useRecoilValue($tempThemeVars)
 
   const { '--lw-m': lblWrpMargin,
     '--lw-p': lblWrpPadding,
@@ -70,19 +72,24 @@ export default function SpacingControlMenu() {
       drftStyle['--fld-p'] = `${v}`
     }))
   }
+  const undoHandler = (value) => {
+    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      drftStyle[value] = tempThemeVars[value]
+    }))
+  }
 
   return (
     <>
-      <SpaceControl value={lblWrpMargin} title="Label Wrapper Margin" onChange={val => lblWrpMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={lblWrpPadding} title="Label Wrapper Padding" onChange={val => lblWrpPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={fldLblMargin} title="Field Label Margin" onChange={val => fldLblMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={fldLblPadding} title="Field Label Padding" onChange={val => fldLblPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={subTitleMargin} title="Sub Title Margin" onChange={val => subTitleMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={subTitlePadding} title="Sub Title Padding" onChange={val => subTitlePaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={hlpTxtMargin} title="Helper Text Margin" onChange={val => HlpTxtMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={hlpTxtPadding} title="Helper TextPadding" onChange={val => HlpTxtPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={fldMargin} title="Field Margin" onChange={val => FldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={fldPadding} title="Field Padding" onChange={val => FldPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--lw-m']} undoHandler={() => undoHandler('--lw-m')} value={lblWrpMargin} title="Label Wrapper Margin" onChange={val => lblWrpMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--lw-p']} undoHandler={() => undoHandler('--lw-p')} value={lblWrpPadding} title="Label Wrapper Padding" onChange={val => lblWrpPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--fl-m']} undoHandler={() => undoHandler('--fl-m')} value={fldLblMargin} title="Field Label Margin" onChange={val => fldLblMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--fl-p']} undoHandler={() => undoHandler('--fl-p')} value={fldLblPadding} title="Field Label Padding" onChange={val => fldLblPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--st-m']} undoHandler={() => undoHandler('--st-m')} value={subTitleMargin} title="Sub Title Margin" onChange={val => subTitleMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--st-p']} undoHandler={() => undoHandler('--st-p')} value={subTitlePadding} title="Sub Title Padding" onChange={val => subTitlePaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--ht-m']} undoHandler={() => undoHandler('--ht-m')} value={hlpTxtMargin} title="Helper Text Margin" onChange={val => HlpTxtMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--ht-p']} undoHandler={() => undoHandler('--ht-p')} value={hlpTxtPadding} title="Helper TextPadding" onChange={val => HlpTxtPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fldMargin} title="Field Margin" onChange={val => FldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl disabled={!tempThemeVars['--fld-p']} undoHandler={() => undoHandler('--fld-p')} value={fldPadding} title="Field Padding" onChange={val => FldPaddingHandler(val)} unitOption={['px', 'em', 'rem']} />
     </>
   )
 }

@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BorderRadiusCornersIcn from '../../../../Icons/BorderRadiusCornersIcn'
 import BorderRadiusIcn from '../../../../Icons/BorderRadiusIcn'
+import UndoIcon from '../../../../Icons/UndoIcon'
 import ut from '../../../../styles/2.utilities'
 import { unitConverterHelper } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import SizeControl from './SizeControl'
 
-export default function SpaceControl({ value, unitOption, title, onChange = () => { } }) {
+export default function SpaceControl({ value, unitOption, title, onChange = () => { }, undoHandler, disabled }) {
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')
@@ -69,6 +70,9 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
     <div className={css(ut.mt2)}>
       <div className={css(s.titlecontainer)}>
         <span className={css(s.title)}>{title}</span>
+        <button onClick={undoHandler} disabled={disabled} type="button">
+          <UndoIcon size="18" />
+        </button>
         <StyleSegmentControl
           square
           defaultActive="All"
