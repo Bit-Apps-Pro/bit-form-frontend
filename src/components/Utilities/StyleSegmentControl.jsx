@@ -15,6 +15,7 @@ export default function StyleSegmentControl({ defaultActive,
   borderRadius = 8,
   activeShow,
   noShadow,
+  defaultItmWidth,
   wideTab }) {
   const { css } = useFela()
   const baseSize = Number(size)
@@ -95,10 +96,12 @@ export default function StyleSegmentControl({ defaultActive,
   const [active, setactive] = useState(defaultActive || options[0].label)
 
   const setSelectorPos = (activeElement) => {
-    const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
-    // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
-    selectorRef.current.style.width = `${toActiveElmWidth}px`
-    selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
+    setTimeout(() => {
+      const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
+      // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
+      selectorRef.current.style.width = `${toActiveElmWidth}px`
+      selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
+    }, 100)
   }
 
   useEffect(() => {
@@ -141,7 +144,7 @@ export default function StyleSegmentControl({ defaultActive,
   return (
     <div className={`${css(style.wrapper)} ${className}`}>
       <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
-        <div ref={selectorRef} className={`selector ${css(style.selector)}`} />
+        <div ref={selectorRef} className={`selector ${css(style.selector)}`} style={{ width: defaultItmWidth }} />
         {options?.map((item, i) => {
           const btn = (
             <button
