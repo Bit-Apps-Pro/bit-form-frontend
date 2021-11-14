@@ -11,7 +11,6 @@ import TrashIcn from '../../../Icons/TrashIcn'
 import ut from '../../../styles/2.utilities'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import CheckBox from '../../Fields/CheckBox'
 import Button from '../../Utilities/Button'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Tip from '../../Utilities/Tip'
@@ -23,7 +22,7 @@ const DragHandle = SortableHandle(({ className }) => (
   <span className={`handle ${className}`}><DragIcn size={14} /></span>
 ))
 
-const SortableItem = SortableElement(({ value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey }) => {
+const SortableItem = SortableElement(({ value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault }) => {
   const { css } = useFela()
 
   const isGroupStart = 'type' in value && value.type.includes('group') && value.type.includes('start')
@@ -184,7 +183,7 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
                 <input type="text" value={value[valKey]} onChange={e => setOpt(e, optIndx, valKey)} placeholder={`${value[lblKey]}`} width={140} className={css(optionStyle.input)} />
               </>
             )}
-            {!isGroupStart && (
+            {!isGroupStart && checkByDefault && (
               <span className={css(ut.flxc, ut.pb1, ut.ml1)}>
                 <Tip msg="Check by Default">
                   <TableCheckBox checked={value.check !== undefined} onChange={(e) => setCheck(e, optIndx)} className="" />
@@ -226,7 +225,7 @@ const SortableItem = SortableElement(({ value, optIndx, type, option, setOption,
   )
 })
 
-export default function VisualOptionsTab({ optKey, options, option, setOption, type, lblKey, valKey, hasGroup }) {
+export default function VisualOptionsTab({ optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup }) {
   const { css } = useFela()
   const [scrolIndex, setScrolIndex] = useState(0)
 
@@ -313,7 +312,7 @@ export default function VisualOptionsTab({ optKey, options, option, setOption, t
           // overscanCount={20}
           renderItem={({ index, style }) => (
             <div key={option[index].id} style={style}>
-              <SortableItem key={`sortable-${option[index].id}`} index={index} optIndx={index} value={option[index]} type={type} option={option} setOption={setOption} lblKey={lblKey} valKey={valKey} setScrolIndex={setScrolIndex} optKey={optKey} />
+              <SortableItem key={`sortable-${option[index].id}`} index={index} optIndx={index} value={option[index]} type={type} option={option} setOption={setOption} lblKey={lblKey} valKey={valKey} setScrolIndex={setScrolIndex} optKey={optKey} checkByDefault={checkByDefault} />
             </div>
           )}
         />
@@ -322,9 +321,11 @@ export default function VisualOptionsTab({ optKey, options, option, setOption, t
         <Button className={css(optionStyle.add_btn)} onClick={() => addOption()}>
           {__('Add More +', 'bitform')}
         </Button>
-        {hasGroup && <Button className={css(optionStyle.add_btn)} onClick={addGroup}>
-          {__('Add Group +', 'bitform')}
-        </Button>}
+        {hasGroup && (
+          <Button className={css(optionStyle.add_btn)} onClick={addGroup}>
+            {__('Add Group +', 'bitform')}
+          </Button>
+        )}
 
       </div>
     </>
