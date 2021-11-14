@@ -6,16 +6,13 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsv2hsl } from './colorHelpers'
+import { $themeVars } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
-import ColorPreview from './ColorPreview'
-import ut from '../../styles/2.utilities'
-import { $themeVars } from '../../GlobalStates'
-import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsv2hsl } from './colorHelpers'
+import ColorPreview from './ColorPreview'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
@@ -183,7 +180,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
 
       <Grow open={controller === 'Var'}>
         <div className={css(c.varClr)}>
-          {console.log({ globalBgColor, color, value })}
           <button className={`${css(c.clrItem)} ${css(color === '--global-bg-color' ? c.active : null)}`} type="button" onClick={() => setColorState('--global-bg-color')}>
             <ColorPreview bg={globalBgColor} className={css(ut.mr2)} />
             <span>Background Color</span>

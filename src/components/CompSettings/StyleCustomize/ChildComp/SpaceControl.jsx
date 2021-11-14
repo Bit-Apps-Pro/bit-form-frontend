@@ -12,6 +12,12 @@ import SizeControl from './SizeControl'
 export default function SpaceControl({ value, unitOption, title, onChange = () => { }, undoHandler, disabled, className }) {
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
+
+  if (values.length === 4) {
+    const distinct = values.filter((val, index, self) => self.indexOf(val) === index)
+    if (distinct.length === 1) values = distinct
+  }
+
   const [controller, setController] = useState(values.length === 1 ? 'All' : 'Individual')
 
   const sizeValues = (v) => (v && getNumFromStr(v)) || 0
