@@ -188,7 +188,6 @@ function RadioCheckSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } }, setUpdateBtn)
-
   }
 
   function setMax(e) {
@@ -216,7 +215,7 @@ function RadioCheckSettings() {
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_disable_on_max`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hideAdminLabel = (e) => {
@@ -238,6 +237,10 @@ function RadioCheckSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Field name updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_field_name', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const handleOptions = newOpts => {
+    setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
   }
 
   return (
@@ -497,6 +500,7 @@ function RadioCheckSettings() {
           <EditOptions
             optionMdl={optionMdl}
             options={options}
+            setOptions={newOpts => handleOptions(newOpts)}
             lblKey="lbl"
             valKey="val"
             type={fieldData.typ}
