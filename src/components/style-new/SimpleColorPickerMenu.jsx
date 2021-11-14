@@ -6,13 +6,16 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $themeVars } from '../../GlobalStates'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsv2hsl } from './colorHelpers'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import ColorPreview from './ColorPreview'
 import ut from '../../styles/2.utilities'
+import { $themeVars } from '../../GlobalStates'
+import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import { hsv2hsl } from './colorHelpers'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
@@ -35,7 +38,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
     if (isColorVar) return
     switch (action?.type) {
       case 'global-primary-color':
-        console.log('set color')
         return setColor(str2Color(themeVars['--global-primary-color']))
       case 'global-font-color':
         return setColor(str2Color(themeVars['--global-font-color']))
@@ -72,6 +74,9 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
+        console.log(`hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`)
+        console.log('--global-bg-color', themeVars['--global-bg-color'])
+
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
           drft['--gbg-h'] = Math.round(_h)
@@ -118,6 +123,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
+        console.log(colorVar)
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `var(${color})`
         }))

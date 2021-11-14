@@ -124,15 +124,29 @@ const ut = {
     bd: 'var(--b-92-62)',
     brs: 8,
     p: 6,
-    //cr: 'var(--white-100)',
-    b: 'none'
+    // cr: 'var(--white-100)',
+    b: 'none',
   },
   btn: {
     cur: 'pointer',
     b: 'none',
     oe: 'none',
     bd: 'none',
-  }
+  },
+  icnBtn: {
+    curp: 1,
+    b: 'none',
+    oe: 'none',
+    bd: 'none',
+    flx: 'center',
+    brs: 20,
+    aspectRatio: '1/1',
+    w: 30,
+    h: 30,
+    ':hover': { bd: 'var(--white-0-95)' },
+    ':active': { bd: 'var(--white-0-93)' },
+    ':focus-visible': { focusShadow: 1 },
+  },
 
 }
 export default ut

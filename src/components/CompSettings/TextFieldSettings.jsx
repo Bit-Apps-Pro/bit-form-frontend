@@ -402,53 +402,55 @@ function TextFieldSettings() {
         </SimpleAccordion>
         <hr className={css(FieldStyle.divider)} />
         <SimpleAccordion
-          title={__('Icon', 'bitform')}
+          title={__('Icons', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           toggleAction={hideAdminLabel}
           toggleChecked
           open
         // disable={!fieldData?.adminLbl}
         >
-          <div className={css(FieldStyle.placeholder, ut.mt2)}>
-            <div className={css(ut.flxc)}>
-              <span className={css(ut.w9)}>PrefIX </span>
-              <div className={css(ut.w3, ut.flxcb)}>
+          <div className={css(ut.mt2, { mx: 10 })}>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>Start icon</span>
+              <div className={css(ut.flxcb)}>
                 {fieldData?.prefixIcn && (
-                  <img src={fieldData?.prefixIcn} alt="icon" width="25" height="25" style={{ marginBottom: '-9px' }} />
+                  <img src={fieldData?.prefixIcn} alt="icon" width="25" height="25" />
                 )}
 
-                <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.btn)}>
-                  <EditIcn size={21} />
+                <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
                 </button>
                 {fieldData?.prefixIcn && (
-                  <button onClick={() => removeIcon('prefixIcn')} className={css(ut.btn)} type="button">
-                    <CloseIcn size="15" />
+                  <button onClick={() => removeIcon('prefixIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
                   </button>
                 )}
 
               </div>
             </div>
-          </div>
 
-          <div className={css(FieldStyle.placeholder, ut.mt2)}>
-            <div className={css(ut.flxc)}>
-              <span className={css(ut.w9)}>Suffix </span>
-              <div className={css(ut.w3, ut.flxcb)}>
-                {fieldData?.suffixIcn && (
-                  <img src={fieldData?.suffixIcn} alt="icon" width="25" height="25" style={{ marginBottom: '-9px' }} />
-                )}
-                <button onClick={() => setIconModel('suffixIcn')} className={css(ut.btn)} type="button">
-                  <EditIcn size={21} />
-                </button>
-                {fieldData?.suffixIcn && (
-                  <button onClick={() => removeIcon('suffixIcn')} className={css(ut.btn)} type="button">
-                    <CloseIcn size="15" />
+
+            <div className={css(ut.mt2)}>
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>End icon</span>
+                <div className={css(ut.flxcb)}>
+                  {fieldData?.suffixIcn && (
+                    <img src={fieldData?.suffixIcn} alt="icon" width="25" height="25" />
+                  )}
+                  <button onClick={() => setIconModel('suffixIcn')} className={css(ut.icnBtn)} type="button">
+                    <EditIcn size={22} />
                   </button>
-                )}
+                  {fieldData?.suffixIcn && (
+                    <button onClick={() => removeIcon('suffixIcn')} className={css(ut.icnBtn)} type="button">
+                      <CloseIcn size="13" />
+                    </button>
+                  )}
 
+                </div>
               </div>
             </div>
           </div>
+
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
