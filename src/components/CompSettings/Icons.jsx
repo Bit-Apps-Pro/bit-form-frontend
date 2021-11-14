@@ -272,7 +272,7 @@ function Icons({ iconType, setModal }) {
               </div>
             )}
           </Scrollbars>
-          <button type="button" className={css(app.btn, preFixStyle.btnPosition)} onClick={saveIcn}>
+          <button type="button" disabled={prefix === ''} className={css(app.btn, preFixStyle.btnPosition)} onClick={saveIcn}>
             <DownloadIcon size="19" />
             Download & save
             {dnLoading && <LoaderSm size={20} clr="#000" className={ut.ml2} />}
@@ -312,7 +312,7 @@ function Icons({ iconType, setModal }) {
               ))}
             </div>
           </Scrollbars>
-          <button type="button" className={css(app.btn, preFixStyle.btnPosition)} onClick={selectedSaveIcon}>
+          <button type="button" disabled={prefix === ''} className={css(app.btn, preFixStyle.btnPosition)} onClick={selectedSaveIcon}>
             Save
           </button>
         </>
