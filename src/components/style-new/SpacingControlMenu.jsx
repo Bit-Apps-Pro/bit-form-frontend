@@ -73,6 +73,7 @@ export default function SpacingControlMenu() {
     }))
   }
   const undoHandler = (value) => {
+    if(!tempThemeVars[value]) return
     setThemeVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle[value] = tempThemeVars[value]
     }))

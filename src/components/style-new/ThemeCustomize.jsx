@@ -62,12 +62,14 @@ export default function ThemeCustomize() {
     }))
   }
   const undoColor = (value) => {
+    if (!tempThemeVars[value]) return
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft[value] = tempThemeVars[value]
     }))
   }
 
   const undoHandler = (value) => {
+    if (!tempThemeVars[value]) return
     setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle[value] = tempThemeVars[value] || '0px'
     }))
@@ -93,7 +95,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
-              <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+              <button disabled={!tempThemeVars['--global-bg-color']} onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
                 <UndoIcon size="20" />
               </button>
             </div>
@@ -102,7 +104,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
+              <button disabled={!tempThemeVars['--global-primary-color']} onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
                 <UndoIcon size="20" />
               </button>
             </div>
@@ -111,7 +113,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
-              <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
+              <button disabled={!tempThemeVars['--global-font-color']} onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
                 <UndoIcon size="20" />
               </button>
             </div>
@@ -120,7 +122,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
-              <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
+              <button disabled={!tempThemeVars['--global-fld-bdr-color']} onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
                 <UndoIcon size="20" />
               </button>
             </div>
@@ -129,7 +131,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
-              <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+              <button disabled={!tempThemeVars['--global-fld-bg-color']} onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
                 <UndoIcon size="20" />
               </button>
             </div>
@@ -169,7 +171,7 @@ export default function ThemeCustomize() {
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
-            <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
+            <button disabled={!tempThemeVars['--g-bdr-rad']} onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
               <UndoIcon size="20" />
             </button>
             <SizeControl
@@ -183,7 +185,7 @@ export default function ThemeCustomize() {
           </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Font Size</span>
-            <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
+            <button disabled={!tempThemeVars['--fld-fs']} onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
               <UndoIcon size="20" />
             </button>
             <SizeControl

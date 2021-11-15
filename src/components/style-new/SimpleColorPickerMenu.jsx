@@ -71,9 +71,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
-        console.log(`hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`)
-        console.log('--global-bg-color', themeVars['--global-bg-color'])
-
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
           drft['--gbg-h'] = Math.round(_h)
@@ -108,8 +105,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
   const handleColorVar = () => {
     switch (action?.type) {
       case 'global-primary-color':
-        console.log('set color')
-
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-primary-color'] = `var(${color})`
         }))
@@ -120,7 +115,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
-        console.log(colorVar)
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `var(${color})`
         }))
