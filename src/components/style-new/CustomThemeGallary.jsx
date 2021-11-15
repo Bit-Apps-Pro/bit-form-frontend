@@ -1,50 +1,47 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $styles } from '../../GlobalStates'
+import { $selectedFieldId, $styles } from '../../GlobalStates'
+import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
 import Tip from '../Utilities/Tip'
-import CheckMarkIcn from '../../Icons/CheckMarkIcn'
-import SliderModal from '../Utilities/SliderModal'
-import { useState } from 'react'
-import themeProvider from './themes/0_themeProvider'
-export default function ThemeGallary() {
-  const { css } = useFela()
+import bitformDefaultTheme from './themes/1_bitformDefault'
+import materialTheme from './themes/2_material'
 
+export default function CustomThemeGallary() {
+  const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
-  const fields = useRecoilValue($fields)
-  const fieldsArray = Object.entries(fields)
-  const [modal, setModal] = useState({ show: false })
+
+  const selectedFieldId = useRecoilValue($selectedFieldId)
+  console.log(styles)
+  console.log(styles.fields[selectedFieldId].theme)
+
   const themes = [
     { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
     { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
   ]
-
   const handleThemeApply = (themeSlug) => {
-    console.log(themeProvider(themeSlug, fieldsArray))
-    setStyles(themeProvider(themeSlug, fieldsArray))
+    if (themeSlug === 'bitformDefault') {
+      setStyles(prvStyle => produce(prvStyle, drftStyle => {
+        drftStyle.fields[selectedFieldId] = bitformDefaultTheme(selectedFieldId, styles.fields[selectedFieldId].fieldType)
+      }))
+    }
+    if (themeSlug === 'material') {
+      setStyles(prvStyle => produce(prvStyle, drftStyle => {
+        drftStyle.fields[selectedFieldId] = materialTheme(selectedFieldId, styles.fields[selectedFieldId].fieldType)
+      }))
+    }
   }
-
   return (
-    <div className={css(themeGalStyle.wrp)}>
-      <SliderModal show={modal.show} setModal={setModal}>
-        <div>dfasdfasdf</div>
-        <div>dfasdfasdf</div>
-        <div>dfasdfasdf</div>
-        <div>dfasdfasdf</div>
-      </SliderModal>
-      <button type="button" onClick={() => setModal({ show: true })}>asdf</button>
-      <h4 className={css(themeGalStyle.title)}>Themes</h4>
-      <div className={css(themeGalStyle.thm_container)}>
-        {themes.map(theme => (
-          <ThemeGallary.Card key={theme.name} applyThemeAction={() => handleThemeApply(theme.slug)} name={theme.name} img={theme.img} isActive={styles.theme === theme.slug} />
-        ))}
-      </div>
+    <div className={css(themeGalStyle.thm_container)}>
+      {themes.map(theme => (
+        <CustomThemeGallary.Card key={theme.name} name={theme.name} applyThemeAction={() => handleThemeApply(theme.slug)} img={theme.img} isActive={styles.fields[selectedFieldId]?.theme === theme.slug} />
+      ))}
     </div>
   )
 }
-
 
 const Card = ({ name, img, isActive, applyThemeAction }) => {
   const { formType, formID } = useParams()
@@ -71,7 +68,9 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
                 type="button"
                 onClick={applyThemeAction}
                 className={css(themeGalStyle.thm_ctrl_btn)}
-                aria-label="Theme Preview"><CheckMarkIcn size="20px" />
+                aria-label="Theme Preview"
+              >
+                <CheckMarkIcn size="20px" />
               </button>
             </Tip>
           )}
@@ -90,20 +89,15 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
   )
 }
 
-ThemeGallary.Card = Card
-
+CustomThemeGallary.Card = Card
 
 const themeGalStyle = {
-  wrp: { bd: 'var(--white-100)' },
-  title: {
-    mt: 10,
-    mb: 5,
-  },
-  thmImg: { dy: 'block' },
   thm_container: {
     flx: 1,
     flxp: 'jc',
   },
+
+  thmImg: { dy: 'block' },
   thm_wrp: {
     w: 124,
     h: 170,
@@ -158,6 +152,6 @@ const themeGalStyle = {
   },
   activeStyle: {
     bcr: 'var(--b-50)',
-    bs: '0 0 0 2px var(--b-50)'
-  }
+    bs: '0 0 0 2px var(--b-50)',
+  },
 }

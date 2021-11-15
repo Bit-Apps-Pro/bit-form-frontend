@@ -293,7 +293,6 @@ export default function LabelControlMenu() {
         <span className={css(mainStyle.label)}>Label Alignment</span>
         {
           tempThemeVars['--lbl-al'] && (
-
             <button type="button" onClick={() => undoAlignHandler('--lbl-al')}>
               <UndoIcon size="18" />
             </button>
@@ -315,7 +314,6 @@ export default function LabelControlMenu() {
         <span className={css(mainStyle.label)}>Subtitle Alignment</span>
         {
           tempThemeVars['--st-al'] && (
-
             <button type="button" onClick={() => undoAlignHandler('--st-al')}>
               <UndoIcon size="18" />
             </button>
