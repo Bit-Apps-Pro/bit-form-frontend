@@ -95,45 +95,65 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
-              <button disabled={!tempThemeVars['--global-bg-color']} onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-bg-color'] && (
+                  <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              <button disabled={!tempThemeVars['--global-primary-color']} onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-primary-color'] && (
+                  <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
-              <button disabled={!tempThemeVars['--global-font-color']} onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-font-color'] && (
+                  <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
-              <button disabled={!tempThemeVars['--global-fld-bdr-color']} onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-fld-bdr-color'] && (
+                  <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
-              <button disabled={!tempThemeVars['--global-fld-bg-color']} onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-fld-bg-color'] && (
+                  <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
           </div>
@@ -171,9 +191,13 @@ export default function ThemeCustomize() {
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
-            <button disabled={!tempThemeVars['--g-bdr-rad']} onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
-              <UndoIcon size="20" />
-            </button>
+            {
+              tempThemeVars['--g-bdr-rad'] && (
+                <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
+                  <UndoIcon size="20" />
+                </button>
+              )
+            }
             <SizeControl
               inputHandler={borderRadHandler}
               sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
@@ -185,9 +209,13 @@ export default function ThemeCustomize() {
           </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Font Size</span>
-            <button disabled={!tempThemeVars['--fld-fs']} onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
-              <UndoIcon size="20" />
-            </button>
+            {
+              tempThemeVars['--fld-fs'] && (
+                <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
+                  <UndoIcon size="20" />
+                </button>
+              )
+            }
             <SizeControl
               inputHandler={fldFsSizeHandler}
               sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}

@@ -9,7 +9,7 @@ import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import Grow from './Grow'
 import SizeControl from './SizeControl'
 
-export default function SpaceControl({ value, unitOption, title, onChange = () => { }, undoHandler, disabled, className }) {
+export default function SpaceControl({ value, unitOption, title, onChange = () => { }, undoHandler, isValue, className }) {
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
 
@@ -75,9 +75,12 @@ export default function SpaceControl({ value, unitOption, title, onChange = () =
     <div className={className}>
       <div className={css(s.titlecontainer)}>
         <span className={css(s.title)}>{title}</span>
-        <button onClick={undoHandler} disabled={disabled} type="button">
-          <UndoIcon size="18" />
-        </button>
+        {isValue
+          && (
+            <button onClick={undoHandler} type="button">
+              <UndoIcon size="18" />
+            </button>
+          )}
         <StyleSegmentControl
           square
           defaultActive="All"
