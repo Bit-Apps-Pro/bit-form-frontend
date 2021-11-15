@@ -269,9 +269,13 @@ export default function LabelControlMenu() {
       <Grow open={openVarPos}>
         <div className={css(ut.mb2, mainStyle.main)}>
           <span className={css(mainStyle.label)}>Label Postion Vertical</span>
-          <button disabled={!tempThemeVars['--lw-sa']} type="button" onClick={() => undoAlignHandler('--lw-sa')}>
-            <UndoIcon size="18" />
-          </button>
+          {
+            tempThemeVars['--lw-sa'] && (
+              <button type="button" onClick={() => undoAlignHandler('--lw-sa')}>
+                <UndoIcon size="18" />
+              </button>
+            )
+          }
           <StyleSegmentControl
             show={['icn']}
             tipPlace="bottom"
@@ -287,9 +291,14 @@ export default function LabelControlMenu() {
       </Grow>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Label Alignment</span>
-        <button disabled={!tempThemeVars['--lbl-al']} type="button" onClick={() => undoAlignHandler('--lbl-al')}>
-          <UndoIcon size="18" />
-        </button>
+        {
+          tempThemeVars['--lbl-al'] && (
+
+            <button type="button" onClick={() => undoAlignHandler('--lbl-al')}>
+              <UndoIcon size="18" />
+            </button>
+          )
+        }
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
@@ -304,9 +313,14 @@ export default function LabelControlMenu() {
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Subtitle Alignment</span>
-        <button disabled={!tempThemeVars['--st-al']} type="button" onClick={() => undoAlignHandler('--st-al')}>
-          <UndoIcon size="18" />
-        </button>
+        {
+          tempThemeVars['--st-al'] && (
+
+            <button type="button" onClick={() => undoAlignHandler('--st-al')}>
+              <UndoIcon size="18" />
+            </button>
+          )
+        }
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
@@ -321,9 +335,13 @@ export default function LabelControlMenu() {
       </div>
       <div className={css(ut.mb2, mainStyle.main)}>
         <span className={css(mainStyle.label)}>Helpertext Alignment</span>
-        <button disabled={!tempThemeVars['--ht-al']} type="button" onClick={() => undoAlignHandler('--ht-al')}>
-          <UndoIcon size="18" />
-        </button>
+        {
+          tempThemeVars['--ht-al'] && (
+            <button type="button" onClick={() => undoAlignHandler('--ht-al')}>
+              <UndoIcon size="18" />
+            </button>
+          )
+        }
         <StyleSegmentControl
           show={['icn']}
           tipPlace="bottom"
