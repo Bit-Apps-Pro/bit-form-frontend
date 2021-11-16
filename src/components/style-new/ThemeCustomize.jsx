@@ -89,6 +89,13 @@ export default function ThemeCustomize() {
     }))
   }
 
+  const setSizes = () => {
+    setStyles(prvStyles => {
+      console.log({ prvStyles })
+      return prvStyles
+    })
+  }
+
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
@@ -266,6 +273,8 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Theme</span>
             <ThemeControl />
           </div>
+
+          <button onClick={setSizes}>set 10 px</button>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
