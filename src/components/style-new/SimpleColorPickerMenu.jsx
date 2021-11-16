@@ -13,9 +13,6 @@ import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import ColorPreview from './ColorPreview'
 import ut from '../../styles/2.utilities'
 import { $themeVars } from '../../GlobalStates'
-import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsv2hsl } from './colorHelpers'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
