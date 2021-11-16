@@ -16,13 +16,14 @@ export default function MarginControlMenu() {
   }
 
   const undoHandler = (value) => {
+    if(!tempThemeVars[value]) return
     setThemeVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle[value] = tempThemeVars[value] || '0px'
     }))
   }
   return (
     <>
-      <SpaceControl disabled={!tempThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fidMargin} title="Field Margin" onChange={val => fieldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isValue={tempThemeVars['--fld-m']} undoHandler={() => undoHandler('--fld-m')} value={fidMargin} title="Field Margin" onChange={val => fieldMarginHandler(val)} unitOption={['px', 'em', 'rem']} />
     </>
   )
 }

@@ -20,14 +20,15 @@ export default function FieldWrapperControlMenu() {
     }))
   }
   const undoHandler = (value) => {
+    if (!tempThemeVars[value]) return
     setThemeVars(preStyle => produce(preStyle, drftStyle => {
       drftStyle[value] = tempThemeVars[value] || '0px'
     }))
   }
   return (
     <>
-      <SpaceControl disabled={!tempThemeVars['--fw-m']} undoHandler={() => undoHandler('--fw-m')} value={wrpMagin} title="Field Wrapper Margin" onChange={val => marginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl disabled={!tempThemeVars['--fw-p']} undoHandler={() => undoHandler('--fw-p')} value={wrpPadding} title="Field Wrapper Padding" onChange={val => paddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isValue={tempThemeVars['--fw-m']} undoHandler={() => undoHandler('--fw-m')} value={wrpMagin} title="Field Wrapper Margin" onChange={val => marginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isValue={tempThemeVars['--fw-p']} undoHandler={() => undoHandler('--fw-p')} value={wrpPadding} title="Field Wrapper Padding" onChange={val => paddingHandler(val)} unitOption={['px', 'em', 'rem']} />
     </>
   )
 }

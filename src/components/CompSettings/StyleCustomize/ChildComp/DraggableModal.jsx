@@ -6,6 +6,7 @@ import { $draggableModal } from '../../../../GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
+import CustomThemeGallary from '../../../style-new/CustomThemeGallary'
 import FieldWrapperControlMenu from '../../../style-new/FieldWrapperControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
@@ -24,6 +25,7 @@ const RenderComponent = ({ component, action, value }) => {
     case 'spacing-control': return <SpacingControlMenu />
     case 'field-margin-control': return <MarginControlMenu />
     case 'field-wrapper-control': return <FieldWrapperControlMenu />
+    case 'theme-control': return <CustomThemeGallary />
     default: return 'loading'
   }
 }
@@ -36,6 +38,7 @@ const setTitle = (component) => {
     case 'spacing-control': return 'Label Spacing Control'
     case 'field-margin-control': return 'Field Margin Control'
     case 'field-wrapper-control': return 'Field Wrapper Control'
+    case 'theme-control': return 'Theme Gallary'
     default: return '...'
   }
 }

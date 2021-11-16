@@ -6,13 +6,13 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsv2hsl } from './colorHelpers'
+import { $themeVars } from '../../GlobalStates'
+import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import { hsv2hsl } from './colorHelpers'
 import ColorPreview from './ColorPreview'
-import ut from '../../styles/2.utilities'
-import { $themeVars } from '../../GlobalStates'
 
 export default function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
@@ -71,9 +71,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
-        console.log(`hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`)
-        console.log('--global-bg-color', themeVars['--global-bg-color'])
-
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
           drft['--gbg-h'] = Math.round(_h)
@@ -108,8 +105,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
   const handleColorVar = () => {
     switch (action?.type) {
       case 'global-primary-color':
-        console.log('set color')
-
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-primary-color'] = `var(${color})`
         }))
@@ -120,7 +115,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
-        console.log(colorVar)
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = `var(${color})`
         }))
@@ -141,9 +135,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
   }
 
   useEffect(() => {
-    console.log('handle var', isColorVar, color)
     if (isColorVar) {
-      console.log('handle var')
       handleColorVar()
     } else if (color) {
       handleColor()
@@ -180,7 +172,6 @@ export default function SimpleColorPickerMenu({ action, value }) {
 
       <Grow open={controller === 'Var'}>
         <div className={css(c.varClr)}>
-          {console.log({ globalBgColor, color, value })}
           <button className={`${css(c.clrItem)} ${css(color === '--global-bg-color' ? c.active : null)}`} type="button" onClick={() => setColorState('--global-bg-color')}>
             <ColorPreview bg={globalBgColor} className={css(ut.mr2)} />
             <span>Background Color</span>

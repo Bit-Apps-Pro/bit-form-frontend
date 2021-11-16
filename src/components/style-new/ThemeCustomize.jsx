@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -7,8 +8,11 @@ import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
+import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
+import CustomThemeGallary from './CustomThemeGallary'
 import FieldMarginControl from './FieldMarginControl'
 import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
@@ -16,6 +20,7 @@ import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import { changeFormDir, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import ThemeControl from './ThemeControl'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -23,6 +28,7 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
+  const [modal, setModal] = useState(false)
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -62,12 +68,14 @@ export default function ThemeCustomize() {
     }))
   }
   const undoColor = (value) => {
+    if (!tempThemeVars[value]) return
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft[value] = tempThemeVars[value]
     }))
   }
 
   const undoHandler = (value) => {
+    if (!tempThemeVars[value]) return
     setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle[value] = tempThemeVars[value] || '0px'
     }))
@@ -93,45 +101,65 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
-              <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-bg-color'] && (
+                  <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-primary-color'] && (
+                  <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
-              <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-font-color'] && (
+                  <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
-              <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-fld-bdr-color'] && (
+                  <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
-              <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
+              {
+                tempThemeVars['--global-fld-bg-color'] && (
+                  <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
             </div>
             <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
           </div>
@@ -169,9 +197,13 @@ export default function ThemeCustomize() {
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
-            <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
-              <UndoIcon size="20" />
-            </button>
+            {
+              tempThemeVars['--g-bdr-rad'] && (
+                <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
+                  <UndoIcon size="20" />
+                </button>
+              )
+            }
             <SizeControl
               min={0}
               max={20}
@@ -185,9 +217,13 @@ export default function ThemeCustomize() {
           </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Font Size</span>
-            <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
-              <UndoIcon size="20" />
-            </button>
+            {
+              tempThemeVars['--fld-fs'] && (
+                <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
+                  <UndoIcon size="20" />
+                </button>
+              )
+            }
             <SizeControl
               inputHandler={fldFsSizeHandler}
               sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
@@ -197,6 +233,18 @@ export default function ThemeCustomize() {
               options={['px', 'em', 'rem']}
             />
           </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Theme</span>
+            <ThemeControl />
+          </div>
+
+          <Modal
+            show={modal}
+            setModal={setModal}
+            title={__('Form theme', 'bitform')}
+          >
+            <CustomThemeGallary setModal={setModal} />
+          </Modal>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
