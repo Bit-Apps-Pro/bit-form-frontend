@@ -15,7 +15,7 @@ import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir, unitConverterHelper } from './styleHelpers'
+import { changeFormDir, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -33,11 +33,11 @@ export default function ThemeCustomize() {
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs } = themeVars
 
-  const globalBdrRadValue = globalBorderRad.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
-  const globalBdrRadUnit = globalBorderRad.match(/([A-z]|%)+/gi)[0]
+  const globalBdrRadValue = getNumFromStr(globalBorderRad)
+  const globalBdrRadUnit = getStrFromStr(globalBorderRad)
 
-  const fldFSValue = fldFs?.match(/[-]?([0-9]*[.])?[0-9]+/gi)[0]
-  const fldFSUnit = fldFs?.match(/([A-z]|%)+/gi)[0]
+  const fldFSValue = getNumFromStr(fldFs)
+  const fldFSUnit = getStrFromStr(fldFs)
   // const [h,s,l/]
   // const globalPrimaryColor = ['--global-primary-color']
   // const direction = styles.themeVars['--dir']
@@ -173,6 +173,8 @@ export default function ThemeCustomize() {
               <UndoIcon size="20" />
             </button>
             <SizeControl
+              min={0}
+              max={20}
               inputHandler={borderRadHandler}
               sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
               value={globalBdrRadValue}
