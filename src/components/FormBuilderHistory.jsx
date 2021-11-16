@@ -13,6 +13,9 @@ import builderHistoryStyle from '../styles/builderHistory.style'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
+import Modal from './Utilities/Modal'
+import { __ } from '../Utils/i18nwrap'
+import Editor from './CompSettings/Editor'
 
 export default function FormBuilderHistory() {
   const { css } = useFela()
@@ -25,6 +28,7 @@ export default function FormBuilderHistory() {
   const { active, histories } = builderHistory
   const setBuilderHelpers = useSetRecoilState($builderHelperStates)
   // const [scrolIndex, setScrolIndex] = useState(0)
+  const [modal, setModal] = useState(false)
 
   const handleUndoRedoShortcut = e => {
     console.log('undo redo triggered')
@@ -151,6 +155,11 @@ export default function FormBuilderHistory() {
             <RedoIcon size="25" />
           </button>
         </Tip>
+        <Tip msg="Custom CSS and JS">
+          <button type="button" onClick={() => setModal(true)}>
+            Editor
+          </button>
+        </Tip>
         <Downmenu
           place="bottom-end"
           onShow={() => setShowHistory(true)}
@@ -221,6 +230,18 @@ export default function FormBuilderHistory() {
           </div>
         </Downmenu>
       </div>
+
+      <Modal
+        md
+        autoHeight
+        show={modal}
+        setModal={setModal}
+        className="o-v"
+        title={__('', 'bitform')}
+      >
+        <div className="pos-rel" />
+        <Editor />
+      </Modal>
     </div>
   )
 }
