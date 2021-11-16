@@ -60,7 +60,7 @@ export const $themeVars = atom({
     '--dir': 'ltr', // direaction
     '--fw-dis': '', // field wrapper display
     '--fw-fdir': '', // field wrapper flex direction
-    '--lw-width': '50px', // for width
+    '--lw-width': '', // label wrapper  width
     '--iw-width': '',
     '--lw-sa': '',
     '--lbl-al': '', // label align
@@ -81,7 +81,7 @@ export const $themeVars = atom({
     '--fld-m': '', // field margin
     '--fld-fs': '12px', // field font size
     '--fw-m': '', // field wrapper margin
-    '--fw-p': '', // field wrapper paddin
+    '--fw-p': '10px', // field wrapper paddin
   },
 })
 export const $tempThemeVars = atom({
