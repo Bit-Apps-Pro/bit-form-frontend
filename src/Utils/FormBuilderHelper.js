@@ -80,6 +80,7 @@ export function delAllPrevKeys(obj, key) {
     // eslint-disable-next-line no-param-reassign
     delete obj[Number(okey)]
   }
+
   return obj
 }
 

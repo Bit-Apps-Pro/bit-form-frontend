@@ -24,7 +24,6 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const { css } = useFela()
   const history = useHistory()
   const { formType, formID, rightBar } = useParams()
-  console.log('------', useParams())
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
