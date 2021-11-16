@@ -15,8 +15,6 @@ export default function CustomThemeGallary() {
   const [styles, setStyles] = useRecoilState($styles)
 
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  console.log(styles)
-  console.log(styles.fields[selectedFieldId].theme)
 
   const themes = [
     { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
