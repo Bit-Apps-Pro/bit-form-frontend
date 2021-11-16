@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import checkboxNradioStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 
@@ -46,18 +47,18 @@ export default function bitformDefaultTheme(fk, type, direction) {
     case 'textarea':
       return {
         theme: 'bitformDefault',
-        fieldThemeVars: {},
         fieldType: type,
-        overrideGlobalTheme: false,
+        // fieldThemeVars: {},
+        // overrideGlobalTheme: false,
         classes: textStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'check':
     case 'radio':
       return {
         theme: 'bitformDefault',
-        fieldThemeVars: {},
         fieldType: type,
-        overrideGlobalTheme: false,
+        // fieldThemeVars: {},
+        // overrideGlobalTheme: false,
         classes: checkboxNradioStyle_1_bitformDefault({ fk, type, direction }),
       }
     default:
