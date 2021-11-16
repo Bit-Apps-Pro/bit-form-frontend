@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -8,11 +7,8 @@ import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
-import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
-import CustomThemeGallary from './CustomThemeGallary'
 import FieldMarginControl from './FieldMarginControl'
 import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
@@ -28,7 +24,6 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
-  const [modal, setModal] = useState(false)
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -237,14 +232,6 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Theme</span>
             <ThemeControl />
           </div>
-
-          <Modal
-            show={modal}
-            setModal={setModal}
-            title={__('Form theme', 'bitform')}
-          >
-            <CustomThemeGallary setModal={setModal} />
-          </Modal>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
