@@ -1,7 +1,6 @@
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
 import { showDraggableModal } from './styleHelpers'
