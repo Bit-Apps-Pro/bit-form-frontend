@@ -57,6 +57,7 @@ export const $themeVars = atom({
     // '--gfbg-l': 20,
     // '--gfbg-a': 100,
     '--g-bdr-rad': '11px', // border radius
+    '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
     '--fw-dis': '', // field wrapper display
     '--fw-fdir': '', // field wrapper flex direction

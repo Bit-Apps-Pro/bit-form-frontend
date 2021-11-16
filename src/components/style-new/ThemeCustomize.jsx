@@ -32,10 +32,14 @@ export default function ThemeCustomize() {
     '--g-bdr-rad': globalBorderRad,
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr,
-    '--fld-fs': fldFs } = themeVars
+    '--fld-fs': fldFs,
+    '--g-bdr-width': globalBdrWidth } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
+
+  const globalBdrWidthVal = getNumFromStr(globalBdrWidth)
+  const globalBdrWidthUnit = getStrFromStr(globalBdrWidth)
 
   const fldFSValue = getNumFromStr(fldFs)
   const fldFSUnit = getStrFromStr(fldFs)
@@ -56,12 +60,21 @@ export default function ThemeCustomize() {
       drft['--g-bdr-rad'] = `${convertvalue}${unit || globalBdrRadUnit}`
     }))
   }
+
+  const borderWidthHandler = ({ value, unit }) => {
+    const convertvalue = unitConverterHelper(unit, value, globalBdrWidthUnit)
+    setThemeVars(prvStyle => produce(prvStyle, drft => {
+      drft['--g-bdr-width'] = `${convertvalue}${unit || globalBdrWidthUnit}`
+    }))
+  }
+
   const fldFsSizeHandler = ({ value, unit }) => {
     const convertvalue = unitConverterHelper(unit, value, fldFSUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft['--fld-fs'] = `${convertvalue}${unit || fldFSUnit}`
     }))
   }
+
   const undoColor = (value) => {
     if (!tempThemeVars[value]) return
     setThemeVars(prvStyle => produce(prvStyle, drft => {
@@ -206,6 +219,27 @@ export default function ThemeCustomize() {
               sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
               value={globalBdrRadValue}
               unit={globalBdrRadUnit}
+              width="110px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
+
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Border width</span>
+            {
+              tempThemeVars['--g-bdr-width'] && (
+                <button onClick={() => undoHandler('--g-bdr-width')} className={css(cls.btn, ut.mr1)} type="button">
+                  <UndoIcon size="20" />
+                </button>
+              )
+            }
+            <SizeControl
+              min={0}
+              max={20}
+              inputHandler={borderWidthHandler}
+              sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+              value={globalBdrWidthVal}
+              unit={globalBdrWidthUnit}
               width="110px"
               options={['px', 'em', 'rem']}
             />
