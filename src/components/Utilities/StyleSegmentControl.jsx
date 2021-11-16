@@ -28,7 +28,7 @@ export default function StyleSegmentControl({ defaultActive,
       // mx: 'auto',
     },
     tabs: {
-      fs: 15,
+      fs: 14,
       // bd: 'blue',
       bd: 'var(--white-0-95)',
       py: 3,
