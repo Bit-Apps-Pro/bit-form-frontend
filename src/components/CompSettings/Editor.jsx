@@ -29,8 +29,7 @@ function Editor() {
     tabSize: 2,
   }
 
-  const themeSetLocalStorage = (e) => {
-    const { value } = e.target
+  const themeSetLocalStorage = ({ target: { value } }) => {
     localStorage.setItem('bf-editor-theme', value)
     setTheme(value)
   }
@@ -77,6 +76,8 @@ function Editor() {
             <>
               {enableEditor === 'on' ? (
                 <AceEditor
+                  height="330px"
+                  width="99%"
                   placeholder=""
                   mode="javascript"
                   theme={theme}
@@ -91,7 +92,12 @@ function Editor() {
                 />
               ) : (
                 <div>
-                  <textarea className={css(style.editor)} onChange={(e) => setJsCode(e.target.value)} value={jsCode} />
+                  <textarea
+                    className={css(style.editor)}
+                    onChange={(e) => setJsCode(e.target.value)}
+                    value={jsCode}
+                    rows="18"
+                  />
                 </div>
               )}
             </>
@@ -101,6 +107,8 @@ function Editor() {
             <>
               {enableEditor === 'on' ? (
                 <AceEditor
+                  height="330px"
+                  width="99%"
                   placeholder=""
                   mode="css"
                   theme={theme}
@@ -115,7 +123,12 @@ function Editor() {
                 />
               ) : (
                 <div>
-                  <textarea className={css(style.editor)} onChange={(e) => setCssCode(e.target.value)} value={cssCode} />
+                  <textarea
+                    className={css(style.editor)}
+                    onChange={(e) => setCssCode(e.target.value)}
+                    value={cssCode}
+                    rows="18"
+                  />
                 </div>
               )}
             </>
@@ -139,9 +152,8 @@ function Editor() {
 const style = {
   editor: {
     brs: 8,
-    h: '320px !important',
     mt: 6,
-    w: '662px !important',
+    w: '99%',
   },
   theme: { dy: 'flex', jc: 'flex-end' },
 
