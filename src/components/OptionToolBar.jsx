@@ -19,6 +19,8 @@ import Downmenu from './Utilities/Downmenu'
 import SingleToggle from './Utilities/SingleToggle'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
+import Modal from './Utilities/Modal'
+import Editor from './CompSettings/Editor'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
@@ -27,6 +29,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
+  const [modal, setModal] = useState(false)
 
   const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
 
@@ -67,6 +70,23 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <div className={css(OptionToolBarStyle.border_right)} />
 
           <FormBuilderHistory />
+          <div className={css(OptionToolBarStyle.border_right)} />
+          <Tip msg="Custom CSS and JS">
+            <button type="button" onClick={() => setModal(true)}>
+              Editor
+            </button>
+          </Tip>
+          <Modal
+            md
+            autoHeight
+            show={modal}
+            setModal={setModal}
+            className="o-v"
+            title=""
+          >
+            <div className="pos-rel" />
+            <Editor />
+          </Modal>
 
           <div className={css(OptionToolBarStyle.border_right)} />
 
