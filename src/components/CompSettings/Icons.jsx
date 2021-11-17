@@ -42,7 +42,7 @@ function Icons({ iconType, setModal }) {
     { label: 'Bootstrap', value: 't=2_id_bootstrapicons', id: 'bootstrap-icons', status: false },
     { label: 'Material Design', value: 't=2_id_materialdesign-icons', id: 'material-design-icons', status: false },
     { label: 'Ion', value: 't=2_id_ionicons', id: 'ionicons', status: false },
-    { label: 'Octions', value: 't=2_id_octions', id: 'octicons', status: false },
+    { label: 'Octicons', value: 't=2_id_octicons', id: 'octicons', status: false },
     { label: 'CSS.GG', value: 't=2_id_css.gg', id: 'css.gg', status: false },
     { label: 'Feather', value: 't=2_id_feather', id: 'feather', status: false },
     { label: 'Carbon', value: 't=2_id_carbonicons', id: 'carbon-icons', status: false },
