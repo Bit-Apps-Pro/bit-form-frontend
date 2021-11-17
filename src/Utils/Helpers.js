@@ -13,10 +13,9 @@ export const hideWpMenu = () => {
   }
 }
 
-export const isObjectEmpty = (obj) => {
-  // eslint-disable-next-line guard-for-in
-  for (const p in obj) return false; return true
-}
+export const isObjectEmpty = (obj) => obj
+  && Object.keys(obj).length === 0
+  && Object.getPrototypeOf(obj) === Object.prototype
 
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
@@ -34,14 +33,15 @@ export const showWpMenu = () => {
 export const getNewId = flds => {
   let largestNumberFld = 0
   let num = 0
-  for (const fld in flds) {
+  const fldsArr = Object.keys(flds)
+  fldsArr.map(fld => {
     if (fld !== null && fld !== undefined) {
       num = Number(fld.match(/-[0-9]+/g)?.[0]?.match(/[0-9]+/g))
       if (typeof num === 'number' && num > largestNumberFld) {
         largestNumberFld = num
       }
     }
-  }
+  })
   return largestNumberFld + 1
 }
 
@@ -295,4 +295,3 @@ export const sortByField = (array, fieldKey, typ) => array.sort((a, b) => {
   }
   return ((y < x) ? -1 : ((y > x) ? 1 : 0))
 })
-
