@@ -595,20 +595,20 @@ function Workflow({ formID }) {
   }
 
   const emailInFormField = () => {
-    for (const field of fieldsArr) {
+    fieldsArr.map(field => {
       if (field.type === 'email') {
         return true
       }
-    }
+    })
     return false
   }
   const fileInFormField = () => {
     const file = []
-    for (const field of fieldsArr) {
+    fieldsArr.map(field => {
       if (field.type === 'file-up') {
         file.push({ label: field.name, value: field.key })
       }
-    }
+    })
     return file
   }
 
