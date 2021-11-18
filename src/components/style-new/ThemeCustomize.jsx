@@ -1,3 +1,5 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import { useFela } from 'react-fela'
@@ -8,6 +10,7 @@ import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
+import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
@@ -16,7 +19,7 @@ import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir, getNumFromStr, getStrFromStr, highlightElm, removeHightlight, unitConverterHelper } from './styleHelpers'
+import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function ThemeCustomize() {
@@ -90,12 +93,57 @@ export default function ThemeCustomize() {
     }))
   }
 
-  const setSizes = () => {
-    highlightElm('[data-fw]')
-    setStyles(prvStyles => {
-      console.log({ prvStyles })
-      return prvStyles
-    })
+  const setSizes = ({ target: { value } }) => {
+    const tmpThemeVar = deepCopy(themeVars)
+
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      const flds = prvStyle.fields
+      const fldKeyArr = Object.keys(flds)
+      const fldKeyArrLen = fldKeyArr.length
+
+      for (let i = 0; i < fldKeyArrLen; i += 1) {
+        const fldKey = fldKeyArr[i]
+        const commonStyles = CommonStyle(fldKeyArr[i], value)
+        const commonStylClasses = Object.keys(commonStyles)
+
+        const fldClassesObj = flds[fldKey].classes
+        const fldClasses = Object.keys(fldClassesObj)
+
+        const commonStylClassesLen = commonStylClasses.length
+        for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
+          const comnStylClass = commonStylClasses[indx]
+
+          if (fldClassesObj.hasOwnProperty(comnStylClass)) {
+            const mainStlProperties = fldClassesObj[comnStylClass]
+            const comStlProperties = commonStyles[comnStylClass]
+            const comnStlPropertiesKey = Object.keys(comStlProperties)
+
+            const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
+            for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
+              const comnStlProperty = comnStlPropertiesKey[popIndx]
+
+              if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
+                const mainStlVal = mainStlProperties[comnStlProperty]
+                const comStlVal = comStlProperties[comnStlProperty]
+                if (mainStlVal === comStlVal) {
+                  continue
+                }
+                if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
+                  const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                  tmpThemeVar[mainStateVar] = comStlVal
+                  continue
+                }
+                if (!mainStlVal?.match(/var/gi)?.[0]) {
+                  drft.fields[fldKey].classes[fldClasses[indx]][comnStlProperty] = comStlVal
+                }
+              }
+            }
+          }
+        }
+      }
+    }))
+
+    setThemeVars(tmpThemeVar)
   }
 
   return (
@@ -282,21 +330,22 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Theme</span>
             <ThemeControl />
           </div>
-
-          <button
-            onMouseLeave={() => removeHightlight()}
-            onMouseEnter={() => highlightElm('[data-dev-fw]')}
-          >
-            set 10 px
-          </button>
-          {/* <button onClick={() => removeHightlight()}>remove</button> */}
-
-          <h4 className={css(cls.subTitle)}>More Customizations</h4>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Theme</span>
+            <select onChange={setSizes} name="" id="">
+              <option value="small-2">Small-2</option>
+              <option value="small-1">Small-1</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="large-1">Large-1</option>
+            </select>
+          </div>
 
           {[...Array(20).keys()].map(() => <br />)}
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   )
 }
 
