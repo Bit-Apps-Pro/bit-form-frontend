@@ -149,7 +149,7 @@ export default function ThemeCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
-  const OpenHandler = (value) => {
+  const openHandler = (value) => {
     console.log(value)
     setActiveAccordion(value)
   }
@@ -350,7 +350,7 @@ export default function ThemeCustomize() {
             title={__('Admin Label', 'bitform')}
             className={css(cls.con)}
             disable={activeAccordion !== 1}
-            onClick={() => OpenHandler(1)}
+            onClick={() => openHandler(1)}
           >
             <div className={css(ut.flxcb)}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -363,7 +363,7 @@ export default function ThemeCustomize() {
             title={__('Admin Label', 'bitform')}
             className={css(cls.con)}
             disable={activeAccordion !== 2}
-            onClick={() => OpenHandler(2)}
+            onClick={() => openHandler(2)}
           >
             <div className={css(ut.flxcb)}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
