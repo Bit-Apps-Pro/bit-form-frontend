@@ -3,6 +3,7 @@ import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
@@ -15,7 +16,7 @@ import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import { changeFormDir, getNumFromStr, getStrFromStr, highlightElm, removeHightlight, unitConverterHelper } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function ThemeCustomize() {
@@ -90,6 +91,7 @@ export default function ThemeCustomize() {
   }
 
   const setSizes = () => {
+    highlightElm('[data-fw]')
     setStyles(prvStyles => {
       console.log({ prvStyles })
       return prvStyles
@@ -111,8 +113,15 @@ export default function ThemeCustomize() {
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
-        <br />
         <div className={css(cls.container)}>
+          <div className={css(cls.subTitle2)}>Colors</div>
+
+          <ScrollMenu>
+            <MenuItem itemId={1} label="Default" />
+            <MenuItem itemId={2} label="Default" />
+            <MenuItem itemId={3} label="Default" />
+          </ScrollMenu>
+
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
@@ -274,13 +283,25 @@ export default function ThemeCustomize() {
             <ThemeControl />
           </div>
 
-          <button onClick={setSizes}>set 10 px</button>
+          <button
+            onMouseLeave={() => removeHightlight()}
+            onMouseEnter={() => highlightElm('[data-dev-fw]')}
+          >
+            set 10 px
+          </button>
+          {/* <button onClick={() => removeHightlight()}>remove</button> */}
+
+          <h4 className={css(cls.subTitle)}>More Customizations</h4>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
       </div>
     </div>
   )
+}
+
+const MenuItem = ({ label }) => {
+  return <div>{label}</div>
 }
 
 const cls = {
@@ -291,6 +312,7 @@ const cls = {
   wrp: { ml: 5, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
+  subTitle2: { fs: 14, fw: 500, my: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { ml: 12, mr: 15 },
   btn: {
@@ -301,4 +323,10 @@ const cls = {
     cur: 'pointer',
   },
   pnt: { cur: 'not-allowed' },
+  menuItem: {
+    p: 10,
+    ws: 'nowrap',
+    fs: 14,
+    fw: 500
+  }
 }
