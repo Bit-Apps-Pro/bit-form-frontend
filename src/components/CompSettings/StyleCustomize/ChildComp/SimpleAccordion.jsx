@@ -11,7 +11,9 @@ import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
-export default function SimpleAccordion({ className, title, toggleName, children, open = false, onOpen = () => { }, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable }) {
+export default function SimpleAccordion({ className,
+  title,
+  toggleName, children, open = false, onOpen = () => { }, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable, onClick }) {
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
@@ -20,6 +22,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
   const toggleAccordion = (e) => {
     // e.preventDefault()
     if (disable) return
+    console.log(onOpen)
 
     if (e.type === 'keypress') {
       if (e.code === 'Space' || e.code === 'Enter') {
@@ -31,7 +34,6 @@ export default function SimpleAccordion({ className, title, toggleName, children
     if (e.type === 'keyup') {
       if (e.code === 'Escape') {
         setTgl(false)
-        onOpen(false)
         return
       }
     }
@@ -55,7 +57,6 @@ export default function SimpleAccordion({ className, title, toggleName, children
 
   const setAccHeight = (el) => setH(getAbsoluteHeight(el))
 
-
   return (
     <div
       role="button"
@@ -63,6 +64,7 @@ export default function SimpleAccordion({ className, title, toggleName, children
       onKeyUp={toggleAccordion}
       onKeyPress={toggleAccordion}
       className={`${className} ${tgl && 'active'}`}
+      onClick={onClick}
     >
       <div
         className="btgl w-10"
