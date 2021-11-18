@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { select } from '../../Utils/globalHelpers'
 
@@ -12,18 +13,20 @@ export const showDraggableModal = (e, setDraggableModal, { component, width = 25
 
 export const json2CssStr = (jsonValue) => {
   let cssStr = '{'
-  for (const property in jsonValue) {
-    if (Object.hasOwnProperty.call(jsonValue, property)) {
-      cssStr += `${property}:${jsonValue[property]};`
-    }
-  }
+  const objArr = Object.entries(jsonValue)
+  objArr.map(([property, value]) => {
+    cssStr += `${property}:${value};`
+  })
   cssStr += '}'
   return cssStr
 }
 
 export const changeFormDir = (style, dir) => produce(style, drft => {
   if (drft.theme === 'bitformDefault') {
-    for (const fieldKey in drft.fields) {
+    const fieldsKeysArr = Object.keys(drft.fields)
+    const fieldsKeysArrLen = fieldsKeysArr.length
+    for (let i = 0; i < fieldsKeysArrLen; i += 1) {
+      const fieldKey = fieldsKeysArr[i]
       if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
         if (drft.fields[fieldKey].overrideGlobalTheme === false) {
           switch (drft.fields[fieldKey].fieldType) {
@@ -38,6 +41,8 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
                 drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right'] = prvMargin
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
               }
+              break
+            default:
               break
           }
         }

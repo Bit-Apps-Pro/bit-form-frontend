@@ -75,12 +75,14 @@ export function isRestYhasBlockX(key, fieldMinW, obj, maxCol) {
  * @returns
  */
 export function delAllPrevKeys(obj, key) {
-  for (const [okey] of Object.entries(obj)) {
-    if (Number(key) === Number(okey)) return obj
-    // eslint-disable-next-line no-param-reassign
-    delete obj[Number(okey)]
+  const targetKey = Number(key)
+  const keysArr = Object.entries(obj)
+  const keysArrLen = keysArr.length
+  for (let i = 0; i < keysArrLen; i += 1) {
+    const okey = Number(keysArr[i])
+    if (okey === targetKey) return obj
+    delete obj[okey]
   }
-
   return obj
 }
 
@@ -156,7 +158,10 @@ export function convertLayout(lay, tc, fieldMinW = 1) {
     }
 
     const layoutYAxisCountArr = Object.entries(layoutYAxisCount)
-    for (const [key, value] of layoutYAxisCountArr) {
+    const layoutYAxisCountArrLen = layoutYAxisCountArr.length
+
+    for (let i = 0; i < layoutYAxisCountArrLen; i += 1) {
+      const [key, value] = layoutYAxisCountArr[i]
       const blankXPos = getEmptyXPos(tc, layoutItem.w, value)
 
       if (blankXPos > -1) {

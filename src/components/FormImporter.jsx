@@ -78,17 +78,20 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       return
     }
     const formDetail = deepCopy(importProp.formDetail)
-    for (const p of ['additional', 'workFlows', 'reports']) {
+    const importOptions = ['additional', 'workFlows', 'reports']
+    importOptions.map(p => {
       if (importProp.prop.indexOf(p) === -1) {
         delete formDetail[p]
       }
-    }
+    })
+
     if (formDetail.formSettings) {
-      for (const p of ['confirmation', 'mailTem', 'integrations']) {
+      const importFeatures = ['confirmation', 'mailTem', 'integrations']
+      importFeatures.map(p => {
         if (importProp.prop.indexOf(p) === -1) {
           delete formDetail.formSettings[p]
         }
-      }
+      })
     }
 
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {

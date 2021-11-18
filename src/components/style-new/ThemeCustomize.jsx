@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -8,11 +7,8 @@ import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
-import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
-import CustomThemeGallary from './CustomThemeGallary'
 import FieldMarginControl from './FieldMarginControl'
 import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
@@ -28,7 +24,6 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
-  const [modal, setModal] = useState(false)
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -37,10 +32,14 @@ export default function ThemeCustomize() {
     '--g-bdr-rad': globalBorderRad,
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr,
-    '--fld-fs': fldFs } = themeVars
+    '--fld-fs': fldFs,
+    '--g-bdr-width': globalBdrWidth } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
+
+  const globalBdrWidthVal = getNumFromStr(globalBdrWidth)
+  const globalBdrWidthUnit = getStrFromStr(globalBdrWidth)
 
   const fldFSValue = getNumFromStr(fldFs)
   const fldFSUnit = getStrFromStr(fldFs)
@@ -61,12 +60,21 @@ export default function ThemeCustomize() {
       drft['--g-bdr-rad'] = `${convertvalue}${unit || globalBdrRadUnit}`
     }))
   }
+
+  const borderWidthHandler = ({ value, unit }) => {
+    const convertvalue = unitConverterHelper(unit, value, globalBdrWidthUnit)
+    setThemeVars(prvStyle => produce(prvStyle, drft => {
+      drft['--g-bdr-width'] = `${convertvalue}${unit || globalBdrWidthUnit}`
+    }))
+  }
+
   const fldFsSizeHandler = ({ value, unit }) => {
     const convertvalue = unitConverterHelper(unit, value, fldFSUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft['--fld-fs'] = `${convertvalue}${unit || fldFSUnit}`
     }))
   }
+
   const undoColor = (value) => {
     if (!tempThemeVars[value]) return
     setThemeVars(prvStyle => produce(prvStyle, drft => {
@@ -79,6 +87,13 @@ export default function ThemeCustomize() {
     setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle[value] = tempThemeVars[value] || '0px'
     }))
+  }
+
+  const setSizes = () => {
+    setStyles(prvStyles => {
+      console.log({ prvStyles })
+      return prvStyles
+    })
   }
 
   return (
@@ -215,6 +230,27 @@ export default function ThemeCustomize() {
               options={['px', 'em', 'rem']}
             />
           </div>
+
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Border width</span>
+            {
+              tempThemeVars['--g-bdr-width'] && (
+                <button onClick={() => undoHandler('--g-bdr-width')} className={css(cls.btn, ut.mr1)} type="button">
+                  <UndoIcon size="20" />
+                </button>
+              )
+            }
+            <SizeControl
+              min={0}
+              max={20}
+              inputHandler={borderWidthHandler}
+              sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+              value={globalBdrWidthVal}
+              unit={globalBdrWidthUnit}
+              width="110px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Font Size</span>
             {
@@ -238,13 +274,7 @@ export default function ThemeCustomize() {
             <ThemeControl />
           </div>
 
-          <Modal
-            show={modal}
-            setModal={setModal}
-            title={__('Form theme', 'bitform')}
-          >
-            <CustomThemeGallary setModal={setModal} />
-          </Modal>
+          <button onClick={setSizes}>set 10 px</button>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
