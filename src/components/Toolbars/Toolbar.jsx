@@ -37,6 +37,7 @@ import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import Tools from './Tools'
 import ut from '../../styles/2.utilities'
+import { searchKey } from '../style-new/styleHelpers'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
@@ -442,17 +443,13 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     }, */
   ]
 
+  // TODO disable this event when a modal opened
   useEffect(() => {
     window.addEventListener('keyup', searchKey)
+    return () => {
+      window.removeEventListener('keyup', searchKey)
+    }
   }, [])
-  const searchKey = (e) => {
-    if (e.code === 'Slash') {
-      document.getElementById('search-icon').focus()
-    }
-    if (e.code === 'Escape') {
-      document.getElementById('search-icon').blur()
-    }
-  }
 
   const searchHandler = (e) => {
     setSortedTools([])
