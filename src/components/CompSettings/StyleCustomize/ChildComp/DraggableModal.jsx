@@ -11,6 +11,7 @@ import FieldWrapperControlMenu from '../../../style-new/FieldWrapperControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
+import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
@@ -26,6 +27,7 @@ const RenderComponent = ({ component, action, value }) => {
     case 'field-margin-control': return <MarginControlMenu />
     case 'field-wrapper-control': return <FieldWrapperControlMenu />
     case 'theme-control': return <CustomThemeGallary />
+    case 'form-wrapper-control': return <FormWrapperControlMenu />
     default: return 'loading'
   }
 }
@@ -39,6 +41,7 @@ const setTitle = (component) => {
     case 'field-margin-control': return 'Field Margin Control'
     case 'field-wrapper-control': return 'Field Wrapper Control'
     case 'theme-control': return 'Theme Gallary'
+    case 'form-wrapper-control': return 'Form Wrapper'
     default: return '...'
   }
 }

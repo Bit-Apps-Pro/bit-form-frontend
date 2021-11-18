@@ -16,6 +16,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
 import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
+import FormWrapperControl from './FormWrapperControl'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
@@ -265,6 +266,10 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Wrapper Control</span>
             <FieldWrapperControl />
+          </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Form Wrapper Control</span>
+            <FormWrapperControl />
           </div>
 
           <div className={css(ut.flxcb)}>
