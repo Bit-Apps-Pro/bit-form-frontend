@@ -14,7 +14,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
-export default function RazorpaySettings() {
+export default function RazorpayFieldSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])

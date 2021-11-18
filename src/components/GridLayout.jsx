@@ -199,10 +199,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     }
 
     if (extraAttr.validType === 'setDefaultPayConfig') {
-      const newFldData = produce(draggingField, draft => {
-        // eslint-disable-next-line no-param-reassign
-        draft.fieldData.payIntegID = extraAttr.payData.id
-      })
+      const newFldData = { ...fieldData }
+      newFldData.payIntegID = extraAttr.payData.id
       return newFldData
     }
 

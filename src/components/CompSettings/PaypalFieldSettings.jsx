@@ -17,7 +17,7 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
-export default function PaypalSettings() {
+export default function PaypalFieldSettings() {
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -144,7 +144,7 @@ export default function PaypalSettings() {
       </div>
       <hr className={css(style.divider)} />
 
-      {/* 
+      {/*
       <div className="mb-2">
         <span className="font-w-m">{__('Field Type : ', 'bitform')}</span>
         {__('Paypal', 'bitform')}
