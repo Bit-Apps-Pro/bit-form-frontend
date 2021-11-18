@@ -1,3 +1,5 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import { useFela } from 'react-fela'
@@ -21,6 +23,7 @@ import ThemeControl from './ThemeControl'
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
+  // const setStyles = useSetRecoilState($styles)
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
@@ -89,11 +92,106 @@ export default function ThemeCustomize() {
     }))
   }
 
-  const setSizes = () => {
-    setStyles(prvStyles => {
-      console.log({ prvStyles })
-      return prvStyles
-    })
+  // const fk = 'bf34-2'
+
+  const CommonStyle = (fk, type) => {
+    switch (type) {
+      case 'small-2':
+        return {
+          [`.${fk}-lbl`]: { 'font-size': '10px' },
+          [`.${fk}-st`]: { 'font-size': '9px' },
+          [`.${fk}-ht`]: { 'font-size': '9px' },
+          [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px' },
+        }
+      case 'small-1':
+        return {
+          [`.${fk}-lbl`]: { 'font-size': '12px' },
+          [`.${fk}-st`]: { 'font-size': '10px' },
+          [`.${fk}-ht`]: { 'font-size': '10px' },
+          [`.${fk}-fld`]: { 'font-size': '12px', padding: '6px 3px' },
+        }
+      case 'small':
+        return {
+          [`.${fk}-lbl`]: { 'font-size': '14px' },
+          [`.${fk}-st`]: { 'font-size': '12px' },
+          [`.${fk}-ht`]: { 'font-size': '12px' },
+          [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
+        }
+      case 'medium':
+        return {
+          [`.${fk}-lbl`]: { 'font-size': '16px' },
+          [`.${fk}-st`]: { 'font-size': '11px' },
+          [`.${fk}-ht`]: { 'font-size': '11px' },
+          [`.${fk}-fld`]: { 'font-size': '16px', padding: '8px 5px' },
+        }
+      case 'large':
+        return {
+          [`.${fk}-lbl`]: { 'font-size': '18px' },
+          [`.${fk}-st`]: { 'font-size': '12px' },
+          [`.${fk}-ht`]: { 'font-size': '12px' },
+          [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
+        }
+      case 'large-1':
+        return {
+          [`.${fk}-lbl`]: { 'font-size': '20px' },
+          [`.${fk}-st`]: { 'font-size': '14px' },
+          [`.${fk}-ht`]: { 'font-size': '14px' },
+          [`.${fk}-fld`]: { 'font-size': '20px', padding: '10px 7px' },
+        }
+      default:
+        return 'default......'
+    }
+  }
+
+  const setSizes = ({ target: { value } }) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      console.log(prvStyle)
+      const flds = prvStyle.fields
+      const fldKeyArr = Object.keys(flds)
+      const fldKeyArrLen = fldKeyArr.length
+
+      for (let i = 0; i < fldKeyArrLen; i += 1) {
+        const fldKey = fldKeyArr[i]
+        const commonStyles = CommonStyle(fldKeyArr[i], value)
+        const commonStylClasses = Object.keys(commonStyles)
+
+        const fldClassesObj = flds[fldKey].classes
+        const fldClasses = Object.keys(fldClassesObj)
+
+        const commonStylClassesLen = commonStylClasses.length
+        for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
+          const comnStylClass = commonStylClasses[indx]
+
+          if (fldClassesObj.hasOwnProperty(comnStylClass)) {
+            const mainStlProperties = fldClassesObj[comnStylClass]
+            const comStlProperties = commonStyles[comnStylClass]
+            const comnStlPropertiesKey = Object.keys(comStlProperties)
+
+            const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
+            for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
+              const comnStlProperty = comnStlPropertiesKey[popIndx]
+              if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
+                const mainStlVal = mainStlProperties[comnStlProperty]
+                const comStlVal = comStlProperties[comnStlProperty]
+                if (mainStlVal === comStlVal) {
+                  continue
+                }
+                if (mainStlVal?.match(/var/gi)?.[0]) {
+                  const mainStateVar = mainStlVal.replaceAll(/\(|var|\)/gi, '')
+                  setThemeVars(prv => produce(prv, drf => {
+                    drf[mainStateVar] = comStlVal
+                  }))
+                  continue
+                }
+                if (!mainStlVal?.match(/var/gi)?.[0]) {
+                  drft.fields[fldKey].classes[fldClasses[indx]][comnStlProperty] = comStlVal
+                }
+              }
+            }
+          }
+        }
+      }
+    }))
   }
 
   return (
@@ -273,8 +371,17 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Theme</span>
             <ThemeControl />
           </div>
-
-          <button onClick={setSizes}>set 10 px</button>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Theme</span>
+            <select onChange={setSizes} name="" id="">
+              <option value="small-2">Small-2</option>
+              <option value="small-1">Small-1</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="large-1">Large-1</option>
+            </select>
+          </div>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
