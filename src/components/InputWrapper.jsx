@@ -10,13 +10,21 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const err = fieldData.error || ''
   return (
     <div
-      data-fw
+      data-dev-fw={fieldKey}
       className={`${fieldKey}-fw  ${flags.styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
     >
-      <div className={`${fieldKey}-lw`}>
+      <div
+        data-dev-lw={fieldKey}
+        className={`${fieldKey}-lw`}
+      >
         {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
-          <label title={fieldData.lbl} className={`${fieldKey}-lbl`} htmlFor={fieldKey}>
+          <label
+            data-dev-lbl={fieldKey}
+            title={fieldData.lbl}
+            className={`${fieldKey}-lbl`}
+            htmlFor={fieldKey}
+          >
             {fieldData.lbl}
             {fieldData.valid?.req && (
               <>
@@ -26,9 +34,9 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             )}
           </label>
         )}
-        <div className={`${fieldKey}-st`}>sub title</div>
+        <div data-dev-st={fieldKey} className={`${fieldKey}-st`}>sub title</div>
       </div>
-      <div className={`${fieldKey}-iw`}>
+      <div data-dev-iw={fieldKey} className={`${fieldKey}-iw`}>
         {children}
         <div className={`${fieldKey}-ht`}>helper text</div>
       </div>

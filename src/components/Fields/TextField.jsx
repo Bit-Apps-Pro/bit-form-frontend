@@ -55,8 +55,9 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div className={`${fieldKey}-ifw`}>
+        <div data-dev-ifw={fieldKey} className={`${fieldKey}-ifw`}>
           <input
+            data-dev-fld={fieldKey}
             id={fieldKey}
             list={`${fieldKey}-datalist`}
             ref={textFieldRef}

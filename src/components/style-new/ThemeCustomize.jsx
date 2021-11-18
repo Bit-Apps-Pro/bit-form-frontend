@@ -1,21 +1,26 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
+import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
 import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
+import FormWrapperControl from './FormWrapperControl'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { changeFormDir, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function ThemeCustomize() {
@@ -89,11 +94,57 @@ export default function ThemeCustomize() {
     }))
   }
 
-  const setSizes = () => {
-    setStyles(prvStyles => {
-      console.log({ prvStyles })
-      return prvStyles
-    })
+  const setSizes = ({ target: { value } }) => {
+    const tmpThemeVar = deepCopy(themeVars)
+
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      const flds = prvStyle.fields
+      const fldKeyArr = Object.keys(flds)
+      const fldKeyArrLen = fldKeyArr.length
+
+      for (let i = 0; i < fldKeyArrLen; i += 1) {
+        const fldKey = fldKeyArr[i]
+        const commonStyles = CommonStyle(fldKeyArr[i], value)
+        const commonStylClasses = Object.keys(commonStyles)
+
+        const fldClassesObj = flds[fldKey].classes
+        const fldClasses = Object.keys(fldClassesObj)
+
+        const commonStylClassesLen = commonStylClasses.length
+        for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
+          const comnStylClass = commonStylClasses[indx]
+
+          if (fldClassesObj.hasOwnProperty(comnStylClass)) {
+            const mainStlProperties = fldClassesObj[comnStylClass]
+            const comStlProperties = commonStyles[comnStylClass]
+            const comnStlPropertiesKey = Object.keys(comStlProperties)
+
+            const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
+            for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
+              const comnStlProperty = comnStlPropertiesKey[popIndx]
+
+              if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
+                const mainStlVal = mainStlProperties[comnStlProperty]
+                const comStlVal = comStlProperties[comnStlProperty]
+                if (mainStlVal === comStlVal) {
+                  continue
+                }
+                if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
+                  const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                  tmpThemeVar[mainStateVar] = comStlVal
+                  continue
+                }
+                if (!mainStlVal?.match(/var/gi)?.[0]) {
+                  drft.fields[fldKey].classes[fldClasses[indx]][comnStlProperty] = comStlVal
+                }
+              }
+            }
+          }
+        }
+      }
+    }))
+
+    setThemeVars(tmpThemeVar)
   }
 
   return (
@@ -111,8 +162,15 @@ export default function ThemeCustomize() {
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
-        <br />
         <div className={css(cls.container)}>
+          <div className={css(cls.subTitle2)}>Colors</div>
+
+          <ScrollMenu>
+            <MenuItem itemId={1} label="Default" />
+            <MenuItem itemId={2} label="Default" />
+            <MenuItem itemId={3} label="Default" />
+          </ScrollMenu>
+
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
@@ -209,6 +267,10 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Field Wrapper Control</span>
             <FieldWrapperControl />
           </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Form Wrapper Control</span>
+            <FormWrapperControl />
+          </div>
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
@@ -273,14 +335,27 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Theme</span>
             <ThemeControl />
           </div>
-
-          <button onClick={setSizes}>set 10 px</button>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Theme</span>
+            <select onChange={setSizes} name="" id="">
+              <option value="small-2">Small-2</option>
+              <option value="small-1">Small-1</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="large-1">Large-1</option>
+            </select>
+          </div>
 
           {[...Array(20).keys()].map(() => <br />)}
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   )
+}
+
+const MenuItem = ({ label }) => {
+  return <div>{label}</div>
 }
 
 const cls = {
@@ -291,6 +366,7 @@ const cls = {
   wrp: { ml: 5, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
+  subTitle2: { fs: 14, fw: 500, my: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { ml: 12, mr: 15 },
   btn: {
@@ -301,4 +377,10 @@ const cls = {
     cur: 'pointer',
   },
   pnt: { cur: 'not-allowed' },
+  menuItem: {
+    p: 10,
+    ws: 'nowrap',
+    fs: 14,
+    fw: 500
+  }
 }

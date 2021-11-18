@@ -10,6 +10,7 @@ import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
+import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
@@ -19,6 +20,8 @@ import Downmenu from './Utilities/Downmenu'
 import SingleToggle from './Utilities/SingleToggle'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
+import Modal from './Utilities/Modal'
+import Editor from './CompSettings/Editor'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
@@ -27,6 +30,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const [flags, setFlags] = useRecoilState($flags)
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
+  const [modal, setModal] = useState(false)
 
   const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
 
@@ -67,8 +71,29 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <div className={css(OptionToolBarStyle.border_right)} />
 
           <FormBuilderHistory />
+          <div className={css(OptionToolBarStyle.border_right)} />
+          <Tip msg="Custom CSS and JS">
+            <button type="button" onClick={() => setModal(true)}>
+              Editor
+            </button>
+          </Tip>
+          <Modal
+            md
+            autoHeight
+            show={modal}
+            setModal={setModal}
+            className="o-v"
+            title=""
+          >
+            <div className="pos-rel" />
+            <Editor />
+          </Modal>
 
           <div className={css(OptionToolBarStyle.border_right)} />
+
+          <Tip msg="Medium Screen View">
+            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`} type="button"><SettingsIcn size={22} /></button>
+          </Tip>
 
           <div className={css([ut.flxc, OptionToolBarStyle.rightSideBarBtn])}>
             <Tip msg="Fields Settings">

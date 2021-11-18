@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { select } from '../../Utils/globalHelpers'
 
@@ -12,18 +13,20 @@ export const showDraggableModal = (e, setDraggableModal, { component, width = 25
 
 export const json2CssStr = (jsonValue) => {
   let cssStr = '{'
-  for (const property in jsonValue) {
-    if (Object.hasOwnProperty.call(jsonValue, property)) {
-      cssStr += `${property}:${jsonValue[property]};`
-    }
-  }
+  const objArr = Object.entries(jsonValue)
+  objArr.map(([property, value]) => {
+    cssStr += `${property}:${value};`
+  })
   cssStr += '}'
   return cssStr
 }
 
 export const changeFormDir = (style, dir) => produce(style, drft => {
   if (drft.theme === 'bitformDefault') {
-    for (const fieldKey in drft.fields) {
+    const fieldsKeysArr = Object.keys(drft.fields)
+    const fieldsKeysArrLen = fieldsKeysArr.length
+    for (let i = 0; i < fieldsKeysArrLen; i += 1) {
+      const fieldKey = fieldsKeysArr[i]
       if (Object.hasOwnProperty.call(drft.fields, fieldKey)) {
         if (drft.fields[fieldKey].overrideGlobalTheme === false) {
           switch (drft.fields[fieldKey].fieldType) {
@@ -38,6 +41,8 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
                 drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-right'] = prvMargin
                 delete drft.fields[fieldKey].classes[`.${fieldKey}-bx`]['margin-left']
               }
+              break
+            default:
               break
           }
         }
@@ -69,46 +74,43 @@ export const unitConverterHelper = (unit, value, preUnit) => {
 export const getNumFromStr = (str = '') => str.match(/[-]?([0-9]*[.])?[0-9]+/gi)?.[0]
 export const getStrFromStr = (str = '') => str.match(/([A-z]|%)+/gi)?.[0]
 
+export const searchKey = (e) => {
+  if (e.code === 'Slash') {
+    document.getElementById('search-icon').focus()
+  }
+  if (e.code === 'Escape') {
+    document.getElementById('search-icon').blur()
+  }
+}
+
 function getAbsoluteSize(el) {
   const styles = window.getComputedStyle(el)
-  const marginTop = parseFloat(styles.marginTop)
-  const marginBottom = parseFloat(styles.marginBottom)
-  const marginY = marginTop + marginBottom
+  // const marginTop =
+  // const marginBottom =
 
-  const marginLeft = parseFloat(styles.marginLeft)
-  const marginRight = parseFloat(styles.marginRight)
-  const marginX = marginLeft + marginRight
+  // const marginLeft = parseFloat(styles.marginLeft)
+  // const marginRight = parseFloat(styles.marginRight)
 
-  const borderTop = parseFloat(styles.borderTop)
+  // const borderTop = parseFloat(styles.borderTop)
   const borderBottom = parseFloat(styles.borderBottom)
-  const borderY = borderBottom + borderTop
 
   const borderLeft = parseFloat(styles.borderLeft)
   const borderRight = parseFloat(styles.borderRight)
-  const borderX = borderRight + borderLeft
 
   const paddingLeft = parseFloat(styles.paddingLeft)
   const paddingRight = parseFloat(styles.paddingRight)
   const paddingTop = parseFloat(styles.paddingTop)
   const paddingBottom = parseFloat(styles.paddingBottom)
-  const height = Math.ceil(el.offsetHeight)
-  const width = Math.ceil(el.offsetWidth)
 
   return {
-    height,
-    width,
     borderBottom,
-    borderTop,
+    borderTop: parseFloat(styles.borderTop),
     borderLeft,
     borderRight,
-    marginBottom,
-    marginTop,
-    marginLeft,
-    marginRight,
-    marginX,
-    marginY,
-    borderX,
-    borderY,
+    marginBottom: parseFloat(styles.marginBottom),
+    marginTop: parseFloat(styles.marginTop),
+    marginLeft: parseFloat(styles.marginLeft),
+    marginRight: parseFloat(styles.marginRight),
     paddingLeft,
     paddingRight,
     paddingTop,
@@ -120,17 +122,13 @@ function getAbsoluteSize(el) {
  * @param {string} selector html query  selector
  * @param {string} selector "element" | "margin" | "padding"
 */
-export function highlightElm(selector, selectType = 'element') {
-  const elms = document.querySelectorAll(selector)
+export function highlightElm(selector, selectType = 'element padding margin') {
+  const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
   elms.forEach(elm => {
     const marginDiv = document.createElement('div')
     const paddingDiv = document.createElement('div')
     const elementDiv = document.createElement('div')
-    const { height,
-      width,
-      marginX,
-      marginY,
-      marginRight,
+    const { marginRight,
       marginBottom,
       marginLeft,
       marginTop,
@@ -138,13 +136,21 @@ export function highlightElm(selector, selectType = 'element') {
       paddingRight,
       paddingTop,
       paddingBottom } = getAbsoluteSize(elm)
-    marginDiv.style.width = `${width + marginX}px`
-    marginDiv.style.height = `${height + marginY}px`
-    marginDiv.style.top = `${elm.offsetTop - marginTop}px`
-    marginDiv.style.left = `${elm.offsetLeft - marginLeft}px`
-    marginDiv.classList.add('margin')
+    const { top, left, height, width } = elm.getBoundingClientRect()
 
-    elementDiv.classList.add('element')
+    marginDiv.style.width = `${width + marginRight + marginLeft}px`
+    marginDiv.style.height = `${height + marginTop + marginBottom}px`
+    marginDiv.style.top = `${top - marginTop}px`
+    marginDiv.style.left = `${left - marginLeft}px`
+    marginDiv.classList.add('highlight-margin')
+    marginDiv.setAttribute('data-highlight', selector)
+    marginDiv.onclick = (e) => {
+      if (e.target.hasAttribute('data-highlight')) { e.target.remove(); return }
+      if (e.target.parentNode.hasAttribute('data-highlight')) { e.target.parentNode.remove(); return }
+      if (e.target.parentNode.parentNode.hasAttribute('data-highlight')) { e.target.parentNode.parentNode.remove() }
+    }
+
+    elementDiv.classList.add('highlight-element')
     elementDiv.style.width = `${width}px`
     elementDiv.style.height = `${height}px`
     elementDiv.style.marginRight = `${marginRight}px`
@@ -152,7 +158,7 @@ export function highlightElm(selector, selectType = 'element') {
     elementDiv.style.marginTop = `${marginTop}px`
     elementDiv.style.marginBottom = `${marginBottom}px`
 
-    paddingDiv.classList.add('padding')
+    paddingDiv.classList.add('highlight-padding')
     paddingDiv.style.width = `${width - paddingLeft - paddingRight}px`
     paddingDiv.style.height = `${height - paddingTop - paddingBottom}px`
     paddingDiv.style.marginRight = `${paddingRight}px`
@@ -163,14 +169,77 @@ export function highlightElm(selector, selectType = 'element') {
     if (selectType.indexOf('element') < 0) {
       elementDiv.style.background = 'transparent'
     }
-    if (selectType.indexOf('margin') < 0) {
+    if (selectType.indexOf('margin') < 0
+      || (width + marginTop + marginBottom) === width
+      || (height + marginRight + marginLeft) === height) {
       marginDiv.style.background = 'transparent'
     }
-    if (selectType.indexOf('padding') < 0) {
+    if (selectType.indexOf('padding') < 0
+      || (width - paddingLeft - paddingRight) === width
+      || (height - paddingTop - paddingBottom) === height) {
       paddingDiv.style.background = 'transparent'
     }
     marginDiv.appendChild(elementDiv)
     elementDiv.appendChild(paddingDiv)
-    elementDiv.style.width = document.body.appendChild(marginDiv)
+    // console.log('', marginDiv)
+    // document.body.appendChild(marginDiv)
+    document.getElementById('bit-grid-layout')?.contentWindow?.document.body.prepend(marginDiv)
   })
+}
+
+export const removeHightlight = (selector = '[data-highlight]') => {
+  const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
+  elms.forEach(elm => { elm.remove() })
+}
+/**
+ * @param {string} fk "field key"
+ * @param {string} type "size"
+*/
+export const CommonStyle = (fk, type) => {
+  switch (type) {
+    case 'small-2':
+      return {
+        [`.${fk}-lbl`]: { 'font-size': '10px' },
+        [`.${fk}-st`]: { 'font-size': '9px' },
+        [`.${fk}-ht`]: { 'font-size': '9px' },
+        [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px !important' },
+      }
+    case 'small-1':
+      return {
+        [`.${fk}-lbl`]: { 'font-size': '12px' },
+        [`.${fk}-st`]: { 'font-size': '10px' },
+        [`.${fk}-ht`]: { 'font-size': '10px' },
+        [`.${fk}-fld`]: { 'font-size': '12px', padding: '6px 3px' },
+      }
+    case 'small':
+      return {
+        [`.${fk}-lbl`]: { 'font-size': '14px' },
+        [`.${fk}-st`]: { 'font-size': '12px' },
+        [`.${fk}-ht`]: { 'font-size': '12px' },
+        [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
+      }
+    case 'medium':
+      return {
+        [`.${fk}-lbl`]: { 'font-size': '16px' },
+        [`.${fk}-st`]: { 'font-size': '11px' },
+        [`.${fk}-ht`]: { 'font-size': '11px' },
+        [`.${fk}-fld`]: { 'font-size': '16px', padding: '8px 5px' },
+      }
+    case 'large':
+      return {
+        [`.${fk}-lbl`]: { 'font-size': '18px' },
+        [`.${fk}-st`]: { 'font-size': '12px' },
+        [`.${fk}-ht`]: { 'font-size': '12px' },
+        [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
+      }
+    case 'large-1':
+      return {
+        [`.${fk}-lbl`]: { 'font-size': '20px' },
+        [`.${fk}-st`]: { 'font-size': '14px' },
+        [`.${fk}-ht`]: { 'font-size': '14px' },
+        [`.${fk}-fld`]: { 'font-size': '20px', padding: '10px 7px' },
+      }
+    default:
+      return 'default......'
+  }
 }

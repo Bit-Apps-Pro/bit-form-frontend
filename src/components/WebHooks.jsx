@@ -147,7 +147,9 @@ function WebHooks({ removeIntegration }) {
     try {
       const urlParams = new URLSearchParams(new URL(url).search)
       const allparams = []
-      for (const [key, value] of urlParams.entries()) allparams.push({ key, value })
+      urlParams.forEach((value, key) => {
+        allparams.push({ key, value })
+      })
       return allparams
     } catch (e) {
       return []
