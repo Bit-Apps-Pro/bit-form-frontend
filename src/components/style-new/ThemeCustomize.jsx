@@ -9,6 +9,7 @@ import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
+import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
@@ -23,7 +24,6 @@ import ThemeControl from './ThemeControl'
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
-  // const setStyles = useSetRecoilState($styles)
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
@@ -101,7 +101,7 @@ export default function ThemeCustomize() {
           [`.${fk}-lbl`]: { 'font-size': '10px' },
           [`.${fk}-st`]: { 'font-size': '9px' },
           [`.${fk}-ht`]: { 'font-size': '9px' },
-          [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px' },
+          [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px !important' },
         }
       case 'small-1':
         return {
@@ -144,8 +144,9 @@ export default function ThemeCustomize() {
   }
 
   const setSizes = ({ target: { value } }) => {
+    const tmpThemeVar = deepCopy(themeVars)
+
     setStyles(prvStyle => produce(prvStyle, drft => {
-      console.log(prvStyle)
       const flds = prvStyle.fields
       const fldKeyArr = Object.keys(flds)
       const fldKeyArrLen = fldKeyArr.length
@@ -170,17 +171,16 @@ export default function ThemeCustomize() {
             const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
             for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
               const comnStlProperty = comnStlPropertiesKey[popIndx]
+
               if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
                 const mainStlVal = mainStlProperties[comnStlProperty]
                 const comStlVal = comStlProperties[comnStlProperty]
                 if (mainStlVal === comStlVal) {
                   continue
                 }
-                if (mainStlVal?.match(/var/gi)?.[0]) {
-                  const mainStateVar = mainStlVal.replaceAll(/\(|var|\)/gi, '')
-                  setThemeVars(prv => produce(prv, drf => {
-                    drf[mainStateVar] = comStlVal
-                  }))
+                if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
+                  const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                  tmpThemeVar[mainStateVar] = comStlVal
                   continue
                 }
                 if (!mainStlVal?.match(/var/gi)?.[0]) {
@@ -192,6 +192,8 @@ export default function ThemeCustomize() {
         }
       }
     }))
+
+    setThemeVars(tmpThemeVar)
   }
 
   return (
