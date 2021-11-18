@@ -150,7 +150,6 @@ export default function ThemeCustomize() {
   }
 
   const openHandler = (value) => {
-    console.log(value)
     setActiveAccordion(value)
   }
 
