@@ -74,46 +74,43 @@ export const unitConverterHelper = (unit, value, preUnit) => {
 export const getNumFromStr = (str = '') => str.match(/[-]?([0-9]*[.])?[0-9]+/gi)?.[0]
 export const getStrFromStr = (str = '') => str.match(/([A-z]|%)+/gi)?.[0]
 
+export const searchKey = (e) => {
+  if (e.code === 'Slash') {
+    document.getElementById('search-icon').focus()
+  }
+  if (e.code === 'Escape') {
+    document.getElementById('search-icon').blur()
+  }
+}
+
 function getAbsoluteSize(el) {
   const styles = window.getComputedStyle(el)
-  const marginTop = parseFloat(styles.marginTop)
-  const marginBottom = parseFloat(styles.marginBottom)
-  const marginY = marginTop + marginBottom
+  // const marginTop =
+  // const marginBottom =
 
-  const marginLeft = parseFloat(styles.marginLeft)
-  const marginRight = parseFloat(styles.marginRight)
-  const marginX = marginLeft + marginRight
+  // const marginLeft = parseFloat(styles.marginLeft)
+  // const marginRight = parseFloat(styles.marginRight)
 
-  const borderTop = parseFloat(styles.borderTop)
+  // const borderTop = parseFloat(styles.borderTop)
   const borderBottom = parseFloat(styles.borderBottom)
-  const borderY = borderBottom + borderTop
 
   const borderLeft = parseFloat(styles.borderLeft)
   const borderRight = parseFloat(styles.borderRight)
-  const borderX = borderRight + borderLeft
 
   const paddingLeft = parseFloat(styles.paddingLeft)
   const paddingRight = parseFloat(styles.paddingRight)
   const paddingTop = parseFloat(styles.paddingTop)
   const paddingBottom = parseFloat(styles.paddingBottom)
-  const height = Math.ceil(el.offsetHeight)
-  const width = Math.ceil(el.offsetWidth)
 
   return {
-    height,
-    width,
     borderBottom,
-    borderTop,
+    borderTop: parseFloat(styles.borderTop),
     borderLeft,
     borderRight,
-    marginBottom,
-    marginTop,
-    marginLeft,
-    marginRight,
-    marginX,
-    marginY,
-    borderX,
-    borderY,
+    marginBottom: parseFloat(styles.marginBottom),
+    marginTop: parseFloat(styles.marginTop),
+    marginLeft: parseFloat(styles.marginLeft),
+    marginRight: parseFloat(styles.marginRight),
     paddingLeft,
     paddingRight,
     paddingTop,
@@ -125,16 +122,17 @@ function getAbsoluteSize(el) {
  * @param {string} selector html query  selector
  * @param {string} selector "element" | "margin" | "padding"
 */
-export function highlightElm(selector, selectType = 'element') {
-  const elms = document.querySelectorAll(selector)
+export function highlightElm(selector, selectType = 'element padding margin') {
+  const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
   elms.forEach(elm => {
     const marginDiv = document.createElement('div')
     const paddingDiv = document.createElement('div')
     const elementDiv = document.createElement('div')
-    const { height,
-      width,
-      marginX,
-      marginY,
+    const {
+      // height,
+      // width,
+      // marginX,
+      // marginY,
       marginRight,
       marginBottom,
       marginLeft,
@@ -143,13 +141,21 @@ export function highlightElm(selector, selectType = 'element') {
       paddingRight,
       paddingTop,
       paddingBottom } = getAbsoluteSize(elm)
-    marginDiv.style.width = `${width + marginX}px`
-    marginDiv.style.height = `${height + marginY}px`
-    marginDiv.style.top = `${elm.offsetTop - marginTop}px`
-    marginDiv.style.left = `${elm.offsetLeft - marginLeft}px`
-    marginDiv.classList.add('margin')
+    const { top, left, height, width } = elm.getBoundingClientRect()
 
-    elementDiv.classList.add('element')
+    marginDiv.style.width = `${width + marginRight + marginLeft}px`
+    marginDiv.style.height = `${height + marginTop + marginBottom}px`
+    marginDiv.style.top = `${top - marginTop}px`
+    marginDiv.style.left = `${left - marginLeft}px`
+    marginDiv.classList.add('highlight-margin')
+    marginDiv.setAttribute('data-highlight', selector)
+    marginDiv.onclick = (e) => {
+      if (e.target.hasAttribute('data-highlight')) { e.target.remove(); return }
+      if (e.target.parentNode.hasAttribute('data-highlight')) { e.target.parentNode.remove(); return }
+      if (e.target.parentNode.parentNode.hasAttribute('data-highlight')) { e.target.parentNode.parentNode.remove(); return }
+    }
+
+    elementDiv.classList.add('highlight-element')
     elementDiv.style.width = `${width}px`
     elementDiv.style.height = `${height}px`
     elementDiv.style.marginRight = `${marginRight}px`
@@ -157,7 +163,7 @@ export function highlightElm(selector, selectType = 'element') {
     elementDiv.style.marginTop = `${marginTop}px`
     elementDiv.style.marginBottom = `${marginBottom}px`
 
-    paddingDiv.classList.add('padding')
+    paddingDiv.classList.add('highlight-padding')
     paddingDiv.style.width = `${width - paddingLeft - paddingRight}px`
     paddingDiv.style.height = `${height - paddingTop - paddingBottom}px`
     paddingDiv.style.marginRight = `${paddingRight}px`
@@ -168,14 +174,25 @@ export function highlightElm(selector, selectType = 'element') {
     if (selectType.indexOf('element') < 0) {
       elementDiv.style.background = 'transparent'
     }
-    if (selectType.indexOf('margin') < 0) {
+    if (selectType.indexOf('margin') < 0
+      || (width + marginTop + marginBottom) === width
+      || (height + marginRight + marginLeft) === height) {
       marginDiv.style.background = 'transparent'
     }
-    if (selectType.indexOf('padding') < 0) {
+    if (selectType.indexOf('padding') < 0
+      || (width - paddingLeft - paddingRight) === width
+      || (height - paddingTop - paddingBottom) === height) {
       paddingDiv.style.background = 'transparent'
     }
     marginDiv.appendChild(elementDiv)
     elementDiv.appendChild(paddingDiv)
-    elementDiv.style.width = document.body.appendChild(marginDiv)
+    // console.log('', marginDiv)
+    // document.body.appendChild(marginDiv)
+    document.getElementById('bit-grid-layout')?.contentWindow?.document.body.prepend(marginDiv)
   })
+}
+
+export const removeHightlight = (selector = '[data-highlight]') => {
+  const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
+  elms.forEach(elm => { elm.remove() })
 }
