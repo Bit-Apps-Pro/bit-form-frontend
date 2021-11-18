@@ -83,7 +83,7 @@ export default function LabelControlMenu() {
           drftStyle['--fw-dis'] = 'flex'
           drftStyle['--fw-fdir'] = 'row-reverse'
           drftStyle['--lw-width'] ||= '40%'
-          drftStyle['--iw-width'] = '100%'
+          drftStyle['--iw-width'] = '60%'
         }))
         setOpenVarPos(true)
         setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
