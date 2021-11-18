@@ -10,6 +10,7 @@ import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
 import MobileIcon from '../Icons/MobileIcon'
+import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
@@ -69,6 +70,10 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <FormBuilderHistory />
 
           <div className={css(OptionToolBarStyle.border_right)} />
+
+          <Tip msg="Medium Screen View">
+            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`} type="button"><SettingsIcn size={22} /></button>
+          </Tip>
 
           <div className={css([ut.flxc, OptionToolBarStyle.rightSideBarBtn])}>
             <Tip msg="Fields Settings">
