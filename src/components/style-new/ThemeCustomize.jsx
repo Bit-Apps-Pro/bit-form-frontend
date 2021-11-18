@@ -2,6 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -10,6 +11,8 @@ import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
+import { __ } from '../../Utils/i18nwrap'
+import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
@@ -27,6 +30,7 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
+  const [activeAccordion, setActiveAccordion] = useState()
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -143,6 +147,11 @@ export default function ThemeCustomize() {
     }))
 
     setThemeVars(tmpThemeVar)
+  }
+
+  const OpenHandler = (value) => {
+    console.log(value)
+    setActiveAccordion(value)
   }
 
   return (
@@ -333,6 +342,36 @@ export default function ThemeCustomize() {
               <option value="large-1">Large-1</option>
             </select>
           </div>
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500)}>Theme</span>
+            <ThemeControl />
+          </div>
+          <SimpleAccordion
+            title={__('Admin Label', 'bitform')}
+            className={css(cls.con)}
+            disable={activeAccordion !== 1}
+            onClick={() => OpenHandler(1)}
+          >
+            <div className={css(ut.flxcb)}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequuntur soluta qui illo et corporis. Reprehenderit,
+              quod voluptatibus, dicta illo, doloribus quisquam corrupti
+              quasi vero fugiat voluptates sint fugit a quae.
+            </div>
+          </SimpleAccordion>
+          <SimpleAccordion
+            title={__('Admin Label', 'bitform')}
+            className={css(cls.con)}
+            disable={activeAccordion !== 2}
+            onClick={() => OpenHandler(2)}
+          >
+            <div className={css(ut.flxcb)}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequuntur soluta qui illo et corporis. Reprehenderit,
+              quod voluptatibus, dicta illo, doloribus quisquam corrupti
+              quasi vero fugiat voluptates sint fugit a quae.
+            </div>
+          </SimpleAccordion>
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
@@ -359,4 +398,5 @@ const cls = {
     cur: 'pointer',
   },
   pnt: { cur: 'not-allowed' },
+  con: { p: 10 },
 }
