@@ -147,6 +147,11 @@ const ut = {
     ':active': { bd: 'var(--white-0-93)' },
     ':focus-visible': { focusShadow: 1 },
   },
+  divider: {
+    my: 0,
+    mx: 10,
+    bb: '0.5px soild var(--white-0-83)',
+  },
 
 }
 export default ut

@@ -2,7 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -359,6 +359,7 @@ export default function ThemeCustomize() {
               quasi vero fugiat voluptates sint fugit a quae.
             </div>
           </SimpleAccordion>
+          <hr className={css(ut.divider)} />
           <SimpleAccordion
             title={__('Admin Label', 'bitform')}
             className={css(cls.con)}
@@ -372,6 +373,21 @@ export default function ThemeCustomize() {
               quasi vero fugiat voluptates sint fugit a quae.
             </div>
           </SimpleAccordion>
+          <hr className={css(ut.divider)} />
+          <SimpleAccordion
+            title={__('Admin Label', 'bitform')}
+            className={css(cls.con)}
+            disable={activeAccordion !== 3}
+            onClick={() => openHandler(3)}
+          >
+            <div className={css(ut.flxcb)}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequuntur soluta qui illo et corporis. Reprehenderit,
+              quod voluptatibus, dicta illo, doloribus quisquam corrupti
+              quasi vero fugiat voluptates sint fugit a quae.
+            </div>
+          </SimpleAccordion>
+          <hr className={css(ut.divider)} />
 
           {[...Array(20).keys()].map(() => <br />)}
         </div>
