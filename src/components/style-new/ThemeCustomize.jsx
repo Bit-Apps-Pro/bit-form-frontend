@@ -43,7 +43,8 @@ export default function ThemeCustomize() {
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
-    '--fw-bg': globalfldWrpBg } = themeVars
+    '--fw-bg': globalfldWrpBg,
+    '--st-bg': stBg } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -363,16 +364,18 @@ export default function ThemeCustomize() {
           </SimpleAccordion>
           <hr className={css(ut.divider)} />
           <SimpleAccordion
-            title={__('Admin Label', 'bitform')}
+            title={__('Label & Subtitle Container', 'bitform')}
             className={css(cls.con)}
             disable={activeAccordion !== 3}
             onClick={() => openHandler(3)}
           >
-            <div className={css(ut.flxcb)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur soluta qui illo et corporis. Reprehenderit,
-              quod voluptatibus, dicta illo, doloribus quisquam corrupti
-              quasi vero fugiat voluptates sint fugit a quae.
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Background Color</span>
+              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Spacing</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
             </div>
           </SimpleAccordion>
           <hr className={css(ut.divider)} />
@@ -408,4 +411,8 @@ const cls = {
 const fldWrapperObj = {
   object: 'themeVars',
   paths: { margin: '--fw-m', padding: '--fw-p' },
+}
+const stSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--st-m', padding: '--st-p' },
 }
