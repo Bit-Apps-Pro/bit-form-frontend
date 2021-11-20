@@ -22,7 +22,6 @@ export default function SimpleAccordion({ className,
   const toggleAccordion = (e) => {
     // e.preventDefault()
     if (disable) return
-    console.log(onOpen)
 
     if (e.type === 'keypress') {
       if (e.code === 'Space' || e.code === 'Enter') {

@@ -2,7 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -23,6 +23,7 @@ import FormWrapperControl from './FormWrapperControl'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
+import SpacingControl from './SpacingControl'
 import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
@@ -33,6 +34,7 @@ export default function ThemeCustomize() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
   const [activeAccordion, setActiveAccordion] = useState()
+  const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -42,7 +44,9 @@ export default function ThemeCustomize() {
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
-    '--g-bdr-width': globalBdrWidth } = themeVars
+    '--g-bdr-width': globalBdrWidth,
+    '--fw-bg': globalfldWrpBg,
+    '--st-bg': stBg } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -151,8 +155,7 @@ export default function ThemeCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
-  const OpenHandler = (value) => {
-    console.log(value)
+  const openHandler = (value) => {
     setActiveAccordion(value)
   }
 
@@ -280,114 +283,118 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Form Wrapper Control</span>
             <FormWrapperControl />
           </div>
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Border Radius</span>
-            {
-              tempThemeVars['--g-bdr-rad'] && (
-                <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
-                  <UndoIcon size="20" />
-                </button>
-              )
-            }
-            <SizeControl
-              min={0}
-              max={20}
-              inputHandler={borderRadHandler}
-              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-              value={globalBdrRadValue}
-              unit={globalBdrRadUnit}
-              width="110px"
-              options={['px', 'em', 'rem']}
-            />
-          </div>
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Border width</span>
-            {
-              tempThemeVars['--g-bdr-width'] && (
-                <button onClick={() => undoHandler('--g-bdr-width')} className={css(cls.btn, ut.mr1)} type="button">
-                  <UndoIcon size="20" />
-                </button>
-              )
-            }
-            <SizeControl
-              min={0}
-              max={20}
-              inputHandler={borderWidthHandler}
-              sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-              value={globalBdrWidthVal}
-              unit={globalBdrWidthUnit}
-              width="110px"
-              options={['px', 'em', 'rem']}
-            />
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Field Font Size</span>
-            {
-              tempThemeVars['--fld-fs'] && (
-                <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
-                  <UndoIcon size="20" />
-                </button>
-              )
-            }
-            <SizeControl
-              inputHandler={fldFsSizeHandler}
-              sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
-              value={fldFSValue}
-              unit={fldFSUnit}
-              width="110px"
-              options={['px', 'em', 'rem']}
-            />
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Theme</span>
-            <ThemeControl />
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Theme</span>
-            <select onChange={setSizes} name="" id="">
-              <option value="small-2">Small-2</option>
-              <option value="small-1">Small-1</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="large-1">Large-1</option>
-            </select>
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Theme</span>
-            <ThemeControl />
-          </div>
-          <SimpleAccordion
-            title={__('Admin Label', 'bitform')}
-            className={css(cls.con)}
-            disable={activeAccordion !== 1}
-            onClick={() => OpenHandler(1)}
-          >
-            <div className={css(ut.flxcb)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur soluta qui illo et corporis. Reprehenderit,
-              quod voluptatibus, dicta illo, doloribus quisquam corrupti
-              quasi vero fugiat voluptates sint fugit a quae.
-            </div>
-          </SimpleAccordion>
-          <SimpleAccordion
-            title={__('Admin Label', 'bitform')}
-            className={css(cls.con)}
-            disable={activeAccordion !== 2}
-            onClick={() => OpenHandler(2)}
-          >
-            <div className={css(ut.flxcb)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur soluta qui illo et corporis. Reprehenderit,
-              quod voluptatibus, dicta illo, doloribus quisquam corrupti
-              quasi vero fugiat voluptates sint fugit a quae.
-            </div>
-          </SimpleAccordion>
-
-          {[...Array(20).keys()].map(() => <br />)}
         </div>
+
+        <div className={css(ut.flxcb)}>
+          <span className={css(ut.fw500)}>Border Radius</span>
+          {
+            tempThemeVars['--g-bdr-rad'] && (
+              <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            )
+          }
+          <SizeControl
+            min={0}
+            max={20}
+            inputHandler={borderRadHandler}
+            sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+            value={globalBdrRadValue}
+            unit={globalBdrRadUnit}
+            width="110px"
+            options={['px', 'em', 'rem']}
+          />
+        </div>
+
+        <div className={css(ut.flxcb)}>
+          <span className={css(ut.fw500)}>Border width</span>
+          {
+            tempThemeVars['--g-bdr-width'] && (
+              <button onClick={() => undoHandler('--g-bdr-width')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            )
+          }
+          <SizeControl
+            min={0}
+            max={20}
+            inputHandler={borderWidthHandler}
+            sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+            value={globalBdrWidthVal}
+            unit={globalBdrWidthUnit}
+            width="110px"
+            options={['px', 'em', 'rem']}
+          />
+        </div>
+        <div className={css(ut.flxcb)}>
+          <span className={css(ut.fw500)}>Field Font Size</span>
+          {
+            tempThemeVars['--fld-fs'] && (
+              <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
+                <UndoIcon size="20" />
+              </button>
+            )
+          }
+          <SizeControl
+            inputHandler={fldFsSizeHandler}
+            sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+            value={fldFSValue}
+            unit={fldFSUnit}
+            width="110px"
+            options={['px', 'em', 'rem']}
+          />
+        </div>
+        <div className={css(ut.flxcb)}>
+          <span className={css(ut.fw500)}>Theme</span>
+          <ThemeControl />
+        </div>
+        <div className={css(ut.flxcb)}>
+          <span className={css(ut.fw500)}>Size</span>
+          <select onChange={setSizes} name="" id="">
+            <option value="small-2">Small-2</option>
+            <option value="small-1">Small-1</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="large-1">Large-1</option>
+          </select>
+        </div>
+
+        <hr className={css(ut.divider)} />
+        <SimpleAccordion
+          title={__('Field container', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 2}
+          onClick={() => openHandler(2)}
+        >
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Background Color</span>
+            <SimpleColorPicker value={globalfldWrpBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Spacing</span>
+            <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
+          </div>
+        </SimpleAccordion>
+        <hr className={css(ut.divider)} />
+        <SimpleAccordion
+          title={__('Label & Subtitle Container', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 3}
+          onClick={() => openHandler(3)}
+        >
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Background Color</span>
+            <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
+          </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Spacing</span>
+            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+          </div>
+        </SimpleAccordion>
+        <hr className={css(ut.divider)} />
+
+        {[...Array(20).keys()].map(() => <br />)}
       </div>
     </div>
   )
@@ -421,4 +428,13 @@ const cls = {
     fw: 500,
   },
   con: { p: 10 },
+}
+
+const fldWrapperObj = {
+  object: 'themeVars',
+  paths: { margin: '--fw-m', padding: '--fw-p' },
+}
+const stSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--st-m', padding: '--st-p' },
 }

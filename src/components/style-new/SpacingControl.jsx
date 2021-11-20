@@ -2,21 +2,20 @@ import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
-import ColorPreview from './ColorPreview'
 import { showDraggableModal } from './styleHelpers'
 
-export default function SimpleColorPicker({ subtitle, action, value }) {
+export default function SpacingControl({ subtitle, action, value, objectPaths }) {
   const { css } = useFela()
   const setDraggableModal = useSetRecoilState($draggableModal)
   return (
     <div className={css(c.preview_wrp)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action, value })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths })}
         type="button"
         className={css(c.pickrBtn)}
       >
-        <ColorPreview bg={value} h={25} w={25} className={css(ut.mr2)} />
-        <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+        {/* <span className={css(c.clrVal)}>{value.replaceAll(/\(|var|\)/gi, '')}</span> */}
+        <span>Configure</span>
       </button>
       {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
         <CloseIcn size="12" />
@@ -31,7 +30,7 @@ const c = {
     w: 130,
     mnw: 130,
     brs: 10,
-    p: 3,
+    p: 10,
     flx: 'center-between',
   },
   preview: {
