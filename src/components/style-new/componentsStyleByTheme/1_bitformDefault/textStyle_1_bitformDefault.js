@@ -4,7 +4,7 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-fw`]: {
       display: 'var(--fw-dis, block)',
       'flex-direction': 'var(--fw-fdir, row)',
-      background: 'var(--global-fld-bg-color, transparent)',
+      background: 'var(--fw-bg, transparent)',
       width: '100%',
       padding: 'var(--fw-p, 0)',
       margin: 'var(--fw-m, 0)',

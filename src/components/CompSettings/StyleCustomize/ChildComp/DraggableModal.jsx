@@ -10,13 +10,14 @@ import CustomThemeGallary from '../../../style-new/CustomThemeGallary'
 import FieldWrapperControlMenu from '../../../style-new/FieldWrapperControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
+import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 
-const RenderComponent = ({ component, action, value }) => {
+const RenderComponent = ({ component, action, value, objectPaths }) => {
   switch (component) {
     case 'border-style': return <BorderStyle />
     case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
@@ -26,6 +27,7 @@ const RenderComponent = ({ component, action, value }) => {
     case 'field-margin-control': return <MarginControlMenu />
     case 'field-wrapper-control': return <FieldWrapperControlMenu />
     case 'theme-control': return <CustomThemeGallary />
+    case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} />
     default: return 'loading'
   }
 }
@@ -39,6 +41,7 @@ const setTitle = (component) => {
     case 'field-margin-control': return 'Field Margin Control'
     case 'field-wrapper-control': return 'Field Wrapper Control'
     case 'theme-control': return 'Theme Gallary'
+    case 'space-control': return 'Margin & Padding Control'
     default: return '...'
   }
 }
@@ -46,7 +49,7 @@ const setTitle = (component) => {
 export default function DraggableModal() {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, subtitle, action, value } = draggableModal
+  const { show, position, component, width, subtitle, action, value, objectPaths } = draggableModal
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
@@ -85,7 +88,7 @@ export default function DraggableModal() {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} action={action} value={value} />
+            <RenderComponent component={component} action={action} value={value} objectPaths={objectPaths} />
           </Suspense>
         </div>
       </div>

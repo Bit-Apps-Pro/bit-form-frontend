@@ -21,6 +21,7 @@ import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import SimpleColorPicker from './SimpleColorPicker'
+import SpacingControl from './SpacingControl'
 import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
@@ -31,6 +32,7 @@ export default function ThemeCustomize() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
   const [activeAccordion, setActiveAccordion] = useState()
+  const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -40,7 +42,8 @@ export default function ThemeCustomize() {
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
-    '--g-bdr-width': globalBdrWidth } = themeVars
+    '--g-bdr-width': globalBdrWidth,
+    '--fw-bg': globalfldWrpBg } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -151,6 +154,11 @@ export default function ThemeCustomize() {
 
   const openHandler = (value) => {
     setActiveAccordion(value)
+  }
+
+  const objectPaths = {
+    object: 'themeVars',
+    paths: { margin: '--fw-m', padding: '--fw-p' },
   }
 
   return (
@@ -331,7 +339,7 @@ export default function ThemeCustomize() {
             <ThemeControl />
           </div>
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Theme</span>
+            <span className={css(ut.fw500)}>Size</span>
             <select onChange={setSizes} name="" id="">
               <option value="small-2">Small-2</option>
               <option value="small-1">Small-1</option>
@@ -341,35 +349,21 @@ export default function ThemeCustomize() {
               <option value="large-1">Large-1</option>
             </select>
           </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Theme</span>
-            <ThemeControl />
-          </div>
-          <SimpleAccordion
-            title={__('Admin Label', 'bitform')}
-            className={css(cls.con)}
-            disable={activeAccordion !== 1}
-            onClick={() => openHandler(1)}
-          >
-            <div className={css(ut.flxcb)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur soluta qui illo et corporis. Reprehenderit,
-              quod voluptatibus, dicta illo, doloribus quisquam corrupti
-              quasi vero fugiat voluptates sint fugit a quae.
-            </div>
-          </SimpleAccordion>
+
           <hr className={css(ut.divider)} />
           <SimpleAccordion
-            title={__('Admin Label', 'bitform')}
+            title={__('Field container', 'bitform')}
             className={css(cls.con)}
             disable={activeAccordion !== 2}
             onClick={() => openHandler(2)}
           >
-            <div className={css(ut.flxcb)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur soluta qui illo et corporis. Reprehenderit,
-              quod voluptatibus, dicta illo, doloribus quisquam corrupti
-              quasi vero fugiat voluptates sint fugit a quae.
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Background Color</span>
+              <SimpleColorPicker value={globalfldWrpBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Spacing</span>
+              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={objectPaths} />
             </div>
           </SimpleAccordion>
           <hr className={css(ut.divider)} />

@@ -83,6 +83,20 @@ export const $themeVars = atom({
     '--fld-fs': '12px', // field font size
     '--fw-m': '', // field wrapper margin
     '--fw-p': '10px', // field wrapper paddin
+
+    '--fw-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
+    '--fw-b': '10px',
+    '--fw-sh': '10px',
+
+    '--fl-bg': '10px',
+    '--fl-c': '10px',
+    // '--fl-m': '10px',
+    // '--fl-p': '10px',
+    '--st-bg': '10px',
+    '--st-c': '10px',
+    // '--st-m': '10px',
+    // '--st-p': '10px',
+
   },
 })
 export const $tempThemeVars = atom({

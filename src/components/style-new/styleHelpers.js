@@ -2,12 +2,12 @@ import produce from 'immer'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
-export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value }) => {
+export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths }) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
   const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - width)
   const y = e.target.getBoundingClientRect().top - offset.top
-  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value })
+  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths })
 }
 
 export const json2CssStr = (jsonValue) => {
