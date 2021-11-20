@@ -156,11 +156,6 @@ export default function ThemeCustomize() {
     setActiveAccordion(value)
   }
 
-  const objectPaths = {
-    object: 'themeVars',
-    paths: { margin: '--fw-m', padding: '--fw-p' },
-  }
-
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
@@ -270,10 +265,10 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Field Margin</span>
             <FieldMarginControl />
           </div>
-          <div className={css(ut.flxcb)}>
+          {/* <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Field Wrapper Control</span>
             <FieldWrapperControl />
-          </div>
+          </div> */}
 
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Border Radius</span>
@@ -363,7 +358,7 @@ export default function ThemeCustomize() {
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>Spacing</span>
-              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={objectPaths} />
+              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
             </div>
           </SimpleAccordion>
           <hr className={css(ut.divider)} />
@@ -408,4 +403,9 @@ const cls = {
   },
   pnt: { cur: 'not-allowed' },
   con: { p: 10 },
+}
+
+const fldWrapperObj = {
+  object: 'themeVars',
+  paths: { margin: '--fw-m', padding: '--fw-p' },
 }
