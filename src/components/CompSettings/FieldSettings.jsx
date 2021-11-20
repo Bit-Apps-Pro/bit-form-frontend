@@ -1,14 +1,14 @@
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
-import PaypalSettings from '../PaypalSettings'
-import RazorpaySettings from '../RazorpaySettings'
+import AdFileUpSettings from './AdFileUpSettings'
 import ButtonSettings from './ButtonSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
 import FileUpSettings from './FileUpSettings'
-import AdFileUpSettings from './AdFileUpSettings'
 import HtmlFieldSettings from './HtmlFieldSettings'
+import PaypalFieldSettings from './PaypalFieldSettings'
 import RadioCheckSettings from './RadioCheckSettings'
+import RazorpayFieldSettings from './RazorpayFieldSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import SelectSettings from './SelectSettings'
 import TextFieldSettings from './TextFieldSettings'
@@ -57,9 +57,9 @@ export default function FieldSettings() {
     case 'button':
       return <ButtonSettings />
     case 'paypal':
-      return <PaypalSettings />
+      return <PaypalFieldSettings />
     case 'razorpay':
-      return <RazorpaySettings />
+      return <RazorpayFieldSettings />
     default:
       return <></>
   }

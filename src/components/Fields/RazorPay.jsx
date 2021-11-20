@@ -115,7 +115,7 @@ export default function RazorPay({ fieldKey, contentID, formID, attr, buttonDisa
         payment_type: isSubscription ? 'subscription' : 'order',
       }
       bitsFetchFront(paymentParams, 'bitforms_save_razorpay_details')
-        .then(_ => formParent.classList.remove('pos-rel', 'form-loading'))
+        .then(() => formParent.classList.remove('pos-rel', 'form-loading'))
     }
   }
 
