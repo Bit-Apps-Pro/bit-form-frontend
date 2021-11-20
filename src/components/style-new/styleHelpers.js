@@ -119,8 +119,8 @@ function getAbsoluteSize(el) {
 }
 
 /**
- * @param {string} selector html query  selector
- * @param {string} selector "element" | "margin" | "padding"
+ * @param {string} selector html query selector
+ * @param {string} selectType "element" | "margin" | "padding"
 */
 export function highlightElm(selector, selectType = 'element padding margin') {
   const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
@@ -191,9 +191,10 @@ export const removeHightlight = (selector = '[data-highlight]') => {
   const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
   elms.forEach(elm => { elm.remove() })
 }
+
 /**
- * @param {string} fk "field key"
- * @param {string} type "size"
+ * @param {string} fk field key
+ * @param {string} type size
 */
 export const CommonStyle = (fk, type) => {
   switch (type) {
