@@ -4,9 +4,9 @@
 import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
@@ -365,16 +365,16 @@ export default function ThemeCustomize() {
         <SimpleAccordion
           title={__('Field container', 'bitform')}
           className={css(cls.con)}
-          disable={activeAccordion !== 2}
-          onClick={() => openHandler(2)}
+          disable={activeAccordion !== 1}
+          onClick={() => openHandler(1)}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Background Color</span>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               <SimpleColorPicker value={globalfldWrpBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Spacing</span>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
             </div>
           </div>
@@ -383,17 +383,17 @@ export default function ThemeCustomize() {
         <SimpleAccordion
           title={__('Label & Subtitle Container', 'bitform')}
           className={css(cls.con)}
-          disable={activeAccordion !== 3}
-          onClick={() => openHandler(3)}
+          disable={activeAccordion !== 2}
+          onClick={() => openHandler(2)}
         >
           <div className={css(ut.m10)}>
 
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Background Color</span>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Spacing</span>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
             </div>
           </div>
@@ -402,24 +402,26 @@ export default function ThemeCustomize() {
         <SimpleAccordion
           title={__('Label', 'bitform')}
           className={css(cls.con)}
-          disable={activeAccordion !== 4}
-          onClick={() => openHandler(4)}
+          disable={activeAccordion !== 3}
+          onClick={() => openHandler(3)}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Background Color</span>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Text Color</span>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>Spacing</span>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={flSpacingObj} />
             </div>
           </div>
         </SimpleAccordion>
+
+       
 
         {[...Array(20).keys()].map(() => <br />)}
       </div>
