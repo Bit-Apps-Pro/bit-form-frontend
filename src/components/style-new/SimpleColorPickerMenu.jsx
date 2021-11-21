@@ -48,6 +48,10 @@ export default function SimpleColorPickerMenu({ action, value }) {
         return setColor(str2Color(themeVars['--fw-bg']))
       case 'st-bg':
         return setColor(str2Color(themeVars['--st-bg']))
+      case 'fl-bg':
+        return setColor(str2Color(themeVars['--fl-bg']))
+      case 'fl-c':
+        return setColor(str2Color(themeVars['--fl-c']))
       default:
         break
     }
@@ -113,10 +117,16 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'st-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--st-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${Math.round(_s)}%`
-          // drft['--gfbg-l'] = `${Math.round(_l)}%`
-          // drft['--gfbg-a'] = color.a / 100
+        }))
+        break
+      case 'fl-bg':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--fl-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+        }))
+        break
+      case 'fl-c':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--fl-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
         }))
         break
       default:
@@ -159,6 +169,16 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'st-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--st-bg'] = `var(${color})`
+        }))
+        break
+      case 'fl-bg':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--fl-bg'] = `var(${color})`
+        }))
+        break
+      case 'fl-c':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--fl-c'] = `var(${color})`
         }))
         break
       default:

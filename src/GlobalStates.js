@@ -88,14 +88,14 @@ export const $themeVars = atom({
     '--fw-b': '10px',
     '--fw-sh': '10px',
 
-    '--fl-bg': '10px',
-    '--fl-c': '10px',
-    // '--fl-m': '10px',
-    // '--fl-p': '10px',
-    '--st-bg': '10px',
-    '--st-c': '10px',
-    // '--st-m': '10px',
-    // '--st-p': '10px',
+    '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
+    '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
+
+    '--st-bg': '10px', // sub title background color
+    '--st-c': '10px', // sub title color
+
+    '--ht-bg': '10px', // helper text background color
+    '--ht-c': '10px', // helpertext color
 
   },
 })
