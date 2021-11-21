@@ -91,11 +91,11 @@ export const $themeVars = atom({
     '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
     '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
 
-    '--st-bg': '10px', // sub title background color
-    '--st-c': '10px', // sub title color
+    '--st-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
+    '--st-c': 'hsla(201, 71%, 39%, 100)', // sub title color
 
-    '--ht-bg': '10px', // helper text background color
-    '--ht-c': '10px', // helpertext color
+    '--ht-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
+    '--ht-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
 
   },
 })

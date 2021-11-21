@@ -48,7 +48,9 @@ export default function ThemeCustomize() {
     '--fw-bg': globalfldWrpBg,
     '--st-bg': stBg,
     '--fl-bg': flBg,
-    '--fl-c': flc } = themeVars
+    '--fl-c': flc,
+    '--ht-bg': htBg,
+    '--ht-c': htC } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -421,7 +423,29 @@ export default function ThemeCustomize() {
           </div>
         </SimpleAccordion>
 
-       
+     
+
+        <SimpleAccordion
+          title={__('Helper Text', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 5}
+          onClick={() => openHandler(5)}
+        >
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+            </div>
+          </div>
+        </SimpleAccordion>
 
         {[...Array(20).keys()].map(() => <br />)}
       </div>
