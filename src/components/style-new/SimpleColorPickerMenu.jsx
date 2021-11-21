@@ -46,6 +46,8 @@ export default function SimpleColorPickerMenu({ action, value }) {
         return setColor(str2Color(themeVars['--global-fld-bg-color']))
       case 'fw-bg':
         return setColor(str2Color(themeVars['--fw-bg']))
+      case 'lw-bg':
+        return setColor(str2Color(themeVars['--lw-bg']))
       case 'st-bg':
         return setColor(str2Color(themeVars['--st-bg']))
       case 'st-c':
@@ -124,6 +126,11 @@ export default function SimpleColorPickerMenu({ action, value }) {
           // drft['--gfbg-a'] = color.a / 100
         }))
         break
+      case 'lw-bg':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--lw-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+        }))
+        break
       case 'st-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--st-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
@@ -199,6 +206,11 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'fw-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--fw-bg'] = `var(${color})`
+        }))
+        break
+      case 'lw-bg':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--lw-bg'] = `var(${color})`
         }))
         break
       case 'st-bg':

@@ -46,6 +46,7 @@ export default function ThemeCustomize() {
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
     '--fw-bg': fwBg,
+    '--lw-bg': lwBg,
     '--st-bg': stBg,
     '--st-c': stC,
     '--fl-bg': flBg,
@@ -376,7 +377,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              <SimpleColorPicker value={fwBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
+              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
@@ -395,11 +396,11 @@ export default function ThemeCustomize() {
 
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Subtitle Background Color" />
+              <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} />
             </div>
           </div>
         </SimpleAccordion>
@@ -465,7 +466,7 @@ export default function ThemeCustomize() {
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} />
             </div>
           </div>
         </SimpleAccordion>
@@ -532,13 +533,21 @@ const fldWrapperObj = {
   object: 'themeVars',
   paths: { margin: '--fw-m', padding: '--fw-p' },
 }
-const stSpacingObj = {
+const lWrapperObj = {
   object: 'themeVars',
-  paths: { margin: '--st-m', padding: '--st-p' },
+  paths: { margin: '--lw-m', padding: '--lw-p' },
 }
 const flSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--fl-m', padding: '--fl-p' },
+}
+const stSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--st-m', padding: '--st-p' },
+}
+const htSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--ht-m', padding: '--ht-p' },
 }
 const errMsgSpacingObj = {
   object: 'themeVars',

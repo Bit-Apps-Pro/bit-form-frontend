@@ -59,22 +59,22 @@ export const $themeVars = atom({
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
-    '--fw-dis': '', // field wrapper display
-    '--fw-fdir': '', // field wrapper flex direction
     '--iw-width': '',
-    '--lw-sa': '',
     '--lbl-al': '', // label align
 
+    '--lw-sa': '',
     '--lw-width': '', // label wrapper  width
     '--lw-m': '', // label wrapper for margin
     '--lw-p': '', // label wrapper for padding
     '--lw-bg': '', // label wrapper for padding
-    '--lw-c': '', // label wrapper for padding
+    '--lw-c': '', // label wrapper for color
 
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
     '--fld-fs': '12px', // field font size
 
+    '--fw-dis': '', // field wrapper display
+    '--fw-fdir': '', // field wrapper flex direction
     '--fw-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
     '--fw-b': '10px',
     '--fw-sh': '10px',
