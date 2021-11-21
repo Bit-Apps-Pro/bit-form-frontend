@@ -45,12 +45,15 @@ export default function ThemeCustomize() {
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
-    '--fw-bg': globalfldWrpBg,
+    '--fw-bg': fwBg,
     '--st-bg': stBg,
+    '--st-c': stC,
     '--fl-bg': flBg,
     '--fl-c': flc,
     '--ht-bg': htBg,
-    '--ht-c': htC } = themeVars
+    '--ht-c': htC,
+    '--err-bg': errBg,
+    '--err-c': errC } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -373,7 +376,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              <SimpleColorPicker value={globalfldWrpBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
+              <SimpleColorPicker value={fwBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
@@ -392,11 +395,11 @@ export default function ThemeCustomize() {
 
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
+              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
             </div>
           </div>
         </SimpleAccordion>
@@ -423,7 +426,27 @@ export default function ThemeCustomize() {
           </div>
         </SimpleAccordion>
 
-     
+        <SimpleAccordion
+          title={__('Subtitle', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 4}
+          onClick={() => openHandler(4)}
+        >
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+            </div>
+          </div>
+        </SimpleAccordion>
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
@@ -443,6 +466,28 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+            </div>
+          </div>
+        </SimpleAccordion>
+
+        <SimpleAccordion
+          title={__('Error Message', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 6}
+          onClick={() => openHandler(6)}
+        >
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
             </div>
           </div>
         </SimpleAccordion>
@@ -494,4 +539,8 @@ const stSpacingObj = {
 const flSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--fl-m', padding: '--fl-p' },
+}
+const errMsgSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--err-m', padding: '--err-p' },
 }

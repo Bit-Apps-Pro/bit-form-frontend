@@ -44,10 +44,12 @@ export default function SimpleColorPickerMenu({ action, value }) {
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
       case 'global-fld-bg-color':
         return setColor(str2Color(themeVars['--global-fld-bg-color']))
-      case 'global-fld-wrp-bg':
+      case 'fw-bg':
         return setColor(str2Color(themeVars['--fw-bg']))
       case 'st-bg':
         return setColor(str2Color(themeVars['--st-bg']))
+      case 'st-c':
+        return setColor(str2Color(themeVars['--st-c']))
       case 'fl-bg':
         return setColor(str2Color(themeVars['--fl-bg']))
       case 'fl-c':
@@ -56,6 +58,10 @@ export default function SimpleColorPickerMenu({ action, value }) {
         return setColor(str2Color(themeVars['--ht-bg']))
       case 'ht-c':
         return setColor(str2Color(themeVars['--ht-c']))
+      case 'err-bg':
+        return setColor(str2Color(themeVars['--err-bg']))
+      case 'err-c':
+        return setColor(str2Color(themeVars['--err-c']))
       default:
         break
     }
@@ -109,7 +115,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
           // drft['--gfbg-a'] = color.a / 100
         }))
         break
-      case 'global-fld-wrp-bg':
+      case 'fw-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--fw-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
           // drft['--gfbg-h'] = Math.round(_h)
@@ -121,6 +127,11 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'st-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--st-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+        }))
+        break
+      case 'st-c':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--st-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
         }))
         break
       case 'fl-bg':
@@ -141,6 +152,16 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'ht-c':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--ht-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+        }))
+        break
+      case 'err-bg':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--err-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+        }))
+        break
+      case 'err-c':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--err-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
         }))
         break
       default:
@@ -175,7 +196,7 @@ export default function SimpleColorPickerMenu({ action, value }) {
           drft['--global-fld-bg-color'] = `var(${color})`
         }))
         break
-      case 'global-fld-wrp-bg':
+      case 'fw-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--fw-bg'] = `var(${color})`
         }))
@@ -183,6 +204,11 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'st-bg':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--st-bg'] = `var(${color})`
+        }))
+        break
+      case 'st-c':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--st-c'] = `var(${color})`
         }))
         break
       case 'fl-bg':
@@ -203,6 +229,16 @@ export default function SimpleColorPickerMenu({ action, value }) {
       case 'ht-c':
         setThemeVars(prvState => produce(prvState, drft => {
           drft['--ht-c'] = `var(${color})`
+        }))
+        break
+      case 'err-bg':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--err-bg'] = `var(${color})`
+        }))
+        break
+      case 'err-c':
+        setThemeVars(prvState => produce(prvState, drft => {
+          drft['--err-c'] = `var(${color})`
         }))
         break
       default:
