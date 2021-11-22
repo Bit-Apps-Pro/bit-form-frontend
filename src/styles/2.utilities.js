@@ -53,6 +53,7 @@ const ut = {
   pmt0: { '& p': { m: 0 } },
   // margin
   ma: { m: 'auto' },
+  m10: { m: 10 },
   m0: { m: '0 !important' },
   mb0: { mb: 0 },
   mb1: { mb: 5 },
@@ -151,6 +152,7 @@ const ut = {
     my: 0,
     mx: 10,
     bb: '0.5px soild var(--white-0-83)',
+    w: '100%',
   },
 
 }

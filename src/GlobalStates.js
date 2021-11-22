@@ -27,6 +27,73 @@ export const $draggableModal = atom({ key: '$draggableModal', default: { show: f
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false } })
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0 } })
+export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
+export const $lightThemeColors = atom({
+  key: '$lightThemeColors',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+  },
+})
+export const $darkThemeColors = atom({
+  key: '$darkThemeColors',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+  },
+})
+export const $highContrastThemeColors = atom({
+  key: '$highContrastThemeColors',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+  },
+})
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
@@ -59,46 +126,53 @@ export const $themeVars = atom({
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
-    '--fw-dis': '', // field wrapper display
-    '--fw-fdir': '', // field wrapper flex direction
-    '--lw-width': '', // label wrapper  width
     '--iw-width': '',
-    '--lw-sa': '',
     '--lbl-al': '', // label align
-    '--st-al': '', // subtitle align
-    '--ht-al': '', // helper text align
-    '--fl-fs': '16px', // field label font size
-    '--st-fs': '12px', // subtitle font size
-    '--ht-fs': '12px', // hepler text font size
+
+    '--lw-sa': '',
+    '--lw-width': '', // label wrapper  width
     '--lw-m': '', // label wrapper for margin
     '--lw-p': '', // label wrapper for padding
-    '--fl-m': '', // field label margin
-    '--fl-p': '', // field label padding
-    '--st-m': '', // subtitle margin
-    '--st-p': '', // subtitle padding
-    '--ht-m': '', // helper text margin
-    '--ht-p': '', // hepler text padding
+    '--lw-bg': '', // label wrapper for padding
+    '--lw-c': '', // label wrapper for color
+
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
     '--fld-fs': '12px', // field font size
-    '--fw-m': '', // field wrapper margin
-    '--fw-p': '10px', // field wrapper paddin
 
+    '--fw-dis': '', // field wrapper display
+    '--fw-fdir': '', // field wrapper flex direction
     '--fw-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
     '--fw-b': '10px',
     '--fw-sh': '10px',
+    '--fw-m': '', // field wrapper margin
+    '--fw-p': '10px', // field wrapper paddin
 
-    '--fl-bg': '10px',
-    '--fl-c': '10px',
-    // '--fl-m': '10px',
-    // '--fl-p': '10px',
-    '--st-bg': '10px',
-    '--st-c': '10px',
-    // '--st-m': '10px',
-    // '--st-p': '10px',
+    '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
+    '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
+    '--fl-m': '', // field label margin
+    '--fl-p': '', // field label padding
+    '--fl-fs': '16px', // field label font size
 
-    '--err-bg': 'hsla(1,3,4,6)',
-    '--err-sh': '1em 3px 5px 0rem yellow inset',
+    '--st-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
+    '--st-c': 'hsla(201, 71%, 39%, 100)', // sub title color
+    '--st-m': '5px', // subtitle margin
+    '--st-p': '5px', // subtitle padding
+    '--st-al': '5px', // subtitle align
+    '--st-fs': '12px', // subtitle font size
+
+    '--ht-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
+    '--ht-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
+    '--ht-m': '', // helper text margin
+    '--ht-p': '', // hepler text padding
+    '--ht-fs': '12px', // hepler text font size
+    '--ht-al': '', // helper text align
+
+    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
+    '--err-sh': '1em 3px 5px 0rem yellow inset', // error messages text color
+    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
+    '--err-m': '', // error messages margin
+    '--err-p': '', // error messages padding
   },
 })
 export const $tempThemeVars = atom({

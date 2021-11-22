@@ -4,12 +4,10 @@
 import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $colorScheme, $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
-import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -17,11 +15,11 @@ import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAcco
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
-import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
 import FormWrapperControl from './FormWrapperControl'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
+import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
@@ -35,7 +33,9 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
+  const colorSchemeRoot = useRecoilValue($colorScheme)
   const [activeAccordion, setActiveAccordion] = useState()
+  const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
   const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
@@ -47,8 +47,16 @@ export default function ThemeCustomize() {
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
-    '--fw-bg': globalfldWrpBg,
+    '--fw-bg': fwBg,
+    '--lw-bg': lwBg,
     '--st-bg': stBg,
+    '--st-c': stC,
+    '--fl-bg': flBg,
+    '--fl-c': flc,
+    '--ht-bg': htBg,
+    '--ht-c': htC,
+    '--err-bg': errBg,
+    '--err-c': errC,
     '--err-sh': errSh } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
@@ -59,10 +67,6 @@ export default function ThemeCustomize() {
 
   const fldFSValue = getNumFromStr(fldFs)
   const fldFSUnit = getStrFromStr(fldFs)
-  // const [h,s,l/]
-  // const globalPrimaryColor = ['--global-primary-color']
-  // const direction = styles.themeVars['--dir']
-  // console.log()
 
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
@@ -162,6 +166,8 @@ export default function ThemeCustomize() {
     setActiveAccordion(value)
   }
 
+  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
@@ -176,78 +182,57 @@ export default function ThemeCustomize() {
       <h4 className={css(cls.title)}>Theme Customize</h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
+        <h4 className={css(cls.subTitle)}>Color Scheme</h4>
+        <div className={css(ut.flxcb, ut.w9, ut.mt1)}>
+          <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
+          <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
+          <button onClick={handlecolorScheme} name="high-contrast" data-active={colorScheme === 'high-contrast'} className={css(cls.menuItem, colorScheme === 'high-contrast' && cls.clrActive)} type="button">High Contrast</button>
+        </div>
+        <div className={css(cls.divider)} />
+
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
         <div className={css(cls.container)}>
-          <div className={css(cls.subTitle2)}>Colors</div>
 
-          <ScrollMenu>
-            <MenuItem itemId={1} label="Default" />
-            <MenuItem itemId={2} label="Default" />
-            <MenuItem itemId={3} label="Default" />
-          </ScrollMenu>
+          {/*
+          <div className={css(ut.flxc)}>
+            <div className={css(cls.menuItem)}>Default</div>
+            <div className={css(cls.menuItem, { px: 10 })}>Dark Mode</div>
+            <div className={css(cls.menuItem)}>High Contrast Mode</div>
+          </div> */}
 
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
-              {
-                tempThemeVars['--global-bg-color'] && (
-                  <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-bg-color'] && <ResetStyle themeVar="--global-bg-color" />}
+
             </div>
             <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              {
-                tempThemeVars['--global-primary-color'] && (
-                  <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-primary-color'] && <ResetStyle themeVar="--global-primary-color" />}
             </div>
             <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
-              {
-                tempThemeVars['--global-font-color'] && (
-                  <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-font-color'] && <ResetStyle themeVar="--global-font-color" />}
             </div>
             <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
-              {
-                tempThemeVars['--global-fld-bdr-color'] && (
-                  <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-fld-bdr-color'] && <ResetStyle themeVar="--global-fld-bdr-color" />}
             </div>
             <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
-              {
-                tempThemeVars['--global-fld-bg-color'] && (
-                  <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-fld-bg-color'] && <ResetStyle themeVar="--global-fld-bg-color" />}
             </div>
             <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
           </div>
@@ -278,10 +263,7 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Field Margin</span>
             <FieldMarginControl />
           </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Field Wrapper Control</span>
-            <FieldWrapperControl />
-          </div>
+
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Form Wrapper Control</span>
             <FormWrapperControl />
@@ -290,13 +272,7 @@ export default function ThemeCustomize() {
 
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Border Radius</span>
-          {
-            tempThemeVars['--g-bdr-rad'] && (
-              <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
-            )
-          }
+          {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" />}
           <SizeControl
             min={0}
             max={20}
@@ -311,13 +287,7 @@ export default function ThemeCustomize() {
 
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Border width</span>
-          {
-            tempThemeVars['--g-bdr-width'] && (
-              <button onClick={() => undoHandler('--g-bdr-width')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
-            )
-          }
+          {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" />}
           <SizeControl
             min={0}
             max={20}
@@ -331,13 +301,7 @@ export default function ThemeCustomize() {
         </div>
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Field Font Size</span>
-          {
-            tempThemeVars['--fld-fs'] && (
-              <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
-            )
-          }
+          {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" />}
           <SizeControl
             inputHandler={fldFsSizeHandler}
             sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
@@ -363,67 +327,156 @@ export default function ThemeCustomize() {
           </select>
         </div>
 
-        <hr className={css(ut.divider)} />
         <SimpleAccordion
           title={__('Field container', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 1}
+          onClick={() => openHandler(1)}
+        >
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--fw-bg'] && <ResetStyle themeVar="--fw-bg" />}
+              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
+            </div>
+          </div>
+        </SimpleAccordion>
+
+        <SimpleAccordion
+          title={__('Label & Subtitle Container', 'bitform')}
           className={css(cls.con)}
           disable={activeAccordion !== 2}
           onClick={() => openHandler(2)}
         >
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Background Color</span>
-            <SimpleColorPicker value={globalfldWrpBg} action={{ type: 'global-fld-wrp-bg' }} subtitle="Field Background Color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Spacing</span>
-            <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--lw-bg'] && <ResetStyle themeVar="--lw-bg" />}
+              <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} />
+            </div>
           </div>
         </SimpleAccordion>
-        <hr className={css(ut.divider)} />
+
         <SimpleAccordion
-          title={__('Label & Subtitle Container', 'bitform')}
+          title={__('Label', 'bitform')}
           className={css(cls.con)}
           disable={activeAccordion !== 3}
           onClick={() => openHandler(3)}
         >
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Background Color</span>
-            <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Spacing</span>
-            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--fl-bg'] && <ResetStyle themeVar="--fl-bg" />}
+              <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--fl-c'] && <ResetStyle themeVar="--fl-c" />}
+              <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={flSpacingObj} />
+            </div>
           </div>
         </SimpleAccordion>
-        <hr className={css(ut.divider)} />
+
         <SimpleAccordion
-          title={__('Error Message', 'bitform')}
+          title={__('Subtitle', 'bitform')}
           className={css(cls.con)}
           disable={activeAccordion !== 4}
           onClick={() => openHandler(4)}
         >
-          <ThemeStylePropertyBlock label="Shadow">
-            <div className={css(ut.flxc)}>
-              {
-                tempThemeVars['--err-sh'] && (
-                  <button onClick={() => undoHandler('--err-sh')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
-              <ShadowControl value={errSh} objectPaths={errStylePathObj} />
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--st-bg'] && <ResetStyle themeVar="--st-bg" />}
+              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
             </div>
-          </ThemeStylePropertyBlock>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--st-c'] && <ResetStyle themeVar="--st-c" />}
+              <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+            </div>
+          </div>
         </SimpleAccordion>
-        <hr className={css(ut.divider)} />
 
-        {[...Array(20).keys()].map(() => <br />)}
+        <SimpleAccordion
+          title={__('Helper Text', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 5}
+          onClick={() => openHandler(5)}
+        >
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--ht-bg'] && <ResetStyle themeVar="--ht-bg" />}
+              <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--ht-c'] && <ResetStyle themeVar="--ht-c" />}
+              <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} />
+            </div>
+          </div>
+        </SimpleAccordion>
+
+        <SimpleAccordion
+          title={__('Error Message', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 6}
+          onClick={() => openHandler(6)}
+        >
+          <div className={css(ut.m10)}>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--err-bg'] && <ResetStyle themeVar="--err-bg" />}
+              <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--err-c'] && <ResetStyle themeVar="--global-bg-color" />}
+              <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
+            </div>
+            <ThemeStylePropertyBlock label="Shadow">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
+                <ShadowControl value={errSh} objectPaths={errStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+          </div>
+        </SimpleAccordion>
+
+        {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
     </div>
   )
 }
 
-const MenuItem = ({ label }) => <div>{label}</div>
+const MenuItem = ({ label, onClick, name }) => {
+  const { css } = useFela()
+  return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
+}
 
 const cls = {
   title: { mt: 5, mb: 2 },
@@ -433,7 +486,7 @@ const cls = {
   wrp: { ml: 5, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
-  subTitle2: { fs: 14, fw: 500, my: 10 },
+  subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { ml: 12, mr: 15 },
   btn: {
@@ -445,17 +498,36 @@ const cls = {
   },
   pnt: { cur: 'not-allowed' },
   menuItem: {
-    p: 10,
     ws: 'nowrap',
     fs: 14,
     fw: 500,
+    b: 'none',
+    bd: 'transparent',
+    curp: 1,
+    py: 8,
+    px: 15,
+    brs: 20,
+    pn: 'relative',
+    ':hover:not([data-active="true"])': { bd: 'var(--b-79-96)' },
   },
-  con: { p: 10 },
+  clrActive: {
+    bd: 'var(--b-50)',
+    cr: 'var(--white-100)'
+  },
+  con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
 }
 
 const fldWrapperObj = {
   object: 'themeVars',
   paths: { margin: '--fw-m', padding: '--fw-p' },
+}
+const lWrapperObj = {
+  object: 'themeVars',
+  paths: { margin: '--lw-m', padding: '--lw-p' },
+}
+const flSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--fl-m', padding: '--fl-p' },
 }
 const stSpacingObj = {
   object: 'themeVars',
@@ -464,4 +536,12 @@ const stSpacingObj = {
 const errStylePathObj = {
   object: 'themeVars',
   paths: { shadow: '--err-sh' },
+}
+const htSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--ht-m', padding: '--ht-p' },
+}
+const errMsgSpacingObj = {
+  object: 'themeVars',
+  paths: { margin: '--err-m', padding: '--err-p' },
 }
