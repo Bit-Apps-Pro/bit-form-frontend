@@ -14,7 +14,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempThemeVars, $themeVars, $builderHookStates, $newFormId, $styles } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempThemeVars, $themeVars, $builderHookStates, $newFormId, $styles, $flags } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -60,6 +60,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
   const builderHookStates = useRecoilValue($builderHookStates)
+  const { styleMode } = useRecoilValue($flags)
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(style))
   const [styleLoading, setstyleLoading] = useState(true)
@@ -263,7 +264,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       } else if (gw > 700) {
         setbrkPoint('lg')
       }
-    }, 100))
+    }, styleMode ? 0 : 100))
   }
 
   return (
