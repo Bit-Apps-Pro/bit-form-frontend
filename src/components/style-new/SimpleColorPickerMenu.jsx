@@ -174,8 +174,22 @@ export default function SimpleColorPickerMenu({ action, value }) {
     }
   }, [color])
 
+  const formatColorOnChange = clr => {
+    let c = ''
+    if (typeof clr === 'string') {
+      c = `var(${clr})`
+    } else {
+      const [_h, _s, _l] = hsv2hsl(clr.h, clr.s, clr.v)
+      c = `hsla(${Math.round(_h || 0)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${clr.a || 100})`
+    }
+
+    action.onChange(c)
+  }
+
   const setColorState = (val) => {
     setColor(val)
+
+    if (action.onChange) formatColorOnChange(val)
   }
 
   // useEffect(() => {

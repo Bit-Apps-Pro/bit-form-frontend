@@ -97,6 +97,8 @@ export const $themeVars = atom({
     // '--st-m': '10px',
     // '--st-p': '10px',
 
+    '--err-bg': 'hsla(1,3,4,6)',
+    '--err-sh': '1em 3px 5px 0rem yellow inset',
   },
 })
 export const $tempThemeVars = atom({
