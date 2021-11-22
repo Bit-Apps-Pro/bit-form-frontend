@@ -458,10 +458,10 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
             </div>
-            <ThemeStylePropertyBlock label="Shadow">
+            <ThemeStylePropertyBlock label="Shadow" className={css(ut.mt2)}>
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
-                <ShadowControl value={errSh} objectPaths={errStylePathObj} />
+                <ShadowControl subtitle='Error Message Shadow' value={errSh} objectPaths={errStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
           </div>
