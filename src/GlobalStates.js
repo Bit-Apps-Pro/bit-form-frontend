@@ -169,10 +169,10 @@ export const $themeVars = atom({
     '--ht-al': '', // helper text align
 
     '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
-    '--err-sh': '1em 3px 5px 0rem yellow inset', // error messages text color
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
     '--err-m': '', // error messages margin
     '--err-p': '', // error messages padding
+    '--err-sh': '1em 3px 5px 0rem yellow inset', // error messages box shadow
   },
 })
 export const $tempThemeVars = atom({
