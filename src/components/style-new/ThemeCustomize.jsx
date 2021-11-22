@@ -6,8 +6,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
-import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
@@ -33,7 +32,9 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
+  const colorSchemeRoot = useRecoilValue($colorScheme)
   const [activeAccordion, setActiveAccordion] = useState()
+  const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
   const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
@@ -56,10 +57,6 @@ export default function ThemeCustomize() {
 
   const fldFSValue = getNumFromStr(fldFs)
   const fldFSUnit = getStrFromStr(fldFs)
-  // const [h,s,l/]
-  // const globalPrimaryColor = ['--global-primary-color']
-  // const direction = styles.themeVars['--dir']
-  // console.log()
 
   const handleDir = ({ target: { checked } }) => {
     const dir = checked ? 'rtl' : 'ltr'
@@ -159,6 +156,8 @@ export default function ThemeCustomize() {
     setActiveAccordion(value)
   }
 
+  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+
   return (
     <div className={css(cls.mainWrapper)}>
       <span className={css({ flxi: 'center', mt: 10 })}>
@@ -173,15 +172,23 @@ export default function ThemeCustomize() {
       <h4 className={css(cls.title)}>Theme Customize</h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
+        <h4 className={css(cls.subTitle)}>Color Scheme</h4>
+        <div className={css(ut.flxcb, ut.w9, ut.mt1)}>
+          <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
+          <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
+          <button onClick={handlecolorScheme} name="high-contrast" data-active={colorScheme === 'high-contrast'} className={css(cls.menuItem, colorScheme === 'high-contrast' && cls.clrActive)} type="button">High Contrast</button>
+        </div>
+        <div className={css(cls.divider)} />
+
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
         <div className={css(cls.container)}>
-          <div className={css(cls.subTitle2)}>Colors</div>
 
-          <ScrollMenu>
-            <MenuItem itemId={1} label="Default" />
-            <MenuItem itemId={2} label="Default" />
-            <MenuItem itemId={3} label="Default" />
-          </ScrollMenu>
+          {/*
+          <div className={css(ut.flxc)}>
+            <div className={css(cls.menuItem)}>Default</div>
+            <div className={css(cls.menuItem, { px: 10 })}>Dark Mode</div>
+            <div className={css(cls.menuItem)}>High Contrast Mode</div>
+          </div> */}
 
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
@@ -394,13 +401,16 @@ export default function ThemeCustomize() {
         </SimpleAccordion>
         <hr className={css(ut.divider)} />
 
-        {[...Array(20).keys()].map(() => <br />)}
+        {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
     </div>
   )
 }
 
-const MenuItem = ({ label }) => <div>{label}</div>
+const MenuItem = ({ label, onClick, name }) => {
+  const { css } = useFela()
+  return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
+}
 
 const cls = {
   title: { mt: 5, mb: 2 },
@@ -410,7 +420,7 @@ const cls = {
   wrp: { ml: 5, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
-  subTitle2: { fs: 14, fw: 500, my: 10 },
+  subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { ml: 12, mr: 15 },
   btn: {
@@ -422,10 +432,21 @@ const cls = {
   },
   pnt: { cur: 'not-allowed' },
   menuItem: {
-    p: 10,
     ws: 'nowrap',
     fs: 14,
     fw: 500,
+    b: 'none',
+    bd: 'transparent',
+    curp: 1,
+    py: 8,
+    px: 15,
+    brs: 20,
+    pn: 'relative',
+    ':hover:not([data-active="true"])': { bd: 'var(--b-79-96)' },
+  },
+  clrActive: {
+    bd: 'var(--b-50)',
+    cr: 'var(--white-100)'
   },
   con: { p: 10 },
 }
