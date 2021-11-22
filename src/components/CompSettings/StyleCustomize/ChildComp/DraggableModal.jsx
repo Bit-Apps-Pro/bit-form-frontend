@@ -7,12 +7,11 @@ import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
 import CustomThemeGallary from '../../../style-new/CustomThemeGallary'
-import FieldWrapperControlMenu from '../../../style-new/FieldWrapperControlMenu'
+import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
-import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
 
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
@@ -26,7 +25,6 @@ const RenderComponent = ({ component, action, value, objectPaths }) => {
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
     case 'field-margin-control': return <MarginControlMenu />
-    case 'field-wrapper-control': return <FieldWrapperControlMenu />
     case 'theme-control': return <CustomThemeGallary />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
     case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} />
@@ -41,7 +39,6 @@ const setTitle = (component) => {
     case 'label-control': return 'Label Placement Control'
     case 'spacing-control': return 'Label Spacing Control'
     case 'field-margin-control': return 'Field Margin Control'
-    case 'field-wrapper-control': return 'Field Wrapper Control'
     case 'theme-control': return 'Theme Gallary'
     case 'form-wrapper-control': return 'Form Wrapper'
     case 'space-control': return 'Margin & Padding Control'

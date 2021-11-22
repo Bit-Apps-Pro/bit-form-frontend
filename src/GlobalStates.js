@@ -126,44 +126,52 @@ export const $themeVars = atom({
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
-    '--fw-dis': '', // field wrapper display
-    '--fw-fdir': '', // field wrapper flex direction
-    '--lw-width': '', // label wrapper  width
     '--iw-width': '',
-    '--lw-sa': '',
     '--lbl-al': '', // label align
-    '--st-al': '', // subtitle align
-    '--ht-al': '', // helper text align
-    '--fl-fs': '16px', // field label font size
-    '--st-fs': '12px', // subtitle font size
-    '--ht-fs': '12px', // hepler text font size
+
+    '--lw-sa': '',
+    '--lw-width': '', // label wrapper  width
     '--lw-m': '', // label wrapper for margin
     '--lw-p': '', // label wrapper for padding
-    '--fl-m': '', // field label margin
-    '--fl-p': '', // field label padding
-    '--st-m': '', // subtitle margin
-    '--st-p': '', // subtitle padding
-    '--ht-m': '', // helper text margin
-    '--ht-p': '', // hepler text padding
+    '--lw-bg': '', // label wrapper for padding
+    '--lw-c': '', // label wrapper for color
+
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
     '--fld-fs': '12px', // field font size
-    '--fw-m': '', // field wrapper margin
-    '--fw-p': '10px', // field wrapper paddin
 
+    '--fw-dis': '', // field wrapper display
+    '--fw-fdir': '', // field wrapper flex direction
     '--fw-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
     '--fw-b': '10px',
     '--fw-sh': '10px',
+    '--fw-m': '', // field wrapper margin
+    '--fw-p': '10px', // field wrapper paddin
 
-    '--fl-bg': '10px',
-    '--fl-c': '10px',
-    // '--fl-m': '10px',
-    // '--fl-p': '10px',
-    '--st-bg': '10px',
-    '--st-c': '10px',
-    // '--st-m': '10px',
-    // '--st-p': '10px',
+    '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
+    '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
+    '--fl-m': '', // field label margin
+    '--fl-p': '', // field label padding
+    '--fl-fs': '16px', // field label font size
 
+    '--st-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
+    '--st-c': 'hsla(201, 71%, 39%, 100)', // sub title color
+    '--st-m': '5px', // subtitle margin
+    '--st-p': '5px', // subtitle padding
+    '--st-al': '5px', // subtitle align
+    '--st-fs': '12px', // subtitle font size
+
+    '--ht-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
+    '--ht-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
+    '--ht-m': '', // helper text margin
+    '--ht-p': '', // hepler text padding
+    '--ht-fs': '12px', // hepler text font size
+    '--ht-al': '', // helper text align
+
+    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
+    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
+    '--err-m': '', // error messages margin
+    '--err-p': '', // error messages margin
   },
 })
 export const $tempThemeVars = atom({
