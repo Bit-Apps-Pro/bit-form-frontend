@@ -71,5 +71,6 @@ module.exports = {
     'consistent-return': 'off',
     'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
     'no-use-before-define': 'off',
+    allowShortCircuit: true
   },
 }
