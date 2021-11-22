@@ -50,7 +50,7 @@ const setTitle = (component) => {
   }
 }
 
-export default function DraggableModal() {
+export default function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const { show, position, component, width, subtitle, action, value, objectPaths } = draggableModal
@@ -60,6 +60,8 @@ export default function DraggableModal() {
     setPos({ ...position })
     // console.log('ref', dragableRef.current.props.children)
   }, [position])
+
+  console.log({ pos })
 
   const DragableModalLoader = () => (
     <>
@@ -77,7 +79,7 @@ export default function DraggableModal() {
   if (!show) return <></>
 
   return (
-    <Draggable ref={dragableRef} handle=".draggable-modal-handler" bounds="parent" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)}>
+    <Draggable ref={dragableRef} handle=".draggable-modal-handler" bounds="parent" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)} onStart={() => setBuilderPointerEventNone(true)} onStop={() => setBuilderPointerEventNone(false)}>
       <div className={css(draggableModalStyle.container)} style={{ width, ...pos && { transition: 'transform .2s' } }}>
         {/* style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }} */}
         <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handler`}>
