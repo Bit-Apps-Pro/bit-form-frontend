@@ -16,6 +16,7 @@ import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 const BorderStyle = lazy(() => import('./BorderStyle'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
+const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
 const RenderComponent = ({ component, action, value, objectPaths }) => {
   switch (component) {
@@ -28,9 +29,11 @@ const RenderComponent = ({ component, action, value, objectPaths }) => {
     case 'theme-control': return <CustomThemeGallary />
     case 'form-wrapper-control': return <FormWrapperControlMenu />
     case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} />
+    case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
     default: return 'loading'
   }
 }
+
 const setTitle = (component) => {
   switch (component) {
     case 'border-style': return 'Border'
@@ -42,6 +45,7 @@ const setTitle = (component) => {
     case 'theme-control': return 'Theme Gallary'
     case 'form-wrapper-control': return 'Form Wrapper'
     case 'space-control': return 'Margin & Padding Control'
+    case 'shadow-control': return 'Shadow'
     default: return '...'
   }
 }

@@ -172,6 +172,8 @@ export const $themeVars = atom({
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
     '--err-m': '', // error messages margin
     '--err-p': '', // error messages margin
+    '--err-bg': 'hsla(1,3,4,6)',
+    '--err-sh': '1em 3px 5px 0rem yellow inset',
   },
 })
 export const $tempThemeVars = atom({

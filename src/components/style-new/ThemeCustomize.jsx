@@ -21,10 +21,12 @@ import FormWrapperControl from './FormWrapperControl'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
+import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
 import ThemeControl from './ThemeControl'
+import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
@@ -55,7 +57,7 @@ export default function ThemeCustomize() {
     '--ht-bg': htBg,
     '--ht-c': htC,
     '--err-bg': errBg,
-    '--err-c': errC } = themeVars
+    '--err-c': errC, '--err-sh': errSh } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -410,6 +412,27 @@ export default function ThemeCustomize() {
             </div>
           </div>
         </SimpleAccordion>
+        <hr className={css(ut.divider)} />
+        <SimpleAccordion
+          title={__('Error Message', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 4}
+          onClick={() => openHandler(4)}
+        >
+          <ThemeStylePropertyBlock label="Shadow">
+            <div className={css(ut.flxc)}>
+              {
+                tempThemeVars['--err-sh'] && (
+                  <button onClick={() => undoHandler('--err-sh')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
+              <ShadowControl value={errSh} objectPaths={errStylePathObj} />
+            </div>
+          </ThemeStylePropertyBlock>
+        </SimpleAccordion>
+        <hr className={css(ut.divider)} />
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
@@ -460,8 +483,8 @@ export default function ThemeCustomize() {
         </SimpleAccordion>
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 
@@ -531,5 +554,9 @@ const htSpacingObj = {
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--err-m', padding: '--err-p' },
+  paths: { margin: '--err-m', padding: '--err-p' }
+}
+const errStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--err-sh' },
 }
