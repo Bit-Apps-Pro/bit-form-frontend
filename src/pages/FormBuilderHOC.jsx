@@ -95,7 +95,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   useEffect(() => {
     if (fetchedBuilderHelperStates) {
       const parseStyle = JSON.parse(fetchedBuilderHelperStates || '{}')
-      console.log('parseStyle', parseStyle)
       setStyle(parseStyle.style)
       setBreakpointSize(parseStyle.breakpointSize)
       setTempThemeVars(parseStyle?.themeVars)

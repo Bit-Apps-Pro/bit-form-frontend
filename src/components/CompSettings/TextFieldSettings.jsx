@@ -43,6 +43,7 @@ function TextFieldSettings() {
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const subtitle = fieldData.subtitle || ''
+  const helperTxt = fieldData.helperTxt || ''
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
@@ -136,6 +137,25 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const setHelperTxt = ({ target: { value } }) => {
+    if (value === '') delete fieldData.helperTxt
+    else fieldData.helperTxt = value
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const hideHelperTxt = ({ target: { checked } }) => {
+    if (checked) fieldData.helperTxt = fieldData.lbl || fldKey
+    else delete fieldData.helperTxt
+
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hidePlaceholder = (e) => {
@@ -365,7 +385,7 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
-  const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
+
 
   const setIconModel = (typ) => {
     setIcnType(typ)
@@ -386,7 +406,7 @@ function TextFieldSettings() {
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
   }
-
+  const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
   return (
     <>
       <div className="">
@@ -438,12 +458,37 @@ function TextFieldSettings() {
             <textarea
               cols="30"
               rows="2"
-              aria-label="Admin label for this Field"
-              placeholder="Type Admin label here..."
+              aria-label="Sub title for this Field"
+              placeholder="Type sub title here..."
               className={css(FieldStyle.input)}
               value={subtitle}
               type="text"
               onChange={setSubTitle}
+            />
+          </div>
+        </SimpleAccordion>
+
+        <hr className={css(FieldStyle.divider)} />
+
+        <SimpleAccordion
+          title={__('Helper Text', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideHelperTxt}
+          toggleChecked={fieldData?.helperTxt !== undefined}
+          open={fieldData?.helperTxt !== undefined}
+          disable={!fieldData?.helperTxt}
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <textarea
+              cols="30"
+              rows="2"
+              aria-label="Helper text for this Field"
+              placeholder="Type Helper text here..."
+              className={css(FieldStyle.input)}
+              value={helperTxt}
+              type="text"
+              onChange={setHelperTxt}
             />
           </div>
         </SimpleAccordion>
