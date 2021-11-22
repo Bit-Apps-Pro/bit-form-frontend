@@ -89,9 +89,9 @@ export const $themeVars = atom({
 
     '--st-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
     '--st-c': 'hsla(201, 71%, 39%, 100)', // sub title color
-    '--st-m': '', // subtitle margin
-    '--st-p': '', // subtitle padding
-    '--st-al': '', // subtitle align
+    '--st-m': '5px', // subtitle margin
+    '--st-p': '5px', // subtitle padding
+    '--st-al': '5px', // subtitle align
     '--st-fs': '12px', // subtitle font size
 
     '--ht-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color

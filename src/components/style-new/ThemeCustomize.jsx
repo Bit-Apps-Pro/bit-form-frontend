@@ -9,7 +9,6 @@ import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
-import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -17,11 +16,11 @@ import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAcco
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FieldMarginControl from './FieldMarginControl'
-import FieldWrapperControl from './FieldWrapperControl'
 import FontPicker from './FontPicker'
 import FormWrapperControl from './FormWrapperControl'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
+import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
@@ -194,65 +193,36 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb)}>
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
-              {
-                tempThemeVars['--global-bg-color'] && (
-                  <button onClick={() => undoColor('--global-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-bg-color'] && <ResetStyle themeVar="--global-bg-color" />}
+
             </div>
             <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              {
-                tempThemeVars['--global-primary-color'] && (
-                  <button onClick={() => undoColor('--global-primary-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-primary-color'] && <ResetStyle themeVar="--global-primary-color" />}
             </div>
             <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
-              {
-                tempThemeVars['--global-font-color'] && (
-                  <button onClick={() => undoColor('--global-font-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-font-color'] && <ResetStyle themeVar="--global-font-color" />}
             </div>
             <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
-              {
-                tempThemeVars['--global-fld-bdr-color'] && (
-                  <button onClick={() => undoColor('--global-fld-bdr-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-fld-bdr-color'] && <ResetStyle themeVar="--global-fld-bdr-color" />}
             </div>
             <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
-              {
-                tempThemeVars['--global-fld-bg-color'] && (
-                  <button onClick={() => undoColor('--global-fld-bg-color')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
+              {tempThemeVars['--global-fld-bg-color'] && <ResetStyle themeVar="--global-fld-bg-color" />}
             </div>
             <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
           </div>
@@ -283,10 +253,7 @@ export default function ThemeCustomize() {
             <span className={css(ut.fw500)}>Field Margin</span>
             <FieldMarginControl />
           </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Field Wrapper Control</span>
-            <FieldWrapperControl />
-          </div>
+
           <div className={css(ut.flxcb)}>
             <span className={css(ut.fw500)}>Form Wrapper Control</span>
             <FormWrapperControl />
@@ -295,13 +262,7 @@ export default function ThemeCustomize() {
 
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Border Radius</span>
-          {
-            tempThemeVars['--g-bdr-rad'] && (
-              <button onClick={() => undoHandler('--g-bdr-rad')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
-            )
-          }
+          {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" />}
           <SizeControl
             min={0}
             max={20}
@@ -316,13 +277,7 @@ export default function ThemeCustomize() {
 
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Border width</span>
-          {
-            tempThemeVars['--g-bdr-width'] && (
-              <button onClick={() => undoHandler('--g-bdr-width')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
-            )
-          }
+          {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" />}
           <SizeControl
             min={0}
             max={20}
@@ -336,13 +291,7 @@ export default function ThemeCustomize() {
         </div>
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Field Font Size</span>
-          {
-            tempThemeVars['--fld-fs'] && (
-              <button onClick={() => undoHandler('--fld-fs')} className={css(cls.btn, ut.mr1)} type="button">
-                <UndoIcon size="20" />
-              </button>
-            )
-          }
+          {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" />}
           <SizeControl
             inputHandler={fldFsSizeHandler}
             sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
@@ -377,6 +326,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--fw-bg'] && <ResetStyle themeVar="--fw-bg" />}
               <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -393,9 +343,9 @@ export default function ThemeCustomize() {
           onClick={() => openHandler(2)}
         >
           <div className={css(ut.m10)}>
-
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--lw-bg'] && <ResetStyle themeVar="--lw-bg" />}
               <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -414,10 +364,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--fl-bg'] && <ResetStyle themeVar="--fl-bg" />}
               <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--fl-c'] && <ResetStyle themeVar="--fl-c" />}
               <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -436,10 +388,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--st-bg'] && <ResetStyle themeVar="--st-bg" />}
               <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--st-c'] && <ResetStyle themeVar="--st-c" />}
               <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -458,10 +412,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--ht-bg'] && <ResetStyle themeVar="--ht-bg" />}
               <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--ht-c'] && <ResetStyle themeVar="--ht-c" />}
               <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -480,10 +436,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+              {tempThemeVars['--err-bg'] && <ResetStyle themeVar="--err-bg" />}
               <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
+              {tempThemeVars['--err-c'] && <ResetStyle themeVar="--global-bg-color" />}
               <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
