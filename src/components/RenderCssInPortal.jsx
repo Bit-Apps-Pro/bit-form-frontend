@@ -1231,7 +1231,8 @@ export default function RenderCssInPortal() {
   line-height: 1.4;
   white-space: normal;
   outline: 0;
-  transition-property: transform, visibility, opacity
+  transition-property: transform, visibility, opacity;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .tippy-box[data-placement^=top]>.tippy-arrow {
@@ -1579,7 +1580,7 @@ arrow:after,
  }
  
  .red-btn {
-    background: var(--red-100-61);
+    background: var(--red-100-49);
     color: var(--white-100);
     border: 1px solid var(--crimson);
     text-shadow: 0 .5px 1px #101010b5

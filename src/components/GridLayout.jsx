@@ -342,10 +342,13 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   const navigateToStyle = typ => {
-    if (typ === 'paypal') history.replace(history.location.pathname.replace(/fields-list|style\/.+|style/g, 'style/fl/ppl'))
-    // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
-    else history.replace(history.location.pathname.replace(/fields-list|style\/.+/g, 'style'))
+    // if (typ === 'paypal') history.replace(history.location.pathname.replace(/fields-list|style\/.+|style/g, 'style/fl/ppl'))
+    // // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
+    // else history.replace(history.location.pathname.replace(/fields-list|style\/.+/g, 'style'))
+    console.log(history.location.pathname)
+    history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
     resetContextMenu()
+
   }
 
   const handleFldBlockEvent = (fieldId) => {
