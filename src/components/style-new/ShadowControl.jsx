@@ -5,7 +5,7 @@ import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
 import { showDraggableModal } from './styleHelpers'
 
-export default function ShadowControl({ value, objectPaths }) {
+export default function ShadowControl({ value, subtitle, objectPaths }) {
   const setDraggableModal = useSetRecoilState($draggableModal)
   const { css } = useFela()
 
@@ -14,7 +14,7 @@ export default function ShadowControl({ value, objectPaths }) {
   return (
     <div className={css(c.preview_wrp)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', objectPaths })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths })}
         type="button"
         className={css(c.pickrBtn)}
       >

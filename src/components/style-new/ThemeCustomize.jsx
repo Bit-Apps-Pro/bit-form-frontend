@@ -4,7 +4,6 @@
 import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
@@ -57,7 +56,8 @@ export default function ThemeCustomize() {
     '--ht-bg': htBg,
     '--ht-c': htC,
     '--err-bg': errBg,
-    '--err-c': errC, '--err-sh': errSh } = themeVars
+    '--err-c': errC,
+    '--err-sh': errSh } = themeVars
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -479,6 +479,12 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
             </div>
+            <ThemeStylePropertyBlock label="Shadow" className={css(ut.mt2)}>
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
+                <ShadowControl subtitle='Error Message Shadow' value={errSh} objectPaths={errStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
@@ -548,15 +554,15 @@ const stSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--st-m', padding: '--st-p' },
 }
+const errStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--err-sh' },
+}
 const htSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--ht-m', padding: '--ht-p' },
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--err-m', padding: '--err-p' }
-}
-const errStylePathObj = {
-  object: 'themeVars',
-  paths: { shadow: '--err-sh' },
+  paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' }
 }

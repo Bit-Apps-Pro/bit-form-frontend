@@ -67,7 +67,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [debounce, setDebounce] = useState(null)
   const bits = useRecoilValue($bits)
   const [showToolBar, setShowToolbar] = useState(false)
-  const [isBuilderResizing, setIsBuilderResizing] = useState(false)
+  const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
@@ -206,13 +206,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
 
   const onResizeActivate = useCallback(() => {
     console.log('resize active')
-    setIsBuilderResizing(true)
+    setBuilderPointerEventNone(true)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 0ms'
   }, [])
 
   const afterResizing = useCallback(() => {
     console.log('resize off')
-    setIsBuilderResizing(false)
+    setBuilderPointerEventNone(false)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 500ms'
   }, [])
 
@@ -271,7 +271,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     <>
       {/* {formType === 'edit' && <FetchBuilderHelperStates formID={formID} />} */}
       <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
-      <DraggableModal />
+      <DraggableModal setBuilderPointerEventNone={setBuilderPointerEventNone} />
       <Container
         ref={conRef}
         style={{ height: '100vh' }}
@@ -301,7 +301,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
             <>
               <RenderPortal
                 id="bit-grid-layout"
-                style={{ width: gridWidth - 9, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: isBuilderResizing ? 'none' : 'all' }}
+                style={{ width: gridWidth - 9, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
               >
                 <RenderThemeVarsAndFormCSS />
                 <RenderCssInPortal />
