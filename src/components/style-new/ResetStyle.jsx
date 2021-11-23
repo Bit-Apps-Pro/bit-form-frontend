@@ -9,11 +9,16 @@ export default function ResetStyle({ themeVar }) {
   const setThemeVars = useSetRecoilState($themeVars)
   const { css } = useFela()
 
-  const reset = (value) => {
-    if (!tempThemeVars[value]) return
+  const resetValue = val => {
+    if (!tempThemeVars[val]) return
     setThemeVars(prvStyle => produce(prvStyle, drft => {
-      drft[value] = tempThemeVars[value]
+      drft[val] = tempThemeVars[val]
     }))
+  }
+
+  const reset = (value) => {
+    if (Array.isArray(value)) value.forEach(v => resetValue(v))
+    else resetValue(value)
   }
   return (
     <button onClick={() => reset(themeVar)} className={css(cls.btn)} type="button">
