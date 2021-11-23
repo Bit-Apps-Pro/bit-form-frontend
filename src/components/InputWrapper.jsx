@@ -34,11 +34,19 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             )}
           </label>
         )}
-        <div data-dev-st={fieldKey} className={`${fieldKey}-st`}>sub title</div>
+        {
+          fieldData.subtitle && (
+            <div data-dev-st={fieldKey} className={`${fieldKey}-st`}>{fieldData.subtitle}</div>
+          )
+        }
       </div>
       <div data-dev-iw={fieldKey} className={`${fieldKey}-iw`}>
         {children}
-        <div className={`${fieldKey}-ht`}>helper text</div>
+        {
+          fieldData.helperTxt && (
+            <div className={`${fieldKey}-ht`}>{fieldData.helperTxt}</div>
+          )
+        }
       </div>
       {(err || fieldData?.err) && (
         <div className={`error-wrapper ${err && 'h-a'}`}>
