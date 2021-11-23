@@ -27,6 +27,73 @@ export const $draggableModal = atom({ key: '$draggableModal', default: { show: f
 export const $builderHelperStates = atom({ key: '$builderHelperStates', default: { respectLGLayoutOrder: true } })
 export const $flags = atom({ key: '$flags', default: { saveStyle: true, styleMode: false } })
 export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0 } })
+export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
+export const $lightThemeColors = atom({
+  key: '$lightThemeColors',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+  },
+})
+export const $darkThemeColors = atom({
+  key: '$darkThemeColors',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+  },
+})
+export const $highContrastThemeColors = atom({
+  key: '$highContrastThemeColors',
+  default: {
+    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--gph': 0, // global primary hue
+    '--gps': 10, // global primary saturation
+    '--gpl': 20, // global primary lightness
+    '--gpa': 100, // global primary opacity
+    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--gfh': 0, // global font color hue
+    '--gfs': 10, // global fonst color sa
+    '--gfl': 20,
+    '--gfa': 100,
+    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--gbg-h': 0,
+    '--gbg-s': 10,
+    '--gbg-l': 20,
+    '--gbg-a': 100,
+    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
+    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+  },
+})
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
@@ -105,6 +172,8 @@ export const $themeVars = atom({
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
     '--err-m': '', // error messages margin
     '--err-p': '', // error messages margin
+    '--err-bg': 'hsla(1,3,4,6)',
+    '--err-sh': '1em 3px 5px 0rem yellow inset',
   },
 })
 export const $tempThemeVars = atom({

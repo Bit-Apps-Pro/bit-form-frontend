@@ -73,9 +73,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <FormBuilderHistory />
           <div className={css(OptionToolBarStyle.border_right)} />
           <Tip msg="Custom CSS and JS">
-            <button type="button" onClick={() => setModal(true)}>
-              Editor
-            </button>
+            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`} onClick={() => setModal(true)} type="button"><SettingsIcn size={22} /></button>
           </Tip>
           <Modal
             md
@@ -90,10 +88,6 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           </Modal>
 
           <div className={css(OptionToolBarStyle.border_right)} />
-
-          <Tip msg="Medium Screen View">
-            <button className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])}`} type="button"><SettingsIcn size={22} /></button>
-          </Tip>
 
           <div className={css([ut.flxc, OptionToolBarStyle.rightSideBarBtn])}>
             <Tip msg="Fields Settings">

@@ -244,3 +244,14 @@ export const CommonStyle = (fk, type) => {
       return 'default......'
   }
 }
+
+export const getStyleValueFromObjectPath = (object, path, state) => {
+  const paths = path.split('.')
+  let value = {}
+  const stateObj = state[object]
+  paths.forEach(p => {
+    value = stateObj[p]
+  })
+
+  return value
+}
