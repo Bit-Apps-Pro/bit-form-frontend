@@ -499,7 +499,7 @@ const cls = {
   l1: { cr: 'var(--white-0-61)', ':hover': { textDecoration: 'underline !important' } },
   l2: { cr: 'var(--white-0-21)' },
   wrp: { ml: 5, mt: 10, fs: 12 },
-  mainWrapper: { bd: 'var(--white-100)' },
+  mainWrapper: { bd: 'var(--white-100)', w: '97%' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
@@ -529,7 +529,7 @@ const cls = {
     bd: 'var(--b-50)',
     cr: 'var(--white-100)'
   },
-  con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
+  con: { py: 10, bb: '0.5px solid var(--white-0-83)', w: '95%' },
 }
 
 const fldWrapperObj = {
