@@ -380,7 +380,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
                   breakpoints={{ lg: 700, md: 420, sm: 300 }}
                   rowHeight={rowHeight}
                   margin={gridContentMargin}
-                  containerPadding={[1, 1]}
+                  // containerPadding={[1, 1]}
                   draggableCancel=".no-drg"
                   draggableHandle=".drag"
                   layouts={layouts}
