@@ -19,7 +19,7 @@ import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
-import { bitCipher, multiAssign } from '../Utils/Helpers'
+import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
 
 const styleReducer = (style, action) => {
@@ -84,6 +84,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
       setstyleLoading(false)
     } else {
+      // if(isObjectEmpty())
       setExistingStyle()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
