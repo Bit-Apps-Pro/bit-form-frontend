@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $colorScheme, $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
@@ -412,6 +412,27 @@ export default function ThemeCustomize() {
             </div>
           </div>
         </SimpleAccordion>
+        <hr className={css(ut.divider)} />
+        <SimpleAccordion
+          title={__('Error Message', 'bitform')}
+          className={css(cls.con)}
+          disable={activeAccordion !== 4}
+          onClick={() => openHandler(4)}
+        >
+          <ThemeStylePropertyBlock label="Shadow">
+            <div className={css(ut.flxc)}>
+              {
+                tempThemeVars['--err-sh'] && (
+                  <button onClick={() => undoHandler('--err-sh')} className={css(cls.btn, ut.mr1)} type="button">
+                    <UndoIcon size="20" />
+                  </button>
+                )
+              }
+              <ShadowControl value={errSh} objectPaths={errStylePathObj} />
+            </div>
+          </ThemeStylePropertyBlock>
+        </SimpleAccordion>
+        <hr className={css(ut.divider)} />
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
@@ -468,8 +489,8 @@ export default function ThemeCustomize() {
         </SimpleAccordion>
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 
@@ -484,7 +505,7 @@ const cls = {
   l1: { cr: 'var(--white-0-61)', ':hover': { textDecoration: 'underline !important' } },
   l2: { cr: 'var(--white-0-21)' },
   wrp: { ml: 5, mt: 10, fs: 12 },
-  mainWrapper: { bd: 'var(--white-100)' },
+  mainWrapper: { bd: 'var(--white-100)', w: '97%' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
@@ -514,7 +535,7 @@ const cls = {
     bd: 'var(--b-50)',
     cr: 'var(--white-100)'
   },
-  con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
+  con: { py: 10, bb: '0.5px solid var(--white-0-83)', w: '95%' },
 }
 
 const fldWrapperObj = {
@@ -543,5 +564,5 @@ const htSpacingObj = {
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--err-m', padding: '--err-p' },
+  paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' }
 }

@@ -42,11 +42,13 @@ function TextFieldSettings() {
   const isRequired = fieldData.valid.req || false
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
+  const subtitle = fieldData.subtitle || ''
+  const helperTxt = fieldData.helperTxt || ''
   const imputMode = fieldData.inputMode || 'text'
   const placeholder = fieldData.ph || ''
   const defaultValue = fieldData.defaultValue || ''
   const suggestions = fieldData.suggestions || []
-  const autoComplete = fieldData?.autoComplete?.trim()?.split(' ') || ['Off']
+  const autoComplete = fieldData?.autoComplete ? fieldData.autoComplete.trim().split(' ') : ['Off']
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
@@ -116,6 +118,44 @@ function TextFieldSettings() {
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const setSubTitle = ({ target: { value } }) => {
+    if (value === '') delete fieldData.subtitle
+    else fieldData.subtitle = value
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Sub Title updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_subtitle', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const hideSubTitle = ({ target: { checked } }) => {
+    if (checked) fieldData.subtitle = fieldData.lbl || fldKey
+    else delete fieldData.subtitle
+
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const setHelperTxt = ({ target: { value } }) => {
+    if (value === '') delete fieldData.helperTxt
+    else fieldData.helperTxt = value
+
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Helper Text updated: ${adminLabel || fieldData.lbl || fldKey}`, type: 'change_helperTxt', state: { fields: allFields, fldKey } }, setUpdateBtn)
+  }
+
+  const hideHelperTxt = ({ target: { checked } }) => {
+    if (checked) fieldData.helperTxt = fieldData.lbl || fldKey
+    else delete fieldData.helperTxt
+
+    const req = checked ? 'on' : 'off'
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hidePlaceholder = (e) => {
@@ -309,18 +349,20 @@ function TextFieldSettings() {
   //   setFields(allFields)
   //   addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   // }
-  const autoCompleteHandler = (value) => {
+  const seAutoComplete = (value) => {
     const val = value.split(',').join(' ')
-    if (val !== '') fieldData.autoComplete = val
-    else delete fieldData.autoComplete
+    if (val === '') delete fieldData.autoComplete
+    else fieldData.autoComplete = val
+
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-  const autoCompleteChecked = ({ target: { checked } }) => {
-    if (checked) fieldData.autoComplete = autoComplete
+  const hideAutoComplete = ({ target: { checked } }) => {
+    if (checked) fieldData.autoComplete = fieldData.lbl || fldKey
     else delete fieldData.autoComplete
+
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -343,7 +385,7 @@ function TextFieldSettings() {
     setFields(allFields)
     addToBuilderHistory(setBuilderHistory, { event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
-  const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
+
 
   const setIconModel = (typ) => {
     setIcnType(typ)
@@ -364,7 +406,7 @@ function TextFieldSettings() {
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
   }
-
+  const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
   return (
     <>
       <div className="">
@@ -400,7 +442,59 @@ function TextFieldSettings() {
             />
           </div>
         </SimpleAccordion>
+
         <hr className={css(FieldStyle.divider)} />
+
+        <SimpleAccordion
+          title={__('Sub Title', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideSubTitle}
+          toggleChecked={fieldData?.subtitle !== undefined}
+          open={fieldData?.subtitle !== undefined}
+          disable={!fieldData?.subtitle}
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <textarea
+              cols="30"
+              rows="2"
+              aria-label="Sub title for this Field"
+              placeholder="Type sub title here..."
+              className={css(FieldStyle.input)}
+              value={subtitle}
+              type="text"
+              onChange={setSubTitle}
+            />
+          </div>
+        </SimpleAccordion>
+
+        <hr className={css(FieldStyle.divider)} />
+
+        <SimpleAccordion
+          title={__('Helper Text', 'bitform')}
+          className={css(FieldStyle.fieldSection)}
+          switching
+          toggleAction={hideHelperTxt}
+          toggleChecked={fieldData?.helperTxt !== undefined}
+          open={fieldData?.helperTxt !== undefined}
+          disable={!fieldData?.helperTxt}
+        >
+          <div className={css(FieldStyle.placeholder)}>
+            <textarea
+              cols="30"
+              rows="2"
+              aria-label="Helper text for this Field"
+              placeholder="Type Helper text here..."
+              className={css(FieldStyle.input)}
+              value={helperTxt}
+              type="text"
+              onChange={setHelperTxt}
+            />
+          </div>
+        </SimpleAccordion>
+
+        <hr className={css(FieldStyle.divider)} />
+
         <SimpleAccordion
           title={__('Icons', 'bitform')}
           className={css(FieldStyle.fieldSection)}
@@ -414,7 +508,7 @@ function TextFieldSettings() {
               <span className={css(ut.fw500)}>Start icon</span>
               <div className={css(ut.flxcb)}>
                 {fieldData?.prefixIcn && (
-                  <img src={fieldData?.prefixIcn} alt="icon" width="25" height="25" />
+                  <img src={fieldData?.prefixIcn} alt="start icon" width="25" height="25" />
                 )}
 
                 <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.icnBtn)}>
@@ -429,13 +523,12 @@ function TextFieldSettings() {
               </div>
             </div>
 
-
             <div className={css(ut.mt2)}>
               <div className={css(ut.flxcb)}>
                 <span className={css(ut.fw500)}>End icon</span>
                 <div className={css(ut.flxcb)}>
                   {fieldData?.suffixIcn && (
-                    <img src={fieldData?.suffixIcn} alt="icon" width="25" height="25" />
+                    <img src={fieldData?.suffixIcn} alt="end icon" width="25" height="25" />
                   )}
                   <button onClick={() => setIconModel('suffixIcn')} className={css(ut.icnBtn)} type="button">
                     <EditIcn size={22} />
@@ -524,7 +617,7 @@ function TextFieldSettings() {
           title={__('Auto Complete', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           switching
-          toggleAction={autoCompleteChecked}
+          toggleAction={hideAutoComplete}
           toggleChecked={fieldData?.autoComplete !== undefined}
           open={fieldData?.autoComplete !== undefined}
           disable={!fieldData.autoComplete}
@@ -536,7 +629,7 @@ function TextFieldSettings() {
               className={`${css(FieldStyle.input)}`}
               placeholder="Select one"
               options={autofillList}
-              onChange={val => autoCompleteHandler(val)}
+              onChange={val => seAutoComplete(val)}
             />
             {/* <select
               className={css(FieldStyle.input)}
@@ -776,7 +869,6 @@ function TextFieldSettings() {
               </SimpleAccordion>
               <hr className={css(FieldStyle.divider)} />
             </>
-
           )
         }
         <div className="pos-rel">
@@ -792,7 +884,6 @@ function TextFieldSettings() {
                 />
                 <hr className={css(FieldStyle.divider)} />
               </>
-              // </div>
             )
           }
         </div>
