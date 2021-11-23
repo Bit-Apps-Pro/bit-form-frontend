@@ -172,9 +172,11 @@ export const $themeVars = atom({
     '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
     '--err-m': '', // error messages margin
-    '--err-p': '', // error messages margin
-    '--err-bg': 'hsla(1,3,4,6)',
-    '--err-sh': '1em 3px 5px 0rem yellow inset',
+    '--err-p': '', // error messages padding
+    '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
+    '--err-bdr': 'solid red', // error message border
+    '--err-bdr-width': '1px', // error message border width
+    '--err-bdr-rad': '8px', // error message border radius
   },
 })
 export const $tempThemeVars = atom({

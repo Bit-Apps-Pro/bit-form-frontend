@@ -33,228 +33,107 @@ export default function SimpleColorPickerMenu({ action, value }) {
 
   useEffect(() => {
     if (isColorVar) return
-    switch (action?.type) {
+    if (!action.type) return
+
+    switch (action.type) {
       case 'global-primary-color':
-        return setColor(str2Color(themeVars['--global-primary-color']))
       case 'global-font-color':
         return setColor(str2Color(themeVars['--global-font-color']))
-      case 'global-bg-color':
-        return setColor(str2Color(themeVars['--global-bg-color']))
       case 'global-fld-bdr-color':
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
-      case 'global-fld-bg-color':
-        return setColor(str2Color(themeVars['--global-fld-bg-color']))
-      case 'fw-bg':
-        return setColor(str2Color(themeVars['--fw-bg']))
-      case 'lw-bg':
-        return setColor(str2Color(themeVars['--lw-bg']))
-      case 'st-bg':
-        return setColor(str2Color(themeVars['--st-bg']))
-      case 'st-c':
-        return setColor(str2Color(themeVars['--st-c']))
-      case 'fl-bg':
-        return setColor(str2Color(themeVars['--fl-bg']))
-      case 'fl-c':
-        return setColor(str2Color(themeVars['--fl-c']))
-      case 'ht-bg':
-        return setColor(str2Color(themeVars['--ht-bg']))
-      case 'ht-c':
-        return setColor(str2Color(themeVars['--ht-c']))
-      case 'err-bg':
-        return setColor(str2Color(themeVars['--err-bg']))
-      case 'err-c':
-        return setColor(str2Color(themeVars['--err-c']))
       default:
-        break
+        return setColor(str2Color(themeVars[`--${action.type}`]))
     }
   }, [action])
 
   const handleColor = () => {
     const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
-    switch (action?.type) {
+    if (!action.type) return
+
+    const h = Math.round(_h || 0)
+    const s = Math.round(_s)
+    const l = Math.round(_l)
+    const a = color.a || 100
+
+    const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`
+
+    switch (action.type) {
       case 'global-primary-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-primary-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-          drft['--gph'] = Math.round(_h)
-          drft['--gps'] = `${Math.round(_s)}%`
-          drft['--gpl'] = `${Math.round(_l)}%`
-          drft['--gpa'] = color.a / 100
+          drft['--global-primary-color'] = hsla
+          drft['--gph'] = h
+          drft['--gps'] = `${s}%`
+          drft['--gpl'] = `${l}%`
+          drft['--gpa'] = a / 100
         }))
         break
       case 'global-font-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-font-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--global-font-color'] = hsla
           drft['--gfh'] = Math.round(_h)
-          drft['--gfs'] = `${Math.round(_s)}%`
-          drft['--gfl'] = `${Math.round(_l)}%`
-          drft['--gfa'] = color.a / 100
+          drft['--gfs'] = `${s}%`
+          drft['--gfl'] = `${l}%`
+          drft['--gfa'] = a / 100
         }))
         break
       case 'global-bg-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--global-bg-color'] = hsla
           drft['--gbg-h'] = Math.round(_h)
-          drft['--gbg-s'] = `${Math.round(_s)}%`
-          drft['--gbg-l'] = `${Math.round(_l)}%`
-          drft['--gbg-a'] = color.a / 100
+          drft['--gbg-s'] = `${s}%`
+          drft['--gbg-l'] = `${l}%`
+          drft['--gbg-a'] = a / 100
         }))
         break
       case 'global-fld-bdr-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-fld-bdr-clr'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--global-fld-bdr-clr'] = hsla
           // drft['--gfbc-h'] = Math.round(_h)
-          // drft['--gfbc-s'] = `${Math.round(_s)}%`
-          // drft['--gfbc-l'] = `${Math.round(_l)}%`
-          // drft['--gfbc-a'] = color.a / 100
+          // drft['--gfbc-s'] = `${s}%`
+          // drft['--gfbc-l'] = `${l}%`
+          // drft['--gfbc-a'] = a / 100
         }))
         break
       case 'global-fld-bg-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-fld-bg-color'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--global-fld-bg-color'] = hsla
           // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${Math.round(_s)}%`
-          // drft['--gfbg-l'] = `${Math.round(_l)}%`
-          // drft['--gfbg-a'] = color.a / 100
+          // drft['--gfbg-s'] = `${s}%`
+          // drft['--gfbg-l'] = `${l}%`
+          // drft['--gfbg-a'] = a / 100
         }))
         break
       case 'fw-bg':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--fw-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          drft['--fw-bg'] = hsla
           // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${Math.round(_s)}%`
-          // drft['--gfbg-l'] = `${Math.round(_l)}%`
-          // drft['--gfbg-a'] = color.a / 100
-        }))
-        break
-      case 'lw-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--lw-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'st-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--st-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'st-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--st-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'fl-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--fl-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'fl-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--fl-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'ht-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--ht-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'ht-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--ht-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'err-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--err-bg'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
-        }))
-        break
-      case 'err-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--err-c'] = `hsla(${Math.round(_h)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${color.a})`
+          // drft['--gfbg-s'] = `${s}%`
+          // drft['--gfbg-l'] = `${l}%`
+          // drft['--gfbg-a'] = a / 100
         }))
         break
       default:
-        break
+        return setThemeVars(prvState => produce(prvState, drft => {
+          drft[`--${action.type}`] = hsla
+        }))
     }
   }
 
   const handleColorVar = () => {
-    switch (action?.type) {
-      case 'global-primary-color':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-primary-color'] = `var(${color})`
-        }))
-        break
-      case 'global-font-color':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-font-color'] = `var(${color})`
-        }))
-        break
-      case 'global-bg-color':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-bg-color'] = `var(${color})`
-        }))
-        break
+    if (!action.type) return
+
+    const colorVar = `var(${color})`
+
+    switch (action.type) {
       case 'global-fld-bdr-color':
         setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-fld-bdr-clr'] = `var(${color})`
-        }))
-        break
-      case 'global-fld-bg-color':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--global-fld-bg-color'] = `var(${color})`
-        }))
-        break
-      case 'fw-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--fw-bg'] = `var(${color})`
-        }))
-        break
-      case 'lw-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--lw-bg'] = `var(${color})`
-        }))
-        break
-      case 'st-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--st-bg'] = `var(${color})`
-        }))
-        break
-      case 'st-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--st-c'] = `var(${color})`
-        }))
-        break
-      case 'fl-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--fl-bg'] = `var(${color})`
-        }))
-        break
-      case 'fl-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--fl-c'] = `var(${color})`
-        }))
-        break
-      case 'ht-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--ht-bg'] = `var(${color})`
-        }))
-        break
-      case 'ht-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--ht-c'] = `var(${color})`
-        }))
-        break
-      case 'err-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--err-bg'] = `var(${color})`
-        }))
-        break
-      case 'err-c':
-        setThemeVars(prvState => produce(prvState, drft => {
-          drft['--err-c'] = `var(${color})`
+          drft['--global-fld-bdr-clr'] = colorVar
         }))
         break
       default:
-        break
+        return setThemeVars(prvState => produce(prvState, drft => {
+          drft[`--${action.type}`] = colorVar
+        }))
     }
   }
 
