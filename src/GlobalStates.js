@@ -130,13 +130,6 @@ export const $themeVars = atom({
     '--iw-width': '',
     '--lbl-al': '', // label align
 
-    '--lw-sa': '',
-    '--lw-width': '', // label wrapper  width
-    '--lw-m': '', // label wrapper for margin
-    '--lw-p': '', // label wrapper for padding
-    '--lw-bg': '', // label wrapper for padding
-    '--lw-c': '', // label wrapper for color
-
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
     '--fld-fs': '12px', // field font size
@@ -145,15 +138,33 @@ export const $themeVars = atom({
     '--fw-fdir': '', // field wrapper flex direction
     '--fw-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
     '--fw-b': '10px',
-    '--fw-sh': '10px',
     '--fw-m': '', // field wrapper margin
     '--fw-p': '10px', // field wrapper paddin
+    '--fw-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
+    '--fw-bdr': 'solid red', // field wrapper border
+    '--fw-bdr-width': '1px', // field wrapper border width
+    '--fw-bdr-rad': '8px', // field wrapper border radius
+
+    '--lw-sa': '',
+    '--lw-width': '', // label wrapper  width
+    '--lw-m': '', // label wrapper for margin
+    '--lw-p': '', // label wrapper for padding
+    '--lw-bg': '', // label wrapper for padding
+    '--lw-c': '', // label wrapper for color
+    '--lw-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
+    '--lw-bdr': 'solid red', // label wrapper border
+    '--lw-bdr-width': '1px', // label wrapper border width
+    '--lw-bdr-rad': '8px', // label wrapper border radius
 
     '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
     '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
     '--fl-m': '', // field label margin
     '--fl-p': '', // field label padding
     '--fl-fs': '16px', // field label font size
+    '--fl-sh': '1em 3px 5px 0rem blue inset', // field label box shadow
+    '--fl-bdr': 'solid red', // field label border
+    '--fl-bdr-width': '1px', // field label border width
+    '--fl-bdr-rad': '8px', // field label border radius
 
     '--st-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
     '--st-c': 'hsla(201, 71%, 39%, 100)', // sub title color
@@ -161,6 +172,10 @@ export const $themeVars = atom({
     '--st-p': '5px', // subtitle padding
     '--st-al': '5px', // subtitle align
     '--st-fs': '12px', // subtitle font size
+    '--st-sh': '1em 3px 5px 0rem blue inset', // subtitle box shadow
+    '--st-bdr': 'solid red', // subtitle border
+    '--st-bdr-width': '1px', // subtitle border width
+    '--st-bdr-rad': '8px', // subtitle border radius
 
     '--ht-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
     '--ht-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
@@ -168,6 +183,10 @@ export const $themeVars = atom({
     '--ht-p': '', // hepler text padding
     '--ht-fs': '12px', // hepler text font size
     '--ht-al': '', // helper text align
+    '--ht-sh': '1em 3px 5px 0rem blue inset', // hepler text box shadow
+    '--ht-bdr': 'solid red', // hepler text border
+    '--ht-bdr-width': '1px', // hepler text border width
+    '--ht-bdr-rad': '8px', // hepler text border radius
 
     '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
