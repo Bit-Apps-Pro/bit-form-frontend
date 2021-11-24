@@ -1,17 +1,16 @@
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import { showDraggableModal } from './styleHelpers'
 
-export default function FontPicker() {
+export default function FontPicker({ id }) {
   const { css } = useFela()
-  const setDraggableModal = useSetRecoilState($draggableModal)
-
+  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   return (
-    <div className={css(c.preview_wrp)}>
+    <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
         className={css(c.btn)}
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font' })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id })}
         type="button"
       >
         <div />
@@ -29,6 +28,7 @@ const c = {
     brs: 10,
     p: 3,
     flx: 'center-between',
+    h: 30,
   },
   btn: { b: 'none' },
   clrVal: {
@@ -36,5 +36,5 @@ const c = {
     textOverflow: 'ellipsis',
     ow: 'hidden',
   },
-
+  active: { focusShadow: 1 },
 }

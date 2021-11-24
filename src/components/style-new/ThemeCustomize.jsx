@@ -60,7 +60,6 @@ export default function ThemeCustomize() {
     '--err-c': errC,
     '--err-sh': errSh } = themeVars
 
-
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
 
@@ -208,45 +207,46 @@ export default function ThemeCustomize() {
               {tempThemeVars['--global-bg-color'] && <ResetStyle themeVar="--global-bg-color" />}
 
             </div>
-            <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
+            <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
               {tempThemeVars['--global-primary-color'] && <ResetStyle themeVar="--global-primary-color" />}
             </div>
-            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
+            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
               {tempThemeVars['--global-font-color'] && <ResetStyle themeVar="--global-font-color" />}
             </div>
-            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
+            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
               {tempThemeVars['--global-fld-bdr-color'] && <ResetStyle themeVar="--global-fld-bdr-color" />}
             </div>
-            <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
+            <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
               {tempThemeVars['--global-fld-bg-color'] && <ResetStyle themeVar="--global-fld-bg-color" />}
             </div>
-            <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
+            <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
           </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Font Family</span>
+            <FontPicker id="global-font-fam" />
+          </div>
+
         </div>
 
         <div className={css(cls.divider)} />
 
         <div className={css({ mr: 15 })}>
-          <div className={css(ut.flxcb, ut.mb2)}>
-            <span className={css(ut.fw500)}>Font Family</span>
-            <FontPicker />
-          </div>
 
           <div className={css(ut.flxcb, ut.mb2)}>
             <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
@@ -484,18 +484,17 @@ export default function ThemeCustomize() {
             <ThemeStylePropertyBlock label="Shadow" className={css(ut.mt2)}>
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
-                <ShadowControl subtitle='Error Message Shadow' value={errSh} objectPaths={errStylePathObj} />
+                <ShadowControl subtitle="Error Message Shadow" value={errSh} objectPaths={errStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
-
 
 const cls = {
   title: { mt: 5, mb: 2 },
@@ -531,7 +530,7 @@ const cls = {
   },
   clrActive: {
     bd: 'var(--b-50)',
-    cr: 'var(--white-100)'
+    cr: 'var(--white-100)',
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)', w: '95%' },
 }
@@ -562,5 +561,5 @@ const htSpacingObj = {
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' }
+  paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' },
 }
