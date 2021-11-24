@@ -139,7 +139,7 @@ export default function FieldThemeCustomize() {
         </Link>
         <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
       </span>
-      <h4 className={css(cls.title)}>Theme Customize</h4>
+      <h4 className={css(cls.title)}>Field Style Customization</h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
         <h4 className={css(cls.subTitle)}>Color Scheme</h4>
