@@ -20,7 +20,7 @@ const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMen
 
 const RenderComponent = ({ component, action, value, objectPaths }) => {
   switch (component) {
-    case 'border-style': return <BorderStyle />
+    case 'border-style': return <BorderStyle objectPaths={objectPaths} />
     case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
