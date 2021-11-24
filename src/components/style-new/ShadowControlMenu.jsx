@@ -5,7 +5,7 @@ import { $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getStyleValueFromObjectPath, unitConverterHelper } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getStyleValueFromObjectPath, splitValueBySpaces, unitConverterHelper } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()
@@ -15,7 +15,7 @@ export default function ShadowControlMenu({ objectPaths }) {
   const shadowStyle = getStyleValueFromObjectPath(object, paths.shadow, { themeVars })
 
   const extractShadowValue = () => {
-    const shadowExtracted = shadowStyle.match(/[^ s]+(?:s+([^)]*\)?))?/g)
+    const shadowExtracted = splitValueBySpaces(shadowStyle)
 
     return {
       xOffset: shadowExtracted[0],

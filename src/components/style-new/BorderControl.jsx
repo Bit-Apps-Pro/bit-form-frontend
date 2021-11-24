@@ -1,17 +1,15 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { $draggableModal, $themeVars } from '../../GlobalStates'
+import { useSetRecoilState } from 'recoil'
+import { $draggableModal } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
-import { getStyleValueFromObjectPath, showDraggableModal, splitValueBySpaces } from './styleHelpers'
+import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
 export default function BorderControl({ subtitle, value, objectPaths }) {
   const { css } = useFela()
   const setDraggableModal = useSetRecoilState($draggableModal)
 
-  const themeVars = useRecoilValue($themeVars)
-
-  const [, color] = splitValueBySpaces(getStyleValueFromObjectPath(objectPaths.object, objectPaths.paths.border, { themeVars }))
+  const [, color] = splitValueBySpaces(value)
 
   return (
     <div className={css(c.preview_wrp)}>

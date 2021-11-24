@@ -3,13 +3,13 @@ import { useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
-import { showDraggableModal } from './styleHelpers'
+import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
 export default function ShadowControl({ value, subtitle, objectPaths }) {
   const setDraggableModal = useSetRecoilState($draggableModal)
   const { css } = useFela()
 
-  const colorVal = value.match(/[^ s]+(?:s+([^)]*\)?))?/g)[4]
+  const colorVal = splitValueBySpaces(value)[4]
 
   return (
     <div className={css(c.preview_wrp)}>
