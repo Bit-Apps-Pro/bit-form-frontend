@@ -386,7 +386,6 @@ function TextFieldSettings() {
     addToBuilderHistory(setBuilderHistory, { event: `Field Input mode update ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
-
   const setIconModel = (typ) => {
     setIcnType(typ)
     setIcnMdl(true)

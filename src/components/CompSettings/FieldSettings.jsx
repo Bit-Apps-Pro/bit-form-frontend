@@ -12,6 +12,9 @@ import RazorpayFieldSettings from './RazorpayFieldSettings'
 import ReCaptchaSettigns from './ReCaptchaSettigns'
 import SelectSettings from './SelectSettings'
 import TextFieldSettings from './TextFieldSettings'
+import TitleSettings from './TitleSettings'
+import ImageSettings from './ImageSettings'
+import DividerSettings from './DividerSettings'
 
 export default function FieldSettings() {
   const { formType, formID } = useParams()
@@ -60,6 +63,12 @@ export default function FieldSettings() {
       return <PaypalFieldSettings />
     case 'razorpay':
       return <RazorpayFieldSettings />
+    case 'title':
+      return <TitleSettings />
+    case 'image':
+      return <ImageSettings />
+    case 'divider':
+      return <DividerSettings />
     default:
       return <></>
   }

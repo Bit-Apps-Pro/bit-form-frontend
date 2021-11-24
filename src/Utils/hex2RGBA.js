@@ -6,7 +6,7 @@ const convertHexUnitTo256 = (hexStr) => parseInt(hexStr.repeat(2 / hexStr.length
 
 const getAlphafloat = (a, alpha) => {
   if (typeof a !== 'undefined') { return a / 255 }
-  if ((typeof alpha != 'number') || alpha < 0 || alpha > 1) {
+  if ((typeof alpha !== 'number') || alpha < 0 || alpha > 1) {
     return 1
   }
   return alpha

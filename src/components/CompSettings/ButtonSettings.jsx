@@ -36,7 +36,7 @@ export default function ButtonSettings() {
     fieldData.txt = e.target.value
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory(setBuilderHistory, { event: `Button text updated : ${fieldData.txt}`, type:'change_btn_txt', state: { fields: allFields, fldKey } }, setUpdateBtn)
+    addToBuilderHistory(setBuilderHistory, { event: `Button text updated : ${fieldData.txt}`, type: 'change_btn_txt', state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   function setBtnTyp(e) {
