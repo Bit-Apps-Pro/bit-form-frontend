@@ -1,11 +1,12 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $tempStyles, $themeVars } from '../../GlobalStates'
 import UndoIcon from '../../Icons/UndoIcon'
 
 export default function ResetStyle({ themeVar }) {
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const tempStyles = useRecoilValue($tempStyles)
+  const tempThemeVars = tempStyles.themeVars
   const setThemeVars = useSetRecoilState($themeVars)
   const { css } = useFela()
 

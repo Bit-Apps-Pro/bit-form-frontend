@@ -179,9 +179,11 @@ export const $themeVars = atom({
     '--err-bdr-rad': '8px', // error message border radius
   },
 })
-export const $tempThemeVars = atom({
-  key: '$tempThemeVars',
-  default: {},
+export const $tempStyles = atom({
+  key: '$tempStyles',
+  default: {
+    themeVars: {}
+  },
 })
 export const $styles = atom({
   key: '$styles',

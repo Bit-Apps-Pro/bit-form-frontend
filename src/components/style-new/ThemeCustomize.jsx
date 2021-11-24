@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
+import { $styles, $tempStyles, $themeVars, $colorScheme } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
@@ -33,11 +33,12 @@ export default function ThemeCustomize() {
   const { formType, formID } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const tempStyles = useRecoilValue($tempStyles)
   const colorSchemeRoot = useRecoilValue($colorScheme)
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
   const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
+  const tempThemeVars = tempStyles.themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
