@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
+import { $colorScheme, $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
@@ -14,6 +14,7 @@ import { __ } from '../../Utils/i18nwrap'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
+import BorderControl from './BorderControl'
 import FieldMarginControl from './FieldMarginControl'
 import FontPicker from './FontPicker'
 import FormWrapperControl from './FormWrapperControl'
@@ -57,7 +58,10 @@ export default function ThemeCustomize() {
     '--ht-c': htC,
     '--err-bg': errBg,
     '--err-c': errC,
-    '--err-sh': errSh } = themeVars
+    '--err-sh': errSh,
+    '--err-bdr': errB } = themeVars
+
+  console.log({ errB }, themeVars);
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -412,27 +416,6 @@ export default function ThemeCustomize() {
             </div>
           </div>
         </SimpleAccordion>
-        <hr className={css(ut.divider)} />
-        <SimpleAccordion
-          title={__('Error Message', 'bitform')}
-          className={css(cls.con)}
-          disable={activeAccordion !== 4}
-          onClick={() => openHandler(4)}
-        >
-          <ThemeStylePropertyBlock label="Shadow">
-            <div className={css(ut.flxc)}>
-              {
-                tempThemeVars['--err-sh'] && (
-                  <button onClick={() => undoHandler('--err-sh')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
-              <ShadowControl value={errSh} objectPaths={errStylePathObj} />
-            </div>
-          </ThemeStylePropertyBlock>
-        </SimpleAccordion>
-        <hr className={css(ut.divider)} />
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
@@ -479,10 +462,16 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
             </div>
-            <ThemeStylePropertyBlock label="Shadow" className={css(ut.mt2)}>
+            <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
                 <ShadowControl subtitle='Error Message Shadow' value={errSh} objectPaths={errStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--err-bdr'] && <ResetStyle themeVar={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} />}
+                <BorderControl subtitle='Error Message Border' value={errB} objectPaths={errStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -556,7 +545,7 @@ const stSpacingObj = {
 }
 const errStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--err-sh' },
+  paths: { shadow: '--err-sh', border: '--err-bdr', borderWidth: '--err-bdr-width', borderRadius: '--err-bdr-rad' },
 }
 const htSpacingObj = {
   object: 'themeVars',
