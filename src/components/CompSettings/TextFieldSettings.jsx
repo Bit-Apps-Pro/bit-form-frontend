@@ -130,7 +130,7 @@ function TextFieldSettings() {
   }
 
   const hideSubTitle = ({ target: { checked } }) => {
-    if (checked) fieldData.subtitle = fieldData.lbl || fldKey
+    if (checked) fieldData.subtitle = 'Sub Title' || fieldData.lbl || fldKey
     else delete fieldData.subtitle
 
     const req = checked ? 'on' : 'off'
@@ -149,7 +149,7 @@ function TextFieldSettings() {
   }
 
   const hideHelperTxt = ({ target: { checked } }) => {
-    if (checked) fieldData.helperTxt = fieldData.lbl || fldKey
+    if (checked) fieldData.helperTxt = 'Helper Text' || fieldData.lbl || fldKey
     else delete fieldData.helperTxt
 
     const req = checked ? 'on' : 'off'

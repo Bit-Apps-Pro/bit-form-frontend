@@ -55,7 +55,7 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
         fieldKey={fieldKey}
         fieldData={attr}
       >
-        <div data-dev-ifw={fieldKey} className={`${fieldKey}-ifw`}>
+        <div data-dev-inp-fld-wrp={fieldKey} className={`${fieldKey}-inp-fld-wrp`}>
           <input
             data-dev-fld={fieldKey}
             id={fieldKey}
@@ -77,8 +77,8 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             {...{ onChange: onChangeHandler }}
           />
 
-          {attr.prefixIcn && <img className={`${fieldKey}-pre-i`} height="90%" src={attr?.prefixIcn} alt="" />}
-          {attr.suffixIcn && <img className={`${fieldKey}-suf-i`} height="90%" src={attr?.suffixIcn} alt="" />}
+          {attr.prefixIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-pre-i`} height="90%" src={attr.prefixIcn} alt="" />}
+          {attr.suffixIcn && <img data-dev-suf-i={fieldKey} className={`${fieldKey}-suf-i`} height="90%" src={attr.suffixIcn} alt="" />}
 
         </div>
         {attr.suggestions?.length && (

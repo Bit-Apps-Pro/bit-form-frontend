@@ -9,7 +9,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       'pointer-events': 'none',
       'user-select': 'none',
     },
-    [`.${fk}-fw`]: {
+    [`.${fk}-fld-wrp`]: {
       height: '100%',
       'text-align': 'start',
       width: '100%',

@@ -1,5 +1,6 @@
+import { Link, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import { useFela } from 'react-fela'
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { Link, useLocation, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import { __ } from '../../Utils/i18nwrap'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FieldIcn from '../../Icons/FieldIcn'
@@ -18,18 +19,20 @@ import ThemeGallary from '../style-new/ThemeGallary'
 import ThemeCustomize from '../style-new/ThemeCustomize'
 import FieldSettings from './FieldSettings'
 import FieldsList from './FieldsList'
+import FieldThemeCustomize from '../style-new/FieldThemeCustomize'
 
 function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
+  const { css } = useFela()
+
   // const [scrollTopShadow, setScrollTopShadow] = useState(false)
 
   // const onSettingScroll = ({ target: { scrollTop } }) => {
   //   scrollTop > 20 ? setScrollTopShadow(true) : setScrollTopShadow(false)
   // }
-  const location = useLocation()
   return (
-    <div className="elm-settings">
+    <div className={css(c.elmSettings)}>
       {/* <div className="elm-settings-title pos-rel flx" style={{ ...scrollTopShadow && { boxShadow: '0 0px 16px 2px #b0b7d8' } }}>
         <TabLink title={__('Field', 'bitform')} sub={__('Settings', 'bitform')} icn="settings" link="fs" />
         <TabLink title={__('Style', 'bitform')} sub={__('Customize', 'bitform')} icn={<i className="mr-2"><BrushIcn height="22" width="22" /></i>} link="style" />
@@ -48,6 +51,12 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
             <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
             <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
+            <Route path={`${path}/field-theme-customize`}><FieldThemeCustomize /></Route>
+            {/*  change theme 
+            change size 
+            change primary color
+            change font color
+            */}
 
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
@@ -133,3 +142,16 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   )
 }
 export default CompSettings
+
+const c = {
+  elmSettings: {
+    bd: 'var(--white-100)',
+    h: '100%',
+    mxw: 400,
+    pl: 5,
+    mnw: 270,
+    mr: 0,
+    ml: 'auto',
+    fs: 18,
+  },
+}

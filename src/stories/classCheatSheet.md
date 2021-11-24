@@ -1,16 +1,16 @@
 ### css class names
 | key | meaning       |
 | --- | ------------- |
-| -fw | field wrapper |
+| -fld-wrp | field wrapper |
 
 ### CSS vars
 | var name   | meaning                      |
 | ---------- | ---------------------------- |
 | --dir      | direction                    |
-| --fw-dis   | field wrapper display        |
-| --lw-width | label wrapper width          |
-| --iw-width | input wrapper width          |
-| --lw-sa    | label wrapper self alignment |
+| --fld-wrp-dis   | field wrapper display        |
+| --lbl-wrp-width | label wrapper width          |
+| -inp-wrp-width | input wrapper width          |
+| --lbl-wrp-sa    | label wrapper self alignment |
 | --lbl-al   | label alignment              |
-| --st-al  | sub title alignment          |
-| --ht-al    | helper text alignment        |
+| --sub-titl-al  | sub title alignment          |
+| --hlp-txt-al    | helper text alignment        |

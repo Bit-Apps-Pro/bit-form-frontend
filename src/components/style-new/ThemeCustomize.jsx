@@ -37,7 +37,7 @@ export default function ThemeCustomize() {
   const colorSchemeRoot = useRecoilValue($colorScheme)
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
-  const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
+  const { '--fld-wrp-m': wrpMagin, '--fld-wrp-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -48,14 +48,14 @@ export default function ThemeCustomize() {
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
-    '--fw-bg': fwBg,
-    '--lw-bg': lwBg,
-    '--st-bg': stBg,
-    '--st-c': stC,
+    '--fld-wrp-bg': fwBg,
+    '--lbl-wrp-bg': lwBg,
+    '--sub-titl-bg': stBg,
+    '--sub-titl-c': stC,
     '--fl-bg': flBg,
     '--fl-c': flc,
-    '--ht-bg': htBg,
-    '--ht-c': htC,
+    '--hlp-txt-bg': htBg,
+    '--hlp-txt-c': htC,
     '--err-bg': errBg,
     '--err-c': errC,
     '--err-sh': errSh } = themeVars
@@ -337,7 +337,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--fw-bg'] && <ResetStyle themeVar="--fw-bg" />}
+              {tempThemeVars['--fld-wrp-bg'] && <ResetStyle themeVar="--fld-wrp-bg" />}
               <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -356,7 +356,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--lw-bg'] && <ResetStyle themeVar="--lw-bg" />}
+              {tempThemeVars['--lbl-wrp-bg'] && <ResetStyle themeVar="--lbl-wrp-bg" />}
               <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -399,12 +399,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--st-bg'] && <ResetStyle themeVar="--st-bg" />}
+              {tempThemeVars['--sub-titl-bg'] && <ResetStyle themeVar="--sub-titl-bg" />}
               <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempThemeVars['--st-c'] && <ResetStyle themeVar="--st-c" />}
+              {tempThemeVars['--sub-titl-c'] && <ResetStyle themeVar="--sub-titl-c" />}
               <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -444,12 +444,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--ht-bg'] && <ResetStyle themeVar="--ht-bg" />}
+              {tempThemeVars['--hlp-txt-bg'] && <ResetStyle themeVar="--hlp-txt-bg" />}
               <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempThemeVars['--ht-c'] && <ResetStyle themeVar="--ht-c" />}
+              {tempThemeVars['--hlp-txt-c'] && <ResetStyle themeVar="--hlp-txt-c" />}
               <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -536,11 +536,11 @@ const cls = {
 
 const fldWrapperObj = {
   object: 'themeVars',
-  paths: { margin: '--fw-m', padding: '--fw-p' },
+  paths: { margin: '--fld-wrp-m', padding: '--fld-wrp-p' },
 }
 const lWrapperObj = {
   object: 'themeVars',
-  paths: { margin: '--lw-m', padding: '--lw-p' },
+  paths: { margin: '--lbl-wrp-m', padding: '--lbl-wrp-p' },
 }
 const flSpacingObj = {
   object: 'themeVars',
@@ -548,7 +548,7 @@ const flSpacingObj = {
 }
 const stSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--st-m', padding: '--st-p' },
+  paths: { margin: '--sub-titl-m', padding: '--sub-titl-p' },
 }
 const errStylePathObj = {
   object: 'themeVars',
@@ -556,7 +556,7 @@ const errStylePathObj = {
 }
 const htSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--ht-m', padding: '--ht-p' },
+  paths: { margin: '--hlp-txt-m', padding: '--hlp-txt-p' },
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
