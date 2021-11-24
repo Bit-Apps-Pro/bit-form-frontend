@@ -4,7 +4,7 @@ import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'r
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import CompSettings from '../components/CompSettings/CompSettings'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
@@ -14,7 +14,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempThemeVars, $themeVars, $builderHookStates, $newFormId, $styles, $flags } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempThemeVars, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -53,12 +53,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   // const isLoading = false
   const newFormId = useRecoilValue($newFormId)
   // const [fields, setFields] = useRecoilState($fields)
-  const formID = formType === 'new' ? newFormId : pramsFormId
+  const isNewForm = formType === 'new'
+  const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [tolbarSiz, setTolbarSiz] = useState(toolbarOff)
   const [gridWidth, setGridWidth] = useState(window.innerWidth - 468)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
+  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
   const builderHookStates = useRecoilValue($builderHookStates)
   const { styleMode } = useRecoilValue($flags)
   const [style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
@@ -73,24 +75,21 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setBreakpointSize = useSetRecoilState($breakpointSize)
   const setThemeVars = useSetRecoilState($themeVars)
   const setTempThemeVars = useSetRecoilState($tempThemeVars)
-
   const setStyle = useSetRecoilState($styles)
+
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
   const { forceBuilderWidthToLG } = builderHookStates
 
-  useEffect(() => {
-    if (formType === 'new') {
-      sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
-      setstyleLoading(false)
-    } else {
-      // if(isObjectEmpty())
-      setExistingStyle()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  // if (formType === 'new') {
+  // sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
+  // setstyleLoading(false)
+  // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  const { data: fetchedBuilderHelperStates } = useSWR(formType === 'edit' ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
+  const { data: fetchedBuilderHelperStates } = useSWRImmutable(!isNewForm ? 'bitforms_form_helpers_state' : null, (uri) => bitsFetch({ formID }, uri)
     .then(({ data: [response] }) => response?.builder_helper_state))
 
   useEffect(() => {
@@ -100,36 +99,45 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setBreakpointSize(parseStyle.breakpointSize)
       setTempThemeVars(parseStyle?.themeVars)
       setThemeVars(parseStyle.themeVars)
+
+      // declare new theme exist , no need old theme functions
+      if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
+    } else {
+      setOldExistingStyle()
     }
   }, [fetchedBuilderHelperStates])
 
   useEffect(() => {
-    if (brkPoint === 'md') {
-      const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
-      setStyleSheet(j2c.sheet(merge(style, st)))
-    } else if (brkPoint === 'sm') {
-      const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
-      setStyleSheet(j2c.sheet(merge(style, st)))
-    } else if (brkPoint === 'lg') {
-      setStyleSheet(j2c.sheet(style))
+    if (!isNewThemeStyleLoaded) {
+      if (brkPoint === 'md') {
+        const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+        setStyleSheet(j2c.sheet(merge(style, st)))
+      } else if (brkPoint === 'sm') {
+        const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+        setStyleSheet(j2c.sheet(merge(style, st)))
+      } else if (brkPoint === 'lg') {
+        setStyleSheet(j2c.sheet(style))
+      }
     }
   }, [brkPoint, style])
 
   useEffect(() => { setResponsiveView('lg') }, [forceBuilderWidthToLG])
 
   const styleProvider = () => {
-    if (brkPoint === 'md') {
-      const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
-      return merge(style, st)
-    }
-    if (brkPoint === 'sm') {
-      const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
-      return merge(style, st)
+    if (!isNewThemeStyleLoaded) {
+      if (brkPoint === 'md') {
+        const st = style['@media only screen and (max-width:600px)'] || style['@media only screen and (max-width: 600px)']
+        return merge(style, st)
+      }
+      if (brkPoint === 'sm') {
+        const st = style['@media only screen and (max-width:400px)'] || style['@media only screen and (max-width: 400px)']
+        return merge(style, st)
+      }
     }
     return style
   }
 
-  function setExistingStyle() {
+  function setOldExistingStyle() {
     const headers = new Headers()
     headers.append('pragma', 'no-cache')
     headers.append('cache-control', 'no-cache')
@@ -244,19 +252,20 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     conRef.current.applyResizer(resizer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conRef])
-
   const setGrWidth = (paneWidth) => {
     clearTimeout(debounce)
     setDebounce(setTimeout(() => {
       setGridWidth(paneWidth)
       let w = 0
-      if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
-      if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
-      if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
-      if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
-      if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
-      if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
-      const gw = Math.round(paneWidth - 33 - w) // inner left-right padding
+      if (!isNewThemeStyleLoaded) {
+        if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
+        if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
+        if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
+        if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
+        if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
+        if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
+      }
+      const gw = Math.round(paneWidth - 0 - w) // inner left-right padding
       if (gw <= 510) {
         setbrkPoint('sm')
       } else if (gw > 420 && gw <= 700) {
@@ -301,13 +310,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
             <>
               <RenderPortal
                 id="bit-grid-layout"
-                style={{ width: gridWidth - 9, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
+                style={{ width: gridWidth + 6, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
               >
                 <RenderThemeVarsAndFormCSS />
                 <RenderCssInPortal />
-                <style>{styleSheet}</style>
+                {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
                 <GridLayout
-                  // theme={theme}
                   style={styleProvider()}
                   gridWidth={gridWidth}
                   newData={newData}

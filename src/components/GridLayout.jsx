@@ -356,11 +356,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   }
 
   return (
-    <div style={{ width: gridWidth - 9 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
+    <div style={{ width: gridWidth + 6 }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}>
       {/* // <div style={{ width: '100%' }} className="layout-wrapper" id="layout-wrapper" onDragOver={e => e.preventDefault()} onDragEnter={e => e.preventDefault()}> */}
       {styleMode && <RenderGridLayoutStyle />}
 
-      <Scrollbars autoHide>
+      <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
         <div id={`f-${formID}`} style={{ padding: 10, paddingRight: 13 }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-${formID} _frm-bg`}>
             <div className={`_frm-${formID}`}>

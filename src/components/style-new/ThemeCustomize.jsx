@@ -8,6 +8,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $colorScheme, $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
+import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -62,6 +63,7 @@ export default function ThemeCustomize() {
     '--err-bdr': errB } = themeVars
 
   console.log({ errB }, themeVars);
+
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -483,10 +485,6 @@ export default function ThemeCustomize() {
   )
 }
 
-const MenuItem = ({ label, onClick, name }) => {
-  const { css } = useFela()
-  return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
-}
 
 const cls = {
   title: { mt: 5, mb: 2 },

@@ -77,8 +77,9 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             {...{ onChange: onChangeHandler }}
           />
 
-          <img className={`${fieldKey}-pre-i`} height="90%" src="https://www.iconpacks.net/icons/1/free-pin-icon-48-thumb.png" alt="" />
-          <img className={`${fieldKey}-suf-i`} height="90%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvpwIaPb2cZQ4FzSnIgDUHrI7D7O3wFYFIwd7w18xZ2dk0a8Yqa1b8s8bf6OHk3N7R1ko&usqp=CAU" alt="" />
+          {attr.prefixIcn && <img className={`${fieldKey}-pre-i`} height="90%" src={prefixIcn} alt="" />}
+          {attr.suffixIcn && <img className={`${fieldKey}-suf-i`} height="90%" src={suffixIcn} alt="" />}
+
         </div>
         {attr.suggestions?.length && (
           <datalist id={`${fieldKey}-datalist`}>
