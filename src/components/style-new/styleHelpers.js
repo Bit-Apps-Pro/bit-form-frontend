@@ -11,14 +11,14 @@ export const showDraggableModal = (e, setDraggableModal, { component, width = 25
   setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths })
 }
 
-export const json2CssStr = (jsonValue) => {
+export const json2CssStr = (className, jsonValue) => {
   let cssStr = '{'
   const objArr = Object.entries(jsonValue)
   objArr.map(([property, value]) => {
     cssStr += `${property}:${value};`
   })
   cssStr += '}'
-  return cssStr
+  return className + cssStr
 }
 
 export const changeFormDir = (style, dir) => produce(style, drft => {

@@ -19,6 +19,7 @@ import ThemeGallary from '../style-new/ThemeGallary'
 import ThemeCustomize from '../style-new/ThemeCustomize'
 import FieldSettings from './FieldSettings'
 import FieldsList from './FieldsList'
+import FieldThemeCustomize from '../style-new/FieldThemeCustomize'
 
 function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
@@ -50,6 +51,12 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
             <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
             <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
+            <Route path={`${path}/field-theme-customize`}><FieldThemeCustomize /></Route>
+            {/*  change theme 
+            change size 
+            change primary color
+            change font color
+            */}
 
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
