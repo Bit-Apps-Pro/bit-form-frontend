@@ -16,7 +16,7 @@ import SendinBlueIntegLayout from './SendinBlueIntegLayout'
 
 function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useHistory()
-  const {css} = useFela()
+  const { css } = useFela()
   const { formID } = useParams()
   const [isLoading, setisLoading] = useState(false)
   const [step, setstep] = useState(1)

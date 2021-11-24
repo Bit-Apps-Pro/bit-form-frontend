@@ -1,14 +1,15 @@
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useState } from 'react'
 import { $fields, $styles } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
 import Tip from '../Utilities/Tip'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import SliderModal from '../Utilities/SliderModal'
-import { useState } from 'react'
 import themeProvider from './themes/0_themeProvider'
+
 export default function ThemeGallary() {
   const { css } = useFela()
 
@@ -45,7 +46,6 @@ export default function ThemeGallary() {
   )
 }
 
-
 const Card = ({ name, img, isActive, applyThemeAction }) => {
   const { formType, formID } = useParams()
   const { css } = useFela()
@@ -71,7 +71,9 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
                 type="button"
                 onClick={applyThemeAction}
                 className={css(themeGalStyle.thm_ctrl_btn)}
-                aria-label="Theme Preview"><CheckMarkIcn size="20px" />
+                aria-label="Theme Preview"
+              >
+                <CheckMarkIcn size="20px" />
               </button>
             </Tip>
           )}
@@ -91,7 +93,6 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
 }
 
 ThemeGallary.Card = Card
-
 
 const themeGalStyle = {
   wrp: { bd: 'var(--white-100)' },
@@ -158,6 +159,6 @@ const themeGalStyle = {
   },
   activeStyle: {
     bcr: 'var(--b-50)',
-    bs: '0 0 0 2px var(--b-50)'
-  }
+    bs: '0 0 0 2px var(--b-50)',
+  },
 }

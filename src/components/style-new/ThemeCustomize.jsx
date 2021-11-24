@@ -60,7 +60,6 @@ export default function ThemeCustomize() {
     '--err-c': errC,
     '--err-sh': errSh } = themeVars
 
-
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
 
@@ -484,18 +483,17 @@ export default function ThemeCustomize() {
             <ThemeStylePropertyBlock label="Shadow" className={css(ut.mt2)}>
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
-                <ShadowControl subtitle='Error Message Shadow' value={errSh} objectPaths={errStylePathObj} />
+                <ShadowControl subtitle="Error Message Shadow" value={errSh} objectPaths={errStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
-
 
 const cls = {
   title: { mt: 5, mb: 2 },
@@ -531,7 +529,7 @@ const cls = {
   },
   clrActive: {
     bd: 'var(--b-50)',
-    cr: 'var(--white-100)'
+    cr: 'var(--white-100)',
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)', w: '95%' },
 }
@@ -562,5 +560,5 @@ const htSpacingObj = {
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' }
+  paths: { margin: '--err-m', padding: '--err-p', shadow: '--err-sh' },
 }

@@ -24,7 +24,7 @@ export default function Apikey() {
   const [isLoading, setisLoading] = useState(false)
   const { css } = useFela()
 
-  const handleSubmit = e => {
+  const handleSubmit = () => {
     setisLoading(true)
     const apiSaveProm = bitsFetch({ api_key: key }, 'bitforms_api_key')
       .then((res) => {

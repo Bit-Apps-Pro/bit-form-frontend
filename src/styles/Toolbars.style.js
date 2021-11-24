@@ -15,7 +15,7 @@ const Toolbars = {
     pn: 'relative',
     zx: 99,
     pb: 8,
-    clipPath: 'inset(0 0 -15px 0)'
+    clipPath: 'inset(0 0 -15px 0)',
   },
   fields_search: {
     pn: 'relative',

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import checkboxNradioStyle_2_material from "../componentsStyleByTheme/2_material/checkboxNradioStyle_2_material"
+import checkboxNradioStyle_2_material from '../componentsStyleByTheme/2_material/checkboxNradioStyle_2_material'
 
 export default function materialTheme(fk, type, direction) {
   switch (type) {
@@ -24,10 +24,10 @@ export default function materialTheme(fk, type, direction) {
           '--gbg-a': 100,
           '--global-fld-bg-color': 'var(--global-bg-color)',
           '--border-radius': '10px',
-          '--dir': 'ltr'
+          '--dir': 'ltr',
         },
         form: {},
-        fields: {}
+        fields: {},
       }
     case 'form':
       return { _frm: { background: 'var(--global-bg-color)' } }
@@ -95,7 +95,7 @@ export default function materialTheme(fk, type, direction) {
         fieldThemeVars: {},
         fieldType: type,
         overrideGlobalTheme: false,
-        classes: checkboxNradioStyle_2_material({ fk, type, direction })
+        classes: checkboxNradioStyle_2_material({ fk, type, direction }),
       }
     default:
       return {}

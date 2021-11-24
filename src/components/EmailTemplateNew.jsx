@@ -5,6 +5,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { $fieldsArr, $mailTemplates } from '../GlobalStates'
 // import '../resource/css/tinymce.css'
 import BackIcn from '../Icons/BackIcn'
@@ -12,7 +13,6 @@ import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import TinyMCE from './Utilities/TinyMCE'
 import app from '../styles/app.style'
-import { useFela } from 'react-fela'
 
 function EmailTemplateNew() {
   console.log('%c $render EmailTemplate new', 'background:purple;padding:3px;border-radius:5px;color:white')

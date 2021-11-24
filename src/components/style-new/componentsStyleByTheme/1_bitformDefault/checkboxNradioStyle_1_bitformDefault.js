@@ -37,11 +37,9 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       cursor: 'pointer',
       display: 'flex',
       'align-items': 'center',
-      color: 'var(--global-font-color)'
+      color: 'var(--global-font-color)',
     },
-    [`.${fk}-ct`]: {
-      'line-height': 'initial'
-    },
+    [`.${fk}-ct`]: { 'line-height': 'initial' },
     // checkbox input
     [`.${fk}-ci`]: {
       position: 'absolute',

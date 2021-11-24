@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 
-export const RenderPortal = ({
-  children,
+export const RenderPortal = ({ children,
   title,
-  ...props
-}) => {
+  ...props }) => {
   const [contentRef, setContentRef] = useState(null)
-  const mountNode =
-    contentRef?.contentWindow?.document?.body
+  const mountNode = contentRef?.contentWindow?.document?.body
 
   return (
     <iframe title={title} {...props} ref={setContentRef}>

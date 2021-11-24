@@ -26,7 +26,7 @@ export default function FontPickerMenu() {
 
   useEffect(() => {
     allFonts && setFonts(allFonts.items)
-
+    allFonts && localStorage.setItem('bf-fonts', JSON.stringify(allFonts.items))
     if (!allFonts) {
       setLoading(true)
     } else {
