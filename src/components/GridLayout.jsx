@@ -6,9 +6,9 @@
 
 import produce from 'immer'
 import { memo, useContext, useEffect, useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useHistory } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $layouts, $selectedFieldId, $styles, $themeVars, $uniqueFieldId, $updateBtn } from '../GlobalStates'
@@ -33,6 +33,7 @@ import ConfirmModal from './Utilities/ConfirmModal'
 
 function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   console.log('render gridlay')
+  const { formType } = useParams()
   const { payments } = useContext(AppSettings)
   const setProModal = useContext(ShowProModalContext)
   const [fields, setFields] = useRecoilState($fields)
@@ -346,7 +347,8 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // // if (/text|textarea|number|password|email|url|date|time|week|month|datetime-local|/g.test(typ){
     // else history.replace(history.location.pathname.replace(/fields-list|style\/.+/g, 'style'))
     console.log(history.location.pathname)
-    history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
+    history.push(`/form/builder/${formType}/${formID}/field-theme-customize`)
+    // history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
     resetContextMenu()
 
   }
