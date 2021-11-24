@@ -127,34 +127,34 @@ export const $themeVars = atom({
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
-    '--iw-width': '',
+    '-inp-wrp-width': '',
     '--lbl-al': '', // label align
+
+    '--lbl-wrp-sa': '',
+    '--lbl-wrp-width': '', // label wrapper  width
+    '--lbl-wrp-m': '', // label wrapper for margin
+    '--lbl-wrp-p': '', // label wrapper for padding
+    '--lbl-wrp-bg': '', // label wrapper for padding
+    '--lbl-wrp-c': '', // label wrapper for color
+    '--lbl-wrp-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
+    '--lbl-wrp-bdr': 'solid red', // label wrapper border
+    '--lbl-wrp-bdr-width': '1px', // label wrapper border width
+    '--lbl-wrp-bdr-rad': '8px', // label wrapper border radius
 
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
     '--fld-fs': '12px', // field font size
 
-    '--fw-dis': '', // field wrapper display
-    '--fw-fdir': '', // field wrapper flex direction
-    '--fw-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
-    '--fw-b': '10px',
-    '--fw-m': '', // field wrapper margin
-    '--fw-p': '10px', // field wrapper paddin
-    '--fw-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
-    '--fw-bdr': 'solid red', // field wrapper border
-    '--fw-bdr-width': '1px', // field wrapper border width
-    '--fw-bdr-rad': '8px', // field wrapper border radius
-
-    '--lw-sa': '',
-    '--lw-width': '', // label wrapper  width
-    '--lw-m': '', // label wrapper for margin
-    '--lw-p': '', // label wrapper for padding
-    '--lw-bg': '', // label wrapper for padding
-    '--lw-c': '', // label wrapper for color
-    '--lw-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
-    '--lw-bdr': 'solid red', // label wrapper border
-    '--lw-bdr-width': '1px', // label wrapper border width
-    '--lw-bdr-rad': '8px', // label wrapper border radius
+    '--fld-wrp-dis': '', // field wrapper display
+    '--fld-wrp-fdir': '', // field wrapper flex direction
+    '--fld-wrp-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
+    '--fld-wrp-b': '10px',
+    '--fld-wrp-m': '', // field wrapper margin
+    '--fld-wrp-p': '10px', // field wrapper paddin
+    '--fld-wrp-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
+    '--fld-wrp-bdr': 'solid red', // field wrapper border
+    '--fld-wrp-bdr-width': '1px', // field wrapper border width
+    '--fld-wrp-bdr-rad': '8px', // field wrapper border radius
 
     '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
     '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
@@ -166,27 +166,27 @@ export const $themeVars = atom({
     '--fl-bdr-width': '1px', // field label border width
     '--fl-bdr-rad': '8px', // field label border radius
 
-    '--st-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
-    '--st-c': 'hsla(201, 71%, 39%, 100)', // sub title color
-    '--st-m': '5px', // subtitle margin
-    '--st-p': '5px', // subtitle padding
-    '--st-al': '5px', // subtitle align
-    '--st-fs': '12px', // subtitle font size
-    '--st-sh': '1em 3px 5px 0rem blue inset', // subtitle box shadow
-    '--st-bdr': 'solid red', // subtitle border
-    '--st-bdr-width': '1px', // subtitle border width
-    '--st-bdr-rad': '8px', // subtitle border radius
+    '--sub-titl-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
+    '--sub-titl-c': 'hsla(201, 71%, 39%, 100)', // sub title color
+    '--sub-titl-m': '5px', // subtitle margin
+    '--sub-titl-p': '5px', // subtitle padding
+    '--sub-titl-al': '5px', // subtitle align
+    '--sub-titl-fs': '12px', // subtitle font size
+    '--sub-titl-sh': '1em 3px 5px 0rem blue inset', // subtitle box shadow
+    '--sub-titl-bdr': 'solid red', // subtitle border
+    '--sub-titl-bdr-width': '1px', // subtitle border width
+    '--sub-titl-bdr-rad': '8px', // subtitle border radius
 
-    '--ht-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
-    '--ht-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
-    '--ht-m': '', // helper text margin
-    '--ht-p': '', // hepler text padding
-    '--ht-fs': '12px', // hepler text font size
-    '--ht-al': '', // helper text align
-    '--ht-sh': '1em 3px 5px 0rem blue inset', // hepler text box shadow
-    '--ht-bdr': 'solid red', // hepler text border
-    '--ht-bdr-width': '1px', // hepler text border width
-    '--ht-bdr-rad': '8px', // hepler text border radius
+    '--hlp-txt-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
+    '--hlp-txt-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
+    '--hlp-txt-m': '', // helper text margin
+    '--hlp-txt-p': '', // hepler text padding
+    '--hlp-txt-fs': '12px', // hepler text font size
+    '--hlp-txt-al': '', // helper text align
+    '--hlp-txt-sh': '1em 3px 5px 0rem blue inset', // helper text box shadow
+    '--hlp-txt-bdr': 'solid red', // helper text border
+    '--hlp-txt-bdr-width': '1px', // helper text border width
+    '--hlp-txt-bdr-rad': '8px', // helper text border radius
 
     '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color

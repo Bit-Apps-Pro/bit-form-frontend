@@ -47,5 +47,11 @@ const style = {
     ':hover': { cr: 'var(--b-50)' },
     ':focus-visible': { focusShadow: 1 },
   },
+  fixed: {
+    pn: 'sticky',
+    tp: '0',
+    bd: 'var(--white-100)',
+    zx: 10
+  }
 }
 export default style

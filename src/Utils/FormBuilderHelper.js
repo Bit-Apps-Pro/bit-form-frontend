@@ -390,7 +390,7 @@ const getElementTotalHeight = (elm) => {
 
 export const fitLayoutItems = (lays) => produce(lays, draftLayout => {
   draftLayout.lg.map(fld => {
-    const height = getElementTotalHeight(selectInGrid(`.${fld.i}-fw`))
+    const height = getElementTotalHeight(selectInGrid(`.${fld.i}-fld-wrp`))
     if (height) {
       fld.h = Math.round(height / 2)
     }
@@ -418,3 +418,14 @@ export const nestedObjAssign = (obj, path, value, createNonExist = true) => {
 
   return nestedObjAssign(obj[path[0]], path.slice(1), value)
 }
+
+export const propertyValueSumY = (propertyValue = '') => {
+  let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
+  if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
+  if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
+  if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
+  arr = [arr[0], arr[2]]
+  const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
+  return summ || 0
+}
+export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))

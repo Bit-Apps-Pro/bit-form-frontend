@@ -8,10 +8,8 @@ export default function RenderStyle({ styleClasses }) {
 
   for (let i = 0; i < fieldStyleArrLength; i += 1) {
     const [className, styleObj] = fieldStyleArr[i]
-    styleString += `${className}`
-    styleString += json2CssStr(styleObj)
+    styleString += json2CssStr(className, styleObj)
   }
-
   return (
     <style>{styleString}</style>
   )

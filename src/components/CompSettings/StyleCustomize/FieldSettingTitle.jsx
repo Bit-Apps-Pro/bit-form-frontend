@@ -10,7 +10,7 @@ export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
   const { css } = useFela()
   return (
     <>
-      <div className={css(style.section, style.flxColumn)}>
+      <div className={css(style.section, style.flxColumn, style.fixed)}>
         <Back2FldBtn size="16" className={css(style.btn, ut.fontBody)} />
         <div>
           <div className={css(style.mainTitle)}>{__(title, 'bitform')}</div>

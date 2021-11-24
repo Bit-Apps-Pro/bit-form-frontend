@@ -37,7 +37,7 @@ export default function ThemeCustomize() {
   const colorSchemeRoot = useRecoilValue($colorScheme)
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
-  const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
+  const { '--fld-wrp-m': wrpMagin, '--fld-wrp-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
     '--dir': direction,
@@ -48,24 +48,24 @@ export default function ThemeCustomize() {
     '--global-fld-bg-color': globalFldBgClr,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
-    '--fw-bg': fwBg,
-    '--fw-sh': fwSh,
-    '--fw-bdr': fwBdr,
-    '--lw-bg': lwBg,
-    '--lw-sh': lwSh,
-    '--lw-bdr': lwBdr,
-    '--st-bg': stBg,
-    '--st-c': stC,
-    '--st-sh': stSh,
-    '--st-bdr': stBdr,
+    '--fld-wrp-bg': fwBg,
+    '--fld-wrp-sh': fwSh,
+    '--fld-wrp-bdr': fwBdr,
+    '--lbl-wrp-bg': lwBg,
+    '--lbl-wrp-sh': lwSh,
+    '--lbl-wrp-bdr': lwBdr,
+    '--sub-titl-bg': stBg,
+    '--sub-titl-c': stC,
+    '--sub-titl-sh': stSh,
+    '--sub-titl-bdr': stBdr,
     '--fl-bg': flBg,
     '--fl-c': flc,
     '--fl-sh': flSh,
     '--fl-bdr': flBdr,
-    '--ht-bg': htBg,
-    '--ht-c': htC,
-    '--ht-sh': htSh,
-    '--ht-bdr': htBdr,
+    '--hlp-txt-bg': htBg,
+    '--hlp-txt-c': htC,
+    '--hlp-txt-sh': htSh,
+    '--hlp-txt-bdr': htBdr,
     '--err-bg': errBg,
     '--err-c': errC,
     '--err-sh': errSh,
@@ -350,7 +350,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--fw-bg'] && <ResetStyle themeVar="--fw-bg" />}
+              {tempThemeVars['--fld-wrp-bg'] && <ResetStyle themeVar="--fld-wrp-bg" />}
               <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -359,13 +359,13 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--fw-sh'] && <ResetStyle themeVar="--fw-sh" />}
+                {tempThemeVars['--fld-wrp-sh'] && <ResetStyle themeVar="--fld-wrp-sh" />}
                 <ShadowControl subtitle="Field Container Shadow" value={fwSh} objectPaths={fwStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--fw-bdr'] && <ResetStyle themeVar={['--fw-bdr', '--fw-bdr-width', '--fw-bdr-rad']} />}
+                {tempThemeVars['--fld-wrp-bdr'] && <ResetStyle themeVar={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']} />}
                 <BorderControl subtitle="Field Container Border" value={fwBdr} objectPaths={fwStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
@@ -381,7 +381,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--lw-bg'] && <ResetStyle themeVar="--lw-bg" />}
+              {tempThemeVars['--lbl-wrp-bg'] && <ResetStyle themeVar="--lbl-wrp-bg" />}
               <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -390,13 +390,13 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--lw-sh'] && <ResetStyle themeVar="--lw-sh" />}
+                {tempThemeVars['--lbl-wrp-sh'] && <ResetStyle themeVar="--lbl-wrp-sh" />}
                 <ShadowControl subtitle="Label & Subtitle Container Shadow" value={lwSh} objectPaths={lwStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--lw-bdr'] && <ResetStyle themeVar={['--lw-bdr', '--lw-bdr-width', '--lw-bdr-rad']} />}
+                {tempThemeVars['--lbl-wrp-bdr'] && <ResetStyle themeVar={['--lbl-wrp-bdr', '--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']} />}
                 <BorderControl subtitle="Label & Subtitle Container Border" value={lwBdr} objectPaths={lwStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
@@ -448,12 +448,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--st-bg'] && <ResetStyle themeVar="--st-bg" />}
+              {tempThemeVars['--sub-titl-bg'] && <ResetStyle themeVar="--sub-titl-bg" />}
               <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempThemeVars['--st-c'] && <ResetStyle themeVar="--st-c" />}
+              {tempThemeVars['--sub-titl-c'] && <ResetStyle themeVar="--sub-titl-c" />}
               <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -462,13 +462,13 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--st-sh'] && <ResetStyle themeVar="--st-sh" />}
+                {tempThemeVars['--sub-titl-sh'] && <ResetStyle themeVar="--sub-titl-sh" />}
                 <ShadowControl subtitle="Subtitle Shadow" value={stSh} objectPaths={stStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--st-bdr'] && <ResetStyle themeVar={['--st-bdr', '--st-bdr-width', '--st-bdr-rad']} />}
+                {tempThemeVars['--sub-titl-bdr'] && <ResetStyle themeVar={['--sub-titl-bdr', '--sub-titl-bdr-width', '--sub-titl-bdr-rad']} />}
                 <BorderControl subtitle="Subtitle Border" value={stBdr} objectPaths={stStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
@@ -484,12 +484,12 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--ht-bg'] && <ResetStyle themeVar="--ht-bg" />}
+              {tempThemeVars['--hlp-txt-bg'] && <ResetStyle themeVar="--hlp-txt-bg" />}
               <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempThemeVars['--ht-c'] && <ResetStyle themeVar="--ht-c" />}
+              {tempThemeVars['--hlp-txt-c'] && <ResetStyle themeVar="--hlp-txt-c" />}
               <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -498,13 +498,13 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--ht-sh'] && <ResetStyle themeVar="--ht-sh" />}
+                {tempThemeVars['--hlp-txt-sh'] && <ResetStyle themeVar="--hlp-txt-sh" />}
                 <ShadowControl subtitle="Helper Text Shadow" value={htSh} objectPaths={htStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--ht-bdr'] && <ResetStyle themeVar={['--ht-bdr', '--ht-bdr-width', '--ht-bdr-rad']} />}
+                {tempThemeVars['--hlp-txt-bdr'] && <ResetStyle themeVar={['--hlp-txt-bdr', '--hlp-txt-bdr-width', '--hlp-txt-bdr-rad']} />}
                 <BorderControl subtitle="Helper Text Border" value={htBdr} objectPaths={htStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
@@ -594,11 +594,11 @@ const cls = {
 
 const fldWrapperObj = {
   object: 'themeVars',
-  paths: { margin: '--fw-m', padding: '--fw-p' },
+  paths: { margin: '--fld-wrp-m', padding: '--fld-wrp-p' },
 }
 const lWrapperObj = {
   object: 'themeVars',
-  paths: { margin: '--lw-m', padding: '--lw-p' },
+  paths: { margin: '--lbl-wrp-m', padding: '--lbl-wrp-p' },
 }
 const flSpacingObj = {
   object: 'themeVars',
@@ -606,15 +606,15 @@ const flSpacingObj = {
 }
 const stSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--st-m', padding: '--st-p' },
+  paths: { margin: '--sub-titl-m', padding: '--sub-titl-p' },
 }
 const fwStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--fw-sh', border: '--fw-bdr', borderWidth: '--fw-bdr-width', borderRadius: '--fw-bdr-rad' },
+  paths: { shadow: '--fld-wrp-sh', border: '--fld-wrp-bdr', borderWidth: '--fld-wrp-bdr-width', borderRadius: '--fld-wrp-bdr-rad' },
 }
 const lwStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--lw-sh', border: '--lw-bdr', borderWidth: '--lw-bdr-width', borderRadius: '--lw-bdr-rad' },
+  paths: { shadow: '--lbl-wrp-sh', border: '--lbl-wrp-bdr', borderWidth: '--lbl-wrp-bdr-width', borderRadius: '--lbl-wrp-bdr-rad' },
 }
 const flStylePathObj = {
   object: 'themeVars',
@@ -622,11 +622,11 @@ const flStylePathObj = {
 }
 const stStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--st-sh', border: '--st-bdr', borderWidth: '--st-bdr-width', borderRadius: '--st-bdr-rad' },
+  paths: { shadow: '--sub-titl-sh', border: '--sub-titl-bdr', borderWidth: '--sub-titl-bdr-width', borderRadius: '--sub-titl-bdr-rad' },
 }
 const htStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--ht-sh', border: '--ht-bdr', borderWidth: '--ht-bdr-width', borderRadius: '--ht-bdr-rad' },
+  paths: { shadow: '--hlp-txt-sh', border: '--hlp-txt-bdr', borderWidth: '--hlp-txt-bdr-width', borderRadius: '--hlp-txt-bdr-rad' },
 }
 const errStylePathObj = {
   object: 'themeVars',
@@ -634,7 +634,7 @@ const errStylePathObj = {
 }
 const htSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--ht-m', padding: '--ht-p' },
+  paths: { margin: '--hlp-txt-m', padding: '--hlp-txt-p' },
 }
 const errMsgSpacingObj = {
   object: 'themeVars',
