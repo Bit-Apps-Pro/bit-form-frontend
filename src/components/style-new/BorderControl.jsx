@@ -1,13 +1,18 @@
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
-import { $draggableModal } from '../../GlobalStates'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { $draggableModal, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
-import { showDraggableModal } from './styleHelpers'
+import { getStyleValueFromObjectPath, showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
 export default function BorderControl({ subtitle, value, objectPaths }) {
   const { css } = useFela()
   const setDraggableModal = useSetRecoilState($draggableModal)
+
+  const themeVars = useRecoilValue($themeVars)
+
+  const [, color] = splitValueBySpaces(getStyleValueFromObjectPath(objectPaths.object, objectPaths.paths.border, { themeVars }))
+
   return (
     <div className={css(c.preview_wrp)}>
       <button
@@ -15,7 +20,7 @@ export default function BorderControl({ subtitle, value, objectPaths }) {
         type="button"
         className={css(c.pickrBtn)}
       >
-        <ColorPreview bg={'red'} h={5} w={25} className={css(ut.mr2)} />
+        <ColorPreview bg={color} h={25} w={25} className={css(ut.mr2)} />
         <span className={css(c.clrVal)}>{value}</span>
       </button>
     </div>
@@ -28,7 +33,7 @@ const c = {
     w: 130,
     mnw: 130,
     brs: 10,
-    p: 10,
+    p: 3,
     flx: 'center-between',
   },
   preview: {

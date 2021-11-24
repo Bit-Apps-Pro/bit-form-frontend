@@ -4,12 +4,9 @@ import { useRecoilState } from 'recoil'
 import { $themeVars } from '../../../../GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
-import borderStyle from '../../../../styles/borderStyle.style'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import { getStyleValueFromObjectPath, splitValueBySpaces } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
-import BoxSizeControl from './BoxSizeControl'
-import ColorPickerInput from './ColorPickerInput'
 import SpaceControl from './SpaceControl'
 
 export default function BorderStyle({ objectPaths }) {
@@ -32,7 +29,6 @@ export default function BorderStyle({ objectPaths }) {
   const borderStyleValues = extractBorderStyle()
 
   const generateBorderStyleValue = (name, val) => {
-    console.log('generate', name, { val });
     const newBorderStyleValue = Object.entries(borderStyleValues).map(([shName, shVal]) => {
       if (shName === name) {
         return `${val || ''}`
