@@ -77,8 +77,8 @@ function TextField({ fieldKey, attr, onBlurHandler, resetFieldValue, formID, sty
             {...{ onChange: onChangeHandler }}
           />
 
-          {attr.prefixIcn && <img className={`${fieldKey}-pre-i`} height="90%" src={prefixIcn} alt="" />}
-          {attr.suffixIcn && <img className={`${fieldKey}-suf-i`} height="90%" src={suffixIcn} alt="" />}
+          {attr.prefixIcn && <img className={`${fieldKey}-pre-i`} height="90%" src={attr?.prefixIcn} alt="" />}
+          {attr.suffixIcn && <img className={`${fieldKey}-suf-i`} height="90%" src={attr?.suffixIcn} alt="" />}
 
         </div>
         {attr.suggestions?.length && (

@@ -19,11 +19,11 @@ import { deepCopy } from '../../Utils/Helpers'
 import Grow from './StyleCustomize/ChildComp/Grow'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 
-function Icons({ iconType, setModal }) {
+function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const [controller, setController] = useState({ parent: 'Icons' })
+  const [controller, setController] = useState({ parent: selected || 'Icons' })
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [dnLoading, setDnLoading] = useState(false)
@@ -32,6 +32,7 @@ function Icons({ iconType, setModal }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchLoading, setSearchLoading] = useState(false)
   const [scrollLoading, setScrollLoading] = useState(false)
+  const uploadLabel = uploadLbl || 'Upload Icon'
   const [total, setTotal] = useState(10001)
   const { css } = useFela()
   const url = 'https://raw.githack.com'
@@ -111,10 +112,8 @@ function Icons({ iconType, setModal }) {
       wpMediaMdl.open()
     }
   }
-  console.log('first', { controller })
 
   useEffect(() => {
-    console.log('secnd', { controller })
     setPrefix('')
     setFiles([])
     setIcons([])
@@ -130,7 +129,7 @@ function Icons({ iconType, setModal }) {
           setLoading(false)
         })
     }
-    if (controller.parent === 'Downloaded icons') {
+    if (controller.parent === 'Downloaded Icons') {
       setLoading(true)
       bitsFetch({}, 'bitforms_get_download_icn').then((res) => {
         if (res !== undefined && res.success) {
@@ -226,11 +225,9 @@ function Icons({ iconType, setModal }) {
   return (
     <div>
       <StyleSegmentControl
-        options={[{ label: 'Icons', show: ['label'] }, { label: 'Upload icon' }, { label: 'Downloaded icons' }]}
+        options={[{ label: 'Icons', show: ['label'] }, { label: uploadLabel }, { label: 'Downloaded Icons' }]}
         onChange={lbl => onTabChangeHandler(lbl, 'parent')}
-        // defaultActive={controller.parent}
-        // defaultActive={'Icons'}
-        // activeValue="Icons"
+        defaultActive={controller.parent}
         defaultItmWidth={220}
         wideTab
         className={css(ut.mt1)}
@@ -306,7 +303,7 @@ function Icons({ iconType, setModal }) {
 
       </Grow>
 
-      <Grow open={controller.parent === 'Upload icon'}>
+      <Grow open={controller.parent === uploadLabel}>
         <button type="button" className={css(s.upBtn)} onClick={setWpMedia}>
           <FileUploadIcn w="35" />
           {' '}
@@ -314,7 +311,7 @@ function Icons({ iconType, setModal }) {
         </button>
       </Grow>
 
-      <Grow open={controller.parent === 'Downloaded icons'}>
+      <Grow open={controller.parent === 'Downloaded Icons'}>
         {loading && (
           <div className={css({ h: 300 })}>
             <div title="Loading..." className={css({ flxp: 'wrap', jc: 'center', flx: 1 })}>

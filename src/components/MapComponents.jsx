@@ -14,9 +14,12 @@ import SubmitBtn from './Fields/SubmitBtn'
 import Button from './Fields/Button'
 import Paypal from './Fields/Paypal'
 import RazorPay from './Fields/RazorPay'
+import TitleField from './Fields/TitleField'
 import { $styles } from '../GlobalStates'
 import '../resource/sass/components.scss'
 import AdvanceFileUp from './Fields/AdvanceFileUp'
+import Image from './Fields/Image'
+import Divider from './Fields/Divider'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -78,6 +81,12 @@ function MapComponents({ atts, fieldKey, formID, onBlurHandler, resetFieldValue,
       return <Paypal isBuilder={isBuilder} fieldKey={fieldKey} formID={formID} attr={atts} contentID={contentID} fieldData={fieldData} resetFieldValue={resetFieldValue} />
     case 'razorpay':
       return <RazorPay fieldKey={fieldKey} contentID={contentID} formID={formID} attr={atts} buttonDisabled={buttonDisabled} resetFieldValue={resetFieldValue} />
+    case 'title':
+      return <TitleField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+    case 'image':
+      return <Image fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+    case 'divider':
+      return <Divider fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

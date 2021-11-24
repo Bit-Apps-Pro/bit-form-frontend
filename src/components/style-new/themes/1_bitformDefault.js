@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import checkboxNradioStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
+import titleStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/titleStyle_1_bitformDefault'
+import dividerStyle_1_bitformDefault from '../componentsStyleByTheme/1_bitformDefault/dividerStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme(fk, type, direction) {
   switch (type) {
@@ -60,6 +62,22 @@ export default function bitformDefaultTheme(fk, type, direction) {
         // fieldThemeVars: {},
         // overrideGlobalTheme: false,
         classes: checkboxNradioStyle_1_bitformDefault({ fk, type, direction }),
+      }
+    case 'title':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        // fieldThemeVars: {},
+        // overrideGlobalTheme: false,
+        classes: titleStyle_1_bitformDefault({ fk, type, direction }),
+      }
+    case 'divider':
+      return {
+        theme: 'bitformDefault',
+        fieldType: type,
+        // fieldThemeVars: {},
+        // overrideGlobalTheme: false,
+        classes: dividerStyle_1_bitformDefault({ fk, type, direction }),
       }
     default:
       return {}
