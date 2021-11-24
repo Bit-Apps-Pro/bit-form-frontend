@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, memo } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
@@ -50,7 +50,7 @@ const setTitle = (component) => {
   }
 }
 
-export default function DraggableModal({ setBuilderPointerEventNone }) {
+function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const { show, position, component, width, subtitle, action, value, objectPaths } = draggableModal
@@ -101,3 +101,4 @@ export default function DraggableModal({ setBuilderPointerEventNone }) {
     </Draggable>
   )
 }
+export default memo(DraggableModal)
