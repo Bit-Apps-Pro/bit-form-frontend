@@ -9,7 +9,6 @@ import LoaderSm from './Loaders/LoaderSm'
 import CopyText from './Utilities/CopyText'
 import SnackMsg from './Utilities/SnackMsg'
 
-
 export default function Captcha() {
   const { reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
   const [snack, setsnack] = useState({ show: false })

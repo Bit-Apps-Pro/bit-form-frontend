@@ -10,7 +10,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       'pointer-events': 'none',
       'user-select': 'none',
     },
-    [`.${fk}-fw`]: {
+    [`.${fk}-fld-wrp`]: {
       height: '100%',
       'text-align': 'start',
       width: '100%',

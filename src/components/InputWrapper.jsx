@@ -10,13 +10,13 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const err = fieldData.error || ''
   return (
     <div
-      data-dev-fw={fieldKey}
-      className={`${fieldKey}-fw  ${flags.styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
+      data-dev-fld-wrp={fieldKey}
+      className={`${fieldKey}-fld-wrp  ${flags.styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
     >
       <div
-        data-dev-lw={fieldKey}
-        className={`${fieldKey}-lw`}
+        data-dev-lbl-wrp={fieldKey}
+        className={`${fieldKey}-lbl-wrp`}
       >
         {(!noLabel && !fieldData?.valid?.hideLbl && 'lbl' in fieldData) && (
           <label
@@ -36,15 +36,15 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         )}
         {
           fieldData.subtitle && (
-            <div data-dev-st={fieldKey} className={`${fieldKey}-st`}>{fieldData.subtitle}</div>
+            <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>{fieldData.subtitle}</div>
           )
         }
       </div>
-      <div data-dev-iw={fieldKey} className={`${fieldKey}-iw`}>
+      <div data-dev-inp-wrp={fieldKey} className={`${fieldKey}-inp-wrp`}>
         {children}
         {
           fieldData.helperTxt && (
-            <div className={`${fieldKey}-ht`}>{fieldData.helperTxt}</div>
+            <div className={`${fieldKey}-hlp-txt`}>{fieldData.helperTxt}</div>
           )
         }
       </div>

@@ -3,12 +3,12 @@ import produce from 'immer'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
-export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths }) => {
+export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths, id }) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
   const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - width)
   const y = e.target.getBoundingClientRect().top - offset.top
-  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths })
+  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths, id })
 }
 
 export const json2CssStr = (className, jsonValue) => {
@@ -201,43 +201,43 @@ export const CommonStyle = (fk, type) => {
     case 'small-2':
       return {
         [`.${fk}-lbl`]: { 'font-size': '10px' },
-        [`.${fk}-st`]: { 'font-size': '9px' },
-        [`.${fk}-ht`]: { 'font-size': '9px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '9px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '9px' },
         [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px !important' },
       }
     case 'small-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '12px' },
-        [`.${fk}-st`]: { 'font-size': '10px' },
-        [`.${fk}-ht`]: { 'font-size': '10px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '10px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '10px' },
         [`.${fk}-fld`]: { 'font-size': '12px', padding: '6px 3px' },
       }
     case 'small':
       return {
         [`.${fk}-lbl`]: { 'font-size': '14px' },
-        [`.${fk}-st`]: { 'font-size': '12px' },
-        [`.${fk}-ht`]: { 'font-size': '12px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
         [`.${fk}-fld`]: { 'font-size': '14px', padding: '7px 4px' },
       }
     case 'medium':
       return {
         [`.${fk}-lbl`]: { 'font-size': '16px' },
-        [`.${fk}-st`]: { 'font-size': '11px' },
-        [`.${fk}-ht`]: { 'font-size': '11px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '11px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '11px' },
         [`.${fk}-fld`]: { 'font-size': '16px', padding: '8px 5px' },
       }
     case 'large':
       return {
         [`.${fk}-lbl`]: { 'font-size': '18px' },
-        [`.${fk}-st`]: { 'font-size': '12px' },
-        [`.${fk}-ht`]: { 'font-size': '12px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '12px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '12px' },
         [`.${fk}-fld`]: { 'font-size': '18px', padding: '9px 6px' },
       }
     case 'large-1':
       return {
         [`.${fk}-lbl`]: { 'font-size': '20px' },
-        [`.${fk}-st`]: { 'font-size': '14px' },
-        [`.${fk}-ht`]: { 'font-size': '14px' },
+        [`.${fk}-sub-titl`]: { 'font-size': '14px' },
+        [`.${fk}-hlp-txt`]: { 'font-size': '14px' },
         [`.${fk}-fld`]: { 'font-size': '20px', padding: '10px 7px' },
       }
     default:

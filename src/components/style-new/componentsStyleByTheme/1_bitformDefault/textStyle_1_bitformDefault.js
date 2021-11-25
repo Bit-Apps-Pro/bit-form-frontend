@@ -1,21 +1,21 @@
 /* eslint-disable camelcase */
 export default function textStyle_1_bitformDefault({ fk, type, direction }) {
   return {
-    [`.${fk}-fw`]: {
-      display: 'var(--fw-dis, block)',
-      'flex-direction': 'var(--fw-fdir, row)',
-      background: 'var(--fw-bg, transparent)',
+    [`.${fk}-fld-wrp`]: {
+      display: 'var(--fld-wrp-dis, block)',
+      'flex-direction': 'var(--fld-wrp-fdir, row)',
+      background: 'var(--fld-wrp-bg, transparent)',
       width: '100%',
-      padding: 'var(--fw-p, 0)',
-      margin: 'var(--fw-m, 0)',
+      padding: 'var(--fld-wrp-p, 0)',
+      margin: 'var(--fld-wrp-m, 0)',
       position: 'relative',
     },
-    [`.${fk}-lw`]: { width: 'var(--lw-width, auto)', 'align-self': 'var(--lw-sa, auto)', margin: 'var(--lw-m, 0)', padding: 'var(--lw-p, 0)' },
+    [`.${fk}-lbl-wrp`]: { width: 'var(--lbl-wrp-width, auto)', 'align-self': 'var(--lbl-wrp-sa, auto)', margin: 'var(--lbl-wrp-m, 0)', padding: 'var(--lbl-wrp-p, 0)' },
     [`.${fk}-lbl`]: { 'font-size': 'var(--fl-fs)', display: 'block', 'text-align': 'var(--lbl-al, left)', margin: 'var(--fl-m, 0)', padding: 'var(--fl-p, 0)' },
-    [`.${fk}-st`]: { 'font-size': 'var(--st-fs)', 'text-align': 'var(--st-al, left)', padding: 'var(--st-p, 0)', margin: 'var(--st-m, 0)' },
-    [`.${fk}-ht`]: { 'font-size': 'var(--ht-fs)', 'text-align': 'var(--ht-al, left)', padding: 'var(--ht-p, 0)', margin: 'var(--ht-m, 0)' },
-    [`.${fk}-ifw`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
-    [`.${fk}-iw`]: { width: 'var(--iw-width, auto)' },
+    [`.${fk}-sub-titl`]: { 'font-size': 'var(--sub-titl-fs)', 'text-align': 'var(--sub-titl-al, left)', padding: 'var(--sub-titl-p, 0)', margin: 'var(--sub-titl-m, 0)' },
+    [`.${fk}-hlp-txt`]: { 'font-size': 'var(--hlp-txt-fs)', 'text-align': 'var(--hlp-txt-al, left)', padding: 'var(--hlp-txt-p, 0)', margin: 'var(--hlp-txt-m, 0)' },
+    [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
+    [`.${fk}-inp-wrp`]: { width: 'var(-inp-wrp-width, auto)' },
 
     // field style
     [`.${fk}-fld`]: {

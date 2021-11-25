@@ -39,7 +39,7 @@ export default function CustomFieldMap({ formFields, userConf, setUserConf, type
           ))
         }
 
-        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(type,'meta_map', userConf?.meta_map?.length, userConf, setUserConf)} className="icn-btn sh-sm" type="button">+</button></div>
+        <div className="txt-center  mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(type, 'meta_map', userConf?.meta_map?.length, userConf, setUserConf)} className="icn-btn sh-sm" type="button">+</button></div>
 
       </div>
     </>

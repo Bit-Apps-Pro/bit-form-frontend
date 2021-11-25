@@ -11,11 +11,11 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $layouts, $selectedFieldId, $styles, $themeVars, $uniqueFieldId, $updateBtn } from '../GlobalStates'
+import { $additionalSettings, $breakpoint, $builderHistory, $builderHookStates, $draggingField, $fields, $flags, $isNewThemeStyleLoaded, $layouts, $selectedFieldId, $styles, $themeVars, $uniqueFieldId, $updateBtn } from '../GlobalStates'
 import { ShowProModalContext } from '../pages/FormDetails'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, fitLayoutItems, produceNewLayouts, propertyValueSumX } from '../Utils/FormBuilderHelper'
+import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, filterNumber, fitLayoutItems, produceNewLayouts, propertyValueSumX, propertyValueSumY } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -43,10 +43,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   const draggingField = useRecoilValue($draggingField)
   const flags = useRecoilValue($flags)
   const builderHookStates = useRecoilValue($builderHookStates)
+  const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const setStyles = useSetRecoilState($styles)
   const themeVars = useRecoilValue($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
-  const [builderWidth, setBuilderWidth] = useState(gridWidth - 32)
+  const [builderWidth, setBuilderWidth] = useState(gridWidth)
   const cols = { lg: 60, md: 40, sm: 20 }
   const [gridContentMargin, setgridContentMargin] = useState([-0.2, 0])
   const [rowHeight, setRowHeight] = useState(2)
@@ -89,32 +90,32 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
   useEffect(() => {
     let w = 0
     let h = 0
-
-    if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
-    if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
-    if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
-    if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
-    if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
-    if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
-    setBuilderWidth(gridWidth - 33 - w)
-
-    if (style[`._frm-g-${formID}`]?.gap) {
-      const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
-      setgridContentMargin([Number(gaps[1]), Number(gaps[0])])
-    }
-
-    if (style[`.fld-lbl-${formID}`]?.['font-size']) {
-      let lineHeight = 1
-      if (style[`.fld-lbl-${formID}`]?.['line-height']) {
-        lineHeight = filterNumber(style[`.fld-lbl-${formID}`]['line-height'])
+    if (!isNewThemeStyleLoaded) {
+      if (style[`._frm-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-${formID}`]['border-width']) }
+      if (style[`._frm-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-${formID}`].padding) }
+      if (style[`._frm-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-${formID}`].margin) }
+      if (style[`._frm-bg-${formID}`]?.['border-width']) { w += propertyValueSumX(style[`._frm-bg-${formID}`]['border-width']) }
+      if (style[`._frm-bg-${formID}`]?.padding) { w += propertyValueSumX(style[`._frm-bg-${formID}`].padding) }
+      if (style[`._frm-bg-${formID}`]?.margin) { w += propertyValueSumX(style[`._frm-bg-${formID}`].margin) }
+      if (style[`._frm-g-${formID}`]?.gap) {
+        const gaps = style[`._frm-g-${formID}`].gap.replace(/px/g, '').split(' ')
+        setgridContentMargin([Number(gaps[1]), Number(gaps[0])])
       }
-      h += filterNumber(style[`.fld-lbl-${formID}`]['font-size']) * lineHeight
+
+      if (style[`.fld-lbl-${formID}`]?.['font-size']) {
+        let lineHeight = 1
+        if (style[`.fld-lbl-${formID}`]?.['line-height']) {
+          lineHeight = filterNumber(style[`.fld-lbl-${formID}`]['line-height'])
+        }
+        h += filterNumber(style[`.fld-lbl-${formID}`]['font-size']) * lineHeight
+      }
+      if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
+      if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
+      if (style[`input.fld-${formID},textarea.fld-${formID}`]?.height) {
+        h += filterNumber(style[`input.fld-${formID},textarea.fld-${formID}`].height)
+      } else { h += 40 /* default field height */ }
     }
-    if (style[`.fld-wrp-${formID}`]?.padding) { h += propertyValueSumY(style[`.fld-wrp-${formID}`].padding) }
-    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.margin) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`].margin) }
-    if (style[`input.fld-${formID},textarea.fld-${formID}`]?.height) {
-      h += filterNumber(style[`input.fld-${formID},textarea.fld-${formID}`].height)
-    } else { h += 40 /* default field height */ }
+
     // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.['border-width']) { h += propertyValueSumY(style[`input.fld-${formID},textarea.fld-${formID}`]['border-width']) }
     // let topNbottomPadding = 0
     // if (style[`input.fld-${formID},textarea.fld-${formID}`]?.padding) {
@@ -126,21 +127,11 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     // h += 40 // default field height
     // setRowHeight((h / 2) / 10)
 
+    setBuilderWidth(gridWidth - 0 - w)
+
     // set row height in local
     sessionStorage.setItem('btcd-rh', h / 2)
   }, [style, gridWidth, formID])
-
-  const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
-
-  const propertyValueSumY = (propertyValue = '') => {
-    let arr = propertyValue?.replace(/px|em|rem|!important/g, '').split(' ')
-    if (arr.length === 1) { arr = Array(4).fill(arr[0]) }
-    if (arr.length === 2) { arr = [arr[0], arr[1], arr[0], arr[1]] }
-    if (arr.length === 3) { arr = [arr[0], arr[1], arr[2], arr[1]] }
-    arr = [arr[0], arr[2]]
-    const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
-    return summ || 0
-  }
 
   const margeNewData = () => {
     if (newData !== null) {

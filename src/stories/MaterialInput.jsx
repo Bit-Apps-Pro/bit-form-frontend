@@ -119,10 +119,10 @@ const MtInput = ({ size }) => {
         </span>
       </div>
       <hr />
-      <div >
+      <div>
         <input id="exampleField1" placeholder=" " type="text" />
         <label htmlFor="exampleField1">Text Field</label>
-        <span >
+        <span>
           <svg
             width="30px"
             viewBox="0 0 24 24"

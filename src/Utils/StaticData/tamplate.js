@@ -6,4 +6,4 @@ export const activationTamplate = `<p>Hellow {customer_name}</p>
 <p>Please click on the button to complete the verification processs for {email}</p>
 <p><a style="background: linear-gradient(145deg, #0069ff, #097fe6) !important; text-decoration: none !important; font-weight: 500; margin-top: 10px; color: #fff; text-transform: uppercase; font-size: 14px; padding: 10px 24px; display: inline-block; border-radius: 50px; margin-left: 35%;" title="VERIFY EMAIL ADDRESS" href="{activation_url}" target="_blank" rel="noopener">VERIFY EMAIL ADDRESS</a></p>`
 
-export const activationMessage = `<pre>Your account has been activated successfully.&nbsp;You can now login.</pre>`
+export const activationMessage = '<pre>Your account has been activated successfully.&nbsp;You can now login.</pre>'

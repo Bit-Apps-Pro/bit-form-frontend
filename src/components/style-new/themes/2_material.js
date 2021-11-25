@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import checkboxNradioStyle_2_material from "../componentsStyleByTheme/2_material/checkboxNradioStyle_2_material"
+import checkboxNradioStyle_2_material from '../componentsStyleByTheme/2_material/checkboxNradioStyle_2_material'
 
 export default function materialTheme(fk, type, direction) {
   switch (type) {
@@ -24,10 +24,10 @@ export default function materialTheme(fk, type, direction) {
           '--gbg-a': 100,
           '--global-fld-bg-color': 'var(--global-bg-color)',
           '--border-radius': '10px',
-          '--dir': 'ltr'
+          '--dir': 'ltr',
         },
         form: {},
-        fields: {}
+        fields: {},
       }
     case 'form':
       return { _frm: { background: 'var(--global-bg-color)' } }
@@ -45,7 +45,7 @@ export default function materialTheme(fk, type, direction) {
     case 'color':
     case 'textarea':
       return {
-        [`.${fk}-fw`]: {
+        [`.${fk}-fld-wrp`]: {
           background: 'var(--primary-color)',
           height: '100%',
           'text-align': 'start',
@@ -61,7 +61,7 @@ export default function materialTheme(fk, type, direction) {
           color: 'rgba(42, 49, 99, 1)!important',
           'line-height': '1.4!important',
         },
-        [`.${fk}-ifw`]: { position: 'relative' },
+        [`.${fk}inp-fld-wrp`]: { position: 'relative' },
         [`.${fk}-fld`]: {
           display: ' inline-block !important',
           direction: 'inherit !important',
@@ -95,7 +95,7 @@ export default function materialTheme(fk, type, direction) {
         fieldThemeVars: {},
         fieldType: type,
         overrideGlobalTheme: false,
-        classes: checkboxNradioStyle_2_material({ fk, type, direction })
+        classes: checkboxNradioStyle_2_material({ fk, type, direction }),
       }
     default:
       return {}
