@@ -1,12 +1,16 @@
+/* eslint-disable no-continue */
+/* eslint-disable no-extra-label */
+/* eslint-disable no-labels */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
+import { $styles, $tempThemeVars, $themeVars, $colorScheme, $flags } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
@@ -35,6 +39,7 @@ export default function ThemeCustomize() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const tempThemeVars = useRecoilValue($tempThemeVars)
   const colorSchemeRoot = useRecoilValue($colorScheme)
+  const setFlags = useSetRecoilState($flags)
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
   const { '--fld-wrp-m': wrpMagin, '--fld-wrp-p': wrpPadding } = themeVars
@@ -59,6 +64,11 @@ export default function ThemeCustomize() {
     '--err-bg': errBg,
     '--err-c': errC,
     '--err-sh': errSh } = themeVars
+
+  useEffect(() => {
+    setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
+    // return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
+  }, [])
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -121,37 +131,37 @@ export default function ThemeCustomize() {
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
         const commonStyles = CommonStyle(fldKeyArr[i], value)
+        console.log({ commonStyles })
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
-        const fldClasses = Object.keys(fldClassesObj)
+        // const fldClasses = Object.keys(fldClassesObj)
 
         const commonStylClassesLen = commonStylClasses.length
         for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
           const comnStylClass = commonStylClasses[indx]
 
           if (fldClassesObj.hasOwnProperty(comnStylClass)) {
-            const mainStlProperties = fldClassesObj[comnStylClass]
-            const comStlProperties = commonStyles[comnStylClass]
-            const comnStlPropertiesKey = Object.keys(comStlProperties)
+            const mainStlPropertiesObj = fldClassesObj[comnStylClass]
+            const comStlPropertiesObj = commonStyles[comnStylClass]
+            const comnStlProperties = Object.keys(comStlPropertiesObj)
+            const comnStlPropertiesLen = comnStlProperties.length
 
-            const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
-            for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
-              const comnStlProperty = comnStlPropertiesKey[popIndx]
+            for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
+              const comnStlProperty = comnStlProperties[popIndx]
 
-              if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
-                const mainStlVal = mainStlProperties[comnStlProperty]
-                const comStlVal = comStlProperties[comnStlProperty]
-                if (mainStlVal === comStlVal) {
-                  continue
-                }
-                if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
-                  const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-                  tmpThemeVar[mainStateVar] = comStlVal
-                  continue
-                }
-                if (!mainStlVal?.match(/var/gi)?.[0]) {
-                  drft.fields[fldKey].classes[fldClasses[indx]][comnStlProperty] = comStlVal
+              if (mainStlPropertiesObj.hasOwnProperty(comnStlProperty)) {
+                const mainStlVal = mainStlPropertiesObj[comnStlProperty]
+                const comStlVal = comStlPropertiesObj[comnStlProperty]
+                if (mainStlVal !== comStlVal) {
+                  if (mainStlVal?.match(/var/gi)) {
+                    const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                    if (tmpThemeVar[mainStateVar] !== comStlVal) {
+                      tmpThemeVar[mainStateVar] = comStlVal
+                    }
+                  } else {
+                    drft.fields[fldKey].classes[comnStylClass][comnStlProperty] = comStlVal
+                  }
                 }
               }
             }
