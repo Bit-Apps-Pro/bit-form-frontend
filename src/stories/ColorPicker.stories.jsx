@@ -1,4 +1,4 @@
-import ColorPicker from "./ColorPicker"
+import ColorPicker from './ColorPicker'
 
 export default {
   title: 'Example/ColorPicker',

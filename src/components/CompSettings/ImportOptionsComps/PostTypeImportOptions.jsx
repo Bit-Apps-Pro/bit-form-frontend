@@ -1,11 +1,10 @@
 /* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
+import { useRecoilValue } from 'recoil'
 import { $bits } from '../../../GlobalStates'
-import { __ } from '../../../Utils/i18nwrap'
 import { sortByField } from '../../../Utils/Helpers'
-import LoaderSm from '../../Loaders/LoaderSm'
+import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 
 export const generatePostOptions = (importOpts, lblKey, valKey) => {

@@ -5,7 +5,7 @@ import { Button } from './Button'
 export default {
   title: 'Example/Button',
   component: Button,
-  argTypes: { data: {  } },
+  argTypes: { data: { } },
 }
 
 const Template = (args) => <Button {...args} />

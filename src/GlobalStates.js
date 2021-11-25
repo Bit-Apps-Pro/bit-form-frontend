@@ -98,27 +98,27 @@ export const $highContrastThemeColors = atom({
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
-    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
-    '--gph': 0, // global primary hue
-    '--gps': 10, // global primary saturation
-    '--gpl': 20, // global primary lightness
-    '--gpa': 100, // global primary opacity
-    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
-    '--gfh': 0, // global font color hue
-    '--gfs': 10, // global fonst color sa
-    '--gfl': 20,
-    '--gfa': 100,
-    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
-    '--gbg-h': 0,
-    '--gbg-s': 10,
-    '--gbg-l': 20,
-    '--gbg-a': 100,
-    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)', // border color
+    // '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    // '--gph': 0, // global primary hue
+    // '--gps': 10, // global primary saturation
+    // '--gpl': 20, // global primary lightness
+    // '--gpa': 100, // global primary opacity
+    // '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    // '--gfh': 0, // global font color hue
+    // '--gfs': 10, // global fonst color sa
+    // '--gfl': 20,
+    // '--gfa': 100,
+    // '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    // '--gbg-h': 0,
+    // '--gbg-s': 10,
+    // '--gbg-l': 20,
+    // '--gbg-a': 100,
+    // '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)', // border color
     // '--gfbc-h': 0,
     // '--gfbc-s': 10,
     // '--gfbc-l': 20,
     // '--gfbc-a': 100,
-    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+    // '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
     // '--global-fld-bg-color': 'hsla(215, 10%, 20%, 100)', // field background color
     // '--gfbg-h': 0,
     // '--gfbg-s': 10,
@@ -198,9 +198,11 @@ export const $themeVars = atom({
     '--err-bdr-rad': '8px', // error message border radius
   },
 })
-export const $tempThemeVars = atom({
-  key: '$tempThemeVars',
-  default: {},
+export const $tempStyles = atom({
+  key: '$tempStyles',
+  default: {
+    themeVars: {},
+  },
 })
 export const $styles = atom({
   key: '$styles',
@@ -230,4 +232,20 @@ export const $reportSelector = selectorFamily({
     // eslint-disable-next-line no-param-reassign
     draft[reportID] = newReport
   })),
+})
+
+export const $themeColors = selector({
+  key: '$themeColors',
+  get: ({ get }) => {
+    const colorScheme = get($colorScheme)
+    if (colorScheme === 'light') return get($lightThemeColors)
+    if (colorScheme === 'dark') return get($darkThemeColors)
+    if (colorScheme === 'high-contrast') return get($highContrastThemeColors)
+  },
+  set: ({ set, get }, newColors) => {
+    const colorScheme = get($colorScheme)
+    if (colorScheme === 'light') set($lightThemeColors, newColors)
+    if (colorScheme === 'dark') set($darkThemeColors, newColors)
+    if (colorScheme === 'high-contrast') set($highContrastThemeColors, newColors)
+  },
 })

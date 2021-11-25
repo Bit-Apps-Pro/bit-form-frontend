@@ -3,7 +3,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $builderHookStates, $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $builderHookStates, $tempStyles, $themeVars } from '../../GlobalStates'
 import LblPlacementInlineIcn from '../../Icons/LblPlacementInlineIcn'
 import LblPlacementReverseIcn from '../../Icons/LblPlacementReverseIcn'
 import LblPlacementTopIcn from '../../Icons/LblPlacementTopIcn'
@@ -25,7 +25,9 @@ export default function LabelControlMenu() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   const [openVarPos, setOpenVarPos] = useState(false)
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const tempStyles = useRecoilValue($tempStyles)
+  const tempThemeVars = tempStyles.themeVars
+
 
   const { '--fl-fs': fldLblFs,
     '--sub-titl-fs': subTitleFs,

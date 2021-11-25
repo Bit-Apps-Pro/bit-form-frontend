@@ -1,3 +1,1 @@
-module.exports = {
-  testPathPattern: 'src/tests',
-}
+module.exports = { testPathPattern: 'src/tests' }

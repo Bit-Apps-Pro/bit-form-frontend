@@ -59,8 +59,8 @@ ReactDOM.render(
         </RendererProvider>
       </Suspense>
     </AppSettingsProvider>
-  </RecoilRoot>
-  , document.getElementById('btcd-app'),
+  </RecoilRoot>,
+  document.getElementById('btcd-app'),
 )
 
 // serviceWorker.register();

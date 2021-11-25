@@ -3,6 +3,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, NavLink, useRouteMatch } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import { useFela } from 'react-fela'
 import { $mailTemplates } from '../GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -14,7 +15,6 @@ import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Table from './Utilities/Table'
 import app from '../styles/app.style'
-import { useFela } from 'react-fela'
 import LayoutIcn from '../Icons/LayoutIcn'
 import StackIcn from '../Icons/StackIcn'
 import ut from '../styles/2.utilities'
@@ -22,7 +22,7 @@ import ut from '../styles/2.utilities'
 export default function AllEmailTemplates({ formID }) {
   const [mailTem, setMailTem] = useRecoilState($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
-  const {css } = useFela()
+  const { css } = useFela()
   const { url } = useRouteMatch()
 
   const duplicateTem = i => {

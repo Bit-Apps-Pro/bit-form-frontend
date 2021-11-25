@@ -1,12 +1,16 @@
+/* eslint-disable no-continue */
+/* eslint-disable no-extra-label */
+/* eslint-disable no-labels */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $colorScheme, $styles, $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $styles, $themeVars, $colorScheme, $flags, $tempStyles } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
@@ -33,10 +37,12 @@ export default function ThemeCustomize() {
   const { formType, formID } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const tempStyles = useRecoilValue($tempStyles)
   const colorSchemeRoot = useRecoilValue($colorScheme)
+  const setFlags = useSetRecoilState($flags)
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
+  const tempThemeVars = tempStyles.themeVars
   const { '--fld-wrp-m': wrpMagin, '--fld-wrp-p': wrpPadding } = themeVars
 
   const { '--global-primary-color': globalPrimaryColor,
@@ -70,6 +76,11 @@ export default function ThemeCustomize() {
     '--err-c': errC,
     '--err-sh': errSh,
     '--err-bdr': errB } = themeVars
+
+  useEffect(() => {
+    setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
+    // return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
+  }, [])
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
@@ -107,20 +118,6 @@ export default function ThemeCustomize() {
     }))
   }
 
-  const undoColor = (value) => {
-    if (!tempThemeVars[value]) return
-    setThemeVars(prvStyle => produce(prvStyle, drft => {
-      drft[value] = tempThemeVars[value]
-    }))
-  }
-
-  const undoHandler = (value) => {
-    if (!tempThemeVars[value]) return
-    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle[value] = tempThemeVars[value] || '0px'
-    }))
-  }
-
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
 
@@ -132,37 +129,37 @@ export default function ThemeCustomize() {
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
         const commonStyles = CommonStyle(fldKeyArr[i], value)
+        console.log({ commonStyles })
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
-        const fldClasses = Object.keys(fldClassesObj)
+        // const fldClasses = Object.keys(fldClassesObj)
 
         const commonStylClassesLen = commonStylClasses.length
         for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
           const comnStylClass = commonStylClasses[indx]
 
           if (fldClassesObj.hasOwnProperty(comnStylClass)) {
-            const mainStlProperties = fldClassesObj[comnStylClass]
-            const comStlProperties = commonStyles[comnStylClass]
-            const comnStlPropertiesKey = Object.keys(comStlProperties)
+            const mainStlPropertiesObj = fldClassesObj[comnStylClass]
+            const comStlPropertiesObj = commonStyles[comnStylClass]
+            const comnStlProperties = Object.keys(comStlPropertiesObj)
+            const comnStlPropertiesLen = comnStlProperties.length
 
-            const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
-            for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
-              const comnStlProperty = comnStlPropertiesKey[popIndx]
+            for (let popIndx = 0; popIndx < comnStlPropertiesLen; popIndx += 1) {
+              const comnStlProperty = comnStlProperties[popIndx]
 
-              if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
-                const mainStlVal = mainStlProperties[comnStlProperty]
-                const comStlVal = comStlProperties[comnStlProperty]
-                if (mainStlVal === comStlVal) {
-                  continue
-                }
-                if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
-                  const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-                  tmpThemeVar[mainStateVar] = comStlVal
-                  continue
-                }
-                if (!mainStlVal?.match(/var/gi)?.[0]) {
-                  drft.fields[fldKey].classes[fldClasses[indx]][comnStlProperty] = comStlVal
+              if (mainStlPropertiesObj.hasOwnProperty(comnStlProperty)) {
+                const mainStlVal = mainStlPropertiesObj[comnStlProperty]
+                const comStlVal = comStlPropertiesObj[comnStlProperty]
+                if (mainStlVal !== comStlVal) {
+                  if (mainStlVal?.match(/var/gi)) {
+                    const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                    if (tmpThemeVar[mainStateVar] !== comStlVal) {
+                      tmpThemeVar[mainStateVar] = comStlVal
+                    }
+                  } else {
+                    drft.fields[fldKey].classes[comnStylClass][comnStlProperty] = comStlVal
+                  }
                 }
               }
             }
@@ -218,45 +215,46 @@ export default function ThemeCustomize() {
               {tempThemeVars['--global-bg-color'] && <ResetStyle themeVar="--global-bg-color" />}
 
             </div>
-            <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} subtitle="Background color" />
+            <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
               {tempThemeVars['--global-primary-color'] && <ResetStyle themeVar="--global-primary-color" />}
             </div>
-            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
+            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
               {tempThemeVars['--global-font-color'] && <ResetStyle themeVar="--global-font-color" />}
             </div>
-            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
+            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Border Color</span>
               {tempThemeVars['--global-fld-bdr-color'] && <ResetStyle themeVar="--global-fld-bdr-color" />}
             </div>
-            <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} subtitle="Border Color" />
+            <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Field Background Color</span>
               {tempThemeVars['--global-fld-bg-color'] && <ResetStyle themeVar="--global-fld-bg-color" />}
             </div>
-            <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} subtitle="Field Background Color" />
+            <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
           </div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Font Family</span>
+            <FontPicker id="global-font-fam" />
+          </div>
+
         </div>
 
         <div className={css(cls.divider)} />
 
         <div className={css({ mr: 15 })}>
-          <div className={css(ut.flxcb, ut.mb2)}>
-            <span className={css(ut.fw500)}>Font Family</span>
-            <FontPicker />
-          </div>
 
           <div className={css(ut.flxcb, ut.mb2)}>
             <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>

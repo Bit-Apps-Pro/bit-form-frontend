@@ -3,7 +3,7 @@
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $themeVars } from '../../GlobalStates'
@@ -14,7 +14,7 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsv2hsl } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 
-export default function SimpleColorPickerMenu({ action, value }) {
+function SimpleColorPickerMenu({ action, value }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
@@ -219,6 +219,8 @@ export default function SimpleColorPickerMenu({ action, value }) {
     </div>
   )
 }
+
+export default memo(SimpleColorPickerMenu)
 
 const c = {
   preview_wrp: {

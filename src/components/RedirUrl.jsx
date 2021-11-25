@@ -13,7 +13,6 @@ import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
 
-
 function RedirUrl({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [redirectUrls, setredirectUrls] = useState(null)

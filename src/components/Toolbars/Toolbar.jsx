@@ -66,6 +66,39 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       },
     },
     {
+      name: __('Title', 'bitform'),
+      keywords: 'title',
+      icn: '',
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 20 },
+      elm: {
+        typ: 'title',
+        title: __('Title', 'bitform'),
+        subTitle: __('Sub Title', 'bitform'),
+        valid: {},
+        err: {},
+      },
+    },
+    {
+      name: __('Divider', 'bitform'),
+      keywords: 'divider',
+      icn: '',
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 8 },
+      elm: {
+        typ: 'divider',
+        err: {},
+      },
+    },
+    {
+      name: __('Image', 'bitform'),
+      keywords: 'image',
+      icn: '',
+      pos: { h: 40, w: 60, i: 'shadow_block', minH: 10 },
+      elm: {
+        typ: 'image',
+        err: {},
+      },
+    },
+    {
       name: __('Date', 'bitform'),
       keywords: 'Date',
       icn: <DateIcn w="23" />,
