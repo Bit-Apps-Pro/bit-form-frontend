@@ -47,29 +47,18 @@ export default function FieldSettings() {
     case 'select':
     case 'dropdown':
       return <SelectSettings />
-    case 'file-up':
-      return <FileUpSettings />
-    case 'ad-file-up':
-      return <AdFileUpSettings />
-    case 'recaptcha':
-      return <ReCaptchaSettigns />
-    case 'decision-box':
-      return <DecisionBoxSettings />
-    case 'html':
-      return <HtmlFieldSettings />
-    case 'button':
-      return <ButtonSettings />
-    case 'paypal':
-      return <PaypalFieldSettings />
-    case 'razorpay':
-      return <RazorpayFieldSettings />
-    case 'title':
-      return <TitleSettings />
-    case 'image':
-      return <ImageSettings />
-    case 'divider':
-      return <DividerSettings />
-    default:
-      return <></>
+    case 'file-up': return <FileUpSettings />
+    case 'ad-file-up': return <AdFileUpSettings />
+    case 'recaptcha': return <ReCaptchaSettigns />
+    case 'decision-box': return <DecisionBoxSettings />
+    case 'html': return <HtmlFieldSettings />
+    case 'button': return <ButtonSettings />
+    case 'paypal': return <PaypalFieldSettings />
+    case 'razorpay': return <RazorpayFieldSettings />
+    case 'title': return <TitleSettings />
+    case 'image': return <ImageSettings />
+    case 'divider': return <DividerSettings />
+
+    default: return <></>
   }
 }

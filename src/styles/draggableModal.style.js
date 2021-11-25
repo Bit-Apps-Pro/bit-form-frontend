@@ -10,13 +10,12 @@ const draggableModalStyle = {
     b: '1px solid var(--white-0-83)',
     bs: '0 6px 6px 0 #00000012, 0 3px 23px 0 #e8e8e8',
   },
-  titleContainer: { w: '85%' },
+  titleContainer: { w: '85%', cur: 'move', },
   title: {
     fw: 500,
     fs: 14,
     px: 3,
     dy: 'block',
-    cur: 'move',
   },
 
   button: {

@@ -5,20 +5,20 @@ import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
-export default function ShadowControl({ value, subtitle, objectPaths }) {
-  const setDraggableModal = useSetRecoilState($draggableModal)
+export default function BorderControl({ subtitle, value, objectPaths }) {
   const { css } = useFela()
+  const setDraggableModal = useSetRecoilState($draggableModal)
 
-  const colorVal = splitValueBySpaces(value)[4]
+  const [, color] = splitValueBySpaces(value)
 
   return (
     <div className={css(c.preview_wrp)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'border-style', subtitle, objectPaths })}
         type="button"
         className={css(c.pickrBtn)}
       >
-        <ColorPreview bg={colorVal} h={25} w={25} className={css(ut.mr2)} />
+        <ColorPreview bg={color} h={25} w={25} className={css(ut.mr2)} />
         <span className={css(c.clrVal)}>{value}</span>
       </button>
     </div>

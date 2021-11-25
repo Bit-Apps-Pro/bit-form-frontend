@@ -8,7 +8,7 @@ import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
+import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -60,6 +60,7 @@ function TextFieldSettings() {
   const [optionMdl, setOptionMdl] = useState(false)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -121,8 +122,10 @@ function TextFieldSettings() {
   }
 
   const setSubTitle = ({ target: { value } }) => {
-    if (value === '') delete fieldData.subtitle
-    else fieldData.subtitle = value
+    if (value === '') {
+      delete fieldData.subtitle
+      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    } else fieldData.subtitle = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -130,18 +133,23 @@ function TextFieldSettings() {
   }
 
   const hideSubTitle = ({ target: { checked } }) => {
-    if (checked) fieldData.subtitle = 'Sub Title' || fieldData.lbl || fldKey
+    if (checked) fieldData.subtitle = 'Sub Title'
     else delete fieldData.subtitle
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    // recalculate builder field height
+    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
     addToBuilderHistory(setBuilderHistory, { event: `Sub Title ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `subtitle_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const setHelperTxt = ({ target: { value } }) => {
-    if (value === '') delete fieldData.helperTxt
-    else fieldData.helperTxt = value
+    if (value === '') {
+      delete fieldData.helperTxt
+      // recalculate builder field height
+      setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
+    } else fieldData.helperTxt = value
 
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
@@ -149,18 +157,20 @@ function TextFieldSettings() {
   }
 
   const hideHelperTxt = ({ target: { checked } }) => {
-    if (checked) fieldData.helperTxt = 'Helper Text' || fieldData.lbl || fldKey
+    if (checked) fieldData.helperTxt = 'Helper Text'
     else delete fieldData.helperTxt
 
     const req = checked ? 'on' : 'off'
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
+    // recalculate builder field height
+    setBuilderHookState(olds => ({ ...olds, reCalculateFieldHeights: olds.reCalculateFieldHeights + 1 }))
     addToBuilderHistory(setBuilderHistory, { event: `Helper Text ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `helpetTxt_${req}`, state: { fields: allFields, fldKey } }, setUpdateBtn)
   }
 
   const hidePlaceholder = (e) => {
     if (e.target.checked) {
-      fieldData.ph = `${fieldData.lbl} type here...` || 'Type here...'
+      fieldData.ph = 'type here...'
     } else {
       delete fieldData.ph
     }
@@ -182,7 +192,7 @@ function TextFieldSettings() {
   }
 
   const defaultValueChecked = ({ target: { checked } }) => {
-    if (checked) fieldData.defaultValue = `${fieldData.lbl} type here...` || 'Default value type here...'
+    if (checked) fieldData.defaultValue = 'type here...'
     else delete fieldData.defaultValue
 
     const req = checked ? 'on' : 'off'

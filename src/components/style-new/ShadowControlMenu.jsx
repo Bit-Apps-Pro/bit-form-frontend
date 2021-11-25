@@ -5,7 +5,7 @@ import { $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getStyleValueFromObjectPath, unitConverterHelper } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getStyleValueFromObjectPath, splitValueBySpaces, unitConverterHelper } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()
@@ -15,7 +15,7 @@ export default function ShadowControlMenu({ objectPaths }) {
   const shadowStyle = getStyleValueFromObjectPath(object, paths.shadow, { themeVars })
 
   const extractShadowValue = () => {
-    const shadowExtracted = shadowStyle.match(/[^ s]+(?:s+([^)]*\)?))?/g)
+    const shadowExtracted = splitValueBySpaces(shadowStyle)
 
     return {
       xOffset: shadowExtracted[0],
@@ -57,7 +57,7 @@ export default function ShadowControlMenu({ objectPaths }) {
   return (
     <div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>X</span>
+        <span className={css(ut.fs12, ut.fw500)}>X</span>
         <SizeControl
           width="105px"
           value={Number(getNumFromStr(shadowValues.xOffset) || 0)}
@@ -68,7 +68,7 @@ export default function ShadowControlMenu({ objectPaths }) {
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>Y</span>
+        <span className={css(ut.fs12, ut.fw500)}>Y</span>
         <SizeControl
           width="105px"
           value={Number(getNumFromStr(shadowValues.yOffset) || 0)}
@@ -79,7 +79,7 @@ export default function ShadowControlMenu({ objectPaths }) {
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>Blur</span>
+        <span className={css(ut.fs12, ut.fw500)}>Blur</span>
         <SizeControl
           width="105px"
           value={Number(getNumFromStr(shadowValues.blur) || 0)}
@@ -90,7 +90,7 @@ export default function ShadowControlMenu({ objectPaths }) {
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>Spread</span>
+        <span className={css(ut.fs12, ut.fw500)}>Spread</span>
         <SizeControl
           width="105px"
           value={Number(getNumFromStr(shadowValues.spread) || 0)}
@@ -101,11 +101,11 @@ export default function ShadowControlMenu({ objectPaths }) {
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>Color</span>
+        <span className={css(ut.fs12, ut.fw500)}>Color</span>
         <SimpleColorPickerTooltip action={{ onChange: val => generateShadowValue('color', { value: val }) }} value={shadowValues.color} />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(ut.fs12)}>Inset</span>
+        <span className={css(ut.fs12, ut.fw500)}>Inset</span>
         <select name="" id="" value={shadowValues.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value })}>
           <option value="">outset</option>
           <option value="inset">inset</option>

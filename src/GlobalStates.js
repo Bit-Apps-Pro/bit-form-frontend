@@ -136,6 +136,10 @@ export const $themeVars = atom({
     '--lbl-wrp-p': '', // label wrapper for padding
     '--lbl-wrp-bg': '', // label wrapper for padding
     '--lbl-wrp-c': '', // label wrapper for color
+    '--lbl-wrp-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
+    '--lbl-wrp-bdr': 'solid red', // label wrapper border
+    '--lbl-wrp-bdr-width': '1px', // label wrapper border width
+    '--lbl-wrp-bdr-rad': '8px', // label wrapper border radius
 
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
@@ -145,15 +149,22 @@ export const $themeVars = atom({
     '--fld-wrp-fdir': '', // field wrapper flex direction
     '--fld-wrp-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
     '--fld-wrp-b': '10px',
-    '--fld-wrp-sh': '10px',
     '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
+    '--fld-wrp-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
+    '--fld-wrp-bdr': 'solid red', // field wrapper border
+    '--fld-wrp-bdr-width': '1px', // field wrapper border width
+    '--fld-wrp-bdr-rad': '8px', // field wrapper border radius
 
     '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
     '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
     '--fl-m': '', // field label margin
     '--fl-p': '', // field label padding
     '--fl-fs': '16px', // field label font size
+    '--fl-sh': '1em 3px 5px 0rem blue inset', // field label box shadow
+    '--fl-bdr': 'solid red', // field label border
+    '--fl-bdr-width': '1px', // field label border width
+    '--fl-bdr-rad': '8px', // field label border radius
 
     '--sub-titl-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
     '--sub-titl-c': 'hsla(201, 71%, 39%, 100)', // sub title color
@@ -161,6 +172,10 @@ export const $themeVars = atom({
     '--sub-titl-p': '5px', // subtitle padding
     '--sub-titl-al': '5px', // subtitle align
     '--sub-titl-fs': '12px', // subtitle font size
+    '--sub-titl-sh': '1em 3px 5px 0rem blue inset', // subtitle box shadow
+    '--sub-titl-bdr': 'solid red', // subtitle border
+    '--sub-titl-bdr-width': '1px', // subtitle border width
+    '--sub-titl-bdr-rad': '8px', // subtitle border radius
 
     '--hlp-txt-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
     '--hlp-txt-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
@@ -168,6 +183,10 @@ export const $themeVars = atom({
     '--hlp-txt-p': '', // hepler text padding
     '--hlp-txt-fs': '12px', // hepler text font size
     '--hlp-txt-al': '', // helper text align
+    '--hlp-txt-sh': '1em 3px 5px 0rem blue inset', // helper text box shadow
+    '--hlp-txt-bdr': 'solid red', // helper text border
+    '--hlp-txt-bdr-width': '1px', // helper text border width
+    '--hlp-txt-bdr-rad': '8px', // helper text border radius
 
     '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
@@ -213,4 +232,19 @@ export const $reportSelector = selectorFamily({
     // eslint-disable-next-line no-param-reassign
     draft[reportID] = newReport
   })),
+})
+export const $themeColors = selector({
+  key: '$themeColors',
+  get: ({ get }) => {
+    const colorScheme = get($colorScheme)
+    if (colorScheme === 'light') return get($lightThemeColors)
+    if (colorScheme === 'dark') return get($darkThemeColors)
+    if (colorScheme === 'high-contrast') return get($highContrastThemeColors)
+  },
+  set: ({ set, get }, newColors) => {
+    const colorScheme = get($colorScheme)
+    if (colorScheme === 'light') set($lightThemeColors, newColors)
+    if (colorScheme === 'dark') set($darkThemeColors, newColors)
+    if (colorScheme === 'high-contrast') set($highContrastThemeColors, newColors)
+  },
 })
