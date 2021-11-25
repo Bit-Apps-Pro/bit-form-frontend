@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { nestedObjAssign } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -247,13 +248,22 @@ export const CommonStyle = (fk, type) => {
 
 export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) || []
 
-export const getStyleValueFromObjectPath = (object, path, state) => {
-  const paths = path.split('.')
+export const getStyleStateObj = (obj, states) => states[obj]
+
+export const getStyleValueFromObjectPath = (state, path) => {
+  const paths = path?.split('.') || []
   let value = {}
-  const stateObj = state[object]
-  paths.forEach(p => {
-    value = stateObj[p]
-  })
+  for (let i = 0; i < paths.length; i += 1) {
+    value = state[paths[i]]
+  }
 
   return value
+}
+
+export const setStyleStateObj = (obj, path, value, setStates) => {
+  let setStateFunc = null
+  if (obj === 'themeVars') {
+    setStateFunc = setStates.setThemeVars
+  }
+  setStateFunc?.(preStyle => produce(preStyle, drftStyle => nestedObjAssign(drftStyle, path, value)))
 }
