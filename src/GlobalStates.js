@@ -212,3 +212,18 @@ export const $reportSelector = selectorFamily({
     draft[reportID] = newReport
   })),
 })
+export const $themeColors = selector({
+  key: '$themeColors',
+  get: ({ get }) => {
+    const colorScheme = get($colorScheme)
+    if (colorScheme === 'light') return get($lightThemeColors)
+    if (colorScheme === 'dark') return get($darkThemeColors)
+    if (colorScheme === 'high-contrast') return get($highContrastThemeColors)
+  },
+  set: ({ set, get }, newColors) => {
+    const colorScheme = get($colorScheme)
+    if (colorScheme === 'light') set($lightThemeColors, newColors)
+    if (colorScheme === 'dark') set($darkThemeColors, newColors)
+    if (colorScheme === 'high-contrast') set($highContrastThemeColors, newColors)
+  },
+})
