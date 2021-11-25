@@ -1,25 +1,25 @@
-import { Link, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
-import { useFela } from 'react-fela'
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { __ } from '../../Utils/i18nwrap'
+import { useFela } from 'react-fela'
+import { Link, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import BackIcn from '../../Icons/BackIcn'
+import BtnIcn from '../../Icons/BtnIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FieldIcn from '../../Icons/FieldIcn'
 import FormIcn from '../../Icons/FormIcn'
 import ImageIcn from '../../Icons/ImageIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
+import PaypalIcn from '../../Icons/PaypalIcn'
+import { __ } from '../../Utils/i18nwrap'
+import FieldStyleCustomize from '../style-new/FieldStyleCustomize'
+import ThemeCustomize from '../style-new/ThemeCustomize'
+import ThemeGallary from '../style-new/ThemeGallary'
+import FieldLinkBtn from './FieldLinkButton'
+import FieldSettings from './FieldSettings'
+import FieldsList from './FieldsList'
 import DropdownStyleEditors from './StyleCustomize/DropdownStyleEditors'
 import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
-import BtnIcn from '../../Icons/BtnIcn'
-import BackIcn from '../../Icons/BackIcn'
-import FieldLinkBtn from './FieldLinkButton'
-import PaypalIcn from '../../Icons/PaypalIcn'
-import ThemeGallary from '../style-new/ThemeGallary'
-import ThemeCustomize from '../style-new/ThemeCustomize'
-import FieldSettings from './FieldSettings'
-import FieldsList from './FieldsList'
-import FieldThemeCustomize from '../style-new/FieldThemeCustomize'
 
 function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
@@ -51,9 +51,9 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
             <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
             <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
-            <Route path={`${path}/field-theme-customize`}><FieldThemeCustomize /></Route>
-            {/*  change theme 
-            change size 
+            <Route path={`${path}/field-theme-customize`}><FieldStyleCustomize /></Route>
+            {/*  change theme
+            change size
             change primary color
             change font color
             */}

@@ -15,7 +15,7 @@ import SimpleColorPicker from './SimpleColorPicker'
 import { CommonStyle, getThemeColor } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
-export default function FieldThemeCustomize() {
+export default function FieldStyleCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const setStyles = useSetRecoilState($styles)
@@ -202,7 +202,7 @@ const cls = {
   },
   clrActive: {
     bd: 'var(--b-50)',
-    cr: 'var(--white-100)'
+    cr: 'var(--white-100)',
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
 }
