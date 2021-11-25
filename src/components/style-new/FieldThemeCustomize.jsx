@@ -4,114 +4,69 @@
 import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $tempThemeVars, $themeVars, $colorScheme } from '../../GlobalStates'
+import { $colorScheme, $darkThemeColors, $highContrastThemeColors, $lightThemeColors, $selectedFieldId, $styles, $tempStyles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
-import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
-import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import SingleToggle from '../Utilities/SingleToggle'
-import FieldMarginControl from './FieldMarginControl'
-import FontPicker from './FontPicker'
-import FormWrapperControl from './FormWrapperControl'
-import LabelControl from './LabelControl'
-import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
-import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import SpacingControl from './SpacingControl'
-import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import { CommonStyle, getThemeColor } from './styleHelpers'
 import ThemeControl from './ThemeControl'
-import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function FieldThemeCustomize() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const { themeVars: tempThemevars } = useRecoilValue($tempStyles)
   const colorSchemeRoot = useRecoilValue($colorScheme)
-  const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
-  const { '--fw-m': wrpMagin, '--fw-p': wrpPadding } = themeVars
-
-  const { '--global-primary-color': globalPrimaryColor,
-    '--dir': direction,
-    '--global-font-color': globalFontColor,
-    '--global-bg-color': globalBgColor,
-    '--g-bdr-rad': globalBorderRad,
-    '--global-fld-bdr-clr': globalFldBdrClr,
-    '--global-fld-bg-color': globalFldBgClr,
-    '--fld-fs': fldFs,
-    '--g-bdr-width': globalBdrWidth,
-    '--fw-bg': fwBg,
-    '--lw-bg': lwBg,
-    '--st-bg': stBg,
-    '--st-c': stC,
-    '--fl-bg': flBg,
-    '--fl-c': flc,
-    '--ht-bg': htBg,
-    '--ht-c': htC,
-    '--err-bg': errBg,
-    '--err-c': errC, '--err-sh': errSh } = themeVars
-
-  const globalBdrRadValue = getNumFromStr(globalBorderRad)
-  const globalBdrRadUnit = getStrFromStr(globalBorderRad)
-
-  const globalBdrWidthVal = getNumFromStr(globalBdrWidth)
-  const globalBdrWidthUnit = getStrFromStr(globalBdrWidth)
-
-  const fldFSValue = getNumFromStr(fldFs)
-  const fldFSUnit = getStrFromStr(fldFs)
-
+  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const darkThemeColors = useRecoilValue($darkThemeColors)
+  const lightThemeColors = useRecoilValue($lightThemeColors)
+  const highContrastThemeColors = useRecoilValue($highContrastThemeColors)
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
 
     setStyles(prvStyle => produce(prvStyle, drft => {
       const flds = prvStyle.fields
-      const fldKeyArr = Object.keys(flds)
-      const fldKeyArrLen = fldKeyArr.length
 
-      for (let i = 0; i < fldKeyArrLen; i += 1) {
-        const fldKey = fldKeyArr[i]
-        const commonStyles = CommonStyle(fldKeyArr[i], value)
-        const commonStylClasses = Object.keys(commonStyles)
+      const commonStyles = CommonStyle(selectedFieldId, value)
+      const commonStylClasses = Object.keys(commonStyles)
 
-        const fldClassesObj = flds[fldKey].classes
-        const fldClasses = Object.keys(fldClassesObj)
+      const fldClassesObj = flds[selectedFieldId].classes
+      const fldClasses = Object.keys(fldClassesObj)
+      console.log(commonStyles, flds, fldClassesObj)
 
-        const commonStylClassesLen = commonStylClasses.length
-        for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
-          const comnStylClass = commonStylClasses[indx]
+      const commonStylClassesLen = commonStylClasses.length
+      for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
+        const comnStylClass = commonStylClasses[indx]
 
-          if (fldClassesObj.hasOwnProperty(comnStylClass)) {
-            const mainStlProperties = fldClassesObj[comnStylClass]
-            const comStlProperties = commonStyles[comnStylClass]
-            const comnStlPropertiesKey = Object.keys(comStlProperties)
+        if (fldClassesObj.hasOwnProperty(comnStylClass)) {
+          const mainStlProperties = fldClassesObj[comnStylClass]
+          const comStlProperties = commonStyles[comnStylClass]
+          const comnStlPropertiesKey = Object.keys(comStlProperties)
 
-            const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
-            for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
-              const comnStlProperty = comnStlPropertiesKey[popIndx]
+          const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
+          for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
+            const comnStlProperty = comnStlPropertiesKey[popIndx]
 
-              if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
-                const mainStlVal = mainStlProperties[comnStlProperty]
-                const comStlVal = comStlProperties[comnStlProperty]
-                if (mainStlVal === comStlVal) {
-                  continue
-                }
-                if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
-                  const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-                  tmpThemeVar[mainStateVar] = comStlVal
-                  continue
-                }
-                if (!mainStlVal?.match(/var/gi)?.[0]) {
-                  drft.fields[fldKey].classes[fldClasses[indx]][comnStlProperty] = comStlVal
-                }
+            if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
+              const mainStlVal = mainStlProperties[comnStlProperty]
+              const comStlVal = comStlProperties[comnStlProperty]
+              if (mainStlVal === comStlVal) {
+                continue
+              }
+              if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
+                const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
+                tmpThemeVar[mainStateVar] = comStlVal
+                continue
+              }
+              if (!mainStlVal?.match(/var/gi)?.[0]) {
+                drft.fields[selectedFieldId].classes[fldClasses[indx]][comnStlProperty] = comStlVal
               }
             }
           }
@@ -122,11 +77,17 @@ export default function FieldThemeCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
-  const openHandler = (value) => {
-    setActiveAccordion(value)
-  }
-
   const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+
+  const handChange = ({ target: { checked } }) => {
+    if (checked) {
+      setThemeVars(prvThemevar => produce(prvThemevar, drft => {
+        drft['--global-font-color'] = tempThemevars['--global-font-color']
+      }))
+    } else {
+      console.log(checked)
+    }
+  }
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -139,7 +100,7 @@ export default function FieldThemeCustomize() {
         </Link>
         <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
       </span>
-      <h4 className={css(cls.title)}>Field Style Customization</h4>
+      <h4 className={css(cls.title)}>Theme Customize</h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
         <h4 className={css(cls.subTitle)}>Color Scheme</h4>
@@ -163,22 +124,23 @@ export default function FieldThemeCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              {tempThemeVars['--global-primary-color'] && <ResetStyle themeVar="--global-primary-color" />}
+              {(tempThemevars['--global-primary-color'] !== getThemeColor(colorScheme, '--global-primary-color', darkThemeColors, lightThemeColors, highContrastThemeColors))
+                && <ResetStyle themeVar="--global-primary-color" />}
             </div>
-            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
+            <SimpleColorPicker value={getThemeColor(colorScheme, '--global-primary-color', darkThemeColors, lightThemeColors, highContrastThemeColors)} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
-              {tempThemeVars['--global-font-color'] && <ResetStyle themeVar="--global-font-color" />}
+              <span><input type="checkbox" title="Default Color" onChange={handChange} name="" id="" /></span>
+              {(tempThemevars['--global-font-color'] !== getThemeColor(colorScheme, '--global-font-color', darkThemeColors, lightThemeColors, highContrastThemeColors)) && <ResetStyle themeVar="--global-font-color" />}
             </div>
-            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} />
+            <SimpleColorPicker value={getThemeColor(colorScheme, '--global-font-color', darkThemeColors, lightThemeColors, highContrastThemeColors)} action={{ type: 'global-font-color' }} />
           </div>
 
         </div>
 
         <div className={css(cls.divider)} />
-
 
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Theme</span>
@@ -196,15 +158,15 @@ export default function FieldThemeCustomize() {
           </select>
         </div>
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
 
-const MenuItem = ({ label, onClick, name }) => {
-  const { css } = useFela()
-  return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
-}
+// const MenuItem = ({ label, onClick, name }) => {
+//   const { css } = useFela()
+//   return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
+// }
 
 const cls = {
   title: { mt: 5, mb: 2 },
@@ -243,33 +205,4 @@ const cls = {
     cr: 'var(--white-100)'
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
-}
-
-const fldWrapperObj = {
-  object: 'themeVars',
-  paths: { margin: '--fw-m', padding: '--fw-p' },
-}
-const lWrapperObj = {
-  object: 'themeVars',
-  paths: { margin: '--lw-m', padding: '--lw-p' },
-}
-const flSpacingObj = {
-  object: 'themeVars',
-  paths: { margin: '--fl-m', padding: '--fl-p' },
-}
-const stSpacingObj = {
-  object: 'themeVars',
-  paths: { margin: '--st-m', padding: '--st-p' },
-}
-const htSpacingObj = {
-  object: 'themeVars',
-  paths: { margin: '--ht-m', padding: '--ht-p' },
-}
-const errMsgSpacingObj = {
-  object: 'themeVars',
-  paths: { margin: '--err-m', padding: '--err-p' }
-}
-const errStylePathObj = {
-  object: 'themeVars',
-  paths: { shadow: '--err-sh' },
 }

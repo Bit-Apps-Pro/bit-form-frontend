@@ -182,7 +182,7 @@ export const $themeVars = atom({
 export const $tempStyles = atom({
   key: '$tempStyles',
   default: {
-    themeVars: {}
+    themeVars: {},
   },
 })
 export const $styles = atom({
