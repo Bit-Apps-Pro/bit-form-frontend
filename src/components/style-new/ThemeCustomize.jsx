@@ -10,15 +10,15 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $themeVars, $colorScheme, $flags } from '../../GlobalStates'
+import { $styles, $themeVars, $colorScheme, $flags, $tempStyles } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
-import UndoIcon from '../../Icons/UndoIcon'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
+import BorderControl from './BorderControl'
 import FieldMarginControl from './FieldMarginControl'
 import FontPicker from './FontPicker'
 import FormWrapperControl from './FormWrapperControl'
@@ -55,16 +55,27 @@ export default function ThemeCustomize() {
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
     '--fld-wrp-bg': fwBg,
+    '--fld-wrp-sh': fwSh,
+    '--fld-wrp-bdr': fwBdr,
     '--lbl-wrp-bg': lwBg,
+    '--lbl-wrp-sh': lwSh,
+    '--lbl-wrp-bdr': lwBdr,
     '--sub-titl-bg': stBg,
     '--sub-titl-c': stC,
+    '--sub-titl-sh': stSh,
+    '--sub-titl-bdr': stBdr,
     '--fl-bg': flBg,
     '--fl-c': flc,
+    '--fl-sh': flSh,
+    '--fl-bdr': flBdr,
     '--hlp-txt-bg': htBg,
     '--hlp-txt-c': htC,
+    '--hlp-txt-sh': htSh,
+    '--hlp-txt-bdr': htBdr,
     '--err-bg': errBg,
     '--err-c': errC,
-    '--err-sh': errSh } = themeVars
+    '--err-sh': errSh,
+    '--err-bdr': errB } = themeVars
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -104,20 +115,6 @@ export default function ThemeCustomize() {
     const convertvalue = unitConverterHelper(unit, value, fldFSUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft['--fld-fs'] = `${convertvalue}${unit || fldFSUnit}`
-    }))
-  }
-
-  const undoColor = (value) => {
-    if (!tempThemeVars[value]) return
-    setThemeVars(prvStyle => produce(prvStyle, drft => {
-      drft[value] = tempThemeVars[value]
-    }))
-  }
-
-  const undoHandler = (value) => {
-    if (!tempThemeVars[value]) return
-    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
-      drftStyle[value] = tempThemeVars[value] || '0px'
     }))
   }
 
@@ -356,6 +353,18 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
             </div>
+            <ThemeStylePropertyBlock label="Shadow">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--fld-wrp-sh'] && <ResetStyle themeVar="--fld-wrp-sh" />}
+                <ShadowControl subtitle="Field Container Shadow" value={fwSh} objectPaths={fwStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--fld-wrp-bdr'] && <ResetStyle themeVar={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']} />}
+                <BorderControl subtitle="Field Container Border" value={fwBdr} objectPaths={fwStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
@@ -375,6 +384,18 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} />
             </div>
+            <ThemeStylePropertyBlock label="Shadow">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--lbl-wrp-sh'] && <ResetStyle themeVar="--lbl-wrp-sh" />}
+                <ShadowControl subtitle="Label & Subtitle Container Shadow" value={lwSh} objectPaths={lwStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--lbl-wrp-bdr'] && <ResetStyle themeVar={['--lbl-wrp-bdr', '--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']} />}
+                <BorderControl subtitle="Label & Subtitle Container Border" value={lwBdr} objectPaths={lwStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
@@ -399,6 +420,18 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={flSpacingObj} />
             </div>
+            <ThemeStylePropertyBlock label="Shadow">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--fl-sh'] && <ResetStyle themeVar="--fl-sh" />}
+                <ShadowControl subtitle="Label Shadow" value={flSh} objectPaths={flStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--fl-bdr'] && <ResetStyle themeVar={['--fl-bdr', '--fl-bdr-width', '--fl-bdr-rad']} />}
+                <BorderControl subtitle="Label Border" value={flBdr} objectPaths={flStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
@@ -423,29 +456,20 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
             </div>
+            <ThemeStylePropertyBlock label="Shadow">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--sub-titl-sh'] && <ResetStyle themeVar="--sub-titl-sh" />}
+                <ShadowControl subtitle="Subtitle Shadow" value={stSh} objectPaths={stStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--sub-titl-bdr'] && <ResetStyle themeVar={['--sub-titl-bdr', '--sub-titl-bdr-width', '--sub-titl-bdr-rad']} />}
+                <BorderControl subtitle="Subtitle Border" value={stBdr} objectPaths={stStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
-        <hr className={css(ut.divider)} />
-        <SimpleAccordion
-          title={__('Error Message', 'bitform')}
-          className={css(cls.con)}
-          disable={activeAccordion !== 4}
-          onClick={() => openHandler(4)}
-        >
-          <ThemeStylePropertyBlock label="Shadow">
-            <div className={css(ut.flxc)}>
-              {
-                tempThemeVars['--err-sh'] && (
-                  <button onClick={() => undoHandler('--err-sh')} className={css(cls.btn, ut.mr1)} type="button">
-                    <UndoIcon size="20" />
-                  </button>
-                )
-              }
-              <ShadowControl value={errSh} objectPaths={errStylePathObj} />
-            </div>
-          </ThemeStylePropertyBlock>
-        </SimpleAccordion>
-        <hr className={css(ut.divider)} />
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
@@ -468,6 +492,18 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} />
             </div>
+            <ThemeStylePropertyBlock label="Shadow">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--hlp-txt-sh'] && <ResetStyle themeVar="--hlp-txt-sh" />}
+                <ShadowControl subtitle="Helper Text Shadow" value={htSh} objectPaths={htStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--hlp-txt-bdr'] && <ResetStyle themeVar={['--hlp-txt-bdr', '--hlp-txt-bdr-width', '--hlp-txt-bdr-rad']} />}
+                <BorderControl subtitle="Helper Text Border" value={htBdr} objectPaths={htStylePathObj} />
+              </div>
+            </ThemeStylePropertyBlock>
           </div>
         </SimpleAccordion>
 
@@ -492,18 +528,24 @@ export default function ThemeCustomize() {
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
             </div>
-            <ThemeStylePropertyBlock label="Shadow" className={css(ut.mt2)}>
+            <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--err-sh'] && <ResetStyle themeVar="--err-sh" />}
                 <ShadowControl subtitle="Error Message Shadow" value={errSh} objectPaths={errStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
-          </div>
-        </SimpleAccordion>
+            <ThemeStylePropertyBlock label="Border">
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--err-bdr'] && <ResetStyle themeVar={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} />}
+                <BorderControl subtitle="Error Message Border" value={errB} objectPaths={errStylePathObj} />
+              </div >
+            </ThemeStylePropertyBlock >
+          </div >
+        </SimpleAccordion >
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 
@@ -562,9 +604,29 @@ const stSpacingObj = {
   object: 'themeVars',
   paths: { margin: '--sub-titl-m', padding: '--sub-titl-p' },
 }
+const fwStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--fld-wrp-sh', border: '--fld-wrp-bdr', borderWidth: '--fld-wrp-bdr-width', borderRadius: '--fld-wrp-bdr-rad' },
+}
+const lwStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--lbl-wrp-sh', border: '--lbl-wrp-bdr', borderWidth: '--lbl-wrp-bdr-width', borderRadius: '--lbl-wrp-bdr-rad' },
+}
+const flStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--fl-sh', border: '--fl-bdr', borderWidth: '--fl-bdr-width', borderRadius: '--fl-bdr-rad' },
+}
+const stStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--sub-titl-sh', border: '--sub-titl-bdr', borderWidth: '--sub-titl-bdr-width', borderRadius: '--sub-titl-bdr-rad' },
+}
+const htStylePathObj = {
+  object: 'themeVars',
+  paths: { shadow: '--hlp-txt-sh', border: '--hlp-txt-bdr', borderWidth: '--hlp-txt-bdr-width', borderRadius: '--hlp-txt-bdr-rad' },
+}
 const errStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--err-sh' },
+  paths: { shadow: '--err-sh', border: '--err-bdr', borderWidth: '--err-bdr-width', borderRadius: '--err-bdr-rad' },
 }
 const htSpacingObj = {
   object: 'themeVars',

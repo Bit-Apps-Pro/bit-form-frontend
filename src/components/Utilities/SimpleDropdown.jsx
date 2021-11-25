@@ -6,10 +6,11 @@ import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useCom
 
 export default function SimpleDropdown({ options, value, onChange = () => { }, placeholder = 'Select One', w = 150, h = 25 }) {
   let defaultVal = null
+  const selected = options.find(opt => opt.value === value)
   if (Number.isInteger(value)) {
     defaultVal = options[value]
   } else {
-    defaultVal = value
+    defaultVal = selected || {}
   }
   const { css } = useFela()
   const [menu, setMenu] = useState({ open: false, height: 0 })
@@ -20,13 +21,14 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
     if (Number.isInteger(value)) {
       setSelectedItem(options[value])
     } else {
-      setSelectedItem(value)
+      const selected = options.find(opt => opt.value === value)
+      setSelectedItem(selected || {})
     }
   }, [value])
 
-  useEffect(() => {
-    onChange(selectedItem)
-  }, [selectedItem])
+  // useEffect(() => {
+  //   onChange(selectedItem)
+  // }, [selectedItem])
 
   useEffect(() => {
     if (!isComponentVisible) {
@@ -45,11 +47,12 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
     }
   }
 
-  // const handleOptionClick = (e, i) => {
-  //   e.stopPropagation()
-  //   setSelectedItem(options[i])
-  //   setMenu({ height: 0, open: false })
-  // }
+  const handleOptionClick = (e, i) => {
+    e.stopPropagation()
+    setSelectedItem(options[i])
+    if (onChange) onChange(options[i].value)
+    setMenu({ height: 0, open: false })
+  }
 
   const handleDropdownClick = (e) => {
     if (e.code === 'Escape') {
@@ -109,8 +112,8 @@ export default function SimpleDropdown({ options, value, onChange = () => { }, p
                 <button
                   type="button"
                   tabIndex={menu.open ? 0 : -1}
-                  // onClick={(e) => handleOptionClick(e, i)}
-                  // onKeyPress={(e) => handleOptionClick(e, i)}
+                  onClick={(e) => handleOptionClick(e, i)}
+                  onKeyPress={(e) => handleOptionClick(e, i)}
                   className={css(simppleDpdStyle.opt_btn)}
                 >
                   <i className={css(simppleDpdStyle.opt_icn)}>{itm.icn}</i>
