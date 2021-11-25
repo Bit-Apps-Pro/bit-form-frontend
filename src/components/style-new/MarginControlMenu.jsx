@@ -1,13 +1,15 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $tempStyles, $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function MarginControlMenu() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { '--fld-m': fidMargin } = themeVars
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const tempStyle = useRecoilValue($tempStyles)
+  const tempThemeVars = tempStyle.themeVars
+
 
   const fieldMarginHandler = (v) => {
     setThemeVars(preStyle => produce(preStyle, drftStyle => {

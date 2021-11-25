@@ -1,12 +1,13 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $tempThemeVars, $themeVars } from '../../GlobalStates'
+import { $tempStyles, $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempThemeVars = useRecoilValue($tempThemeVars)
+  const tempStyles = useRecoilValue($tempStyles)
+  const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
 
   const marginHandler = (v) => {

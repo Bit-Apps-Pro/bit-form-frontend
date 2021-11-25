@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import merge from 'deepmerge-alt'
+import produce from 'immer'
 import { createRef, memo, useCallback, useEffect, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
@@ -14,7 +15,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempThemeVars, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -73,8 +74,8 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const setThemeVars = useSetRecoilState($themeVars)
-  const setTempThemeVars = useSetRecoilState($tempThemeVars)
+  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const setTempStyles = useSetRecoilState($tempStyles)
   const setStyle = useSetRecoilState($styles)
 
   // eslint-disable-next-line no-console
@@ -97,12 +98,17 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       const parseStyle = JSON.parse(fetchedBuilderHelperStates || '{}')
       setStyle(parseStyle.style)
       setBreakpointSize(parseStyle.breakpointSize)
-      setTempThemeVars(parseStyle?.themeVars)
+      setTempStyles(preStyle => produce(preStyle, drft => {
+        drft.themeVars = parseStyle?.themeVars
+      }))
       setThemeVars(parseStyle.themeVars)
 
       // declare new theme exist , no need old theme functions
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
     } else {
+      setTempStyles(preStyle => produce(preStyle, drft => {
+        drft.themeVars = themeVars
+      }))
       setOldExistingStyle()
     }
   }, [fetchedBuilderHelperStates])
