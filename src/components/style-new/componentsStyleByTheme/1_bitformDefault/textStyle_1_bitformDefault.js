@@ -29,7 +29,7 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       'border-color': 'rgba(199, 212, 221, 1)!important',
       'border-radius': 'var(--g-bdr-rad)!important',
       'border-style': 'solid!important',
-      'border-width': '1px 1px 1px 1px!important',
+      'border-width': 'var(--g-bdr-width)!important',
       'font-size': 'var(--fld-fs)!important',
       color: 'rgba(0, 0, 0, 1)!important',
       padding: '10px 8px 10px 8px!important',
