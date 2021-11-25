@@ -71,8 +71,6 @@ export default function ThemeCustomize() {
     '--err-sh': errSh,
     '--err-bdr': errB } = themeVars
 
-  console.log({ htSh }, themeVars)
-
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
   const globalBdrRadUnit = getStrFromStr(globalBorderRad)
 

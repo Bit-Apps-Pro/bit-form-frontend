@@ -1,24 +1,23 @@
-import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $themeVars } from '../../../../GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { getStyleValueFromObjectPath, splitValueBySpaces } from '../../../style-new/styleHelpers'
+import { getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
-export default function BorderStyle({ objectPaths }) {
+export default function BorderControlMenu({ objectPaths }) {
   const { css } = useFela()
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
 
   const { object, paths } = objectPaths
 
-  const borderStyle = getStyleValueFromObjectPath(object, paths.border, { themeVars })
-  const borderWidth = getStyleValueFromObjectPath(object, paths.borderWidth, { themeVars })
-  const borderRadius = getStyleValueFromObjectPath(object, paths.borderRadius, { themeVars })
+  const borderStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.border)
+  const borderWidth = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.borderWidth)
+  const borderRadius = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.borderRadius)
 
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)
@@ -36,15 +35,11 @@ export default function BorderStyle({ objectPaths }) {
       return `${shVal || ''}`
     }).join(' ')
 
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle[paths.border] = newBorderStyleValue
-    }))
+    setStyleStateObj(object, paths.border, newBorderStyleValue, { setThemeVars })
   }
 
-  const onSizeChange = (name, val) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle[name] = val
-    }))
+  const onSizeChange = (pathName, val) => {
+    setStyleStateObj(object, pathName, val, { setThemeVars })
   }
 
   const options = [

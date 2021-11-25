@@ -1,30 +1,22 @@
-import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getStyleValueFromObjectPath, splitValueBySpaces, unitConverterHelper } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces, unitConverterHelper } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { object, paths } = objectPaths
 
-  const shadowStyle = getStyleValueFromObjectPath(object, paths.shadow, { themeVars })
+  const shadowStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.shadow, { themeVars })
 
   const extractShadowValue = () => {
-    const shadowExtracted = splitValueBySpaces(shadowStyle)
+    const [xOffset, yOffset, blur, spread, color, inset] = splitValueBySpaces(shadowStyle)
 
-    return {
-      xOffset: shadowExtracted[0],
-      yOffset: shadowExtracted[1],
-      blur: shadowExtracted[2],
-      spread: shadowExtracted[3],
-      color: shadowExtracted[4],
-      inset: shadowExtracted[5],
-    }
+    return { xOffset, yOffset, blur, spread, color, inset }
   }
 
   const shadowValues = extractShadowValue()
@@ -37,11 +29,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       return `${shVal || ''}`
     }).join(' ')
 
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle[paths.shadow] = newShadowStyle
-    }))
-
-    console.log({ newShadowStyle })
+    setStyleStateObj(object, paths.shadow, newShadowStyle, { setThemeVars })
   }
 
   const unitHandler = (name, unit, value, oldVal) => {
@@ -51,8 +39,6 @@ export default function ShadowControlMenu({ objectPaths }) {
       generateShadowValue(name, { value: convertedVal, unit })
     }
   }
-
-  console.log(shadowValues)
 
   return (
     <div>

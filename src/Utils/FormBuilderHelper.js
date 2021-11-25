@@ -397,7 +397,8 @@ export const fitLayoutItems = (lays) => produce(lays, draftLayout => {
   })
 })
 
-export const nestedObjAssign = (obj, path, value, createNonExist = true) => {
+export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
+  const path = paths.split('.')
   if (path.length === 1) {
     if (createNonExist) {
       if (value instanceof Object) {
