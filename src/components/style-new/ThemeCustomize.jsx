@@ -548,7 +548,7 @@ export default function ThemeCustomize() {
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempErrC !== errC && <ResetStyle themeVar="--global-bg-color" stateName="themeVars" />}
+              {tempErrC !== errC && <ResetStyle themeVar="--err-c" stateName="themeVars" />}
               <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
