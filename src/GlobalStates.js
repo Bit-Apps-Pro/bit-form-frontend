@@ -156,15 +156,15 @@ export const $themeVars = atom({
     '--fld-wrp-bdr-width': '1px', // field wrapper border width
     '--fld-wrp-bdr-rad': '8px', // field wrapper border radius
 
-    '--fl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
-    '--fl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
-    '--fl-m': '', // field label margin
-    '--fl-p': '', // field label padding
-    '--fl-fs': '16px', // field label font size
-    '--fl-sh': '1em 3px 5px 0rem blue inset', // field label box shadow
-    '--fl-bdr': 'solid red', // field label border
-    '--fl-bdr-width': '1px', // field label border width
-    '--fl-bdr-rad': '8px', // field label border radius
+    '--fld-lbl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
+    '--fld-lbl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
+    '--fld-lbl-m': '', // field label margin
+    '--fld-lbl-p': '', // field label padding
+    '--fld-lbl-fs': '16px', // field label font size
+    '--fld-lbl-sh': '1em 3px 5px 0rem blue inset', // field label box shadow
+    '--fld-lbl-bdr': 'solid red', // field label border
+    '--fld-lbl-bdr-width': '1px', // field label border width
+    '--fld-lbl-bdr-rad': '8px', // field label border radius
 
     '--sub-titl-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
     '--sub-titl-c': 'hsla(201, 71%, 39%, 100)', // sub title color
