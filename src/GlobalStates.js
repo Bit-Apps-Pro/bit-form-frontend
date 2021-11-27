@@ -54,7 +54,7 @@ export const $lightThemeColors = atom({
 export const $darkThemeColors = atom({
   key: '$darkThemeColors',
   default: {
-    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
+    '--global-primary-color': 'hsla(215, 10%, 20%, 100)', // primary color
     '--gph': 0, // global primary hue
     '--gps': 10, // global primary saturation
     '--gpl': 20, // global primary lightness

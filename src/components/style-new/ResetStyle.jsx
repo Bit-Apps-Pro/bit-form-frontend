@@ -12,16 +12,19 @@ export default function ResetStyle({ themeVar, stateName }) {
 
   const resetValue = val => {
     if (stateName === 'themeVars') {
+      console.log(stateName, themeVars[val])
       if (!themeVars[val]) return
       setThemeVar(prvStyle => produce(prvStyle, drft => { drft[val] = themeVars[val] }))
     }
     if (stateName === 'themeColors') {
+      console.log(stateName, themeVars[val])
       if (!themeColors[val]) return
       setThemeColor(prvStyle => produce(prvStyle, drft => { drft[val] = themeColors[val] }))
     }
   }
 
   const reset = (value) => {
+    console.log('reset value', value, stateName)
     if (Array.isArray(value)) value.forEach(v => resetValue(v))
     else resetValue(value)
   }

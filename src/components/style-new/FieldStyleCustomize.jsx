@@ -81,7 +81,10 @@ export default function FieldStyleCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
-  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+  const handlecolorScheme = ({ target: { name } }) => {
+    setColorScheme(name)
+    console.log(themeColors, name)
+  }
 
   const handChange = ({ target: { checked } }) => {
     if (checked) {
