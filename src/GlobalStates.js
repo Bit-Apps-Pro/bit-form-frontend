@@ -143,7 +143,7 @@ export const $themeVars = atom({
 
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
-    '--fld-fs': '12px', // field font size
+    '--fld-fs': '1rem', // field font size
 
     '--fld-wrp-dis': '', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
@@ -168,9 +168,9 @@ export const $themeVars = atom({
 
     '--sub-titl-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
     '--sub-titl-c': 'hsla(201, 71%, 39%, 100)', // sub title color
-    '--sub-titl-m': '5px', // subtitle margin
-    '--sub-titl-p': '5px', // subtitle padding
-    '--sub-titl-al': '5px', // subtitle align
+    '--sub-titl-m': '', // subtitle margin
+    '--sub-titl-p': '', // subtitle padding
+    '--sub-titl-al': '', // subtitle align
     '--sub-titl-fs': '12px', // subtitle font size
     '--sub-titl-sh': '1em 3px 5px 0rem blue inset', // subtitle box shadow
     '--sub-titl-bdr': 'solid red', // subtitle border
