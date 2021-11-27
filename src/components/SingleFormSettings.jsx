@@ -544,23 +544,21 @@ export default function SingleFormSettings() {
         action={(e) => setAccordingEnable(e, 'empty_submission', 'Empty Submission')}
         checked={additionalSetting?.enabled?.empty_submission}
       >
-        <>
-          <div className="mb-2 ml-2">
-            <b>Error message</b>
-            <br />
-            <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'empty_submission')} value={additionalSetting.settings?.empty_submission?.message} />
-          </div>
-        </>
+        <div className="mb-2 ml-2">
+          <b>Error message</b>
+          <br />
+          <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'empty_submission')} value={additionalSetting.settings?.empty_submission?.message} />
+        </div>
 
       </Accordions>
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
           <div className="flx">
+            <span className="mr-2 flx">
+              <FocusIcn size="20" />
+            </span>
             <b>
-              <span className="mr-2">
-                <FocusIcn size="20" />
-              </span>
               {__('Validate form input on focus lost', 'bitform')}
             </b>
           </div>
