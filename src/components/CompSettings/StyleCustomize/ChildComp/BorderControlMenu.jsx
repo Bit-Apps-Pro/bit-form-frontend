@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $themeVars } from '../../../../GlobalStates'
+import { $themeVars, $styles } from '../../../../GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
@@ -12,13 +12,14 @@ export default function BorderControlMenu({ objectPaths }) {
   const { css } = useFela()
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [styles, setStyles] = useRecoilState($styles)
 
   const { object, paths } = objectPaths
 
-  const borderStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.border)
-  const borderWidth = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.borderWidth)
-  const borderRadius = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars }), paths.borderRadius)
-
+  const borderStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.border)
+  const borderWidth = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.borderWidth)
+  const borderRadius = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.borderRadius)
+  console.log(borderRadius, borderStyle, getStyleStateObj(object, { themeVars, styles }), paths.border, 'abcdef')
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)
 
@@ -35,23 +36,29 @@ export default function BorderControlMenu({ objectPaths }) {
       return `${shVal || ''}`
     }).join(' ')
 
-    setStyleStateObj(object, paths.border, newBorderStyleValue, { setThemeVars })
+    setStyleStateObj(object, paths.border, newBorderStyleValue, { setThemeVars, setStyles })
   }
 
   const onSizeChange = (pathName, val) => {
-    setStyleStateObj(object, pathName, val, { setThemeVars })
+    setStyleStateObj(object, pathName, val, { setThemeVars, setStyles })
   }
 
   const options = [
     { icn: <ChevronDownIcn size={12} />, label: 'Solid', value: 'solid' },
     { icn: <ChevronDownIcn size={12} />, label: 'Dashed', value: 'dashed' },
     { icn: <ChevronDownIcn size={12} />, label: 'Dotted', value: 'dotted' },
+    { icn: <ChevronDownIcn size={12} />, label: 'Double', value: 'double' },
+    { icn: <ChevronDownIcn size={12} />, label: 'Groove', value: 'groove' },
+    { icn: <ChevronDownIcn size={12} />, label: 'Ridge', value: 'ridge' },
+    { icn: <ChevronDownIcn size={12} />, label: 'Inset', value: 'inset' },
+    { icn: <ChevronDownIcn size={12} />, label: 'Outset', value: 'outset' },
+    { icn: <ChevronDownIcn size={12} />, label: 'None', value: 'none' },
   ]
 
   return (
     <>
       <div className={css(ut.flxcb, ut.mb2)}>
-        <span className={css(borderStyle.title, ut.fs12, ut.fw500)}>Type</span>
+        <span className={css(ut.fs12, ut.fw500)}>Type</span>
         <SimpleDropdown options={options} value={borderStyleValues.type} onChange={val => generateBorderStyleValue('type', val)} w={130} h={30} />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
