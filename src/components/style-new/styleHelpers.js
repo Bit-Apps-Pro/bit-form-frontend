@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { nestedObjAssign } from '../../Utils/FormBuilderHelper'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -251,10 +251,10 @@ export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) |
 export const getStyleStateObj = (obj, states) => states[obj]
 
 export const getStyleValueFromObjectPath = (state, path) => {
-  const paths = path?.split('.') || []
-  let value = {}
+  const paths = path?.split('->') || []
+  let value = state
   for (let i = 0; i < paths.length; i += 1) {
-    value = state[paths[i]]
+    value = value[paths[i]]
   }
 
   return value
@@ -264,8 +264,12 @@ export const setStyleStateObj = (obj, path, value, setStates) => {
   let setStateFunc = null
   if (obj === 'themeVars') {
     setStateFunc = setStates.setThemeVars
+  } else if (obj === 'styles') {
+    setStateFunc = setStates.setStyles
   }
-  setStateFunc?.(preStyle => produce(preStyle, drftStyle => nestedObjAssign(drftStyle, path, value)))
+  setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
+    assignNestedObj(drftStyle, path, value)
+  }))
 }
 
 export const getThemeColor = (colorScheme, colorVar, darkThemeColors, lightThemeColors, highContrastThemeColors) => {
