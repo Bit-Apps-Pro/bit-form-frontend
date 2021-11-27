@@ -4,12 +4,12 @@ import { nestedObjAssign } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
-export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths }) => {
+export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths, id }) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
   const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - width)
   const y = e.target.getBoundingClientRect().top - offset.top
-  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths })
+  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths, id })
 }
 
 export const json2CssStr = (className, jsonValue) => {
@@ -125,7 +125,7 @@ function getAbsoluteSize(el) {
 */
 export function highlightElm(selector, selectType = 'element padding margin') {
   const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
-  elms.forEach(elm => {
+  elms?.forEach(elm => {
     const marginDiv = document.createElement('div')
     const paddingDiv = document.createElement('div')
     const elementDiv = document.createElement('div')
@@ -180,6 +180,7 @@ export function highlightElm(selector, selectType = 'element padding margin') {
       || (height - paddingTop - paddingBottom) === height) {
       paddingDiv.style.background = 'transparent'
     }
+
     marginDiv.appendChild(elementDiv)
     elementDiv.appendChild(paddingDiv)
     // console.log('', marginDiv)
