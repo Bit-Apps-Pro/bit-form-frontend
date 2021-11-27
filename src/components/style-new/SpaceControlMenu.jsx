@@ -1,29 +1,37 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $tempStyles, $themeVars } from '../../GlobalStates'
+import { $styles, $tempStyles, $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
+import { getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [styles, setStyles] = useRecoilState($styles)
   const tempStyles = useRecoilValue($tempStyles)
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
 
+  const stateObj = getStyleStateObj(object, { themeVars, styles })
+
   const marginHandler = (v) => {
-    if (object === 'themeVars') {
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[paths.margin] = `${v}`
-      }))
-    }
+    setStyleStateObj(object, paths.margin, v, { setThemeVars, setStyles })
+
+    // if (object === 'themeVars') {
+    //   setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    //     drftStyle[paths.margin] = `${v}`
+    //   }))
+    // }
   }
 
   const paddingHandler = (v) => {
-    if (object === 'themeVars') {
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[paths.padding] = `${v}`
-      }))
-    }
+    setStyleStateObj(object, paths.padding, v, { setThemeVars, setStyles })
+
+    // if (object === 'themeVars') {
+    //   setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    //     drftStyle[paths.padding] = `${v}`
+    //   }))
+    // }
   }
 
   const undoHandler = (v) => {
@@ -36,8 +44,8 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   }
 
   const isValue = (v) => (object === 'themeVars') && tempThemeVars[v]
-  const getMargin = () => (object === 'themeVars') && themeVars[paths.margin]
-  const getPadding = () => (object === 'themeVars') && themeVars[paths.padding]
+  const getMargin = () => getStyleValueFromObjectPath(stateObj, paths.margin)
+  const getPadding = () => getStyleValueFromObjectPath(stateObj, paths.padding)
 
   return (
     <>

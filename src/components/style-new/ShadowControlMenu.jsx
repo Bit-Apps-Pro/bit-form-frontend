@@ -23,9 +23,8 @@ export default function ShadowControlMenu({ objectPaths }) {
   const shadowValues = extractShadowValue()
 
   const newShadowVal = (name, val, unit) => {
-    console.log('test', name, val, unit)
     if (name === 'color') {
-      return val || 'white'
+      return val || 'hsla(0, 0%, 0%, 100)'
     }
     if (name === 'inset') {
       return val || ''

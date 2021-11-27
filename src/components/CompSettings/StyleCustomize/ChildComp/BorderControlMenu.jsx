@@ -16,10 +16,12 @@ export default function BorderControlMenu({ objectPaths }) {
 
   const { object, paths } = objectPaths
 
-  const borderStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.border)
-  const borderWidth = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.borderWidth)
-  const borderRadius = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.borderRadius)
-  console.log(borderRadius, borderStyle, getStyleStateObj(object, { themeVars, styles }), paths.border, 'abcdef')
+  const stateObj = getStyleStateObj(object, { themeVars, styles })
+
+  const borderStyle = getStyleValueFromObjectPath(stateObj, paths.border)
+  const borderWidth = getStyleValueFromObjectPath(stateObj, paths.borderWidth)
+  const borderRadius = getStyleValueFromObjectPath(stateObj, paths.borderRadius)
+
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)
 
@@ -65,8 +67,12 @@ export default function BorderControlMenu({ objectPaths }) {
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
         <SimpleColorPickerTooltip action={{ onChange: val => generateBorderStyleValue('color', val) }} value={borderStyleValues.color} />
       </div>
-      <SpaceControl value={borderWidth} className={css(ut.mb2)} onChange={val => onSizeChange(paths.borderWidth, val)} title="Width" unitOption={['px', 'em', 'rem']} />
-      <SpaceControl value={borderRadius} className={css(ut.mb2)} onChange={val => onSizeChange(paths.borderRadius, val)} title="Radius" unitOption={['px', 'em', 'rem']} />
+      {paths.borderWidth && (
+        <SpaceControl value={borderWidth} className={css(ut.mb2)} onChange={val => onSizeChange(paths.borderWidth, val)} title="Width" unitOption={['px', 'em', 'rem']} />
+      )}
+      {paths.borderRadius && (
+        <SpaceControl value={borderRadius} className={css(ut.mb2)} onChange={val => onSizeChange(paths.borderRadius, val)} title="Radius" unitOption={['px', 'em', 'rem', '%']} />
+      )}
     </>
   )
 }
