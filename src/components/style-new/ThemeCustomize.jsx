@@ -429,7 +429,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Field container', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 1}
           onClick={() => openHandler(1)}
           actionComponent={<HighlightElm selector="[data-dev-fld-wrp]" />}
@@ -461,7 +461,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Label & Subtitle Container', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 2}
           onClick={() => openHandler(2)}
         >
@@ -492,7 +492,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Label', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 3}
           onClick={() => openHandler(3)}
         >
@@ -528,7 +528,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Subtitle', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 4}
           onClick={() => openHandler(4)}
         >
@@ -564,7 +564,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 5}
           onClick={() => openHandler(5)}
         >
@@ -600,7 +600,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Error Message', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 6}
           onClick={() => openHandler(6)}
         >
@@ -676,7 +676,14 @@ const cls = {
     bd: 'var(--b-50)',
     cr: 'var(--white-100)',
   },
-  con: { py: 10, bb: '0.5px solid var(--white-0-83)', w: '95%' },
+  accordion: {
+    py: 10,
+    bb: '0.5px solid var(--white-0-83)',
+    w: '95%',
+    '& .title, .toggle-icn': {
+      curp: 1
+    }
+  },
 }
 
 const fldWrapperObj = {
