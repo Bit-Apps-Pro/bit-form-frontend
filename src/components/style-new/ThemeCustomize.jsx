@@ -513,7 +513,7 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--fld-lbl-sh'] && <ResetStyle themeVar="--fld-lbl-sh" />}
+                {tempThemeVars['--fld-lbl-sh'] && <ResetStyle themeVar="--fld-lbl-sh" stateName="themeVars" />}
                 <ShadowControl subtitle="Label Shadow" value={flSh} objectPaths={flStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
