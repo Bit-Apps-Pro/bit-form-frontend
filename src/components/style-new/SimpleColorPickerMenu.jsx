@@ -5,8 +5,8 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
-import { $themeVars } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $themeVars, $themeColors } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
@@ -21,15 +21,17 @@ function SimpleColorPickerMenu({ action, value }) {
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   // const [colorVar, setColorVar] = useState()
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
-  const { '--global-bg-color': globalBgColor,
-    '--global-fld-bdr-clr': globalFldBdrClr,
-    '--global-fld-bg-color': globalFldBgColor,
-    '--global-font-color': globalFontColor,
-    '--global-primary-color': globalPrimaryColor } = themeVars
+
+  const { '--global-bg-color': themeBgColor,
+    '--global-fld-bdr-clr': themeFldBdrClr,
+    '--global-fld-bg-color': themeFldBgColor,
+    '--global-font-color': themeFontColor,
+    '--global-primary-color': themePrimaryColor } = themeColors
 
   useEffect(() => {
     if (isColorVar) return
@@ -59,7 +61,7 @@ function SimpleColorPickerMenu({ action, value }) {
 
     switch (action.type) {
       case 'global-primary-color':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-primary-color'] = hsla
           drft['--gph'] = h
           drft['--gps'] = `${s}%`
@@ -68,7 +70,7 @@ function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-font-color':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-font-color'] = hsla
           drft['--gfh'] = Math.round(_h)
           drft['--gfs'] = `${s}%`
@@ -77,7 +79,7 @@ function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-bg-color':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-bg-color'] = hsla
           drft['--gbg-h'] = Math.round(_h)
           drft['--gbg-s'] = `${s}%`
@@ -86,7 +88,7 @@ function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-fld-bdr-color':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = hsla
           // drft['--gfbc-h'] = Math.round(_h)
           // drft['--gfbc-s'] = `${s}%`
@@ -95,7 +97,7 @@ function SimpleColorPickerMenu({ action, value }) {
         }))
         break
       case 'global-fld-bg-color':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bg-color'] = hsla
           // drft['--gfbg-h'] = Math.round(_h)
           // drft['--gfbg-s'] = `${s}%`
@@ -126,7 +128,7 @@ function SimpleColorPickerMenu({ action, value }) {
 
     switch (action.type) {
       case 'global-fld-bdr-color':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = colorVar
         }))
         break
@@ -190,23 +192,23 @@ function SimpleColorPickerMenu({ action, value }) {
       <Grow open={controller === 'Var'}>
         <div className={css(c.varClr)}>
           <button className={`${css(c.clrItem)} ${css(color === '--global-bg-color' ? c.active : null)}`} type="button" onClick={() => setColorState('--global-bg-color')}>
-            <ColorPreview bg={globalBgColor} className={css(ut.mr2)} />
+            <ColorPreview bg={themeBgColor} className={css(ut.mr2)} />
             <span>Background Color</span>
           </button>
           <button className={css(c.clrItem, color === '--global-primary-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-primary-color')}>
-            <ColorPreview bg={globalPrimaryColor} className={css(ut.mr2)} />
+            <ColorPreview bg={themePrimaryColor} className={css(ut.mr2)} />
             <span>Background Primary Color</span>
           </button>
           <button className={css(c.clrItem, color === '--global-font-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-font-color')}>
-            <ColorPreview bg={globalFontColor} className={css(ut.mr2)} />
+            <ColorPreview bg={themeFontColor} className={css(ut.mr2)} />
             <span>Font Color</span>
           </button>
           <button className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bdr-clr')}>
-            <ColorPreview bg={globalFldBdrClr} className={css(ut.mr2)} />
+            <ColorPreview bg={themeFldBdrClr} className={css(ut.mr2)} />
             <span>Field Border Color</span>
           </button>
           <button className={css(c.clrItem, color === '--global-fld-bg-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-fld-bg-color')}>
-            <ColorPreview bg={globalFldBgColor} className={css(ut.mr2)} />
+            <ColorPreview bg={themeFldBgColor} className={css(ut.mr2)} />
             <span>Field Background Color</span>
           </button>
         </div>

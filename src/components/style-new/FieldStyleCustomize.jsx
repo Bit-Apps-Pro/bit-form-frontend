@@ -6,13 +6,13 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $colorScheme, $darkThemeColors, $highContrastThemeColors, $lightThemeColors, $selectedFieldId, $styles, $tempStyles, $themeVars } from '../../GlobalStates'
+import { $colorScheme, $selectedFieldId, $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
-import { CommonStyle, getThemeColor } from './styleHelpers'
+import { CommonStyle } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function FieldStyleCustomize() {
@@ -24,9 +24,13 @@ export default function FieldStyleCustomize() {
   const colorSchemeRoot = useRecoilValue($colorScheme)
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
   const selectedFieldId = useRecoilValue($selectedFieldId)
-  const darkThemeColors = useRecoilValue($darkThemeColors)
-  const lightThemeColors = useRecoilValue($lightThemeColors)
-  const highContrastThemeColors = useRecoilValue($highContrastThemeColors)
+  const themeColors = useRecoilValue($themeColors)
+
+  const { '--global-font-color': themeFontColor,
+    '--global-primary-color': themePrimaryColor } = themeColors
+
+  const { '--global-font-color': tempFontColor,
+    '--global-primary-color': tempPrimaryColor } = tempThemevars
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
@@ -124,20 +128,19 @@ export default function FieldStyleCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
-              {(tempThemevars['--global-primary-color'] !== getThemeColor(colorScheme, '--global-primary-color', darkThemeColors, lightThemeColors, highContrastThemeColors))
+              {(tempPrimaryColor !== themePrimaryColor)
                 && <ResetStyle themeVar="--global-primary-color" />}
             </div>
-            <SimpleColorPicker value={getThemeColor(colorScheme, '--global-primary-color', darkThemeColors, lightThemeColors, highContrastThemeColors)} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
+            <SimpleColorPicker value={themePrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
           <div className={css(ut.flxcb, ut.mt2)}>
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
               <span><input type="checkbox" title="Default Color" onChange={handChange} name="" id="" /></span>
-              {(tempThemevars['--global-font-color'] !== getThemeColor(colorScheme, '--global-font-color', darkThemeColors, lightThemeColors, highContrastThemeColors)) && <ResetStyle themeVar="--global-font-color" />}
+              {(tempFontColor !== themeFontColor) && <ResetStyle themeVar="--global-font-color" />}
             </div>
-            <SimpleColorPicker value={getThemeColor(colorScheme, '--global-font-color', darkThemeColors, lightThemeColors, highContrastThemeColors)} action={{ type: 'global-font-color' }} />
+            <SimpleColorPicker value={themeFontColor} action={{ type: 'global-font-color' }} />
           </div>
-
         </div>
 
         <div className={css(cls.divider)} />
