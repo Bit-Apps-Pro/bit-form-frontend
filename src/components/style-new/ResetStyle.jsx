@@ -2,7 +2,8 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $tempStyles, $themeVars } from '../../GlobalStates'
-import UndoIcon from '../../Icons/UndoIcon'
+import StyleResetIcn from '../../Icons/StyleResetIcn'
+import sc from '../../styles/commonStyleEditorStyle'
 
 export default function ResetStyle({ themeVar }) {
   const tempStyles = useRecoilValue($tempStyles)
@@ -13,6 +14,7 @@ export default function ResetStyle({ themeVar }) {
   const resetValue = val => {
     if (!tempThemeVars[val]) return
     setThemeVars(prvStyle => produce(prvStyle, drft => {
+      // eslint-disable-next-line no-param-reassign
       drft[val] = tempThemeVars[val]
     }))
   }
@@ -22,19 +24,8 @@ export default function ResetStyle({ themeVar }) {
     else resetValue(value)
   }
   return (
-    <button onClick={() => reset(themeVar)} className={css(cls.btn)} type="button">
-      <UndoIcon size="20" />
+    <button onClick={() => reset(themeVar)} className={css(sc.resetBtn)} type="button">
+      <StyleResetIcn size="40" />
     </button>
   )
-}
-
-const cls = {
-  btn: {
-    b: 'none',
-    oe: 'none',
-    brs: 8,
-    bc: 'var(--white-0-95)',
-    cur: 'pointer',
-    mr: 5,
-  },
 }
