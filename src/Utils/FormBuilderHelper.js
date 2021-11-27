@@ -397,7 +397,8 @@ export const fitLayoutItems = (lays) => produce(lays, draftLayout => {
   })
 })
 
-export const nestedObjAssign = (obj, path, value, createNonExist = true) => {
+export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
+  const path = paths?.split?.('->') || []
   if (path.length === 1) {
     if (createNonExist) {
       if (value instanceof Object) {
@@ -417,6 +418,19 @@ export const nestedObjAssign = (obj, path, value, createNonExist = true) => {
   }
 
   return nestedObjAssign(obj[path[0]], path.slice(1), value)
+}
+
+export const assignNestedObj = (obj, keyPath, value) => {
+  const path = keyPath?.split?.('->') || []
+  const lastKeyIndex = path.length - 1
+  for (let i = 0; i < lastKeyIndex; i += 1) {
+    const key = path[i]
+    if (!(key in obj)) {
+      obj[key] = {}
+    }
+    obj = obj[key]
+  }
+  obj[path[lastKeyIndex]] = value
 }
 
 export const propertyValueSumY = (propertyValue = '') => {

@@ -8,6 +8,7 @@ import { showDraggableModal } from './styleHelpers'
 export default function SimpleColorPicker({ subtitle, action, value, id }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  console.log({ draggableModal })
   return (
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
@@ -33,6 +34,7 @@ const c = {
     brs: 10,
     p: 3,
     flx: 'center-between',
+    ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
   clearBtn: {
     brs: '50%',

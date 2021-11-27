@@ -13,14 +13,14 @@ import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 
-const BorderStyle = lazy(() => import('./BorderStyle'))
+const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
 const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
 const RenderComponent = ({ component, action, value, objectPaths }) => {
   switch (component) {
-    case 'border-style': return <BorderStyle objectPaths={objectPaths} />
+    case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />

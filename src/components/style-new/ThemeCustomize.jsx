@@ -13,6 +13,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $styles, $themeVars, $colorScheme, $flags, $tempStyles, $themeColors } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import sc from '../../styles/commonStyleEditorStyle'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
@@ -22,6 +23,7 @@ import BorderControl from './BorderControl'
 import FieldMarginControl from './FieldMarginControl'
 import FontPicker from './FontPicker'
 import FormWrapperControl from './FormWrapperControl'
+import HighlightElm from './HighlightElm'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
@@ -61,10 +63,10 @@ export default function ThemeCustomize() {
     '--sub-titl-c': stC,
     '--sub-titl-sh': stSh,
     '--sub-titl-bdr': stBdr,
-    '--fl-bg': flBg,
-    '--fl-c': flc,
-    '--fl-sh': flSh,
-    '--fl-bdr': flBdr,
+    '--fld-lbl-bg': flBg,
+    '--fld-lbl-c': flc,
+    '--fld-lbl-sh': flSh,
+    '--fld-lbl-bdr': flBdr,
     '--hlp-txt-bg': htBg,
     '--hlp-txt-c': htC,
     '--hlp-txt-sh': htSh,
@@ -114,7 +116,7 @@ export default function ThemeCustomize() {
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
-    // return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
+    return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
 
   const globalBdrRadValue = getNumFromStr(globalBorderRad)
@@ -156,7 +158,6 @@ export default function ThemeCustomize() {
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
         const commonStyles = CommonStyle(fldKeyArr[i], value)
-        console.log({ commonStyles })
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
@@ -224,6 +225,7 @@ export default function ThemeCustomize() {
           <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
           <button onClick={handlecolorScheme} name="high-contrast" data-active={colorScheme === 'high-contrast'} className={css(cls.menuItem, colorScheme === 'high-contrast' && cls.clrActive)} type="button">High Contrast</button>
         </div>
+
         <div className={css(cls.divider)} />
 
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
@@ -277,16 +279,78 @@ export default function ThemeCustomize() {
             <FontPicker id="global-font-fam" />
           </div>
 
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Border Radius</span>
+            {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" />}
+            <SizeControl
+              min={0}
+              max={20}
+              inputHandler={borderRadHandler}
+              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+              value={globalBdrRadValue}
+              unit={globalBdrRadUnit}
+              width="110px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
+
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Border width</span>
+            {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" />}
+            <SizeControl
+              min={0}
+              max={20}
+              inputHandler={borderWidthHandler}
+              sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+              value={globalBdrWidthVal}
+              unit={globalBdrWidthUnit}
+              width="110px"
+              options={['px', 'em', 'rem']}
+            />
+          </div>
+
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Field Font Size</span>
+            <div className={css(ut.flxc)}>
+              {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" />}
+              <SizeControl
+                inputHandler={fldFsSizeHandler}
+                sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+                value={fldFSValue}
+                unit={fldFSUnit}
+                width="110px"
+                options={['px', 'em', 'rem']}
+              />
+            </div>
+          </div>
+
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Size</span>
+            <select onChange={setSizes} className={css(sc.select)}>
+              <option value="small-2">Small-2</option>
+              <option value="small-1">Small-1</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="large-1">Large-1</option>
+            </select>
+          </div>
+
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
+            <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
+          </div>
+
         </div>
 
         <div className={css(cls.divider)} />
 
-        <div className={css({ mr: 15 })}>
+        <div className={css(ut.flxcb)}>
+          <span className={css(ut.fw500)}>Theme</span>
+          <ThemeControl />
+        </div>
 
-          <div className={css(ut.flxcb, ut.mb2)}>
-            <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
-            <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
-          </div>
+        <div className={css({ mr: 15 })}>
 
           <div className={css(ut.flxcb, ut.mb2)}>
             <span className={css(ut.fw500)}>Label Alignment</span>
@@ -363,12 +427,15 @@ export default function ThemeCustomize() {
             <option value="large-1">Large-1</option>
           </select>
         </div>
+        <h4 className={css(cls.subTitle)}>More Customizations</h4>
+        <div className={css(cls.divider)} />
 
         <SimpleAccordion
           title={__('Field container', 'bitform')}
           className={css(cls.con)}
           disable={activeAccordion !== 1}
           onClick={() => openHandler(1)}
+          actionComponent={<HighlightElm selector="[data-dev-fld-wrp]" />}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -577,7 +644,7 @@ export default function ThemeCustomize() {
 }
 
 const cls = {
-  title: { mt: 5, mb: 2 },
+  title: { mt: 5, mb: 2, fs: 18 },
   breadcumbLink: { fs: 11, flxi: 'center', mr: 3, ':focus': { bs: 'none' } },
   l1: { cr: 'var(--white-0-61)', ':hover': { textDecoration: 'underline !important' } },
   l2: { cr: 'var(--white-0-21)' },
@@ -597,7 +664,7 @@ const cls = {
   pnt: { cur: 'not-allowed' },
   menuItem: {
     ws: 'nowrap',
-    fs: 14,
+    fs: 12,
     fw: 500,
     b: 'none',
     bd: 'transparent',
@@ -625,7 +692,7 @@ const lWrapperObj = {
 }
 const flSpacingObj = {
   object: 'themeVars',
-  paths: { margin: '--fl-m', padding: '--fl-p' },
+  paths: { margin: '--fld-lbl-m', padding: '--fld-lbl-p' },
 }
 const stSpacingObj = {
   object: 'themeVars',
@@ -641,7 +708,7 @@ const lwStylePathObj = {
 }
 const flStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--fl-sh', border: '--fl-bdr', borderWidth: '--fl-bdr-width', borderRadius: '--fl-bdr-rad' },
+  paths: { shadow: '--fld-lbl-sh', border: '--fld-lbl-bdr', borderWidth: '--fld-lbl-bdr-width', borderRadius: '--fld-lbl-bdr-rad' },
 }
 const stStylePathObj = {
   object: 'themeVars',

@@ -72,5 +72,6 @@ module.exports = {
     'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
     'no-use-before-define': 'off',
     allowShortCircuit: 0,
+    'react/function-component-definition': 0,
   },
 }

@@ -1,14 +1,15 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
-export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths }) => {
+export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths, id }) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
   const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - width)
   const y = e.target.getBoundingClientRect().top - offset.top
-  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths })
+  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths, id })
 }
 
 export const json2CssStr = (className, jsonValue) => {
@@ -124,7 +125,7 @@ function getAbsoluteSize(el) {
 */
 export function highlightElm(selector, selectType = 'element padding margin') {
   const elms = document.getElementById('bit-grid-layout')?.contentWindow.document.querySelectorAll(selector)
-  elms.forEach(elm => {
+  elms?.forEach(elm => {
     const marginDiv = document.createElement('div')
     const paddingDiv = document.createElement('div')
     const elementDiv = document.createElement('div')
@@ -179,6 +180,7 @@ export function highlightElm(selector, selectType = 'element padding margin') {
       || (height - paddingTop - paddingBottom) === height) {
       paddingDiv.style.background = 'transparent'
     }
+
     marginDiv.appendChild(elementDiv)
     elementDiv.appendChild(paddingDiv)
     // console.log('', marginDiv)
@@ -247,15 +249,28 @@ export const CommonStyle = (fk, type) => {
 
 export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) || []
 
-export const getStyleValueFromObjectPath = (object, path, state) => {
-  const paths = path.split('.')
-  let value = {}
-  const stateObj = state[object]
-  paths.forEach(p => {
-    value = stateObj[p]
-  })
+export const getStyleStateObj = (obj, states) => states[obj]
+
+export const getStyleValueFromObjectPath = (state, path) => {
+  const paths = path?.split('->') || []
+  let value = state
+  for (let i = 0; i < paths.length; i += 1) {
+    value = value[paths[i]]
+  }
 
   return value
+}
+
+export const setStyleStateObj = (obj, path, value, setStates) => {
+  let setStateFunc = null
+  if (obj === 'themeVars') {
+    setStateFunc = setStates.setThemeVars
+  } else if (obj === 'styles') {
+    setStateFunc = setStates.setStyles
+  }
+  setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
+    assignNestedObj(drftStyle, path, value)
+  }))
 }
 
 export const getThemeColor = (colorScheme, colorVar, darkThemeColors, lightThemeColors, highContrastThemeColors) => {

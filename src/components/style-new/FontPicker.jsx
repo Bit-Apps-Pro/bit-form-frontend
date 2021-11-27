@@ -13,8 +13,7 @@ export default function FontPicker({ id }) {
         onClick={e => showDraggableModal(e, setDraggableModal, { component: 'font', id })}
         type="button"
       >
-        <div />
-        <span className={css(c.clrVal)}>Montseterrat</span>
+        Montseterrat
       </button>
     </div>
   )
@@ -29,6 +28,9 @@ const c = {
     p: 3,
     flx: 'center-between',
     h: 30,
+    fw: 500,
+    curp: 1,
+    ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
   btn: { b: 'none' },
   clrVal: {

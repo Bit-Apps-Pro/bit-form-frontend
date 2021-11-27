@@ -2,7 +2,8 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
-import UndoIcon from '../../Icons/UndoIcon'
+import StyleResetIcn from '../../Icons/StyleResetIcn'
+import sc from '../../styles/commonStyleEditorStyle'
 
 export default function ResetStyle({ themeVar, stateName }) {
   const { themeColors, themeVars } = useRecoilValue($tempStyles)
@@ -12,12 +13,10 @@ export default function ResetStyle({ themeVar, stateName }) {
 
   const resetValue = val => {
     if (stateName === 'themeVars') {
-      console.log(stateName, themeVars[val])
       if (!themeVars[val]) return
       setThemeVar(prvStyle => produce(prvStyle, drft => { drft[val] = themeVars[val] }))
     }
     if (stateName === 'themeColors') {
-      console.log(stateName, themeVars[val])
       if (!themeColors[val]) return
       setThemeColor(prvStyle => produce(prvStyle, drft => { drft[val] = themeColors[val] }))
     }
@@ -29,19 +28,8 @@ export default function ResetStyle({ themeVar, stateName }) {
     else resetValue(value)
   }
   return (
-    <button onClick={() => reset(themeVar)} className={css(cls.btn)} type="button">
-      <UndoIcon size="20" />
+    <button onClick={() => reset(themeVar)} className={css(sc.resetBtn)} type="button">
+      <StyleResetIcn size="40" />
     </button>
   )
-}
-
-const cls = {
-  btn: {
-    b: 'none',
-    oe: 'none',
-    brs: 8,
-    bc: 'var(--white-0-95)',
-    cur: 'pointer',
-    mr: 5,
-  },
 }

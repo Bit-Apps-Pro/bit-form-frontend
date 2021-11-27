@@ -13,7 +13,19 @@ import SingleToggle from '../../../Utilities/SingleToggle'
 
 export default function SimpleAccordion({ className,
   title,
-  toggleName, children, open = false, onOpen = () => { }, switching, tip, tipProps, toggleAction, toggleChecked, isPro, disable, onClick }) {
+  toggleName,
+  children,
+  open = false,
+  onOpen = () => { },
+  switching,
+  tip,
+  tipProps,
+  toggleAction,
+  toggleChecked,
+  isPro,
+  disable,
+  actionComponent,
+  onClick }) {
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
@@ -88,6 +100,7 @@ export default function SimpleAccordion({ className,
               {switching && (
                 <SingleToggle className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked} />
               )}
+              {actionComponent && actionComponent}
             </div>
             <ChevronDownIcn className="toggle-icn" size="20" rotate={!!tgl} />
           </div>

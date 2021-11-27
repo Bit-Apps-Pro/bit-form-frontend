@@ -29,7 +29,7 @@ export default function LabelControlMenu() {
   const tempThemeVars = tempStyles.themeVars
 
 
-  const { '--fl-fs': fldLblFs,
+  const { '--fld-lbl-fs': fldLblFs,
     '--sub-titl-fs': subTitleFs,
     '--hlp-txt-fs': heplrTxtFs,
     '--lbl-wrp-width': lblWidth,
@@ -149,7 +149,7 @@ export default function LabelControlMenu() {
 
   const fontSizeHandler = ({ value, unit }) => {
     setThemeVars(preStyle => produce(preStyle, drftStyle => {
-      drftStyle['--fl-fs'] = `${value}${unit}`
+      drftStyle['--fld-lbl-fs'] = `${value}${unit}`
     }))
   }
 
@@ -197,7 +197,7 @@ export default function LabelControlMenu() {
     <div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12)}>Label Font Size</span>
-        <button type="button" disabled={!tempThemeVars['--fl-fs']} onClick={() => undoHandler('--fl-fs')}>
+        <button type="button" disabled={!tempThemeVars['--fld-lbl-fs']} onClick={() => undoHandler('--fld-lbl-fs')}>
           <UndoIcon size="18" />
         </button>
         <SizeControl
@@ -205,7 +205,7 @@ export default function LabelControlMenu() {
           value={Number(fldLblFsVal || 0)}
           unit={fldLblFsUnit}
           inputHandler={fontSizeHandler}
-          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--fl-fs')}
+          sizeHandler={({ unitKey, unitValue }) => unitHandler(unitKey, unitValue, '--fld-lbl-fs')}
           options={['px', 'em', 'rem']}
         />
       </div>
