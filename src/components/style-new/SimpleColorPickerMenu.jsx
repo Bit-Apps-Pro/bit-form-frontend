@@ -5,8 +5,8 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $themeVars, $themeColors } from '../../GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $themeColors, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
@@ -58,6 +58,7 @@ function SimpleColorPickerMenu({ action, value }) {
     const a = color.a || 100
 
     const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`
+    console.log(action.type)
 
     switch (action.type) {
       case 'global-primary-color':

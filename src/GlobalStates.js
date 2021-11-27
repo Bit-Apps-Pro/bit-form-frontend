@@ -134,7 +134,7 @@ export const $themeVars = atom({
     '--lbl-wrp-width': '', // label wrapper  width
     '--lbl-wrp-m': '', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
-    '--lbl-wrp-bg': '', // label wrapper for padding
+    '--lbl-wrp-bg': 'hsla(215, 10%, 20%, 100)', // label wrapper for padding
     '--lbl-wrp-c': '', // label wrapper for color
     '--lbl-wrp-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
     '--lbl-wrp-bdr': 'solid red', // label wrapper border
