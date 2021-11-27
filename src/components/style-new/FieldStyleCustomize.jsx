@@ -81,7 +81,10 @@ export default function FieldStyleCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
-  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+  const handlecolorScheme = ({ target: { name } }) => {
+    setColorScheme(name)
+    console.log(themeColors, name)
+  }
 
   const handChange = ({ target: { checked } }) => {
     if (checked) {
@@ -129,7 +132,7 @@ export default function FieldStyleCustomize() {
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Primary Color</span>
               {(tempPrimaryColor !== themePrimaryColor)
-                && <ResetStyle themeVar="--global-primary-color" />}
+                && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
             </div>
             <SimpleColorPicker value={themePrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
           </div>
@@ -137,7 +140,7 @@ export default function FieldStyleCustomize() {
             <div className={css(ut.flxcb)}>
               <span className={css(ut.fw500)}>Font Color</span>
               <span><input type="checkbox" title="Default Color" onChange={handChange} name="" id="" /></span>
-              {(tempFontColor !== themeFontColor) && <ResetStyle themeVar="--global-font-color" />}
+              {(tempFontColor !== themeFontColor) && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
             </div>
             <SimpleColorPicker value={themeFontColor} action={{ type: 'global-font-color' }} />
           </div>
