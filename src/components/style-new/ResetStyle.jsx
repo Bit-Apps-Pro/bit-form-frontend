@@ -1,9 +1,9 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import sc from '../../styles/commonStyleEditorStyle'
+import { $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 
 export default function ResetStyle({ themeVar, stateName }) {
   const { themeColors, themeVars } = useRecoilValue($tempStyles)
@@ -23,7 +23,6 @@ export default function ResetStyle({ themeVar, stateName }) {
   }
 
   const reset = (value) => {
-    console.log('reset value', value, stateName)
     if (Array.isArray(value)) value.forEach(v => resetValue(v))
     else resetValue(value)
   }

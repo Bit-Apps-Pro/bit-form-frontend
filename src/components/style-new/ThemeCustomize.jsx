@@ -94,10 +94,10 @@ export default function ThemeCustomize() {
     '--lbl-wrp-bg': tempLblWrpBg,
     '--lbl-wrp-sh': tempLblWrpSh,
     '--lbl-wrp-bdr': tempLblWrpBdr,
-    '--fl-bg': tempFlBg,
-    '--fl-c': tempFlC,
-    '--fl-sh': tempFlSh,
-    '--fl-bdr': tempFlBdr,
+    '--fld-lbl-bg': tempFlBg,
+    '--fld-lbl-c': tempFlC,
+    '--fld-lbl-sh': tempFlSh,
+    '--fld-lbl-bdr': tempFlBdr,
     '--sub-titl-bg': tempSubTitleBg,
     '--sub-titl-c': tempSubTitlC,
     '--sub-titl-sh': tempSubTitlSh,
@@ -109,10 +109,7 @@ export default function ThemeCustomize() {
     '--err-bg': tempErrBg,
     '--err-c': tempErrC,
     '--err-sh': tempErrSh,
-    '--err-bdr': tempErrBdr
-
-
-  } = tempThemeVars
+    '--err-bdr': tempErrBdr } = tempThemeVars
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -371,6 +368,8 @@ export default function ThemeCustomize() {
           </div>
         </div>
 
+        <h4 className={css(cls.subTitle)}>More Customizations</h4>
+        <div className={css(cls.divider)} />
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Border Radius</span>
           {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" stateName="themeColors" />}
@@ -427,12 +426,10 @@ export default function ThemeCustomize() {
             <option value="large-1">Large-1</option>
           </select>
         </div>
-        <h4 className={css(cls.subTitle)}>More Customizations</h4>
-        <div className={css(cls.divider)} />
 
         <SimpleAccordion
           title={__('Field container', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 1}
           onClick={() => openHandler(1)}
           actionComponent={<HighlightElm selector="[data-dev-fld-wrp]" />}
@@ -464,7 +461,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Label & Subtitle Container', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 2}
           onClick={() => openHandler(2)}
         >
@@ -495,19 +492,19 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Label', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 3}
           onClick={() => openHandler(3)}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempFlBg !== flBg && <ResetStyle themeVar="--fl-bg" stateName="themeVars" />}
+              {tempThemeVars['--fld-lbl-bg'] && <ResetStyle themeVar="--fld-lbl-bg" />}
               <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempFlC !== flc && <ResetStyle themeVar="--fl-c" stateName="themeVars" />}
+              {tempThemeVars['--fld-lbl-c'] && <ResetStyle themeVar="--fld-lbl-c" />}
               <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -516,13 +513,13 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempFlSh !== flSh && <ResetStyle themeVar="--fl-sh" stateName="themeVars" />}
+                {tempThemeVars['--fld-lbl-sh'] && <ResetStyle themeVar="--fld-lbl-sh" stateName="themeVars" />}
                 <ShadowControl subtitle="Label Shadow" value={flSh} objectPaths={flStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempFlBdr !== flBdr && <ResetStyle themeVar={['--fl-bdr', '--fl-bdr-width', '--fl-bdr-rad']} stateName="themeVars" />}
+                {tempThemeVars['--fld-lbl-bdr'] && <ResetStyle themeVar={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']} />}
                 <BorderControl subtitle="Label Border" value={flBdr} objectPaths={flStylePathObj} />
               </div>
             </ThemeStylePropertyBlock>
@@ -531,7 +528,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Subtitle', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 4}
           onClick={() => openHandler(4)}
         >
@@ -567,7 +564,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Helper Text', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 5}
           onClick={() => openHandler(5)}
         >
@@ -603,7 +600,7 @@ export default function ThemeCustomize() {
 
         <SimpleAccordion
           title={__('Error Message', 'bitform')}
-          className={css(cls.con)}
+          className={css(cls.accordion)}
           disable={activeAccordion !== 6}
           onClick={() => openHandler(6)}
         >
@@ -679,7 +676,14 @@ const cls = {
     bd: 'var(--b-50)',
     cr: 'var(--white-100)',
   },
-  con: { py: 10, bb: '0.5px solid var(--white-0-83)', w: '95%' },
+  accordion: {
+    py: 10,
+    bb: '0.5px solid var(--white-0-83)',
+    w: '95%',
+    '& .title, .toggle-icn': {
+      curp: 1
+    }
+  },
 }
 
 const fldWrapperObj = {
