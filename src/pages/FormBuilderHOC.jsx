@@ -15,7 +15,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/Toolbars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -77,6 +77,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const setTempStyles = useSetRecoilState($tempStyles)
   const setStyle = useSetRecoilState($styles)
+  const themeColors = useRecoilValue($themeColors)
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -108,6 +109,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
     } else {
       setTempStyles(preStyle => produce(preStyle, drft => {
         drft.themeVars = themeVars
+        drft.themeColors = themeColors
       }))
       setOldExistingStyle()
     }
