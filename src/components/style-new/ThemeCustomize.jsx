@@ -566,12 +566,12 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempHlpTxtBg !== htBg && <ResetStyle themeVar="--hlp-txt-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" id="hlp-txt-bg" />
+              <SimpleColorPicker value={htBg} action={{ type: 'hlp-txt-bg' }} subtitle="Background Color" id="hlp-txt-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempHlpTxtC !== htC && <ResetStyle themeVar="--hlp-txt-c" stateName="themeVars" />}
-              <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" id="hlp-txt-c" />
+              <SimpleColorPicker value={htC} action={{ type: 'hlp-txt-c' }} subtitle="Text Color" id="hlp-txt-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
