@@ -1,24 +1,21 @@
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import { showDraggableModal } from './styleHelpers'
 
-export default function SpacingControl({ subtitle, action, value, objectPaths }) {
+export default function SpacingControl({ subtitle, action, value, objectPaths, id }) {
   const { css } = useFela()
-  const setDraggableModal = useSetRecoilState($draggableModal)
+  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   return (
-    <div className={css(c.preview_wrp)}>
+    <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
         type="button"
         className={css(c.pickrBtn)}
       >
-        {/* <span className={css(c.clrVal)}>{value.replaceAll(/\(|var|\)/gi, '')}</span> */}
         <span>Configure</span>
       </button>
-      {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
-        <CloseIcn size="12" />
-      </button> */}
+
     </div>
   )
 }
@@ -64,4 +61,5 @@ const c = {
     textOverflow: 'ellipsis',
     ow: 'hidden',
   },
+  active: { focusShadow: 1 },
 }

@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $themeVars, $colorScheme, $flags, $tempStyles, $themeColors } from '../../GlobalStates'
+import { $colorScheme, $flags, $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
@@ -31,7 +31,6 @@ import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
-import ThemeControl from './ThemeControl'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
@@ -239,7 +238,6 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxb)}>
               <span className={css(ut.fw500)}>Background Color</span>
               {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
-
             </div>
             <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
           </div>
@@ -342,11 +340,6 @@ export default function ThemeCustomize() {
 
         <div className={css(cls.divider)} />
 
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Theme</span>
-          <ThemeControl />
-        </div>
-
         <div className={css({ mr: 15 })}>
 
           <div className={css(ut.flxcb, ut.mb2)}>
@@ -411,10 +404,12 @@ export default function ThemeCustomize() {
             options={['px', 'em', 'rem']}
           />
         </div>
-        <div className={css(ut.flxcb)}>
+
+        {/* <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Theme</span>
           <ThemeControl />
-        </div>
+        </div> */}
+
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Size</span>
           <select onChange={setSizes} name="" id="">
@@ -438,22 +433,22 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeColors" />}
-              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" />
+              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" id="fld-wp-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} />
+              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} id="spacing-control" />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempFldWrpSh !== fwSh && <ResetStyle themeVar="--fld-wrp-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Field Container Shadow" value={fwSh} objectPaths={fwStylePathObj} />
+                <ShadowControl subtitle="Field Container Shadow" value={fwSh} objectPaths={fwStylePathObj} id="fld-wrp-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 {tempFldWrpBdr !== fwBdr && <ResetStyle themeVar={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']} stateName="themeVars" />}
-                <BorderControl subtitle="Field Container Border" value={fwBdr} objectPaths={fwStylePathObj} />
+                <BorderControl subtitle="Field Container Border" value={fwBdr} objectPaths={fwStylePathObj} id="fld-wrp-bdr" />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -469,22 +464,22 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempLblWrpBg !== lwBg && <ResetStyle themeVar="--lbl-wrp-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" />
+              <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" id="lbl-wrp-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} id="lbl-spacing-control" />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempLblWrpSh !== lwSh && <ResetStyle themeVar="--lbl-wrp-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Label & Subtitle Container Shadow" value={lwSh} objectPaths={lwStylePathObj} />
+                <ShadowControl subtitle="Label & Subtitle Container Shadow" value={lwSh} objectPaths={lwStylePathObj} id="lbl-wrp-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 {tempLblWrpBdr !== lwBdr && <ResetStyle themeVar={['--lbl-wrp-bdr', '--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']} stateName="themeVars" />}
-                <BorderControl subtitle="Label & Subtitle Container Border" value={lwBdr} objectPaths={lwStylePathObj} />
+                <BorderControl subtitle="Label & Subtitle Container Border" value={lwBdr} objectPaths={lwStylePathObj} id="lbl-wrp-bdr" />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -500,27 +495,27 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempThemeVars['--fld-lbl-bg'] && <ResetStyle themeVar="--fld-lbl-bg" />}
-              <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" />
+              <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" id="fld-lbl-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempThemeVars['--fld-lbl-c'] && <ResetStyle themeVar="--fld-lbl-c" />}
-              <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" />
+              <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" id="fld-lbl-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={flSpacingObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={flSpacingObj} id="lbl-spacing-control" />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--fld-lbl-sh'] && <ResetStyle themeVar="--fld-lbl-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Label Shadow" value={flSh} objectPaths={flStylePathObj} />
+                <ShadowControl subtitle="Label Shadow" value={flSh} objectPaths={flStylePathObj} id="fld-lbl-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 {tempThemeVars['--fld-lbl-bdr'] && <ResetStyle themeVar={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']} />}
-                <BorderControl subtitle="Label Border" value={flBdr} objectPaths={flStylePathObj} />
+                <BorderControl subtitle="Label Border" value={flBdr} objectPaths={flStylePathObj} id="fld-lbl-bdr-width" />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -536,27 +531,27 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempSubTitleBg !== stBg && <ResetStyle themeVar="--sub-titl-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" />
+              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" id="sub-titl-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempSubTitlC !== stC && <ResetStyle themeVar="--sub-titl-c" stateName="themeVars" />}
-              <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" />
+              <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" id="sub-title-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} id="subtitle-spacing-control" />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempSubTitlSh !== stSh && <ResetStyle themeVar="--sub-titl-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Subtitle Shadow" value={stSh} objectPaths={stStylePathObj} />
+                <ShadowControl subtitle="Subtitle Shadow" value={stSh} objectPaths={stStylePathObj} id="sub-titl-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 {tempSubTitlBdr !== stBdr && <ResetStyle themeVar={['--sub-titl-bdr', '--sub-titl-bdr-width', '--sub-titl-bdr-rad']} stateName="themeVars" />}
-                <BorderControl subtitle="Subtitle Border" value={stBdr} objectPaths={stStylePathObj} />
+                <BorderControl subtitle="Subtitle Border" value={stBdr} objectPaths={stStylePathObj} id="sub-title-width-bdr-control" />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -572,27 +567,27 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempHlpTxtBg !== htBg && <ResetStyle themeVar="--hlp-txt-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" />
+              <SimpleColorPicker value={htBg} action={{ type: 'ht-bg' }} subtitle="Background Color" id="hlp-txt-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempHlpTxtC !== htC && <ResetStyle themeVar="--hlp-txt-c" stateName="themeVars" />}
-              <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" />
+              <SimpleColorPicker value={htC} action={{ type: 'ht-c' }} subtitle="Text Color" id="hlp-txt-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} id="hlp-spacing-control" />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempHlpTxtSh !== htSh && <ResetStyle themeVar="--hlp-txt-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Helper Text Shadow" value={htSh} objectPaths={htStylePathObj} />
+                <ShadowControl subtitle="Helper Text Shadow" value={htSh} objectPaths={htStylePathObj} id="hlp-txt-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 {tempHlpTxtBdr !== htBdr && <ResetStyle themeVar={['--hlp-txt-bdr', '--hlp-txt-bdr-width', '--hlp-txt-bdr-rad']} stateName="themeVars" />}
-                <BorderControl subtitle="Helper Text Border" value={htBdr} objectPaths={htStylePathObj} />
+                <BorderControl subtitle="Helper Text Border" value={htBdr} objectPaths={htStylePathObj} id="hlp-txt-control" />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -608,27 +603,27 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempErrBg !== errBg && <ResetStyle themeVar="--err-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" />
+              <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" id="err-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempErrC !== errC && <ResetStyle themeVar="--err-c" stateName="themeVars" />}
-              <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" />
+              <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" id="err-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} />
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} id="err-spacing-control" />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
                 {tempErrSh !== errSh && <ResetStyle themeVar="--err-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Error Message Shadow" value={errSh} objectPaths={errStylePathObj} />
+                <ShadowControl subtitle="Error Message Shadow" value={errSh} objectPaths={errStylePathObj} id="err-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 {tempErrBdr !== errB && <ResetStyle themeVar={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} stateName="themeVars" />}
-                <BorderControl subtitle="Error Message Border" value={errB} objectPaths={errStylePathObj} />
+                <BorderControl subtitle="Error Message Border" value={errB} objectPaths={errStylePathObj} id="err-control" />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -680,9 +675,7 @@ const cls = {
     py: 10,
     bb: '0.5px solid var(--white-0-83)',
     w: '95%',
-    '& .title, .toggle-icn': {
-      curp: 1
-    }
+    '& .title, .toggle-icn': { curp: 1 },
   },
 }
 

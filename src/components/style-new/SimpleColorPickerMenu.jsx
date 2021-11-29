@@ -58,7 +58,6 @@ function SimpleColorPickerMenu({ action, value }) {
     const a = color.a || 100
 
     const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`
-    console.log(action.type)
 
     switch (action.type) {
       case 'global-primary-color':
