@@ -38,17 +38,16 @@ export default function ThemeCustomize() {
   const { formType, formID } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const tempStyles = useRecoilValue($tempStyles)
+  const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
   const colorSchemeRoot = useRecoilValue($colorScheme)
   const setFlags = useSetRecoilState($flags)
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
-  const tempThemeVars = tempStyles.themeVars
-  const tempThemeColors = tempStyles.themeColors
-  const { '--fld-wrp-m': wrpMagin, '--fld-wrp-p': wrpPadding } = themeVars
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
 
   const { '--dir': direction,
+    '--fld-wrp-m': wrpMagin,
+    '--fld-wrp-p': wrpPadding,
     '--g-bdr-rad': globalBorderRad,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
@@ -432,7 +431,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeColors" />}
+              {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeVars" />}
               <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" id="fld-wp-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>

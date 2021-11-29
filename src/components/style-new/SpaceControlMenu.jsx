@@ -10,18 +10,10 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
 
-  const marginHandler = (v) => {
+  const spaceHandler = (val, property) => {
     if (object === 'themeVars') {
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[paths.margin] = `${v}`
-      }))
-    }
-  }
-
-  const paddingHandler = (v) => {
-    if (object === 'themeVars') {
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
-        drftStyle[paths.padding] = `${v}`
+        drftStyle[property] = `${val}`
       }))
     }
   }
@@ -35,17 +27,16 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     }
   }
 
-  const isValue = (v) => (object === 'themeVars') && tempThemeVars[v]
-  const getMargin = () => (object === 'themeVars') && themeVars[paths.margin]
-  const getPadding = () => (object === 'themeVars') && themeVars[paths.padding]
+  const getVal = (v) => (object === 'themeVars') && themeVars[v]
+  const checkedExist = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
 
   return (
     <>
       {paths?.margin && (
-        <SpaceControl isValue={isValue(paths.margin)} undoHandler={() => undoHandler(paths.margin)} value={getMargin()} title="Margin" onChange={val => marginHandler(val)} unitOption={['px', 'em', 'rem']} />
+        <SpaceControl isValue={checkedExist(paths.margin)} undoHandler={() => undoHandler(paths.margin)} value={getVal(paths.margin)} title="Margin" onChange={val => spaceHandler(val, paths.margin)} unitOption={['px', 'em', 'rem']} />
       )}
       {paths?.padding && (
-        <SpaceControl isValue={isValue(paths.padding)} undoHandler={() => undoHandler(paths.padding)} value={getPadding()} title="Padding" onChange={val => paddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+        <SpaceControl isValue={checkedExist(paths.padding)} undoHandler={() => undoHandler(paths.padding)} value={getVal(paths.padding)} title="Padding" onChange={val => spaceHandler(val, paths.padding)} unitOption={['px', 'em', 'rem']} />
       )}
     </>
   )
