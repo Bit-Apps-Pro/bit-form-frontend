@@ -530,12 +530,12 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempSubTitleBg !== stBg && <ResetStyle themeVar="--sub-titl-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={stBg} action={{ type: 'st-bg' }} subtitle="Subtitle Background Color" id="sub-titl-bg" />
+              <SimpleColorPicker value={stBg} action={{ type: 'sub-titl-bg' }} subtitle="Subtitle Background Color" id="sub-titl-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempSubTitlC !== stC && <ResetStyle themeVar="--sub-titl-c" stateName="themeVars" />}
-              <SimpleColorPicker value={stC} action={{ type: 'st-c' }} subtitle="Text Color" id="sub-title-c" />
+              <SimpleColorPicker value={stC} action={{ type: 'sub-titl-c' }} subtitle="Text Color" id="sub-title-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
