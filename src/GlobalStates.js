@@ -127,7 +127,7 @@ export const $themeVars = atom({
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
-    '-inp-wrp-width': '',
+    '--inp-wrp-width': '',
     '--lbl-al': '', // label align
 
     '--lbl-wrp-sa': '',

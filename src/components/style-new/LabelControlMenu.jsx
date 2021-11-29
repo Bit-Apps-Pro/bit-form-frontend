@@ -64,7 +64,7 @@ export default function LabelControlMenu() {
         setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
           drftStyle['--fld-wrp-dis'] = ''
           drftStyle['--lbl-wrp-width'] = ''
-          drftStyle['-inp-wrp-width'] = ''
+          drftStyle['--inp-wrp-width'] = ''
           drftStyle['--lbl-wrp-sa'] = ''
         }))
         setOpenVarPos(false)
@@ -75,7 +75,7 @@ export default function LabelControlMenu() {
           drftStyle['--fld-wrp-dis'] = 'flex'
           drftStyle['--fld-wrp-fdir'] = ''
           drftStyle['--lbl-wrp-width'] ||= '40%'
-          drftStyle['-inp-wrp-width'] = '100%'
+          drftStyle['--inp-wrp-width'] = '100%'
         }))
         setOpenVarPos(true)
         setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
@@ -85,7 +85,7 @@ export default function LabelControlMenu() {
           drftStyle['--fld-wrp-dis'] = 'flex'
           drftStyle['--fld-wrp-fdir'] = 'row-reverse'
           drftStyle['--lbl-wrp-width'] ||= '40%'
-          drftStyle['-inp-wrp-width'] = '60%'
+          drftStyle['--inp-wrp-width'] = '60%'
         }))
         setOpenVarPos(true)
         setBuilderHookStates(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))
