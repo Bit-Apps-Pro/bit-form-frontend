@@ -272,9 +272,3 @@ export const setStyleStateObj = (obj, path, value, setStates) => {
     assignNestedObj(drftStyle, path, value)
   }))
 }
-
-export const getThemeColor = (colorScheme, colorVar, darkThemeColors, lightThemeColors, highContrastThemeColors) => {
-  if (colorScheme === 'dark') return darkThemeColors[colorVar]
-  if (colorScheme === 'light') return lightThemeColors[colorVar]
-  if (colorScheme === 'high-contrast') return highContrastThemeColors[colorVar]
-}
