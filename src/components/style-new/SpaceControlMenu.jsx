@@ -20,7 +20,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
 
   const undoHandler = (v) => {
     if (object === 'themeVars') {
-      if (!tempThemeVars[v]) return
+      // if (!tempThemeVars[v]) return
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[v] = tempThemeVars[v] || '0px'
       }))

@@ -463,7 +463,7 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
               {tempLblWrpBg !== lwBg && <ResetStyle themeVar="--lbl-wrp-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={lwBg} action={{ type: 'lw-bg' }} subtitle="Subtitle Background Color" id="lbl-wrp-bg" />
+              <SimpleColorPicker value={lwBg} action={{ type: 'lbl-wrp-bg' }} subtitle="Subtitle Background Color" id="lbl-wrp-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
@@ -493,13 +493,13 @@ export default function ThemeCustomize() {
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempThemeVars['--fld-lbl-bg'] && <ResetStyle themeVar="--fld-lbl-bg" />}
-              <SimpleColorPicker value={flBg} action={{ type: 'fl-bg' }} subtitle="Subtitle Background Color" id="fld-lbl-bg" />
+              {tempFlBg !== flBg && <ResetStyle themeVar="--fld-lbl-bg" stateName="themeVars" />}
+              <SimpleColorPicker value={flBg} action={{ type: 'fld-lbl-bg' }} subtitle="Subtitle Background Color" id="fld-lbl-bg" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempThemeVars['--fld-lbl-c'] && <ResetStyle themeVar="--fld-lbl-c" />}
-              <SimpleColorPicker value={flc} action={{ type: 'fl-c' }} subtitle="Text Color" id="fld-lbl-c" />
+              {tempFlC !== flc && <ResetStyle themeVar="--fld-lbl-c" stateName="themeVars" />}
+              <SimpleColorPicker value={flc} action={{ type: 'fld-lbl-c' }} subtitle="Text Color" id="fld-lbl-c" />
             </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
@@ -507,13 +507,13 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--fld-lbl-sh'] && <ResetStyle themeVar="--fld-lbl-sh" stateName="themeVars" />}
+                {tempFlSh !== flSh && <ResetStyle themeVar="--fld-lbl-sh" stateName="themeVars" />}
                 <ShadowControl subtitle="Label Shadow" value={flSh} objectPaths={flStylePathObj} id="fld-lbl-sh" />
               </div>
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempThemeVars['--fld-lbl-bdr'] && <ResetStyle themeVar={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']} />}
+                {tempFlBdr !== flBdr && <ResetStyle themeVar={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']} stateName="themeVars" />}
                 <BorderControl subtitle="Label Border" value={flBdr} objectPaths={flStylePathObj} id="fld-lbl-bdr-width" />
               </div>
             </ThemeStylePropertyBlock>
