@@ -15,7 +15,7 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
     [`.${fk}-sub-titl`]: { 'font-size': 'var(--sub-titl-fs)', 'text-align': 'var(--sub-titl-al, left)', padding: 'var(--sub-titl-p, 0)', margin: 'var(--sub-titl-m, 0)' },
     [`.${fk}-hlp-txt`]: { 'font-size': 'var(--hlp-txt-fs)', 'text-align': 'var(--hlp-txt-al, left)', padding: 'var(--hlp-txt-p, 0)', margin: 'var(--hlp-txt-m, 0)' },
     [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
-    [`.${fk}-inp-wrp`]: { width: 'var(-inp-wrp-width, auto)' },
+    [`.${fk}-inp-wrp`]: { width: 'var(--inp-wrp-width, auto)' },
 
     // field style
     [`.${fk}-fld`]: {

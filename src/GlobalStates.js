@@ -127,14 +127,14 @@ export const $themeVars = atom({
     '--g-bdr-rad': '11px', // border radius
     '--g-bdr-width': '1px', // border width
     '--dir': 'ltr', // direaction
-    '-inp-wrp-width': '',
+    '--inp-wrp-width': '',
     '--lbl-al': '', // label align
 
     '--lbl-wrp-sa': '',
     '--lbl-wrp-width': '', // label wrapper  width
     '--lbl-wrp-m': '', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
-    '--lbl-wrp-bg': '', // label wrapper for padding
+    '--lbl-wrp-bg': 'hsla(215, 10%, 20%, 100)', // label wrapper for padding
     '--lbl-wrp-c': '', // label wrapper for color
     '--lbl-wrp-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
     '--lbl-wrp-bdr': 'solid red', // label wrapper border
@@ -147,7 +147,7 @@ export const $themeVars = atom({
 
     '--fld-wrp-dis': '', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
-    '--fld-wrp-bg': 'hlsa(23,23,23,3)', // fieldwrapper background
+    '--fld-wrp-bg': 'hsla(0, 71%, 39%, 100)', // fieldwrapper background
     '--fld-wrp-b': '10px',
     '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin

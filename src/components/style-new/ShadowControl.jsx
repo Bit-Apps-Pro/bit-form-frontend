@@ -1,20 +1,20 @@
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
 
-export default function ShadowControl({ value, subtitle, objectPaths }) {
-  const setDraggableModal = useSetRecoilState($draggableModal)
+export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   const { css } = useFela()
 
   const colorVal = splitValueBySpaces(value)[4]
+  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   return (
-    <div className={css(c.preview_wrp)}>
+    <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'shadow-control', subtitle, objectPaths, id })}
         type="button"
         className={css(c.pickrBtn)}
       >
@@ -66,4 +66,5 @@ const c = {
     textOverflow: 'ellipsis',
     ow: 'hidden',
   },
+  active: { focusShadow: 1 },
 }
