@@ -28,8 +28,8 @@ function FormWrapperControlMenu() {
   }
   return (
     <>
-      <SpaceControl isValue={_frm?.margin} value={_frm?.margin || '0px 0px 0px 0px'} undoHandler={() => undoHandler('margin')} title="Form Wrapper Margin" onChange={val => marginHandler(val)} unitOption={['px', 'em', 'rem']} />
-      <SpaceControl isValue={_frm?.padding} value={_frm?.padding || '0px 0px 0px 0px'} undoHandler={() => undoHandler('padding')} title="Form Wrapper Padding" onChange={val => paddingHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isResetable={_frm?.margin} value={_frm?.margin || '0px 0px 0px 0px'} undoHandler={() => undoHandler('margin')} title="Form Wrapper Margin" onChange={val => marginHandler(val)} unitOption={['px', 'em', 'rem']} />
+      <SpaceControl isResetable={_frm?.padding} value={_frm?.padding || '0px 0px 0px 0px'} undoHandler={() => undoHandler('padding')} title="Form Wrapper Padding" onChange={val => paddingHandler(val)} unitOption={['px', 'em', 'rem']} />
     </>
   )
 }

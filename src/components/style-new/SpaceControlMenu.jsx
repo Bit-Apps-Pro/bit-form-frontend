@@ -38,7 +38,7 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     <>
       {paths?.margin && (
         <SpaceControl
-          isValue={checkIsResetable(paths.margin)}
+          isResetable={checkIsResetable(paths.margin)}
           undoHandler={() => undoHandler(paths.margin)}
           value={getVal(paths.margin)}
           title="Margin"
