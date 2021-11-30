@@ -36,7 +36,6 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID, customstyle } = useParams()
-  const params = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
@@ -45,7 +44,6 @@ export default function ThemeCustomize() {
   const [activeAccordion, setActiveAccordion] = useState()
   const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  console.log(customstyle)
 
   const { '--dir': direction,
     '--fld-wrp-m': wrpMagin,

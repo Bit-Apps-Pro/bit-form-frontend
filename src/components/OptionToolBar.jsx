@@ -122,7 +122,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               width={180}
               show={['icn']}
               tipPlace="bottom"
-              defaultActive={rightBar.match(/themes|theme-customize/gi) ? 'theme-customize' : 'fld-settings'}
+              defaultActive={rightBar.match(/themes|theme-customize/gi) ? 'theme-customize/theme-customization' : 'fld-settings'}
               options={[
                 { icn: <EditIcn size="19" />, label: 'fld-settings', tip: 'Field Settings' },
                 { icn: <BrushIcn size="15" />, label: 'theme-customize', tip: 'Theme Customization' },
