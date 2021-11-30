@@ -3,12 +3,13 @@ const Toolbars = {
     bd: 'var(--white-100)',
     h: '100%',
     ow: 'hidden',
-    mxw: 190,
+    mxw: 182,
     mnw: 55,
     px: 3,
     pt: 8,
     pb: 140,
     tn: 'width 500ms',
+    bs: '0 0 0 1px var(--b-44-87)'
   },
   searchBar: {
     bs: '#7b7b7b 0px 7px 9px -9px',

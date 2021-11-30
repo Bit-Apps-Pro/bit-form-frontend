@@ -13,11 +13,18 @@ const sc = {
     ':focus': { focusShadow: 1 },
   },
   resetBtn: {
-    w: 25,
-    h: 25,
+    w: 23,
+    h: 24,
     flx: 'center',
-
-  }
+    p: 5,
+    brs: 20,
+    b: 'none',
+    bd: 'none',
+    curp: 1,
+    cr: 'var(--white-0-0-29)',
+    mr: 3,
+    ':hover': { bd: 'var(--white-0-95)', cr: 'var(--white-0-29)' },
+  },
 }
 
 export default sc
