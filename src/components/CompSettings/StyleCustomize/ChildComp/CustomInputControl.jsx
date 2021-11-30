@@ -10,7 +10,8 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
   const rangeRef = useRef(null)
 
   useEffect(() => {
-    rangeRef.current.style.backgroundSize = `${((val - min) * 100) / (max - min)}% 100%`
+    const size = ((val - min) * 100) / (max - min)
+    rangeRef.current.style.backgroundSize = `${size < 0 ? 0 : size.toFixed(2)}% 100%`
   }, [max, min, val])
 
   return (

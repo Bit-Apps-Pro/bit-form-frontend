@@ -13,6 +13,7 @@ import Modal from '../Utilities/Modal'
 import Icons from './Icons'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import SpacingControl from '../style-new/SpacingControl'
 
 function ImageSettings() {
   const { css } = useFela()
@@ -20,10 +21,10 @@ function ImageSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [icnMdl, setIcnMdl] = useState('')
-  const [styles, setStyles] = useRecoilState($styles)
+  const styles = useRecoilValue($styles)
 
   const imgClass = `.${fldKey}-img`
-  const { border, 'border-width': borderWidth, 'border-radius': borderRadius, 'box-shadow': boxShadow } = styles.fields[fldKey].classes[imgClass]
+  const { border, 'box-shadow': boxShadow } = styles.fields[fldKey].classes[imgClass]
 
   const removeImage = (name) => {
     if (fieldData[name]) {
@@ -42,6 +43,8 @@ function ImageSettings() {
       borderWidth: `${path}->border-width`,
       borderRadius: `${path}->border-radius`,
       shadow: `${path}->box-shadow`,
+      margin: `${path}->margin`,
+      padding: `${path}->padding`,
     },
   }
 
@@ -90,6 +93,14 @@ function ImageSettings() {
             <span className={css(ut.fw500, ut.ml2)}>Shadow</span>
             <div className={css(ut.flxcb, ut.mr2)}>
               <ShadowControl subtitle="Border Shadow" value={boxShadow} objectPaths={objectPaths} />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
+            <div className={css(ut.flxcb, ut.mr2)}>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={objectPaths} />
             </div>
           </div>
         </div>

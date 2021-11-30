@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $tempStyles, $themeVars } from '../../GlobalStates'
+import { $styles, $tempStyles, $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
+import { getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [styles, setStyles] = useRecoilState($styles)
   const tempStyles = useRecoilValue($tempStyles)
   const tempThemeVars = tempStyles.themeVars
   const { object, paths } = objectPaths
@@ -18,6 +20,8 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     }
   }
 
+  // const stateObj = getStyleStateObj(object, { themeVars, styles })
+
   const undoHandler = (v) => {
     if (object === 'themeVars') {
       // if (!tempThemeVars[v]) return
@@ -28,15 +32,29 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   }
 
   const getVal = (v) => (object === 'themeVars') && themeVars[v]
-  const checkedExist = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
+  const checkIsResetable = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
 
   return (
     <>
       {paths?.margin && (
-        <SpaceControl isValue={checkedExist(paths.margin)} undoHandler={() => undoHandler(paths.margin)} value={getVal(paths.margin)} title="Margin" onChange={val => spaceHandler(val, paths.margin)} unitOption={['px', 'em', 'rem']} />
+        <SpaceControl
+          isValue={checkIsResetable(paths.margin)}
+          undoHandler={() => undoHandler(paths.margin)}
+          value={getVal(paths.margin)}
+          title="Margin"
+          onChange={val => spaceHandler(val, paths.margin)}
+          unitOption={['px', 'em', 'rem']}
+        />
       )}
       {paths?.padding && (
-        <SpaceControl isValue={checkedExist(paths.padding)} undoHandler={() => undoHandler(paths.padding)} value={getVal(paths.padding)} title="Padding" onChange={val => spaceHandler(val, paths.padding)} unitOption={['px', 'em', 'rem']} />
+        <SpaceControl
+          isResetable={checkIsResetable(paths.padding)}
+          undoHandler={() => undoHandler(paths.padding)}
+          value={getVal(paths.padding)}
+          title="Padding"
+          onChange={val => spaceHandler(val, paths.padding)}
+          unitOption={['px', 'em', 'rem']}
+        />
       )}
     </>
   )
