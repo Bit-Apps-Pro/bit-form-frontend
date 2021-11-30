@@ -89,7 +89,7 @@ export default function StyleSegmentControl({ defaultActive,
         flx: 'center',
       },
     },
-    icn: { ...!noShadow && { fr: 'drop-shadow(0 1px 1px lightgray)' } },
+    // icn: { ...!noShadow && { fr: 'drop-shadow(0 1px 1px lightgray)' } },
   }
   const selectorRef = useRef(null)
   const tabsRef = useRef(null)
