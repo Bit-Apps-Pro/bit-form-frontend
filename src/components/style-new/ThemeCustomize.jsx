@@ -380,6 +380,7 @@ export default function ThemeCustomize() {
           <span className={css(ut.fw500)}>Theme</span>
           <ThemeControl />
         </div>
+        */}
 
         <SimpleAccordion
           title={__('Field container', 'bitform')}
