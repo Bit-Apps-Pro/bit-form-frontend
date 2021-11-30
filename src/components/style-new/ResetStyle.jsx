@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
@@ -5,7 +6,7 @@ import StyleResetIcn from '../../Icons/StyleResetIcn'
 import sc from '../../styles/commonStyleEditorStyle'
 import { $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 
-export default function ResetStyle({ themeVar, stateName }) {
+export default function ResetStyle({ themeVar, stateName, show }) {
   const { themeColors, themeVars } = useRecoilValue($tempStyles)
   const setThemeColor = useSetRecoilState($themeColors)
   const setThemeVar = useSetRecoilState($themeVars)
@@ -22,13 +23,20 @@ export default function ResetStyle({ themeVar, stateName }) {
     }
   }
 
-  const reset = (value) => {
-    if (Array.isArray(value)) value.forEach(v => resetValue(v))
-    else resetValue(value)
+  const reset = () => {
+    if (Array.isArray(themeVar)) themeVar.forEach(v => resetValue(v))
+    else resetValue(themeVar)
   }
+
   return (
-    <button onClick={() => reset(themeVar)} className={css(sc.resetBtn)} type="button">
-      <StyleResetIcn size="40" />
+    <button
+      title="Reset Style"
+      onClick={reset}
+      className={css(sc.resetBtn)}
+      type="button"
+      style={{ visibility: show ? 'visible' : 'hidden' }}
+    >
+      <StyleResetIcn size="80" />
     </button>
   )
 }
