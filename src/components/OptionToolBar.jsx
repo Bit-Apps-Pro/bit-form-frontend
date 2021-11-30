@@ -90,7 +90,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
           <div className={css(OptionToolBarStyle.border_right)} />
 
           <div className={css([ut.flxc, OptionToolBarStyle.rightSideBarBtn])}>
-            <Tip msg="Fields Settings">
+            {/* <Tip msg="Fields Settings">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
                 activeClassName="active"
@@ -107,7 +107,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
               >
                 <BrushIcn size="20" />
               </NavLink>
-            </Tip>
+            </Tip> */}
             <Tip msg="Custom Styling">
               <NavLink
                 className={css([OptionToolBarStyle.icn_btn, ut.icn_hover])}
