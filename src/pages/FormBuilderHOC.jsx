@@ -14,7 +14,7 @@ import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
-import ToolBar from '../components/Toolbars/Toolbar'
+import ToolBar from '../components/LeftBars/Toolbar'
 import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
@@ -22,6 +22,7 @@ import css2json from '../Utils/css2json'
 import { propertyValueSumX } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
+import StyleLayers from '../components/LeftBars/StyleLayers'
 
 const styleReducer = (style, action) => {
   if (action.brkPoint === 'lg') {
@@ -287,7 +288,12 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   return (
     <>
       {/* {formType === 'edit' && <FetchBuilderHelperStates formID={formID} />} */}
-      <OptionToolBar setResponsiveView={setResponsiveView} setShowToolbar={setShowToolbar} showToolBar={showToolBar} toggleToolBar={toggleToolBar} />
+      <OptionToolBar
+        setResponsiveView={setResponsiveView}
+        setShowToolbar={setShowToolbar}
+        showToolBar={showToolBar}
+        toggleToolBar={toggleToolBar}
+      />
       <DraggableModal setBuilderPointerEventNone={setBuilderPointerEventNone} />
       <Container
         ref={conRef}
@@ -300,12 +306,14 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           className="tool-sec"
           defaultSize={showToolBar ? 0 : 180}
         >
-          <ToolBar
-            setNewData={addNewData}
-            className="tile"
-            tolbarSiz={tolbarSiz}
-            setTolbar={toggleToolBar}
-          />
+          {styleMode ? <StyleLayers /> : (
+            <ToolBar
+              setNewData={addNewData}
+              className="tile"
+              tolbarSiz={tolbarSiz}
+              setTolbar={toggleToolBar}
+            />
+          )}
         </Section>
         <Bar className="bar bar-l" />
 
@@ -315,24 +323,22 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
           defaultSize={gridWidth}
         >
           {!isLoading && !styleLoading ? (
-            <>
-              <RenderPortal
-                id="bit-grid-layout"
-                style={{ width: gridWidth + 6, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
-              >
-                <RenderThemeVarsAndFormCSS />
-                <RenderCssInPortal />
-                {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
-                <GridLayout
-                  style={styleProvider()}
-                  gridWidth={gridWidth}
-                  newData={newData}
-                  setNewData={setNewData}
-                  formType={formType}
-                  formID={formID}
-                />
-              </RenderPortal>
-            </>
+            <RenderPortal
+              id="bit-grid-layout"
+              style={{ width: gridWidth + 6, height: 'calc(100% - 82px)', margin: '3px auto auto', overflow: 'hidden', pointerEvents: builderPointerEventNone ? 'none' : 'all' }}
+            >
+              <RenderThemeVarsAndFormCSS />
+              <RenderCssInPortal />
+              {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
+              <GridLayout
+                style={styleProvider()}
+                gridWidth={gridWidth}
+                newData={newData}
+                setNewData={setNewData}
+                formType={formType}
+                formID={formID}
+              />
+            </RenderPortal>
           ) : <GridLayoutLoader />}
 
         </Section>
