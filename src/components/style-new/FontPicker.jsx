@@ -29,10 +29,9 @@ const c = {
     flx: 'center-between',
     h: 30,
     fw: 500,
-    curp: 1,
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
-  btn: { b: 'none' },
+  btn: { b: 'none', curp: 1 },
   clrVal: {
     w: 70,
     textOverflow: 'ellipsis',
