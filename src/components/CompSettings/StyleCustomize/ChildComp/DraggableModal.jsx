@@ -58,23 +58,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
   const dragableRef = useRef(null)
   useEffect(() => {
     setPos({ ...position })
-    // console.log('ref', dragableRef.current.props.children)
   }, [position])
-
-  console.log({ pos })
-
-  const DragableModalLoader = () => (
-    <>
-      <div title="Loading..." className={css(ut.flxcb, ut.mb2)}>
-        <div title="Loading..." className={`${css({ w: 70, h: 15, brs: 5 })} loader`} />
-        <div title="Loading..." className={`${css({ w: 80, h: 30, brs: 5 })} loader`} />
-      </div>
-      <div title="Loading..." className={css(ut.flxcb)}>
-        <div title="Loading..." className={`${css({ w: 70, h: 15, brs: 5 })} loader`} />
-        <div title="Loading..." className={`${css({ w: 80, h: 30, brs: 5 })} loader`} />
-      </div>
-    </>
-  )
 
   if (!show) return <></>
 
@@ -101,4 +85,21 @@ function DraggableModal({ setBuilderPointerEventNone }) {
     </Draggable>
   )
 }
+
 export default memo(DraggableModal)
+
+const DragableModalLoader = () => {
+  const { css } = useFela()
+  return (
+    <>
+      <div title="Loading..." className={css(ut.flxcb, ut.mb2)}>
+        <div title="Loading..." className={`${css({ w: 70, h: 15, brs: 5 })} loader`} />
+        <div title="Loading..." className={`${css({ w: 80, h: 30, brs: 5 })} loader`} />
+      </div>
+      <div title="Loading..." className={css(ut.flxcb)}>
+        <div title="Loading..." className={`${css({ w: 70, h: 15, brs: 5 })} loader`} />
+        <div title="Loading..." className={`${css({ w: 80, h: 30, brs: 5 })} loader`} />
+      </div>
+    </>
+  )
+}
