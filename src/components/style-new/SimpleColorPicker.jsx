@@ -8,7 +8,6 @@ import { showDraggableModal } from './styleHelpers'
 export default function SimpleColorPicker({ subtitle, action, value, id }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  console.log({ draggableModal })
   return (
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
