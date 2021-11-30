@@ -1844,6 +1844,13 @@ arrow:after,
     overflow: hidden;
     background: rgb(255, 255, 103);
   }
+  .layout-wrapper{
+    background-size: 13px 13px;
+    background-image: radial-gradient(#458ff7 0.5px, #fff 0.5px);
+    background-size: 10px 10px;
+  /* background-color: var(--white-100); */
+}
+
 
 `
 
