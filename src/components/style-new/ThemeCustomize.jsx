@@ -48,7 +48,7 @@ export default function ThemeCustomize() {
   const tempThemeColors = tempStyles.themeColors
   const { '--fld-wrp-m': wrpMagin, '--fld-wrp-p': wrpPadding } = themeVars
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-
+  console.log({ colorScheme, themeColors })
   const { '--dir': direction,
     '--g-bdr-rad': globalBorderRad,
     '--fld-fs': fldFs,
@@ -293,7 +293,7 @@ export default function ThemeCustomize() {
 
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Border width</span>
-            {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" />}
+            {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" show={false} />}
             <SizeControl
               min={0}
               max={20}
@@ -304,6 +304,18 @@ export default function ThemeCustomize() {
               width="110px"
               options={['px', 'em', 'rem']}
             />
+          </div>
+
+          <div className={css(ut.flxcb, ut.mt2)}>
+            <span className={css(ut.fw500)}>Size</span>
+            <select onChange={setSizes} className={css(sc.select)}>
+              <option value="small-2">Small-2</option>
+              <option value="small-1">Small-1</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="large-1">Large-1</option>
+            </select>
           </div>
 
           <div className={css(ut.flxcb, ut.mt2)}>
@@ -319,18 +331,6 @@ export default function ThemeCustomize() {
                 options={['px', 'em', 'rem']}
               />
             </div>
-          </div>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Size</span>
-            <select onChange={setSizes} className={css(sc.select)}>
-              <option value="small-2">Small-2</option>
-              <option value="small-1">Small-1</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="large-1">Large-1</option>
-            </select>
           </div>
 
           <div className={css(ut.flxcb, ut.mt2)}>
@@ -370,35 +370,7 @@ export default function ThemeCustomize() {
 
         <h4 className={css(cls.subTitle)}>More Customizations</h4>
         <div className={css(cls.divider)} />
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Border Radius</span>
-          {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" stateName="themeColors" />}
-          <SizeControl
-            min={0}
-            max={20}
-            inputHandler={borderRadHandler}
-            sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-            value={globalBdrRadValue}
-            unit={globalBdrRadUnit}
-            width="110px"
-            options={['px', 'em', 'rem']}
-          />
-        </div>
 
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Border width</span>
-          {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" stateName="themeColors" />}
-          <SizeControl
-            min={0}
-            max={20}
-            inputHandler={borderWidthHandler}
-            sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-            value={globalBdrWidthVal}
-            unit={globalBdrWidthUnit}
-            width="110px"
-            options={['px', 'em', 'rem']}
-          />
-        </div>
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Field Font Size</span>
           {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
@@ -414,17 +386,6 @@ export default function ThemeCustomize() {
         <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Theme</span>
           <ThemeControl />
-        </div>
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Size</span>
-          <select onChange={setSizes} name="" id="">
-            <option value="small-2">Small-2</option>
-            <option value="small-1">Small-1</option>
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-            <option value="large-1">Large-1</option>
-          </select>
         </div>
 
         <SimpleAccordion
@@ -464,6 +425,7 @@ export default function ThemeCustomize() {
           className={css(cls.accordion)}
           disable={activeAccordion !== 2}
           onClick={() => openHandler(2)}
+          actionComponent={<HighlightElm selector="[data-dev-lbl-wrp]" />}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -495,6 +457,7 @@ export default function ThemeCustomize() {
           className={css(cls.accordion)}
           disable={activeAccordion !== 3}
           onClick={() => openHandler(3)}
+          actionComponent={<HighlightElm selector="[data-dev-lbl]" />}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -531,6 +494,7 @@ export default function ThemeCustomize() {
           className={css(cls.accordion)}
           disable={activeAccordion !== 4}
           onClick={() => openHandler(4)}
+          actionComponent={<HighlightElm selector="[data-dev-sub-titl]" />}
         >
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
