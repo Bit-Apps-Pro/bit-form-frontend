@@ -32,23 +32,23 @@ export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
 export const $lightThemeColors = atom({
   key: '$lightThemeColors',
   default: {
-    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
-    '--gph': 0, // global primary hue
-    '--gps': 10, // global primary saturation
-    '--gpl': 20, // global primary lightness
+    '--global-primary-color': 'hsla(217, 100%, 50%, 100)', // primary color
+    '--gph': 217, // global primary hue
+    '--gps': '100%', // global primary saturation
+    '--gpl': '50%', // global primary lightness
     '--gpa': 100, // global primary opacity
-    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
+    '--global-font-color': 'hsla(0, 0%, 14%, 100)',
     '--gfh': 0, // global font color hue
-    '--gfs': 10, // global fonst color sa
-    '--gfl': 20,
+    '--gfs': '0%', // global fonst color saaturation
+    '--gfl': '14%',
     '--gfa': 100,
-    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--global-bg-color': 'hsla(0, 0%, 100%, 100)', // background color
     '--gbg-h': 0,
-    '--gbg-s': 10,
-    '--gbg-l': 20,
+    '--gbg-s': 0,
+    '--gbg-l': 100,
     '--gbg-a': 100,
-    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
-    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+    '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)',
+    '--global-fld-bg-color': '', // field background color
   },
 })
 export const $darkThemeColors = atom({
@@ -86,7 +86,7 @@ export const $highContrastThemeColors = atom({
     '--gfs': 10, // global fonst color sa
     '--gfl': 20,
     '--gfa': 100,
-    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
+    '--global-bg-color': 'hsla(10, 100%, 97%, 100)', // background color
     '--gbg-h': 0,
     '--gbg-s': 10,
     '--gbg-l': 20,
@@ -239,11 +239,13 @@ export const $themeColors = selector({
   key: '$themeColors',
   get: ({ get }) => {
     const colorScheme = get($colorScheme)
+    console.log('in state', colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
     if (colorScheme === 'dark') return get($darkThemeColors)
     if (colorScheme === 'high-contrast') return get($highContrastThemeColors)
   },
   set: ({ set, get }, newColors) => {
+    console.log('set in selctot', $colorScheme)
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') set($lightThemeColors, newColors)
     if (colorScheme === 'dark') set($darkThemeColors, newColors)
