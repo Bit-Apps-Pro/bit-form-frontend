@@ -35,13 +35,12 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
-  const { formType, formID } = useParams()
+  const { formType, formID, customstyle } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
   const setFlags = useSetRecoilState($flags)
-  const [activeAccordion, setActiveAccordion] = useState()
   const themeColors = useRecoilValue($themeColors)
 
   const { '--dir': direction,
@@ -213,7 +212,7 @@ export default function ThemeCustomize() {
       <h4 className={css(cls.title)}>Theme Customize</h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-        <h4 className={css(cls.subTitle)}>Color Scheme</h4>
+        {/* <h4 className={css(cls.subTitle)}>Color Scheme</h4>
         <div className={css(ut.flxcb, ut.w9, ut.mt1)}>
           <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
           <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
@@ -222,142 +221,146 @@ export default function ThemeCustomize() {
 
         <div className={css(cls.divider)} />
 
-        <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
-        <div className={css(cls.container)}>
+        <h4 className={css(cls.subTitle)}>Quick Tweaks</h4> */}
 
-          {/*
+        {customstyle === 'theme-customization' && (
+          <>
+            <div className={css(cls.container)}>
+
+              {/*
           <div className={css(ut.flxc)}>
             <div className={css(cls.menuItem)}>Default</div>
             <div className={css(cls.menuItem, { px: 10 })}>Dark Mode</div>
             <div className={css(cls.menuItem)}>High Contrast Mode</div>
           </div> */}
+              <div className={css(ut.flxcb)}>
+                <div className={css(ut.flxb)}>
+                  <span className={css(ut.fw500)}>Background Color</span>
+                  {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
+                </div>
+                <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>Primary Color</span>
+                  {tempPrimaryColor && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
+                </div>
+                <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>Font Color</span>
+                  {tempFontColor && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
+                </div>
+                <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>Border Color</span>
+                  {tempFldBdrClr && <ResetStyle themeVar="--global-fld-bdr-color" stateName="themeColors" />}
+                </div>
+                <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>Field Background Color</span>
+                  {tempFldBgClr && <ResetStyle themeVar="--global-fld-bg-color" stateName="themeColors" />}
+                </div>
+                <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Font Family</span>
+                <FontPicker id="global-font-fam" />
+              </div>
 
-          <div className={css(ut.flxcb)}>
-            <div className={css(ut.flxb)}>
-              <span className={css(ut.fw500)}>Background Color</span>
-              {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Border Radius</span>
+                {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" />}
+                <SizeControl
+                  min={0}
+                  max={20}
+                  inputHandler={borderRadHandler}
+                  sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+                  value={globalBdrRadValue}
+                  unit={globalBdrRadUnit}
+                  width="110px"
+                  options={['px', 'em', 'rem']}
+                />
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Border width</span>
+                {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" show={false} />}
+                <SizeControl
+                  min={0}
+                  max={20}
+                  inputHandler={borderWidthHandler}
+                  sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+                  value={globalBdrWidthVal}
+                  unit={globalBdrWidthUnit}
+                  width="110px"
+                  options={['px', 'em', 'rem']}
+                />
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Size</span>
+                <select onChange={setSizes} className={css(sc.select)}>
+                  <option value="small-2">Small-2</option>
+                  <option value="small-1">Small-1</option>
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                  <option value="large-1">Large-1</option>
+                </select>
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Field Font Size</span>
+                <div className={css(ut.flxc)}>
+                  {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
+                  <SizeControl
+                    inputHandler={fldFsSizeHandler}
+                    sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+                    value={fldFSValue}
+                    unit={fldFSUnit}
+                    width="110px"
+                    options={['px', 'em', 'rem']}
+                  />
+                </div>
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
+                <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
+              </div>
+
             </div>
-            <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Primary Color</span>
-              {tempPrimaryColor && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
+
+            <div className={css(cls.divider)} />
+
+            <div className={css({ mr: 15 })}>
+
+              <div className={css(ut.flxcb, ut.mb2)}>
+                <span className={css(ut.fw500)}>Label Alignment</span>
+                <LabelControl />
+              </div>
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>Label Spacing</span>
+                <LabelSpacingControl />
+              </div>
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>Field Margin</span>
+                <FieldMarginControl />
+              </div>
+
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>Form Wrapper Control</span>
+                <FormWrapperControl />
+              </div>
             </div>
-            <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Font Color</span>
-              {tempFontColor && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
-            </div>
-            <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Border Color</span>
-              {tempFldBdrClr && <ResetStyle themeVar="--global-fld-bdr-color" stateName="themeColors" />}
-            </div>
-            <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Field Background Color</span>
-              {tempFldBgClr && <ResetStyle themeVar="--global-fld-bg-color" stateName="themeColors" />}
-            </div>
-            <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Font Family</span>
-            <FontPicker id="global-font-fam" />
-          </div>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Border Radius</span>
-            {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" />}
-            <SizeControl
-              min={0}
-              max={20}
-              inputHandler={borderRadHandler}
-              sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-              value={globalBdrRadValue}
-              unit={globalBdrRadUnit}
-              width="110px"
-              options={['px', 'em', 'rem']}
-            />
-          </div>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Border width</span>
-            {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" show={false} />}
-            <SizeControl
-              min={0}
-              max={20}
-              inputHandler={borderWidthHandler}
-              sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-              value={globalBdrWidthVal}
-              unit={globalBdrWidthUnit}
-              width="110px"
-              options={['px', 'em', 'rem']}
-            />
-          </div>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Size</span>
-            <select onChange={setSizes} className={css(sc.select)}>
-              <option value="small-2">Small-2</option>
-              <option value="small-1">Small-1</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-              <option value="large-1">Large-1</option>
-            </select>
-          </div>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Field Font Size</span>
-            <div className={css(ut.flxc)}>
-              {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
-              <SizeControl
-                inputHandler={fldFsSizeHandler}
-                sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
-                value={fldFSValue}
-                unit={fldFSUnit}
-                width="110px"
-                options={['px', 'em', 'rem']}
-              />
-            </div>
-          </div>
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
-            <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
-          </div>
-
-        </div>
-
-        <div className={css(cls.divider)} />
-
-        <div className={css({ mr: 15 })}>
-
-          <div className={css(ut.flxcb, ut.mb2)}>
-            <span className={css(ut.fw500)}>Label Alignment</span>
-            <LabelControl />
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Label Spacing</span>
-            <LabelSpacingControl />
-          </div>
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Field Margin</span>
-            <FieldMarginControl />
-          </div>
-
-          <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500)}>Form Wrapper Control</span>
-            <FormWrapperControl />
-          </div>
-        </div>
+          </>
+        )}
 
         <h4 className={css(cls.subTitle)}>More Customizations</h4>
         <div className={css(cls.divider)} />
@@ -365,7 +368,7 @@ export default function ThemeCustomize() {
         {/* <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Theme</span>
           <ThemeControl />
-        </div> */}
+        </div> 
 
         <SimpleAccordion
           title={__('Field container', 'bitform')}
@@ -373,39 +376,44 @@ export default function ThemeCustomize() {
           disable={activeAccordion !== 1}
           onClick={() => openHandler(1)}
           actionComponent={<HighlightElm selector="[data-dev-fld-wrp]" />}
-        >
-          <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" id="fld-wp-bg" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} id="spacing-control" />
-            </div>
-            <ThemeStylePropertyBlock label="Shadow">
-              <div className={css(ut.flxc)}>
-                {tempFldWrpSh !== fwSh && <ResetStyle themeVar="--fld-wrp-sh" stateName="themeVars" />}
-                <ShadowControl subtitle="Field Container Shadow" value={fwSh} objectPaths={fwStylePathObj} id="fld-wrp-sh" />
+        > */}
+        {
+          customstyle === 'field-container' && (
+            <div className={css(ut.m10)}>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+                {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeVars" />}
+                <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" id="fld-wp-bg" />
               </div>
-            </ThemeStylePropertyBlock>
-            <ThemeStylePropertyBlock label="Border">
-              <div className={css(ut.flxc)}>
-                {tempFldWrpBdr !== fwBdr && <ResetStyle themeVar={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']} stateName="themeVars" />}
-                <BorderControl subtitle="Field Container Border" value={fwBdr} objectPaths={fwStylePathObj} id="fld-wrp-bdr" />
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} id="spacing-control" />
               </div>
-            </ThemeStylePropertyBlock>
-          </div>
-        </SimpleAccordion>
+              <ThemeStylePropertyBlock label="Shadow">
+                <div className={css(ut.flxc)}>
+                  {tempFldWrpSh !== fwSh && <ResetStyle themeVar="--fld-wrp-sh" stateName="themeVars" />}
+                  <ShadowControl subtitle="Field Container Shadow" value={fwSh} objectPaths={fwStylePathObj} id="fld-wrp-sh" />
+                </div>
+              </ThemeStylePropertyBlock>
+              <ThemeStylePropertyBlock label="Border">
+                <div className={css(ut.flxc)}>
+                  {tempFldWrpBdr !== fwBdr && <ResetStyle themeVar={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']} stateName="themeVars" />}
+                  <BorderControl subtitle="Field Container Border" value={fwBdr} objectPaths={fwStylePathObj} id="fld-wrp-bdr" />
+                </div>
+              </ThemeStylePropertyBlock>
+            </div>
+          )
+        }
+        {/* </SimpleAccordion> */}
 
-        <SimpleAccordion
+        {/* <SimpleAccordion
           title={__('Label & Subtitle Container', 'bitform')}
           className={css(cls.accordion)}
           disable={activeAccordion !== 2}
           onClick={() => openHandler(2)}
           actionComponent={<HighlightElm selector="[data-dev-lbl-wrp]" />}
-        >
+        > */}
+        {customstyle === 'label-subtitle-container' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -429,15 +437,17 @@ export default function ThemeCustomize() {
               </div>
             </ThemeStylePropertyBlock>
           </div>
-        </SimpleAccordion>
+        )}
+        {/* </SimpleAccordion> */}
 
-        <SimpleAccordion
+        {/* <SimpleAccordion
           title={__('Label', 'bitform')}
           className={css(cls.accordion)}
           disable={activeAccordion !== 3}
           onClick={() => openHandler(3)}
           actionComponent={<HighlightElm selector="[data-dev-lbl]" />}
-        >
+        > */}
+        {customstyle === 'label' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -466,15 +476,18 @@ export default function ThemeCustomize() {
               </div>
             </ThemeStylePropertyBlock>
           </div>
-        </SimpleAccordion>
+        )}
 
-        <SimpleAccordion
+        {/* </SimpleAccordion> */}
+
+        {/* <SimpleAccordion
           title={__('Subtitle', 'bitform')}
           className={css(cls.accordion)}
           disable={activeAccordion !== 4}
           onClick={() => openHandler(4)}
           actionComponent={<HighlightElm selector="[data-dev-sub-titl]" />}
-        >
+        > */}
+        {customstyle === 'subtitle' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -503,14 +516,16 @@ export default function ThemeCustomize() {
               </div>
             </ThemeStylePropertyBlock>
           </div>
-        </SimpleAccordion>
+        )}
+        {/* </SimpleAccordion> */}
 
-        <SimpleAccordion
+        {/* <SimpleAccordion
           title={__('Helper Text', 'bitform')}
           className={css(cls.accordion)}
           disable={activeAccordion !== 5}
           onClick={() => openHandler(5)}
-        >
+        > */}
+        {customstyle === 'helper-text' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -539,14 +554,16 @@ export default function ThemeCustomize() {
               </div>
             </ThemeStylePropertyBlock>
           </div>
-        </SimpleAccordion>
+        )}
+        {/* </SimpleAccordion> */}
 
-        <SimpleAccordion
+        {/* <SimpleAccordion
           title={__('Error Message', 'bitform')}
           className={css(cls.accordion)}
           disable={activeAccordion !== 6}
           onClick={() => openHandler(6)}
-        >
+        > */}
+        {customstyle === 'error-messages' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -575,7 +592,8 @@ export default function ThemeCustomize() {
               </div>
             </ThemeStylePropertyBlock>
           </div>
-        </SimpleAccordion>
+        )}
+        {/* </SimpleAccordion> */}
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>

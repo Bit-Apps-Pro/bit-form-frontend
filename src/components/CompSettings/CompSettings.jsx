@@ -50,13 +50,8 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
             <Route path={`${path}/fields-list`} component={FieldsList} />
             <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
-            <Route path={`${path}/theme-customize`}><ThemeCustomize /></Route>
+            <Route path={`${path}/theme-customize/:customstyle`}><ThemeCustomize /></Route>
             <Route path={`${path}/field-theme-customize`}><FieldStyleCustomize /></Route>
-            {/*  change theme
-            change size
-            change primary color
-            change font color
-            */}
 
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>

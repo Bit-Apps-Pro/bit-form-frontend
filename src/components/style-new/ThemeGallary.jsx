@@ -61,7 +61,7 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
           </Tip>
           {isActive ? (
             <Tip msg="Customize theme">
-              <Link to={`/form/builder/${formType}/${formID}/theme-customize`} type="button" className={css(themeGalStyle.thm_ctrl_btn)} aria-label="Theme Customize">
+              <Link to={`/form/builder/${formType}/${formID}/theme-customize/theme-customization`} type="button" className={css(themeGalStyle.thm_ctrl_btn)} aria-label="Theme Customize">
                 <EditIcn size="20" stroke="2.2" />
               </Link>
             </Tip>
