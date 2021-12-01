@@ -39,12 +39,11 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
-  const colorSchemeRoot = useRecoilValue($colorScheme)
+  const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
   const setFlags = useSetRecoilState($flags)
   const [activeAccordion, setActiveAccordion] = useState()
-  const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  console.log({ colorScheme, themeColors })
+  const themeColors = useRecoilValue($themeColors)
+
   const { '--dir': direction,
     '--fld-wrp-m': wrpMagin,
     '--fld-wrp-p': wrpPadding,
@@ -318,7 +317,7 @@ export default function ThemeCustomize() {
           <div className={css(ut.flxcb, ut.mt2)}>
             <span className={css(ut.fw500)}>Field Font Size</span>
             <div className={css(ut.flxc)}>
-              {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" />}
+              {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
               <SizeControl
                 inputHandler={fldFsSizeHandler}
                 sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
@@ -363,23 +362,10 @@ export default function ThemeCustomize() {
         <h4 className={css(cls.subTitle)}>More Customizations</h4>
         <div className={css(cls.divider)} />
 
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Field Font Size</span>
-          {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
-          <SizeControl
-            inputHandler={fldFsSizeHandler}
-            sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
-            value={fldFSValue}
-            unit={fldFSUnit}
-            width="110px"
-            options={['px', 'em', 'rem']}
-          />
-        </div>
-
         {/* <div className={css(ut.flxcb)}>
           <span className={css(ut.fw500)}>Theme</span>
           <ThemeControl />
-        </div>
+        </div> */}
 
         <SimpleAccordion
           title={__('Field container', 'bitform')}
@@ -607,7 +593,7 @@ const cls = {
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
-  container: { ml: 12, mr: 15 },
+  container: { ml: 12, mr: 10 },
   btn: {
     b: 'none',
     oe: 'none',
