@@ -91,13 +91,14 @@ export default function StyleSegmentControl({ defaultActive,
     },
     // icn: { ...!noShadow && { fr: 'drop-shadow(0 1px 1px lightgray)' } },
   }
+
   const selectorRef = useRef(null)
   const tabsRef = useRef(null)
   const [active, setactive] = useState(defaultActive || options[0].label)
 
   const setSelectorPos = (activeElement) => {
     setTimeout(() => {
-      const { width: toActiveElmWidth } = activeElement.getBoundingClientRect()
+      const { width: toActiveElmWidth } = activeElement?.getBoundingClientRect() || { width: 0 }
       // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
       selectorRef.current.style.width = `${toActiveElmWidth}px`
       selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
