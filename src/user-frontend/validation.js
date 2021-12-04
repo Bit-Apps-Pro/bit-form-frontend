@@ -87,7 +87,7 @@ const generateFormEntries = () => {
 const generateErrMsg = (errKey, fldKey, fldData) => {
   const errFld = document.querySelector(`#form-${contentId} #${fldKey}-error`)
   if (errFld) {
-    if (errKey && fldData.err[errKey].show) {
+    if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
       errFld.parentElement.style.height = `${errFld.offsetHeight}px`
     } else {
