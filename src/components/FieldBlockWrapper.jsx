@@ -21,19 +21,6 @@ export default function FieldBlockWrapper({ layoutItem,
   formID,
   navigateToFieldSettings,
   navigateToStyle }) {
-  const { reCaptchaV2 } = useContext(AppSettings)
-  const ComponentsByTheme = () => {
-    const componentProps = deepCopy(fields[layoutItem.i])
-    // TODO move this code with recaptcha component after remove react frontend
-    if (componentProps && componentProps.typ === 'recaptcha') {
-      componentProps.siteKey = reCaptchaV2.siteKey
-    }
-    if (0) {
-      return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
-    }
-    return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
-  }
-
   return (
     <>
       <div className="blk-icn-wrp pos-abs flx">
@@ -87,7 +74,25 @@ export default function FieldBlockWrapper({ layoutItem,
           />
         </Downmenu>
       </div>
-      <ComponentsByTheme />
+      <ComponentsByTheme
+        fields={fields}
+        layoutItem={layoutItem}
+        formID={formID}
+      />
     </>
   )
+}
+
+const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
+  const { reCaptchaV2 } = useContext(AppSettings)
+
+  const componentProps = deepCopy(fields[layoutItem.i])
+  // TODO move this code with recaptcha component after remove react frontend
+  if (componentProps && componentProps.typ === 'recaptcha') {
+    componentProps.siteKey = reCaptchaV2.siteKey
+  }
+  if (0) {
+    return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
+  }
+  return <MapComponents isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
 }
