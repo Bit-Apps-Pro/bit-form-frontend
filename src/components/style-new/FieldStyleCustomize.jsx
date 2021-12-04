@@ -5,13 +5,15 @@ import { produce } from 'immer'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $flags, $styles } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $flags, $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
+import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 import materialTheme from './themes/2_material'
 
@@ -20,16 +22,61 @@ export default function FieldStyleCustomize() {
   const { formType, formID, fldKey, element } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const setFlags = useSetRecoilState($flags)
+  const themeVars = useRecoilValue($themeVars)
 
   const fldStyleObj = styles.fields[fldKey]
-  const { theme, fieldType } = fldStyleObj
+  const { theme, fieldType, classes } = fldStyleObj
+
+  console.log(classes)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
 
-  const fldStl = fldStyleObj.classes[`.${fldKey}-fld-wrp`]
+  const fldWrpStyle = classes[`.${fldKey}-fld-wrp`]
+
+  const getValueFromThemeVar = (val) => {
+    if (val.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
+  const uddateFontSize = (unit, value, elemn) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.fields[fldKey].classes[`.${fldKey}-${elemn}`]['font-size'] = `${value}${unit}`
+    }))
+  }
+  // for font-size
+  const fldLbl = classes[`.${fldKey}-lbl`]
+  const fldLblfs = fldLbl['font-size']
+  const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
+  const fldFsHandler = ({ unit, value }) => {
+    uddateFontSize(unit, value, 'lbl')
+  }
+  const fldFSValue = getNumFromStr(fldLblfsvalue)
+  const fldFSUnit = getStrFromStr(fldLblfsvalue)
+
+  // sub title
+  const subtitl = classes[`.${fldKey}-sub-titl`]
+  const subtitlFs = subtitl['font-size']
+  const subTitlfsvalue = getValueFromThemeVar(subtitlFs)
+  const subtitlFsHandler = ({ unit, value }) => {
+    uddateFontSize(unit, value, 'sub-titl')
+  }
+  const subTitlFSValue = getNumFromStr(subTitlfsvalue)
+  const subTitlFSUnit = getStrFromStr(subTitlfsvalue)
+
+  // heplper text
+  const hplTxt = classes[`.${fldKey}-hlp-txt`]
+  const hplTxtFs = hplTxt['font-size']
+  const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
+  const hlpTxtFsHandler = ({ unit, value }) => {
+    uddateFontSize(unit, value, 'hlp-txt')
+  }
+  const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
+  const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
   const overrideGlobalThemeHandler = ({ target: { checked } }) => {
     if (checked) {
@@ -47,15 +94,30 @@ export default function FieldStyleCustomize() {
       }))
     }
   }
+
   const fldStyle = {
     fk: fldKey,
     selector: `.${fldKey}-fld-wrp`,
     property: 'background',
   }
-  const fldWrpSpacing = {
-    object: 'fieldStyle',
-    paths: { fk: fldKey, selector: `.${fldKey}-fld-wrp`, margin: 'margin', padding: 'padding' },
-  }
+
+  const spacingObj = (ele) => (
+    {
+      object: 'fieldStyle',
+      paths: {
+        fk: fldKey,
+        selector: `.${fldKey}-${ele}`,
+        margin: 'margin',
+        padding: 'padding',
+      },
+    }
+  )
+
+  const fldWrpSpacing = spacingObj('fld-wrp')
+  const labelWrp = spacingObj('lbl-wrp')
+  const lbl = spacingObj('lbl')
+  const subtitle = spacingObj('sub-titl')
+  const hlpTxt = spacingObj('hlp-txt')
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -88,23 +150,95 @@ export default function FieldStyleCustomize() {
 
         {fldStyleObj?.overrideGlobalTheme && (
           <>
-            {element === 'field-container' && (
-              <>
-                <div className={css(cls.container)}>
+            <div className={css(cls.container)}>
+              {element === 'field-container' && (
+                <>
                   <div className={css(ut.flxcb, ut.mt2)}>
                     <div className={css(ut.flxcb)}>
                       <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
                     </div>
-                    <SimpleColorPicker value={fldStl.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
+                    <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
                   </div>
                   <div className={css(ut.flxcb, ut.mt2)}>
                     <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                     <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
                   </div>
+                </>
+              )}
+              {element === 'label-subtitle-container' && (
+                <div className={css(ut.flxcb, ut.mt2)}>
+                  <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                  <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
                 </div>
-                <div className={css(cls.divider)} />
-              </>
-            )}
+              )}
+              {element === 'label' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>Field Font Size</span>
+                    <div className={css(ut.flxc)}>
+                      <SizeControl
+                        inputHandler={fldFsHandler}
+                        sizeHandler={({ unitKey, unitValue }) => fldFsHandler({ unit: unitKey, value: unitValue })}
+                        value={fldFSValue}
+                        unit={fldFSUnit}
+                        width="110px"
+                        options={['px', 'em', 'rem']}
+                        id="font-size-control"
+                      />
+                    </div>
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
+                  </div>
+                </>
+              )}
+              {element === 'subtitle' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>Font Size</span>
+                    <div className={css(ut.flxc)}>
+                      <SizeControl
+                        inputHandler={subtitlFsHandler}
+                        sizeHandler={({ unitKey, unitValue }) => subtitlFsHandler({ unit: unitKey, value: unitValue })}
+                        value={subTitlFSValue}
+                        unit={subTitlFSUnit}
+                        width="110px"
+                        options={['px', 'em', 'rem']}
+                        id="font-size-control"
+                      />
+                    </div>
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subtitle} id="spacing-control" />
+                  </div>
+                </>
+              )}
+              {element === 'helper-text' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>Font Size</span>
+                    <div className={css(ut.flxc)}>
+                      <SizeControl
+                        inputHandler={hlpTxtFsHandler}
+                        sizeHandler={({ unitKey, unitValue }) => hlpTxtFsHandler({ unit: unitKey, value: unitValue })}
+                        value={hplTxtFSValue}
+                        unit={hplTxtFSUnit}
+                        width="110px"
+                        options={['px', 'em', 'rem']}
+                        id="font-size-control"
+                      />
+                    </div>
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={hlpTxt} id="spacing-control" />
+                  </div>
+                </>
+              )}
+            </div>
+            <div className={css(cls.divider)} />
           </>
         )}
 
