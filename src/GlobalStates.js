@@ -51,6 +51,7 @@ export const $lightThemeColors = atom({
     '--global-fld-bg-color': '', // field background color
   },
 })
+
 export const $darkThemeColors = atom({
   key: '$darkThemeColors',
   default: {
@@ -73,6 +74,7 @@ export const $darkThemeColors = atom({
     '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
   },
 })
+
 export const $highContrastThemeColors = atom({
   key: '$highContrastThemeColors',
   default: {
