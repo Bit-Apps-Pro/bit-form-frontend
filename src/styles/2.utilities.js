@@ -37,6 +37,7 @@ const ut = {
     ':disabled::before': { dy: 'none' },
   },
   fontBody: { fontFamily: '"Roboto", sans-serif' },
+  fontH: { fontFamily: '"Montserrat", sans-serif' },
   fw500: { fw: 500 },
   fs12: { fs: 12 },
 
