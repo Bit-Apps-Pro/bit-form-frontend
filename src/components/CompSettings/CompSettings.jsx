@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'

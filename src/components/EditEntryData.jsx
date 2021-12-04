@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import Scrollbars from 'react-custom-scrollbars'
+import Scrollbars from 'react-custom-scrollbars-2'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates'
 import Bitforms from '../user-frontend/Bitforms'
@@ -110,6 +110,9 @@ export default function EditEntryData(props) {
     )
   }
 
+  const mdlContentElm = document.querySelector('.btcd-modal-content')
+  const mdlAutoHeight = mdlContentElm?.offsetHeight ? (mdlContentElm.offsetHeight + 20) : 0
+
   return (
     <Modal
       hdrActn={<SaveBtn />}
@@ -131,7 +134,13 @@ export default function EditEntryData(props) {
           </style>
         </>
       )}
-      <Scrollbars style={{ height: 'calc(100% - 17px)' }}>
+      <Scrollbars
+        style={{ height: 'calc(100% - 17px)' }}
+        autoHide
+        autoHeight
+        autoHeightMin={mdlAutoHeight}
+        autoHeightMax={mdlAutoHeight}
+      >
         {data.layout !== null && (
           <Bitforms
             refer={ref}

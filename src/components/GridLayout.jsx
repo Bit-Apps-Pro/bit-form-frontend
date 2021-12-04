@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 
 import { memo, useContext, useEffect, useState } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { createDraft, finishDraft } from 'immer'
