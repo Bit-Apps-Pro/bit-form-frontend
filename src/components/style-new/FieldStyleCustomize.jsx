@@ -2,99 +2,122 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $colorScheme, $selectedFieldId, $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $flags, $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
-import { deepCopy } from '../../Utils/Helpers'
-import ResetStyle from './ResetStyle'
+import { __ } from '../../Utils/i18nwrap'
+import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { CommonStyle } from './styleHelpers'
-import ThemeControl from './ThemeControl'
+import SpacingControl from './SpacingControl'
+import { getNumFromStr, getStrFromStr } from './styleHelpers'
+import bitformDefaultTheme from './themes/1_bitformDefault'
+import materialTheme from './themes/2_material'
 
 export default function FieldStyleCustomize() {
   const { css } = useFela()
-  const { formType, formID } = useParams()
-  const setStyles = useSetRecoilState($styles)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const { themeVars: tempThemevars } = useRecoilValue($tempStyles)
-  const colorSchemeRoot = useRecoilValue($colorScheme)
-  const [colorScheme, setColorScheme] = useState(colorSchemeRoot)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const themeColors = useRecoilValue($themeColors)
+  const { formType, formID, fldKey, element } = useParams()
+  const [styles, setStyles] = useRecoilState($styles)
+  const setFlags = useSetRecoilState($flags)
+  const themeVars = useRecoilValue($themeVars)
 
-  const { '--global-font-color': themeFontColor,
-    '--global-primary-color': themePrimaryColor } = themeColors
+  const fldStyleObj = styles.fields[fldKey]
+  const { theme, fieldType, classes } = fldStyleObj
 
-  const { '--global-font-color': tempFontColor,
-    '--global-primary-color': tempPrimaryColor } = tempThemevars
+  console.log(classes)
 
-  const setSizes = ({ target: { value } }) => {
-    const tmpThemeVar = deepCopy(themeVars)
+  useEffect(() => {
+    setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
+    return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
+  }, [])
 
+  const fldWrpStyle = classes[`.${fldKey}-fld-wrp`]
+
+  const getValueFromThemeVar = (val) => {
+    if (val.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return val
+  }
+  const uddateFontSize = (unit, value, elemn) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      const flds = prvStyle.fields
-
-      const commonStyles = CommonStyle(selectedFieldId, value)
-      const commonStylClasses = Object.keys(commonStyles)
-
-      const fldClassesObj = flds[selectedFieldId].classes
-      const fldClasses = Object.keys(fldClassesObj)
-      console.log(commonStyles, flds, fldClassesObj)
-
-      const commonStylClassesLen = commonStylClasses.length
-      for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
-        const comnStylClass = commonStylClasses[indx]
-
-        if (fldClassesObj.hasOwnProperty(comnStylClass)) {
-          const mainStlProperties = fldClassesObj[comnStylClass]
-          const comStlProperties = commonStyles[comnStylClass]
-          const comnStlPropertiesKey = Object.keys(comStlProperties)
-
-          const comnStlPropertiesKeyLen = comnStlPropertiesKey.length
-          for (let popIndx = 0; popIndx < comnStlPropertiesKeyLen; popIndx += 1) {
-            const comnStlProperty = comnStlPropertiesKey[popIndx]
-
-            if (mainStlProperties.hasOwnProperty(comnStlProperty)) {
-              const mainStlVal = mainStlProperties[comnStlProperty]
-              const comStlVal = comStlProperties[comnStlProperty]
-              if (mainStlVal === comStlVal) {
-                continue
-              }
-              if (mainStlVal?.match(/var/gi)?.[0] === 'var') {
-                const mainStateVar = mainStlVal.replaceAll(/\(|var|!important|,.*|\)/gi, '')
-                tmpThemeVar[mainStateVar] = comStlVal
-                continue
-              }
-              if (!mainStlVal?.match(/var/gi)?.[0]) {
-                drft.fields[selectedFieldId].classes[fldClasses[indx]][comnStlProperty] = comStlVal
-              }
-            }
-          }
-        }
-      }
+      drft.fields[fldKey].classes[`.${fldKey}-${elemn}`]['font-size'] = `${value}${unit}`
     }))
-
-    setThemeVars(tmpThemeVar)
   }
-
-  const handlecolorScheme = ({ target: { name } }) => {
-    setColorScheme(name)
-    console.log(themeColors, name)
+  // for font-size
+  const fldLbl = classes[`.${fldKey}-lbl`]
+  const fldLblfs = fldLbl['font-size']
+  const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
+  const fldFsHandler = ({ unit, value }) => {
+    uddateFontSize(unit, value, 'lbl')
   }
+  const fldFSValue = getNumFromStr(fldLblfsvalue)
+  const fldFSUnit = getStrFromStr(fldLblfsvalue)
 
-  const handChange = ({ target: { checked } }) => {
+  // sub title
+  const subtitl = classes[`.${fldKey}-sub-titl`]
+  const subtitlFs = subtitl['font-size']
+  const subTitlfsvalue = getValueFromThemeVar(subtitlFs)
+  const subtitlFsHandler = ({ unit, value }) => {
+    uddateFontSize(unit, value, 'sub-titl')
+  }
+  const subTitlFSValue = getNumFromStr(subTitlfsvalue)
+  const subTitlFSUnit = getStrFromStr(subTitlfsvalue)
+
+  // heplper text
+  const hplTxt = classes[`.${fldKey}-hlp-txt`]
+  const hplTxtFs = hplTxt['font-size']
+  const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
+  const hlpTxtFsHandler = ({ unit, value }) => {
+    uddateFontSize(unit, value, 'hlp-txt')
+  }
+  const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
+  const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
+
+  const overrideGlobalThemeHandler = ({ target: { checked } }) => {
     if (checked) {
-      setThemeVars(prvThemevar => produce(prvThemevar, drft => {
-        drft['--global-font-color'] = tempThemevars['--global-font-color']
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fields[fldKey].overrideGlobalTheme = true
       }))
     } else {
-      console.log(checked)
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        if (theme === 'bitformDefault') {
+          drft.fields[fldKey] = bitformDefaultTheme(fldKey, fieldType)
+        }
+        if (theme === 'material') {
+          drft.fields[fldKey] = materialTheme(fldKey, fieldType)
+        }
+      }))
     }
   }
+
+  const fldStyle = {
+    fk: fldKey,
+    selector: `.${fldKey}-fld-wrp`,
+    property: 'background',
+  }
+
+  const spacingObj = (ele) => (
+    {
+      object: 'fieldStyle',
+      paths: {
+        fk: fldKey,
+        selector: `.${fldKey}-${ele}`,
+        margin: 'margin',
+        padding: 'padding',
+      },
+    }
+  )
+
+  const fldWrpSpacing = spacingObj('fld-wrp')
+  const labelWrp = spacingObj('lbl-wrp')
+  const lbl = spacingObj('lbl')
+  const subtitle = spacingObj('sub-titl')
+  const hlpTxt = spacingObj('hlp-txt')
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -110,59 +133,115 @@ export default function FieldStyleCustomize() {
       <h4 className={css(cls.title)}>Theme Customize</h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-        <h4 className={css(cls.subTitle)}>Color Scheme</h4>
+        {/* <h4 className={css(cls.subTitle)}>Color Scheme</h4>
         <div className={css(ut.flxcb, ut.w9, ut.mt1)}>
           <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
           <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
           <button onClick={handlecolorScheme} name="high-contrast" data-active={colorScheme === 'high-contrast'} className={css(cls.menuItem, colorScheme === 'high-contrast' && cls.clrActive)} type="button">High Contrast</button>
         </div>
-        <div className={css(cls.divider)} />
+        <div className={css(cls.divider)} /> */}
 
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
-        <div className={css(cls.container)}>
+        <span>
+          Override Global Theme Color
+          {' '}
+          <input type="checkbox" onChange={overrideGlobalThemeHandler} checked={fldStyleObj?.overrideGlobalTheme} name="" id="" aria-label="default Theme Color" />
+        </span>
 
-          {/*
-          <div className={css(ut.flxc)}>
-            <div className={css(cls.menuItem)}>Default</div>
-            <div className={css(cls.menuItem, { px: 10 })}>Dark Mode</div>
-            <div className={css(cls.menuItem)}>High Contrast Mode</div>
-          </div> */}
-
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Primary Color</span>
-              {(tempPrimaryColor !== themePrimaryColor)
-                && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
+        {fldStyleObj?.overrideGlobalTheme && (
+          <>
+            <div className={css(cls.container)}>
+              {element === 'field-container' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <div className={css(ut.flxcb)}>
+                      <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+                    </div>
+                    <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
+                  </div>
+                </>
+              )}
+              {element === 'label-subtitle-container' && (
+                <div className={css(ut.flxcb, ut.mt2)}>
+                  <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                  <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
+                </div>
+              )}
+              {element === 'label' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>Field Font Size</span>
+                    <div className={css(ut.flxc)}>
+                      <SizeControl
+                        inputHandler={fldFsHandler}
+                        sizeHandler={({ unitKey, unitValue }) => fldFsHandler({ unit: unitKey, value: unitValue })}
+                        value={fldFSValue}
+                        unit={fldFSUnit}
+                        width="110px"
+                        options={['px', 'em', 'rem']}
+                        id="font-size-control"
+                      />
+                    </div>
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
+                  </div>
+                </>
+              )}
+              {element === 'subtitle' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>Font Size</span>
+                    <div className={css(ut.flxc)}>
+                      <SizeControl
+                        inputHandler={subtitlFsHandler}
+                        sizeHandler={({ unitKey, unitValue }) => subtitlFsHandler({ unit: unitKey, value: unitValue })}
+                        value={subTitlFSValue}
+                        unit={subTitlFSUnit}
+                        width="110px"
+                        options={['px', 'em', 'rem']}
+                        id="font-size-control"
+                      />
+                    </div>
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subtitle} id="spacing-control" />
+                  </div>
+                </>
+              )}
+              {element === 'helper-text' && (
+                <>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>Font Size</span>
+                    <div className={css(ut.flxc)}>
+                      <SizeControl
+                        inputHandler={hlpTxtFsHandler}
+                        sizeHandler={({ unitKey, unitValue }) => hlpTxtFsHandler({ unit: unitKey, value: unitValue })}
+                        value={hplTxtFSValue}
+                        unit={hplTxtFSUnit}
+                        width="110px"
+                        options={['px', 'em', 'rem']}
+                        id="font-size-control"
+                      />
+                    </div>
+                  </div>
+                  <div className={css(ut.flxcb, ut.mt2)}>
+                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={hlpTxt} id="spacing-control" />
+                  </div>
+                </>
+              )}
             </div>
-            <SimpleColorPicker value={themePrimaryColor} action={{ type: 'global-primary-color' }} subtitle="Primary color" />
-          </div>
-          <div className={css(ut.flxcb, ut.mt2)}>
-            <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Font Color</span>
-              <span><input type="checkbox" title="Default Color" onChange={handChange} name="" id="" /></span>
-              {(tempFontColor !== themeFontColor) && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
-            </div>
-            <SimpleColorPicker value={themeFontColor} action={{ type: 'global-font-color' }} />
-          </div>
-        </div>
+            <div className={css(cls.divider)} />
+          </>
+        )}
 
-        <div className={css(cls.divider)} />
-
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Theme</span>
-          <ThemeControl />
-        </div>
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Size</span>
-          <select onChange={setSizes} name="" id="">
-            <option value="small-2">Small-2</option>
-            <option value="small-1">Small-1</option>
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-            <option value="large-1">Large-1</option>
-          </select>
-        </div>
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
     </div>

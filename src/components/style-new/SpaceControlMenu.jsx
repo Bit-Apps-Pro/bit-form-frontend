@@ -3,7 +3,6 @@ import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles, $themeVars } from '../../GlobalStates'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
-import { getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -18,9 +17,12 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
         drftStyle[property] = `${val}`
       }))
     }
+    if (object === 'fieldStyle') {
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fields[paths.fk].classes[paths.selector][property] = `${val}`
+      }))
+    }
   }
-
-  // const stateObj = getStyleStateObj(object, { themeVars, styles })
 
   const undoHandler = (v) => {
     if (object === 'themeVars') {
@@ -31,7 +33,19 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     }
   }
 
-  const getVal = (v) => (object === 'themeVars') && themeVars[v]
+  const getVal = (property) => {
+    if (object === 'themeVars') return themeVars[property]
+    if (object === 'fieldStyle') {
+      let value = styles.fields[paths.fk].classes[paths.selector][property]
+      const checkCssVar = value?.match(/var/gi)?.[0]
+      if (checkCssVar === 'var') {
+        const getVarProperty = value.replaceAll(/\(|var|,.*|\)/gi, '')
+        value = themeVars[getVarProperty]
+      }
+      return value
+    }
+  }
+
   const checkIsResetable = (v) => (object === 'themeVars') && (tempThemeVars[v] !== themeVars[v])
 
   return (

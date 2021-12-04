@@ -1,50 +1,83 @@
 import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import Scrollbars from 'react-custom-scrollbars-2'
 import FocusIcn from '../../Icons/FocusIcn'
 import TweaksIcn from '../../Icons/TweaksIcn'
-// import SettingsIcn from '../../Icons/SettingsIcn'
+import { $fields } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
-// import ut from '../../styles/2.utilities'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
 
 export default function StyleLayers() {
   const { css } = useFela()
+  const { formType, formID } = useParams()
+  const history = useHistory()
+  const fields = useRecoilValue($fields)
+  const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
+
+  const styleHandler = ({ target: { value: element } }) => {
+    history.push(`/form/builder/${formType}/${formID}/theme-customize/${element}`)
+  }
+
+  const fieldStyleHandler = (customStyle, fldKey) => {
+    history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${fldKey}/${customStyle}`)
+  }
 
   return (
     <div className={css(s.con)}>
       <h4 className={css(s.title)}>Elements & Layers</h4>
       <div className={css(s.divider)} />
-      <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
-      <NavBtn route="theme-customization" label="Theme Quick Tweaks asdasdasdasd" icn={<TweaksIcn size={13} />} />
-      <NavBtn route="field-container" label="Field Blocks" />
-      <NavBtn route="label-subtitle-container" label="Label Containers" />
-      <NavBtn route="label" label="Labels" />
-      <NavBtn route="subtitle" label="Sub Labels" />
-      <NavBtn route="helper-text" label="Helper Texts" />
-      <NavBtn route="error-messages" label="Error Messages" />
+      <Scrollbars height="100pxs" autoHide>
+        <div className={css(s.scrollDiv)}>
+          <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
+          <NavBtn route="theme-customization" label="Theme Quick Tweaks asdasdasdasd" icn={<TweaksIcn size={13} />} />
+          <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" />
+          <NavBtn route="label-subtitle-container" label="Label Containers" />
+          <NavBtn route="label" label="Labels" />
+          <NavBtn route="subtitle" label="Sub Labels" />
+          <NavBtn route="helper-text" label="Helper Texts" />
+          <NavBtn route="error-messages" label="Error Messages" />
 
-      <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
+          <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
 
-      <LayerAccordion title="Texfield">
-        <NavBtn route="error-messages" label="Quick Tweaks" offset="2.5" icn={<TweaksIcn size={13} />} />
-        <NavBtn route="error-messages" label="Field Container" offset="2.5" />
-        <NavBtn route="error-messages" label="Label Container" offset="2.5" />
-        <NavBtn route="error-messages" label="Label" offset="2.5" />
-        <NavBtn route="error-messages" label="Sub Label" offset="2.5" />
-        <NavBtn route="error-messages" label="Helper Text" offset="2.5" />
-        <NavBtn route="error-messages" label="Error Message" offset="2.5" />
-      </LayerAccordion>
-      <LayerAccordion title="Checkbox">
-        <NavBtn route="error-messages" label="Quick Tweaks" offset="2.5" titleClass={{ fw: 600 }} />
-        <NavBtn route="error-messages" label="Field Container" offset="2.5" />
-        <NavBtn route="error-messages" label="Label Container" offset="2.5" />
-        <NavBtn route="error-messages" label="Label" offset="2.5" />
-        <NavBtn route="error-messages" label="Sub Label" offset="2.5" />
-        <NavBtn route="error-messages" label="Helper Text" offset="2.5" />
-        <NavBtn route="error-messages" label="Error Message" offset="2.5" />
-      </LayerAccordion>
+          <LayerAccordion title="Texfield">
+            <NavBtn route="error-messages" label="Quick Tweaks" offset="2.5" icn={<TweaksIcn size={13} />} />
+            <NavBtn route="error-messages" label="Field Container" offset="2.5" />
+            <NavBtn route="error-messages" label="Label Container" offset="2.5" />
+            <NavBtn route="error-messages" label="Label" offset="2.5" />
+            <NavBtn route="error-messages" label="Sub Label" offset="2.5" />
+            <NavBtn route="error-messages" label="Helper Text" offset="2.5" />
+            <NavBtn route="error-messages" label="Error Message" offset="2.5" />
+          </LayerAccordion>
+          <LayerAccordion title="Checkbox">
+            <NavBtn route="error-messages" label="Quick Tweaks" offset="2.5" titleClass={{ fw: 600 }} />
+            <NavBtn route="error-messages" label="Field Container" offset="2.5" />
+            <NavBtn route="error-messages" label="Label Container" offset="2.5" />
+            <NavBtn route="error-messages" label="Label" offset="2.5" />
+            <NavBtn route="error-messages" label="Sub Label" offset="2.5" />
+            <NavBtn route="error-messages" label="Helper Text" offset="2.5" />
+            <NavBtn route="error-messages" label="Error Message" offset="2.5" />
+          </LayerAccordion>
 
+          {activeFields.map(([fldKey, fldData]) => (
+            <LayerAccordion title={fldData.typ} key={`${fldKey}`}>
+              <button type="button" onClick={() => fieldStyleHandler('field-container', fldKey)}>Field Container</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('label-subtitle-container', fldKey)}>Label Subtitle Container</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('label', fldKey)}>Label</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('subtitle', fldKey)}>Sub Title</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('helper-text', fldKey)}>Helper Text</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('error-messages', fldKey)}>Error Messages</button>
+              <hr />
+            </LayerAccordion>
+          ))}
+        </div>
+      </Scrollbars>
     </div>
   )
 }
@@ -71,18 +104,20 @@ function NavBtn({ route, label, offset = 1, icn, highlightSelector }) {
         {label}
       </div>
       <div className={css(s.navActionBtn)} data-action-btn>
-        <div
-          onMouseOver={() => highlightElm('highlightSelector')}
-          onFocus={() => highlightElm('highlightSelector')}
-          onMouseLeave={() => removeHightlight()}
-          onBlur={() => removeHightlight()}
-          role="button"
-          tabIndex="0"
-          className={css(s.highlightBtn)}
-          title="Highlight Element in Builder"
-        >
-          <FocusIcn size={15} stroke="2.5" />
-        </div>
+        {highlightSelector && (
+          <div
+            onMouseEnter={() => highlightElm(highlightSelector)}
+            onFocus={() => highlightElm(highlightSelector)}
+            onMouseLeave={() => removeHightlight()}
+            onBlur={() => removeHightlight()}
+            role="button"
+            tabIndex="0"
+            className={css(s.highlightBtn)}
+            title="Highlight Element in Builder"
+          >
+            <FocusIcn size={15} stroke="2.5" />
+          </div>
+        )}
       </div>
     </div>
   )
@@ -160,6 +195,9 @@ const s = {
     curp: 1,
     ':focus-visible': { focusShadow: 1 },
     ':hover': { bd: '#d3d3d3' },
+  },
+  scrollDiv: {
+    ow: 'hidden',
   },
   divider: { bb: '1px solid var(--white-0-83)' },
 }

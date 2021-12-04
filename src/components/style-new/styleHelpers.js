@@ -52,24 +52,24 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
   }
 })
 
-export const unitConverterHelper = (unit, value, preUnit) => {
-  if (preUnit === unit) return value
+export const unitConverterHelper = (unit, value, prvUnit) => {
+  if (prvUnit === unit) return value
 
-  if (preUnit === 'px' && unit === 'em') return Number((value * 0.0625).toFixed(3))
-  if (preUnit === 'px' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
-  if (preUnit === 'px' && unit === '%') return Number(value * 6.25)
+  if (prvUnit === 'px' && unit === 'em') return Number((value * 0.0625).toFixed(3))
+  if (prvUnit === 'px' && unit === 'rem') return Number((value * 0.0625).toFixed(3))
+  if (prvUnit === 'px' && unit === '%') return Number(value * 6.25)
 
-  if (preUnit === 'em' && unit === 'px') return Number(value * 16)
-  if (preUnit === 'em' && unit === 'rem') return Number(value)
-  if (preUnit === 'em' && unit === '%') return Number(value * 100)
+  if (prvUnit === 'em' && unit === 'px') return Number(value * 16)
+  if (prvUnit === 'em' && unit === 'rem') return Number(value)
+  if (prvUnit === 'em' && unit === '%') return Number(value * 100)
 
-  if (preUnit === 'rem' && unit === 'em') return Number(value)
-  if (preUnit === 'rem' && unit === 'px') return Number(value * 16)
-  if (preUnit === 'rem' && unit === '%') return Number(value * 100)
+  if (prvUnit === 'rem' && unit === 'em') return Number(value)
+  if (prvUnit === 'rem' && unit === 'px') return Number(value * 16)
+  if (prvUnit === 'rem' && unit === '%') return Number(value * 100)
 
-  if (preUnit === '%' && unit === 'px') return Number(value * 0.16)
-  if (preUnit === '%' && unit === 'rem') return Number(value * 0.01)
-  if (preUnit === '%' && unit === 'em') return Number(value * 0.01)
+  if (prvUnit === '%' && unit === 'px') return Number(value * 0.16)
+  if (prvUnit === '%' && unit === 'rem') return Number(value * 0.01)
+  if (prvUnit === '%' && unit === 'em') return Number(value * 0.01)
 }
 
 export const getNumFromStr = (str = '') => str.match(/[-]?([0-9]*[.])?[0-9]+/gi)?.[0]

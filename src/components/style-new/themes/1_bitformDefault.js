@@ -52,7 +52,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         // fieldThemeVars: {},
-        // overrideGlobalTheme: false,
+        overrideGlobalTheme: false,
         classes: textStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'check':
@@ -61,7 +61,7 @@ export default function bitformDefaultTheme(fk, type, direction) {
         theme: 'bitformDefault',
         fieldType: type,
         // fieldThemeVars: {},
-        // overrideGlobalTheme: false,
+        overrideGlobalTheme: false,
         classes: checkboxNradioStyle_1_bitformDefault({ fk, type, direction }),
       }
     case 'title':

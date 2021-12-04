@@ -5,13 +5,13 @@ import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
 import { showDraggableModal } from './styleHelpers'
 
-export default function SimpleColorPicker({ subtitle, action, value, id }) {
+export default function SimpleColorPicker({ subtitle, action, value, id, objectPaths }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   return (
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action, value, id })}
+        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action, value, id, objectPaths })}
         type="button"
         className={css(c.pickrBtn)}
       >
