@@ -1,5 +1,7 @@
 import { useFela } from 'react-fela'
 import { useHistory, useParams } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { $fields } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 
@@ -7,9 +9,14 @@ export default function StyleLayers() {
   const { css } = useFela()
   const { formType, formID } = useParams()
   const history = useHistory()
+  const fields = useRecoilValue($fields)
+  const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
 
-  const styleHandler = ({ target: { value: customstyle } }) => {
-    history.push(`/form/builder/${formType}/${formID}/theme-customize/${customstyle}`)
+  const styleHandler = ({ target: { value: element } }) => {
+    history.push(`/form/builder/${formType}/${formID}/theme-customize/${element}`)
+  }
+  const fieldStyleHandler = (customStyle, fldKey) => {
+    history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${fldKey}/${customStyle}`)
   }
 
   return (
@@ -28,24 +35,44 @@ export default function StyleLayers() {
         asdasdasdf asdf asdfasdfasdf
       </LayerAccordion>
       <button type="button" value="theme-customization" onClick={styleHandler}>Form Theme Customization</button>
-      {' '}
       <br />
       <button type="button" value="field-container" onClick={styleHandler}>Field Container</button>
-      {' '}
       <br />
       <button type="button" value="label-subtitle-container" onClick={styleHandler}>Label Subtitle Container</button>
-      {' '}
       <br />
       <button type="button" value="label" onClick={styleHandler}>Label</button>
-      {' '}
       <br />
       <button type="button" value="subtitle" onClick={styleHandler}>Sub Title</button>
-      {' '}
       <br />
       <button type="button" value="helper-text" onClick={styleHandler}>Helper Text</button>
-      {' '}
       <br />
       <button type="button" value="error-messages" onClick={styleHandler}>Error Messages</button>
+      <hr />
+      <span>Active Field list</span>
+      {
+        activeFields.map(([fldKey, fldData], inx) => {
+          const { lbl, typ } = fldData
+
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <LayerAccordion title={lbl || typ} key={`${fldKey}-${inx}`}>
+              <button type="button" onClick={() => fieldStyleHandler('field-container', fldKey)}>Field Container</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('label-subtitle-container', fldKey)}>Label Subtitle Container</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('label', fldKey)}>Label</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('subtitle', fldKey)}>Sub Title</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('helper-text', fldKey)}>Helper Text</button>
+              <br />
+              <button type="button" onClick={() => fieldStyleHandler('error-messages', fldKey)}>Error Messages</button>
+              <hr />
+            </LayerAccordion>
+          )
+        })
+      }
+      <hr />
     </div>
   )
 }

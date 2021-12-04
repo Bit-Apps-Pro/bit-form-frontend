@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState, memo } from 'react'
+import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
@@ -21,7 +21,7 @@ const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMen
 const RenderComponent = ({ component, action, value, objectPaths }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
-    case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} />
+    case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />

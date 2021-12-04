@@ -5,8 +5,8 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
-import { $themeColors, $themeVars } from '../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
@@ -14,14 +14,14 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsv2hsl } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 
-function SimpleColorPickerMenu({ action, value }) {
+function SimpleColorPickerMenu({ action, value, objectPaths }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
-  // const [colorVar, setColorVar] = useState()
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const setStyles = useSetRecoilState($styles)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -43,6 +43,8 @@ function SimpleColorPickerMenu({ action, value }) {
         return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-fld-bdr-color':
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
+      case 'lbl-wrp-bg':
+        return setColor(str2Color('hsl(100, 10%, 20%)'))
       default:
         return setColor(str2Color(themeVars[`--${action.type}`]))
     }
@@ -112,6 +114,11 @@ function SimpleColorPickerMenu({ action, value }) {
           // drft['--gfbg-s'] = `${s}%`
           // drft['--gfbg-l'] = `${l}%`
           // drft['--gfbg-a'] = a / 100
+        }))
+        break
+      case 'lbl-wrp-bg':
+        setStyles(prvStyle => produce(prvStyle, drft => {
+          drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = hsla
         }))
         break
       default:

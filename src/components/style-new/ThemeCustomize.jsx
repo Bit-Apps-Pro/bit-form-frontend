@@ -6,7 +6,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -16,14 +16,12 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
 import FieldMarginControl from './FieldMarginControl'
 import FontPicker from './FontPicker'
 import FormWrapperControl from './FormWrapperControl'
-import HighlightElm from './HighlightElm'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
@@ -35,11 +33,12 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
   const { css } = useFela()
-  const { formType, formID, customstyle } = useParams()
+  const { formType, formID, element } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
-  const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
+  const setColorScheme = useSetRecoilState($colorScheme)
+
   const setFlags = useSetRecoilState($flags)
   const themeColors = useRecoilValue($themeColors)
 
@@ -106,6 +105,7 @@ export default function ThemeCustomize() {
     '--err-c': tempErrC,
     '--err-sh': tempErrSh,
     '--err-bdr': tempErrBdr } = tempThemeVars
+
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -192,11 +192,11 @@ export default function ThemeCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
-  const openHandler = (value) => {
-    setActiveAccordion(value)
-  }
+  // const openHandler = (value) => {
+  //   setActiveAccordion(value)
+  // }
 
-  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+  // const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -223,7 +223,7 @@ export default function ThemeCustomize() {
 
         <h4 className={css(cls.subTitle)}>Quick Tweaks</h4> */}
 
-        {customstyle === 'theme-customization' && (
+        {element === 'theme-customization' && (
           <>
             <div className={css(cls.container)}>
 
@@ -378,7 +378,7 @@ export default function ThemeCustomize() {
           actionComponent={<HighlightElm selector="[data-dev-fld-wrp]" />}
         > */}
         {
-          customstyle === 'field-container' && (
+          element === 'field-container' && (
             <div className={css(ut.m10)}>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -413,7 +413,7 @@ export default function ThemeCustomize() {
           onClick={() => openHandler(2)}
           actionComponent={<HighlightElm selector="[data-dev-lbl-wrp]" />}
         > */}
-        {customstyle === 'label-subtitle-container' && (
+        {element === 'label-subtitle-container' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -447,7 +447,7 @@ export default function ThemeCustomize() {
           onClick={() => openHandler(3)}
           actionComponent={<HighlightElm selector="[data-dev-lbl]" />}
         > */}
-        {customstyle === 'label' && (
+        {element === 'label' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -487,7 +487,7 @@ export default function ThemeCustomize() {
           onClick={() => openHandler(4)}
           actionComponent={<HighlightElm selector="[data-dev-sub-titl]" />}
         > */}
-        {customstyle === 'subtitle' && (
+        {element === 'subtitle' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -525,7 +525,7 @@ export default function ThemeCustomize() {
           disable={activeAccordion !== 5}
           onClick={() => openHandler(5)}
         > */}
-        {customstyle === 'helper-text' && (
+        {element === 'helper-text' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -563,7 +563,7 @@ export default function ThemeCustomize() {
           disable={activeAccordion !== 6}
           onClick={() => openHandler(6)}
         > */}
-        {customstyle === 'error-messages' && (
+        {element === 'error-messages' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
