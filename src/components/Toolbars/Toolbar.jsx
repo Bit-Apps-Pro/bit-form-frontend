@@ -43,7 +43,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Text Field', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'That Field is taken. Try another.', show: true } },
+        err: { entryUnique: { dflt: 'The value is already taken. Try another.', show: false } },
       },
     },
     {
@@ -55,7 +55,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('User Name', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
+        err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: false } },
       },
     },
     {
@@ -67,7 +67,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Multi-Line Text', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: { entryUnique: { dflt: 'The value is already taken. Try another.', show: false } },
       },
     },
     /* {
@@ -91,7 +91,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: false } },
       },
     },
     {
@@ -108,7 +108,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: false } },
       },
     },
     {
@@ -120,7 +120,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Number Field', 'bitform'),
         ph: __('Number Input', 'bitform'),
         valid: {},
-        err: { invalid: { dflt: 'Number is invalid', show: true }, entryUnique: { dflt: 'That Number field is taken. Try another.', show: true } },
+        err: { invalid: { dflt: 'Number is invalid', show: true }, entryUnique: { dflt: 'That Number field is taken. Try another.', show: false } },
       },
     },
     {
@@ -137,7 +137,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { label: 'Option 3', value: 'Option 3' },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: false } },
       },
     },
     {
@@ -174,7 +174,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('example@mail.com', 'bitform'),
         pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{1,24})+$',
         valid: {},
-        err: { invalid: { dflt: 'Email is invalid', show: true }, entryUnique: { dflt: 'That email is taken. Try another.', show: true } },
+        err: { invalid: { dflt: 'Email is invalid', show: true }, entryUnique: { dflt: 'That email is taken. Try another.', show: false } },
       },
     },
     {
@@ -191,7 +191,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('URL Field', 'bitform'),
         ph: __('https://www.example.com', 'bitform'),
         valid: {},
-        err: { invalid: { dflt: 'URL is invalid', show: true }, entryUnique: { dflt: 'That URL is taken. Try another.', show: true } },
+        err: { invalid: { dflt: 'URL is invalid', show: true }, entryUnique: { dflt: 'That URL is taken. Try another.', show: false } },
       },
     },
     {
