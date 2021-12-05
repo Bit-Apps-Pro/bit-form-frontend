@@ -85,11 +85,30 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
   if (errFld && 'err' in (fldData || {})) {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
+      errFld.parentElement.style.marginTop = '5px'
       errFld.parentElement.style.height = `${errFld.offsetHeight}px`
+      scrollToFld(fldKey)
     } else {
+      errFld.parentElement.style.marginTop = 0
       errFld.parentElement.style.height = 0
     }
   }
+}
+
+const scrollToFld = fldKey => {
+  const fld = document.querySelector(`#form-${contentId} .${fldKey}`)
+  if (!isElementInViewport(fld)) window.scroll({ top: fld.offsetTop, behavior: 'smooth' })
+}
+
+const isElementInViewport = elm => {
+  const rect = elm.getBoundingClientRect()
+
+  return (
+    rect.top >= 0
+    && rect.left >= 0
+    && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
 }
 
 const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
