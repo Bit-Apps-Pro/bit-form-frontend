@@ -24,10 +24,9 @@ export default function FieldStyleCustomize() {
   const setFlags = useSetRecoilState($flags)
   const themeVars = useRecoilValue($themeVars)
 
-  const fldStyleObj = styles.fields[fldKey]
+  const fldStyleObj = styles?.fields?.[fldKey]
+  console.log(styles)
   const { theme, fieldType, classes } = fldStyleObj
-
-  console.log(classes)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
