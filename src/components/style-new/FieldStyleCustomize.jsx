@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $flags, $styles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -26,8 +26,6 @@ export default function FieldStyleCustomize() {
 
   const fldStyleObj = styles?.fields?.[fldKey]
   const { fieldType, classes, theme } = fldStyleObj
-
-  console.log(styles)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
