@@ -11,6 +11,7 @@ export default function LayerAccordion({ className,
   open = false,
   actionComponent,
   offset = 0,
+  tag,
   onClick }) {
   const [tgl, setTgl] = useState((open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
@@ -70,7 +71,7 @@ export default function LayerAccordion({ className,
               <span className={`title ${css(cls.dflx, ut.fw500)}`}>
                 {title}
               </span>
-              <span className={css(cls.titleTag)}>bf2-1</span>
+              <span className={css(cls.titleTag)}>{tag}</span>
             </div>
             <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
               {actionComponent && actionComponent}
