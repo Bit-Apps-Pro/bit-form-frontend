@@ -102,16 +102,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setBreakpointSize(parseStyle.breakpointSize)
       setTempStyles(preStyle => produce(preStyle, drft => {
         drft.themeVars = parseStyle?.themeVars
+        drft.themeColors = themeColors
       }))
       setThemeVars(parseStyle.themeVars)
 
       // declare new theme exist , no need old theme functions
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
     } else {
-      setTempStyles(preStyle => produce(preStyle, drft => {
-        drft.themeVars = themeVars
-        drft.themeColors = themeColors
-      }))
       setOldExistingStyle()
     }
   }, [fetchedBuilderHelperStates])
