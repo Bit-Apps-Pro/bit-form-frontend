@@ -16,7 +16,7 @@ const customProperties = {
 
   g: ($ = 'center') => ({ placeContent: $ }),
   dy: $ => ({ display: $ }),
-  flxp: $ => ({ flexWrap: 'wrap' }),
+  flxp: () => ({ flexWrap: 'wrap' }),
   bsz: $ => ({ boxSizing: $ }),
   vy: $ => ({ visibility: $ }),
 

@@ -66,9 +66,12 @@ export default function LayerAccordion({ className,
         <div className={css(ut.flxc, cls.titlebar)} style={{ paddingLeft: offset * 2 }}>
           <SortIcn className={`toggle-icn ${css(cls.icn)} `} size="9" style={{ transform: `rotate(${tgl ? 180 : 90}deg)` }} />
           <div className={css(cls.flxbwn)}>
-            <span className={`title ${css(cls.dflx)}`}>
-              {title}
-            </span>
+            <div className={css(ut.flxc)}>
+              <span className={`title ${css(cls.dflx, ut.fw500)}`}>
+                {title}
+              </span>
+              <span className={css(cls.titleTag)}>bf2-1</span>
+            </div>
             <div onClick={cancelBubble} onKeyPress={cancelBubble} role="button" tabIndex="-1">
               {actionComponent && actionComponent}
             </div>
@@ -105,6 +108,7 @@ const cls = {
   titlebar: {
     ws: 'nowrap',
     ow: 'hidden',
+    fw: 500,
     ':hover': { bd: '#eeeff7' },
   },
   dflx: {
@@ -123,8 +127,16 @@ const cls = {
     mt: -1,
     tn: 'transform 250ms',
   },
-  body: {
-    // ml: 22,
-    fs: 12,
+  body: { fs: 12 },
+  titleTag: {
+    p: '1px 5px',
+    bd: '#EDF2F7',
+    brs: 5,
+    cr: 'gray',
+    fs: 11,
+    fw: 400,
+    b: '1px solid #d8dde2',
+    ml: '7px',
+    curp: 1,
   },
 }
