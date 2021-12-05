@@ -196,8 +196,6 @@ function TextFieldSettings() {
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
-  console.log('fieldData', fieldData)
-
   return (
     <div className="mr-4 ml-2">
       <Back2FldList />
@@ -306,7 +304,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
@@ -319,9 +317,8 @@ function TextFieldSettings() {
                   </div>
                 </div>
               )}
-              <UniqField
+              <ErrorMessageSettings
                 type="entryUnique"
-                isUnique="isEntryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
               />
@@ -333,7 +330,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(email|username)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
@@ -346,11 +343,11 @@ function TextFieldSettings() {
                   </div>
                 </div>
               )}
-              <UniqField
+              <ErrorMessageSettings
                 type="userUnique"
-                isUnique="isUserUnique"
                 title="Validate as User Unique"
                 tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+                defaultMsg="The email is already taken. Try another."
               />
             </div>
           )
