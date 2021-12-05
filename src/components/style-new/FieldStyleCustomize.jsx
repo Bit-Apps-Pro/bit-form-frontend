@@ -25,8 +25,9 @@ export default function FieldStyleCustomize() {
   const themeVars = useRecoilValue($themeVars)
 
   const fldStyleObj = styles?.fields?.[fldKey]
+  const { fieldType, classes, theme } = fldStyleObj
+
   console.log(styles)
-  const { theme, fieldType, classes } = fldStyleObj
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -74,15 +75,37 @@ export default function FieldStyleCustomize() {
   const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
   const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
-  const overrideGlobalThemeHandler = ({ target: { checked } }) => {
+  const overrideGlobalThemeHandler = (e, elmnt) => {
+    const { target: { checked } } = e
+
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[fldKey].overrideGlobalTheme = true
+        drft.fields[fldKey].overrideGlobalTheme = [...prvStyle.fields[fldKey].overrideGlobalTheme, elmnt]
       }))
     } else {
       setStyles(prvStyle => produce(prvStyle, drft => {
+        const prvElmnt = [...prvStyle.fields[fldKey].overrideGlobalTheme]
+        prvElmnt.splice(prvElmnt.findIndex(el => el === elmnt), 1)
+        drft.fields[fldKey].overrideGlobalTheme = prvElmnt
+
         if (theme === 'bitformDefault') {
-          drft.fields[fldKey] = bitformDefaultTheme(fldKey, fieldType)
+          const getElementStyle = bitformDefaultTheme(fldKey, fieldType)
+          if (elmnt === 'field-container') {
+            const getStyle = getElementStyle.classes[`.${fldKey}-fld-wrp`]
+            drft.fields[fldKey].classes[`.${fldKey}-fld-wrp`] = getStyle
+          } else if (elmnt === 'label-subtitle-container') {
+            const getStyle = getElementStyle.classes[`.${fldKey}-lbl-wrp`]
+            drft.fields[fldKey].classes[`.${fldKey}-lbl-wrp`] = getStyle
+          } else if (elmnt === 'label') {
+            const getStyle = getElementStyle.classes[`.${fldKey}-lbl`]
+            drft.fields[fldKey].classes[`.${fldKey}-lbl`] = getStyle
+          } else if (elmnt === 'subtitle') {
+            const getStyle = getElementStyle.classes[`.${fldKey}-sub-titl`]
+            drft.fields[fldKey].classes[`.${fldKey}-sub-titl`] = getStyle
+          } else if (elmnt === 'helper-text') {
+            const getStyle = getElementStyle.classes[`.${fldKey}-hlp-txt`]
+            drft.fields[fldKey].classes[`.${fldKey}-hlp-txt`] = getStyle
+          }
         }
         if (theme === 'material') {
           drft.fields[fldKey] = materialTheme(fldKey, fieldType)
@@ -141,102 +164,98 @@ export default function FieldStyleCustomize() {
         <span>
           Override Global Theme Color
           {' '}
-          <input type="checkbox" onChange={overrideGlobalThemeHandler} checked={fldStyleObj?.overrideGlobalTheme} name="" id="" aria-label="default Theme Color" />
+          <input type="checkbox" onChange={(e) => overrideGlobalThemeHandler(e, element)} checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false} name="" id="" aria-label="default Theme Color" />
         </span>
 
-        {fldStyleObj?.overrideGlobalTheme && (
-          <>
-            <div className={css(cls.container)}>
-              {element === 'field-container' && (
-                <>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <div className={css(ut.flxcb)}>
-                      <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                    </div>
-                    <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
-                  </div>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
-                  </div>
-                </>
-              )}
-              {element === 'label-subtitle-container' && (
-                <div className={css(ut.flxcb, ut.mt2)}>
-                  <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                  <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
+        <div className={css(cls.container)}>
+          {element === 'field-container' && (
+            <>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
                 </div>
-              )}
-              {element === 'label' && (
-                <>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>Field Font Size</span>
-                    <div className={css(ut.flxc)}>
-                      <SizeControl
-                        inputHandler={fldFsHandler}
-                        sizeHandler={({ unitKey, unitValue }) => fldFsHandler({ unit: unitKey, value: unitValue })}
-                        value={fldFSValue}
-                        unit={fldFSUnit}
-                        width="110px"
-                        options={['px', 'em', 'rem']}
-                        id="font-size-control"
-                      />
-                    </div>
-                  </div>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
-                  </div>
-                </>
-              )}
-              {element === 'subtitle' && (
-                <>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>Font Size</span>
-                    <div className={css(ut.flxc)}>
-                      <SizeControl
-                        inputHandler={subtitlFsHandler}
-                        sizeHandler={({ unitKey, unitValue }) => subtitlFsHandler({ unit: unitKey, value: unitValue })}
-                        value={subTitlFSValue}
-                        unit={subTitlFSUnit}
-                        width="110px"
-                        options={['px', 'em', 'rem']}
-                        id="font-size-control"
-                      />
-                    </div>
-                  </div>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subtitle} id="spacing-control" />
-                  </div>
-                </>
-              )}
-              {element === 'helper-text' && (
-                <>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>Font Size</span>
-                    <div className={css(ut.flxc)}>
-                      <SizeControl
-                        inputHandler={hlpTxtFsHandler}
-                        sizeHandler={({ unitKey, unitValue }) => hlpTxtFsHandler({ unit: unitKey, value: unitValue })}
-                        value={hplTxtFSValue}
-                        unit={hplTxtFSUnit}
-                        width="110px"
-                        options={['px', 'em', 'rem']}
-                        id="font-size-control"
-                      />
-                    </div>
-                  </div>
-                  <div className={css(ut.flxcb, ut.mt2)}>
-                    <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                    <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={hlpTxt} id="spacing-control" />
-                  </div>
-                </>
-              )}
+                <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
+              </div>
+            </>
+          )}
+          {element === 'label-subtitle-container' && (
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
             </div>
-            <div className={css(cls.divider)} />
-          </>
-        )}
+          )}
+          {element === 'label' && (
+            <>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Field Font Size</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={fldFsHandler}
+                    sizeHandler={({ unitKey, unitValue }) => fldFsHandler({ unit: unitKey, value: unitValue })}
+                    value={fldFSValue}
+                    unit={fldFSUnit}
+                    width="110px"
+                    options={['px', 'em', 'rem']}
+                    id="font-size-control"
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
+              </div>
+            </>
+          )}
+          {element === 'subtitle' && (
+            <>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Font Size</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={subtitlFsHandler}
+                    sizeHandler={({ unitKey, unitValue }) => subtitlFsHandler({ unit: unitKey, value: unitValue })}
+                    value={subTitlFSValue}
+                    unit={subTitlFSUnit}
+                    width="110px"
+                    options={['px', 'em', 'rem']}
+                    id="font-size-control"
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subtitle} id="spacing-control" />
+              </div>
+            </>
+          )}
+          {element === 'helper-text' && (
+            <>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Font Size</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={hlpTxtFsHandler}
+                    sizeHandler={({ unitKey, unitValue }) => hlpTxtFsHandler({ unit: unitKey, value: unitValue })}
+                    value={hplTxtFSValue}
+                    unit={hplTxtFSUnit}
+                    width="110px"
+                    options={['px', 'em', 'rem']}
+                    id="font-size-control"
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={hlpTxt} id="spacing-control" />
+              </div>
+            </>
+          )}
+        </div>
+        <div className={css(cls.divider)} />
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
