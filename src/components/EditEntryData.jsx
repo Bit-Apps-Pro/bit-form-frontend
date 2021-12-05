@@ -110,8 +110,8 @@ export default function EditEntryData(props) {
     )
   }
 
-  const mdlContentElm = document.querySelector('.btcd-modal-content')
-  const mdlAutoHeight = mdlContentElm?.offsetHeight ? (mdlContentElm.offsetHeight + 20) : 0
+  const mdlContentElm = document.querySelector('.btcd-modal-wrp')
+  const mdlAutoHeight = mdlContentElm?.offsetHeight ? (mdlContentElm.offsetHeight - 150) : 0
 
   return (
     <Modal
@@ -135,7 +135,6 @@ export default function EditEntryData(props) {
         </>
       )}
       <Scrollbars
-        style={{ height: 'calc(100% - 17px)' }}
         autoHide
         autoHeight
         autoHeightMin={mdlAutoHeight}
