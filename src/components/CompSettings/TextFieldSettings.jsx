@@ -1,18 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 import CopyText from '../Utilities/CopyText'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import UniqField from './CompSettingsUtils/UniqField'
-import { deepCopy } from '../../Utils/Helpers'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')

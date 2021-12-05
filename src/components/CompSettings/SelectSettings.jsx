@@ -15,7 +15,6 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
 
 export default function SelectSettings() {
@@ -241,9 +240,8 @@ export default function SelectSettings() {
             </div>
           </div>
         )}
-        <UniqField
+        <ErrorMessageSettings
           type="entryUnique"
-          isUnique="isEntryUnique"
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
         />
