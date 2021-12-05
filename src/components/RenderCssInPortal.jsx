@@ -1830,15 +1830,15 @@ arrow:after,
     stroke-linejoin: round;
   }
   .highlight-margin {
-  background-color: rgb(255, 200, 98);
-  opacity: 0.5;
-  position: absolute;
-  overflow: hidden;
-  z-index: 999999;
+    background-color: rgb(255, 200, 98);
+    opacity: 0.3;
+    position: absolute;
+    overflow: hidden;
+    z-index: 999999;
   }
   .highlight-padding {
     overflow: hidden;
-    background-color: rgb(86, 86, 255);
+    background-color: rgb(86, 111, 255);
   }
   .highlight-element {
     overflow: hidden;
