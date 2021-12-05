@@ -49,8 +49,7 @@ export default function FieldStyleCustomize() {
     }))
   }
   // for font-size
-  const fldLbl = classes[`.${fldKey}-lbl`]
-  const fldLblfs = fldLbl['font-size']
+  const fldLblfs = classes[`.${fldKey}-lbl`]['font-size']
   const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
   const fldFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'lbl')
@@ -59,18 +58,16 @@ export default function FieldStyleCustomize() {
   const fldFSUnit = getStrFromStr(fldLblfsvalue)
 
   // sub title
-  const subtitl = classes[`.${fldKey}-sub-titl`]
-  const subtitlFs = subtitl['font-size']
-  const subTitlfsvalue = getValueFromThemeVar(subtitlFs)
+  const subtitl = classes[`.${fldKey}-sub-titl`]['font-size']
+  const subTitlFs = getValueFromThemeVar(subtitl)
   const subtitlFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'sub-titl')
   }
-  const subTitlFSValue = getNumFromStr(subTitlfsvalue)
-  const subTitlFSUnit = getStrFromStr(subTitlfsvalue)
+  const subTitlFSValue = getNumFromStr(subTitlFs)
+  const subTitlFSUnit = getStrFromStr(subTitlFs)
 
   // heplper text
-  const hplTxt = classes[`.${fldKey}-hlp-txt`]
-  const hplTxtFs = hplTxt['font-size']
+  const hplTxtFs = classes[`.${fldKey}-hlp-txt`]['font-size']
   const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
   const hlpTxtFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'hlp-txt')

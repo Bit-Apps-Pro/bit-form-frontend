@@ -341,7 +341,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     history.push(`/form/builder/${formType}/${formID}/field-theme-customize`)
     // history.replace(history.location.pathname.replace(/theme-customize|themes|fields-list|style\/.+/g, 'field-theme-customize'))
     resetContextMenu()
-
   }
 
   const handleFldBlockEvent = (fieldId) => {
