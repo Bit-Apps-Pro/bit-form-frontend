@@ -11,9 +11,9 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       position: 'relative',
     },
     [`.${fk}-lbl-wrp`]: { width: 'var(--lbl-wrp-width, auto)', 'align-self': 'var(--lbl-wrp-sa, auto)', margin: 'var(--lbl-wrp-m, 0)', padding: 'var(--lbl-wrp-p, 0)' },
-    [`.${fk}-lbl`]: { 'font-size': 'var(--fld-lbl-fs)', display: 'block', 'text-align': 'var(--lbl-al, initial)', margin: 'var(--fld-lbl-m, 0)', padding: 'var(--fld-lbl-p, 0)' },
-    [`.${fk}-sub-titl`]: { 'font-size': 'var(--sub-titl-fs)', 'text-align': 'var(--sub-titl-al, initial)', padding: 'var(--sub-titl-p, 0)', margin: 'var(--sub-titl-m, 0)' },
-    [`.${fk}-hlp-txt`]: { 'font-size': 'var(--hlp-txt-fs)', 'text-align': 'var(--hlp-txt-al, init)', padding: 'var(--hlp-txt-p, 0)', margin: 'var(--hlp-txt-m, 0)' },
+    [`.${fk}-lbl`]: { 'font-size': 'var(--fld-lbl-fs)', display: 'flex', 'align-items': 'center', 'text-align': 'var(--lbl-al, initial)', margin: 'var(--fld-lbl-m, 0)', padding: 'var(--fld-lbl-p, 0)' },
+    [`.${fk}-sub-titl`]: { 'font-size': 'var(--sub-titl-fs)', display: 'flex', 'align-items': 'center', 'text-align': 'var(--sub-titl-al, initial)', padding: 'var(--sub-titl-p, 0)', margin: 'var(--sub-titl-m, 0)' },
+    [`.${fk}-hlp-txt`]: { 'font-size': 'var(--hlp-txt-fs)', display: 'flex', 'align-items': 'center', 'text-align': 'var(--hlp-txt-al, init)', padding: 'var(--hlp-txt-p, 0)', margin: 'var(--hlp-txt-m, 0)' },
     [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
     [`.${fk}-inp-wrp`]: { width: 'var(--inp-wrp-width, auto)' },
 
@@ -59,5 +59,26 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       top: '50%',
       transform: 'translateY(-50%)',
     },
+    [`.${fk}-lbl-pre-i`]: {
+      width: '25px',
+      height: '25px',
+
+    },
+    [`.${fk}-sub-titl-icn`]: {
+      width: '25px',
+      height: '25px',
+
+    },
+    [`.${fk}-hlp-txt-icn`]: {
+      width: '25px',
+      height: '25px',
+
+    },
+    [`.${fk}-title-i`]: {
+      width: '25px',
+      height: '25px',
+
+    },
+
   }
 }

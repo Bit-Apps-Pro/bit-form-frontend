@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
+import SpacingControl from '../style-new/SpacingControl'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
@@ -16,12 +17,22 @@ function DividerSettings() {
   const [styles, setStyles] = useRecoilState($styles)
 
   const dividerCLass = `.${fldKey}-divider`
-  const { 'border-width': borderWidth, 'border-style': borderStyle } = styles.fields[fldKey].classes[dividerCLass]
+  const { 'border-width': borderWidth, 'border-style': borderStyle, margin, padding } = styles.fields[fldKey].classes[dividerCLass]
 
   const inputHandler = (val, type) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[dividerCLass][type] = val
     }))
+  }
+
+  const path = `fields->${fldKey}->classes->${dividerCLass}`
+
+  const objectPaths = {
+    object: 'styles',
+    paths: {
+      margin: `${path}->margin`,
+      padding: `${path}->padding`,
+    },
   }
 
   return (
@@ -61,6 +72,15 @@ function DividerSettings() {
             value={borderWidth}
             inputHandler={(e) => inputHandler(e.value, 'border-width')}
           />
+        </div>
+      </div>
+      <br />
+      <div>
+        <div className={css(ut.flxcb, ut.mt2)}>
+          <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
+          <div className={css(ut.flxcb, ut.mr2)}>
+            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={objectPaths} />
+          </div>
         </div>
       </div>
     </div>

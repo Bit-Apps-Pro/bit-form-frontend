@@ -9,6 +9,8 @@ export default function titleStyle_1_bitformDefault({ fk, type, direction }) {
       'background-image': '',
     },
     [`.${fk}-main`]: { },
-    [`.${fk}-title`]: { 'margin-top': 0, 'margin-bottom': '3px' },
+    [`.${fk}-title`]: { margin: 0 },
+    [`.${fk}-sub-title`]: { margin: 0 },
+    [`.${fk}-logo`]: { },
   }
 }

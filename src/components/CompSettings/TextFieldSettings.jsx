@@ -8,7 +8,7 @@ import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
+import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn, $styles } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -19,6 +19,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
+import { getNumFromStr, getStrFromStr, unitConverterHelper } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -31,6 +32,7 @@ import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import Icons from './Icons'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
+import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function TextFieldSettings() {
@@ -61,6 +63,14 @@ function TextFieldSettings() {
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const setBuilderHookState = useSetRecoilState($builderHookStates)
+
+  const [styles, setStyles] = useRecoilState($styles)
+
+  const subTleIcn = `.${fldKey}-sub-titl-icn`
+  const hlpTxtIcn = `.${fldKey}-hlp-txt-icn`
+
+  const { width: subTleWidth, height: subTleHeight } = styles.fields[fldKey].classes[subTleIcn] || ''
+  const { width: hlpIcnWidth, height: hlpIcnHeight } = styles.fields[fldKey].classes[hlpTxtIcn] || ''
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -415,6 +425,20 @@ function TextFieldSettings() {
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
   }
+
+  const icnWidthHandle = ({ unit, value }, cls, width) => {
+    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(width || 'px'))
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
+    }))
+  }
+  const icnHeightHandle = ({ unit, value }, cls, height) => {
+    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(height || 'px'))
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
+    }))
+  }
+
   const inputModeList = ['none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url']
   return (
     <>
@@ -475,6 +499,51 @@ function TextFieldSettings() {
               onChange={setSubTitle}
             />
           </div>
+
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>Icon</span>
+            <div className={css(ut.flxcb)}>
+              {fieldData?.subTleIcn && (
+                <img src={fieldData?.subTleIcn} alt="start icon" width="18" height="18" />
+              )}
+
+              <button type="button" onClick={() => setIconModel('subTleIcn')} className={css(ut.icnBtn)}>
+                <EditIcn size={22} />
+              </button>
+              {fieldData.subTleIcn && (
+                <button onClick={() => removeIcon('subTleIcn')} className={css(ut.icnBtn)} type="button">
+                  <CloseIcn size="13" />
+                </button>
+              )}
+
+            </div>
+          </div>
+          <div className={css(ut.flxcb, ut.m10)}>
+            <span className={css(ut.fw500)}>Width</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                inputHandler={val => icnWidthHandle(val, subTleIcn, subTleWidth)}
+                sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleWidth)}
+                value={getNumFromStr(subTleWidth) || 10}
+                unit={getStrFromStr(subTleWidth) || 'px'}
+                width="110px"
+                options={['px', '%']}
+              />
+            </div>
+          </div>
+          <div className={css(ut.flxcb, ut.m10)}>
+            <span className={css(ut.fw500)}>Height</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                inputHandler={val => icnHeightHandle(val, subTleIcn, subTleHeight)}
+                sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleHeight)}
+                value={getNumFromStr(subTleHeight) || 10}
+                unit={getStrFromStr(subTleHeight) || 'px'}
+                width="110px"
+                options={['px', '%']}
+              />
+            </div>
+          </div>
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
@@ -500,12 +569,60 @@ function TextFieldSettings() {
               onChange={setHelperTxt}
             />
           </div>
+          <div className={css(ut.mt2, { mx: 10 })}>
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>Icon</span>
+              <div className={css(ut.flxcb)}>
+                {fieldData?.hlpTxtIcn && (
+                  <img src={fieldData?.hlpTxtIcn} alt="Icon" width="18" height="18" />
+                )}
+
+                <button type="button" onClick={() => setIconModel('hlpTxtIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
+                </button>
+                {fieldData?.hlpTxtIcn && (
+                  <button onClick={() => removeIcon('hlpTxtIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                )}
+
+              </div>
+            </div>
+          </div>
+
+          <div className={css(ut.flxcb, ut.m10)}>
+            <span className={css(ut.fw500)}>Width</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                inputHandler={val => icnWidthHandle(val, hlpTxtIcn, hlpIcnWidth)}
+                sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnWidth)}
+                value={getNumFromStr(hlpIcnWidth) || 10}
+                unit={getStrFromStr(hlpIcnWidth) || 'px'}
+                width="110px"
+                options={['px', '%']}
+              />
+            </div>
+          </div>
+          <div className={css(ut.flxcb, ut.m10)}>
+            <span className={css(ut.fw500)}>Height</span>
+            <div className={css(ut.flxc)}>
+              <SizeControl
+                inputHandler={val => icnHeightHandle(val, hlpTxtIcn, hlpIcnHeight)}
+                sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnHeight)}
+                value={getNumFromStr(hlpIcnHeight) || 10}
+                unit={getStrFromStr(hlpIcnHeight) || 'px'}
+                width="110px"
+                options={['px', '%']}
+              />
+            </div>
+          </div>
+
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
 
         <SimpleAccordion
-          title={__('Icons', 'bitform')}
+          title={__('Input Icons', 'bitform')}
           className={css(FieldStyle.fieldSection)}
           toggleAction={hideAdminLabel}
           toggleChecked
@@ -517,7 +634,7 @@ function TextFieldSettings() {
               <span className={css(ut.fw500)}>Start icon</span>
               <div className={css(ut.flxcb)}>
                 {fieldData?.prefixIcn && (
-                  <img src={fieldData?.prefixIcn} alt="start icon" width="25" height="25" />
+                  <img src={fieldData?.prefixIcn} alt="start icon" width="18" height="18" />
                 )}
 
                 <button type="button" onClick={() => setIconModel('prefixIcn')} className={css(ut.icnBtn)}>
@@ -537,7 +654,7 @@ function TextFieldSettings() {
                 <span className={css(ut.fw500)}>End icon</span>
                 <div className={css(ut.flxcb)}>
                   {fieldData?.suffixIcn && (
-                    <img src={fieldData?.suffixIcn} alt="end icon" width="25" height="25" />
+                    <img src={fieldData?.suffixIcn} alt="end icon" width="18" height="18" />
                   )}
                   <button onClick={() => setIconModel('suffixIcn')} className={css(ut.icnBtn)} type="button">
                     <EditIcn size={22} />
