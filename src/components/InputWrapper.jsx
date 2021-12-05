@@ -50,7 +50,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       </div>
       {(err || fieldData?.err) && (
         <div className={`error-wrapper ${err && 'h-a'}`}>
-          <div id={`${fieldKey}-error`} className="error-txt">
+          <div id={`${fieldKey}-error`} data-dev-err-msg={fieldKey} className="error-txt">
             {err}
           </div>
         </div>
