@@ -559,7 +559,6 @@ textarea.fld {
 }
 
 .error-wrapper {
-  margin-top: 5px;
   height: 0;
   overflow: hidden;
   transition: all .3s;
@@ -573,6 +572,7 @@ textarea.fld {
   font-size: 13px;
 }
 
-.h-a {
+.err-msg {
   height: auto !important;
+  margin-top: 5px !important;
 }
