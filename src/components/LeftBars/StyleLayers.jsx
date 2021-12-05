@@ -28,7 +28,7 @@ export default function StyleLayers() {
     <div className={css(s.con)}>
       <h4 className={css(s.title)}>Elements & Layers</h4>
       <div className={css(s.divider)} />
-      <Scrollbars height="100pxs" autoHide>
+      <Scrollbars height="100px" autoHide>
         <div className={css(s.scrollDiv)}>
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="theme-customization" label="Theme Quick Tweaks asdasdasdasd" icn={<TweaksIcn size={13} />} />
@@ -62,6 +62,7 @@ export default function StyleLayers() {
 
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion title={fldData.typ} key={`${fldKey}`}>
+              <NavBtn route={fldKey} subRoute="field-container" label="Field Container" offset="2.5" />
               <button type="button" onClick={() => fieldStyleHandler('field-container', fldKey)}>Field Container</button>
               <br />
               <button type="button" onClick={() => fieldStyleHandler('label-subtitle-container', fldKey)}>Label Subtitle Container</button>
@@ -81,11 +82,12 @@ export default function StyleLayers() {
     </div>
   )
 }
-function NavBtn({ route, label, offset = 1, icn, highlightSelector }) {
+function NavBtn({ route, label, offset = 1, icn, highlightSelector, subRoute }) {
   const { formType, formID } = useParams()
   const history = useHistory()
   const styleHandler = () => {
-    history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
+    if (!subRoute) history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
+    else history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${subRoute}`)
   }
   const { css } = useFela()
   return (
@@ -196,8 +198,6 @@ const s = {
     ':focus-visible': { focusShadow: 1 },
     ':hover': { bd: '#d3d3d3' },
   },
-  scrollDiv: {
-    ow: 'hidden',
-  },
+  scrollDiv: { ow: 'hidden' },
   divider: { bb: '1px solid var(--white-0-83)' },
 }
