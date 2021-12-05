@@ -518,32 +518,36 @@ function TextFieldSettings() {
 
             </div>
           </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Width</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={val => icnWidthHandle(val, subTleIcn, subTleWidth)}
-                sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleWidth)}
-                value={getNumFromStr(subTleWidth) || 10}
-                unit={getStrFromStr(subTleWidth) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Height</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={val => icnHeightHandle(val, subTleIcn, subTleHeight)}
-                sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleHeight)}
-                value={getNumFromStr(subTleHeight) || 10}
-                unit={getStrFromStr(subTleHeight) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
+          {fieldData?.subTleIcn && (
+            <>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Width</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => icnWidthHandle(val, subTleIcn, subTleWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleWidth)}
+                    value={getNumFromStr(subTleWidth) || 10}
+                    unit={getStrFromStr(subTleWidth) || 'px'}
+                    width="110px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Height</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => icnHeightHandle(val, subTleIcn, subTleHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleHeight)}
+                    value={getNumFromStr(subTleHeight) || 10}
+                    unit={getStrFromStr(subTleHeight) || 'px'}
+                    width="110px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
@@ -590,32 +594,36 @@ function TextFieldSettings() {
             </div>
           </div>
 
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Width</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={val => icnWidthHandle(val, hlpTxtIcn, hlpIcnWidth)}
-                sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnWidth)}
-                value={getNumFromStr(hlpIcnWidth) || 10}
-                unit={getStrFromStr(hlpIcnWidth) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Height</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={val => icnHeightHandle(val, hlpTxtIcn, hlpIcnHeight)}
-                sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnHeight)}
-                value={getNumFromStr(hlpIcnHeight) || 10}
-                unit={getStrFromStr(hlpIcnHeight) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
+          {fieldData?.hlpTxtIcn && (
+            <>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Width</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => icnWidthHandle(val, hlpTxtIcn, hlpIcnWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnWidth)}
+                    value={getNumFromStr(hlpIcnWidth) || 10}
+                    unit={getStrFromStr(hlpIcnWidth) || 'px'}
+                    width="110px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Height</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => icnHeightHandle(val, hlpTxtIcn, hlpIcnHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnHeight)}
+                    value={getNumFromStr(hlpIcnHeight) || 10}
+                    unit={getStrFromStr(hlpIcnHeight) || 'px'}
+                    width="110px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+            </>
+          )}
 
         </SimpleAccordion>
 

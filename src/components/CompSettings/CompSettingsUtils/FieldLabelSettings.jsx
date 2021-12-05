@@ -127,32 +127,37 @@ export default function FieldLabelSettings() {
 
             </div>
           </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Width</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={val => lblWidthHandler(val, lblIcnCls, lblIcnWidth)}
-                sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblIcnCls, lblIcnWidth)}
-                value={getNumFromStr(lblIcnWidth) || 10}
-                unit={getStrFromStr(lblIcnWidth) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
-          <div className={css(ut.flxcb, ut.m10)}>
-            <span className={css(ut.fw500)}>Height</span>
-            <div className={css(ut.flxc)}>
-              <SizeControl
-                inputHandler={val => lblHeightHandler(val, lblIcnCls, lblIcnHeight)}
-                sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblIcnCls, lblIcnHeight)}
-                value={getNumFromStr(lblIcnHeight) || 10}
-                unit={getStrFromStr(lblIcnHeight) || 'px'}
-                width="110px"
-                options={['px', '%']}
-              />
-            </div>
-          </div>
+          {fieldData?.lblPreFix && (
+            <>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Width</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => lblWidthHandler(val, lblIcnCls, lblIcnWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblIcnCls, lblIcnWidth)}
+                    value={getNumFromStr(lblIcnWidth) || 10}
+                    unit={getStrFromStr(lblIcnWidth) || 'px'}
+                    width="110px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Height</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => lblHeightHandler(val, lblIcnCls, lblIcnHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblIcnCls, lblIcnHeight)}
+                    value={getNumFromStr(lblIcnHeight) || 10}
+                    unit={getStrFromStr(lblIcnHeight) || 'px'}
+                    width="110px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
         </div>
       </SimpleAccordion>
       <Modal
