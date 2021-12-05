@@ -20,14 +20,15 @@ export default function StyleLayers() {
       <div className={css(s.divider)} />
       <Scrollbars height="100px" autoHide>
         <div className={css(s.scrollDiv)}>
+
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="theme-customization" label="Theme Quick Tweaks asdasdasdasd" icn={<TweaksIcn size={13} />} />
-          <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" />
-          <NavBtn route="label-subtitle-container" label="Label Containers" />
-          <NavBtn route="label" label="Labels" />
-          <NavBtn route="subtitle" label="Sub Labels" />
-          <NavBtn route="helper-text" label="Helper Texts" />
-          <NavBtn route="error-messages" label="Error Messages" />
+          <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" offset="2" />
+          <NavBtn route="label-subtitle-container" label="Label Containers" offset="2" />
+          <NavBtn route="label" label="Labels" offset="2" />
+          <NavBtn route="subtitle" label="Sub Labels" offset="2" />
+          <NavBtn route="helper-text" label="Helper Texts" offset="2" />
+          <NavBtn route="error-messages" label="Error Messages" offset="2" />
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
