@@ -33,11 +33,14 @@ import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
 import Toolbars from '../../styles/Toolbars.style'
+import DividerIcn from '../../Icons/DividerIcn'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import Tools from './Tools'
 import ut from '../../styles/2.utilities'
 import { searchKey } from '../style-new/styleHelpers'
+import TitleIcn from '../../Icons/TitleIcn'
+import ImgFldIcn from '../../Icons/ImgFldIcn'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
@@ -68,7 +71,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Title', 'bitform'),
       keywords: 'title',
-      icn: '',
+      icn: <TitleIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 20 },
       elm: {
         typ: 'title',
@@ -81,7 +84,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Divider', 'bitform'),
       keywords: 'divider',
-      icn: '',
+      icn: <DividerIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 8 },
       elm: {
         typ: 'divider',
@@ -91,7 +94,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Image', 'bitform'),
       keywords: 'image',
-      icn: '',
+      icn: <ImgFldIcn w="23" />,
       pos: { h: 40, w: 60, i: 'shadow_block', minH: 10 },
       elm: {
         typ: 'image',
