@@ -1,6 +1,10 @@
+import inputWrapperClasses from './inputWrapperClasses'
+
 /* eslint-disable camelcase */
 export default function checkboxNradioStyle_1_bitformDefault({ fk, type, direction }) {
   return {
+    ...inputWrapperClasses(fk),
+
     // checkbox symbol
     [`.${fk}-cks`]: {
       position: 'absolute',
@@ -8,21 +12,6 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       height: 0,
       'pointer-events': 'none',
       'user-select': 'none',
-    },
-    [`.${fk}-fld-wrp`]: {
-      height: '100%',
-      'text-align': 'start',
-      width: '100%',
-      padding: '10px',
-    },
-    [`.${fk}-lbl`]: {
-      display: 'block',
-      overflow: 'hidden',
-      margin: 0,
-      'font-weight': 500,
-      'font-size': '16px',
-      color: 'rgba(42, 49, 99, 1)!important',
-      'line-height': '1.4!important',
     },
     // checkbox container
     [`.${fk}-cc`]: {
