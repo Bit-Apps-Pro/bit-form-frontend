@@ -223,7 +223,7 @@ function TextFieldSettings() {
       {
         fieldData.typ === 'number' && (
           <>
-            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} className="w-10" />
+            <SingleInput inpType="number" title={__('Min Value:', 'bitform')} value={min} action={setMin} className="w-10" />
             {fieldData.mn && (
               <ErrorMessageSettings
                 type="mn"
@@ -231,7 +231,7 @@ function TextFieldSettings() {
                 tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
               />
             )}
-            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} className="w-10" />
+            <SingleInput inpType="number" title={__('Max Value:', 'bitform')} value={max} action={setMax} className="w-10" />
             {fieldData.mx && (
               <ErrorMessageSettings
                 type="mx"
