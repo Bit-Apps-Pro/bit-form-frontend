@@ -193,7 +193,7 @@ function RadioCheckSettings() {
       </div>
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired || isOptionRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
           type="req"
