@@ -25,6 +25,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             className={`${fieldKey}-lbl`}
             htmlFor={fieldKey}
           >
+            {fieldData.lblPreFix && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreFix} alt="" />}
             {fieldData.lbl}
             {fieldData.valid?.req && (
               <>
@@ -35,16 +36,22 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           </label>
         )}
         {
-          fieldData.subtitle && (
-            <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>{fieldData.subtitle}</div>
+          (fieldData.subtitle || fieldData.subTleIcn) && (
+            <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>
+              {fieldData.subTleIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-icn`} src={fieldData.subTleIcn} alt="" />}
+              {fieldData.subtitle || ''}
+            </div>
           )
         }
       </div>
       <div data-dev-inp-wrp={fieldKey} className={`${fieldKey}-inp-wrp`}>
         {children}
         {
-          fieldData.helperTxt && (
-            <div className={`${fieldKey}-hlp-txt`}>{fieldData.helperTxt}</div>
+          (fieldData.helperTxt || fieldData.hlpTxtIcn) && (
+            <div className={`${fieldKey}-hlp-txt`}>
+              {fieldData.hlpTxtIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-icn`} src={fieldData.hlpTxtIcn} alt="" />}
+              {fieldData.helperTxt || ''}
+            </div>
           )
         }
       </div>

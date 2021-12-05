@@ -76,8 +76,9 @@ export default function CustomInputControl(
     return stp
   }
 
-  const onChangeHandler = ({ target: { valueAsNumber } }) => {
-    if (onChange) onChange(valueAsNumber)
+  const onChangeHandler = (e) => {
+    const val = Number(e.target.value)
+    if (onChange) onChange(val)
   }
 
   const handleArrowKey = e => {
