@@ -11,18 +11,8 @@ import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
 
 export default function StyleLayers() {
   const { css } = useFela()
-  const { formType, formID } = useParams()
-  const history = useHistory()
   const fields = useRecoilValue($fields)
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
-
-  const styleHandler = ({ target: { value: element } }) => {
-    history.push(`/form/builder/${formType}/${formID}/theme-customize/${element}`)
-  }
-
-  const fieldStyleHandler = (customStyle, fldKey) => {
-    history.push(`/form/builder/${formType}/${formID}/field-theme-customize/${fldKey}/${customStyle}`)
-  }
 
   return (
     <div className={css(s.con)}>
@@ -40,41 +30,14 @@ export default function StyleLayers() {
           <NavBtn route="error-messages" label="Error Messages" />
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
-
-          <LayerAccordion title="Texfield">
-            <NavBtn route="error-messages" label="Quick Tweaks" offset="2.5" icn={<TweaksIcn size={13} />} />
-            <NavBtn route="error-messages" label="Field Container" offset="2.5" />
-            <NavBtn route="error-messages" label="Label Container" offset="2.5" />
-            <NavBtn route="error-messages" label="Label" offset="2.5" />
-            <NavBtn route="error-messages" label="Sub Label" offset="2.5" />
-            <NavBtn route="error-messages" label="Helper Text" offset="2.5" />
-            <NavBtn route="error-messages" label="Error Message" offset="2.5" />
-          </LayerAccordion>
-          <LayerAccordion title="Checkbox">
-            <NavBtn route="error-messages" label="Quick Tweaks" offset="2.5" titleClass={{ fw: 600 }} />
-            <NavBtn route="error-messages" label="Field Container" offset="2.5" />
-            <NavBtn route="error-messages" label="Label Container" offset="2.5" />
-            <NavBtn route="error-messages" label="Label" offset="2.5" />
-            <NavBtn route="error-messages" label="Sub Label" offset="2.5" />
-            <NavBtn route="error-messages" label="Helper Text" offset="2.5" />
-            <NavBtn route="error-messages" label="Error Message" offset="2.5" />
-          </LayerAccordion>
-
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion title={fldData.typ} key={`${fldKey}`}>
-              <NavBtn route={fldKey} subRoute="field-container" label="Field Container" offset="2.5" />
-              <button type="button" onClick={() => fieldStyleHandler('field-container', fldKey)}>Field Container</button>
-              <br />
-              <button type="button" onClick={() => fieldStyleHandler('label-subtitle-container', fldKey)}>Label Subtitle Container</button>
-              <br />
-              <button type="button" onClick={() => fieldStyleHandler('label', fldKey)}>Label</button>
-              <br />
-              <button type="button" onClick={() => fieldStyleHandler('subtitle', fldKey)}>Sub Title</button>
-              <br />
-              <button type="button" onClick={() => fieldStyleHandler('helper-text', fldKey)}>Helper Text</button>
-              <br />
-              <button type="button" onClick={() => fieldStyleHandler('error-messages', fldKey)}>Error Messages</button>
-              <hr />
+            <LayerAccordion title={fldData.typ} tag={fldKey} key={`${fldKey}`}>
+              <NavBtn route={fldKey} subRoute="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
+              <NavBtn route={fldKey} subRoute="label-subtitle-container" label="Label Container" offset="2.5" highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`} />
+              <NavBtn route={fldKey} subRoute="label" label="Label" offset="2.5" highlightSelector={`[data-dev-lbl="${fldKey}"]`} />
+              <NavBtn route={fldKey} subRoute="subtitle" label="Subtitle" offset="2.5" highlightSelector={`[data-dev-sub-titl="${fldKey}"]`} />
+              <NavBtn route={fldKey} subRoute="helper-text" label="Helper Text" offset="2.5" highlightSelector={`[data-dev-hlp-txt="${fldKey}"]`} />
+              <NavBtn route={fldKey} subRoute="Error Message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
             </LayerAccordion>
           ))}
         </div>
