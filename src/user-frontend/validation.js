@@ -16,8 +16,6 @@ export default function validateForm({ form, input }) {
     fields = { [name]: fields[name] }
   }
 
-  console.log('entry', formEntries, fields)
-
   let formCanBeSumbitted = true
   const flds = Object.entries(fields)
   let { length } = flds
@@ -26,8 +24,6 @@ export default function validateForm({ form, input }) {
     const [fldKey, fldData] = flds[length]
     const fldType = fldData.typ
     const fldValue = typeof formEntries[fldKey] === 'string' ? formEntries[fldKey].trim() : formEntries[fldKey]
-
-    console.log('flddata', fldKey, fldValue, fldData)
 
     const fldDiv = document.querySelector(`#form-${contentId} .${fldKey}`)
     if (window.getComputedStyle(fldDiv).display === 'none') {
@@ -86,7 +82,7 @@ const generateFormEntries = () => {
 
 const generateErrMsg = (errKey, fldKey, fldData) => {
   const errFld = document.querySelector(`#form-${contentId} #${fldKey}-error`)
-  if (errFld) {
+  if (errFld && 'err' in (fldData || {})) {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
       errFld.parentElement.style.height = `${errFld.offsetHeight}px`
@@ -107,7 +103,7 @@ const urlFldValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPa
 
 const dcsnbxFldValidation = (fldValue, fldData) => ((fldData.valid.req && (fldValue !== fldData.msg.checked)) ? 'req' : '')
 
-const checkFldValidation = (fldValue, fldData) => (fldData.opt.filter(opt => opt.req && !(fldValue || []).includes(opt.lbl)).length ? 'req' : '')
+const checkFldValidation = (fldValue, fldData) => (fldData?.opt?.find(opt => opt.req && !((fldValue || []).includes(opt.lbl))) ? 'req' : '')
 
 const fileupFldValidation = (fldValue, fldData) => ((fldData.valid.req && !Array.isArray(fldValue) && !fldValue.name) ? 'req' : '')
 
