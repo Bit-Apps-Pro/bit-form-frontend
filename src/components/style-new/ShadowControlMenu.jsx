@@ -2,6 +2,7 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $themeVars, $styles } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
+import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
 import { getNumFromStr, getStrFromStr, getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces, unitConverterHelper } from './styleHelpers'
@@ -62,6 +63,8 @@ export default function ShadowControlMenu({ objectPaths }) {
           inputHandler={valObj => generateShadowValue('xOffset', valObj)}
           sizeHandler={({ unitKey, unitValue }) => unitHandler('xOffset', unitKey, unitValue, shadowValues.xOffset)}
           options={['px', 'em', 'rem']}
+          min="-10"
+          max="20"
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -73,6 +76,8 @@ export default function ShadowControlMenu({ objectPaths }) {
           inputHandler={valObj => generateShadowValue('yOffset', valObj)}
           sizeHandler={({ unitKey, unitValue }) => unitHandler('yOffset', unitKey, unitValue, shadowValues.yOffset)}
           options={['px', 'em', 'rem']}
+          min="-10"
+          max="20"
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -84,6 +89,8 @@ export default function ShadowControlMenu({ objectPaths }) {
           inputHandler={valObj => generateShadowValue('blur', valObj)}
           sizeHandler={({ unitKey, unitValue }) => unitHandler('blur', unitKey, unitValue, shadowValues.blur)}
           options={['px', 'em', 'rem']}
+          min="0"
+          max="10"
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -95,6 +102,8 @@ export default function ShadowControlMenu({ objectPaths }) {
           inputHandler={valObj => generateShadowValue('spread', valObj)}
           sizeHandler={({ unitKey, unitValue }) => unitHandler('spread', unitKey, unitValue, shadowValues.spread)}
           options={['px', 'em', 'rem']}
+          min="-5"
+          max="20"
         />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
@@ -103,7 +112,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Inset</span>
-        <select name="" id="" value={shadowValues.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value })}>
+        <select className={css(sc.select)} value={shadowValues.inset || ''} onChange={e => generateShadowValue('inset', { value: e.target.value })}>
           <option value="">outset</option>
           <option value="inset">inset</option>
         </select>
