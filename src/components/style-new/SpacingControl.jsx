@@ -26,8 +26,9 @@ const c = {
     w: 130,
     mnw: 130,
     brs: 10,
-    p: 10,
+    p: 7,
     flx: 'center-between',
+    h: 30,
   },
   preview: {
     w: 25,
