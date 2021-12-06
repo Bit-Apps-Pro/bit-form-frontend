@@ -39,7 +39,13 @@ export default function ThemeGallary() {
       <h4 className={css(themeGalStyle.title)}>Themes</h4>
       <div className={css(themeGalStyle.thm_container)}>
         {themes.map(theme => (
-          <ThemeGallary.Card key={theme.name} applyThemeAction={() => handleThemeApply(theme.slug)} name={theme.name} img={theme.img} isActive={styles.theme === theme.slug} />
+          <ThemeGallary.Card
+            key={theme.name}
+            applyThemeAction={() => handleThemeApply(theme.slug)}
+            name={theme.name}
+            img={theme.img}
+            isActive={styles.theme === theme.slug}
+          />
         ))}
       </div>
     </div>
@@ -61,7 +67,7 @@ const Card = ({ name, img, isActive, applyThemeAction }) => {
           </Tip>
           {isActive ? (
             <Tip msg="Customize theme">
-              <Link to={`/form/builder/${formType}/${formID}/theme-customize/theme-customization`} type="button" className={css(themeGalStyle.thm_ctrl_btn)} aria-label="Theme Customize">
+              <Link to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} type="button" className={css(themeGalStyle.thm_ctrl_btn)} aria-label="Theme Customize">
                 <EditIcn size="20" stroke="2.2" />
               </Link>
             </Tip>
