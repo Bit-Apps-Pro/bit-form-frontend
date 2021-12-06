@@ -275,17 +275,19 @@ export default function ThemeCustomize() {
 
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Border Radius</span>
-                {tempThemeVars['--g-bdr-red'] && <ResetStyle themeVar="--g-bdr-red" />}
-                <SizeControl
-                  min={0}
-                  max={20}
-                  inputHandler={borderRadHandler}
-                  sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-                  value={globalBdrRadValue}
-                  unit={globalBdrRadUnit}
-                  width="110px"
-                  options={['px', 'em', 'rem']}
-                />
+                <div className={css(ut.flxc)}>
+                  <ResetStyle objectKey="--g-bdr-rad"   stateName="themeVars" />
+                  <SizeControl
+                    min={0}
+                    max={20}
+                    inputHandler={borderRadHandler}
+                    sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+                    value={globalBdrRadValue}
+                    unit={globalBdrRadUnit}
+                    width="110px"
+                    options={['px', 'em', 'rem']}
+                  />
+                </div>
               </div>
 
               <div className={css(ut.flxcb, ut.mt2)}>
