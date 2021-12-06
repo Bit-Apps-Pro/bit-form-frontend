@@ -36,6 +36,7 @@ export default function FieldStyleCustomize() {
   const labelSubTitlStyle = classes[`.${fldKey}-lbl-wrp`]
   const lblStyle = classes[`.${fldKey}-lbl`]
   const subtitlStyle = classes[`.${fldKey}-sub-titl`]
+  const hlpTxtStyle = classes[`.${fldKey}-hlp-txt`]
 
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
@@ -131,6 +132,8 @@ export default function FieldStyleCustomize() {
   const lblColor = colorObj('lbl', 'color')
   const subTitlBg = colorObj('sub-titl', 'background')
   const subTitlColor = colorObj('sub-titl', 'color')
+  const hlpTxtBg = colorObj('hlp-txt', 'background')
+  const hlpTxtColor = colorObj('hlp-txt', 'color')
 
   const spacingObj = (ele) => (
     {
@@ -300,6 +303,19 @@ export default function FieldStyleCustomize() {
           )}
           {element === 'helper-text' && (
             <div className={css(!checkExistElement('helper-text') && cls.blur)}>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={hlpTxtStyle?.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={hlpTxtBg} id="label-container-backgroung" />
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={hlpTxtStyle?.color} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={hlpTxtColor} id="label-container-color" />
+              </div>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
