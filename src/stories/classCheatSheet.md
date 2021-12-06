@@ -61,7 +61,6 @@
 | --fld-wrp-dis | field wrapper display |
 | --fld-wrp-fdir | field wrapper flx direction |
 | --fld-wrp-bg | field wrapper background |
-| --fld-wrp-b | field wrapper --- |
 | --fld-wrp-m | field wrapper margin |
 | --fld-wrp-p | field wrapper padding |
 | --fld-wrp-sh | field wrapper box shadow |
