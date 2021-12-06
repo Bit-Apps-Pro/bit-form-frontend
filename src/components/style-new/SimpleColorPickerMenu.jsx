@@ -5,7 +5,7 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
@@ -35,6 +35,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
 
   const getCustomColor = () => {
     const colorValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
+    if (colorValue === undefined) return 'hsla(0, 0%, 100%, 100)'
     if (colorValue.match(/var/g)?.[0] === 'var') {
       const getVarProperty = colorValue.replaceAll(/\(|var|,.*|\)/gi, '')
       return themeVars[getVarProperty]
