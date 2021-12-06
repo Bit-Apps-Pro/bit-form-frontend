@@ -96,8 +96,11 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
 }
 
 const scrollToFld = fldKey => {
-  const fld = document.querySelector(`#form-${contentId} .${fldKey}`)
-  if (!isElementInViewport(fld)) window.scroll({ top: fld.offsetTop, behavior: 'smooth' })
+  const fld = document.querySelector(`#form-${contentId} .btcd-fld-itm.${fldKey}`)
+  const bodyRect = document.body.getBoundingClientRect()
+  const fldRect = fld.getBoundingClientRect()
+  const offsetTop = fldRect.top - bodyRect.top
+  if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
 }
 
 const isElementInViewport = elm => {

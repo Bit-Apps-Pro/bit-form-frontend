@@ -17,7 +17,10 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
 
   if (err && fldWrapperElm) {
     const fld = fldWrapperElm.current
-    if (!isElementInViewport(fld)) window.scroll({ top: fld.offsetTop, behavior: 'smooth' })
+    const bodyRect = document.body.getBoundingClientRect()
+    const fldRect = fld.getBoundingClientRect()
+    const offsetTop = fldRect.top - bodyRect.top
+    if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
   }
 
   return (
