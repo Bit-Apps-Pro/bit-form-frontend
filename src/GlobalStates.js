@@ -153,10 +153,10 @@ export const $themeVars = atom({
     '--fld-wrp-bg': 'hsla(0, 71%, 39%, 100)', // fieldwrapper background
     '--fld-wrp-m': '10px', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
-    '--fld-wrp-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
-    '--fld-wrp-bdr': 'solid red', // field wrapper border
-    '--fld-wrp-bdr-width': '1px', // field wrapper border width
-    '--fld-wrp-bdr-rad': '8px', // field wrapper border radius
+    '--fld-wrp-sh': '', // field wrapper box shadow
+    '--fld-wrp-bdr': '', // field wrapper border
+    '--fld-wrp-bdr-width': '', // field wrapper border width
+    '--fld-wrp-bdr-rad': '', // field wrapper border radius
 
     '--fld-lbl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
     '--fld-lbl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
