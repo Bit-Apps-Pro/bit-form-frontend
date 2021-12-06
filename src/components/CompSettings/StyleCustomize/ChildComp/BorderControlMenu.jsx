@@ -61,17 +61,44 @@ export default function BorderControlMenu({ objectPaths }) {
     <>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fw500)}>Type</span>
-        <SimpleDropdown options={options} value={borderStyleValues.type} onChange={val => generateBorderStyleValue('type', val)} w={130} h={30} />
+        <SimpleDropdown
+          options={options}
+          value={borderStyleValues.type}
+          onChange={val => generateBorderStyleValue('type', val)}
+          w={130}
+          h={30}
+        />
       </div>
       <div className={css(ut.flxcb, ut.mb2)}>
         <span className={css(ut.fs12, ut.fs12, ut.fw500)}>Color</span>
-        <SimpleColorPickerTooltip action={{ onChange: val => generateBorderStyleValue('color', val) }} value={borderStyleValues.color} />
+        <SimpleColorPickerTooltip
+          action={{ onChange: val => generateBorderStyleValue('color', val) }}
+          value={borderStyleValues.color}
+        />
       </div>
+
       {paths.borderWidth && (
-        <SpaceControl value={borderWidth} className={css(ut.mb2)} onChange={val => onSizeChange(paths.borderWidth, val)} title="Width" unitOption={['px', 'em', 'rem']} />
+        <SpaceControl
+          value={borderWidth}
+          className={css(ut.mb2)}
+          onChange={val => onSizeChange(paths.borderWidth, val)}
+          title="Width"
+          unitOption={['px', 'em', 'rem']}
+          min="0"
+          max="10"
+        />
       )}
+
       {paths.borderRadius && (
-        <SpaceControl value={borderRadius} className={css(ut.mb2)} onChange={val => onSizeChange(paths.borderRadius, val)} title="Radius" unitOption={['px', 'em', 'rem', '%']} />
+        <SpaceControl
+          value={borderRadius}
+          className={css(ut.mb2)}
+          onChange={val => onSizeChange(paths.borderRadius, val)}
+          title="Radius"
+          unitOption={['px', 'em', 'rem', '%']}
+          min="0"
+          max="20"
+        />
       )}
     </>
   )
