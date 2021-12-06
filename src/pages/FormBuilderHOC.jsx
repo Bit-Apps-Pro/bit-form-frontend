@@ -15,7 +15,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/LeftBars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors, $lightThemeColors, $darkThemeColors, $highContrastThemeColors } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -75,10 +75,13 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const conRef = createRef(null)
   const notIE = !window.document.documentMode
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const setThemeVars = useSetRecoilState($themeVars)
   const setTempStyles = useSetRecoilState($tempStyles)
   const setStyle = useSetRecoilState($styles)
   const themeColors = useRecoilValue($themeColors)
+  const setLightThemeColors = useSetRecoilState($lightThemeColors)
+  const setDarkThemeColors = useSetRecoilState($darkThemeColors)
+  const setHighContrastThemeColors = useSetRecoilState($highContrastThemeColors)
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -105,6 +108,9 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         drft.themeColors = themeColors
       }))
       setThemeVars(parseStyle.themeVars)
+      setLightThemeColors(parseStyle.themeColors.lightThemeColors)
+      setDarkThemeColors(parseStyle.themeColors.darkThemeColors)
+      setHighContrastThemeColors(parseStyle.themeColors.highContrastThemeColors)
 
       // declare new theme exist , no need old theme functions
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
