@@ -22,13 +22,13 @@ export default function StyleLayers() {
         <div className={css(s.scrollDiv)}>
 
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
-          <NavBtn route="theme-customization" label="Theme Quick Tweaks" icn={<TweaksIcn size={13} />} />
-          <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" offset="2" />
-          <NavBtn route="label-subtitle-container" label="Label Containers" offset="2" />
-          <NavBtn route="label" label="Labels" offset="2" />
-          <NavBtn route="subtitle" label="Sub Labels" offset="2" />
-          <NavBtn route="helper-text" label="Helper Texts" offset="2" />
-          <NavBtn route="error-messages" label="Error Messages" offset="2" />
+          <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
+          <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" offset="3" />
+          <NavBtn route="label-container" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
+          <NavBtn route="label" label="Labels" offset="3" highlightSelector="[data-dev-lbl]" />
+          <NavBtn route="subtitle" label="Sub Labels" offset="3" highlightSelector="[data-dev-sub-titl]" />
+          <NavBtn route="helper-text" label="Helper Texts" offset="3" highlightSelector="[data-dev-hlp-txt]" />
+          <NavBtn route="error-messages" label="Error Messages" offset="3" highlightSelector="[data-dev-err-msg]" />
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
