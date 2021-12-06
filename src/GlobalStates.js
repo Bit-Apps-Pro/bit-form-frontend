@@ -97,6 +97,7 @@ export const $highContrastThemeColors = atom({
     '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
   },
 })
+
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
@@ -150,7 +151,6 @@ export const $themeVars = atom({
     '--fld-wrp-dis': '', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
     '--fld-wrp-bg': 'hsla(0, 71%, 39%, 100)', // fieldwrapper background
-    '--fld-wrp-b': '10px',
     '--fld-wrp-m': '10px', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
     '--fld-wrp-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
