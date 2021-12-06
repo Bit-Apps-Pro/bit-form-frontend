@@ -8,6 +8,10 @@ export default function inputWrapperClasses(fk) {
       padding: 'var(--fld-wrp-p, 0)',
       margin: 'var(--fld-wrp-m, 0)',
       position: 'relative',
+      'box-shadow': 'var(--fld-wrp-sh, none)',
+      'border-radius': 'var(--fld-wrp-bdr-rad, 0)',
+      border: 'var(--fld-wrp-bdr, medium none)',
+      'border-width': 'var(--fld-wrp-bdr-width, 0)'
     },
     [`.${fk}-lbl-wrp`]: { width: 'var(--lbl-wrp-width, auto)', 'align-self': 'var(--lbl-wrp-sa, auto)', margin: 'var(--lbl-wrp-m, 0)', padding: 'var(--lbl-wrp-p, 0)' },
     [`.${fk}-lbl`]: { 'font-size': 'var(--fld-lbl-fs)', display: 'flex', 'align-items': 'center', 'text-align': 'var(--lbl-al, initial)', margin: 'var(--fld-lbl-m, 0)', padding: 'var(--fld-lbl-p, 0)' },
