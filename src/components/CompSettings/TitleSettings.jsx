@@ -42,10 +42,10 @@ function TitleSettings() {
   const subTitleClass = `.${fldKey}-sub-title`
   const logoCls = `.${fldKey}-logo`
   const { classes } = styles.fields[fldKey]
-  const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass]
-  const { color: titleClr, 'font-size': tleFntSize } = classes[titleClass]
-  const { color: subTitleClr, 'font-size': subTleFntSize } = classes[subTitleClass]
-  const { border, width: logoWidth, height: logoHeight } = classes[logoCls]
+  const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
+  const { color: titleClr, 'font-size': tleFntSize } = classes[titleClass] || ''
+  const { color: subTitleClr, 'font-size': subTleFntSize } = classes[subTitleClass] || ''
+  const { border, width: logoWidth, height: logoHeight } = classes[logoCls] || ''
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')
 

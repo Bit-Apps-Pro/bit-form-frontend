@@ -17,7 +17,7 @@ function DividerSettings() {
   const [styles, setStyles] = useRecoilState($styles)
 
   const dividerCLass = `.${fldKey}-divider`
-  const { 'border-width': borderWidth, 'border-style': borderStyle, margin, padding } = styles.fields[fldKey].classes[dividerCLass]
+  const { 'border-width': borderWidth, 'border-style': borderStyle } = styles.fields[fldKey].classes[dividerCLass] || ''
 
   const inputHandler = (val, type) => {
     setStyles(preStyle => produce(preStyle, drftStyle => {
