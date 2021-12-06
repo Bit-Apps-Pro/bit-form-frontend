@@ -4,6 +4,7 @@ import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import SortIcn from '../../../../Icons/SortIcn'
 import ut from '../../../../styles/2.utilities'
+import { fieldTool } from '../../../../Utils/StaticData/fieldTool'
 
 export default function LayerAccordion({ className,
   title,
@@ -46,6 +47,8 @@ export default function LayerAccordion({ className,
     return Math.ceil(el.offsetHeight + margin)
   }
 
+  const showFldTitle = (typ) => fieldTool[typ] || typ
+
   const setAccHeight = (el) => setH(getAbsoluteHeight(el))
 
   return (
@@ -69,7 +72,7 @@ export default function LayerAccordion({ className,
           <div className={css(cls.flxbwn)}>
             <div className={css(ut.flxc)}>
               <span className={`title ${css(cls.dflx, ut.fw500)}`}>
-                {title}
+                {showFldTitle(title)}
               </span>
               <span className={css(cls.titleTag)}>{tag}</span>
             </div>
