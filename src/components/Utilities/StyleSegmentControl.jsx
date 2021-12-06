@@ -98,10 +98,10 @@ export default function StyleSegmentControl({ defaultActive,
 
   const setSelectorPos = (activeElement) => {
     setTimeout(() => {
-      const { width: toActiveElmWidth } = activeElement?.getBoundingClientRect() || { width: 0 }
+      const { width: toActiveElmWidth } = activeElement.getBoundingClientRect() || { width: 0 }
       // selectorRef.current.style.left = `${activeElement.offsetLeft}px`
       selectorRef.current.style.width = `${toActiveElmWidth}px`
-      selectorRef.current.style.transform = `translate(${activeElement?.offsetLeft || 0 - 5}px, -50%)`
+      selectorRef.current.style.transform = `translate(${activeElement.offsetLeft - 5}px, -50%)`
     }, 100)
   }
 
