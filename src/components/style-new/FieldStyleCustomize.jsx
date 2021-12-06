@@ -33,6 +33,7 @@ export default function FieldStyleCustomize() {
   }, [])
 
   const fldWrpStyle = classes[`.${fldKey}-fld-wrp`]
+  const labelSubTitlStyle = classes[`.${fldKey}-lbl-wrp`]
 
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
@@ -118,6 +119,11 @@ export default function FieldStyleCustomize() {
     selector: `.${fldKey}-fld-wrp`,
     property: 'background',
   }
+  const fldColor = {
+    fk: fldKey,
+    selector: `.${fldKey}-fld-wrp`,
+    property: 'color',
+  }
 
   const spacingObj = (ele) => (
     {
@@ -137,7 +143,7 @@ export default function FieldStyleCustomize() {
   const subtitle = spacingObj('sub-titl')
   const hlpTxt = spacingObj('hlp-txt')
 
-  console.log(fldStyleObj?.overrideGlobalTheme)
+  const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -169,28 +175,40 @@ export default function FieldStyleCustomize() {
         </span>
 
         <div className={css(cls.container)}>
-          {element === 'field-container' && fldStyleObj?.overrideGlobalTheme?.find(el => el === element) && (
-            <div>
+          {element === 'field-container' && (
+            <div className={css(!checkExistElement('field-container') && cls.blur)}>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <div className={css(ut.flxcb)}>
                   <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
                 </div>
-                <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
+                <SimpleColorPicker value={fldWrpStyle?.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} id="field-container-backgroung" />
               </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={fldWrpStyle?.color} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldColor} id="field-container-color" />
+              </div>
+
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
               </div>
             </div>
           )}
+
           {element === 'label-subtitle-container' && (
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
+            <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
+             
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
+              </div>
             </div>
           )}
           {element === 'label' && (
-            <>
+            <div className={css(!checkExistElement('label') && cls.blur)}>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Field Font Size</span>
                 <div className={css(ut.flxc)}>
@@ -206,13 +224,19 @@ export default function FieldStyleCustomize() {
                 </div>
               </div>
               <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
               </div>
-            </>
+            </div>
           )}
           {element === 'subtitle' && (
-            <>
+            <div className={css(!checkExistElement('subtitle') && cls.blur)}>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
@@ -231,10 +255,10 @@ export default function FieldStyleCustomize() {
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subtitle} id="spacing-control" />
               </div>
-            </>
+            </div>
           )}
           {element === 'helper-text' && (
-            <>
+            <div className={css(!checkExistElement('helper-text') && cls.blur)}>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
@@ -253,7 +277,7 @@ export default function FieldStyleCustomize() {
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={hlpTxt} id="spacing-control" />
               </div>
-            </>
+            </div>
           )}
         </div>
         <div className={css(cls.divider)} />
@@ -279,7 +303,7 @@ const cls = {
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
-  container: { ml: 12, mr: 15 },
+  container: { ml: 12, mr: 15, pn: 'relative' },
   btn: {
     b: 'none',
     oe: 'none',
@@ -306,14 +330,10 @@ const cls = {
     cr: 'var(--white-100)',
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
-  overlay: {
-    // w: '100%',
-    // h: 200,
-    // tp: 0,
-    // lt: 0,
-    // rt: 0,
-    // bm: 0,
-    // zx: 100,
-    // bd: 'rgba(0,0,0,0.5)',
+  blur: {
+    fr: 'blur(1px)',
+    bd: 'radial-gradient(white, transparent)',
+    zx: 9,
+    pnevn: 'none',
   },
 }
