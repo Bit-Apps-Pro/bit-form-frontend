@@ -35,7 +35,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
 
   const getCustomColor = () => {
     const colorValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
-    if (colorValue === undefined) return 'hsla(0, 0%, 0%, 0%)'
+    if (colorValue === undefined) return 'hsla(0, 0%, 100%, 100)'
     if (colorValue.match(/var/g)?.[0] === 'var') {
       const getVarProperty = colorValue.replaceAll(/\(|var|,.*|\)/gi, '')
       return themeVars[getVarProperty]

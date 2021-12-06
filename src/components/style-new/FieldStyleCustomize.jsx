@@ -34,8 +34,7 @@ export default function FieldStyleCustomize() {
 
   const fldWrpStyle = classes[`.${fldKey}-fld-wrp`]
   const labelSubTitlStyle = classes[`.${fldKey}-lbl-wrp`]
-
-  console.log(labelSubTitlStyle)
+  const lblStyle = classes[`.${fldKey}-lbl`]
 
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
@@ -127,6 +126,8 @@ export default function FieldStyleCustomize() {
   const fldWrpColor = colorObj('fld-wrp', 'color')
   const lblWrpBg = colorObj('lbl-wrp', 'background')
   const lblWrpColor = colorObj('lbl-wrp', 'color')
+  const lblBg = colorObj('lbl', 'background')
+  const lblColor = colorObj('lbl', 'color')
 
   const spacingObj = (ele) => (
     {
@@ -225,6 +226,20 @@ export default function FieldStyleCustomize() {
           {element === 'label' && (
             <div className={css(!checkExistElement('label') && cls.blur)}>
               <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={lblStyle?.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={lblBg} id="label-container-backgroung" />
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={lblStyle?.color} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={lblColor} id="label-container-color" />
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Field Font Size</span>
                 <div className={css(ut.flxc)}>
                   <SizeControl
@@ -238,12 +253,7 @@ export default function FieldStyleCustomize() {
                   />
                 </div>
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={fldWrpStyle.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} />
-              </div>
+
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
