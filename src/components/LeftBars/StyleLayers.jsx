@@ -22,7 +22,7 @@ export default function StyleLayers() {
         <div className={css(s.scrollDiv)}>
 
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
-          <NavBtn route="theme-customization" label="Theme Quick Tweaks asdasdasdasd" icn={<TweaksIcn size={13} />} />
+          <NavBtn route="theme-customization" label="Theme Quick Tweaks" icn={<TweaksIcn size={13} />} />
           <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" offset="2" />
           <NavBtn route="label-subtitle-container" label="Label Containers" offset="2" />
           <NavBtn route="label" label="Labels" offset="2" />
