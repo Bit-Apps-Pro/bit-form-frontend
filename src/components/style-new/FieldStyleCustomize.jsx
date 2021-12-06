@@ -5,7 +5,7 @@ import { produce } from 'immer'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
@@ -34,6 +34,8 @@ export default function FieldStyleCustomize() {
 
   const fldWrpStyle = classes[`.${fldKey}-fld-wrp`]
   const labelSubTitlStyle = classes[`.${fldKey}-lbl-wrp`]
+
+  console.log(labelSubTitlStyle)
 
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
@@ -114,16 +116,17 @@ export default function FieldStyleCustomize() {
     }
   }
 
-  const fldStyle = {
-    fk: fldKey,
-    selector: `.${fldKey}-fld-wrp`,
-    property: 'background',
-  }
-  const fldColor = {
-    fk: fldKey,
-    selector: `.${fldKey}-fld-wrp`,
-    property: 'color',
-  }
+  const colorObj = (elemnt, cssProperty) => (
+    {
+      fk: fldKey,
+      selector: `.${fldKey}-${elemnt}`,
+      property: cssProperty,
+    }
+  )
+  const fldWrpBg = colorObj('fld-wrp', 'background')
+  const fldWrpColor = colorObj('fld-wrp', 'color')
+  const lblWrpBg = colorObj('lbl-wrp', 'background')
+  const lblWrpColor = colorObj('lbl-wrp', 'color')
 
   const spacingObj = (ele) => (
     {
@@ -181,14 +184,14 @@ export default function FieldStyleCustomize() {
                 <div className={css(ut.flxcb)}>
                   <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
                 </div>
-                <SimpleColorPicker value={fldWrpStyle?.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldStyle} id="field-container-backgroung" />
+                <SimpleColorPicker value={fldWrpStyle?.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldWrpBg} id="field-container-backgroung" />
               </div>
 
               <div className={css(ut.flxcb, ut.mt2)}>
                 <div className={css(ut.flxcb)}>
                   <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
                 </div>
-                <SimpleColorPicker value={fldWrpStyle?.color} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldColor} id="field-container-color" />
+                <SimpleColorPicker value={fldWrpStyle?.color} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={fldWrpColor} id="field-container-color" />
               </div>
 
               <div className={css(ut.flxcb, ut.mt2)}>
@@ -200,10 +203,22 @@ export default function FieldStyleCustomize() {
 
           {element === 'label-subtitle-container' && (
             <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
-             
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={labelSubTitlStyle?.background} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={lblWrpBg} id="label-subtitle-container-backgroung" />
+              </div>
+
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <div className={css(ut.flxcb)}>
+                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
+                </div>
+                <SimpleColorPicker value={labelSubTitlStyle?.color} action={{ type: 'lbl-wrp-bg' }} subtitle="Primary color" objectPaths={lblWrpColor} id="label-subtitle-container-color" />
+              </div>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="spacing-control" />
+                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="label-subtitle-spacing-control" />
               </div>
             </div>
           )}
