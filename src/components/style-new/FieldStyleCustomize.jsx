@@ -47,7 +47,7 @@ export default function FieldStyleCustomize() {
     }))
   }
   // for font-size
-  const fldLblfs = classes[`.${fldKey}-lbl`]['font-size']
+  const fldLblfs = classes[`.${fldKey}-lbl`]?.['font-size']
   const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
   const fldFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'lbl')
@@ -56,7 +56,7 @@ export default function FieldStyleCustomize() {
   const fldFSUnit = getStrFromStr(fldLblfsvalue)
 
   // sub title
-  const subtitl = classes[`.${fldKey}-sub-titl`]['font-size']
+  const subtitl = classes[`.${fldKey}-sub-titl`]?.['font-size']
   const subTitlFs = getValueFromThemeVar(subtitl)
   const subtitlFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'sub-titl')
@@ -65,7 +65,7 @@ export default function FieldStyleCustomize() {
   const subTitlFSUnit = getStrFromStr(subTitlFs)
 
   // heplper text
-  const hplTxtFs = classes[`.${fldKey}-hlp-txt`]['font-size']
+  const hplTxtFs = classes[`.${fldKey}-hlp-txt`]?.['font-size']
   const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
   const hlpTxtFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'hlp-txt')
@@ -76,6 +76,7 @@ export default function FieldStyleCustomize() {
   const overrideGlobalThemeHandler = (e, elmnt) => {
     const { target: { checked } } = e
 
+    if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
         drft.fields[fldKey].overrideGlobalTheme = [...prvStyle.fields[fldKey].overrideGlobalTheme, elmnt]
@@ -105,9 +106,9 @@ export default function FieldStyleCustomize() {
             drft.fields[fldKey].classes[`.${fldKey}-hlp-txt`] = getStyle
           }
         }
-        if (theme === 'material') {
-          drft.fields[fldKey] = materialTheme(fldKey, fieldType)
-        }
+        // if (theme === 'material') {
+        //   drft.fields[fldKey] = materialTheme(fldKey, fieldType)
+        // }
       }))
     }
   }
@@ -135,6 +136,8 @@ export default function FieldStyleCustomize() {
   const lbl = spacingObj('lbl')
   const subtitle = spacingObj('sub-titl')
   const hlpTxt = spacingObj('hlp-txt')
+
+  console.log(fldStyleObj?.overrideGlobalTheme)
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -166,8 +169,8 @@ export default function FieldStyleCustomize() {
         </span>
 
         <div className={css(cls.container)}>
-          {element === 'field-container' && (
-            <>
+          {element === 'field-container' && fldStyleObj?.overrideGlobalTheme?.find(el => el === element) && (
+            <div>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <div className={css(ut.flxcb)}>
                   <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -178,7 +181,7 @@ export default function FieldStyleCustomize() {
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
               </div>
-            </>
+            </div>
           )}
           {element === 'label-subtitle-container' && (
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -303,4 +306,14 @@ const cls = {
     cr: 'var(--white-100)',
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
+  overlay: {
+    // w: '100%',
+    // h: 200,
+    // tp: 0,
+    // lt: 0,
+    // rt: 0,
+    // bm: 0,
+    // zx: 100,
+    // bd: 'rgba(0,0,0,0.5)',
+  },
 }

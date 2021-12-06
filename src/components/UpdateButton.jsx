@@ -5,7 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $fieldLabels, $fields, $formName, $forms, $integrations, $layouts, $mailTemplates, $newFormId, $reports, $styles, $themeVars, $updateBtn, $workflows } from '../GlobalStates'
+import { $additionalSettings, $breakpointSize, $builderHelperStates, $builderHookStates, $confirmations, $darkThemeColors, $fieldLabels, $fields, $formName, $forms, $highContrastThemeColors, $integrations, $layouts, $lightThemeColors, $mailTemplates, $newFormId, $reports, $styles, $themeVars, $updateBtn, $workflows } from '../GlobalStates'
 import navbar from '../styles/navbar.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { convertLayout, layoutOrderSortedByLg, produceNewLayouts, sortLayoutItemsByRowCol } from '../Utils/FormBuilderHelper'
@@ -40,6 +40,11 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const style = useRecoilValue($styles)
   const breakpointSize = useRecoilValue($breakpointSize)
   const themeVars = useRecoilValue($themeVars)
+
+  const lightThemeColors = useRecoilValue($lightThemeColors)
+  const darkThemeColors = useRecoilValue($darkThemeColors)
+  const highContrastThemeColors = useRecoilValue($highContrastThemeColors)
+  const themeColors = { lightThemeColors, darkThemeColors, highContrastThemeColors }
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -199,6 +204,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       workFlows,
       formStyle,
       style,
+      themeColors,
       breakpointSize,
       themeVars,
       layoutChanged: sessionStorage.getItem('btcd-lc'),
