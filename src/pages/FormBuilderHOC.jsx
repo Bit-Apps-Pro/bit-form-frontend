@@ -108,9 +108,9 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
         drft.themeColors = themeColors
       }))
       setThemeVars(parseStyle.themeVars)
-      setLightThemeColors(parseStyle.themeColors.lightThemeColors)
-      setDarkThemeColors(parseStyle.themeColors.darkThemeColors)
-      setHighContrastThemeColors(parseStyle.themeColors.highContrastThemeColors)
+      if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
+      if (parseStyle.themeColors?.darkThemeColors) setDarkThemeColors(parseStyle.themeColors.darkThemeColors)
+      if (parseStyle.themeColors?.highContrastThemeColors) setHighContrastThemeColors(parseStyle.themeColors.highContrastThemeColors)
 
       // declare new theme exist , no need old theme functions
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
