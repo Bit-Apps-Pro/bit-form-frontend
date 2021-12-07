@@ -244,20 +244,24 @@ export default function FieldStyleCustomize() {
           )}
           {element === 'label' && (
             <div className={css(!checkExistElement('label') && cls.blur)}>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={lblStyle?.background} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={lblBg} id="label-container-backgroung" />
-              </div>
-
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={lblStyle?.color} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={lblColor} id="label-container-color" />
-              </div>
-
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Background Color"
+                stateName="themeVars"
+                value={lblStyle?.background}
+                modalType="individul-color"
+                modalId="label-container-backgroung"
+                objectPaths={lblBg}
+              />
+              <SimpleColorPicker
+                title="Color"
+                subtitle="Color"
+                stateName="themeVars"
+                value={lblStyle?.color}
+                modalType="individul-color"
+                modalId="label-container-color"
+                objectPaths={lblColor}
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Field Font Size</span>
                 <div className={css(ut.flxc)}>
