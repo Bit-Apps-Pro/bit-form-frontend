@@ -388,7 +388,8 @@ const cls = {
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
   blur: {
-    fr: 'blur(1px)',
+    // fr: 'blur(1px)',
+    oy: '0.2',
     bd: 'radial-gradient(white, transparent)',
     zx: 9,
     pnevn: 'none',
