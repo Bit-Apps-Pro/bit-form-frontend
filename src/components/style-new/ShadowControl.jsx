@@ -14,7 +14,7 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   const colorVal = splitValueBySpaces(value)[4]
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const clearValue = () => {
-    if (objectPaths.paths.hasOwnProperty('shadow')) {
+    if (Object.prototype.hasOwnProperty.call(objectPaths.paths, 'shadow')) {
       setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
         drft[objectPaths.paths.shadow] = ''
       }))
