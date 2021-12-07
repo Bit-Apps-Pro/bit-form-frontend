@@ -539,16 +539,22 @@ export default function ThemeCustomize() {
 
         {element === 'error-messages' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempErrBg !== errBg && <ResetStyle themeVar="--err-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" id="err-bg" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempErrC !== errC && <ResetStyle themeVar="--err-c" stateName="themeVars" />}
-              <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" id="err-c" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Background Color"
+              stateName="themeVars"
+              value={errBg}
+              modalType="err-bg"
+              modalId="err-bg"
+            />
+            <SimpleColorPicker
+              title="Text Color"
+              subtitle="Text Color"
+              stateName="themeVars"
+              value={errC}
+              modalType="err-c"
+              modalId="err-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} id="err-spacing-control" />
