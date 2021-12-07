@@ -431,11 +431,14 @@ export default function ThemeCustomize() {
 
         {element === 'label' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempFlBg !== flBg && <ResetStyle themeVar="--fld-lbl-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={flBg} action={{ type: 'fld-lbl-bg' }} subtitle="Subtitle Background Color" id="fld-lbl-bg" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Subtitle Background Color"
+              stateName="themeVars"
+              value={flBg}
+              modalType="fld-lbl-bg"
+              modalId="fld-lbl-bg"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempFlC !== flc && <ResetStyle themeVar="--fld-lbl-c" stateName="themeVars" />}
