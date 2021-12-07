@@ -2,6 +2,7 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
+import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
@@ -12,7 +13,7 @@ export default function SimpleColorPicker({ title, stateName, subtitle, action, 
   return (
     <div className={css(ut.flxcb, ut.mt2)}>
       <div className={css(ut.flxb)}>
-        <span className={css(ut.fw500)}>{title}</span>
+        <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
         <ResetStyle objectKey={`--${modalType}`} stateName={stateName} />
       </div>
       <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
