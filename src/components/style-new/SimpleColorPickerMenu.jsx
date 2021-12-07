@@ -132,7 +132,9 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
         }))
         break
       default:
+        console.log('defatul action', action.type)
         return setThemeVars(prvState => produce(prvState, drft => {
+          console.log(prvState[`--${action.type}`])
           drft[`--${action.type}`] = hsla
         }))
     }

@@ -371,11 +371,14 @@ export default function ThemeCustomize() {
         {
           element === 'field-container' && (
             <div className={css(ut.m10)}>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeVars" />}
-                <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" id="fld-wp-bg" />
-              </div>
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Field Background Color"
+                stateName="themeVars"
+                value={fwBg}
+                modalType="fld-wrp-bg"
+                modalId="fld-wp-bg"
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} id="spacing-control" />
