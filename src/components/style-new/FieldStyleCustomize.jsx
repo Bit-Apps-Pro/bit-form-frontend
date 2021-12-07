@@ -5,7 +5,7 @@ import { produce } from 'immer'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
@@ -15,7 +15,6 @@ import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
-import materialTheme from './themes/2_material'
 
 export default function FieldStyleCustomize() {
   const { css } = useFela()
@@ -181,7 +180,12 @@ export default function FieldStyleCustomize() {
         <span>
           Override Global Theme Color
           {' '}
-          <input type="checkbox" onChange={(e) => overrideGlobalThemeHandler(e, element)} checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false} name="" id="" aria-label="default Theme Color" />
+          <input
+            type="checkbox"
+            onChange={(e) => overrideGlobalThemeHandler(e, element)}
+            checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
+            aria-label="default Theme Color"
+          />
         </span>
 
         <div className={css(cls.container)}>
@@ -214,19 +218,24 @@ export default function FieldStyleCustomize() {
 
           {element === 'label-subtitle-container' && (
             <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={labelSubTitlStyle?.background} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={lblWrpBg} id="label-subtitle-container-backgroung" />
-              </div>
-
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={labelSubTitlStyle?.color} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={lblWrpColor} id="label-subtitle-container-color" />
-              </div>
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Background Color"
+                stateName="themeVars"
+                value={labelSubTitlStyle?.background}
+                modalType="individul-color"
+                modalId="label-subtitle-container-backgroung"
+                objectPaths={lblWrpBg}
+              />
+              <SimpleColorPicker
+                title="Color"
+                subtitle="Color"
+                stateName="themeVars"
+                value={labelSubTitlStyle?.color}
+                modalType="individul-color"
+                modalId="label-subtitle-container-color"
+                objectPaths={lblWrpColor}
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="label-subtitle-spacing-control" />
