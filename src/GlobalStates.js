@@ -177,7 +177,7 @@ export const $themeVars = atom({
     '--sub-titl-bdr-width': '', // subtitle border width
     '--sub-titl-bdr-rad': '', // subtitle border radius
 
-    '--hlp-txt-bg': '', // helper text background color
+    '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
     '--hlp-txt-c': '', // helpertext color
     '--hlp-txt-m': '', // helper text margin
     '--hlp-txt-p': '', // hepler text padding

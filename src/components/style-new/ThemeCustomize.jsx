@@ -502,16 +502,22 @@ export default function ThemeCustomize() {
 
         {element === 'helper-text' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempHlpTxtBg !== htBg && <ResetStyle themeVar="--hlp-txt-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={htBg} action={{ type: 'hlp-txt-bg' }} subtitle="Background Color" id="hlp-txt-bg" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempHlpTxtC !== htC && <ResetStyle themeVar="--hlp-txt-c" stateName="themeVars" />}
-              <SimpleColorPicker value={htC} action={{ type: 'hlp-txt-c' }} subtitle="Text Color" id="hlp-txt-c" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Background Color"
+              stateName="themeVars"
+              value={htBg}
+              modalType="hlp-txt-bg"
+              modalId="hlp-txt-bg"
+            />
+            <SimpleColorPicker
+              title="Text Color"
+              subtitle="Text Color"
+              stateName="themeVars"
+              value={htC}
+              modalType="hlp-txt-c"
+              modalId="hlp-txt-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} id="hlp-spacing-control" />
