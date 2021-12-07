@@ -276,7 +276,6 @@ export default function FieldStyleCustomize() {
                   />
                 </div>
               </div>
-
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
@@ -285,19 +284,24 @@ export default function FieldStyleCustomize() {
           )}
           {element === 'subtitle' && (
             <div className={css(!checkExistElement('subtitle') && cls.blur)}>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={subtitlStyle?.background} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={subTitlBg} id="label-container-backgroung" />
-              </div>
-
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={subtitlStyle?.color} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={subTitlColor} id="label-container-color" />
-              </div>
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Background Color"
+                stateName="themeVars"
+                value={subtitlStyle?.background}
+                modalType="individul-color"
+                modalId="label-container-backgroung"
+                objectPaths={subTitlBg}
+              />
+              <SimpleColorPicker
+                title="Color"
+                subtitle="Color"
+                stateName="themeVars"
+                value={subtitlStyle?.color}
+                modalType="individul-color"
+                modalId="label-container-color"
+                objectPaths={subTitlColor}
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
