@@ -77,12 +77,6 @@ export default function ThemeCustomize() {
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
 
-  const { '--global-primary-color': tempPrimaryColor,
-    '--global-font-color': tempFontColor,
-    '--global-bg-color': tempBgColor,
-    '--global-fld-bdr-clr': tempFldBdrClr,
-    '--global-fld-bg-color': tempFldBgClr } = tempThemeColors
-
   const { '--fld-wrp-bg': tempFldWrpBg,
     '--fld-wrp-sh': tempFldWrpSh,
     '--fld-wrp-bdr': tempFldWrpBdr,
@@ -239,42 +233,47 @@ export default function ThemeCustomize() {
 
         {element === 'quick-tweaks' && (
           <>
+            <SimpleColorPicker
+              title="Background color"
+              subtitle="Background color"
+              stateName="themeColors"
+              value={globalBgColor}
+              modalType="global-bg-color"
+              modalId="global-bg-clr"
+            />
+            <SimpleColorPicker
+              title="Primary Color"
+              subtitle="Primary Color"
+              stateName="themeColors"
+              value={globalPrimaryColor}
+              modalType="global-primary-color"
+              modalId="global-primary-clr"
+            />
+            <SimpleColorPicker
+              title="Font Color"
+              subtitle="Font Color"
+              stateName="themeColors"
+              value={globalFontColor}
+              modalType="global-font-color"
+              modalId="global-font-clr"
+            />
+            <SimpleColorPicker
+              title="Border Color"
+              subtitle="Border Color"
+              stateName="themeColors"
+              value={globalFldBdrClr}
+              modalType="global-fld-bdr-clr"
+              modalId="global-fld-bdr-clr"
+            />
+            <SimpleColorPicker
+              title="Field Background Color"
+              subtitle="Field Background Color"
+              stateName="themeColors"
+              value={globalFldBgClr}
+              modalType="global-fld-bg-color"
+              modalId="global-fld-bg-clr"
+            />
 
-            <div className={css(ut.flxcb)}>
-              <div className={css(ut.flxb)}>
-                <span className={css(ut.fw500)}>Background Color</span>
-                {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Primary Color</span>
-                {tempPrimaryColor && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Font Color</span>
-                {tempFontColor && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Border Color</span>
-                {tempFldBdrClr && <ResetStyle themeVar="--global-fld-bdr-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Field Background Color</span>
-                {tempFldBgClr && <ResetStyle themeVar="--global-fld-bg-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
-            </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>Font Family</span>
               <FontPicker id="global-font-fam" />
