@@ -166,7 +166,7 @@ export const $themeVars = atom({
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
 
-    '--sub-titl-bg': '', // sub title background color
+    '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
     '--sub-titl-c': '', // sub title color
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '', // subtitle padding

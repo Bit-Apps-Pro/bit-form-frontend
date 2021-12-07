@@ -465,11 +465,15 @@ export default function ThemeCustomize() {
 
         {element === 'subtitle' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempSubTitleBg !== stBg && <ResetStyle themeVar="--sub-titl-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={stBg} action={{ type: 'sub-titl-bg' }} subtitle="Subtitle Background Color" id="sub-titl-bg" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Subtitle Background Color"
+              stateName="themeVars"
+              value={stBg}
+              modalType="sub-titl-bg"
+              modalId="sub-titl-bg"
+            />
+           
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempSubTitlC !== stC && <ResetStyle themeVar="--sub-titl-c" stateName="themeVars" />}
