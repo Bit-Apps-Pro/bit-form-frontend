@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import sc from '../../styles/commonStyleEditorStyle'
 import { $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
