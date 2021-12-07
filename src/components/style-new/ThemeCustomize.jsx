@@ -401,11 +401,15 @@ export default function ThemeCustomize() {
 
         {element === 'label-container' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempLblWrpBg !== lwBg && <ResetStyle themeVar="--lbl-wrp-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={lwBg} action={{ type: 'lbl-wrp-bg' }} subtitle="Subtitle Background Color" id="lbl-wrp-bg" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Subtitle Background Color"
+              stateName="themeVars"
+              value={lwBg}
+              modalType="lbl-wrp-bg"
+              modalId="lbl-wrp-bg"
+            />
+
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} id="lbl-spacing-control" />

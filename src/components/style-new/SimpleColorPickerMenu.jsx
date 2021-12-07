@@ -53,8 +53,8 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
         return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-fld-bdr-clr':
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
-      case 'lbl-wrp-bg':
-        return setColor(str2Color(getCustomColor()))
+      // case 'lbl-wrp-bg':
+      //   return setColor(str2Color(getCustomColor()))
       default:
         return setColor(str2Color(themeVars[`--${action.type}`]))
     }
@@ -126,15 +126,15 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
           // drft['--gfbg-a'] = a / 100
         }))
         break
-      case 'lbl-wrp-bg':
-        setStyles(prvStyle => produce(prvStyle, drft => {
-          drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = hsla
-        }))
-        break
+      // case 'lbl-wrp-bg':
+      //   setStyles(prvStyle => produce(prvStyle, drft => {
+      //     drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = hsla
+      //   }))
+      //   break
       default:
         console.log('defatul action', action.type)
         return setThemeVars(prvState => produce(prvState, drft => {
-          console.log(prvState[`--${action.type}`])
+          console.log('prev style', prvState[`--${action.type}`])
           drft[`--${action.type}`] = hsla
         }))
     }
