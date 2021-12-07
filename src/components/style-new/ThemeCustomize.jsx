@@ -473,12 +473,14 @@ export default function ThemeCustomize() {
               modalType="sub-titl-bg"
               modalId="sub-titl-bg"
             />
-           
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempSubTitlC !== stC && <ResetStyle themeVar="--sub-titl-c" stateName="themeVars" />}
-              <SimpleColorPicker value={stC} action={{ type: 'sub-titl-c' }} subtitle="Text Color" id="sub-title-c" />
-            </div>
+            <SimpleColorPicker
+              title="Text Color"
+              subtitle="Text Color"
+              stateName="themeVars"
+              value={stC}
+              modalType="sub-titl-c"
+              modalId="sub-titl-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} id="subtitle-spacing-control" />
