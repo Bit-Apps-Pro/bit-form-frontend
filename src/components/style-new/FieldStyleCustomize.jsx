@@ -324,19 +324,24 @@ export default function FieldStyleCustomize() {
           )}
           {element === 'helper-text' && (
             <div className={css(!checkExistElement('helper-text') && cls.blur)}>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={hlpTxtStyle?.background} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={hlpTxtBg} id="label-container-backgroung" />
-              </div>
-
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>{__('Color', 'bitform')}</span>
-                </div>
-                <SimpleColorPicker value={hlpTxtStyle?.color} action={{ type: 'individul-color' }} subtitle="Primary color" objectPaths={hlpTxtColor} id="label-container-color" />
-              </div>
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Background Color"
+                stateName="themeVars"
+                value={hlpTxtStyle?.background}
+                modalType="individul-color"
+                modalId="helper-container-backgroung"
+                objectPaths={hlpTxtBg}
+              />
+              <SimpleColorPicker
+                title="Color"
+                subtitle="Color"
+                stateName="themeVars"
+                value={hlpTxtStyle?.color}
+                modalType="individul-color"
+                modalId="helper-container-color"
+                objectPaths={hlpTxtColor}
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
