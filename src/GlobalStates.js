@@ -48,7 +48,7 @@ export const $lightThemeColors = atom({
     '--gbg-l': 100,
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)',
-    '--global-fld-bg-color': '', // field background color
+    '--global-fld-bg-color': 'hsla(0, 0%, 67%, 100)', // field background color
   },
 })
 
