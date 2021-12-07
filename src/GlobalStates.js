@@ -132,18 +132,6 @@ export const $themeVars = atom({
     '--dir': 'ltr', // direaction
     '--inp-wrp-width': '',
     '--lbl-al': '', // label align
-
-    '--lbl-wrp-sa': '',
-    '--lbl-wrp-width': '', // label wrapper  width
-    '--lbl-wrp-m': '', // label wrapper for margin
-    '--lbl-wrp-p': '', // label wrapper for padding
-    '--lbl-wrp-bg': 'hsla(215, 10%, 20%, 100)', // label wrapper for padding
-    '--lbl-wrp-c': '', // label wrapper for color
-    '--lbl-wrp-sh': '1em 3px 5px 0rem blue inset', // label wrapper box shadow
-    '--lbl-wrp-bdr': 'solid red', // label wrapper border
-    '--lbl-wrp-bdr-width': '1px', // label wrapper border width
-    '--lbl-wrp-bdr-rad': '8px', // label wrapper border radius
-
     // '--fld-p': '', // field padding
     '--fld-m': '', // field margin
     '--fld-fs': '1rem', // field font size
@@ -153,42 +141,52 @@ export const $themeVars = atom({
     '--fld-wrp-bg': 'hsla(0, 71%, 39%, 100)', // fieldwrapper background
     '--fld-wrp-m': '10px', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
-    '--fld-wrp-sh': '1em 3px 5px 0rem blue inset', // field wrapper box shadow
-    '--fld-wrp-bdr': 'solid red', // field wrapper border
-    '--fld-wrp-bdr-width': '1px', // field wrapper border width
-    '--fld-wrp-bdr-rad': '8px', // field wrapper border radius
+    '--fld-wrp-sh': '', // field wrapper box shadow
+    '--fld-wrp-bdr': '', // field wrapper border
+    '--fld-wrp-bdr-width': '', // field wrapper border width
+    '--fld-wrp-bdr-rad': '', // field wrapper border radius
+
+    '--lbl-wrp-sa': '',
+    '--lbl-wrp-width': '', // label wrapper  width
+    '--lbl-wrp-m': '', // label wrapper for margin
+    '--lbl-wrp-p': '', // label wrapper for padding
+    '--lbl-wrp-bg': 'hsla(215, 10%, 20%, 100)', // label wrapper for padding
+    '--lbl-wrp-sh': '', // label wrapper box shadow
+    '--lbl-wrp-bdr': '', // label wrapper border
+    '--lbl-wrp-bdr-width': '', // label wrapper border width
+    '--lbl-wrp-bdr-rad': '', // label wrapper border radius
 
     '--fld-lbl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
     '--fld-lbl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
     '--fld-lbl-m': '', // field label margin
     '--fld-lbl-p': '', // field label padding
     '--fld-lbl-fs': '16px', // field label font size
-    '--fld-lbl-sh': '1em 3px 5px 0rem blue inset', // field label box shadow
-    '--fld-lbl-bdr': 'solid red', // field label border
-    '--fld-lbl-bdr-width': '1px', // field label border width
-    '--fld-lbl-bdr-rad': '8px', // field label border radius
+    '--fld-lbl-sh': '', // field label box shadow
+    '--fld-lbl-bdr': '', // field label border
+    '--fld-lbl-bdr-width': '', // field label border width
+    '--fld-lbl-bdr-rad': '', // field label border radius
 
-    '--sub-titl-bg': 'hsla(0, 71%, 39%, 100)', // sub title background color
-    '--sub-titl-c': 'hsla(201, 71%, 39%, 100)', // sub title color
+    '--sub-titl-bg': '', // sub title background color
+    '--sub-titl-c': '', // sub title color
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '', // subtitle padding
     '--sub-titl-al': '', // subtitle align
     '--sub-titl-fs': '12px', // subtitle font size
-    '--sub-titl-sh': '1em 3px 5px 0rem blue inset', // subtitle box shadow
-    '--sub-titl-bdr': 'solid red', // subtitle border
-    '--sub-titl-bdr-width': '1px', // subtitle border width
-    '--sub-titl-bdr-rad': '8px', // subtitle border radius
+    '--sub-titl-sh': '', // subtitle box shadow
+    '--sub-titl-bdr': '', // subtitle border
+    '--sub-titl-bdr-width': '', // subtitle border width
+    '--sub-titl-bdr-rad': '', // subtitle border radius
 
-    '--hlp-txt-bg': 'hsla(0, 71%, 39%, 100)', // helper text background color
-    '--hlp-txt-c': 'hsla(0, 71%, 39%, 100)', // helpertext color
+    '--hlp-txt-bg': '', // helper text background color
+    '--hlp-txt-c': '', // helpertext color
     '--hlp-txt-m': '', // helper text margin
     '--hlp-txt-p': '', // hepler text padding
     '--hlp-txt-fs': '12px', // hepler text font size
     '--hlp-txt-al': '', // helper text align
-    '--hlp-txt-sh': '1em 3px 5px 0rem blue inset', // helper text box shadow
-    '--hlp-txt-bdr': 'solid red', // helper text border
-    '--hlp-txt-bdr-width': '1px', // helper text border width
-    '--hlp-txt-bdr-rad': '8px', // helper text border radius
+    '--hlp-txt-sh': '', // helper text box shadow
+    '--hlp-txt-bdr': '', // helper text border
+    '--hlp-txt-bdr-width': '', // helper text border width
+    '--hlp-txt-bdr-rad': '', // helper text border radius
 
     '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
     '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color

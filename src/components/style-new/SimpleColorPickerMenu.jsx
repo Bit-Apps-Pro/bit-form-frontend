@@ -5,7 +5,7 @@ import { str2Color } from '@atomik-color/core'
 import produce from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
@@ -21,7 +21,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -32,6 +32,16 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     '--global-fld-bg-color': themeFldBgColor,
     '--global-font-color': themeFontColor,
     '--global-primary-color': themePrimaryColor } = themeColors
+
+  const getCustomColor = () => {
+    const colorValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
+    if (colorValue === undefined) return 'hsla(0, 0%, 100%, 100)'
+    if (colorValue.match(/var/g)?.[0] === 'var') {
+      const getVarProperty = colorValue.replaceAll(/\(|var|,.*|\)/gi, '')
+      return themeVars[getVarProperty]
+    }
+    return colorValue
+  }
 
   useEffect(() => {
     if (isColorVar) return
@@ -44,7 +54,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
       case 'global-fld-bdr-color':
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
       case 'lbl-wrp-bg':
-        return setColor(str2Color('hsl(100, 10%, 20%)'))
+        return setColor(str2Color(getCustomColor()))
       default:
         return setColor(str2Color(themeVars[`--${action.type}`]))
     }

@@ -37,7 +37,7 @@ export default function ThemeCustomize() {
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
-  const setColorScheme = useSetRecoilState($colorScheme)
+  const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
 
   const setFlags = useSetRecoilState($flags)
   const themeColors = useRecoilValue($themeColors)
@@ -105,7 +105,6 @@ export default function ThemeCustomize() {
     '--err-c': tempErrC,
     '--err-sh': tempErrSh,
     '--err-bdr': tempErrBdr } = tempThemeVars
-
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -192,11 +191,24 @@ export default function ThemeCustomize() {
     setThemeVars(tmpThemeVar)
   }
 
+  const genarateTitle = () => {
+    switch (element) {
+      case 'quick-tweaks': return 'Theme Quick Tweaks'
+      case 'field-container': return 'Field Block'
+      case 'label-container': return 'Label Container'
+      case 'label': return 'Label'
+      case 'subtitle': return 'Sub Label'
+      case 'helper-text': return 'Helper Text'
+      case 'error-messages': return 'Error Messages'
+      default: return 'Theme Customization'
+    }
+  }
+
   // const openHandler = (value) => {
   //   setActiveAccordion(value)
   // }
 
-  // const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -209,134 +221,127 @@ export default function ThemeCustomize() {
         </Link>
         <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
       </span>
-      <h4 className={css(cls.title)}>Theme Customize</h4>
+      <h4 className={css(cls.title)}>
+        {genarateTitle()}
+        {' '}
+        (Global)
+      </h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-        {/* <h4 className={css(cls.subTitle)}>Color Scheme</h4>
+
+        <h4 className={css(cls.subTitle)}>Color Scheme</h4>
         <div className={css(ut.flxcb, ut.w9, ut.mt1)}>
           <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
           <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
           <button onClick={handlecolorScheme} name="high-contrast" data-active={colorScheme === 'high-contrast'} className={css(cls.menuItem, colorScheme === 'high-contrast' && cls.clrActive)} type="button">High Contrast</button>
         </div>
-
         <div className={css(cls.divider)} />
 
-        <h4 className={css(cls.subTitle)}>Quick Tweaks</h4> */}
-
-        {element === 'theme-customization' && (
+        {element === 'quick-tweaks' && (
           <>
-            <div className={css(cls.container)}>
 
-              {/*
-          <div className={css(ut.flxc)}>
-            <div className={css(cls.menuItem)}>Default</div>
-            <div className={css(cls.menuItem, { px: 10 })}>Dark Mode</div>
-            <div className={css(cls.menuItem)}>High Contrast Mode</div>
-          </div> */}
+            <div className={css(ut.flxcb)}>
+              <div className={css(ut.flxb)}>
+                <span className={css(ut.fw500)}>Background Color</span>
+                {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
+              </div>
+              <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
               <div className={css(ut.flxcb)}>
-                <div className={css(ut.flxb)}>
-                  <span className={css(ut.fw500)}>Background Color</span>
-                  {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
-                </div>
-                <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
+                <span className={css(ut.fw500)}>Primary Color</span>
+                {tempPrimaryColor && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Primary Color</span>
-                  {tempPrimaryColor && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
-                </div>
-                <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
+              <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>Font Color</span>
+                {tempFontColor && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Font Color</span>
-                  {tempFontColor && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
-                </div>
-                <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
+              <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>Border Color</span>
+                {tempFldBdrClr && <ResetStyle themeVar="--global-fld-bdr-color" stateName="themeColors" />}
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Border Color</span>
-                  {tempFldBdrClr && <ResetStyle themeVar="--global-fld-bdr-color" stateName="themeColors" />}
-                </div>
-                <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
+              <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <div className={css(ut.flxcb)}>
+                <span className={css(ut.fw500)}>Field Background Color</span>
+                {tempFldBgClr && <ResetStyle themeVar="--global-fld-bg-color" stateName="themeColors" />}
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Field Background Color</span>
-                  {tempFldBgClr && <ResetStyle themeVar="--global-fld-bg-color" stateName="themeColors" />}
-                </div>
-                <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
-              </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Font Family</span>
-                <FontPicker id="global-font-fam" />
-              </div>
+              <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
+            </div>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Font Family</span>
+              <FontPicker id="global-font-fam" />
+            </div>
 
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Border Radius</span>
-                <div className={css(ut.flxc)}>
-                  <ResetStyle objectKey="--g-bdr-rad"   stateName="themeVars" />
-                  <SizeControl
-                    min={0}
-                    max={20}
-                    inputHandler={borderRadHandler}
-                    sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-                    value={globalBdrRadValue}
-                    unit={globalBdrRadUnit}
-                    width="110px"
-                    options={['px', 'em', 'rem']}
-                  />
-                </div>
-              </div>
-
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Border width</span>
-                {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" show={false} />}
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Border Radius</span>
+              <div className={css(ut.flxc)}>
+                <ResetStyle objectKey="--g-bdr-rad" stateName="themeVars" />
                 <SizeControl
                   min={0}
                   max={20}
-                  inputHandler={borderWidthHandler}
-                  sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
-                  value={globalBdrWidthVal}
-                  unit={globalBdrWidthUnit}
+                  inputHandler={borderRadHandler}
+                  sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+                  value={globalBdrRadValue}
+                  unit={globalBdrRadUnit}
                   width="110px"
                   options={['px', 'em', 'rem']}
                 />
               </div>
+            </div>
 
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Size</span>
-                <select onChange={setSizes} className={css(sc.select)}>
-                  <option value="small-2">Small-2</option>
-                  <option value="small-1">Small-1</option>
-                  <option value="small">Small</option>
-                  <option value="medium">Medium</option>
-                  <option value="large">Large</option>
-                  <option value="large-1">Large-1</option>
-                </select>
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Border width</span>
+              {tempThemeVars['--g-bdr-width'] && <ResetStyle themeVar="--g-bdr-width" show={false} />}
+              <SizeControl
+                min={0}
+                max={20}
+                inputHandler={borderWidthHandler}
+                sizeHandler={({ unitKey, unitValue }) => borderWidthHandler({ unit: unitKey, value: unitValue })}
+                value={globalBdrWidthVal}
+                unit={globalBdrWidthUnit}
+                width="110px"
+                options={['px', 'em', 'rem']}
+              />
+            </div>
+
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Size</span>
+              <select onChange={setSizes} className={css(sc.select)}>
+                <option value="small-2">Small-2</option>
+                <option value="small-1">Small-1</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="large-1">Large-1</option>
+              </select>
+            </div>
+
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Field Font Size</span>
+              <div className={css(ut.flxc)}>
+                {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
+                <SizeControl
+                  inputHandler={fldFsSizeHandler}
+                  sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
+                  value={fldFSValue}
+                  unit={fldFSUnit}
+                  width="110px"
+                  options={['px', 'em', 'rem']}
+                />
               </div>
+            </div>
 
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Field Font Size</span>
-                <div className={css(ut.flxc)}>
-                  {tempThemeVars['--fld-fs'] && <ResetStyle themeVar="--fld-fs" stateName="themeColors" />}
-                  <SizeControl
-                    inputHandler={fldFsSizeHandler}
-                    sizeHandler={({ unitKey, unitValue }) => fldFsSizeHandler({ unit: unitKey, value: unitValue })}
-                    value={fldFSValue}
-                    unit={fldFSUnit}
-                    width="110px"
-                    options={['px', 'em', 'rem']}
-                  />
-                </div>
-              </div>
-
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
-                <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
-              </div>
-
+            <div className={css(ut.flxcb, ut.mt2)}>
+              <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
+              <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
             </div>
 
             <div className={css(cls.divider)} />
@@ -364,21 +369,6 @@ export default function ThemeCustomize() {
           </>
         )}
 
-        <h4 className={css(cls.subTitle)}>More Customizations</h4>
-        <div className={css(cls.divider)} />
-
-        {/* <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Theme</span>
-          <ThemeControl />
-        </div> 
-
-        <SimpleAccordion
-          title={__('Field container', 'bitform')}
-          className={css(cls.accordion)}
-          disable={activeAccordion !== 1}
-          onClick={() => openHandler(1)}
-          actionComponent={<HighlightElm selector="[data-dev-fld-wrp]" />}
-        > */}
         {
           element === 'field-container' && (
             <div className={css(ut.m10)}>
@@ -406,16 +396,8 @@ export default function ThemeCustomize() {
             </div>
           )
         }
-        {/* </SimpleAccordion> */}
 
-        {/* <SimpleAccordion
-          title={__('Label & Subtitle Container', 'bitform')}
-          className={css(cls.accordion)}
-          disable={activeAccordion !== 2}
-          onClick={() => openHandler(2)}
-          actionComponent={<HighlightElm selector="[data-dev-lbl-wrp]" />}
-        > */}
-        {element === 'label-subtitle-container' && (
+        {element === 'label-container' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
@@ -440,15 +422,7 @@ export default function ThemeCustomize() {
             </ThemeStylePropertyBlock>
           </div>
         )}
-        {/* </SimpleAccordion> */}
 
-        {/* <SimpleAccordion
-          title={__('Label', 'bitform')}
-          className={css(cls.accordion)}
-          disable={activeAccordion !== 3}
-          onClick={() => openHandler(3)}
-          actionComponent={<HighlightElm selector="[data-dev-lbl]" />}
-        > */}
         {element === 'label' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -480,15 +454,6 @@ export default function ThemeCustomize() {
           </div>
         )}
 
-        {/* </SimpleAccordion> */}
-
-        {/* <SimpleAccordion
-          title={__('Subtitle', 'bitform')}
-          className={css(cls.accordion)}
-          disable={activeAccordion !== 4}
-          onClick={() => openHandler(4)}
-          actionComponent={<HighlightElm selector="[data-dev-sub-titl]" />}
-        > */}
         {element === 'subtitle' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -519,14 +484,7 @@ export default function ThemeCustomize() {
             </ThemeStylePropertyBlock>
           </div>
         )}
-        {/* </SimpleAccordion> */}
 
-        {/* <SimpleAccordion
-          title={__('Helper Text', 'bitform')}
-          className={css(cls.accordion)}
-          disable={activeAccordion !== 5}
-          onClick={() => openHandler(5)}
-        > */}
         {element === 'helper-text' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -557,14 +515,7 @@ export default function ThemeCustomize() {
             </ThemeStylePropertyBlock>
           </div>
         )}
-        {/* </SimpleAccordion> */}
 
-        {/* <SimpleAccordion
-          title={__('Error Message', 'bitform')}
-          className={css(cls.accordion)}
-          disable={activeAccordion !== 6}
-          onClick={() => openHandler(6)}
-        > */}
         {element === 'error-messages' && (
           <div className={css(ut.m10)}>
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -595,7 +546,6 @@ export default function ThemeCustomize() {
             </ThemeStylePropertyBlock>
           </div>
         )}
-        {/* </SimpleAccordion> */}
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
@@ -608,12 +558,12 @@ const cls = {
   breadcumbLink: { fs: 11, flxi: 'center', mr: 3, ':focus': { bs: 'none' } },
   l1: { cr: 'var(--white-0-61)', ':hover': { textDecoration: 'underline !important' } },
   l2: { cr: 'var(--white-0-21)' },
-  wrp: { ml: 5, mt: 10, fs: 12 },
+  wrp: { ml: 5, mr: 8, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)', w: '97%' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
-  container: { ml: 12, mr: 10 },
+  // container: { ml: 12, mr: 10 },
   btn: {
     b: 'none',
     oe: 'none',
