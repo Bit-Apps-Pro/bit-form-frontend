@@ -8,11 +8,13 @@ import { $fields } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
+import { fieldTool } from '../../Utils/StaticData/fieldTool'
 
 export default function StyleLayers() {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
+  const showFldTitle = (typ) => fieldTool[typ] || typ
 
   return (
     <div className={css(s.con)}>
@@ -32,7 +34,7 @@ export default function StyleLayers() {
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion title={fldData.typ} tag={fldKey} key={`${fldKey}`}>
+            <LayerAccordion title={showFldTitle(fldData.typ)} tag={fldKey} key={`${fldKey}`}>
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="label-subtitle-container" label="Label Container" offset="2.5" highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="label" label="Label" offset="2.5" highlightSelector={`[data-dev-lbl="${fldKey}"]`} />
