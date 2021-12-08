@@ -14,20 +14,22 @@ export default function SimpleColorPicker({ title, stateName, subtitle, action, 
     <div className={css(ut.flxcb, ut.mt2)}>
       <div className={css(ut.flxb)}>
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
-        <ResetStyle objectKey={`--${modalType}`} stateName={stateName} />
       </div>
-      <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
-        <button
-          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths })}
-          type="button"
-          className={css(c.pickrBtn)}
-        >
-          <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
-          <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
-        </button>
-        {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
-          <CloseIcn size="12" />
-        </button> */}
+      <div className={css(ut.flxc)}>
+        <ResetStyle objectKey={`--${modalType}`} stateName={stateName} />
+        <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
+          <button
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths })}
+            type="button"
+            className={css(c.pickrBtn)}
+          >
+            <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
+            <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+          </button>
+          {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <CloseIcn size="12" />
+          </button> */}
+        </div>
       </div>
     </div>
   )
