@@ -3839,7 +3839,7 @@ select.btcd-paper-inp {
   margin-right: 20px;
   font-weight: 500;
   box-shadow: 0 1px 2px hsla(var(--blue-h), var(--black-s), var(--black-l), 0.2);
-
+  border:none;
   & .lft-icn {
     // background     : #f5f5f5;
     background: var(--white-0-95);
@@ -3852,18 +3852,9 @@ select.btcd-paper-inp {
 
   &:hover {
     color: var(--b-50);
-
     & .lft-icn {
       background: hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 48%));
       color: var(--b-50);
-
-      & .line-icn {
-        stroke: var(--b-50);
-      }
-
-      & .fill-icn {
-        fill: var(--b-50);
-      }
     }
   }
 }
@@ -4737,6 +4728,7 @@ _:-ms-fullscreen,
 }
 
 .w-nwrp {
+  text-align: left;
   white-space: nowrap;
 }
 
