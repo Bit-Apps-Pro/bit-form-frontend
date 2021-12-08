@@ -28,7 +28,7 @@ import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
@@ -121,7 +121,7 @@ export default function ThemeCustomize() {
   }
 
   const updateHandler = (value, unit, globalVarUnit, globalVar) => {
-    const convertvalue = unitConverterHelper(unit, value, globalVarUnit)
+    const convertvalue = unitConverter(unit, value, globalVarUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft[globalVar] = `${convertvalue}${unit || globalVarUnit}`
     }))

@@ -4,7 +4,7 @@ import BoxFullIcon from '../../../../Icons/BoxFullIcon'
 import BoxIcon from '../../../../Icons/BoxIcon'
 import UndoIcon from '../../../../Icons/UndoIcon'
 import ut from '../../../../styles/2.utilities'
-import { getNumFromStr, getStrFromStr, unitConverterHelper } from '../../../style-new/styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverter } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import Grow from './Grow'
 import SizeControl from './SizeControl'
@@ -59,7 +59,7 @@ export default function SpaceControl({ value,
 
   const handleValues = ({ value: val, unit, id }) => {
     const preUnit = getStrFromStr(values[id])
-    const convertvalue = unitConverterHelper(unit, val, preUnit)
+    const convertvalue = unitConverter(unit, val, preUnit)
 
     values[id] = convertvalue + unit
     let v
