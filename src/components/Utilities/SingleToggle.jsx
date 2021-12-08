@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 
-export default function SingleToggle({ className, title, isChecked, name, action, disabled }) {
+export default function SingleToggle({ className, title, isChecked, name, action = () => { }, disabled }) {
   const { css } = useFela()
   return (
     <div className={`flx flx-between ${className}`}>
