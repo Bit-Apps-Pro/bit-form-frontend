@@ -1,3 +1,6 @@
+import { useParams, useHistory } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { $selectedFieldId } from '../../GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ChevronRightIcon from '../../Icons/ChevronRightIcon'
@@ -24,71 +27,17 @@ import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
 import { __ } from '../../Utils/i18nwrap'
 
-export default function FieldLinkBtn({ icn, title, sub, action }) {
-  const extraProps = {}
-  if (action !== undefined) {
-    extraProps.role = 'button'
-    extraProps.tabIndex = 0
-    extraProps.onKeyPress = action
-    extraProps.onClick = action
-  }
+export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
+  const { formType, formID } = useParams()
+  const setSeletedFieldId = useSetRecoilState($selectedFieldId)
+  const history = useHistory()
 
-  const FieldIcon = icon => {
-    switch (icon) {
-      case 'text':
-        return <TextIcn size="14" />
-      case 'username':
-        return <UserIcn size="14" />
-      case 'textarea':
-        return <TextareaIcn size="14" />
-      case 'check':
-        return <CheckBoxIcn w="14" />
-      case 'radio':
-        return <RadioIcn size="14" />
-      case 'number':
-        return <NumberIcn w="14" />
-      case 'select':
-        return <DropDownIcn w="14" />
-      case 'password':
-        return <PasswordIcn size="14" />
-      case 'email':
-        return <MailIcn size="14" />
-      case 'url':
-        return <UrlIcn w="14" />
-      case 'file-up':
-        return <FileUploadIcn w="14" />
-      case 'date':
-        return <DateIcn w="14" />
-      case 'time':
-        return <TimeIcn size="14" />
-      case 'datetime-local':
-        return <DateTimeIcn w="14" />
-      case 'month':
-        return <MonthIcn w="14" />
-      case 'week':
-        return <WeekIcn size="14" />
-      case 'color':
-        return <ColorPickerIcn w="14" />
-      case 'recaptcha':
-        return <ReCaptchaIcn size="14" />
-      case 'decision-box':
-        return <DecisionBoxIcn size="14" />
-      case 'button':
-        return <BtnIcn size="14" />
-      case 'html':
-        return <CodeSnippetIcn size="14" />
-      case 'paypal':
-        return <PaypalIcn w="14" />
-      case 'razorpay':
-        return <RazorPayIcn w="14" h="19" />
-      default:
-        return false
-    }
+  const handleFldLink = () => {
+    setSeletedFieldId(fieldKey)
+    history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldKey}`)
   }
-
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <div className="btc-s-l mt-2" {...extraProps}>
+    <button type="button" onClick={handleFldLink} className="btc-s-l mt-2">
       <div className="flx flx-between ">
         <div className="flx w-9">
           <span className="lft-icn mr-2 flx br-50">
@@ -96,16 +45,68 @@ export default function FieldLinkBtn({ icn, title, sub, action }) {
           </span>
           <div className="w-nwrp o-h">
             <div className="txt-o o-h mb-1">{title}</div>
-            {sub && (
+            {subTitle && (
               <small>
                 {__('Key:', 'bitform')}
-                {` ${sub}`}
+                {` ${subTitle}`}
               </small>
             )}
           </div>
         </div>
         <ChevronRightIcon size={18} />
       </div>
-    </div>
+    </button>
   )
+}
+const FieldIcon = icon => {
+  switch (icon) {
+    case 'text':
+      return <TextIcn size="14" />
+    case 'username':
+      return <UserIcn size="14" />
+    case 'textarea':
+      return <TextareaIcn size="14" />
+    case 'check':
+      return <CheckBoxIcn w="14" />
+    case 'radio':
+      return <RadioIcn size="14" />
+    case 'number':
+      return <NumberIcn w="14" />
+    case 'select':
+      return <DropDownIcn w="14" />
+    case 'password':
+      return <PasswordIcn size="14" />
+    case 'email':
+      return <MailIcn size="14" />
+    case 'url':
+      return <UrlIcn w="14" />
+    case 'file-up':
+      return <FileUploadIcn w="14" />
+    case 'date':
+      return <DateIcn w="14" />
+    case 'time':
+      return <TimeIcn size="14" />
+    case 'datetime-local':
+      return <DateTimeIcn w="14" />
+    case 'month':
+      return <MonthIcn w="14" />
+    case 'week':
+      return <WeekIcn size="14" />
+    case 'color':
+      return <ColorPickerIcn w="14" />
+    case 'recaptcha':
+      return <ReCaptchaIcn size="14" />
+    case 'decision-box':
+      return <DecisionBoxIcn size="14" />
+    case 'button':
+      return <BtnIcn size="14" />
+    case 'html':
+      return <CodeSnippetIcn size="14" />
+    case 'paypal':
+      return <PaypalIcn w="14" />
+    case 'razorpay':
+      return <RazorPayIcn w="14" h="19" />
+    default:
+      return false
+  }
 }
