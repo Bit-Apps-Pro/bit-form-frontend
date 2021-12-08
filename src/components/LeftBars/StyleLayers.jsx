@@ -18,7 +18,7 @@ export default function StyleLayers() {
     <div className={css(s.con)}>
       <h4 className={css(s.title)}>Elements & Layers</h4>
       <div className={css(s.divider)} />
-      <Scrollbars height="100px" autoHide>
+      <Scrollbars style={{ height: 'calc(100% - 120px' }} autoHide>
         <div className={css(s.scrollDiv)}>
 
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
@@ -33,12 +33,12 @@ export default function StyleLayers() {
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion title={fldData.typ} tag={fldKey} key={`${fldKey}`}>
-              <NavBtn route={fldKey} subRoute="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
-              <NavBtn route={fldKey} subRoute="label-subtitle-container" label="Label Container" offset="2.5" highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`} />
-              <NavBtn route={fldKey} subRoute="label" label="Label" offset="2.5" highlightSelector={`[data-dev-lbl="${fldKey}"]`} />
-              <NavBtn route={fldKey} subRoute="subtitle" label="Subtitle" offset="2.5" highlightSelector={`[data-dev-sub-titl="${fldKey}"]`} />
-              <NavBtn route={fldKey} subRoute="helper-text" label="Helper Text" offset="2.5" highlightSelector={`[data-dev-hlp-txt="${fldKey}"]`} />
-              <NavBtn route={fldKey} subRoute="Error Message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="label-subtitle-container" label="Label Container" offset="2.5" highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="label" label="Label" offset="2.5" highlightSelector={`[data-dev-lbl="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="subtitle" label="Subtitle" offset="2.5" highlightSelector={`[data-dev-sub-titl="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="helper-text" label="Helper Text" offset="2.5" highlightSelector={`[data-dev-hlp-txt="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="Error Message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
             </LayerAccordion>
           ))}
         </div>
@@ -46,8 +46,15 @@ export default function StyleLayers() {
     </div>
   )
 }
-function NavBtn({ route, label, offset = 1, icn, highlightSelector, subRoute }) {
-  const { formType, formID } = useParams()
+function NavBtn({ route, subRoute, label, offset = 1, icn, highlightSelector }) {
+  const { formType, formID, fldKey, element } = useParams()
+  let active = false
+  console.log({ fldKey, element, route, subRoute })
+  if (!subRoute && element === route) {
+    active = true
+  } else if (subRoute === fldKey && route === element) {
+    active = true
+  }
   const history = useHistory()
   const styleHandler = () => {
     if (!subRoute) history.push(`/form/builder/${formType}/${formID}/theme-customize/${route}`)
@@ -56,7 +63,7 @@ function NavBtn({ route, label, offset = 1, icn, highlightSelector, subRoute }) 
   const { css } = useFela()
   return (
     <div
-      className={css(s.navBtn)}
+      className={css(s.navBtn, active && s.navBtnActive)}
       style={{ paddingLeft: offset * 10 }}
       type="button"
       value={route}
@@ -142,6 +149,7 @@ const s = {
       '& div[data-action-btn]': { dy: 'flex' },
     },
   },
+  navBtnActive: { bd: '#eeeff7' },
   navActionBtn: {
     h: '100%',
     b: 'none',
