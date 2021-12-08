@@ -14,7 +14,7 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   const colorVal = splitValueBySpaces(value)[4]
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const clearValue = () => {
-    if (objectPaths.paths.hasOwnProperty('shadow')) {
+    if (Object.prototype.hasOwnProperty.call(objectPaths.paths, 'shadow')) {
       setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
         drft[objectPaths.paths.shadow] = ''
       }))
@@ -28,7 +28,12 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
         className={css(c.pickrBtn)}
       >
         <ColorPreview bg={colorVal} h={25} w={25} className={css(ut.mr2)} />
-        <span className={css(c.clrVal)}>{value !== '' ? value : 'Add Shadow'}</span>
+        <span className={css(c.clrVal)}>{value || 'Add Shadow'}</span>
+        {value && (
+          <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
+            <CloseIcn size="12" />
+          </button>
+        )}
       </button>
       {value && (
         <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">

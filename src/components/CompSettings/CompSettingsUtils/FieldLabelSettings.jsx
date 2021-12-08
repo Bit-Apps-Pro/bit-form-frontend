@@ -12,7 +12,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
-import { getNumFromStr, getStrFromStr, unitConverterHelper } from '../../style-new/styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverter } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
@@ -75,14 +75,14 @@ export default function FieldLabelSettings() {
   }
 
   const lblWidthHandler = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(width || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
     }))
   }
 
   const lblHeightHandler = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(height || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
     }))

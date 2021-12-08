@@ -52,7 +52,7 @@ export const changeFormDir = (style, dir) => produce(style, drft => {
   }
 })
 
-export const unitConverterHelper = (unit, value, prvUnit) => {
+export const unitConverter = (unit, value, prvUnit) => {
   if (prvUnit === unit) return value
 
   if (prvUnit === 'px' && unit === 'em') return Number((value * 0.0625).toFixed(3))

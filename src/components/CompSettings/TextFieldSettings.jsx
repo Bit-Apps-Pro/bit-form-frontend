@@ -20,7 +20,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { getNumFromStr, getStrFromStr, unitConverterHelper } from '../style-new/styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -428,13 +428,13 @@ function TextFieldSettings() {
   }
 
   const icnWidthHandle = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(width || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
     }))
   }
   const icnHeightHandle = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(height || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
     }))
