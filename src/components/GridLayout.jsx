@@ -461,6 +461,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
             navigateToStyle={navigateToStyle}
             cloneLayoutItem={cloneLayoutItem}
             removeLayoutItem={removeLayoutItem}
+            className="right-click-context-menu"
           />
         </CSSTransition>
       </div>
@@ -480,5 +481,6 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     </div>
   )
 }
+
 
 export default memo(GridLayout)
