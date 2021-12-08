@@ -12,9 +12,10 @@ import FilePondPluginImageResize from 'filepond-plugin-image-resize'
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
 import FilePondPluginMediaPreview from 'filepond-plugin-media-preview'
 import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
+import { useParams } from 'react-router-dom'
 
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates'
 import 'filepond/dist/filepond.min.css'
 
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
@@ -24,7 +25,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { selectInGrid } from '../../Utils/globalHelpers'
 
 function AdvanceFileUp({ attr, formID, fieldKey }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   useEffect(() => {

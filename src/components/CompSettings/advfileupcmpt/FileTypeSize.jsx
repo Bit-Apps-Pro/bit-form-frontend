@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -11,7 +12,7 @@ import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 
 function FileTypeSize({ action }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
@@ -65,17 +66,15 @@ function FileTypeSize({ action }) {
           />
 
           {fieldData?.config?.minFileSize && (
-            <>
-              <SizeControl
-                className={css(ut.mt1)}
-                width={94}
-                options={['MB', 'KB']}
-                sizeHandler={(e) => sizeHandler(e, 'minFileSize')}
-                byteType={findByte(fieldData?.config, 'minFileSize')}
-                value={findValue(fieldData?.config, 'minFileSize')}
-                inputHandler={(e) => inputHandler(e, 'minFileSize')}
-              />
-            </>
+            <SizeControl
+              className={css(ut.mt1)}
+              width={94}
+              options={['MB', 'KB']}
+              sizeHandler={(e) => sizeHandler(e, 'minFileSize')}
+              byteType={findByte(fieldData?.config, 'minFileSize')}
+              value={findValue(fieldData?.config, 'minFileSize')}
+              inputHandler={(e) => inputHandler(e, 'minFileSize')}
+            />
           )}
         </div>
         {fieldData?.config?.minFileSize && (

@@ -10,10 +10,9 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 
 export default function PaypalStyleEditor() {
-  const { formID, formType } = useParams()
+  const { formID, formType,fieldKey: fldKey } = useParams()
   const [lay, setLay] = useRecoilState($layouts)
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [customHeight, setCustomHeight] = useState(fieldData?.style?.height || '')

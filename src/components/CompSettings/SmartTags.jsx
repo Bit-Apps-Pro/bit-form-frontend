@@ -3,12 +3,13 @@
 
 import produce from 'immer'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $fields, $fieldsArr, $selectedFieldId } from '../../GlobalStates'
+import { $fields, $fieldsArr } from '../../GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 
 function SmartTags({ fieldName }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = useRecoilValue($fieldsArr)
@@ -41,42 +42,39 @@ function SmartTags({ fieldName }) {
   ]
 
   return (
-    <>
-      <div className={css(style.main)}>
-        <ul>
-          <h4 style={{ margin: 0 }}>Form Fields</h4>
-          {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha|title)$/)
-            && (
-              <li>
-                <button
-                  type="button"
-                  className={`${css(style.button)} btnHover`}
-                  title={f.name}
-                  onClick={() => addField(f.key)}
-                >
-                  {f.name}
-                </button>
-              </li>
-            ))}
-        </ul>
-        <ul>
-          <h4 style={{ margin: 0 }}>Smart Tags</h4>
-          {others !== null && others.map(f => (
+    <div className={css(style.main)}>
+      <ul>
+        <h4 style={{ margin: 0 }}>Form Fields</h4>
+        {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha|title)$/)
+          && (
             <li>
               <button
                 type="button"
                 className={`${css(style.button)} btnHover`}
-                title={f.label}
-                onClick={() => addField(f.value)}
+                title={f.name}
+                onClick={() => addField(f.key)}
               >
-                {f.label}
+                {f.name}
               </button>
             </li>
           ))}
-        </ul>
-      </div>
-
-    </>
+      </ul>
+      <ul>
+        <h4 style={{ margin: 0 }}>Smart Tags</h4>
+        {others !== null && others.map(f => (
+          <li>
+            <button
+              type="button"
+              className={`${css(style.button)} btnHover`}
+              title={f.label}
+              onClick={() => addField(f.value)}
+            >
+              {f.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 const style = {
