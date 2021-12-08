@@ -194,11 +194,11 @@ export default function ThemeCustomize() {
   const genarateTitle = () => {
     switch (element) {
       case 'quick-tweaks': return 'Theme Quick Tweaks'
-      case 'field-container': return 'Field Block'
-      case 'label-container': return 'Label Container'
-      case 'label': return 'Label'
-      case 'subtitle': return 'Sub Label'
-      case 'helper-text': return 'Helper Text'
+      case 'field-container': return 'Field Blocks'
+      case 'label-container': return 'Label Containers'
+      case 'label': return 'Labels'
+      case 'subtitle': return 'Sub Labels'
+      case 'helper-text': return 'Helper Texts'
       case 'error-messages': return 'Error Messages'
       default: return 'Theme Customization'
     }
