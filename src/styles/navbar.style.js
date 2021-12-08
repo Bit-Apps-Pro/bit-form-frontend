@@ -35,15 +35,14 @@ const navbar = {
   btcd_bld_title_inp: {
     bd: 'var(--dp-blue-bg)',
     cr: 'var(--white)',
-    // p: 6,
     py: 6,
-    px: 16,
-    fs: 16,
+    px: 10,
+    fs: 14,
     b: 'none',
     tn: 'background 0.3s !important',
     oe: 'none',
-    ml: 12,
-    brs: 12,
+    ml: 8,
+    brs: 8,
 
     '&:hover': { bd: 'var(--b-16-35)' },
     '&:focus': {
