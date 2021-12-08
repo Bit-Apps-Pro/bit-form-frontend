@@ -3,9 +3,10 @@
 /* eslint-disable object-property-newline */
 /* eslint-disable no-undef */
 
-import { memo, useMemo, useState, useEffect } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
+import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
@@ -13,9 +14,11 @@ import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import DateIcn from '../../Icons/DateIcn'
 import DateTimeIcn from '../../Icons/DateTimeIcn'
 import DecisionBoxIcn from '../../Icons/DecisionBoxIcn'
+import DividerIcn from '../../Icons/DividerIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import FlagIcn from '../../Icons/FlagIcn'
+import ImgFldIcn from '../../Icons/ImgFldIcn'
 import MailIcn from '../../Icons/MailIcn'
 import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
@@ -23,24 +26,21 @@ import PasswordIcn from '../../Icons/PasswordIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
-import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TimeIcn from '../../Icons/TimeIcn'
+import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
+import ut from '../../styles/2.utilities'
 import Toolbars from '../../styles/Toolbars.style'
-import DividerIcn from '../../Icons/DividerIcn'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
-import Tools from './Tools'
-import ut from '../../styles/2.utilities'
 import { searchKey } from '../style-new/styleHelpers'
-import TitleIcn from '../../Icons/TitleIcn'
-import ImgFldIcn from '../../Icons/ImgFldIcn'
+import Tools from './Tools'
 
 function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const { css } = useFela()
@@ -65,7 +65,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: {},
       },
     },
     {
@@ -140,7 +140,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { label: 'Option 3', value: 'Option 3' },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: {},
       },
     },
 
@@ -154,7 +154,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Text Field', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'That Field is taken. Try another.', show: true } },
+        err: {},
       },
     },
     {
@@ -180,10 +180,33 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Multi-Line Text', 'bitform'),
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: {},
       },
     },
-
+    /* {
+      name: 'Blank Block',
+      icn: blank,
+      pos: { h: 2, w: 3, i: 'block-5' },
+      elm: {
+        typ: 'blank',
+      },
+    }, */
+    {
+      name: __('Check Box', 'bitform'),
+      icn: <CheckBoxIcn w="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      elm: {
+        typ: 'check',
+        lbl: __('Check Boxs', 'bitform'),
+        opt: [
+          { lbl: __('Option 1', 'bitform') },
+          { lbl: __('Option 2', 'bitform') },
+          { lbl: __('Option 3', 'bitform') },
+        ],
+        valid: {},
+        err: {},
+      },
+    },
     {
       name: __('Radio Button', 'bitform'),
       keywords: 'Radio button, button',
@@ -199,7 +222,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
           { lbl: __('Option 3', 'bitform') },
         ],
         valid: {},
-        err: { entryUnique: { dflt: 'That field is taken. Try another.', show: true } },
+        err: {},
       },
     },
     {
@@ -212,7 +235,36 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('Number Field', 'bitform'),
         ph: __('Number Input', 'bitform'),
         valid: {},
-        err: { invalid: { dflt: 'Number is invalid', show: true }, entryUnique: { dflt: 'That Number field is taken. Try another.', show: true } },
+        err: { invalid: { dflt: 'Number is invalid', show: true } },
+      },
+    },
+    {
+      name: __('Dropdown', 'bitform'),
+      icn: <DropDownIcn w="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      elm: {
+        typ: 'select',
+        lbl: __('Drop-Down', 'bitform'),
+        mul: false,
+        opt: [
+          { label: 'Option 1', value: 'Option 1' },
+          { label: 'Option 2', value: 'Option 2' },
+          { label: 'Option 3', value: 'Option 3' },
+        ],
+        valid: {},
+        err: {},
+      },
+    },
+    {
+      name: __('Country', 'bitform'),
+      icn: <FlagIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      elm: {
+        typ: 'select',
+        lbl: __('Select Country', 'bitform'),
+        mul: false,
+        opt: countries,
+        valid: {},
       },
     },
     {
@@ -239,7 +291,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('example@mail.com', 'bitform'),
         pattern: '^$_bf_$w+([.-]?$_bf_$w+)*@$_bf_$w+([.-]?$_bf_$w+)*($_bf_$.$_bf_$w{1,24})+$',
         valid: {},
-        err: { invalid: { dflt: 'Email is invalid', show: true }, entryUnique: { dflt: 'That email is taken. Try another.', show: true } },
+        err: { invalid: { dflt: 'Email is invalid', show: true } },
       },
     },
 
@@ -356,7 +408,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         lbl: __('URL Field', 'bitform'),
         ph: __('https://www.example.com', 'bitform'),
         valid: {},
-        err: { invalid: { dflt: 'URL is invalid', show: true }, entryUnique: { dflt: 'That URL is taken. Try another.', show: true } },
+        err: { invalid: { dflt: 'URL is invalid', show: true } },
       },
     },
     {

@@ -49,11 +49,11 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
     if (checked) {
-      fieldData.err[type][name] = true
-      const msg = 'This value is already taken, please try another. '
+      fieldData.err[type].show = true
+      const msg = 'That field is taken. Try another'
       if (!fieldData.err[type].dflt) fieldData.err[type].dflt = msg
     } else {
-      delete fieldData.err[type][name]
+      delete fieldData.err[name].show
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
