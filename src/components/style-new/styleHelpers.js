@@ -205,7 +205,7 @@ export const CommonStyle = (fk, type) => {
         [`.${fk}-lbl`]: { 'font-size': '10px' },
         [`.${fk}-st`]: { 'font-size': '9px' },
         [`.${fk}-ht`]: { 'font-size': '9px' },
-        [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px !important' },
+        [`.${fk}-fld`]: { 'font-size': '10px', padding: '5px 2px !important', height: '10px' },
       }
     case 'small-1':
       return {
