@@ -1,6 +1,7 @@
 import { useHistory, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { useEffect } from 'react'
+import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
 import AdFileUpSettings from './AdFileUpSettings'
 import ButtonSettings from './ButtonSettings'
 import DecisionBoxSettings from './DecisionBoxSettings'
@@ -17,15 +18,15 @@ import ImageSettings from './ImageSettings'
 import DividerSettings from './DividerSettings'
 
 export default function FieldSettings() {
-  const { formType, formID } = useParams()
-  const history = useHistory()
+  const { fieldKey } = useParams()
   const fields = useRecoilValue($fields)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const styles = useRecoilValue($styles)
+  const seletedFieldType = fields?.[fieldKey]?.typ
 
-  const seletedFieldType = fields?.[selectedFieldId]?.typ
-  if (!selectedFieldId) {
-    history.push(`/form/builder/${formType}/${formID}/fields-list`)
+  if (!fieldKey || !seletedFieldType || !styles?.fields?.[fieldKey]?.classes) {
+    return <>Loading</>
   }
+
   switch (seletedFieldType) {
     case 'text':
     case 'username':
@@ -59,6 +60,6 @@ export default function FieldSettings() {
     case 'image': return <ImageSettings />
     case 'divider': return <DividerSettings />
 
-    default: return <></>
+    default: return <>No field found with this key.</>
   }
 }
