@@ -29,12 +29,12 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
       >
         <ColorPreview bg={colorVal} h={25} w={25} className={css(ut.mr2)} />
         <span className={css(c.clrVal)}>{value !== '' ? value : 'Add Shadow'}</span>
-        {value && (
-          <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
-            <CloseIcn size="12" />
-          </button>
-        )}
       </button>
+      {value && (
+        <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
+          <CloseIcn size="12" />
+        </button>
+      )}
     </div>
   )
 }
@@ -58,20 +58,18 @@ const c = {
   },
   clearBtn: {
     brs: '50%',
-    pn: 'absolute',
-    tp: 3,
-    rt: 1,
-    w: 20,
-    h: 20,
+    p: 4,
+    w: 17,
+    h: 17,
     b: 'none',
     flx: 'center',
-    // bd: 'transparent',
-    bd: '#d3d1d1',
+    bd: 'transparent',
     cr: 'var(--white-0-50)',
     curp: 1,
-    ':hover': { cr: 'var(--black-0)' },
+    ':hover': { cr: 'var(--black-0)', bd: '#d3d1d1' },
   },
   pickrBtn: {
+    w: '86%',
     pn: 'relative',
     b: 'none',
     curp: 1,
