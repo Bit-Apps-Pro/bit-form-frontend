@@ -48,7 +48,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         {children}
         {
           (fieldData.helperTxt || fieldData.hlpTxtIcn) && (
-            <div className={`${fieldKey}-hlp-txt`}>
+            <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
               {fieldData.hlpTxtIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-icn`} src={fieldData.hlpTxtIcn} alt="" />}
               {fieldData.helperTxt || ''}
             </div>
