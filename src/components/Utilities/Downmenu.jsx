@@ -9,7 +9,7 @@ import 'tippy.js/animations/scale.css'
 import 'tippy.js/dist/svg-arrow.css'
 import 'tippy.js/animations/shift-away-extreme.css'
 
-export default function Downmenu({ className, children, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click' }) {
+export default function Downmenu({ children, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click' }) {
   return (
     <Tippy
       inertia
