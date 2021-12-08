@@ -14,8 +14,8 @@ export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
-  console.log('test', fieldData)
+  const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : (fieldData?.err?.[type]?.dflt || defaultMsg)
+
   const setCustomErrMsg = e => {
     const { name, checked } = e.target
     if (!fieldData.err) fieldData.err = {}

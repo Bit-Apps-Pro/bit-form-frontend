@@ -320,6 +320,7 @@ function TextFieldSettings() {
                 type="entryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+                defaultMsg="The value is already taken. Try another."
               />
             </div>
           )
@@ -346,7 +347,7 @@ function TextFieldSettings() {
                 type="userUnique"
                 title="Validate as User Unique"
                 tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-                defaultMsg="The email is already taken. Try another."
+                defaultMsg="The value is already taken. Try another."
               />
             </div>
           )

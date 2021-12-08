@@ -264,6 +264,7 @@ function RadioCheckSettings() {
           type="entryUnique"
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+          defaultMsg="The value is already taken. Try another."
         />
       </div>
       <button onClick={openImportModal} className="btn" type="button">

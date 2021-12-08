@@ -286,6 +286,7 @@ export default function SelectSettings() {
                   type="mx"
                   title="Max Error Message"
                   tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
+                  defaultMsg="The value is already taken. Try another."
                 />
                 {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
               </>
