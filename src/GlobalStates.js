@@ -138,8 +138,8 @@ export const $themeVars = atom({
 
     '--fld-wrp-dis': '', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
-    '--fld-wrp-bg': 'hsla(0, 71%, 39%, 100)', // fieldwrapper background
-    '--fld-wrp-m': '10px', // field wrapper margin
+    '--fld-wrp-bg': '', // fieldwrapper background
+    '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
     '--fld-wrp-sh': '', // field wrapper box shadow
     '--fld-wrp-bdr': '', // field wrapper border
@@ -150,17 +150,17 @@ export const $themeVars = atom({
     '--lbl-wrp-width': '', // label wrapper  width
     '--lbl-wrp-m': '', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
-    '--lbl-wrp-bg': 'hsla(215, 10%, 20%, 100)', // label wrapper for padding
+    '--lbl-wrp-bg': '', // label wrapper for padding
     '--lbl-wrp-sh': '', // label wrapper box shadow
     '--lbl-wrp-bdr': '', // label wrapper border
     '--lbl-wrp-bdr-width': '', // label wrapper border width
     '--lbl-wrp-bdr-rad': '', // label wrapper border radius
 
-    '--fld-lbl-bg': 'hsla(0, 71%, 39%, 100)', // field label background color
-    '--fld-lbl-c': 'hsla(0, 71%, 39%, 100)', // field babel color
+    '--fld-lbl-bg': '', // field label background color
+    '--fld-lbl-c': '', // field babel color
     '--fld-lbl-m': '', // field label margin
     '--fld-lbl-p': '', // field label padding
-    '--fld-lbl-fs': '16px', // field label font size
+    '--fld-lbl-fs': '1rem', // field label font size
     '--fld-lbl-sh': '', // field label box shadow
     '--fld-lbl-bdr': '', // field label border
     '--fld-lbl-bdr-width': '', // field label border width
