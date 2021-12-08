@@ -19,12 +19,13 @@ import materialTheme from './themes/2_material'
 
 export default function FieldStyleCustomize() {
   const { css } = useFela()
-  const { formType, formID, fldKey, element } = useParams()
+  const { formType, formID, fieldKey, element } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
   const setFlags = useSetRecoilState($flags)
   const themeVars = useRecoilValue($themeVars)
 
-  const fldStyleObj = styles?.fields?.[fldKey]
+  const fldStyleObj = styles?.fields?.[fieldKey]
+  if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { fieldType, classes, theme } = fldStyleObj
 
   useEffect(() => {
@@ -32,11 +33,11 @@ export default function FieldStyleCustomize() {
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
 
-  const fldWrpStyle = classes[`.${fldKey}-fld-wrp`]
-  const labelSubTitlStyle = classes[`.${fldKey}-lbl-wrp`]
-  const lblStyle = classes[`.${fldKey}-lbl`]
-  const subtitlStyle = classes[`.${fldKey}-sub-titl`]
-  const hlpTxtStyle = classes[`.${fldKey}-hlp-txt`]
+  const fldWrpStyle = classes[`.${fieldKey}-fld-wrp`]
+  const labelSubTitlStyle = classes[`.${fieldKey}-lbl-wrp`]
+  const lblStyle = classes[`.${fieldKey}-lbl`]
+  const subtitlStyle = classes[`.${fieldKey}-sub-titl`]
+  const hlpTxtStyle = classes[`.${fieldKey}-hlp-txt`]
 
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
@@ -47,11 +48,11 @@ export default function FieldStyleCustomize() {
   }
   const uddateFontSize = (unit, value, elemn) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.fields[fldKey].classes[`.${fldKey}-${elemn}`]['font-size'] = `${value}${unit}`
+      drft.fields[fieldKey].classes[`.${fieldKey}-${elemn}`]['font-size'] = `${value}${unit}`
     }))
   }
   // for font-size
-  const fldLblfs = classes[`.${fldKey}-lbl`]?.['font-size']
+  const fldLblfs = classes[`.${fieldKey}-lbl`]?.['font-size']
   const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
   const fldFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'lbl')
@@ -60,7 +61,7 @@ export default function FieldStyleCustomize() {
   const fldFSUnit = getStrFromStr(fldLblfsvalue)
 
   // sub title
-  const subtitl = classes[`.${fldKey}-sub-titl`]?.['font-size']
+  const subtitl = classes[`.${fieldKey}-sub-titl`]?.['font-size']
   const subTitlFs = getValueFromThemeVar(subtitl)
   const subtitlFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'sub-titl')
@@ -69,7 +70,7 @@ export default function FieldStyleCustomize() {
   const subTitlFSUnit = getStrFromStr(subTitlFs)
 
   // heplper text
-  const hplTxtFs = classes[`.${fldKey}-hlp-txt`]?.['font-size']
+  const hplTxtFs = classes[`.${fieldKey}-hlp-txt`]?.['font-size']
   const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
   const hlpTxtFsHandler = ({ unit, value }) => {
     uddateFontSize(unit, value, 'hlp-txt')
@@ -83,35 +84,35 @@ export default function FieldStyleCustomize() {
     if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[fldKey].overrideGlobalTheme = [...prvStyle.fields[fldKey].overrideGlobalTheme, elmnt]
+        drft.fields[fieldKey].overrideGlobalTheme = [...prvStyle.fields[fieldKey].overrideGlobalTheme, elmnt]
       }))
     } else {
       setStyles(prvStyle => produce(prvStyle, drft => {
-        const prvElmnt = [...prvStyle.fields[fldKey].overrideGlobalTheme]
+        const prvElmnt = [...prvStyle.fields[fieldKey].overrideGlobalTheme]
         prvElmnt.splice(prvElmnt.findIndex(el => el === elmnt), 1)
-        drft.fields[fldKey].overrideGlobalTheme = prvElmnt
+        drft.fields[fieldKey].overrideGlobalTheme = prvElmnt
 
         if (theme === 'bitformDefault') {
-          const getElementStyle = bitformDefaultTheme(fldKey, fieldType)
+          const getElementStyle = bitformDefaultTheme(fieldKey, fieldType)
           if (elmnt === 'field-container') {
-            const getStyle = getElementStyle.classes[`.${fldKey}-fld-wrp`]
-            drft.fields[fldKey].classes[`.${fldKey}-fld-wrp`] = getStyle
+            const getStyle = getElementStyle.classes[`.${fieldKey}-fld-wrp`]
+            drft.fields[fieldKey].classes[`.${fieldKey}-fld-wrp`] = getStyle
           } else if (elmnt === 'label-subtitle-container') {
-            const getStyle = getElementStyle.classes[`.${fldKey}-lbl-wrp`]
-            drft.fields[fldKey].classes[`.${fldKey}-lbl-wrp`] = getStyle
+            const getStyle = getElementStyle.classes[`.${fieldKey}-lbl-wrp`]
+            drft.fields[fieldKey].classes[`.${fieldKey}-lbl-wrp`] = getStyle
           } else if (elmnt === 'label') {
-            const getStyle = getElementStyle.classes[`.${fldKey}-lbl`]
-            drft.fields[fldKey].classes[`.${fldKey}-lbl`] = getStyle
+            const getStyle = getElementStyle.classes[`.${fieldKey}-lbl`]
+            drft.fields[fieldKey].classes[`.${fieldKey}-lbl`] = getStyle
           } else if (elmnt === 'subtitle') {
-            const getStyle = getElementStyle.classes[`.${fldKey}-sub-titl`]
-            drft.fields[fldKey].classes[`.${fldKey}-sub-titl`] = getStyle
+            const getStyle = getElementStyle.classes[`.${fieldKey}-sub-titl`]
+            drft.fields[fieldKey].classes[`.${fieldKey}-sub-titl`] = getStyle
           } else if (elmnt === 'helper-text') {
-            const getStyle = getElementStyle.classes[`.${fldKey}-hlp-txt`]
-            drft.fields[fldKey].classes[`.${fldKey}-hlp-txt`] = getStyle
+            const getStyle = getElementStyle.classes[`.${fieldKey}-hlp-txt`]
+            drft.fields[fieldKey].classes[`.${fieldKey}-hlp-txt`] = getStyle
           }
         }
         // if (theme === 'material') {
-        //   drft.fields[fldKey] = materialTheme(fldKey, fieldType)
+        //   drft.fields[fieldKey] = materialTheme(fieldKey, fieldType)
         // }
       }))
     }
@@ -119,8 +120,8 @@ export default function FieldStyleCustomize() {
 
   const colorObj = (elemnt, cssProperty) => (
     {
-      fk: fldKey,
-      selector: `.${fldKey}-${elemnt}`,
+      fk: fieldKey,
+      selector: `.${fieldKey}-${elemnt}`,
       property: cssProperty,
     }
   )
@@ -139,8 +140,8 @@ export default function FieldStyleCustomize() {
     {
       object: 'fieldStyle',
       paths: {
-        fk: fldKey,
-        selector: `.${fldKey}-${ele}`,
+        fk: fieldKey,
+        selector: `.${fieldKey}-${ele}`,
         margin: 'margin',
         padding: 'padding',
       },
