@@ -380,9 +380,8 @@ export default function SelectSettings() {
             </div>
           </div>
         )}
-        <UniqField
+        <ErrorMessageSettings
           type="entryUnique"
-          isUnique="isEntryUnique"
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
         />
@@ -506,6 +505,7 @@ export default function SelectSettings() {
                   type="mx"
                   title="Max Error Message"
                   tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
+                  defaultMsg="The value is already taken. Try another."
                 />
                 <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
               </>

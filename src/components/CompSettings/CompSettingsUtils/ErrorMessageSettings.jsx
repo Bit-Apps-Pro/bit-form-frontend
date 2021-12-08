@@ -14,7 +14,7 @@ import CheckBoxMini from '../../Utilities/CheckBoxMini'
 import Cooltip from '../../Utilities/Cooltip'
 import CustomErrorMessageModal from './CustomErrorMessageModal'
 
-export default function ErrorMessageSettings({ type, title, tipTitle }) {
+export default function ErrorMessageSettings({ type, title, tipTitle, defaultMsg }) {
   const [errorModal, setErrorModal] = useState(false)
   const fldKey = useRecoilValue($selectedFieldId)
   const [fields, setFields] = useRecoilState($fields)
@@ -48,6 +48,7 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
     if (!fieldData.err[name]) fieldData.err[name] = {}
     if (checked) {
       fieldData.err[name].show = true
+      if (!fieldData.err[name].dflt) fieldData.err[name].dflt = defaultMsg
     } else {
       delete fieldData.err[name].show
     }
@@ -131,14 +132,13 @@ export default function ErrorMessageSettings({ type, title, tipTitle }) {
             dangerouslySetInnerHTML={{ __html: errMsg }}
             className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
           />
+          <CustomErrorMessageModal
+            errorModal={errorModal}
+            setErrorModal={setErrorModal}
+            type={type}
+          />
         </>
       )}
-
-      <CustomErrorMessageModal
-        errorModal={errorModal}
-        setErrorModal={setErrorModal}
-        type={type}
-      />
     </div>
   )
 }

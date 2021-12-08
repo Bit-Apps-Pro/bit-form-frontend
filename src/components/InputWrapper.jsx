@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $breakpoint, $fieldsDirection, $flags } from '../GlobalStates'
 
@@ -8,6 +9,27 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
   const err = fieldData.error || ''
+  const fldWrapperElm = useRef(null)
+
+  const isElementInViewport = elm => {
+    const rect = elm.getBoundingClientRect()
+
+    return (
+      rect.top >= 0
+      && rect.left >= 0
+      && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+      && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+
+  if (err && fldWrapperElm) {
+    const fld = fldWrapperElm.current
+    const bodyRect = document.body.getBoundingClientRect()
+    const fldRect = fld.getBoundingClientRect()
+    const offsetTop = fldRect.top - bodyRect.top
+    if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
+  }
+
   return (
     <div
       data-dev-fld-wrp={fieldKey}
@@ -56,7 +78,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         }
       </div>
       {(err || fieldData?.err) && (
-        <div className={`error-wrapper ${err && 'h-a'}`}>
+        <div className={`error-wrapper ${err && 'err-msg'}`}>
           <div id={`${fieldKey}-error`} data-dev-err-msg={fieldKey} className="error-txt">
             {err}
           </div>

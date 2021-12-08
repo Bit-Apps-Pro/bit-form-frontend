@@ -15,7 +15,6 @@ import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import UniqField from './CompSettingsUtils/UniqField'
 import EditOptions from './EditOptions/EditOptions'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -413,13 +412,13 @@ function RadioCheckSettings() {
             </div>
           </div>
         )} */}
-        <UniqField
+        <ErrorMessageSettings
           type="entryUnique"
-          isUnique="isEntryUnique"
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
           className={css(FieldStyle.fieldSection)}
           isPro
+          defaultMsg="The value is already taken. Try another."
         />
       </div>
 

@@ -8,7 +8,7 @@ import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $updateBtn, $styles } from '../../GlobalStates'
+import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $styles, $updateBtn } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -908,7 +908,6 @@ function TextFieldSettings() {
             <>
               <UniqField
                 type="entryUnique"
-                isUnique="isEntryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
                 className={css(FieldStyle.fieldSection)}
@@ -1009,12 +1008,13 @@ function TextFieldSettings() {
           {
             fieldData.typ.match(/^(email|username)$/) && (
               <>
-                <UniqField
+                <ErrorMessageSettings
                   className={css(FieldStyle.fieldSection)}
                   type="userUnique"
                   isUnique="isUserUnique"
                   title="Validate as User Unique"
                   tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+                  defaultMsg="The value is already taken. Try another."
                 />
                 <hr className={css(FieldStyle.divider)} />
               </>
