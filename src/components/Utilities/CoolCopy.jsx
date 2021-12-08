@@ -28,8 +28,8 @@ export default function CoolCopy({ className, cls, value, readOnly = true }) {
   }
   return (
     <div className={`${css(style.wrapper)} ${className}`}>
+      <input aria-label="Copy field key" ref={copyInput} className={`${css(style.input)} ${cls}`} id="text-copy" type="text" value={value} readOnly={readOnly} />
       <Tip msg="Copy">
-        <input aria-label="Copy field key" ref={copyInput} className={`${css(style.input)} ${cls}`} id="text-copy" type="text" value={value} readOnly={readOnly} />
         <button onClick={copyText} className={`${css(style.btn)}`} type="button" aria-label="Copy field key">
           <CopyIcn w="20" />
         </button>
