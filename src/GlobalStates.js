@@ -75,29 +75,6 @@ export const $darkThemeColors = atom({
   },
 })
 
-export const $highContrastThemeColors = atom({
-  key: '$highContrastThemeColors',
-  default: {
-    '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
-    '--gph': 0, // global primary hue
-    '--gps': 10, // global primary saturation
-    '--gpl': 20, // global primary lightness
-    '--gpa': 100, // global primary opacity
-    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
-    '--gfh': 0, // global font color hue
-    '--gfs': 10, // global fonst color sa
-    '--gfl': 20,
-    '--gfa': 100,
-    '--global-bg-color': 'hsla(10, 100%, 97%, 100)', // background color
-    '--gbg-h': 0,
-    '--gbg-s': 10,
-    '--gbg-l': 20,
-    '--gbg-a': 100,
-    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
-    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
-  },
-})
-
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
@@ -242,13 +219,11 @@ export const $themeColors = selector({
     console.log('in state', colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
     if (colorScheme === 'dark') return get($darkThemeColors)
-    if (colorScheme === 'high-contrast') return get($highContrastThemeColors)
   },
   set: ({ set, get }, newColors) => {
     console.log('set in selctot', $colorScheme)
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') set($lightThemeColors, newColors)
     if (colorScheme === 'dark') set($darkThemeColors, newColors)
-    if (colorScheme === 'high-contrast') set($highContrastThemeColors, newColors)
   },
 })

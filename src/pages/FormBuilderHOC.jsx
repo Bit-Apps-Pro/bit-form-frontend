@@ -15,7 +15,7 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ToolBar from '../components/LeftBars/Toolbar'
-import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors, $lightThemeColors, $darkThemeColors, $highContrastThemeColors } from '../GlobalStates'
+import { $bits, $breakpoint, $breakpointSize, $tempStyles, $themeVars, $builderHookStates, $newFormId, $styles, $flags, $isNewThemeStyleLoaded, $themeColors, $lightThemeColors, $darkThemeColors } from '../GlobalStates'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
@@ -81,7 +81,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const themeColors = useRecoilValue($themeColors)
   const setLightThemeColors = useSetRecoilState($lightThemeColors)
   const setDarkThemeColors = useSetRecoilState($darkThemeColors)
-  const setHighContrastThemeColors = useSetRecoilState($highContrastThemeColors)
 
   // eslint-disable-next-line no-console
   console.log('render formbuilder')
@@ -110,7 +109,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setThemeVars(parseStyle.themeVars)
       if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
       if (parseStyle.themeColors?.darkThemeColors) setDarkThemeColors(parseStyle.themeColors.darkThemeColors)
-      if (parseStyle.themeColors?.highContrastThemeColors) setHighContrastThemeColors(parseStyle.themeColors.highContrastThemeColors)
 
       // declare new theme exist , no need old theme functions
       if (!isObjectEmpty(parseStyle)) setIsNewThemeStyleLoaded(true)
