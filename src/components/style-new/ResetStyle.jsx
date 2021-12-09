@@ -13,11 +13,12 @@ export default function ResetStyle({ objectKey, stateName }) {
   const { css } = useFela()
   let show = false
   if (stateName === 'themeVars') {
-    if (themeVar?.[objectKey] !== tmpThemeVars?.[objectKey]) {
+    if (tmpThemeVars?.[objectKey] && themeVar?.[objectKey] !== tmpThemeVars?.[objectKey]) {
+      console.log('reset ', tmpThemeVars?.[objectKey], themeVar?.[objectKey])
       show = true
     }
   } else if (stateName === 'themeColors') {
-    if (tmpThemeColors?.[objectKey] !== themeColor?.[objectKey]) {
+    if (tmpThemeColors?.[objectKey] && tmpThemeColors?.[objectKey] !== themeColor?.[objectKey]) {
       show = true
     }
   }
