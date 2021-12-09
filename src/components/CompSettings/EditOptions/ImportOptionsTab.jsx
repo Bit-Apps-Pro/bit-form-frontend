@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import { deepCopy } from '../../../Utils/Helpers'
 import ImportOptions from '../ImportOptions'
 
 export default function ImportOptionsTab({ lblKey, valKey, setEditOptionType }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [importOpts, setImportOpts] = useState({})

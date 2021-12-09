@@ -1,6 +1,7 @@
 import produce from 'immer'
 import { useContext, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import { AppSettings } from '../../Utils/AppSettingsContext'
@@ -15,7 +16,7 @@ import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function RazorpayFieldSettings() {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)

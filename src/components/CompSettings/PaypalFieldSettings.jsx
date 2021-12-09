@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
@@ -18,7 +19,7 @@ import Back2FldBtn from './Back2FldBtn'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function PaypalFieldSettings() {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)

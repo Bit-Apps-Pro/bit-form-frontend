@@ -295,8 +295,6 @@ function FormDetails() {
     }
   }
 
-  console.log(formType, 'form type')
-
   return (
     <ShowProModalContext.Provider value={setProModal}>
       <div className={`btcd-builder-wrp ${fulScn && 'btcd-ful-scn'}`}>
@@ -356,7 +354,7 @@ function FormDetails() {
         </nav>
         <div className={css(navbar.builder_routes)}>
           <Switch>
-            <Route exact path="/form/builder/:formType/:formID/:rightBar?/:f?/:d?">
+            <Route exact path="/form/builder/:formType/:formID/:rightBar?/:element?/:fldKey?">
               <Suspense fallback={<BuilderLoader />}>
                 <FormBuilderHOC isLoading={isLoading} />
               </Suspense>

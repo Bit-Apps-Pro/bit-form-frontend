@@ -2,6 +2,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
@@ -18,7 +19,7 @@ export default function UniqField({ type, title, tipTitle, isUnique, className }
   const bits = useRecoilValue($bits)
   const { css } = useFela()
   const [errorModal, setErrorModal] = useState(false)
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt

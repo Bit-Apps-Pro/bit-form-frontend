@@ -51,9 +51,9 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
       case 'global-primary-color':
       case 'global-font-color':
         return setColor(str2Color(themeVars['--global-font-color']))
-      case 'global-fld-bdr-color':
+      case 'global-fld-bdr-clr':
         return setColor(str2Color(themeVars['--global-fld-bdr-clr']))
-      case 'lbl-wrp-bg':
+      case 'individul-color':
         return setColor(str2Color(getCustomColor()))
       default:
         return setColor(str2Color(themeVars[`--${action.type}`]))
@@ -99,7 +99,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
           drft['--gbg-a'] = a / 100
         }))
         break
-      case 'global-fld-bdr-color':
+      case 'global-fld-bdr-clr':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = hsla
           // drft['--gfbc-h'] = Math.round(_h)
@@ -126,7 +126,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
           // drft['--gfbg-a'] = a / 100
         }))
         break
-      case 'lbl-wrp-bg':
+      case 'individul-color':
         setStyles(prvStyle => produce(prvStyle, drft => {
           drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = hsla
         }))
@@ -144,7 +144,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     const colorVar = `var(${color})`
 
     switch (action.type) {
-      case 'global-fld-bdr-color':
+      case 'global-fld-bdr-clr':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = colorVar
         }))

@@ -2,6 +2,7 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../../GlobalStates'
 import app from '../../../styles/app.style'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -10,7 +11,7 @@ import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
 
 export default function HTMLContentModal({ labelModal, setLabelModal }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()

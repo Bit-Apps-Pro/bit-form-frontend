@@ -4,6 +4,7 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
@@ -25,7 +26,7 @@ export default function SelectSettings() {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const { css } = useFela()
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const options = fieldData.opt

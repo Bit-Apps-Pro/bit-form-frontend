@@ -18,7 +18,7 @@ import ut from '../../styles/2.utilities'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 
 export default function LabelControlMenu() {
   const { css } = useFela()
@@ -174,7 +174,7 @@ export default function LabelControlMenu() {
   const unitHandler = (unit, value, name) => {
     if (value) {
       const preUnit = getStrFromStr(themeVars[name])
-      const convetVal = unitConverterHelper(unit, value, preUnit)
+      const convetVal = unitConverter(unit, value, preUnit)
       setThemeVars(preStyle => produce(preStyle, drftStyle => {
         drftStyle[name] = `${convetVal}${unit}`
       }))

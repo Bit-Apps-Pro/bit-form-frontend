@@ -2,6 +2,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
@@ -17,7 +18,7 @@ import SpacingControl from '../style-new/SpacingControl'
 
 function ImageSettings() {
   const { css } = useFela()
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [icnMdl, setIcnMdl] = useState('')

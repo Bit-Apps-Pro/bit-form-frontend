@@ -7,6 +7,7 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -28,12 +29,12 @@ import SpacingControl from '../style-new/SpacingControl'
 import SimpleColorPicker from '../style-new/SimpleColorPicker'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
-import { getNumFromStr, getStrFromStr, unitConverterHelper } from '../style-new/styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
 import BorderControl from '../style-new/BorderControl'
 
 function TitleSettings() {
   const { css } = useFela()
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [styles, setStyles] = useRecoilState($styles)
@@ -123,7 +124,7 @@ function TitleSettings() {
     }))
   }
   const fntSizeHandler = ({ unit, value, id }) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(tleFntSize || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(tleFntSize || 'px'))
 
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[id]['font-size'] = `${convertvalue}${unit || 'px'}`
@@ -131,13 +132,13 @@ function TitleSettings() {
   }
 
   const widthHandler = ({ unit, value }) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(logoWidth || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(logoWidth || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[logoCls].width = `${convertvalue}${unit || 'px'}`
     }))
   }
   const heightHandler = ({ unit, value }) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(logoHeight || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(logoHeight || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[logoCls].height = `${convertvalue}${unit || 'px'}`
     }))

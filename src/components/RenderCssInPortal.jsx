@@ -1509,7 +1509,8 @@ arrow:after,
  body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box
+    box-sizing: border-box;
+    font-family: sans-serif;
  }
  body *{
     box-sizing: border-box !important;
@@ -1747,8 +1748,9 @@ arrow:after,
     width: 100%;
   }
   .context-btn {
+    font-family: "Montserrat", sans-serif;
     border: 0px;
-    padding: 8px 8px;
+    padding: 6px 6px;
     padding-right: 36px;
     width: 100%;
     border-radius: 8px;
@@ -1790,7 +1792,11 @@ arrow:after,
   .delete:hover svg {
     stroke: var(--red-100-49) !important;
   }
-
+  .right-click-context-menu{
+    border:1px solid #d0d0d0;
+    padding: 5px;
+    box-shadow: 0px 47px 58px rgba(0, 0, 0, 0.07), 0px 19.6355px 25.6741px rgba(0, 0, 0, 0.0503198), 0px 10.4981px 17.9875px rgba(0, 0, 0, 0.0417275), 0px 5.88513px 13.1341px rgba(0, 0, 0, 0.035), 0px 3.12555px 8.79534px rgba(0, 0, 0, 0.0282725), 0px 1.30061px 4.46737px rgba(0, 0, 0, 0.0196802);
+}
   `
 
   const utils = styled.div`

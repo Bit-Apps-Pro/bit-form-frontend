@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import produce from 'immer'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useAsyncDebounce } from 'react-table'
+import { useParams } from 'react-router-dom'
 import ut from '../../styles/2.utilities'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -20,7 +21,7 @@ import Grow from './StyleCustomize/ChildComp/Grow'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 
 function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [controller, setController] = useState({ parent: selected || 'Icons' })

@@ -28,7 +28,7 @@ import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverterHelper } from './styleHelpers'
+import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
@@ -77,12 +77,6 @@ export default function ThemeCustomize() {
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
 
-  const { '--global-primary-color': tempPrimaryColor,
-    '--global-font-color': tempFontColor,
-    '--global-bg-color': tempBgColor,
-    '--global-fld-bdr-clr': tempFldBdrClr,
-    '--global-fld-bg-color': tempFldBgClr } = tempThemeColors
-
   const { '--fld-wrp-bg': tempFldWrpBg,
     '--fld-wrp-sh': tempFldWrpSh,
     '--fld-wrp-bdr': tempFldWrpBdr,
@@ -127,7 +121,7 @@ export default function ThemeCustomize() {
   }
 
   const updateHandler = (value, unit, globalVarUnit, globalVar) => {
-    const convertvalue = unitConverterHelper(unit, value, globalVarUnit)
+    const convertvalue = unitConverter(unit, value, globalVarUnit)
     setThemeVars(prvStyle => produce(prvStyle, drft => {
       drft[globalVar] = `${convertvalue}${unit || globalVarUnit}`
     }))
@@ -194,11 +188,11 @@ export default function ThemeCustomize() {
   const genarateTitle = () => {
     switch (element) {
       case 'quick-tweaks': return 'Theme Quick Tweaks'
-      case 'field-container': return 'Field Block'
-      case 'label-container': return 'Label Container'
-      case 'label': return 'Label'
-      case 'subtitle': return 'Sub Label'
-      case 'helper-text': return 'Helper Text'
+      case 'field-container': return 'Field Blocks'
+      case 'label-container': return 'Label Containers'
+      case 'label': return 'Labels'
+      case 'subtitle': return 'Sub Labels'
+      case 'helper-text': return 'Helper Texts'
       case 'error-messages': return 'Error Messages'
       default: return 'Theme Customization'
     }
@@ -239,42 +233,47 @@ export default function ThemeCustomize() {
 
         {element === 'quick-tweaks' && (
           <>
+            <SimpleColorPicker
+              title="Background color"
+              subtitle="Background color"
+              stateName="themeColors"
+              value={globalBgColor}
+              modalType="global-bg-color"
+              modalId="global-bg-clr"
+            />
+            <SimpleColorPicker
+              title="Primary Color"
+              subtitle="Primary Color"
+              stateName="themeColors"
+              value={globalPrimaryColor}
+              modalType="global-primary-color"
+              modalId="global-primary-clr"
+            />
+            <SimpleColorPicker
+              title="Font Color"
+              subtitle="Font Color"
+              stateName="themeColors"
+              value={globalFontColor}
+              modalType="global-font-color"
+              modalId="global-font-clr"
+            />
+            <SimpleColorPicker
+              title="Border Color"
+              subtitle="Border Color"
+              stateName="themeColors"
+              value={globalFldBdrClr}
+              modalType="global-fld-bdr-clr"
+              modalId="global-fld-bdr-clr"
+            />
+            <SimpleColorPicker
+              title="Field Background Color"
+              subtitle="Field Background Color"
+              stateName="themeColors"
+              value={globalFldBgClr}
+              modalType="global-fld-bg-color"
+              modalId="global-fld-bg-clr"
+            />
 
-            <div className={css(ut.flxcb)}>
-              <div className={css(ut.flxb)}>
-                <span className={css(ut.fw500)}>Background Color</span>
-                {tempBgColor && <ResetStyle themeVar="--global-bg-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalBgColor} action={{ type: 'global-bg-color' }} id="global-bg-clr" subtitle="Background color" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Primary Color</span>
-                {tempPrimaryColor && <ResetStyle themeVar="--global-primary-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalPrimaryColor} action={{ type: 'global-primary-color' }} id="global-primary-clr" subtitle="Primary color" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Font Color</span>
-                {tempFontColor && <ResetStyle themeVar="--global-font-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalFontColor} action={{ type: 'global-font-color' }} id="global-font-clr" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Border Color</span>
-                {tempFldBdrClr && <ResetStyle themeVar="--global-fld-bdr-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalFldBdrClr} action={{ type: 'global-fld-bdr-color' }} id="global-fld-bdr-clr" subtitle="Border Color" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <div className={css(ut.flxcb)}>
-                <span className={css(ut.fw500)}>Field Background Color</span>
-                {tempFldBgClr && <ResetStyle themeVar="--global-fld-bg-color" stateName="themeColors" />}
-              </div>
-              <SimpleColorPicker value={globalFldBgClr} action={{ type: 'global-fld-bg-color' }} id="global-fld-bg-clr" subtitle="Field Background Color" />
-            </div>
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>Font Family</span>
               <FontPicker id="global-font-fam" />
@@ -372,11 +371,14 @@ export default function ThemeCustomize() {
         {
           element === 'field-container' && (
             <div className={css(ut.m10)}>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-                {tempFldWrpBg !== fwBg && <ResetStyle themeVar="--fld-wrp-bg" stateName="themeVars" />}
-                <SimpleColorPicker value={fwBg} action={{ type: 'fw-bg' }} subtitle="Field Background Color" id="fld-wp-bg" />
-              </div>
+              <SimpleColorPicker
+                title="Background Color"
+                subtitle="Field Background Color"
+                stateName="themeVars"
+                value={fwBg}
+                modalType="fld-wrp-bg"
+                modalId="fld-wp-bg"
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
                 <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} id="spacing-control" />
@@ -399,11 +401,15 @@ export default function ThemeCustomize() {
 
         {element === 'label-container' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempLblWrpBg !== lwBg && <ResetStyle themeVar="--lbl-wrp-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={lwBg} action={{ type: 'lbl-wrp-bg' }} subtitle="Subtitle Background Color" id="lbl-wrp-bg" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Subtitle Background Color"
+              stateName="themeVars"
+              value={lwBg}
+              modalType="lbl-wrp-bg"
+              modalId="lbl-wrp-bg"
+            />
+
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lWrapperObj} id="lbl-spacing-control" />
@@ -425,11 +431,14 @@ export default function ThemeCustomize() {
 
         {element === 'label' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempFlBg !== flBg && <ResetStyle themeVar="--fld-lbl-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={flBg} action={{ type: 'fld-lbl-bg' }} subtitle="Subtitle Background Color" id="fld-lbl-bg" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Subtitle Background Color"
+              stateName="themeVars"
+              value={flBg}
+              modalType="fld-lbl-bg"
+              modalId="fld-lbl-bg"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
               {tempFlC !== flc && <ResetStyle themeVar="--fld-lbl-c" stateName="themeVars" />}
@@ -456,16 +465,22 @@ export default function ThemeCustomize() {
 
         {element === 'subtitle' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempSubTitleBg !== stBg && <ResetStyle themeVar="--sub-titl-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={stBg} action={{ type: 'sub-titl-bg' }} subtitle="Subtitle Background Color" id="sub-titl-bg" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempSubTitlC !== stC && <ResetStyle themeVar="--sub-titl-c" stateName="themeVars" />}
-              <SimpleColorPicker value={stC} action={{ type: 'sub-titl-c' }} subtitle="Text Color" id="sub-title-c" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Subtitle Background Color"
+              stateName="themeVars"
+              value={stBg}
+              modalType="sub-titl-bg"
+              modalId="sub-titl-bg"
+            />
+            <SimpleColorPicker
+              title="Text Color"
+              subtitle="Text Color"
+              stateName="themeVars"
+              value={stC}
+              modalType="sub-titl-c"
+              modalId="sub-titl-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={stSpacingObj} id="subtitle-spacing-control" />
@@ -487,16 +502,22 @@ export default function ThemeCustomize() {
 
         {element === 'helper-text' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempHlpTxtBg !== htBg && <ResetStyle themeVar="--hlp-txt-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={htBg} action={{ type: 'hlp-txt-bg' }} subtitle="Background Color" id="hlp-txt-bg" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempHlpTxtC !== htC && <ResetStyle themeVar="--hlp-txt-c" stateName="themeVars" />}
-              <SimpleColorPicker value={htC} action={{ type: 'hlp-txt-c' }} subtitle="Text Color" id="hlp-txt-c" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Background Color"
+              stateName="themeVars"
+              value={htBg}
+              modalType="hlp-txt-bg"
+              modalId="hlp-txt-bg"
+            />
+            <SimpleColorPicker
+              title="Text Color"
+              subtitle="Text Color"
+              stateName="themeVars"
+              value={htC}
+              modalType="hlp-txt-c"
+              modalId="hlp-txt-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={htSpacingObj} id="hlp-spacing-control" />
@@ -518,16 +539,22 @@ export default function ThemeCustomize() {
 
         {element === 'error-messages' && (
           <div className={css(ut.m10)}>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Background Color', 'bitform')}</span>
-              {tempErrBg !== errBg && <ResetStyle themeVar="--err-bg" stateName="themeVars" />}
-              <SimpleColorPicker value={errBg} action={{ type: 'err-bg' }} subtitle="Background Color" id="err-bg" />
-            </div>
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempErrC !== errC && <ResetStyle themeVar="--err-c" stateName="themeVars" />}
-              <SimpleColorPicker value={errC} action={{ type: 'err-c' }} subtitle="Text Color" id="err-c" />
-            </div>
+            <SimpleColorPicker
+              title="Background Color"
+              subtitle="Background Color"
+              stateName="themeVars"
+              value={errBg}
+              modalType="err-bg"
+              modalId="err-bg"
+            />
+            <SimpleColorPicker
+              title="Text Color"
+              subtitle="Text Color"
+              stateName="themeVars"
+              value={errC}
+              modalType="err-c"
+              modalId="err-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} id="err-spacing-control" />

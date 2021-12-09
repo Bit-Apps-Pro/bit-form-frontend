@@ -3,6 +3,7 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -18,7 +19,7 @@ import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 export default function DecisionBoxSettings() {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [labelModal, setLabelModal] = useState(false)

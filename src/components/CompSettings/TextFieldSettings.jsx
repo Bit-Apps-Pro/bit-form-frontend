@@ -7,6 +7,7 @@ import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $builderHistory, $builderHookStates, $fields, $selectedFieldId, $styles, $updateBtn } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -19,7 +20,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
-import { getNumFromStr, getStrFromStr, unitConverterHelper } from '../style-new/styleHelpers'
+import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
 import Modal from '../Utilities/Modal'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -38,7 +39,15 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
   const bits = useRecoilValue($bits)
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
+  if (!fldKey) return <>No field exist with this field key</>
+  const setBuilderHistory = useSetRecoilState($builderHistory)
+  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [optionMdl, setOptionMdl] = useState(false)
+  const [icnMdl, setIcnMdl] = useState(false)
+  const [icnType, setIcnType] = useState('')
+  const setBuilderHookState = useSetRecoilState($builderHookStates)
+  const [styles, setStyles] = useRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
@@ -54,17 +63,9 @@ function TextFieldSettings() {
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
-  const regexr = fieldData.valid.regexr || ''
+  const regexr = fieldData.valid.regexr || '' 
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
-  const setBuilderHistory = useSetRecoilState($builderHistory)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const [optionMdl, setOptionMdl] = useState(false)
-  const [icnMdl, setIcnMdl] = useState(false)
-  const [icnType, setIcnType] = useState('')
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
-
-  const [styles, setStyles] = useRecoilState($styles)
 
   const subTleIcn = `.${fldKey}-sub-titl-icn`
   const hlpTxtIcn = `.${fldKey}-hlp-txt-icn`
@@ -427,13 +428,13 @@ function TextFieldSettings() {
   }
 
   const icnWidthHandle = ({ unit, value }, cls, width) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(width || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(width || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[cls].width = `${convertvalue}${unit || 'px'}`
     }))
   }
   const icnHeightHandle = ({ unit, value }, cls, height) => {
-    const convertvalue = unitConverterHelper(unit, value, getStrFromStr(height || 'px'))
+    const convertvalue = unitConverter(unit, value, getStrFromStr(height || 'px'))
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[cls].height = `${convertvalue}${unit || 'px'}`
     }))

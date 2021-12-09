@@ -1,6 +1,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import app from '../../styles/app.style'
@@ -19,7 +20,7 @@ export default function ImportOptions({ importOpts, setImportOpts, lblKey, valKe
   const bits = useRecoilValue($bits)
   const { isPro } = bits
   const { css } = useFela()
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const generateNewOptions = () => {

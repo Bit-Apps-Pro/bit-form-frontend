@@ -33,6 +33,7 @@ export default function FieldContextMenu({ isContextMenu,
   layoutItem,
   navigateToFieldSettings,
   navigateToStyle,
+  className,
   cloneLayoutItem,
   removeLayoutItem }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
@@ -107,32 +108,12 @@ export default function FieldContextMenu({ isContextMenu,
 
   return (
     <div style={generateContextMenuStyle()}>
-      <div className="context-menu">
+      <div className={`context-menu ${className}`}>
         <ul className="context-list">
-          <li className="context-item">
-            <button type="button" className="context-btn" onClick={deselectFieldId}>
-              <DeSelectIcn />
-              <span>Deselect</span>
-            </button>
-          </li>
-          <li className="context-item">
-            <button type="button" className="context-btn" onClick={navigateToFieldSettings}>
-              <EditIcn size="19" />
-              <span>Settings</span>
-            </button>
-          </li>
-          <li className="context-item">
-            <button type="button" className="context-btn" onClick={() => navigateToStyle(fields[fldKey].typ)}>
-              <BrushIcn height="18" width="14" stroke="1.6" />
-              <span>Style</span>
-            </button>
-          </li>
-          <li className="context-item">
-            <button type="button" className="context-btn" onClick={() => cloneLayoutItem(fldKey)}>
-              <CopyIcn size="19" />
-              <span>Clone</span>
-            </button>
-          </li>
+          <ContextMenuItem onClick={deselectFieldId} label="Deselect" icn={<DeSelectIcn />} />
+          <ContextMenuItem onClick={navigateToFieldSettings} label="Settings" icn={<EditIcn size="19" />} />
+          <ContextMenuItem onClick={() => navigateToStyle(fields[fldKey].typ)} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
+          <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
           <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
               <Downmenu place="right-start" arrow={false} trigger="mouseenter click">
@@ -148,36 +129,12 @@ export default function FieldContextMenu({ isContextMenu,
                   <span>Hide</span>
                   <ChevronRightIcon size="19" />
                 </button>
-                <div className="flx pos-rel context-menu">
+                <div className="flx pos-rel">
                   <ul className="context-list">
-                    <li className="context-item">
-                      <button type="button" className="context-btn" onClick={() => handleFieldHide('all')}>
-                        <AllDeviceIcn size="19" />
-                        <span>Always</span>
-                        {checkIfHidden() && <CheckMarkIcn cls="context-btn-color" size="19" />}
-                      </button>
-                    </li>
-                    <li className="context-item">
-                      <button type="button" className="context-btn" onClick={() => handleFieldHide('lg')}>
-                        <LaptopIcn size="19" />
-                        <span>Large</span>
-                        {checkIfHidden('lg') && <CheckMarkIcn cls="context-btn-color" size="19" />}
-                      </button>
-                    </li>
-                    <li className="context-item">
-                      <button type="button" className="context-btn" onClick={() => handleFieldHide('md')}>
-                        <TabletIcon size="19" />
-                        <span>Medium</span>
-                        {checkIfHidden('md') && <CheckMarkIcn cls="context-btn-color" size="19" />}
-                      </button>
-                    </li>
-                    <li className="context-item">
-                      <button type="button" className="context-btn" onClick={() => handleFieldHide('sm')}>
-                        <MobileIcon size="18" />
-                        <span>Small</span>
-                        {checkIfHidden('sm') && <CheckMarkIcn cls="context-btn-color" size="19" />}
-                      </button>
-                    </li>
+                    <ContextMenuItem onClick={() => handleFieldHide('all')} label="Always" icn={<AllDeviceIcn size="19" />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
+                    <ContextMenuItem onClick={() => handleFieldHide('lg')} label="Large" icn={<LaptopIcn size="19" />} postIcn={checkIfHidden('lg') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
+                    <ContextMenuItem onClick={() => handleFieldHide('md')} label="Medium" icn={<TabletIcon size="19" />} postIcn={checkIfHidden('md') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
+                    <ContextMenuItem onClick={() => handleFieldHide('sm')} label="Small" icn={<MobileIcon size="18" />} postIcn={checkIfHidden('sm') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
                   </ul>
                 </div>
               </Downmenu>
@@ -191,5 +148,17 @@ export default function FieldContextMenu({ isContextMenu,
         </ul>
       </div>
     </div>
+  )
+}
+
+function ContextMenuItem({ onClick, label, icn, postIcn }) {
+  return (
+    <li className="context-item">
+      <button type="button" className="context-btn" onClick={onClick}>
+        {icn}
+        <span>{label}</span>
+        {postIcn}
+      </button>
+    </li>
   )
 }

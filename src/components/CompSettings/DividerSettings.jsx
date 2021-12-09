@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
@@ -11,7 +12,7 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 function DividerSettings() {
   const { css } = useFela()
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [styles, setStyles] = useRecoilState($styles)

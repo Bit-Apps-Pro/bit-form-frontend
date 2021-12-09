@@ -1,6 +1,7 @@
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
@@ -12,7 +13,7 @@ import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function ReCaptchaSettigns() {
   const { css } = useFela()
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const onInput = ({ target: { name, value } }) => {

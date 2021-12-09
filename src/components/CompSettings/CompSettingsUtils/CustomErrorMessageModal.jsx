@@ -2,6 +2,7 @@ import produce from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
 import app from '../../../styles/app.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
@@ -11,7 +12,7 @@ import Modal from '../../Utilities/Modal'
 import TinyMCE from '../../Utilities/TinyMCE'
 
 export default function CustomErrorMessageModal({ errorModal, setErrorModal, type }) {
-  const fldKey = useRecoilValue($selectedFieldId)
+  const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const { css } = useFela()
   const fld = fields[fldKey]

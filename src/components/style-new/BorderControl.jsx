@@ -1,6 +1,8 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
-import { $draggableModal } from '../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $draggableModal, $themeVars } from '../../GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import ColorPreview from './ColorPreview'
 import { showDraggableModal, splitValueBySpaces } from './styleHelpers'
@@ -11,6 +13,18 @@ export default function BorderControl({ subtitle, value, objectPaths, id }) {
   const [, color] = splitValueBySpaces(value)
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
+  const setThemeVars = useSetRecoilState($themeVars)
+  const { shadow, borderRadius, borderWidth, border } = objectPaths.paths
+
+  const clearValue = () => {
+    setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+      drft[shadow] = ''
+      drft[borderRadius] = ''
+      drft[borderWidth] = ''
+      drft[border] = ''
+    }))
+  }
+
   return (
     <div className={css(c.preview_wrp, draggableModel.id === id && c.active)}>
       <button
@@ -19,8 +33,13 @@ export default function BorderControl({ subtitle, value, objectPaths, id }) {
         className={css(c.pickrBtn)}
       >
         <ColorPreview bg={color} h={25} w={25} className={css(ut.mr2)} />
-        <span className={css(c.clrVal)}>{value}</span>
+        <span className={css(c.clrVal)}>{value || 'Add Border Style'}</span>
       </button>
+      {value && (
+        <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
+          <CloseIcn size="12" />
+        </button>
+      )}
     </div>
   )
 }

@@ -21,7 +21,7 @@ import PaypalStyleEditor from './StyleCustomize/PaypalStyleEditor'
 import StyleEditor from './StyleCustomize/StyleEditor'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 
-function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
+function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }) {
   const { path } = useRouteMatch()
   const { formType, formID } = useParams()
   const { css } = useFela()
@@ -51,7 +51,7 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
             <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
             <Route path={`${path}/theme-customize/:element`}><ThemeCustomize /></Route>
-            <Route path={`${path}/field-theme-customize/:fldKey/:element`}><FieldStyleCustomize /></Route>
+            <Route path={`${path}/field-theme-customize/:element/:fieldKey`}><FieldStyleCustomize /></Route>
 
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
@@ -136,7 +136,7 @@ function CompSettings({ style, styleDispatch, brkPoint, setResponsiveView }) {
     </div>
   )
 }
-export default CompSettings
+export default BuilderRightPanel
 
 const c = {
   elmSettings: {
