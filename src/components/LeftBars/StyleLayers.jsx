@@ -28,7 +28,7 @@ export default function StyleLayers() {
           <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-container" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
           <NavBtn route="label" label="Labels" offset="3" highlightSelector="[data-dev-lbl]" />
-          <NavBtn route="subtitle" label="Sub Labels" offset="3" highlightSelector="[data-dev-sub-titl]" />
+          <NavBtn route="subtitle" label="Sub Title" offset="3" highlightSelector="[data-dev-sub-titl]" />
           <NavBtn route="helper-text" label="Helper Texts" offset="3" highlightSelector="[data-dev-hlp-txt]" />
           <NavBtn route="error-messages" label="Error Messages" offset="3" highlightSelector="[data-dev-err-msg]" />
 
@@ -51,7 +51,6 @@ export default function StyleLayers() {
 function NavBtn({ route, subRoute, label, offset = 1, icn, highlightSelector }) {
   const { formType, formID, fldKey, element } = useParams()
   let active = false
-  console.log({ fldKey, element, route, subRoute })
   if (!subRoute && element === route) {
     active = true
   } else if (subRoute === fldKey && route === element) {
