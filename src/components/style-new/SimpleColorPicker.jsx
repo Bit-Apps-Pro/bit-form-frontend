@@ -17,8 +17,6 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
   const setThemeColors = useSetRecoilState($themeColors)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
-  console.log(objectPaths, modalId, modalId, stateName)
-
   const clearHandler = () => {
     if (objectPaths?.property) {
       setStyles(prvStyle => produce(prvStyle, drft => {
