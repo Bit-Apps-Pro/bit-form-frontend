@@ -153,7 +153,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       } */}
       <div className={css(cls.container)}>
         <select name="property" id="" onChange={addPropertyHandler}>
-          <option>selct One</option>
+          <option>Select One</option>
           {
             allowCustomProperty.map((item, indx) => {
               if (existingProperties.includes(item)) return
