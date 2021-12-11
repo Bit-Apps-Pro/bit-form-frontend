@@ -20,17 +20,17 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
   console.log(objectPaths, modalId, modalId, stateName)
 
   const clearHandler = () => {
-    if (stateName === 'themeColors') {
+    if (objectPaths?.property) {
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = ''
+      }))
+    } else if (stateName === 'themeColors') {
       setThemeColors(prvStyle => produce(prvStyle, drft => {
         drft[`--${modalType}`] = ''
       }))
     } else if (stateName === 'themeVars') {
       setThemeVars(prvStyle => produce(prvStyle, drft => {
         drft[`--${modalType}`] = ''
-      }))
-    } else if (Object.prototype.hasOwnProperty.call(objectPaths, 'property')) {
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = ''
       }))
     }
   }
