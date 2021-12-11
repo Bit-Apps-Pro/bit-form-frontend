@@ -6,13 +6,19 @@ import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
+import TrashIcn from '../../Icons/TrashIcn'
 
-export default function SimpleColorPicker({ title, stateName, subtitle, action, value, id, objectPaths, modalType, modalId }) {
+export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   return (
-    <div className={css(ut.flxcb, ut.mt2)}>
-      <div className={css(ut.flxb)}>
+    <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
+      <div className={css(ut.flxc)}>
+        {deleteable && (
+          <button onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
+            <TrashIcn size="15" />
+          </button>
+        )}
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
@@ -36,6 +42,15 @@ export default function SimpleColorPicker({ title, stateName, subtitle, action, 
 }
 
 const c = {
+  containerHover: {
+    '&:hover .delete-btn': {
+      bd: 'var(--b-79-96)',
+      brs: '50%',
+      cr: 'var(--b-50)',
+      oy: 1,
+      tm: 'scale(1.1)',
+    },
+  },
   preview_wrp: {
     bd: 'var(--white-0-95)',
     w: 130,
@@ -62,6 +77,15 @@ const c = {
     flx: 'center',
     bd: 'transparent',
     p: 0,
+  },
+  delBtn: {
+    b: 'none',
+    p: 5,
+    bd: 'transparent',
+    mr: 5,
+    oy: 0,
+    tn: '.2s all',
+    curp: 1,
   },
   clrVal: {
     w: 90,
