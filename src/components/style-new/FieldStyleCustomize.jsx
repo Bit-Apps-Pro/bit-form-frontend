@@ -9,10 +9,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
-import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
-import SimpleColorPicker from './SimpleColorPicker'
-import SpacingControl from './SpacingControl'
+import IndividualCustomStyle from './IndividualCustomStyle'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
@@ -32,12 +30,6 @@ export default function FieldStyleCustomize() {
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
   }, [])
 
-  const fldWrpStyle = classes[`.${fieldKey}-fld-wrp`]
-  const labelSubTitlStyle = classes[`.${fieldKey}-lbl-wrp`]
-  const lblStyle = classes[`.${fieldKey}-lbl`]
-  const subtitlStyle = classes[`.${fieldKey}-sub-titl`]
-  const hlpTxtStyle = classes[`.${fieldKey}-hlp-txt`]
-
   const getValueFromThemeVar = (val) => {
     if (val.match(/var/g)?.[0] === 'var') {
       const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
@@ -45,25 +37,17 @@ export default function FieldStyleCustomize() {
     }
     return val
   }
-  const uddateFontSize = (unit, value, elemn) => {
+  const updateFontSize = (unit, value, elemn) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       drft.fields[fieldKey].classes[`.${fieldKey}-${elemn}`]['font-size'] = `${value}${unit}`
     }))
   }
-  // for font-size
-  const fldLblfs = classes[`.${fieldKey}-lbl`]?.['font-size']
-  const fldLblfsvalue = getValueFromThemeVar(fldLblfs)
-  const fldFsHandler = ({ unit, value }) => {
-    uddateFontSize(unit, value, 'lbl')
-  }
-  const fldFSValue = getNumFromStr(fldLblfsvalue)
-  const fldFSUnit = getStrFromStr(fldLblfsvalue)
 
   // sub title
   const subtitl = classes[`.${fieldKey}-sub-titl`]?.['font-size']
   const subTitlFs = getValueFromThemeVar(subtitl)
   const subtitlFsHandler = ({ unit, value }) => {
-    uddateFontSize(unit, value, 'sub-titl')
+    updateFontSize(unit, value, 'sub-titl')
   }
   const subTitlFSValue = getNumFromStr(subTitlFs)
   const subTitlFSUnit = getStrFromStr(subTitlFs)
@@ -72,7 +56,7 @@ export default function FieldStyleCustomize() {
   const hplTxtFs = classes[`.${fieldKey}-hlp-txt`]?.['font-size']
   const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
   const hlpTxtFsHandler = ({ unit, value }) => {
-    uddateFontSize(unit, value, 'hlp-txt')
+    updateFontSize(unit, value, 'hlp-txt')
   }
   const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
   const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
@@ -117,42 +101,6 @@ export default function FieldStyleCustomize() {
     }
   }
 
-  const colorObj = (elemnt, cssProperty) => (
-    {
-      fk: fieldKey,
-      selector: `.${fieldKey}-${elemnt}`,
-      property: cssProperty,
-    }
-  )
-  const fldWrpBg = colorObj('fld-wrp', 'background')
-  const fldWrpColor = colorObj('fld-wrp', 'color')
-  const lblWrpBg = colorObj('lbl-wrp', 'background')
-  const lblWrpColor = colorObj('lbl-wrp', 'color')
-  const lblBg = colorObj('lbl', 'background')
-  const lblColor = colorObj('lbl', 'color')
-  const subTitlBg = colorObj('sub-titl', 'background')
-  const subTitlColor = colorObj('sub-titl', 'color')
-  const hlpTxtBg = colorObj('hlp-txt', 'background')
-  const hlpTxtColor = colorObj('hlp-txt', 'color')
-
-  const spacingObj = (ele) => (
-    {
-      object: 'fieldStyle',
-      paths: {
-        fk: fieldKey,
-        selector: `.${fieldKey}-${ele}`,
-        margin: 'margin',
-        padding: 'padding',
-      },
-    }
-  )
-
-  const fldWrpSpacing = spacingObj('fld-wrp')
-  const labelWrp = spacingObj('lbl-wrp')
-  const lbl = spacingObj('lbl')
-  const subtitle = spacingObj('sub-titl')
-  const hlpTxt = spacingObj('hlp-txt')
-
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
   return (
@@ -185,117 +133,23 @@ export default function FieldStyleCustomize() {
         <div className={css(cls.container)}>
           {element === 'field-container' && (
             <div className={css(!checkExistElement('field-container') && cls.blur)}>
-              <SimpleColorPicker
-                title="Background Color"
-                subtitle="Background Color"
-                stateName="themeVars"
-                value={fldWrpStyle?.background}
-                modalType="individul-color"
-                modalId="field-container-backgroung"
-                objectPaths={fldWrpBg}
-              />
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                stateName="themeVars"
-                value={fldWrpStyle?.color}
-                modalType="individul-color"
-                modalId="field-container-color"
-                objectPaths={fldWrpColor}
-              />
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrpSpacing} id="spacing-control" />
-              </div>
+              <IndividualCustomStyle elementKey="fld-wrp" fldKey={fieldKey} />
             </div>
           )}
 
           {element === 'label-subtitle-container' && (
             <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
-              <SimpleColorPicker
-                title="Background Color"
-                subtitle="Background Color"
-                stateName="themeVars"
-                value={labelSubTitlStyle?.background}
-                modalType="individul-color"
-                modalId="label-subtitle-container-backgroung"
-                objectPaths={lblWrpBg}
-              />
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                stateName="themeVars"
-                value={labelSubTitlStyle?.color}
-                modalType="individul-color"
-                modalId="label-subtitle-container-color"
-                objectPaths={lblWrpColor}
-              />
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={labelWrp} id="label-subtitle-spacing-control" />
-              </div>
+              <IndividualCustomStyle elementKey="lbl-wrp" fldKey={fieldKey} />
             </div>
           )}
           {element === 'label' && (
             <div className={css(!checkExistElement('label') && cls.blur)}>
-              <SimpleColorPicker
-                title="Background Color"
-                subtitle="Background Color"
-                stateName="themeVars"
-                value={lblStyle?.background}
-                modalType="individul-color"
-                modalId="label-container-backgroung"
-                objectPaths={lblBg}
-              />
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                stateName="themeVars"
-                value={lblStyle?.color}
-                modalType="individul-color"
-                modalId="label-container-color"
-                objectPaths={lblColor}
-              />
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Field Font Size</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={fldFsHandler}
-                    sizeHandler={({ unitKey, unitValue }) => fldFsHandler({ unit: unitKey, value: unitValue })}
-                    value={fldFSValue}
-                    unit={fldFSUnit}
-                    width="110px"
-                    options={['px', 'em', 'rem']}
-                    id="font-size-control"
-                  />
-                </div>
-              </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={lbl} id="spacing-control" />
-              </div>
+              <IndividualCustomStyle elementKey="lbl" fldKey={fieldKey} />
             </div>
           )}
           {element === 'subtitle' && (
             <div className={css(!checkExistElement('subtitle') && cls.blur)}>
-              <SimpleColorPicker
-                title="Background Color"
-                subtitle="Background Color"
-                stateName="themeVars"
-                value={subtitlStyle?.background}
-                modalType="individul-color"
-                modalId="label-container-backgroung"
-                objectPaths={subTitlBg}
-              />
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                stateName="themeVars"
-                value={subtitlStyle?.color}
-                modalType="individul-color"
-                modalId="label-container-color"
-                objectPaths={subTitlColor}
-              />
+              <IndividualCustomStyle elementKey="sub-titl" fldKey={fieldKey} />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
@@ -310,32 +164,11 @@ export default function FieldStyleCustomize() {
                   />
                 </div>
               </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={subtitle} id="spacing-control" />
-              </div>
             </div>
           )}
           {element === 'helper-text' && (
             <div className={css(!checkExistElement('helper-text') && cls.blur)}>
-              <SimpleColorPicker
-                title="Background Color"
-                subtitle="Background Color"
-                stateName="themeVars"
-                value={hlpTxtStyle?.background}
-                modalType="individul-color"
-                modalId="helper-container-backgroung"
-                objectPaths={hlpTxtBg}
-              />
-              <SimpleColorPicker
-                title="Color"
-                subtitle="Color"
-                stateName="themeVars"
-                value={hlpTxtStyle?.color}
-                modalType="individul-color"
-                modalId="helper-container-color"
-                objectPaths={hlpTxtColor}
-              />
+              <IndividualCustomStyle elementKey="hlp-txt" fldKey={fieldKey} />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Font Size</span>
                 <div className={css(ut.flxc)}>
@@ -349,10 +182,6 @@ export default function FieldStyleCustomize() {
                     id="font-size-control"
                   />
                 </div>
-              </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={hlpTxt} id="spacing-control" />
               </div>
             </div>
           )}
