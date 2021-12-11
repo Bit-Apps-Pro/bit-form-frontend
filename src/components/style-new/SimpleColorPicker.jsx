@@ -1,17 +1,40 @@
+import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
-import { $draggableModal } from '../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $draggableModal, $styles, $themeColors, $themeVars } from '../../GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
-import TrashIcn from '../../Icons/TrashIcn'
-import CloseIcn from '../../Icons/CloseIcn'
 
-export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler, clearHandler }) {
+export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler }) {
   const { css } = useFela()
+  const setStyles = useSetRecoilState($styles)
+  const setThemeVars = useSetRecoilState($themeVars)
+  const setThemeColors = useSetRecoilState($themeColors)
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+
+  console.log(objectPaths, modalId, modalId, stateName)
+
+  const clearHandler = () => {
+    if (stateName === 'themeColors') {
+      setThemeColors(prvStyle => produce(prvStyle, drft => {
+        drft[`--${modalType}`] = ''
+      }))
+    } else if (stateName === 'themeVars') {
+      setThemeVars(prvStyle => produce(prvStyle, drft => {
+        drft[`--${modalType}`] = ''
+      }))
+    } else if (Object.prototype.hasOwnProperty.call(objectPaths, 'property')) {
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = ''
+      }))
+    }
+  }
+
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc)}>
@@ -33,9 +56,11 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
             <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
             <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
           </button>
-          <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
-            <CloseIcn size="12" />
-          </button>
+          {value && (
+            <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+              <CloseIcn size="12" />
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -63,18 +88,15 @@ const c = {
   },
   clearBtn: {
     brs: '50%',
-    w: 20,
-    h: 20,
+    p: 4,
+    w: 17,
+    h: 17,
     b: 'none',
     flx: 'center',
     bd: 'transparent',
     cr: 'var(--white-0-50)',
-    pn: 'absolute',
     curp: 1,
-    rt: 0,
-    zn: 99,
-    cur: 'pointer',
-    ':hover': { cr: 'var(--black-0)',bd: 'var(--white-0-95)' },
+    ':hover': { cr: 'var(--black-0)', bd: '#d3d1d1' },
   },
   pickrBtn: {
     b: 'none',
