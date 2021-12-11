@@ -7,8 +7,9 @@ import ColorPreview from './ColorPreview'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 import TrashIcn from '../../Icons/TrashIcn'
+import CloseIcn from '../../Icons/CloseIcn'
 
-export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler }) {
+export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler, clearHandler }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   return (
@@ -32,9 +33,9 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
             <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
             <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
           </button>
-          {/* <button className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+          <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
             <CloseIcn size="12" />
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
