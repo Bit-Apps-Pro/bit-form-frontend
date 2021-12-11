@@ -45,11 +45,14 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const delPropertyHandler = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      if (property === 'spacing') {
-        delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].margin
-        delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].padding
-      } else {
-        delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property]
+      switch (property) {
+        case 'spacing':
+          delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].margin
+          delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].padding
+          break
+        default:
+          delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property]
+          break
       }
     }))
   }
