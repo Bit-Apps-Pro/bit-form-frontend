@@ -125,24 +125,6 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         err: {},
       },
     },
-    {
-      name: __('Dropdown', 'bitform'),
-      keywords: 'Dropdown, Menu',
-      icn: <DropDownIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
-      elm: {
-        typ: 'select',
-        lbl: __('Drop-Down', 'bitform'),
-        mul: false,
-        opt: [
-          { label: 'Option 1', value: 'Option 1' },
-          { label: 'Option 2', value: 'Option 2' },
-          { label: 'Option 3', value: 'Option 3' },
-        ],
-        valid: {},
-        err: {},
-      },
-    },
 
     {
       name: __('Text', 'bitform'),
@@ -194,7 +176,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Check Box', 'bitform'),
       icn: <CheckBoxIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
       elm: {
         typ: 'check',
         lbl: __('Check Boxs', 'bitform'),
@@ -241,7 +223,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Dropdown', 'bitform'),
       icn: <DropDownIcn w="23" />,
-      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
       elm: {
         typ: 'select',
         lbl: __('Drop-Down', 'bitform'),
@@ -258,7 +240,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     {
       name: __('Country', 'bitform'),
       icn: <FlagIcn size="23" />,
-      pos: { h: 2, w: 6, i: 'n_blk', minH: 2 },
+      pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
       elm: {
         typ: 'select',
         lbl: __('Select Country', 'bitform'),
