@@ -10,7 +10,7 @@ import ImageIcn from '../../Icons/ImageIcn'
 import ItemBlockIcn from '../../Icons/ItemBlockIcn'
 import PaypalIcn from '../../Icons/PaypalIcn'
 import { __ } from '../../Utils/i18nwrap'
-import FieldStyleCustomize from '../style-new/FieldStyleCustomize'
+import FieldStyleCustomizeHOC from '../style-new/FieldStyleCustomize'
 import ThemeCustomize from '../style-new/ThemeCustomize'
 import ThemeGallary from '../style-new/ThemeGallary'
 import FieldLinkBtn from './FieldLinkButton'
@@ -51,7 +51,7 @@ function BuilderRightPanel({ style, styleDispatch, brkPoint, setResponsiveView }
             <Route path={`${path}/field-settings/:fieldKey`} component={FieldSettings} />
             <Route path={`${path}/themes`}><ThemeGallary /></Route>
             <Route path={`${path}/theme-customize/:element`}><ThemeCustomize /></Route>
-            <Route path={`${path}/field-theme-customize/:element/:fieldKey`}><FieldStyleCustomize /></Route>
+            <Route path={`${path}/field-theme-customize/:element/:fieldKey`}><FieldStyleCustomizeHOC /></Route>
 
             <Route exact path={`${path}/style`}>
               <Link to={`/form/builder/${formType}/${formID}/style/bg`}>
