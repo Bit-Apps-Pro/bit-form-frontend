@@ -69,8 +69,12 @@ const c = {
     flx: 'center',
     bd: 'transparent',
     cr: 'var(--white-0-50)',
+    pn: 'absolute',
     curp: 1,
-    ':hover': { cr: 'var(--black-0)' },
+    rt: 0,
+    zn: 99,
+    cur: 'pointer',
+    ':hover': { cr: 'var(--black-0)',bd: 'var(--white-0-95)' },
   },
   pickrBtn: {
     b: 'none',
