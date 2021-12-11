@@ -29,11 +29,6 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
       >
         <ColorPreview bg={colorVal} h={25} w={25} className={css(ut.mr2)} />
         <span className={css(c.clrVal)}>{value || 'Add Shadow'}</span>
-        {value && (
-          <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
-            <CloseIcn size="12" />
-          </button>
-        )}
       </button>
       {value && (
         <button className={css(c.clearBtn)} onClick={clearValue} type="button" aria-label="Clear Color">
