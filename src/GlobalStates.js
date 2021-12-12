@@ -180,6 +180,7 @@ export const $tempStyles = atom({
   default: {
     themeVars: {},
     themeColors: {},
+    tempStyles: {},
   },
 })
 export const $styles = atom({
