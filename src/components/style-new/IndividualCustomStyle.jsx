@@ -45,15 +45,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const delPropertyHandler = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      switch (property) {
-        case 'spacing':
-          delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].margin
-          delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`].padding
-          break
-        default:
-          delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property]
-          break
-      }
+      delete drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`][property]
     }))
   }
   const clearHandler = (property) => {
@@ -82,10 +74,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
   )
   const bg = colorObj('background')
   const clr = colorObj('color')
-  const spacing = spacingObj({
-    margin: existingProperties.includes('margin'),
-    padding: existingProperties.includes('padding'),
-  })
+  const margin = spacingObj({ margin: existingProperties.includes('margin') })
+  const padding = spacingObj({ padding: existingProperties.includes('padding') })
   return (
     <>
       {
@@ -121,15 +111,28 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         )
       }
       {
-        (existingProperties.includes('margin') || existingProperties.includes('padding')) && (
+        existingProperties.includes('margin') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
             <div className={css(ut.flxc)}>
-              <button onClick={() => delPropertyHandler('spacing')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+              <button onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                 <TrashIcn size="15" />
               </button>
-              <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
+              <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
             </div>
-            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={spacing} id="spacing-control" />
+            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Margin control" objectPaths={margin} id="margin-control" />
+          </div>
+        )
+      }
+      {
+        existingProperties.includes('padding') && (
+          <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
+            <div className={css(ut.flxc)}>
+              <button onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+                <TrashIcn size="15" />
+              </button>
+              <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
+            </div>
+            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Padding control" objectPaths={padding} id="padding-control" />
           </div>
         )
       }
