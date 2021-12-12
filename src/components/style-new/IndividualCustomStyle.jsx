@@ -56,6 +56,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const colorObj = (cssProperty) => (
     {
+      object: 'fieldStyle',
       fk: fldKey,
       selector: `.${fldKey}-${elementKey}`,
       property: cssProperty,
@@ -83,7 +84,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <SimpleColorPicker
             title="Background Color"
             subtitle="Background Color"
-            stateName="themeVars"
             value={existingCssProperties?.background}
             modalType="individul-color"
             modalId="field-container-backgroung"
@@ -99,7 +99,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           <SimpleColorPicker
             title="Color"
             subtitle="Color"
-            stateName="themeVars"
             value={existingCssProperties?.color}
             modalType="individul-color"
             modalId="field-container-color"
