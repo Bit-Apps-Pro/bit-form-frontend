@@ -224,9 +224,9 @@ export default function ThemeCustomize() {
       <div className={css(cls.wrp)}>
 
         <h4 className={css(cls.subTitle)}>Color Scheme</h4>
-        <div className={css(ut.flxcb, ut.w9, ut.mt1)}>
+        <div className={css(ut.flxc, ut.w9, ut.mt1)}>
           <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
-          <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
+          <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, ut.ml2, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
         </div>
         <div className={css(cls.divider)} />
 
