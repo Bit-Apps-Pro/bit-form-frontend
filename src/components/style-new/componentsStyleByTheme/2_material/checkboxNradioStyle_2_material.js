@@ -64,16 +64,16 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       transition: 'box-shadow 0.2s, background 0.2s',
     },
     [`.${fk}-bx:hover::before`]: {
-      background: 'hsla(var(--gph), var(--gps), var(--gpl), 0.2)',
-      'box-shadow': '0 0 0 12px hsla(var(--gph), var(--gps), var(--gpl), 0.2)',
+      background: 'hsla(var(--gah), var(--gas), var(--gal), 0.2)',
+      'box-shadow': '0 0 0 12px hsla(var(--gah), var(--gas), var(--gal), 0.2)',
     },
     [`.${fk}-ci:focus ~ label[data-cl] span[data-bx]::before`]: {
-      background: 'hsla(var(--gph), var(--gps), var(--gpl), 0.2)',
-      'box-shadow': '0 0 0 12px hsla(var(--gph), var(--gps), var(--gpl), 0.2)',
+      background: 'hsla(var(--gah), var(--gas), var(--gal), 0.2)',
+      'box-shadow': '0 0 0 12px hsla(var(--gah), var(--gas), var(--gal), 0.2)',
     },
     [`.${fk}-bx:active::before`]: {
-      background: 'hsla(var(--gph), var(--gps), var(--gpl), 0.2)',
-      'box-shadow': '0 0 0 12px hsla(var(--gph), var(--gps), var(--gpl), 0.3)',
+      background: 'hsla(var(--gah), var(--gas), var(--gal), 0.2)',
+      'box-shadow': '0 0 0 12px hsla(var(--gah), var(--gas), var(--gal), 0.3)',
     },
     // checkbox input
     [`.${fk}-ci`]: {
@@ -81,11 +81,11 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       opacity: '0!important',
     },
     [`.${fk}-ci:checked ~ label[data-cl] span[data-bx]`]: {
-      background: 'var(--global-primary-color)',
-      'border-color': 'var(--global-primary-color)',
+      background: 'var(--global-accent-color)',
+      'border-color': 'var(--global-accent-color)',
     },
-    // [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gph), var(--gps), var(--gpl), 0.3)' },
-    // [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-primary-color)' },
+    // [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
+    // [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
     [`.${fk}-ci:active ~ label[data-cl] span[data-bx]`]: { transform: 'scale(0.9)' },
     [`.${fk}-ci:disabled ~ label[data-cl]`]: {
       opacity: 0.6,
@@ -97,7 +97,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
       [`.${fk}-svgwrp`]: {
         height: '12px',
         width: '10px',
-        filter: 'drop-shadow(0px 1.5px .5px hsl(var(--gph), var(--gps), 13%))',
+        filter: 'drop-shadow(0px 1.5px .5px hsl(var(--gah), var(--gas), 13%))',
       },
       [`.${fk}-ck-icn`]: {
         'stroke-dashoffset': '16px',
@@ -126,7 +126,7 @@ export default function checkboxNradioStyle_2_material({ fk, type, direction }) 
         width: 0,
         height: 0,
         background: 'var(--global-fld-bg-color)',
-        'box-shadow': '0 1px 3px 0px hsl(var(--gph), var(--gps), 13%)',
+        'box-shadow': '0 1px 3px 0px hsl(var(--gah), var(--gas), 13%)',
         transform: 'translate(-50%, -50%)',
       },
       [`.${fk}-ci:checked ~ label[data-cl] span[data-bx]::after`]: {

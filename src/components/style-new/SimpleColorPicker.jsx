@@ -113,7 +113,7 @@ const c = {
     curp: 1,
   },
   clrVal: {
-    w: 90,
+    w: 73,
     ws: 'nowrap',
     textOverflow: 'ellipsis',
     ow: 'hidden',

@@ -11,11 +11,11 @@ export default function bitformDefaultTheme(fk, type, direction) {
       return {
         theme: 'bitformDefault',
         themeVars: {
-          '--global-primary-color': 'hsla(0, 10%, 20%, 100)',
-          '--gph': 0,
-          '--gps': 10,
-          '--gpl': 20,
-          '--gpa': 100,
+          '--global-accent-color': 'hsla(0, 10%, 20%, 100)',
+          '--gah': 0,
+          '--gas': 10,
+          '--gal': 20,
+          '--gaa': 100,
           '--global-font-color': 'hsla(0, 10%, 20%, 100)',
           '--gfh': 0,
           '--gfs': 10,

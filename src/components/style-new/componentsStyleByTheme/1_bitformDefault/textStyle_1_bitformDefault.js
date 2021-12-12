@@ -27,10 +27,10 @@ export default function textStyle_1_bitformDefault({ fk, type, direction }) {
       ...type === 'textarea' && { resize: 'vertical' },
     },
     [`.${fk}-fld:focus`]: {
-      'box-shadow': '0 0 0 3px hsla(var(--gph), var(--gps), var(--gpl), 0.30)!important',
-      'border-color': 'var(--global-primary-color)!important',
+      'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30)!important',
+      'border-color': 'var(--global-accent-color)!important',
     },
-    [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-primary-color)!important' },
+    [`.${fk}-fld:hover`]: { 'border-color': 'var(--global-accent-color)!important' },
     [`.${fk}-fld::placeholder`]: { color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)!important' },
 
     // field icon

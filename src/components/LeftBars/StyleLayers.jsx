@@ -25,7 +25,9 @@ export default function StyleLayers() {
 
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
-          <NavBtn route="field-container" label="Field Blocks" highlightSelector="[data-dev-fld-wrp]" offset="3" />
+          <NavBtn route="form-wrapper" label="Form Wrapper" highlightSelector="[data-dev-fld-wrp]" offset="3" />
+          <NavBtn route="form-container" label="Form Container" highlightSelector="[data-dev-fld-wrp]" offset="3" />
+          <NavBtn route="field-container" label="Field Containers" highlightSelector="[data-dev-fld-wrp]" offset="3" />
           <NavBtn route="label-container" label="Label Containers" offset="3" highlightSelector="[data-dev-lbl-wrp]" />
           <NavBtn route="label" label="Labels" offset="3" highlightSelector="[data-dev-lbl]" />
           <NavBtn route="subtitle" label="Sub Title" offset="3" highlightSelector="[data-dev-sub-titl]" />
@@ -40,7 +42,7 @@ export default function StyleLayers() {
               <NavBtn subRoute={fldKey} route="label" label="Label" offset="2.5" highlightSelector={`[data-dev-lbl="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="subtitle" label="Subtitle" offset="2.5" highlightSelector={`[data-dev-sub-titl="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="helper-text" label="Helper Text" offset="2.5" highlightSelector={`[data-dev-hlp-txt="${fldKey}"]`} />
-              <NavBtn subRoute={fldKey} route="Error Message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
             </LayerAccordion>
           ))}
         </div>

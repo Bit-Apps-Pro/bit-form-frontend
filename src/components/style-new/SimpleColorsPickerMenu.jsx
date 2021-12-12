@@ -9,12 +9,26 @@ import { useRecoilState } from 'recoil'
 import { $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsv2hsl } from './colorHelpers'
 import ColorPreview from './ColorPreview'
+import { getStyleValueFromObjectPath } from './styleHelpers'
 
-function SimpleColorPickerMenu({ action, value, objectPaths }) {
+// stateObjName string ex: themeColor
+// objPath string ex: a->b->
+// hslaPaths object ex: {h: 'a->b->',s: 'a->s->l'}
+// canSetVariable bool
+//
+// fields->id->classes->className->prop
+
+// <SimpleColorsPicker
+//  stateName="themevar"
+//  propertyPath="fields->id->classes->className->prop"
+//  hsla={{h:'--gfh', s: ''}}
+// />
+function SimpleColorsPickerMenu({ stateObjName, propertyPath, hslaPaths, canSetVariable }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
@@ -26,6 +40,16 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
+
+  let defaultValue = ''
+  switch (stateObjName) {
+    case 'themeColors':
+      defaultValue = getStyleValueFromObjectPath(themeBgColor, propertyPath)
+      break
+
+    default:
+      break
+  }
 
   const { '--global-bg-color': themeBgColor,
     '--global-fld-bdr-clr': themeFldBdrClr,
@@ -70,6 +94,23 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     const a = color.a || 100
 
     const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`
+
+    switch (stateObj) {
+      case 'themeColor':
+        setThemeColors(prvState => produce(prvState, drftThmClr => {
+          drftThmClr[propertyPath] = hsla
+          if (hslaPaths) {
+            if ('h' in hslaPaths) { drftThmClr[hslaPaths.h] = h }
+            if ('s' in hslaPaths) { drftThmClr[hslaPaths.s] = s }
+            if ('l' in hslaPaths) { drftThmClr[hslaPaths.l] = l }
+            if ('a' in hslaPaths) { drftThmClr[hslaPaths.a] = a }
+          }
+        }))
+        break
+
+      default:
+        break
+    }
 
     switch (action.type) {
       case 'global-primary-color':
@@ -239,7 +280,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
   )
 }
 
-export default memo(SimpleColorPickerMenu)
+export default memo(SimpleColorsPickerMenu)
 
 const c = {
   preview_wrp: {
