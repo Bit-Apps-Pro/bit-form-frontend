@@ -105,6 +105,7 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setTempStyles(preStyle => produce(preStyle, drft => {
         drft.themeVars = parseStyle?.themeVars
         drft.themeColors = themeColors
+        drft.tempStyles = parseStyle.style
       }))
       setThemeVars(parseStyle.themeVars)
       if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
