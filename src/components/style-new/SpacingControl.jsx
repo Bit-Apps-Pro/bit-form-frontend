@@ -39,7 +39,7 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
       >
         <span>{val || 'Configure'}</span>
       </button>
-      {(value || val) && (
+      {(val) && (
         <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
           <CloseIcn size="12" />
         </button>
