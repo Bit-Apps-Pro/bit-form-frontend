@@ -12,6 +12,7 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
 
   const { object, paths } = objectPaths
   let val
+  if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
 
   const clearHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -36,7 +37,7 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
         type="button"
         className={css(c.pickrBtn)}
       >
-        <span>{(value || val) || 'Configure'}</span>
+        <span>{val || 'Configure'}</span>
       </button>
       {(value || val) && (
         <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
