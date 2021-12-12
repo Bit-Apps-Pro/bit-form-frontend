@@ -216,12 +216,10 @@ export const $themeColors = selector({
   key: '$themeColors',
   get: ({ get }) => {
     const colorScheme = get($colorScheme)
-    console.log('in state', colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
     if (colorScheme === 'dark') return get($darkThemeColors)
   },
   set: ({ set, get }, newColors) => {
-    console.log('set in selctot', $colorScheme)
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') set($lightThemeColors, newColors)
     if (colorScheme === 'dark') set($darkThemeColors, newColors)

@@ -2,6 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
+import { memo } from 'react'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
@@ -14,15 +15,21 @@ import IndividualCustomStyle from './IndividualCustomStyle'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
-export default function FieldStyleCustomize() {
-  const { css } = useFela()
+export default function FieldStyleCustomizeHOC() {
   const { formType, formID, fieldKey, element } = useParams()
+  const styles = useRecoilValue($styles)
+
+  if (!styles?.fields?.[fieldKey]) { console.error('no style object found according to this field'); return <>No Field</> }
+
+  return <FieldStyleCustomize {...{ formType, formID, fieldKey, element }} />
+}
+const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
+  const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
   const setFlags = useSetRecoilState($flags)
   const themeVars = useRecoilValue($themeVars)
 
   const fldStyleObj = styles?.fields?.[fieldKey]
-  if (!fldStyleObj) { console.error('no style object found according to this field'); return <></> }
   const { fieldType, classes, theme } = fldStyleObj
 
   useEffect(() => {
@@ -192,7 +199,7 @@ export default function FieldStyleCustomize() {
       </div>
     </div>
   )
-}
+})
 
 // const MenuItem = ({ label, onClick, name }) => {
 //   const { css } = useFela()
