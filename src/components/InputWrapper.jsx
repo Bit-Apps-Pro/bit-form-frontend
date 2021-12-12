@@ -11,7 +11,6 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && element === 'error-messages'
   const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && element === 'error-message' && urlFldKey === fieldKey
 
-  console.log(useParams())
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
   const err = fieldData.error || ''
