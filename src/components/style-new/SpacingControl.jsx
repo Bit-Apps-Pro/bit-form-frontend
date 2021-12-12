@@ -1,16 +1,33 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $draggableModal } from '../../GlobalStates'
+import produce from 'immer'
+import { $draggableModal, $styles } from '../../GlobalStates'
 import { showDraggableModal } from './styleHelpers'
 import CloseIcn from '../../Icons/CloseIcn'
 
 export default function SpacingControl({ subtitle, action, value, objectPaths, id }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const [styles, setStyles] = useRecoilState($styles)
 
-  console.log(value, objectPaths)
-  const clearHandler = (e) => {
-    console.log(value, e)
+  const { object, paths } = objectPaths
+  let val
+
+  const clearHandler = () => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      if (object === 'fieldStyle' && paths.margin) {
+        drft.fields[paths.fk].classes[paths.selector][paths.margin] = ''
+      }
+      if (object === 'fieldStyle' && paths.padding) {
+        drft.fields[paths.fk].classes[paths.selector][paths.padding] = ''
+      }
+    }))
+  }
+  if (object === 'fieldStyle' && paths.margin) {
+    val = styles.fields[paths.fk].classes[paths.selector][paths.margin]
+  }
+  if (object === 'fieldStyle' && paths.padding) {
+    val = styles.fields[paths.fk].classes[paths.selector][paths.padding]
   }
   return (
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
@@ -19,9 +36,9 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
         type="button"
         className={css(c.pickrBtn)}
       >
-        <span>Configure</span>
+        <span>{(value || val) || 'Configure'}</span>
       </button>
-      {value && (
+      {(value || val) && (
         <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
           <CloseIcn size="12" />
         </button>
