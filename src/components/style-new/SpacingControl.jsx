@@ -8,7 +8,6 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
-  console.log(value, objectPaths)
   const clearHandler = (e) => {
     console.log(value, e)
   }
