@@ -16,7 +16,7 @@ export default function ResetStyle({ objectKey, stateName, objectPaths }) {
   let show = false
   if (objectPaths?.object === 'fieldStyle') {
     const style = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
-    const tempStyle = tempStyles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
+    const tempStyle = tempStyles?.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
     if (style !== tempStyle) {
       show = true
     }

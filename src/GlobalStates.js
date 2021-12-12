@@ -32,11 +32,11 @@ export const $colorScheme = atom({ key: '$colorScheme', default: 'light' })
 export const $lightThemeColors = atom({
   key: '$lightThemeColors',
   default: {
-    '--global-primary-color': 'hsla(217, 100%, 50%, 100)', // primary color
-    '--gph': 217, // global primary hue
-    '--gps': '100%', // global primary saturation
-    '--gpl': '50%', // global primary lightness
-    '--gpa': 100, // global primary opacity
+    '--global-accent-color': 'hsla(217, 100%, 50%, 100)', // Accent Color
+    '--gah': 217, // global primary hue
+    '--gas': '100%', // global primary saturation
+    '--gal': '50%', // global primary lightness
+    '--gaa': 100, // global primary opacity
     '--global-font-color': 'hsla(0, 0%, 14%, 100)',
     '--gfh': 0, // global font color hue
     '--gfs': '0%', // global fonst color saaturation
@@ -56,11 +56,11 @@ export const $lightThemeColors = atom({
 export const $darkThemeColors = atom({
   key: '$darkThemeColors',
   default: {
-    '--global-primary-color': 'hsla(215, 10%, 20%, 100)', // primary color
-    '--gph': 0, // global primary hue
-    '--gps': 10, // global primary saturation
-    '--gpl': 20, // global primary lightness
-    '--gpa': 100, // global primary opacity
+    '--global-accent-color': 'hsla(215, 10%, 20%, 100)', // Accent Color
+    '--gah': 0, // global primary hue
+    '--gas': 10, // global primary saturation
+    '--gal': 20, // global primary lightness
+    '--gaa': 100, // global primary opacity
     '--global-font-color': 'hsla(0, 10%, 20%, 100)',
     '--gfh': 0, // global font color hue
     '--gfs': 10, // global fonst color sa
@@ -80,11 +80,11 @@ export const $darkThemeColors = atom({
 export const $themeVars = atom({
   key: '$themeVars',
   default: {
-    // '--global-primary-color': 'hsla(0, 10%, 20%, 100)', // primary color
-    // '--gph': 0, // global primary hue
-    // '--gps': 10, // global primary saturation
-    // '--gpl': 20, // global primary lightness
-    // '--gpa': 100, // global primary opacity
+    // '--global-accent-color': 'hsla(0, 10%, 20%, 100)', // Accent Color
+    // '--gah': 0, // global primary hue
+    // '--gas': 10, // global primary saturation
+    // '--gal': 20, // global primary lightness
+    // '--gaa': 100, // global primary opacity
     // '--global-font-color': 'hsla(0, 10%, 20%, 100)',
     // '--gfh': 0, // global font color hue
     // '--gfs': 10, // global fonst color sa

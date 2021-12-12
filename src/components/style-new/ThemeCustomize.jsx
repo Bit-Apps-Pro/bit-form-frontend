@@ -71,7 +71,7 @@ export default function ThemeCustomize() {
     '--err-sh': errSh,
     '--err-bdr': errB } = themeVars
 
-  const { '--global-primary-color': globalPrimaryColor,
+  const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
     '--global-fld-bdr-clr': globalFldBdrClr,
@@ -241,8 +241,8 @@ export default function ThemeCustomize() {
               modalId="global-bg-clr"
             />
             <SimpleColorPicker
-              title="Primary Color"
-              subtitle="Primary Color"
+              title="Accent Color"
+              subtitle="Accent Color"
               stateName="themeColors"
               value={globalPrimaryColor}
               modalType="global-primary-color"

@@ -21,11 +21,11 @@
 
 | var name  | meaning   |
 | --------- | --------- |
-| --global-primary-color  | primary color |
-| --gph  | global primary hue |
-| --gps  | global primary saturation |
-| --gpl  | global primary lightness  |
-| --gpa  | global primary opacity    |
+| --global-accent-color  | Accent Color |
+| --gah  | global primary hue |
+| --gas  | global primary saturation |
+| --gal  | global primary lightness  |
+| --gaa  | global primary opacity    |
 | --global-font-color  | global font color    |
 | --gfh  | global font color hue |
 | --gfs  | global font color saturation |

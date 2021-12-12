@@ -31,7 +31,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     '--global-fld-bdr-clr': themeFldBdrClr,
     '--global-fld-bg-color': themeFldBgColor,
     '--global-font-color': themeFontColor,
-    '--global-primary-color': themePrimaryColor } = themeColors
+    '--global-accent-color': themePrimaryColor } = themeColors
 
   const getCustomColor = () => {
     const colorValue = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
@@ -74,11 +74,11 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     switch (action.type) {
       case 'global-primary-color':
         setThemeColors(prvState => produce(prvState, drft => {
-          drft['--global-primary-color'] = hsla
-          drft['--gph'] = h
-          drft['--gps'] = `${s}%`
-          drft['--gpl'] = `${l}%`
-          drft['--gpa'] = a / 100
+          drft['--global-accent-color'] = hsla
+          drft['--gah'] = h
+          drft['--gas'] = `${s}%`
+          drft['--gal'] = `${l}%`
+          drft['--gaa'] = a / 100
         }))
         break
       case 'global-font-color':
@@ -212,9 +212,9 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
             <ColorPreview bg={themeBgColor} className={css(ut.mr2)} />
             <span>Background Color</span>
           </button>
-          <button className={css(c.clrItem, color === '--global-primary-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-primary-color')}>
+          <button className={css(c.clrItem, color === '--global-accent-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-accent-color')}>
             <ColorPreview bg={themePrimaryColor} className={css(ut.mr2)} />
-            <span>Background Primary Color</span>
+            <span>Background Accent Color</span>
           </button>
           <button className={css(c.clrItem, color === '--global-font-color' ? c.active : null)} type="button" onClick={() => setColorState('--global-font-color')}>
             <ColorPreview bg={themeFontColor} className={css(ut.mr2)} />
