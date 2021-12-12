@@ -47,7 +47,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             className={`${fieldKey}-lbl`}
             htmlFor={fieldKey}
           >
-            {fieldData.lblPreFix && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreFix} alt="" />}
+            {fieldData.lblPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
             {fieldData.lbl}
             {fieldData.valid?.req && (
               <>
@@ -55,13 +55,15 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 <span className="fld-req-symbol">*</span>
               </>
             )}
+            {fieldData.lblSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
           </label>
         )}
         {
-          (fieldData.subtitle || fieldData.subTleIcn) && (
+          (fieldData.subtitle || fieldData.subTlePreIcn || fieldData.subTleSufIcn) && (
             <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>
-              {fieldData.subTleIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-icn`} src={fieldData.subTleIcn} alt="" />}
+              {fieldData.subTlePreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i`} src={fieldData.subTlePreIcn} alt="" />}
               {fieldData.subtitle || ''}
+              {fieldData.subTleSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i`} src={fieldData.subTleSufIcn} alt="" />}
             </div>
           )
         }
@@ -69,10 +71,11 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
       <div data-dev-inp-wrp={fieldKey} className={`${fieldKey}-inp-wrp`}>
         {children}
         {
-          (fieldData.helperTxt || fieldData.hlpTxtIcn) && (
+          (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
-              {fieldData.hlpTxtIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-icn`} src={fieldData.hlpTxtIcn} alt="" />}
+              {fieldData.hlpPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
               {fieldData.helperTxt || ''}
+              {fieldData.hlpSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>
           )
         }
