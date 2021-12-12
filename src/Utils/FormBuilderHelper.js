@@ -420,17 +420,22 @@ export const nestedObjAssign = (obj, paths, value, createNonExist = true) => {
   return nestedObjAssign(obj[path[0]], path.slice(1), value)
 }
 
+// TODO can be assign non existing path also
 export const assignNestedObj = (obj, keyPath, value) => {
-  const path = keyPath?.split?.('->') || []
-  const lastKeyIndex = path.length - 1
+  const paths = keyPath?.split('->') || []
+  if (paths.length === 1) {
+    obj[paths[0]] = value
+    return
+  }
+  const lastKeyIndex = paths.length - 1
   for (let i = 0; i < lastKeyIndex; i += 1) {
-    const key = path[i]
+    const key = paths[i]
     if (!(key in obj)) {
       obj[key] = {}
     }
     obj = obj[key]
   }
-  obj[path[lastKeyIndex]] = value
+  obj[paths[lastKeyIndex]] = value
 }
 
 export const propertyValueSumY = (propertyValue = '') => {
