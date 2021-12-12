@@ -2,10 +2,16 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates'
 import { showDraggableModal } from './styleHelpers'
+import CloseIcn from '../../Icons/CloseIcn'
 
 export default function SpacingControl({ subtitle, action, value, objectPaths, id }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+
+  console.log(value, objectPaths)
+  const clearHandler = (e) => {
+    console.log(value, e)
+  }
   return (
     <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
       <button
@@ -15,7 +21,11 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
       >
         <span>Configure</span>
       </button>
-
+      {value && (
+        <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+          <CloseIcn size="12" />
+        </button>
+      )}
     </div>
   )
 }
