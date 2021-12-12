@@ -42,13 +42,14 @@ export const $lightThemeColors = atom({
     '--gfs': '0%', // global fonst color saaturation
     '--gfl': '14%',
     '--gfa': 100,
-    '--global-bg-color': 'hsla(0, 0%, 100%, 100)', // background color
+    '--global-bg-color': 'hsla(0, 0%, 95%, 100)', // background color
     '--gbg-h': 0,
     '--gbg-s': 0,
     '--gbg-l': 100,
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)',
-    '--global-fld-bg-color': 'hsla(0, 0%, 67%, 100)', // field background color
+    '--global-fld-bg-color': 'hsla(0, 40%, 67%, 100)', // field background color
+    '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
   },
 })
 
@@ -72,6 +73,7 @@ export const $darkThemeColors = atom({
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
     '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+    '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
   },
 })
 
@@ -143,7 +145,6 @@ export const $themeVars = atom({
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
 
-    '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
     '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '', // subtitle padding
