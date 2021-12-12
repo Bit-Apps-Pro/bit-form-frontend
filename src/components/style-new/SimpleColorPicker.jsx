@@ -44,7 +44,7 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
-        <ResetStyle objectKey={`--${modalType}`} stateName={stateName} />
+        <ResetStyle objectKey={`--${modalType}`} stateName={stateName} objectPaths={objectPaths} />
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths })}
