@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import sc from '../../styles/commonStyleEditorStyle'
@@ -10,13 +10,14 @@ export default function ResetStyle({ objectKey, stateName, objectPaths }) {
   const { themeColors: tmpThemeColors, themeVars: tmpThemeVars, tempStyles } = useRecoilValue($tempStyles)
   const [themeColor, setThemeColor] = useRecoilState($themeColors)
   const [themeVar, setThemeVar] = useRecoilState($themeVars)
-  const setStyles = useSetRecoilState($styles)
+  const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
 
   let show = false
   if (objectPaths?.object === 'fieldStyle') {
-    if (tempStyles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]) {
-      console.log('reset')
+    const style = styles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
+    const tempStyle = tempStyles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
+    if (style !== tempStyle) {
       show = true
     }
   } else if (stateName === 'themeVars') {
