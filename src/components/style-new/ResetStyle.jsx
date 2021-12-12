@@ -1,18 +1,25 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import sc from '../../styles/commonStyleEditorStyle'
-import { $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 
-export default function ResetStyle({ objectKey, stateName }) {
-  const { themeColors: tmpThemeColors, themeVars: tmpThemeVars } = useRecoilValue($tempStyles)
+export default function ResetStyle({ objectKey, stateName, objectPaths }) {
+  const { themeColors: tmpThemeColors, themeVars: tmpThemeVars, tempStyles } = useRecoilValue($tempStyles)
   const [themeColor, setThemeColor] = useRecoilState($themeColors)
   const [themeVar, setThemeVar] = useRecoilState($themeVars)
+  const setStyles = useSetRecoilState($styles)
   const { css } = useFela()
+
   let show = false
-  if (stateName === 'themeVars') {
+  if (objectPaths?.object === 'fieldStyle') {
+    if (tempStyles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]) {
+      console.log('reset')
+      show = true
+    }
+  } else if (stateName === 'themeVars') {
     if (tmpThemeVars?.[objectKey] && themeVar?.[objectKey] !== tmpThemeVars?.[objectKey]) {
       console.log('reset ', tmpThemeVars?.[objectKey], themeVar?.[objectKey])
       show = true
@@ -22,6 +29,7 @@ export default function ResetStyle({ objectKey, stateName }) {
       show = true
     }
   }
+
   const resetValue = () => {
     if (stateName === 'themeVars') {
       if (!tmpThemeVars[objectKey]) return
@@ -30,6 +38,12 @@ export default function ResetStyle({ objectKey, stateName }) {
     if (stateName === 'themeColors') {
       if (!tmpThemeColors[objectKey]) return
       setThemeColor(prvStyle => produce(prvStyle, drft => { drft[objectKey] = tmpThemeColors[objectKey] }))
+    }
+    if (objectPaths.object === 'fieldStyle') {
+      const value = tempStyles.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property]
+      setStyles(prvStyle => produce(prvStyle, drft => {
+        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = value
+      }))
     }
   }
 
