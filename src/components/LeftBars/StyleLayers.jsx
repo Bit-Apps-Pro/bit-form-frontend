@@ -36,7 +36,7 @@ export default function StyleLayers() {
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
-            <LayerAccordion title={showFldTitle(fldData.typ)} tag={fldKey} key={`${fldKey}`}>
+            <LayerAccordion title={showFldTitle(fldData.typ)} tag={fldKey} key={fldKey}>
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="label-subtitle-container" label="Label Container" offset="2.5" highlightSelector={`[data-dev-lbl-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="label" label="Label" offset="2.5" highlightSelector={`[data-dev-lbl="${fldKey}"]`} />
