@@ -48,7 +48,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     if (!action.type) return
 
     switch (action.type) {
-      case 'global-primary-color':
+      case 'global-accent-color':
       case 'global-font-color':
         return setColor(str2Color(themeVars['--global-font-color']))
       case 'global-fld-bdr-clr':
@@ -72,7 +72,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`
 
     switch (action.type) {
-      case 'global-primary-color':
+      case 'global-accent-color':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-accent-color'] = hsla
           drft['--gah'] = h

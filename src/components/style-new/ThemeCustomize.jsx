@@ -245,8 +245,8 @@ export default function ThemeCustomize() {
               subtitle="Accent Color"
               stateName="themeColors"
               value={globalPrimaryColor}
-              modalType="global-primary-color"
-              modalId="global-primary-clr"
+              modalType="global-accent-color"
+              modalId="global-accent-clr"
             />
             <SimpleColorPicker
               title="Font Color"
