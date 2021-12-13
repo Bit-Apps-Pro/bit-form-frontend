@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
@@ -63,15 +64,21 @@ function TextFieldSettings() {
   const fieldName = fieldData.fieldName || fldKey
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
-  const regexr = fieldData.valid.regexr || '' 
+  const regexr = fieldData.valid.regexr || ''
   const flags = fieldData.valid.flags || ''
   const { css } = useFela()
 
-  const subTleIcn = `.${fldKey}-sub-titl-icn`
-  const hlpTxtIcn = `.${fldKey}-hlp-txt-icn`
+  const subTlePreIcn = `.${fldKey}-sub-titl-pre-i`
+  const subTleSufIcn = `.${fldKey}-sub-titl-suf-i`
 
-  const { width: subTleWidth, height: subTleHeight } = styles.fields[fldKey].classes[subTleIcn] || ''
-  const { width: hlpIcnWidth, height: hlpIcnHeight } = styles.fields[fldKey].classes[hlpTxtIcn] || ''
+  const hlpPreIcnCls = `.${fldKey}-hlp-txt-pre-i`
+  const hlpSufIcnCls = `.${fldKey}-hlp-txt-suf-i`
+
+  const { width: subPreIcnWidth, height: subPreIcnHeight } = styles?.fields[fldKey]?.classes[subTlePreIcn] || {}
+  const { width: subSufIcnWidth, height: subSufIcnHeight } = styles?.fields[fldKey]?.classes[subTleSufIcn] || {}
+
+  const { width: hlpPreIcnWidth, height: hlpPreIcnHeight } = styles?.fields[fldKey]?.classes[hlpPreIcnCls] || {}
+  const { width: hlpSufIcnWidth, height: hlpSufIcnHeight } = styles?.fields[fldKey]?.classes[hlpSufIcnCls] || {}
 
   const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
   const escapeBackslashPattern = str => str.replaceAll('\\', '$_bf_$')
@@ -502,53 +509,102 @@ function TextFieldSettings() {
           </div>
 
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Icon</span>
+            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
             <div className={css(ut.flxcb)}>
-              {fieldData?.subTleIcn && (
-                <img src={fieldData?.subTleIcn} alt="start icon" width="18" height="18" />
+              {fieldData?.subTlePreIcn && (
+                <img src={fieldData?.subTlePreIcn} alt="start icon" width="18" height="18" />
               )}
 
-              <button type="button" onClick={() => setIconModel('subTleIcn')} className={css(ut.icnBtn)}>
+              <button type="button" onClick={() => setIconModel('subTlePreIcn')} className={css(ut.icnBtn)}>
                 <EditIcn size={22} />
               </button>
-              {fieldData.subTleIcn && (
-                <button onClick={() => removeIcon('subTleIcn')} className={css(ut.icnBtn)} type="button">
+              {fieldData.subTlePreIcn && (
+                <button onClick={() => removeIcon('subTlePreIcn')} className={css(ut.icnBtn)} type="button">
                   <CloseIcn size="13" />
                 </button>
               )}
 
             </div>
           </div>
-          {fieldData?.subTleIcn && (
+          {fieldData?.subTlePreIcn && (
             <>
               <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Width</span>
+                <span className={css(ut.fw500)}>Start Icon Width</span>
                 <div className={css(ut.flxc)}>
                   <SizeControl
-                    inputHandler={val => icnWidthHandle(val, subTleIcn, subTleWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleWidth)}
-                    value={getNumFromStr(subTleWidth) || 10}
-                    unit={getStrFromStr(subTleWidth) || 'px'}
-                    width="110px"
+                    inputHandler={val => icnWidthHandle(val, subTlePreIcn, subPreIcnWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTlePreIcn, subPreIcnWidth)}
+                    value={getNumFromStr(subPreIcnWidth) || 10}
+                    unit={getStrFromStr(subPreIcnWidth) || 'px'}
+                    width="80px"
                     options={['px', '%']}
                   />
                 </div>
               </div>
               <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Height</span>
+                <span className={css(ut.fw500)}>Start Icon Height</span>
                 <div className={css(ut.flxc)}>
                   <SizeControl
-                    inputHandler={val => icnHeightHandle(val, subTleIcn, subTleHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleIcn, subTleHeight)}
-                    value={getNumFromStr(subTleHeight) || 10}
-                    unit={getStrFromStr(subTleHeight) || 'px'}
-                    width="110px"
+                    inputHandler={val => icnHeightHandle(val, subTlePreIcn, subPreIcnHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTlePreIcn, subPreIcnHeight)}
+                    value={getNumFromStr(subPreIcnHeight) || 10}
+                    unit={getStrFromStr(subPreIcnHeight) || 'px'}
+                    width="80px"
                     options={['px', '%']}
                   />
                 </div>
               </div>
             </>
           )}
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
+            <div className={css(ut.flxcb)}>
+              {fieldData?.subTleSufIcn && (
+                <img src={fieldData?.subTleSufIcn} alt="end icon" width="18" height="18" />
+              )}
+
+              <button type="button" onClick={() => setIconModel('subTleSufIcn')} className={css(ut.icnBtn)}>
+                <EditIcn size={22} />
+              </button>
+              {fieldData.subTleSufIcn && (
+                <button onClick={() => removeIcon('subTleSufIcn')} className={css(ut.icnBtn)} type="button">
+                  <CloseIcn size="13" />
+                </button>
+              )}
+
+            </div>
+          </div>
+          {fieldData?.subTleSufIcn && (
+            <>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>End Icon Width</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => icnWidthHandle(val, subTleSufIcn, subSufIcnWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, subTleSufIcn, subSufIcnWidth)}
+                    value={getNumFromStr(subSufIcnWidth) || 10}
+                    unit={getStrFromStr(subSufIcnWidth) || 'px'}
+                    width="80px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>End Icon Height</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => icnHeightHandle(val, subTleSufIcn, subSufIcnHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, subTleSufIcn, subSufIcnHeight)}
+                    value={getNumFromStr(subSufIcnHeight) || 10}
+                    unit={getStrFromStr(subSufIcnHeight) || 'px'}
+                    width="80px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
         </SimpleAccordion>
 
         <hr className={css(FieldStyle.divider)} />
@@ -576,55 +632,105 @@ function TextFieldSettings() {
           </div>
           <div className={css(ut.mt2, { mx: 10 })}>
             <div className={css(ut.flxcb)}>
-              <span className={css(ut.fw500)}>Icon</span>
+              <span className={css(ut.fw500)}>Start Icon</span>
               <div className={css(ut.flxcb)}>
-                {fieldData?.hlpTxtIcn && (
-                  <img src={fieldData?.hlpTxtIcn} alt="Icon" width="18" height="18" />
+                {fieldData?.hlpPreIcn && (
+                  <img src={fieldData?.hlpPreIcn} alt="Icon" width="18" height="18" />
                 )}
 
-                <button type="button" onClick={() => setIconModel('hlpTxtIcn')} className={css(ut.icnBtn)}>
+                <button type="button" onClick={() => setIconModel('hlpPreIcn')} className={css(ut.icnBtn)}>
                   <EditIcn size={22} />
                 </button>
-                {fieldData?.hlpTxtIcn && (
-                  <button onClick={() => removeIcon('hlpTxtIcn')} className={css(ut.icnBtn)} type="button">
+                {fieldData?.hlpPreIcn && (
+                  <button onClick={() => removeIcon('hlpPreIcn')} className={css(ut.icnBtn)} type="button">
                     <CloseIcn size="13" />
                   </button>
                 )}
 
               </div>
             </div>
-          </div>
 
-          {fieldData?.hlpTxtIcn && (
-            <>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Width</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => icnWidthHandle(val, hlpTxtIcn, hlpIcnWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnWidth)}
-                    value={getNumFromStr(hlpIcnWidth) || 10}
-                    unit={getStrFromStr(hlpIcnWidth) || 'px'}
-                    width="110px"
-                    options={['px', '%']}
-                  />
+            {fieldData?.hlpPreIcn && (
+              <>
+                <div className={css(ut.flxcb, ut.m10)}>
+                  <span className={css(ut.fw500)}>Start Icon Width</span>
+                  <div className={css(ut.flxc)}>
+                    <SizeControl
+                      inputHandler={val => icnWidthHandle(val, hlpPreIcnCls, hlpPreIcnWidth)}
+                      sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpPreIcnCls, hlpPreIcnWidth)}
+                      value={getNumFromStr(hlpPreIcnWidth) || 10}
+                      unit={getStrFromStr(hlpPreIcnWidth) || 'px'}
+                      width="80px"
+                      options={['px', '%']}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Height</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    inputHandler={val => icnHeightHandle(val, hlpTxtIcn, hlpIcnHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpTxtIcn, hlpIcnHeight)}
-                    value={getNumFromStr(hlpIcnHeight) || 10}
-                    unit={getStrFromStr(hlpIcnHeight) || 'px'}
-                    width="110px"
-                    options={['px', '%']}
-                  />
+                <div className={css(ut.flxcb, ut.m10)}>
+                  <span className={css(ut.fw500)}>Start Icon Height</span>
+                  <div className={css(ut.flxc)}>
+                    <SizeControl
+                      inputHandler={val => icnHeightHandle(val, hlpPreIcnCls, hlpPreIcnHeight)}
+                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpPreIcnCls, hlpIcnHeight)}
+                      value={getNumFromStr(hlpPreIcnHeight) || 10}
+                      unit={getStrFromStr(hlpPreIcnHeight) || 'px'}
+                      width="80px"
+                      options={['px', '%']}
+                    />
+                  </div>
                 </div>
+              </>
+            )}
+
+            <div className={css(ut.flxcb)}>
+              <span className={css(ut.fw500)}>End Icon</span>
+              <div className={css(ut.flxcb)}>
+                {fieldData?.hlpSufIcn && (
+                  <img src={fieldData?.hlpSufIcn} alt="Icon" width="18" height="18" />
+                )}
+
+                <button type="button" onClick={() => setIconModel('hlpSufIcn')} className={css(ut.icnBtn)}>
+                  <EditIcn size={22} />
+                </button>
+                {fieldData?.hlpSufIcn && (
+                  <button onClick={() => removeIcon('hlpSufIcn')} className={css(ut.icnBtn)} type="button">
+                    <CloseIcn size="13" />
+                  </button>
+                )}
+
               </div>
-            </>
-          )}
+            </div>
+
+            {fieldData?.hlpSufIcn && (
+              <>
+                <div className={css(ut.flxcb, ut.m10)}>
+                  <span className={css(ut.fw500)}>Start Icon Width</span>
+                  <div className={css(ut.flxc)}>
+                    <SizeControl
+                      inputHandler={val => icnWidthHandle(val, hlpSufIcnCls, hlpPreIcnWidth)}
+                      sizeHandler={({ unitKey, unitValue }) => icnWidthHandle({ unit: unitKey, value: unitValue }, hlpSufIcnCls, hlpSufIcnWidth)}
+                      value={getNumFromStr(hlpSufIcnWidth) || 10}
+                      unit={getStrFromStr(hlpSufIcnWidth) || 'px'}
+                      width="80px"
+                      options={['px', '%']}
+                    />
+                  </div>
+                </div>
+                <div className={css(ut.flxcb, ut.m10)}>
+                  <span className={css(ut.fw500)}>Start Icon Height</span>
+                  <div className={css(ut.flxc)}>
+                    <SizeControl
+                      inputHandler={val => icnHeightHandle(val, hlpSufIcnCls, hlpSufIcnHeight)}
+                      sizeHandler={({ unitKey, unitValue }) => icnHeightHandle({ unit: unitKey, value: unitValue }, hlpSufIcnCls, hlpSufIcnHeight)}
+                      value={getNumFromStr(hlpSufIcnHeight) || 10}
+                      unit={getStrFromStr(hlpSufIcnHeight) || 'px'}
+                      width="80px"
+                      options={['px', '%']}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
 
         </SimpleAccordion>
 

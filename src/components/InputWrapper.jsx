@@ -51,7 +51,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             className={`${fieldKey}-lbl`}
             htmlFor={fieldKey}
           >
-            {fieldData.lblPreFix && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreFix} alt="" />}
+            {fieldData.lblPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
             {fieldData.lbl}
             {fieldData.valid?.req && (
               <>
@@ -59,27 +59,34 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 <span className="fld-req-symbol">*</span>
               </>
             )}
+            {fieldData.lblSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
           </label>
         )}
         {
-          (fieldData.subtitle || fieldData.subTleIcn) && (
+          (fieldData.subtitle || fieldData.subTlePreIcn || fieldData.subTleSufIcn) && (
             <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>
-              {fieldData.subTleIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-icn`} src={fieldData.subTleIcn} alt="" />}
-              {fieldData.subtitle}
+              {fieldData.subTlePreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i`} src={fieldData.subTlePreIcn} alt="" />}
+              {fieldData.subtitle || ''}
+              {fieldData.subTleSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i`} src={fieldData.subTleSufIcn} alt="" />}
             </div>
           )
         }
       </div>
       <div data-dev-inp-wrp={fieldKey} className={`${fieldKey}-inp-wrp`}>
+        {/* field content here */}
         {children}
-        {(fieldData.helperTxt || fieldData.hlpTxtIcn) && (
-          <div
-            data-dev-hlp-txt={fieldKey}
-            className={`${fieldKey}-hlp-txt`}
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: renderHelperText(fieldKey, fieldData.hlpTxtIcn, fieldData.helperTxt) }}
-          />
-        )}
+
+        {/* field helper text */}
+        {
+          (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
+            <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
+              {fieldData.hlpPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
+              {fieldData.helperTxt || ''}
+              {new DOMParser().parseFromString(fieldData?.helperTxt, 'text/html')}
+              {fieldData.hlpSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
+            </div>
+          )
+        }
       </div>
       {/* TEMPORARY HIDE */}
       {/* {(err || fieldData?.err) && (
@@ -89,6 +96,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           </div>
         </div>
       )} */}
+      {/* field error message */}
       {(showAllErrorMsg || showOnlyThisFldErrMsg) && (
         <div className={`${fieldKey}-err-msg`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio recusandae libero voluptates, rerum blanditiis quisquam? A sapiente, cum molestiae ratione voluptatem ipsam veniam obcaecati.</div>
       )}
