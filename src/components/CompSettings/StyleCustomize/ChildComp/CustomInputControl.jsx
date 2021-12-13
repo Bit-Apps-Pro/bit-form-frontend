@@ -85,7 +85,7 @@ export default function CustomInputControl(
     if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
       e.preventDefault()
       if (e.code === 'ArrowDown') {
-        onChange((e.target.valueAsNumber + (getStepByEvent(e) || step)) * -1)
+        onChange((e.target.valueAsNumber - (getStepByEvent(e) || step)))
         return
       }
       onChange(e.target.valueAsNumber + (getStepByEvent(e) || step))
