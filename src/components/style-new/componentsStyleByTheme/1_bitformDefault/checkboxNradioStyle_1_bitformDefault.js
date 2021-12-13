@@ -35,11 +35,11 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       opacity: '0!important',
     },
     [`.${fk}-ci:checked ~ .${fk}-cl .${fk}-bx`]: {
-      background: 'var(--global-primary-color)',
-      'border-color': 'var(--global-primary-color)',
+      background: 'var(--global-accent-color)',
+      'border-color': 'var(--global-accent-color)',
     },
-    [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gph), var(--gps), var(--gpl), 0.3)' },
-    [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-primary-color)' },
+    [`.${fk}-ci:focus ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.3)' },
+    [`.${fk}-ci:focus-visible ~ .${fk}-cl .${fk}-bx`]: { 'box-shadow': '0 0 0 2px var(--global-fld-bg-color),0 0 0 4px var(--global-accent-color)' },
     [`.${fk}-ci:active ~ .${fk}-cl .${fk}-bx`]: { transform: 'scale(0.9)' },
     [`.${fk}-ci:disabled ~ .${fk}-cl`]: {
       opacity: 0.6,
@@ -64,7 +64,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       [`.${fk}-svgwrp`]: {
         height: '12px',
         width: '10px',
-        filter: 'drop-shadow(0px 1px 1px hsl(var(--gph), var(--gps), 13%))',
+        filter: 'drop-shadow(0px 1px 1px hsl(var(--gah), var(--gas), 13%))',
       },
       [`.${fk}-ck-icn`]: { 'stroke-dashoffset': '16px' },
       [`.${fk}-ck-svgline`]: {

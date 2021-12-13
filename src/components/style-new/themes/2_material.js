@@ -7,11 +7,11 @@ export default function materialTheme(fk, type, direction) {
       return {
         theme: 'material',
         themeVars: {
-          '--global-primary-color': 'hsla(210, 100%, 50%, 100)',
-          '--gph': 210,
-          '--gps': 100,
-          '--gpl': 50,
-          '--gpa': 100,
+          '--global-accent-color': 'hsla(210, 100%, 50%, 100)',
+          '--gah': 210,
+          '--gas': 100,
+          '--gal': 50,
+          '--gaa': 100,
           '--global-font-color': 'hsla(0, 10%, 20%, 100)',
           '--gfh': 0,
           '--gfs': 10,

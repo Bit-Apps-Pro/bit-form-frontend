@@ -68,11 +68,23 @@ export default function inputWrapperClasses(fk) {
       width: '15px',
       height: '15px',
     },
-    [`.${fk}-sub-titl-icn`]: {
+    [`.${fk}-lbl-suf-i`]: {
+      width: '15px',
+      height: '15px',
+    },
+    [`.${fk}-sub-titl-pre-i`]: {
       width: '11px',
       height: '11px',
     },
-    [`.${fk}-hlp-txt-icn`]: {
+    [`.${fk}-sub-titl-suf-i`]: {
+      width: '11px',
+      height: '11px',
+    },
+    [`.${fk}-hlp-txt-pre-i`]: {
+      width: '11px',
+      height: '11px',
+    },
+    [`.${fk}-hlp-txt-suf-i`]: {
       width: '11px',
       height: '11px',
     },

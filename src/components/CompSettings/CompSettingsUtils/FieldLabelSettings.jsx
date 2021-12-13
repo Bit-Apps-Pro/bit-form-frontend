@@ -28,12 +28,15 @@ export default function FieldLabelSettings() {
   const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const [styles, setStyles] = useRecoilState($styles)
-  const [optionMdl, setOptionMdl] = useState(false)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
 
-  const lblIcnCls = `.${fldKey}-lbl-pre-i`
-  const { width: lblIcnWidth, height: lblIcnHeight } = styles.fields[fldKey].classes[lblIcnCls] || ''
+  const lblPreIcnCls = `.${fldKey}-lbl-pre-i`
+  const lblSufIcnCls = `.${fldKey}-lbl-suf-i`
+
+  const { width: lblPreIcnWidth, height: lblPreIcnHeight } = styles?.fields[fldKey]?.classes[lblPreIcnCls] || {}
+  const { width: lblSufIcnWidth, height: lblSufIcnHeight } = styles?.fields[fldKey]?.classes[lblSufIcnCls] || {}
+
   function setLabel(e) {
     if (e.target.value === '') {
       delete fieldData.lbl
@@ -111,47 +114,48 @@ export default function FieldLabelSettings() {
 
         <div className={css(ut.mt2, { mx: 10 })}>
           <div className={css(ut.flxcb)}>
-            <span className={css(ut.fw500, ut.ml2)}>Icon</span>
+            <span className={css(ut.fw500, ut.ml2)}>Start Icon</span>
             <div className={css(ut.flxcb)}>
-              {fieldData?.lblPreFix && (
-                <img src={fieldData?.lblPreFix} alt="start icon" width="18" height="18" />
+              {fieldData?.lblPreIcn && (
+                <img src={fieldData?.lblPreIcn} alt="start icon" width="18" height="18" />
               )}
 
-              <button type="button" onClick={() => setIconModel('lblPreFix')} className={css(ut.icnBtn)}>
+              <button type="button" onClick={() => setIconModel('lblPreIcn')} className={css(ut.icnBtn)}>
                 <EditIcn size={22} />
               </button>
-              {fieldData?.lblPreFix && (
-                <button onClick={() => removeIcon('lblPreFix')} className={css(ut.icnBtn)} type="button">
+              {fieldData?.lblPreIcn && (
+                <button onClick={() => removeIcon('lblPreIcn')} className={css(ut.icnBtn)} type="button">
                   <CloseIcn size="13" />
                 </button>
               )}
 
             </div>
           </div>
-          {fieldData?.lblPreFix && (
+
+          {fieldData?.lblPreIcn && (
             <>
               <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Width</span>
+                <span className={css(ut.fw500)}>Start Icon Width</span>
                 <div className={css(ut.flxc)}>
                   <SizeControl
-                    inputHandler={val => lblWidthHandler(val, lblIcnCls, lblIcnWidth)}
-                    sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblIcnCls, lblIcnWidth)}
-                    value={getNumFromStr(lblIcnWidth) || 10}
-                    unit={getStrFromStr(lblIcnWidth) || 'px'}
-                    width="110px"
+                    inputHandler={val => lblWidthHandler(val, lblPreIcnCls, lblPreIcnWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblPreIcnCls, lblPreIcnWidth)}
+                    value={getNumFromStr(lblPreIcnWidth) || 10}
+                    unit={getStrFromStr(lblPreIcnWidth) || 'px'}
+                    width="80px"
                     options={['px', '%']}
                   />
                 </div>
               </div>
               <div className={css(ut.flxcb, ut.m10)}>
-                <span className={css(ut.fw500)}>Height</span>
+                <span className={css(ut.fw500)}>Start Icon Height</span>
                 <div className={css(ut.flxc)}>
                   <SizeControl
-                    inputHandler={val => lblHeightHandler(val, lblIcnCls, lblIcnHeight)}
-                    sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblIcnCls, lblIcnHeight)}
-                    value={getNumFromStr(lblIcnHeight) || 10}
-                    unit={getStrFromStr(lblIcnHeight) || 'px'}
-                    width="110px"
+                    inputHandler={val => lblHeightHandler(val, lblPreIcnCls, lblPreIcnHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblPreIcnCls, lblPreIcnHeight)}
+                    value={getNumFromStr(lblPreIcnHeight) || 10}
+                    unit={getStrFromStr(lblPreIcnHeight) || 'px'}
+                    width="80px"
                     options={['px', '%']}
                   />
                 </div>
@@ -159,6 +163,54 @@ export default function FieldLabelSettings() {
             </>
           )}
 
+          <div className={css(ut.flxcb)}>
+            <span className={css(ut.fw500, ut.ml2)}>End Icon</span>
+            <div className={css(ut.flxcb)}>
+              {fieldData?.lblSufIcn && (
+                <img src={fieldData?.lblSufIcn} alt="end icon" width="18" height="18" />
+              )}
+
+              <button type="button" onClick={() => setIconModel('lblSufIcn')} className={css(ut.icnBtn)}>
+                <EditIcn size={22} />
+              </button>
+              {fieldData?.lblSufIcn && (
+                <button onClick={() => removeIcon('lblSufIcn')} className={css(ut.icnBtn)} type="button">
+                  <CloseIcn size="13" />
+                </button>
+              )}
+
+            </div>
+          </div>
+          {fieldData?.lblSufIcn && (
+            <>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Start Icon Width</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => lblWidthHandler(val, lblSufIcnCls, lblSufIcnWidth)}
+                    sizeHandler={({ unitKey, unitValue }) => lblWidthHandler({ unit: unitKey, value: unitValue }, lblSufIcnCls, lblSufIcnWidth)}
+                    value={getNumFromStr(lblSufIcnWidth) || 10}
+                    unit={getStrFromStr(lblSufIcnWidth) || 'px'}
+                    width="80px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+              <div className={css(ut.flxcb, ut.m10)}>
+                <span className={css(ut.fw500)}>Start Icon Height</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    inputHandler={val => lblHeightHandler(val, lblSufIcnCls, lblSufIcnHeight)}
+                    sizeHandler={({ unitKey, unitValue }) => lblHeightHandler({ unit: unitKey, value: unitValue }, lblSufIcnCls, lblSufIcnHeight)}
+                    value={getNumFromStr(lblSufIcnHeight) || 10}
+                    unit={getStrFromStr(lblSufIcnHeight) || 'px'}
+                    width="80px"
+                    options={['px', '%']}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </SimpleAccordion>
       <Modal

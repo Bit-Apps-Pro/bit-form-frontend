@@ -236,7 +236,13 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
       <Grow open={controller.parent === 'Icons'}>
         <div className={css(ut.mt2, ut.flxc, { flxp: 1, jc: 'center' })}>
           {filter.map((iconPack, i) => (
-            <button title={iconPack.label} onClick={() => searchByIconPack(i, iconPack.value, iconPack.status)} type="button" className={`${css(s.chip, ut.mr2)} ${iconPack.status && css(s.active)}`}>
+            <button
+              key={iconPack.label}
+              title={iconPack.label}
+              onClick={() => searchByIconPack(i, iconPack.value, iconPack.status)}
+              type="button"
+              className={`${css(s.chip, ut.mr2)} ${iconPack.status && css(s.active)}`}
+            >
               {iconPack.label}
             </button>
 
@@ -279,6 +285,7 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
             {icons.map((item) => (
               <button
                 type="button"
+                key={`${item.name} (${item.id})`}
                 title={`${item.name} (${item.id})`}
                 className={`${css(s.icnBtn)} ${url + item.url === prefix && css(s.active, s.activeIcn)}`}
                 onClick={(e) => setPrefix(e.target.src)}
@@ -291,7 +298,7 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
             <div title="Loading...">
               <div className={css(ut.mt2)} />
               {Array(26).fill(1).map((itm, i) => (
-                <div key={`loderfnt-${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
+                <div key={`loderfnt--${i * 2}`} title="Loading..." className={`${css(s.loadingPlaceholder)} loader`} />
               ))}
             </div>
           )}

@@ -51,23 +51,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
   const [isScroll, setIsScroll] = useState(false)
 
   const tools = [
-    {
-      name: __('Check Box', 'bitform'),
-      keywords: 'Check Box',
-      icn: <CheckBoxIcn w="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
-      elm: {
-        typ: 'check',
-        lbl: __('Check Boxs', 'bitform'),
-        opt: [
-          { lbl: __('Option 1', 'bitform') },
-          { lbl: __('Option 2', 'bitform') },
-          { lbl: __('Option 3', 'bitform') },
-        ],
-        valid: {},
-        err: {},
-      },
-    },
+
     {
       name: __('Title', 'bitform'),
       keywords: 'title',
@@ -174,7 +158,8 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
       },
     }, */
     {
-      name: __('Check Box', 'bitform'),
+      name: __('Checkbox', 'bitform'),
+      keywords: 'Check Box',
       icn: <CheckBoxIcn w="23" />,
       pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
       elm: {
@@ -222,6 +207,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Dropdown', 'bitform'),
+      keywords: 'Dropdown',
       icn: <DropDownIcn w="23" />,
       pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
       elm: {
@@ -239,6 +225,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
     },
     {
       name: __('Country', 'bitform'),
+      keywords: 'Country',
       icn: <FlagIcn size="23" />,
       pos: { h: 2, w: 6, i: 'shadow_block', minH: 2 },
       elm: {
@@ -249,6 +236,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         valid: {},
       },
     },
+
     {
       name: __('Password', 'bitform'),
       keywords: 'Password',
@@ -314,19 +302,7 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         err: {},
       },
     },
-    {
-      name: __('Country', 'bitform'),
-      keywords: 'Country',
-      icn: <FlagIcn size="23" />,
-      pos: { h: 40, w: 60, i: 'shadow_block', minH: 40 },
-      elm: {
-        typ: 'select',
-        lbl: __('Select Country', 'bitform'),
-        mul: false,
-        opt: countries,
-        valid: {},
-      },
-    },
+
     {
       name: __('File Upload', 'bitform'),
       keywords: 'File Upload',

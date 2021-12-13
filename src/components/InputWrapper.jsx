@@ -1,16 +1,20 @@
 import { useRef } from 'react'
 import { useRecoilValue } from 'recoil'
+import { useParams } from 'react-router-dom'
 import { $breakpoint, $fieldsDirection, $flags } from '../GlobalStates'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
   const breakpoint = useRecoilValue($breakpoint)
   const fieldDirection = useRecoilValue($fieldsDirection)
-  const flags = useRecoilValue($flags)
+  const { styleMode } = useRecoilValue($flags)
+  const { rightBar, element, fieldKey: urlFldKey } = useParams()
+  const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && element === 'error-messages'
+  const showOnlyThisFldErrMsg = styleMode && rightBar === 'field-theme-customize' && element === 'error-message' && urlFldKey === fieldKey
+
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
   const err = fieldData.error || ''
   const fldWrapperElm = useRef(null)
-
   const isElementInViewport = elm => {
     const rect = elm.getBoundingClientRect()
 
@@ -33,7 +37,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
   return (
     <div
       data-dev-fld-wrp={fieldKey}
-      className={`${fieldKey}-fld-wrp  ${flags.styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
+      className={`${fieldKey}-fld-wrp  ${styleMode ? '' : 'drag'} ${isBuilder ? 'o-h' : ''} ${fieldData?.valid?.hide ? 'vis-n' : ''} ${isHidden ? 'fld-hide' : ''}`}
       style={{ direction: fieldDirection }}
     >
       <div
@@ -47,7 +51,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             className={`${fieldKey}-lbl`}
             htmlFor={fieldKey}
           >
-            {fieldData.lblPreFix && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreFix} alt="" />}
+            {fieldData.lblPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
             {fieldData.lbl}
             {fieldData.valid?.req && (
               <>
@@ -55,35 +59,61 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 <span className="fld-req-symbol">*</span>
               </>
             )}
+            {fieldData.lblSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
           </label>
         )}
         {
-          (fieldData.subtitle || fieldData.subTleIcn) && (
+          (fieldData.subtitle || fieldData.subTlePreIcn || fieldData.subTleSufIcn) && (
             <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>
-              {fieldData.subTleIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-icn`} src={fieldData.subTleIcn} alt="" />}
+              {fieldData.subTlePreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i`} src={fieldData.subTlePreIcn} alt="" />}
               {fieldData.subtitle || ''}
+              {fieldData.subTleSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i`} src={fieldData.subTleSufIcn} alt="" />}
             </div>
           )
         }
       </div>
       <div data-dev-inp-wrp={fieldKey} className={`${fieldKey}-inp-wrp`}>
+        {/* field content here */}
         {children}
+
+        {/* field helper text */}
         {
-          (fieldData.helperTxt || fieldData.hlpTxtIcn) && (
+          (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
-              {fieldData.hlpTxtIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-icn`} src={fieldData.hlpTxtIcn} alt="" />}
+              {fieldData.hlpPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
               {fieldData.helperTxt || ''}
+              {new DOMParser().parseFromString(fieldData?.helperTxt, 'text/html')}
+              {fieldData.hlpSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>
           )
         }
       </div>
-      {(err || fieldData?.err) && (
+      {/* TEMPORARY HIDE */}
+      {/* {(err || fieldData?.err) && (
         <div className={`error-wrapper ${err && 'err-msg'}`}>
           <div id={`${fieldKey}-error`} data-dev-err-msg={fieldKey} className="error-txt">
             {err}
           </div>
         </div>
+      )} */}
+      {/* field error message */}
+      {(showAllErrorMsg || showOnlyThisFldErrMsg) && (
+        <div className={`${fieldKey}-err-msg`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio recusandae libero voluptates, rerum blanditiis quisquam? A sapiente, cum molestiae ratione voluptatem ipsam veniam obcaecati.</div>
       )}
     </div>
   )
+}
+
+function renderHelperText(fieldKey, hlpTxtIcn, hlpTxt) {
+  return `
+  ${hlpTxtIcn ? `
+    <img
+      data-dev-pre-i="${fieldKey}"
+      className="${fieldKey}-hlp-txt-icn"}
+      src="${hlpTxtIcn}"
+      alt=""
+    />
+  ` : ''}
+  ${hlpTxt && hlpTxt}
+</div>`
 }
