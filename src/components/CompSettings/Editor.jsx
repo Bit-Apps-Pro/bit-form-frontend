@@ -3,8 +3,10 @@ import { useFela } from 'react-fela'
 import AceEditor from 'react-ace'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
-import TableCheckBox from '../Utilities/TableCheckBox'
+import SingleToggle from '../Utilities/SingleToggle'
+import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
+
 import 'brace/mode/javascript'
 import 'brace/mode/css'
 import 'brace/snippets/javascript'
@@ -58,20 +60,36 @@ function Editor() {
 
       <Grow open={tab === 'Custom Code'}>
         <>
-          <StyleSegmentControl
-            options={[{ label: 'JS' }, { label: 'CSS' }]}
-            onChange={lbl => setEditorTab(lbl)}
-            defaultActive="JS"
-            actionValue={editorTab}
-            wideTab
-          />
-          <br />
-          <TableCheckBox
-            name="js"
-            onChange={editorHandler}
-            title={__(' Enable Editor', 'bitform')}
-            checked={enableEditor === 'on'}
-          />
+          <div className={css({ flx: 'between' })}>
+            <StyleSegmentControl
+              className={css(ut.w5)}
+              options={[{ label: 'JS' }, { label: 'CSS' }]}
+              onChange={lbl => setEditorTab(lbl)}
+              defaultActive="JS"
+              actionValue={editorTab}
+              wideTab
+            />
+            <div className={css(ut.flxc, ut.w10, style.editorBtn)}>
+              {enableEditor === 'on' && (
+                <>
+                  <span className={css(ut.mr1)}>{__(' Editor Theme', 'bitform')}</span>
+                  <div className={css(style.theme)}>
+                    <select className={css(style.select)} onChange={themeSetLocalStorage} value={theme}>
+                      <option>Theme Select</option>
+                      <option value="twilight">Twilight</option>
+                      <option value="tomorrow">Tomorrow</option>
+                    </select>
+                  </div>
+                </>
+              )}
+              <span className={css(ut.mr1, ut.ml2)}>{__(' Enable Editor', 'bitform')}</span>
+              <SingleToggle
+                isChecked={enableEditor === 'on'}
+                action={editorHandler}
+              />
+            </div>
+          </div>
+
           <Grow open={editorTab === 'JS'}>
             <>
               {enableEditor === 'on' ? (
@@ -93,7 +111,7 @@ function Editor() {
               ) : (
                 <div>
                   <textarea
-                    className={css(style.editor)}
+                    className={css(style.editor,{ h:330 })}
                     onChange={(e) => setJsCode(e.target.value)}
                     value={jsCode}
                     rows="18"
@@ -124,7 +142,7 @@ function Editor() {
               ) : (
                 <div>
                   <textarea
-                    className={css(style.editor)}
+                    className={css(style.editor,{ h:330 })}
                     onChange={(e) => setCssCode(e.target.value)}
                     value={cssCode}
                     rows="18"
@@ -133,18 +151,11 @@ function Editor() {
               )}
             </>
           </Grow>
-          <br />
-          {enableEditor === 'on' && (
-            <div className={css(style.theme)}>
-              <select onChange={themeSetLocalStorage} value={theme}>
-                <option>Theme Select</option>
-                <option value="twilight">twilight</option>
-                <option value="tomorrow">tomorrow</option>
-              </select>
-            </div>
-          )}
         </>
       </Grow>
+      <div className={css(ut.flxb, ut.mt1, { jc: 'end' })}>
+        <button type="button" className={css(ut.btn, style.saveBtn)}>Save</button>
+      </div>
     </div>
   )
 }
@@ -156,7 +167,41 @@ const style = {
     w: '99%',
   },
   theme: { dy: 'flex', jc: 'flex-end' },
+  select: {
+    fs: 14,
+    fw: 500,
+    w: '96%',
+    bd: 'var(--b-79-96) !important',
 
+    oe: 'none !important',
+    ae: 'auto !important',
+    mx: 'auto',
+    dy: 'block',
+    lh: '2 !important',
+    px: 8,
+    p: '0 !important',
+    mb: 3,
+    bs: 'none !important',
+    b: 'none !important',
+    brs: '8px !important',
+    '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
+    ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
+  },
+  editorBtn: {
+    jc: 'end',
+    fs: 12,
+    pr: 5,
+  },
+  saveBtn: {
+    bc: 'var(--b-50)',
+    brs: 8,
+    fs: 12,
+    px: 15,
+    py: 5,
+    mr: 8,
+    cr: 'var(--white-100)',
+    ':hover': { bd: 'var(--b-36)' },
+  },
 }
 
 export default Editor
