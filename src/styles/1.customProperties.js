@@ -78,6 +78,7 @@ const customProperties = {
     ...$ === 'align-center' && { alignItems: 'center' },
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
+  cg: $ => ({ columnGap: Number.isInteger($) ? `${$}px` : $ }),
 
   fd: $ => ({ flexDirection: $ }),
   jc: $ => ({ justifyContent: $ }),
