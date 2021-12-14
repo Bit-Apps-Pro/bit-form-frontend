@@ -65,12 +65,12 @@ function SimpleColorsPickerMenu({ stateObjName,
 
       case 'styles':
         const styleColor = getStyleValueFromObjectPath(styles, propertyPath)
-        let c = styleColor
-        if (styleColor.match(/var/gi)?.[0 === 'var']) {
-          const varClr = styleColor.replaceAll(/\(|var|,.*|\)/gi, '')
-          c = themeVars[varClr] ? themeVars[varClr] : $themeColors[varClr]
-        }
-        setColor(str2Color(c))
+        // let c = styleColor
+        // if (styleColor.match(/var/gi)?.[0 === 'var']) {
+        //   const varClr = styleColor.replaceAll(/\(|var|,.*|\)/gi, '')
+        //   c = themeVars[varClr] ? themeVars[varClr] : $themeColors[varClr]
+        // }
+        // setColor(str2Color(c))
         break
 
       default:
