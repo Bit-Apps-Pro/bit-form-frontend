@@ -104,8 +104,9 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
       setBreakpointSize(parseStyle.breakpointSize)
       setTempStyles(preStyle => produce(preStyle, drft => {
         drft.themeVars = parseStyle?.themeVars
-        drft.themeColors = themeColors
-        drft.tempStyles = parseStyle.style
+        drft.lightThemeColors = parseStyle.themeColors?.lightThemeColors
+        drft.darkThemeColors = parseStyle.themeColors?.darkThemeColors
+        drft.styles = parseStyle.style
       }))
       setThemeVars(parseStyle.themeVars)
       if (parseStyle.themeColors?.lightThemeColors) setLightThemeColors(parseStyle.themeColors.lightThemeColors)
