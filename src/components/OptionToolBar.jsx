@@ -60,11 +60,11 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       <div className={css(OptionToolBarStyle.form_section)}>
         <div className={css(ut.flxc)}>
           <Tip msg="Form Fields">
-            <button onClick={formFieldButtonHandler} type="button" className={`${css(OptionToolBarStyle.icn_btn, ut.icn_hover, { ml: 10 })} ${(!flags.styleMode && !showToolBar) && 'active'}`}>
+            <button onClick={formFieldButtonHandler} type="button" className={`${css(OptionToolBarStyle.icn_btn, ut.icn_hover, ut.ml2)} ${(!flags.styleMode && !showToolBar) && 'active'}`}>
               <AddIcon size="22" />
             </button>
           </Tip>
-          <Tip msg="Style Render">
+          <Tip msg="Form Elements">
             <button onClick={styleModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}>
               <LayerIcon size="22" />
             </button>
