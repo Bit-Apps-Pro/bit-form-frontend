@@ -1,4 +1,4 @@
-export default function LightIcn({ size = 18, stroke = 2 }) {
+export default function DarkIcn({ size = 18, stroke = 2 }) {
   return (
     <svg
       width={size}
