@@ -12,6 +12,8 @@ import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $colorScheme, $flags, $styles, $tempStyles, $themeColors, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
+import DarkIcn from '../../Icons/DarkIcn'
+import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { deepCopy } from '../../Utils/Helpers'
@@ -202,7 +204,9 @@ export default function ThemeCustomize() {
   //   setActiveAccordion(value)
   // }
 
-  const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
+  const handlecolorScheme = (colorName) => {
+    setColorScheme(colorName)
+  }
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -225,8 +229,14 @@ export default function ThemeCustomize() {
 
         <h4 className={css(cls.subTitle)}>Color Scheme</h4>
         <div className={css(ut.flxc, ut.w9, ut.mt1)}>
-          <button onClick={handlecolorScheme} name="light" data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">Light</button>
-          <button onClick={handlecolorScheme} name="dark" data-active={colorScheme === 'dark'} className={css(cls.menuItem, ut.ml2, colorScheme === 'dark' && cls.clrActive)} type="button">Dark</button>
+          <button onClick={() => handlecolorScheme('light')} data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">
+            <LightIcn size="18" />
+            Light
+          </button>
+          <button onClick={() => handlecolorScheme('dark')} data-active={colorScheme === 'dark'} className={css(cls.menuItem, ut.ml2, colorScheme === 'dark' && cls.clrActive)} type="button">
+            <DarkIcn size="18" />
+            Dark
+          </button>
         </div>
         <div className={css(cls.divider)} />
 
@@ -599,6 +609,8 @@ const cls = {
   },
   pnt: { cur: 'not-allowed' },
   menuItem: {
+    cg: 3,
+    flx: 'align-center',
     ws: 'nowrap',
     fs: 12,
     fw: 500,
