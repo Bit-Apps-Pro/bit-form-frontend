@@ -235,41 +235,41 @@ export default function ThemeCustomize() {
             <SimpleColorPicker
               title="Background color"
               subtitle="Background color"
-              stateName="themeColors"
               value={globalBgColor}
-              modalType="global-bg-color"
+              stateObjName="themeColors"
+              propertyPath="--global-bg-color"
               modalId="global-bg-clr"
             />
             <SimpleColorPicker
               title="Accent Color"
               subtitle="Accent Color"
-              stateName="themeColors"
               value={globalPrimaryColor}
-              modalType="global-primary-color"
+              stateObjName="themeColors"
+              propertyPath="--global-accent-color"
               modalId="global-primary-clr"
             />
             <SimpleColorPicker
               title="Font Color"
               subtitle="Font Color"
-              stateName="themeColors"
               value={globalFontColor}
-              modalType="global-font-color"
+              stateObjName="themeColors"
+              propertyPath="--global-font-color"
               modalId="global-font-clr"
             />
             <SimpleColorPicker
               title="Border Color"
               subtitle="Border Color"
-              stateName="themeColors"
               value={globalFldBdrClr}
-              modalType="global-fld-bdr-clr"
+              stateObjName="themeColors"
+              propertyPath="--global-fld-bdr-clr"
               modalId="global-fld-bdr-clr"
             />
             <SimpleColorPicker
               title="Field Background Color"
               subtitle="Field Background Color"
-              stateName="themeColors"
               value={globalFldBgClr}
-              modalType="global-fld-bg-color"
+              stateObjName="themeColors"
+              propertyPath="--global-fld-bg-color"
               modalId="global-fld-bg-clr"
             />
 
@@ -371,11 +371,11 @@ export default function ThemeCustomize() {
           element === 'field-container' && (
             <div className={css(ut.m10)}>
               <SimpleColorPicker
-                title="Background Color"
+                title="Background colors"
                 subtitle="Field Background Color"
-                stateName="themeVars"
                 value={fwBg}
-                modalType="fld-wrp-bg"
+                stateObjName="themeVars"
+                propertyPath="--fld-wrp-bg"
                 modalId="fld-wp-bg"
               />
               <div className={css(ut.flxcb, ut.mt2)}>
@@ -403,9 +403,9 @@ export default function ThemeCustomize() {
             <SimpleColorPicker
               title="Background Color"
               subtitle="Subtitle Background Color"
-              stateName="themeVars"
               value={lwBg}
-              modalType="lbl-wrp-bg"
+              stateObjName="themeVars"
+              propertyPath="--lbl-wrp-bg"
               modalId="lbl-wrp-bg"
             />
 
@@ -433,16 +433,19 @@ export default function ThemeCustomize() {
             <SimpleColorPicker
               title="Background Color"
               subtitle="Subtitle Background Color"
-              stateName="themeVars"
               value={flBg}
-              modalType="fld-lbl-bg"
+              stateObjName="themeVars"
+              propertyPath="--fld-lbl-bg"
               modalId="fld-lbl-bg"
             />
-            <div className={css(ut.flxcb, ut.mt2)}>
-              <span className={css(ut.fw500)}>{__('Text Color', 'bitform')}</span>
-              {tempFlC !== flc && <ResetStyle themeVar="--fld-lbl-c" stateName="themeVars" />}
-              <SimpleColorPicker value={flc} action={{ type: 'fld-lbl-c' }} subtitle="Text Color" id="fld-lbl-c" />
-            </div>
+            <SimpleColorPicker
+              title="Text Colors"
+              subtitle="Text Color"
+              value={flc}
+              stateObjName="themeVars"
+              propertyPath="--fld-lbl-c"
+              modalId="fld-lbl-c"
+            />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
               <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={flSpacingObj} id="lbl-spacing-control" />
@@ -467,17 +470,17 @@ export default function ThemeCustomize() {
             <SimpleColorPicker
               title="Background Color"
               subtitle="Subtitle Background Color"
-              stateName="themeVars"
               value={stBg}
-              modalType="sub-titl-bg"
+              stateObjName="themeVars"
+              propertyPath="--sub-titl-bg"
               modalId="sub-titl-bg"
             />
             <SimpleColorPicker
               title="Text Color"
               subtitle="Text Color"
-              stateName="themeVars"
               value={stC}
-              modalType="sub-titl-c"
+              stateObjName="themeVars"
+              propertyPath="--sub-titl-c"
               modalId="sub-titl-c"
             />
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -504,17 +507,17 @@ export default function ThemeCustomize() {
             <SimpleColorPicker
               title="Background Color"
               subtitle="Background Color"
-              stateName="themeVars"
               value={htBg}
-              modalType="hlp-txt-bg"
+              stateObjName="themeVars"
+              propertyPath="--hlp-txt-bg"
               modalId="hlp-txt-bg"
             />
             <SimpleColorPicker
               title="Text Color"
               subtitle="Text Color"
-              stateName="themeVars"
               value={htC}
-              modalType="hlp-txt-c"
+              stateObjName="themeVars"
+              propertyPath="--hlp-txt-c"
               modalId="hlp-txt-c"
             />
             <div className={css(ut.flxcb, ut.mt2)}>
@@ -541,17 +544,17 @@ export default function ThemeCustomize() {
             <SimpleColorPicker
               title="Background Color"
               subtitle="Background Color"
-              stateName="themeVars"
               value={errBg}
-              modalType="err-bg"
+              stateObjName="themeVars"
+              propertyPath="--err-bg"
               modalId="err-bg"
             />
             <SimpleColorPicker
               title="Text Color"
               subtitle="Text Color"
-              stateName="themeVars"
               value={errC}
-              modalType="err-c"
+              stateObjName="themeVars"
+              propertyPath="--err-c"
               modalId="err-c"
             />
             <div className={css(ut.flxcb, ut.mt2)}>
