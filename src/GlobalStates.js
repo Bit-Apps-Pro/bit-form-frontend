@@ -117,7 +117,7 @@ export const $themeVars = atom({
 
     '--fld-wrp-dis': '', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
-    '--fld-wrp-bg': '', // fieldwrapper background
+    '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
     '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
     '--fld-wrp-sh': '', // field wrapper box shadow
