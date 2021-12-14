@@ -4,12 +4,12 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
 
 // eslint-disable-next-line import/prefer-default-export
-export const showDraggableModal = (e, setDraggableModal, { component, width = 250, subtitle, action, value, objectPaths, id }) => {
+export const showDraggableModal = (e, setDraggableModal, props) => {
   const settingsMenu = select('#settings-menu')
   const offset = { top: 55 }
-  const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - width)
+  const x = Math.round((window.innerWidth - settingsMenu.getBoundingClientRect().width) - (props.width || 250))
   const y = e.target.getBoundingClientRect().top - offset.top
-  setDraggableModal({ show: true, component, position: { x, y }, width, subtitle, action, value, objectPaths, id })
+  setDraggableModal({ show: true, position: { x, y }, ...props })
 }
 
 export const json2CssStr = (className, jsonValue) => {
