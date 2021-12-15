@@ -8,13 +8,13 @@ import { $fields } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
-import { fieldTool } from '../../Utils/StaticData/fieldTool'
+import fieldTypes from '../../Utils/StaticData/fieldTypes'
 
 export default function StyleLayers() {
   const { css } = useFela()
   const fields = useRecoilValue($fields)
   const activeFields = Object.entries(fields).filter(([, fld]) => !fld.hidden)
-  const showFldTitle = (typ) => fieldTool[typ] || typ
+  const showFldTitle = (typ) => fieldTypes[typ] || typ
 
   return (
     <div className={css(s.con)}>
