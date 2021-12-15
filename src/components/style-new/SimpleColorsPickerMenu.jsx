@@ -105,7 +105,11 @@ function SimpleColorsPickerMenu({ stateObjName,
         break
       case 'styles':
         setStyles(prvState => produce(prvState, drftStyles => {
-          assignNestedObj(drftStyles, propertyPath, hslaStr)
+          let hslaColor = hslaStr
+          const value = getStyleValueFromObjectPath(drftStyles, propertyPath)
+          const checkExistImportant = value?.match(/!important/gi)?.[0]
+          if (checkExistImportant) hslaColor = `${hslaColor} !important`
+          assignNestedObj(drftStyles, propertyPath, hslaColor)
         }))
         break
 

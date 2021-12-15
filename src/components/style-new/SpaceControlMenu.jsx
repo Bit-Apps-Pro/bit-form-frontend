@@ -19,6 +19,11 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     }
     if (object === 'fieldStyle') {
       setStyles(prvStyle => produce(prvStyle, drft => {
+        const value = drft.fields[paths.fk].classes[paths.selector][property]
+        const checkExistImportant = value?.match(/!important/gi)?.[0]
+        if (checkExistImportant) {
+          val = `${val} !important`
+        }
         drft.fields[paths.fk].classes[paths.selector][property] = `${val}`
       }))
     }
