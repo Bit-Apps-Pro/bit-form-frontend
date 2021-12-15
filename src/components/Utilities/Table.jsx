@@ -7,6 +7,7 @@ import { ReactSortable } from 'react-sortablejs'
 import { useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import ConfirmModal from './ConfirmModal'
 import Menu from './Menu'
@@ -64,7 +65,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch, exportImportMe
 
 function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
   return (
-    <Menu icn={<EyeOffIcon size="20" />}>
+    <Menu icn={<EyeOffIcon size="21" />}>
       <Scrollbars autoHide style={{ width: 200 }}>
         <ReactSortable list={cols} setList={l => setCols(l)} handle=".btcd-pane-drg">
           {tableCol.map((column, i) => (
@@ -103,7 +104,8 @@ function Table(props) {
     allColumns, // col hide
     setGlobalFilter,
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
-    setColumnOrder } = useTable({
+    setColumnOrder } = useTable(
+    {
       debug: true,
       fetchData,
       columns,
@@ -125,32 +127,34 @@ function Table(props) {
       autoResetFilters: false,
       autoResetGlobalFilter: false,
     },
-      useFilters,
-      useGlobalFilter,
-      useSortBy,
-      usePagination,
-      useSticky,
-      useColumnOrder,
-      // useBlockLayout,
-      useFlexLayout,
-      props.resizable ? useResizeColumns : '', // resize
-      props.rowSeletable ? useRowSelect : '', // row select
-      props.rowSeletable ? (hooks => {
-        hooks.allColumns.push(cols => [
-          {
-            id: 'selection',
-            width: 50,
-            maxWidth: 50,
-            minWidth: 67,
-            sticky: 'left',
-            Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
-            Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
-          },
-          ...cols,
-        ])
-      }) : '')
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination,
+    useSticky,
+    useColumnOrder,
+    // useBlockLayout,
+    useFlexLayout,
+    props.resizable ? useResizeColumns : '', // resize
+    props.rowSeletable ? useRowSelect : '', // row select
+    props.rowSeletable ? (hooks => {
+      hooks.allColumns.push(cols => [
+        {
+          id: 'selection',
+          width: 50,
+          maxWidth: 50,
+          minWidth: 67,
+          sticky: 'left',
+          Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+          Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+        },
+        ...cols,
+      ])
+    }) : '',
+  )
   const [stateSavable, setstateSavable] = useState(false)
   const [search, setSearch] = useState(globalFilter)
+  const { css } = useFela()
   useEffect(() => {
     if (fetchData) {
       fetchData({ pageIndex, pageSize, sortBy, filters, globalFilter: search })
@@ -262,7 +266,7 @@ function Table(props) {
                 {'setBulkStatus' in props
                   && (
                     <button onClick={showStModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Status"' }} aria-label="icon-btn" type="button">
-                      <ToggleLeftIcn />
+                      <ToggleLeftIcn stroke="1.5" />
                     </button>
                   )}
                 {'duplicateData' in props
@@ -272,9 +276,9 @@ function Table(props) {
                     </button>
                   )}
                 <button onClick={showDelModal} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
-                  <TrashIcn size="20" />
+                  <TrashIcn size="21" />
                 </button>
-                <small className="btcd-pill">
+                <small className={css(cls.pill)}>
                   {selectedFlatRows.length}
                   {' '}
                   {__('Row Selected', 'bitform')}
@@ -432,6 +436,16 @@ function Table(props) {
 
     </>
   )
+}
+
+const cls = {
+  pill: {
+    bd: 'hsla(var(--blue-h), var(--blue-s), var(--blue-l), 0.8)',
+    cr: 'var(--white)',
+    py: 5,
+    px: 7,
+    brs: 5,
+  },
 }
 
 export default memo(Table)
