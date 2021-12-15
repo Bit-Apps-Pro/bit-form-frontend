@@ -2,8 +2,8 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $styles, $tempStyles, $themeColors, $themeVars, $colorScheme, $darkThemeColors, $lightThemeColors } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $colorScheme, $darkThemeColors, $lightThemeColors, $styles, $tempStyles, $themeVars } from '../../GlobalStates'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
 import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
