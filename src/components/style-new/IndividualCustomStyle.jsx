@@ -105,7 +105,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         existingProperties.includes('margin') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
             <div className={css(ut.flxc)}>
-              <button onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+              <button title="Delete Property" onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                 <TrashIcn size="15" />
               </button>
               <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
@@ -118,7 +118,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         existingProperties.includes('padding') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
             <div className={css(ut.flxc)}>
-              <button onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+              <button title="Delete Property" onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                 <TrashIcn size="15" />
               </button>
               <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
