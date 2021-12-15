@@ -53,7 +53,7 @@ export default function SimpleColorPicker({ title,
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
       <div className={css(ut.flxc)}>
         {deleteable && (
-          <button onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
+          <button title="Delete Property" onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
             <TrashIcn size="15" />
           </button>
         )}
@@ -71,7 +71,7 @@ export default function SimpleColorPicker({ title,
             <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
           </button>
           {value && (
-            <button onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
               <CloseIcn size="12" />
             </button>
           )}
