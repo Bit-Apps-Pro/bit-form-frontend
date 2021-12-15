@@ -584,19 +584,19 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
             {!searchData.length && !sortedTools.length && tools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
-                {!tolbarSiz && tool.name}
+                {tool.name}
               </Tools>
             ))}
             {!sortedTools.length && searchData && searchData.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
-                {!tolbarSiz && tool.name}
+                {tool.name}
               </Tools>
             ))}
             {!searchData.length && sortedTools && sortedTools.map(tool => (
               <Tools key={tool.name} setNewData={setNewData} value={{ fieldData: tool.elm, fieldSize: tool.pos }}>
                 <span className={`${css(Toolbars.tool_icn, ut.mr1)} tool-icn`}>{tool.icn}</span>
-                {!tolbarSiz && tool.name}
+                {tool.name}
               </Tools>
             ))}
           </div>

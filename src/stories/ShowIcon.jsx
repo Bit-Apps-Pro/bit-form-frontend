@@ -114,6 +114,8 @@ import TxtAlignLeftIcn from '../Icons/TxtAlignLeftIcn'
 import TxtAlignRightIcn from '../Icons/TxtAlignRightIcn'
 import BoxIcon from '../Icons/BoxIcon'
 import BoxFullIcon from '../Icons/BoxFullIcon'
+import LightIcn from '../Icons/LightIcn'
+import DarkIcn from '../Icons/DarkIcn'
 
 export default function ShowIcon() {
   const [searchIcon, setSearchIcon] = useState([])
@@ -733,6 +735,16 @@ export default function ShowIcon() {
       key: 'Box icon right',
       icon: <BoxIcon size={20} varient="right" />,
       com: '<BoxIcon size={18} varient="right"  />',
+    },
+    {
+      key: 'Light Icon',
+      icon: <LightIcn size={20} />,
+      com: '<LightIcn size={18} />',
+    },
+    {
+      key: 'Dark Icon',
+      icon: <DarkIcn size={20} />,
+      com: '<DarkIcn size={18} />',
     },
 
   ]

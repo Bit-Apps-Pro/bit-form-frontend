@@ -5,6 +5,7 @@ import { NavLink, useHistory, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $breakpoint, $flags } from '../GlobalStates'
 import AddIcon from '../Icons/AddIcon'
+import LayerIcon from '../Icons/LayerIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
@@ -33,6 +34,18 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const [modal, setModal] = useState(false)
 
   const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
+  const styleModeButtonHandler = () => {
+    setFlags(prvFlags => {
+      if (prvFlags.styleMode || showToolBar) toggleToolBar()
+      return { ...prvFlags, styleMode: true }
+    })
+  }
+  const formFieldButtonHandler = () => {
+    setFlags(prvFlags => {
+      if (!prvFlags.styleMode || showToolBar) toggleToolBar()
+      return { ...prvFlags, styleMode: false }
+    })
+  }
 
   const handleRightPanel = (currentActive) => {
     if (currentActive === 'fld-settings') {
@@ -45,10 +58,18 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   return (
     <div className={css(OptionToolBarStyle.optionToolBar)}>
       <div className={css(OptionToolBarStyle.form_section)}>
-        <button onClick={toggleToolBar} type="button" className={`${css(OptionToolBarStyle.field_btn)} ${!showToolBar && 'active'}`}>
-          <AddIcon size="22" />
-          <span className={css(OptionToolBarStyle.txt)}>Form Fields</span>
-        </button>
+        <div className={css(ut.flxc)}>
+          <Tip msg="Form Fields">
+            <button onClick={formFieldButtonHandler} type="button" className={`${css(OptionToolBarStyle.icn_btn, ut.icn_hover, { ml: 10 })} ${(!flags.styleMode && !showToolBar) && 'active'}`}>
+              <AddIcon size="22" />
+            </button>
+          </Tip>
+          <Tip msg="Style Render">
+            <button onClick={styleModeButtonHandler} type="button" className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${(flags.styleMode && !showToolBar) && 'active'}`}>
+              <LayerIcon size="22" />
+            </button>
+          </Tip>
+        </div>
         <div className={css(OptionToolBarStyle.option_section)}>
           <Tip msg="Small Screen View">
             <button onClick={() => setResponsiveView('sm')} className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${breakpoint === 'sm' && 'active'}`} type="button"><MobileIcon size={23} /></button>
