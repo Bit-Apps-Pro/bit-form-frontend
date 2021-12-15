@@ -11,7 +11,7 @@ import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsv2hsl } from './colorHelpers'
+import { hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 
 function SimpleColorPickerMenu({ action, value, objectPaths }) {
@@ -61,7 +61,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
   }, [action])
 
   const handleColor = () => {
-    const [_h, _s, _l] = hsv2hsl(color.h, color.s, color.v)
+    const [_h, _s, _l] = hsva2hsla(color.h, color.s, color.v)
     if (!action.type) return
 
     const h = Math.round(_h || 0)
@@ -169,7 +169,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
     if (typeof clr === 'string') {
       c = `var(${clr})`
     } else {
-      const [_h, _s, _l] = hsv2hsl(clr.h, clr.s, clr.v)
+      const [_h, _s, _l] = hsva2hsla(clr.h, clr.s, clr.v)
       c = `hsla(${Math.round(_h || 0)}, ${Math.round(_s)}%, ${Math.round(_l)}%, ${clr.a || 100})`
     }
 

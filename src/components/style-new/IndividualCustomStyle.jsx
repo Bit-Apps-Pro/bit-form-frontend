@@ -54,14 +54,6 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const colorObj = (cssProperty) => (
-    {
-      object: 'fieldStyle',
-      fk: fldKey,
-      selector: `.${fldKey}-${elementKey}`,
-      property: cssProperty,
-    }
-  )
   const spacingObj = (spacing) => (
     {
       object: 'fieldStyle',
@@ -73,8 +65,8 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       },
     }
   )
-  const bg = colorObj('background')
-  const clr = colorObj('color')
+  const propertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
+
   const margin = spacingObj({ margin: existingProperties.includes('margin') })
   const padding = spacingObj({ padding: existingProperties.includes('padding') })
   return (
@@ -85,9 +77,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Background Color"
             subtitle="Background Color"
             value={existingCssProperties?.background}
-            modalType="individul-color"
             modalId="field-container-backgroung"
-            objectPaths={bg}
+            stateObjName="styles"
+            propertyPath={propertyPath('background')}
             deleteable
             delPropertyHandler={() => delPropertyHandler('background')}
             clearHandler={() => clearHandler('background')}
@@ -100,9 +92,9 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             title="Color"
             subtitle="Color"
             value={existingCssProperties?.color}
-            modalType="individul-color"
             modalId="field-container-color"
-            objectPaths={clr}
+            stateObjName="styles"
+            propertyPath={propertyPath('color')}
             deleteable
             delPropertyHandler={() => delPropertyHandler('color')}
             clearHandler={() => clearHandler('color')}

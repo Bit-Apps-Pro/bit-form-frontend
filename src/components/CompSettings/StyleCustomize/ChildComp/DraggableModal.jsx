@@ -14,14 +14,16 @@ import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
 
 const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
-const SimpleColorPickerMenu = lazy(() => import('../../../style-new/SimpleColorPickerMenu'))
+const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColorsPickerMenu'))
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, objectPaths }) => {
+const RenderComponent = ({ component, action, value, objectPaths, id, stateObjName, propertyPath }) => {
+  console.log(stateObjName, propertyPath, component)
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
-    case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
+    // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
+    case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
@@ -53,7 +55,7 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, subtitle, action, value, objectPaths } = draggableModal
+  const { show, position, component, width, stateObjName, propertyPath, subtitle, action, value, objectPaths, id } = draggableModal
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
@@ -78,7 +80,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} action={action} value={value} objectPaths={objectPaths} />
+            <RenderComponent component={component} action={action} value={value} objectPaths={objectPaths} id={id} stateObjName={stateObjName} propertyPath={propertyPath} />
           </Suspense>
         </div>
       </div>

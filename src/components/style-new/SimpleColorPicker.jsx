@@ -5,12 +5,22 @@ import { $draggableModal, $styles, $themeColors, $themeVars } from '../../Global
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 
-export default function SimpleColorPicker({ title, stateName, subtitle, value, objectPaths, modalType, modalId, deleteable, delPropertyHandler }) {
+export default function SimpleColorPicker({ title,
+  stateObjName,
+  propertyPath,
+  subtitle,
+  value,
+  objectPaths,
+  modalType,
+  modalId,
+  deleteable,
+  delPropertyHandler }) {
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
@@ -18,18 +28,24 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
 
   const clearHandler = () => {
-    if (objectPaths?.property) {
-      setStyles(prvStyle => produce(prvStyle, drft => {
-        drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = ''
-      }))
-    } else if (stateName === 'themeColors') {
-      setThemeColors(prvStyle => produce(prvStyle, drft => {
-        drft[`--${modalType}`] = ''
-      }))
-    } else if (stateName === 'themeVars') {
-      setThemeVars(prvStyle => produce(prvStyle, drft => {
-        drft[`--${modalType}`] = ''
-      }))
+    switch (stateObjName) {
+      case 'themeColors':
+        setThemeColors(prvStyle => produce(prvStyle, drft => {
+          drft[`${propertyPath}`] = ''
+        }))
+        break
+      case 'themeVars':
+        setThemeVars(prvStyle => produce(prvStyle, drft => {
+          drft[`${propertyPath}`] = ''
+        }))
+        break
+      case 'styles':
+        setStyles(prvState => produce(prvState, drftStyles => {
+          assignNestedObj(drftStyles, propertyPath, '')
+        }))
+        break
+      default:
+        break
     }
   }
 
@@ -44,10 +60,10 @@ export default function SimpleColorPicker({ title, stateName, subtitle, value, o
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
-        <ResetStyle objectKey={`--${modalType}`} stateName={stateName} objectPaths={objectPaths} />
+        <ResetStyle objectKey={`--${modalType}`} stateName={stateObjName} objectPaths={objectPaths} />
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath })}
             type="button"
             className={css(c.pickrBtn)}
           >

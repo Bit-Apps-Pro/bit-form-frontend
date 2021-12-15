@@ -27,11 +27,16 @@ export function hsl2hsv(hslH, hslS, hslL) {
 * hsv2hsl(0, 0, 0) // => [0, 100, 50]
 * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
 */
-export function hsv2hsl(hsvH, hsvS, hsvV) {
+export function hsva2hsla(hsvH, hsvS, hsvV, alpha = 100) {
   const hslL = (200 - hsvS) * hsvV / 100
   const [hslS, hslV] = [
     hslL === 0 || hslL === 200 ? 0 : hsvS * hsvV / 100 / (hslL <= 100 ? hslL : 200 - hslL) * 100,
     hslL * 5 / 10,
   ]
-  return [hsvH, hslS, hslV]
+
+  const h = Math.round(hsvH)
+  const s = Math.round(hslS)
+  const l = Math.round(hslV)
+
+  return [h, s, l, alpha, `hsla(${h}, ${s}%, ${l}%, ${alpha})`]
 }
