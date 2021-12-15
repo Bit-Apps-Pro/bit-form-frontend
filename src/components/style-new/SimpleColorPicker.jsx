@@ -8,6 +8,7 @@ import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
 import ColorPreview from './ColorPreview'
+import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 
@@ -20,7 +21,8 @@ export default function SimpleColorPicker({ title,
   modalType,
   modalId,
   deleteable,
-  delPropertyHandler }) {
+  delPropertyHandler,
+  allowImportant }) {
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
@@ -61,6 +63,7 @@ export default function SimpleColorPicker({ title,
       </div>
       <div className={css(ut.flxc)}>
         <ResetStyle objectKey={`--${modalType}`} stateObjName={stateObjName} objectPaths={objectPaths} propertyPath={propertyPath} />
+        <Important stateObjName={stateObjName} propertyPath={propertyPath} allowImportant={allowImportant} />
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath })}
