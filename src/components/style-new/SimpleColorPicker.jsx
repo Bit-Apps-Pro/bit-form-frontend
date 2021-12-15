@@ -70,7 +70,7 @@ export default function SimpleColorPicker({ title,
             type="button"
             className={css(c.pickrBtn)}
           >
-            <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
+            <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
             <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
           </button>
           {value && (
