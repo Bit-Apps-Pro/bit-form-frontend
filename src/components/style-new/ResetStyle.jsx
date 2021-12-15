@@ -61,7 +61,7 @@ export default function ResetStyle({ objectKey, stateName, objectPaths }) {
       type="button"
       style={{ visibility: show ? 'visible' : 'hidden' }}
     >
-      <StyleResetIcn size="80" />
+      <StyleResetIcn size="20" />
     </button>
   )
 }

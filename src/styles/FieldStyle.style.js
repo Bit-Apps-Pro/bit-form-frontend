@@ -37,10 +37,11 @@ const FieldStyle = {
     mt: 10,
     mb: 3,
     bs: 'none !important',
-    b: 'none !important',
     brs: '8px !important',
+    tn: 'box-shadow .3s',
+    b: '1px solid #e6e6e6 !important',
     '::placeholder': { cr: 'hsl(215deg 16% 57%)', fs: 12 },
-    ':focus': { bs: '0 0 0 2px var(--b-50) !important' },
+    ':focus': { bs: '0 0 0 1px var(--b-50) !important', bcr: 'var(--b-50)!important' },
   },
 
   hover_tip: {
@@ -55,7 +56,6 @@ const FieldStyle = {
       '& .hover-tip': {
         oy: 1,
         tn: '0.2s',
-
       },
     },
   },

@@ -2,14 +2,14 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { memo } from 'react'
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
@@ -119,9 +119,13 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           Themes /
           {' '}
         </Link>
-        <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
+        <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Individual Field Style Customize</span>
       </span>
-      <h4 className={css(cls.title)}>Theme Customize</h4>
+      <h4 className={css(cls.title)}>
+        {fieldsTypes[fieldType]}
+        {' '}
+        Field Style Customize
+      </h4>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
 
