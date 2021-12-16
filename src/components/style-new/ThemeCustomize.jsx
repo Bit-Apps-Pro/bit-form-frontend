@@ -303,12 +303,7 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>Size</span>
               <select onChange={setSizes} className={css(sc.select)}>
-                <option value="small-2">Small-2</option>
-                <option value="small-1">Small-1</option>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-                <option value="large-1">Large-1</option>
+                {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
               </select>
             </div>
 
@@ -570,6 +565,14 @@ export default function ThemeCustomize() {
       </div>
     </div>
   )
+}
+
+const sizes = {
+  'small-2': 'Small-2',
+  'small-1': 'Small-1',
+  medium: 'Medium',
+  large: 'Large',
+  'large-1': 'Large-1',
 }
 
 const cls = {
