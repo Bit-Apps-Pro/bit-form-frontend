@@ -28,7 +28,7 @@ import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { changeFormDir, commonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
@@ -133,7 +133,7 @@ export default function ThemeCustomize() {
 
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        const commonStyles = CommonStyle(fldKeyArr[i], value)
+        const commonStyles = commonStyle(fldKeyArr[i], value)
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
