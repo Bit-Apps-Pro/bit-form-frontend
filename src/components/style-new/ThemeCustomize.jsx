@@ -36,7 +36,7 @@ export default function ThemeCustomize() {
   const { formType, formID, element } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
+  const { themeVars: tempThemeVars } = useRecoilValue($tempStyles)
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
 
   const setFlags = useSetRecoilState($flags)
@@ -77,26 +77,16 @@ export default function ThemeCustomize() {
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
 
-  const { '--fld-wrp-bg': tempFldWrpBg,
-    '--fld-wrp-sh': tempFldWrpSh,
+  const { '--fld-wrp-sh': tempFldWrpSh,
     '--fld-wrp-bdr': tempFldWrpBdr,
-    '--lbl-wrp-bg': tempLblWrpBg,
     '--lbl-wrp-sh': tempLblWrpSh,
     '--lbl-wrp-bdr': tempLblWrpBdr,
-    '--fld-lbl-bg': tempFlBg,
-    '--fld-lbl-c': tempFlC,
     '--fld-lbl-sh': tempFlSh,
     '--fld-lbl-bdr': tempFlBdr,
-    '--sub-titl-bg': tempSubTitleBg,
-    '--sub-titl-c': tempSubTitlC,
     '--sub-titl-sh': tempSubTitlSh,
     '--sub-titl-bdr': tempSubTitlBdr,
-    '--hlp-txt-bg': tempHlpTxtBg,
-    '--hlp-txt-c': tempHlpTxtC,
     '--hlp-txt-sh': tempHlpTxtSh,
     '--hlp-txt-bdr': tempHlpTxtBdr,
-    '--err-bg': tempErrBg,
-    '--err-c': tempErrC,
     '--err-sh': tempErrSh,
     '--err-bdr': tempErrBdr } = tempThemeVars
 
