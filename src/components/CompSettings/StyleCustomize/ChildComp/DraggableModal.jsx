@@ -19,7 +19,6 @@ const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
 const RenderComponent = ({ component, action, value, objectPaths, id, stateObjName, propertyPath }) => {
-  console.log(stateObjName, propertyPath, component)
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
