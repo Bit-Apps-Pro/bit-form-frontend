@@ -2,17 +2,18 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { memo } from 'react'
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
+import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import IndividualCustomStyle from './IndividualCustomStyle'
-import { getNumFromStr, getStrFromStr } from './styleHelpers'
+import { commonStyle, getNumFromStr, getStrFromStr } from './styleHelpers'
+import ThemeControl from './ThemeControl'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
@@ -108,6 +109,28 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     }
   }
 
+  const setSizes = ({ target: { value } }) => {
+    const commonStyleClasses = commonStyle(fieldKey, value)
+    const cmnStlClasses = Object.keys(commonStyleClasses)
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      const stylesClasses = drftStyle.fields[fieldKey].classes
+      const cmnStlClsLen = cmnStlClasses.length
+
+      for (let i = 0; i < cmnStlClsLen; i += 1) {
+        if (Object.prototype.hasOwnProperty.call(stylesClasses, cmnStlClasses[i])) {
+          const cmnClsProperty = commonStyleClasses[cmnStlClasses[i]]
+          const cmnClsPropertyKey = Object.keys(cmnClsProperty)
+          const cmnClsPropertyKeyLan = cmnClsPropertyKey.length
+
+          for (let popIndx = 0; popIndx < cmnClsPropertyKeyLan; popIndx += 1) {
+            const cmnClsPropertyValue = cmnClsProperty[cmnClsPropertyKey[popIndx]]
+            drftStyle.fields[fieldKey].classes[cmnStlClasses[i]][cmnClsPropertyKey[popIndx]] = cmnClsPropertyValue
+          }
+        }
+      }
+    }))
+  }
+
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
   return (
@@ -138,6 +161,20 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         </span>
 
         <div className={css(cls.container)}>
+          {element === 'quick-tweaks' && (
+            <div className={css(!checkExistElement('field-container') && cls.blur)}>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Size</span>
+                <select onChange={setSizes} className={css(sc.select)}>
+                  {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
+                </select>
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Theme</span>
+                <ThemeControl fldKey={fieldKey} />
+              </div>
+            </div>
+          )}
           {element === 'field-container' && (
             <div className={css(!checkExistElement('field-container') && cls.blur)}>
               <IndividualCustomStyle elementKey="fld-wrp" fldKey={fieldKey} />
@@ -250,4 +287,12 @@ const cls = {
     zx: 9,
     pnevn: 'none',
   },
+}
+
+const sizes = {
+  'small-2': 'Small-2',
+  'small-1': 'Small-1',
+  medium: 'Medium',
+  large: 'Large',
+  'large-1': 'Large-1',
 }

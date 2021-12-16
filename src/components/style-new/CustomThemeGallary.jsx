@@ -35,7 +35,13 @@ export default function CustomThemeGallary() {
   return (
     <div className={css(themeGalStyle.thm_container)}>
       {themes.map(theme => (
-        <CustomThemeGallary.Card key={theme.name} name={theme.name} applyThemeAction={() => handleThemeApply(theme.slug)} img={theme.img} isActive={styles.fields[selectedFieldId]?.theme === theme.slug} />
+        <CustomThemeGallary.Card
+          key={theme.name}
+          name={theme.name}
+          applyThemeAction={() => handleThemeApply(theme.slug)}
+          img={theme.img}
+          isActive={styles.fields[selectedFieldId]?.theme === theme.slug}
+        />
       ))}
     </div>
   )
