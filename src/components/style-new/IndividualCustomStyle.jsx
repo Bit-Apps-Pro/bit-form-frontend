@@ -113,7 +113,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </button>
               <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
             </div>
-            <Important propertyPath={propertyPath('margin')} allowImportant />
+            <Important propertyPath={propertyPath('margin')} />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Margin control" objectPaths={margin} id="margin-control" />
           </div>
         )
@@ -127,7 +127,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </button>
               <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
             </div>
-            <Important propertyPath={propertyPath('padding')} allowImportant />
+            <Important propertyPath={propertyPath('padding')} />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Padding control" objectPaths={padding} id="padding-control" />
           </div>
         )
