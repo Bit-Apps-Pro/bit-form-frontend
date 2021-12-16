@@ -5,6 +5,7 @@ import { $styles } from '../../GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
+import Important from './Important'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 
@@ -83,6 +84,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             deleteable
             delPropertyHandler={() => delPropertyHandler('background')}
             clearHandler={() => clearHandler('background')}
+            allowImportant
           />
         )
       }
@@ -98,6 +100,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             deleteable
             delPropertyHandler={() => delPropertyHandler('color')}
             clearHandler={() => clearHandler('color')}
+            allowImportant
           />
         )
       }
@@ -105,11 +108,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         existingProperties.includes('margin') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
             <div className={css(ut.flxc)}>
-              <button onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+              <button title="Delete Property" onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                 <TrashIcn size="15" />
               </button>
               <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
             </div>
+            <Important propertyPath={propertyPath('margin')} allowImportant />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Margin control" objectPaths={margin} id="margin-control" />
           </div>
         )
@@ -118,11 +122,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
         existingProperties.includes('padding') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
             <div className={css(ut.flxc)}>
-              <button onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
+              <button title="Delete Property" onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
                 <TrashIcn size="15" />
               </button>
               <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
             </div>
+            <Important propertyPath={propertyPath('padding')} allowImportant />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Padding control" objectPaths={padding} id="padding-control" />
           </div>
         )
