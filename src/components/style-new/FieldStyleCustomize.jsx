@@ -6,11 +6,12 @@ import { memo, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $flags, $styles, $themeVars } from '../../GlobalStates'
+import { $flags, $styles, $themeVars, $fields } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
+import SingleToggle from '../Utilities/SingleToggle'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
@@ -28,7 +29,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const [styles, setStyles] = useRecoilState($styles)
   const setFlags = useSetRecoilState($flags)
   const themeVars = useRecoilValue($themeVars)
-
+  const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
 
@@ -68,9 +69,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const hplTxtFSValue = getNumFromStr(hplTxtfsvalue)
   const hplTxtFSUnit = getStrFromStr(hplTxtfsvalue)
 
-  const overrideGlobalThemeHandler = (e, elmnt) => {
-    const { target: { checked } } = e
-
+  const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
     if (theme === 'material') return
     if (checked) {
       setStyles(prvStyle => produce(prvStyle, drft => {
@@ -124,22 +123,20 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       <h4 className={css(cls.title)}>
         {fieldsTypes[fieldType]}
         {' '}
-        Field Style Customize
+        {element?.replace('-', ' ')}
       </h4>
+      <div className={css(ut.flxc)}>
+        <h5 className={css(cls.subTitle)}>{fields[fieldKey].adminLbl}</h5>
+        <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
+      </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-
-        <h4 className={css(cls.subTitle)}>Quick Tweaks</h4>
-        <span>
-          Override Global Theme Color
-          {' '}
-          <input
-            type="checkbox"
-            onChange={(e) => overrideGlobalThemeHandler(e, element)}
-            checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
-            aria-label="default Theme Color"
-          />
-        </span>
+        <SingleToggle
+          title="Override form theme styles"
+          action={(e) => overrideGlobalThemeHandler(e, element)}
+          checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
+          className={css(ut.mr2, ut.mb2)}
+        />
 
         <div className={css(cls.container)}>
           {element === 'field-container' && (
@@ -205,11 +202,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   )
 })
 
-// const MenuItem = ({ label, onClick, name }) => {
-//   const { css } = useFela()
-//   return <button onClick={onClick} name={name} className={css(cls.menuItem)} type="button">{label}</button>
-// }
-
 const cls = {
   title: { mt: 5, mb: 2 },
   breadcumbLink: { fs: 11, flxi: 'center', mr: 3, ':focus': { bs: 'none' } },
@@ -248,10 +240,18 @@ const cls = {
   },
   con: { py: 10, bb: '0.5px solid var(--white-0-83)' },
   blur: {
-    // fr: 'blur(1px)',
-    oy: '0.2',
-    bd: 'radial-gradient(white, transparent)',
+    oy: '0.5',
+    cur: 'not-allowed',
+    bd: 'white',
     zx: 9,
     pnevn: 'none',
+  },
+  pill: {
+    brs: 8,
+    b: '1px solid var(--b-31-44-27)',
+    px: 5,
+    py: 2,
+    bd: 'var(--b-23-95)',
+    fw: 500,
   },
 }
