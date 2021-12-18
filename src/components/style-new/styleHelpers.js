@@ -195,10 +195,12 @@ export const removeHightlight = (selector = '[data-highlight]') => {
 }
 
 /**
+ * @function commonStyle(fk, type)
  * @param {string} fk field key
  * @param {string} type size
+ * @return style classes
 */
-export const CommonStyle = (fk, type) => {
+export const commonStyle = (fk, type) => {
   switch (type) {
     case 'small-2':
       return {

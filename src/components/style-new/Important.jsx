@@ -5,13 +5,13 @@ import { $styles } from '../../GlobalStates'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { getStyleValueFromObjectPath } from './styleHelpers'
 
-export default function Important({ propertyPath, allowImportant }) {
+export default function Important({ propertyPath }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
-  const getValue = styles && Object.keys(styles).length > 0 && getStyleValueFromObjectPath(styles, propertyPath)
-  const checkExistImportant = getValue?.match(/!important/gi)?.[0]
+  const getValue = styles?.fields && getStyleValueFromObjectPath(styles, propertyPath)
+  const checkExistImportant = getValue?.match(/!important/gi)
 
-  const addAndRemoveImportant = () => {
+  const addOrRemoveImportant = () => {
     let newValue
     if (checkExistImportant) {
       newValue = getValue.replace(/!important/gi, '')
@@ -22,19 +22,16 @@ export default function Important({ propertyPath, allowImportant }) {
       assignNestedObj(drft, propertyPath, newValue)
     }))
   }
+
   return (
-    <>
-      {allowImportant && (
-        <button
-          className={css(cls.btn, checkExistImportant && cls.active)}
-          title="Important"
-          type="button"
-          onClick={addAndRemoveImportant}
-        >
-          i
-        </button>
-      )}
-    </>
+    <button
+      className={css(cls.btn, checkExistImportant && cls.active)}
+      title="Important"
+      type="button"
+      onClick={addOrRemoveImportant}
+    >
+      i
+    </button>
   )
 }
 

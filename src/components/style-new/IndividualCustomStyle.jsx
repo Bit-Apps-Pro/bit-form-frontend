@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
@@ -113,7 +114,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </button>
               <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
             </div>
-            <Important propertyPath={getPropertyPath('margin')} allowImportant />
+            <Important propertyPath={getPropertyPath('margin')} />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Margin control" objectPaths={margin} id="margin-control" />
           </div>
         )
@@ -127,7 +128,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </button>
               <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
             </div>
-            <Important propertyPath={getPropertyPath('padding')} allowImportant />
+            <Important propertyPath={getPropertyPath('padding')} />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Padding control" objectPaths={padding} id="padding-control" />
           </div>
         )

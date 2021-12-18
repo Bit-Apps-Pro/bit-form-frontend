@@ -28,7 +28,7 @@ import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { changeFormDir, CommonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
+import { changeFormDir, commonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ThemeCustomize() {
@@ -36,7 +36,7 @@ export default function ThemeCustomize() {
   const { formType, formID, element } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const { themeVars: tempThemeVars, themeColors: tempThemeColors } = useRecoilValue($tempStyles)
+  const { themeVars: tempThemeVars } = useRecoilValue($tempStyles)
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
 
   const setFlags = useSetRecoilState($flags)
@@ -77,26 +77,16 @@ export default function ThemeCustomize() {
     '--global-fld-bdr-clr': globalFldBdrClr,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
 
-  const { '--fld-wrp-bg': tempFldWrpBg,
-    '--fld-wrp-sh': tempFldWrpSh,
+  const { '--fld-wrp-sh': tempFldWrpSh,
     '--fld-wrp-bdr': tempFldWrpBdr,
-    '--lbl-wrp-bg': tempLblWrpBg,
     '--lbl-wrp-sh': tempLblWrpSh,
     '--lbl-wrp-bdr': tempLblWrpBdr,
-    '--fld-lbl-bg': tempFlBg,
-    '--fld-lbl-c': tempFlC,
     '--fld-lbl-sh': tempFlSh,
     '--fld-lbl-bdr': tempFlBdr,
-    '--sub-titl-bg': tempSubTitleBg,
-    '--sub-titl-c': tempSubTitlC,
     '--sub-titl-sh': tempSubTitlSh,
     '--sub-titl-bdr': tempSubTitlBdr,
-    '--hlp-txt-bg': tempHlpTxtBg,
-    '--hlp-txt-c': tempHlpTxtC,
     '--hlp-txt-sh': tempHlpTxtSh,
     '--hlp-txt-bdr': tempHlpTxtBdr,
-    '--err-bg': tempErrBg,
-    '--err-c': tempErrC,
     '--err-sh': tempErrSh,
     '--err-bdr': tempErrBdr } = tempThemeVars
 
@@ -143,7 +133,7 @@ export default function ThemeCustomize() {
 
       for (let i = 0; i < fldKeyArrLen; i += 1) {
         const fldKey = fldKeyArr[i]
-        const commonStyles = CommonStyle(fldKeyArr[i], value)
+        const commonStyles = commonStyle(fldKeyArr[i], value)
         const commonStylClasses = Object.keys(commonStyles)
 
         const fldClassesObj = flds[fldKey].classes
@@ -313,12 +303,7 @@ export default function ThemeCustomize() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>Size</span>
               <select onChange={setSizes} className={css(sc.select)}>
-                <option value="small-2">Small-2</option>
-                <option value="small-1">Small-1</option>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-                <option value="large-1">Large-1</option>
+                {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
               </select>
             </div>
 
@@ -580,6 +565,14 @@ export default function ThemeCustomize() {
       </div>
     </div>
   )
+}
+
+const sizes = {
+  'small-2': 'Small-2',
+  'small-1': 'Small-1',
+  medium: 'Medium',
+  large: 'Large',
+  'large-1': 'Large-1',
 }
 
 const cls = {
