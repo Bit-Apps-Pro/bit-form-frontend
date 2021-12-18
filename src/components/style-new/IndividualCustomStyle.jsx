@@ -66,7 +66,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       },
     }
   )
-  const propertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
+  const getPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
 
   const margin = spacingObj({ margin: existingProperties.includes('margin') })
   const padding = spacingObj({ padding: existingProperties.includes('padding') })
@@ -75,12 +75,12 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       {
         existingProperties.includes('background') && (
           <SimpleColorPicker
-            title="Background Color"
+            title="Background"
             subtitle="Background Color"
             value={existingCssProperties?.background}
             modalId="field-container-backgroung"
             stateObjName="styles"
-            propertyPath={propertyPath('background')}
+            propertyPath={getPropertyPath('background')}
             deleteable
             delPropertyHandler={() => delPropertyHandler('background')}
             clearHandler={() => clearHandler('background')}
@@ -96,7 +96,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
             value={existingCssProperties?.color}
             modalId="field-container-color"
             stateObjName="styles"
-            propertyPath={propertyPath('color')}
+            propertyPath={getPropertyPath('color')}
             deleteable
             delPropertyHandler={() => delPropertyHandler('color')}
             clearHandler={() => clearHandler('color')}
@@ -113,7 +113,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </button>
               <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
             </div>
-            <Important propertyPath={propertyPath('margin')} allowImportant />
+            <Important propertyPath={getPropertyPath('margin')} allowImportant />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Margin control" objectPaths={margin} id="margin-control" />
           </div>
         )
@@ -127,7 +127,7 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               </button>
               <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
             </div>
-            <Important propertyPath={propertyPath('padding')} allowImportant />
+            <Important propertyPath={getPropertyPath('padding')} allowImportant />
             <SpacingControl action={{ type: 'spacing-control' }} subtitle="Padding control" objectPaths={padding} id="padding-control" />
           </div>
         )
