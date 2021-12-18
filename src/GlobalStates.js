@@ -1,12 +1,12 @@
 import produce from 'immer'
 import { atom, selector, selectorFamily } from 'recoil'
-import { getFormsByPhpVar, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
+import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
 
 // atoms
 // eslint-disable-next-line no-undef
 export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} })
 export const $formId = atom({ key: '$formId', default: 0 })
-export const $forms = atom({ key: '$forms', default: getFormsByPhpVar(), dangerouslyAllowMutability: true })
+export const $forms = atom({ key: '$forms', default: getFormsFromPhpVariable(), dangerouslyAllowMutability: true })
 export const $reports = atom({ key: '$reports', default: [], dangerouslyAllowMutability: true })
 export const $fields = atom({ key: '$fields', default: [], dangerouslyAllowMutability: true })
 export const $layouts = atom({ key: '$layouts', default: { lg: [], md: [], sm: [] }, dangerouslyAllowMutability: true })

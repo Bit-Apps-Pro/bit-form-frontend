@@ -264,7 +264,7 @@ export const csvToJson = (string, delimiter = ',') => {
 
 export const isType = (type, val) => !!(val?.constructor && val.constructor.name.toLowerCase() === type.toLowerCase())
 
-export const getFormsByPhpVar = () => {
+export const getFormsFromPhpVariable = () => {
   let allForms = []
   if (!Object.prototype.hasOwnProperty.call(process.env, 'PUBLIC_URL')
     && typeof bits !== 'undefined'
