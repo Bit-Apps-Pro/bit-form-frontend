@@ -14,9 +14,10 @@ import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import IndividualCustomStyle from './IndividualCustomStyle'
-import { commonStyle, getNumFromStr, getStrFromStr } from './styleHelpers'
+import { commonStyle, getNumFromStr, getStrFromStr, getStyleValueFromObjectPath } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 import bitformDefaultTheme from './themes/1_bitformDefault'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 
 export default function FieldStyleCustomizeHOC() {
   const { formType, formID, fieldKey, element } = useParams()
@@ -34,6 +35,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
+  const propertyPath = (property) => `fields->${fieldKey}->classes->.${fieldKey}-fld-wrp->${property}`
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -131,6 +133,22 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     }))
   }
 
+  const getBorderRadius = () => {
+    let brsValue = getStyleValueFromObjectPath(styles, propertyPath('border-radius'))
+    if (brsValue?.match(/var/gi)?.[0]) {
+      brsValue = brsValue?.replaceAll(/\(|var|,.*|\)/gi, '')
+      brsValue = themeVars[brsValue] !== '' ? themeVars[brsValue] : '0px'
+    }
+    return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
+  }
+  const [borderRadVal, borderRadUnit] = getBorderRadius()
+
+  const borderRadHandler = ({ value, unit }) => {
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, propertyPath('border-radius'), `${value}${unit}`)
+    }))
+  }
+
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
   return (
@@ -147,7 +165,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       <h4 className={css(cls.title)}>
         {fieldsTypes[fieldType]}
         {' '}
-        {element?.replace('-', ' ')}
+        {element?.replaceAll('-', ' ')}
       </h4>
       <div className={css(ut.flxc)}>
         <h5 className={css(cls.subTitle)}>{fields[fieldKey].adminLbl}</h5>
@@ -176,6 +194,21 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Theme</span>
                 <ThemeControl fldKey={fieldKey} />
+              </div>
+              <div className={css(ut.flxcb, ut.mt2)}>
+                <span className={css(ut.fw500)}>Border Radius</span>
+                <div className={css(ut.flxc)}>
+                  <SizeControl
+                    min={0}
+                    max={20}
+                    inputHandler={borderRadHandler}
+                    sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
+                    value={borderRadVal}
+                    unit={borderRadUnit}
+                    width="110px"
+                    options={['px', 'em', 'rem']}
+                  />
+                </div>
               </div>
             </div>
           )}
