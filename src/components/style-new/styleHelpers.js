@@ -261,6 +261,7 @@ export const getStyleValueFromObjectPath = (obj, path) => {
   let value = obj
   for (let i = 0; i < paths.length; i += 1) {
     value = value[paths[i]]
+    if (value === undefined) return ''
   }
 
   return value

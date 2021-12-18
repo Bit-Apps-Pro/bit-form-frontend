@@ -6,18 +6,19 @@ import { memo, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $flags, $styles, $themeVars, $fields } from '../../GlobalStates'
+import { $fields, $flags, $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
-import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import sc from '../../styles/commonStyleEditorStyle'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import IndividualCustomStyle from './IndividualCustomStyle'
+import SimpleColorPicker from './SimpleColorPicker'
 import { commonStyle, getNumFromStr, getStrFromStr, getStyleValueFromObjectPath } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 import bitformDefaultTheme from './themes/1_bitformDefault'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 
 export default function FieldStyleCustomizeHOC() {
   const { formType, formID, fieldKey, element } = useParams()
@@ -35,7 +36,10 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
-  const propertyPath = (property) => `fields->${fieldKey}->classes->.${fieldKey}-fld-wrp->${property}`
+  const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
+  const themeColors = useRecoilValue($themeColors)
+
+  const { '--global-accent-color': accentColor } = themeColors
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -134,18 +138,25 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   const getBorderRadius = () => {
-    let brsValue = getStyleValueFromObjectPath(styles, propertyPath('border-radius'))
+    const elementKey = styles.fields[fieldKey].fieldType === 'text' ? 'fld' : 'ck'
+    let brsValue = getStyleValueFromObjectPath(styles, propertyPath(elementKey, 'border-radius'))
     if (brsValue?.match(/var/gi)?.[0]) {
       brsValue = brsValue?.replaceAll(/\(|var|,.*|\)/gi, '')
       brsValue = themeVars[brsValue] !== '' ? themeVars[brsValue] : '0px'
     }
+    if (!brsValue) brsValue = '0px'
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
   }
   const [borderRadVal, borderRadUnit] = getBorderRadius()
 
   const borderRadHandler = ({ value, unit }) => {
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      assignNestedObj(drftStyle, propertyPath('border-radius'), `${value}${unit}`)
+      const fld = prvStyle.fields[fieldKey]
+      if (fld.theme === 'bitformDefault' && fld.fieldType === 'text') {
+        assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), `${value}${unit}`)
+      } else if (fld.theme === 'bitformDefault' && fld.fieldType === 'check') {
+        assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), `${value}${unit}`)
+      }
     }))
   }
 
@@ -185,6 +196,14 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         <div className={css(cls.container)}>
           {element === 'quick-tweaks' && (
             <div>
+              <SimpleColorPicker
+                title="Accent Color"
+                subtitle="Accent Color"
+                value={accentColor}
+                stateObjName="themeColors"
+                propertyPath="--global-accent-color"
+                modalId="global-primary-clr"
+              />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Size</span>
                 <select onChange={setSizes} className={css(sc.select)}>
