@@ -238,7 +238,7 @@ export default function ThemeCustomize() {
               propertyPath="--global-accent-color"
               modalId="global-primary-clr"
               // eslint-disable-next-line no-sequences
-              hslaPaths={'--gah', '--gas', '--gal', '--gaa'}
+              hslaPaths={{ h: '--gah', s: '--gas', l: '--gal', a: '--gaa' }}
             />
             <SimpleColorPicker
               title="Font Color"

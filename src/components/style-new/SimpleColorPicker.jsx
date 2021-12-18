@@ -22,7 +22,8 @@ export default function SimpleColorPicker({ title,
   modalId,
   deleteable,
   delPropertyHandler,
-  allowImportant }) {
+  allowImportant,
+  hslaPaths }) {
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
@@ -66,7 +67,7 @@ export default function SimpleColorPicker({ title,
         {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths })}
             type="button"
             className={css(c.pickrBtn)}
           >

@@ -18,11 +18,11 @@ const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColor
 const FontPickerMenu = lazy(() => import('../../../style-new/FontPickerMenu'))
 const ShadowControlMenu = lazy(() => import('../../../style-new/ShadowControlMenu'))
 
-const RenderComponent = ({ component, action, value, objectPaths, id, stateObjName, propertyPath, fldKey }) => {
+const RenderComponent = ({ component, action, value, objectPaths, id, stateObjName, propertyPath, fldKey, hslaPaths }) => {
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
-    case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} />
+    case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
@@ -33,6 +33,7 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
     case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
     default: return 'loading'
   }
+
 }
 
 const setTitle = (component) => {
@@ -54,12 +55,13 @@ const setTitle = (component) => {
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const { show, position, component, width, stateObjName, propertyPath, subtitle, action, value, objectPaths, id, fldKey } = draggableModal
+  const { show, position, component, width, stateObjName, propertyPath, subtitle, action, value, objectPaths, id, fldKey, hslaPaths } = draggableModal
   const [pos, setPos] = useState('')
   const dragableRef = useRef(null)
   useEffect(() => {
     setPos({ ...position })
   }, [position])
+  console.log(hslaPaths)
 
   if (!show) return <></>
 
@@ -79,7 +81,7 @@ function DraggableModal({ setBuilderPointerEventNone }) {
         <hr className={css(draggableModalStyle.hr)} />
         <div className={css(draggableModalStyle.content)}>
           <Suspense fallback={<DragableModalLoader />}>
-            <RenderComponent component={component} action={action} value={value} objectPaths={objectPaths} id={id} stateObjName={stateObjName} propertyPath={propertyPath} fldKey={fldKey} />
+            <RenderComponent component={component} action={action} value={value} objectPaths={objectPaths} id={id} stateObjName={stateObjName} propertyPath={propertyPath} fldKey={fldKey} hslaPaths={hslaPaths} />
           </Suspense>
         </div>
       </div>
