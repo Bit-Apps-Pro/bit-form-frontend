@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
@@ -10,28 +12,36 @@ import Tip from '../Utilities/Tip'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 import materialTheme from './themes/2_material'
 
-export default function CustomThemeGallary() {
+export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
-
   const selectedFieldId = useRecoilValue($selectedFieldId)
+
+  console.log(styles.fields[fldKey])
 
   const themes = [
     { name: 'Bit Form Default', slug: 'bitformDefault', img: 'defaultTheme.svg' },
     { name: 'Material Design', slug: 'material', img: 'defaultTheme.svg' },
   ]
   const handleThemeApply = (themeSlug) => {
+    const fk = fldKey || selectedFieldId
     if (themeSlug === 'bitformDefault') {
       setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        drftStyle.fields[selectedFieldId] = bitformDefaultTheme(selectedFieldId, styles.fields[selectedFieldId].fieldType)
+        drftStyle.fields[fk] = bitformDefaultTheme(fk, prvStyle.fields[fk].fieldType)
       }))
     }
     if (themeSlug === 'material') {
       setStyles(prvStyle => produce(prvStyle, drftStyle => {
-        drftStyle.fields[selectedFieldId] = materialTheme(selectedFieldId, styles.fields[selectedFieldId].fieldType)
+        drftStyle.fields[fk] = materialTheme(fk, prvStyle.fields[fk].fieldType)
       }))
     }
   }
+
+  const checkActiveTheme = (themeSlug) => {
+    const fk = fldKey || selectedFieldId
+    return styles.fields[fk]?.theme === themeSlug
+  }
+
   return (
     <div className={css(themeGalStyle.thm_container)}>
       {themes.map(theme => (
@@ -40,7 +50,7 @@ export default function CustomThemeGallary() {
           name={theme.name}
           applyThemeAction={() => handleThemeApply(theme.slug)}
           img={theme.img}
-          isActive={styles.fields[selectedFieldId]?.theme === theme.slug}
+          isActive={checkActiveTheme(theme.slug)}
         />
       ))}
     </div>

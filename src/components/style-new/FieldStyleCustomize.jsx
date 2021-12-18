@@ -41,7 +41,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }, [])
 
   const getValueFromThemeVar = (val) => {
-    if (val.match(/var/g)?.[0] === 'var') {
+    if (val?.match(/var/g)?.[0] === 'var') {
       const getVarProperty = val.replaceAll(/\(|var|,.*|\)/gi, '')
       return themeVars[getVarProperty]
     }
@@ -54,7 +54,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   // sub title
-  const subtitl = classes[`.${fieldKey}-sub-titl`]?.['font-size']
+  const subtitl = classes?.[`.${fieldKey}-sub-titl`]?.['font-size']
   const subTitlFs = getValueFromThemeVar(subtitl)
   const subtitlFsHandler = ({ unit, value }) => {
     updateFontSize(unit, value, 'sub-titl')
@@ -63,7 +63,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const subTitlFSUnit = getStrFromStr(subTitlFs)
 
   // heplper text
-  const hplTxtFs = classes[`.${fieldKey}-hlp-txt`]?.['font-size']
+  const hplTxtFs = classes?.[`.${fieldKey}-hlp-txt`]?.['font-size']
   const hplTxtfsvalue = getValueFromThemeVar(hplTxtFs)
   const hlpTxtFsHandler = ({ unit, value }) => {
     updateFontSize(unit, value, 'hlp-txt')
@@ -155,16 +155,18 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
-        <SingleToggle
-          title="Override form theme styles"
-          action={(e) => overrideGlobalThemeHandler(e, element)}
-          checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
-          className={css(ut.mr2, ut.mb2)}
-        />
+        {element !== 'quick-tweaks' && (
+          <SingleToggle
+            title="Override form theme styles"
+            action={(e) => overrideGlobalThemeHandler(e, element)}
+            checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
+            className={css(ut.mr2, ut.mb2)}
+          />
+        )}
 
         <div className={css(cls.container)}>
           {element === 'quick-tweaks' && (
-            <div className={css(!checkExistElement('field-container') && cls.blur)}>
+            <div>
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Size</span>
                 <select onChange={setSizes} className={css(sc.select)}>
