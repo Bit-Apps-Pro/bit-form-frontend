@@ -8,6 +8,7 @@ const customProperties = {
   bb: $ => ({ borderBottom: $ }),
   brs: $ => ({ borderRadius: Number.isInteger($) ? `${$}px` : $ }),
   bcr: $ => ({ borderColor: $ }),
+  bse: $ => ({ borderStyle: $ }),
 
   bd: $ => ({ background: $ }),
   cr: $ => ({ color: $ }),
@@ -79,6 +80,7 @@ const customProperties = {
     ...$ === 'center-between' && { alignItems: 'center', justifyContent: 'space-between' },
   }),
   cg: $ => ({ columnGap: Number.isInteger($) ? `${$}px` : $ }),
+  rg: $ => ({ rowGap: Number.isInteger($) ? `${$}px` : $ }),
 
   fd: $ => ({ flexDirection: $ }),
   jc: $ => ({ justifyContent: $ }),

@@ -100,5 +100,21 @@ const app = {
     m: 'auto',
     p: 12,
   },
+
+  blueGrd: {
+    bd: 'linear-gradient(145deg, var(--b-50), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 10%))) !important',
+    cr: 'var(--white) !important',
+    tn: 'background .3s',
+    ':hover': {
+      bd: `linear-gradient(145deg, 
+      hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 5%)), 
+      hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 10%))) !important`,
+    },
+    ':active': {
+      bd: `linear-gradient(145deg, 
+      hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 8%)), 
+      hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 13%))) !important`,
+    },
+  },
 }
 export default app
