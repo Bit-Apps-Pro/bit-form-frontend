@@ -348,6 +348,7 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
+    history.push(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
 
   return (
@@ -481,6 +482,4 @@ function GridLayout({ newData, setNewData, style, gridWidth, formID }) {
     </div>
   )
 }
-
-
 export default memo(GridLayout)
