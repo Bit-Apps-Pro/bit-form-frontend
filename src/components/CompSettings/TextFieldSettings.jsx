@@ -15,6 +15,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
+import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
@@ -960,8 +961,8 @@ function TextFieldSettings() {
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3)}>
-                    <div className={css(ut.flxc)}>
-                      <h4 className={css(ut.m0, FieldStyle.title)}>{__('Expression:', 'bitform')}</h4>
+                    <div className={css(ut.flxc, ut.ml1)}>
+                      <h4 className={css(ut.m0, FieldStyle.title)}>{__('Expression', 'bitform')}:</h4>
                       {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro', 'bitform')}</span>}
                     </div>
                     <input
