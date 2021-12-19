@@ -6,18 +6,15 @@ import { memo, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $fields, $flags, $styles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $fields, $flags, $styles, $themeVars } from '../../GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
-import sc from '../../styles/commonStyleEditorStyle'
-import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
+import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
-import SimpleColorPicker from './SimpleColorPicker'
-import { commonStyle, getNumFromStr, getStrFromStr, getStyleValueFromObjectPath } from './styleHelpers'
-import ThemeControl from './ThemeControl'
+import { getNumFromStr, getStrFromStr } from './styleHelpers'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
 export default function FieldStyleCustomizeHOC() {
@@ -36,10 +33,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fields = useRecoilValue($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
-  const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
-  const themeColors = useRecoilValue($themeColors)
-
-  const { '--global-accent-color': accentColor } = themeColors
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -115,51 +108,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
     }
   }
 
-  const setSizes = ({ target: { value } }) => {
-    const commonStyleClasses = commonStyle(fieldKey, value)
-    const cmnStlClasses = Object.keys(commonStyleClasses)
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      const stylesClasses = drftStyle.fields[fieldKey].classes
-      const cmnStlClsLen = cmnStlClasses.length
-
-      for (let i = 0; i < cmnStlClsLen; i += 1) {
-        if (Object.prototype.hasOwnProperty.call(stylesClasses, cmnStlClasses[i])) {
-          const cmnClsProperty = commonStyleClasses[cmnStlClasses[i]]
-          const cmnClsPropertyKey = Object.keys(cmnClsProperty)
-          const cmnClsPropertyKeyLan = cmnClsPropertyKey.length
-
-          for (let popIndx = 0; popIndx < cmnClsPropertyKeyLan; popIndx += 1) {
-            const cmnClsPropertyValue = cmnClsProperty[cmnClsPropertyKey[popIndx]]
-            drftStyle.fields[fieldKey].classes[cmnStlClasses[i]][cmnClsPropertyKey[popIndx]] = cmnClsPropertyValue
-          }
-        }
-      }
-    }))
-  }
-
-  const getBorderRadius = () => {
-    const elementKey = styles.fields[fieldKey].fieldType === 'text' ? 'fld' : 'ck'
-    let brsValue = getStyleValueFromObjectPath(styles, propertyPath(elementKey, 'border-radius'))
-    if (brsValue?.match(/var/gi)?.[0]) {
-      brsValue = brsValue?.replaceAll(/\(|var|,.*|\)/gi, '')
-      brsValue = themeVars[brsValue] !== '' ? themeVars[brsValue] : '0px'
-    }
-    if (!brsValue) brsValue = '0px'
-    return [getNumFromStr(brsValue), getStrFromStr(brsValue)]
-  }
-  const [borderRadVal, borderRadUnit] = getBorderRadius()
-
-  const borderRadHandler = ({ value, unit }) => {
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      const fld = prvStyle.fields[fieldKey]
-      if (fld.theme === 'bitformDefault' && fld.fieldType === 'text') {
-        assignNestedObj(drftStyle, propertyPath('fld', 'border-radius'), `${value}${unit}`)
-      } else if (fld.theme === 'bitformDefault' && fld.fieldType === 'check') {
-        assignNestedObj(drftStyle, propertyPath('ck', 'border-radius'), `${value}${unit}`)
-      }
-    }))
-  }
-
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
   return (
@@ -194,44 +142,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         )}
 
         <div className={css(cls.container)}>
-          {element === 'quick-tweaks' && (
-            <div>
-              <SimpleColorPicker
-                title="Accent Color"
-                subtitle="Accent Color"
-                value={accentColor}
-                stateObjName="field-accent-color"
-                propertyPath="--global-accent-color"
-                modalId="global-primary-clr"
-                fldKey={fieldKey}
-              />
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Size</span>
-                <select onChange={setSizes} className={css(sc.select)}>
-                  {Object.keys(sizes).map((key) => <option value={key}>{sizes[key]}</option>)}
-                </select>
-              </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Theme</span>
-                <ThemeControl fldKey={fieldKey} />
-              </div>
-              <div className={css(ut.flxcb, ut.mt2)}>
-                <span className={css(ut.fw500)}>Border Radius</span>
-                <div className={css(ut.flxc)}>
-                  <SizeControl
-                    min={0}
-                    max={20}
-                    inputHandler={borderRadHandler}
-                    sizeHandler={({ unitKey, unitValue }) => borderRadHandler({ unit: unitKey, value: unitValue })}
-                    value={borderRadVal}
-                    unit={borderRadUnit}
-                    width="110px"
-                    options={['px', 'em', 'rem']}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
+          {element === 'quick-tweaks' && <FieldQuickTweaks fieldKey={fieldKey} />}
+
           {element === 'field-container' && (
             <div className={css(!checkExistElement('field-container') && cls.blur)}>
               <IndividualCustomStyle elementKey="fld-wrp" fldKey={fieldKey} />
@@ -347,12 +259,4 @@ const cls = {
     bd: 'var(--b-23-95)',
     fw: 500,
   },
-}
-
-const sizes = {
-  'small-2': 'Small-2',
-  'small-1': 'Small-1',
-  medium: 'Medium',
-  large: 'Large',
-  'large-1': 'Large-1',
 }
