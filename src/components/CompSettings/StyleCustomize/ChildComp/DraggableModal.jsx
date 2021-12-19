@@ -22,7 +22,7 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
   switch (component) {
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
-    case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} />
+    case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
@@ -33,7 +33,6 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
     case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
     default: return 'loading'
   }
-
 }
 
 const setTitle = (component) => {
@@ -61,7 +60,6 @@ function DraggableModal({ setBuilderPointerEventNone }) {
   useEffect(() => {
     setPos({ ...position })
   }, [position])
-  console.log(hslaPaths)
 
   if (!show) return <></>
 

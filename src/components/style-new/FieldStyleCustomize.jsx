@@ -200,9 +200,10 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                 title="Accent Color"
                 subtitle="Accent Color"
                 value={accentColor}
-                stateObjName="themeColors"
+                stateObjName="field-accent-color"
                 propertyPath="--global-accent-color"
                 modalId="global-primary-clr"
+                fldKey={fieldKey}
               />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>Size</span>
