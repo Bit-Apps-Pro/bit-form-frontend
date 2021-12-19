@@ -33,7 +33,8 @@ function SimpleColorsPickerMenu({ stateObjName,
   propertyPath,
   hslaPaths,
   canSetVariable,
-  id }) {
+  id,
+  fldKey }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
@@ -45,6 +46,7 @@ function SimpleColorsPickerMenu({ stateObjName,
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
+
   const { '--global-bg-color': themeBgColor,
     '--global-fld-bdr-clr': themeFldBdrClr,
     '--global-fld-bg-color': themeFldBgColor,
@@ -72,7 +74,11 @@ function SimpleColorsPickerMenu({ stateObjName,
         // }
         // setColor(str2Color(c))
         break
+      case 'field-accent-color':
+        const accColor = getStyleValueFromObjectPath(themeColors, propertyPath)
+        setColor(str2Color(accColor))
 
+      // eslint-disable-next-line no-fallthrough
       default:
         break
     }
@@ -112,7 +118,13 @@ function SimpleColorsPickerMenu({ stateObjName,
           assignNestedObj(drftStyles, propertyPath, hslaColor)
         }))
         break
+      case 'field-accent-color':
+        setStyles(prvState => produce(prvState, drftStyles => {
+          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = `${hslaStr}!important`
+          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = `${hslaStr}!important`
+        }))
 
+      // eslint-disable-next-line no-fallthrough
       default:
         break
     }
