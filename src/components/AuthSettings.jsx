@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import toast from 'react-hot-toast'
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { __ } from '../Utils/i18nwrap'
 import { $bits, $fieldsArr } from '../GlobalStates'
 import CheckBox from './Utilities/CheckBox'
@@ -18,6 +19,7 @@ import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import SnackMsg from './Utilities/SnackMsg'
 import Loader from './Loaders/Loader'
 import { fogotPassTamplate, activationTamplate, activationMessage } from '../Utils/StaticData/tamplate'
+import app from '../styles/app.style'
 
 export default function AdditionalSettings() {
   const bits = useRecoilValue($bits)
@@ -27,6 +29,7 @@ export default function AdditionalSettings() {
   const formFields = useRecoilValue($fieldsArr)
   const [type, setType] = useState('register')
   const { formID } = useParams()
+  const { css } = useFela()
 
   const [dataConf, setDataConf] = useState({
     register: {
@@ -130,8 +133,10 @@ export default function AdditionalSettings() {
       setIsLoading(false)
       return
     }
-    const prom = bitsFetch(tmpConf,
-      'bitforms_save_auth_settings')
+    const prom = bitsFetch(
+      tmpConf,
+      'bitforms_save_auth_settings',
+    )
       .then((res) => {
         if (res !== undefined && res.success) {
           setIsLoading(false)
@@ -246,7 +251,7 @@ export default function AdditionalSettings() {
                 type="button"
                 id="secondary-update-btn"
                 onClick={saveSettings}
-                className="btn btcd-btn-lg blue flx"
+                className={css(app.btn, app.blueGrd, { px: 20 })}
                 disabled={isLoading}
               >
                 {__('Save ', 'bitform')}
