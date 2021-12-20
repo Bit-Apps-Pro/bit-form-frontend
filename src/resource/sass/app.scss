@@ -3998,6 +3998,7 @@ select.btcd-paper-inp {
     line-height: 1;
     border-radius: 8px;
     width: 100%;
+    max-width: 100%;
     padding: 10px 25px 10px 10px;
     outline: none;
     border: 1px solid var(--gray-3);
@@ -4786,6 +4787,11 @@ _:-ms-fullscreen,
 .py-1 {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.px-1 {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .br-5 {

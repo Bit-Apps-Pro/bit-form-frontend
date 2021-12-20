@@ -94,6 +94,17 @@ const app = {
     },
   },
 
+  btn_blue_otln: {
+    bd: 'transparent',
+    cr: 'var(--b-50) !important',
+    b: '1px solid var(--b-50)',
+    tn: 'background 0.2s !important',
+    ':hover': {
+      bd: 'var(--b-50)',
+      cr: 'var(--white) !important',
+    },
+  },
+
   inte_sm_img: {
     mxw: '110px !important',
     mxh: '110px !important',
