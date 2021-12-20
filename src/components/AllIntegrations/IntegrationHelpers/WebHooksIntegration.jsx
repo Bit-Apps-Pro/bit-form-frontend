@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
+import ExternalLinkIcn from '../../../Icons/ExternalLinkIcn'
 import TrashIcn from '../../../Icons/TrashIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
@@ -82,83 +83,83 @@ export default function WebHooksLayouts({ formID, formFields, webHooks, setWebHo
     setstep(2)
   }
   return (
-    <>
-      <div style={{ ...{ width: isInfo && 900 } }}>
-        <div className="flx ">
-          <div className="w-7 mr-2 mb-4">
-            <div className="f-m">{__('Integration name', 'bitform')}</div>
-            <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
-          </div>
+    <div style={{ ...{ width: isInfo && 900 } }}>
+      <div className="flx ">
+        <div className="w-7 mr-2 mb-4 mt-2">
+          <div className="f-m">{__('Integration name', 'bitform')}</div>
+          <input name="name" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.name} disabled={isInfo} />
         </div>
-        <div className="flx">
-          <div className="w-7 mr-2">
-            <div className="f-m">{__('Link:', 'bitform')}</div>
-            <input name="url" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.url} disabled={isInfo} />
-            {webHooks?.apiConsole && (
-              <small className="d-blk mt-2">
-                {__('To got Webhook , Please Visit', 'bitform')}
-                {' '}
-                <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`, 'bitform')}</a>
-              </small>
-            )}
-          </div>
-
-          <div className="w-3">
-            <div className="f-m">{__('Method:', 'bitform')}</div>
-            <select name="method" onChange={e => handleInput(e, webHooks, setWebHooks)} defaultValue={webHooks.method} className="btcd-paper-inp mt-1" disabled={isInfo}>
-              {method.map((itm, indx) => (<option key={`method-${indx * 2}`} value={itm}>{itm}</option>))}
-            </select>
-          </div>
-        </div>
-        {!isInfo && (
-          <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={`${css(app.btn)} btcd-btn-o-blue`}>
-            {__('Test Webhook', 'bitform')}
-            {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
-          </Button>
-        )}
-        <br />
-        <br />
-        <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
-        <div className="btcd-param-t-wrp mt-1">
-          <div className="btcd-param-t">
-            <div className="tr">
-              <div className="td">{__('Key', 'bitform')}</div>
-              <div className="td">{__('Value', 'bitform')}</div>
-            </div>
-            {getUrlParams(webHooks.url) !== null && getUrlParams(webHooks.url)?.map((itm, childindx) => (
-              <div className="tr" key={`fu-1${childindx * 3}`}>
-                <div className="td">
-                  <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[0].substr(1)} disabled={isInfo} />
-                </div>
-                <div className="td">
-                  <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[1]} disabled={isInfo} />
-                </div>
-                {!isInfo && (
-                  <div className="flx p-atn">
-                    <Button onClick={() => delParam(itm, webHooks, setWebHooks)} icn><TrashIcn size={16} /></Button>
-                    <MultiSelect
-                      options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
-                      className="btcd-paper-drpdwn wdt-200 ml-2"
-                      singleSelect
-                      onChange={val => setFromField(val, itm, webHooks, setWebHooks)}
-                      defaultValue={itm.split('=')[1]}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-            {!isInfo && (
-              <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><CloseIcn size="14" className="icn-rotate-45" /></Button>
-            )}
-          </div>
-        </div>
-        {create && (
-          <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
-            {__('Next', 'bitform')}
-            <BackIcn className="ml-1 rev-icn" />
-          </button>
-        )}
       </div>
-    </>
+      <div className="flx flx-start">
+        <div className="w-7">
+          <div className="f-m">{__('Link:', 'bitform')}</div>
+          <input name="url" onChange={e => handleInput(e, webHooks, setWebHooks)} className="btcd-paper-inp mt-1" type="text" value={webHooks.url} disabled={isInfo} />
+          {webHooks?.apiConsole && (
+            <small className="d-blk mt-2">
+              {__('To got Webhook , Please Visit', 'bitform')}
+              {' '}
+              <a className="btcd-link" href={webHooks.apiConsole} target="_blank" rel="noreferrer">{__(`${webHooks.type} Dashboard`, 'bitform')}</a>
+            </small>
+          )}
+        </div>
+
+        <div className="w-3 px-1">
+          <div className="f-m">{__('Method:', 'bitform')}</div>
+          <select name="method" onChange={e => handleInput(e, webHooks, setWebHooks)} defaultValue={webHooks.method} className="btcd-paper-inp mt-1" disabled={isInfo}>
+            {method.map((itm, indx) => (<option key={`method-${indx * 2}`} value={itm}>{itm}</option>))}
+          </select>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>
+      <div className="btcd-param-t-wrp mt-1">
+        <div className="btcd-param-t">
+          <div className="tr">
+            <div className="td">{__('Key', 'bitform')}</div>
+            <div className="td">{__('Value', 'bitform')}</div>
+          </div>
+          {getUrlParams(webHooks.url) !== null && getUrlParams(webHooks.url)?.map((itm, childindx) => (
+            <div className="tr" key={`fu-1${childindx * 3}`}>
+              <div className="td">
+                <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('key', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[0].substr(1)} disabled={isInfo} />
+              </div>
+              <div className="td">
+                <input className="btcd-paper-inp p-i-sm" onChange={e => handleParam('val', e.target.value, itm, webHooks, setWebHooks)} type="text" value={itm.split('=')[1]} disabled={isInfo} />
+              </div>
+              {!isInfo && (
+                <div className="flx p-atn">
+                  <Button onClick={() => delParam(itm, webHooks, setWebHooks)} icn><TrashIcn size={16} /></Button>
+                  <MultiSelect
+                    options={formFields.map(f => ({ label: f.name, value: `\${${f.key}}` }))}
+                    className="btcd-paper-drpdwn wdt-200 ml-2"
+                    singleSelect
+                    onChange={val => setFromField(val, itm, webHooks, setWebHooks)}
+                    defaultValue={itm.split('=')[1]}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+          {!isInfo && (
+            <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><CloseIcn size="14" className="icn-rotate-45" /></Button>
+          )}
+        </div>
+      </div>
+      {!isInfo && (
+        <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className={css(app.btn, app.btn_blue_otln)}>
+          {__('Test Webhook', 'bitform')}
+          {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
+          <ExternalLinkIcn size={18} className="ml-1" />
+        </Button>
+      )}
+      { (!isInfo && create) && <br /> }
+      {create && (
+        <button onClick={() => nextPage()} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button">
+          {__('Next', 'bitform')}
+          <BackIcn className="ml-1 rev-icn" />
+        </button>
+      )}
+    </div>
   )
 }
