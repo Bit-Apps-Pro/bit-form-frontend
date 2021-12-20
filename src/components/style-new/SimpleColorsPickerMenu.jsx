@@ -120,7 +120,9 @@ function SimpleColorsPickerMenu({ stateObjName,
         break
       case 'field-accent-color':
         setStyles(prvState => produce(prvState, drftStyles => {
+          const sc = `0 0 0 3px hsla(${h}, ${s}, ${l}, 0.30)!important`
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = `${hslaStr}!important`
+          drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['box-shadow'] = sc
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:hover`]['border-color'] = `${hslaStr}!important`
         }))
 
