@@ -2,9 +2,9 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates'
+import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -17,6 +17,7 @@ import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import sc from '../../styles/commonStyleEditorStyle'
 
 export default function DecisionBoxSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -113,7 +114,7 @@ export default function DecisionBoxSettings() {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: fieldData.lbl || fieldData?.info?.lbl }}
           // className="err-msg-box mt-2"
-          className={css(FieldStyle.input, ut.px10, ut.py5, ut.pmt0)}
+          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
         />
       </div>
 

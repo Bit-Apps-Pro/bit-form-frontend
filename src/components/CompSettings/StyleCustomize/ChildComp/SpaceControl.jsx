@@ -179,6 +179,7 @@ const s = {
     jc: 'flex-end',
     flxp: 'wrap',
     mt: 10,
+    w: 220,
   },
   titlecontainer: { flx: 'center-between' },
   title: { fs: 12, fw: 500 },
