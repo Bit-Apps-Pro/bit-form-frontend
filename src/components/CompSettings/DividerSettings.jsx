@@ -80,7 +80,11 @@ function DividerSettings() {
         <div className={css(ut.flxcb, ut.mt2)}>
           <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
           <div className={css(ut.flxcb, ut.mr2)}>
-            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={objectPaths} />
+            <SpacingControl
+              action={{ type: 'spacing-control' }}
+              subtitle="Spacing control"
+              objectPaths={objectPaths}
+            />
           </div>
         </div>
       </div>

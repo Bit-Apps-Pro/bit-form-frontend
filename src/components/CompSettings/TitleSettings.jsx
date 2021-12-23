@@ -321,7 +321,11 @@ function TitleSettings() {
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500, ut.ml2)}>Spacing</span>
               <div className={css(ut.flxcb, ut.mr2)}>
-                <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={titlePaths} />
+                <SpacingControl
+                  action={{ type: 'spacing-control' }}
+                  subtitle="Spacing control"
+                  objectPaths={titlePaths}
+                />
               </div>
             </div>
           </div>
