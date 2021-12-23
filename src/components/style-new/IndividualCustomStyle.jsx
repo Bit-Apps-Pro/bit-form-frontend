@@ -6,7 +6,6 @@ import { $styles } from '../../GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
-import Important from './Important'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 
@@ -56,21 +55,20 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
     }))
   }
 
-  const spacingObj = (spacing) => (
+  const propertyObjPath = (property) => (
     {
-      object: 'fieldStyle',
+      object: 'styles',
       paths: {
-        fk: fldKey,
-        selector: `.${fldKey}-${elementKey}`,
-        margin: spacing.margin && 'margin',
-        padding: spacing.padding && 'padding',
+        ...property === 'margin' && { margin: `fields->${fldKey}->classes->.${fldKey}-${elementKey}->margin` },
+        ...property === 'padding' && { padding: `fields->${fldKey}->classes->.${fldKey}-${elementKey}->padding` },
       },
     }
   )
+
   const getPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-${elementKey}->${cssProperty}`
 
-  const margin = spacingObj({ margin: existingProperties.includes('margin') })
-  const padding = spacingObj({ padding: existingProperties.includes('padding') })
+  // const margin = spacingObj({ margin: existingProperties.includes('margin') })
+  // const padding = spacingObj({ padding: existingProperties.includes('padding') })
   return (
     <>
       {
@@ -108,28 +106,40 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
       {
         existingProperties.includes('margin') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc)}>
+            <div className={css(ut.flxc, ut.ml1)}>
               <button title="Delete Property" onClick={() => delPropertyHandler('margin')} className={`${css(cls.delBtn)} delete-btn`} type="button">
-                <TrashIcn size="15" />
+                <TrashIcn size="14" />
               </button>
               <span className={css(ut.fw500)}>{__('Margin', 'bitform')}</span>
             </div>
-            <Important propertyPath={getPropertyPath('margin')} />
-            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Margin control" objectPaths={margin} id="margin-control" />
+            <div className={css(ut.flxc, { cg: 3 })}>
+              <SpacingControl
+                allowImportant
+                action={{ type: 'spacing-control' }}
+                subtitle="Margin control"
+                objectPaths={propertyObjPath('margin')}
+                id="margin-control"
+              />
+            </div>
           </div>
         )
       }
       {
         existingProperties.includes('padding') && (
           <div className={css(ut.flxcb, ut.mt2, cls.containerHover)}>
-            <div className={css(ut.flxc)}>
+            <div className={css(ut.flxc, ut.ml1)}>
               <button title="Delete Property" onClick={() => delPropertyHandler('padding')} className={`${css(cls.delBtn)} delete-btn`} type="button">
-                <TrashIcn size="15" />
+                <TrashIcn size="14" />
               </button>
               <span className={css(ut.fw500)}>{__('Padding', 'bitform')}</span>
             </div>
-            <Important propertyPath={getPropertyPath('padding')} />
-            <SpacingControl action={{ type: 'spacing-control' }} subtitle="Padding control" objectPaths={padding} id="padding-control" />
+            <SpacingControl
+              allowImportant
+              action={{ type: 'spacing-control' }}
+              subtitle="Padding control"
+              objectPaths={propertyObjPath('padding')}
+              id="padding-control"
+            />
           </div>
         )
       }
@@ -182,21 +192,20 @@ const allowCustomProperty = [
 const cls = {
   container: { ml: 12, mr: 15, pn: 'relative' },
   delBtn: {
+    se: 20,
+    flx: 'center',
     b: 'none',
-    p: 5,
-    bd: 'transparent',
-    mr: 5,
-    oy: 0,
+    p: 0,
+    mr: 1,
     tn: '.2s all',
     curp: 1,
+    brs: '50%',
+    tm: 'scale(0)',
+    bd: 'none',
+    cr: 'var(--red-100-61)',
+    pn: 'absolute',
+    lt: -15,
+    ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
-  containerHover: {
-    '&:hover .delete-btn': {
-      bd: 'var(--b-79-96)',
-      brs: '50%',
-      cr: 'var(--b-50)',
-      oy: 1,
-      tm: 'scale(1.1)',
-    },
-  },
+  containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
 }
