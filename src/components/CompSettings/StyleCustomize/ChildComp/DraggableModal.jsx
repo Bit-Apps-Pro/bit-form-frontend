@@ -8,6 +8,7 @@ import ut from '../../../../styles/2.utilities'
 import draggableModalStyle from '../../../../styles/draggableModal.style'
 import CustomThemeGallary from '../../../style-new/CustomThemeGallary'
 import FormWrapperControlMenu from '../../../style-new/FormWrapperControlMenu'
+import IndividualShadowControlMenu from '../../../style-new/IndividualShadowControlMenu'
 import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
@@ -23,6 +24,7 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
     case 'border-style': return <BorderControlMenu objectPaths={objectPaths} />
     // case 'color-picker': return <SimpleColorPickerMenu action={action} value={value} objectPaths={objectPaths} />
     case 'color-picker': return <SimpleColorsPickerMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
+    case 'individual-shadow-control': return <IndividualShadowControlMenu stateObjName={stateObjName} action={action} propertyPath={propertyPath} id={id} hslaPaths={hslaPaths} fldKey={fldKey} />
     case 'font': return <FontPickerMenu />
     case 'label-control': return <LabelControlMenu />
     case 'spacing-control': return <SpacingControlMenu />
@@ -39,6 +41,7 @@ const setTitle = (component) => {
   switch (component) {
     case 'border-style': return 'Border'
     case 'color-picker': return 'Color picker'
+    case 'individual-shadow-control': return 'Shadow control'
     case 'font': return 'Fonts'
     case 'label-control': return 'Label Placement Control'
     case 'spacing-control': return 'Label Spacing Control'

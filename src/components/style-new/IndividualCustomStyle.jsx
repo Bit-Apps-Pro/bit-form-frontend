@@ -7,6 +7,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import Important from './Important'
+import IndividualShadowControl from './IndividualShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 
@@ -133,6 +134,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
           </div>
         )
       }
+      {existingProperties.includes('box-shadow') && (
+        <IndividualShadowControl
+          title="Box-shadow"
+          subtitle="Box-shadow"
+          value={existingCssProperties?.['box-shadow']}
+          modalId="field-container-box-shadow"
+          stateObjName="styles"
+          propertyPath={getPropertyPath('box-shadow')}
+          deleteable
+          delPropertyHandler={() => delPropertyHandler('box-shadow')}
+          clearHandler={() => clearHandler('box-shadow')}
+          allowImportant
+          fldKey={fldKey}
+        />
+      )}
       {/* {
         existingCssProperties.includes('font-size') && (
           <div className={css(ut.flxcb, ut.mt2)}>
@@ -175,7 +191,7 @@ const allowCustomProperty = [
   'border',
   'margin',
   'padding',
-  'shadow',
+  'box-shadow',
   'border-radius',
 ]
 
