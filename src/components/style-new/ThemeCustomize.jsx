@@ -367,7 +367,13 @@ export default function ThemeCustomize() {
               />
               <div className={css(ut.flxcb, ut.mt2)}>
                 <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-                <SpacingControl value={{ margin: wrpMagin, padding: wrpPadding }} action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={fldWrapperObj} id="spacing-control" />
+                <SpacingControl
+                  value={{ margin: wrpMagin, padding: wrpPadding }}
+                  action={{ type: 'spacing-control' }}
+                  subtitle="Spacing control"
+                  objectPaths={fldWrapperObj}
+                  id="spacing-control"
+                />
               </div>
               <ThemeStylePropertyBlock label="Shadow">
                 <div className={css(ut.flxc)}>
