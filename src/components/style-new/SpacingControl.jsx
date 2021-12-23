@@ -2,48 +2,48 @@ import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import produce from 'immer'
 import { $draggableModal, $styles } from '../../GlobalStates'
-import { showDraggableModal } from './styleHelpers'
+import { getValueByObjPath, showDraggableModal } from './styleHelpers'
 import CloseIcn from '../../Icons/CloseIcn'
+import Important from './Important'
+import { assignNestedObj } from '../../Utils/FormBuilderHelper'
+import ut from '../../styles/2.utilities'
 
-export default function SpacingControl({ subtitle, action, value, objectPaths, id }) {
+export default function SpacingControl({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
 
+  console.log({ value, objectPaths })
   const { object, paths } = objectPaths
-  let val
-  if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
+  const val = getValueByObjPath(styles, paths.margin || paths.padding)
+  // if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
 
   const clearHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      if (object === 'fieldStyle' && paths.margin) {
-        drft.fields[paths.fk].classes[paths.selector][paths.margin] = ''
-      }
-      if (object === 'fieldStyle' && paths.padding) {
-        drft.fields[paths.fk].classes[paths.selector][paths.padding] = ''
+      if (object === 'styles') {
+        assignNestedObj(drft, paths.margin || paths.padding, '')
       }
     }))
   }
-  if (object === 'fieldStyle' && paths.margin) {
-    val = styles.fields[paths.fk].classes[paths.selector][paths.margin]
-  }
-  if (object === 'fieldStyle' && paths.padding) {
-    val = styles.fields[paths.fk].classes[paths.selector][paths.padding]
-  }
+
   return (
-    <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
-      <button
-        onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
-        type="button"
-        className={css(c.pickrBtn)}
-      >
-        <span>{val || 'Configure'}</span>
-      </button>
-      {(val) && (
-        <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
-          <CloseIcn size="12" />
+    <div className={css(ut.flxc, { cg: 3 })}>
+      {allowImportant && (<Important propertyPath={paths.margin || paths.padding} />)}
+      <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
+        <button
+          onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
+          type="button"
+          className={css(c.pickrBtn)}
+          title={val}
+        >
+          {val || 'Configure'}
         </button>
-      )}
+        {(val) && (
+          <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
+            <CloseIcn size="12" />
+          </button>
+        )}
+      </div>
     </div>
   )
 }
@@ -57,6 +57,7 @@ const c = {
     p: 7,
     flx: 'center-between',
     h: 30,
+    ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
   preview: {
     w: 25,
@@ -80,9 +81,15 @@ const c = {
   pickrBtn: {
     b: 'none',
     curp: 1,
-    flx: 'center',
     bd: 'transparent',
+    ws: 'nowrap',
+    to: 'ellipsis',
     p: 0,
+    h: 28,
+    w: 94,
+    dy: 'block',
+    ow: 'hidden',
+    ta: 'start',
   },
   clrVal: {
     w: 90,
