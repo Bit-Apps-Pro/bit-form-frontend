@@ -4,7 +4,7 @@ import { $themeVars, $styles } from '../../../../GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
-import { getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
+import { getStyleStateObj, getValueByObjPath, setStyleStateObj, splitValueBySpaces } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
@@ -18,9 +18,9 @@ export default function BorderControlMenu({ objectPaths }) {
 
   const stateObj = getStyleStateObj(object, { themeVars, styles })
 
-  const borderStyle = getStyleValueFromObjectPath(stateObj, paths.border)
-  const borderWidth = getStyleValueFromObjectPath(stateObj, paths.borderWidth)
-  const borderRadius = getStyleValueFromObjectPath(stateObj, paths.borderRadius)
+  const borderStyle = getValueByObjPath(stateObj, paths.border)
+  const borderWidth = getValueByObjPath(stateObj, paths.borderWidth)
+  const borderRadius = getValueByObjPath(stateObj, paths.borderRadius)
 
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)

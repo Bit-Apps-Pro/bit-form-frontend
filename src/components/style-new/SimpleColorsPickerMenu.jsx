@@ -15,7 +15,7 @@ import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
-import { getStyleValueFromObjectPath } from './styleHelpers'
+import { getValueByObjPath } from './styleHelpers'
 
 // stateObjName string ex: themeColor
 // objPath string ex: a->b->
@@ -56,17 +56,17 @@ function SimpleColorsPickerMenu({ stateObjName,
   useEffect(() => {
     switch (stateObjName) {
       case 'themeColors':
-        const themeColorsVal = getStyleValueFromObjectPath(themeColors, propertyPath)
+        const themeColorsVal = getValueByObjPath(themeColors, propertyPath)
         setColor(str2Color(themeColorsVal))
         break
 
       case 'themeVars':
-        const themeVarColor = getStyleValueFromObjectPath(themeVars, propertyPath)
+        const themeVarColor = getValueByObjPath(themeVars, propertyPath)
         setColor(str2Color(themeVarColor))
         break
 
       case 'styles':
-        const styleColor = getStyleValueFromObjectPath(styles, propertyPath)
+        const styleColor = getValueByObjPath(styles, propertyPath)
         // let c = styleColor
         // if (styleColor.match(/var/gi)?.[0 === 'var']) {
         //   const varClr = styleColor.replaceAll(/\(|var|,.*|\)/gi, '')
@@ -75,7 +75,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         // setColor(str2Color(c))
         break
       case 'field-accent-color':
-        const accColor = getStyleValueFromObjectPath(themeColors, propertyPath)
+        const accColor = getValueByObjPath(themeColors, propertyPath)
         setColor(str2Color(accColor))
 
       // eslint-disable-next-line no-fallthrough
@@ -112,7 +112,7 @@ function SimpleColorsPickerMenu({ stateObjName,
       case 'styles':
         setStyles(prvState => produce(prvState, drftStyles => {
           let hslaColor = hslaStr
-          const value = getStyleValueFromObjectPath(drftStyles, propertyPath)
+          const value = getValueByObjPath(drftStyles, propertyPath)
           const checkExistImportant = value?.match(/!important/gi)?.[0]
           if (checkExistImportant) hslaColor = `${hslaColor} !important`
           assignNestedObj(drftStyles, propertyPath, hslaColor)
