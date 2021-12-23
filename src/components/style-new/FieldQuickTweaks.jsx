@@ -7,7 +7,7 @@ import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPicker from './SimpleColorPicker'
-import { commonStyle, getNumFromStr, getStrFromStr, getStyleValueFromObjectPath } from './styleHelpers'
+import { commonStyle, getNumFromStr, getStrFromStr, getValueByObjPath } from './styleHelpers'
 import ThemeControl from './ThemeControl'
 
 export default function FieldQuickTweaks({ fieldKey }) {
@@ -53,7 +53,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
   const getBorderRadius = () => {
     const elementKey = styles.fields[fieldKey].fieldType === 'text' ? 'fld' : 'ck'
-    let brsValue = getStyleValueFromObjectPath(styles, propertyPath(elementKey, 'border-radius'))
+    let brsValue = getValueByObjPath(styles, propertyPath(elementKey, 'border-radius'))
     if (brsValue?.match(/var/gi)?.[0]) {
       brsValue = brsValue?.replaceAll(/\(|var|,.*|\)/gi, '')
       brsValue = themeVars[brsValue] !== '' ? themeVars[brsValue] : '0px'

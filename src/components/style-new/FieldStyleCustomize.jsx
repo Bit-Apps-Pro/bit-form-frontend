@@ -199,7 +199,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             </div>
           )}
         </div>
-        <div className={css(cls.divider)} />
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
@@ -249,7 +248,7 @@ const cls = {
     cur: 'not-allowed',
     bd: 'white',
     zx: 9,
-    pnevn: 'none',
+    pe: 'none',
   },
   pill: {
     brs: 8,

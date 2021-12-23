@@ -253,7 +253,7 @@ export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) |
 
 export const getStyleStateObj = (obj, states) => states[obj]
 
-export const getStyleValueFromObjectPath = (obj, path) => {
+export const getValueByObjPath = (obj, path) => {
   const paths = path?.split('->') || []
   if (paths.length === 1) {
     return obj[paths[0]]

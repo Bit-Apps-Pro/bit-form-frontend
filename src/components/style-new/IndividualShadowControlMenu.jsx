@@ -18,7 +18,7 @@ import SimpleAccordion from '../CompSettings/StyleCustomize/ChildComp/SimpleAcco
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getStyleValueFromObjectPath, splitValueBySpaces, unitConverter } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getValueByObjPath, splitValueBySpaces, unitConverter } from './styleHelpers'
 
 function IndividualShadowControlMenu({ propertyPath }) {
   const { css } = useFela()
@@ -32,7 +32,7 @@ function IndividualShadowControlMenu({ propertyPath }) {
   ]
 
   const getShadowStyleVal = () => {
-    let shadowValue = getStyleValueFromObjectPath(styles, propertyPath)
+    let shadowValue = getValueByObjPath(styles, propertyPath)
     if (shadowValue.match(/var/gi)?.[0] === 'var') {
       const themeVarShadow = shadowValue.replaceAll(/\(|var|,.*|\)/gi, '')
       shadowValue = themeVars[themeVarShadow]

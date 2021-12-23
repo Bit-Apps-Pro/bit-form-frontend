@@ -5,9 +5,9 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $colorScheme, $darkThemeColors, $lightThemeColors, $styles, $tempStyles, $themeVars } from '../../GlobalStates'
 import StyleResetIcn from '../../Icons/StyleResetIcn'
-import sc from '../../styles/commonStyleEditorStyle'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
-import { getStyleValueFromObjectPath } from './styleHelpers'
+import Tip from '../Utilities/Tip'
+import { getValueByObjPath } from './styleHelpers'
 
 export default function ResetStyle({ objectKey, stateName, objectPaths, stateObjName, propertyPath }) {
   const { lightThemeColors: tmpLightThemeColors,
@@ -24,8 +24,8 @@ export default function ResetStyle({ objectKey, stateName, objectPaths, stateObj
   let show = false
   switch (stateObjName) {
     case 'styles':
-      const styleVlu = getStyleValueFromObjectPath(styles, propertyPath)
-      const tempStyleVlue = tmpStyles && Object.keys(tmpStyles).length > 0 && getStyleValueFromObjectPath(tmpStyles, propertyPath)
+      const styleVlu = getValueByObjPath(styles, propertyPath)
+      const tempStyleVlue = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, propertyPath)
       if (styleVlu !== tempStyleVlue) show = true
       break
 
@@ -72,7 +72,7 @@ export default function ResetStyle({ objectKey, stateName, objectPaths, stateObj
         }
         break
       case 'styles':
-        const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getStyleValueFromObjectPath(tmpStyles, propertyPath)
+        const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, propertyPath)
         if (value) {
           setStyles(prvStyle => produce(prvStyle, drft => {
             assignNestedObj(drft, propertyPath, value)
@@ -91,14 +91,30 @@ export default function ResetStyle({ objectKey, stateName, objectPaths, stateObj
   }
 
   return (
-    <button
-      title="Reset Style"
-      onClick={reset}
-      className={css(sc.resetBtn)}
-      type="button"
-      style={{ visibility: show ? 'visible' : 'hidden' }}
-    >
-      <StyleResetIcn size="20" />
-    </button>
+    <Tip msg="Reset style">
+      <button
+        onClick={reset}
+        className={css(st.resetBtn)}
+        type="button"
+        style={{ visibility: show ? 'visible' : 'hidden' }}
+      >
+        <StyleResetIcn size="20" />
+      </button>
+    </Tip>
   )
+}
+
+const st = {
+  resetBtn: {
+    se: 20,
+    flx: 'center',
+    p: 3,
+    brs: 20,
+    b: 'none',
+    bd: 'none',
+    curp: 1,
+    cr: 'var(--white-0-0-29)',
+    mr: 3,
+    ':hover': { bd: 'var(--white-0-95)', cr: 'var(--white-0-29)' },
+  },
 }

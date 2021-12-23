@@ -5,7 +5,7 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getStyleStateObj, getStyleValueFromObjectPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
+import { getNumFromStr, getStrFromStr, getStyleStateObj, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()
@@ -13,7 +13,7 @@ export default function ShadowControlMenu({ objectPaths }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { object, paths } = objectPaths
 
-  const shadowStyle = getStyleValueFromObjectPath(getStyleStateObj(object, { themeVars, styles }), paths.shadow, { themeVars })
+  const shadowStyle = getValueByObjPath(getStyleStateObj(object, { themeVars, styles }), paths.shadow, { themeVars })
 
   const extractShadowValue = () => {
     const [xOffset, yOffset, blur, spread, color, inset] = splitValueBySpaces(shadowStyle)

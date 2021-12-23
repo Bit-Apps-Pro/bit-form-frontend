@@ -55,17 +55,17 @@ export default function SimpleColorPicker({ title,
 
   return (
     <div className={css(ut.flxcb, ut.mt2, c.containerHover)}>
-      <div className={css(ut.flxc)}>
+      <div className={css(ut.flxc, deleteable && ut.ml1)}>
         {deleteable && (
           <button title="Delete Property" onClick={delPropertyHandler} className={`${css(c.delBtn)} delete-btn`} type="button">
-            <TrashIcn size="15" />
+            <TrashIcn size="14" />
           </button>
         )}
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
         <ResetStyle objectKey={`--${modalType}`} stateObjName={stateObjName} objectPaths={objectPaths} propertyPath={propertyPath} />
-        {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
+        {allowImportant && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
             onClick={e => showDraggableModal(e, setDraggableModal, { component: 'color-picker', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
@@ -87,15 +87,23 @@ export default function SimpleColorPicker({ title,
 }
 
 const c = {
-  containerHover: {
-    '&:hover .delete-btn': {
-      bd: 'var(--b-79-96)',
-      brs: '50%',
-      cr: 'var(--b-50)',
-      oy: 1,
-      tm: 'scale(1.1)',
-    },
+  delBtn: {
+    se: 20,
+    flx: 'center',
+    b: 'none',
+    p: 0,
+    mr: 1,
+    tn: '.2s all',
+    curp: 1,
+    brs: '50%',
+    tm: 'scale(0)',
+    bd: 'none',
+    cr: 'var(--red-100-61)',
+    pn: 'absolute',
+    lt: -15,
+    ':hover': { bd: '#ffd0d0', cr: '#460000' },
   },
+  containerHover: { '&:hover .delete-btn': { tm: 'scale(1)' } },
   preview_wrp: {
     bd: 'var(--white-0-95)',
     w: 130,
@@ -124,15 +132,7 @@ const c = {
     bd: 'transparent',
     p: 0,
   },
-  delBtn: {
-    b: 'none',
-    p: 5,
-    bd: 'transparent',
-    mr: 5,
-    oy: 0,
-    tn: '.2s all',
-    curp: 1,
-  },
+
   clrVal: {
     w: 73,
     ws: 'nowrap',
