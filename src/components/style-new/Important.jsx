@@ -34,7 +34,7 @@ export default function Important({ propertyPath, className }) {
       >
         <StarIcn size="12" />
       </button>
-    </Tip >
+    </Tip>
   )
 }
 

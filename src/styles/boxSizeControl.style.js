@@ -3,7 +3,6 @@ const boxSizeControlStyle = {
     flx: 'align-center',
     jc: 'flex-end',
   },
-  titlecontainer: { flx: 'center-between' },
   title: { fs: 12 },
 
   segmentcontainer: {
