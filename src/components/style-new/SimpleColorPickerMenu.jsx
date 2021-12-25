@@ -118,7 +118,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
         }))
         break
       case 'fw-bg':
-        setThemeVars(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => produce(prvState, drft => {
           drft['--fld-wrp-bg'] = hsla
           // drft['--gfbg-h'] = Math.round(_h)
           // drft['--gfbg-s'] = `${s}%`

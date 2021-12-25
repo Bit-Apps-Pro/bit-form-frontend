@@ -49,7 +49,34 @@ export const $lightThemeColors = atom({
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 0%, 67%, 100)',
     '--global-fld-bg-color': 'hsla(0, 40%, 67%, 100)', // field background color
+
+    '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
+    '--fld-wrp-bdr': '', // field wrapper border
+    '--fld-wrp-sh': '', // field wrapper box shadow
+
+    '--lbl-wrp-bg': '', // label wrapper for background
+    '--lbl-wrp-sh': '', // label wrapper box shadow
+    '--lbl-wrp-bdr': '', // label wrapper border
+
+    '--fld-lbl-bg': '', // field label background color
+    '--fld-lbl-c': '', // field babel color
+    '--fld-lbl-sh': '', // field label box shadow
+    '--fld-lbl-bdr': '', // field label border
+
     '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
+    '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
+    '--sub-titl-sh': '', // subtitle box shadow
+    '--sub-titl-bdr': '', // subtitle border
+
+    '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
+    '--hlp-txt-c': '', // helpertext color
+    '--hlp-txt-sh': '', // helper text box shadow
+    '--hlp-txt-bdr': '', // helper text border
+
+    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
+    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
+    '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
+    '--err-bdr': 'solid red', // error message border
   },
 })
 
@@ -73,7 +100,35 @@ export const $darkThemeColors = atom({
     '--gbg-a': 100,
     '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
     '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
+
+    '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
+    '--fld-wrp-bdr': '', // field wrapper border
+    '--fld-wrp-sh': '', // field wrapper box shadow
+
+    '--lbl-wrp-bg': '', // label wrapper for background
+    '--lbl-wrp-sh': '', // label wrapper box shadow
+    '--lbl-wrp-bdr': '', // label wrapper border
+
+    '--fld-lbl-bg': '', // field label background color
+    '--fld-lbl-c': '', // field babel color
+    '--fld-lbl-sh': '', // field label box shadow
+    '--fld-lbl-bdr': '', // field label border
+
     '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
+    '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
+    '--sub-titl-sh': '', // subtitle box shadow
+    '--sub-titl-bdr': '', // subtitle border
+
+    '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
+    '--hlp-txt-c': '', // helpertext color
+    '--hlp-txt-sh': '', // helper text box shadow
+    '--hlp-txt-bdr': '', // helper text border
+
+    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
+    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
+    '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
+    '--err-bdr': 'solid red', // error message border
+
   },
 })
 
@@ -117,11 +172,11 @@ export const $themeVars = atom({
 
     '--fld-wrp-dis': '', // field wrapper display
     '--fld-wrp-fdir': '', // field wrapper flex direction
-    '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
+    // '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
     '--fld-wrp-m': '', // field wrapper margin
     '--fld-wrp-p': '10px', // field wrapper paddin
-    '--fld-wrp-sh': '', // field wrapper box shadow
-    '--fld-wrp-bdr': '', // field wrapper border
+    // '--fld-wrp-sh': '', // field wrapper box shadow
+    // '--fld-wrp-bdr': '', // field wrapper border
     '--fld-wrp-bdr-width': '', // field wrapper border width
     '--fld-wrp-bdr-rad': '', // field wrapper border radius
 
@@ -129,49 +184,49 @@ export const $themeVars = atom({
     '--lbl-wrp-width': '', // label wrapper  width
     '--lbl-wrp-m': '', // label wrapper for margin
     '--lbl-wrp-p': '', // label wrapper for padding
-    '--lbl-wrp-bg': '', // label wrapper for padding
-    '--lbl-wrp-sh': '', // label wrapper box shadow
-    '--lbl-wrp-bdr': '', // label wrapper border
+    // '--lbl-wrp-bg': '', // label wrapper for background
+    // '--lbl-wrp-sh': '', // label wrapper box shadow
+    // '--lbl-wrp-bdr': '', // label wrapper border
     '--lbl-wrp-bdr-width': '', // label wrapper border width
     '--lbl-wrp-bdr-rad': '', // label wrapper border radius
 
-    '--fld-lbl-bg': '', // field label background color
-    '--fld-lbl-c': '', // field babel color
+    // '--fld-lbl-bg': '', // field label background color
+    // '--fld-lbl-c': '', // field babel color
     '--fld-lbl-m': '', // field label margin
     '--fld-lbl-p': '', // field label padding
     '--fld-lbl-fs': '1rem', // field label font size
-    '--fld-lbl-sh': '', // field label box shadow
-    '--fld-lbl-bdr': '', // field label border
+    // '--fld-lbl-sh': '', // field label box shadow
+    // '--fld-lbl-bdr': '', // field label border
     '--fld-lbl-bdr-width': '', // field label border width
     '--fld-lbl-bdr-rad': '', // field label border radius
 
-    '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
+    // '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
     '--sub-titl-m': '', // subtitle margin
     '--sub-titl-p': '', // subtitle padding
     '--sub-titl-al': '', // subtitle align
     '--sub-titl-fs': '12px', // subtitle font size
-    '--sub-titl-sh': '', // subtitle box shadow
-    '--sub-titl-bdr': '', // subtitle border
+    // '--sub-titl-sh': '', // subtitle box shadow
+    // '--sub-titl-bdr': '', // subtitle border
     '--sub-titl-bdr-width': '', // subtitle border width
     '--sub-titl-bdr-rad': '', // subtitle border radius
 
-    '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
-    '--hlp-txt-c': '', // helpertext color
+    // '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
+    // '--hlp-txt-c': '', // helpertext color
     '--hlp-txt-m': '', // helper text margin
     '--hlp-txt-p': '', // hepler text padding
     '--hlp-txt-fs': '12px', // hepler text font size
     '--hlp-txt-al': '', // helper text align
-    '--hlp-txt-sh': '', // helper text box shadow
-    '--hlp-txt-bdr': '', // helper text border
+    // '--hlp-txt-sh': '', // helper text box shadow
+    // '--hlp-txt-bdr': '', // helper text border
     '--hlp-txt-bdr-width': '', // helper text border width
     '--hlp-txt-bdr-rad': '', // helper text border radius
 
-    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
-    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
+    // '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
+    // '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
     '--err-m': '', // error messages margin
     '--err-p': '', // error messages padding
-    '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
-    '--err-bdr': 'solid red', // error message border
+    // '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
+    // '--err-bdr': 'solid red', // error message border
     '--err-bdr-width': '1px', // error message border width
     '--err-bdr-rad': '8px', // error message border radius
   },

@@ -48,20 +48,26 @@ export default function ThemeCustomize() {
     '--g-bdr-rad': globalBorderRad,
     '--fld-fs': fldFs,
     '--g-bdr-width': globalBdrWidth,
+    '--sub-titl-bg': stBg,
+    '--sub-titl-c': stC,
+    '--sub-titl-bdr': stBdr } = themeVars
+
+  const { '--global-accent-color': globalPrimaryColor,
+    '--global-font-color': globalFontColor,
+    '--global-bg-color': globalBgColor,
+    '--global-fld-bdr-clr': globalFldBdrClr,
+    '--global-fld-bg-color': globalFldBgClr,
     '--fld-wrp-bg': fwBg,
-    '--fld-wrp-sh': fwSh,
     '--fld-wrp-bdr': fwBdr,
+    '--fld-wrp-sh': fwSh,
     '--lbl-wrp-bg': lwBg,
     '--lbl-wrp-sh': lwSh,
     '--lbl-wrp-bdr': lwBdr,
-    '--sub-titl-bg': stBg,
-    '--sub-titl-c': stC,
-    '--sub-titl-sh': stSh,
-    '--sub-titl-bdr': stBdr,
-    '--fld-lbl-bg': flBg,
     '--fld-lbl-c': flc,
     '--fld-lbl-sh': flSh,
+    '--fld-lbl-bg': flBg,
     '--fld-lbl-bdr': flBdr,
+    '--sub-titl-sh': stSh,
     '--hlp-txt-bg': htBg,
     '--hlp-txt-c': htC,
     '--hlp-txt-sh': htSh,
@@ -69,13 +75,7 @@ export default function ThemeCustomize() {
     '--err-bg': errBg,
     '--err-c': errC,
     '--err-sh': errSh,
-    '--err-bdr': errB } = themeVars
-
-  const { '--global-accent-color': globalPrimaryColor,
-    '--global-font-color': globalFontColor,
-    '--global-bg-color': globalBgColor,
-    '--global-fld-bdr-clr': globalFldBdrClr,
-    '--global-fld-bg-color': globalFldBgClr } = themeColors
+    '--err-bdr': errB } = themeColors
 
   const { '--fld-wrp-sh': tempFldWrpSh,
     '--fld-wrp-bdr': tempFldWrpBdr,
@@ -361,7 +361,7 @@ export default function ThemeCustomize() {
                 title="Background colors"
                 subtitle="Field Background Color"
                 value={fwBg}
-                stateObjName="themeVars"
+                stateObjName="themeColors"
                 propertyPath="--fld-wrp-bg"
                 modalId="fld-wp-bg"
               />
@@ -397,7 +397,7 @@ export default function ThemeCustomize() {
               title="Background Color"
               subtitle="Subtitle Background Color"
               value={lwBg}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--lbl-wrp-bg"
               modalId="lbl-wrp-bg"
             />
@@ -427,7 +427,7 @@ export default function ThemeCustomize() {
               title="Background Color"
               subtitle="Subtitle Background Color"
               value={flBg}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--fld-lbl-bg"
               modalId="fld-lbl-bg"
             />
@@ -472,7 +472,7 @@ export default function ThemeCustomize() {
               title="Text Color"
               subtitle="Text Color"
               value={stC}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--sub-titl-c"
               modalId="sub-titl-c"
             />
@@ -482,7 +482,7 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempSubTitlSh !== stSh && <ResetStyle themeVar="--sub-titl-sh" stateName="themeVars" />}
+                {tempSubTitlSh !== stSh && <ResetStyle themeVar="--sub-titl-sh" stateName="themeColors" />}
                 <ShadowControl subtitle="Subtitle Shadow" value={stSh} objectPaths={stStylePathObj} id="sub-titl-sh" />
               </div>
             </ThemeStylePropertyBlock>
@@ -501,7 +501,7 @@ export default function ThemeCustomize() {
               title="Background Color"
               subtitle="Background Color"
               value={htBg}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--hlp-txt-bg"
               modalId="hlp-txt-bg"
             />
@@ -509,7 +509,7 @@ export default function ThemeCustomize() {
               title="Text Color"
               subtitle="Text Color"
               value={htC}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--hlp-txt-c"
               modalId="hlp-txt-c"
             />
@@ -519,7 +519,7 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempHlpTxtSh !== htSh && <ResetStyle themeVar="--hlp-txt-sh" stateName="themeVars" />}
+                {tempHlpTxtSh !== htSh && <ResetStyle themeVar="--hlp-txt-sh" stateName="themeColors" />}
                 <ShadowControl subtitle="Helper Text Shadow" value={htSh} objectPaths={htStylePathObj} id="hlp-txt-sh" />
               </div>
             </ThemeStylePropertyBlock>
@@ -538,7 +538,7 @@ export default function ThemeCustomize() {
               title="Background Color"
               subtitle="Background Color"
               value={errBg}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--err-bg"
               modalId="err-bg"
             />
@@ -546,7 +546,7 @@ export default function ThemeCustomize() {
               title="Text Color"
               subtitle="Text Color"
               value={errC}
-              stateObjName="themeVars"
+              stateObjName="themeColors"
               propertyPath="--err-c"
               modalId="err-c"
             />
@@ -556,7 +556,7 @@ export default function ThemeCustomize() {
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
-                {tempErrSh !== errSh && <ResetStyle themeVar="--err-sh" stateName="themeVars" />}
+                {tempErrSh !== errSh && <ResetStyle themeVar="--err-sh" stateName="themeColors" />}
                 <ShadowControl subtitle="Error Message Shadow" value={errSh} objectPaths={errStylePathObj} id="err-sh" />
               </div>
             </ThemeStylePropertyBlock>
