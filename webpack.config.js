@@ -24,6 +24,7 @@ module.exports = (env, argv) => {
     devtool: production ? false : 'eval',
     entry: {
       index: path.resolve(__dirname, 'src/index.js'),
+      // bitformsFrontend: path.resolve(__dirname, 'src/user-frontend/index.js'),
       'bitforms-shortcode-block': path.resolve(__dirname, 'src/gutenberg-block/shortcode-block.jsx'),
       bitforms: path.resolve(__dirname, 'src/resource/sass/app.scss'),
       'bitforms-file': path.resolve(__dirname, 'src/resource/js/file-upload'),
@@ -120,7 +121,7 @@ module.exports = (env, argv) => {
         }),
       ]), */
       // new BundleAnalyzerPlugin(),
-      new CleanWebpackPlugin(),
+      // new CleanWebpackPlugin(),
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: production ? JSON.stringify('production') : JSON.stringify('development') } }),
       new MiniCssExtractPlugin({
         filename: hot ? '[name].css' : '../css/[name].css?v=[contenthash:6]',

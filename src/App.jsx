@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 
+import { useEffect } from 'react'
 import { lazy, Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Link, NavLink, Route, Switch } from 'react-router-dom'
@@ -22,6 +23,8 @@ const Error404 = lazy(() => import('./pages/Error404'))
 
 export default function App() {
   const loaderStyle = { height: '90vh' }
+
+  useEffect(() => { removeUnwantedCSS() }, [])
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
@@ -100,4 +103,19 @@ export default function App() {
       </Router>
     </Suspense>
   )
+}
+
+function removeUnwantedCSS() {
+  const conflictStyles = ['bootstrap']
+  const styles = document.styleSheets
+
+  for (let i = 0; i < styles.length; i += 1) {
+    if (styles[i].href !== null) {
+      console.log('style', styles[i])
+      const regex = new RegExp(conflictStyles.join('.*css|'), 'gi')
+      if (styles[i]?.href.match(regex)) {
+        styles[i].disabled = true
+      }
+    }
+  }
 }

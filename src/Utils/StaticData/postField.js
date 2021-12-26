@@ -15,7 +15,7 @@ export const postFields = [
   },
   {
     key: 'post_excerpt',
-    name: 'Post Excert',
+    name: 'Post Excerpt',
   },
   {
     key: '_thumbnail_id',

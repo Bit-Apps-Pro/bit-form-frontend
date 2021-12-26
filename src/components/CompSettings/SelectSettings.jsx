@@ -226,6 +226,26 @@ export default function SelectSettings() {
           tipTitle="By enabling this feature, user will see the error message if select box is empty"
         />
       )}
+      <div className="pos-rel">
+        {!bits.isPro && (
+          <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+            <div className="pro">
+              {__('Available On', 'bitform')}
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
+            </div>
+          </div>
+        )}
+        <ErrorMessageSettings
+          type="entryUnique"
+          title="Validate as Entry Unique"
+          tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        />
+      </div>
       <SingleToggle title={__('Multiple Select:', 'bitform')} action={setMultiple} isChecked={isMultiple} className="mt-3" />
       <SingleToggle title={__('Allow Other Option:', 'bitform')} action={setAllowCustomOption} isChecked={allowCustomOpt} className="mt-3 mb-2" />
       {
@@ -266,6 +286,7 @@ export default function SelectSettings() {
                   type="mx"
                   title="Max Error Message"
                   tipTitle={`By enabling this feature, user will see the error message when selected options is greater than ${fieldData.mx}`}
+                  defaultMsg="The value is already taken. Try another."
                 />
                 {/* <SingleToggle title={__('Disable if maximum selected:', 'bitform')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" /> */}
               </>
@@ -307,7 +328,7 @@ export default function SelectSettings() {
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
                 {__('Available On', 'bitform')}
-                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
                     {__('Premium', 'bitform')}

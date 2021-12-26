@@ -16,8 +16,6 @@ export default function validateForm({ form, input }) {
     fields = { [name]: fields[name] }
   }
 
-  console.log('entry', formEntries, fields)
-
   let formCanBeSumbitted = true
   const flds = Object.entries(fields)
   let { length } = flds
@@ -26,8 +24,6 @@ export default function validateForm({ form, input }) {
     const [fldKey, fldData] = flds[length]
     const fldType = fldData.typ
     const fldValue = typeof formEntries[fldKey] === 'string' ? formEntries[fldKey].trim() : formEntries[fldKey]
-
-    console.log('flddata', fldKey, fldValue, fldData)
 
     const fldDiv = document.querySelector(`#form-${contentId} .${fldKey}`)
     if (window.getComputedStyle(fldDiv).display === 'none') {
@@ -86,14 +82,36 @@ const generateFormEntries = () => {
 
 const generateErrMsg = (errKey, fldKey, fldData) => {
   const errFld = document.querySelector(`#form-${contentId} #${fldKey}-error`)
-  if (errFld) {
-    if (errKey && fldData.err[errKey].show) {
+  if (errFld && 'err' in (fldData || {})) {
+    if (errKey && fldData?.err?.[errKey]?.show) {
       errFld.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
+      errFld.parentElement.style.marginTop = '5px'
       errFld.parentElement.style.height = `${errFld.offsetHeight}px`
+      scrollToFld(fldKey)
     } else {
+      errFld.parentElement.style.marginTop = 0
       errFld.parentElement.style.height = 0
     }
   }
+}
+
+const scrollToFld = fldKey => {
+  const fld = document.querySelector(`#form-${contentId} .btcd-fld-itm.${fldKey}`)
+  const bodyRect = document.body.getBoundingClientRect()
+  const fldRect = fld.getBoundingClientRect()
+  const offsetTop = fldRect.top - bodyRect.top
+  if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
+}
+
+const isElementInViewport = elm => {
+  const rect = elm.getBoundingClientRect()
+
+  return (
+    rect.top >= 0
+    && rect.left >= 0
+    && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
 }
 
 const generateBackslashPattern = str => str.replaceAll('$_bf_$', '\\')
@@ -107,7 +125,7 @@ const urlFldValidation = (fldValue, fldData) => (!new RegExp(generateBackslashPa
 
 const dcsnbxFldValidation = (fldValue, fldData) => ((fldData.valid.req && (fldValue !== fldData.msg.checked)) ? 'req' : '')
 
-const checkFldValidation = (fldValue, fldData) => (fldData.opt.filter(opt => opt.req && !(fldValue || []).includes(opt.lbl)).length ? 'req' : '')
+const checkFldValidation = (fldValue, fldData) => (fldData?.opt?.find(opt => opt.req && !((fldValue || []).includes(opt.lbl))) ? 'req' : '')
 
 const fileupFldValidation = (fldValue, fldData) => ((fldData.valid.req && !Array.isArray(fldValue) && !fldValue.name) ? 'req' : '')
 

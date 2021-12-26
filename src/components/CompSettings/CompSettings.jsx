@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Link, NavLink, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
@@ -26,6 +26,7 @@ import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TextIcn from '../../Icons/TextIcn'
+import UserIcn from '../../Icons/UserIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import WeekIcn from '../../Icons/WeekIcn'
@@ -167,6 +168,7 @@ const RenderSettings = () => {
   const seletedFieldType = fields?.[selectedFieldId]?.typ
   switch (seletedFieldType) {
     case 'text':
+    case 'username':
     case 'number':
     case 'password':
     case 'email':
@@ -227,6 +229,8 @@ const FieldIcon = icn => {
   switch (icn) {
     case 'text':
       return <TextIcn size="23" />
+    case 'username':
+      return <UserIcn size="23" />
     case 'textarea':
       return <TextareaIcn size="23" />
     case 'check':

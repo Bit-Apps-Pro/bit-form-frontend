@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo, useState, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -192,7 +192,7 @@ function RadioCheckSettings() {
       </div>
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired || isOptionRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
           type="req"
@@ -246,6 +246,27 @@ function RadioCheckSettings() {
           </>
         )
       }
+      <div className="pos-rel">
+        {!bits.isPro && (
+          <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
+            <div className="pro">
+              {__('Available On', 'bitform')}
+              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+                <span className="txt-pro">
+                  {' '}
+                  {__('Premium', 'bitform')}
+                </span>
+              </a>
+            </div>
+          </div>
+        )}
+        <ErrorMessageSettings
+          type="entryUnique"
+          title="Validate as Entry Unique"
+          tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+          defaultMsg="The value is already taken. Try another."
+        />
+      </div>
       <button onClick={openImportModal} className="btn" type="button">
         <DownloadIcon size="16" />
         &nbsp;
@@ -289,7 +310,7 @@ function RadioCheckSettings() {
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
                 {__('Available On', 'bitform')}
-                <a href="https://bitpress.pro/" target="_blank" rel="noreferrer">
+                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                   <span className="txt-pro">
                     &nbsp;
                     {__('Premium', 'bitform')}

@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 
 import { memo, useMemo } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 import { __ } from '../../Utils/i18nwrap'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import DateIcn from '../../Icons/DateIcn'
@@ -18,6 +18,7 @@ import PaypalIcn from '../../Icons/PaypalIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TextIcn from '../../Icons/TextIcn'
+import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import UrlIcn from '../../Icons/UrlIcn'
@@ -43,6 +44,18 @@ function Toolbar({ tolbarSiz, setNewData, setTolbar }) {
         ph: __('Placeholder Text...', 'bitform'),
         valid: {},
         err: {},
+      },
+    },
+    {
+      name: __('User Name', 'bitform'),
+      icn: <UserIcn size="23" />,
+      pos: { h: 2, w: 6, i: 'n_blk', maxH: 2, minH: 2 },
+      elm: {
+        typ: 'username',
+        lbl: __('User Name', 'bitform'),
+        ph: __('Placeholder Text...', 'bitform'),
+        valid: {},
+        err: { entryUnique: { dflt: 'That User Name is taken. Try another.', show: true } },
       },
     },
     {

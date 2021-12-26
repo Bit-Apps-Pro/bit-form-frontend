@@ -32,6 +32,7 @@ function MapComponents(props) {
     case 'text':
     case 'number':
     case 'password':
+    case 'username':
     case 'email':
     case 'url':
     case 'date':
