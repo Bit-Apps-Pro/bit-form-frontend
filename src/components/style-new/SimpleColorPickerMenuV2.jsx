@@ -14,7 +14,7 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
 
-function SimpleColorPickerMenu({ action, value, objectPaths }) {
+function SimpleColorPickerMenuV2({ action, value, objectPaths }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [color, setColor] = useState()
@@ -239,7 +239,7 @@ function SimpleColorPickerMenu({ action, value, objectPaths }) {
   )
 }
 
-export default memo(SimpleColorPickerMenu)
+export default memo(SimpleColorPickerMenuV2)
 
 const c = {
   preview_wrp: {
