@@ -13,7 +13,7 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
   const [styles, setStyles] = useRecoilState($styles)
 
-  console.log({ value, objectPaths })
+  // console.log({ value, objectPaths })
   const { object, paths } = objectPaths
   const val = getValueByObjPath(styles, paths.margin || paths.padding)
   // if (value) val = `margin: ${value.margin}, padding: ${value.padding}`

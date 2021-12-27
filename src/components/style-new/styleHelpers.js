@@ -254,6 +254,8 @@ export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) |
 export const getStyleStateObj = (obj, states) => states[obj]
 
 export const getValueByObjPath = (obj, path) => {
+  if (!obj || !path) return undefined
+
   const paths = path?.split('->') || []
   if (paths.length === 1) {
     return obj[paths[0]]
@@ -273,6 +275,8 @@ export const setStyleStateObj = (obj, path, value, setStates) => {
     setStateFunc = setStates.setThemeVars
   } else if (obj === 'styles') {
     setStateFunc = setStates.setStyles
+  } else if (obj === 'themeColors') {
+    setStateFunc = setStates.setThemeColors
   }
   setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
     assignNestedObj(drftStyle, path, value)
