@@ -251,7 +251,7 @@ export const commonStyle = (fk, type) => {
 
 export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) || []
 
-export const getStyleStateObj = (obj, states) => states[obj]
+export const getObjByKey = (objName, obj) => obj[objName]
 
 export const getValueByObjPath = (obj, path) => {
   if (!obj || !path) return undefined

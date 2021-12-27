@@ -3,6 +3,7 @@ import Tippy from '@tippyjs/react'
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
+import ut from '../../../../styles/2.utilities'
 import customInputControlStyle from '../../../../styles/customInputControl.style'
 
 const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
@@ -15,9 +16,8 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
   }, [max, min, val])
 
   return (
-    <div className="flx">
+    <div className={css(ut.flxc, { cg: 3, h: 25 })}>
       <span>{min}</span>
-      &nbsp;
       <input
         type="range"
         ref={rangeRef}
@@ -28,7 +28,6 @@ const SliderInput = ({ min, max, step, val, onChangeHandler }) => {
         onInput={onChangeHandler}
         value={val}
       />
-      &nbsp;
       <span>{max}</span>
     </div>
   )

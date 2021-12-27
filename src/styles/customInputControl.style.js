@@ -91,7 +91,7 @@ const customInputControlStyle = {
     oe: 'none',
     p: 0,
     h: 6,
-    my: 12,
+    w: '80%',
     bc: '#dedede',
     bi: 'linear-gradient(90deg, #4099FF 0%, #4099FF 100%)',
     'background-size': '50% 100%',

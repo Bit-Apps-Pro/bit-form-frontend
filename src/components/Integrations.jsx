@@ -1,5 +1,5 @@
 /* eslint-disable-next-line no-undef */
-import { withQuicklink } from 'quicklink/dist/react/hoc'
+// import { withQuicklink } from 'quicklink/dist/react/hoc'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -260,4 +260,4 @@ function Integrations() {
   )
 }
 
-export default withQuicklink(Integrations)
+export default Integrations
