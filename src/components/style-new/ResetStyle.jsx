@@ -33,13 +33,12 @@ export default function ResetStyle({ stateObjName, propertyPath }) {
         propertyPath.forEach(property => {
           const styleVlu = getValueByObjPath(styles, property)
           const tempStyleVlue = getValueByObjPath(tmpStyles, property)
-          if (styleVlu !== tempStyleVlue) show = true
+          if (tempStyleVlue !== '' && styleVlu !== tempStyleVlue) show = true
         })
       } else {
         const styleVlu = getValueByObjPath(styles, propertyPath)
         const tempStyleVlue = getValueByObjPath(tmpStyles, propertyPath)
-        console.log({ styleVlu, tempStyleVlue, styles })
-        if (styleVlu !== tempStyleVlue) show = true
+        if (tempStyleVlue !== '' && styleVlu !== tempStyleVlue) show = true
       }
       break
 
