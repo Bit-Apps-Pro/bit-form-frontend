@@ -203,17 +203,30 @@ export default function ThemeCustomize() {
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
 
-        <h4 className={css(cls.subTitle)}>Color Scheme</h4>
-        <div className={css(ut.flxc, ut.w9, ut.mt1)}>
-          <button onClick={() => handlecolorScheme('light')} data-active={colorScheme === 'light'} className={css(cls.menuItem, colorScheme === 'light' && cls.clrActive)} type="button">
-            <LightIcn size="18" />
-            Light
-          </button>
-          <button onClick={() => handlecolorScheme('dark')} data-active={colorScheme === 'dark'} className={css(cls.menuItem, ut.ml2, colorScheme === 'dark' && cls.clrActive)} type="button">
-            <DarkIcn size="18" />
-            Dark
-          </button>
+        <div className={css(ut.flxc, { ws: 'nowrap', cg: 10 })}>
+          <h4 className={css(cls.subTitle)}>Color Scheme</h4>
+          <div className={css(ut.flxc, ut.w9, ut.mt1)}>
+            <button
+              onClick={() => handlecolorScheme('light')}
+              data-active={colorScheme === 'light'}
+              className={css(cls.thmBtn, colorScheme === 'light' && cls.clrActive)}
+              type="button"
+            >
+              <LightIcn size="17" />
+              Light
+            </button>
+            <button
+              onClick={() => handlecolorScheme('light')}
+              data-active={colorScheme === 'dark'}
+              className={css(cls.thmBtn, colorScheme === 'dark' && cls.clrActive)}
+              type="button"
+            >
+              <DarkIcn size="17" />
+              Dark
+            </button>
+          </div>
         </div>
+
         <div className={css(cls.divider)} />
 
         {
@@ -708,8 +721,8 @@ export default function ThemeCustomize() {
         }
 
         {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
 
@@ -740,9 +753,10 @@ const cls = {
     cur: 'pointer',
   },
   pnt: { cur: 'not-allowed' },
-  menuItem: {
-    cg: 3,
-    flx: 'align-center',
+  thmBtn: {
+    flxi: 'center',
+    cg: 4,
+    h: 30,
     ws: 'nowrap',
     fs: 12,
     fw: 500,
