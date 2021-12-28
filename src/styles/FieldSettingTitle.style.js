@@ -51,7 +51,7 @@ const style = {
     pn: 'sticky',
     tp: '0',
     bd: 'var(--white-100)',
-    zx: 10
-  }
+    zx: 10,
+  },
 }
 export default style

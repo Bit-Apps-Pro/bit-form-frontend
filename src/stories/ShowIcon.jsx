@@ -117,6 +117,7 @@ import BoxFullIcon from '../Icons/BoxFullIcon'
 import LightIcn from '../Icons/LightIcn'
 import DarkIcn from '../Icons/DarkIcn'
 import StarIcn from '../Icons/StarIcn'
+import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
 export default function ShowIcon() {
   const [searchIcon, setSearchIcon] = useState([])
@@ -751,6 +752,11 @@ export default function ShowIcon() {
       key: 'Dark Icon',
       icon: <DarkIcn size={20} />,
       com: '<DarkIcn size={18} />',
+    },
+    {
+      key: 'External-Link Icon',
+      icon: <ExternalLinkIcn size={20} />,
+      com: '<ExternalLinkIcn size={18} />',
     },
 
   ]

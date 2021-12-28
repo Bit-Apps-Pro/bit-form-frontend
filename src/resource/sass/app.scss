@@ -386,16 +386,16 @@ input[type="checkbox"].disabled:checked:before {
   &:hover {
     //background: #016fcf !important;
     background: linear-gradient(145deg,
-        hsl(var(--blue-h-s), calc(var(--blue-l) - 5%)),
-        hsl(var(--blue-h-s), calc(var(--blue-l) - 10%)),
+        hsl(var(--blue-h),var(--blue-s), calc(var(--blue-l) - 5%)),
+        hsl(var(--blue-h),var(--blue-s), calc(var(--blue-l) - 10%)),
       ) !important;
   }
 
   &:active {
     // background: #0062b8;
     background: linear-gradient(145deg,
-        hsl(var(--blue-h-s), calc(var(--blue-l) - 8%)),
-        hsl(var(--blue-h-s), calc(var(--blue-l) - 13%)),
+        hsl(var(--blue-h),var(--blue-s), calc(var(--blue-l) - 8%)),
+        hsl(var(--blue-h),var(--blue-s), calc(var(--blue-l) - 13%)),
       ) !important;
   }
 }
@@ -1560,7 +1560,8 @@ input[type="checkbox"].disabled:checked:before {
   width: 100%;
 
   & span {
-    font-weight: 600;
+    font-weight: 500;
+    margin-left: 5px
   }
 
   & input {
@@ -2582,7 +2583,7 @@ nav.top-nav {
 .btcd-modal-content {
   position: relative;
   padding: 15px;
-  height: 97%;
+  height: 100%;
 }
 
 .custom-conf-mdl {
@@ -3297,129 +3298,6 @@ select.btcd-paper-inp {
   }
 }
 
-//table checkbox start
-.btcd-label-cbx {
-  position: relative;
-  // display: inline-flex;
-  align-items: center;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  cursor: pointer;
-  margin-bottom: 0;
-  outline: none;
-  margin-right: 8px;
-
-  input {
-    &:checked {
-      + {
-        .btcd-t-cbx {
-          border-color: var(--b-50);
-
-          svg {
-            path {
-              fill: var(--b-50);
-            }
-
-            polyline {
-              stroke-dashoffset: 0;
-            }
-          }
-        }
-      }
-    }
-
-    &:indeterminate {
-      + {
-        .btcd-t-cbx {
-          border-color: var(--b-50);
-
-          svg {
-            path {
-              stroke-dashoffset: 0;
-            }
-
-            line {
-              stroke-width: 2;
-            }
-          }
-        }
-      }
-    }
-    &:focus ~ .btcd-t-cbx path{
-      stroke-dashoffset: 0;
-    }
-  }
-
-  &:hover {
-    .btcd-t-cbx path {
-        stroke-dashoffset: 0;
-    }
-  }
-
-  .btcd-cbx-title {
-    font-size: 14px;
-  }
-
-  .btcd-t-cbx {
-    position: relative;
-    float: left;
-    width: 20px;
-    height: 20px;
-    // border       : 2px solid #c8ccd4;
-    border: 2px solid var(--b-12-81);
-    border-radius: 3px;
-
-    svg {
-      position: absolute;
-      top: -2px;
-      left: -2px;
-
-      path {
-        fill: none;
-        stroke: var(--b-50);
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 70px;
-        stroke-dashoffset: 71px;
-        transition: all 0.6s ease;
-      }
-
-      polyline {
-        fill: none;
-        stroke: var(--white);
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-dasharray: 18px;
-        stroke-dashoffset: 18px;
-        transition: all 0.3s ease;
-      }
-
-      line {
-        stroke: var(--b-50);
-        stroke-width: 0;
-        stroke-linecap: round;
-      }
-    }
-  }
-
-  >span {
-    line-height: 1;
-    vertical-align: middle;
-  }
-}
-
-.btcd-cbx-invisible {
-  position: absolute;
-  left: 0;
-  // z-index: -1;
-  width: 0;
-  height: 0;
-  opacity: 0;
-}
-
-// table checkbox end
 .btcd-t-resizer {
   display: inline-block;
   background: transparent;
@@ -4114,6 +3992,7 @@ select.btcd-paper-inp {
     line-height: 1;
     border-radius: 8px;
     width: 100%;
+    max-width: 100%;
     padding: 10px 25px 10px 10px;
     outline: none;
     border: 1px solid var(--gray-3);
@@ -4902,6 +4781,11 @@ _:-ms-fullscreen,
 .py-1 {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.px-1 {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .br-5 {

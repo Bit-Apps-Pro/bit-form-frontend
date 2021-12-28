@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { $forms } from '../GlobalStates'
+import ut from '../styles/2.utilities'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
+import TableCheckBox from './Utilities/TableCheckBox'
+import CustomFileUpload from './Utilities/CustomFileUpload'
 
 export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
   const setForms = useSetRecoilState($forms)
@@ -106,100 +109,53 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       }
     })
   }
+
   return (
-    <div className="flx flx-col flx-center mt-4">
-      <div className="fld-wrp">
-        <input
-          type="file"
-          accept=".json"
-          name="formDetail"
-          onChange={handleChange}
-        />
-        {error.formDetail && <span className="btcd-btn-o-red">{error.formDetail}</span>}
-      </div>
-      <br />
-      <br />
-      <div className="fld-wrp">
-        <div className="fld-lbl">Please select property you want to import with form</div>
-        <div className="no-drg fld btcd-ck-con btcd-round">
-          <label className="btcd-ck-wrp">
-            <span>All</span>
-            <input
-              value="all"
-              type="checkbox"
-              defaultChecked
-              checked={importProp.prop.indexOf('all') >= 0}
-              name="prop"
-              onChange={handleChange}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
-          <label className="btcd-ck-wrp">
-            <span>Form Settings</span>
-            <input
-              value="additional"
-              type="checkbox"
-              defaultChecked
-              checked={importProp.prop.indexOf('additional') >= 0}
-              name="prop"
-              onChange={handleChange}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
-          <label className="btcd-ck-wrp">
-            <span>Confirmations</span>
-            <input
-              value="confirmation"
-              type="checkbox"
-              defaultChecked
-              checked={importProp.prop.indexOf('confirmation') >= 0}
-              name="prop"
-              onChange={handleChange}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
-          <label className="btcd-ck-wrp">
-            <span>Conditional Logics</span>
-            <input
-              value="workFlows"
-              type="checkbox"
-              defaultChecked
-              checked={importProp.prop.indexOf('workFlows') >= 0}
-              name="prop"
-              onChange={handleChange}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
-          <label className="btcd-ck-wrp">
-            <span>Email Templates</span>
-            <input
-              value="mailTem"
-              type="checkbox"
-              defaultChecked
-              checked={importProp.prop.indexOf('mailTem') >= 0}
-              name="prop"
-              onChange={handleChange}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
-          <label className="btcd-ck-wrp">
-            <span>Integrations</span>
-            <input
-              value="integrations"
-              type="checkbox"
-              defaultChecked
-              checked={importProp.prop.indexOf('integrations') >= 0}
-              name="prop"
-              onChange={handleChange}
-            />
-            <span className="btcd-mrk ck" />
-          </label>
+    <div className={css({ flx: 'between', fd: 'column', h: '91%' })}>
+
+      <div className={css({ flx: 'center', fd: 'column', mt: 15 })}>
+        <CustomFileUpload accept=".json" name="formDetail" onChange={handleChange} iconShow />
+        {error.formDetail && <span className={css(cls.error)}>{error.formDetail}</span>}
+        <br />
+        <br />
+        <div className="fld-wrp">
+          <div className={`${css(ut.mb1)} fld-lbl`}>Please select property you want to import with form</div>
+          <TableCheckBox title=" All" value="all" checked={importProp.prop.indexOf('all') >= 0} name="prop" onChange={handleChange} />
+          <div className={css(cls.inputWraper)}>
+
+            <TableCheckBox title=" Additional" value="additional" checked={importProp.prop.indexOf('additional') >= 0} name="prop" onChange={handleChange} />
+
+            <TableCheckBox title=" Confirmations" value="confirmation" checked={importProp.prop.indexOf('confirmation') >= 0} name="prop" onChange={handleChange} />
+
+            <TableCheckBox title=" Conditional Logics" value="workFlows" checked={importProp.prop.indexOf('workFlows') >= 0} name="prop" onChange={handleChange} />
+
+            <TableCheckBox title=" Email Templates" value="mailTem" checked={importProp.prop.indexOf('mailTem') >= 0} name="prop" onChange={handleChange} />
+
+            <TableCheckBox title=" Integrations" value="integrations" checked={importProp.prop.indexOf('integrations') >= 0} name="prop" onChange={handleChange} />
+          </div>
         </div>
       </div>
-      <div className="flx flx-between w-5">
-        <button onClick={() => setModal(false)} className={`${css(app.btn)} round btcd-btn-lg blue blue-sh`} type="button"> Cancel </button>
-        <button onClick={handleImport} className={`${css(app.btn)} round btcd-btn-lg blue blue-sh`} type="button"> Import </button>
+      <div className={css(cls.btnContainer)}>
+        <button onClick={() => setModal(false)} className={`${css(app.btn)}`} type="button"> Cancel </button>
+        <button onClick={handleImport} className={`${css(app.btn, app.blueGrd)}`} type="button"> Import </button>
       </div>
     </div>
   )
+}
+
+const cls = {
+  btnContainer: {
+    flx: 'center',
+    jc: 'end',
+    cg: 10,
+    w: '100%',
+    h: 40,
+  },
+  inputWraper: { my: 10, rg: 5, flx: 'align-center', flxp: '' },
+  error: {
+    cr: 'var(--red-83-54)',
+    tn: 'background 0.2s !important',
+    mt: 5,
+    ':hover': { cr: 'var(--red-100-49)' },
+  },
 }

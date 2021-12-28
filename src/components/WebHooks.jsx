@@ -4,6 +4,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
+import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import StackIcn from '../Icons/StackIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import ut from '../styles/2.utilities'
@@ -11,6 +12,7 @@ import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import LoaderSm from './Loaders/LoaderSm'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -18,6 +20,7 @@ import SnackMsg from './Utilities/SnackMsg'
 
 function WebHooks({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
+  const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
@@ -114,15 +117,19 @@ function WebHooks({ removeIntegration }) {
   }
 
   const testWebhook = webHookId => {
+    setIsLoading(true)
     const confirmation = deepCopy(allConf)
     bitsFetch({ hookDetails: confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
         setSnackbar({ show: true, msg: `${response.data}` })
+        setIsLoading(false)
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
         setSnackbar({ show: true, msg: `${msg}. ${__('please try again', 'bitform')}` })
+        setIsLoading(false)
       } else {
         setSnackbar({ show: true, msg: __('Webhook tests failed. please try again', 'bitform') })
+        setIsLoading(false)
       }
     })
   }
@@ -196,7 +203,11 @@ function WebHooks({ removeIntegration }) {
                   </select>
                 </div>
               </div>
-              <Button onClick={() => testWebhook(i)} className={`${css(app.btn)} btcd-btn-o-blue`}>{__('Test Webhook', 'bitform')}</Button>
+              <Button onClick={() => testWebhook(i)} className={css(app.btn, app.btn_blue_otln)}>
+                {__('Test Webhook', 'bitform')}
+                {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
+                <ExternalLinkIcn size={18} className="ml-1" />
+              </Button>
               <br />
               <br />
               <div className="f-m">{__('Add Url Parameter: (optional)', 'bitform')}</div>

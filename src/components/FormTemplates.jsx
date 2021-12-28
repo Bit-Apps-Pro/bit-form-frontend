@@ -9,6 +9,7 @@ import DownloadIcon from '../Icons/DownloadIcon'
 import FormIcn from '../Icons/FormIcn'
 // import bitsFetch from '../Utils/bitsFetch'
 import app from '../styles/app.style'
+import TableCheckBox from './Utilities/TableCheckBox'
 
 export default function FormTemplates({ setTempModal, newFormId, setSnackbar }) {
   const [modal, setModal] = useState(false)
