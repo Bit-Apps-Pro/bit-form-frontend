@@ -15,6 +15,6 @@ const editorConfig = {
     margin: '0px',
     padding: '0px',
     border: '',
-  }
+  },
 }
 export default editorConfig
