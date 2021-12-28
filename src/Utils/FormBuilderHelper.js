@@ -148,11 +148,14 @@ export function convertLayout(lay, tc, fieldMinW = 1) {
         y: lastItem.y,
       })
 
-      setYaxisCount(lastItem.y, lastItem.y + layoutItem.h,
+      setYaxisCount(
+        lastItem.y,
+        lastItem.y + layoutItem.h,
         [
           lastItem.x + lastItem.w,
           layoutItem.w + lastItem.x + lastItem.w,
-        ])
+        ],
+      )
       layoutItemIndex += 1
       continue
     }
@@ -447,4 +450,6 @@ export const propertyValueSumY = (propertyValue = '') => {
   const summ = arr?.reduce((pv, cv) => Number(pv) + Number(cv), 0)
   return summ || 0
 }
+
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
+
