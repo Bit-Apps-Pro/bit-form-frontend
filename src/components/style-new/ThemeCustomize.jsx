@@ -179,7 +179,7 @@ export default function ThemeCustomize() {
     }
   }
 
-  const handlecolorScheme = (colorName) => setColorScheme(colorName)
+  const handlecolorScheme = (colorSchemeName) => setColorScheme(colorSchemeName)
 
   return (
     <div className={css(cls.mainWrapper)}>
@@ -216,7 +216,7 @@ export default function ThemeCustomize() {
               Light
             </button>
             <button
-              onClick={() => handlecolorScheme('light')}
+              onClick={() => handlecolorScheme('dark')}
               data-active={colorScheme === 'dark'}
               className={css(cls.thmBtn, colorScheme === 'dark' && cls.clrActive)}
               type="button"
