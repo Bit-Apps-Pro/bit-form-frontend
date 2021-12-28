@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $colorScheme, $darkThemeColors, $lightThemeColors, $styles, $themeVars } from '../../GlobalStates'
@@ -16,7 +17,8 @@ export default function RenderThemeVarsAndFormCSS() {
       <style>{json2CssStr('.layout-wrapper', themeVars)}</style>
       {colorScheme === 'light' && <style>{json2CssStr('.layout-wrapper', lightThemeColors)}</style>}
       {colorScheme === 'dark' && <style>{json2CssStr('.layout-wrapper', darkThemeColors)}</style>}
-      <style>{json2CssStr(`._frm-${formID}`, styles.form._frm)}</style>
+      <style>{json2CssStr(`._frm-${formID}`, styles.form[colorScheme]._frm)}</style>
+      <style>{json2CssStr(`._frm-bg-${formID}`, styles.form[colorScheme]['_frm-bg'])}</style>
     </>
   )
 }

@@ -13,6 +13,23 @@ const sc = {
     ':focus': { focusShadow: 1 },
   },
   childPmargin0: { '& p': { m: 0 } },
+  propsElemContainer: { '&:hover .delete-btn': { tm: 'scale(1)' } },
+  propsDelBtn: {
+    se: 20,
+    flx: 'center',
+    b: 'none',
+    p: 0,
+    mr: 1,
+    tn: '.2s all',
+    curp: 1,
+    brs: '50%',
+    tm: 'scale(0)',
+    bd: 'none',
+    cr: 'var(--red-100-61)',
+    pn: 'absolute',
+    lt: -15,
+    ':hover': { bd: '#ffd0d0', cr: '#460000' },
+  },
 }
 
 export default sc

@@ -244,7 +244,16 @@ export const $styles = atom({
   key: '$styles',
   default: {
     theme: 'bitformDefault',
-    form: { _frm: { background: 'var(--global-bg-color)' } },
+    form: {
+      light: {
+        _frm: { background: 'var(--global-bg-color)' },
+        '_frm-bg': { padding: '10px' },
+      },
+      dark: {
+        _frm: { background: 'var(--global-bg-color)' },
+        '_frm-bg': { padding: '10px' },
+      },
+    },
     fields: {},
   },
 })

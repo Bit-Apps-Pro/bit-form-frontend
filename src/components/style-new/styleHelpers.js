@@ -254,8 +254,7 @@ export const splitValueBySpaces = str => str?.split(/(?!\(.*)\s(?![^(]*?\))/g) |
 export const getObjByKey = (objName, obj) => obj[objName]
 
 export const getValueByObjPath = (obj, path) => {
-  if (!obj || !path) return undefined
-
+  if (!obj || !path) return null
   const paths = path?.split('->') || []
   if (paths.length === 1) {
     return obj[paths[0]]
@@ -281,4 +280,10 @@ export const setStyleStateObj = (obj, path, value, setStates) => {
   setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
     assignNestedObj(drftStyle, path, value)
   }))
+}
+
+export function arrDiff(arr1, arr2) {
+  return arr1
+    .filter(x => !arr2.includes(x))
+    .concat(arr2.filter(x => !arr1.includes(x)))
 }

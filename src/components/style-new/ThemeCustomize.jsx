@@ -21,7 +21,9 @@ import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
 import FieldMarginControl from './FieldMarginControl'
 import FontPicker from './FontPicker'
+import FormContainerCustomizer from './FormContainerCustomizer'
 import FormWrapperControl from './FormWrapperControl'
+import FormWrapperCustomizer from './FormWrapperCustomizer'
 import LabelControl from './LabelControl'
 import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
@@ -356,6 +358,9 @@ export default function ThemeCustomize() {
             </div>
           </>
         )}
+
+        {element === 'form-wrapper' && <FormWrapperCustomizer />}
+        {element === 'form-container' && <FormContainerCustomizer />}
 
         {
           element === 'field-container' && (
