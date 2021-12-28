@@ -73,7 +73,8 @@ function IndividualShadowControlMenu({ propertyPath }) {
   const addShadowHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drftStyles => {
       const getOldShadow = getShadowStyleVal()
-      assignNestedObj(drftStyles, propertyPath, `${getOldShadow},`)
+      const newShadow = getOldShadow === undefined || getOldShadow === '' ? '3px -35px 54px -10px hsla(0, 44%, 35%, 66%) inset' : `${getOldShadow},`
+      assignNestedObj(drftStyles, propertyPath, newShadow)
     }))
   }
   const deleteShadow = (indx) => {

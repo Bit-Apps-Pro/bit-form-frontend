@@ -65,7 +65,7 @@ export default function SimpleColorPicker({ title,
         <span className={css(ut.fw500)}>{__(title, 'bitform')}</span>
       </div>
       <div className={css(ut.flxc)}>
-        <ResetStyle objectKey={`--${modalType}`} stateObjName={stateObjName} objectPaths={objectPaths} propertyPath={propertyPath} />
+        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
         {allowImportant && <Important className={css({ mr: 3 })} stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button

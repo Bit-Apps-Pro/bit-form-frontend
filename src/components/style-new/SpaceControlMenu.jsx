@@ -61,7 +61,8 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
     <>
       {paths?.margin && (
         <SpaceControl
-          isResetable={checkIsResetable(paths.margin)}
+          stateObjName={objectPaths.object}
+          propertyPath={objectPaths.paths.margin}
           undoHandler={() => undoHandler(paths.margin)}
           value={getVal(paths.margin)}
           title="Margin"
@@ -71,7 +72,8 @@ export default function SpaceControlMenu({ value: spacing, objectPaths }) {
       )}
       {paths?.padding && (
         <SpaceControl
-          isResetable={checkIsResetable(paths.padding)}
+          stateObjName={objectPaths.object}
+          propertyPath={objectPaths.paths.padding}
           undoHandler={() => undoHandler(paths.padding)}
           value={getVal(paths.padding)}
           title="Padding"

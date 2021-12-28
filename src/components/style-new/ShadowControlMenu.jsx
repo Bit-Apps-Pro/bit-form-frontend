@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $themeVars, $styles } from '../../GlobalStates'
+import { $styles, $themeColors } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -9,11 +9,12 @@ import { getNumFromStr, getStrFromStr, getObjByKey, getValueByObjPath, setStyleS
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
   const { object, paths } = objectPaths
 
-  const shadowStyleStr = getValueByObjPath(getObjByKey(object, { themeVars, styles }), paths.shadow, { themeVars })
+  const currentState = getObjByKey(object, { themeColors, styles })
+  const shadowStyleStr = getValueByObjPath(currentState, paths.shadow, { themeColors, styles })
 
   const shadowValues = extractShadowValue(shadowStyleStr)
 
@@ -35,7 +36,7 @@ export default function ShadowControlMenu({ objectPaths }) {
       return newShadowVal(shName, shVal, '')
     }).join(' ')
 
-    setStyleStateObj(object, paths.shadow, newshadowStyleStr, { setThemeVars, setStyles })
+    setStyleStateObj(object, paths.shadow, newshadowStyleStr, { setThemeColors, setStyles })
   }
 
   const unitHandler = (name, unit, value, oldVal) => {

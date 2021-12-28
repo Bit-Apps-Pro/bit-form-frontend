@@ -274,6 +274,8 @@ export const setStyleStateObj = (obj, path, value, setStates) => {
     setStateFunc = setStates.setThemeVars
   } else if (obj === 'styles') {
     setStateFunc = setStates.setStyles
+  } else if (obj === 'themeColors') {
+    setStateFunc = setStates.setThemeColors
   }
   setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
     assignNestedObj(drftStyle, path, value)

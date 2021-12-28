@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import BoxFullIcon from '../../../../Icons/BoxFullIcon'
 import BoxIcon from '../../../../Icons/BoxIcon'
-import UndoIcon from '../../../../Icons/UndoIcon'
 import ut from '../../../../styles/2.utilities'
+import ResetStyle from '../../../style-new/ResetStyle'
 import { getNumFromStr, getStrFromStr, unitConverter } from '../../../style-new/styleHelpers'
 import StyleSegmentControl from '../../../Utilities/StyleSegmentControl'
 import Grow from './Grow'
@@ -13,9 +13,9 @@ export default function SpaceControl({ value,
   unitOption,
   title,
   onChange = () => { },
-  undoHandler,
-  isResetable,
-  className }) {
+  className,
+  stateObjName,
+  propertyPath }) {
   const { css } = useFela()
   let values = (value || '0px 0px 0px 0px').trim().split(' ')
 
@@ -81,12 +81,7 @@ export default function SpaceControl({ value,
     <div className={className}>
       <div className={css(s.titlecontainer)}>
         <span className={css(s.title)}>{title}</span>
-        {isResetable
-          && (
-            <button onClick={undoHandler} type="button">
-              <UndoIcon size="18" />
-            </button>
-          )}
+        <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
         <StyleSegmentControl
           square
           defaultActive="All"

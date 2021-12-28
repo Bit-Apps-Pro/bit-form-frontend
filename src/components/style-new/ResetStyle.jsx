@@ -9,7 +9,7 @@ import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import Tip from '../Utilities/Tip'
 import { getValueByObjPath } from './styleHelpers'
 
-export default function ResetStyle({ objectKey, stateName, objectPaths, stateObjName, propertyPath }) {
+export default function ResetStyle({ stateObjName, propertyPath }) {
   const { lightThemeColors: tmpLightThemeColors,
     darkThemeColors: tmpDarkThemeColors,
     themeVars: tmpThemeVars,
@@ -21,28 +21,60 @@ export default function ResetStyle({ objectKey, stateName, objectPaths, stateObj
   const [darkThemeColors, setDarkThemeColors] = useRecoilState($darkThemeColors)
   const [lightThemeColors, setLightThemeColors] = useRecoilState($lightThemeColors)
 
+  // console.log({ stateObjName, lightThemeColors, propertyPath },
+  //   'lightThemeColors', lightThemeColors[propertyPath],
+  //   'temlighThemeColors', tmpLightThemeColors,
+  //   darkThemeColors[propertyPath] === tmpDarkThemeColors[propertyPath],
+  // )
   let show = false
   switch (stateObjName) {
     case 'styles':
-      const styleVlu = getValueByObjPath(styles, propertyPath)
-      const tempStyleVlue = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, propertyPath)
-      if (styleVlu !== tempStyleVlue) show = true
+      if (Array.isArray(propertyPath)) {
+        propertyPath.forEach(property => {
+          const styleVlu = getValueByObjPath(styles, property)
+          const tempStyleVlue = getValueByObjPath(tmpStyles, property)
+          if (styleVlu !== tempStyleVlue) show = true
+        })
+      } else {
+        const styleVlu = getValueByObjPath(styles, propertyPath)
+        const tempStyleVlue = getValueByObjPath(tmpStyles, propertyPath)
+        console.log({ styleVlu, tempStyleVlue, styles })
+        if (styleVlu !== tempStyleVlue) show = true
+      }
       break
 
     case 'themeVars':
-      if (tmpThemeVars?.[propertyPath] && themeVar?.[propertyPath] !== tmpThemeVars?.[propertyPath]) {
-        console.log('reset ', tmpThemeVars?.[propertyPath], themeVar?.[propertyPath])
+      if (Array.isArray(propertyPath)) {
+        propertyPath.forEach(property => {
+          if (tmpThemeVars?.[property] && themeVar?.[property] !== tmpThemeVars?.[property]) {
+            // console.log('reset ', tmpThemeVars?.[property], themeVar?.[property])
+            show = true
+          }
+        })
+      } else if (tmpThemeVars?.[propertyPath] && themeVar?.[propertyPath] !== tmpThemeVars?.[propertyPath]) {
         show = true
       }
       break
 
     case 'themeColors':
       if (colorScheme === 'light') {
-        if (tmpLightThemeColors?.[propertyPath] && tmpLightThemeColors?.[propertyPath] !== lightThemeColors?.[propertyPath]) {
+        if (Array.isArray(propertyPath)) {
+          propertyPath.forEach(property => {
+            if (tmpLightThemeColors?.[property] && tmpLightThemeColors?.[property] !== lightThemeColors?.[property]) {
+              show = true
+            }
+          })
+        } else if (tmpLightThemeColors?.[propertyPath] && tmpLightThemeColors?.[propertyPath] !== lightThemeColors?.[propertyPath]) {
           show = true
         }
       } else if (colorScheme === 'dark') {
-        if (tmpDarkThemeColors?.[propertyPath] && tmpDarkThemeColors?.[propertyPath] !== darkThemeColors?.[propertyPath]) {
+        if (Array.isArray(propertyPath)) {
+          propertyPath.forEach(property => {
+            if (tmpDarkThemeColors?.[property] && tmpDarkThemeColors?.[property] !== darkThemeColors?.[property]) {
+              show = true
+            }
+          })
+        } else if (tmpDarkThemeColors?.[propertyPath] && tmpDarkThemeColors?.[propertyPath] !== darkThemeColors?.[propertyPath]) {
           show = true
         }
       }
@@ -52,30 +84,30 @@ export default function ResetStyle({ objectKey, stateName, objectPaths, stateObj
       break
   }
 
-  const resetValue = () => {
+  const resetValue = (path) => {
     switch (stateObjName) {
       case 'themeVars':
-        if (!tmpThemeVars[propertyPath]) return
-        setThemeVar(prvStyle => produce(prvStyle, drft => { drft[propertyPath] = tmpThemeVars[propertyPath] }))
+        if (!tmpThemeVars[path]) return
+        setThemeVar(prvStyle => produce(prvStyle, drft => { drft[path] = tmpThemeVars[path] }))
         break
       case 'themeColors':
         if (colorScheme === 'light') {
-          if (!tmpLightThemeColors[propertyPath]) return
+          if (!tmpLightThemeColors[path]) return
           setLightThemeColors(prvStyle => produce(prvStyle, drft => {
-            drft[propertyPath] = tmpLightThemeColors[propertyPath]
+            drft[path] = tmpLightThemeColors[path]
           }))
         } else {
-          if (!tmpDarkThemeColors[propertyPath]) return
+          if (!tmpDarkThemeColors[path]) return
           setDarkThemeColors(prvStyle => produce(prvStyle, drft => {
-            drft[propertyPath] = tmpDarkThemeColors[propertyPath]
+            drft[path] = tmpDarkThemeColors[path]
           }))
         }
         break
       case 'styles':
-        const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, propertyPath)
+        const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, path)
         if (value) {
           setStyles(prvStyle => produce(prvStyle, drft => {
-            assignNestedObj(drft, propertyPath, value)
+            assignNestedObj(drft, path, value)
           }))
         }
         break
@@ -86,8 +118,8 @@ export default function ResetStyle({ objectKey, stateName, objectPaths, stateObj
   }
 
   const reset = () => {
-    if (Array.isArray(objectKey)) objectKey.forEach(v => resetValue(v))
-    else resetValue()
+    if (Array.isArray(propertyPath)) propertyPath.forEach(path => resetValue(path))
+    else resetValue(propertyPath)
   }
 
   return (
