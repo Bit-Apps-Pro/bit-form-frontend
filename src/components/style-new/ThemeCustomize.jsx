@@ -36,7 +36,6 @@ export default function ThemeCustomize() {
   const { formType, formID, element } = useParams()
   const setStyles = useSetRecoilState($styles)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const { themeVars: tempThemeVars } = useRecoilValue($tempStyles)
   const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
 
   const setFlags = useSetRecoilState($flags)
@@ -77,10 +76,6 @@ export default function ThemeCustomize() {
     '--err-sh': errSh,
     '--err-bdr': errB,
     '--sub-titl-c': stC } = themeColors
-
-  const { '--hlp-txt-bdr': tempHlpTxtBdr,
-    '--err-sh': tempErrSh,
-    '--err-bdr': tempErrBdr } = tempThemeVars
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
@@ -179,10 +174,6 @@ export default function ThemeCustomize() {
       default: return 'Theme Customization'
     }
   }
-
-  // const openHandler = (value) => {
-  //   setActiveAccordion(value)
-  // }
 
   const handlecolorScheme = ({ target: { name } }) => setColorScheme(name)
 
@@ -404,7 +395,8 @@ export default function ThemeCustomize() {
               <ThemeStylePropertyBlock label="Border">
                 <div className={css(ut.flxc)}>
                   <ResetStyle
-                    propertyPath={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']}
+                    // propertyPath={['--fld-wrp-bdr', '--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']}
+                    propertyPath={['--fld-wrp-bdr-width', '--fld-wrp-bdr-rad']}
                     stateObjName="themeVars"
                   />
                   <BorderControl
@@ -456,7 +448,8 @@ export default function ThemeCustomize() {
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 <ResetStyle
-                  propertyPath={['--lbl-wrp-bdr', '--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']}
+                  // propertyPath={['--lbl-wrp-bdr', '--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']}
+                  propertyPath={['--lbl-wrp-bdr-width', '--lbl-wrp-bdr-rad']}
                   stateObjName="themeVars"
                 />
                 <BorderControl
@@ -514,7 +507,8 @@ export default function ThemeCustomize() {
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 <ResetStyle
-                  propertyPath={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']}
+                  // propertyPath={['--fld-lbl-bdr', '--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']}
+                  propertyPath={['--fld-lbl-bdr-width', '--fld-lbl-bdr-rad']}
                   stateObjName="themeVars"
                 />
                 <BorderControl
@@ -572,7 +566,8 @@ export default function ThemeCustomize() {
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
                 <ResetStyle
-                  propertyPath={['--sub-titl-bdr', '--sub-titl-bdr-width', '--sub-titl-bdr-rad']}
+                  // propertyPath={['--sub-titl-bdr', '--sub-titl-bdr-width', '--sub-titl-bdr-rad']}
+                  propertyPath={['--sub-titl-bdr-width', '--sub-titl-bdr-rad']}
                   stateObjName="themeVars"
                 />
                 <BorderControl
@@ -629,8 +624,17 @@ export default function ThemeCustomize() {
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempHlpTxtBdr !== htBdr && <ResetStyle propertyPath={['--hlp-txt-bdr', '--hlp-txt-bdr-width', '--hlp-txt-bdr-rad']} stateObjName="themeVars" />}
-                <BorderControl subtitle="Helper Text Border" value={htBdr} objectPaths={htStylePathObj} id="hlp-txt-control" />
+                <ResetStyle
+                  // propertyPath={['--hlp-txt-bdr', '--hlp-txt-bdr-width', '--hlp-txt-bdr-rad']}
+                  propertyPath={['--hlp-txt-bdr-width', '--hlp-txt-bdr-rad']}
+                  stateObjName="themeVars"
+                />
+                <BorderControl
+                  subtitle="Helper Text Border"
+                  value={htBdr}
+                  objectPaths={htStylePathObj}
+                  id="hlp-txt-control"
+                />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -656,7 +660,12 @@ export default function ThemeCustomize() {
             />
             <div className={css(ut.flxcb, ut.mt2)}>
               <span className={css(ut.fw500)}>{__('Spacing', 'bitform')}</span>
-              <SpacingControl action={{ type: 'spacing-control' }} subtitle="Spacing control" objectPaths={errMsgSpacingObj} id="err-spacing-control" />
+              <SpacingControl
+                action={{ type: 'spacing-control' }}
+                subtitle="Spacing control"
+                objectPaths={errMsgSpacingObj}
+                id="err-spacing-control"
+              />
             </div>
             <ThemeStylePropertyBlock label="Shadow">
               <div className={css(ut.flxc)}>
@@ -674,8 +683,17 @@ export default function ThemeCustomize() {
             </ThemeStylePropertyBlock>
             <ThemeStylePropertyBlock label="Border">
               <div className={css(ut.flxc)}>
-                {tempErrBdr !== errB && <ResetStyle propertyPath={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} stateObjName="themeVars" />}
-                <BorderControl subtitle="Error Message Border" value={errB} objectPaths={errStylePathObj} id="err-control" />
+                {/* <ResetStyle propertyPath={['--err-bdr', '--err-bdr-width', '--err-bdr-rad']} stateObjName="themeVars" /> */}
+                <ResetStyle
+                  propertyPath={['--err-bdr-width', '--err-bdr-rad']}
+                  stateObjName="themeVars"
+                />
+                <BorderControl
+                  subtitle="Error Message Border"
+                  value={errB}
+                  objectPaths={errStylePathObj}
+                  id="err-control"
+                />
               </div>
             </ThemeStylePropertyBlock>
           </div>
@@ -757,7 +775,8 @@ const stSpacingObj = {
 }
 const fwStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--fld-wrp-sh', border: '--fld-wrp-bdr', borderWidth: '--fld-wrp-bdr-width', borderRadius: '--fld-wrp-bdr-rad' },
+  borderObjName: 'themeColors',
+  paths: { border: '--fld-wrp-bdr', borderWidth: '--fld-wrp-bdr-width', borderRadius: '--fld-wrp-bdr-rad' },
 }
 const fldwrpShPathObj = {
   object: 'themeColors',
@@ -765,7 +784,8 @@ const fldwrpShPathObj = {
 }
 const lwStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--lbl-wrp-sh', border: '--lbl-wrp-bdr', borderWidth: '--lbl-wrp-bdr-width', borderRadius: '--lbl-wrp-bdr-rad' },
+  borderObjName: 'themeColors',
+  paths: { border: '--lbl-wrp-bdr', borderWidth: '--lbl-wrp-bdr-width', borderRadius: '--lbl-wrp-bdr-rad' },
 }
 const labwrpShObj = {
   object: 'themeColors',
@@ -773,6 +793,7 @@ const labwrpShObj = {
 }
 const flStylePathObj = {
   object: 'themeVars',
+  borderObjName: 'themeColors',
   paths: { border: '--fld-lbl-bdr', borderWidth: '--fld-lbl-bdr-width', borderRadius: '--fld-lbl-bdr-rad' },
 }
 const fldLblShObj = {
@@ -781,7 +802,8 @@ const fldLblShObj = {
 }
 const stStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--sub-titl-sh', border: '--sub-titl-bdr', borderWidth: '--sub-titl-bdr-width', borderRadius: '--sub-titl-bdr-rad' },
+  borderObjName: 'themeColors',
+  paths: { border: '--sub-titl-bdr', borderWidth: '--sub-titl-bdr-width', borderRadius: '--sub-titl-bdr-rad' },
 }
 const subTitlShObj = {
   object: 'themeColors',
@@ -789,7 +811,8 @@ const subTitlShObj = {
 }
 const htStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--hlp-txt-sh', border: '--hlp-txt-bdr', borderWidth: '--hlp-txt-bdr-width', borderRadius: '--hlp-txt-bdr-rad' },
+  borderObjName: 'themeColors',
+  paths: { border: '--hlp-txt-bdr', borderWidth: '--hlp-txt-bdr-width', borderRadius: '--hlp-txt-bdr-rad' },
 }
 const hlpTxtShObj = {
   object: 'themeColors',
@@ -797,7 +820,8 @@ const hlpTxtShObj = {
 }
 const errStylePathObj = {
   object: 'themeVars',
-  paths: { shadow: '--err-sh', border: '--err-bdr', borderWidth: '--err-bdr-width', borderRadius: '--err-bdr-rad' },
+  borderObjName: 'themeColors',
+  paths: { border: '--err-bdr', borderWidth: '--err-bdr-width', borderRadius: '--err-bdr-rad' },
 }
 const errShObj = {
   object: 'themeColors',

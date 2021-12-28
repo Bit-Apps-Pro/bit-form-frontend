@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $themeVars, $styles } from '../../../../GlobalStates'
+import { $styles, $themeColors, $themeVars } from '../../../../GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
@@ -12,13 +12,17 @@ export default function BorderControlMenu({ objectPaths }) {
   const { css } = useFela()
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
 
-  const { object, paths } = objectPaths
+  const { object, borderObjName, paths } = objectPaths
 
   const stateObj = getObjByKey(object, { themeVars, styles })
 
-  const borderStyle = getValueByObjPath(stateObj, paths.border)
+  const borderStyleStateObj = getObjByKey(borderObjName, { themeVars, themeColors, styles })
+  const borderStylePath = paths.border
+
+  const borderStyle = getValueByObjPath(borderStyleStateObj, borderStylePath)
   const borderWidth = getValueByObjPath(stateObj, paths.borderWidth)
   const borderRadius = getValueByObjPath(stateObj, paths.borderRadius)
 
@@ -37,8 +41,7 @@ export default function BorderControlMenu({ objectPaths }) {
       }
       return `${shVal || ''}`
     }).join(' ')
-
-    setStyleStateObj(object, paths.border, newBorderStyleValue, { setThemeVars, setStyles })
+    setStyleStateObj(borderObjName, paths.border, newBorderStyleValue, { setThemeColors, setStyles })
   }
 
   const onSizeChange = (pathName, val) => {
