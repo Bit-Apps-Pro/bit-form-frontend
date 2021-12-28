@@ -10,24 +10,27 @@ import { getValueByObjPath } from './styleHelpers'
 export default function Important({ propertyPath, className }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
-  const getValue = styles?.fields && getValueByObjPath(styles, propertyPath)
-  const isAlreadyImportant = getValue?.match(/!important/gi)
+  const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
+  const isAlreadyImportant = styleValue?.match(/!important/gi)
+  const isStyleValueEmptyOrCssVar = styleValue === '' || styleValue.match(/var/gi)
 
   const addOrRemoveImportant = () => {
-    let newValue
+    let newStyleValue
+
     if (isAlreadyImportant) {
-      newValue = getValue.replace(/!important/gi, '')
+      newStyleValue = styleValue.replace(/!important/gi, '')
     } else {
-      newValue = `${getValue} !important`
+      newStyleValue = `${styleValue} !important`
     }
     setStyles(prvStyle => produce(prvStyle, drft => {
-      assignNestedObj(drft, propertyPath, newValue)
+      assignNestedObj(drft, propertyPath, newStyleValue)
     }))
   }
 
   return (
     <Tip msg="Set style as !important">
       <button
+        style={{ visibility: isStyleValueEmptyOrCssVar ? 'hidden' : 'visible' }}
         className={`${css(cls.btn, isAlreadyImportant && cls.active)} ${className}`}
         type="button"
         onClick={addOrRemoveImportant}
