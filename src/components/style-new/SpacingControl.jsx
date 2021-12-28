@@ -14,20 +14,20 @@ export default function SpacingControl({ subtitle, action, value, objectPaths, i
   const [styles, setStyles] = useRecoilState($styles)
 
   const { object, paths } = objectPaths
-  const val = getValueByObjPath(styles, paths.margin || paths.padding)
+  const val = getValueByObjPath(styles, paths?.margin || paths?.padding)
   // if (value) val = `margin: ${value.margin}, padding: ${value.padding}`
 
   const clearHandler = () => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       if (object === 'styles') {
-        assignNestedObj(drft, paths.margin || paths.padding, '')
+        assignNestedObj(drft, paths?.margin || paths?.padding, '')
       }
     }))
   }
 
   return (
     <div className={css(ut.flxc, { cg: 3 })}>
-      {allowImportant && (<Important propertyPath={paths.margin || paths.padding} />)}
+      {allowImportant && (<Important propertyPath={paths?.margin || paths?.padding} />)}
       <div className={css(c.preview_wrp, draggableModal.id === id && c.active)}>
         <button
           onClick={e => showDraggableModal(e, setDraggableModal, { component: 'space-control', subtitle, action, value, objectPaths, id })}
