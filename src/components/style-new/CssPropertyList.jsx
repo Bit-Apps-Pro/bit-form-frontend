@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import CloseIcn from '../../Icons/CloseIcn'
-import { firstLetterUpper } from '../../Utils/FormBuilderHelper'
+import { firstLetterUpper } from '../../Utils/Helpers'
 import Downmenu from '../Utilities/Downmenu'
 
 export default function CssPropertyList({ properties, setProperty }) {
