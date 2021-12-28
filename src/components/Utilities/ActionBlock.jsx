@@ -2,6 +2,7 @@
 import produce from 'immer'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Button from './Button'
 import MtInput from './MtInput'
@@ -13,6 +14,7 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
   const fields = useRecoilValue($fields)
   const formFields = useRecoilValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const { css } = useFela()
   let fieldKey = ''
   let type = ''
 
@@ -71,9 +73,9 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
         {[...formFields, ...btnFields].map(itm => <option key={`ff-Ab-${itm.key}`} value={itm.key}>{itm.name}</option>)}
       </MtSelect>
 
-      <svg height="35" width="100" className="mt-1">
-        <line x1="0" y1="20" x2="50" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-      </svg>
+      <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
+        <div className={css({ w: '100%', bd: '#dce2ff', h: 2 })} />
+      </div>
 
       <MtSelect
         label="Action"
@@ -95,9 +97,9 @@ function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType })
 
       {action.action === 'value' && (
         <>
-          <svg height="35" width="100" className="mt-1">
-            <line x1="0" y1="20" x2="40" y2="20" style={{ stroke: '#b9c5ff', strokeWidth: 1 }} />
-          </svg>
+          <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
+            <div className={css({ w: '100%', bd: '#dce2ff', h: 2 })} />
+          </div>
 
           {type === 'select' || type === 'check' || type === 'radio'
             ? (

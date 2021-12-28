@@ -34,6 +34,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, classes, theme } = fldStyleObj
 
+  const isFieldElemetOverrided = fldStyleObj?.overrideGlobalTheme.includes(element)
+
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
@@ -107,6 +109,8 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       }))
     }
   }
+  console.log({ fldStyleObj, element, isFieldElemetOverrided })
+
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
@@ -136,7 +140,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           <SingleToggle
             title="Override form theme styles"
             action={(e) => overrideGlobalThemeHandler(e, element)}
-            checked={fldStyleObj?.overrideGlobalTheme?.find(el => el === element) || false}
+            isChecked={isFieldElemetOverrided}
             className={css(ut.mr2, ut.mb2)}
           />
         )}
