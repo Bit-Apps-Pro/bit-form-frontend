@@ -9,7 +9,6 @@ import sc from '../../styles/commonStyleEditorStyle'
 import { __ } from '../../Utils/i18nwrap'
 import CssPropertyList from './CssPropertyList'
 import editorConfig from './NewStyleEditorConfig'
-import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { arrDiff } from './styleHelpers'
 
