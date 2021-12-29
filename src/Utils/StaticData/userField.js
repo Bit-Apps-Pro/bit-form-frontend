@@ -27,7 +27,7 @@ export const userFields = [
   },
   {
     key: 'user_pass',
-    name: 'Passoword',
+    name: 'Password',
   },
   {
     key: 'user_url',

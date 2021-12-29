@@ -1,18 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { memo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 import CopyText from '../Utilities/CopyText'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
-import UniqField from './CompSettingsUtils/UniqField'
-import { deepCopy } from '../../Utils/Helpers'
-import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import predefinedPatterns from '../../Utils/StaticData/patterns.json'
 
 function TextFieldSettings() {
   console.log('%c $render TextFieldSettings', 'background:gray;padding:3px;border-radius:5px;color:white')
@@ -196,8 +195,6 @@ function TextFieldSettings() {
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
 
-  console.log('fieldData', fieldData)
-
   return (
     <div className="mr-4 ml-2">
       <Back2FldList />
@@ -226,7 +223,7 @@ function TextFieldSettings() {
       {
         fieldData.typ === 'number' && (
           <>
-            <SingleInput inpType="number" title={__('Min:', 'bitform')} value={min} action={setMin} className="w-10" />
+            <SingleInput inpType="number" title={__('Min Value:', 'bitform')} value={min} action={setMin} className="w-10" />
             {fieldData.mn && (
               <ErrorMessageSettings
                 type="mn"
@@ -234,7 +231,7 @@ function TextFieldSettings() {
                 tipTitle={`By enabling this feature, user will see the error message when input number is less than ${fieldData.mn}`}
               />
             )}
-            <SingleInput inpType="number" title={__('Max:', 'bitform')} value={max} action={setMax} className="w-10" />
+            <SingleInput inpType="number" title={__('Max Value:', 'bitform')} value={max} action={setMax} className="w-10" />
             {fieldData.mx && (
               <ErrorMessageSettings
                 type="mx"
@@ -306,7 +303,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(text|url|textarea|password|number|email|color|date|username|)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
@@ -319,11 +316,11 @@ function TextFieldSettings() {
                   </div>
                 </div>
               )}
-              <UniqField
+              <ErrorMessageSettings
                 type="entryUnique"
-                isUnique="isEntryUnique"
                 title="Validate as Entry Unique"
                 tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+                defaultMsg="The value is already taken. Try another."
               />
             </div>
           )
@@ -333,7 +330,7 @@ function TextFieldSettings() {
         {
           fieldData.typ.match(/^(email|username)$/) && (
             <div>
-              { !bits.isPro && (
+              {!bits.isPro && (
                 <div className="pro-blur flx" style={{ height: '100%', left: 0, width: '100%', marginTop: 14 }}>
                   <div className="pro">
                     {__('Available On', 'bitform')}
@@ -346,11 +343,11 @@ function TextFieldSettings() {
                   </div>
                 </div>
               )}
-              <UniqField
+              <ErrorMessageSettings
                 type="userUnique"
-                isUnique="isUserUnique"
                 title="Validate as User Unique"
                 tipTitle="Enabling this option will check from the user database whether its value is duplicate."
+                defaultMsg="The value is already taken. Try another."
               />
             </div>
           )

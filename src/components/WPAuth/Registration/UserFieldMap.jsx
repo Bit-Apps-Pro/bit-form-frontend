@@ -91,7 +91,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             <TableCheckBox name="user_notify" onChange={handleCheckd} title={__('User Email Notification', 'bitform')} checked={!!userConf[type]?.user_notify} value={false} />
             <Cooltip width={250} icnSize={17} className="ml-1">
               <div className="txt-body">
-                When this option is enabled, a welcome email will be sent to WordPress after registration.
+                When this option is enabled, a welcome email will be sent from WordPress after registration.
                 <br />
               </div>
             </Cooltip>
@@ -173,7 +173,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
             type={type}
             showMdl={showMdl}
             setshowMdl={setshowMdl}
-            title="Customize  Activation Email Tamplate"
+            title="Customize  Activation Email template"
           />
         </div>
         {userConf[type]?.activation === 'email_verify' && (
@@ -188,7 +188,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
               >
                 <EditIcn size={21} />
               </span>
-              <div className="f-m ml-1">{__('Customize  Activation Email Tamplate', 'bitform')}</div>
+              <div className="f-m ml-1">{__('Customize  Activation Email template', 'bitform')}</div>
             </div>
             <div className="flx w-5 ml-2 mt-4">
               <span

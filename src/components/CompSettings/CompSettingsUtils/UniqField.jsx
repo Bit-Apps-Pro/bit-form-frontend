@@ -35,11 +35,11 @@ export default function UniqField({ type, title, tipTitle, isUnique }) {
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
     if (checked) {
-      fieldData.err[type][name] = true
+      fieldData.err[type].show = true
       const msg = 'That field is taken. Try another'
       if (!fieldData.err[type].dflt) fieldData.err[type].dflt = msg
     } else {
-      delete fieldData.err[type][name]
+      delete fieldData.err[name].show
     }
     setFields(allFields => ({ ...allFields, ...{ [fldKey]: fieldData } }))
   }
@@ -64,9 +64,9 @@ export default function UniqField({ type, title, tipTitle, isUnique }) {
             <div className="txt-body">{__(tipTitle, 'bitform')}</div>
           </Cooltip>
         </h4>
-        <SingleToggle name={isUnique} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
+        <SingleToggle name={type} action={setShowErrMsg} isChecked={fieldData?.err?.[type]?.[isUnique]} />
       </div>
-      {fieldData?.err?.[type]?.[isUnique] && (
+      {fieldData?.err?.[type]?.show && (
         <>
           <div className="flx flx-between mt-1 mb-1 mr-2">
             <div className="flx">

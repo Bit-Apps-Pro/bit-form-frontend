@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { memo, useState, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fields, $selectedFieldId } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -15,7 +15,6 @@ import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldList from './Back2FldList'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import UniqField from './CompSettingsUtils/UniqField'
 import ImportOptions from './ImportOptions'
 
 function RadioCheckSettings() {
@@ -193,7 +192,7 @@ function RadioCheckSettings() {
       </div>
       <FieldLabelSettings />
       <SingleInput inpType="text" title={__('Admin Label:', 'bitform')} value={adminLabel} action={setAdminLabel} />
-      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
+      <SingleToggle title={__('Required:', 'bitform')} action={setRadioRequired} isChecked={isRadioRequired || isOptionRequired} disabled={isOptionRequired} className="mt-3" />
       {(isRadioRequired || isOptionRequired) && (
         <ErrorMessageSettings
           type="req"
@@ -261,11 +260,11 @@ function RadioCheckSettings() {
             </div>
           </div>
         )}
-        <UniqField
+        <ErrorMessageSettings
           type="entryUnique"
-          isUnique="isEntryUnique"
           title="Validate as Entry Unique"
           tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+          defaultMsg="The value is already taken. Try another."
         />
       </div>
       <button onClick={openImportModal} className="btn" type="button">
