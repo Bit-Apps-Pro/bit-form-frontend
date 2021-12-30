@@ -9,10 +9,10 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { __ } from '../../Utils/i18nwrap'
 import CssPropertyList from './CssPropertyList'
+import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { arrDiff } from './styleHelpers'
 
 export default function FormContainerCustomizer() {
   const { css } = useFela()
@@ -22,17 +22,25 @@ export default function FormContainerCustomizer() {
   const formWrpStylesObj = styles.form[colorScheme]._frm
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
 
-  const addableCssProps = arrDiff(formWrpStylesPropertiesArr, Object.keys(editorConfig.formWrapper.properties))
+  const addableCssProps = Object
+    .keys(editorConfig.formWrapper.properties)
+    .filter(x => !formWrpStylesPropertiesArr.includes(x))
 
-  const delPropertyHandler = (property) => {
+  const delPropertyHandler = (prop) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
-      delete drft.form[colorScheme]._frm[property]
+      delete drft.form[colorScheme]._frm[prop]
     }))
   }
 
   const setNewCssProp = (prop) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
-      drft.form[colorScheme]._frm[colorScheme][prop] = editorConfig.defaultProps[prop]
+      drft.form[colorScheme]._frm[prop] = editorConfig.defaultProps[prop]
+    }))
+  }
+
+  const clearHandler = (prop) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.form[colorScheme]._frm[prop] = ''
     }))
   }
 
@@ -45,8 +53,7 @@ export default function FormContainerCustomizer() {
       },
     }
   )
-
-  const asdf = 'asdfasdf'
+  const getPropertyPath = (cssProperty) => `form->${colorScheme}->_frm->${cssProperty}`
 
   return (
     <div className={css(ut.ml2, { pn: 'relative' })}>
@@ -73,6 +80,7 @@ export default function FormContainerCustomizer() {
           />
         </div>
       )}
+
       {formWrpStylesPropertiesArr.includes('margin') && (
         <div className={css(ut.flxcb, ut.mt2, sc.propsElemContainer)}>
           <div className={css(ut.flxc, ut.ml1)}>
@@ -94,6 +102,54 @@ export default function FormContainerCustomizer() {
             id="margin-control"
           />
         </div>
+      )}
+
+      {
+        formWrpStylesPropertiesArr.includes('background') && (
+          <SimpleColorPicker
+            title="Background"
+            subtitle="Background Color"
+            value={formWrpStylesObj?.background}
+            modalId="field-container-backgroung"
+            stateObjName="styles"
+            propertyPath={getPropertyPath('background')}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('background')}
+            clearHandler={() => clearHandler('background')}
+            allowImportant
+          />
+        )
+      }
+      {
+        formWrpStylesPropertiesArr.includes('color') && (
+          <SimpleColorPicker
+            title="Color"
+            subtitle="Color"
+            value={formWrpStylesObj?.color}
+            modalId="field-container-color"
+            stateObjName="styles"
+            propertyPath={getPropertyPath('color')}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('color')}
+            clearHandler={() => clearHandler('color')}
+            allowImportant
+          />
+        )
+      }
+
+      {formWrpStylesPropertiesArr.includes('box-shadow') && (
+        <IndividualShadowControl
+          title="Box-shadow"
+          subtitle="Box-shadow"
+          value={formWrpStylesObj?.['box-shadow']}
+          modalId="field-container-box-shadow"
+          stateObjName="styles"
+          propertyPath={getPropertyPath('box-shadow')}
+          deleteable
+          delPropertyHandler={() => delPropertyHandler('box-shadow')}
+          clearHandler={() => clearHandler('box-shadow')}
+          allowImportant
+        />
       )}
 
       <div className={css(ut.m10)}>

@@ -68,7 +68,7 @@ export default function ThemeQuickTweaksCustomizer() {
         const commonStylClassesLen = commonStylClasses.length
         for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
           const comnStylClass = commonStylClasses[indx]
-         
+
           if (fldClassesObj.hasOwnProperty(comnStylClass)) {
             const mainStlPropertiesObj = fldClassesObj[comnStylClass]
             const comStlPropertiesObj = commonStyles[comnStylClass]

@@ -8,9 +8,10 @@ import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { __ } from '../../Utils/i18nwrap'
 import CssPropertyList from './CssPropertyList'
+import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
+import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
-import { arrDiff } from './styleHelpers'
 
 export default function FormWrapperCustomizer() {
   const { css } = useFela()
@@ -18,8 +19,11 @@ export default function FormWrapperCustomizer() {
   const colorScheme = useRecoilValue($colorScheme)
   const formWrpStylesObj = styles.form[colorScheme]['_frm-bg']
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
+  console.log('formWrpStylesObj', formWrpStylesObj)
 
-  const addableCssProps = arrDiff(formWrpStylesPropertiesArr, Object.keys(editorConfig.formWrapper.properties))
+  const addableCssProps = Object
+    .keys(editorConfig.formWrapper.properties)
+    .filter(x => !formWrpStylesPropertiesArr.includes(x))
 
   const delPropertyHandler = (property) => {
     setStyles(prvStyles => produce(prvStyles, drft => {
@@ -42,10 +46,48 @@ export default function FormWrapperCustomizer() {
       },
     }
   )
+  const getPropertyPath = (cssProperty) => `form->${colorScheme}->_frm-bg->${cssProperty}`
+
+  const clearHandler = (property) => {
+    setStyles(prvStyle => produce(prvStyle, drft => {
+      drft.form[colorScheme]['_frm-bg'][property] = ''
+    }))
+  }
 
   return (
     <div className={css(ut.ml2, { pn: 'relative' })}>
-
+      {
+        formWrpStylesPropertiesArr.includes('background') && (
+          <SimpleColorPicker
+            title="Background"
+            subtitle="Background Color"
+            value={formWrpStylesObj?.background}
+            modalId="field-container-backgroung"
+            stateObjName="styles"
+            propertyPath={getPropertyPath('background')}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('background')}
+            clearHandler={() => clearHandler('background')}
+            allowImportant
+          />
+        )
+      }
+      {
+        formWrpStylesPropertiesArr.includes('color') && (
+          <SimpleColorPicker
+            title="Color"
+            subtitle="Color"
+            value={formWrpStylesObj?.color}
+            modalId="field-container-color"
+            stateObjName="styles"
+            propertyPath={getPropertyPath('color')}
+            deleteable
+            delPropertyHandler={() => delPropertyHandler('color')}
+            clearHandler={() => clearHandler('color')}
+            allowImportant
+          />
+        )
+      }
       {formWrpStylesPropertiesArr.includes('padding') && (
         <div className={css(ut.flxcb, ut.mt2, sc.propsElemContainer)}>
           <div className={css(ut.flxc, ut.ml1)}>
@@ -89,6 +131,20 @@ export default function FormWrapperCustomizer() {
             id="margin-control"
           />
         </div>
+      )}
+      {formWrpStylesPropertiesArr.includes('box-shadow') && (
+        <IndividualShadowControl
+          title="Box-shadow"
+          subtitle="Box-shadow"
+          value={formWrpStylesObj?.['box-shadow']}
+          modalId="field-container-box-shadow"
+          stateObjName="styles"
+          propertyPath={getPropertyPath('box-shadow')}
+          deleteable
+          delPropertyHandler={() => delPropertyHandler('box-shadow')}
+          clearHandler={() => clearHandler('box-shadow')}
+          allowImportant
+        />
       )}
 
       <div className={css(ut.m10)}>
