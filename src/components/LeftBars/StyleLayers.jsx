@@ -52,11 +52,12 @@ export default function StyleLayers() {
   )
 }
 function NavBtn({ route, subRoute, label, offset = 1, icn, highlightSelector }) {
-  const { formType, formID, fldKey, element } = useParams()
+  const { formType, formID, fieldKey, element, rightBar } = useParams()
+
   let active = false
-  if (!subRoute && element === route) {
+  if (rightBar === 'theme-customize' && !fieldKey && !subRoute && element === route) {
     active = true
-  } else if (subRoute === fldKey && route === element) {
+  } else if (rightBar === 'field-theme-customize' && subRoute && subRoute === fieldKey && element === route) {
     active = true
   }
   const history = useHistory()
