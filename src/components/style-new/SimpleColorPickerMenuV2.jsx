@@ -102,28 +102,16 @@ function SimpleColorPickerMenuV2({ action, value, objectPaths }) {
       case 'global-fld-bdr-clr':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bdr-clr'] = hsla
-          // drft['--gfbc-h'] = Math.round(_h)
-          // drft['--gfbc-s'] = `${s}%`
-          // drft['--gfbc-l'] = `${l}%`
-          // drft['--gfbc-a'] = a / 100
         }))
         break
       case 'global-fld-bg-color':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--global-fld-bg-color'] = hsla
-          // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${s}%`
-          // drft['--gfbg-l'] = `${l}%`
-          // drft['--gfbg-a'] = a / 100
         }))
         break
       case 'fw-bg':
         setThemeColors(prvState => produce(prvState, drft => {
           drft['--fld-wrp-bg'] = hsla
-          // drft['--gfbg-h'] = Math.round(_h)
-          // drft['--gfbg-s'] = `${s}%`
-          // drft['--gfbg-l'] = `${l}%`
-          // drft['--gfbg-a'] = a / 100
         }))
         break
       case 'individul-color':
