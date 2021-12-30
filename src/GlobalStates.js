@@ -1,5 +1,6 @@
 import produce from 'immer'
 import { atom, selector, selectorFamily } from 'recoil'
+import merge from 'deepmerge-alt'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from './Utils/Helpers'
 
 // atoms
@@ -82,52 +83,7 @@ export const $lightThemeColors = atom({
 
 export const $darkThemeColors = atom({
   key: '$darkThemeColors',
-  default: {
-    '--global-accent-color': 'hsla(215, 10%, 20%, 100)', // Accent Color
-    '--gah': 0, // global primary hue
-    '--gas': 10, // global primary saturation
-    '--gal': 20, // global primary lightness
-    '--gaa': 100, // global primary opacity
-    '--global-font-color': 'hsla(0, 10%, 20%, 100)',
-    '--gfh': 0, // global font color hue
-    '--gfs': 10, // global fonst color sa
-    '--gfl': 20,
-    '--gfa': 100,
-    '--global-bg-color': 'hsla(240, 100%, 97%, 100)', // background color
-    '--gbg-h': 0,
-    '--gbg-s': 10,
-    '--gbg-l': 20,
-    '--gbg-a': 100,
-    '--global-fld-bdr-clr': 'hsla(0, 10%, 20%, 100)',
-    '--global-fld-bg-color': 'var(--global-bg-color)', // field background color
-    '--fld-wrp-bg': 'hsla(0, 0%, 100%, 100)', // fieldwrapper background
-    '--fld-wrp-bdr': '', // field wrapper border
-    '--fld-wrp-sh': '', // field wrapper box shadow
-
-    '--lbl-wrp-bg': '', // label wrapper for background
-    '--lbl-wrp-sh': '', // label wrapper box shadow
-    '--lbl-wrp-bdr': '', // label wrapper border
-
-    '--fld-lbl-bg': '', // field label background color
-    '--fld-lbl-c': '', // field babel color
-    '--fld-lbl-sh': '', // field label box shadow
-    '--fld-lbl-bdr': '', // field label border
-
-    '--sub-titl-bg': 'hsla(215, 71%, 39%, 100)', // sub title background color
-    '--sub-titl-c': 'hsla(210, 71%, 39%, 100)', // sub title color
-    '--sub-titl-sh': '', // subtitle box shadow
-    '--sub-titl-bdr': '', // subtitle border
-
-    '--hlp-txt-bg': 'hsla(123, 71%, 39%, 100)', // helper text background color
-    '--hlp-txt-c': '', // helpertext color
-    '--hlp-txt-sh': '', // helper text box shadow
-    '--hlp-txt-bdr': '', // helper text border
-
-    '--err-bg': 'hsla(210, 71%, 39%, 100)', // error messages background color
-    '--err-c': 'hsla(215, 71%, 39%, 100)', // error messages text color
-    '--err-sh': '1em 3px 5px 0rem blue inset', // error messages box shadow
-    '--err-bdr': 'solid red', // error message border
-  },
+  default: {},
 })
 
 export const $themeVars = atom({
@@ -182,6 +138,7 @@ export const $themeVars = atom({
     '--err-bdr-rad': '8px', // error message border radius
   },
 })
+
 export const $tempStyles = atom({
   key: '$tempStyles',
   default: {
@@ -236,7 +193,7 @@ export const $themeColors = selector({
   get: ({ get }) => {
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
-    if (colorScheme === 'dark') return get($darkThemeColors)
+    if (colorScheme === 'dark') return merge(get($lightThemeColors), get($darkThemeColors))
   },
   set: ({ set, get }, newColors) => {
     const colorScheme = get($colorScheme)

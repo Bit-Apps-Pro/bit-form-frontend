@@ -14,10 +14,12 @@ import ChevronLeft from '../../Icons/ChevronLeft'
 import DarkIcn from '../../Icons/DarkIcn'
 import LightIcn from '../../Icons/LightIcn'
 import ut from '../../styles/2.utilities'
-import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
-import FieldContainerCustomizer from './FieldContainerCustomizer'
+
 import FormContainerCustomizer from './FormContainerCustomizer'
 import FormWrapperCustomizer from './FormWrapperCustomizer'
+
+import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
+import FieldContainerCustomizer from './FieldContainerCustomizer'
 import HelperTextCustomizer from './HelperTextCustomizer'
 import LabelContainerCustomizer from './LabelContainerCustomizer'
 import LabelCustomizer from './LabelCustomizer'
@@ -109,7 +111,7 @@ export default function ThemeCustomize() {
         {element === 'helper-text' && <HelperTextCustomizer />}
         {element === 'error-messages' && <ErrorMessagesCustomizer />}
 
-        {[...Array(20).keys()].map((i) => <br key={`${i}-asd`} />)}
+        {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)}
       </div>
     </div>
   )
