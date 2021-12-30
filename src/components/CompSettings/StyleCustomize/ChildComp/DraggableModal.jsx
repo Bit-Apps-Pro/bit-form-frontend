@@ -67,10 +67,10 @@ function DraggableModal({ setBuilderPointerEventNone }) {
   if (!show) return <></>
 
   return (
-    <Draggable ref={dragableRef} handle=".draggable-modal-handler" bounds="parent" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)} onStart={() => setBuilderPointerEventNone(true)} onStop={() => setBuilderPointerEventNone(false)}>
+    <Draggable ref={dragableRef} bounds="parent" handle=".draggable-modal-handle" position={pos !== null ? position : pos} onMouseDown={() => setPos(null)} onStart={() => setBuilderPointerEventNone(true)} onStop={() => setBuilderPointerEventNone(false)}>
       <div className={css(draggableModalStyle.container)} style={{ width, ...pos && { transition: 'transform .2s' } }}>
         {/* style={{ top: position?.y, right: position?.x, display: show ? 'block' : 'none', width }} */}
-        <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handler`}>
+        <div className={`${css([ut.flxb, draggableModalStyle.titleBar])} draggable-modal-handle`}>
           <div className={css(ut.flxClm, draggableModalStyle.titleContainer)}>
             <span className={css(draggableModalStyle.title)}>{setTitle(component)}</span>
             <span className={css(ut.fontBody, { fs: 10, mx: 3, cr: 'var(--white-0-50)' })}>{subtitle}</span>
