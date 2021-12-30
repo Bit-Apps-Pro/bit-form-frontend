@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
 export const showDraggableModal = (e, setDraggableModal, props) => {
@@ -286,4 +287,19 @@ export function arrDiff(arr1, arr2) {
   return arr1
     .filter(x => !arr2.includes(x))
     .concat(arr2.filter(x => !arr1.includes(x)))
+}
+
+export const addableCssPropsByField = (fieldType) => {
+  switch (fieldType) {
+    case 'text':
+    case 'date':
+    case 'number':
+      return Object.keys(editorConfig.texfieldStyle.properties)
+    case 'dropdown':
+    // return Object.keys(editorConfig.texfieldStyle.properties)
+
+    // eslint-disable-next-line no-fallthrough
+    default:
+      break
+  }
 }
