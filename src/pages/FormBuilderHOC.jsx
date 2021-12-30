@@ -49,12 +49,7 @@ const styleReducer = (style, action) => {
 }
 
 const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
-  // const formSettings = {}cd
-  // const { formType, formID: pramsFormId } = {}
-  // const { formType, formID pramsFormId } = { formType: 'edit', formID: 2 }
-  // const isLoading = false
   const newFormId = useRecoilValue($newFormId)
-  // const [fields, setFields] = useRecoilState($fields)
   const isNewForm = formType === 'new'
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
@@ -78,7 +73,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   const setThemeVars = useSetRecoilState($themeVars)
   const setTempStyles = useSetRecoilState($tempStyles)
   const setStyle = useSetRecoilState($styles)
-  const themeColors = useRecoilValue($themeColors)
   const setLightThemeColors = useSetRecoilState($lightThemeColors)
   const setDarkThemeColors = useSetRecoilState($darkThemeColors)
 
@@ -231,7 +225,6 @@ const FormBuilder = memo(({ formType, formID: pramsFormId, isLoading }) => {
   }, [])
 
   const afterResizing = useCallback(() => {
-    console.log('resize off')
     setBuilderPointerEventNone(false)
     document.querySelector('.tool-sec').style.transition = 'flex-grow 500ms'
   }, [])
