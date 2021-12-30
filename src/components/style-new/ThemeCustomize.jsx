@@ -21,13 +21,10 @@ import { __ } from '../../Utils/i18nwrap'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
-import FieldMarginControl from './FieldMarginControl'
 import FontPicker from './FontPicker'
 import FormContainerCustomizer from './FormContainerCustomizer'
-import FormWrapperControl from './FormWrapperControl'
 import FormWrapperCustomizer from './FormWrapperCustomizer'
 import LabelControl from './LabelControl'
-import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
 import ShadowControl from './ShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
@@ -339,7 +336,6 @@ export default function ThemeCustomize() {
                 <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
               </div>
 
-              <div className={css(cls.divider)} />
 
               <div className={css({ mr: 15 })}>
 
@@ -347,19 +343,7 @@ export default function ThemeCustomize() {
                   <span className={css(ut.fw500)}>Label Alignment</span>
                   <LabelControl />
                 </div>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Label Spacing</span>
-                  <LabelSpacingControl />
-                </div>
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Field Margin</span>
-                  <FieldMarginControl />
-                </div>
 
-                <div className={css(ut.flxcb)}>
-                  <span className={css(ut.fw500)}>Form Wrapper Control</span>
-                  <FormWrapperControl />
-                </div>
               </div>
             </>
           )
