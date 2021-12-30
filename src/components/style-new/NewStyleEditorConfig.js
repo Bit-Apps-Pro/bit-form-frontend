@@ -16,5 +16,18 @@ const editorConfig = {
     padding: '0px',
     border: '',
   },
+  texfieldStyle: {
+    states: ['hover'],
+    properties: {
+      background: {},
+      color: {},
+      'font-size': {},
+      border: {},
+      margin: {},
+      padding: {},
+      'box-shadow': {},
+      'border-radius': {},
+    },
+  },
 }
 export default editorConfig
