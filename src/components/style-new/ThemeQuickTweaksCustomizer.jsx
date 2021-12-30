@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -9,12 +10,9 @@ import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import FontPicker from './FontPicker'
 import LabelControl from './LabelControl'
-import LabelSpacingControl from './LabelSpacingControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import { changeFormDir, commonStyle, getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
-import FieldMarginControl from './FieldMarginControl'
-import FormWrapperControl from './FormWrapperControl'
 
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
@@ -49,6 +47,7 @@ export default function ThemeQuickTweaksCustomizer() {
   const borderRadHandler = ({ value, unit }) => updateHandler(value, unit, globalBdrRadUnit, '--g-bdr-rad')
   const borderWidthHandler = ({ value, unit }) => updateHandler(value, unit, globalBdrWidthUnit, '--g-bdr-width')
   const fldFsSizeHandler = ({ value, unit }) => updateHandler(value, unit, fldFSUnit, '--fld-fs')
+
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
 
@@ -68,7 +67,7 @@ export default function ThemeQuickTweaksCustomizer() {
         const commonStylClassesLen = commonStylClasses.length
         for (let indx = 0; indx < commonStylClassesLen; indx += 1) {
           const comnStylClass = commonStylClasses[indx]
-         
+
           if (fldClassesObj.hasOwnProperty(comnStylClass)) {
             const mainStlPropertiesObj = fldClassesObj[comnStylClass]
             const comStlPropertiesObj = commonStyles[comnStylClass]
@@ -215,28 +214,11 @@ export default function ThemeQuickTweaksCustomizer() {
         <SingleToggle isChecked={direction === 'rtl'} action={handleDir} />
       </div>
 
-      <div className={css(cls.divider)} />
-
-      <div className={css({ mr: 15 })}>
-
-        <div className={css(ut.flxcb, ut.mb2)}>
-          <span className={css(ut.fw500)}>Label Alignment</span>
-          <LabelControl />
-        </div>
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Label Spacing</span>
-          <LabelSpacingControl />
-        </div>
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Field Margin</span>
-          <FieldMarginControl />
-        </div>
-
-        <div className={css(ut.flxcb)}>
-          <span className={css(ut.fw500)}>Form Wrapper Control</span>
-          <FormWrapperControl />
-        </div>
+      <div className={css(ut.flxcb, ut.mb2)}>
+        <span className={css(ut.fw500)}>Label Alignment</span>
+        <LabelControl />
       </div>
+
     </>
   )
 }
@@ -247,4 +229,3 @@ const sizes = {
   large: 'Large',
   'large-1': 'Large-1',
 }
-const cls = { divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 } }
