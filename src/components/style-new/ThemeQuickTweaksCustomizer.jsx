@@ -108,7 +108,7 @@ export default function ThemeQuickTweaksCustomizer() {
   return (
     <>
       <SimpleColorPicker
-        title="Background colorsss"
+        title="Background color"
         subtitle="Background color"
         value={globalBgColor}
         stateObjName="themeColors"

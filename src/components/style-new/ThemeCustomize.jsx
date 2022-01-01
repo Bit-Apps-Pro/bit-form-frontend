@@ -33,6 +33,8 @@ export default function ThemeCustomize() {
 
   const setFlags = useSetRecoilState($flags)
 
+// console.log({}])
+
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))
     return () => { setFlags(oldFlgs => ({ ...oldFlgs, styleMode: false })) }
