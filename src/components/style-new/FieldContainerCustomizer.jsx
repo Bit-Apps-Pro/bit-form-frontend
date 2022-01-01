@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
-import { $themeColors, $themeVars } from '../../GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $colorScheme, $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
@@ -13,7 +13,13 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function FieldContainerCustomizer() {
   const themeColors = useRecoilValue($themeColors)
   const themeVars = useRecoilValue($themeVars)
+  const colorScheme = useRecoilValue($colorScheme)
+  const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
+  const formWrpStylesObj = styles.form[colorScheme]['_frm-bg']
+  const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
+
+  console.log(styles)
 
   const { '--fld-wrp-m': wrpMagin,
     '--fld-wrp-p': wrpPadding } = themeVars
@@ -21,6 +27,17 @@ export default function FieldContainerCustomizer() {
   const { '--fld-wrp-bg': fwBg,
     '--fld-wrp-bdr': fwBdr,
     '--fld-wrp-sh': fwSh } = themeColors
+
+  // const addableCssProps = Object
+  //   .keys(editorConfig.formWrapper.properties)
+  //   .filter(x => !formWrpStylesPropertiesArr.includes(x))
+
+  // const setNewCssProp = (prop) => {
+  //   setStyles(prvStyles => produce(prvStyles, drft => {
+  //     drft.form[colorScheme]['_frm-bg'][prop] = editorConfig.defaultProps[prop]
+  //   }))
+  // }
+
   return (
     <div className={css(ut.m10)}>
       <SimpleColorPicker

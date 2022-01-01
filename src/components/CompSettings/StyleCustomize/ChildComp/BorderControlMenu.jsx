@@ -24,7 +24,7 @@ export default function BorderControlMenu({ objectPaths }) {
 
   const borderStyle = getValueByObjPath(borderStyleStateObj, borderStylePath)
   const borderWidth = getValueByObjPath(stateObj, paths.borderWidth)
-  const borderRadius = getValueByObjPath(stateObj, paths.borderRadius)
+  const borderRadius = getValueByObjPath(stateObj, paths?.borderRadius)
 
   const extractBorderStyle = () => {
     const [type, color] = splitValueBySpaces(borderStyle)

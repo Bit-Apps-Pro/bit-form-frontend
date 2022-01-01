@@ -8,11 +8,14 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { __ } from '../../Utils/i18nwrap'
+import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
+import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
+import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function FormContainerCustomizer() {
   const { css } = useFela()
@@ -54,6 +57,12 @@ export default function FormContainerCustomizer() {
     }
   )
   const getPropertyPath = (cssProperty) => `form->${colorScheme}->_frm->${cssProperty}`
+
+  const fwStylePathObj = {
+    object: 'styles',
+    borderObjName: 'styles',
+    paths: { border: getPropertyPath('border'), borderWidth: getPropertyPath('border-width') },
+  }
 
   return (
     <div className={css(ut.ml2, { pn: 'relative' })}>
@@ -150,6 +159,22 @@ export default function FormContainerCustomizer() {
           clearHandler={() => clearHandler('box-shadow')}
           allowImportant
         />
+      )}
+      {formWrpStylesPropertiesArr.includes('border') && (
+        <ThemeStylePropertyBlock label="Border">
+          <div className={css(ut.flxc)}>
+            <ResetStyle
+              propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
+              stateObjName="styles"
+            />
+            <BorderControl
+              subtitle="Field Container Border"
+              value={formWrpStylesObj?.border}
+              objectPaths={fwStylePathObj}
+              id="fld-wrp-bdr"
+            />
+          </div>
+        </ThemeStylePropertyBlock>
       )}
 
       <div className={css(ut.m10)}>
