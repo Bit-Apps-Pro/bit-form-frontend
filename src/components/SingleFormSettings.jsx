@@ -4,6 +4,7 @@ import DatePicker from 'react-date-picker'
 import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { produce } from 'immer'
 import { $additionalSettings, $bits, $fields } from '../GlobalStates'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import HoneypotIcn from '../Icons/HoneypotIcn'
@@ -94,7 +95,7 @@ export default function SingleFormSettings() {
     // saveForm('addional', additionalSettings)
   }
 
-  const enableSubmission = e => {
+  const storeSubmission = e => {
     const additionalSettings = deepCopy(additionalSetting)
     if (!isPro) {
       setProModal({ show: true, msg: 'Disable entry storing is in Pro Version!' })
@@ -342,27 +343,29 @@ export default function SingleFormSettings() {
   }
 
   const handleDate = (val, typ) => {
-    const additional = deepCopy(additionalSetting)
-    const y = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(val)
-    const m = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(val)
-    const d = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(val)
-    if (typ === 'from') {
-      additional.settings.restrict_form.date.from = `${m}-${d}-${y}`
-    } else {
-      additional.settings.restrict_form.date.to = `${m}-${d}-${y}`
-    }
-    setadditional({ ...additional })
+    const date = new Date(val)
+    const y = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date)
+    const m = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date)
+    const d = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
+
+    setadditional(prvState => produce(prvState, drft => {
+      if (typ === 'from') {
+        drft.settings.restrict_form.date.from = `${m}-${d}-${y}`
+      } else {
+        drft.settings.restrict_form.date.to = `${m}-${d}-${y}`
+      }
+    }))
   }
 
   const handleTime = (val, typ) => {
-    const additional = deepCopy(additionalSetting)
-    if ('restrict_form' in additional.settings && 'time' in additional.settings.restrict_form) {
-      if (typ === 'from') {
-        additional.settings.restrict_form.time.from = val
-      } else {
-        additional.settings.restrict_form.time.to = val
-      }
-      setadditional({ ...additional })
+    if ('restrict_form' in additionalSetting.settings && 'time' in additionalSetting.settings.restrict_form) {
+      setadditional(prvState => produce(prvState, drft => {
+        if (typ === 'from') {
+          drft.settings.restrict_form.time.from = val
+        } else {
+          drft.settings.restrict_form.time.to = val
+        }
+      }))
     }
   }
 
@@ -447,17 +450,6 @@ export default function SingleFormSettings() {
       }
     }
     return 'Medium'
-  }
-
-  const handleDisableStoreEntry = e => {
-    const additional = deepCopy(additionalSetting)
-    if (e.target.checked) {
-      additional.enabled.disableStoreEntry = true
-    } else {
-      delete additional.enabled.disableStoreEntry
-    }
-    setadditional(additional)
-    // saveForm('addional', additional)
   }
 
   const toggleCaptchaAdvanced = () => setShowCaptchaAdvanced(show => !show)
@@ -580,7 +572,7 @@ export default function SingleFormSettings() {
               {__('Disable entry storing in WordPress database', 'bitform')}
             </b>
           </div>
-          <SingleToggle2 disabled={!isPro} action={enableSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
+          <SingleToggle2 disabled={!isPro} action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
       <Accordions
@@ -711,10 +703,7 @@ export default function SingleFormSettings() {
               <div><small>{__('From', 'bitform')}</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'from')}
-                value={('restrict_form' in additionalSetting.settings
-                  && 'date' in additionalSetting.settings.restrict_form
-                  && 'from' in additionalSetting.settings.restrict_form.date
-                  && new Date(additionalSetting.settings.restrict_form.date.from)) || new Date()}
+                value={new Date(additionalSetting?.settings?.restrict_form?.date?.from || null)}
                 dayPlaceholder="dd"
                 monthPlaceholder="mm"
                 yearPlaceholder="year"
@@ -726,12 +715,7 @@ export default function SingleFormSettings() {
               <div><small>{__('To', 'bitform')}</small></div>
               <DatePicker
                 onChange={val => handleDate(val, 'to')}
-                value={
-                  ('restrict_form' in additionalSetting.settings
-                    && 'date' in additionalSetting.settings.restrict_form
-                    && 'to' in additionalSetting.settings.restrict_form.date
-                    && new Date(additionalSetting.settings.restrict_form.date.to)) || new Date()
-                }
+                value={new Date(additionalSetting?.settings?.restrict_form?.date?.to || null)}
                 dayPlaceholder="dd"
                 monthPlaceholder="mm"
                 yearPlaceholder="year"
@@ -748,18 +732,14 @@ export default function SingleFormSettings() {
             <div><small>{__('From', 'bitform')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'from')}
-              value={('restrict_form' in additionalSetting.settings
-                && 'time' in additionalSetting.settings.restrict_form
-                && additionalSetting.settings.restrict_form.time.from) || new Date()}
+              value={additionalSetting?.settings?.restrict_form?.time?.from || new Date()}
             />
           </div>
           <div>
             <div><small>{__('To', 'bitform')}</small></div>
             <TimePicker
               onChange={val => handleTime(val, 'to')}
-              value={('restrict_form' in additionalSetting.settings
-                && 'time' in additionalSetting.settings.restrict_form
-                && additionalSetting.settings.restrict_form.time.to) || new Date()}
+              value={additionalSetting?.settings?.restrict_form?.time?.to || new Date()}
               className="btcd-date-pick"
             />
           </div>
