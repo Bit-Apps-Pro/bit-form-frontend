@@ -69,7 +69,7 @@ export default function IndividualShadowControl({ title,
         {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 240, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >

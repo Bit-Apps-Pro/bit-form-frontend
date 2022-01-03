@@ -7,7 +7,7 @@ import { memo } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $styles, $themeVars } from '../../GlobalStates'
-import AddIcon from '../../Icons/AddIcon'
+import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
@@ -175,10 +175,15 @@ function IndividualShadowControlMenu({ propertyPath }) {
           <div className={css(c.divider)} />
         </>
       ))}
-
       <div className={css(c.footer)}>
-        <button className={css(c.addBtn)} onClick={addShadowHandler} type="button" tabIndex="0" title="Add Shadow">
-          <AddIcon size="20" />
+        <button
+          className={css(c.addBtn)}
+          type="button"
+          aria-label="Add Shadow"
+          onClick={addShadowHandler}
+          title="Add Shadow"
+        >
+          <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
         </button>
       </div>
     </div>
@@ -204,7 +209,7 @@ const c = {
     brs: 8,
     fs: 12,
   },
-  divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
+  divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 3 },
   delBtn: {
     se: 18,
     p: 1,
@@ -217,12 +222,15 @@ const c = {
   },
   footer: { flx: 'center' },
   addBtn: {
-    bd: 'transparent',
-    oe: 'none',
+    se: 25,
     b: 'none',
-    '&:hover': {
-      bd: 'var(--white-0-86)',
-      cr: 'var(--b-50)',
-    },
+    brs: '50%',
+    p: 0,
+    flxi: 'center',
+    bd: 'var(--white-0-95)',
+    curp: 1,
+    tn: 'transform 0.2s',
+    ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
+    ':active': { tm: 'scale(0.95)' },
   },
 }
