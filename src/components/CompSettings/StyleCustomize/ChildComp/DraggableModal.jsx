@@ -13,6 +13,7 @@ import LabelControlMenu from '../../../style-new/LabelControlMenu'
 import MarginControlMenu from '../../../style-new/MarginControlMenu'
 import SpaceControlMenu from '../../../style-new/SpaceControlMenu'
 import SpacingControlMenu from '../../../style-new/SpacingControlMenu'
+import TransitionControlMenu from '../../../style-new/TransitionControlMenu'
 
 const BorderControlMenu = lazy(() => import('./BorderControlMenu'))
 const SimpleColorsPickerMenu = lazy(() => import('../../../style-new/SimpleColorsPickerMenu'))
@@ -33,6 +34,7 @@ const RenderComponent = ({ component, action, value, objectPaths, id, stateObjNa
     case 'form-wrapper-control': return <FormWrapperControlMenu />
     case 'space-control': return <SpaceControlMenu value={value} objectPaths={objectPaths} />
     case 'shadow-control': return <ShadowControlMenu objectPaths={objectPaths} />
+    case 'transition-control': return <TransitionControlMenu stateObjName={stateObjName} propertyPath={propertyPath} />
     default: return 'loading'
   }
 }
@@ -50,6 +52,7 @@ const setTitle = (component) => {
     case 'form-wrapper-control': return 'Form Wrapper'
     case 'space-control': return 'Margin & Padding Control'
     case 'shadow-control': return 'Shadow'
+    case 'transition-control': return 'Transition'
     default: return '...'
   }
 }

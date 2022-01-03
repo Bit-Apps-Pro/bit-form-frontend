@@ -15,6 +15,7 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
+import TransitionControl from './TransitionControl'
 
 export default function FormWrapperCustomizer() {
   const { css } = useFela()
@@ -22,8 +23,7 @@ export default function FormWrapperCustomizer() {
   const colorScheme = useRecoilValue($colorScheme)
   const formWrpStylesObj = styles.form[colorScheme]['_frm-bg']
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
-  console.log('formWrpStylesObj', formWrpStylesObj)
-
+  console.log(formWrpStylesObj)
   const addableCssProps = Object
     .keys(editorConfig.formWrapper.properties)
     .filter(x => !formWrpStylesPropertiesArr.includes(x))
@@ -170,6 +170,20 @@ export default function FormWrapperCustomizer() {
             />
           </div>
         </ThemeStylePropertyBlock>
+      )}
+      {formWrpStylesPropertiesArr.includes('transition') && (
+        <TransitionControl
+          title="Transition"
+          subtitle="Transition"
+          value={formWrpStylesObj?.transition}
+          modalId="field-container-transition"
+          stateObjName="styles"
+          propertyPath={getPropertyPath('transition')}
+          deleteable
+          delPropertyHandler={() => delPropertyHandler('transition')}
+          clearHandler={() => clearHandler('transition')}
+          allowImportant
+        />
       )}
 
       <div className={css(ut.m10)}>

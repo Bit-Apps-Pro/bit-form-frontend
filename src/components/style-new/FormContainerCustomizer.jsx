@@ -16,6 +16,7 @@ import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
+import TransitionControl from './TransitionControl'
 
 export default function FormContainerCustomizer() {
   const { css } = useFela()
@@ -175,6 +176,20 @@ export default function FormContainerCustomizer() {
             />
           </div>
         </ThemeStylePropertyBlock>
+      )}
+      {formWrpStylesPropertiesArr.includes('transition') && (
+        <TransitionControl
+          title="Transition"
+          subtitle="Transition"
+          value={formWrpStylesObj?.transition}
+          modalId="field-container-transition"
+          stateObjName="styles"
+          propertyPath={getPropertyPath('transition')}
+          deleteable
+          delPropertyHandler={() => delPropertyHandler('transition')}
+          clearHandler={() => clearHandler('transition')}
+          allowImportant
+        />
       )}
 
       <div className={css(ut.m10)}>

@@ -11,10 +11,10 @@ import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
-import editorConfig from './NewStyleEditorConfig'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { addableCssPropsByField } from './styleHelpers'
+import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
@@ -224,6 +224,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               fldKey={fldKey}
             />
           )}
+          {existingProperties.includes('transition') && (
+            <TransitionControl
+              title="Transition"
+              subtitle="Transition"
+              value={existingCssProperties?.transition}
+              modalId="field-container-transition"
+              stateObjName="styles"
+              propertyPath={getPropertyPath('transition')}
+              deleteable
+              delPropertyHandler={() => delPropertyHandler('transition')}
+              clearHandler={() => clearHandler('transition')}
+              allowImportant
+            />
+          )}
+
           {/* {
         existingCssProperties.includes('font-size') && (
           <div className={css(ut.flxcb, ut.mt2)}>
