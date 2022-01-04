@@ -294,6 +294,9 @@ export const addableCssPropsByField = (fieldType) => {
     case 'text':
     case 'date':
     case 'number':
+    case 'username':
+    case 'textarea':
+    case 'email':
       return Object.keys(editorConfig.texfieldStyle.properties)
     case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)

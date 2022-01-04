@@ -34,11 +34,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existingCssProperties = classes[`.${fldKey}-${elementKey}`]
   const existingProperties = Object.keys(existingCssProperties)
-  const addableCssProps = addableCssPropsByField(fieldType).filter(x => !existingProperties.includes(x))
+  const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
 
   const existingCssHoverProperties = classes?.[`.${fldKey}-${elementKey}:hover`]
   const existingHoverProperties = Object.keys(existingCssHoverProperties || {})
-  const addableCssHoverProps = addableCssPropsByField(fieldType).filter(x => !existingHoverProperties.includes(x))
+  const addableCssHoverProps = addableCssPropsByField(fieldType)?.filter(x => !existingHoverProperties?.includes(x))
 
   const setNewCssProp = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
