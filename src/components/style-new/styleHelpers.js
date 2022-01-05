@@ -13,11 +13,12 @@ export const showDraggableModal = (e, setDraggableModal, { component, width = 25
 }
 
 // This Function used for Array To Style String converter (like shadow)
-export const arrayToStyleStringGenarator = shadows => {
+export const objectArrayToStyleStringGenarator = shadows => {
   let shadowString = ''
   shadows.map(shadow => {
-    shadowString += Object.values(shadow).join(' ,')
+    shadowString += `${Object.values(shadow).join(' ') },`
   })
+  shadowString = shadowString.slice(0, -1)
   return shadowString
 }
 

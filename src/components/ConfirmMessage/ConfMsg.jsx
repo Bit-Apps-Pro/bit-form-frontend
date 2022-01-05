@@ -22,7 +22,7 @@ import TinyMCE from '../Utilities/TinyMCE'
 import ConfirmMsgPreview from './ConfirmMsgPreview'
 import SliderModal from '../Utilities/SliderModal'
 import EditIcn from '../../Icons/EditIcn'
-import { arrayToStyleStringGenarator } from '../style-new/styleHelpers'
+import { objectArrayToStyleStringGenarator } from '../style-new/styleHelpers'
 
 function ConfMsg({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
@@ -199,7 +199,7 @@ function ConfMsg({ removeIntegration }) {
       m: 'auto',
       pn: 'relative',
       wb: 'break-all',
-      bs: arrayToStyleStringGenarator(confirmationStyles.boxShadow),
+      bs: objectArrayToStyleStringGenarator(confirmationStyles.boxShadow),
     },
     close: {
       cr: confirmationStyles.closeIconColor,

@@ -1,10 +1,10 @@
 import fade from './Animations/fade'
 import scale from './Animations/scale'
 import modalSlide from './Animations/modal-slide'
-import { arrayToStyleStringGenarator } from '../style-new/styleHelpers'
+import { objectArrayToStyleStringGenarator } from '../style-new/styleHelpers'
 
 export default function modalCssStyles(formID, position, animation, width, background, borderWidth, borderType, borderColor, borderRadius, boxShadow, closeBackground, closeHover, closeIconColor, closeIconHover) {
-  const boxShadowString = arrayToStyleStringGenarator(boxShadow)
+  const boxShadowString = objectArrayToStyleStringGenarator(boxShadow)
 
   return {
     [`.msg-container-${formID}`]: {
