@@ -24,10 +24,9 @@ export default function DecisionBoxLabelModal({ labelModal, setLabelModal }) {
   }, [labelModal])
 
   const setLbl = val => {
-    const tmp = deepCopy(fieldData)
-    tmp.lbl = val
-
-    setFields(allFields => ({ ...allFields, ...{ [fldKey]: tmp } }))
+    setFields(prevState => produce(prevState, draft => {
+      draft[fldKey].lbl = val
+    }))
   }
 
   const cancelModal = () => {

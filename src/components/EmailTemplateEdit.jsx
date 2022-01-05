@@ -32,11 +32,9 @@ function EmailTemplateEdit() {
   }
 
   const handleBody = val => {
-    setMailTem(prevTemplates => {
-      const mailTem = deepCopy(prevTemplates)
-      mailTem[id].body = val
-      return mailTem
-    })
+    setMailTem(prevState => produce(prevState, draft => {
+      draft[id].body = val
+    }))
   }
 
   const addFieldToSubject = e => {

@@ -25,9 +25,9 @@ function ConfMsg({ removeIntegration }) {
   const { css } = useFela()
 
   const handleMsg = (mg, idx) => {
-    const confirmation = deepCopy(allConf)
-    confirmation.type.successMsg[idx].msg = mg
-    setAllConf(confirmation)
+    setAllConf(prevState => produce(prevState, draft => {
+      draft.type.successMsg[idx].msg = mg
+    }))
     setUpdateBtn({ unsaved: true })
   }
 

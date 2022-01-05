@@ -24,7 +24,9 @@ function EmailTemplateNew() {
   const { css } = useFela()
 
   const handleBody = value => {
-    setTem(prev => ({ ...prev, body: value }))
+    setTem(prevState => produce(prevState, draft => {
+      draft.body = value
+    }))
   }
 
   const handleInput = ({ target: { name, value } }) => {
