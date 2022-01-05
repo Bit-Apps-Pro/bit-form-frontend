@@ -15,7 +15,7 @@ import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
 import { useParams } from 'react-router-dom'
 
 import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import 'filepond/dist/filepond.min.css'
 
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'

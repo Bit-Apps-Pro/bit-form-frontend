@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
-import { $forms } from '../GlobalStates'
+import { $forms } from '../GlobalStates/GlobalStates'
 import ut from '../styles/2.utilities'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'

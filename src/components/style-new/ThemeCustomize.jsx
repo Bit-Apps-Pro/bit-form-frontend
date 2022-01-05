@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $colorScheme, $flags } from '../../GlobalStates'
+import { $colorScheme, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import DarkIcn from '../../Icons/DarkIcn'
 import LightIcn from '../../Icons/LightIcn'
@@ -33,7 +33,7 @@ export default function ThemeCustomize() {
 
   const setFlags = useSetRecoilState($flags)
 
-// console.log({}])
+  // console.log({}])
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))

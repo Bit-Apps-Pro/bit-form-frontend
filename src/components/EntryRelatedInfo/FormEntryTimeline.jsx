@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits, $fieldLabels } from '../../GlobalStates'
+import { $bits, $fieldLabels } from '../../GlobalStates/GlobalStates'
 import DocIcn from '../../Icons/DocIcn'
 import bitsFetch from '../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../Utils/Helpers'

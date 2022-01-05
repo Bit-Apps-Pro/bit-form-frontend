@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../GlobalStates/GlobalStates'
 import AllDeviceIcn from '../Icons/AllDeviceIcn'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckMarkIcn from '../Icons/CheckMarkIcn'

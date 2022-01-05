@@ -4,7 +4,7 @@
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates'
+import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import StackIcn from '../Icons/StackIcn'
 import TrashIcn from '../Icons/TrashIcn'

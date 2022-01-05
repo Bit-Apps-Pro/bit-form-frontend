@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react'
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../GlobalStates'
+import { $bits } from '../GlobalStates/GlobalStates'
 
 export const AppSettings = createContext()
 

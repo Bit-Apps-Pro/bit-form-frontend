@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $draggableModal } from '../../GlobalStates'
+import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { showDraggableModal } from './styleHelpers'
 
 export default function FontPicker({ id }) {

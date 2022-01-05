@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import CopyText from '../Utilities/CopyText'

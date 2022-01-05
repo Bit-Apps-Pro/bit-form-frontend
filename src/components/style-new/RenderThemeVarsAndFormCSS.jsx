@@ -1,7 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import { $colorScheme, $styles, $themeColors, $themeVars } from '../../GlobalStates'
+import { $colorScheme } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { json2CssStr } from './styleHelpers'
 
 export default function RenderThemeVarsAndFormCSS() {

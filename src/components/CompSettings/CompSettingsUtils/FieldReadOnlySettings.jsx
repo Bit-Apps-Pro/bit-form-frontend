@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates'
+import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { __ } from '../../../Utils/i18nwrap'
 import SingleToggle from '../../Utilities/SingleToggle'

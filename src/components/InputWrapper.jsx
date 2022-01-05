@@ -1,7 +1,8 @@
 import { useRef } from 'react'
-import { useRecoilValue } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $breakpoint, $fieldsDirection, $flags } from '../GlobalStates'
+import { useRecoilValue } from 'recoil'
+import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
+import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 
 export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
   const breakpoint = useRecoilValue($breakpoint)

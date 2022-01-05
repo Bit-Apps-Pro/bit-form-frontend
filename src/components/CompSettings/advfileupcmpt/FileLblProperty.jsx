@@ -7,7 +7,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { deepCopy } from '../../../Utils/Helpers'
-import { $fields, $selectedFieldId } from '../../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import Cooltip from '../../Utilities/Cooltip'
 
 export default function FileLblProperty({ placeholder, type, title, inputType = 'text', max = '', min = '', coolTip = '' }) {

@@ -1,11 +1,12 @@
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
-import { $styles, $themeColors } from '../../GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SimpleColorPickerTooltip from './SimpleColorPickerTooltip'
-import { getNumFromStr, getStrFromStr, getObjByKey, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
+import { getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, splitValueBySpaces, unitConverter } from './styleHelpers'
 
 export default function ShadowControlMenu({ objectPaths }) {
   const { css } = useFela()

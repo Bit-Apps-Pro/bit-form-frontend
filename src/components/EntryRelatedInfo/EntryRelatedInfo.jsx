@@ -7,7 +7,7 @@ import FormEntryPayments from './FormEntryPayments'
 import FormEntryTimeline from './FormEntryTimeline'
 import Modal from '../Utilities/Modal'
 import GoogleAdInfo from './GoogleAdInfo'
-import { $fieldLabels } from '../../GlobalStates'
+import { $fieldLabels } from '../../GlobalStates/GlobalStates'
 
 function EntryRelatedInfo({ formID, entryID, rowDtl, setSnackbar, integrations, close }) {
   const allLabels = useRecoilValue($fieldLabels)

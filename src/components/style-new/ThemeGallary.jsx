@@ -1,13 +1,14 @@
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { useState } from 'react'
-import { $fields, $styles } from '../../GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import EditIcn from '../../Icons/EditIcn'
 import EyeIcon from '../../Icons/EyeIcon'
-import Tip from '../Utilities/Tip'
-import CheckMarkIcn from '../../Icons/CheckMarkIcn'
 import SliderModal from '../Utilities/SliderModal'
+import Tip from '../Utilities/Tip'
 import themeProvider from './themes/0_themeProvider'
 
 export default function ThemeGallary() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import LoaderSm from '../../Loaders/LoaderSm'
 
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {

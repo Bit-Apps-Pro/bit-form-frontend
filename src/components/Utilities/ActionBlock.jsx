@@ -8,7 +8,7 @@ import Button from './Button'
 import MtInput from './MtInput'
 import MtSelect from './MtSelect'
 import TrashIcn from '../../Icons/TrashIcn'
-import { $fields, $fieldsArr, $updateBtn } from '../../GlobalStates'
+import { $fields, $fieldsArr, $updateBtn } from '../../GlobalStates/GlobalStates'
 
 function ActionBlock({ action, lgcGrpInd, actionInd, setworkFlows, actionType }) {
   const fields = useRecoilValue($fields)

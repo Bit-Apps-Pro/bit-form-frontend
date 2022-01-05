@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $styles, $tempStyles, $themeVars } from '../../GlobalStates'
+import { $styles, $tempStyles } from '../../GlobalStates/StylesState'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
-import { getValueByObjPath, setStyleStateObj } from './styleHelpers'
+import { getValueByObjPath } from './styleHelpers'
 
 export default function SpaceControlMenu({ value: spacing, objectPaths }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
