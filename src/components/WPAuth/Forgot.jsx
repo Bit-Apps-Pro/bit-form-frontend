@@ -44,7 +44,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   }
 
   return (
-    <div style={{ width: 800, opacity: status === 0 && 0.6 }}>
+    <div style={{ width: 800, opacity: status === 0 && 0.6, pointerEvents: status === 0 && 'none' }}>
       <div>
         <div>
           <div className="mt-3 mb-1"><b>Forget Password Fields Mapping</b></div>
