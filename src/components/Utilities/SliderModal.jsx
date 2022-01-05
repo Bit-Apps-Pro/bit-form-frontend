@@ -29,7 +29,7 @@ const s = {
     ml: '-250px',
     mt: '-100px',
     brs: 14,
-    tm: 'scale(0)',
+    tm: 'scale(0) transform(-50%, -50%)',
     oy: 1,
     bs:
       `0px 3px 0.5px rgba(0, 0, 0, 0.034),
@@ -104,7 +104,7 @@ const s = {
     tn: 'transform .4s',
   },
 }
-export default function SliderModal({ show = true, setModal, children, isInfinite = true }) {
+export default function SliderModal({ title = 'Example Title', className, show = true, setModal, children, isInfinite = true }) {
   const { css } = useFela()
   const [step, setStep] = useState(0)
 
@@ -171,7 +171,7 @@ export default function SliderModal({ show = true, setModal, children, isInfinit
           role="dialog"
           aria-modal="true"
           data-modal
-          className={css(s.modal)}
+          className={`${css(s.modal)} ${className}`}
         >
           <div data-arrow className={css(s.leftArrwWrp)}>
             <button
@@ -196,7 +196,7 @@ export default function SliderModal({ show = true, setModal, children, isInfinit
             </button>
           </div>
           <div className={css(ut.flxcb, ut.px10)}>
-            <h2 id="title" className={css(s.title)}>Title</h2>
+            <h2 id="title" className={css(s.title)}>{title}</h2>
             <div>
               <button onClick={closeModal} className={css(s.closeBtn)} type="button" aria-label="Close Modal" title="Close modal   Esc"><CloseIcn size="12" /></button>
             </div>
