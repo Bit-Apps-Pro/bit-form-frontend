@@ -2,6 +2,7 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+import inputWrapperClasses from './componentsStyleByTheme/1_bitformDefault/inputWrapperClasses'
 import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -305,4 +306,74 @@ export const addableCssPropsByField = (fieldType) => {
     default:
       break
   }
+}
+
+const styleClasses = {
+  lbl: ['lbl', 'lbl-wrp'],
+  lblPreIcn: ['lbl-pre-i'],
+  lblSufIcn: ['lbl-suf-i'],
+  subTitl: ['sub-titl'],
+  subTlePreIcn: ['sub-titl-pre-i'],
+  subTleSufIcn: ['sub-titl-suf-i'],
+  hepTxt: ['hlp-txt'],
+  hlpPreIcn: ['hlp-txt-pre-i'],
+  hlpSufIcn: ['hlp-txt-suf-i'],
+  prefixIcn: ['pre-i'],
+  suffixIcn: ['suf-i'],
+}
+
+const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+
+export const removeUnuseStyles = (fields, setStyles) => {
+  const fieldsArray = Object.keys(fields)
+  setStyles(prvStyle => produce(prvStyle, deftStyles => {
+    fieldsArray.forEach(fldkey => {
+      const fld = fields[fldkey]
+      if (!fld.lbl) deleteStyles(deftStyles, styleClasses.lbl, fldkey)
+      if (!fld.lblPreIcn) deleteStyles(deftStyles, styleClasses.lblPreIcn, fldkey)
+      if (!fld.lblSufIcn) deleteStyles(deftStyles, styleClasses.lblSufIcn, fldkey)
+      if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
+      if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
+      if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
+      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hepTxt, fldkey)
+      if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
+      if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
+
+      switch (fld.typ) {
+        case 'text':
+        case 'number':
+        case 'password':
+        case 'username':
+        case 'email':
+        case 'url':
+        case 'date':
+        case 'datetime-local':
+        case 'time':
+        case 'month':
+        case 'week':
+        case 'color':
+        case 'textarea':
+          if (!fld.prefixIcn) deleteStyles(deftStyles, styleClasses.prefixIcn, fldkey)
+          if (!fld.suffixIcn) deleteStyles(deftStyles, styleClasses.suffixIcn, fldkey)
+          break
+        case 'radio':
+
+          break
+        case 'check':
+
+          break
+        default:
+          break
+      }
+    })
+  }))
+}
+
+export const addDefaultStyleClasses = (fk, element, setStyle) => {
+  const inputWrapperClss = inputWrapperClasses(fk)
+  setStyle(prvStyle => produce(prvStyle, drftStyle => {
+    styleClasses[element].forEach(cls => {
+      drftStyle.fields[fk].classes[`.${fk}-${cls}`] = inputWrapperClss[`.${fk}-${cls}`]
+    })
+  }))
 }

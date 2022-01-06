@@ -22,7 +22,6 @@ export default function StyleLayers() {
       <div className={css(s.divider)} />
       <Scrollbars style={{ height: 'calc(100% - 120px' }} autoHide>
         <div className={css(s.scrollDiv)}>
-
           <h5 className={css(s.subtitle, ut.mt1, ut.fontH)}>Common Elements</h5>
           <NavBtn route="quick-tweaks" label={<span className={css({ fw: 500 })}>Theme Quick Tweaks</span>} icn={<TweaksIcn size={13} />} />
           <NavBtn route="form-wrapper" label="Form Wrapper" highlightSelector="[data-dev-fld-wrp]" offset="3" />
@@ -36,9 +35,12 @@ export default function StyleLayers() {
 
           <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
           {activeFields.map(([fldKey, fldData]) => (
+
             <LayerAccordion title={showFldTitle(fldData.typ)} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey}>
               <ElementConfiguration fldType={fldData.typ} fldKey={fldKey} />
-              <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
+              {!fldData.typ.match(/^(button|)$/) && (
+                <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
+              )}
             </LayerAccordion>
           ))}
         </div>
