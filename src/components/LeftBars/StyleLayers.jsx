@@ -37,6 +37,8 @@ export default function StyleLayers() {
           {activeFields.map(([fldKey, fldData]) => (
 
             <LayerAccordion title={showFldTitle(fldData.typ)} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey}>
+              <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
+              <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <ElementConfiguration fldType={fldData.typ} fldKey={fldKey} />
               {!fldData.typ.match(/^(button|)$/) && (
                 <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />

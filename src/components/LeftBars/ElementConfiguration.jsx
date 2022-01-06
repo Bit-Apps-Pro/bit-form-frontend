@@ -8,8 +8,6 @@ export default function ElementConfiguration({ fldType, fldKey }) {
 
   return (
     <>
-      <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
-      <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
       {fieldObj.lbl
         && (
           <>
