@@ -3,8 +3,9 @@ import { useHistory, useParams } from 'react-router-dom'
 import FocusIcn from '../../Icons/FocusIcn'
 import ut from '../../styles/2.utilities'
 import { highlightElm, removeHightlight } from '../style-new/styleHelpers'
+import Cooltip from '../Utilities/Cooltip'
 
-export default function NavBtn({ route, subRoute, label, offset = 1, icn, highlightSelector }) {
+export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1, icn, highlightSelector }) {
   const { formType, formID, fieldKey, element, rightBar } = useParams()
 
   let active = false
@@ -33,6 +34,11 @@ export default function NavBtn({ route, subRoute, label, offset = 1, icn, highli
       <div className={css(ut.flxc)}>
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
         {label}
+        <Cooltip width={150} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+          <div className={css(s.tipBody)}>
+            {cssSelector}
+          </div>
+        </Cooltip>
       </div>
       <div className={css(s.navActionBtn)} data-action-btn>
         {highlightSelector && (
@@ -75,6 +81,7 @@ const s = {
       focusShadow: 1,
       '& div[data-action-btn]': { dy: 'flex' },
     },
+    '& .hovertip': { oy: 0 },
     ':hover': {
       bd: '#eeeff7',
       '& div[data-action-btn]': { dy: 'flex' },
@@ -100,5 +107,11 @@ const s = {
     curp: 1,
     ':focus-visible': { focusShadow: 1 },
     ':hover': { bd: '#d3d3d3' },
+  },
+  tipBody: {
+    lh: '1.1',
+    fs: '12.5px',
+    fw: 100,
+    ff: '"Roboto", sans-serif',
   },
 }
