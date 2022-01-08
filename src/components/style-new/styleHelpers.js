@@ -2,7 +2,8 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
-import inputWrapperClasses from './componentsStyleByTheme/1_bitformDefault/inputWrapperClasses'
+// eslint-disable-next-line camelcase
+import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -326,6 +327,7 @@ const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.field
 
 export const removeUnuseStyles = (fields, setStyles) => {
   const fieldsArray = Object.keys(fields)
+  console.log(fields)
   setStyles(prvStyle => produce(prvStyle, deftStyles => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]
@@ -370,10 +372,31 @@ export const removeUnuseStyles = (fields, setStyles) => {
 }
 
 export const addDefaultStyleClasses = (fk, element, setStyle) => {
-  const inputWrapperClss = inputWrapperClasses(fk)
   setStyle(prvStyle => produce(prvStyle, drftStyle => {
-    styleClasses[element].forEach(cls => {
-      drftStyle.fields[fk].classes[`.${fk}-${cls}`] = inputWrapperClss[`.${fk}-${cls}`]
-    })
+    const fldTyp = prvStyle.fields[fk].fieldType
+    switch (fldTyp) {
+      case 'text':
+      case 'number':
+      case 'password':
+      case 'username':
+      case 'email':
+      case 'url':
+      case 'date':
+      case 'datetime-local':
+      case 'time':
+      case 'month':
+      case 'week':
+      case 'color':
+      case 'textarea':
+        // eslint-disable-next-line no-case-declarations
+        const textStyleBitFormDefault = textStyle_1_bitformDefault({ fk, fldTyp })
+        // eslint-disable-next-line no-case-declarations
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      default:
+        break
+    }
   }))
 }
