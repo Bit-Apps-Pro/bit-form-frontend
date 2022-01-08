@@ -1,24 +1,24 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { useEffect, useRef, useState } from 'react'
-import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import produce from 'immer'
+import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
-import { useAsyncDebounce } from 'react-table'
+import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import ut from '../../styles/2.utilities'
-import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import bitsFetch from '../../Utils/bitsFetch'
+import { useAsyncDebounce } from 'react-table'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $fields, $selectedFieldId, $styles } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import app from '../../styles/app.style'
-import SearchIcon from '../../Icons/SearchIcon'
 import DownloadIcon from '../../Icons/DownloadIcon'
-import LoaderSm from '../Loaders/LoaderSm'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
-import { deepCopy } from '../../Utils/Helpers'
-import Grow from './StyleCustomize/ChildComp/Grow'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
+import SearchIcon from '../../Icons/SearchIcon'
+import ut from '../../styles/2.utilities'
+import app from '../../styles/app.style'
+import bitsFetch from '../../Utils/bitsFetch'
+import { deepCopy } from '../../Utils/Helpers'
+import LoaderSm from '../Loaders/LoaderSm'
+import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import Grow from './StyleCustomize/ChildComp/Grow'
 
 function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
   const { fieldKey: fldKey } = useParams()
@@ -34,6 +34,8 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
   const [searchLoading, setSearchLoading] = useState(false)
   const [scrollLoading, setScrollLoading] = useState(false)
   const uploadLabel = uploadLbl || 'Upload Icon'
+  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const setStyles = useSetRecoilState($styles)
   const [total, setTotal] = useState(10001)
   const { css } = useFela()
   const url = 'https://raw.githack.com'
@@ -147,7 +149,12 @@ function Icons({ iconType, setModal, selected = '', uploadLbl = '' }) {
       .then(res => {
         if (res !== undefined && res.success) {
           fieldData[iconType] = res.data
+          console.log('fieldData', fieldData, iconType)
           setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+          setStyles(prvStyle => produce(prvStyle, draft => {
+            if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left'] = '40px !important'
+            if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right'] = '40px !important'
+          }))
         }
         setDnLoading(false)
         setModal(false)

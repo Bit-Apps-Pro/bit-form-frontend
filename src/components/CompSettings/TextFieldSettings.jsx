@@ -15,7 +15,6 @@ import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
-import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
@@ -51,9 +50,9 @@ function TextFieldSettings() {
   const setBuilderHookState = useSetRecoilState($builderHookStates)
   const [styles, setStyles] = useRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
   const fieldData = deepCopy(fields[fldKey])
   const isRequired = fieldData.valid.req || false
+  const selectedFieldId = useRecoilValue($selectedFieldId)
   const isAutoComplete = fieldData.ac === 'on'
   const adminLabel = fieldData.adminLbl || ''
   const subtitle = fieldData.subtitle || ''
@@ -432,6 +431,10 @@ function TextFieldSettings() {
       delete fieldData[iconType]
       const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
+      setStyles(prvStyle => produce(prvStyle, draft => {
+        if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
+        if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
+      }))
     }
   }
 
