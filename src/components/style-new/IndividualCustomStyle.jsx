@@ -2,8 +2,8 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $colorScheme, $styles } from '../../GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $styles } from '../../GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -19,7 +19,6 @@ import TransitionControl from './TransitionControl'
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
-  const colorScheme = useRecoilValue($colorScheme)
   const [controller, setController] = useState('Default')
   console.log(styles)
 
