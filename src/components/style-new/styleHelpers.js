@@ -327,7 +327,6 @@ const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.field
 
 export const removeUnuseStyles = (fields, setStyles) => {
   const fieldsArray = Object.keys(fields)
-  console.log(fields)
   setStyles(prvStyle => produce(prvStyle, deftStyles => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]

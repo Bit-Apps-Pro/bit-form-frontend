@@ -16,6 +16,7 @@ export default function StyleLayers() {
   const showFldTitle = (typ) => fieldTypes[typ] || typ
   const selectedFieldKey = useRecoilValue($selectedFieldId)
 
+
   return (
     <div className={css(s.con)}>
       <h4 className={css(s.title)}>Elements & Layers</h4>
@@ -39,7 +40,7 @@ export default function StyleLayers() {
             <LayerAccordion title={showFldTitle(fldData.typ)} fldData={fldData} tag={fldKey} key={fldKey} open={fldKey === selectedFieldKey} highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`}>
               <NavBtn subRoute={fldKey} route="quick-tweaks" label="Quick Tweaks" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
               <NavBtn subRoute={fldKey} route="field-container" label="Field Container" offset="2.5" highlightSelector={`[data-dev-fld-wrp="${fldKey}"]`} />
-              <ElementConfiguration fldType={fldData.typ} fldKey={fldKey} />
+              <ElementConfiguration fldData={fldData} fldKey={fldKey} />
               {!fldData.typ.match(/^(button|)$/) && (
                 <NavBtn subRoute={fldKey} route="error-message" label="Error Message" offset="2.5" highlightSelector={`[data-dev-err-msg="${fldKey}"]`} />
               )}
