@@ -51,7 +51,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             className={`${fieldKey}-lbl`}
             htmlFor={fieldKey}
           >
-            {fieldData.lblPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
+            {fieldData.lblPreIcn && <img data-dev-lbl-pre-i={fieldKey} className={`${fieldKey}-lbl-pre-i`} src={fieldData.lblPreIcn} alt="" />}
             {fieldData.lbl}
             {fieldData.valid?.req && (
               <>
@@ -59,15 +59,15 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 <span className="fld-req-symbol">*</span>
               </>
             )}
-            {fieldData.lblSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
+            {fieldData.lblSufIcn && <img data-dev-lbl-suf-i={fieldKey} className={`${fieldKey}-lbl-suf-i`} src={fieldData.lblSufIcn} alt="" />}
           </label>
         )}
         {
           (fieldData.subtitle || fieldData.subTlePreIcn || fieldData.subTleSufIcn) && (
             <div data-dev-sub-titl={fieldKey} className={`${fieldKey}-sub-titl`}>
-              {fieldData.subTlePreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i`} src={fieldData.subTlePreIcn} alt="" />}
+              {fieldData.subTlePreIcn && <img data-dev-sub-titl-pre-i={fieldKey} className={`${fieldKey}-sub-titl-pre-i`} src={fieldData.subTlePreIcn} alt="" />}
               {fieldData.subtitle || ''}
-              {fieldData.subTleSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i`} src={fieldData.subTleSufIcn} alt="" />}
+              {fieldData.subTleSufIcn && <img data-dev-sub-titl-suf-i={fieldKey} className={`${fieldKey}-sub-titl-suf-i`} src={fieldData.subTleSufIcn} alt="" />}
             </div>
           )
         }
@@ -80,10 +80,10 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
         {
           (fieldData.helperTxt || fieldData.hlpPreIcn || fieldData.hlpSufIcn) && (
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
-              {fieldData.hlpPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
+              {fieldData.hlpPreIcn && <img data-dev-hlp-txt-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
               {fieldData.helperTxt || ''}
               {/* {new DOMParser().parseFromString(fieldData?.helperTxt, 'text/html')} */}
-              {fieldData.hlpSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
+              {fieldData.hlpSufIcn && <img data-dev-hlp-txt-suf-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>
           )
         }
