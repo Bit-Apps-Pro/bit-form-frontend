@@ -111,8 +111,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       }))
     }
   }
-  console.log({ fldStyleObj, element, isFieldElemetOverrided })
-
+  // console.log({ fldStyleObj, element, isFieldElemetOverrided })
 
   const checkExistElement = () => fldStyleObj?.overrideGlobalTheme?.find(el => el === element)
 
@@ -155,7 +154,6 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               <IndividualCustomStyle elementKey="fld-wrp" fldKey={fieldKey} />
             </div>
           )}
-
           {element === 'label-subtitle-container' && (
             <div className={css(!checkExistElement('label-subtitle-container') && cls.blur)}>
               <IndividualCustomStyle elementKey="lbl-wrp" fldKey={fieldKey} />

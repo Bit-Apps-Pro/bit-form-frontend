@@ -8,11 +8,15 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { __ } from '../../Utils/i18nwrap'
+import BorderControl from './BorderControl'
 import CssPropertyList from './CssPropertyList'
 import IndividualShadowControl from './IndividualShadowControl'
 import editorConfig from './NewStyleEditorConfig'
+import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
+import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
+import TransitionControl from './TransitionControl'
 
 export default function FormWrapperCustomizer() {
   const { css } = useFela()
@@ -20,8 +24,7 @@ export default function FormWrapperCustomizer() {
   const colorScheme = useRecoilValue($colorScheme)
   const formWrpStylesObj = styles.form[colorScheme]['_frm-bg']
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj)
-  console.log('formWrpStylesObj', formWrpStylesObj)
-
+  console.log(formWrpStylesObj)
   const addableCssProps = Object
     .keys(editorConfig.formWrapper.properties)
     .filter(x => !formWrpStylesPropertiesArr.includes(x))
@@ -53,6 +56,12 @@ export default function FormWrapperCustomizer() {
     setStyles(prvStyle => produce(prvStyle, drft => {
       drft.form[colorScheme]['_frm-bg'][property] = ''
     }))
+  }
+
+  const fwStylePathObj = {
+    object: 'styles',
+    borderObjName: 'styles',
+    paths: { border: getPropertyPath('border'), borderWidth: getPropertyPath('border-width') },
   }
 
   return (
@@ -144,6 +153,36 @@ export default function FormWrapperCustomizer() {
           deleteable
           delPropertyHandler={() => delPropertyHandler('box-shadow')}
           clearHandler={() => clearHandler('box-shadow')}
+          allowImportant
+        />
+      )}
+      {formWrpStylesPropertiesArr.includes('border') && (
+        <ThemeStylePropertyBlock label="Border">
+          <div className={css(ut.flxc)}>
+            <ResetStyle
+              propertyPath={[getPropertyPath('border'), getPropertyPath('border-width')]}
+              stateObjName="styles"
+            />
+            <BorderControl
+              subtitle="Field Container Border"
+              value={formWrpStylesObj?.border}
+              objectPaths={fwStylePathObj}
+              id="fld-wrp-bdr"
+            />
+          </div>
+        </ThemeStylePropertyBlock>
+      )}
+      {formWrpStylesPropertiesArr.includes('transition') && (
+        <TransitionControl
+          title="Transition"
+          subtitle="Transition"
+          value={formWrpStylesObj?.transition}
+          modalId="field-container-transition"
+          stateObjName="styles"
+          propertyPath={getPropertyPath('transition')}
+          deleteable
+          delPropertyHandler={() => delPropertyHandler('transition')}
+          clearHandler={() => clearHandler('transition')}
           allowImportant
         />
       )}

@@ -1,10 +1,11 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/button-has-type */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'

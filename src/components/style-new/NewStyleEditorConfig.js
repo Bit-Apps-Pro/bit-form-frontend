@@ -27,6 +27,7 @@ const editorConfig = {
       padding: {},
       'box-shadow': {},
       'border-radius': {},
+      transition: {},
     },
   },
 }

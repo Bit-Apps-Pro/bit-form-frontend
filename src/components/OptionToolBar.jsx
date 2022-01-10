@@ -2,27 +2,29 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useHistory, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $fields, $styles } from '../GlobalStates'
 import { $breakpoint, $flags } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
-import LayerIcon from '../Icons/LayerIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import EditIcn from '../Icons/EditIcn'
 import EllipsisIcon from '../Icons/EllipsisIcon'
 import LaptopIcn from '../Icons/LaptopIcn'
+import LayerIcon from '../Icons/LayerIcon'
 import MobileIcon from '../Icons/MobileIcon'
 import SettingsIcn from '../Icons/SettingsIcn'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
 import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import BreakpointSizeControl from './BreakpointSizeControl'
+import Editor from './CompSettings/Editor'
 import FormBuilderHistory from './FormBuilderHistory'
+import { removeUnuseStyles } from './style-new/styleHelpers'
 import Downmenu from './Utilities/Downmenu'
+import Modal from './Utilities/Modal'
 import SingleToggle from './Utilities/SingleToggle'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
-import Modal from './Utilities/Modal'
-import Editor from './CompSettings/Editor'
 
 export default function OptionToolBar({ setResponsiveView, setShowToolbar, showToolBar, toggleToolBar }) {
   const { css } = useFela()
@@ -32,6 +34,8 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
   const breakpoint = useRecoilValue($breakpoint)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
   const [modal, setModal] = useState(false)
+  const fields = useRecoilValue($fields)
+  const setStyles = useSetRecoilState($styles)
 
   const styleModeHandler = ({ target: { checked } }) => setFlags(prv => ({ ...prv, styleMode: checked }))
   const styleModeButtonHandler = () => {
@@ -39,12 +43,14 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
       if (prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: true }
     })
+    removeUnuseStyles(fields, setStyles)
   }
   const formFieldButtonHandler = () => {
     setFlags(prvFlags => {
       if (!prvFlags.styleMode || showToolBar) toggleToolBar()
       return { ...prvFlags, styleMode: false }
     })
+    removeUnuseStyles(fields, setStyles)
   }
 
   const handleRightPanel = (currentActive) => {
@@ -53,6 +59,7 @@ export default function OptionToolBar({ setResponsiveView, setShowToolbar, showT
     } else if (currentActive === 'theme-customize') {
       history.push(`/form/builder/${formType}/${formID}/themes`)
     }
+    removeUnuseStyles(fields, setStyles)
   }
 
   return (

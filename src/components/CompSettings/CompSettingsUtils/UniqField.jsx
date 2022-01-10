@@ -1,9 +1,10 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
-import { $bits, $builderHistory, $fields, $selectedFieldId, $updateBtn } from '../../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $builderHistory, $fields, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import ut from '../../../styles/2.utilities'
 import ErrorMessages from '../../../styles/ErrorMessages.style'

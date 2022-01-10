@@ -2,8 +2,7 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $colorScheme } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
@@ -15,11 +14,11 @@ import IndividualShadowControl from './IndividualShadowControl'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
 import { addableCssPropsByField } from './styleHelpers'
+import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey, fldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const { css } = useFela()
-  const colorScheme = useRecoilValue($colorScheme)
   const [controller, setController] = useState('Default')
   console.log(styles)
 
@@ -34,11 +33,11 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
 
   const existingCssProperties = classes[`.${fldKey}-${elementKey}`]
   const existingProperties = Object.keys(existingCssProperties)
-  const addableCssProps = addableCssPropsByField(fieldType).filter(x => !existingProperties.includes(x))
+  const addableCssProps = addableCssPropsByField(fieldType)?.filter(x => !existingProperties?.includes(x))
 
   const existingCssHoverProperties = classes?.[`.${fldKey}-${elementKey}:hover`]
   const existingHoverProperties = Object.keys(existingCssHoverProperties || {})
-  const addableCssHoverProps = addableCssPropsByField(fieldType).filter(x => !existingHoverProperties.includes(x))
+  const addableCssHoverProps = addableCssPropsByField(fieldType)?.filter(x => !existingHoverProperties?.includes(x))
 
   const setNewCssProp = (property) => {
     setStyles(prvStyle => produce(prvStyle, drft => {
@@ -224,6 +223,21 @@ export default function IndividualCustomStyle({ elementKey, fldKey }) {
               fldKey={fldKey}
             />
           )}
+          {existingProperties.includes('transition') && (
+            <TransitionControl
+              title="Transition"
+              subtitle="Transition"
+              value={existingCssProperties?.transition}
+              modalId="field-container-transition"
+              stateObjName="styles"
+              propertyPath={getPropertyPath('transition')}
+              deleteable
+              delPropertyHandler={() => delPropertyHandler('transition')}
+              clearHandler={() => clearHandler('transition')}
+              allowImportant
+            />
+          )}
+
           {/* {
         existingCssProperties.includes('font-size') && (
           <div className={css(ut.flxcb, ut.mt2)}>

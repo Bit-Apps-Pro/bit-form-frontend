@@ -2,6 +2,8 @@
 import produce from 'immer'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { select } from '../../Utils/globalHelpers'
+// eslint-disable-next-line camelcase
+import textStyle_1_bitformDefault from './componentsStyleByTheme/1_bitformDefault/textStyle_1_bitformDefault'
 import editorConfig from './NewStyleEditorConfig'
 
 // eslint-disable-next-line import/prefer-default-export
@@ -304,6 +306,9 @@ export const addableCssPropsByField = (fieldType) => {
     case 'text':
     case 'date':
     case 'number':
+    case 'username':
+    case 'textarea':
+    case 'email':
       return Object.keys(editorConfig.texfieldStyle.properties)
     case 'dropdown':
     // return Object.keys(editorConfig.texfieldStyle.properties)
@@ -312,4 +317,95 @@ export const addableCssPropsByField = (fieldType) => {
     default:
       break
   }
+}
+
+const styleClasses = {
+  lbl: ['lbl', 'lbl-wrp'],
+  lblPreIcn: ['lbl-pre-i'],
+  lblSufIcn: ['lbl-suf-i'],
+  subTitl: ['sub-titl'],
+  subTlePreIcn: ['sub-titl-pre-i'],
+  subTleSufIcn: ['sub-titl-suf-i'],
+  hepTxt: ['hlp-txt'],
+  hlpPreIcn: ['hlp-txt-pre-i'],
+  hlpSufIcn: ['hlp-txt-suf-i'],
+  prefixIcn: ['pre-i'],
+  suffixIcn: ['suf-i'],
+}
+
+const deleteStyles = (obj, clsArr, fk) => clsArr.forEach(cls => delete obj.fields?.[fk]?.classes?.[`.${fk}-${cls}`])
+
+export const removeUnuseStyles = (fields, setStyles) => {
+  const fieldsArray = Object.keys(fields)
+  setStyles(prvStyle => produce(prvStyle, deftStyles => {
+    fieldsArray.forEach(fldkey => {
+      const fld = fields[fldkey]
+      if (!fld.lbl) deleteStyles(deftStyles, styleClasses.lbl, fldkey)
+      if (!fld.lblPreIcn) deleteStyles(deftStyles, styleClasses.lblPreIcn, fldkey)
+      if (!fld.lblSufIcn) deleteStyles(deftStyles, styleClasses.lblSufIcn, fldkey)
+      if (!fld.subtitle) deleteStyles(deftStyles, styleClasses.subTitl, fldkey)
+      if (!fld.subTlePreIcn) deleteStyles(deftStyles, styleClasses.subTlePreIcn, fldkey)
+      if (!fld.subTleSufIcn) deleteStyles(deftStyles, styleClasses.subTleSufIcn, fldkey)
+      if (!fld.helperTxt) deleteStyles(deftStyles, styleClasses.hepTxt, fldkey)
+      if (!fld.hlpPreIcn) deleteStyles(deftStyles, styleClasses.hlpPreIcn, fldkey)
+      if (!fld.hlpSufIcn) deleteStyles(deftStyles, styleClasses.hlpSufIcn, fldkey)
+
+      switch (fld.typ) {
+        case 'text':
+        case 'number':
+        case 'password':
+        case 'username':
+        case 'email':
+        case 'url':
+        case 'date':
+        case 'datetime-local':
+        case 'time':
+        case 'month':
+        case 'week':
+        case 'color':
+        case 'textarea':
+          if (!fld.prefixIcn) deleteStyles(deftStyles, styleClasses.prefixIcn, fldkey)
+          if (!fld.suffixIcn) deleteStyles(deftStyles, styleClasses.suffixIcn, fldkey)
+          break
+        case 'radio':
+
+          break
+        case 'check':
+
+          break
+        default:
+          break
+      }
+    })
+  }))
+}
+
+export const addDefaultStyleClasses = (fk, element, setStyle) => {
+  setStyle(prvStyle => produce(prvStyle, drftStyle => {
+    const fldTyp = prvStyle.fields[fk].fieldType
+    switch (fldTyp) {
+      case 'text':
+      case 'number':
+      case 'password':
+      case 'username':
+      case 'email':
+      case 'url':
+      case 'date':
+      case 'datetime-local':
+      case 'time':
+      case 'month':
+      case 'week':
+      case 'color':
+      case 'textarea':
+        // eslint-disable-next-line no-case-declarations
+        const textStyleBitFormDefault = textStyle_1_bitformDefault({ fk, fldTyp })
+        // eslint-disable-next-line no-case-declarations
+        styleClasses[element].forEach(cls => {
+          drftStyle.fields[fk].classes[`.${fk}-${cls}`] = textStyleBitFormDefault[`.${fk}-${cls}`]
+        })
+        break
+      default:
+        break
+    }
+  }))
 }

@@ -1,21 +1,18 @@
+/* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $draggableModal } from '../../GlobalStates/GlobalStates'
-import { $styles } from '../../GlobalStates/StylesState'
-import { $themeColors } from '../../GlobalStates/ThemeColorsState'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { $draggableModal, $styles, $themeColors, $themeVars } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import { assignNestedObj } from '../../Utils/FormBuilderHelper'
 import { __ } from '../../Utils/i18nwrap'
-import ColorPreview from './ColorPreview'
 import Important from './Important'
 import ResetStyle from './ResetStyle'
 import { showDraggableModal } from './styleHelpers'
 
-export default function IndividualShadowControl({ title,
+export default function TransitionControl({ title,
   stateObjName,
   propertyPath,
   subtitle,
@@ -26,7 +23,6 @@ export default function IndividualShadowControl({ title,
   deleteable,
   delPropertyHandler,
   allowImportant,
-  hslaPaths,
   fldKey }) {
   const { css } = useFela()
   const setStyles = useSetRecoilState($styles)
@@ -72,12 +68,11 @@ export default function IndividualShadowControl({ title,
         {allowImportant && <Important stateObjName={stateObjName} propertyPath={propertyPath} />}
         <div className={css(c.preview_wrp, draggableModal.id === modalId && c.active)}>
           <button
-            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'individual-shadow-control', width: 240, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, hslaPaths, fldKey })}
+            onClick={e => showDraggableModal(e, setDraggableModal, { component: 'transition-control', width: 240, subtitle, action: { type: modalType }, value, id: modalId, objectPaths, stateObjName, propertyPath, fldKey })}
             type="button"
             className={css(c.pickrBtn)}
           >
-            <ColorPreview bg={value?.replace(/!important/gi, '')} h={24} w={24} className={css(ut.mr2)} />
-            <span className={css(c.clrVal)}>{value?.replaceAll(/\(|var|\)/gi, '')}</span>
+            {value || 'Configure'}
           </button>
           {value && (
             <button title="Clear Value" onClick={clearHandler} className={css(c.clearBtn)} type="button" aria-label="Clear Color">
@@ -97,7 +92,7 @@ const c = {
     w: 130,
     mnw: 130,
     brs: 10,
-    p: 3,
+    p: 8,
     flx: 'center-between',
     ':hover': { bs: '0 0 0 1px var(--white-0-83)' },
   },
