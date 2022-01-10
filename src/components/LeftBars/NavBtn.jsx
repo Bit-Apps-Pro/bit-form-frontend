@@ -34,11 +34,13 @@ export default function NavBtn({ route, subRoute, cssSelector, label, offset = 1
       <div className={css(ut.flxc)}>
         {icn && <span className={css(ut.flxc, { mr: 5 })}>{icn}</span>}
         {label}
-        <Cooltip width={150} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
-          <div className={css(s.tipBody)}>
-            {cssSelector}
-          </div>
-        </Cooltip>
+        {cssSelector && (
+          <Cooltip width={180} icnSize={17} className={`${css(ut.mr2)} hovertip`}>
+            <div className={css(s.tipBody)}>
+              {`CSS Selector: ${cssSelector}`}
+            </div>
+          </Cooltip>
+        )}
       </div>
       <div className={css(s.navActionBtn)} data-action-btn>
         {highlightSelector && (
