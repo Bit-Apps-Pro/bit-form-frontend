@@ -105,7 +105,7 @@ function Workflow({ formID }) {
       toast.promise(prom, {
         success: 'Successfully Deleted.',
         loading: 'Deleting...',
-        error: 'Error occured, Try again.',
+        error: 'Error occurred, Try again.',
       })
     } else {
       workFlows.splice(val, 1)
