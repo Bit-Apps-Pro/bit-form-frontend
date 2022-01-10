@@ -111,7 +111,6 @@ function removeUnwantedCSS() {
 
   for (let i = 0; i < styles.length; i += 1) {
     if (styles[i].href !== null) {
-      console.log('style', styles[i])
       const regex = new RegExp(conflictStyles.join('.*css|'), 'gi')
       if (styles[i]?.href.match(regex)) {
         styles[i].disabled = true
