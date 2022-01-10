@@ -27,8 +27,8 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
   const hidden = report ? report[report.length - 1]?.details?.hiddenColumns : []
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
 
-  let colHeading = []
-  let fieldKey = []
+  const colHeading = []
+  const fieldKey = []
 
   columns.map((col, index) => {
     if (!hidden?.includes(col.accessor)) {
@@ -49,26 +49,26 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
     setIsLoading(true)
     bitsFetch({ data },
       'bitforms_filter_export_data').then((res) => {
-        if (res !== undefined && res.success) {
-          if (res.data?.count !== 0) {
-            const header = []
-            header[0] = 'Entry ID'
-            colHeading.map((col, index) => {
-              header[index + 1] = col.val
-            })
-            const ws = XLSX.utils.json_to_sheet(res.data)
-            /* add to workbook */
-            const wb = XLSX.utils.book_new()
-            XLSX.utils.sheet_add_aoa(ws, [header])
-            XLSX.utils.book_append_sheet(wb, ws)
-            /* generate an XLSX file */
-            XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
-          } else {
-            setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
-          }
+      if (res !== undefined && res.success) {
+        if (res.data?.count !== 0) {
+          const header = []
+          header[0] = 'Entry ID'
+          colHeading.map((col, index) => {
+            header[index + 1] = col.val
+          })
+          const ws = XLSX.utils.json_to_sheet(res.data)
+          /* add to workbook */
+          const wb = XLSX.utils.book_new()
+          XLSX.utils.sheet_add_aoa(ws, [header])
+          XLSX.utils.book_append_sheet(wb, ws)
+          /* generate an XLSX file */
+          XLSX.writeFile(wb, `bitform ${formID}.${data?.fileFormate}`)
+        } else {
+          setSnackbar({ ...{ show: true, msg: __('no response found', 'bitform') } })
         }
-        setIsLoading(false)
-      })
+      }
+      setIsLoading(false)
+    })
   }
 
   const handleInput = (typ, val) => {
@@ -99,7 +99,7 @@ export default function Export({ showExportMdl, close, cols, formID, report }) {
               className="mt-3 flx"
             >
               <b style={{ width: 200 }}>{__('Enter row number', 'bitform')}</b>
-              <input type="text" style={{ width: 250 }} name="limit" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-2" placeholder="Export Row Number" />
+              <input aria-label="Export Row Number" type="text" style={{ width: 250 }} name="limit" onChange={(e) => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-2" placeholder="Export Row Number" />
             </div>
           )}
 
