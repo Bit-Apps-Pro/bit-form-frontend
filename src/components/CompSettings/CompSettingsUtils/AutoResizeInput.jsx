@@ -6,29 +6,31 @@ const AutoResizeInput = ({ name, className, ariaLabel, placeholder, changeAction
   const { css } = useFela()
   const textInput = useRef(null)
 
-  const heightReset = () => {
+  const rowIncrease = () => {
     while (textInput.current.getAttribute('rows') < maxRow && textInput.current.offsetHeight < textInput.current.scrollHeight) {
-      console.log( "loop 1= ", textInput.current.getAttribute('rows'), textInput.current.offsetHeight, textInput.current.scrollHeight)
       textInput.current.setAttribute('rows', Number(textInput.current.getAttribute('rows')) + 1)
     }
   }
+  const rowDecrease = () => {
+    textInput.current.style.height = `${textInput.current.offsetHeight - 1}px`
+    while (textInput.current.offsetHeight >= textInput.current.scrollHeight && textInput.current.getAttribute('rows') > 1) {
+      textInput.current.setAttribute('rows', Number(textInput.current.getAttribute('rows')) - 1)
+      textInput.current.style.height = 'unset'
+      textInput.current.style.height = `${textInput.current.offsetHeight - 1}px`
+    }
+    textInput.current.style.height = 'unset'
+  }
+
   useEffect(() => {
-    heightReset()
+    rowIncrease()
   }, [])
 
-  const keyAction = (e) => {
-    if (e.keyCode === 8 || e.keyCode === 46) {
-      textInput.current.style.height = `${textInput.current.offsetHeight - 1 }px`
-      while (textInput.current.offsetHeight >= textInput.current.scrollHeight) {
-        console.log("loop 2= ", textInput.current.getAttribute('rows'), textInput.current.offsetHeight, textInput.current.scrollHeight)
-        textInput.current.setAttribute('rows', Number(textInput.current.getAttribute('rows')) - 1)
-        textInput.current.style.height = 'unset'
-        textInput.current.style.height = `${textInput.current.offsetHeight - 1 }px`
-      }
-      textInput.current.style.height = 'unset'
-    }
-    heightReset(e)
+  const handleInputChange = e => {
+    if (changeAction) changeAction(e)
+    rowDecrease()
+    rowIncrease()
   }
+
   return (
     <textarea
       aria-label={ariaLabel}
@@ -38,8 +40,7 @@ const AutoResizeInput = ({ name, className, ariaLabel, placeholder, changeAction
       placeholder={placeholder}
       value={value}
       rows={rows}
-      onKeyUp={keyAction}
-      onChange={changeAction}
+      onChange={handleInputChange}
     />
   )
 }
