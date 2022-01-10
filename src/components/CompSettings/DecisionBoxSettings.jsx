@@ -17,6 +17,7 @@ import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 export default function DecisionBoxSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -127,7 +128,11 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="admib label" className={css(FieldStyle.input)} value={fieldData.adminLbl || ''} type="text" onChange={setAdminLabel} />
+          <AutoResizeInput
+            ariaLabel="admib label"
+            value={fieldData.adminLbl || ''}
+            changeAction={setAdminLabel}
+          />
         </div>
       </SimpleAccordion>
 

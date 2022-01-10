@@ -28,6 +28,7 @@ import ImageValidateoMdl from './advfileupcmpt/ImageValidateoMdl'
 import FileStyle from './advfileupcmpt/FileStyle'
 import FileTypeSize from './advfileupcmpt/FileTypeSize'
 import Cooltip from '../Utilities/Cooltip'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 function AdFileUpSettings() {
   const [lblPropertyMdl, setLblPropertyMdl] = useState(false)
@@ -143,14 +144,12 @@ function AdFileUpSettings() {
         disable={!fieldData?.adminLbl}
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input
-            aria-label="Admin label for this Field"
+          <AutoResizeInput
+            ariaLabel="Admin label for this Field"
             placeholder="Type Admin label here..."
-            className={css(FieldStyle.input)}
             value={adminLabel}
-            type="text"
             name="adminLabel"
-            onChange={setFieldProperty}
+            changeAction={setFieldProperty}
           />
         </div>
       </SimpleAccordion>

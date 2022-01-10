@@ -31,6 +31,7 @@ import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import SizeControl from './StyleCustomize/ChildComp/SizeControl'
 import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleHelpers'
 import BorderControl from '../style-new/BorderControl'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 function TitleSettings() {
   const { css } = useFela()
@@ -372,12 +373,11 @@ function TitleSettings() {
                 />
               </Downmenu>
             </div>
-            <textarea
+            <AutoResizeInput
               placeholder="Sub Title..."
-              className={css(FieldStyle.input)}
               name="subTitle"
               value={fieldData?.subTitle}
-              onChange={handleTitle}
+              changeAction={handleTitle}
             />
           </div>
 
