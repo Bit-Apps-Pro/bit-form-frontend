@@ -83,7 +83,6 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
             <div data-dev-hlp-txt={fieldKey} className={`${fieldKey}-hlp-txt`}>
               {fieldData.hlpPreIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-pre-i`} src={fieldData.hlpPreIcn} alt="" />}
               {fieldData.helperTxt || ''}
-              {new DOMParser().parseFromString(fieldData?.helperTxt, 'text/html')}
               {fieldData.hlpSufIcn && <img data-dev-pre-i={fieldKey} className={`${fieldKey}-hlp-txt-suf-i`} src={fieldData.hlpSufIcn} alt="" />}
             </div>
           )

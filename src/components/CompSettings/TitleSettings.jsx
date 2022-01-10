@@ -27,6 +27,7 @@ import { getNumFromStr, getStrFromStr, unitConverter } from '../style-new/styleH
 import Downmenu from '../Utilities/Downmenu'
 import Modal from '../Utilities/Modal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import Icons from './Icons'
 import SmartTags from './SmartTags'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -377,12 +378,11 @@ function TitleSettings() {
                 />
               </Downmenu>
             </div>
-            <textarea
+            <AutoResizeInput
               placeholder="Sub Title..."
-              className={css(FieldStyle.input)}
               name="subTitle"
               value={fieldData?.subTitle}
-              onChange={handleTitle}
+              changeAction={handleTitle}
             />
           </div>
 

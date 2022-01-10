@@ -2,22 +2,23 @@
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useParams } from 'react-router-dom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $builderHistory, $fields, $updateBtn } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
+import sc from '../../styles/commonStyleEditorStyle'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import sc from '../../styles/commonStyleEditorStyle'
 
 export default function DecisionBoxSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -128,7 +129,11 @@ export default function DecisionBoxSettings() {
         open
       >
         <div className={css(FieldStyle.placeholder)}>
-          <input aria-label="admib label" className={css(FieldStyle.input)} value={fieldData.adminLbl || ''} type="text" onChange={setAdminLabel} />
+          <AutoResizeInput
+            ariaLabel="admib label"
+            value={fieldData.adminLbl || ''}
+            changeAction={setAdminLabel}
+          />
         </div>
       </SimpleAccordion>
 
