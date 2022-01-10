@@ -1,6 +1,7 @@
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $colorScheme, $styles } from '../../GlobalStates'
+import { $colorScheme } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'

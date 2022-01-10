@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
 import { useHistory, useParams } from 'react-router-dom'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
 
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import NavBtn from './NavBtn'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 
 export default function ElementConfiguration({ fldData, fldKey }) {
   const { formType, formID } = useParams()

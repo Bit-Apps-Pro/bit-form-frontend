@@ -1,7 +1,7 @@
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
-import { $fields, $selectedFieldId } from '../../GlobalStates'
+import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
